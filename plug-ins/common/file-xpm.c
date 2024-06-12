@@ -256,11 +256,11 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xpm");
 
-      GIMP_PROC_ARG_INT (procedure, "threshold",
-                         _("_Threshold"),
-                         _("Alpha threshold"),
-                         0, 255, 127,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "threshold",
+                                       _("_Threshold"),
+                                       _("Alpha threshold"),
+                                       0, 255, 127,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

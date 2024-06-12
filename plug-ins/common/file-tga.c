@@ -302,17 +302,17 @@ tga_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tga");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "rle",
-                             _("_Use RLE compression"),
-                             _("Use RLE compression"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "rle",
+                                           _("_Use RLE compression"),
+                                           _("Use RLE compression"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "origin",
-                         _("Ori_gin"),
-                         _("Image origin (0 = top-left, 1 = bottom-left)"),
-                         0, 1, ORIGIN_BOTTOM_LEFT,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "origin",
+                                       _("Ori_gin"),
+                                       _("Image origin (0 = top-left, 1 = bottom-left)"),
+                                       0, 1, ORIGIN_BOTTOM_LEFT,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

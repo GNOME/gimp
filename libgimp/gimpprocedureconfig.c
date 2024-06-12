@@ -815,7 +815,8 @@ _gimp_procedure_config_end_run (GimpProcedureConfig *config,
  * but must take care of their default values itself. The easiest way
  * to do this is by simply using [func@export_comment], [func@export_exif] etc.
  * as default values for these arguments when adding them using
- * GIMP_PROC_ARG_BOOLEAN() or GIMP_PROC_AUX_ARG_BOOLEAN().
+ * gimp_procedure_add_boolean_argument() or 
+ * gimp_procedure_add_boolean_aux_argument().
  *
  * Returns: (transfer none) (nullable): The metadata to be used
  *          for this export, or %NULL if @original_image doesn't have

@@ -452,10 +452,10 @@ ifs_create_procedure (GimpPlugIn  *plug_in,
                                       "Owen Taylor",
                                       "1997");
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "fractal-str",
-                                "The fractal description serialized as string",
-                                NULL, NULL,
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "fractal-str",
+                                              "The fractal description serialized as string",
+                                              NULL, NULL,
+                                              GIMP_PARAM_READWRITE);
     }
 
   return procedure;

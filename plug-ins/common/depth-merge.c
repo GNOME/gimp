@@ -219,53 +219,53 @@ merge_create_procedure (GimpPlugIn  *plug_in,
                                       "Sean Cier",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "source-1",
-                              _("Source _1"),
-                              _("Source 1"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "source-1",
+                                            _("Source _1"),
+                                            _("Source 1"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "depth-map-1",
-                              _("_Depth map 1"),
-                              _("Depth map 1"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "depth-map-1",
+                                            _("_Depth map 1"),
+                                            _("Depth map 1"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "source-2",
-                              _("Source _2"),
-                              _("Source 2"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "source-2",
+                                            _("Source _2"),
+                                            _("Source 2"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "depth-map-2",
-                              _("Depth _map 2"),
-                              _("Depth map 2"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "depth-map-2",
+                                            _("Depth _map 2"),
+                                            _("Depth map 2"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "overlap",
-                            _("O_verlap"),
-                            _("Overlap"),
-                            0, 2, 0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "overlap",
+                                          _("O_verlap"),
+                                          _("Overlap"),
+                                          0, 2, 0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "offset",
-                            _("O_ffset"),
-                            _("Depth relative offset"),
-                            -1, 1, 0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "offset",
+                                          _("O_ffset"),
+                                          _("Depth relative offset"),
+                                          -1, 1, 0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "scale-1",
-                            _("Sc_ale 1"),
-                            _("Depth relative scale 1"),
-                            -1, 1, 1,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "scale-1",
+                                          _("Sc_ale 1"),
+                                          _("Depth relative scale 1"),
+                                          -1, 1, 1,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "scale-2",
-                            _("Scal_e 2"),
-                            _("Depth relative scale 2"),
-                            -1, 1, 1,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "scale-2",
+                                          _("Scal_e 2"),
+                                          _("Depth relative scale 2"),
+                                          -1, 1, 1,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

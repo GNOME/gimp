@@ -266,24 +266,24 @@ hot_create_procedure (GimpPlugIn  *plug_in,
                                       "Eric L. Hernes",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "mode",
-                         _("Mode"),
-                         _("Mode { NTSC (0), PAL (1) }"),
-                         0, 1, MODE_NTSC,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "mode",
+                                       _("Mode"),
+                                       _("Mode { NTSC (0), PAL (1) }"),
+                                       0, 1, MODE_NTSC,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "action",
-                         _("Action"),
-                         _("Action { (0) reduce luminance, "
-                         "(1) reduce saturation, or (2) Blacken }"),
-                         0, 2, ACT_LREDUX,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "action",
+                                       _("Action"),
+                                       _("Action { (0) reduce luminance, "
+                                       "(1) reduce saturation, or (2) Blacken }"),
+                                       0, 2, ACT_LREDUX,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-layer",
-                             _("Create _new layer"),
-                             _("Create a new layer"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "new-layer",
+                                           _("Create _new layer"),
+                                           _("Create a new layer"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

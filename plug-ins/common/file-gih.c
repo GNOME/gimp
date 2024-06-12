@@ -181,63 +181,63 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      GIMP_PROC_ARG_INT (procedure, "spacing",
-                         _("Spacing (_percent)"),
-                         _("Spacing of the brush"),
-                         1, 1000, 20,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "spacing",
+                                       _("Spacing (_percent)"),
+                                       _("Spacing of the brush"),
+                                       1, 1000, 20,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "description",
-                            _("_Description"),
-                            _("Short description of the GIH brush pipe"),
-                            "GIMP Brush Pipe",
-                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "description",
+                                          _("_Description"),
+                                          _("Short description of the GIH brush pipe"),
+                                          "GIMP Brush Pipe",
+                                          GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "cell-width",
-                         _("Cell _width"),
-                         _("Width of the brush cells in pixels"),
-                         1, 1000, 1,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "cell-width",
+                                       _("Cell _width"),
+                                       _("Width of the brush cells in pixels"),
+                                       1, 1000, 1,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "cell-height",
-                         _("Cell _height"),
-                         _("Height of the brush cells in pixels"),
-                         1, 1000, 1,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "cell-height",
+                                       _("Cell _height"),
+                                       _("Height of the brush cells in pixels"),
+                                       1, 1000, 1,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "num-cells",
-                         _("_Number of cells"),
-                         _("Number of cells to cut up"),
-                         1, 1000, 1,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "num-cells",
+                                       _("_Number of cells"),
+                                       _("Number of cells to cut up"),
+                                       1, 1000, 1,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BYTES (procedure, "ranks",
-                           _("_Rank"),
-                           _("Ranks of the dimensions"),
-                           GIMP_PARAM_READWRITE);
+      gimp_procedure_add_bytes_argument (procedure, "ranks",
+                                         _("_Rank"),
+                                         _("Ranks of the dimensions"),
+                                         GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "selection-modes",
-                          "Selection modes",
-                          _("Selection modes"),
-                          GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_array_argument (procedure, "selection-modes",
+                                               _("Selection modes"),
+                                               _("Selection modes"),
+                                               GIMP_PARAM_READWRITE);
 
       /* Auxiliary arguments. Only useful for the GUI, to pass info around. */
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "info-text",
-                                _("Display as"),
-                                _("Describe how the layers will be split"),
-                                "", GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "info-text",
+                                              _("Display as"),
+                                              _("Describe how the layers will be split"),
+                                              "", GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "dimension",
-                             _("D_imension"),
-                             _("How many dimensions the animated brush has"),
-                             1, 1000, 1,
-                             GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "dimension",
+                                           _("D_imension"),
+                                           _("How many dimensions the animated brush has"),
+                                           1, 1000, 1,
+                                           GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT32_ARRAY (procedure, "guides",
-                                     "Guides",
-                                     "Guides to show how the layers will be split in cells",
-                                     GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_aux_argument (procedure, "guides",
+                                                   "Guides",
+                                                   "Guides to show how the layers will be split in cells",
+                                                   GIMP_PARAM_READWRITE);
     }
 
   return procedure;

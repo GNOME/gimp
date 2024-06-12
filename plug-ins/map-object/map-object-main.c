@@ -135,298 +135,298 @@ map_create_procedure (GimpPlugIn  *plug_in,
                                       "Tom Bech & Federico Mena Quintero",
                                       "Version 1.2.0, July 16 1998");
 
-      GIMP_PROC_ARG_CHOICE (procedure, "map-type",
-                            _("Map _to"),
-                            _("Type of mapping"),
-                            gimp_choice_new_with_values ("map-plane",    MAP_PLANE,    _("Plane"),    NULL,
-                                                         "map-sphere",   MAP_SPHERE,   _("Sphere"),   NULL,
-                                                         "map-box",      MAP_BOX,      _("Box"),      NULL,
-                                                         "map-cylinder", MAP_CYLINDER, _("Cylinder"), NULL,
-                                                         NULL),
-                            "map-plane",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "map-type",
+                                          _("Map _to"),
+                                          _("Type of mapping"),
+                                          gimp_choice_new_with_values ("map-plane",    MAP_PLANE,    _("Plane"),    NULL,
+                                                                       "map-sphere",   MAP_SPHERE,   _("Sphere"),   NULL,
+                                                                       "map-box",      MAP_BOX,      _("Box"),      NULL,
+                                                                       "map-cylinder", MAP_CYLINDER, _("Cylinder"), NULL,
+                                                                       NULL),
+                                          "map-plane",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "viewpoint-x",
-                            _("X"),
-                            _("Position of viewpoint (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "viewpoint-y",
-                            _("Y"),
-                            _("Position of viewpoint (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "viewpoint-z",
-                            _("Z"),
-                            _("Position of viewpoint (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 2.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "viewpoint-x",
+                                          _("X"),
+                                          _("Position of viewpoint (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "viewpoint-y",
+                                          _("Y"),
+                                          _("Position of viewpoint (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "viewpoint-z",
+                                          _("Z"),
+                                          _("Position of viewpoint (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 2.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "position-x",
-                            _("Position X"),
-                            _("Object position (x,y,z)"),
-                            -1.0, 2.0, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "position-y",
-                            _("Position Y"),
-                            _("Object position (x,y,z)"),
-                            -1.0, 2.0, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "position-z",
-                            _("Position Z"),
-                            _("Object position (x,y,z)"),
-                            -1.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "position-x",
+                                          _("Position X"),
+                                          _("Object position (x,y,z)"),
+                                          -1.0, 2.0, 0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "position-y",
+                                          _("Position Y"),
+                                          _("Object position (x,y,z)"),
+                                          -1.0, 2.0, 0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "position-z",
+                                          _("Position Z"),
+                                          _("Object position (x,y,z)"),
+                                          -1.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "first-axis-x",
-                            _("X"),
-                            _("First axis of object (x,y,z)"),
-                            -1.0, 2.0, 1.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "first-axis-y",
-                            _("y"),
-                            _("First axis of object (x,y,z)"),
-                            -1.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "first-axis-z",
-                            _("Z"),
-                            _("First axis of object (x,y,z)"),
-                            -1.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "first-axis-x",
+                                          _("X"),
+                                          _("First axis of object (x,y,z)"),
+                                          -1.0, 2.0, 1.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "first-axis-y",
+                                          _("y"),
+                                          _("First axis of object (x,y,z)"),
+                                          -1.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "first-axis-z",
+                                          _("Z"),
+                                          _("First axis of object (x,y,z)"),
+                                          -1.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "second-axis-x",
-                            _("X"),
-                            _("Second axis of object (x,y,z)"),
-                            -1.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "second-axis-y",
-                            _("Y"),
-                            _("Second axis of object (x,y,z)"),
-                            -1.0, 2.0, 1.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "second-axis-z",
-                            _("Z"),
-                            _("Second axis of object (x,y,z)"),
-                            -1.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "second-axis-x",
+                                          _("X"),
+                                          _("Second axis of object (x,y,z)"),
+                                          -1.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "second-axis-y",
+                                          _("Y"),
+                                          _("Second axis of object (x,y,z)"),
+                                          -1.0, 2.0, 1.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "second-axis-z",
+                                          _("Z"),
+                                          _("Second axis of object (x,y,z)"),
+                                          -1.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-x",
-                            _("Angle X"),
-                            _("Rotation about X axis in degrees"),
-                            -360, 360, 0.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-y",
-                            _("Angle Y"),
-                            _("Rotation about Y axis in degrees"),
-                            -360, 360, 0.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "rotation-angle-z",
-                            _("Angle Z"),
-                            _("Rotation about Z axis in degrees"),
-                            -360, 360, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "rotation-angle-x",
+                                          _("Angle X"),
+                                          _("Rotation about X axis in degrees"),
+                                          -360, 360, 0.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "rotation-angle-y",
+                                          _("Angle Y"),
+                                          _("Rotation about Y axis in degrees"),
+                                          -360, 360, 0.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "rotation-angle-z",
+                                          _("Angle Z"),
+                                          _("Rotation about Z axis in degrees"),
+                                          -360, 360, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "light-type",
-                            _("Light source type"),
-                            _("Type of lightsource"),
-                            gimp_choice_new_with_values ("point-light",       POINT_LIGHT,       _("Point Light"),       NULL,
-                                                         "directional-light", DIRECTIONAL_LIGHT, _("Directional Light"), NULL,
-                                                         "no-light",          NO_LIGHT,          _("No Light"),          NULL,
-                                                         NULL),
-                            "point-light",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "light-type",
+                                          _("Light source type"),
+                                          _("Type of lightsource"),
+                                          gimp_choice_new_with_values ("point-light",       POINT_LIGHT,       _("Point Light"),       NULL,
+                                                                       "directional-light", DIRECTIONAL_LIGHT, _("Directional Light"), NULL,
+                                                                       "no-light",          NO_LIGHT,          _("No Light"),          NULL,
+                                                                       NULL),
+                                          "point-light",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_COLOR (procedure, "light-color",
-                           _("Light source _color"),
-                           _("Light source color"),
-                           TRUE, default_color,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_argument (procedure, "light-color",
+                                         _("Light source _color"),
+                                         _("Light source color"),
+                                         TRUE, default_color,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-x",
-                            _("Light position X"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-y",
-                            _("Light position Y"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-position-z",
-                            _("Light position Z"),
-                            _("Light source position (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 2.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "light-position-x",
+                                          _("Light position X"),
+                                          _("Light source position (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, -0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "light-position-y",
+                                          _("Light position Y"),
+                                          _("Light source position (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, -0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "light-position-z",
+                                          _("Light position Z"),
+                                          _("Light source position (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 2.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-x",
-                            _("Light direction X"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -1.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-y",
-                            _("Light direction Y"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, -1.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "light-direction-z",
-                            _("Light direction Z"),
-                            _("Light source direction (x,y,z)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "light-direction-x",
+                                          _("Light direction X"),
+                                          _("Light source direction (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, -1.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "light-direction-y",
+                                          _("Light direction Y"),
+                                          _("Light source direction (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, -1.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "light-direction-z",
+                                          _("Light direction Z"),
+                                          _("Light source direction (x,y,z)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "ambient-intensity",
-                            _("Ambie_nt"),
-                            _("Material ambient intensity"),
-                            0, 1, 0.3,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "ambient-intensity",
+                                          _("Ambie_nt"),
+                                         _("Material ambient intensity"),
+                                          0, 1, 0.3,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-intensity",
-                            _("D_iffuse"),
-                            _("Material diffuse intensity"),
-                            0, 1, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "diffuse-intensity",
+                                          _("D_iffuse"),
+                                          _("Material diffuse intensity"),
+                                          0, 1, 1.0,
+                                          G_PARAM_READWRITE);
 
       /* Reflectivity */
-      GIMP_PROC_ARG_DOUBLE (procedure, "diffuse-reflectivity",
-                            _("Di_ffuse"),
-                            _("Material diffuse reflectivity"),
-                            0, 1, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "diffuse-reflectivity",
+                                          _("Di_ffuse"),
+                                          _("Material diffuse reflectivity"),
+                                          0, 1, 0.5,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "specular-reflectivity",
-                            _("Spec_ular"),
-                            _("Material specular reflectivity"),
-                            0, 1, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "specular-reflectivity",
+                                          _("Spec_ular"),
+                                          _("Material specular reflectivity"),
+                                          0, 1, 0.5,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "highlight",
-                            _("Highligh_t"),
-                            _("Material highlight "
-                              "(note, it's exponential)"),
-                            0, G_MAXDOUBLE, 27.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "highlight",
+                                          _("Highligh_t"),
+                                          _("Material highlight "
+                                            "(note, it's exponential)"),
+                                          0, G_MAXDOUBLE, 27.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "antialiasing",
-                             _("Antialia_sing"),
-                             _("Apply antialiasing"),
-                             TRUE,
-                             G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "depth",
-                            _("_Depth"),
-                            _("Antialiasing quality. Higher is better, "
-                              "but slower"),
-                            1.0, 5.0, 3.0,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "threshold",
-                            _("Thr_eshold"),
-                            _("Stop when pixel differences are smaller than "
-                              "this value"),
-                            0.001, 1000.0, 0.250,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "antialiasing",
+                                           _("Antialia_sing"),
+                                           _("Apply antialiasing"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "depth",
+                                          _("_Depth"),
+                                          _("Antialiasing quality. Higher is better, "
+                                            "but slower"),
+                                          1.0, 5.0, 3.0,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "threshold",
+                                          _("Thr_eshold"),
+                                          _("Stop when pixel differences are smaller than "
+                                            "this value"),
+                                          0.001, 1000.0, 0.250,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "tiled",
-                             _("_Tile source image"),
-                             _("Tile source image"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "tiled",
+                                           _("_Tile source image"),
+                                           _("Tile source image"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
-                             _("Create _new image"),
-                             _("Create a new image"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "new-image",
+                                           _("Create _new image"),
+                                           _("Create a new image"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-layer",
-                             _("Create ne_w layer"),
-                             _("Create a new layer when applying filter"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "new-layer",
+                                           _("Create ne_w layer"),
+                                           _("Create a new layer when applying filter"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-background",
-                             _("Transparent bac_kground"),
-                             _("Make background transparent"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "transparent-background",
+                                           _("Transparent bac_kground"),
+                                           _("Make background transparent"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
       /* Sphere Options */
-      GIMP_PROC_ARG_DOUBLE (procedure, "sphere-radius",
-                            _("Radi_us"),
-                            _("Sphere radius"),
-                            0, G_MAXDOUBLE, 0.25,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "sphere-radius",
+                                          _("Radi_us"),
+                                          _("Sphere radius"),
+                                          0, G_MAXDOUBLE, 0.25,
+                                          G_PARAM_READWRITE);
 
       /* Box Options */
-      GIMP_PROC_ARG_DRAWABLE (procedure, "box-front-drawable",
-                              _("Fro_nt"),
-                              _("Box front face "
-                                "(set this to NULL if not used)"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DRAWABLE (procedure, "box-back-drawable",
-                              _("B_ack"),
-                              _("Box back face"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DRAWABLE (procedure, "box-top-drawable",
-                              _("To_p"),
-                              _("Box top face"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DRAWABLE (procedure, "box-bottom-drawable",
-                              _("Bo_ttom"),
-                              _("Box bottom face"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DRAWABLE (procedure, "box-left-drawable",
-                              _("Le_ft"),
-                              _("Box left face"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DRAWABLE (procedure, "box-right-drawable",
-                              _("Ri_ght"),
-                              _("Box right face"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "box-front-drawable",
+                                            _("Fro_nt"),
+                                            _("Box front face "
+                                              "(set this to NULL if not used)"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "box-back-drawable",
+                                            _("B_ack"),
+                                            _("Box back face"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "box-top-drawable",
+                                            _("To_p"),
+                                            _("Box top face"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "box-bottom-drawable",
+                                            _("Bo_ttom"),
+                                            _("Box bottom face"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "box-left-drawable",
+                                            _("Le_ft"),
+                                            _("Box left face"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "box-right-drawable",
+                                            _("Ri_ght"),
+                                            _("Box right face"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "x-scale",
-                            _("Scale X"),
-                            _("Box X size"),
-                            0, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "y-scale",
-                            _("Scale Y"),
-                            _("Box Y size"),
-                            0, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "z-scale",
-                            _("Scale Z"),
-                            _("Box Z size"),
-                            0, G_MAXDOUBLE, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "x-scale",
+                                          _("Scale X"),
+                                          _("Box X size"),
+                                          0, G_MAXDOUBLE, 0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "y-scale",
+                                          _("Scale Y"),
+                                          _("Box Y size"),
+                                          0, G_MAXDOUBLE, 0.5,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "z-scale",
+                                          _("Scale Z"),
+                                          _("Box Z size"),
+                                          0, G_MAXDOUBLE, 0.5,
+                                          G_PARAM_READWRITE);
 
       /* Cylinder options */
-      GIMP_PROC_ARG_DRAWABLE (procedure, "cyl-top-drawable",
-                              _("_Top"),
-                              _("Cylinder top face "
-                                "(set this to NULL if not used)"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DRAWABLE (procedure, "cyl-bottom-drawable",
-                              _("_Bottom"),
-                              _("Cylinder bottom face "
-                                "(set this to NULL if not used)"),
-                              TRUE,
-                              G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-radius",
-                            _("Radi_us"),
-                            _("Cylinder radius"),
-                            0, G_MAXDOUBLE, 0.25,
-                            G_PARAM_READWRITE);
-      GIMP_PROC_ARG_DOUBLE (procedure, "cylinder-length",
-                            _("Cylin_der length"),
-                            _("Cylinder length"),
-                            0, G_MAXDOUBLE, 0.25,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "cyl-top-drawable",
+                                            _("_Top"),
+                                            _("Cylinder top face "
+                                              "(set this to NULL if not used)"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "cyl-bottom-drawable",
+                                            _("_Bottom"),
+                                            _("Cylinder bottom face "
+                                              "(set this to NULL if not used)"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "cylinder-radius",
+                                          _("Radi_us"),
+                                          _("Cylinder radius"),
+                                          0, G_MAXDOUBLE, 0.25,
+                                          G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "cylinder-length",
+                                          _("Cylin_der length"),
+                                          _("Cylinder length"),
+                                          0, G_MAXDOUBLE, 0.25,
+                                          G_PARAM_READWRITE);
 
       g_object_unref (default_color);
     }

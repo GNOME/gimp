@@ -104,27 +104,27 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
                                       "Henrik Brix Andersen",
                                       "1999-2008");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                        "Run mode",
+                                        "The run mode",
+                                        GIMP_TYPE_RUN_MODE,
+                                        GIMP_RUN_INTERACTIVE,
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-names",
-                          "Domain names",
-                          "Domain names",
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_string_array_argument (procedure, "domain-names",
+                                                "Domain names",
+                                                "Domain names",
+                                                G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-uris",
-                          "Domain URIs",
-                          "Domain URIs",
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_string_array_argument (procedure, "domain-uris",
+                                                "Domain URIs",
+                                                "Domain URIs",
+                                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BYTES (procedure, "dialog-data",
-                               "Dialog data",
-                               "Remembering dialog's basic features; this is never meant to be a public argument",
-                               GIMP_PARAM_READWRITE);
+      gimp_procedure_add_bytes_aux_argument (procedure, "dialog-data",
+                                             "Dialog data",
+                                             "Remembering dialog's basic features; this is never meant to be a public argument",
+                                             GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -220,23 +220,23 @@ temp_proc_install (GimpPlugIn *plug_in)
                                   "Henrik Brix Andersen",
                                   "1999-2008");
 
-  GIMP_PROC_ARG_STRING (procedure, "help-domain",
-                        "Help domain",
-                        "Help domain to use",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "help-domain",
+                                      "Help domain",
+                                      "Help domain to use",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-locales",
-                        "Help locales",
-                        "Language to use",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "help-locales",
+                                      "Help locales",
+                                      "Language to use",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-id",
-                        "Help ID",
-                        "Help ID to open",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "help-id",
+                                      "Help ID",
+                                      "Help ID to open",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

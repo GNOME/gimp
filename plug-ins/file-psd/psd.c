@@ -233,39 +233,39 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psd");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "clippingpath",
-                             _("Assign a Clipping _Path"),
-                             _("Select a path to be the "
-                             "clipping path"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "clippingpath",
+                                           _("Assign a Clipping _Path"),
+                                           _("Select a path to be the "
+                                           "clipping path"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "clippingpathname",
-                            _("Clipping Path _Name"),
-                            _("Clipping path name\n"
-                            "(ignored if no clipping path)"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "clippingpathname",
+                                          _("Clipping Path _Name"),
+                                          _("Clipping path name\n"
+                                            "(ignored if no clipping path)"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "clippingpathflatness",
-                            _("Path _Flatness"),
-                            _("Clipping path flatness in device pixels\n"
-                            "(ignored if no clipping path)"),
-                            0.0, 100.0, 0.2,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "clippingpathflatness",
+                                          _("Path _Flatness"),
+                                          _("Clipping path flatness in device pixels\n"
+                                            "(ignored if no clipping path)"),
+                                          0.0, 100.0, 0.2,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             _("Export as _CMYK"),
-                             _("Export a CMYK PSD image using the soft-proofing color profile"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           _("Export as _CMYK"),
+                                           _("Export a CMYK PSD image using the soft-proofing color profile"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "duotone",
-                             _("Export as _Duotone"),
-                             _("Export as a Duotone PSD file if Duotone color space information "
-                             "was attached to the image when originally imported."),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "duotone",
+                                           _("Export as _Duotone"),
+                                           _("Export as a Duotone PSD file if Duotone color space information "
+                                           "was attached to the image when originally imported."),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_METADATA_PROC))
     {
@@ -283,29 +283,29 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                       "John Marshall",
                                       "John Marshall",
                                       "2007");
-      GIMP_PROC_ARG_INT (procedure, "size",
-                         "Metadata size",
-                         NULL,
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "size",
+                                       "Metadata size",
+                                       NULL,
+                                      0, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_image ("image",
                                                           "image",
                                                           "The image",
                                                           FALSE,
                                                           GIMP_PARAM_READWRITE));
-      GIMP_PROC_ARG_BOOLEAN (procedure, "metadata-type",
-                             "Metadata type",
-                             "If the metadata contains image or "
-                             "layer PSD resources.",
-                             FALSE,
-                             G_PARAM_READWRITE);
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             "CMYK",
-                             "If the layer metadata needs to be "
-                             "converted from CMYK colorspace.",
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "metadata-type",
+                                           "Metadata type",
+                                           "If the metadata contains image or "
+                                           "layer PSD resources.",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           "CMYK",
+                                           "If the layer metadata needs to be "
+                                           "converted from CMYK colorspace.",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

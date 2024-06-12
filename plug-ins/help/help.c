@@ -137,15 +137,15 @@ help_create_procedure (GimpPlugIn  *plug_in,
                                       "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
                                       "1999-2008");
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-names",
-                          "Domain Names",
-                          "Domain names",
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_string_array_argument (procedure, "domain-names",
+                                                "Domain Names",
+                                                "Domain names",
+                                                G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-uris",
-                          "Domain URIs",
-                          "Domain URIs",
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_string_array_argument (procedure, "domain-uris",
+                                                "Domain URIs",
+                                                "Domain URIs",
+                                                G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -210,25 +210,25 @@ help_temp_proc_install (GimpPlugIn *plug_in)
                                   "Henrik Brix Andersen",
                                   "1999-2008");
 
-  GIMP_PROC_ARG_STRING (procedure, "help-proc",
-                        "The procedure of the browser to use",
-                        "The procedure of the browser to use",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "help-proc",
+                                      "The procedure of the browser to use",
+                                      "The procedure of the browser to use",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-domain",
-                        "Help domain to use",
-                        "Help domain to use",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "help-domain",
+                                      "Help domain to use",
+                                      "Help domain to use",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-locales",
-                        "Language to use",
-                        "Language to use",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "help-locales",
+                                      "Language to use",
+                                      "Language to use",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-id",
+  gimp_procedure_add_string_argument (procedure, "help-id",
                         "Help ID to open",
                         "Help ID to open",
                         NULL,

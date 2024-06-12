@@ -364,83 +364,83 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           XCURSOR_EXTENSION);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-x",
-                         _("Hot spot _X"),
-                         _("X-coordinate of hot spot "
-                           "(use -1, -1 to keep original hot spot)"),
-                         -1, GIMP_MAX_IMAGE_SIZE, -1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hot-spot-x",
+                                       _("Hot spot _X"),
+                                       _("X-coordinate of hot spot "
+                                         "(use -1, -1 to keep original hot spot)"),
+                                       -1, GIMP_MAX_IMAGE_SIZE, -1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-y",
-                         _("Hot spot _Y"),
-                         _("Y-coordinate of hot spot "
-                           "(use -1, -1 to keep original hot spot)"),
-                         -1, GIMP_MAX_IMAGE_SIZE, -1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hot-spot-y",
+                                       _("Hot spot _Y"),
+                                       _("Y-coordinate of hot spot "
+                                         "(use -1, -1 to keep original hot spot)"),
+                                       -1, GIMP_MAX_IMAGE_SIZE, -1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "crop",
-                             _("_Auto Crop all frames"),
-                             _("Remove the empty borders of all frames."),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "crop",
+                                           _("_Auto Crop all frames"),
+                                           _("Remove the empty borders of all frames."),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "size",
-                            _("Si_ze where unspecified"),
-                            _("Default frame size if unspecified"),
-                            gimp_choice_new_with_values ("size-12px", 12, ("12px"), NULL,
-                                                         "size-16px", 16, ("16px"), NULL,
-                                                         "size-24px", 24, ("24px"), NULL,
-                                                         "size-32px", 32, ("32px"), NULL,
-                                                         "size-36px", 36, ("36px"), NULL,
-                                                         "size-40px", 40, ("40px"), NULL,
-                                                         "size-48px", 48, ("48px"), NULL,
-                                                         "size-64px", 64, ("64px"), NULL,
-                                                         NULL),
-                            "size-32px",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "size",
+                                          _("Si_ze where unspecified"),
+                                          _("Default frame size if unspecified"),
+                                          gimp_choice_new_with_values ("size-12px", 12, ("12px"), NULL,
+                                                                       "size-16px", 16, ("16px"), NULL,
+                                                                       "size-24px", 24, ("24px"), NULL,
+                                                                       "size-32px", 32, ("32px"), NULL,
+                                                                       "size-36px", 36, ("36px"), NULL,
+                                                                       "size-40px", 40, ("40px"), NULL,
+                                                                       "size-48px", 48, ("48px"), NULL,
+                                                                       "size-64px", 64, ("64px"), NULL,
+                                                                       NULL),
+                                          "size-32px",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "size-replace",
-                             _("_Use default size for all frames"),
-                             _("Use default size for all frames"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "size-replace",
+                                           _("_Use default size for all frames"),
+                                           _("Use default size for all frames"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "delay",
-                         _("_Delay where unspecified"),
-                         _("Default time span in milliseconds in which "
-                           "each frame is rendered"),
-                         CURSOR_MINIMUM_DELAY, G_MAXINT, CURSOR_DEFAULT_DELAY,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "delay",
+                                       _("_Delay where unspecified"),
+                                       _("Default time span in milliseconds in which "
+                                         "each frame is rendered"),
+                                       CURSOR_MINIMUM_DELAY, G_MAXINT, CURSOR_DEFAULT_DELAY,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "delay-replace",
-                             _("Use default delay for all _frames"),
-                             _("Use default delay for all frames"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "delay-replace",
+                                           _("Use default delay for all _frames"),
+                                           _("Use default delay for all frames"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "xmc-copyright",
-                            _("C_opyright"),
-                            _("Copyright information"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "xmc-copyright",
+                                          _("C_opyright"),
+                                          _("Copyright information"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "xmc-copyright",
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "xmc-license",
-                            _("Lice_nse"),
-                            _("License information"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "xmc-license",
+                                          _("Lice_nse"),
+                                          _("License information"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "xmc-license",
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "gimp-comment",
-                            _("Co_mment"),
-                            _("Optional comment"),
-                            gimp_get_default_comment (),
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "gimp-comment",
+                                          _("Co_mment"),
+                                          _("Optional comment"),
+                                          gimp_get_default_comment (),
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "gimp-comment",
                                         GIMP_ARGUMENT_SYNC_PARASITE);

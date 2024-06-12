@@ -295,11 +295,11 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                       "Adam D. Moss <adam@gimp.org>",
                                       "1997-2003");
 
-      GIMP_PROC_VAL_IMAGE (procedure, "result",
-                           "Result",
-                           "Resultimg image",
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "result",
+                                             "Result",
+                                             "Resulting image",
+                                             FALSE,
+                                             G_PARAM_READWRITE);
     }
 
   return procedure;

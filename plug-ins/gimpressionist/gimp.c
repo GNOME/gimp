@@ -132,16 +132,16 @@ gimpressionist_create_procedure (GimpPlugIn  *plug_in,
                                       "Vidar Madsen",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_STRING (procedure, "preset",
-                            _("Preset"),
-                            _("Preset Name"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "preset",
+                                          _("Preset"),
+                                          _("Preset Name"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
-                               "Settings data",
-                               "TODO: eventually we must implement proper args for every settings",
-                               GIMP_PARAM_READWRITE);
+      gimp_procedure_add_bytes_aux_argument (procedure, "settings-data",
+                                             "Settings data",
+                                             "TODO: eventually we must implement proper args for every settings",
+                                             GIMP_PARAM_READWRITE);
     }
 
   return procedure;

@@ -214,16 +214,16 @@ gimp_export_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_IMAGE (procedure, "image",
-                       "Image",
-                       "The image to export",
-                       FALSE,
-                       G_PARAM_READWRITE);
+  gimp_procedure_add_image_argument (procedure, "image",
+                                    "Image",
+                                     "The image to export",
+                                     FALSE,
+                                     G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_FILE (procedure, "file",
-                      "File",
-                      "The file to export to",
-                      GIMP_PARAM_READWRITE);
+  gimp_procedure_add_file_argument (procedure, "file",
+                                    "File",
+                                    "The file to export to",
+                                    GIMP_PARAM_READWRITE);
 }
 
 static void
@@ -458,47 +458,47 @@ gimp_export_procedure_add_metadata (GimpExportProcedure *export_procedure)
     return;
 
   if (export_procedure->priv->supports_exif)
-    GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-exif",
-                               _("Save _Exif"),
-                               _("Save Exif (Exchangeable image file format) metadata"),
-                               gimp_export_exif (),
-                               G_PARAM_READWRITE);
+    gimp_procedure_add_boolean_aux_argument (procedure, "save-exif",
+                                             _("Save _Exif"),
+                                             _("Save Exif (Exchangeable image file format) metadata"),
+                                             gimp_export_exif (),
+                                             G_PARAM_READWRITE);
   if (export_procedure->priv->supports_iptc)
-    GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-iptc",
-                               _("Save _IPTC"),
-                               _("Save IPTC (International Press Telecommunications Council) metadata"),
-                               gimp_export_iptc (),
-                               G_PARAM_READWRITE);
+    gimp_procedure_add_boolean_aux_argument (procedure, "save-iptc",
+                                             _("Save _IPTC"),
+                                             _("Save IPTC (International Press Telecommunications Council) metadata"),
+                                             gimp_export_iptc (),
+                                             G_PARAM_READWRITE);
   if (export_procedure->priv->supports_xmp)
-    GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-xmp",
-                               _("Save _XMP"),
-                               _("Save XMP (Extensible Metadata Platform) metadata"),
-                               gimp_export_xmp (),
-                               G_PARAM_READWRITE);
+    gimp_procedure_add_boolean_aux_argument (procedure, "save-xmp",
+                                             _("Save _XMP"),
+                                             _("Save XMP (Extensible Metadata Platform) metadata"),
+                                             gimp_export_xmp (),
+                                             G_PARAM_READWRITE);
   if (export_procedure->priv->supports_profile)
-    GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                               _("Save color _profile"),
-                               _("Save the ICC color profile as metadata"),
-                               gimp_export_color_profile (),
-                               G_PARAM_READWRITE);
+    gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
+                                             _("Save color _profile"),
+                                             _("Save the ICC color profile as metadata"),
+                                             gimp_export_color_profile (),
+                                             G_PARAM_READWRITE);
   if (export_procedure->priv->supports_thumbnail)
-    GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-thumbnail",
-                               _("Save _thumbnail"),
-                               _("Save a smaller representation of the image as metadata"),
-                               gimp_export_thumbnail (),
-                               G_PARAM_READWRITE);
+    gimp_procedure_add_boolean_aux_argument (procedure, "save-thumbnail",
+                                             _("Save _thumbnail"),
+                                             _("Save a smaller representation of the image as metadata"),
+                                             gimp_export_thumbnail (),
+                                             G_PARAM_READWRITE);
   if (export_procedure->priv->supports_comment)
     {
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 _("Save c_omment"),
-                                 _("Save a comment as metadata"),
-                                 gimp_export_comment (),
-                                 G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                _("Comment"),
-                                _("Image comment"),
-                                gimp_get_default_comment (),
-                                G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-comment",
+                                               _("Save c_omment"),
+                                               _("Save a comment as metadata"),
+                                               gimp_export_comment (),
+                                               G_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "gimp-comment",
+                                              _("Comment"),
+                                              _("Image comment"),
+                                              gimp_get_default_comment (),
+                                              G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "gimp-comment",
                                         GIMP_ARGUMENT_SYNC_PARASITE);

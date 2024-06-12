@@ -183,15 +183,15 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
        * them AUX for now and leave it as further exercise to decide whether it
        * should be part of the PDB API.
        */
-      GIMP_PROC_AUX_ARG_ENUM (procedure, "target",
-                              "Open _pages as", NULL,
-                              GIMP_TYPE_PAGE_SELECTOR_TARGET,
-                              GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_enum_aux_argument (procedure, "target",
+                                            "Open _pages as", NULL,
+                                            GIMP_TYPE_PAGE_SELECTOR_TARGET,
+                                            GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "keep-empty-space",
-                                 _("_Keep empty space around imported layers"),
-                                 NULL, TRUE, GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "keep-empty-space",
+                                               _("_Keep empty space around imported layers"),
+                                               NULL, TRUE, GIMP_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -223,56 +223,56 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tif,tiff");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bigtiff",
-                             _("Export in _BigTIFF variant file format"),
-                             _("The BigTIFF variant file format uses 64-bit offsets, "
-                               "hence supporting over 4GiB files and bigger"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "bigtiff",
+                                           _("Export in _BigTIFF variant file format"),
+                                           _("The BigTIFF variant file format uses 64-bit offsets, "
+                                             "hence supporting over 4GiB files and bigger"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "compression",
-                            _("Co_mpression"),
-                            _("Compression type"),
-                            gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
-                                                         "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
-                                                         "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
-                                                         "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
-                                                         "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
-                                                         "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
-                                                         "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
-                                                         NULL),
-                            "none", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "compression",
+                                          _("Co_mpression"),
+                                          _("Compression type"),
+                                          gimp_choice_new_with_values ("none",          GIMP_COMPRESSION_NONE,          _("None"),              NULL,
+                                                                       "lzw",           GIMP_COMPRESSION_LZW,           _("LZW"),               NULL,
+                                                                       "packbits",      GIMP_COMPRESSION_PACKBITS,      _("Pack Bits"),         NULL,
+                                                                       "adobe_deflate", GIMP_COMPRESSION_ADOBE_DEFLATE, _("Deflate"),           NULL,
+                                                                       "jpeg",          GIMP_COMPRESSION_JPEG,          _("JPEG"),              NULL,
+                                                                       "ccittfax3",     GIMP_COMPRESSION_CCITTFAX3,     _("CCITT Group 3 fax"), NULL,
+                                                                       "ccittfax4",     GIMP_COMPRESSION_CCITTFAX4,     _("CCITT Group 4 fax"), NULL,
+                                                                       NULL),
+                                          "none", G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent-pixels",
-                             _("Save color _values from transparent pixels"),
-                             _("Keep the color data masked by an alpha channel "
-                               "intact (do not store premultiplied components)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-transparent-pixels",
+                                           _("Save color _values from transparent pixels"),
+                                           _("Keep the color data masked by an alpha channel "
+                                             "intact (do not store premultiplied components)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             _("Export as CMY_K"),
-                             _("Create a CMYK TIFF image using the soft-proofing color profile"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           _("Export as CMY_K"),
+                                           _("Create a CMYK TIFF image using the soft-proofing color profile"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
-                                 _("Save La_yers"),
-                                 _("Save Layers"),
-                                 TRUE,
-                                 G_PARAM_READWRITE);
+     gimp_procedure_add_boolean_aux_argument (procedure, "save-layers",
+                                               _("Save La_yers"),
+                                               _("Save Layers"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "crop-layers",
-                                 _("Crop L_ayers"),
-                                 _("Crop Layers"),
-                                 TRUE,
-                                 G_PARAM_READWRITE);
+     gimp_procedure_add_boolean_aux_argument (procedure, "crop-layers",
+                                               _("Crop L_ayers"),
+                                               _("Crop Layers"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-geotiff",
-                                 _("Save _GeoTIFF data"),
-                                 _("Save GeoTIFF data"),
-                                 TRUE,
-                                 G_PARAM_READWRITE);
+     gimp_procedure_add_boolean_aux_argument (procedure, "save-geotiff",
+                                               _("Save _GeoTIFF data"),
+                                               _("Save GeoTIFF data"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
 
       gimp_export_procedure_set_support_exif      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
       gimp_export_procedure_set_support_iptc      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);

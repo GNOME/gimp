@@ -139,62 +139,62 @@ csource_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "c");
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "prefixed-name",
-                                _("_Prefixed name"),
-                                _("Prefixed name"),
-                                "gimp_image",
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "prefixed-name",
+                                              _("_Prefixed name"),
+                                              _("Prefixed name"),
+                                              "gimp_image",
+                                              GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                _("Comme_nt"),
-                                _("Comment"),
-                                gimp_get_default_comment (),
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "gimp-comment",
+                                              _("Comme_nt"),
+                                              _("Comment"),
+                                              gimp_get_default_comment (),
+                                              GIMP_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "gimp-comment",
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 _("Save comment to _file"),
-                                 _("Save comment"),
-                                 gimp_export_comment (),
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-comment",
+                                               _("Save comment to _file"),
+                                               _("Save comment"),
+                                               gimp_export_comment (),
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "glib-types",
-                                 _("Use GLib types (guint_8*)"),
-                                 _("Use GLib types"),
-                                 TRUE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "glib-types",
+                                               _("Use GLib types (guint_8*)"),
+                                               _("Use GLib types"),
+                                               TRUE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-alpha",
-                                 _("Save alpha channel (RG_BA/RGB)"),
-                                 _("Save the alpha channel"),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-alpha",
+                                               _("Save alpha channel (RG_BA/RGB)"),
+                                               _("Save the alpha channel"),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "rgb565",
-                                 _("Save as RGB565 (1_6-bit)"),
-                                 _("Use RGB565 encoding"),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "rgb565",
+                                               _("Save as RGB565 (1_6-bit)"),
+                                               _("Use RGB565 encoding"),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-macros",
-                                 _("_Use macros instead of struct"),
-                                 _("Use C macros"),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "use-macros",
+                                               _("_Use macros instead of struct"),
+                                               _("Use C macros"),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-rle",
-                                 _("Use _1 bit Run-Length-Encoding"),
-                                 _("Use run-length-encoding"),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "use-rle",
+                                               _("Use _1 bit Run-Length-Encoding"),
+                                               _("Use run-length-encoding"),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_DOUBLE (procedure, "opacity",
-                                _("Opaci_ty"),
-                                _("Opacity"),
-                                0.0, 100.0, 100.0,
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_double_aux_argument (procedure, "opacity",
+                                              _("Opaci_ty"),
+                                              _("Opacity"),
+                                              0.0, 100.0, 100.0,
+                                              GIMP_PARAM_READWRITE);
     }
 
   return procedure;

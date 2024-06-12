@@ -97,18 +97,18 @@ gimp_batch_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                      "Run mode",
-                      "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_NONINTERACTIVE,
-                      G_PARAM_READWRITE);
+  gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                    "Run mode",
+                                    "The run mode",
+                                    GIMP_TYPE_RUN_MODE,
+                                    GIMP_RUN_NONINTERACTIVE,
+                                    G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "script",
-                        "Batch commands in the target language",
-                        "Batch commands in the target language, which will be run by the interpreter",
-                        "",
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "script",
+                                      "Batch commands in the target language",
+                                      "Batch commands in the target language, which will be run by the interpreter",
+                                      "",
+                                      G_PARAM_READWRITE);
 }
 
 static void

@@ -157,35 +157,35 @@ tile_create_procedure (GimpPlugIn  *plug_in,
        * sense or when we want stored values to only apply when run on a same
        * image.
        */
-      GIMP_PROC_ARG_INT (procedure, "new-width",
-                         _("New _width"),
-                         _("New (tiled) image width"),
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "new-width",
+                                       _("New _width"),
+                                       _("New (tiled) image width"),
+                                       1, GIMP_MAX_IMAGE_SIZE, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "new-height",
-                         _("New _height"),
-                         _("New (tiled) image height"),
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "new-height",
+                                       _("New _height"),
+                                       _("New (tiled) image height"),
+                                       1, GIMP_MAX_IMAGE_SIZE, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-image",
-                             _("New _image"),
-                             _("Create a new image"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "new-image",
+                                           _("New _image"),
+                                           _("Create a new image"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
-                           "New image",
-                           "Output image (NULL if new-image == FALSE)",
-                           TRUE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "new-image",
+                                             "New image",
+                                             "Output image (NULL if new-image == FALSE)",
+                                             TRUE,
+                                             G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_LAYER (procedure, "new-layer",
-                           "New layer",
-                           "Output layer (NULL if new-image == FALSE)",
-                           TRUE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_layer_return_value (procedure, "new-layer",
+                                             "New layer",
+                                             "Output layer (NULL if new-image == FALSE)",
+                                             TRUE,
+                                             G_PARAM_READWRITE);
     }
 
   return procedure;

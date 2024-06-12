@@ -513,12 +513,12 @@ gimp_drawable_chooser_clicked (GimpDrawableChooser *chooser)
                                                (GimpRunFunc) gimp_temp_callback_run,
                                                g_object_ref (chooser),
                                                (GDestroyNotify) g_object_unref);
-      GIMP_PROC_ARG_DRAWABLE (callback_procedure, "drawable",
-                              "Drawable", "The selected drawable",
-                              TRUE, G_PARAM_READWRITE);
-      GIMP_PROC_ARG_BOOLEAN (callback_procedure, "closing",
-                             "Closing", "If the dialog was closing",
-                             FALSE, G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (callback_procedure, "drawable",
+                                            "Drawable", "The selected drawable",
+                                            TRUE, G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (callback_procedure, "closing",
+                                           "Closing", "If the dialog was closing",
+                                           FALSE, G_PARAM_READWRITE);
 
       gimp_plug_in_add_temp_procedure (plug_in, callback_procedure);
       g_object_unref (callback_procedure);

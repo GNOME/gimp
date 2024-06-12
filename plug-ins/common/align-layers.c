@@ -188,55 +188,55 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
                                       "Shuji Narazaki",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "horizontal-style",
-                         _("_Horizontal style"),
-                         _("(None = 0, Collect = 1, "
-                           "Fill left to right = 2, Fill right to left = 3, "
-                           "Snap to grid = 4)"),
-                         H_NONE, SNAP2HGRID, H_NONE,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "horizontal-style",
+                                       _("_Horizontal style"),
+                                       _("(None = 0, Collect = 1, "
+                                         "Fill left to right = 2, Fill right to left = 3, "
+                                         "Snap to grid = 4)"),
+                                       H_NONE, SNAP2HGRID, H_NONE,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "horizontal-base",
-                         _("Hori_zontal base"),
-                         _("(Left edge = 0, Center = 1, "
-                           "Right edge = 2)"),
-                         H_BASE_LEFT, H_BASE_RIGHT, H_BASE_LEFT,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "horizontal-base",
+                                       _("Hori_zontal base"),
+                                       _("(Left edge = 0, Center = 1, "
+                                         "Right edge = 2)"),
+                                       H_BASE_LEFT, H_BASE_RIGHT, H_BASE_LEFT,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "vertical-style",
-                         _("_Vertical style"),
-                         _("(None = 0, Collect = 1, "
-                           "Fill left to right = 2, Fill right to left = 3, "
-                           "Snap to grid = 4)"),
-                         V_NONE, SNAP2VGRID, V_NONE,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "vertical-style",
+                                       _("_Vertical style"),
+                                       _("(None = 0, Collect = 1, "
+                                         "Fill left to right = 2, Fill right to left = 3, "
+                                         "Snap to grid = 4)"),
+                                       V_NONE, SNAP2VGRID, V_NONE,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "vertical-base",
-                         _("Ver_tical base"),
-                         _("(Left edge = 0, Center = 1, "
-                           "Right edge = 2)"),
-                         V_BASE_TOP, V_BASE_BOTTOM, V_BASE_TOP,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "vertical-base",
+                                       _("Ver_tical base"),
+                                       _("(Left edge = 0, Center = 1, "
+                                         "Right edge = 2)"),
+                                       V_BASE_TOP, V_BASE_BOTTOM, V_BASE_TOP,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "grid-size",
-                         _("_Grid"),
-                         _("Grid"),
-                         1, 200, 10,
-                         GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "grid-size",
+                                       _("_Grid"),
+                                       _("Grid"),
+                                       1, 200, 10,
+                                       GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure,
-                             "ignore-bottom-layer",
-                             _("Ignore the _bottom layer even if visible"),
-                             _("Ignore the bottom layer even if visible"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure,
+                                           "ignore-bottom-layer",
+                                           _("Ignore the _bottom layer even if visible"),
+                                           _("Ignore the bottom layer even if visible"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure,
-                             "use-bottom-layer",
-                             _("_Use the (invisible) bottom layer as the base"),
-                             _("Use the (invisible) bottom layer as the base"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure,
+                                           "use-bottom-layer",
+                                           _("_Use the (invisible) bottom layer as the base"),
+                                           _("Use the (invisible) bottom layer as the base"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
       /* TODO: these 2 arguments existed in the original procedure but
        * were actually unused. If we want to keep them, let's at least
@@ -244,16 +244,16 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
        * them.
        */
       /*
-      GIMP_PROC_ARG_BOOLEAN (procedure,
-                             "link-after-alignment",
-                             "Link the visible layers after alignment",
-                             FALSE,
-                             G_PARAM_READWRITE);
-      GIMP_PROC_ARG_BOOLEAN (procedure,
-                             "use-bottom",
-                             "use the bottom layer as the base of alignment",
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure,
+                                           "link-after-alignment",
+                                           "Link the visible layers after alignment",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure,
+                                           "use-bottom",
+                                           "use the bottom layer as the base of alignment",
+                                           TRUE,
+                                           G_PARAM_READWRITE);
                              */
     }
 

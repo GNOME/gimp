@@ -179,71 +179,71 @@ gif_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "gif");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlace",
-                             _("_Interlace"),
-                             _("Try to export as interlaced"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "interlace",
+                                           _("_Interlace"),
+                                           _("Try to export as interlaced"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
-                             _("Loop _Forever"),
-                             _("(animated gif) Loop infinitely"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "loop",
+                                           _("Loop _Forever"),
+                                           _("(animated gif) Loop infinitely"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "number-of-repeats",
-                         _("_Number of repeats"),
-                         _("(animated gif) Number of repeats "
-                           "(Ignored if 'loop' is TRUE)"),
-                         0, G_MAXSHORT - 1, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "number-of-repeats",
+                                       _("_Number of repeats"),
+                                       _("(animated gif) Number of repeats "
+                                         "(Ignored if 'loop' is TRUE)"),
+                                       0, G_MAXSHORT - 1, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         _("_Delay between frames when unspecified"),
-                         _("(animated gif) Default delay between frames "
-                           "in milliseconds"),
-                         0, G_MAXINT, 100,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-delay",
+                                       _("_Delay between frames when unspecified"),
+                                       _("(animated gif) Default delay between frames "
+                                         "in milliseconds"),
+                                       0, G_MAXINT, 100,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-dispose",
-                         _("Frame disposal _when unspecified"),
-                         _("(animated gif) Default disposal type "
-                           "(0=`don't care`, "
-                           "1=combine, "
-                           "2=replace)"),
-                         0, 2, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-dispose",
+                                       _("Frame disposal _when unspecified"),
+                                       _("(animated gif) Default disposal type "
+                                         "(0=`don't care`, "
+                                         "1=combine, "
+                                         "2=replace)"),
+                                       0, 2, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "as-animation",
-                             _("_As animation"),
-                             _("Export GIF as animation?"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "as-animation",
+                                           _("_As animation"),
+                                           _("Export GIF as animation?"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
-                             _("_Use delay entered above for all frames"),
-                             _("(animated gif) Use specified delay for all frames"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "force-delay",
+                                           _("_Use delay entered above for all frames"),
+                                           _("(animated gif) Use specified delay for all frames"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "force-dispose",
-                             _("Use dis_posal entered above "
-                               "for all frames"),
-                             _("(animated gif) Use specified disposal for all frames"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "force-dispose",
+                                           _("Use dis_posal entered above "
+                                             "for all frames"),
+                                           _("(animated gif) Use specified disposal for all frames"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
-                                 _("Sa_ve comment"),
-                                 _("Save the image comment in the GIF file"),
-                                 gimp_export_comment (),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-comment",
+                                               _("Sa_ve comment"),
+                                               _("Save the image comment in the GIF file"),
+                                               gimp_export_comment (),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
-                                _("Commen_t"),
-                                _("Image comment"),
-                                gimp_get_default_comment (),
-                                G_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "gimp-comment",
+                                              _("Commen_t"),
+                                              _("Image comment"),
+                                              gimp_get_default_comment (),
+                                              G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "gimp-comment",
                                         GIMP_ARGUMENT_SYNC_PARASITE);
@@ -329,7 +329,7 @@ gif_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GList *drawables;  
+      GList *drawables;
 
       /* Create an exportable image based on the export options */
       switch (run_mode)
@@ -360,7 +360,7 @@ gif_export (GimpProcedure        *procedure,
         }
       drawables = gimp_image_list_layers (image);
 
-      if (! export_image (file, image, drawables->data, orig_image, 
+      if (! export_image (file, image, drawables->data, orig_image,
                           G_OBJECT (config), &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -373,7 +373,7 @@ gif_export (GimpProcedure        *procedure,
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
 
-  
+
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

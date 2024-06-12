@@ -200,109 +200,109 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
       /* See bugs #63610 and #61088 for a discussion about the quality
        * settings
        */
-      GIMP_PROC_ARG_DOUBLE (procedure, "quality",
-                            _("_Quality"),
-                            _("Quality of exported image"),
-                            0.0, 1.0, 0.9,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "quality",
+                                          _("_Quality"),
+                                          _("Quality of exported image"),
+                                          0.0, 1.0, 0.9,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "smoothing",
-                            _("S_moothing"),
-                            _("Smoothing factor for exported image"),
-                            0.0, 1.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "smoothing",
+                                          _("S_moothing"),
+                                          _("Smoothing factor for exported image"),
+                                          0.0, 1.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "optimize",
-                             _("Optimi_ze"),
-                             _("Use optimized tables during Huffman coding"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "optimize",
+                                           _("Optimi_ze"),
+                                           _("Use optimized tables during Huffman coding"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "progressive",
-                             _("_Progressive"),
-                             _("Create progressive JPEG images"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "progressive",
+                                           _("_Progressive"),
+                                           _("Create progressive JPEG images"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             _("Export as CM_YK"),
-                             _("Create a CMYK JPEG image using the soft-proofing color profile"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           _("Export as CM_YK"),
+                                           _("Create a CMYK JPEG image using the soft-proofing color profile"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "sub-sampling",
-                            _("Su_bsampling"),
-                            _("Sub-sampling type"),
-                            gimp_choice_new_with_values ("sub-sampling-1x1", JPEG_SUBSAMPLING_1x1_1x1_1x1, _("4:4:4 (best quality)"),               NULL,
-                                                         "sub-sampling-2x1", JPEG_SUBSAMPLING_2x1_1x1_1x1, _("4:2:2 (chroma halved horizontally)"), NULL,
-                                                         "sub-sampling-1x2", JPEG_SUBSAMPLING_1x2_1x1_1x1, _("4:4:0 (chroma halved vertically)"),   NULL,
-                                                         "sub-sampling-2x2", JPEG_SUBSAMPLING_2x2_1x1_1x1, _("4:2:0 (chroma quartered)"),           NULL,
-                                                         NULL),
-                            "sub-sampling-1x1", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "sub-sampling",
+                                          _("Su_bsampling"),
+                                          _("Sub-sampling type"),
+                                          gimp_choice_new_with_values ("sub-sampling-1x1", JPEG_SUBSAMPLING_1x1_1x1_1x1, _("4:4:4 (best quality)"),               NULL,
+                                                                       "sub-sampling-2x1", JPEG_SUBSAMPLING_2x1_1x1_1x1, _("4:2:2 (chroma halved horizontally)"), NULL,
+                                                                       "sub-sampling-1x2", JPEG_SUBSAMPLING_1x2_1x1_1x1, _("4:4:0 (chroma halved vertically)"),   NULL,
+                                                                       "sub-sampling-2x2", JPEG_SUBSAMPLING_2x2_1x1_1x1, _("4:2:0 (chroma quartered)"),           NULL,
+                                                                       NULL),
+                                          "sub-sampling-1x1", G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "baseline",
-                             _("Baseline"),
-                             _("Force creation of a baseline JPEG "
-                               "(non-baseline JPEGs can't be read by all decoders)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "baseline",
+                                           _("Baseline"),
+                                           _("Force creation of a baseline JPEG "
+                                             "(non-baseline JPEGs can't be read by all decoders)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "restart",
-                         _("Inter_val (MCU rows):"),
-                         _("Interval of restart markers "
-                           "(in MCU rows, 0 = no restart markers)"),
-                         0, 64, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "restart",
+                                       _("Inter_val (MCU rows):"),
+                                       _("Interval of restart markers "
+                                         "(in MCU rows, 0 = no restart markers)"),
+                                       0, 64, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "dct",
-                            _("_DCT method"),
-                            _("DCT method to use"),
-                            gimp_choice_new_with_values ("fixed",   1, _("Fast Integer"),    NULL,
-                                                         "integer", 0, _("Integer"),         NULL,
-                                                         "float",   2, _("Floating-Point"),  NULL,
-                                                         NULL),
-                            "integer", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "dct",
+                                          _("_DCT method"),
+                                          _("DCT method to use"),
+                                          gimp_choice_new_with_values ("fixed",   1, _("Fast Integer"),    NULL,
+                                                                       "integer", 0, _("Integer"),         NULL,
+                                                                       "float",   2, _("Floating-Point"),  NULL,
+                                                                       NULL),
+                                          "integer", G_PARAM_READWRITE);
 
       /* Some auxiliary arguments mostly for interactive usage. */
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-original-quality",
-                                 _("_Use quality settings from original image"),
-                                 _("If the original image was loaded from a JPEG "
-                                   "file using non-standard quality settings "
-                                   "(quantization tables), enable this option to "
-                                   "get almost the same quality and file size."),
-                                 FALSE,
-                                 G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT (procedure, "original-quality",
-                             NULL, NULL,
-                             -1, 100, -1,
-                             G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT (procedure, "original-sub-sampling",
-                             NULL, NULL,
-                             JPEG_SUBSAMPLING_2x2_1x1_1x1,
-                             JPEG_SUBSAMPLING_1x2_1x1_1x1,
-                             JPEG_SUBSAMPLING_2x2_1x1_1x1,
-                             G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT (procedure, "original-num-quant-tables",
-                             NULL, NULL,
-                             -1, 4, -1,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "use-original-quality",
+                                               _("_Use quality settings from original image"),
+                                               _("If the original image was loaded from a JPEG "
+                                                 "file using non-standard quality settings "
+                                                 "(quantization tables), enable this option to "
+                                                 "get almost the same quality and file size."),
+                                               FALSE,
+                                               G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "original-quality",
+                                           NULL, NULL,
+                                           -1, 100, -1,
+                                           G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "original-sub-sampling",
+                                           NULL, NULL,
+                                           JPEG_SUBSAMPLING_2x2_1x1_1x1,
+                                           JPEG_SUBSAMPLING_1x2_1x1_1x1,
+                                           JPEG_SUBSAMPLING_2x2_1x1_1x1,
+                                           G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "original-num-quant-tables",
+                                           NULL, NULL,
+                                           -1, 4, -1,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "show-preview",
-                                 _("Sho_w preview in image window"),
-                                 _("Creates a temporary layer with an export preview"),
-                                 FALSE,
-                                 G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-arithmetic-coding",
-                                 _("Use _arithmetic coding"),
-                                 _("Older software may have trouble opening "
-                                   "arithmetic-coded images"),
-                                 FALSE,
-                                 G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-restart",
-                                 _("Use restart mar_kers"),
-                                 NULL, FALSE,
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "show-preview",
+                                               _("Sho_w preview in image window"),
+                                               _("Creates a temporary layer with an export preview"),
+                                               FALSE,
+                                               G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "use-arithmetic-coding",
+                                               _("Use _arithmetic coding"),
+                                               _("Older software may have trouble opening "
+                                                 "arithmetic-coded images"),
+                                               FALSE,
+                                               G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "use-restart",
+                                               _("Use restart mar_kers"),
+                                               NULL, FALSE,
+                                               G_PARAM_READWRITE);
 
       gimp_export_procedure_set_support_exif      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
       gimp_export_procedure_set_support_iptc      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);

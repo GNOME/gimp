@@ -551,11 +551,11 @@ print_temp_proc_install (GimpImage *image)
                                   "Sven Neumann",
                                   "2008");
 
-  GIMP_PROC_ARG_IMAGE (procedure, "image",
-                       "Image",
-                       "The image to notify about",
-                       FALSE,
-                       G_PARAM_READWRITE);
+  gimp_procedure_add_image_argument (procedure, "image",
+                                     "Image",
+                                     "The image to notify about",
+                                     FALSE,
+                                     G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

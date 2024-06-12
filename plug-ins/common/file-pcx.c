@@ -218,12 +218,12 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "January 1997");
 
-      GIMP_PROC_ARG_INT (procedure, "override-palette",
-                         _("Palette Options"),
-                         _("Use built-in palette (0) or override with "
-                           "black/white (1)"),
-                         0, 1, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "override-palette",
+                                       _("Palette Options"),
+                                       _("Use built-in palette (0) or override with "
+                                         "black/white (1)"),
+                                       0, 1, 0,
+                                       G_PARAM_READWRITE);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-pcx");
@@ -249,12 +249,12 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
                                       "Alex S.",
                                       "2023");
 
-      GIMP_PROC_ARG_INT (procedure, "override-palette",
-                         _("Palette Options"),
-                         _("Use built-in palette (0) or override with "
-                           "black/white (1)"),
-                         0, 1, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "override-palette",
+                                       _("Palette Options"),
+                                       _("Use built-in palette (0) or override with "
+                                         "black/white (1)"),
+                                       0, 1, 0,
+                                       G_PARAM_READWRITE);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-dcx");
@@ -274,7 +274,7 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("ZSoft PCX image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Exports files in ZSoft PCX file format",
+                                        _("Exports files in ZSoft PCX file format"),
                                         "FIXME: write help for pcx_export",
                                         name);
       gimp_procedure_set_attribution (procedure,

@@ -170,83 +170,83 @@ html_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "html,htm");
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "use-caption",
-                                 _("Use c_aption"),
-                                 _("Enable if you would like to have the table "
-                                   "captioned."),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "use-caption",
+                                               _("Use c_aption"),
+                                               _("Enable if you would like to have the table "
+                                                 "captioned."),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "caption-text",
-                                _("Capt_ion"),
-                                _("The text for the table caption."),
-                                "Made with GIMP Table Magic",
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "caption-text",
+                                              _("Capt_ion"),
+                                              _("The text for the table caption."),
+                                              "Made with GIMP Table Magic",
+                                              GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "cell-content",
-                                _("Cell con_tent"),
-                                _("The text to go into each cell."),
-                                "&nbsp;",
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "cell-content",
+                                              _("Cell con_tent"),
+                                              _("The text to go into each cell."),
+                                              "&nbsp;",
+                                              GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "cell-width",
-                                _("_Width"),
-                                _("The width for each table cell. "
-                                  "Can be a number or a percent."),
-                                "",
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "cell-width",
+                                              _("_Width"),
+                                              _("The width for each table cell. "
+                                                "Can be a number or a percent."),
+                                              "",
+                                              GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "cell-height",
-                                _("_Height"),
-                                _("The height for each table cell. "
-                                  "Can be a number or a percent."),
-                                "",
-                                GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_aux_argument (procedure, "cell-height",
+                                              _("_Height"),
+                                              _("The height for each table cell. "
+                                                "Can be a number or a percent."),
+                                              "",
+                                              GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "full-document",
-                                 _("_Generate full HTML document"),
-                                 _("If enabled GTM will output a full HTML "
-                                   "document with <HTML>, <BODY>, etc. tags "
-                                   "instead of just the table html."),
-                                 TRUE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "full-document",
+                                               _("_Generate full HTML document"),
+                                               _("If enabled GTM will output a full HTML "
+                                                 "document with <HTML>, <BODY>, etc. tags "
+                                                 "instead of just the table html."),
+                                               TRUE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "border",
-                             _("_Border"),
-                             _("The number of pixels in the table border."),
-                             0, 1000, 2,
-                             GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "border",
+                                           _("_Border"),
+                                           _("The number of pixels in the table border."),
+                                           0, 1000, 2,
+                                           GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "span-tags",
-                                 _("_Use cellspan"),
-                                 _("If enabled GTM will replace any "
-                                   "rectangular sections of identically "
-                                   "colored blocks with one large cell with "
-                                   "ROWSPAN and COLSPAN values."),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "span-tags",
+                                               _("_Use cellspan"),
+                                               _("If enabled GTM will replace any "
+                                                 "rectangular sections of identically "
+                                                 "colored blocks with one large cell with "
+                                                 "ROWSPAN and COLSPAN values."),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "compress-td-tags",
-                                 _("Co_mpress TD tags"),
-                                 _("Enabling this will cause GTM to "
-                                   "leave no whitespace between the TD "
-                                   "tags and the cell content. This is only "
-                                   "necessary for pixel level positioning "
-                                   "control."),
-                                 FALSE,
-                                 GIMP_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "compress-td-tags",
+                                               _("Co_mpress TD tags"),
+                                               _("Enabling this will cause GTM to "
+                                                 "leave no whitespace between the TD "
+                                                 "tags and the cell content. This is only "
+                                                 "necessary for pixel level positioning "
+                                                 "control."),
+                                               FALSE,
+                                               GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "cell-padding",
-                             _("Cell-pa_dding"),
-                             _("The amount of cell padding."),
-                             0, 1000, 4,
-                             GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "cell-padding",
+                                           _("Cell-pa_dding"),
+                                           _("The amount of cell padding."),
+                                           0, 1000, 4,
+                                           GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "cell-spacing",
-                             _("Cell spaci_ng"),
-                             _("The amount of cell spacing."),
-                             0, 1000, 0,
-                             GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "cell-spacing",
+                                           _("Cell spaci_ng"),
+                                           _("The amount of cell spacing."),
+                                           0, 1000, 0,
+                                           GIMP_PARAM_READWRITE);
     }
 
   return procedure;

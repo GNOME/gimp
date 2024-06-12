@@ -182,54 +182,54 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "jxl");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             _("L_ossless"),
-                             _("Use lossless compression"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "lossless",
+                                           _("L_ossless"),
+                                           _("Use lossless compression"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "compression",
-                            _("Co_mpression/maxError"),
-                            _("Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = visually lossless."),
-                            0.1, 15, 1,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "compression",
+                                          _("Co_mpression/maxError"),
+                                          _("Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = visually lossless."),
+                                          0.1, 15, 1,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
-                         _("_Bit depth"),
-                         _("Bit depth of exported image"),
-                         8, 16, 8,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "save-bit-depth",
+                                       _("_Bit depth"),
+                                       _("Bit depth of exported image"),
+                                       8, 16, 8,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "speed",
-                         _("Effort/S_peed"),
-                         _("Encoder effort setting"),
-                         1, 9,
-                         7,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "speed",
+                                       _("Effort/S_peed"),
+                                       _("Encoder effort setting"),
+                                       1, 9,
+                                       7,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "uses-original-profile",
-                             _("Save ori_ginal profile"),
-                             _("Store ICC profile to exported JXL file"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "uses-original-profile",
+                                           _("Save ori_ginal profile"),
+                                           _("Store ICC profile to exported JXL file"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             _("Export as CMY_K"),
-                             _("Create a CMYK JPEG XL image using the soft-proofing color profile"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "cmyk",
+                                           _("Export as CMY_K"),
+                                           _("Create a CMYK JPEG XL image using the soft-proofing color profile"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
-                             _("Save Exi_f"),
-                             _("Toggle saving Exif data"),
-                             gimp_export_exif (),
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-exif",
+                                           _("Save Exi_f"),
+                                           _("Toggle saving Exif data"),
+                                           gimp_export_exif (),
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
-                             _("Save _XMP"),
-                             _("Toggle saving XMP data"),
-                             gimp_export_xmp (),
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-xmp",
+                                           _("Save _XMP"),
+                                           _("Toggle saving XMP data"),
+                                           gimp_export_xmp (),
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

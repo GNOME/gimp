@@ -184,12 +184,12 @@ editor_create_procedure (GimpPlugIn  *plug_in,
                                       "Michael Natterer <mitch@gimp.org>",
                                       "2000");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                       "Run mode",
+                                       "The run mode",
+                                       GIMP_TYPE_RUN_MODE,
+                                       GIMP_RUN_INTERACTIVE,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

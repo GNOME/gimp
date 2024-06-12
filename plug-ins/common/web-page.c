@@ -128,36 +128,36 @@ webpage_create_procedure (GimpPlugIn  *plug_in,
                                       "2011",
                                       "2011");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                        "Run mode",
+                                        "The run mode",
+                                        GIMP_TYPE_RUN_MODE,
+                                        GIMP_RUN_INTERACTIVE,
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "url",
-                            _("Enter location (_URI)"),
-                            _("URL of the webpage to screenshot"),
-                            "https://www.gimp.org/",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "url",
+                                          _("Enter location (_URI)"),
+                                          _("URL of the webpage to screenshot"),
+                                          "https://www.gimp.org/",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "width",
-                         _("_Width (pixels)"),
-                         _("The width of the screenshot (in pixels)"),
-                         100, GIMP_MAX_IMAGE_SIZE, 1024,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "width",
+                                       _("_Width (pixels)"),
+                                       _("The width of the screenshot (in pixels)"),
+                                       100, GIMP_MAX_IMAGE_SIZE, 1024,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "font-size",
-                         _("_Font size"),
-                         _("The font size to use in the page (in pt)"),
-                         1, 1000, 12,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "font-size",
+                                       _("_Font size"),
+                                       _("The font size to use in the page (in pt)"),
+                                       1, 1000, 12,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
-                           "Image",
-                           "The output image",
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "image",
+                                         "Image",
+                                         "The output image",
+                                         FALSE,
+                                         G_PARAM_READWRITE);
     }
 
   return procedure;

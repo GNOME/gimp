@@ -245,12 +245,12 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "j2k,j2c,jpc");
 
-      GIMP_PROC_ARG_INT (procedure, "colorspace",
-                         _("Color s_pace"),
-                         _("Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), "
-                           "CMYK (3), YCbCr (4), xvYCC (5) }"),
-                         0, 5, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "colorspace",
+                                       _("Color s_pace"),
+                                       _("Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), "
+                                         "CMYK (3), YCbCr (4), xvYCC (5) }"),
+                                       0, 5, 0,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -251,55 +251,55 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "heif,heic");
 
-      GIMP_PROC_ARG_INT (procedure, "quality",
-                         _("_Quality"),
-                         _("Quality factor (0 = worst, 100 = best)"),
-                         0, 100, 50,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "quality",
+                                       _("_Quality"),
+                                       _("Quality factor (0 = worst, 100 = best)"),
+                                       0, 100, 50,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             _("L_ossless"),
-                             _("Use lossless compression"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "lossless",
+                                           _("L_ossless"),
+                                           _("Use lossless compression"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 _("Save color prof_ile"),
-                                 _("Save the image's color profile"),
-                                 gimp_export_color_profile (),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
+                                               _("Save color prof_ile"),
+                                               _("Save the image's color profile"),
+                                               gimp_export_color_profile (),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
-                         _("_Bit depth"),
-                         _("Bit depth of exported image"),
-                         8, 12, 8,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "save-bit-depth",
+                                       _("_Bit depth"),
+                                       _("Bit depth of exported image"),
+                                       8, 12, 8,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "pixel-format",
-                         _("_Pixel format"),
-                         _("Format of color sub-sampling"),
-                         HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                         HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "pixel-format",
+                                       _("_Pixel format"),
+                                       _("Format of color sub-sampling"),
+                                       HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                                       HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "encoder-speed",
-                         _("Enco_der speed"),
-                         _("Tradeoff between speed and compression"),
-                         HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
-                         HEIFPLUGIN_ENCODER_SPEED_BALANCED,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "encoder-speed",
+                                       _("Enco_der speed"),
+                                       _("Tradeoff between speed and compression"),
+                                       HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
+                                       HEIFPLUGIN_ENCODER_SPEED_BALANCED,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
-                             _("Save Exi_f"),
-                             _("Toggle saving Exif data"),
-                             gimp_export_exif (),
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-exif",
+                                           _("Save Exi_f"),
+                                           _("Toggle saving Exif data"),
+                                           gimp_export_exif (),
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
-                             _("Save _XMP"),
-                             _("Toggle saving XMP data"),
-                             gimp_export_xmp (),
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-xmp",
+                                           _("Save _XMP"),
+                                           _("Toggle saving XMP data"),
+                                           gimp_export_xmp (),
+                                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_PROC_AV1))
     {
@@ -361,55 +361,55 @@ heif_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
 
-      GIMP_PROC_ARG_INT (procedure, "quality",
-                         _("_Quality"),
-                         _("Quality factor (0 = worst, 100 = best)"),
-                         0, 100, 50,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "quality",
+                                       _("_Quality"),
+                                       _("Quality factor (0 = worst, 100 = best)"),
+                                       0, 100, 50,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             _("L_ossless"),
-                             _("Use lossless compression"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "lossless",
+                                           _("L_ossless"),
+                                           _("Use lossless compression"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
-                                 _("Save color prof_ile"),
-                                 _("Save the image's color profile"),
-                                 gimp_export_color_profile (),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
+                                               _("Save color prof_ile"),
+                                               _("Save the image's color profile"),
+                                               gimp_export_color_profile (),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
-                         _("_Bit depth"),
-                         _("Bit depth of exported image"),
-                         8, 12, 8,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "save-bit-depth",
+                                       _("_Bit depth"),
+                                       _("Bit depth of exported image"),
+                                       8, 12, 8,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "pixel-format",
-                         _("_Pixel format"),
-                         _("Format of color sub-sampling"),
-                         HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                         HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "pixel-format",
+                                       _("_Pixel format"),
+                                       _("Format of color sub-sampling"),
+                                       HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                                       HEIFPLUGIN_EXPORT_FORMAT_YUV420,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "encoder-speed",
-                         _("Enco_der speed"),
-                         _("Tradeoff between speed and compression"),
-                         HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
-                         HEIFPLUGIN_ENCODER_SPEED_BALANCED,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "encoder-speed",
+                                       _("Enco_der speed"),
+                                       _("Tradeoff between speed and compression"),
+                                       HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
+                                       HEIFPLUGIN_ENCODER_SPEED_BALANCED,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
-                             _("Save Exi_f"),
-                             _("Toggle saving Exif data"),
-                             gimp_export_exif (),
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-exif",
+                                           _("Save Exi_f"),
+                                           _("Toggle saving Exif data"),
+                                           gimp_export_exif (),
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
-                             _("Save _XMP"),
-                             _("Toggle saving XMP data"),
-                             gimp_export_xmp (),
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-xmp",
+                                           _("Save _XMP"),
+                                           _("Toggle saving XMP data"),
+                                           gimp_export_xmp (),
+                                           G_PARAM_READWRITE);
     }
 #if LIBHEIF_HAVE_VERSION(1,17,0)
   else if (! strcmp (name, LOAD_PROC_HEJ2))

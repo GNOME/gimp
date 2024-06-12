@@ -532,16 +532,16 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "Shuji Narazaki",
                                       "1997");
 
-      GIMP_PROC_ARG_FILE (procedure, "parameter-file",
-                          _("Parameter File"),
-                          _("The parameter file from which CML_explorer makes an image. "
-                            "This argument is only used in non-interactive runs."),
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "parameter-file",
+                                        _("Parameter File"),
+                                        _("The parameter file from which CML_explorer makes an image. "
+                                          "This argument is only used in non-interactive runs."),
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
-                               "Settings data",
-                               "TODO: eventually we must implement proper args for every settings",
-                               GIMP_PARAM_READWRITE);
+      gimp_procedure_add_bytes_aux_argument (procedure, "settings-data",
+                                             "Settings data",
+                                             "TODO: eventually we must implement proper args for every settings",
+                                             GIMP_PARAM_READWRITE);
     }
 
   return procedure;

@@ -125,17 +125,17 @@ guillotine_create_procedure (GimpPlugIn  *plug_in,
                                       "Adam D. Moss (adam@foxbox.org)",
                                       "1998");
 
-      GIMP_PROC_VAL_INT (procedure, "image-count",
-                         "Number of images created",
-                         "Number of images created",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_return_value (procedure, "image-count",
+                                           "Number of images created",
+                                           "Number of images created",
+                                           0, G_MAXINT, 0,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_OBJECT_ARRAY (procedure, "images",
-                                  "Output images",
-                                  "Output images",
-                                  GIMP_TYPE_IMAGE,
-                                  G_PARAM_READWRITE);
+      gimp_procedure_add_object_array_return_value (procedure, "images",
+                                                    "Output images",
+                                                    "Output images",
+                                                    GIMP_TYPE_IMAGE,
+                                                    G_PARAM_READWRITE);
     }
 
   return procedure;

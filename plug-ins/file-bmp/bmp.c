@@ -194,27 +194,27 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "bmp");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-rle",
-                             _("Ru_n-Length Encoded"),
-                             _("Use run-length-encoding compression "
-                               "(only valid for 4 and 8-bit indexed images)"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "use-rle",
+                                           _("Ru_n-Length Encoded"),
+                                           _("Use run-length-encoding compression "
+                                             "(only valid for 4 and 8-bit indexed images)"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "write-color-space",
-                             _("_Write color space information"),
-                             _("Whether or not to write BITMAPV5HEADER "
-                               "color space data"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "write-color-space",
+                                           _("_Write color space information"),
+                                           _("Whether or not to write BITMAPV5HEADER "
+                                             "color space data"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "rgb-format",
-                         _("R_GB format"),
-                         _("Export format for RGB images "
-                           "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
-                           "4=RGBA_8888, 5=RGBX_8888)"),
-                         0, 5, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "rgb-format",
+                                       _("R_GB format"),
+                                       _("Export format for RGB images "
+                                         "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
+                                         "4=RGBA_8888, 5=RGBX_8888)"),
+                                       0, 5, 3,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

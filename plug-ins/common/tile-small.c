@@ -281,11 +281,11 @@ tile_create_procedure (GimpPlugIn  *plug_in,
                                       "Andy Thomas",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "num-tiles",
-                         _("_n²"),
-                         _("Number of tiles to make"),
-                         2, MAX_SEGS, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "num-tiles",
+                                       _("_n²"),
+                                       _("Number of tiles to make"),
+                                       2, MAX_SEGS, 2,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

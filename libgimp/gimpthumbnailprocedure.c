@@ -82,47 +82,47 @@ gimp_thumbnail_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_FILE (procedure, "file",
-                      "File",
-                      "The file to load the thumbnail from",
-                      GIMP_PARAM_READWRITE);
+  gimp_procedure_add_file_argument (procedure, "file",
+                                    "File",
+                                    "The file to load the thumbnail from",
+                                    GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "thumb-size",
-                     "Thumb Size",
-                     "Preferred thumbnail size",
-                     16, 2014, 256,
-                     GIMP_PARAM_READWRITE);
+  gimp_procedure_add_int_argument (procedure, "thumb-size",
+                                   "Thumb Size",
+                                   "Preferred thumbnail size",
+                                   16, 2014, 256,
+                                   GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_IMAGE (procedure, "image",
-                       "Image",
-                       "Thumbnail image",
-                       TRUE,
-                       GIMP_PARAM_READWRITE);
+  gimp_procedure_add_image_return_value (procedure, "image",
+                                         "Image",
+                                         "Thumbnail image",
+                                         TRUE,
+                                         GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_INT (procedure, "image-width",
-                     "Image width",
-                     "Width of the full-sized image (0 for unknown)",
-                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                     GIMP_PARAM_READWRITE);
+  gimp_procedure_add_int_return_value (procedure, "image-width",
+                                       "Image width",
+                                       "Width of the full-sized image (0 for unknown)",
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_INT (procedure, "image-height",
-                     "Image height",
-                     "Height of the full-sized image (0 for unknown)",
-                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                     GIMP_PARAM_READWRITE);
+  gimp_procedure_add_int_return_value (procedure, "image-height",
+                                       "Image height",
+                                       "Height of the full-sized image (0 for unknown)",
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_ENUM (procedure, "image-type",
-                      "Image type",
-                      "Type of the image",
-                      GIMP_TYPE_IMAGE_TYPE,
-                      GIMP_RGB_IMAGE,
-                      GIMP_PARAM_READWRITE);
+  gimp_procedure_add_enum_return_value (procedure, "image-type",
+                                        "Image type",
+                                        "Type of the image",
+                                        GIMP_TYPE_IMAGE_TYPE,
+                                        GIMP_RGB_IMAGE,
+                                        GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_INT (procedure, "num-layers",
-                     "Num layers",
-                     "Number of layers in the image",
-                     1, G_MAXINT, 1,
-                     GIMP_PARAM_READWRITE);
+  gimp_procedure_add_int_return_value (procedure, "num-layers",
+                                       "Num layers",
+                                       "Number of layers in the image",
+                                       1, G_MAXINT, 1,
+                                       GIMP_PARAM_READWRITE);
 }
 
 static void

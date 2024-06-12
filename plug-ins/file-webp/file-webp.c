@@ -165,76 +165,76 @@ webp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "webp");
 
-      GIMP_PROC_ARG_INT (procedure, "preset",
-                         _("Source _type"),
-                         _("WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
-                           "Icon=4, Text=5)"),
-                         0, 5, WEBP_PRESET_DEFAULT,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "preset",
+                                       _("Source _type"),
+                                       _("WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
+                                         "Icon=4, Text=5)"),
+                                       0, 5, WEBP_PRESET_DEFAULT,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             _("L_ossless"),
-                             _("Use lossless encoding"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "lossless",
+                                           _("L_ossless"),
+                                           _("Use lossless encoding"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "quality",
-                            _("Image _quality"),
-                            _("Quality of the image"),
-                            0, 100, 90,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "quality",
+                                          _("Image _quality"),
+                                          _("Quality of the image"),
+                                          0, 100, 90,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "alpha-quality",
-                            _("Alpha q_uality"),
-                            _("Quality of the image's alpha channel"),
-                            0, 100, 100,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "alpha-quality",
+                                          _("Alpha q_uality"),
+                                          _("Quality of the image's alpha channel"),
+                                          0, 100, 100,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-sharp-yuv",
-                             _("Use Sharp YU_V"),
-                             /* TRANSLATORS: \xe2\x86\x92 is a Unicode
-                              * "Rightward Arrow" in UTF-8 encoding.
-                              */
-                             _("Use sharper (but slower) RGB\xe2\x86\x92YUV conversion"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "use-sharp-yuv",
+                                           _("Use Sharp YU_V"),
+                                           /* TRANSLATORS: \xe2\x86\x92 is a Unicode
+                                            * "Rightward Arrow" in UTF-8 encoding.
+                                            */
+                                           _("Use sharper (but slower) RGB\xe2\x86\x92YUV conversion"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "animation-loop",
-                             _("Loop _forever"),
-                             _("Loop animation infinitely"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "animation-loop",
+                                           _("Loop _forever"),
+                                           _("Loop animation infinitely"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "minimize-size",
-                             _("_Minimize output size (slower)"),
-                             _("Minimize output file size"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "minimize-size",
+                                           _("_Minimize output size (slower)"),
+                                           _("Minimize output file size"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "keyframe-distance",
-                         _("Max distance between _key-frames"),
-                         _("Maximum distance between keyframes"),
-                         0, G_MAXINT, 50,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "keyframe-distance",
+                                       _("Max distance between _key-frames"),
+                                       _("Maximum distance between keyframes"),
+                                       0, G_MAXINT, 50,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         _("_Default delay between frames"),
-                         _("Default delay (in milliseconds) to use when timestamps"
-                           " for frames are not available or forced."),
-                         0, G_MAXINT, 200,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-delay",
+                                       _("_Default delay between frames"),
+                                       _("Default delay (in milliseconds) to use when timestamps"
+                                         " for frames are not available or forced."),
+                                       0, G_MAXINT, 200,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
-                             _("Use default dela_y for all frames"),
-                             _("Force default delay on all frames"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "force-delay",
+                                           _("Use default dela_y for all frames"),
+                                           _("Force default delay on all frames"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "animation",
-                             _("Save a_nimation"),
-                             _("Use layers for animation"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "animation",
+                                           _("Save a_nimation"),
+                                           _("Use layers for animation"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
       gimp_export_procedure_set_support_exif      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
       gimp_export_procedure_set_support_iptc      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);

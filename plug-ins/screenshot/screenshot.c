@@ -153,56 +153,56 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_icon_pixbuf (procedure,
                                       gdk_pixbuf_new_from_resource ("/org/gimp/screenshot-icons/screenshot-icon.png", NULL));
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_NONINTERACTIVE,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                        "Run mode",
+                                        "The run mode",
+                                        GIMP_TYPE_RUN_MODE,
+                                        GIMP_RUN_NONINTERACTIVE,
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "shoot-type",
-                         _("Shoot _area"),
-                         _("The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
-                         "SHOOT-REGION (2) }"),
-                         0, 2, SHOOT_WINDOW,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "shoot-type",
+                                       _("Shoot _area"),
+                                       _("The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
+                                       "SHOOT-REGION (2) }"),
+                                       0, 2, SHOOT_WINDOW,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "x1",
-                         "X1",
-                         "Region left x coord for SHOOT-WINDOW",
-                         G_MININT, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "x1",
+                                       "X1",
+                                       "Region left x coord for SHOOT-WINDOW",
+                                       G_MININT, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "y1",
-                         "Y1",
-                         "Region top y coord for SHOOT-WINDOW",
-                         G_MININT, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "y1",
+                                       "Y1",
+                                       "Region top y coord for SHOOT-WINDOW",
+                                       G_MININT, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "x2",
-                         "X2",
-                         "Region right x coord for SHOOT-WINDOW",
-                         G_MININT, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "x2",
+                                       "X2",
+                                       "Region right x coord for SHOOT-WINDOW",
+                                       G_MININT, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "y2",
-                         "Y2",
-                         "Region bottom y coord for SHOOT-WINDOW",
-                         G_MININT, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "y2",
+                                       "Y2",
+                                       "Region bottom y coord for SHOOT-WINDOW",
+                                       G_MININT, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "include-pointer",
-                             _("Include _mouse pointer"),
-                             _("Your pointing device's cursor will be part of the image"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "include-pointer",
+                                           _("Include _mouse pointer"),
+                                           _("Your pointing device's cursor will be part of the image"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
       /* Since no backends allow window screenshot non-interactively so far, no
        * need to expose this argument to the API.
        */
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "include-decoration",
-                                 _("Include window _decoration"),
-                                 _("Title bar, window borders and shadow will be part of the image"),
+      gimp_procedure_add_boolean_aux_argument (procedure, "include-decoration",
+                                               _("Include window _decoration"),
+                                               _("Title bar, window borders and shadow will be part of the image"),
 #ifdef PLATFORM_OSX
                                  /* on OS X, this just means shoot the shadow, default to nope */
                                  FALSE,
@@ -210,28 +210,28 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                  TRUE,
 #endif
                                  G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT     (procedure, "selection-delay",
-                                 _("Selection d_elay"),
-                                 _("Delay before selection of the window or the region"),
-                                 0, 20, 0,
-                                 G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT     (procedure, "screenshot-delay",
-                                 _("Screenshot dela_y"),
-                                 _("Delay before snapping the screenshot"),
-                                 0, 20, 0,
-                                 G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_INT     (procedure, "color-profile",
-                                 _("Color _Profile"),
-                                 "{ SCREENSHOT_PROFILE_POLICY_MONITOR, (0), "
-                                 "SCREENSHOT_PROFILE_POLICY_MONITOR, (1) } ",
-                                 0, 1, SCREENSHOT_PROFILE_POLICY_MONITOR,
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument     (procedure, "selection-delay",
+                                               _("Selection d_elay"),
+                                               _("Delay before selection of the window or the region"),
+                                               0, 20, 0,
+                                               G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument     (procedure, "screenshot-delay",
+                                               _("Screenshot dela_y"),
+                                               _("Delay before snapping the screenshot"),
+                                               0, 20, 0,
+                                               G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument     (procedure, "color-profile",
+                                               _("Color _Profile"),
+                                               "{ SCREENSHOT_PROFILE_POLICY_MONITOR, (0), "
+                                               "SCREENSHOT_PROFILE_POLICY_MONITOR, (1) } ",
+                                               0, 1, SCREENSHOT_PROFILE_POLICY_MONITOR,
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
-                           "Image",
-                           "Output image",
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "image",
+                                             "Image",
+                                             "Output image",
+                                             FALSE,
+                                             G_PARAM_READWRITE);
     }
 
   return procedure;

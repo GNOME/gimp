@@ -153,10 +153,10 @@ cel_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,KiSS\\040");
 
-      GIMP_PROC_ARG_FILE (procedure, "palette-file",
-                          _("_Palette file"),
-                          _("KCF file to load palette from"),
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "palette-file",
+                                        _("_Palette file"),
+                                        _("KCF file to load palette from"),
+                                        G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -183,10 +183,10 @@ cel_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cel");
 
-      GIMP_PROC_ARG_FILE (procedure, "palette-file",
-                          "Palette file",
-                          "File to save palette to",
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "palette-file",
+                                        _("_Palette file"),
+                                        _("File to save palette to"),
+                                        G_PARAM_READWRITE);
     }
 
   return procedure;

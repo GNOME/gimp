@@ -184,14 +184,14 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,<?xml,0,string,<svg");
 
-      GIMP_PROC_ARG_CHOICE (procedure, "paths",
-                            _("_Paths"),
-                            _("Whether and how to import paths so that they can be used with the path tool"),
-                            gimp_choice_new_with_values ("no-import",     0, _("Don't import paths"),        NULL,
-                                                         "import",        0, _("Import paths individually"), NULL,
-                                                         "import-merged", 0, _("Merge imported paths"),      NULL,
-                                                         NULL),
-                            "no-import", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "paths",
+                                          _("_Paths"),
+                                          _("Whether and how to import paths so that they can be used with the path tool"),
+                                          gimp_choice_new_with_values ("no-import",     0, _("Don't import paths"),        NULL,
+                                                                       "import",        0, _("Import paths individually"), NULL,
+                                                                       "import-merged", 0, _("Merge imported paths"),      NULL,
+                                                                       NULL),
+                                          "no-import", G_PARAM_READWRITE);
     }
 
   return procedure;

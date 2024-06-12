@@ -133,23 +133,23 @@ checkerboard_create_procedure (GimpPlugIn  *plug_in,
                                       "Brent Burton & the Edward Blevins",
                                       "1997");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "psychobily",
-                             _("_Psychobilly"),
-                             _("Render a psychobilly checkerboard"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "psychobilly",
+                                           _("_Psychobilly"),
+                                           _("Render a psychobilly checkerboard"),
+                                           FALSE,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "check-size",
-                         _("_Size"),
-                         _("Size of the checks"),
-                         1, GIMP_MAX_IMAGE_SIZE, 10,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "check-size",
+                                       _("_Size"),
+                                       _("Size of the checks"),
+                                       1, GIMP_MAX_IMAGE_SIZE, 10,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_UNIT (procedure, "check-size-unit",
-                              _("Check size unit of measure"),
-                              _("Check size unit of measure"),
-                              TRUE, TRUE, GIMP_UNIT_PIXEL,
-                              GIMP_PARAM_READWRITE);
+      gimp_procedure_add_unit_aux_argument (procedure, "check-size-unit",
+                                            _("Check size unit of measure"),
+                                            _("Check size unit of measure"),
+                                            TRUE, TRUE, GIMP_UNIT_PIXEL,
+                                            GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -266,8 +266,8 @@ do_checkerboard_pattern (GObject      *config,
 
   if (config)
     g_object_get (config,
-                  "check-size", &size,
-                  "psychobily", &mode,
+                  "check-size",  &size,
+                  "psychobilly", &mode,
                   NULL);
 
   color = gimp_context_get_background ();
@@ -511,7 +511,7 @@ checkerboard_dialog (GimpProcedure *procedure,
                                          1.0, size);
 
   toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                             "psychobily",
+                                             "psychobilly",
                                              GTK_TYPE_CHECK_BUTTON);
   gtk_widget_set_margin_bottom (toggle, 12);
 
@@ -528,7 +528,7 @@ checkerboard_dialog (GimpProcedure *procedure,
                             preview);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "preview", "check-size", "psychobily",
+                              "preview", "check-size", "psychobilly",
                               NULL);
 
   gtk_widget_show (dialog);

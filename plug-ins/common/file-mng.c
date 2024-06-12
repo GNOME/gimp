@@ -272,82 +272,82 @@ mng_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "mng");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
-                             _("_Interlace"),
-                             _("Use interlacing"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "interlaced",
+                                           _("_Interlace"),
+                                           _("Use interlacing"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "png-compression",
-                         _("_PNG compression level"),
-                         _("PNG compression level, choose a high compression "
-                           "level for small file size"),
-                         0, 9, 9,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "png-compression",
+                                       _("_PNG compression level"),
+                                       _("PNG compression level, choose a high compression "
+                                         "level for small file size"),
+                                       0, 9, 9,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-quality",
-                            _("JPEG compression _quality"),
-                            _("JPEG quality factor"),
-                            0, 1, 0.75,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "jpeg-quality",
+                                          _("JPEG compression _quality"),
+                                          _("JPEG quality factor"),
+                                          0, 1, 0.75,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "jpeg-smoothing",
-                            _("_JPEG smoothing factor"),
-                            _("JPEG smoothing factor"),
-                            0, 1, 0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "jpeg-smoothing",
+                                          _("_JPEG smoothing factor"),
+                                          _("JPEG smoothing factor"),
+                                          0, 1, 0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
-                             _("L_oop"),
-                             _("(ANIMATED MNG) Loop infinitely"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "loop",
+                                           _("L_oop"),
+                                           _("(ANIMATED MNG) Loop infinitely"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         _("Default fra_me delay"),
-                         _("(ANIMATED MNG) Default delay between frames in "
-                           "milliseconds"),
-                         1, G_MAXINT, 100,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-delay",
+                                       _("Default fra_me delay"),
+                                       _("(ANIMATED MNG) Default delay between frames in "
+                                         "milliseconds"),
+                                       1, G_MAXINT, 100,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-chunks",
-                         _("Default chunks t_ype"),
-                         _("(ANIMATED MNG) Default chunks type "
-                           "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
-                           "2 = All PNG; 3 = All JNG)"),
-                         0, 3, CHUNKS_PNG_D,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-chunks",
+                                       _("Default chunks t_ype"),
+                                       _("(ANIMATED MNG) Default chunks type "
+                                         "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
+                                         "2 = All PNG; 3 = All JNG)"),
+                                       0, 3, CHUNKS_PNG_D,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-dispose",
-                         _("De_fault frame disposal"),
-                         _("(ANIMATED MNG) Default dispose type "
-                           "(0 = combine; 1 = replace)"),
-                         0, 1, DISPOSE_COMBINE,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-dispose",
+                                       _("De_fault frame disposal"),
+                                       _("(ANIMATED MNG) Default dispose type "
+                                         "(0 = combine; 1 = replace)"),
+                                       0, 1, DISPOSE_COMBINE,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
-                             _("Save _background color"),
-                             _("Write bKGd (background color) chunk"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "bkgd",
+                                           _("Save _background color"),
+                                           _("Write bKGd (background color) chunk"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
-                             _("Save _gamma"),
-                             _("Write gAMA (gamma) chunk"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "gama",
+                                           _("Save _gamma"),
+                                           _("Write gAMA (gamma) chunk"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
-                             _("Sa_ve resolution"),
-                             _("Write pHYs (image resolution) chunk"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "phys",
+                                           _("Sa_ve resolution"),
+                                           _("Write pHYs (image resolution) chunk"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "time",
-                             _("Save creation _time"),
-                             _("Write tIME (creation time) chunk"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "time",
+                                           _("Save creation _time"),
+                                           _("Write tIME (creation time) chunk"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

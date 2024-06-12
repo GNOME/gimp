@@ -110,31 +110,31 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
                                   "Spencer Kimball & Peter Mattis",
                                   "1997");
 
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                      "Run mode",
-                      "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_INTERACTIVE,
-                      G_PARAM_READWRITE);
+  gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                    "Run mode",
+                                    "The run mode",
+                                    GIMP_TYPE_RUN_MODE,
+                                    GIMP_RUN_INTERACTIVE,
+                                    G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "ip",
-                        "IP",
-                        "The IP on which to listen for requests",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "ip",
+                                      "IP",
+                                      "The IP on which to listen for requests",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "port",
-                     "Port",
-                     "The port on which to listen for requests",
-                     0, G_MAXINT, 0,
-                     G_PARAM_READWRITE);
+  gimp_procedure_add_int_argument (procedure, "port",
+                                   "Port",
+                                   "The port on which to listen for requests",
+                                   0, G_MAXINT, 0,
+                                   G_PARAM_READWRITE);
 
-  /* FUTURE: GIMP_PROC_ARG_FILE, but little benefit, need change script-fu-server.c */
-  GIMP_PROC_ARG_STRING (procedure, "logfile",
-                        "Log File",
-                        "The file to log activity to",
-                        NULL,
-                        G_PARAM_READWRITE);
+  /* FUTURE: gimp_procedure_add_file_argument, but little benefit, need change script-fu-server.c */
+  gimp_procedure_add_string_argument (procedure, "logfile",
+                                      "Log File",
+                                      "The file to log activity to",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
   return procedure;
 }

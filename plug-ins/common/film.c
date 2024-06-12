@@ -196,114 +196,114 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "film-height",
-                         _("Film _height"),
-                         _("Height of film (0: fit to images)"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "film-height",
+                                       _("Film _height"),
+                                       _("Height of film (0: fit to images)"),
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_COLOR (procedure, "film-color",
-                           _("_Film color"),
-                           _("Color of the film"),
-                           TRUE, default_film_color,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_argument (procedure, "film-color",
+                                         _("_Film color"),
+                                         _("Color of the film"),
+                                         TRUE, default_film_color,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "number-start",
-                         _("Start _index"),
-                         _("Start index for numbering"),
-                         0, G_MAXINT, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "number-start",
+                                       _("Start _index"),
+                                       _("Start index for numbering"),
+                                       0, G_MAXINT, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_FONT (procedure, "number-font",
-                          _("Number _font"),
-                          _("Font for drawing numbers"),
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_font_argument (procedure, "number-font",
+                                        _("Number _font"),
+                                        _("Font for drawing numbers"),
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_COLOR (procedure, "number-color",
-                           _("_Number color"),
-                           _("Color for numbers"),
-                           TRUE, default_number_color,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_argument (procedure, "number-color",
+                                         _("_Number color"),
+                                         _("Color for numbers"),
+                                         TRUE, default_number_color,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "at-top",
-                             _("At _top"),
-                             _("Draw numbers at top"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "at-top",
+                                           _("At _top"),
+                                           _("Draw numbers at top"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "at-bottom",
-                             _("At _bottom"),
-                             _("Draw numbers at bottom"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "at-bottom",
+                                           _("At _bottom"),
+                                           _("Draw numbers at bottom"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
       /* Arguments ignored in interactive mode. */
 
-      GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "images",
-                                  "Images",
-                                  "Images to be used for film",
-                                  GIMP_TYPE_IMAGE,
-                                  G_PARAM_READWRITE);
+      gimp_procedure_add_object_array_argument (procedure, "images",
+                                                "Images",
+                                                "Images to be used for film",
+                                                GIMP_TYPE_IMAGE,
+                                                G_PARAM_READWRITE);
 
       /* The more specific settings. */
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "picture-height",
-                            _("Image _height"),
-                            _("As fraction of the strip height"),
-                            0.0, 1.0, 0.695,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "picture-height",
+                                          _("Image _height"),
+                                          _("As fraction of the strip height"),
+                                          0.0, 1.0, 0.695,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "picture-spacing",
-                            _("Image s_pacing"),
-                            _("The spacing between 2 images, as fraction of the strip height"),
-                            0.0, 1.0, 0.040,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "picture-spacing",
+                                          _("Image s_pacing"),
+                                          _("The spacing between 2 images, as fraction of the strip height"),
+                                          0.0, 1.0, 0.040,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "hole-offset",
-                            _("Hole offse_t"),
-                            _("The offset from the edge of film, as fraction of the strip height"),
-                            0.0, 1.0, 0.058,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "hole-offset",
+                                          _("Hole offse_t"),
+                                          _("The offset from the edge of film, as fraction of the strip height"),
+                                          0.0, 1.0, 0.058,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "hole-width",
-                            _("Hole _width"),
-                            _("The width of the holes, as fraction of the strip height"),
-                            0.0, 1.0, 0.052,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "hole-width",
+                                          _("Hole _width"),
+                                          _("The width of the holes, as fraction of the strip height"),
+                                          0.0, 1.0, 0.052,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "hole-height",
-                            _("Hole hei_ght"),
-                            _("The height of the holes, as fraction of the strip height"),
-                            0.0, 1.0, 0.081,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "hole-height",
+                                          _("Hole hei_ght"),
+                                          _("The height of the holes, as fraction of the strip height"),
+                                          0.0, 1.0, 0.081,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "hole-spacing",
-                            _("Hole _distance"),
-                            _("The distance between holes, as fraction of the strip height"),
-                            0.0, 1.0, 0.081,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "hole-spacing",
+                                          _("Hole _distance"),
+                                          _("The distance between holes, as fraction of the strip height"),
+                                          0.0, 1.0, 0.081,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "number-height",
-                            _("_Number height"),
-                            _("The height of drawn numbers, as fraction of the strip height"),
-                            0.0, 1.0, 0.052,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "number-height",
+                                          _("_Number height"),
+                                          _("The height of drawn numbers, as fraction of the strip height"),
+                                          0.0, 1.0, 0.052,
+                                          G_PARAM_READWRITE);
 
       /* Auxiliary argument mostly for the GUI. */
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "keep-height",
-                                 _("F_it height to images"),
-                                 _("Keep maximum image height"),
-                                 TRUE,
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_aux_argument (procedure, "keep-height",
+                                               _("F_it height to images"),
+                                               _("Keep maximum image height"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
 
       /* Returned image. */
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
-                           "New image",
-                           "Output image",
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "new-image",
+                                             "New image",
+                                             "Output image",
+                                             FALSE,
+                                             G_PARAM_READWRITE);
     }
 
   g_object_unref (default_film_color);

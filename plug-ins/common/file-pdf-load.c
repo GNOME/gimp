@@ -222,42 +222,42 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
 
-      GIMP_PROC_ARG_STRING (procedure, "password",
-                            _("PDF password"),
-                            _("The password to decrypt the encrypted PDF file"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "password",
+                                          _("PDF password"),
+                                          _("The password to decrypt the encrypted PDF file"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
-                             _("Load in re_verse order"),
-                             _("Load PDF pages in reverse order"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "reverse-order",
+                                           _("Load in re_verse order"),
+                                           _("Load PDF pages in reverse order"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      /* FIXME: this should be a GIMP_PROC_ARG_ENUM of type
+      /* FIXME: this should be a gimp_procedure_add_enum_argument () of type
        * GIMP_TYPE_PAGE_SELECTOR_TARGET but it won't work right now (see FIXME
        * comment in libgimp/gimpgpparams-body.c:116).
 
-      GIMP_PROC_ARG_ENUM (procedure, "target",
-                          _("Open pages as"),
-                          _("Number of pages to load (0 for all)"),
-                          GIMP_TYPE_PAGE_SELECTOR_TARGET,
-                          GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "target",
+                                        _("Open pages as"),
+                                        _("Number of pages to load (0 for all)"),
+                                        GIMP_TYPE_PAGE_SELECTOR_TARGET,
+                                        GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                                        G_PARAM_READWRITE);
 
        */
-      GIMP_PROC_AUX_ARG_INT (procedure, "target",
-                             _("Open pages as"),
-                             _("Number of pages to load (0 for all)"),
-                             GIMP_PAGE_SELECTOR_TARGET_LAYERS, GIMP_PAGE_SELECTOR_TARGET_IMAGES,
-                             GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "target",
+                                           _("Open pages as"),
+                                           _("Number of pages to load (0 for all)"),
+                                           GIMP_PAGE_SELECTOR_TARGET_LAYERS, GIMP_PAGE_SELECTOR_TARGET_IMAGES,
+                                           GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-pages",
-                         _("N pages"),
-                         _("Number of pages to load (0 for all)"),
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "n-pages",
+                                       _("N pages"),
+                                       _("Number of pages to load (0 for all)"),
+                                       0, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
       /* FIXME: shouldn't the whole selector be considered as one argument
        * containing properties "target", "n-pages" and "pages" as a single
@@ -266,22 +266,22 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
        * some settings generally, not sure that the list of page makes sense
        * from one PDF document loaded to another (different) one.
        */
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "pages",
-                                 _("Pages"),
-                                 _("The pages to load in the expected order"),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_argument (procedure, "pages",
+                                               _("Pages"),
+                                               _("The pages to load in the expected order"),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "antialias",
-                             _("Use _Anti-aliasing"),
-                             _("Render texts with anti-aliasing"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "antialias",
+                                           _("Use _Anti-aliasing"),
+                                           _("Render texts with anti-aliasing"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "white-background",
-                             _("_Fill transparent areas with white"),
-                             _("Render all pages as opaque by filling the background in white"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "white-background",
+                                           _("_Fill transparent areas with white"),
+                                           _("Render all pages as opaque by filling the background in white"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {

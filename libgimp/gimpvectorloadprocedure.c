@@ -107,45 +107,45 @@ gimp_vector_load_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_INT (procedure, "width",
-                     _("_Width (pixels)"),
-                     "Width (in pixels) to load the image in. "
-                     "(0 for the corresponding width per native ratio)",
-                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                     GIMP_PARAM_READWRITE);
+  gimp_procedure_add_int_argument (procedure, "width",
+                                   _("_Width (pixels)"),
+                                     "Width (in pixels) to load the image in. "
+                                     "(0 for the corresponding width per native ratio)",
+                                   0, GIMP_MAX_IMAGE_SIZE, 0,
+                                   GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "height",
-                     _("_Height (pixels)"),
-                     "Height (in pixels) to load the image in. "
-                     "(0 for the corresponding height per native ratio)",
-                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                     GIMP_PARAM_READWRITE);
+  gimp_procedure_add_int_argument (procedure, "height",
+                                   _("_Height (pixels)"),
+                                     "Height (in pixels) to load the image in. "
+                                     "(0 for the corresponding height per native ratio)",
+                                   0, GIMP_MAX_IMAGE_SIZE, 0,
+                                   GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_BOOLEAN (procedure, "keep-ratio",
-                         _("_Keep aspect ratio"),
-                         _("Force dimensions with aspect ratio"),
-                         TRUE,
-                         G_PARAM_READWRITE);
-  GIMP_PROC_ARG_BOOLEAN (procedure, "prefer-native-dimensions",
-                         _("_Prefer native dimensions"),
-                         _("Load and use dimensions from source file"),
-                         FALSE,
-                         G_PARAM_READWRITE);
+  gimp_procedure_add_boolean_argument (procedure, "keep-ratio",
+                                       _("_Keep aspect ratio"),
+                                       _("Force dimensions with aspect ratio"),
+                                       TRUE,
+                                       G_PARAM_READWRITE);
+  gimp_procedure_add_boolean_argument (procedure, "prefer-native-dimensions",
+                                       _("_Prefer native dimensions"),
+                                       _("Load and use dimensions from source file"),
+                                       FALSE,
+                                       G_PARAM_READWRITE);
 
   /* Note: the "pixel-density" is saved in pixels per inch. "physical-unit"
    * property is only there for display.
    */
-  GIMP_PROC_AUX_ARG_DOUBLE (procedure, "pixel-density",
-                            _("Resolu_tion"),
-                            _("Pixel Density: number of pixels per physical unit"),
-                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                            GIMP_VECTOR_LOAD_DEFAULT_PIXEL_DENSITY,
-                            G_PARAM_READWRITE);
-  GIMP_PROC_AUX_ARG_INT (procedure, "physical-unit",
-                         _("Unit"),
-                         _("Physical unit"),
-                         GIMP_UNIT_INCH, GIMP_UNIT_PICA, GIMP_UNIT_INCH,
-                         G_PARAM_READWRITE);
+  gimp_procedure_add_double_aux_argument (procedure, "pixel-density",
+                                          _("Resolu_tion"),
+                                          _("Pixel Density: number of pixels per physical unit"),
+                                          GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                                          GIMP_VECTOR_LOAD_DEFAULT_PIXEL_DENSITY,
+                                          G_PARAM_READWRITE);
+  gimp_procedure_add_int_aux_argument (procedure, "physical-unit",
+                                       _("Unit"),
+                                       _("Physical unit"),
+                                       GIMP_UNIT_INCH, GIMP_UNIT_PICA, GIMP_UNIT_INCH,
+                                       G_PARAM_READWRITE);
 }
 
 static void

@@ -116,24 +116,24 @@ glob_create_procedure (GimpPlugIn  *plug_in,
                                       "Sven Neumann",
                                       "2004");
 
-      GIMP_PROC_ARG_STRING (procedure, "pattern",
-                            "Pattern",
-                            "The glob pattern (in UTF-8 encoding)",
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "pattern",
+                                          "Pattern",
+                                          "The glob pattern (in UTF-8 encoding)",
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "filename-encoding",
-                             "Filename encoding",
-                             "FALSE to return UTF-8 strings, TRUE to return "
-                             "strings in filename encoding",
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "filename-encoding",
+                                           "Filename encoding",
+                                           "FALSE to return UTF-8 strings, TRUE to return "
+                                           "strings in filename encoding",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_STRV (procedure, "files",
-                          "Files",
-                          "The list of matching filenames",
-                          G_PARAM_READWRITE |
-                          GIMP_PARAM_NO_VALIDATE);
+      gimp_procedure_add_string_array_return_value (procedure, "files",
+                                                    "Files",
+                                                    "The list of matching filenames",
+                                                    G_PARAM_READWRITE |
+                                                    GIMP_PARAM_NO_VALIDATE);
     }
 
   return procedure;

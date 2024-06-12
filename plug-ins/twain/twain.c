@@ -216,17 +216,17 @@ twain_create_procedure (GimpPlugIn  *plug_in,
                                       PLUG_IN_COPYRIGHT,
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_VAL_INT (procedure, "image-count",
-                         "Number of acquired images",
-                         "Number of acquired images",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_return_value (procedure, "image-count",
+                                           "Number of acquired images",
+                                           "Number of acquired images",
+                                           0, G_MAXINT, 0,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_OBJECT_ARRAY (procedure, "images",
-                                  "Array of acquired images",
-                                  "Array of acquired images",
-                                  GIMP_TYPE_IMAGE,
-                                  G_PARAM_READWRITE);
+      gimp_procedure_add_object_array_return_value (procedure, "images",
+                                                    "Array of acquired images",
+                                                    "Array of acquired images",
+                                                    GIMP_TYPE_IMAGE,
+                                                    G_PARAM_READWRITE);
      }
 
   return procedure;

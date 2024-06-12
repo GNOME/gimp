@@ -409,37 +409,37 @@ jigsaw_create_procedure (GimpPlugIn  *plug_in,
                                       "Nigel Wetten",
                                       "May 2000");
 
-      GIMP_PROC_ARG_INT (procedure, "x",
-                         _("_Horizontal"),
-                         _("Number of pieces going across"),
-                         MIN_XTILES, MAX_XTILES, 5,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "x",
+                                       _("_Horizontal"),
+                                       _("Number of pieces going across"),
+                                       MIN_XTILES, MAX_XTILES, 5,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "y",
-                         _("_Vertical"),
-                         _("Number of pieces going down"),
-                         MIN_YTILES, MAX_YTILES, 5,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "y",
+                                       _("_Vertical"),
+                                       _("Number of pieces going down"),
+                                       MIN_YTILES, MAX_YTILES, 5,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "style",
-                         _("Jigsaw Style"),
-                         _("The style/shape of the jigsaw puzzle "
-                           "{ Square (0), Curved (1) }"),
-                         0, 1, BEZIER_1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "style",
+                                       _("Jigsaw Style"),
+                                       _("The style/shape of the jigsaw puzzle "
+                                         "{ Square (0), Curved (1) }"),
+                                       0, 1, BEZIER_1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "blend-lines",
-                         _("_Blend width"),
-                         _("Degree of slope of each piece's edge"),
-                         MIN_BLEND_LINES, MAX_BLEND_LINES, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "blend-lines",
+                                       _("_Blend width"),
+                                       _("Degree of slope of each piece's edge"),
+                                       MIN_BLEND_LINES, MAX_BLEND_LINES, 3,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "blend-amount",
-                            _("Hi_ghlight"),
-                            _("The amount of highlighting on the edges "
-                              "of each piece"),
-                            MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "blend-amount",
+                                          _("Hi_ghlight"),
+                                          _("The amount of highlighting on the edges "
+                                            "of each piece"),
+                                          MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.5,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

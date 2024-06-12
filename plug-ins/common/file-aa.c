@@ -150,11 +150,11 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
 
       for (i = 0; aa_formats[i]; i++);
 
-      GIMP_PROC_ARG_INT (procedure, "file-type",
-                         _("_Format"),
-                         _("File type to use"),
-                         0, i, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "file-type",
+                                       _("_Format"),
+                                       _("File type to use"),
+                                       0, i, 0,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -148,163 +148,163 @@ sel2path_create_procedure (GimpPlugIn  *plug_in,
                                       "Andy Thomas",
                                       "1999");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "align-threshold",
-                            _("_Align Threshold"),
-                            _("If two endpoints are closer than this, "
-                              "they are made to be equal."),
-                            0.2, 2.0, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "align-threshold",
+                                          _("_Align Threshold"),
+                                          _("If two endpoints are closer than this, "
+                                            "they are made to be equal."),
+                                          0.2, 2.0, 0.5,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "corner-always-threshold",
-                            _("Corner Al_ways Threshold"),
-                            _("If the angle defined by a point and its predecessors "
-                              "and successors is smaller than this, it's a corner, "
-                              "even if it's within 'corner_surround' pixels of a "
-                              "point with a smaller angle."),
-                            30, 180, 60.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "corner-always-threshold",
+                                          _("Corner Al_ways Threshold"),
+                                          _("If the angle defined by a point and its predecessors "
+                                            "and successors is smaller than this, it's a corner, "
+                                            "even if it's within 'corner_surround' pixels of a "
+                                            "point with a smaller angle."),
+                                          30, 180, 60.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "corner-surround",
-                         _("Corner _Surround"),
-                         _("Number of points to consider when determining if a "
-                           "point is a corner or not."),
-                         3, 8, 4,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "corner-surround",
+                                       _("Corner _Surround"),
+                                       _("Number of points to consider when determining if a "
+                                         "point is a corner or not."),
+                                       3, 8, 4,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "corner-threshold",
-                            _("Cor_ner Threshold"),
-                            _("If a point, its predecessors, and its successors "
-                              "define an angle smaller than this, it's a corner."),
-                            0, 180, 100.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "corner-threshold",
+                                          _("Cor_ner Threshold"),
+                                          _("If a point, its predecessors, and its successors "
+                                            "define an angle smaller than this, it's a corner."),
+                                          0, 180, 100.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "error-threshold",
-                            _("Error Thres_hold"),
-                            _("Amount of error at which a fitted spline is "
-                              "unacceptable. If any pixel is further away "
-                              "than this from the fitted curve, we try again."),
-                            0.2, 10, 0.4,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "error-threshold",
+                                          _("Error Thres_hold"),
+                                          _("Amount of error at which a fitted spline is "
+                                            "unacceptable. If any pixel is further away "
+                                            "than this from the fitted curve, we try again."),
+                                          0.2, 10, 0.4,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "filter-alternative-surround",
-                         _("_Filter Alternative Surround"),
-                         _("A second number of adjacent points to consider "
-                           "when filtering."),
-                         1, 10, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "filter-alternative-surround",
+                                       _("_Filter Alternative Surround"),
+                                       _("A second number of adjacent points to consider "
+                                         "when filtering."),
+                                       1, 10, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "filter-epsilon",
-                            _("Filter E_psilon"),
-                            _("If the angles between the vectors produced by "
-                              "filter_surround and filter_alternative_surround "
-                              "points differ by more than this, use the one from "
-                              "filter_alternative_surround."),
-                            5, 40, 10.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "filter-epsilon",
+                                          _("Filter E_psilon"),
+                                          _("If the angles between the vectors produced by "
+                                            "filter_surround and filter_alternative_surround "
+                                            "points differ by more than this, use the one from "
+                                            "filter_alternative_surround."),
+                                          5, 40, 10.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "filter-iteration-count",
-                         _("Filter Iteration Co_unt"),
-                         _("Number of times to smooth original data points.  "
-                           "Increasing this number dramatically --- to 50 or "
-                           "so --- can produce vastly better results. But if "
-                           "any points that 'should' be corners aren't found, "
-                           "the curve goes to hell around that point."),
-                         4, 70, 4,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "filter-iteration-count",
+                                       _("Filter Iteration Co_unt"),
+                                       _("Number of times to smooth original data points.  "
+                                         "Increasing this number dramatically --- to 50 or "
+                                         "so --- can produce vastly better results. But if "
+                                         "any points that 'should' be corners aren't found, "
+                                         "the curve goes to hell around that point."),
+                                       4, 70, 4,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "filter-percent",
-                            _("Filt_er Percent"),
-                            _("To produce the new point, use the old point plus "
-                              "this times the neighbors."),
-                            0, 1, 0.33,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "filter-percent",
+                                          _("Filt_er Percent"),
+                                          _("To produce the new point, use the old point plus "
+                                            "this times the neighbors."),
+                                          0, 1, 0.33,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "filter-secondary-surround",
-                         _("Filter Secondar_y Surround"),
-                         _("Number of adjacent points to consider if "
-                           "'filter_surround' points defines a straight line."),
-                         3, 10, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "filter-secondary-surround",
+                                       _("Filter Secondar_y Surround"),
+                                       _("Number of adjacent points to consider if "
+                                         "'filter_surround' points defines a straight line."),
+                                       3, 10, 3,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "filter-surround",
-                         _("Filter Surroun_d"),
-                         _("Number of adjacent points to consider when filtering."),
-                         2, 10, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "filter-surround",
+                                       _("Filter Surroun_d"),
+                                       _("Number of adjacent points to consider when filtering."),
+                                       2, 10, 2,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "keep-knees",
-                             _("_Keep Knees"),
-                             _("Says whether or not to remove 'knee' "
-                               "points after finding the outline."),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "keep-knees",
+                                           _("_Keep Knees"),
+                                           _("Says whether or not to remove 'knee' "
+                                             "points after finding the outline."),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "line-reversion-threshold",
-                            _("_Line Reversion Threshold"),
-                            _("If a spline is closer to a straight line than this, "
-                              "it remains a straight line, even if it would otherwise "
-                              "be changed back to a curve. This is weighted by the "
-                              "square of the curve length, to make shorter curves "
-                              "more likely to be reverted."),
-                            0.01, 0.2, 0.01,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "line-reversion-threshold",
+                                          _("_Line Reversion Threshold"),
+                                          _("If a spline is closer to a straight line than this, "
+                                            "it remains a straight line, even if it would otherwise "
+                                            "be changed back to a curve. This is weighted by the "
+                                            "square of the curve length, to make shorter curves "
+                                            "more likely to be reverted."),
+                                          0.01, 0.2, 0.01,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "line-threshold",
-                            _("L_ine Threshold"),
-                            _("How many pixels (on the average) a spline can "
-                              "diverge from the line determined by its endpoints "
-                              "before it is changed to a straight line."),
-                            0.2, 4, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "line-threshold",
+                                          _("L_ine Threshold"),
+                                          _("How many pixels (on the average) a spline can "
+                                            "diverge from the line determined by its endpoints "
+                                            "before it is changed to a straight line."),
+                                          0.2, 4, 0.5,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "reparametrize-improvement",
-                            _("Reparametri_ze Improvement"),
-                            _("If reparameterization doesn't improve the fit by this "
-                              "much percent, stop doing it. ""Amount of error at which "
-                              "it is pointless to reparameterize."),
-                            0, 1, 0.01,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "reparametrize-improvement",
+                                          _("Reparametri_ze Improvement"),
+                                          _("If reparameterization doesn't improve the fit by this "
+                                            "much percent, stop doing it. ""Amount of error at which "
+                                            "it is pointless to reparameterize."),
+                                          0, 1, 0.01,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "reparametrize-threshold",
-                            _("Repara_metrize Threshold"),
-                            _("Amount of error at which it is pointless to reparameterize.  "
-                              "This happens, for example, when we are trying to fit the "
-                              "outline of the outside of an 'O' with a single spline. "
-                              "The initial fit is not good enough for the Newton-Raphson "
-                              "iteration to improve it.  It may be that it would be better "
-                              "to detect the cases where we didn't find any corners."),
-                            1, 50, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "reparametrize-threshold",
+                                          _("Repara_metrize Threshold"),
+                                          _("Amount of error at which it is pointless to reparameterize.  "
+                                            "This happens, for example, when we are trying to fit the "
+                                            "outline of the outside of an 'O' with a single spline. "
+                                            "The initial fit is not good enough for the Newton-Raphson "
+                                            "iteration to improve it.  It may be that it would be better "
+                                            "to detect the cases where we didn't find any corners."),
+                                          1, 50, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "subdivide-search",
-                            _("Subdi_vide Search"),
-                            _("Percentage of the curve away from the worst point "
-                             "to look for a better place to subdivide."),
-                            0.05, 1, 0.1,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "subdivide-search",
+                                          _("Subdi_vide Search"),
+                                          _("Percentage of the curve away from the worst point "
+                                           "to look for a better place to subdivide."),
+                                          0.05, 1, 0.1,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "subdivide-surround",
-                         _("Su_bdivide Surround"),
-                         _("Number of points to consider when deciding whether "
-                           "a given point is a better place to subdivide."),
-                         2, 10, 4,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "subdivide-surround",
+                                       _("Su_bdivide Surround"),
+                                       _("Number of points to consider when deciding whether "
+                                         "a given point is a better place to subdivide."),
+                                       2, 10, 4,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "subdivide-threshold",
-                            _("Subdivide Th_reshold"),
-                            _("How many pixels a point can diverge from a straight "
-                              "line and still be considered a better place to "
-                              "subdivide."),
-                            0.01, 1, 0.03,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "subdivide-threshold",
+                                          _("Subdivide Th_reshold"),
+                                          _("How many pixels a point can diverge from a straight "
+                                            "line and still be considered a better place to "
+                                            "subdivide."),
+                                          0.01, 1, 0.03,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "tangent-surround",
-                         _("_Tangent Surround"),
-                         _("Number of points to look at on either side of a "
-                           "point when computing the approximation to the "
-                           "tangent at that point."),
-                         2, 10, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "tangent-surround",
+                                       _("_Tangent Surround"),
+                                       _("Number of points to look at on either side of a "
+                                         "point when computing the approximation to the "
+                                         "tangent at that point."),
+                                       2, 10, 3,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

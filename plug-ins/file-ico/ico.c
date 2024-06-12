@@ -333,25 +333,25 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cur");
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-x",
-                         "Number of hot spot's X coordinates",
-                         "Number of hot spot's X coordinates",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
-                                 "Hot spot X",
-                                 "X coordinates of hot spot (one per layer)",
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "n-hot-spot-x",
+                                       "Number of hot spot's X coordinates",
+                                       "Number of hot spot's X coordinates",
+                                       0, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_argument (procedure, "hot-spot-x",
+                                               "Hot spot X",
+                                               "X coordinates of hot spot (one per layer)",
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-y",
-                         "Number of hot spot's Y coordinates",
-                         "Number of hot spot's Y coordinates",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
-                                 "Hot spot Y",
-                                 "Y coordinates of hot spot (one per layer)",
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "n-hot-spot-y",
+                                       "Number of hot spot's Y coordinates",
+                                       "Number of hot spot's Y coordinates",
+                                       0, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_argument (procedure, "hot-spot-y",
+                                               "Hot spot Y",
+                                               "Y coordinates of hot spot (one per layer)",
+                                               G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_ANI_PROC))
     {
@@ -380,44 +380,44 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ani");
 
-      GIMP_PROC_ARG_STRING (procedure, "cursor-name",
-                            "Cursor Name",
-                            _("Cursor Name (Optional)"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "cursor-name",
+                                          "Cursor Name",
+                                          _("Cursor Name (Optional)"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "author-name",
-                            "Cursor Author",
-                            _("Cursor Author (Optional)"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "author-name",
+                                          "Cursor Author",
+                                          _("Cursor Author (Optional)"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
-                         "Default delay",
-                         "Default delay between frames "
-                         "in jiffies (1/60 of a second)",
-                         0, G_MAXINT, 8,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "default-delay",
+                                       "Default delay",
+                                       "Default delay between frames "
+                                       "in jiffies (1/60 of a second)",
+                                       0, G_MAXINT, 8,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-x",
-                         "Number of hot spot's X coordinates",
-                         "Number of hot spot's X coordinates",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
-                                 "Hot spot X",
-                                 "X coordinates of hot spot (one per layer)",
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "n-hot-spot-x",
+                                       "Number of hot spot's X coordinates",
+                                       "Number of hot spot's X coordinates",
+                                       0, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_argument (procedure, "hot-spot-x",
+                                               "Hot spot X",
+                                               "X coordinates of hot spot (one per layer)",
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-y",
-                         "Number of hot spot's Y coordinates",
-                         "Number of hot spot's Y coordinates",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
-                                 "Hot spot Y",
-                                 "Y coordinates of hot spot (one per layer)",
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "n-hot-spot-y",
+                                       "Number of hot spot's Y coordinates",
+                                       "Number of hot spot's Y coordinates",
+                                       0, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_argument (procedure, "hot-spot-y",
+                                               "Hot spot Y",
+                                               "Y coordinates of hot spot (one per layer)",
+                                               G_PARAM_READWRITE);
     }
 
   return procedure;

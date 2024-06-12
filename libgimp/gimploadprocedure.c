@@ -113,16 +113,16 @@ gimp_load_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_FILE (procedure, "file",
-                      "File",
-                      "The file to load",
-                      GIMP_PARAM_READWRITE);
+  gimp_procedure_add_file_argument (procedure, "file",
+                                    "File",
+                                    "The file to load",
+                                    GIMP_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_IMAGE (procedure, "image",
-                       "Image",
-                       "Output image",
-                       TRUE,
-                       GIMP_PARAM_READWRITE);
+  gimp_procedure_add_image_return_value (procedure, "image",
+                                         "Image",
+                                         "Output image",
+                                         TRUE,
+                                         GIMP_PARAM_READWRITE);
 }
 
 static void

@@ -195,30 +195,30 @@ retinex_create_procedure (GimpPlugIn  *plug_in,
                                       "Fabien Pelisson",
                                       "2003");
 
-      GIMP_PROC_ARG_INT (procedure, "scale",
-                         _("Scal_e"),
-                         _("Biggest scale value"),
-                         MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 240,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "scale",
+                                       _("Scal_e"),
+                                       _("Biggest scale value"),
+                                       MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 240,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "nscales",
-                         _("Scale _division"),
-                         _("Number of scales"),
-                         0, MAX_RETINEX_SCALES, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "nscales",
+                                       _("Scale _division"),
+                                       _("Number of scales"),
+                                       0, MAX_RETINEX_SCALES, 3,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "scales-mode",
-                         _("Le_vel"),
-                         _("Retinex distribution through scales "
-                           "{ Uniform (0), Low (1), High (2) }"),
-                         RETINEX_UNIFORM, RETINEX_HIGH, RETINEX_UNIFORM,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "scales-mode",
+                                       _("Le_vel"),
+                                       _("Retinex distribution through scales "
+                                         "{ Uniform (0), Low (1), High (2) }"),
+                                       RETINEX_UNIFORM, RETINEX_HIGH, RETINEX_UNIFORM,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "cvar",
-                            _("Dy_namic"),
-                            _("Variance value"),
-                            0, 4, 1.2,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "cvar",
+                                          _("Dy_namic"),
+                                          _("Variance value"),
+                                          0, 4, 1.2,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -107,30 +107,30 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
                                   (GDestroyNotify)
                                   gimp_progress_data_free);
 
-  GIMP_PROC_ARG_ENUM (procedure, "command",
-                      "Command",
-                      "The progress command",
-                      GIMP_TYPE_PROGRESS_COMMAND,
-                      GIMP_PROGRESS_COMMAND_START,
-                      G_PARAM_READWRITE);
+  gimp_procedure_add_enum_argument (procedure, "command",
+                                    "Command",
+                                    "The progress command",
+                                    GIMP_TYPE_PROGRESS_COMMAND,
+                                    GIMP_PROGRESS_COMMAND_START,
+                                    G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "text",
-                        "Text",
-                        "The progress text",
-                        NULL,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_string_argument (procedure, "text",
+                                      "Text",
+                                      "The progress text",
+                                      NULL,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_DOUBLE (procedure, "value",
-                        "Value",
-                        "The progress value",
-                        0.0, 1.0, 0.0,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_double_argument (procedure, "value",
+                                      "Value",
+                                      "The progress value",
+                                      0.0, 1.0, 0.0,
+                                      G_PARAM_READWRITE);
 
-  GIMP_PROC_VAL_DOUBLE (procedure, "value",
-                        "Value",
-                        "The progress value",
-                        0.0, 1.0, 0.0,
-                        G_PARAM_READWRITE);
+  gimp_procedure_add_double_return_value (procedure, "value",
+                                          "Value",
+                                          "The progress value",
+                                          0.0, 1.0, 0.0,
+                                          G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

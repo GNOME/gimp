@@ -196,17 +196,17 @@ fli_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "fli,flc");
 
-      GIMP_PROC_ARG_INT (procedure, "from-frame",
-                         _("_From frame"),
-                         _("Load beginning from this frame"),
-                         -1, G_MAXINT, -1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "from-frame",
+                                       _("_From frame"),
+                                       _("Load beginning from this frame"),
+                                       -1, G_MAXINT, -1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "to-frame",
-                         _("_To frame"),
-                         _("End loading with this frame"),
-                         -1, G_MAXINT, -1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "to-frame",
+                                       _("_To frame"),
+                                       _("End loading with this frame"),
+                                       -1, G_MAXINT, -1,
+                                       G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -234,18 +234,18 @@ fli_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "fli,flc");
 
-      GIMP_PROC_ARG_INT (procedure, "from-frame",
-                         _("_From frame"),
-                         _("Export beginning from this frame"),
-                         -1, G_MAXINT, -1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "from-frame",
+                                       _("_From frame"),
+                                       _("Export beginning from this frame"),
+                                       -1, G_MAXINT, -1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "to-frame",
-                         _("_To frame"),
-                         _("End exporting with this frame "
-                           "(or -1 for all frames)"),
-                         -1, G_MAXINT, -1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "to-frame",
+                                       _("_To frame"),
+                                       _("End exporting with this frame "
+                                         "(or -1 for all frames)"),
+                                       -1, G_MAXINT, -1,
+                                       G_PARAM_READWRITE);
     }
   else if (! strcmp (name, INFO_PROC))
     {
@@ -263,28 +263,28 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                       "Jens Ch. Restemeier",
                                       "1997");
 
-      GIMP_PROC_ARG_FILE (procedure, "file",
-                          "File",
-                          "The local file to get info about",
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "file",
+                                        "File",
+                                        "The local file to get info about",
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "width",
-                         "Width",
-                         "Width of one frame",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_return_value (procedure, "width",
+                                           "Width",
+                                           "Width of one frame",
+                                           0, GIMP_MAX_IMAGE_SIZE, 0,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "height",
-                         "Height",
-                         "Height of one frame",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_return_value (procedure, "height",
+                                           "Height",
+                                           "Height of one frame",
+                                           0, GIMP_MAX_IMAGE_SIZE, 0,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "frames",
-                         "Frames",
-                         "Number of frames",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_return_value (procedure, "frames",
+                                           "Frames",
+                                           "Number of frames",
+                                           0, G_MAXINT, 0,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

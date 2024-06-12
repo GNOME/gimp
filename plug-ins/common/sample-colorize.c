@@ -336,70 +336,70 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
                                       "hof@hotbot.com",
                                       "02/2000");
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "sample-drawable",
-                              _("Sample drawable"),
-                              _("Sample drawable (should be of Type RGB or RGBA)"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "sample-drawable",
+                                            _("Sample drawable"),
+                                            _("Sample drawable (should be of Type RGB or RGBA)"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "hold-inten",
-                             _("Hold _intensity"),
-                             _("Hold brightness intensity levels"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "hold-inten",
+                                           _("Hold _intensity"),
+                                           _("Hold brightness intensity levels"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "orig-inten",
-                             _("Original i_ntensity"),
-                             _("TRUE: hold brightness of original intensity "
-                               "levels, "
-                               "FALSE: Hold Intensity of input levels"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "orig-inten",
+                                           _("Original i_ntensity"),
+                                           _("TRUE: hold brightness of original intensity "
+                                             "levels, "
+                                             "FALSE: Hold Intensity of input levels"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "rnd-subcolors",
-                             _("Us_e subcolors"),
-                             _("TRUE: Use all subcolors of same intensity, "
-                               "FALSE: Use only one color per intensity"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "rnd-subcolors",
+                                           _("Us_e subcolors"),
+                                           _("TRUE: Use all subcolors of same intensity, "
+                                             "FALSE: Use only one color per intensity"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "guess-missing",
-                             _("Smooth sam_ples"),
-                             _("TRUE: guess samplecolors for the missing "
-                               "intensity values, "
-                               "FALSE: use only colors found in the sample"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "guess-missing",
+                                           _("Smooth sam_ples"),
+                                           _("TRUE: guess samplecolors for the missing "
+                                             "intensity values, "
+                                             "FALSE: use only colors found in the sample"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "in-low",
-                         _("_Low"),
-                         _("Intensity of lowest input"),
-                         0, 254, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "in-low",
+                                       _("_Low"),
+                                       _("Intensity of lowest input"),
+                                       0, 254, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "in-high",
-                         _("_High"),
-                         _("Intensity of highest input"),
-                         1, 255, 255,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "in-high",
+                                       _("_High"),
+                                       _("Intensity of highest input"),
+                                       1, 255, 255,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
-                            _("Ga_mma"),
-                            _("Gamma adjustment factor, 1.0 is linear"),
-                            0.1, 10.0, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "gamma",
+                                          _("Ga_mma"),
+                                          _("Gamma adjustment factor, 1.0 is linear"),
+                                          0.1, 10.0, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "out-low",
-                         _("Lo_w"),
-                         _("Lowest sample color intensity"),
-                         0, 254, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "out-low",
+                                       _("Lo_w"),
+                                       _("Lowest sample color intensity"),
+                                       0, 254, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "out-high",
-                         _("Hi_gh"),
-                         _("Highest sample color intensity"),
-                         1, 255, 255,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "out-high",
+                                       _("Hi_gh"),
+                                       _("Highest sample color intensity"),
+                                       1, 255, 255,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

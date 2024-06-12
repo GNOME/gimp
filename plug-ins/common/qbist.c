@@ -201,25 +201,25 @@ qbist_create_procedure (GimpPlugIn  *plug_in,
                                       "Jörn Loviscach, Jens Ch. Restemeier",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "anti-aliasing",
-                             _("_Anti-aliasing"),
-                             _("Enable anti-aliasing using an oversampling "
-                               "algorithm"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "anti-aliasing",
+                                           _("_Anti-aliasing"),
+                                           _("Enable anti-aliasing using an oversampling "
+                                             "algorithm"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
       /* Saving the pattern as a parasite is a trick allowing to store
        * random binary data.
        */
-      GIMP_PROC_AUX_ARG_PARASITE (procedure, "pattern",
-                                  "Qbist pattern", NULL,
-                                  G_PARAM_READWRITE);
+      gimp_procedure_add_parasite_aux_argument (procedure, "pattern",
+                                                "Qbist pattern", NULL,
+                                                G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "data-path",
-                                "Path of data file",
-                                _("Any file which will be used as source for pattern generation"),
-                                NULL,
-                                G_PARAM_READWRITE);
+     gimp_procedure_add_string_aux_argument (procedure, "data-path",
+                                              "Path of data file",
+                                              _("Any file which will be used as source for pattern generation"),
+                                              NULL,
+                                              G_PARAM_READWRITE);
     }
 
   return procedure;

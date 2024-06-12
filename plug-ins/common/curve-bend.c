@@ -422,114 +422,114 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                       PLUG_IN_COPYRIGHT,
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
-                            _("Rotat_e"),
-                            _("Direction {angle 0 to 360 degree } "
-                              "of the bend effect"),
-                            0, 360, 0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "rotation",
+                                          _("Rotat_e"),
+                                          _("Direction {angle 0 to 360 degree } "
+                                            "of the bend effect"),
+                                          0, 360, 0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "smoothing",
-                             _("Smoo_thing"),
-                             _("Smoothing"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "smoothing",
+                                           _("Smoo_thing"),
+                                           _("Smoothing"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "antialias",
-                             _("_Antialiasing"),
-                             _("Antialias"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "antialias",
+                                           _("_Antialiasing"),
+                                           _("Antialias"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "work-on-copy",
-                             _("Work on cop_y"),
-                             _("Copy the drawable and bend the copy"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "work-on-copy",
+                                           _("Work on cop_y"),
+                                           _("Copy the drawable and bend the copy"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "curve-type",
-                         _("Curve Type"),
-                         _("{ 0 == smooth (use 17 points), "
-                           "1 == freehand (use 256 val_y) }"),
-                         0, 1, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "curve-type",
+                                       _("Curve Type"),
+                                       _("{ 0 == smooth (use 17 points), "
+                                         "1 == freehand (use 256 val_y) }"),
+                                       0, 1, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "curve-border",
-                         _("Curve for Border"),
-                         _("Choose the active border line to edit"),
-                         0, 1, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "curve-border",
+                                       _("Curve for Border"),
+                                       _("Choose the active border line to edit"),
+                                       0, 1, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "argc-upper-point-x",
-                         _("Argc upper point X"),
-                         _("Argc upper point X"),
-                         2, 17, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "argc-upper-point-x",
+                                       _("Argc upper point X"),
+                                       _("Argc upper point X"),
+                                       2, 17, 2,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "upper-point-x",
-                                 _("Upper point X"),
-                                 _("Array of 17 x point coords "
-                                   "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_float_array_argument (procedure, "upper-point-x",
+                                               _("Upper point X"),
+                                               _("Array of 17 x point coords "
+                                                 "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "argc-upper-point-y",
-                         _("Argc upper point Y"),
-                         _("Argc upper point Y"),
-                         2, 17, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "argc-upper-point-y",
+                                       _("Argc upper point Y"),
+                                       _("Argc upper point Y"),
+                                       2, 17, 2,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "upper-point-y",
-                                 _("Upper point Y"),
-                                 _("Array of 17 y point coords "
-                                   "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_float_array_argument (procedure, "upper-point-y",
+                                               _("Upper point Y"),
+                                               _("Array of 17 y point coords "
+                                                 "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "argc-lower-point-x",
-                         _("Argc lower point X"),
-                         _("Argc lower point X"),
-                         2, 17, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "argc-lower-point-x",
+                                       _("Argc lower point X"),
+                                       _("Argc lower point X"),
+                                       2, 17, 2,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "lower-point-x",
-                                 _("Lower point X"),
-                                 _("Array of 17 x point coords "
-                                   "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_float_array_argument (procedure, "lower-point-x",
+                                               _("Lower point X"),
+                                               _("Array of 17 x point coords "
+                                                 "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "argc-lower-point-y",
-                         _("Argc lower point Y"),
-                         _("Argc lower point Y"),
-                         2, 17, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "argc-lower-point-y",
+                                       _("Argc lower point Y"),
+                                       _("Argc lower point Y"),
+                                       2, 17, 2,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "lower-point-y",
-                                 _("Lower point Y"),
-                                 _("Array of 17 y point coords "
-                                   "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_float_array_argument (procedure, "lower-point-y",
+                                               _("Lower point Y"),
+                                               _("Array of 17 y point coords "
+                                                 "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BYTES (procedure, "upper-val-y",
-                           _("Upper val Y"),
-                           _("Array of 256 y freehand coords "
-                             "{ 0 <= y <= 255 }"),
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_bytes_argument (procedure, "upper-val-y",
+                                         _("Upper val Y"),
+                                         _("Array of 256 y freehand coords "
+                                           "{ 0 <= y <= 255 }"),
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BYTES (procedure, "lower-val-y",
-                           _("Lower val Y"),
-                           _("Array of 256 y freehand coords "
-                             "{ 0 <= y <= 255 }"),
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_bytes_argument (procedure, "lower-val-y",
+                                         _("Lower val Y"),
+                                         _("Array of 256 y freehand coords "
+                                           "{ 0 <= y <= 255 }"),
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_LAYER (procedure, "bent-layer",
-                           _("Bent layer"),
-                           _("The transformed layer"),
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_layer_return_value (procedure, "bent-layer",
+                                             _("Bent layer"),
+                                             _("The transformed layer"),
+                                             FALSE,
+                                             G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
-                               "Settings data",
-                               "TODO: eventually we must implement proper args for every settings",
-                               GIMP_PARAM_READWRITE);
+      gimp_procedure_add_bytes_aux_argument (procedure, "settings-data",
+                                             "Settings data",
+                                             "TODO: eventually we must implement proper args for every settings",
+                                             GIMP_PARAM_READWRITE);
     }
 
   return procedure;

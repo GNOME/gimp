@@ -195,10 +195,10 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "June 2006");
 
-      GIMP_PROC_ARG_BYTES (procedure, "map",
-                           _("Map"),
-                           _("Remap array for the colormap"),
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_bytes_argument (procedure, "map",
+                                         _("Map"),
+                                         _("Remap array for the colormap"),
+                                         G_PARAM_READWRITE);
     }
   else if (strcmp (name, PLUG_IN_PROC_SWAP) == 0)
     {
@@ -228,17 +228,17 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "June 2006");
 
-      GIMP_PROC_ARG_INT (procedure, "index1",
-                         _("Index 1"),
-                         _("First index in the colormap"),
-                         0, 255, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "index1",
+                                       _("Index 1"),
+                                       _("First index in the colormap"),
+                                       0, 255, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "index2",
-                         _("Index 2"),
-                         _("Second (other) index in the colormap"),
-                         0, 255, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "index2",
+                                       _("Index 2"),
+                                       _("Second (other) index in the colormap"),
+                                       0, 255, 0,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -231,94 +231,94 @@ warp_create_procedure (GimpPlugIn  *plug_in,
                                       "John P. Beale",
                                       "1997");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "amount",
-                            _("Step si_ze"),
-                            _("Pixel displacement multiplier"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 10.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "amount",
+                                          _("Step si_ze"),
+                                          _("Pixel displacement multiplier"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 10.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "warp-map",
-                              _("Dis_placement Map"),
-                              _("Displacement control map"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "warp-map",
+                                            _("Dis_placement Map"),
+                                            _("Displacement control map"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "iter",
-                         _("I_terations"),
-                         _("Iteration count"),
-                         1, 100, 5,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "iter",
+                                       _("I_terations"),
+                                       _("Iteration count"),
+                                       1, 100, 5,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "dither",
-                            _("_Dither size"),
-                            _("Random dither amount"),
-                            0, 100, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "dither",
+                                          _("_Dither size"),
+                                          _("Random dither amount"),
+                                          0, 100, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "angle",
-                            _("Rotatio_n angle"),
-                            _("Angle of gradient vector rotation"),
-                            0, 360, 90.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "angle",
+                                          _("Rotatio_n angle"),
+                                          _("Angle of gradient vector rotation"),
+                                          0, 360, 90.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "wrap-type",
-                            _("On ed_ges"),
-                            _("Wrap type"),
-                            gimp_choice_new_with_values ("wrap",  WRAP,  _("Wrap"),             NULL,
-                                                         "smear", SMEAR, _("Smear"),            NULL,
-                                                         "black", BLACK, _("Black"),            NULL,
-                                                         "color", COLOR, _("Foreground Color"), NULL,
-                                                         NULL),
-                            "wrap",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "wrap-type",
+                                          _("On ed_ges"),
+                                          _("Wrap type"),
+                                          gimp_choice_new_with_values ("wrap",  WRAP,  _("Wrap"),             NULL,
+                                                                       "smear", SMEAR, _("Smear"),            NULL,
+                                                                       "black", BLACK, _("Black"),            NULL,
+                                                                       "color", COLOR, _("Foreground Color"), NULL,
+                                                                       NULL),
+                                          "wrap",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "mag-map",
-                              _("_Magnitude Map"),
-                              _("Magnitude control map"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "mag-map",
+                                            _("_Magnitude Map"),
+                                            _("Magnitude control map"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "mag-use",
-                             _("_Use magnitude map"),
-                             _("Use magnitude map"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "mag-use",
+                                           _("_Use magnitude map"),
+                                           _("Use magnitude map"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "substeps",
-                         _("Su_bsteps"),
-                         _("Substeps between image updates"),
-                         1, 100, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "substeps",
+                                       _("Su_bsteps"),
+                                       _("Substeps between image updates"),
+                                       1, 100, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "grad-map",
-                              _("Gradient Ma_p"),
-                              _("Gradient control map"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "grad-map",
+                                            _("Gradient Ma_p"),
+                                            _("Gradient control map"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "grad-scale",
-                            _("Gradient s_cale"),
-                            _("Scaling factor for gradient map (0=don't use)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "grad-scale",
+                                          _("Gradient s_cale"),
+                                          _("Scaling factor for gradient map (0=don't use)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "vector-map",
-                              _("_Vector Map"),
-                              _("Fixed vector control map"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "vector-map",
+                                            _("_Vector Map"),
+                                            _("Fixed vector control map"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "vector-scale",
-                            _("Vector magn_itude"),
-                            _("Scaling factor for fixed vector map (0=don't use)"),
-                            -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "vector-scale",
+                                          _("Vector magn_itude"),
+                                          _("Scaling factor for fixed vector map (0=don't use)"),
+                                          -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
-                            _("Ang_le"),
-                            _("Angle for fixed vector map"),
-                            0, 360, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "vector-angle",
+                                          _("Ang_le"),
+                                          _("Angle for fixed vector map"),
+                                          0, 360, 0.0,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

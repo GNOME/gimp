@@ -170,27 +170,27 @@ nlfilter_create_procedure (GimpPlugIn  *plug_in,
                                       "Graeme W. Gill, Eric L. Hernes",
                                       "1997");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "alpha",
-                            _("_Alpha"),
-                            _("The amount of the filter to apply"),
-                            0, 1, 0.3,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "alpha",
+                                          _("_Alpha"),
+                                          _("The amount of the filter to apply"),
+                                          0, 1, 0.3,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
-                            _("Ra_dius"),
-                            _("The filter radius"),
-                            1.0 / 3.0, 1, 1.0 / 3.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "radius",
+                                          _("Ra_dius"),
+                                          _("The filter radius"),
+                                          1.0 / 3.0, 1, 1.0 / 3.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "filter",
-                         _("Filter"),
-                         _("The Filter to Run, "
-                           "0 - alpha trimmed mean; "
-                           "1 - optimal estimation "
-                           "(alpha controls noise variance); "
-                           "2 - edge enhancement"),
-                         0, 2, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "filter",
+                                       _("Filter"),
+                                       _("The Filter to Run, "
+                                         "0 - alpha trimmed mean; "
+                                         "1 - optimal estimation "
+                                         "(alpha controls noise variance); "
+                                         "2 - edge enhancement"),
+                                       0, 2, 0,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

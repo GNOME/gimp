@@ -349,88 +349,88 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       /* Properties for image data. */
 
-      GIMP_PROC_ARG_INT (procedure, "width",
-                         _("_Width"),
-                         _("Image width in number of pixels"),
-                         1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "height",
-                         _("_Height"),
-                         _("Image height in number of pixels"),
-                         1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "offset",
-                         _("O_ffset"),
-                         _("Offset to beginning of image in raw data"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "width",
+                                       _("_Width"),
+                                       _("Image width in number of pixels"),
+                                       1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "height",
+                                       _("_Height"),
+                                       _("Image height in number of pixels"),
+                                       1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "offset",
+                                       _("O_ffset"),
+                                       _("Offset to beginning of image in raw data"),
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "pixel-format",
-                            _("Pi_xel format"),
-                            _("The layout of pixel data, such as components and their order"),
-                            gimp_choice_new_with_values ("rgb-8bpp",              RAW_RGB_8BPP,    _("RGB 8-bit"),                NULL,
-                                                         "rgb-16bpp",             RAW_RGB_16BPP,   _("RGB 16-bit"),               NULL,
-                                                         "rgb-32bpp",             RAW_RGB_32BPP,   _("RGB 32-bit"),               NULL,
-                                                         "rgba-8bpp",             RAW_RGBA_8BPP,   _("RGBA 8-bit"),               NULL,
-                                                         "rgba-16bpp",            RAW_RGBA_16BPP,  _("RGBA 16-bit"),              NULL,
-                                                         "rgba-32bpp",            RAW_RGBA_32BPP,  _("RGBA 32-bit"),              NULL,
-                                                         "rgb565",                RAW_RGB565,      _("RGB565"),                   NULL,
-                                                         "bgr565",                RAW_BGR565,      _("BGR565"),                   NULL,
-                                                         "grayscale-1bpp",        RAW_GRAY_1BPP,   _("B&W 1 bit"),                NULL,
-                                                         "grayscale-2bpp",        RAW_GRAY_2BPP,   _("Grayscale 2-bit"),          NULL,
-                                                         "grayscale-4bpp",        RAW_GRAY_4BPP,   _("Grayscale 4-bit"),          NULL,
-                                                         "grayscale-8bpp",        RAW_GRAY_8BPP,   _("Grayscale 8-bit"),          NULL,
-                                                         "grayscale-16bpp",       RAW_GRAY_16BPP,  _("Grayscale 16-bit"),         NULL,
-                                                         "grayscale-32bpp",       RAW_GRAY_32BPP,  _("Grayscale 32-bit"),         NULL,
-                                                         "grayscale-alpha-8bpp",  RAW_GRAYA_8BPP,  _("Grayscale-Alpha 8-bit"),    NULL,
-                                                         "grayscale-alpha-16bpp", RAW_GRAYA_16BPP, _("Grayscale-Alpha 16-bit"),   NULL,
-                                                         "grayscale-alpha-32bpp", RAW_GRAYA_32BPP, _("Grayscale-Alpha 32-bit"),   NULL,
-                                                         "indexed",               RAW_INDEXED,     _("Indexed"),                  NULL,
-                                                         "indexed-alpha",         RAW_INDEXEDA,    _("Indexed Alpha"),            NULL,
-                                                         NULL),
-                            "rgb-8bpp", G_PARAM_READWRITE);
-      GIMP_PROC_ARG_CHOICE (procedure, "data-type",
-                            _("_Data type"),
-                            _("Data type used to represent pixel values"),
-                            gimp_choice_new_with_values ("unsigned", RAW_ENCODING_UNSIGNED,   _("Unsigned Integer"),  NULL,
-                                                         "signed",   RAW_ENCODING_SIGNED,     _("Signed Integer"),    NULL,
-                                                         "float",    RAW_ENCODING_FLOAT,      _("Floating Point"),    NULL,
-                                                         NULL),
-                            "unsigned", G_PARAM_READWRITE);
-      GIMP_PROC_ARG_CHOICE (procedure, "endianness",
-                            _("_Endianness"),
-                            _("Order of sequences of bytes"),
-                            gimp_choice_new_with_values ("little-endian", RAW_LITTLE_ENDIAN, _("Little Endian"),    NULL,
-                                                         "big-endian",    RAW_BIG_ENDIAN,    _("Big Endian"),       NULL,
-                                                         NULL),
-                            "little-endian", G_PARAM_READWRITE);
-      GIMP_PROC_ARG_CHOICE (procedure, "planar-configuration",
-                            _("Planar confi_guration"),
-                            _("How color pixel data are stored"),
-                            gimp_choice_new_with_values ("contiguous", RAW_PLANAR_CONTIGUOUS, _("Contiguous"),    NULL,
-                                                         "planar",     RAW_PLANAR_SEPARATE,   _("Planar"),        NULL,
-                                                         NULL),
-                            "contiguous", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "pixel-format",
+                                          _("Pi_xel format"),
+                                          _("The layout of pixel data, such as components and their order"),
+                                          gimp_choice_new_with_values ("rgb-8bpp",              RAW_RGB_8BPP,    _("RGB 8-bit"),                NULL,
+                                                                       "rgb-16bpp",             RAW_RGB_16BPP,   _("RGB 16-bit"),               NULL,
+                                                                       "rgb-32bpp",             RAW_RGB_32BPP,   _("RGB 32-bit"),               NULL,
+                                                                       "rgba-8bpp",             RAW_RGBA_8BPP,   _("RGBA 8-bit"),               NULL,
+                                                                       "rgba-16bpp",            RAW_RGBA_16BPP,  _("RGBA 16-bit"),              NULL,
+                                                                       "rgba-32bpp",            RAW_RGBA_32BPP,  _("RGBA 32-bit"),              NULL,
+                                                                       "rgb565",                RAW_RGB565,      _("RGB565"),                   NULL,
+                                                                       "bgr565",                RAW_BGR565,      _("BGR565"),                   NULL,
+                                                                       "grayscale-1bpp",        RAW_GRAY_1BPP,   _("B&W 1 bit"),                NULL,
+                                                                       "grayscale-2bpp",        RAW_GRAY_2BPP,   _("Grayscale 2-bit"),          NULL,
+                                                                       "grayscale-4bpp",        RAW_GRAY_4BPP,   _("Grayscale 4-bit"),          NULL,
+                                                                       "grayscale-8bpp",        RAW_GRAY_8BPP,   _("Grayscale 8-bit"),          NULL,
+                                                                       "grayscale-16bpp",       RAW_GRAY_16BPP,  _("Grayscale 16-bit"),         NULL,
+                                                                       "grayscale-32bpp",       RAW_GRAY_32BPP,  _("Grayscale 32-bit"),         NULL,
+                                                                       "grayscale-alpha-8bpp",  RAW_GRAYA_8BPP,  _("Grayscale-Alpha 8-bit"),    NULL,
+                                                                       "grayscale-alpha-16bpp", RAW_GRAYA_16BPP, _("Grayscale-Alpha 16-bit"),   NULL,
+                                                                       "grayscale-alpha-32bpp", RAW_GRAYA_32BPP, _("Grayscale-Alpha 32-bit"),   NULL,
+                                                                       "indexed",               RAW_INDEXED,     _("Indexed"),                  NULL,
+                                                                       "indexed-alpha",         RAW_INDEXEDA,    _("Indexed Alpha"),            NULL,
+                                                                       NULL),
+                                          "rgb-8bpp", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "data-type",
+                                          _("_Data type"),
+                                          _("Data type used to represent pixel values"),
+                                          gimp_choice_new_with_values ("unsigned", RAW_ENCODING_UNSIGNED,   _("Unsigned Integer"),  NULL,
+                                                                       "signed",   RAW_ENCODING_SIGNED,     _("Signed Integer"),    NULL,
+                                                                       "float",    RAW_ENCODING_FLOAT,      _("Floating Point"),    NULL,
+                                                                       NULL),
+                                          "unsigned", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "endianness",
+                                          _("_Endianness"),
+                                          _("Order of sequences of bytes"),
+                                          gimp_choice_new_with_values ("little-endian", RAW_LITTLE_ENDIAN, _("Little Endian"),    NULL,
+                                                                       "big-endian",    RAW_BIG_ENDIAN,    _("Big Endian"),       NULL,
+                                                                       NULL),
+                                          "little-endian", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "planar-configuration",
+                                          _("Planar confi_guration"),
+                                          _("How color pixel data are stored"),
+                                          gimp_choice_new_with_values ("contiguous", RAW_PLANAR_CONTIGUOUS, _("Contiguous"),    NULL,
+                                                                       "planar",     RAW_PLANAR_SEPARATE,   _("Planar"),        NULL,
+                                                                       NULL),
+                                          "contiguous", G_PARAM_READWRITE);
 
       /* Properties for palette data. */
 
-      GIMP_PROC_ARG_INT (procedure, "palette-offset",
-                         _("Palette Offse_t"),
-                         _("Offset to beginning of data in the palette file"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "palette-offset",
+                                       _("Palette Offse_t"),
+                                       _("Offset to beginning of data in the palette file"),
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "palette-type",
-                            _("Palette's la_yout"),
-                            _("The layout for the palette's color channels"),
-                            gimp_choice_new_with_values ("rgb", RAW_PALETTE_RGB, _("R, G, B (normal)"),        NULL,
-                                                         "bgr", RAW_PALETTE_BGR, _("B, G, R, X (BMP style)"),  NULL,
-                                                         NULL),
-                            "rgb", G_PARAM_READWRITE);
-      GIMP_PROC_ARG_FILE (procedure, "palette-file",
-                          _("_Palette File"),
-                          _("The file containing palette data"),
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "palette-type",
+                                          _("Palette's la_yout"),
+                                          _("The layout for the palette's color channels"),
+                                          gimp_choice_new_with_values ("rgb", RAW_PALETTE_RGB, _("R, G, B (normal)"),        NULL,
+                                                                       "bgr", RAW_PALETTE_BGR, _("B, G, R, X (BMP style)"),  NULL,
+                                                                       NULL),
+                                          "rgb", G_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "palette-file",
+                                        _("_Palette File"),
+                                        _("The file containing palette data"),
+                                        G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
     {
@@ -462,34 +462,34 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "hgt");
 
-      GIMP_PROC_ARG_CHOICE (procedure, "sample-spacing",
-                            _("Sa_mple spacing"),
-                            _("The sample spacing of the data."),
-                            gimp_choice_new_with_values ("auto-detect", HGT_SRTM_AUTO_DETECT, _("Auto-Detect"),            NULL,
-                                                         "srtm-1",      HGT_SRTM_1,           _("SRTM-1 (1 arc second)"),  NULL,
-                                                         "srtm-3",      HGT_SRTM_3,           _("SRTM-3 (3 arc seconds)"),  NULL,
-                                                         NULL),
-                            "auto-detect", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "sample-spacing",
+                                          _("Sa_mple spacing"),
+                                          _("The sample spacing of the data."),
+                                          gimp_choice_new_with_values ("auto-detect", HGT_SRTM_AUTO_DETECT, _("Auto-Detect"),            NULL,
+                                                                       "srtm-1",      HGT_SRTM_1,           _("SRTM-1 (1 arc second)"),  NULL,
+                                                                       "srtm-3",      HGT_SRTM_3,           _("SRTM-3 (3 arc seconds)"),  NULL,
+                                                                       NULL),
+                                          "auto-detect", G_PARAM_READWRITE);
 
       /* Properties for palette data. */
 
-      GIMP_PROC_ARG_INT (procedure, "palette-offset",
-                         _("Palette Offse_t"),
-                         _("Offset to beginning of data in the palette file"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "palette-offset",
+                                       _("Palette Offse_t"),
+                                       _("Offset to beginning of data in the palette file"),
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "palette-type",
-                            _("Palette's la_yout"),
-                            _("The layout for the palette's color channels"),
-                            gimp_choice_new_with_values ("rgb", RAW_PALETTE_RGB, _("R, G, B (normal)"),        NULL,
-                                                         "bgr", RAW_PALETTE_BGR, _("B, G, R, X (BMP style)"),  NULL,
-                                                         NULL),
-                            "rgb", G_PARAM_READWRITE);
-      GIMP_PROC_ARG_FILE (procedure, "palette-file",
-                          _("_Palette File"),
-                          _("The file containing palette data"),
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "palette-type",
+                                          _("Palette's la_yout"),
+                                          _("The layout for the palette's color channels"),
+                                          gimp_choice_new_with_values ("rgb", RAW_PALETTE_RGB, _("R, G, B (normal)"),        NULL,
+                                                                       "bgr", RAW_PALETTE_BGR, _("B, G, R, X (BMP style)"),  NULL,
+                                                                       NULL),
+                                          "rgb", G_PARAM_READWRITE);
+      gimp_procedure_add_file_argument (procedure, "palette-file",
+                                        _("_Palette File"),
+                                        _("The file containing palette data"),
+                                        G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -513,21 +513,21 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "data,raw");
 
-      GIMP_PROC_ARG_CHOICE (procedure, "planar-configuration",
-                            _("Planar configuration"),
-                            _("How color pixel data are stored"),
-                            gimp_choice_new_with_values ("contiguous", RAW_PLANAR_CONTIGUOUS, _("Contiguous"),    NULL,
-                                                         "planar",     RAW_PLANAR_SEPARATE,   _("Planar"),        NULL,
-                                                         NULL),
-                            "contiguous", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "planar-configuration",
+                                          _("Planar configuration"),
+                                          _("How color pixel data are stored"),
+                                          gimp_choice_new_with_values ("contiguous", RAW_PLANAR_CONTIGUOUS, _("Contiguous"),    NULL,
+                                                                       "planar",     RAW_PLANAR_SEPARATE,   _("Planar"),        NULL,
+                                                                       NULL),
+                                          "contiguous", G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "palette-type",
-                            _("Palette's la_yout"),
-                            _("The layout for the palette's color channels"),
-                            gimp_choice_new_with_values ("rgb", RAW_PALETTE_RGB, _("R, G, B (normal)"),        NULL,
-                                                         "bgr", RAW_PALETTE_BGR, _("B, G, R, X (BMP style)"),  NULL,
-                                                         NULL),
-                            "rgb", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "palette-type",
+                                          _("Palette's la_yout"),
+                                          _("The layout for the palette's color channels"),
+                                          gimp_choice_new_with_values ("rgb", RAW_PALETTE_RGB, _("R, G, B (normal)"),        NULL,
+                                                                       "bgr", RAW_PALETTE_BGR, _("B, G, R, X (BMP style)"),  NULL,
+                                                                       NULL),
+                                          "rgb", G_PARAM_READWRITE);
     }
 
   gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),

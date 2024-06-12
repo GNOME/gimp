@@ -137,27 +137,27 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
                                       "Internet Access AG",
                                       "1998");
 
-      GIMP_PROC_ARG_INT (procedure, "thickness",
-                         _("_Thickness"),
-                         _("Border size to take in count"),
-                         0, G_MAXINT, 3,
-                         G_PARAM_READWRITE);
-      GIMP_PROC_AUX_ARG_UNIT (procedure, "thickness-unit",
-                              _("Thickness unit of measure"),
-                              _("Border size unit of measure"),
-                              TRUE, TRUE, GIMP_UNIT_PIXEL,
-                              GIMP_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "bucket-exponent",
-                         _("Bucket Si_ze"),
-                         _("Bits for bucket size (default=4: 16 Levels)"),
-                         0, G_MAXINT, 4,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "thickness",
+                                       _("_Thickness"),
+                                       _("Border size to take in count"),
+                                       0, G_MAXINT, 3,
+                                       G_PARAM_READWRITE);
+      gimp_procedure_add_unit_aux_argument (procedure, "thickness-unit",
+                                            _("Thickness unit of measure"),
+                                            _("Border size unit of measure"),
+                                            TRUE, TRUE, GIMP_UNIT_PIXEL,
+                                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "bucket-exponent",
+                                       _("Bucket Si_ze"),
+                                       _("Bits for bucket size (default=4: 16 Levels)"),
+                                       0, G_MAXINT, 4,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_COLOR (procedure, "borderaverage",
-                           _("The average color of the specified border."),
-                           _("The average color of the specified border."),
-                           TRUE, default_return_color,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_return_value (procedure, "borderaverage",
+                                             _("The average color of the specified border."),
+                                             _("The average color of the specified border."),
+                                             TRUE, default_return_color,
+                                             G_PARAM_READWRITE);
     }
   g_object_unref (default_return_color);
 

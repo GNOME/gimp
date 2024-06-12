@@ -105,30 +105,30 @@ gimp_image_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                      "Run mode",
-                      "The run mode",
-                      GIMP_TYPE_RUN_MODE,
-                      GIMP_RUN_NONINTERACTIVE,
-                      G_PARAM_READWRITE);
+  gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                    "Run mode",
+                                    "The run mode",
+                                    GIMP_TYPE_RUN_MODE,
+                                    GIMP_RUN_NONINTERACTIVE,
+                                    G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_IMAGE (procedure, "image",
-                       "Image",
-                       "The input image",
-                       FALSE,
-                       G_PARAM_READWRITE);
+  gimp_procedure_add_image_argument (procedure, "image",
+                                     "Image",
+                                     "The input image",
+                                     FALSE,
+                                     G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "num-drawables",
-                     "Number of drawables",
-                     "Number of input drawables",
-                     0, G_MAXINT, 1,
-                     G_PARAM_READWRITE);
+  gimp_procedure_add_int_argument (procedure, "num-drawables",
+                                   "Number of drawables",
+                                   "Number of input drawables",
+                                   0, G_MAXINT, 1,
+                                   G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_OBJECT_ARRAY (procedure, "drawables",
-                              "Drawables",
-                              "The input drawables",
-                              GIMP_TYPE_DRAWABLE,
-                              G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+  gimp_procedure_add_object_array_argument (procedure, "drawables",
+                                            "Drawables",
+                                            "The input drawables",
+                                            GIMP_TYPE_DRAWABLE,
+                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
 }
 
 static void

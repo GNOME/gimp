@@ -125,11 +125,11 @@ browser_create_procedure (GimpPlugIn  *plug_in,
                                       "2003",
                                       "2003/09/16");
 
-      GIMP_PROC_ARG_STRING (procedure, "url",
-                            "URL",
-                            "URL to open",
-                            "https://www.gimp.org/",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "url",
+                                          "URL",
+                                         "URL to open",
+                                         "https://www.gimp.org/",
+                                         G_PARAM_READWRITE);
     }
 
   return procedure;

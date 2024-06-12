@@ -178,81 +178,81 @@ grid_create_procedure (GimpPlugIn  *plug_in,
                                       "Tom Rathborne, TC",
                                       "1997 - 2000");
 
-      GIMP_PROC_ARG_INT (procedure, "hwidth",
-                         "H width",
-                         "Horizontal width",
-                         0, GIMP_MAX_IMAGE_SIZE, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hwidth",
+                                       "H width",
+                                       "Horizontal width",
+                                       0, GIMP_MAX_IMAGE_SIZE, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hspace",
-                         "H space",
-                         "Horizontal spacing",
-                         1, GIMP_MAX_IMAGE_SIZE, 16,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hspace",
+                                       "H space",
+                                       "Horizontal spacing",
+                                       1, GIMP_MAX_IMAGE_SIZE, 16,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hoffset",
-                         "H offset",
-                         "Horizontal offset",
-                         0, GIMP_MAX_IMAGE_SIZE, 8,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hoffset",
+                                       "H offset",
+                                       "Horizontal offset",
+                                       0, GIMP_MAX_IMAGE_SIZE, 8,
+                                       G_PARAM_READWRITE);
 
       /* TODO: for "hcolor", "icolor" and "vcolor", the original code would use
        * the foreground color as default. Future work would be to get the
        * foreground/background color from context.
        */
-      GIMP_PROC_ARG_COLOR (procedure, "hcolor",
-                           "H color",
-                           "Horizontal color",
-                           TRUE, default_hcolor,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_argument (procedure, "hcolor",
+                                         "H color",
+                                         "Horizontal color",
+                                         TRUE, default_hcolor,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "vwidth",
-                         "V width",
-                         "Vertical width",
-                         0, GIMP_MAX_IMAGE_SIZE, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "vwidth",
+                                       "V width",
+                                       "Vertical width",
+                                       0, GIMP_MAX_IMAGE_SIZE, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "vspace",
-                         "V space",
-                         "Vertical spacing",
-                         1, GIMP_MAX_IMAGE_SIZE, 16,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "vspace",
+                                       "V space",
+                                       "Vertical spacing",
+                                       1, GIMP_MAX_IMAGE_SIZE, 16,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "voffset",
-                         "V offset",
-                         "Vertical offset",
-                         0, GIMP_MAX_IMAGE_SIZE, 8,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "voffset",
+                                       "V offset",
+                                       "Vertical offset",
+                                       0, GIMP_MAX_IMAGE_SIZE, 8,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_COLOR (procedure, "vcolor",
-                           "V color",
-                           "Vertical color",
-                           TRUE, default_vcolor,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_argument (procedure, "vcolor",
+                                         "V color",
+                                         "Vertical color",
+                                         TRUE, default_vcolor,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "iwidth",
-                         "I width",
-                         "Intersection width",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "iwidth",
+                                       "I width",
+                                       "Intersection width",
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "ispace",
-                         "I space",
-                         "Intersection spacing",
-                         1, GIMP_MAX_IMAGE_SIZE, 2,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "ispace",
+                                       "I space",
+                                       "Intersection spacing",
+                                       1, GIMP_MAX_IMAGE_SIZE, 2,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "ioffset",
-                         "I offset",
-                         "Intersection offset",
-                         0, GIMP_MAX_IMAGE_SIZE, 6,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "ioffset",
+                                       "I offset",
+                                       "Intersection offset",
+                                       0, GIMP_MAX_IMAGE_SIZE, 6,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_COLOR (procedure, "icolor",
-                           "I color",
-                           "Intersection color",
-                           TRUE, default_icolor,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_color_argument (procedure, "icolor",
+                                         "I color",
+                                         "Intersection color",
+                                         TRUE, default_icolor,
+                                         G_PARAM_READWRITE);
 
       g_object_unref (default_hcolor);
       g_object_unref (default_vcolor);

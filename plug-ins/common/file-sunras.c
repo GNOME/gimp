@@ -319,11 +319,11 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "im1,im8,im24,im32,rs,ras,sun");
 
-      GIMP_PROC_ARG_INT (procedure, "rle",
-                         _("Data Formatting"),
-                         _("Use standard (0) or Run-Length Encoded (1) output"),
-                         0, 1, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "rle",
+                                       _("Data Formatting"),
+                                       _("Use standard (0) or Run-Length Encoded (1) output"),
+                                       0, 1, 1,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

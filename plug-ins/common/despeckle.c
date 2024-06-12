@@ -181,30 +181,30 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
                                       "Copyright 1997-1998 by Michael Sweet",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_INT (procedure, "radius",
-                         _("R_adius"),
-                         _("Filter box radius"),
-                         1, MAX_RADIUS, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "radius",
+                                       _("R_adius"),
+                                       _("Filter box radius"),
+                                       1, MAX_RADIUS, 3,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "type",
-                         _("_Filter Type"),
-                         _("Filter type { MEDIAN (0), ADAPTIVE (1), "
-                         "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }"),
-                         0, 3, FILTER_ADAPTIVE,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "type",
+                                       _("_Filter Type"),
+                                       _("Filter type { MEDIAN (0), ADAPTIVE (1), "
+                                         "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }"),
+                                       0, 3, FILTER_ADAPTIVE,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "black",
-                         _("_Black level"),
-                         _("Black level"),
-                         -1, 255, 7,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "black",
+                                       _("_Black level"),
+                                       _("Black level"),
+                                       -1, 255, 7,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "white",
-                         _("_White level"),
-                         _("White level"),
-                         0, 256, 248,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "white",
+                                       _("_White level"),
+                                       _("White level"),
+                                       0, 256, 248,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

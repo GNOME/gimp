@@ -192,87 +192,87 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
                                       "John Beale",
                                       "Version 1.27, September 2003");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "lum-threshold",
-                            _("Lu_minosity threshold"),
-                            _("Adjust the luminosity threshold"),
-                            0.0, 0.1, 0.01,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "lum-threshold",
+                                          _("Lu_minosity threshold"),
+                                          _("Adjust the luminosity threshold"),
+                                          0.0, 0.1, 0.01,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "flare-inten",
-                            _("_Flare intensity"),
-                            _("Adjust the flare intensity"),
-                            0.0, 1.0, 0.5,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "flare-inten",
+                                          _("_Flare intensity"),
+                                          _("Adjust the flare intensity"),
+                                          0.0, 1.0, 0.5,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spike-len",
-                         _("Spi_ke length"),
-                         _("Adjust the spike length (in pixels)"),
-                         1, 100, 20,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "spike-len",
+                                       _("Spi_ke length"),
+                                       _("Adjust the spike length (in pixels)"),
+                                       1, 100, 20,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spike-points",
-                         _("Spike _points"),
-                         _("Adjust the number of spikes"),
-                         1, 16, 4,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "spike-points",
+                                       _("Spike _points"),
+                                       _("Adjust the number of spikes"),
+                                       1, 16, 4,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spike-angle",
-                         _("Spike angle (-_1: random)"),
-                         _("Adjust the spike angle "
-                           "(-1 causes a random angle to be chosen)"),
-                         -1, 360, 15,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "spike-angle",
+                                       _("Spike angle (-_1: random)"),
+                                       _("Adjust the spike angle "
+                                         "(-1 causes a random angle to be chosen)"),
+                                       -1, 360, 15,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "density",
-                            _("Spike _density"),
-                            _("Adjust the spike density"),
-                            0.0, 1.0, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "density",
+                                          _("Spike _density"),
+                                          _("Adjust the spike density"),
+                                          0.0, 1.0, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "transparency",
-                            _("_Transparency"),
-                            _("Adjust the opacity of the spikes"),
-                            0.0, 1.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "transparency",
+                                          _("_Transparency"),
+                                          _("Adjust the opacity of the spikes"),
+                                          0.0, 1.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "random-hue",
-                            _("Random _hue"),
-                            _("Adjust how much the hue should be "
-                              "changed randomly"),
-                            0.0, 1.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "random-hue",
+                                          _("Random _hue"),
+                                          _("Adjust how much the hue should be "
+                                            "changed randomly"),
+                                          0.0, 1.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "random-saturation",
-                            _("R_andom saturation"),
-                            _("Adjust how much the saturation should be "
-                              "changed randomly"),
-                            0.0, 1.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "random-saturation",
+                                          _("R_andom saturation"),
+                                          _("Adjust how much the saturation should be "
+                                            "changed randomly"),
+                                          0.0, 1.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "preserve-luminosity",
-                             _("Preserve l_uminosity"),
-                             _("Should the luminosity be preserved?"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "preserve-luminosity",
+                                           _("Preserve l_uminosity"),
+                                           _("Should the luminosity be preserved?"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "inverse",
-                             _("In_verse"),
-                             _("Should the effect be inversed?"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "inverse",
+                                           _("In_verse"),
+                                           _("Should the effect be inversed?"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "border",
-                             _("Add _border"),
-                             _("Draw a border of spikes around the image"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "border",
+                                           _("Add _border"),
+                                           _("Draw a border of spikes around the image"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "color-type",
-                         _("Color type"),
-                         _("Color of sparkles: { NATURAL (0), "
-                           "FOREGROUND (1), BACKGROUND (2) }"),
-                         0, 2, NATURAL,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "color-type",
+                                       _("Color type"),
+                                       _("Color of sparkles: { NATURAL (0), "
+                                         "FOREGROUND (1), BACKGROUND (2) }"),
+                                       0, 2, NATURAL,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

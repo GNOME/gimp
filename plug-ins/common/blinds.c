@@ -150,31 +150,31 @@ blinds_create_procedure (GimpPlugIn  *plug_in,
                                       "Andy Thomas",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "angle-displacement",
-                         _("_Displacement"),
-                         _("Angle of Displacement"),
-                         0, 90, 30,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "angle-displacement",
+                                       _("_Displacement"),
+                                       _("Angle of Displacement"),
+                                       0, 90, 30,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "num-segments",
-                         _("_Number of segments"),
-                         _("Number of segments in blinds"),
-                         1, MAX_FANS, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "num-segments",
+                                       _("_Number of segments"),
+                                       _("Number of segments in blinds"),
+                                       1, MAX_FANS, 3,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "orientation",
-                         _("Orientation"),
-                         _("The orientation"),
-                         GIMP_ORIENTATION_HORIZONTAL,
-                         GIMP_ORIENTATION_VERTICAL,
-                         GIMP_ORIENTATION_HORIZONTAL,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "orientation",
+                                       _("Orientation"),
+                                       _("The orientation"),
+                                       GIMP_ORIENTATION_HORIZONTAL,
+                                       GIMP_ORIENTATION_VERTICAL,
+                                       GIMP_ORIENTATION_HORIZONTAL,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bg-transparent",
-                             _("_Transparent"),
-                             _("Background transparent"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "bg-transparent",
+                                           _("_Transparent"),
+                                           _("Background transparent"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

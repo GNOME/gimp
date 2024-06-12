@@ -155,69 +155,69 @@ lic_create_procedure (GimpPlugIn  *plug_in,
                                       "Tom Bech & Federico Mena Quintero",
                                       "Version 0.14, September 24 1997");
 
-      GIMP_PROC_ARG_CHOICE (procedure, "effect-channel",
-                            _("E_ffect Channel"),
-                            _("Effect Channel"),
-                            gimp_choice_new_with_values ("hue",        LIC_HUE,        _("Hue"),        NULL,
-                                                         "saturation", LIC_SATURATION, _("Saturation"), NULL,
-                                                         "brightness", LIC_BRIGHTNESS, _("Brightness"), NULL,
-                                                         NULL),
-                            "brightness",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "effect-channel",
+                                          _("E_ffect Channel"),
+                                          _("Effect Channel"),
+                                          gimp_choice_new_with_values ("hue",        LIC_HUE,        _("Hue"),        NULL,
+                                                                       "saturation", LIC_SATURATION, _("Saturation"), NULL,
+                                                                       "brightness", LIC_BRIGHTNESS, _("Brightness"), NULL,
+                                                                       NULL),
+                                          "brightness",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "effect-operator",
-                            _("Effect O_perator"),
-                            _("Effect Operator"),
-                            gimp_choice_new_with_values ("derivative", 0, _("Derivative"), NULL,
-                                                         "gradient",   1, _("Gradient"),   NULL,
-                                                         NULL),
-                            "gradient",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "effect-operator",
+                                          _("Effect O_perator"),
+                                          _("Effect Operator"),
+                                          gimp_choice_new_with_values ("derivative", 0, _("Derivative"), NULL,
+                                                                       "gradient",   1, _("Gradient"),   NULL,
+                                                                       NULL),
+                                          "gradient",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "effect-convolve",
-                            _("Con_volve"),
-                            _("Convolve"),
-                            gimp_choice_new_with_values ("with-white-noise",  0, _("With white noise"),  NULL,
-                                                         "with-source-image", 1, _("With source image"), NULL,
-                                                         NULL),
-                            "with-source-image",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "effect-convolve",
+                                          _("Con_volve"),
+                                          _("Convolve"),
+                                          gimp_choice_new_with_values ("with-white-noise",  0, _("With white noise"),  NULL,
+                                                                       "with-source-image", 1, _("With source image"), NULL,
+                                                                       NULL),
+                                          "with-source-image",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "effect-image",
-                              _("Effect i_mage"),
-                              _("Effect image"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "effect-image",
+                                            _("Effect i_mage"),
+                                            _("Effect image"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "filter-length",
-                            _("Fil_ter length"),
-                            _("Filter length"),
-                            0.1, 64.0, 5.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "filter-length",
+                                          _("Fil_ter length"),
+                                          _("Filter length"),
+                                          0.1, 64.0, 5.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "noise-magnitude",
-                            _("_Noise Magnitude"),
-                            _("Noise Magnitude"),
-                            1.0, 5.0, 2.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "noise-magnitude",
+                                          _("_Noise Magnitude"),
+                                          _("Noise Magnitude"),
+                                          1.0, 5.0, 2.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "integration-steps",
-                            _("Inte_gration steps"),
-                            _("Integration steps"),
-                            1.0, 40.0, 25.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "integration-steps",
+                                          _("Inte_gration steps"),
+                                          _("Integration steps"),
+                                          1.0, 40.0, 25.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "min-value",
-                            _("Minimum v_alue"),
-                            _("Minimum value"),
-                            -100.0, 0, -25.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "min-value",
+                                          _("Minimum v_alue"),
+                                          _("Minimum value"),
+                                          -100.0, 0, -25.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "max-value",
-                            _("Ma_ximum value"),
-                            _("Maximum value"),
-                            0.0, 100, 25.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "max-value",
+                                          _("Ma_ximum value"),
+                                          _("Maximum value"),
+                                          0.0, 100, 25.0,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

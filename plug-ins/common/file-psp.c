@@ -713,12 +713,12 @@ psp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psp,tub");
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
-                         "_Data Compression",
-                         "Specify 0 for no compression, "
-                         "1 for RLE, and 2 for LZ77",
-                         0, 2, PSP_COMP_LZ77,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "compression",
+                                       "_Data Compression",
+                                       "Specify 0 for no compression, "
+                                       "1 for RLE, and 2 for LZ77",
+                                       0, 2, PSP_COMP_LZ77,
+                                       G_PARAM_READWRITE);
     }
 
   return procedure;

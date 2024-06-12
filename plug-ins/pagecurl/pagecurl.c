@@ -225,51 +225,51 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
                                       "Federico Mena Quintero and Simon Budig",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "colors",
-                            _("Colors"), NULL,
-                            gimp_choice_new_with_values ("fg-bg",                     CURL_COLORS_FG_BG,            _("Foreground / background colors"), NULL,
-                                                         "current-gradient",          CURL_COLORS_GRADIENT,         _("Current gradient"),               NULL,
-                                                         "current-gradient-reversed", CURL_COLORS_GRADIENT_REVERSE, _("Current gradient (reversed)"),    NULL,
-                                                         NULL),
-                            "fg-bg",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "colors",
+                                          _("Colors"), NULL,
+                                          gimp_choice_new_with_values ("fg-bg",                     CURL_COLORS_FG_BG,            _("Foreground / background colors"), NULL,
+                                                                       "current-gradient",          CURL_COLORS_GRADIENT,         _("Current gradient"),               NULL,
+                                                                       "current-gradient-reversed", CURL_COLORS_GRADIENT_REVERSE, _("Current gradient (reversed)"),    NULL,
+                                                                       NULL),
+                                          "fg-bg",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "edge",
-                            _("Locatio_n"),
-                            _("Corner which is curled"),
-                            gimp_choice_new_with_values ("upper-left",  CURL_EDGE_UPPER_LEFT,  _("Upper left"),  NULL,
-                                                         "upper-right", CURL_EDGE_UPPER_RIGHT, _("Upper right"), NULL,
-                                                         "lower-left",  CURL_EDGE_LOWER_LEFT,  _("Lower left"),  NULL,
-                                                         "lower-right", CURL_EDGE_LOWER_RIGHT, _("Lower right"), NULL,
-                                                         NULL),
-                            "lower-right",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "edge",
+                                          _("Locatio_n"),
+                                          _("Corner which is curled"),
+                                          gimp_choice_new_with_values ("upper-left",  CURL_EDGE_UPPER_LEFT,  _("Upper left"),  NULL,
+                                                                       "upper-right", CURL_EDGE_UPPER_RIGHT, _("Upper right"), NULL,
+                                                                       "lower-left",  CURL_EDGE_LOWER_LEFT,  _("Lower left"),  NULL,
+                                                                       "lower-right", CURL_EDGE_LOWER_RIGHT, _("Lower right"), NULL,
+                                                                       NULL),
+                                          "lower-right",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "orientation",
-                            _("Or_ientation"), NULL,
-                            gimp_choice_new_with_values ("vertical",   CURL_ORIENTATION_VERTICAL,   _("Vertical"),   NULL,
-                                                         "horizontal", CURL_ORIENTATION_HORIZONTAL, _("Horizontal"), NULL,
-                                                         NULL),
-                            "vertical",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "orientation",
+                                          _("Or_ientation"), NULL,
+                                          gimp_choice_new_with_values ("vertical",   CURL_ORIENTATION_VERTICAL,   _("Vertical"),   NULL,
+                                                                       "horizontal", CURL_ORIENTATION_HORIZONTAL, _("Horizontal"), NULL,
+                                                                       NULL),
+                                          "vertical",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "shade",
-                             _("Sh_ade"),
-                             _("Shade the region under the curl"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "shade",
+                                           _("Sh_ade"),
+                                           _("Shade the region under the curl"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "opacity",
-                            _("Opaci_ty"),
-                            _("Opacity"),
-                            0.0, 1.0, 0.0,
-                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "opacity",
+                                          _("Opaci_ty"),
+                                          _("Opacity"),
+                                          0.0, 1.0, 0.0,
+                                          GIMP_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_LAYER (procedure, "curl-layer",
-                           "Curl layer",
-                           "The new layer with the curl.",
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_layer_return_value (procedure, "curl-layer",
+                                         "Curl layer",
+                                         "The new layer with the curl.",
+                                         FALSE,
+                                         G_PARAM_READWRITE);
     }
 
   return procedure;

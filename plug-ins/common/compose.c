@@ -414,47 +414,47 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1997");
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image-2",
-                           _("Image 2"),
-                           _("Second input image"),
-                           TRUE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_argument (procedure, "image-2",
+                                         _("Image 2"),
+                                         _("Second input image"),
+                                         TRUE,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image-3",
-                           _("Image 3"),
-                           _("Third input image"),
-                           TRUE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_argument (procedure, "image-3",
+                                         _("Image 3"),
+                                         _("Third input image"),
+                                         TRUE,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image-4",
-                           _("Image 4"),
-                           _("Fourth input image"),
-                           TRUE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_argument (procedure, "image-4",
+                                         _("Image 4"),
+                                         _("Fourth input image"),
+                                         TRUE,
+                                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "compose-type",
-                            _("Color _model"),
-                            type_desc->str,
-                            gimp_choice_new_with_values ("rgb",        0, _("RGB"),                NULL,
-                                                         "rgba",       1, _("RGBA"),               NULL,
-                                                         "hsv",        2, _("HSV"),                NULL,
-                                                         "hsl",        3, _("HSL"),                NULL,
-                                                         "cmyk",       4, _("CMYK"),               NULL,
-                                                         "lab",        5, _("LAB"),                NULL,
-                                                         "lch",        6, _("LCH"),                NULL,
-                                                         "ycbcr470",   7, _("YCbCr ITU R470"),     NULL,
-                                                         "ycbcr709",   8, _("YCbCr ITU R709"),     NULL,
-                                                         "ycbcr470f",  9, _("YCbCr ITU R470 256"), NULL,
-                                                         "ycbcr709f", 10, _("YCbCr ITU R709 256"), NULL,
-                                                         NULL),
-                            "rgb",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "compose-type",
+                                          _("Color _model"),
+                                          type_desc->str,
+                                          gimp_choice_new_with_values ("rgb",        0, _("RGB"),                NULL,
+                                                                       "rgba",       1, _("RGBA"),               NULL,
+                                                                       "hsv",        2, _("HSV"),                NULL,
+                                                                       "hsl",        3, _("HSL"),                NULL,
+                                                                       "cmyk",       4, _("CMYK"),               NULL,
+                                                                       "lab",        5, _("LAB"),                NULL,
+                                                                       "lch",        6, _("LCH"),                NULL,
+                                                                       "ycbcr470",   7, _("YCbCr ITU R470"),     NULL,
+                                                                       "ycbcr709",   8, _("YCbCr ITU R709"),     NULL,
+                                                                       "ycbcr470f",  9, _("YCbCr ITU R470 256"), NULL,
+                                                                       "ycbcr709f", 10, _("YCbCr ITU R709 256"), NULL,
+                                                                       NULL),
+                                          "rgb",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
-                           _("New image"),
-                           _("Output image"),
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "new-image",
+                                             _("New image"),
+                                             _("Output image"),
+                                             FALSE,
+                                             G_PARAM_READWRITE);
     }
   else if (! strcmp (name, DRAWABLE_COMPOSE_PROC))
     {
@@ -477,47 +477,47 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1998");
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "drawable-2",
-                              _("Drawable 2"),
-                              _("Second input drawable"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "drawable-2",
+                                            _("Drawable 2"),
+                                            _("Second input drawable"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "drawable-3",
-                              _("Drawable 3"),
-                              _("Third input drawable"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "drawable-3",
+                                            _("Drawable 3"),
+                                            _("Third input drawable"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "drawable-4",
-                              _("Drawable 4"),
-                              _("Fourth input drawable"),
-                              TRUE,
-                              G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, "drawable-4",
+                                            _("Drawable 4"),
+                                            _("Fourth input drawable"),
+                                            TRUE,
+                                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_CHOICE (procedure, "compose-type",
-                            _("Color _model"),
-                            type_desc->str,
-                            gimp_choice_new_with_values ("rgb",        0, _("RGB"),                NULL,
-                                                         "rgba",       1, _("RGBA"),               NULL,
-                                                         "hsv",        2, _("HSV"),                NULL,
-                                                         "hsl",        3, _("HSL"),                NULL,
-                                                         "cmyk",       4, _("CMYK"),               NULL,
-                                                         "lab",        5, _("LAB"),                NULL,
-                                                         "lch",        6, _("LCH"),                NULL,
-                                                         "ycbcr470",   7, _("YCbCr ITU R470"),     NULL,
-                                                         "ycbcr709",   8, _("YCbCr ITU R709"),     NULL,
-                                                         "ycbcr470f",  9, _("YCbCr ITU R470 256"), NULL,
-                                                         "ycbcr709f", 10, _("YCbCr ITU R709 256"), NULL,
-                                                         NULL),
-                            "rgb",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "compose-type",
+                                          _("Color _model"),
+                                          type_desc->str,
+                                          gimp_choice_new_with_values ("rgb",        0, _("RGB"),                NULL,
+                                                                       "rgba",       1, _("RGBA"),               NULL,
+                                                                       "hsv",        2, _("HSV"),                NULL,
+                                                                       "hsl",        3, _("HSL"),                NULL,
+                                                                       "cmyk",       4, _("CMYK"),               NULL,
+                                                                       "lab",        5, _("LAB"),                NULL,
+                                                                       "lch",        6, _("LCH"),                NULL,
+                                                                       "ycbcr470",   7, _("YCbCr ITU R470"),     NULL,
+                                                                       "ycbcr709",   8, _("YCbCr ITU R709"),     NULL,
+                                                                       "ycbcr470f",  9, _("YCbCr ITU R470 256"), NULL,
+                                                                       "ycbcr709f", 10, _("YCbCr ITU R709 256"), NULL,
+                                                                       NULL),
+                                          "rgb",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
-                           _("New image"),
-                           _("Output image"),
-                           FALSE,
-                           G_PARAM_READWRITE);
+      gimp_procedure_add_image_return_value (procedure, "new-image",
+                                             _("New image"),
+                                             _("Output image"),
+                                             FALSE,
+                                             G_PARAM_READWRITE);
     }
   else if (! strcmp (name, RECOMPOSE_PROC))
     {

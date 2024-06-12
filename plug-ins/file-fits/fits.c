@@ -195,17 +195,17 @@ fits_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,SIMPLE");
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "replace",
-                             _("Replacement for undefined pixels"),
-                             _("Replacement for undefined pixels"),
-                             0, 255, 0,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "replace",
+                                           _("Replacement for undefined pixels"),
+                                           _("Replacement for undefined pixels"),
+                                           0, 255, 0,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "use-data-min-max",
-                             _("Pixel value scaling"),
-                             _("Use DATAMIN/DATAMAX-scaling if possible"),
-                             0, 1, 0,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_int_aux_argument (procedure, "use-data-min-max",
+                                           _("Pixel value scaling"),
+                                           _("Use DATAMIN/DATAMAX-scaling if possible"),
+                                           0, 1, 0,
+                                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {

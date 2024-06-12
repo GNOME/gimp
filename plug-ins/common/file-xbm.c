@@ -209,62 +209,62 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "xbm,icon,bitmap");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-comment",
-                             _("_Write comment"),
-                             _("Write a comment at the beginning of the file."),
-                             FALSE, /* *NOT* gimp_export_comment() */
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-comment",
+                                           _("_Write comment"),
+                                           _("Write a comment at the beginning of the file."),
+                                           FALSE, /* *NOT* gimp_export_comment() */
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "gimp-comment",
-                            _("Co_mment"),
-                            _("Image description (maximum 72 bytes)"),
-                            gimp_get_default_comment (),
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "gimp-comment",
+                                          _("Co_mment"),
+                                          _("Image description (maximum 72 bytes)"),
+                                          gimp_get_default_comment (),
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_set_argument_sync (procedure, "gimp-comment",
                                         GIMP_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "x10-format",
-                             _("_X10 format bitmap"),
-                             _("Export in X10 format"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "x10-format",
+                                           _("_X10 format bitmap"),
+                                           _("Export in X10 format"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-hot-spot",
-                             _("Write hot spot _values"),
-                             _("Write hotspot information"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "use-hot-spot",
+                                           _("Write hot spot _values"),
+                                           _("Write hotspot information"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-x",
-                         _("Hot s_pot X"),
-                         _("X coordinate of hotspot"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hot-spot-x",
+                                       _("Hot s_pot X"),
+                                       _("X coordinate of hotspot"),
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-y",
-                         _("Hot spot _Y"),
-                         _("Y coordinate of hotspot"),
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "hot-spot-y",
+                                       _("Hot spot _Y"),
+                                       _("Y coordinate of hotspot"),
+                                       0, GIMP_MAX_IMAGE_SIZE, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "prefix",
-                            _("I_dentifier prefix"),
-                            _("Identifier prefix [determined from filename]"),
-                            "bitmap",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "prefix",
+                                          _("I_dentifier prefix"),
+                                          _("Identifier prefix [determined from filename]"),
+                                          "bitmap",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "write-mask",
-                             _("Write extra mask _file"),
-                             _("Write extra mask file"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "write-mask",
+                                           _("Write extra mask _file"),
+                                           _("Write extra mask file"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "mask-suffix",
-                            _("Mas_k file extensions"),
-                            _("Suffix of the mask file"),
-                            "-mask",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "mask-suffix",
+                                          _("Mas_k file extensions"),
+                                          _("Suffix of the mask file"),
+                                          "-mask",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -191,55 +191,55 @@ flame_create_procedure (GimpPlugIn  *plug_in,
                                       "Scott Draves",
                                       "1997");
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "brightness",
-                            _("_Brightness"), NULL,
-                            0.0, 5.0, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "brightness",
+                                          _("_Brightness"), NULL,
+                                          0.0, 5.0, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "contrast",
-                            _("Co_ntrast"), NULL,
-                            0.0, 5.0, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "contrast",
+                                          _("Co_ntrast"), NULL,
+                                          0.0, 5.0, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "gamma",
-                            _("_Gamma"), NULL,
-                            1.0, 5.0, 1.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "gamma",
+                                          _("_Gamma"), NULL,
+                                          1.0, 5.0, 1.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "sample-density",
-                            _("Sample _density"), NULL,
-                            0.1, 20.0, 5.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "sample-density",
+                                          _("Sample _density"), NULL,
+                                          0.1, 20.0, 5.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "spatial-oversample",
-                            _("Spa_tial oversample"), NULL,
-                            1, 4, 2.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "spatial-oversample",
+                                          _("Spa_tial oversample"), NULL,
+                                          1, 4, 2.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "spatial-filter-radius",
-                            _("Spatial _filter radius"), NULL,
-                            0.0, 4.0, 0.75,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "spatial-filter-radius",
+                                          _("Spatial _filter radius"), NULL,
+                                          0.0, 4.0, 0.75,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "zoom",
-                            _("_Zoom"), NULL,
-                            -4.0, 4.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "zoom",
+                                          _("_Zoom"), NULL,
+                                          -4.0, 4.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "x",
-                            _("_X"), NULL,
-                            -2.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "x",
+                                          _("_X"), NULL,
+                                          -2.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "y",
-                            _("_Y"), NULL,
-                            -2.0, 2.0, 0.0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "y",
+                                          _("_Y"), NULL,
+                                          -2.0, 2.0, 0.0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BYTES (procedure, "settings-data",
-                               "Settings data",
-                               "TODO: eventually we must implement proper args for every settings",
-                               GIMP_PARAM_READWRITE);
+      gimp_procedure_add_bytes_aux_argument (procedure, "settings-data",
+                                             "Settings data",
+                                             "TODO: eventually we must implement proper args for every settings",
+                                             GIMP_PARAM_READWRITE);
     }
 
   return procedure;

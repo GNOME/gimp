@@ -136,36 +136,37 @@ busy_dialog_create_procedure (GimpPlugIn  *plug_in,
                                       "Ell",
                                       "2018");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                        "Run mode",
+                                        "The run mode",
+                                        GIMP_TYPE_RUN_MODE,
+                                        GIMP_RUN_INTERACTIVE,
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "read-fd",
-                         "The read file descriptor",
-                         "The read file descriptor",
-                         G_MININT, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "read-fd",
+                                       "The read file descriptor",
+                                       "The read file descriptor",
+                                       G_MININT, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "write-fd",
-                         "The write file descriptor",
-                         "The write file descriptor",
-                         G_MININT, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "write-fd",
+                                       "The write file descriptor",
+                                       "The write file descriptor",
+                                       G_MININT, G_MAXINT, 0,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "message",
-                            "The message",
-                            "The message",
-                            NULL,
-                            G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "cancelable",
-                             "Whether the dialog is cancelable",
-                             "Whether the dialog is cancelable",
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "message",
+                                          "The message",
+                                          "The message",
+                                          NULL,
+                                          G_PARAM_READWRITE);
+
+      gimp_procedure_add_boolean_argument (procedure, "cancelable",
+                                           "Whether the dialog is cancelable",
+                                           "Whether the dialog is cancelable",
+                                           FALSE,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

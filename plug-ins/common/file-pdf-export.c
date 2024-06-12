@@ -333,55 +333,55 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pdf");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
-                             _("Convert _bitmaps to vector graphics where possible"),
-                             _("Convert bitmaps to vector graphics where possible"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "vectorize",
+                                           _("Convert _bitmaps to vector graphics where possible"),
+                                           _("Convert bitmaps to vector graphics where possible"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
-                             _("O_mit hidden layers and layers with zero opacity"),
-                             _("Non-visible layers will not be exported"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "ignore-hidden",
+                                           _("O_mit hidden layers and layers with zero opacity"),
+                                           _("Non-visible layers will not be exported"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
-                             _("_Apply layer masks"),
-                             _("Apply layer masks before saving (Keeping the mask "
-                               "will not change the output, only the PDF structure)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "apply-masks",
+                                           _("_Apply layer masks"),
+                                           _("Apply layer masks before saving (Keeping the mask "
+                                             "will not change the output, only the PDF structure)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "layers-as-pages",
-                             _("La_yers as pages"),
-                             _("Layers as pages (bottom layers first)."),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "layers-as-pages",
+                                           _("La_yers as pages"),
+                                           _("Layers as pages (bottom layers first)."),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
-                             _("Re_verse order"),
-                             _("Reverse the pages order (top layers first)."),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "reverse-order",
+                                           _("Re_verse order"),
+                                           _("Reverse the pages order (top layers first)."),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "root-layers-only",
-                             _("Roo_t layers only"),
-                             _("Only the root layers are considered pages"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "root-layers-only",
+                                           _("Roo_t layers only"),
+                                           _("Only the root layers are considered pages"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
-                             _("Convert te_xt layers to image"),
-                             _("Convert text layers to raster graphics"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "convert-text-layers",
+                                           _("Convert te_xt layers to image"),
+                                           _("Convert text layers to raster graphics"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "fill-background-color",
-                             _("_Fill transparent areas with background color"),
-                             _("Fill transparent areas with background color if "
-                               "layer has an alpha channel"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "fill-background-color",
+                                           _("_Fill transparent areas with background color"),
+                                           _("Fill transparent areas with background color if "
+                                             "layer has an alpha channel"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_MULTI_PROC))
     {
@@ -409,57 +409,57 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                       "Copyright Barak Itkin",
                                       "August 2009");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
-                          G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                        "Run mode",
+                                        "The run mode",
+                                        GIMP_TYPE_RUN_MODE,
+                                        GIMP_RUN_INTERACTIVE,
+                                        G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "count",
-                         _("Count"),
-                         _("The number of images entered (This will be the "
-                           "number of pages)."),
-                         1, MAX_PAGE_COUNT, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "count",
+                                       _("Count"),
+                                       _("The number of images entered (This will be the "
+                                         "number of pages)."),
+                                       1, MAX_PAGE_COUNT, 1,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "images",
-                                 "Images",
-                                 "Input image for each page (An image can "
-                                 "appear more than once)",
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_int32_array_argument (procedure, "images",
+                                               "Images",
+                                               "Input image for each page (An image can "
+                                               "appear more than once)",
+                                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
-                             _("Convert _bitmaps to vector graphics where possible"),
-                             _("Convert bitmaps to vector graphics where possible"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "vectorize",
+                                           _("Convert _bitmaps to vector graphics where possible"),
+                                           _("Convert bitmaps to vector graphics where possible"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
-                             _("O_mit hidden layers and layers with zero opacity"),
-                             _("Non-visible layers will not be exported"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "ignore-hidden",
+                                           _("O_mit hidden layers and layers with zero opacity"),
+                                           _("Non-visible layers will not be exported"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
-                             _("_Apply layer masks"),
-                             _("Apply layer masks before saving (Keeping the mask "
-                               "will not change the output, only the PDF structure)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "apply-masks",
+                                           _("_Apply layer masks"),
+                                           _("Apply layer masks before saving (Keeping the mask "
+                                             "will not change the output, only the PDF structure)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "fill-background-color",
-                             _("_Fill transparent areas with background color"),
-                             _("Fill transparent areas with background color if "
-                               "layer has an alpha channel"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "fill-background-color",
+                                           _("_Fill transparent areas with background color"),
+                                           _("Fill transparent areas with background color if "
+                                             "layer has an alpha channel"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "uri",
-                            _("Save to"),
-                            _("The URI of the file to save to"),
-                            NULL,
-                            GIMP_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "uri",
+                                          _("Save to"),
+                                          _("The URI of the file to save to"),
+                                          NULL,
+                                          GIMP_PARAM_READWRITE);
     }
 
   return procedure;

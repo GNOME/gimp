@@ -127,25 +127,25 @@ wavelet_create_procedure (GimpPlugIn  *plug_in,
                                       "Miroslav Talasek <miroslav.talasek@seznam.cz>",
                                       "19 January 2017");
 
-      GIMP_PROC_ARG_INT (procedure, "scales",
-                         _("Scal_es"),
-                         _("Number of scales"),
-                         1, 7, 5,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "scales",
+                                       _("Scal_es"),
+                                       _("Number of scales"),
+                                       1, 7, 5,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "create-group",
-                             _("Create a layer group to store the "
-                               "_decomposition"),
-                             _("Create a layer group to store the "
-                             "decomposition"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "create-group",
+                                           _("Create a layer group to store the "
+                                             "_decomposition"),
+                                           _("Create a layer group to store the "
+                                           "decomposition"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "create-masks",
-                             _("_Add a layer mask to each scales layer"),
-                             _("Add a layer mask to each scales layer"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "create-masks",
+                                           _("_Add a layer mask to each scales layer"),
+                                           _("Add a layer mask to each scales layer"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
     }
 
   return procedure;

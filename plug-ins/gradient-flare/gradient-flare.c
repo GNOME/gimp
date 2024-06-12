@@ -831,72 +831,72 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
                                       "Eiichi Takamori, and a lot of GIMP people",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "gflare-name",
-                            "GFlare name",
-                            "Name of the GFlare to render",
-                            "Default",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "gflare-name",
+                                          "GFlare name",
+                                          "Name of the GFlare to render",
+                                          "Default",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "center-x",
-                         "Center X",
-                         "X coordinate of center of GFlare",
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "center-x",
+                                       "Center X",
+                                       "X coordinate of center of GFlare",
+                                       -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "center-y",
-                         "Center Y",
-                         "Y coordinate of center of GFlare",
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "center-y",
+                                       "Center Y",
+                                       "Y coordinate of center of GFlare",
+                                       -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 128,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "radius",
-                            _("Radi_us"),
-                            _("Radius of GFlare (pixel)"),
-                            1, GIMP_MAX_IMAGE_SIZE, 100,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "radius",
+                                          _("Radi_us"),
+                                          _("Radius of GFlare (pixel)"),
+                                          1, GIMP_MAX_IMAGE_SIZE, 100,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "rotation",
-                            _("Ro_tation"),
-                            _("Rotation of GFlare (degree)"),
-                            0, 360, 0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "rotation",
+                                          _("Ro_tation"),
+                                          _("Rotation of GFlare (degree)"),
+                                          0, 360, 0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "hue",
-                            _("_Hue rotation"),
-                            _("Hue rotation of GFlare (degree)"),
-                            0, 360, 0,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "hue",
+                                          _("_Hue rotation"),
+                                          _("Hue rotation of GFlare (degree)"),
+                                          0, 360, 0,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "vector-angle",
-                            _("Vector _angle"),
-                            _("Vector angle for second flares (degree)"),
-                            0, 360, 60,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "vector-angle",
+                                          _("Vector _angle"),
+                                          _("Vector angle for second flares (degree)"),
+                                          0, 360, 60,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "vector-length",
-                            _("Vector len_gth"),
-                            _("Vector length for second flares "
-                            "(percentage of Radius)"),
-                            0, 10000, 400,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "vector-length",
+                                          _("Vector len_gth"),
+                                          _("Vector length for second flares "
+                                          "(percentage of Radius)"),
+                                          0, 10000, 400,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-asupsample",
-                             _("Ada_ptive supersampling"),
-                             _("Use adaptive supersampling while rendering"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "use-asupsample",
+                                           _("Ada_ptive supersampling"),
+                                           _("Use adaptive supersampling while rendering"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "asupsample-max-depth",
-                         _("_Max depth"),
-                         _("Max depth for adaptive supersampling"),
-                         0, 10, 3,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "asupsample-max-depth",
+                                       _("_Max depth"),
+                                       _("Max depth for adaptive supersampling"),
+                                       0, 10, 3,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "asupsample-threshold",
-                            _("Threshol_d"),
-                            _("Threshold for adaptive supersampling"),
-                            0.0, 1.0, 0.2,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_double_argument (procedure, "asupsample-threshold",
+                                          _("Threshol_d"),
+                                          _("Threshold for adaptive supersampling"),
+                                          0.0, 1.0, 0.2,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

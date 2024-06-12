@@ -234,70 +234,70 @@ png_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "png");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
-                             _("_Interlacing (Adam7)"),
-                             _("Use Adam7 interlacing"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "interlaced",
+                                           _("_Interlacing (Adam7)"),
+                                           _("Use Adam7 interlacing"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
-                         _("Co_mpression level"),
-                         _("Deflate Compression factor (0..9)"),
-                         0, 9, 9,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "compression",
+                                       _("Co_mpression level"),
+                                       _("Deflate Compression factor (0..9)"),
+                                       0, 9, 9,
+                                       G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
-                             _("Save _background color"),
-                             _("Write bKGD chunk (PNG metadata)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "bkgd",
+                                           _("Save _background color"),
+                                           _("Write bKGD chunk (PNG metadata)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
-                             _("Save layer o_ffset"),
-                             _("Write oFFs chunk (PNG metadata)"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "offs",
+                                           _("Save layer o_ffset"),
+                                           _("Write oFFs chunk (PNG metadata)"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
-                             _("Save resol_ution"),
-                             _("Write pHYs chunk (PNG metadata)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "phys",
+                                           _("Save resol_ution"),
+                                           _("Write pHYs chunk (PNG metadata)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "time",
-                             _("Save creation _time"),
-                             _("Write tIME chunk (PNG metadata)"),
-                             TRUE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "time",
+                                           _("Save creation _time"),
+                                           _("Write tIME chunk (PNG metadata)"),
+                                           TRUE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
-                             _("Save color _values from transparent pixels"),
-                             _("Preserve color of completely transparent pixels"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "save-transparent",
+                                           _("Save color _values from transparent pixels"),
+                                           _("Preserve color of completely transparent pixels"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "optimize-palette",
-                             _("_Optimize for smallest possible palette size"),
-                             _("When checked, save as 1, 2, 4, or 8-bit depending"
-                               " on number of colors used. When unchecked, always"
-                               " save as 8-bit"),
-                             FALSE,
-                             G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, "optimize-palette",
+                                           _("_Optimize for smallest possible palette size"),
+                                           _("When checked, save as 1, 2, 4, or 8-bit depending"
+                                             " on number of colors used. When unchecked, always"
+                                             " save as 8-bit"),
+                                           FALSE,
+                                           G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_CHOICE (procedure, "format",
-                                _("_Pixel format"),
-                                _("PNG export format"),
-                                gimp_choice_new_with_values ("auto",    PNG_FORMAT_AUTO,    _("Automatic"),    NULL,
-                                                             "rgb8",    PNG_FORMAT_RGB8,    _("8 bpc RGB"),    NULL,
-                                                             "gray8",   PNG_FORMAT_GRAY8,   _("8 bpc GRAY"),   NULL,
-                                                             "rgba8",   PNG_FORMAT_RGBA8,   _("8 bpc RGBA"),   NULL,
-                                                             "graya8",  PNG_FORMAT_GRAYA8,  _("8 bpc GRAYA"),  NULL,
-                                                             "rgb16",   PNG_FORMAT_RGB16,   _("16 bpc RGB"),   NULL,
-                                                             "gray16",  PNG_FORMAT_GRAY16,  _("16 bpc GRAY"),  NULL,
-                                                             "rgba16",  PNG_FORMAT_RGBA16,  _("16 bpc RGBA"),  NULL,
-                                                             "graya16", PNG_FORMAT_GRAYA16, _("16 bpc GRAYA"), NULL,
-                                                             NULL),
-                                "auto", G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "format",
+                                          _("_Pixel format"),
+                                          _("PNG export format"),
+                                          gimp_choice_new_with_values ("auto",    PNG_FORMAT_AUTO,    _("Automatic"),    NULL,
+                                                                       "rgb8",    PNG_FORMAT_RGB8,    _("8 bpc RGB"),    NULL,
+                                                                       "gray8",   PNG_FORMAT_GRAY8,   _("8 bpc GRAY"),   NULL,
+                                                                       "rgba8",   PNG_FORMAT_RGBA8,   _("8 bpc RGBA"),   NULL,
+                                                                       "graya8",  PNG_FORMAT_GRAYA8,  _("8 bpc GRAYA"),  NULL,
+                                                                       "rgb16",   PNG_FORMAT_RGB16,   _("16 bpc RGB"),   NULL,
+                                                                       "gray16",  PNG_FORMAT_GRAY16,  _("16 bpc GRAY"),  NULL,
+                                                                       "rgba16",  PNG_FORMAT_RGBA16,  _("16 bpc RGBA"),  NULL,
+                                                                       "graya16", PNG_FORMAT_GRAYA16, _("16 bpc GRAYA"), NULL,
+                                                                       NULL),
+                                          "auto", G_PARAM_READWRITE);
 
       gimp_export_procedure_set_support_exif      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);
       gimp_export_procedure_set_support_iptc      (GIMP_EXPORT_PROCEDURE (procedure), TRUE);

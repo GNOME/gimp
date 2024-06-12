@@ -367,11 +367,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pnm");
 
-      GIMP_PROC_ARG_INT (procedure, "raw",
-                         _("Data formatting"),
-                         _("TRUE for raw output, FALSE for ascii output"),
-                         0, 1, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "raw",
+                                       _("Data formatting"),
+                                       _("TRUE for raw output, FALSE for ascii output"),
+                                       0, 1, 1,
+                                       G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PBM_EXPORT_PROC))
     {
@@ -403,11 +403,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pbm");
 
-      GIMP_PROC_ARG_INT (procedure, "raw",
-                         _("Data formatting"),
-                         _("TRUE for raw output, FALSE for ascii output"),
-                         0, 1, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "raw",
+                                       _("Data formatting"),
+                                       _("TRUE for raw output, FALSE for ascii output"),
+                                       0, 1, 1,
+                                       G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PGM_EXPORT_PROC))
     {
@@ -439,11 +439,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pgm");
 
-      GIMP_PROC_ARG_INT (procedure, "raw",
-                         _("Data formatting"),
-                         _("TRUE for raw output, FALSE for ascii output"),
-                         0, 1, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "raw",
+                                       _("Data formatting"),
+                                       _("TRUE for raw output, FALSE for ascii output"),
+                                       0, 1, 1,
+                                       G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PPM_EXPORT_PROC))
     {
@@ -475,11 +475,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ppm");
 
-      GIMP_PROC_ARG_INT (procedure, "raw",
-                         "Data formatting",
-                         _("TRUE for raw output, FALSE for ascii output"),
-                         0, 1, 1,
-                         G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, "raw",
+                                       "Data formatting",
+                                       _("TRUE for raw output, FALSE for ascii output"),
+                                       0, 1, 1,
+                                       G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PAM_EXPORT_PROC))
     {

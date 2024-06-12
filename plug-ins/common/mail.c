@@ -207,35 +207,35 @@ mail_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball and Peter Mattis",
                                       "1995-1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "filename",
-                            _("File_name"),
-                            _("The name of the file to save the image in"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "filename",
+                                          _("File_name"),
+                                          _("The name of the file to save the image in"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "to-address",
-                            _("_To"),
-                            _("The email address to send to"),
-                            "",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "to-address",
+                                          _("_To"),
+                                          _("The email address to send to"),
+                                          "",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "from-address",
-                            _("_From"),
-                            _("The email address for the From: field"),
-                            "",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "from-address",
+                                          _("_From"),
+                                          _("The email address for the From: field"),
+                                          "",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "subject",
-                            _("Su_bject"),
-                            _("The subject"),
-                            "",
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "subject",
+                                          _("Su_bject"),
+                                          _("The subject"),
+                                          "",
+                                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "comment",
-                            _("Co_mment"),
-                            _("The comment"),
-                            NULL,
-                            G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, "comment",
+                                          _("Co_mment"),
+                                          _("The comment"),
+                                          NULL,
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;
