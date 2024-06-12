@@ -144,9 +144,12 @@ AppPublisher=The GIMP Team
 AppPublisherURL=https://www.gimp.org/
 ;ControlPanel 'HelpLink'
 AppSupportURL=https://www.gimp.org/docs/
-;ControlPanel 'URLUpdateInfo'
-AppUpdatesURL=https://www.gimp.org/
-
+#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+	;ControlPanel 'URLUpdateInfo'
+	AppUpdatesURL=https://www.gimp.org/downloads/devel/
+#else
+	AppUpdatesURL=https://www.gimp.org/downloads/
+#endif
 
 ;INSTALLER PAGES
 PrivilegesRequiredOverridesAllowed=dialog
@@ -1277,8 +1280,13 @@ end;
 
 
 //7.2 INSTALL: show GIMP text (aka billboard) above progress bar
-const
-  GIMP_URL = 'https://www.gimp.org/';
+#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+	const
+		GIMP_URL = 'https://gimp.org/downloads/devel/';
+#else
+	const
+		GIMP_URL = 'https://gimp.org/downloads/';
+#endif
 
 procedure lblURL_OnClick(Sender: TObject);
 var ErrorCode: Integer;
