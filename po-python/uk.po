@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-11 17:18+0000\n"
-"PO-Revision-Date: 2024-06-11 21:26+0300\n"
+"POT-Creation-Date: 2024-06-11 21:01+0000\n"
+"PO-Revision-Date: 2024-06-12 20:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -36,7 +36,6 @@ msgid "Colored HTML text"
 msgstr "Кольровий текст HTML"
 
 #: plug-ins/python/colorxhtml.py:222
-#| msgid "Read characters from file"
 msgid "Rea_d characters from file"
 msgstr "Ч_итати символи з файла"
 
@@ -45,12 +44,10 @@ msgid "Read characters from file, if true, or use text entry"
 msgstr "Якщо «true», читати символи з файла, інакше — із введеного тексту"
 
 #: plug-ins/python/colorxhtml.py:225
-#| msgid "Characters"
 msgid "Charac_ters"
 msgstr "Си_мволи"
 
 #: plug-ins/python/colorxhtml.py:226
-#| msgid "Characters that will be used as colored pixels. "
 msgid "Characters that will be used as colored pixels."
 msgstr "Символи, які буде використано як кольорові пікселі."
 
@@ -72,9 +69,9 @@ msgstr "Записати окремий файл CSS"
 
 #. GUI only, used to create a widget to open a file if source-file is enabled
 #: plug-ins/python/colorxhtml.py:235
-#| msgid "Choose file"
-msgid "Choose _File"
-msgstr "Вибрати _файл"
+#| msgid "Choose _File"
+msgid "Choose File"
+msgstr "Виберіть файл"
 
 #: plug-ins/python/foggify.py:114
 msgid "Add a layer of fog"
