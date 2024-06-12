@@ -91,6 +91,48 @@ foreach ($langfile in $langsArray)
   }
 
 
+# Patch 'AppVerName' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
+if ($REVISION -eq '0')
+  {
+    $AppVer = $GIMP_VERSION
+  }
+else
+  {
+    $AppVer = "$GIMP_VERSION.$REVISION"
+  }
+
+function fix_msg ([string]$langsdir)
+{
+  #Prefer MSYS2 since PowerShell/.NET doesn't handle well files with mixed encodings
+  $GIMP_DIR = $PWD
+  Copy-Item build/windows/installer/lang/fix_msg.sh $langsdir
+  Set-Location $langsdir
+  (Get-Content fix_msg.sh) | Foreach-Object {$_ -replace "AppVer","$AppVer"} |
+  Set-Content fix_msg.sh
+  $Env:CHERE_INVOKING = "yes"
+  C:\msys64\usr\bin\bash -lc "bash fix_msg.sh"
+  Remove-Item fix_msg.sh
+  Set-Location $GIMP_DIR
+
+  #$langsArray_local = Get-ChildItem *.isl -Name
+  #foreach ($langfile in $langsArray_local)
+    #{
+    #  $msg = Get-Content $langfile
+    #  $linenumber = $msg | Select-String 'SetupWindowTitle' | Select-Object -ExpandProperty LineNumber
+    #  $msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
+    #         Set-Content -Path "$langfile" -Encoding UTF8
+    #  $msg = Get-Content $langfile
+    #  $linenumber = $msg | Select-String 'UninstallAppFullTitle' | Select-Object -ExpandProperty LineNumber
+    #  $msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
+    #         Set-Content -Path "$langfile" -Encoding UTF8
+    #}
+}
+
+fix_msg $INNOPATH
+fix_msg $INNOPATH\Languages
+fix_msg $INNOPATH\Languages\Unofficial
+
+
 $gen_path = Resolve-Path -Path "_build-*\build\windows\installer" | Select-Object -ExpandProperty Path
 if (Test-Path -Path $gen_path)
   {
