@@ -288,17 +288,14 @@ Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
-#define OMISSIONS="\gir-1.0,\man,\vala"
 Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "\gimp"; Components: {#DEPS_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "{#OMISSIONS},\gimp\*,\metainfo\*,ghostscript\*,\locale\*,\lua\*,\mypaint-data\*,"; Components: {#DEPS_ARCHS}; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "\gimp\*,\metainfo\*,\locale\*,\mypaint-data\*,"; Components: {#DEPS_ARCHS}; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;Optional neutral components (complete install)
-Source: "{#DEPS_DIR32}\share\ghostscript\*"; DestDir: "{app}\share\ghostscript"; Components: gs and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #include "base_po-files.list"
 #ifdef LUA
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\lua\*"; DestDir: "{app}\share\lua"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #ifdef PYTHON
@@ -326,9 +323,6 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir
 #include "base_twain32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-
-;special case due to MS-Windows engine
-Source: "{#DEPS_DIR32}\etc\gtk-3.0\*"; DestDir: "{app}\32\etc\gtk-3.0"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file

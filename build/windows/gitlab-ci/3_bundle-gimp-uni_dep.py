@@ -46,8 +46,8 @@ def main(binary, srcdirs, destdir, debug, dll_file):
   except FileNotFoundError:
     pass
 
-  sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
-                                                                                 binary, ', '.join(srcdirs)))
+  #sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
+  #                                                                               binary, ', '.join(srcdirs)))
   find_dependencies(os.path.abspath(binary), srcdirs)
   if debug in ['debug-only', 'debug-run']:
     if debug == 'debug-only':
@@ -147,7 +147,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
       for srcdir in srcdirs:
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
-          sys.stdout.write("{} (INFO): copying {} to {}\n".format(os.path.basename(__file__), full_file_name, destbin))
+          sys.stdout.write("(INFO): copying {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           break
       else:

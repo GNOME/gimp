@@ -7,25 +7,30 @@ else
   archsArray=('-x86')
 fi
 
-# Splited .debug (DWARF) debug symbols
-# (we extract and link them to make possible save space with Inno custom install)
+
+# (we extract and link DWARF .debug symbols to
+# make possible save space with Inno custom install)
 for ARTIFACTS_SUFFIX in "${archsArray[@]}"; do
-
-  ## Split/extract DWARF symbols from binary to .debug
-  find gimp${ARTIFACTS_SUFFIX} \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --only-keep-debug '{}' '{}'.debug \;
-
-  ## Link .debug to binary
-  find gimp${ARTIFACTS_SUFFIX} \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f -exec objcopy --add-gnu-debuglink='{}'.debug '{}' --strip-unneeded \;
+  binArray=($(find gimp${ARTIFACTS_SUFFIX} \( -iname '*.dll' -or -iname '*.exe' -or -iname '*.pyd' \) -type f))
+  for bin in "${binArray[@]}"; do
+    echo "(INFO): extracting DWARF symbols from $bin"
+    ## Split/extract DWARF symbols from binary to .debug
+    objcopy --only-keep-debug $bin $bin.debug
+    ## Link .debug to binary
+    objcopy --add-gnu-debuglink=$bin.debug $bin --strip-unneeded
+  done
 
   ## Move .debug files to .debug folder
-  debugList=$(find gimp${ARTIFACTS_SUFFIX} -iname '*.debug') && debugArray=($debugList)
+  debugArray=($(find gimp${ARTIFACTS_SUFFIX} -iname '*.debug'))
   for debug in "${debugArray[@]}"; do
-   #NAME="${debug##*/}"
     DIR="${debug%/*}"
-    echo "$debug -> $DIR/.debug"
     if [ ! -d "$DIR/.debug" ]; then
       mkdir "$DIR/.debug"
     fi
+    if [ "$DIR" != "$PREVIOUS_DIR" ]; then
+      echo "(INFO): moving DWARF symbols to $DIR/.debug"
+    fi
     mv "$debug" "$DIR/.debug"
+    export PREVIOUS_DIR="$DIR"
   done
 done
