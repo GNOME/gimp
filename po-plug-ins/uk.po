@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-08 19:56+0000\n"
-"PO-Revision-Date: 2024-06-09 17:58+0300\n"
+"POT-Creation-Date: 2024-06-13 23:41+0000\n"
+"PO-Revision-Date: 2024-06-14 22:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -62,11 +62,11 @@ msgstr "Потренувати козу (Сі)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1375
+#: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
-#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:590
+#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
@@ -143,7 +143,7 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
-#: plug-ins/common/file-pdf-load.c:591 plug-ins/common/grid.c:820
+#: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
@@ -694,16 +694,16 @@ msgstr "Розмір рамки"
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
 
-#: plug-ins/common/busy-dialog.c:255 plug-ins/common/busy-dialog.c:271
+#: plug-ins/common/busy-dialog.c:256 plug-ins/common/busy-dialog.c:272
 msgid "Please Wait"
 msgstr "Будь ласка, зачекайте"
 
 #. the title label
-#: plug-ins/common/busy-dialog.c:299
+#: plug-ins/common/busy-dialog.c:300
 msgid "Please wait for the operation to complete"
 msgstr "Будь ласка, зачекайте на завершення дії"
 
-#: plug-ins/common/busy-dialog.c:359
+#: plug-ins/common/busy-dialog.c:360
 msgid "Canceling..."
 msgstr "Скасовуємо…"
 
@@ -2544,13 +2544,18 @@ msgstr "Тип файлів, яким слід скористатися"
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: plug-ins/common/file-cel.c:157
+#: plug-ins/common/file-cel.c:157 plug-ins/common/file-cel.c:187
 msgid "_Palette file"
 msgstr "Файл _палітри"
 
 #: plug-ins/common/file-cel.c:158
 msgid "KCF file to load palette from"
 msgstr "Файл KCF, з якого слід завантажити палітру"
+
+#: plug-ins/common/file-cel.c:188
+#| msgid "KCF file to load palette from"
+msgid "File to save palette to"
+msgstr "Файл для зберігання палітри"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/file-cel.c:225
@@ -2591,7 +2596,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:374
+#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
 #: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:686
 #: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
 #: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
@@ -3337,7 +3342,7 @@ msgstr "_Ранг"
 msgid "Ranks of the dimensions"
 msgstr "Ранги розмірностей"
 
-#: plug-ins/common/file-gih.c:221
+#: plug-ins/common/file-gih.c:220 plug-ins/common/file-gih.c:221
 msgid "Selection modes"
 msgstr "Режими позначення"
 
@@ -4197,6 +4202,11 @@ msgstr "Зображення DCX ZSoft"
 msgid "Loads files in Zsoft DCX file format"
 msgstr "Завантажує файли у форматі DCX Zsoft"
 
+#: plug-ins/common/file-pcx.c:277
+#| msgid "Loads files in Zsoft PCX file format"
+msgid "Exports files in ZSoft PCX file format"
+msgstr "Експортує файли у форматі файлів PCX ZSoft"
+
 #: plug-ins/common/file-pcx.c:502
 msgid "Could not load PCX image: "
 msgstr "Не вдалося завантажити зображення PCX: "
@@ -4306,7 +4316,7 @@ msgstr "Нижня межа знаходиться за припустимими
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
 
-#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:197
+#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -4324,7 +4334,7 @@ msgstr ""
 "спрощення обробки на широкому спектрі різних платформ. Цей формат є "
 "віддаленим родичем PostScript."
 
-#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:213
+#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
@@ -4488,55 +4498,55 @@ msgstr ""
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Неможливо опрацювати розмір (ширину чи висоту) зображення."
 
-#: plug-ins/common/file-pdf-load.c:225
+#: plug-ins/common/file-pdf-load.c:226
 msgid "PDF password"
 msgstr "Пароль до PDF"
 
-#: plug-ins/common/file-pdf-load.c:226
+#: plug-ins/common/file-pdf-load.c:227
 msgid "The password to decrypt the encrypted PDF file"
 msgstr "Пароль для розшифрування зашифрованого файла PDF"
 
-#: plug-ins/common/file-pdf-load.c:231
+#: plug-ins/common/file-pdf-load.c:232
 msgid "Load in re_verse order"
 msgstr "Завантажити у зв_оротному порядку"
 
-#: plug-ins/common/file-pdf-load.c:232
+#: plug-ins/common/file-pdf-load.c:233
 msgid "Load PDF pages in reverse order"
 msgstr "Завантажити сторінки PDF у зворотному порядку"
 
-#: plug-ins/common/file-pdf-load.c:249
+#: plug-ins/common/file-pdf-load.c:250
 msgid "Open pages as"
 msgstr "Відкрити сторінки як"
 
-#: plug-ins/common/file-pdf-load.c:250 plug-ins/common/file-pdf-load.c:257
+#: plug-ins/common/file-pdf-load.c:251 plug-ins/common/file-pdf-load.c:258
 msgid "Number of pages to load (0 for all)"
 msgstr "Кількість сторінок, які слід завантажити (0 — усі)"
 
-#: plug-ins/common/file-pdf-load.c:256
+#: plug-ins/common/file-pdf-load.c:257
 msgid "N pages"
 msgstr "N сторінок"
 
-#: plug-ins/common/file-pdf-load.c:269
+#: plug-ins/common/file-pdf-load.c:270
 msgid "Pages"
 msgstr "Сторінки"
 
-#: plug-ins/common/file-pdf-load.c:270
+#: plug-ins/common/file-pdf-load.c:271
 msgid "The pages to load in the expected order"
 msgstr "Сторінки, які слід завантажити в очікуваному порядку"
 
-#: plug-ins/common/file-pdf-load.c:274
+#: plug-ins/common/file-pdf-load.c:275
 msgid "Use _Anti-aliasing"
 msgstr "_Застосувати згладжування"
 
-#: plug-ins/common/file-pdf-load.c:275
+#: plug-ins/common/file-pdf-load.c:276
 msgid "Render texts with anti-aliasing"
 msgstr "Показувати текст зі згладжуванням символів"
 
-#: plug-ins/common/file-pdf-load.c:280
+#: plug-ins/common/file-pdf-load.c:281
 msgid "_Fill transparent areas with white"
 msgstr "Запов_нити прозорі області білим кольором"
 
-#: plug-ins/common/file-pdf-load.c:281
+#: plug-ins/common/file-pdf-load.c:282
 msgid "Render all pages as opaque by filling the background in white"
 msgstr "Показати усі сторінки непрозорими, заповнивши тло білим"
 
@@ -4545,7 +4555,7 @@ msgstr "Показати усі сторінки непрозорими, зап�
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:421
+#: plug-ins/common/file-pdf-load.c:422
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -4556,24 +4566,24 @@ msgstr[1] ""
 msgstr[2] ""
 "Документ PDF «%1$s» має %3$d сторінок. Сторінка %2$d за межами діапазону."
 
-#: plug-ins/common/file-pdf-load.c:577
+#: plug-ins/common/file-pdf-load.c:578
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF захищено паролем; введіть пароль:"
 
-#: plug-ins/common/file-pdf-load.c:587
+#: plug-ins/common/file-pdf-load.c:588
 msgid "Encrypted PDF"
 msgstr "Шифрований PDF"
 
-#: plug-ins/common/file-pdf-load.c:614
+#: plug-ins/common/file-pdf-load.c:615
 msgid "Wrong password! Please input the right one:"
 msgstr "Хибний пароль! Введіть правильний:"
 
-#: plug-ins/common/file-pdf-load.c:632
+#: plug-ins/common/file-pdf-load.c:633
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Не вдалось завантажити «%s»: %s"
 
-#: plug-ins/common/file-pdf-load.c:1091
+#: plug-ins/common/file-pdf-load.c:1093
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Помилка при отриманні числа сторінок з даного PDF-файлу."
 
@@ -6132,7 +6142,6 @@ msgstr "WMF"
 
 #: plug-ins/common/file-wmf.c:238
 #, c-format
-#| msgid "Could not open '%s' for reading"
 msgid "Could not open '%s' for reading AA"
 msgstr "Не вдається відкрити «%s» для читання AA"
 
