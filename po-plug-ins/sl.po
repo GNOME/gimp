@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-08 17:30+0000\n"
-"PO-Revision-Date: 2024-06-08 21:21+0200\n"
+"POT-Creation-Date: 2024-06-13 23:41+0000\n"
+"PO-Revision-Date: 2024-06-14 22:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -65,11 +65,11 @@ msgstr "Povadi kozo (C)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1375
+#: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
-#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:590
+#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
@@ -146,7 +146,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
-#: plug-ins/common/file-pdf-load.c:591 plug-ins/common/grid.c:820
+#: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
@@ -694,16 +694,16 @@ msgstr "Velikost roba"
 msgid "Number of Colors"
 msgstr "Število barv"
 
-#: plug-ins/common/busy-dialog.c:255 plug-ins/common/busy-dialog.c:271
+#: plug-ins/common/busy-dialog.c:256 plug-ins/common/busy-dialog.c:272
 msgid "Please Wait"
 msgstr "Prosimo, počakajte"
 
 #. the title label
-#: plug-ins/common/busy-dialog.c:299
+#: plug-ins/common/busy-dialog.c:300
 msgid "Please wait for the operation to complete"
 msgstr "Počakajte na dokončanje operacije"
 
-#: plug-ins/common/busy-dialog.c:359
+#: plug-ins/common/busy-dialog.c:360
 msgid "Canceling..."
 msgstr "Prekinjanje ..."
 
@@ -2536,13 +2536,17 @@ msgstr "Vrsta datoteke, ki jo želite uporabiti"
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: plug-ins/common/file-cel.c:157
+#: plug-ins/common/file-cel.c:157 plug-ins/common/file-cel.c:187
 msgid "_Palette file"
 msgstr "_Datoteka palete"
 
 #: plug-ins/common/file-cel.c:158
 msgid "KCF file to load palette from"
 msgstr "Datoteka KCF za nalaganje palete"
+
+#: plug-ins/common/file-cel.c:188
+msgid "File to save palette to"
+msgstr "Datoteka za shranjevanje palete"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/file-cel.c:225
@@ -2583,7 +2587,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:374
+#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
 #: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:686
 #: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
 #: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
@@ -3323,7 +3327,7 @@ msgstr "_Rang"
 msgid "Ranks of the dimensions"
 msgstr "Rangi mer"
 
-#: plug-ins/common/file-gih.c:221
+#: plug-ins/common/file-gih.c:220 plug-ins/common/file-gih.c:221
 msgid "Selection modes"
 msgstr "Načini izbiranja"
 
@@ -4176,6 +4180,10 @@ msgstr "Slika ZSoft DCX"
 msgid "Loads files in Zsoft DCX file format"
 msgstr "Naloži datoteke v zapisu Zsoft DCX."
 
+#: plug-ins/common/file-pcx.c:277
+msgid "Exports files in ZSoft PCX file format"
+msgstr "Izvozi datoteke v zapisu ZSoft PCX"
+
 #: plug-ins/common/file-pcx.c:502
 msgid "Could not load PCX image: "
 msgstr "Slike PCX ni mogoče naložiti: "
@@ -4285,7 +4293,7 @@ msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
 
-#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:197
+#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
@@ -4303,7 +4311,7 @@ msgstr ""
 "zasnovan tako, da ga je lahko enostavno obdelati na različnih platformah in "
 "je oddaljeni bratranec PostScripta."
 
-#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:213
+#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
@@ -4465,55 +4473,55 @@ msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
-#: plug-ins/common/file-pdf-load.c:225
+#: plug-ins/common/file-pdf-load.c:226
 msgid "PDF password"
 msgstr "Geslo PDF"
 
-#: plug-ins/common/file-pdf-load.c:226
+#: plug-ins/common/file-pdf-load.c:227
 msgid "The password to decrypt the encrypted PDF file"
 msgstr "Geslo za dešifriranje šifrirane datoteke PDF"
 
-#: plug-ins/common/file-pdf-load.c:231
+#: plug-ins/common/file-pdf-load.c:232
 msgid "Load in re_verse order"
 msgstr "Naloži v _obratnem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:232
+#: plug-ins/common/file-pdf-load.c:233
 msgid "Load PDF pages in reverse order"
 msgstr "Naloži strani PDF v obratnem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:249
+#: plug-ins/common/file-pdf-load.c:250
 msgid "Open pages as"
 msgstr "Odpri strani kot"
 
-#: plug-ins/common/file-pdf-load.c:250 plug-ins/common/file-pdf-load.c:257
+#: plug-ins/common/file-pdf-load.c:251 plug-ins/common/file-pdf-load.c:258
 msgid "Number of pages to load (0 for all)"
 msgstr "Število strani za nalaganje (0 za vse)"
 
-#: plug-ins/common/file-pdf-load.c:256
+#: plug-ins/common/file-pdf-load.c:257
 msgid "N pages"
 msgstr "N strani"
 
-#: plug-ins/common/file-pdf-load.c:269
+#: plug-ins/common/file-pdf-load.c:270
 msgid "Pages"
 msgstr "Strani"
 
-#: plug-ins/common/file-pdf-load.c:270
+#: plug-ins/common/file-pdf-load.c:271
 msgid "The pages to load in the expected order"
 msgstr "Naložene strani v pričakovanem vrstnem redu"
 
-#: plug-ins/common/file-pdf-load.c:274
+#: plug-ins/common/file-pdf-load.c:275
 msgid "Use _Anti-aliasing"
 msgstr "Uporabi _glajenje robov"
 
-#: plug-ins/common/file-pdf-load.c:275
+#: plug-ins/common/file-pdf-load.c:276
 msgid "Render texts with anti-aliasing"
 msgstr "Upodobi besedila z glajenjem robov"
 
-#: plug-ins/common/file-pdf-load.c:280
+#: plug-ins/common/file-pdf-load.c:281
 msgid "_Fill transparent areas with white"
 msgstr "_Zapolni prosojna področja z belo barvo"
 
-#: plug-ins/common/file-pdf-load.c:281
+#: plug-ins/common/file-pdf-load.c:282
 msgid "Render all pages as opaque by filling the background in white"
 msgstr "Upodobi vse strani kot prekrivne z zapolnjevanjem ozadja z belo barvo"
 
@@ -4522,7 +4530,7 @@ msgstr "Upodobi vse strani kot prekrivne z zapolnjevanjem ozadja z belo barvo"
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:421
+#: plug-ins/common/file-pdf-load.c:422
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -4531,24 +4539,24 @@ msgstr[1] "Dokument PDF »%1$s« ima %3$d stran. Stran %2$d je izven dosega."
 msgstr[2] "Dokument PDF »%1$s« ima %3$d strani. Stran %2$d je izven dosega."
 msgstr[3] "Dokument PDF »%1$s« ima %3$d strani. Stran %2$d je izven dosega."
 
-#: plug-ins/common/file-pdf-load.c:577
+#: plug-ins/common/file-pdf-load.c:578
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF je zaščiten z geslom, vnesite geslo:"
 
-#: plug-ins/common/file-pdf-load.c:587
+#: plug-ins/common/file-pdf-load.c:588
 msgid "Encrypted PDF"
 msgstr "Šifrirani PDF"
 
-#: plug-ins/common/file-pdf-load.c:614
+#: plug-ins/common/file-pdf-load.c:615
 msgid "Wrong password! Please input the right one:"
 msgstr "Napačno geslo! Poskusite znova:"
 
-#: plug-ins/common/file-pdf-load.c:632
+#: plug-ins/common/file-pdf-load.c:633
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "»%s« ni mogoče naložiti: %s"
 
-#: plug-ins/common/file-pdf-load.c:1091
+#: plug-ins/common/file-pdf-load.c:1093
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Napaka pri pridobivanju števila strani iz dane datoteke PDF."
 
@@ -5174,19 +5182,19 @@ msgstr "%s-strani"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 
-#: plug-ins/common/file-ps.c:3837
+#: plug-ins/common/file-ps.c:3830
 msgid "Pages:"
 msgstr "Strani:"
 
-#: plug-ins/common/file-ps.c:3841
+#: plug-ins/common/file-ps.c:3834
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Strani za nalaganje (npr.: 1-4 ali 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3847
+#: plug-ins/common/file-ps.c:3840
 msgid "Open as"
 msgstr "Odpri kot"
 
-#: plug-ins/common/file-ps.c:3938
+#: plug-ins/common/file-ps.c:3931
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5194,28 +5202,28 @@ msgstr ""
 "Ko je vključeno, bo končna slika umerjena na podano velikost brez spremembe "
 "razmerja stranic."
 
-#: plug-ins/common/file-ps.c:3944
+#: plug-ins/common/file-ps.c:3937
 msgid "Image Size"
 msgstr "Velikost slike"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3964
+#: plug-ins/common/file-ps.c:3957
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3965
+#: plug-ins/common/file-ps.c:3958
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3966
+#: plug-ins/common/file-ps.c:3959
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3967
+#: plug-ins/common/file-ps.c:3960
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3974
+#: plug-ins/common/file-ps.c:3967
 msgid "Output"
 msgstr "Izhod"
 
