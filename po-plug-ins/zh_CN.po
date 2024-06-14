@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-08 19:56+0000\n"
-"PO-Revision-Date: 2024-06-09 20:42+0800\n"
+"POT-Creation-Date: 2024-06-13 23:41+0000\n"
+"PO-Revision-Date: 2024-06-14 16:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -63,11 +63,11 @@ msgstr "锻炼一只山羊（C）"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:279 plug-ins/common/cml-explorer.c:1375
+#: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
 #: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
-#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:590
+#: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
@@ -143,7 +143,7 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
-#: plug-ins/common/file-pdf-load.c:591 plug-ins/common/grid.c:820
+#: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
@@ -687,16 +687,16 @@ msgstr "边界大小"
 msgid "Number of Colors"
 msgstr "颜色数量"
 
-#: plug-ins/common/busy-dialog.c:255 plug-ins/common/busy-dialog.c:271
+#: plug-ins/common/busy-dialog.c:256 plug-ins/common/busy-dialog.c:272
 msgid "Please Wait"
 msgstr "请稍等"
 
 #. the title label
-#: plug-ins/common/busy-dialog.c:299
+#: plug-ins/common/busy-dialog.c:300
 msgid "Please wait for the operation to complete"
 msgstr "请等待操作完成"
 
-#: plug-ins/common/busy-dialog.c:359
+#: plug-ins/common/busy-dialog.c:360
 msgid "Canceling..."
 msgstr "正在取消…"
 
@@ -2499,13 +2499,17 @@ msgstr "使用的文件类型"
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: plug-ins/common/file-cel.c:157
+#: plug-ins/common/file-cel.c:157 plug-ins/common/file-cel.c:187
 msgid "_Palette file"
 msgstr "色板文件(_P)"
 
 #: plug-ins/common/file-cel.c:158
 msgid "KCF file to load palette from"
 msgstr "用来加载色板的 KCF 文件"
+
+#: plug-ins/common/file-cel.c:188
+msgid "File to save palette to"
+msgstr "用来保存色板的文件"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/file-cel.c:225
@@ -2546,7 +2550,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:374
+#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
 #: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:686
 #: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
 #: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
@@ -3262,7 +3266,7 @@ msgstr "等级(_R)"
 msgid "Ranks of the dimensions"
 msgstr "尺寸等级"
 
-#: plug-ins/common/file-gih.c:221
+#: plug-ins/common/file-gih.c:220 plug-ins/common/file-gih.c:221
 msgid "Selection modes"
 msgstr "选择模式"
 
@@ -4096,6 +4100,10 @@ msgstr "ZSoft DCX 图像"
 msgid "Loads files in Zsoft DCX file format"
 msgstr "加载 Zsoft DCX 格式的文件"
 
+#: plug-ins/common/file-pcx.c:277
+msgid "Exports files in ZSoft PCX file format"
+msgstr "以 Zsoft PCX 格式导出文件"
+
 #: plug-ins/common/file-pcx.c:502
 msgid "Could not load PCX image: "
 msgstr "无法加载 PCX 图像："
@@ -4205,7 +4213,7 @@ msgstr "下边框超出边界（须 < %d）：%d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
 
-#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:197
+#: plug-ins/common/file-pdf-export.c:314 plug-ins/common/file-pdf-load.c:198
 msgid "Portable Document Format"
 msgstr "便携式文档格式"
 
@@ -4222,7 +4230,7 @@ msgstr ""
 "将文件保存为 Adobe 的便携式文档格式。PDF 设计为多种不同平台便于处理，且为 "
 "PostScript 远房表亲的文件格式。"
 
-#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:213
+#: plug-ins/common/file-pdf-export.c:330 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
 msgstr "PDF"
 
@@ -4381,55 +4389,55 @@ msgstr "错误！为了保存该文件，应该添加至少一副图像！"
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "无法处理该图像的尺寸（无论宽度或高度）。"
 
-#: plug-ins/common/file-pdf-load.c:225
+#: plug-ins/common/file-pdf-load.c:226
 msgid "PDF password"
 msgstr "PDF 密码"
 
-#: plug-ins/common/file-pdf-load.c:226
+#: plug-ins/common/file-pdf-load.c:227
 msgid "The password to decrypt the encrypted PDF file"
 msgstr "解密该加密 PDF 文件的密码"
 
-#: plug-ins/common/file-pdf-load.c:231
+#: plug-ins/common/file-pdf-load.c:232
 msgid "Load in re_verse order"
 msgstr "逆序加载(_V)"
 
-#: plug-ins/common/file-pdf-load.c:232
+#: plug-ins/common/file-pdf-load.c:233
 msgid "Load PDF pages in reverse order"
 msgstr "按相反顺序加载 PDF 页面"
 
-#: plug-ins/common/file-pdf-load.c:249
+#: plug-ins/common/file-pdf-load.c:250
 msgid "Open pages as"
 msgstr "打开页面为"
 
-#: plug-ins/common/file-pdf-load.c:250 plug-ins/common/file-pdf-load.c:257
+#: plug-ins/common/file-pdf-load.c:251 plug-ins/common/file-pdf-load.c:258
 msgid "Number of pages to load (0 for all)"
 msgstr "要加载的页数（0 为所有）"
 
-#: plug-ins/common/file-pdf-load.c:256
+#: plug-ins/common/file-pdf-load.c:257
 msgid "N pages"
 msgstr "N 页"
 
-#: plug-ins/common/file-pdf-load.c:269
+#: plug-ins/common/file-pdf-load.c:270
 msgid "Pages"
 msgstr "页面"
 
-#: plug-ins/common/file-pdf-load.c:270
+#: plug-ins/common/file-pdf-load.c:271
 msgid "The pages to load in the expected order"
 msgstr "按预期顺序加载的页面"
 
-#: plug-ins/common/file-pdf-load.c:274
+#: plug-ins/common/file-pdf-load.c:275
 msgid "Use _Anti-aliasing"
 msgstr "使用抗锯齿(_A)"
 
-#: plug-ins/common/file-pdf-load.c:275
+#: plug-ins/common/file-pdf-load.c:276
 msgid "Render texts with anti-aliasing"
 msgstr "用抗锯齿渲染文字"
 
-#: plug-ins/common/file-pdf-load.c:280
+#: plug-ins/common/file-pdf-load.c:281
 msgid "_Fill transparent areas with white"
 msgstr "用白色填充透明区域(_F)"
 
-#: plug-ins/common/file-pdf-load.c:281
+#: plug-ins/common/file-pdf-load.c:282
 msgid "Render all pages as opaque by filling the background in white"
 msgstr "通过以白色填充背景将所有页面渲染为不透明"
 
@@ -4438,30 +4446,30 @@ msgstr "通过以白色填充背景将所有页面渲染为不透明"
 #. * third is number of pages.
 #. * Specify order as in English if needed.
 #.
-#: plug-ins/common/file-pdf-load.c:421
+#: plug-ins/common/file-pdf-load.c:422
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] "PDF 文档“%1$s”有“%3$d”页面。页面“%2$d”超出范围。"
 
-#: plug-ins/common/file-pdf-load.c:577
+#: plug-ins/common/file-pdf-load.c:578
 msgid "PDF is password protected, please input the password:"
 msgstr "PDF 被密码保护，请输入密码："
 
-#: plug-ins/common/file-pdf-load.c:587
+#: plug-ins/common/file-pdf-load.c:588
 msgid "Encrypted PDF"
 msgstr "加密 PDF"
 
-#: plug-ins/common/file-pdf-load.c:614
+#: plug-ins/common/file-pdf-load.c:615
 msgid "Wrong password! Please input the right one:"
 msgstr "密码错误！请输入正确密码："
 
-#: plug-ins/common/file-pdf-load.c:632
+#: plug-ins/common/file-pdf-load.c:633
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "无法载入“%s”：%s"
 
-#: plug-ins/common/file-pdf-load.c:1091
+#: plug-ins/common/file-pdf-load.c:1093
 msgid "Error getting number of pages from the given PDF file."
 msgstr "从指定 PDF 文件获取页数时出错。"
 
