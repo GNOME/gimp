@@ -102,6 +102,8 @@ variables:
   # CI-wide Debian variables
   ARTIFACTS_SUFFIX: "-x64"
   GIMP_PREFIX: "${CI_PROJECT_DIR}/_install${ARTIFACTS_SUFFIX}"
+  # Enable colorful output when supported (e.g. ninja, cppcheck)
+  CLICOLOR_FORCE: "1"
 
 
 stages:

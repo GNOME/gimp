@@ -289,10 +289,14 @@ if platform_windows and cc.get_id() == 'gcc'
   compiler_args += msvc_compat_args
 endif
 
-# Optimize DWARF symbols to Dr. Mingw
-# https://github.com/jrfonseca/drmingw/issues/42
+
 if platform_windows and cc.get_id() == 'clang'
+  # Optimize DWARF symbols to Dr. Mingw
+  # https://github.com/jrfonseca/drmingw/issues/42
   compiler_args += '-gdwarf-aranges'
+  # Workaround to get colored output
+  # https://github.com/msys2/MINGW-packages/issues/2988
+  compiler_args += '-fansi-escape-codes'
 endif
 
 # Generate .pdb (CodeView) debug symbols (makes possible to debug with DIA SDK)
