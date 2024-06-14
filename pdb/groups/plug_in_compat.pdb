@@ -3076,54 +3076,6 @@ CODE
 }
 
 sub plug_in_pixelize {
-    $blurb = 'Simplify image into an array of solid-colored squares';
-
-    $help = <<'HELP';
-Pixelize the contents of the specified drawable with specified
-pixelizing width.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'pixel_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
-	  desc => 'Pixel width (the decrease in resolution)' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode *node =
-        gegl_node_new_child (NULL,
-                             "operation", "gegl:pixelize",
-                             "size-x",    pixel_width,
-                             "size-y",    pixel_width,
-                             NULL);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Pixelize"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub plug_in_pixelize2 {
     $blurb = 'Simplify image into an array of solid-colored rectangles';
 
     $help = <<'HELP';
@@ -5391,7 +5343,6 @@ CODE
             plug_in_papertile
             plug_in_photocopy
             plug_in_pixelize
-            plug_in_pixelize2
             plug_in_plasma
             plug_in_polar_coords
             plug_in_red_eye_removal

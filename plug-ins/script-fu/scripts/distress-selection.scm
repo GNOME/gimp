@@ -36,16 +36,7 @@
        (theLayer 0)
        (theMode (car (gimp-image-get-base-type inImage)))
        (prevLayers (gimp-image-get-selected-layers inImage))
-       (horizontalRadius (* 0.32 inSmooth))
-       (verticalRadius (* 0.32 inSmooth))
        )
-
-    (if (= inSmoothH FALSE)
-        (set! horizontalRadius 0)
-    )
-    (if (= inSmoothV FALSE)
-        (set! verticalRadius 0)
-    )
 
     (gimp-context-push)
     (gimp-context-set-defaults)
@@ -89,11 +80,11 @@
                     inSpread
                     inSpread)
 
-    (plug-in-gauss RUN-NONINTERACTIVE
-           theImage theLayer horizontalRadius verticalRadius 0)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE
+           theImage theLayer inSmooth inSmoothH inSmoothV)
     (gimp-layer-scale theLayer theWidth theHeight TRUE)
     (plug-in-threshold-alpha RUN-NONINTERACTIVE theImage theLayer inThreshold)
-    (plug-in-gauss RUN-NONINTERACTIVE theImage theLayer 0.32 0.32 0)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE theImage theLayer 1 TRUE TRUE)
     (gimp-image-select-item inImage CHANNEL-OP-REPLACE theLayer)
     (gimp-image-remove-layer theImage theLayer)
     (if (and (= (car (gimp-item-id-is-channel inDrawable)) TRUE)

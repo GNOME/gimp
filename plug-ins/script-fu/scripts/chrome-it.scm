@@ -151,7 +151,7 @@
     (copy-layer-chrome-it img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height FALSE)
-    (plug-in-gauss RUN-NONINTERACTIVE img layer1 3.2 3.2 0)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-drawable-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
