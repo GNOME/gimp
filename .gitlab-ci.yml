@@ -19,9 +19,9 @@
 # - GIMP_CI_MESON_GCC: trigger the Debian GCC build with AppImage artifact.
 # - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build with AppImage artifact without vector icons.
 # - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
-# - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
-# - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
-# - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
+# - GIMP_CI_MSYS2 = WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
+# - GIMP_CI_MSYS2 = WIN64: trigger the native MSYS2 build for Win 64-bit.
+# - GIMP_CI_MSYS2 = WIN32: trigger the native MSYS2 build for Win 32-bit.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 # - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
 # - GIMP_CI_FLATPAK: trigger the flatpak build and publishing.
@@ -456,7 +456,7 @@ gimp-win-x64-cross:
       - done-dll.list
     expire_in: 2 days
 
-## WINDOWS Aarch64 CI (native MSYS2) ##
+## WINDOWS Aarch64, x64 and x86 CI (native MSYS2) ##
 
 .win:
   extends: .default
@@ -465,153 +465,77 @@ gimp-win-x64-cross:
       interruptible: true
     - if: '$GIMP_CI_WIN_INSTALLER != null'
     - <<: *CI_RELEASE
-  variables:
-    CHERE_INVOKING: "yes"
-  # We use the same universal variables but not directly from PS
-  before_script: []
-
-.win-a64:
-  extends: .win
-  rules:
-    - !reference [.win, rules]
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
     - if: '$GIMP_CI_MS_STORE != null'
-    - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
+    - if: '$GIMP_CI_MSYS2 != null'
+  parallel:
+    matrix:
+      - ARTIFACTS_SUFFIX: a64
+        TAG: windows-aarch64
+      - ARTIFACTS_SUFFIX: x64
+        TAG: win32-ps
+      - ARTIFACTS_SUFFIX: x86
+        TAG: win32-ps
   tags:
-    - windows-aarch64
+    - $TAG
   variables:
-    MSYSTEM: "CLANGARM64"
+    CHERE_INVOKING: "yes"
+  # We use the same universal variables but not directly from PS
   before_script:
-    # Verification to prevent the job from failing because stuck pacman (ARM only)
-    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
-    - if ($stuck -eq "True") {
-        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck";
-        Write-Output "Cleaned previous stuck pacman" }
-    - taskkill /F /FI "MODULES eq msys-2.0.dll"
-    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
+    - if (("$ARTIFACTS_SUFFIX" -eq 'a64') -or ("$GIMP_CI_MSYS2" -eq 'WIN_AARCH64')) {
+        $MSYSTEM = 'CLANGARM64';
+        $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType 'Leaf'}
+        if ($stuck -eq "True") {;
+          Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck";
+          Write-Output "Cleaned previous stuck pacman" };
+        taskkill /F /FI "MODULES eq msys-2.0.dll";
+        Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
+    - if (("$ARTIFACTS_SUFFIX" -eq 'x64') -or ("$GIMP_CI_MSYS2" -eq 'WIN64')) {
+        $MSYSTEM = 'CLANG64'}
+    - if (("$ARTIFACTS_SUFFIX" -eq 'x86') -or ("$GIMP_CI_MSYS2" -eq 'WIN32')) {
+        $MSYSTEM = 'MINGW32';
+        $CC = 'ccache cc';
+        $CXX = 'ccache c++';
+        $CC_LD = 'bfd';
+        $CXX_LD = 'bfd'}
 
-deps-win-a64:
-  extends: .win-a64
+deps-win:
+  extends: .win
   rules:
-    - !reference [.win-a64, rules]
+    - !reference [.win, rules]
   needs: []
   stage: dependencies
   script:
+    - "Msystem is $MSYSTEM"
     - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/1_build-deps-msys2.sh"
   artifacts:
     paths:
-      - _install-a64/
-      - _babl/_build-a64/meson-logs/meson-log.txt
-      - _gegl/_build-a64/meson-logs/meson-log.txt
+      - _install-$ARTIFACTS_SUFFIX/
+      - _babl/_build-$ARTIFACTS_SUFFIX/meson-logs/meson-log.txt
+      - _gegl/_build-$ARTIFACTS_SUFFIX/meson-logs/meson-log.txt
     expire_in: 2 hours
 
-gimp-win-a64:
-  extends: .win-a64
+gimp-win:
+  extends: .win
   rules:
-    - !reference [.win-a64, rules]
-  needs: ["deps-win-a64"]
+    - !reference [.win, rules]
+  needs: ["deps-win"]
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/2_build-gimp-msys2.sh"
     - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh"
+    - if ("$MSYSTEM" -eq 'MINGW32') {
+        C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh"}
   artifacts:
     paths:
-      - gimp-a64/
-      - _build-a64/meson-logs/meson-log.txt
+      - gimp-$ARTIFACTS_SUFFIX/
+      - _build-$ARTIFACTS_SUFFIX/meson-logs/meson-log.txt
       - done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
       - _build-a64/config.h
       - _build-a64/build/windows/installer/
       - _build-a64/build/windows/store/
-    expire_in: 2 days
-
-## WINDOWS x86_64 CI (native MSYS2) ##
-
-.win-x64:
-  extends: .win
-  rules:
-    - !reference [.win, rules]
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
-      interruptible: true
-    - if: '$GIMP_CI_MS_STORE != null'
-    - if: '$GIMP_CI_MSYS2_WIN64 != null'
-  tags:
-    - win32-ps
-  variables:
-    MSYSTEM: "CLANG64"
-
-deps-win-x64:
-  extends: .win-x64
-  rules:
-    - !reference [.win-x64, rules]
-  needs: []
-  stage: dependencies
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/1_build-deps-msys2.sh"
-  artifacts:
-    paths:
-      - _install-x64/
-    expire_in: 2 hours
-
-gimp-win-x64:
-  extends: .win-x64
-  rules:
-    - !reference [.win-x64, rules]
-  needs: ["deps-win-x64"]
-  stage: gimp
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh"
-  artifacts:
-    paths:
-      - gimp-x64/
-      - done-dll.list
-    expire_in: 2 days
-
-## WINDOWS x86 CI (native MSYS2) ##
-
-.win-x86:
-  extends: .win
-  rules:
-    - !reference [.win, rules]
-    - if: '$GIMP_CI_MSYS2_WIN32 != null'
-  tags:
-    - win32-ps
-  variables:
-    MSYSTEM: "MINGW32"
-    CC: "ccache cc"
-    CXX: "ccache c++"
-    CC_LD: bfd
-    CXX_LD: bfd
-
-deps-win-x86:
-  extends: .win-x86
-  rules:
-    - !reference [.win-x86, rules]
-  needs: []
-  stage: dependencies
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/1_build-deps-msys2.sh"
-  artifacts:
-    paths:
-      - _install-x86/
-    expire_in: 2 hours
-
-gimp-win-x86:
-  extends: .win-x86
-  rules:
-    - !reference [.win-x86, rules]
-  needs: ["deps-win-x86"]
-  stage: gimp
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/3_bundle-gimp-uni_base.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/gitlab-ci/3_bundle-gimp-uni_sym.sh"
-  artifacts:
-    paths:
-      - gimp-x86/
-      - done-dll.list
     expire_in: 2 days
 
 
@@ -799,14 +723,24 @@ dist-flatpak-weekly:
     expire_in: 8 days
 
 dist-installer-weekly:
-  extends: .win
+  extends: .default
   rules:
     - !reference [.win, rules]
-  needs: ["gimp-win-a64", "gimp-win-x64", "gimp-win-x86"]
+  needs:
+    - job: gimp-win
+      parallel:
+        matrix:
+          - ARTIFACTS_SUFFIX: a64
+            TAG: windows-aarch64
+          - ARTIFACTS_SUFFIX: x64
+            TAG: win32-ps
+          - ARTIFACTS_SUFFIX: x86
+            TAG: win32-ps
   stage: distribution
   tags:
     - windows-aarch64
   variables:
+    CHERE_INVOKING: "yes"
     MSYSTEM: "CLANGARM64"
   cache: []
   script:
@@ -820,13 +754,20 @@ dist-installer-weekly:
     expire_in: 8 days
 
 dist-store-weekly:
-  extends: .win
+  extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
     - if: '$GIMP_CI_MS_STORE != null'
     - <<: *CI_RELEASE
-  needs: ["gimp-win-a64", "gimp-win-x64"]
+  needs:
+    - job: gimp-win
+      parallel:
+        matrix:
+          - ARTIFACTS_SUFFIX: a64
+            TAG: windows-aarch64
+          - ARTIFACTS_SUFFIX: x64
+            TAG: win32-ps
   stage: distribution
   tags:
     - win32-ps
