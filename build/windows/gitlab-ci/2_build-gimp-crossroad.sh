@@ -16,7 +16,18 @@ if [ -z "$GITLAB_CI" ]; then
   PARENT_DIR='../'
 fi
 
-# So that we can use gimp-console from gimp-debian-x64 project.
+
+# FIXME: We need native/Linux gimp-console.
+if [ ! -d '_build-x64' ]; then
+  echo -e '\033[31m(ERROR)\033[0m: Before running this script, first build GIMP natively in _build-x64'
+fi
+if [ ! -d '../_install-x64' ]; then
+  echo -e '\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in ../_install-x64'
+fi
+if [ ! -d '_build-x64' ] || [ ! -d '../_install-x64' ]; then
+  echo 'Patches are very welcome: https://gitlab.gnome.org/GNOME/gimp/-/issues/11544'
+  exit 1
+fi
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build-x64/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 mkdir -p $PWD/${PARENT_DIR}.local/bin
 GIMP_CONSOLE_PATH=$PWD/${PARENT_DIR}.local/bin/gimp-console-$GIMP_APP_VERSION
