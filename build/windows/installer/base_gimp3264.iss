@@ -215,6 +215,13 @@ UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
 UninstallFilesDir={app}\uninst
 
 
+[LangOptions]
+;Win32 Vista design (despite the name it is still used in Win32 Win 11 apps)
+DialogFontName=Segoe UI
+DialogFontSize=9
+WelcomeFontName=Segoe UI
+WelcomeFontSize=12
+
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
 #include "base_po-msg.list"
@@ -895,7 +902,7 @@ begin
 end;
 
 const
-  RTFHeader = '{\rtf1\deff0{\fonttbl{\f0\fswiss\fprq2\fcharset0 Tahoma;}{\f1\fnil\fcharset2 Symbol;}}\viewkind4\uc1\fs16';
+  RTFHeader = '{\rtf1\deff0{\fonttbl{\f0\fswiss\fprq2\fcharset0 Segoe UI;}{\f1\fnil\fcharset2 Segoe UI Symbol;}}\viewkind4\uc1\fs18';
 	//RTFBullet = '{\pntext\f1\''B7\tab}';
 function UpdateReadyMemo(pSpace, pNewLine, pMemoUserInfo, pMemoDirInfo, pMemoTypeInfo, pMemoComponentsInfo, pMemoGroupInfo, pMemoTasksInfo: String): String;
 var sText: String;
