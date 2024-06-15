@@ -274,8 +274,8 @@ deps-debian-x64:
   artifacts:
     paths:
       - _install${ARTIFACTS_SUFFIX}/
-      - _babl/_build${ARTIFACTS_SUFFIX}/
-      - _gegl/_build${ARTIFACTS_SUFFIX}/
+      - _babl/_build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
+      - _gegl/_build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-debian-x64:
@@ -324,6 +324,7 @@ gimp-debian-x64:
     paths:
       - build/linux/appimage/_Output/
       - _install${ARTIFACTS_SUFFIX}/
+      - _build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
       - _build${ARTIFACTS_SUFFIX}/meson-dist/
       - _build${ARTIFACTS_SUFFIX}/config.h
       - _build${ARTIFACTS_SUFFIX}/devel-docs/
@@ -434,8 +435,8 @@ deps-win-x64-cross:
   artifacts:
     paths:
       - .local/
-      - _deps/_babl/_build-x64-cross/
-      - _deps/_gegl/_build-x64-cross/
+      - _babl/_build-x64-cross/meson-logs/meson-log.txt
+      - _gegl/_build-x64-cross/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win-x64-cross:
@@ -451,6 +452,7 @@ gimp-win-x64-cross:
     expose_as: 'Windows zip'
     paths:
       - gimp-x64/
+      - _build-x64-cross/meson-logs/meson-log.txt
       - done-dll.list
     expire_in: 2 days
 
@@ -500,6 +502,8 @@ deps-win-a64:
   artifacts:
     paths:
       - _install-a64/
+      - _babl/_build-a64/meson-logs/meson-log.txt
+      - _gegl/_build-a64/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win-a64:
@@ -514,6 +518,7 @@ gimp-win-a64:
   artifacts:
     paths:
       - gimp-a64/
+      - _build-a64/meson-logs/meson-log.txt
       - done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
       - _build-a64/config.h
@@ -686,7 +691,7 @@ cppcheck:
     - apt-get update
     - apt-get install -y cppcheck
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build${ARTIFACTS_SUFFIX} -i _build-x64-cross -i _deps -i _install${ARTIFACTS_SUFFIX} -i .local -i .cache -i _ccache -i gimp-x64 .
+        -i _build${ARTIFACTS_SUFFIX} -i _build-x64-cross -i _babl -i _gegl -i _install${ARTIFACTS_SUFFIX} -i .local -i .cache -i _ccache -i gimp-x64 .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
