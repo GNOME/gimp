@@ -78,7 +78,7 @@ workflow:
     CC_LD: lld
     CXX_LD: lld
   cache:
-    key: ${CI_JOB_NAME}${VARIANT}
+    key: ${CI_JOB_NAME_SLUG}${VARIANT}
     paths:
       - _ccache/
   # Universal variables (works in all POSIX OSes and archs)
@@ -92,7 +92,7 @@ workflow:
     - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
   # Common artifacts behavior
   artifacts:
-    name: "${CI_JOB_NAME}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
+    name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
 
 variables:
@@ -439,48 +439,66 @@ gimp-win-x64-cross:
       - done-dll.list
     expire_in: 2 days
 
-## WINDOWS Aarch64 CI (native MSYS2) ##
+## WINDOWS Aarch64, x64 and x86 CI (native MSYS2) ##
 
 .win:
   extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+    - if: '$GIMP_CI_MS_STORE != null'
+    - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
+    - if: '$GIMP_CI_MSYS2_WIN64 != null'
+    - if: '$GIMP_CI_MSYS2_WIN32 != null'
     - <<: *CI_RELEASE
+  parallel:
+    matrix:
+      - MSYSTEM: CLANGARM64
+        TAG: windows-aarch64
+      - MSYSTEM: CLANG64
+        TAG: win32-ps
+      - MSYSTEM: MINGW32
+        TAG: win32-ps
+  tags:
+    - $TAG
   variables:
     CHERE_INVOKING: "yes"
   # We use the same universal variables but not directly from PS
   before_script: []
+  script:
+    - if ($GIMP_CI_MSYS2_WIN_AARCH64 -and $MSYSTEM -ne 'CLANGARM64') {
+        Write-Output "Nothing to do";
+        exit 0 }
+    - if ($GIMP_CI_MSYS2_WIN64 -and $MSYSTEM -ne 'CLANG64') {
+        Write-Output "Nothing to do";
+        exit 0 }
+    - if ($GIMP_CI_MSYS2_WIN32 -and $MSYSTEM -ne 'MINGW32') {
+        Write-Output "Nothing to do";
+        exit 0 }
+    - if (($GIMP_CI_MS_STORE -or $CI_MERGE_REQUEST_LABELS -eq '5. Microsoft Store') -and $MSYSTEM -eq 'MINGW32') { exit 0 }
+    - if ($MSYSTEM -eq 'CLANGARM64') {
+        $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType 'Leaf'}
+        if ($stuck -eq "True") {;
+          Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck";
+          Write-Output "Cleaned previous stuck pacman" };
+        taskkill /F /FI "MODULES eq msys-2.0.dll";
+        Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
+    - if ($MSYSTEM -eq 'MINGW32') {
+        $CC = 'ccache cc';
+        $CXX = 'ccache c++';
+        $CC_LD = 'bfd';
+        $CXX_LD = 'bfd'}
 
-.win-a64:
+deps-win:
   extends: .win
   rules:
     - !reference [.win, rules]
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
-      interruptible: true
-    - if: '$GIMP_CI_MS_STORE != null'
-    - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
-  tags:
-    - windows-aarch64
-  variables:
-    MSYSTEM: "CLANGARM64"
-  before_script:
-    # Verification to prevent the job from failing because stuck pacman (ARM only)
-    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
-    - if ($stuck -eq "True") {
-        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck";
-        Write-Output "Cleaned previous stuck pacman" }
-    - taskkill /F /FI "MODULES eq msys-2.0.dll"
-    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
-
-deps-win-a64:
-  extends: .win-a64
-  rules:
-    - !reference [.win-a64, rules]
   needs: []
   stage: dependencies
   script:
+    - !reference [.win, script]
     - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
   artifacts:
     paths:
@@ -489,112 +507,27 @@ deps-win-a64:
       - _gegl/_build/meson-logs/meson-log.txt
     expire_in: 2 hours
 
-gimp-win-a64:
-  extends: .win-a64
+gimp-win:
+  extends: .win
   rules:
-    - !reference [.win-a64, rules]
-  needs: ["deps-win-a64"]
+    - !reference [.win, rules]
+  needs: ["deps-win"]
   stage: gimp
   script:
+    - !reference [.win, script]
     - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
     - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_base.sh"
+    - if ("$MSYSTEM" -eq 'MINGW32') {
+        C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_sym.sh"}
   artifacts:
     paths:
-      - gimp-a64/
+      - gimp-*/
       - _build/meson-logs/meson-log.txt
       - done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
       - _build/config.h
       - _build/build/windows/installer/
       - _build/build/windows/store/
-    expire_in: 2 days
-
-## WINDOWS x86_64 CI (native MSYS2) ##
-
-.win-x64:
-  extends: .win
-  rules:
-    - !reference [.win, rules]
-    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
-      interruptible: true
-    - if: '$GIMP_CI_MS_STORE != null'
-    - if: '$GIMP_CI_MSYS2_WIN64 != null'
-  tags:
-    - win32-ps
-  variables:
-    MSYSTEM: "CLANG64"
-
-deps-win-x64:
-  extends: .win-x64
-  rules:
-    - !reference [.win-x64, rules]
-  needs: []
-  stage: dependencies
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
-  artifacts:
-    paths:
-      - _install/
-    expire_in: 2 hours
-
-gimp-win-x64:
-  extends: .win-x64
-  rules:
-    - !reference [.win-x64, rules]
-  needs: ["deps-win-x64"]
-  stage: gimp
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_base.sh"
-  artifacts:
-    paths:
-      - gimp-x64/
-      - done-dll.list
-    expire_in: 2 days
-
-## WINDOWS x86 CI (native MSYS2) ##
-
-.win-x86:
-  extends: .win
-  rules:
-    - !reference [.win, rules]
-    - if: '$GIMP_CI_MSYS2_WIN32 != null'
-  tags:
-    - win32-ps
-  variables:
-    MSYSTEM: "MINGW32"
-    CC: "ccache cc"
-    CXX: "ccache c++"
-    CC_LD: bfd
-    CXX_LD: bfd
-
-deps-win-x86:
-  extends: .win-x86
-  rules:
-    - !reference [.win-x86, rules]
-  needs: []
-  stage: dependencies
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
-  artifacts:
-    paths:
-      - _install/
-    expire_in: 2 hours
-
-gimp-win-x86:
-  extends: .win-x86
-  rules:
-    - !reference [.win-x86, rules]
-  needs: ["deps-win-x86"]
-  stage: gimp
-  script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_base.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_sym.sh"
-  artifacts:
-    paths:
-      - gimp-x86/
-      - done-dll.list
     expire_in: 2 days
 
 
@@ -783,14 +716,27 @@ dist-flatpak-weekly:
     expire_in: 8 days
 
 dist-installer-weekly:
-  extends: .win
+  extends: .default
   rules:
-    - !reference [.win, rules]
-  needs: ["gimp-win-a64", "gimp-win-x64", "gimp-win-x86"]
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
+      interruptible: true
+    - if: '$GIMP_CI_WIN_INSTALLER != null'
+    - <<: *CI_RELEASE
+  needs:
+    - job: gimp-win
+      parallel:
+        matrix:
+          - MSYSTEM: CLANGARM64
+            TAG: windows-aarch64
+          - MSYSTEM: CLANG64
+            TAG: win32-ps
+          - MSYSTEM: MINGW32
+            TAG: win32-ps
   stage: distribution
   tags:
     - windows-aarch64
   variables:
+    CHERE_INVOKING: "yes"
     MSYSTEM: "CLANGARM64"
   cache: []
   script:
@@ -804,13 +750,20 @@ dist-installer-weekly:
     expire_in: 8 days
 
 dist-store-weekly:
-  extends: .win
+  extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
     - if: '$GIMP_CI_MS_STORE != null'
     - <<: *CI_RELEASE
-  needs: ["gimp-win-a64", "gimp-win-x64"]
+  needs:
+    - job: gimp-win
+      parallel:
+        matrix:
+          - MSYSTEM: CLANGARM64
+            TAG: windows-aarch64
+          - MSYSTEM: CLANG64
+            TAG: win32-ps
   stage: distribution
   tags:
     - win32-ps
