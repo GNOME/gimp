@@ -290,28 +290,29 @@ Source: "installsplash.bmp"; Flags: dontcopy
 Source: "installsplash_small.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
+#define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
 ;Required neutral components (minimal install)
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
-Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\environ\*"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\environ\*"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
+Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
-Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "\gimp"; Components: {#DEPS_ARCHS}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "\gimp\*,\metainfo\*,\locale\*,\mypaint-data\*,"; Components: {#DEPS_ARCHS}; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "\gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "\gimp\*,\metainfo\*,\locale\*,\mypaint-data\*,"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 
 ;Optional neutral components (complete install)
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
 #include "base_po-files.list"
 #ifdef LUA
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: lua and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: lua and ({#GIMP_ARCHS}); Flags: {#COMMON_FLAGS}
 #endif
-Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 #ifdef PYTHON
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: py and ({#GIMP_ARCHS}); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\pygimp.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: py and ({#GIMP_ARCHS}); Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\*.py"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Components: py; Flags: {#COMMON_FLAGS}
 #endif
 
 
@@ -320,7 +321,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\*.py"; DestDir: "{a
 #define PLATFORM X86
 #include "base_executables.isi"
 ;special case, since 64bit version doesn't work, and is excluded in base_executables.isi
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Components: gimp32; Flags: {#COMMON_FLAGS}
 
 ;x86_64
 #define PLATFORM X64
@@ -333,7 +334,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir
 ;32-on-64bit
 #include "base_twain32on64.isi"
 ;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
-Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
