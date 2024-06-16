@@ -390,6 +390,10 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
 
 #endif //NOFILES
 
+;We need at least an empty folder to avoid GIMP*_LOCALEDIR warnings
+[Dirs]
+Name: "{app}\32\share\locale"; Components: gimp32on64; Flags: uninsalwaysuninstall
+
 
 [InstallDelete]
 Type: files; Name: "{app}\bin\gimp-?.?.exe"
