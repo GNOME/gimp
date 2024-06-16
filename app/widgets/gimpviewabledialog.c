@@ -106,6 +106,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *scrolled_window;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -135,6 +136,16 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_box_pack_start (GTK_BOX (vbox), dialog->desc_label, FALSE, FALSE, 0);
   gtk_widget_show (dialog->desc_label);
 
+  /* Put the image name in a scrolled window so it does not automatically
+   * increase the width of the dialog, but still allows it to be expanded
+   * if the user wants to see full name */
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_EXTERNAL,
+                                  GTK_POLICY_NEVER);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, FALSE, FALSE, 0);
+  gtk_widget_set_visible (scrolled_window, TRUE);
+
   dialog->viewable_label = g_object_new (GTK_TYPE_LABEL,
                                          "xalign",    0.0,
                                          "ellipsize", PANGO_ELLIPSIZE_END,
@@ -142,8 +153,8 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gimp_label_set_attributes (GTK_LABEL (dialog->viewable_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
-  gtk_box_pack_start (GTK_BOX (vbox), dialog->viewable_label, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->viewable_label);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->viewable_label);
+  gtk_widget_set_visible (dialog->viewable_label, TRUE);
 }
 
 static void
@@ -252,15 +263,15 @@ gimp_viewable_dialog_new (GList        *viewables,
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "viewables",       viewables,
-                         "context",        context,
-                         "title",          title,
-                         "role",           role,
-                         "help-func",      help_func,
-                         "help-id",        help_id,
-                         "icon-name",      icon_name,
-                         "description",    desc,
-                         "parent",         parent,
-                         "use-header-bar", use_header_bar,
+                         "context",         context,
+                         "title",           title,
+                         "role",            role,
+                         "help-func",       help_func,
+                         "help-id",         help_id,
+                         "icon-name",       icon_name,
+                         "description",     desc,
+                         "parent",          parent,
+                         "use-header-bar",  use_header_bar,
                          NULL);
 
   va_start (args, help_id);
@@ -382,6 +393,7 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
     }
 
   gtk_label_set_text (GTK_LABEL (dialog->viewable_label), name);
+  gtk_widget_set_tooltip_text (dialog->viewable_label, name);
   g_free (name);
 }
 
