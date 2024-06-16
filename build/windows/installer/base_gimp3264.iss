@@ -339,8 +339,34 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; D
 Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: {#GIMP_ARCHS}; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
 Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
 
-;overridden configuration files
-#include "data_configoverride.isi"
+;allow specific configuration files to be overridden by files in a specific directory
+#define FindHandle
+
+#sub ProcessConfigFile
+  #define FileName FindGetFileName(FindHandle)
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
+  #if BaseDir != GIMP_DIR32
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
+  #endif
+#endsub
+
+#define FindResult
+#sub ProcessConfigDir
+  #emit ';; ' + ConfigDir
+  #emit ';; ' + BaseDir
+  #for {FindHandle = FindResult = FindFirst(AddBackslash(BaseDir) + AddBackSlash(ConfigDir) + "*", 0); \
+      FindResult; FindResult = FindNext(FindHandle)} ProcessConfigFile
+  #if FindHandle
+    #expr FindClose(FindHandle)
+  #endif
+#endsub
+
+#define public BaseDir GIMP_DIR32
+#define public ConfigDir "etc\gimp\" + GIMP_API_VERSION
+#expr ProcessConfigDir
+
+#define public ConfigDir "etc\fonts"
+#expr ProcessConfigDir
 
 #endif //NOFILES
 
@@ -374,10 +400,58 @@ Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\Curre
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 
+
 [Registry]
-;remove LIBTHAI_DICTDIR variable set by original 2.10.8 installer
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: none; ValueName: "LIBTHAI_DICTDIR"; Flags: deletevalue uninsdeletevalue noerror
-#include "data_associations.isi"
+;Shell "Open with"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "GIMP"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe,1"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"" ""%1"""
+
+Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "GIMP"
+Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe,0"
+Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "GIMP is a free raster graphics editor used for image retouching and editing, free-form drawing, converting between different image formats, and more specialized tasks."
+
+Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "GIMP {#GIMP_APP_VERSION}"; ValueData: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; Flags: uninsdeletevalue
+
+;Associations
+#pragma option -e-
+#define protected
+#define Line=0
+#define FileLine
+#sub ProcessAssociation
+	#if !defined(Finished)
+		#if Copy(FileLine,1,1)=="#" || FileLine==""
+			//skip comments and empty lines
+		#else
+			#pragma message "Processing data_associations.list: " + FileLine
+Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#MAJOR}.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#GIMP_VERSION} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe,1"
+Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: ""
+Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: "GIMP{#MAJOR}.{#FileLine}"
+		#endif
+	#endif
+#endsub
+
+#define FileHandle
+#for {FileHandle = FileOpen(AddBackslash(SourcePath)+"data_associations.list"); \
+  FileHandle && !FileEof(FileHandle); FileLine = FileRead(FileHandle)} \
+  ProcessAssociation
+#if FileHandle
+  #expr FileClose(FileHandle)
+#endif
+
+;special case for .ico files
+Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#MAJOR}.ico"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#GIMP_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
+Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.ico\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".ico"; ValueData: ""
+Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".ico"; ValueData: "GIMP{#MAJOR}.{#FileLine}"
+
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
