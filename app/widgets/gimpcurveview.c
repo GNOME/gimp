@@ -782,6 +782,7 @@ gimp_curve_view_draw (GtkWidget *widget,
 
       cairo_push_group (cr);
 
+      gdk_cairo_set_source_rgba (cr, &grid_color);
       cairo_rectangle (cr, x + 0.5, y + 0.5, w, h);
       cairo_fill_preserve (cr);
 
