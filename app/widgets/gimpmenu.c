@@ -250,6 +250,11 @@ gimp_menu_append (GimpMenuShell *shell,
           g_signal_connect (submenu, "notify::color",
                             G_CALLBACK (gimp_menu_submenu_notify_color),
                             item);
+
+          /* End any radio group of the completed submenu.
+           * Any subsequent radio menu items start a new radio group.
+           */
+          group = NULL;
         }
       else
         {
