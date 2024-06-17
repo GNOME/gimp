@@ -137,7 +137,12 @@ conf_app GI_TYPELIB_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
 ### Copy JavaScript plug-ins support
 find_bin "gjs*"
 ### Copy Lua plug-ins support (NOT WORKING)
-#find_bin "lua*"
+prep_pkg lua-lgi
+find_bin "lua*"
+find_lib "liblua*"
+find_lib "lua"
+find_dat "/usr/share/lua" "*"
+find_dat "/usr/share/luajit-2.1.0-beta3" "*"
 #find_lib "liblua*"
 ### Copy Python plug-ins support
 find_bin "python*"
