@@ -147,6 +147,7 @@ if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
 
   bundle "$MSYS_PREFIX" bin/luajit.exe
   bundle "$MSYS_PREFIX" lib/lua/
+  bundle "$MSYS_PREFIX" share/lua/
 
   bundle "$MSYS_PREFIX" bin/python*.exe
   bundle "$MSYS_PREFIX" lib/python*/
