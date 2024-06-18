@@ -102,13 +102,12 @@ struct _EXRLoader
              (channels_.findChannel("RY") ||
               channels_.findChannel("BY")))
       {
-        format_string_ = "RGB";
-        image_type_ = IMAGE_TYPE_RGB;
+        format_string_ = "Y'CbCr";
+        image_type_ = IMAGE_TYPE_YUV;
 
+        /* TODO: Use RGBA interface to incorporate
+         * RY/BY chroma channels */
         pt_ = channels_.findChannel("Y")->type;
-
-        // FIXME: no chroma handling for now.
-        throw;
       }
     else if (channels_.findChannel("Y"))
       {
@@ -194,6 +193,7 @@ struct _EXRLoader
         fb.insert(unknown_channel_name_, Slice(pt_, base, bpp, 0, 1, 1, 0.5));
         break;
 
+      case IMAGE_TYPE_YUV:
       case IMAGE_TYPE_GRAY:
         fb.insert("Y", Slice(pt_, base, bpp, 0, 1, 1, 0.5));
         if (hasAlpha())

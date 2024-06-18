@@ -35,6 +35,7 @@ typedef enum
 typedef enum
 {
   IMAGE_TYPE_RGB,
+  IMAGE_TYPE_YUV,
   IMAGE_TYPE_GRAY,
   IMAGE_TYPE_UNKNOWN_1_CHANNEL
 } EXRImageType;

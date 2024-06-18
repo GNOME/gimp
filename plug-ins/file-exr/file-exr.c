@@ -66,7 +66,7 @@ static GimpImage      * load_image           (GFile                 *file,
                                               gboolean               interactive,
                                               GError               **error);
 static void             sanitize_comment     (gchar                 *comment);
-void                    load_dialog          (void);
+void                    load_dialog          (EXRImageType           image_type);
 
 
 G_DEFINE_TYPE (Exr, exr, GIMP_TYPE_PLUG_IN)
@@ -244,6 +244,7 @@ load_image (GFile                 *file,
       image_type = GIMP_RGB;
       layer_type = has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
+    case IMAGE_TYPE_YUV:
     case IMAGE_TYPE_GRAY:
     case IMAGE_TYPE_UNKNOWN_1_CHANNEL:
       image_type = GIMP_GRAY;
@@ -267,9 +268,10 @@ load_image (GFile                 *file,
       goto out;
     }
 
-  if (exr_loader_get_image_type (loader) == IMAGE_TYPE_UNKNOWN_1_CHANNEL &&
-      interactive)
-    load_dialog ();
+  if (interactive                                                         &&
+      (exr_loader_get_image_type (loader) == IMAGE_TYPE_UNKNOWN_1_CHANNEL ||
+       exr_loader_get_image_type (loader) == IMAGE_TYPE_YUV))
+    load_dialog (exr_loader_get_image_type (loader));
 
   /* try to load an icc profile, it will be generated on the fly if
    * chromaticities are given
@@ -420,12 +422,12 @@ sanitize_comment (gchar *comment)
 }
 
 void
-load_dialog (void)
+load_dialog (EXRImageType image_type)
 {
   GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *vbox;
-  gchar     *label_text;
+  gchar     *label_text = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -441,11 +443,17 @@ load_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
-  label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Unknown Channel Name"),
-                                _("The image contains a single unknown channel.\n"
-                                  "It has been converted to grayscale."));
+  if (image_type == IMAGE_TYPE_UNKNOWN_1_CHANNEL)
+    label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Unknown Channel Name"),
+                                  _("The image contains a single unknown channel.\n"
+                                    "It has been converted to grayscale."));
+  else if (image_type == IMAGE_TYPE_YUV)
+    label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Chroma Channels"),
+                                  _("OpenEXR chroma channels are not yet supported.\n"
+                                    "They have been discarded."));
+
   label = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label), label_text);
 
@@ -454,11 +462,12 @@ load_dialog (void)
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_yalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (label, TRUE);
 
-  g_free (label_text);
+  if (label_text)
+    g_free (label_text);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   /* run the dialog */
   gimp_dialog_run (GIMP_DIALOG (dialog));
