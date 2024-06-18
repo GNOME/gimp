@@ -4,7 +4,7 @@
 ARCH=$(uname -m)
 
 
-if [ -z "$GITLAB_CI" ]; then
+if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   # Make the script work locally
   if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpak.sh' ]; then
     echo 'To run this script locally, please do it from to the gimp git folder'
@@ -29,7 +29,7 @@ if [ -z "$GITLAB_CI" ]; then
   flatpak-builder --run "$GIMP_PREFIX" ../build/linux/flatpak/org.gimp.GIMP-nightly.json.in ninja install
 
 
-else
+elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   export GIMP_PREFIX="$PWD/_install-$ARCH"
 
   # Configure manifest (ugly but works on CI)
