@@ -102,7 +102,7 @@ clean "$GIMP_DISTRIB" lib/*.a
 ## Resources.
 bundle "$GIMP_PREFIX" share/gimp/
 ### Needed for file dialogs
-bundle "$MSYS_PREFIX" share/glib-*/schemas/
+bundle "$MSYS_PREFIX" share/glib-*/schemas/gschemas.compiled
 ### https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
 bundle "$MSYS_PREFIX" share/icons/Adwaita/
 ### https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
