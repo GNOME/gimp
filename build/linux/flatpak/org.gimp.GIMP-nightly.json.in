@@ -15,8 +15,11 @@
             "CC": "ccache clang",
             "CXX": "ccache clang++",
             "CC_LD": "lld",
-            "CXX_LD": "lld"
-        }
+            "CXX_LD": "lld",
+            "CLICOLOR_FORCE": "1"
+        },
+        "cflags": "-fcolor-diagnostics",
+        "cxxflags": "-fcolor-diagnostics"
     },
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
@@ -244,7 +247,9 @@
                 "env": {
                     "CC": "gcc",
                     "CXX": "gcc"
-                }
+                },
+                "cflags-override": true,
+                "cxxflags-override": true
             },
             "config-opts": [
                 "--disable-static",
