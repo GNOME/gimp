@@ -80,7 +80,8 @@
 #pragma option -e+
 
 
-; Optional: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, GIMP_UNSTABLE
+; Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES
+; Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
 
 #define X86 1
 #define X64 2
