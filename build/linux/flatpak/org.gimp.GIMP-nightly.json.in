@@ -60,6 +60,14 @@
         "*.la",
         "*.a"
     ],
+    "add-extensions": {
+        "org.gimp.GIMP.HEIC": {
+            "directory": "lib/libheif",
+            "add-ld-path": "lib",
+            "bundle": false,
+            "autodelete": true
+        }
+    },
     "modules": [
         {
             "name": "appstream-glib",
@@ -502,15 +510,20 @@
             "config-opts": [
                 "-DWITH_GDK_PIXBUF=OFF",
                 "-DWITH_EXAMPLES=OFF",
-                "-DENABLE_PLUGIN_LOADING=OFF",
-                "-DWITH_LIBDE265=ON",
-                "-DWITH_X265=ON",
+                "-DENABLE_PLUGIN_LOADING=ON",
+                "-DWITH_LIBDE265_PLUGIN=ON",
+                "-DWITH_X265_PLUGIN=ON",
                 "-DWITH_DAV1D=ON",
+                "-DWITH_DAV1D_PLUGIN=OFF",
                 "-DWITH_AOM_DECODER=ON",
                 "-DWITH_AOM_ENCODER=ON",
                 "-DWITH_JPEG_DECODER=ON",
-                "-DWITH_OpenJPEG_DECODER=ON"
+                "-DWITH_OpenJPEG_DECODER=ON",
+                "-DWITH_OpenJPEG_DECODER_PLUGIN=OFF"
             ],
+            "build-options": {
+                "append-pkg-config-path": "/app/lib/libheif/lib/pkgconfig"
+            },
             "cleanup": [
                 "/bin",
                 "/share/thumbnailers"
@@ -520,12 +533,14 @@
                     "name": "libde265",
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
+                        "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                         "-DENABLE_SDL=OFF",
                         "-DENABLE_DECODER=OFF",
                         "-DENABLE_ENCODER=OFF"
                     ],
                     "cleanup": [
-                        "/bin"
+                        "/lib/libheif/bin",
+                        "/lib/libheif/include"
                     ],
                     "sources": [
                         {
@@ -543,16 +558,18 @@
                 },
                 {
                     "name": "libx265",
-                    "buildsystem": "cmake",
+                    "buildsystem": "cmake-ninja",
                     "subdir": "source",
                     "config-opts": [
+                        "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                         "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
-                        "-DEXTRA_LINK_FLAGS=-L.",
+                        "-DEXTRA_LINK_FLAGS=-L/app/lib/libheif/lib",
                         "-DLINKED_10BIT=ON",
                         "-DLINKED_12BIT=ON"
                     ],
                     "cleanup": [
-                        "/bin"
+                        "/lib/libheif/bin",
+                        "/lib/libheif/include"
                     ],
                     "sources": [
                         {
@@ -569,18 +586,19 @@
                         {
                             "type": "shell",
                             "commands": [
-                                "ln -s ${FLATPAK_DEST}/lib/libx265-10.a",
-                                "ln -s ${FLATPAK_DEST}/lib/libx265-12.a",
-                                "rm -fr ${FLATPAK_DEST}/lib/libx265.so*"
+                                "ln -s ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a",
+                                "ln -s ${FLATPAK_DEST}/lib/libheif/lib/libx265-12.a",
+                                "rm -fr ${FLATPAK_DEST}/lib/libheif/lib/libx265.so*"
                             ]
                         }
                     ],
                     "modules": [
                         {
                             "name": "libx265-10bpc",
-                            "buildsystem": "cmake",
+                            "buildsystem": "cmake-ninja",
                             "subdir": "source",
                             "config-opts": [
+                                "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                                 "-DHIGH_BIT_DEPTH=ON",
                                 "-DEXPORT_C_API=OFF",
                                 "-DENABLE_SHARED=OFF",
@@ -601,14 +619,15 @@
                                 }
                             ],
                             "post-install": [
-                                "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-10.a"
+                                "mv ${FLATPAK_DEST}/lib/libheif/lib/libx265.a ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a"
                             ]
                         },
                         {
                             "name": "libx265-12bpc",
-                            "buildsystem": "cmake",
+                            "buildsystem": "cmake-ninja",
                             "subdir": "source",
                             "config-opts": [
+                                "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                                 "-DHIGH_BIT_DEPTH=ON",
                                 "-DEXPORT_C_API=OFF",
                                 "-DENABLE_SHARED=OFF",
@@ -630,7 +649,7 @@
                                 }
                             ],
                             "post-install": [
-                                "mv ${FLATPAK_DEST}/lib/libx265.a ${FLATPAK_DEST}/lib/libx265-12.a"
+                                "mv ${FLATPAK_DEST}/lib/libheif/lib/libx265.a ${FLATPAK_DEST}/lib/libheif/lib/libx265-12.a"
                             ]
                         }
                     ]
