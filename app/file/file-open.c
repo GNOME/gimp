@@ -32,6 +32,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
+#include "core/gimpdrawable-filters.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
@@ -780,6 +782,39 @@ file_open_convert_items (GimpImage   *dest_image,
       GimpItem *item;
 
       item = gimp_item_convert (src, dest_image, G_TYPE_FROM_INSTANCE (src));
+
+      /* Import any attached layer effects */
+      if (GIMP_IS_DRAWABLE (item) &&
+          gimp_drawable_has_filters (GIMP_DRAWABLE (src)))
+        {
+          GList         *filter_list;
+          GimpContainer *filters;
+
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (src));
+
+          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+               filter_list = g_list_previous (filter_list))
+            {
+              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                {
+                  GimpDrawableFilter *old_filter = filter_list->data;
+                  GimpDrawableFilter *filter;
+
+                  filter =
+                    gimp_drawable_filter_duplicate (GIMP_DRAWABLE (item),
+                                                    old_filter);
+
+                  if (filter != NULL)
+                    {
+                      gimp_drawable_filter_apply (filter, NULL);
+                      gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                      gimp_drawable_filter_layer_mask_freeze (filter);
+                      g_object_unref (filter);
+                    }
+                }
+            }
+        }
 
       if (g_list_length (items) == 1)
         {
