@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-13 23:41+0000\n"
-"PO-Revision-Date: 2024-06-14 16:34+0800\n"
+"POT-Creation-Date: 2024-06-18 19:48+0000\n"
+"PO-Revision-Date: 2024-06-19 19:32+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -145,7 +145,7 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
+#: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -625,7 +625,7 @@ msgstr "竖直"
 #: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
+#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:684
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -4617,7 +4617,7 @@ msgstr "读取“%s”出错。文件已损坏？"
 msgid "Unknown color model in PNG file '%s'."
 msgstr "PNG 文件“%s”存在未知色彩模型。"
 
-#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:264
+#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:265
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "无法为“%s”创建新图像：%s"
@@ -5883,8 +5883,8 @@ msgstr "为了安全原因，该选项应仅用于信任的输入！"
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:356
-#: plug-ins/file-exr/file-exr.c:370
+#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "未知原因"
 
@@ -9055,36 +9055,48 @@ msgstr "从“%s”查询图像尺寸出错"
 msgid "Error querying image precision from '%s'"
 msgstr "从“%s”查询图像精度出错"
 
-#: plug-ins/file-exr/file-exr.c:254
+#: plug-ins/file-exr/file-exr.c:255
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "从“%s”查询图像类型出错"
 
-#: plug-ins/file-exr/file-exr.c:316
+#: plug-ins/file-exr/file-exr.c:318
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "从“%s”读取像素数据出错"
 
-#: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
+#: plug-ins/file-exr/file-exr.c:357 plug-ins/file-exr/file-exr.c:371
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "加载元数据失败：%s"
 
-#: plug-ins/file-exr/file-exr.c:432
+#: plug-ins/file-exr/file-exr.c:434
 msgid "Import OpenEXR"
 msgstr "导入 OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:446
+#: plug-ins/file-exr/file-exr.c:449
 msgid "Unknown Channel Name"
 msgstr "未知通道名称"
 
-#: plug-ins/file-exr/file-exr.c:447
+#: plug-ins/file-exr/file-exr.c:450
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
 msgstr ""
 "该图像包含一个单独的未知通道。\n"
 "它已被转换为灰度模式。"
+
+#: plug-ins/file-exr/file-exr.c:453
+msgid "Chroma Channels"
+msgstr "色度通道"
+
+#: plug-ins/file-exr/file-exr.c:454
+msgid ""
+"OpenEXR chroma channels are not yet supported.\n"
+"They have been discarded."
+msgstr ""
+"尚未支持 OpenEXR 的色度通道。\n"
+"它们已被丢弃。"
 
 #: plug-ins/file-faxg3/faxg3.c:136
 msgid "G3 fax image"
