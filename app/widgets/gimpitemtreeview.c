@@ -29,6 +29,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
 
+#include "gimphelp-ids.h"
 #include "widgets-types.h"
 
 #include "actions/gimpgeglprocedure.h"
@@ -762,7 +763,7 @@ gimp_item_tree_view_constructed (GObject *object)
 
       gimp_help_set_help_data (item_view->priv->effects_visible_button,
                                _("Toggle the visibility of all filters."),
-                               NULL);
+                               GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_visible_button, "toggled",
                         G_CALLBACK (gimp_item_tree_view_effects_visible_all_toggled),
                         item_view);
@@ -776,7 +777,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gimp_help_set_help_data (item_view->priv->effects_edit_button,
                                _("Edit the selected filter."),
-                               NULL);
+                               GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_edit_button, "clicked",
                         G_CALLBACK (gimp_item_tree_view_effects_edited_clicked),
                         item_view);
@@ -789,7 +790,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gimp_help_set_help_data (item_view->priv->effects_raise_button,
                                _("Raise filter one step up in the stack."),
-                               NULL);
+                               GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_raise_button, "clicked",
                         G_CALLBACK (gimp_item_tree_view_effects_raised_clicked),
                         item_view);
@@ -802,7 +803,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gimp_help_set_help_data (item_view->priv->effects_lower_button,
                                _("Lower filter one step down in the stack."),
-                               NULL);
+                               GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_lower_button, "clicked",
                         G_CALLBACK (gimp_item_tree_view_effects_lowered_clicked),
                         item_view);
@@ -815,7 +816,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gimp_help_set_help_data (item_view->priv->effects_merge_button,
                                _("Merge all active filters down."),
-                               NULL);
+                               GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_merge_button, "clicked",
                         G_CALLBACK (gimp_item_tree_view_effects_merged_clicked),
                         item_view);
@@ -828,7 +829,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
       gimp_help_set_help_data (item_view->priv->effects_remove_button,
                                _("Remove the selected filter."),
-                               NULL);
+                               GIMP_HELP_LAYER_EFFECTS);
       g_signal_connect (item_view->priv->effects_remove_button, "clicked",
                         G_CALLBACK (gimp_item_tree_view_effects_removed_clicked),
                         item_view);

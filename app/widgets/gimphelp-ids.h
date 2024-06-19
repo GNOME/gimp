@@ -198,6 +198,7 @@
 #define GIMP_HELP_LAYER_VISIBLE                   "gimp-layer-visible"
 #define GIMP_HELP_LAYER_LINKED                    "gimp-layer-linked"
 #define GIMP_HELP_LAYER_COLOR_TAG                 "gimp-layer-color-tag"
+#define GIMP_HELP_LAYER_EFFECTS                   "gimp-layer-effects"
 #define GIMP_HELP_LAYER_OPACITY                   "gimp-layer-opacity"
 #define GIMP_HELP_LAYER_MODE                      "gimp-layer-mode"
 #define GIMP_HELP_LAYER_LOCK_ALPHA                "gimp-layer-lock-alpha"
