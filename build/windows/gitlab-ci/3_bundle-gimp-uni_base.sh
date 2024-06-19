@@ -145,7 +145,7 @@ if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*/
   bundle "$MSYS_PREFIX" lib/girepository-*/
 
-  bundle "$MSYS_PREFIX" bin/luajit.exe
+  bundle "$MSYS_PREFIX" bin/lua.exe
   bundle "$MSYS_PREFIX" lib/lua/
   bundle "$MSYS_PREFIX" share/lua/
 

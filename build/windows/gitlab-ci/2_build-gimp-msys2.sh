@@ -27,6 +27,7 @@ fi
 
 # Install the required (pre-built) packages for GIMP
 # We take code from deps script to better maintenance
+pacman --noconfirm -Suy
 echo "$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh |
         sed -n '/# Install the/,/# End of install/p')"    | bash
 
@@ -72,10 +73,10 @@ make_cmd ()
 {
   if [ "$4" == "do_wizardry" ]; then
     interp_lua="(
-                echo lua=$2\bin\luajit.exe
-                echo luajit=$2\bin\luajit.exe
-                echo /usr/bin/lua=$2\bin\luajit.exe
-                echo /usr/bin/luajit=$2\bin\luajit.exe
+                echo lua=$2\bin\lua.exe
+                echo luajit=$2\bin\lua.exe
+                echo /usr/bin/lua=$2\bin\lua.exe
+                echo /usr/bin/luajit=$2\bin\lua.exe
                 echo :Lua:E::lua::luajit:
                 ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\lua.interp"
     interp_pyt="(
