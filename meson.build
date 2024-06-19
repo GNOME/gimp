@@ -1137,9 +1137,7 @@ endif
 
 have_lua = false
 # At time of writing, lua-lgi works with Lua 5.1, 5.2, 5.3, 5.4 and LuaJIT2. On
-# most platforms, we use luajit. On MSYS2, only lua5.1 works with lua-lgi. This
-# is why we use this order for lua detection. Fall back to an unversioned
-# program name.
+# most platforms, we use luajit.
 if get_option('lua').allowed()
   have_lua_lgi = false
 
