@@ -471,9 +471,9 @@
                     "name": "openblas",
                     "no-autogen": true,
                     "make-args": [
-                        "DYNAMIC_ARCH=1",
+                        "DYNAMIC_ARCH=0",
                         "DNOFORTRAN=1",
-                        "DC_LAPACK=1",
+                        "DC_LAPACK=0",
                         "USE_OPENMP=0"
                     ],
                     "make-install-args": [
@@ -652,6 +652,14 @@
         },
         {
             "name": "luajit",
+            "build-options": {
+                "env": {
+                    "CC": "gcc",
+                    "CXX": "gcc"
+                },
+                "cflags-override": true,
+                "cxxflags-override": true
+            },
             "no-autogen": true,
             "cleanup": [
                 "/lib/*.a",
