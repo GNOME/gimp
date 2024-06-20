@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-13 23:41+0000\n"
-"PO-Revision-Date: 2024-06-14 22:17+0300\n"
+"POT-Creation-Date: 2024-06-18 19:48+0000\n"
+"PO-Revision-Date: 2024-06-20 18:37+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -145,7 +145,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
+#: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -630,7 +630,7 @@ msgstr "Вертикально"
 #: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
+#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:684
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -2553,7 +2553,6 @@ msgid "KCF file to load palette from"
 msgstr "Файл KCF, з якого слід завантажити палітру"
 
 #: plug-ins/common/file-cel.c:188
-#| msgid "KCF file to load palette from"
 msgid "File to save palette to"
 msgstr "Файл для зберігання палітри"
 
@@ -4203,7 +4202,6 @@ msgid "Loads files in Zsoft DCX file format"
 msgstr "Завантажує файли у форматі DCX Zsoft"
 
 #: plug-ins/common/file-pcx.c:277
-#| msgid "Loads files in Zsoft PCX file format"
 msgid "Exports files in ZSoft PCX file format"
 msgstr "Експортує файли у форматі файлів PCX ZSoft"
 
@@ -4736,7 +4734,7 @@ msgstr "Помилка при читанні «%s». Файл пошкоджен
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:264
+#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:265
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
@@ -6049,8 +6047,8 @@ msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:356
-#: plug-ins/file-exr/file-exr.c:370
+#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
@@ -9293,36 +9291,50 @@ msgstr "Помилка запиту розмірів зображення з «%
 msgid "Error querying image precision from '%s'"
 msgstr "Помилка запиту точності зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:254
+#: plug-ins/file-exr/file-exr.c:255
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Помилка запиту типу зображення з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:316
+#: plug-ins/file-exr/file-exr.c:318
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Помилка зчитування даних точок з «%s»"
 
-#: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
+#: plug-ins/file-exr/file-exr.c:357 plug-ins/file-exr/file-exr.c:371
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "Не вдалося завантажити метадані: %s"
 
-#: plug-ins/file-exr/file-exr.c:432
+#: plug-ins/file-exr/file-exr.c:434
 msgid "Import OpenEXR"
 msgstr "Імпортувати OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:446
+#: plug-ins/file-exr/file-exr.c:449
 msgid "Unknown Channel Name"
 msgstr "Невідома назва каналу"
 
-#: plug-ins/file-exr/file-exr.c:447
+#: plug-ins/file-exr/file-exr.c:450
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
 msgstr ""
 "У файлі зображення міститься окремий невідомий канал.\n"
 "Кольори каналу перетворено на відтінки сірого."
+
+#: plug-ins/file-exr/file-exr.c:453
+#| msgid "Compose Channels"
+msgid "Chroma Channels"
+msgstr "Канали палітри"
+
+#: plug-ins/file-exr/file-exr.c:454
+#| msgid "Layer comps are not yet supported and will be dropped."
+msgid ""
+"OpenEXR chroma channels are not yet supported.\n"
+"They have been discarded."
+msgstr ""
+"Підтримки каналів палітри OpenEXR ще не передбачено.\n"
+"Їх було відкинуто."
 
 #: plug-ins/file-faxg3/faxg3.c:136
 msgid "G3 fax image"
@@ -17095,10 +17107,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Smart objects are not yet supported and will be dropped."
 #~ msgstr "Підтримки кмітливих об'єктів ще не реалізовано, їх буде відкинуто."
-
-#~ msgid "Layer comps are not yet supported and will be dropped."
-#~ msgstr ""
-#~ "Підтримки обробки обчислення шарів ще не реалізовано, їх буде відкинуто."
 
 #~ msgid "4:2:2 horizontal (chroma halved)"
 #~ msgstr "4:2:2 горизонтально (колірність поділена пополам)"
