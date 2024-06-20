@@ -110,9 +110,11 @@ bundle "$GIMP_PREFIX" share/icons/hicolor/
 ### Needed for wmf
 bundle "$MSYS_PREFIX" share/libwmf/
 ### Only copy from langs supported in GIMP.
-bundle "$GIMP_PREFIX" share/locale/
-for dir in $GIMP_DISTRIB/share/locale/*/; do
-  lang=`basename "$dir"`;
+lang_array=($(echo $(ls po/*.po |
+              sed -e 's|po/||g' -e 's|.po||g' | sort) |
+              tr '\n\r' ' '))
+for lang in "${lang_array[@]}"; do
+  bundle "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES/*.mo
   if [ -d "$MSYS_PREFIX/share/locale/$lang/LC_MESSAGES/" ]; then
     bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
     bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*.mo
