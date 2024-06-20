@@ -21,7 +21,9 @@ BUILD_ARTIF=$(echo _build*)
 ## This script is "filesystem-agnostic". The packager can quickly choose either
 ## putting everything in /usr or in AppDir(root) just specifying the 2nd parameter.
 GIMP_DISTRIB="$CI_PROJECT_DIR/build/linux/appimage/AppDir"
-GIMP_PREFIX="$GIMP_DISTRIB/usr"
+if [ "$GITLAB_CI" ] || [ -z "$GIMP_PREFIX" ]; then
+  GIMP_PREFIX="$GIMP_DISTRIB/usr"
+fi
 if [ -z "$2" ] || [ "$2" = "usr" ]; then
   OPT_PREFIX="${GIMP_PREFIX}"
 elif [ "$2" = "AppDir" ]; then

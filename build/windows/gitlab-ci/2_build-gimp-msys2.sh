@@ -20,7 +20,6 @@ if [ -z "$GITLAB_CI" ]; then
   fi
   git submodule update --init --force
   pacman --noconfirm -Suy
-  PARENT_DIR='../'
   export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
 
@@ -32,7 +31,12 @@ echo "$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh |
 
 
 # Build GIMP
-export GIMP_PREFIX="$PWD/${PARENT_DIR}_install${ARTIFACTS_SUFFIX}"
+# We need to create the condition this ugly way to not break CI
+if [ "$GITLAB_CI" ]; then
+  export GIMP_PREFIX="$PWD/_install${ARTIFACTS_SUFFIX}"
+elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
+  export GIMP_PREFIX="$PWD/../_install${ARTIFACTS_SUFFIX}"
+fi
 ## Universal variables from .gitlab-ci.yml
 IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
 IFS=$' \t\n'

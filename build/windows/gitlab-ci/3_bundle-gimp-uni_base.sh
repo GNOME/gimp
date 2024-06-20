@@ -29,7 +29,11 @@ if [[ "$CI_JOB_NAME" =~ "cross" ]]; then
   export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}-cross"
   export MSYS_PREFIX="$GIMP_PREFIX"
 else
-  export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}"
+  if [ "$GITLAB_CI" ]; then
+    export GIMP_PREFIX="$PWD/_install${ARTIFACTS_SUFFIX}"
+  elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
+    export GIMP_PREFIX="$PWD/../_install${ARTIFACTS_SUFFIX}"
+  fi
   export MSYS_PREFIX="$MSYSTEM_PREFIX"
 fi
 export GIMP_DISTRIB="`realpath ./gimp`${ARTIFACTS_SUFFIX}"

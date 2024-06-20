@@ -11,7 +11,9 @@ if [ -z "$GITLAB_CI" ]; then
     exit 1
   fi
   flatpak update -y
-  export GIMP_PREFIX="$PWD/../_install-$ARCH"
+  if [ -z "$GIMP_PREFIX" ]; then
+    export GIMP_PREFIX="$PWD/../_install-$ARCH"
+  fi
   if [ ! -d "$GIMP_PREFIX" ]; then
     mkdir -p "$GIMP_PREFIX"
   fi
