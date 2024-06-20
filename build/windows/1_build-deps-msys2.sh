@@ -14,7 +14,7 @@ fi
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != "build/windows/gitlab-ci/1_build-deps-msys2.sh" ]; then
+  if [ "$0" != "build/windows/1_build-deps-msys2.sh" ]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
@@ -26,7 +26,7 @@ fi
 
 
 # Install the required (pre-built) packages for babl and GEGL
-DEPS_LIST=$(cat ${GIMP_DIR}build/windows/gitlab-ci/all-deps-uni.txt      |
+DEPS_LIST=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt      |
             sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" |
             sed 's/\\//g')
 

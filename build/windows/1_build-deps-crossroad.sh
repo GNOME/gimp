@@ -8,7 +8,7 @@ if [ -z "$CROSSROAD_PLATFORM" ]; then
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != "build/windows/gitlab-ci/1_build-deps-crossroad.sh" ]; then
+  if [ "$0" != "build/windows/1_build-deps-crossroad.sh" ]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
@@ -53,13 +53,13 @@ clone_or_pull gegl
 # CROSSROAD ENV
 export PATH="$PWD/.local/bin:$PATH"
 export XDG_DATA_HOME="$PWD/.local/share"
-crossroad w64 gimp --run="${GIMP_DIR}build/windows/gitlab-ci/1_build-deps-crossroad.sh"
+crossroad w64 gimp --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
 else
 export ARTIFACTS_SUFFIX="-x64-cross"
 
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2
-crossroad install $(cat ${GIMP_DIR}build/windows/gitlab-ci/all-deps-uni.txt |
+crossroad install $(cat ${GIMP_DIR}build/windows/all-deps-uni.txt |
                     sed "s/\${MINGW_PACKAGE_PREFIX}-//g" | sed 's/\\//g')
 if [ $? -ne 0 ]; then
   echo "Installation of pre-built dependencies failed.";

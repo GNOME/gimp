@@ -14,7 +14,7 @@ fi
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != "build/windows/gitlab-ci/2_build-gimp-msys2.sh" ]; then
+  if [ "$0" != "build/windows/2_build-gimp-msys2.sh" ]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
@@ -26,7 +26,7 @@ fi
 
 # Install the required (pre-built) packages for GIMP
 # We take code from deps script to better maintenance
-echo "$(cat build/windows/gitlab-ci/1_build-deps-msys2.sh |
+echo "$(cat build/windows/1_build-deps-msys2.sh |
         sed -n '/# Install the/,/# End of install/p')"    | bash
 
 

@@ -142,7 +142,7 @@ bundle "$MSYS_PREFIX" share/xml/iso-codes/iso_639.xml
 
 ## Executables and DLLs.
 
-### We save the list of already copied DLLs to keep a state between 3_bundle-gimp-uni_dep runs.
+### We save the list of already copied DLLs to keep a state between 2_bundle-gimp-uni_dep runs.
 rm -f done-dll.list
 
 ### Minimal (and some additional) executables for the 'bin' folder
@@ -179,12 +179,12 @@ fi
 echo "(INFO): searching for dependencies of $GIMP_DISTRIB/lib in $GIMP_PREFIX and $MSYS_PREFIX"
 libArray=($(find "$GIMP_DISTRIB/lib" \( -iname '*.dll' -or -iname '*.exe' \)))
 for dep in "${libArray[@]}"; do
-  python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py $dep $GIMP_PREFIX/ $MSYS_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
+  python3 build/windows/2_bundle-gimp-uni_dep.py $dep $GIMP_PREFIX/ $MSYS_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
 echo "(INFO): searching for dependencies of $GIMP_DISTRIB/bin in $GIMP_PREFIX and $MSYS_PREFIX"
 binArray=($(find "$GIMP_DISTRIB/bin" \( -iname '*.dll' -or -iname '*.exe' \)))
 for dep in "${binArray[@]}"; do
-  python3 build/windows/gitlab-ci/3_bundle-gimp-uni_dep.py $dep $GIMP_PREFIX/ $MSYS_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
+  python3 build/windows/2_bundle-gimp-uni_dep.py $dep $GIMP_PREFIX/ $MSYS_PREFIX/ $GIMP_DISTRIB --output-dll-list done-dll.list;
 done
 
 ### .pdb (CodeView) debug symbols

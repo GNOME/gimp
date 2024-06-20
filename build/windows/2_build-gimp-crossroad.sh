@@ -8,7 +8,7 @@ if [ -z "$CROSSROAD_PLATFORM" ]; then
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != "build/windows/gitlab-ci/2_build-gimp-crossroad.sh" ]; then
+  if [ "$0" != "build/windows/2_build-gimp-crossroad.sh" ]; then
     echo "To run this script locally, please do it from to the gimp git folder"
     exit 1
   fi
@@ -43,7 +43,7 @@ chmod u+x $GIMP_CONSOLE_PATH
 # CROSSROAD ENV
 export PATH="$PWD/${PARENT_DIR}.local/bin:$PWD/bin:$PATH"
 export XDG_DATA_HOME="$PWD/${PARENT_DIR}.local/share"
-crossroad w64 gimp --run="build/windows/gitlab-ci/2_build-gimp-crossroad.sh"
+crossroad w64 gimp --run="build/windows/2_build-gimp-crossroad.sh"
 else
 export ARTIFACTS_SUFFIX="-x64-cross"
 
