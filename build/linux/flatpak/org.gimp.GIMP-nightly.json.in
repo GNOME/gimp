@@ -745,6 +745,26 @@
             ]
         },
         {
+            "name": "cfitsio",
+            "config-opts": [
+                "--enable-reentrant"
+            ],
+            "make-args": ["shared"],
+            "cleanup": [
+                "/include",
+                "/lib/*.a",
+                "/lib/*.la",
+                "/lib/pkgconfig"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://src.fedoraproject.org/repo/pkgs/cfitsio/cfitsio-4.4.0.tar.gz/sha512/9358b1ed94fdc456cf8c0ddcb346c08f6bc97ee862c31366f3fae2d1be8d5278ffc79da01e41ceebf67ebc831f58bce3551e087c883bbf6b396133110d74b076/cfitsio-4.4.0.tar.gz",
+                    "sha256": "95900cf95ae760839e7cb9678a7b2fad0858d6ac12234f934bd1cb6bfc246ba9"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "buildsystem": "meson",
             "config-opts": [
