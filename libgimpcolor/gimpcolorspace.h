@@ -37,15 +37,10 @@ void   gimp_rgb_to_hsv          (const GimpRGB  *rgb,
                                  GimpHSV        *hsv);
 void   gimp_rgb_to_hsl          (const GimpRGB  *rgb,
                                  GimpHSL        *hsl);
-void   gimp_rgb_to_cmyk         (const GimpRGB  *rgb,
-                                 gdouble         pullout,
-                                 GimpCMYK       *cmyk);
 
 void   gimp_hsv_to_rgb          (const GimpHSV  *hsv,
                                  GimpRGB        *rgb);
 void   gimp_hsl_to_rgb          (const GimpHSL  *hsl,
-                                 GimpRGB        *rgb);
-void   gimp_cmyk_to_rgb         (const GimpCMYK *cmyk,
                                  GimpRGB        *rgb);
 
 G_END_DECLS

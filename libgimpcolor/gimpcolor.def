@@ -11,14 +11,6 @@ EXPORTS
 	gimp_cairo_set_source_rgba
 	gimp_cairo_surface_create_buffer
 	gimp_cairo_surface_get_format
-	gimp_cmyk_get_type
-	gimp_cmyk_get_uchar
-	gimp_cmyk_set
-	gimp_cmyk_set_uchar
-	gimp_cmyk_to_rgb
-	gimp_cmyka_get_uchar
-	gimp_cmyka_set
-	gimp_cmyka_set_uchar
 	gimp_color_is_out_of_gamut
 	gimp_color_is_out_of_self_gamut
 	gimp_color_is_perceptually_identical
@@ -105,7 +97,6 @@ EXPORTS
 	gimp_rgb_set
 	gimp_rgb_set_alpha
 	gimp_rgb_set_uchar
-	gimp_rgb_to_cmyk
 	gimp_rgb_to_hsl
 	gimp_rgb_to_hsv
 	gimp_rgba_add
