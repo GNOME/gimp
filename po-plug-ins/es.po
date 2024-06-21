@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-13 23:41+0000\n"
-"PO-Revision-Date: 2024-06-18 12:57+0200\n"
+"POT-Creation-Date: 2024-06-18 19:48+0000\n"
+"PO-Revision-Date: 2024-06-21 14:41+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -154,7 +154,7 @@ msgstr "Ejercitar una cabra (JavaScript)"
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
-#: plug-ins/file-exr/file-exr.c:435 plug-ins/file-psd/psd-load.c:3744
+#: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3744
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -642,7 +642,7 @@ msgstr "Vertical"
 #: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:285
+#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:684
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -4775,7 +4775,7 @@ msgstr "Ocurrió un error al leer el archivo «%s». ¿El archivo está dañado?
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de color desconocido en el archivo PNG «%s»."
 
-#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:264
+#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:265
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "No se pudo crear una imagen nueva para «%s»: %s"
@@ -6083,8 +6083,8 @@ msgstr ""
 "¿Volver a intentar sin los límites que evitan analizar grandes cantidades de "
 "datos?"
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:356
-#: plug-ins/file-exr/file-exr.c:370
+#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "Razón desconocida"
 
@@ -9339,36 +9339,48 @@ msgstr "Error al consultar las dimensiones de la imagen «%s»"
 msgid "Error querying image precision from '%s'"
 msgstr "Error al consultar la precisión de la imagen «%s»"
 
-#: plug-ins/file-exr/file-exr.c:254
+#: plug-ins/file-exr/file-exr.c:255
 #, c-format
 msgid "Error querying image type from '%s'"
 msgstr "Error al consultar el tipo de la imagen «%s»"
 
-#: plug-ins/file-exr/file-exr.c:316
+#: plug-ins/file-exr/file-exr.c:318
 #, c-format
 msgid "Error reading pixel data from '%s'"
 msgstr "Error al leer los datos de los píxeles de «%s»"
 
-#: plug-ins/file-exr/file-exr.c:355 plug-ins/file-exr/file-exr.c:369
+#: plug-ins/file-exr/file-exr.c:357 plug-ins/file-exr/file-exr.c:371
 #, c-format
 msgid "Failed to load metadata: %s"
 msgstr "No se pudieron cargar los metadatos: %s"
 
-#: plug-ins/file-exr/file-exr.c:432
+#: plug-ins/file-exr/file-exr.c:434
 msgid "Import OpenEXR"
 msgstr "Importar OpenEXR"
 
-#: plug-ins/file-exr/file-exr.c:446
+#: plug-ins/file-exr/file-exr.c:449
 msgid "Unknown Channel Name"
 msgstr "Nombre del canal desconocido"
 
-#: plug-ins/file-exr/file-exr.c:447
+#: plug-ins/file-exr/file-exr.c:450
 msgid ""
 "The image contains a single unknown channel.\n"
 "It has been converted to grayscale."
 msgstr ""
 "La imagen contiene un único canal desconocido.\n"
 "Se ha convertido a escala de grises."
+
+#: plug-ins/file-exr/file-exr.c:453
+msgid "Chroma Channels"
+msgstr "Canales de croma"
+
+#: plug-ins/file-exr/file-exr.c:454
+msgid ""
+"OpenEXR chroma channels are not yet supported.\n"
+"They have been discarded."
+msgstr ""
+"Los canales de croma OpenEXR aún no son compatibles.\n"
+"Se han descartado."
 
 #: plug-ins/file-faxg3/faxg3.c:136
 msgid "G3 fax image"
@@ -19018,9 +19030,6 @@ msgstr "Transfiriendo datos desde el escáner/cámara"
 
 #~ msgid "Smart objects are not yet supported and will be dropped."
 #~ msgstr "Los objetos inteligentes aún no son compatibles y se eliminarán."
-
-#~ msgid "Layer comps are not yet supported and will be dropped."
-#~ msgstr "Las composiciones de capas aún no son compatibles y se eliminarán."
 
 #~ msgid "Export Image as C-Source"
 #~ msgstr "Exportar imagen como código C"
