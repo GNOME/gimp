@@ -49,11 +49,10 @@ struct _ColorselCmyk
   GimpColorRenderingIntent  simulation_intent;
   gboolean                  simulation_bpc;
 
-  GimpCMYK            cmyk;
-  GtkWidget          *scales[4];
-  GtkWidget          *name_label;
+  GtkWidget                *scales[4];
+  GtkWidget                *name_label;
 
-  gboolean            in_destruction;
+  gboolean                  in_destruction;
 };
 
 struct _ColorselCmykClass
