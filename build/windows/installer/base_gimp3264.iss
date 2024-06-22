@@ -154,6 +154,7 @@ AppSupportURL=https://www.gimp.org/docs/
 
 ;INSTALLER PAGES
 PrivilegesRequiredOverridesAllowed=dialog
+ShowLanguageDialog=auto
 DisableWelcomePage=no
 InfoBeforeFile=gpl+python.rtf
 DisableDirPage=auto
