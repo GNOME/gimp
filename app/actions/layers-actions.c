@@ -275,7 +275,7 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
 
   { "layers-mask-disable", NULL,
     NC_("layers-action", "_Disable Layer Masks"), NULL, { NULL },
-    NC_("layers-action", "Dismiss the effect of the layer mask"),
+    NC_("layers-action", "Dismiss the effect of the layer masks"),
     layers_mask_disable_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_MASK_DISABLE },
@@ -442,13 +442,13 @@ static const GimpEnumActionEntry layers_color_tag_actions[] =
 static const GimpEnumActionEntry layers_mask_apply_actions[] =
 {
   { "layers-mask-apply", NULL,
-    NC_("layers-action", "Apply Layer _Mask"), NULL, { NULL },
-    NC_("layers-action", "Apply the effect of the layer mask and remove it"),
+    NC_("layers-action", "Apply Layer _Masks"), NULL, { NULL },
+    NC_("layers-action", "Apply the effect of the layer masks and remove them"),
     GIMP_MASK_APPLY, FALSE,
     GIMP_HELP_LAYER_MASK_APPLY },
 
   { "layers-mask-delete", GIMP_ICON_EDIT_DELETE,
-    NC_("layers-action", "Delete Layer Mas_k"), NULL, { NULL },
+    NC_("layers-action", "Delete Layer Mas_ks"), NULL, { NULL },
     NC_("layers-action", "Remove layer masks and their effect"),
     GIMP_MASK_DISCARD, FALSE,
     GIMP_HELP_LAYER_MASK_DELETE }

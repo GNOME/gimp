@@ -1920,7 +1920,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
     }
 
   if (push_undo)
-    gimp_image_undo_push_layer_mask_add (image, C_("undo-type", "Add Layer Mask"),
+    gimp_image_undo_push_layer_mask_add (image, C_("undo-type", "Add Layer Masks"),
                                          layer, mask);
 
   layer->mask = g_object_ref_sink (mask);
@@ -2207,8 +2207,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     {
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_APPLY_MASK,
                                    (mode == GIMP_MASK_APPLY) ?
-                                   C_("undo-type", "Apply Layer Mask") :
-                                   C_("undo-type", "Delete Layer Mask"));
+                                   C_("undo-type", "Apply Layer Masks") :
+                                   C_("undo-type", "Delete Layer Masks"));
 
       gimp_image_undo_push_layer_mask_show (image, NULL, layer);
       gimp_image_undo_push_layer_mask_apply (image, NULL, layer);
@@ -2315,8 +2315,8 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_image_undo_push_layer_mask_apply (image,
                                                apply ?
-                                               C_("undo-type", "Enable Layer Mask") :
-                                               C_("undo-type", "Disable Layer Mask"),
+                                               C_("undo-type", "Enable Layer Masks") :
+                                               C_("undo-type", "Disable Layer Masks"),
                                                layer);
 
       layer->apply_mask = apply ? TRUE : FALSE;
@@ -2397,7 +2397,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 
       if (push_undo)
         gimp_image_undo_push_layer_mask_show (image,
-                                              C_("undo-type", "Show Layer Mask"),
+                                              C_("undo-type", "Show Layer Masks"),
                                               layer);
 
       layer->show_mask = show ? TRUE : FALSE;
