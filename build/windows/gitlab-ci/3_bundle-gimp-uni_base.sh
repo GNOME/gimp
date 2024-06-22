@@ -157,6 +157,7 @@ if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
 
   bundle "$MSYS_PREFIX" bin/python*.exe
   bundle "$MSYS_PREFIX" lib/python*/
+  clean "$GIMP_DISTRIB" lib/python*/*.pyc
 else
   # Just to ensure there is no introspected files that will output annoying warnings
   # This is needed because meson.build files can have flaws

@@ -476,8 +476,6 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities\FileAssociati
 Type: files; Name: "{app}\uninst\uninst.inf"
 Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"
 Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ\pygimp.env"
-;need to clean out all the generated .pyc files
-Type: filesandordirs; Name: "{app}\Python\*"
 
 
 [Code]
