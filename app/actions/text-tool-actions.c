@@ -78,7 +78,7 @@ static const GimpActionEntry text_tool_actions[] =
     NULL },
 
   { "text-tool-text-to-path", GIMP_ICON_PATH,
-    NC_("text-tool-action", "_Path from Text"), NULL, { NULL },
+    NC_("text-tool-action", "Text to _Path"), NULL, { NULL },
     NC_("text-tool-action",
         "Create a path from the outlines of the current text"),
     text_tool_text_to_path_cmd_callback,
