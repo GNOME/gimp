@@ -737,6 +737,7 @@ gimp_gp_param_to_value (gpointer        gimp,
             }
           g_object_unref (profile);
         }
+
       format = babl_format_with_space (encoding, space);
       color  = gegl_color_new ("black");
 
@@ -1063,6 +1064,29 @@ gimp_value_to_gp_param (const GValue *value,
 
       color  = g_value_get_object (value);
       format = gegl_color_get_format (color);
+
+      /* TODO: For indexed colors, we'll convert to R'G'B'(A) u8 as that
+       * is currently what we support. As indexed format support improves,
+       * we'll want to make this space and encoding agnostic. */
+      if (babl_format_is_palette (format))
+        {
+          const Babl *indexed_format = NULL;
+          gint        bpp;
+
+          bpp = babl_format_get_bytes_per_pixel (format);
+          if (bpp == 1)
+            indexed_format = babl_format_with_space ("R'G'B' u8",
+                                                     babl_format_get_space (format));
+          else if (bpp == 2)
+            indexed_format = babl_format_with_space ("R'G'B'A u8",
+                                                     babl_format_get_space (format));
+
+          /* TODO: This is to notify us in the future when indexed image can have more than
+           * 256 colors - we'll need to update encoding support accordingly */
+          g_return_if_fail (indexed_format != NULL);
+
+          format = indexed_format;
+        }
 
       param->data.d_gegl_color.size = babl_format_get_bytes_per_pixel (format);
       gegl_color_get_pixel (color, format, &param->data.d_gegl_color.data);
