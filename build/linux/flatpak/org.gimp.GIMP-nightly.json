@@ -7,7 +7,7 @@
     "sdk-extensions": [
         "org.freedesktop.Sdk.Extension.llvm17"
     ],
-    "command": "gimp-@GIMP_APP_VERSION@",
+    "command": "gimp",
     "build-options": {
         "append-path": "/usr/lib/sdk/llvm17/bin",
         "prepend-ld-library-path": "/usr/lib/sdk/llvm17/lib",
@@ -855,11 +855,12 @@
                 "-Dgi-docgen=disabled",
                 "-Dicc-directory=/run/host/usr/share/color/icc/",
                 "-Dbuild-id=org.gimp.GIMP.flatpak.nightly",
-                "-Dcheck-update=no"
+                "-Dcheck-update=no",
+                "-Denable-default-bin=enabled"
             ],
             "cleanup": [
-                "/bin/gimptool-@GIMP_APP_VERSION@",
-                "/bin/gimp-console-@GIMP_APP_VERSION@"
+                "/bin/gimptool-*",
+                "/bin/gimp-console-*"
             ],
             "sources": [
                 {

@@ -33,5 +33,5 @@ flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm17 -y
 # (Flatpak design mandates to reinstall everything ('--force-clean') on the prefix)
 if [ -z "$GITLAB_CI" ]; then
   flatpak-builder --force-clean --ccache --state-dir=../.flatpak-builder --keep-build-dirs --stop-at=gimp \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json.in 2>&1 | tee flatpak-builder.log
+                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json 2>&1 | tee flatpak-builder.log
 fi
