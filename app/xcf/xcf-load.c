@@ -2515,8 +2515,9 @@ xcf_load_effect_props (XcfInfo      *info,
             xcf_read_int32 (info, (guint32 *) &filter_type, 1);
 
             /* Check if valid property first */
-            if (! (pspec = gegl_operation_find_property (filter->operation_name,
-                                                         filter_prop_name)))
+            if (! (pspec = gegl_operation_find_property_for_version (filter->operation_name,
+                                                                     filter_prop_name,
+                                                                     filter->op_version)))
               {
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_WARNING,
@@ -3398,8 +3399,8 @@ xcf_load_effect (XcfInfo      *info,
     }
 
   if (filter->op_version &&
-      g_strcmp0 (gegl_operation_get_op_version (filter->operation_name),
-                 filter->op_version) != 0)
+      ! gegl_operation_is_supported_version (filter->operation_name,
+                                             filter->op_version))
     {
       filter->unsupported_operation = TRUE;
 
@@ -3420,6 +3421,9 @@ xcf_load_effect (XcfInfo      *info,
   gegl_node_set (filter->operation,
                  "operation", filter->operation_name,
                  NULL);
+
+  if (filter->op_version)
+    gegl_node_set_op_version (filter->operation, filter->op_version);
 
   /* read in the effect properties */
   if (! xcf_load_effect_props (info, &(*filter)))

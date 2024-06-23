@@ -1167,6 +1167,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
       region          = gimp_drawable_filter_get_region (filter_tool->filter);
 
       existing_node = gimp_drawable_filter_get_operation (filter_tool->existing_filter);
+      gegl_node_set_op_version (existing_node, NULL);
       gegl_node_get (existing_node,
                      "operation", &name,
                      NULL);
