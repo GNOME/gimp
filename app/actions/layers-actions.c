@@ -92,7 +92,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW },
 
   { "layers-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
-    NC_("layers-action", "D_uplicate Layer"), NULL, { "<primary><shift>D", NULL },
+    NC_("layers-action", "D_uplicate Layers"), NULL, { "<primary><shift>D", NULL },
     NC_("layers-action",
         "Create duplicates of selected layers and add them to the image"),
     layers_duplicate_cmd_callback,
