@@ -41,6 +41,7 @@ export GIMP_DISTRIB="`realpath ./gimp`${ARTIFACTS_SUFFIX}"
 bundle ()
 {
   check_recurse=${2##*/}
+  # Copy files with wildcards
   if [[ "$check_recurse" =~ '*' ]] && [[ ! "$check_recurse" =~ '/' ]]; then
     path_dest_parent=$(echo $1/${2%/*} | sed "s|${1}/||")
     mkdir -p "$GIMP_DISTRIB/$path_dest_parent"
@@ -49,14 +50,19 @@ bundle ()
       echo "(INFO): copying $path_origin_full2 to $GIMP_DISTRIB/$path_dest_parent"
       cp $path_origin_full2 "$GIMP_DISTRIB/$path_dest_parent"
     done
+  # Copy specific file or specific folder
   else
     path_origin_full=$(echo $1/$2)
     if [[ "$2" =~ '/' ]]; then
       path_dest_parent=$(dirname $path_origin_full | sed "s|${1}/||")
     fi
-    mkdir -p "$GIMP_DISTRIB/$path_dest_parent"
-    echo "(INFO): copying $path_origin_full to $GIMP_DISTRIB/$path_dest_parent"
-    cp -r "$path_origin_full" "$GIMP_DISTRIB/$path_dest_parent"
+    if [ -d "$path_origin_full" ] || [ -f "$path_origin_full" ]; then
+      mkdir -p "$GIMP_DISTRIB/$path_dest_parent"
+      echo "(INFO): copying $path_origin_full to $GIMP_DISTRIB/$path_dest_parent"
+      cp -r "$path_origin_full" "$GIMP_DISTRIB/$path_dest_parent"
+    else
+      echo "(WARNING): $path_origin_full does not exist!"
+    fi
   fi
 }
 
@@ -121,7 +127,7 @@ for lang in "${lang_array[@]}"; do
   bundle "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES/*.mo
   if [ -d "$MSYS_PREFIX/share/locale/$lang/LC_MESSAGES/" ]; then
     bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
-    bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*.mo
+    bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639.mo
   fi
 done
 ### Needed for welcome page
