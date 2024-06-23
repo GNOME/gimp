@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-22 20:12+0000\n"
-"PO-Revision-Date: 2024-06-23 12:30+0200\n"
+"POT-Creation-Date: 2024-06-23 18:09+0000\n"
+"PO-Revision-Date: 2024-06-23 23:11+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -6188,8 +6188,8 @@ msgstr "Ustvari novo skupino plasti in jo dodaj sliki"
 
 #: app/actions/layers-actions.c:95
 msgctxt "layers-action"
-msgid "D_uplicate Layer"
-msgstr "P_odvoji plast"
+msgid "D_uplicate Layers"
+msgstr "P_odvoji plasti"
 
 #: app/actions/layers-actions.c:97
 msgctxt "layers-action"
