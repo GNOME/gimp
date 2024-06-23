@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-22 20:12+0000\n"
-"PO-Revision-Date: 2024-06-23 20:24+0300\n"
+"POT-Creation-Date: 2024-06-23 18:09+0000\n"
+"PO-Revision-Date: 2024-06-23 21:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -6193,9 +6193,11 @@ msgid "Create a new layer group and add it to the image"
 msgstr "Створити нову групу шарів та додати її до зображення"
 
 #: app/actions/layers-actions.c:95
+#| msgctxt "layers-action"
+#| msgid "D_uplicate Layer"
 msgctxt "layers-action"
-msgid "D_uplicate Layer"
-msgstr "Д_ублювати шар"
+msgid "D_uplicate Layers"
+msgstr "Д_ублювати шари"
 
 #: app/actions/layers-actions.c:97
 msgctxt "layers-action"
@@ -6460,8 +6462,6 @@ msgid "_Disable Layer Masks"
 msgstr "_Вимкнути маски шарів"
 
 #: app/actions/layers-actions.c:278
-#| msgctxt "layers-action"
-#| msgid "Dismiss the effect of the layer mask"
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer masks"
 msgstr "Відкинути ефект масок шару"
@@ -6673,22 +6673,16 @@ msgid "Layer Color Tag: Set to Gray"
 msgstr "Кольорова мітка шару: встановити сіру"
 
 #: app/actions/layers-actions.c:445
-#| msgctxt "layers-action"
-#| msgid "Apply Layer _Mask"
 msgctxt "layers-action"
 msgid "Apply Layer _Masks"
 msgstr "Застосувати _маски шару"
 
 #: app/actions/layers-actions.c:446
-#| msgctxt "layers-action"
-#| msgid "Apply the effect of the layer mask and remove it"
 msgctxt "layers-action"
 msgid "Apply the effect of the layer masks and remove them"
 msgstr "Застосувати ефект масок шару та вилучити їх"
 
 #: app/actions/layers-actions.c:451
-#| msgctxt "layers-action"
-#| msgid "Delete Layer Mas_k"
 msgctxt "layers-action"
 msgid "Delete Layer Mas_ks"
 msgstr "Вилучити ма_ски шару"
@@ -7967,8 +7961,6 @@ msgid "Clear all text"
 msgstr "Очистити весь текст"
 
 #: app/actions/text-tool-actions.c:81
-#| msgctxt "layers-action"
-#| msgid "Text to _Path"
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "Текст на _контур"
@@ -12281,15 +12273,11 @@ msgid "Add alpha channel"
 msgstr "Додавання каналу альфи"
 
 #: app/core/core-enums.c:1326 app/core/core-enums.c:1382
-#| msgctxt "undo-type"
-#| msgid "Add layer mask"
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "Додавання масок шару"
 
 #: app/core/core-enums.c:1327 app/core/core-enums.c:1384
-#| msgctxt "undo-type"
-#| msgid "Apply layer mask"
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "Застосування масок шару"
@@ -12510,15 +12498,11 @@ msgid "Convert text layer"
 msgstr "Перетворити текстовий шар"
 
 #: app/core/core-enums.c:1383
-#| msgctxt "undo-type"
-#| msgid "Delete layer mask"
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "Вилучити маски шару"
 
 #: app/core/core-enums.c:1385
-#| msgctxt "undo-type"
-#| msgid "Show layer mask"
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "Показати маски шару"
@@ -14475,7 +14459,6 @@ msgstr ""
 "Не можна додавати маску шару, яка відрізняється розмірами від вказаного шару."
 
 #: app/core/gimplayer.c:1923
-#| msgid "Add Layer Masks"
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Додавання масок шарів"
@@ -14486,32 +14469,26 @@ msgid "Transfer Alpha to Mask"
 msgstr "Перетворити альфу в маску"
 
 #: app/core/gimplayer.c:2210
-#| msgid "Apply Layer Masks"
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Застосування масок шарів"
 
 #: app/core/gimplayer.c:2211
-#| msgid "Delete Layer Masks"
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Вилучення масок шарів"
 
 #: app/core/gimplayer.c:2318
-#| msgctxt "undo-type"
-#| msgid "Enable Layer Mask"
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Вмикання масок шарів"
 
 #: app/core/gimplayer.c:2319
-#| msgid "Disable Layer Masks"
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Вимикання масок шарів"
 
 #: app/core/gimplayer.c:2400
-#| msgid "Show Layer Masks"
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Показ масок шарів"
