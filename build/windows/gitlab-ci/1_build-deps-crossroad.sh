@@ -109,6 +109,6 @@ echo '"lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-png.dll"
 
 ## FIXME: Build manually glib 'gschemas.compiled'
 GLIB_PATH=$(echo $CROSSROAD_PREFIX/share/glib-*/schemas/)
-wine $CROSSROAD_PREFIX/bin/glib-compile-schemas.exe --targetdir=$GLIB_PATH $GLIB_PATH
+wine $CROSSROAD_PREFIX/bin/glib-compile-schemas.exe --targetdir=$GLIB_PATH $GLIB_PATH >/dev/null 2>&1
 
 fi # END OF CROSSROAD ENV
