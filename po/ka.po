@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-27 15:02+0000\n"
-"PO-Revision-Date: 2024-06-02 23:15+0200\n"
+"POT-Creation-Date: 2024-06-22 20:12+0000\n"
+"PO-Revision-Date: 2024-06-23 07:07+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -2472,7 +2472,7 @@ msgstr "შეიყვანეთ სანიშნის აღწერა"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1247 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1238 app/display/gimpdisplayshell-dnd.c:630
 #: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:752
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -2988,129 +2988,129 @@ msgctxt "dialogs-action"
 msgid "_Settings..."
 msgstr "_მორგება..."
 
-#: app/actions/dialogs-actions.c:315 app/actions/dialogs-actions.c:316
+#: app/actions/dialogs-actions.c:314 app/actions/dialogs-actions.c:315
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "გამართვა"
 
-#: app/actions/dialogs-actions.c:319
+#: app/actions/dialogs-actions.c:318
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "გამართვის ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:324
+#: app/actions/dialogs-actions.c:323
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
 msgstr "შემომტანი მოწყობილობები_ს რედაქტორი"
 
-#: app/actions/dialogs-actions.c:325
+#: app/actions/dialogs-actions.c:324
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "შემომტანი მოწყობილობები"
 
-#: app/actions/dialogs-actions.c:327
+#: app/actions/dialogs-actions.c:326
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "შემომტანი მოწყობილობების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:332
+#: app/actions/dialogs-actions.c:331
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts Editor"
 msgstr "კლავიატურის მალსახმობების _რედაქტორი"
 
-#: app/actions/dialogs-actions.c:333
+#: app/actions/dialogs-actions.c:332
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: app/actions/dialogs-actions.c:335
+#: app/actions/dialogs-actions.c:334
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "კლავიატურის მალსახმობების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:340
+#: app/actions/dialogs-actions.c:339
 msgctxt "dialogs-action"
 msgid "_Modules Dialog"
 msgstr "_მოდულების ფანჯარა"
 
-#: app/actions/dialogs-actions.c:341
+#: app/actions/dialogs-actions.c:340
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_მოდულები"
 
-#: app/actions/dialogs-actions.c:343
+#: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "მოდულების ფანჯრის გახსნა"
 
-#: app/actions/dialogs-actions.c:348
+#: app/actions/dialogs-actions.c:347
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "დღის მინიშნება"
 
-#: app/actions/dialogs-actions.c:350
+#: app/actions/dialogs-actions.c:349
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "რამდენიმე გამოსადეგი რჩევა GIMP-ის მოხმარების შესახებ"
 
-#: app/actions/dialogs-actions.c:355
+#: app/actions/dialogs-actions.c:354
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "პირველი ფანჯარა"
 
-#: app/actions/dialogs-actions.c:357
+#: app/actions/dialogs-actions.c:356
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "GIMP-ის გაშვებული რელიზის შესახებ ინფორმაციის ჩვენება"
 
-#: app/actions/dialogs-actions.c:363 app/actions/dialogs-actions.c:370
+#: app/actions/dialogs-actions.c:362 app/actions/dialogs-actions.c:369
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "GIMP-ის შესახებ"
 
-#: app/actions/dialogs-actions.c:365
+#: app/actions/dialogs-actions.c:364
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "შესახებ"
 
-#: app/actions/dialogs-actions.c:367
+#: app/actions/dialogs-actions.c:366
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_შესახებ"
 
-#: app/actions/dialogs-actions.c:375
+#: app/actions/dialogs-actions.c:374
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "მოძებნა და ბრძანების _გაშვება"
 
-#: app/actions/dialogs-actions.c:377
+#: app/actions/dialogs-actions.c:376
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "ბრძანებების პირობით ძებნა და მათი გაშვება"
 
-#: app/actions/dialogs-actions.c:383
+#: app/actions/dialogs-actions.c:382
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "გაფართოებების მართვა"
 
-#: app/actions/dialogs-actions.c:385
+#: app/actions/dialogs-actions.c:384
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "გაფართოებების მართვა: მოძებნეთ, დააყენეთ, წაშალეთ, განაახლეთ."
 
-#: app/actions/dialogs-actions.c:449
+#: app/actions/dialogs-actions.c:448
 msgid "Tool_box"
 msgstr "ხელს_აწყოები"
 
-#: app/actions/dialogs-actions.c:450
+#: app/actions/dialogs-actions.c:449
 msgid "Raise the toolbox"
 msgstr "ხელსაწყოების აწევა"
 
-#: app/actions/dialogs-actions.c:454
+#: app/actions/dialogs-actions.c:453
 msgid "New Tool_box"
 msgstr "ხელსაწყოების ა_ხალი პანელი"
 
-#: app/actions/dialogs-actions.c:455
+#: app/actions/dialogs-actions.c:454
 msgid "Create a new toolbox"
 msgstr "ხელსაწყოების ახალი პანელის შექმნა"
 
@@ -6033,19 +6033,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "ამ გამოსახულების წაშლა"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:700
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:701
 msgid "Lock content"
 msgstr "შიგთავსის ჩაკვეტვა"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:701
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:702
 msgid "Unlock content"
 msgstr "შიგთავსის გახსნა"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:716
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:717
 msgid "Lock position"
 msgstr "პოზიციის ჩაკეტვა"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:717
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:718
 msgid "Unlock position"
 msgstr "პოზიციის გახსნა"
 
@@ -6400,8 +6400,8 @@ msgstr "ფენის ნიღბების გა_მორთვა"
 
 #: app/actions/layers-actions.c:278
 msgctxt "layers-action"
-msgid "Dismiss the effect of the layer mask"
-msgstr "ფენის ნიღბის ეფექტების მოცილება"
+msgid "Dismiss the effect of the layer masks"
+msgstr "ფენის ნიღბების ეფექტის მოცილება"
 
 #: app/actions/layers-actions.c:284
 msgctxt "layers-action"
@@ -6611,18 +6611,18 @@ msgstr "ფენის ფერადი ჭდე: ნაცრისფე�
 
 #: app/actions/layers-actions.c:445
 msgctxt "layers-action"
-msgid "Apply Layer _Mask"
-msgstr "ფენის ნიღბის დადება"
+msgid "Apply Layer _Masks"
+msgstr "ფენის _ნიღბის დადება"
 
 #: app/actions/layers-actions.c:446
 msgctxt "layers-action"
-msgid "Apply the effect of the layer mask and remove it"
-msgstr "ფენის ნიღბის ეფექტის დადება და მოცილება"
+msgid "Apply the effect of the layer masks and remove them"
+msgstr "ფენის ნიღბების ეფექტის დადება და მოცილება"
 
 #: app/actions/layers-actions.c:451
 msgctxt "layers-action"
-msgid "Delete Layer Mas_k"
-msgstr "ფენის ნიღბის წაშლა"
+msgid "Delete Layer Mas_ks"
+msgstr "ფენის ნიღბების _წაშლა"
 
 #: app/actions/layers-actions.c:452
 msgctxt "layers-action"
@@ -7812,7 +7812,7 @@ msgstr "ტექსტური ფაილის გახსნა (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:94 app/dialogs/welcome-dialog.c:717
+#: app/dialogs/vectors-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -7863,8 +7863,8 @@ msgstr "მთელი ტექსტის გასუფთავება"
 
 #: app/actions/text-tool-actions.c:81
 msgctxt "text-tool-action"
-msgid "_Path from Text"
-msgstr "კო_ნტური ტექსტიდან"
+msgid "Text to _Path"
+msgstr "ტექსტიდან _კონტურამდე"
 
 #: app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
@@ -12019,13 +12019,13 @@ msgstr "Alpha-არხის დამატება"
 
 #: app/core/core-enums.c:1326 app/core/core-enums.c:1382
 msgctxt "undo-type"
-msgid "Add layer mask"
+msgid "Add layer masks"
 msgstr "ფენის ნიღბის დამატება"
 
 #: app/core/core-enums.c:1327 app/core/core-enums.c:1384
 msgctxt "undo-type"
-msgid "Apply layer mask"
-msgstr "ფენის ნიღბის დადება"
+msgid "Apply layer masks"
+msgstr "ფენის ნიღბების დადება"
 
 #: app/core/core-enums.c:1328
 msgctxt "undo-type"
@@ -12244,13 +12244,13 @@ msgstr "ტექსტის ფენის გარდაქმნა"
 
 #: app/core/core-enums.c:1383
 msgctxt "undo-type"
-msgid "Delete layer mask"
-msgstr "ფენის ნიღბის წაშლა"
+msgid "Delete layer masks"
+msgstr "ფენის ნიღბების წაშლა"
 
 #: app/core/core-enums.c:1385
 msgctxt "undo-type"
-msgid "Show layer mask"
-msgstr "ფენის ნიღბის ჩვენება"
+msgid "Show layer masks"
+msgstr "ფენის ნიღბების ჩვენება"
 
 #: app/core/core-enums.c:1386
 msgctxt "undo-type"
@@ -13895,7 +13895,7 @@ msgstr "უხილავი ფენის შერწყმა შეუძ
 msgid "Cannot merge down to a layer group."
 msgstr "ფენების ჯგუფის შერწყმა შეუძლებელია."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2768
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2769
 msgid "The layer to merge down to is locked."
 msgstr "შესარწყამი ფენა დაბლოკილია."
 
@@ -13962,53 +13962,53 @@ msgstr "გამოსახულების მასშტაბირე�
 msgid "Can't undo %s"
 msgstr "შეუძლებელია %s-ის დაბრუნება"
 
-#: app/core/gimpimagefile.c:770
+#: app/core/gimpimagefile.c:771
 msgid "Folder"
 msgstr "საქაღალდე"
 
-#: app/core/gimpimagefile.c:775
+#: app/core/gimpimagefile.c:776
 msgid "Special File"
 msgstr "სპეციალური ფაილი"
 
-#: app/core/gimpimagefile.c:791
+#: app/core/gimpimagefile.c:792
 msgid "Remote File"
 msgstr "ფაილის ამოღება"
 
-#: app/core/gimpimagefile.c:810
+#: app/core/gimpimagefile.c:811
 msgid "Click to create preview"
 msgstr "დააჭირეთ მინიატურის შესაქმნელად"
 
-#: app/core/gimpimagefile.c:816
+#: app/core/gimpimagefile.c:817
 msgid "Loading preview..."
 msgstr "მინიატურის ჩატვირთვა..."
 
-#: app/core/gimpimagefile.c:822
+#: app/core/gimpimagefile.c:823
 msgid "Preview is out of date"
 msgstr "მინიატურა ძალიან ძველია"
 
-#: app/core/gimpimagefile.c:828
+#: app/core/gimpimagefile.c:829
 msgid "Cannot create preview"
 msgstr "მინატურის შექმნის შეცდომა"
 
-#: app/core/gimpimagefile.c:838
+#: app/core/gimpimagefile.c:839
 msgid "(Preview may be out of date)"
 msgstr "(მინიატურა შეიძლება ძალიან ძველი იყოს)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:847 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:848 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d პიქსელი"
 
-#: app/core/gimpimagefile.c:870 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:871 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d ფენა"
 
-#: app/core/gimpimagefile.c:918
+#: app/core/gimpimagefile.c:919
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "მინიატურის გახსნის შეცდომა %s:%s"
@@ -14016,7 +14016,7 @@ msgstr "მინიატურის გახსნის შეცდომ�
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2562
+#: app/widgets/gimpitemtreeview.c:2563
 msgid "A selected layer's pixels are locked."
 msgstr "მონიშნული ფენის პიქსელები ჩაკეტილია."
 
@@ -14155,8 +14155,8 @@ msgstr "შეუძლებელია მითითებულ ფენ�
 
 #: app/core/gimplayer.c:1923
 msgctxt "undo-type"
-msgid "Add Layer Mask"
-msgstr "ფენის ნიღბის დამატება"
+msgid "Add Layer Masks"
+msgstr "ფენის ნიღბების დამატება"
 
 #: app/core/gimplayer.c:2047
 msgctxt "undo-type"
@@ -14165,28 +14165,28 @@ msgstr "ალფას ნიღაბში გადატანა"
 
 #: app/core/gimplayer.c:2210
 msgctxt "undo-type"
-msgid "Apply Layer Mask"
-msgstr "ფენის ნიღბის დადება"
+msgid "Apply Layer Masks"
+msgstr "ფენის ნიღბების დადება"
 
 #: app/core/gimplayer.c:2211
 msgctxt "undo-type"
-msgid "Delete Layer Mask"
-msgstr "ფენის ნიღბის წაშლა"
+msgid "Delete Layer Masks"
+msgstr "ფენის ნიღბების წაშლა"
 
 #: app/core/gimplayer.c:2318
 msgctxt "undo-type"
-msgid "Enable Layer Mask"
-msgstr "ფენის ნიღბის ჩართვა"
+msgid "Enable Layer Masks"
+msgstr "ფენის ნიღბების ჩართვა"
 
 #: app/core/gimplayer.c:2319
 msgctxt "undo-type"
-msgid "Disable Layer Mask"
-msgstr "ფენის ნიღბის გამორთვა"
+msgid "Disable Layer Masks"
+msgstr "ფენის ნიღბების გამორთვა"
 
 #: app/core/gimplayer.c:2400
 msgctxt "undo-type"
-msgid "Show Layer Mask"
-msgstr "ფენის ნიღბის ჩვენება"
+msgid "Show Layer Masks"
+msgstr "ფენის ნიღბების ჩვენება"
 
 #: app/core/gimplayer.c:2479
 msgctxt "undo-type"
@@ -14365,7 +14365,7 @@ msgid "In line %d of palette file: "
 msgstr "პალეტის ფაილის ხაზზე %d: "
 
 #: app/core/gimppalette-load.c:494 app/core/gimppalette-load.c:699
-#: app/core/gimppalette-load.c:1032
+#: app/core/gimppalette-load.c:1044
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "პალეტის ფაილ %s-ის ჰედერის კთხვის შეცდომა: "
@@ -14374,91 +14374,95 @@ msgstr "პალეტის ფაილ %s-ის ჰედერის კ�
 msgid "Premature end of file."
 msgstr "ფაილის მოულოდნელი დასასრული."
 
-#: app/core/gimppalette-load.c:708
+#: app/core/gimppalette-load.c:709
+#, c-format
 msgid "Invalid ACB palette version."
 msgstr "არასწორი ACB პალიტრის ვერსია."
 
-#: app/core/gimppalette-load.c:714
+#: app/core/gimppalette-load.c:716
+#, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP-ს ACB პალიტრების მხოლოდ v1-ის მხარდაჭერა აქვს"
 
-#: app/core/gimppalette-load.c:721
+#: app/core/gimppalette-load.c:724
+#, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "არასწორი ACB პალიტრის იდენტიფიკატორი."
 
-#: app/core/gimppalette-load.c:736 app/core/gimppalette-load.c:965
-#: app/core/gimppalette-load.c:986
+#: app/core/gimppalette-load.c:740 app/core/gimppalette-load.c:759
+#: app/core/gimppalette-load.c:977 app/core/gimppalette-load.c:998
+#, c-format
 msgid "Invalid ACB palette name."
 msgstr "არასწორი ACB პალიტრის სახელი."
 
-#: app/core/gimppalette-load.c:754
-msgid "Invalid ACB palette prefix."
-msgstr "არასწორი ACB პალიტრის პრეფიქსი."
-
-#: app/core/gimppalette-load.c:769
+#: app/core/gimppalette-load.c:775
+#, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "არასწორი ACB პალიტრის სუფიქსი."
 
-#: app/core/gimppalette-load.c:787 app/core/gimppalette-load.c:1051
+#: app/core/gimppalette-load.c:794 app/core/gimppalette-load.c:1064
+#, c-format
 msgid "Invalid number of colors in palette."
 msgstr "პალიტრაში არსებული ფერების რაოდენობა არასწორია."
 
-#: app/core/gimppalette-load.c:793 app/core/gimppalette-load.c:1057
+#: app/core/gimppalette-load.c:801 app/core/gimppalette-load.c:1071
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "ფერების არასწორი რაოდენობა: %s."
 
-#: app/core/gimppalette-load.c:805 app/core/gimppalette-load.c:814
+#: app/core/gimppalette-load.c:814 app/core/gimppalette-load.c:824
+#, c-format
 msgid "Invalid ACB palette page info."
 msgstr "არასწორი ACB პალიტრის გვერდის ინფორმაცია."
 
-#: app/core/gimppalette-load.c:825 app/core/gimppalette-load.c:837
+#: app/core/gimppalette-load.c:836 app/core/gimppalette-load.c:849
+#, c-format
 msgid "Invalid ACB palette color space."
 msgstr "არასწორი ACB პალიტრის ფერების სივრცე."
 
-#: app/core/gimppalette-load.c:975
+#: app/core/gimppalette-load.c:987
 msgid "Invalid ACB name size."
 msgstr "არასწორი ACB სახელის ზომა."
 
-#: app/core/gimppalette-load.c:1042
+#: app/core/gimppalette-load.c:1055
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "არასწორი ASE თავსართი: %s"
 
-#: app/core/gimppalette-load.c:1067
+#: app/core/gimppalette-load.c:1082
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "არასწორი ASE ფაილი: %s."
 
-#: app/core/gimppalette-load.c:1158
+#: app/core/gimppalette-load.c:1173
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "არასწორი ფერის კომპონენტები: %s."
 
-#: app/core/gimppalette-load.c:1170 app/core/gimppalette-load.c:1194
+#: app/core/gimppalette-load.c:1185 app/core/gimppalette-load.c:1209
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "არასწორი ASE ფერის ჩანაწერი: %s."
 
-#: app/core/gimppalette-load.c:1226 app/core/gimppalette-load.c:1242
-#: app/core/gimppalette-load.c:1261
+#: app/core/gimppalette-load.c:1241 app/core/gimppalette-load.c:1257
+#: app/core/gimppalette-load.c:1276
 msgid "Invalid ASE palette name."
 msgstr "არასწორი ASE პალიტრის სახელი."
 
-#: app/core/gimppalette-load.c:1235
+#: app/core/gimppalette-load.c:1250
 msgid "Invalid ASE block size."
 msgstr "არასწორი ASE ბლოკის ზომა."
 
-#: app/core/gimppalette-load.c:1251
+#: app/core/gimppalette-load.c:1266
 msgid "Invalid ASE name size."
 msgstr "არასწორი ASE სახელის ზომა."
 
-#: app/core/gimppalette-load.c:1380
+#: app/core/gimppalette-load.c:1395
 #, c-format
 msgid "Unable to read SBZ file"
 msgstr "SBZ ფაილის წაკითხვის შეცდომა"
 
-#: app/core/gimppalette-load.c:1444
+#: app/core/gimppalette-load.c:1459
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "SBZ ფაილის გახსნის შეცდომა"
@@ -14973,48 +14977,48 @@ msgstr "პროცენტი"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:135
+#: app/dialogs/about-dialog.c:146
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (რევიზია %d)"
 
-#: app/dialogs/about-dialog.c:143
+#: app/dialogs/about-dialog.c:154
 msgid "About GIMP"
 msgstr "GIMP-ის შესახებ"
 
-#: app/dialogs/about-dialog.c:152
+#: app/dialogs/about-dialog.c:163
 msgid "Visit the GIMP website"
 msgstr "GIMP-ის ვებ-გვერდზე გადასვლა"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:158
+#: app/dialogs/about-dialog.c:169
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
 
-#: app/dialogs/about-dialog.c:364
+#: app/dialogs/about-dialog.c:376
 msgid "Update available!"
 msgstr "ხელმისაწვდომია განახლება!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:394
+#: app/dialogs/about-dialog.c:406
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "GIMP %s-ის განახლება %d-ის (გამოვიდა %s-ზე) გადმოწერა\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:404
+#: app/dialogs/about-dialog.c:416
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>რელიზის კომენტარი</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:409
+#: app/dialogs/about-dialog.c:421
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "GIMP %s-ის (გამოვიდა %s-ზე) გადმოწერა\n"
 
-#: app/dialogs/about-dialog.c:434 app/dialogs/about-dialog.c:457
+#: app/dialogs/about-dialog.c:446 app/dialogs/about-dialog.c:469
 msgid "Check for updates"
 msgstr "განახლებების შემოწმება"
 
@@ -15022,16 +15026,16 @@ msgstr "განახლებების შემოწმება"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:476
+#: app/dialogs/about-dialog.c:488
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "ბოლოს შემოწმების თარიღი %s %s"
 
-#: app/dialogs/about-dialog.c:703
+#: app/dialogs/about-dialog.c:715
 msgid "GIMP is brought to you by"
 msgstr "GIMP შექმნილია თქვენთვის"
 
-#: app/dialogs/about-dialog.c:779
+#: app/dialogs/about-dialog.c:790
 #, c-format
 msgid ""
 "This is an unstable development release\n"
@@ -15060,7 +15064,7 @@ msgstr "მდებარეობისა და ზომის _ჩაკ�
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:732
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:733
 msgid "Lock visibility"
 msgstr "ხილვადობის ჩაკეტვა"
 
@@ -15547,7 +15551,7 @@ msgstr "მხოლოდ აქტიუ_რი ჯგუფების შ�
 msgid "_Discard invisible layers"
 msgstr "_უჩინარი ფენების მოცილება"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:702
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:693
 msgid "Create a New Image"
 msgstr "ახალი გამოსახულების შექმნა"
 
@@ -15579,7 +15583,7 @@ msgstr "გამოსახულების თვისებები"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
 #: app/dialogs/welcome-dialog.c:187 app/tools/gimpcolorpickertool.c:351
-#: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:746
+#: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
 #: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:647
 #: app/widgets/gimptexteditor.c:167
@@ -15721,11 +15725,11 @@ msgid "_Opacity:"
 msgstr "_გაუმჭვირვალობა:"
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:252 app/tools/gimpmeasuretool.c:821
+#: app/dialogs/layer-options-dialog.c:252 app/tools/gimpmeasuretool.c:815
 msgid "Width:"
 msgstr "სიგანე:"
 
-#: app/dialogs/layer-options-dialog.c:257 app/tools/gimpmeasuretool.c:849
+#: app/dialogs/layer-options-dialog.c:257 app/tools/gimpmeasuretool.c:843
 msgid "Height:"
 msgstr "სიმაღლე:"
 
@@ -16602,7 +16606,7 @@ msgstr "კლავიატურის ყველა მალსახმ�
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1859 app/dialogs/preferences-dialog.c:1860
-#: app/dialogs/welcome-dialog.c:539
+#: app/dialogs/welcome-dialog.c:537
 msgid "Theme"
 msgstr "თემა"
 
@@ -16614,44 +16618,44 @@ msgstr "თემის არჩევა"
 msgid "Color scheme variant (if available)"
 msgstr "ფერების სქემის ვარიანტი (თუ ხელმისაწვდომია)"
 
-#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:586
+#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:589
 msgid "_Override icon sizes set by the theme"
 msgstr "თემის დაყენებული ხატულის ზომების _გადაფარვა"
 
-#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:595
+#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:598
 msgid "Small"
 msgstr "პატარა"
 
-#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:597
+#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:600
 msgid "Medium"
 msgstr "საშუალო"
 
-#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:599
+#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:602
 msgid "Large"
 msgstr "დიდი"
 
-#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:601
+#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:604
 msgid "Huge"
 msgstr "უზარმაზარი"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:617
+#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:620
 msgid "Font Scaling"
 msgstr "ფონტის მასშტაბი"
 
-#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:619
+#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:622
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 
-#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:625
+#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:628
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:627
+#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:630
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:629
+#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:632
 msgid "200%"
 msgstr "200%"
 
@@ -16667,7 +16671,7 @@ msgstr "ხატულების თემა"
 msgid "Select an Icon Theme"
 msgstr "აირჩიეთ ხატულის თემა"
 
-#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:579
+#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:582
 msgid "Use symbolic icons if available"
 msgstr "შესაძლებლობის შემთხვევაში სიმბოლური ხატულების გამოყენება"
 
@@ -16698,7 +16702,7 @@ msgstr "აქტიური ფუნჯისა და გრადიენ
 msgid "Show active _image"
 msgstr "_აქტიური გამოსახულების ჩვენება"
 
-#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:676
+#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:668
 msgid "Use tool _groups"
 msgstr "ხელსაწყოების ჯგუფების გამოყ_ენება"
 
@@ -17867,7 +17871,7 @@ msgid "_Next Tip"
 msgstr "_შემდეგი მინიშნება"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1093
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1084
 msgid "Learn more"
 msgstr "მეტის გაგება"
 
@@ -18019,116 +18023,116 @@ msgstr "წვლილი შეიტანა"
 msgid "Donating"
 msgstr "შეწირვა"
 
-#: app/dialogs/welcome-dialog.c:549
+#: app/dialogs/welcome-dialog.c:547
 msgid "Color scheme"
 msgstr "ფერების სქემა"
 
-#: app/dialogs/welcome-dialog.c:566
+#: app/dialogs/welcome-dialog.c:573
 msgid "Icon theme"
 msgstr "ხატულების თემა"
 
-#: app/dialogs/welcome-dialog.c:583
+#: app/dialogs/welcome-dialog.c:586
 msgid "Icon Scaling"
 msgstr "ხატულის მასშტაბი"
 
-#: app/dialogs/welcome-dialog.c:642
+#: app/dialogs/welcome-dialog.c:645
 msgid "GUI Language (requires restart)"
 msgstr "ინტერფეისის ენა (საჭიროა გადატვირთვა)"
 
-#: app/dialogs/welcome-dialog.c:647
+#: app/dialogs/welcome-dialog.c:650
 msgid "Additional Customizations"
 msgstr "დამატებითი მორგება"
 
-#: app/dialogs/welcome-dialog.c:656
+#: app/dialogs/welcome-dialog.c:654
 msgid "Merge menu and title bar (requires restart)"
 msgstr "მენიუსა და სათაურის ზოლების შერწყმა (საჭიროა პროგრამის გადატვირთვა)"
 
-#: app/dialogs/welcome-dialog.c:664
+#: app/dialogs/welcome-dialog.c:662
 msgid "Enable check for updates (requires internet)"
 msgstr "განახლებების შემოწმების ჩართვა (საჭიროა ინტერნეტი)"
 
-#: app/dialogs/welcome-dialog.c:705
+#: app/dialogs/welcome-dialog.c:696
 msgid "C_reate"
 msgstr "_შექმნა"
 
-#: app/dialogs/welcome-dialog.c:714
+#: app/dialogs/welcome-dialog.c:705
 msgid "Open an Existing Image"
 msgstr "არსებული გამოსახულების გახსნა"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:726
+#: app/dialogs/welcome-dialog.c:717
 msgid "Recent Images"
 msgstr "ბოლო გამოსახულებები"
 
-#: app/dialogs/welcome-dialog.c:821
+#: app/dialogs/welcome-dialog.c:812
 msgid "O_pen Selected Images"
 msgstr "მ_ონიშნული გამოსახულებების გახსნა"
 
-#: app/dialogs/welcome-dialog.c:830
+#: app/dialogs/welcome-dialog.c:821
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 
-#: app/dialogs/welcome-dialog.c:858
+#: app/dialogs/welcome-dialog.c:849
 #, c-format
 msgid "Ways to contribute"
 msgstr "შემოწირვის გზები"
 
-#: app/dialogs/welcome-dialog.c:867 app/dialogs/welcome-dialog.c:878
+#: app/dialogs/welcome-dialog.c:858 app/dialogs/welcome-dialog.c:869
 msgid "Report Bugs"
 msgstr "მოგვწერეთ შეცდომაზე"
 
-#: app/dialogs/welcome-dialog.c:869
+#: app/dialogs/welcome-dialog.c:860
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
 msgstr ""
 
-#: app/dialogs/welcome-dialog.c:882 app/dialogs/welcome-dialog.c:892
+#: app/dialogs/welcome-dialog.c:873 app/dialogs/welcome-dialog.c:883
 msgid "Write Code"
 msgstr "კოდის წერა"
 
-#: app/dialogs/welcome-dialog.c:884
+#: app/dialogs/welcome-dialog.c:875
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr ""
 
-#: app/dialogs/welcome-dialog.c:896 app/dialogs/welcome-dialog.c:906
+#: app/dialogs/welcome-dialog.c:887 app/dialogs/welcome-dialog.c:897
 msgid "Translate"
 msgstr "თარგმნა"
 
-#: app/dialogs/welcome-dialog.c:898
+#: app/dialogs/welcome-dialog.c:889
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "დაუკავშირდით მთარგმნელების გუნდს თქვენი ენისთვის"
 
-#: app/dialogs/welcome-dialog.c:910
+#: app/dialogs/welcome-dialog.c:901
 msgid "Donate"
 msgstr "შეწირვა"
 
-#: app/dialogs/welcome-dialog.c:912
+#: app/dialogs/welcome-dialog.c:903
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "ფულის შემოწირვა მნიშვნელოვანია: ის GIMP-ს უფრო მდგრადს ხდის."
 
-#: app/dialogs/welcome-dialog.c:920
+#: app/dialogs/welcome-dialog.c:911
 msgid "Donate via Liberapay"
 msgstr "შემოგვწირეთ Liberapay-ით"
 
-#: app/dialogs/welcome-dialog.c:923
+#: app/dialogs/welcome-dialog.c:914
 msgid "Other donation options"
 msgstr "შეწირვის სხვა ვარიანტები"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:957
+#: app/dialogs/welcome-dialog.c:948
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s-ის რელიზის შენიშვნები"
 
-#: app/dialogs/welcome-dialog.c:1068
+#: app/dialogs/welcome-dialog.c:1059
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr ""
@@ -18451,7 +18455,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "ფენის ფერთ შევსება"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1876
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1877
 #: app/widgets/gimplayertreeview.c:804
 msgid "Drop layers"
 msgstr "ფენების მოცილება"
@@ -18501,7 +18505,7 @@ msgid "Select Rotation Angle"
 msgstr "აირჩიეთ შემობრუნების კუთხე"
 
 #: app/display/gimpdisplayshell-rotate-dialog.c:152
-#: app/tools/gimpmeasuretool.c:793
+#: app/tools/gimpmeasuretool.c:787
 msgid "Angle:"
 msgstr "კუთხე:"
 
@@ -18555,9 +18559,9 @@ msgstr "(არცერთი)"
 msgid "Layer picked: '%s'"
 msgstr "არჩეული ფენა: '%s'"
 
-#: app/display/gimpdisplayshell-utils.c:194 app/tools/gimpmeasuretool.c:624
-#: app/tools/gimpmeasuretool.c:776 app/tools/gimpmeasuretool.c:832
-#: app/tools/gimpmeasuretool.c:860
+#: app/display/gimpdisplayshell-utils.c:194 app/tools/gimpmeasuretool.c:618
+#: app/tools/gimpmeasuretool.c:770 app/tools/gimpmeasuretool.c:826
+#: app/tools/gimpmeasuretool.c:854
 msgid "pixels"
 msgstr "პიქსელი"
 
@@ -18667,7 +18671,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "წკაპი-გადათრევა ფოკუსის მობრუნებისთვის"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1557 app/tools/gimppainttool.c:678
+#: app/display/gimptoolline.c:1557 app/tools/gimppainttool.c:696
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s შეზღუდული კუთხეებისთვის"
@@ -18981,29 +18985,29 @@ msgstr "წკაპი-გადათრევა საყრდენი წ
 msgid "Click-Drag to shear"
 msgstr "წკაპი-გადათრევა დასახრელად"
 
-#: app/file/file-open.c:136 app/file/file-save.c:126
+#: app/file/file-open.c:140 app/file/file-save.c:126
 msgid "Not a regular file"
 msgstr "ფაილი ჩვეულებრივი არაა"
 
-#: app/file/file-open.c:145 app/file/file-save.c:135
+#: app/file/file-open.c:149 app/file/file-save.c:135
 msgid "Permission denied"
 msgstr "წვდომა აკრძალულია"
 
-#: app/file/file-open.c:252
+#: app/file/file-open.c:273
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "დამატებამ დააბრუნა წარმატების კოდი, მაგრამ არა გამოსახულება: %s"
 
-#: app/file/file-open.c:263
+#: app/file/file-open.c:284
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "დამატებამ ვერ შეძლო ფაილის გახსნა: %s"
 
-#: app/file/file-open.c:645
+#: app/file/file-open.c:669
 msgid "Image doesn't contain any layers"
 msgstr "გამოსახულება არცერთ ფენას შეიცავს"
 
-#: app/file/file-open.c:703
+#: app/file/file-open.c:727
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s'-ის გახსნის შეცდომა: %s"
@@ -19951,7 +19955,7 @@ msgid "Turn colors into shades of gray"
 msgstr "ფერების გადაყვანა ნაცრისფრის ტონებში"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1271
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1272
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:273
@@ -20778,7 +20782,7 @@ msgstr ""
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "გამოსახულება '%s' (%d) '%s' სიზუსტის არ უნდა იყოს"
 
-#: app/pdb/gimppdb-utils.c:761 app/pdb/image-guides-cmds.c:181
+#: app/pdb/gimppdb-utils.c:761 app/pdb/image-guides-cmds.c:177
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr ""
@@ -21446,7 +21450,7 @@ msgstr ""
 msgid "Bad binary format string in interpreter file %s"
 msgstr ""
 
-#: app/plug-in/gimpplugin.c:235
+#: app/plug-in/gimpplugin.c:238
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -21474,7 +21478,7 @@ msgstr ""
 "პროცედურა %s-ს გაშვეების შეცდომა:\n"
 "%s"
 
-#: app/plug-in/gimpplugin-progress.c:337
+#: app/plug-in/gimpplugin-progress.c:339
 msgid "Cancelled"
 msgstr "შეწყვეტილია"
 
@@ -21486,7 +21490,7 @@ msgstr "დამატების ინტერპრეტატორე�
 msgid "Plug-in Environment"
 msgstr "დამატების გარემო"
 
-#: app/plug-in/gimppluginmanager-call.c:190
+#: app/plug-in/gimppluginmanager-call.c:193
 #: app/plug-in/gimppluginmanager-call.c:265
 #: app/plug-in/gimppluginmanager-call.c:365
 #, c-format
@@ -22468,7 +22472,7 @@ msgstr "მრავალი ფენების შევსება შე
 #: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:219 app/tools/gimpfiltertool.c:300
 #: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
-#: app/tools/gimpoffsettool.c:189 app/tools/gimppainttool.c:296
+#: app/tools/gimpoffsettool.c:189 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
 msgid "No selected drawables."
@@ -22489,12 +22493,12 @@ msgid "No valid line art source selected."
 msgstr "არჩეულია ხაზით ხატვის არასწორი წყარო."
 
 #: app/tools/gimpbucketfilltool.c:818 app/tools/gimpbucketfilltool.c:958
-#: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:505
+#: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:514
 msgid "Click in any image to pick the background color"
 msgstr "ფონის ფერის ასაღებად დააწკაპუნეთ ნებისმიერ გამოსახულებაში"
 
 #: app/tools/gimpbucketfilltool.c:825 app/tools/gimpbucketfilltool.c:967
-#: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:499
+#: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:508
 msgid "Click in any image to pick the foreground color"
 msgstr "წინა პლანის ფერის ასაღებად დააწკაპუნეთ ნებისმიერ გამოსახულებაში"
 
@@ -22537,7 +22541,7 @@ msgstr "_ჩარჩოს მიხედვით გარდაქმნა
 msgid "Cannot modify multiple layers. Select only one layer."
 msgstr "ხელსაწყოს ოპერირება მხოლოდ ეგ ფენაზე შეუძლია."
 
-#: app/tools/gimpcagetool.c:250 app/tools/gimppainttool.c:329
+#: app/tools/gimpcagetool.c:250 app/tools/gimppainttool.c:337
 #: app/tools/gimpwarptool.c:809
 msgid "The selected item's pixels are locked."
 msgstr "მონიშნული ელემენტის პიქსელები ჩაკეტილია."
@@ -22821,7 +22825,7 @@ msgstr "_მრუდები..."
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:187
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2541
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2542
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
 
@@ -23024,8 +23028,8 @@ msgstr "ტილოზე-მდებარე ფილტრის კონ
 msgid "A selected item's pixels are locked."
 msgstr "მონიშნული ფენის პიქსელები ჩაკეტილია."
 
-#: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:362
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2553
+#: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2554
 msgid "A selected layer is not visible."
 msgstr "მონიშნული ფენა უხილავია."
 
@@ -23061,21 +23065,21 @@ msgid "Blending Options"
 msgstr "შერევის პარამეტრები"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1286
+#: app/tools/gimpfiltertool.c:1287
 msgid "Advanced Color Options"
 msgstr "ფერის დამატებითი პარამეტრები"
 
-#: app/tools/gimpfiltertool.c:1699 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1700 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "%s-ის პარამეტრების შემოტანა"
 
-#: app/tools/gimpfiltertool.c:1701 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1702 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "%s-ის პარამეტრების გატანა"
 
-#: app/tools/gimpfiltertool.c:1944
+#: app/tools/gimpfiltertool.c:1945
 msgid "Editing filter..."
 msgstr "ფილტრის ჩასწორება..."
 
@@ -23830,15 +23834,15 @@ msgctxt "undo-type"
 msgid "Straighten Vertically by %-3.3g°"
 msgstr "ვერტიკალურად გასწორება %-3.3g°-ით"
 
-#: app/tools/gimpmeasuretool.c:451
+#: app/tools/gimpmeasuretool.c:445
 msgid "Add Guides"
 msgstr "გიდების დამატება"
 
-#: app/tools/gimpmeasuretool.c:741
+#: app/tools/gimpmeasuretool.c:735
 msgid "Measure Distances and Angles"
 msgstr "მანძილების და კუთხეების გაზმვა"
 
-#: app/tools/gimpmeasuretool.c:765
+#: app/tools/gimpmeasuretool.c:759
 msgid "Distance:"
 msgstr "მანძილი:"
 
@@ -24107,37 +24111,37 @@ msgctxt "command"
 msgid "Paint Select"
 msgstr "ნახატის არჩევა"
 
-#: app/tools/gimppainttool.c:176
+#: app/tools/gimppainttool.c:177
 msgid "Click to paint"
 msgstr "ხატვის დასაწყებად დააწკაპუნეთ"
 
-#: app/tools/gimppainttool.c:177
+#: app/tools/gimppainttool.c:178
 msgid "Click to draw the line"
 msgstr "წკაპი ხაზის დასახატად"
 
-#: app/tools/gimppainttool.c:178
+#: app/tools/gimppainttool.c:179
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s ფერის ასარჩევად"
 
-#: app/tools/gimppainttool.c:305
+#: app/tools/gimppainttool.c:306
 msgid "Cannot paint on multiple layers. Select only one layer."
 msgstr "მრავალ ფენაზე ხატვა შეუძლებელია. აირჩიეთ მხოლოდ ერთი ფენა."
 
-#: app/tools/gimppainttool.c:320
+#: app/tools/gimppainttool.c:321
 msgid "Cannot paint on layer groups."
 msgstr "ფენების ჯგუფზე ხატვა შეუძლებელია."
 
-#: app/tools/gimppainttool.c:709
+#: app/tools/gimppainttool.c:727
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s სწორი ხაზისთვის"
 
-#: app/tools/gimppainttool.c:944
+#: app/tools/gimppainttool.c:962
 msgid "The selected drawable does not have an alpha channel."
 msgstr ""
 
-#: app/tools/gimppainttool.c:955
+#: app/tools/gimppainttool.c:973
 msgid "The selected layer's alpha channel is locked."
 msgstr "მონიშნული ფენის ალფა არხი დაბლოკილია."
 
@@ -27351,121 +27355,121 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "ინდექსირებული ფერი (%d ფერი)"
 
-#: app/widgets/gimpitemtreeview.c:702
+#: app/widgets/gimpitemtreeview.c:703
 msgid "Set Item Exclusive Content Lock"
 msgstr "მხოლოდ ამ ელემენტის შემცველობის დაბლოკვა"
 
-#: app/widgets/gimpitemtreeview.c:718
+#: app/widgets/gimpitemtreeview.c:719
 msgid "Set Item Exclusive Position Lock"
 msgstr "ტილოზე ამ ელემენტის გადათრევის დაბლოკვა"
 
-#: app/widgets/gimpitemtreeview.c:733
+#: app/widgets/gimpitemtreeview.c:734
 msgid "Unlock visibility"
 msgstr "ხილვადობის განბლოკვა"
 
-#: app/widgets/gimpitemtreeview.c:734
+#: app/widgets/gimpitemtreeview.c:735
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "ამ ელემენტის ხილვადობის დაბლოკვა"
 
-#: app/widgets/gimpitemtreeview.c:764
+#: app/widgets/gimpitemtreeview.c:765
 msgid "Toggle the visibility of all filters."
 msgstr "ყველა ფილტრის ხილვადობის გადართვა."
 
-#: app/widgets/gimpitemtreeview.c:778
+#: app/widgets/gimpitemtreeview.c:779
 msgid "Edit the selected filter."
 msgstr "მონიშნული ფილტრის ჩასწორება."
 
-#: app/widgets/gimpitemtreeview.c:791
+#: app/widgets/gimpitemtreeview.c:792
 msgid "Raise filter one step up in the stack."
 msgstr "ამ არხების შეკვრაში ფილტრის აწევა ერთი ნაბიჯით."
 
-#: app/widgets/gimpitemtreeview.c:804
+#: app/widgets/gimpitemtreeview.c:805
 msgid "Lower filter one step down in the stack."
 msgstr "ამ არხების შეკვრაში ფილტრის ბოლომდე დაწევა."
 
-#: app/widgets/gimpitemtreeview.c:817
+#: app/widgets/gimpitemtreeview.c:818
 msgid "Merge all active filters down."
 msgstr "ყველა აქტიური ფილტრის შერწყმა."
 
-#: app/widgets/gimpitemtreeview.c:830
+#: app/widgets/gimpitemtreeview.c:831
 msgid "Remove the selected filter."
 msgstr "მონიშნული ფილტრის წაშლა."
 
-#: app/widgets/gimpitemtreeview.c:841
+#: app/widgets/gimpitemtreeview.c:842
 msgid "Layer Effects"
 msgstr "ფენის ეფექტები"
 
-#: app/widgets/gimpitemtreeview.c:872
+#: app/widgets/gimpitemtreeview.c:873
 msgid "Select items by patterns and store item sets"
 msgstr "აირჩიეთ ელემენტებით შაბლონებით და შეინახეთ ელემენტის ნაკრებები"
 
-#: app/widgets/gimpitemtreeview.c:1726
+#: app/widgets/gimpitemtreeview.c:1727
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "მონიშნულია %d ელემენტი"
 
-#: app/widgets/gimpitemtreeview.c:2637 app/widgets/gimpitemtreeview.c:2690
+#: app/widgets/gimpitemtreeview.c:2638 app/widgets/gimpitemtreeview.c:2691
 msgid "Cannot reorder a filter that is being edited."
 msgstr "ვერ გადაალაგებთ ფილტრს, რომლის ჩასწორებაც მიმდინარეობს."
 
-#: app/widgets/gimpitemtreeview.c:2654 app/widgets/gimpitemtreeview.c:2707
+#: app/widgets/gimpitemtreeview.c:2655 app/widgets/gimpitemtreeview.c:2708
 msgid "Reorder filter"
 msgstr "ფილტრების გადალაგება"
 
-#: app/widgets/gimpitemtreeview.c:2752
+#: app/widgets/gimpitemtreeview.c:2753
 msgid "Effects from active tools can not be merged."
 msgstr "აქტიური ხელსაწყოს ეფექტების შერწყმა შეუძლებელია."
 
-#: app/widgets/gimpitemtreeview.c:2802
+#: app/widgets/gimpitemtreeview.c:2806
 msgid "Remove filter"
 msgstr "ფილტრის წაშლა"
 
-#: app/widgets/gimpitemtreeview.c:3325
+#: app/widgets/gimpitemtreeview.c:3329
 msgid "No layer set stored"
 msgstr "ფენების ნაკრები შენახული არაა"
 
-#: app/widgets/gimpitemtreeview.c:3347
+#: app/widgets/gimpitemtreeview.c:3351
 msgid "New layer set's name"
 msgstr "ფენების ახალი ნაკრების სახელი"
 
-#: app/widgets/gimpitemtreeview.c:3389 app/widgets/gimpitemtreeview.c:3404
+#: app/widgets/gimpitemtreeview.c:3393 app/widgets/gimpitemtreeview.c:3408
 msgid "Select layers by text search"
 msgstr "აირჩეთ ფენები ტექსტის ძებნით"
 
-#: app/widgets/gimpitemtreeview.c:3391 app/widgets/gimpitemtreeview.c:3406
+#: app/widgets/gimpitemtreeview.c:3395 app/widgets/gimpitemtreeview.c:3410
 msgid "Text search"
 msgstr "ტექსტით ძებნა"
 
-#: app/widgets/gimpitemtreeview.c:3410
+#: app/widgets/gimpitemtreeview.c:3414
 msgid "Select layers by glob patterns"
 msgstr "ფენების glob შაბლონით არჩევა"
 
-#: app/widgets/gimpitemtreeview.c:3412
+#: app/widgets/gimpitemtreeview.c:3416
 msgid "Glob pattern search"
 msgstr "Glob შაბლონის ძებნა"
 
-#: app/widgets/gimpitemtreeview.c:3416
+#: app/widgets/gimpitemtreeview.c:3420
 msgid "Select layers by regular expressions"
 msgstr "ფენების რეგულარული გამოსახულებებით ძებნა"
 
-#: app/widgets/gimpitemtreeview.c:3418
+#: app/widgets/gimpitemtreeview.c:3422
 msgid "Regular Expression search"
 msgstr "რეგულარული გამოსახულებით ძებნა"
 
-#: app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3477
 msgid "search"
 msgstr "_ძებნა"
 
-#: app/widgets/gimpitemtreeview.c:3474
+#: app/widgets/gimpitemtreeview.c:3478
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3474
+#: app/widgets/gimpitemtreeview.c:3478
 msgid "regexp"
 msgstr "რეგგამოს"
 
-#: app/widgets/gimpitemtreeview.c:3643
+#: app/widgets/gimpitemtreeview.c:3647
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "არასწორი რეგულარული გამოსახულება: %s\n"
@@ -28963,6 +28967,33 @@ msgstr "დაბრუნების ისტორია"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "კონტურების მენიუ"
+
+#~ msgctxt "text-tool-action"
+#~ msgid "_Path from Text"
+#~ msgstr "კო_ნტური ტექსტიდან"
+
+#~ msgctxt "undo-type"
+#~ msgid "Add Layer Mask"
+#~ msgstr "ფენის ნიღბის დამატება"
+
+#~ msgctxt "undo-type"
+#~ msgid "Apply Layer Mask"
+#~ msgstr "ფენის ნიღბის დადება"
+
+#~ msgctxt "undo-type"
+#~ msgid "Delete Layer Mask"
+#~ msgstr "ფენის ნიღბის წაშლა"
+
+#~ msgctxt "undo-type"
+#~ msgid "Disable Layer Mask"
+#~ msgstr "ფენის ნიღბის გამორთვა"
+
+#~ msgctxt "undo-type"
+#~ msgid "Show Layer Mask"
+#~ msgstr "ფენის ნიღბის ჩვენება"
+
+#~ msgid "Invalid ACB palette prefix."
+#~ msgstr "არასწორი ACB პალიტრის პრეფიქსი."
 
 #~ msgid "Insane Options"
 #~ msgstr "რთული პარამეტრები"
