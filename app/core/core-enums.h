@@ -560,8 +560,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_ITEM_RESIZE,           /*< desc="Resize item"                    >*/
   GIMP_UNDO_GROUP_LAYER_ADD,             /*< desc="Add layer"                      >*/
   GIMP_UNDO_GROUP_LAYER_ADD_ALPHA,       /*< desc="Add alpha channel"              >*/
-  GIMP_UNDO_GROUP_LAYER_ADD_MASK,        /*< desc="Add layer mask"                 >*/
-  GIMP_UNDO_GROUP_LAYER_APPLY_MASK,      /*< desc="Apply layer mask"               >*/
+  GIMP_UNDO_GROUP_LAYER_ADD_MASK,        /*< desc="Add layer masks"                >*/
+  GIMP_UNDO_GROUP_LAYER_APPLY_MASK,      /*< desc="Apply layer masks"              >*/
   GIMP_UNDO_GROUP_LAYER_REMOVE_ALPHA,    /*< desc="Remove alpha channel"           >*/
   GIMP_UNDO_GROUP_LAYER_LOCK_ALPHA,      /*< desc="Lock/Unlock alpha channels"     >*/
   GIMP_UNDO_GROUP_LAYER_OPACITY,         /*< desc="Set layers opacity"             >*/
@@ -621,10 +621,10 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_TEXT_LAYER,                  /*< desc="Text layer"                     >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,         /*< desc="Text layer modification"        >*/
   GIMP_UNDO_TEXT_LAYER_CONVERT,          /*< desc="Convert text layer"             >*/
-  GIMP_UNDO_LAYER_MASK_ADD,              /*< desc="Add layer mask"                 >*/
-  GIMP_UNDO_LAYER_MASK_REMOVE,           /*< desc="Delete layer mask"              >*/
-  GIMP_UNDO_LAYER_MASK_APPLY,            /*< desc="Apply layer mask"               >*/
-  GIMP_UNDO_LAYER_MASK_SHOW,             /*< desc="Show layer mask"                >*/
+  GIMP_UNDO_LAYER_MASK_ADD,              /*< desc="Add layer masks"                >*/
+  GIMP_UNDO_LAYER_MASK_REMOVE,           /*< desc="Delete layer masks"             >*/
+  GIMP_UNDO_LAYER_MASK_APPLY,            /*< desc="Apply layer masks"              >*/
+  GIMP_UNDO_LAYER_MASK_SHOW,             /*< desc="Show layer masks"               >*/
   GIMP_UNDO_CHANNEL_ADD,                 /*< desc="New channel"                    >*/
   GIMP_UNDO_CHANNEL_REMOVE,              /*< desc="Delete channel"                 >*/
   GIMP_UNDO_CHANNEL_COLOR,               /*< desc="Channel color"                  >*/
