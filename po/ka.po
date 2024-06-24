@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-22 20:12+0000\n"
-"PO-Revision-Date: 2024-06-23 07:07+0200\n"
+"POT-Creation-Date: 2024-06-23 23:24+0000\n"
+"PO-Revision-Date: 2024-06-24 05:35+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -6134,8 +6134,8 @@ msgstr "ახალი ფენის ჯგუფის შექმნა �
 
 #: app/actions/layers-actions.c:95
 msgctxt "layers-action"
-msgid "D_uplicate Layer"
-msgstr "ფენის დ_უბლირება"
+msgid "D_uplicate Layers"
+msgstr "ფენების დ_უბლირება"
 
 #: app/actions/layers-actions.c:97
 msgctxt "layers-action"
@@ -6154,43 +6154,43 @@ msgstr "არჩეული ფენების წაშლა"
 
 #: app/actions/layers-actions.c:108
 msgctxt "layers-action"
-msgid "_Raise Layer"
-msgstr "ფენის _აწევა"
+msgid "_Raise Layers"
+msgstr "ფენების _აწევა"
 
 #: app/actions/layers-actions.c:109
 msgctxt "layers-action"
-msgid "Raise this layer one step in the layer stack"
-msgstr "ამ არხების შეკვრაში ერთით მაღლა აწევა"
+msgid "Raise the selected layers one step in the layer stack"
+msgstr "მონიშნული ფენების აწევა ერთი ნაბიჯით ფენების შეკვრაში"
 
 #: app/actions/layers-actions.c:114
 msgctxt "layers-action"
-msgid "Layer to _Top"
-msgstr "ფენის ბოლომდე აწევა"
+msgid "Layers to _Top"
+msgstr "_ფენის ბოლომდე აწევა"
 
 #: app/actions/layers-actions.c:115
 msgctxt "layers-action"
-msgid "Move this layer to the top of the layer stack"
-msgstr "ამ არხების შეკვრაში თავში აწევა"
+msgid "Move the selected layers to the top of the layer stack"
+msgstr "მონიშნული ფენების ბოლომდე აწევა ფენების შეკვრაში"
 
 #: app/actions/layers-actions.c:120
 msgctxt "layers-action"
-msgid "_Lower Layer"
-msgstr "ფენის დაწევა"
+msgid "_Lower Layers"
+msgstr "ფენების დაწევა"
 
 #: app/actions/layers-actions.c:121
 msgctxt "layers-action"
-msgid "Lower this layer one step in the layer stack"
-msgstr "ამ არხების შეკვრაში ბოლომდე დაწევა"
+msgid "Lower the selected layers one step in the layer stack"
+msgstr "მონიშნული ფენების დაწევა ერთი ნაბიჯით ფენების შეკვრაში"
 
 #: app/actions/layers-actions.c:126
 msgctxt "layers-action"
-msgid "Layer to _Bottom"
-msgstr "ფენის ბოლომდე დაწევა"
+msgid "Layers to _Bottom"
+msgstr "ფენის ბოლომდე _დაწევა"
 
 #: app/actions/layers-actions.c:127
 msgctxt "layers-action"
-msgid "Move this layer to the bottom of the layer stack"
-msgstr "ამ არხების შეკვრაში ბოლომდე დაწევა"
+msgid "Move the selected layers to the bottom of the layer stack"
+msgstr "მონიშნული ფენების ბოლომდე დაწევა ფენების შეკვრაში"
 
 #: app/actions/layers-actions.c:132
 msgctxt "layers-action"
