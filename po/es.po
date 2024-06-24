@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-23 23:05+0000\n"
-"PO-Revision-Date: 2024-06-24 13:21+0200\n"
+"POT-Creation-Date: 2024-06-24 11:23+0000\n"
+"PO-Revision-Date: 2024-06-24 14:08+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -17991,7 +17991,7 @@ msgstr "Seleccionar las carpetas de complementos"
 
 #: app/dialogs/preferences-dialog.c:3452
 msgid "Scripts"
-msgstr "Guiones"
+msgstr "Scripts"
 
 #: app/dialogs/preferences-dialog.c:3452
 msgid "Script-Fu Folders"
