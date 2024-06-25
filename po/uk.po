@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-23 18:09+0000\n"
-"PO-Revision-Date: 2024-06-23 21:56+0300\n"
+"POT-Creation-Date: 2024-06-23 23:05+0000\n"
+"PO-Revision-Date: 2024-06-25 14:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -6193,8 +6193,6 @@ msgid "Create a new layer group and add it to the image"
 msgstr "Створити нову групу шарів та додати її до зображення"
 
 #: app/actions/layers-actions.c:95
-#| msgctxt "layers-action"
-#| msgid "D_uplicate Layer"
 msgctxt "layers-action"
 msgid "D_uplicate Layers"
 msgstr "Д_ублювати шари"
@@ -6215,44 +6213,60 @@ msgid "Delete selected layers"
 msgstr "Вилучити позначені шари"
 
 #: app/actions/layers-actions.c:108
+#| msgctxt "layers-action"
+#| msgid "_Raise Layer"
 msgctxt "layers-action"
-msgid "_Raise Layer"
-msgstr "П_ідняти шар"
+msgid "_Raise Layers"
+msgstr "П_ідняти шари"
 
 #: app/actions/layers-actions.c:109
+#| msgctxt "layers-action"
+#| msgid "Raise this layer one step in the layer stack"
 msgctxt "layers-action"
-msgid "Raise this layer one step in the layer stack"
-msgstr "Підняти активний шар на один рівень"
+msgid "Raise the selected layers one step in the layer stack"
+msgstr "Підняти позначені шари на на один рівень у стосі"
 
 #: app/actions/layers-actions.c:114
+#| msgctxt "layers-action"
+#| msgid "Layer to _Top"
 msgctxt "layers-action"
-msgid "Layer to _Top"
-msgstr "Зробити шар в_ерхнім"
+msgid "Layers to _Top"
+msgstr "Зробити шари в_ерхніми"
 
 #: app/actions/layers-actions.c:115
+#| msgctxt "layers-action"
+#| msgid "Move this layer to the top of the layer stack"
 msgctxt "layers-action"
-msgid "Move this layer to the top of the layer stack"
-msgstr "Зробити активний шар у верхнім"
+msgid "Move the selected layers to the top of the layer stack"
+msgstr "Зробити позначені шари у верхніми у стосі"
 
 #: app/actions/layers-actions.c:120
+#| msgctxt "layers-action"
+#| msgid "_Lower Layer"
 msgctxt "layers-action"
-msgid "_Lower Layer"
-msgstr "_Опустити шар"
+msgid "_Lower Layers"
+msgstr "_Опустити шари"
 
 #: app/actions/layers-actions.c:121
+#| msgctxt "layers-action"
+#| msgid "Lower this layer one step in the layer stack"
 msgctxt "layers-action"
-msgid "Lower this layer one step in the layer stack"
-msgstr "Опустити активний шар на один рівень"
+msgid "Lower the selected layers one step in the layer stack"
+msgstr "Опустити позначені шари на на один рівень у стосі"
 
 #: app/actions/layers-actions.c:126
+#| msgctxt "layers-action"
+#| msgid "Layer to _Bottom"
 msgctxt "layers-action"
-msgid "Layer to _Bottom"
-msgstr "Зробити шар н_ижнім"
+msgid "Layers to _Bottom"
+msgstr "Зробити шари н_ижніми"
 
 #: app/actions/layers-actions.c:127
+#| msgctxt "layers-action"
+#| msgid "Move this layer to the bottom of the layer stack"
 msgctxt "layers-action"
-msgid "Move this layer to the bottom of the layer stack"
-msgstr "Зробити активний шар нижнім"
+msgid "Move the selected layers to the bottom of the layer stack"
+msgstr "Зробити позначені шари у нижніми у стосі"
 
 #: app/actions/layers-actions.c:132
 msgctxt "layers-action"
