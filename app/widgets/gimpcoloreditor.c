@@ -540,10 +540,11 @@ gimp_color_editor_new (GimpContext *context)
 static void
 gimp_color_editor_style_updated (GtkWidget *widget)
 {
-  GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
-  GtkIconSize      button_icon_size;
-  gint             icon_width  = 40;
-  gint             icon_height = 38;
+  GimpColorEditor   *editor   = GIMP_COLOR_EDITOR (widget);
+  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook);
+  GtkIconSize        button_icon_size;
+  gint               icon_width  = 40;
+  gint               icon_height = 38;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -557,6 +558,8 @@ gimp_color_editor_style_updated (GtkWidget *widget)
   gtk_widget_set_size_request (editor->fg_bg,
                                (gint) (icon_width * 1.75),
                                (gint) (icon_height * 1.75));
+
+  GTK_WIDGET_GET_CLASS (notebook)->style_updated (GTK_WIDGET (notebook));
 }
 
 

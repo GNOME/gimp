@@ -79,6 +79,8 @@ static void   gimp_color_dialog_get_property     (GObject            *object,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
+static void   gimp_color_dialog_style_updated    (GtkWidget          *widget);
+
 static void   gimp_color_dialog_response         (GtkDialog          *dialog,
                                                   gint                response_id);
 
@@ -123,13 +125,16 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed  = gimp_color_dialog_constructed;
   object_class->finalize     = gimp_color_dialog_finalize;
   object_class->set_property = gimp_color_dialog_set_property;
   object_class->get_property = gimp_color_dialog_get_property;
 
-  dialog_class->response     = gimp_color_dialog_response;
+  dialog_class->response      = gimp_color_dialog_response;
+
+  widget_class->style_updated = gimp_color_dialog_style_updated;
 
   color_dialog_signals[UPDATE] =
     g_signal_new ("update",
@@ -326,6 +331,19 @@ gimp_color_dialog_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_color_dialog_style_updated (GtkWidget *widget)
+{
+  GimpColorDialog   *dialog = GIMP_COLOR_DIALOG (widget);
+  GimpColorNotebook *notebook;
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
+  notebook =
+    GIMP_COLOR_NOTEBOOK (gimp_color_selection_get_notebook (GIMP_COLOR_SELECTION (dialog->selection)));
+  GTK_WIDGET_GET_CLASS (notebook)->style_updated (GTK_WIDGET (notebook));
 }
 
 static void
@@ -787,10 +805,23 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
       g_signal_connect_object (user_context, "image-changed",
                                G_CALLBACK (gimp_color_dialog_image_changed),
                                dialog, 0);
+      g_signal_connect_object (viewable_dialog->context->gimp->config,
+                               "notify::theme",
+                               G_CALLBACK (gimp_color_dialog_style_updated),
+                               dialog, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (viewable_dialog->context->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_color_dialog_style_updated),
+                               dialog, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (viewable_dialog->context->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_color_dialog_style_updated),
+                               dialog, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
       gimp_color_dialog_image_changed (viewable_dialog->context,
                                        image, dialog);
       gimp_color_dialog_update_base_type (dialog);
+      gimp_color_dialog_style_updated (dialog);
     }
   else
     {
@@ -808,6 +839,9 @@ gimp_color_dialog_hide (GimpColorDialog *dialog)
       GimpContext *user_context = viewable_dialog->context->gimp->user_context;
       g_signal_handlers_disconnect_by_func (user_context,
                                             G_CALLBACK (gimp_color_dialog_image_changed),
+                                            dialog);
+      g_signal_handlers_disconnect_by_func (viewable_dialog->context->gimp->config,
+                                            G_CALLBACK (gimp_color_dialog_style_updated),
                                             dialog);
     }
 }

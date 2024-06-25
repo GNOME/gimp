@@ -480,6 +480,8 @@ themes_apply_theme (Gimp          *gimp,
             "\n"
             "* { -GimpDockbook-tab-icon-size: %s; }"
             "\n"
+            "* { -GimpColorNotebook-tab-icon-size: %s; }"
+            "\n"
             "* { -GimpEditor-button-icon-size: %s; }"
             "\n"
             "toolpalette button { padding: %dpx; }"
@@ -487,7 +489,7 @@ themes_apply_theme (Gimp          *gimp,
             "button, tab { padding: %dpx; }"
             "\n"
             "paned separator { padding: %dpx; }",
-            tool_icon_size, tab_icon_size, button_icon_size,
+            tool_icon_size, tab_icon_size, tab_icon_size, button_icon_size,
             pal_padding, tab_padding, sep_padding);
         }
 
