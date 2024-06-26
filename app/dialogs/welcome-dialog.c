@@ -739,7 +739,6 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
       GimpThumbnail *icon;
       const gchar   *name;
       gchar         *basename;
-      gchar         *escaped;
 
       imagefile = (GimpImagefile *)
         gimp_container_get_child_by_index (gimp->documents, i);
@@ -749,14 +748,11 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
       name     = gimp_file_get_utf8_name (file);
       basename = g_path_get_basename (name);
 
-      escaped = gimp_escape_uline (basename);
-      g_free (basename);
-
       /* If the file is not found, remove it and try to
        * load another one if possible */
       if (! g_file_test (name, G_FILE_TEST_IS_REGULAR))
         {
-          g_free (escaped);
+          g_free (basename);
 
           if (list_count < num_images)
             list_count++;
@@ -796,8 +792,8 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
       if (thumbnail)
         gtk_grid_attach (GTK_GRID (grid), thumbnail, 1, 0, 1, 1);
 
-      name_label = gtk_label_new (escaped);
-      g_free (escaped);
+      name_label = gtk_label_new (basename);
+      g_free (basename);
       g_object_set (name_label, "xalign", 0.0, NULL);
       gtk_grid_attach (GTK_GRID (grid), name_label, 2, 0, 1, 1);
 
