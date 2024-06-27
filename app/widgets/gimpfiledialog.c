@@ -395,6 +395,8 @@ gimp_file_dialog_dispose (GObject *object)
   g_clear_pointer (&dialog->automatic_help_id, g_free);
   g_clear_pointer (&dialog->automatic_label,   g_free);
   g_clear_pointer (&dialog->file_filter_label, g_free);
+
+  gimp_widget_free_native_handle (GTK_WIDGET (dialog), &dialog->window_handle);
 }
 
 static gboolean

@@ -205,13 +205,16 @@ gimp_dialog_constructed (GObject *object)
 static void
 gimp_dialog_dispose (GObject *object)
 {
-  GdkDisplay *display = NULL;
+  GdkDisplay        *display = NULL;
+  GimpDialogPrivate *private = GET_PRIVATE (object);
 
   if (g_main_depth () == 0)
     {
       display = gtk_widget_get_display (GTK_WIDGET (object));
       g_object_ref (display);
     }
+
+  gimp_widget_free_native_handle (GTK_WIDGET (object), &private->window_handle);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 

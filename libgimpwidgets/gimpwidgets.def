@@ -502,6 +502,7 @@ EXPORTS
 	gimp_unit_store_set_resolution
 	gimp_unit_store_set_resolutions
 	gimp_widget_animation_enabled
+	gimp_widget_free_native_handle
 	gimp_widget_get_color_profile
 	gimp_widget_get_color_transform
 	gimp_widget_get_monitor

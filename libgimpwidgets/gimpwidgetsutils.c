@@ -1163,6 +1163,63 @@ gimp_widget_set_native_handle (GtkWidget  *widget,
 }
 
 /**
+ * gimp_widget_free_native_handle:
+ * @widget: a #GtkWindow
+ * @window_handle: (out): same pointer previously passed to set_native_handle
+ *
+ * Disposes a widget's native window handle created asynchronously after
+ * a previous call to gimp_widget_set_native_handle.
+ * This disposes what the pointer points to, a *GBytes, if any.
+ * Call this when the widget and the window handle it owns is being disposed.
+ *
+ * This should be called at least once, paired with set_native_handle.
+ * This knows how to free @window_handle, especially that on some platforms,
+ * an asynchronous callback must be canceled else it might call back
+ * with the pointer, after the widget and its private is freed.
+ *
+ * This is safe to call when deferenced @window_handle is NULL,
+ * when the window handle was never actually set,
+ * on Wayland where actual setting is asynchronous.
+ *
+ * !!! The word "handle" has two meanings.
+ * A "window handle" is an ID of a window.
+ * A "handle" also commonly means a pointer to a pointer, in this case **GBytes.
+ * @window_handle is both kinds of handle.
+ */
+void
+gimp_widget_free_native_handle (GtkWidget  *widget,
+                                GBytes    **window_handle)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  /* window-handle as pointer to pointer must not be NULL. */
+  g_return_if_fail (window_handle != NULL);
+
+  #ifdef GDK_WINDOWING_WAYLAND
+  /* Cancel the asynch callback which has a pointer into widget's private.
+   * Cancel regardless whether callback has already come.
+   */
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
+      /* The GdkWindow is likely already destroyed. */
+      gtk_widget_get_window (widget) != NULL)
+    gdk_wayland_window_unexport_handle (gtk_widget_get_window (widget));
+  #endif
+
+  /* On some platforms, window_handle may be NULL when an asynch callback has not come yet.
+   * The dereferenced pointer is the window handle.
+   */
+  if (*window_handle != NULL)
+    {
+      /* On all platforms *window_handle is-a allocated GBytes.
+       * A GBytes is NOT a GObject and there is no way to ensure is-a GBytes.
+       *
+       * g_clear_pointer takes a pointer to pointer and unrefs at the pointer.
+       */
+      g_clear_pointer (window_handle, g_bytes_unref);
+    }
+  /* Else no GBytes was ever allocated. */
+}
+
+/**
  * gimp_widget_animation_enabled:
  *
  * This function attempts to read the user's system preference for
@@ -1232,6 +1289,13 @@ _gimp_widget_get_profiles (GtkWidget         *widget,
 /* Private functions */
 
 #ifdef GDK_WINDOWING_WAYLAND
+/* Handler from asynchronous callback from Wayland.
+ * You can't know when it will be called, if ever.
+ *
+ * @phandle is the address of a pointer in some widget's private data.
+ * Before freeing that private data, you must cancel (unexport)
+ * so that this callback is not subsequently invoked.
+ */
 static void
 gimp_widget_wayland_window_exported (GdkWindow   *window,
                                      const char  *handle,

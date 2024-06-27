@@ -24,18 +24,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_WIN32
-#include <gdk/gdkwin32.h>
-#endif
-
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
-#ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/gdkwayland.h>
-#endif
-
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimpuitypes.h"
@@ -121,16 +109,7 @@ gimp_progress_bar_dispose (GObject *object)
       bar->progress_callback = NULL;
     }
 
-  if (priv->window_handle != NULL)
-    {
-#ifdef GDK_WINDOWING_WAYLAND
-      if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
-          /* The GdkWindow is likely already destroyed. */
-          gtk_widget_get_window (GTK_WIDGET (bar)) != NULL)
-        gdk_wayland_window_unexport_handle (gtk_widget_get_window (GTK_WIDGET (bar)));
-#endif
-      g_clear_pointer (&priv->window_handle, g_bytes_unref);
-    }
+  gimp_widget_free_native_handle (GTK_WIDGET (bar), &priv->window_handle);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
