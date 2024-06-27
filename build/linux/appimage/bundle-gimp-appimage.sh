@@ -39,41 +39,45 @@ done
 
 
 #(MOSTLY) AGNOSTIC FUNCTIONS
-prep_pkg ()
+prepare ()
 {
   apt-get install -y --no-install-recommends $1
 }
 
-find_bin ()
+bundle ()
 {
-  find /usr/bin -name ${1} -execdir cp -r '{}' $OPT_PREFIX/bin \;
-  find /bin -name ${1} -execdir cp -r '{}' $OPT_PREFIX/bin \;
+  mkdir -p $OPT_PREFIX/$(echo $1 | sed 's|--||')
+  if [ "$1" = '--bin' ]; then
+    binArray=($(find /usr/bin /bin -name $2))
+    for bin in "${binArray[@]}"; do
+      echo "(INFO): copying $bin to $OPT_PREFIX/bin"
+      cp -r $bin $OPT_PREFIX/bin
+    done
+  elif [ "$1" = '--lib' ]; then
+    libArray=($(find /usr/$LIB_DIR/$LIB_SUBDIR /$LIB_DIR/$LIB_SUBDIR -maxdepth 1 -name $2))
+    for lib in "${libArray[@]}"; do
+      echo "(INFO): copying $lib to $OPT_PREFIX/$LIB_DIR/$LIB_SUBDIR"
+      cp -r $lib $OPT_PREFIX/$LIB_DIR/$LIB_SUBDIR
+    done
+  elif [ "$1" = '--share' ]; then
+    path=$(echo /usr/share/$2 | sed 's|/usr/share/||g')
+    dest_path=$(echo /usr/share/$2 | sed -e 's|/usr/share/||g' -e "s|${path##*/}||g")
+    mkdir -p $OPT_PREFIX/share/$dest_path
+    echo "(INFO): copying /usr/share/$path to $(dirname $OPT_PREFIX/share/$path)"
+    cp -r /usr/share/$path $OPT_PREFIX/share/$dest_path
+  fi
 }
 
-find_lib ()
+configure ()
 {
-  find /usr/${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-  find /usr/${LIB_DIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-  find /${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-  find /${LIB_DIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-}
-
-find_dat ()
-{
-  DAT_PATH=$(echo $1 | sed 's|/usr/||g')
-  mkdir -p $OPT_PREFIX/$DAT_PATH
-  cp -r $1/$2 $OPT_PREFIX/$DAT_PATH/$3
-}
-
-conf_app ()
-{
+  echo "(INFO): configuring $1"
   VAR_PATH=$(echo $2/$3 | sed "s|${2}/||g")
   sed -i "s|${1}_WILD|OPT_PREFIX_WILD${VAR_PATH}|" build/linux/appimage/AppRun
 }
 
 
 # PREPARE ENVIRONMENT
-apt-get install -y --no-install-recommends wget
+prepare wget
 
 ## For now, we always use the latest version of go-appimagetool
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
@@ -90,59 +94,60 @@ chmod +x "$legacy_appimagetool"
 # BUNDLE FILES
 
 ## System base (needed to use GIMP or to avoid polluting the terminal output)
-conf_app LD_LINUX "/usr" "lib64/ld-*.so.*"
+configure LD_LINUX "/usr" "lib64/ld-*.so.*"
 ### Glib needed files
-find_dat "/usr/share/glib-*/schemas" "*"
+bundle --share "glib-*/schemas/"
 ### Glib commonly required modules
-prep_pkg "gvfs"
-find_lib "gvfs*"
-find_lib "gio*"
-conf_app GIO_MODULE_DIR "/usr" "${LIB_DIR}/${LIB_SUBDIR}gio"
+prepare "gvfs"
+bundle --lib "gvfs*"
+bundle --lib "gio*"
+configure GIO_MODULE_DIR "/usr" "${LIB_DIR}/${LIB_SUBDIR}gio"
 ### GTK needed files
-prep_pkg "gnome-icon-theme"
-find_dat "/usr/share/icons/gnome" "*"
-find_dat "/usr/share/mime" "*"
-conf_app GDK_PIXBUF_MODULEDIR "/usr" "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
-conf_app GDK_PIXBUF_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
+prepare "gnome-icon-theme"
+bundle --share "icons/gnome/"
+bundle --share "mime/"
+configure GDK_PIXBUF_MODULEDIR "/usr" "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
+configure GDK_PIXBUF_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
 ### GTK commonly required modules
-prep_pkg "libibus-1.0-5"
-find_lib "libibus*"
-prep_pkg "ibus-gtk3"
-prep_pkg "libcanberra-gtk3-module"
-prep_pkg "libxapp-gtk3-module"
-conf_app GTK_PATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
-conf_app GTK_IM_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
+prepare "libibus-1.0-5"
+bundle --lib "libibus*"
+prepare "ibus-gtk3"
+prepare "libcanberra-gtk3-module"
+prepare "libxapp-gtk3-module"
+configure GTK_PATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
+configure GTK_IM_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
 
 ## Core features
 cp -r $INSTALL_ARTIF/* $OPT_PREFIX
-conf_app BABL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}babl-*"
-conf_app GEGL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
-conf_app GIMP3_SYSCONFDIR "$OPT_PREFIX" "etc/gimp/*"
-conf_app GIMP3_DATADIR "$OPT_PREFIX" "share/gimp/*"
+configure BABL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}babl-*"
+configure GEGL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
+configure GIMP3_SYSCONFDIR "$OPT_PREFIX" "etc/gimp/*"
+configure GIMP3_DATADIR "$OPT_PREFIX" "share/gimp/*"
 ### Copy localized language list support
-find_dat "/usr/share/xml/iso-codes" "iso_639-2.xml" "iso_639.xml"
+bundle --share "xml/iso-codes/iso_639-2.xml"
+mv $OPT_PREFIX/share/xml/iso-codes/iso_639-2.xml $OPT_PREFIX/share/xml/iso-codes/iso_639.xml
 ### Copy system theme support
-find_bin "gsettings*"
-find_bin "sed*"
+bundle --bin "gsettings*"
+bundle --bin "sed*"
 ### Copy GTK inspector support
-find_lib "libEGL*"
-find_lib "libGL*"
-find_lib "dri*"
-conf_app LIBGL_DRIVERS_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}dri"
+bundle --lib "libEGL*"
+bundle --lib "libGL*"
+bundle --lib "dri*"
+configure LIBGL_DRIVERS_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}dri"
 
 ## Plug-ins
-find_bin "uname*"
-conf_app GIMP3_PLUGINDIR "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gimp/*"
-conf_app GI_TYPELIB_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
+bundle --bin "uname*"
+configure GIMP3_PLUGINDIR "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gimp/*"
+configure GI_TYPELIB_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
 ### Copy JavaScript plug-ins support
-find_bin "gjs*"
+bundle --bin "gjs*"
 ### Copy Lua plug-ins support (NOT WORKING)
-#find_bin "lua*"
-#find_lib "liblua*"
+#bundle --bin "lua*"
+#bundle --lib "liblua*"
 ### Copy Python plug-ins support
-find_bin "python*"
-find_lib "python*.*"
-conf_app PYTHONPATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}python3.11"
+bundle --bin "python*"
+bundle --lib "python*.*"
+configure PYTHONPATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}python3.11"
 
 ## Final adjustments
 ### Auto detect and copy deps of binaries copied above
