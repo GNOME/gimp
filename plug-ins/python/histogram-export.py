@@ -106,7 +106,7 @@ def histogram_export(procedure, img, layers, gio_file,
         channels_gimp += [Gimp.HistogramChannel.ALPHA]
 
     try:
-        with open(gio_file.get_path(), "wt") as hfile:
+        with open(gio_file.get_path(), "wt", newline="") as hfile:
             writer = csv.writer(hfile)
             histo_proc = Gimp.get_pdb().lookup_procedure('gimp-drawable-histogram')
             histo_config = histo_proc.create_config()
