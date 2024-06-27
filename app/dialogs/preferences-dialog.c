@@ -139,6 +139,12 @@ static void   prefs_help_language_change_callback2 (GtkComboBox  *combo,
 static void   prefs_check_style_callback           (GObject      *config,
                                                     GParamSpec   *pspec,
                                                     GtkWidget    *widget);
+static void   prefs_theme_reset_callback           (GObject      *config,
+                                                    GParamSpec   *pspec,
+                                                    GtkWidget    *widget);
+static void   prefs_icon_theme_reset_callback      (GObject      *config,
+                                                    GParamSpec   *pspec,
+                                                    GtkWidget    *widget);
 
 
 /*  private variables  */
@@ -195,7 +201,8 @@ prefs_response (GtkWidget *widget,
                 gint       response_id,
                 GtkWidget *dialog)
 {
-  Gimp *gimp = g_object_get_data (G_OBJECT (dialog), "gimp");
+  Gimp   *gimp = g_object_get_data (G_OBJECT (dialog), "gimp");
+  gulong  reset_handler;
 
   switch (response_id)
     {
@@ -216,9 +223,9 @@ prefs_response (GtkWidget *widget,
                                            NULL);
 
         gimp_dialog_set_alternative_button_order (GTK_DIALOG (confirm),
-                                                 GTK_RESPONSE_OK,
-                                                 GTK_RESPONSE_CANCEL,
-                                                 -1);
+                                                  GTK_RESPONSE_OK,
+                                                  GTK_RESPONSE_CANCEL,
+                                                  -1);
 
         gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (confirm)->box,
                                            _("Do you really want to reset all "
@@ -366,6 +373,17 @@ prefs_response (GtkWidget *widget,
 
       tool_editor = NULL;
     }
+
+  /* Disconnect the signals used to update the selection of the
+   * theme and icon theme list boxes, since they're not directly
+   * connected to their properties like the other widgets */
+  reset_handler = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog),
+                                    "gimp-theme-reset-handler"));
+  g_signal_handler_disconnect (gimp->config, reset_handler);
+
+  reset_handler = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (dialog),
+                                    "gimp-icon-theme-reset-handler"));
+  g_signal_handler_disconnect (gimp->config, reset_handler);
 
   /*  enable autosaving again  */
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
@@ -596,9 +614,9 @@ prefs_menus_remove_callback (GtkWidget *widget,
                                     NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   g_signal_connect_object (gtk_widget_get_toplevel (widget), "unmap",
                            G_CALLBACK (gtk_widget_destroy),
@@ -865,7 +883,14 @@ prefs_theme_select_callback (GtkListBox    *listbox,
   g_return_if_fail (row != NULL);
 
   theme = g_object_get_data (G_OBJECT (row), "theme");
+
+  g_signal_handlers_block_by_func (gimp->config,
+                                   G_CALLBACK (prefs_theme_reset_callback),
+                                   listbox);
   g_object_set (gimp->config, "theme", theme, NULL);
+  g_signal_handlers_unblock_by_func (gimp->config,
+                                     G_CALLBACK (prefs_theme_reset_callback),
+                                     listbox);
 }
 
 static void
@@ -876,14 +901,80 @@ prefs_theme_reload_callback (GtkWidget *button,
 }
 
 static void
+prefs_theme_reset_callback (GObject    *config,
+                            GParamSpec *pspec,
+                            GtkWidget  *widget)
+{
+  const gchar    *theme;
+  GtkListBoxRow  *row;
+  gint            i = 0;
+
+  g_object_get (config, "theme", &theme, NULL);
+
+  row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (widget), i);
+
+  while (row != NULL)
+    {
+      const gchar *row_theme = g_object_get_data (G_OBJECT (row), "theme");
+
+      if (! strcmp (theme, row_theme))
+        {
+          gtk_list_box_select_row (GTK_LIST_BOX (widget), row);
+          break;
+        }
+
+      i++;
+      row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (widget), i);
+    }
+}
+
+static void
 prefs_icon_theme_select_callback (GtkListBox    *listbox,
                                   GtkListBoxRow *row,
                                   Gimp          *gimp)
 {
   const char *icon_theme;
 
+  g_return_if_fail (row != NULL);
+
   icon_theme = g_object_get_data (G_OBJECT (row), "icon-theme");
+
+  g_signal_handlers_block_by_func (gimp->config,
+                                   G_CALLBACK (prefs_icon_theme_reset_callback),
+                                   listbox);
   g_object_set (gimp->config, "icon-theme", icon_theme, NULL);
+  g_signal_handlers_unblock_by_func (gimp->config,
+                                     G_CALLBACK (prefs_icon_theme_reset_callback),
+                                     listbox);
+}
+
+static void
+prefs_icon_theme_reset_callback (GObject    *config,
+                                 GParamSpec *pspec,
+                                 GtkWidget  *widget)
+{
+  const gchar    *icon_theme;
+  GtkListBoxRow  *row;
+  gint            i = 0;
+
+  g_object_get (config, "icon-theme", &icon_theme, NULL);
+
+  row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (widget), i);
+
+  while (row != NULL)
+    {
+      const gchar *row_icon_theme =
+        g_object_get_data (G_OBJECT (row), "icon-theme");
+
+      if (! strcmp (icon_theme, row_icon_theme))
+        {
+          gtk_list_box_select_row (GTK_LIST_BOX (widget), row);
+          break;
+        }
+
+      i++;
+      row = gtk_list_box_get_row_at_index (GTK_LIST_BOX (widget), i);
+    }
 }
 
 static void
@@ -1084,10 +1175,10 @@ prefs_dialog_new (Gimp       *gimp,
                             NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (prefs_response),
@@ -1871,6 +1962,7 @@ prefs_dialog_new (Gimp       *gimp,
     gchar            **themes;
     gint               n_themes;
     gint               i;
+    gulong             reset_handler;
 
     scrolled_win = gtk_scrolled_window_new (NULL, NULL);
     gtk_widget_set_size_request (scrolled_win, -1, 80);
@@ -1933,6 +2025,12 @@ prefs_dialog_new (Gimp       *gimp,
     g_signal_connect (listbox, "row-selected",
                       G_CALLBACK (prefs_theme_select_callback),
                       gimp);
+    reset_handler =
+      g_signal_connect (G_OBJECT (gimp->config), "notify::theme",
+                        G_CALLBACK (prefs_theme_reset_callback),
+                        listbox);
+    g_object_set_data (G_OBJECT (dialog), "gimp-theme-reset-handler",
+                       GUINT_TO_POINTER (reset_handler));
 
     grid = prefs_grid_new (GTK_CONTAINER (vbox2));
     button = prefs_enum_combo_box_add (object, "theme-color-scheme", 0, 0,
@@ -2030,6 +2128,7 @@ prefs_dialog_new (Gimp       *gimp,
     gint               scale_factor;
     gint               n_icon_themes;
     gint               i;
+    gulong             reset_handler;
 
     scrolled_win = gtk_scrolled_window_new (NULL, NULL);
     gtk_widget_set_size_request (scrolled_win, -1, 80);
@@ -2128,6 +2227,12 @@ prefs_dialog_new (Gimp       *gimp,
     g_signal_connect (listbox, "row-selected",
                       G_CALLBACK (prefs_icon_theme_select_callback),
                       gimp);
+    reset_handler =
+      g_signal_connect (G_OBJECT (gimp->config), "notify::icon-theme",
+                        G_CALLBACK (prefs_icon_theme_reset_callback),
+                        listbox);
+    g_object_set_data (G_OBJECT (dialog), "gimp-icon-theme-reset-handler",
+                       GUINT_TO_POINTER (reset_handler));
 
     prefs_check_button_add (object, "prefer-symbolic-icons",
                             _("Use symbolic icons if available"),
