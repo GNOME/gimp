@@ -26,7 +26,7 @@ if [ -z "$GITLAB_CI" ]; then
   flatpak install --user gnome-nightly org.gnome.Platform/$ARCH/master org.gnome.Sdk/$ARCH/master -y
 fi
 flatpak remote-add --if-not-exists --user --from flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm17 -y
+flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm18 -y
 
 
 # Clone and build the deps not present in GNOME runtime

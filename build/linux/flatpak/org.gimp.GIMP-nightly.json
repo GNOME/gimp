@@ -5,12 +5,12 @@
     "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
     "sdk-extensions": [
-        "org.freedesktop.Sdk.Extension.llvm17"
+        "org.freedesktop.Sdk.Extension.llvm18"
     ],
     "command": "gimp",
     "build-options": {
-        "append-path": "/usr/lib/sdk/llvm17/bin",
-        "prepend-ld-library-path": "/usr/lib/sdk/llvm17/lib",
+        "append-path": "/usr/lib/sdk/llvm18/bin",
+        "prepend-ld-library-path": "/usr/lib/sdk/llvm18/lib",
         "env": {
             "CC": "ccache clang",
             "CXX": "ccache clang++",
@@ -395,6 +395,9 @@
                 {
                     "name": "json-c",
                     "buildsystem": "cmake-ninja",
+                    "config-opts": [
+                        "-DDISABLE_WERROR=ON"
+                    ],
                     "sources": [
                         {
                             "type": "git",
@@ -671,15 +674,10 @@
         },
         {
             "name": "luajit",
-            "build-options": {
-                "env": {
-                    "CC": "gcc",
-                    "CXX": "gcc"
-                },
-                "cflags-override": true,
-                "cxxflags-override": true
-            },
             "no-autogen": true,
+            "make-args": [
+                "DEFAULT_CC=ccache clang"
+            ],
             "cleanup": [
                 "/lib/*.a",
                 "/include",
