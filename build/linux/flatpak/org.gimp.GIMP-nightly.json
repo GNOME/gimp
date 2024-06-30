@@ -50,12 +50,15 @@
     "desktop-file-name-prefix": "(Nightly) ",
     "cleanup": [
         "/include",
+        "/lib/cmake",
         "/lib/pkgconfig",
         "/share/pkgconfig",
         "/share/aclocal",
         "/man",
-        "/share/man",
+        "/share/doc",
+        "/share/gir-1.0",
         "/share/gtk-doc",
+        "/share/man",
         "/share/vala",
         "*.la",
         "*.a"
@@ -90,6 +93,10 @@
                         "url-template": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$version.tar.xz"
                     }
                 }
+            ],
+            "cleanup": [
+                "/bin",
+                "/share"
             ]
         },
         {
@@ -152,7 +159,6 @@
             ],
             "cleanup": [
                 "/bin",
-                "/share/doc",
                 "/lib/libIlmImfUtil*"
             ],
             "builddir" : true,
@@ -265,8 +271,7 @@
             ],
             "cleanup": [
                 "/bin",
-                "/info",
-                "/man"
+                "/info"
             ],
             "sources": [
                 {
@@ -305,7 +310,6 @@
                 "--disable-dependency-tracking"
             ],
             "cleanup": [
-                "/share/doc",
                 "/bin"
             ],
             "sources": [
@@ -342,8 +346,7 @@
             ],
             "cleanup": [
                 "/bin",
-                "/share/man",
-                "/share/doc"
+                "/share/ghostscript"
             ],
             "sources": [
                 {
@@ -476,6 +479,9 @@
                         "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
                     }
                 }
+            ],
+            "cleanup": [
+                "/bin"
             ],
             "modules": [
                 {
@@ -679,10 +685,7 @@
                 "DEFAULT_CC=ccache clang"
             ],
             "cleanup": [
-                "/lib/*.a",
-                "/include",
-                "/lib/pkgconfig",
-                "/share/man"
+                "/share/luajit*"
             ],
             "sources": [
                 {
@@ -748,12 +751,6 @@
                 "--enable-reentrant"
             ],
             "make-args": ["shared"],
-            "cleanup": [
-                "/include",
-                "/lib/*.a",
-                "/lib/*.la",
-                "/lib/pkgconfig"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -784,7 +781,8 @@
                 "-Dworkshop=true"
             ],
             "cleanup": [
-                "/bin"
+                "/bin",
+                "/share/gegl-*"
             ],
             "sources": [
                 {
