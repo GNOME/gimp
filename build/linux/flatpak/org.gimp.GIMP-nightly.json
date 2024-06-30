@@ -237,8 +237,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.04.0.tar.xz",
-                    "sha256": "1e804ec565acf7126eb2e9bb3b56422ab2039f7e05863a5dfabdd1ffd1bb77a7",
+                    "url": "https://poppler.freedesktop.org/poppler-24.06.1.tar.xz",
+                    "sha256": "1e629e8732286c745fbc0b15a3ee591443fb37a2210856e7f3ec38a0fb93ab13",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -348,8 +348,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10030/ghostscript-10.03.0.tar.gz",
-                    "sha512": "880fc78f8a6afe9181cfbb8a416e3399d7f21550a9d50da3a4b97b38c7fe2a5acaed42df12b7d1dd6e5a769d2824e999f09d394216a4cab93f61e1a0459f31e5",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10031/ghostscript-10.03.1.tar.gz",
+                    "sha512": "c1eec6550ce2d9c8fe78c2e9c91eaa40e1ae3d8625b510e712c0e0ab39ad00d4fa493af5f798a06c21a4acd72a0b503758a0d8f79cc37d5cc1a23ac7f3ba41e2",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
@@ -490,8 +490,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.26.tar.gz",
-                            "sha256": "4e6e4f5cb14c209262e33e6816d70221a2fe49eb69eaf0a06f065598ac602c68",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.27.tar.gz",
+                            "sha256": "aa2d68b1564fe2b13bc292672608e9cdeeeb6dc34995512e65c3b10f4599e897",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
