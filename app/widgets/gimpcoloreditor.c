@@ -310,9 +310,9 @@ gimp_color_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_color_editor_history_selected),
                     editor);
 
-  g_signal_connect (user_context, "display-changed",
-                    G_CALLBACK (gimp_color_editor_display_changed),
-                    editor);
+  g_signal_connect_object (user_context, "display-changed",
+                           G_CALLBACK (gimp_color_editor_display_changed),
+                           editor, 0);
 
   gimp_color_editor_display_changed (user_context, display, editor);
 }
