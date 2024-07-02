@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-28 10:21+0000\n"
-"PO-Revision-Date: 2024-06-29 08:04+0800\n"
+"POT-Creation-Date: 2024-07-01 19:09+0000\n"
+"PO-Revision-Date: 2024-07-02 19:05+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1066,7 +1066,7 @@ msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "编辑颜色(_E)…"
 
-#: app/actions/colormap-actions.c:48 app/widgets/gimpcolordialog.c:199
+#: app/actions/colormap-actions.c:48 app/widgets/gimpcolordialog.c:204
 msgctxt "colormap-action"
 msgid "Edit this color"
 msgstr "编辑此颜色"
@@ -1086,7 +1086,7 @@ msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "添加前景色(_A)"
 
-#: app/actions/colormap-actions.c:63 app/widgets/gimpcolordialog.c:217
+#: app/actions/colormap-actions.c:63 app/widgets/gimpcolordialog.c:222
 msgctxt "colormap-action"
 msgid "Add current foreground color"
 msgstr "添加当前前景色"
@@ -2441,7 +2441,7 @@ msgstr "240 秒"
 #: app/tools/gimpfiltertool.c:358 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:465 app/widgets/gimpcontrollereditor.c:662
+#: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:439
@@ -2508,7 +2508,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1238 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1234 app/display/gimpdisplayshell-dnd.c:630
 #: app/widgets/gimplayertreeview.c:814 app/widgets/gimptoolbox.c:752
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -7380,7 +7380,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:357 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:464 app/widgets/gimpcolordisplayeditor.c:332
+#: app/widgets/gimpcolordialog.c:482 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "重置(_R)"
 
@@ -9188,7 +9188,7 @@ msgstr "本视图切换为有色彩管理的显示效果"
 #: app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "校对颜色(_P)"
+msgstr "启用软打样(_P)"
 
 #: app/actions/view-actions.c:190
 msgctxt "view-action"
@@ -9215,7 +9215,7 @@ msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
 "color space"
-msgstr "软打样时标记出无法在目标色彩空间内呈现的颜色"
+msgstr "软打样时显示超色域警告"
 
 #: app/actions/view-actions.c:211
 msgctxt "view-action"
@@ -9902,7 +9902,7 @@ msgstr "打开显示器"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:466
+#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:484
 #: app/widgets/gimpcontrollereditor.c:663
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -10272,7 +10272,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "解析“%%s”时出错：线段长度长于 %s 个字符。"
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:522
+#: app/core/gimp-tags.c:145 app/gui/themes.c:524
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12598,7 +12598,7 @@ msgstr "无法执行子进程“%s” (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:zh_CN"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:534
+#: app/core/gimp-tags.c:156 app/gui/themes.c:536
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "关闭“%s”时出错：%s"
@@ -17855,7 +17855,7 @@ msgid "_Next Tip"
 msgstr "后一条提示(_N)"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1084
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1080
 msgid "Learn more"
 msgstr "了解更多"
 
@@ -18045,25 +18045,25 @@ msgstr "打开现有图像"
 msgid "Recent Images"
 msgstr "最近图像"
 
-#: app/dialogs/welcome-dialog.c:812
+#: app/dialogs/welcome-dialog.c:808
 msgid "O_pen Selected Images"
 msgstr "打开选中图像(_P)"
 
-#: app/dialogs/welcome-dialog.c:821
+#: app/dialogs/welcome-dialog.c:817
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr "启动时显示（您可以通过“帮助”菜单再次显示欢迎对话框）"
 
-#: app/dialogs/welcome-dialog.c:849
+#: app/dialogs/welcome-dialog.c:845
 #, c-format
 msgid "Ways to contribute"
 msgstr "贡献方式"
 
-#: app/dialogs/welcome-dialog.c:858 app/dialogs/welcome-dialog.c:869
+#: app/dialogs/welcome-dialog.c:854 app/dialogs/welcome-dialog.c:865
 msgid "Report Bugs"
 msgstr "报告缺陷"
 
-#: app/dialogs/welcome-dialog.c:860
+#: app/dialogs/welcome-dialog.c:856
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18072,50 +18072,50 @@ msgstr ""
 "像任何应用程序一样，GIMP 不是没有缺陷的，所以报告您遇到的缺陷对于开发工作非常"
 "重要。"
 
-#: app/dialogs/welcome-dialog.c:873 app/dialogs/welcome-dialog.c:883
+#: app/dialogs/welcome-dialog.c:869 app/dialogs/welcome-dialog.c:879
 msgid "Write Code"
 msgstr "编写代码"
 
-#: app/dialogs/welcome-dialog.c:875
+#: app/dialogs/welcome-dialog.c:871
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr "我们的开发者网站会是您想要开始学习成为代码贡献者的地方。"
 
-#: app/dialogs/welcome-dialog.c:887 app/dialogs/welcome-dialog.c:897
+#: app/dialogs/welcome-dialog.c:883 app/dialogs/welcome-dialog.c:893
 msgid "Translate"
 msgstr "翻译"
 
-#: app/dialogs/welcome-dialog.c:889
+#: app/dialogs/welcome-dialog.c:885
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "联系您所用语言的翻译团队"
 
-#: app/dialogs/welcome-dialog.c:901
+#: app/dialogs/welcome-dialog.c:897
 msgid "Donate"
 msgstr "捐助"
 
-#: app/dialogs/welcome-dialog.c:903
+#: app/dialogs/welcome-dialog.c:899
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "捐助资金很重要：它使 GIMP 可持续发展。"
 
-#: app/dialogs/welcome-dialog.c:911
+#: app/dialogs/welcome-dialog.c:907
 msgid "Donate via Liberapay"
 msgstr "通过 Liberapay 捐助"
 
-#: app/dialogs/welcome-dialog.c:914
+#: app/dialogs/welcome-dialog.c:910
 msgid "Other donation options"
 msgstr "其他捐助选项"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:948
+#: app/dialogs/welcome-dialog.c:944
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s 发布记录"
 
-#: app/dialogs/welcome-dialog.c:1059
+#: app/dialogs/welcome-dialog.c:1055
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "在带有 %s 项目符号的发布项目上点击来获取导览。"
@@ -18572,7 +18572,7 @@ msgstr ""
 
 #: app/display/gimpstatusbar.c:498
 msgid "_Proof Colors"
-msgstr "校对颜色(_P)"
+msgstr "启用软打样(_P)"
 
 #: app/display/gimpstatusbar.c:511 app/display/gimpstatusbar.c:2153
 msgid "Current Soft-Proofing Profile"
@@ -25661,7 +25661,7 @@ msgstr "（无）"
 msgid "Clipboard"
 msgstr "剪贴板"
 
-#: app/widgets/gimpcolordialog.c:247
+#: app/widgets/gimpcolordialog.c:252
 msgid "Add the current color to the color history"
 msgstr "将当前颜色添加到颜色历史"
 
