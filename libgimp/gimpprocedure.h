@@ -191,24 +191,10 @@ const gchar    * gimp_procedure_get_date           (GimpProcedure        *proced
 
 GParamSpec     * gimp_procedure_add_argument       (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
-GParamSpec     * gimp_procedure_add_argument_from_property
-                                                   (GimpProcedure        *procedure,
-                                                    GObject              *config,
-                                                    const gchar          *prop_name);
-
 GParamSpec     * gimp_procedure_add_aux_argument   (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
-GParamSpec     * gimp_procedure_add_aux_argument_from_property
-                                                   (GimpProcedure        *procedure,
-                                                    GObject              *config,
-                                                    const gchar          *prop_name);
-
 GParamSpec     * gimp_procedure_add_return_value   (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
-GParamSpec     * gimp_procedure_add_return_value_from_property
-                                                   (GimpProcedure        *procedure,
-                                                    GObject              *config,
-                                                    const gchar          *prop_name);
 
 GParamSpec     * gimp_procedure_find_argument      (GimpProcedure        *procedure,
                                                     const gchar          *name);

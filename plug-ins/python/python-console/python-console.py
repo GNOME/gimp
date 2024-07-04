@@ -294,18 +294,6 @@ def run(procedure, config, data):
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
 class PythonConsole (Gimp.PlugIn):
-    ## Properties: parameters ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
-                      nick=_("Run mode"), blurb=_("The run mode"))
-    def run_mode(self):
-        """Read-write integer property."""
-        return self.runmode
-
-    @run_mode.setter
-    def run_mode(self, runmode):
-        self.runmode = runmode
-
     ## GimpPlugIn virtual methods ##
     def do_set_i18n(self, name):
         return True, 'gimp30-python', None
@@ -325,7 +313,10 @@ class PythonConsole (Gimp.PlugIn):
             procedure.set_attribution("James Henstridge",
                                       "James Henstridge",
                                       "1997-1999")
-            procedure.add_argument_from_property(self, "run-mode")
+            procedure.add_enum_argument ("run-mode", _("Run mode"),
+                                         _("The run mode"), Gimp.RunMode,
+                                         Gimp.RunMode.INTERACTIVE,
+                                         GObject.ParamFlags.READWRITE)
             procedure.add_menu_path ("<Image>/Filters/Development/Python-Fu")
 
             return procedure

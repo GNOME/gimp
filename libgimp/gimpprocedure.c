@@ -1284,8 +1284,7 @@ gimp_procedure_get_date (GimpProcedure *procedure)
  *
  * Add a new argument to @procedure according to @pspec specifications.
  * The arguments will be ordered according to the call order to
- * [method@Procedure.add_argument] and
- * [method@Procedure.add_argument_from_property].
+ * [method@Procedure.add_argument].
  *
  * If @pspec is floating, ownership will be taken over by @procedure,
  * allowing to pass directly `g*_param_spec_*()` calls as arguments.
@@ -1331,39 +1330,6 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
   procedure->priv->n_args++;
 
   return pspec;
-}
-
-/**
- * gimp_procedure_add_argument_from_property:
- * @procedure: the #GimpProcedure.
- * @config:    a #GObject.
- * @prop_name: property name in @config.
- *
- * Add a new argument to @procedure according to the specifications of
- * the property @prop_name registered on @config.
- *
- * See [method@Procedure.add_argument] for details.
- *
- * Returns: (transfer none): the added #GParamSpec.
- *
- * Since: 3.0
- */
-GParamSpec *
-gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
-                                           GObject       *config,
-                                           const gchar   *prop_name)
-{
-  GParamSpec *pspec;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (prop_name != NULL, NULL);
-
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
-
-  g_return_val_if_fail (pspec != NULL, NULL);
-
-  return gimp_procedure_add_argument (procedure, pspec);
 }
 
 /**
@@ -1422,39 +1388,6 @@ gimp_procedure_add_aux_argument (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_aux_argument_from_property:
- * @procedure: the #GimpProcedure.
- * @config:    a #GObject.
- * @prop_name: property name in @config.
- *
- * Add a new auxiliary argument to @procedure according to the
- * specifications of the property @prop_name registered on @config.
- *
- * See gimp_procedure_add_aux_argument() for details.
- *
- * Returns: (transfer none): the added #GParamSpec.
- *
- * Since: 3.0
- */
-GParamSpec *
-gimp_procedure_add_aux_argument_from_property (GimpProcedure *procedure,
-                                               GObject       *config,
-                                               const gchar   *prop_name)
-{
-  GParamSpec *pspec;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (prop_name != NULL, NULL);
-
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
-
-  g_return_val_if_fail (pspec != NULL, NULL);
-
-  return gimp_procedure_add_aux_argument (procedure, pspec);
-}
-
-/**
  * gimp_procedure_add_return_value:
  * @procedure: the #GimpProcedure.
  * @pspec:     (transfer full): the return value specification.
@@ -1463,8 +1396,7 @@ gimp_procedure_add_aux_argument_from_property (GimpProcedure *procedure,
  * specifications.
  *
  * The returned values will be ordered according to the call order to
- * [method@Procedure.add_return_value] and
- * [method@Procedure.add_return_value_from_property].
+ * [method@Procedure.add_return_value].
  *
  * Returns: (transfer none): the same @pspec.
  *
@@ -1496,41 +1428,6 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   procedure->priv->n_values++;
 
   return pspec;
-}
-
-/**
- * gimp_procedure_add_return_value_from_property:
- * @procedure: the #GimpProcedure.
- * @config:    a #GObject.
- * @prop_name: property name in @config.
- *
- * Add a new return value to @procedure according to the specifications of
- * the property @prop_name registered on @config.
- *
- * The returned values will be ordered according to the call order to
- * [method@Procedure.add_return_value] and
- * [method@Procedure.add_return_value_from_property].
- *
- * Returns: (transfer none): the added #GParamSpec.
- *
- * Since: 3.0
- */
-GParamSpec *
-gimp_procedure_add_return_value_from_property (GimpProcedure *procedure,
-                                               GObject       *config,
-                                               const gchar   *prop_name)
-{
-  GParamSpec *pspec;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (prop_name != NULL, NULL);
-
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
-
-  g_return_val_if_fail (pspec != NULL, NULL);
-
-  return gimp_procedure_add_return_value (procedure, pspec);
 }
 
 /**
