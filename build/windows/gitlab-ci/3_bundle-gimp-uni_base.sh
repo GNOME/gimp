@@ -117,7 +117,7 @@ bundle "$MSYS_PREFIX" share/glib-*/schemas/gschemas.compiled
 bundle "$MSYS_PREFIX" share/icons/Adwaita/
 ### https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
 bundle "$GIMP_PREFIX" share/icons/hicolor/
-### Needed for wmf
+### Needed for file-wmf work
 bundle "$MSYS_PREFIX" share/libwmf/
 ### Only copy from langs supported in GIMP.
 lang_array=($(echo $(ls po/*.po |
@@ -134,6 +134,8 @@ done
 bundle "$GIMP_PREFIX" share/metainfo/org.gimp*.xml
 ### mypaint brushes
 bundle "$MSYS_PREFIX" share/mypaint-data/
+### Needed for full CJK and Cyrillic support in file-pdf
+bundle "$MSYS_PREFIX" share/poppler/
 ### Needed for lang selection in Preferences
 bundle "$MSYS_PREFIX" share/xml/iso-codes/iso_639.xml
 
