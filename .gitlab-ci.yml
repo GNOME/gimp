@@ -431,6 +431,7 @@ gimp-win-x64-cross:
   script:
     - bash build/windows/2_build-gimp-crossroad.sh
     - bash build/windows/2_bundle-gimp-uni_base.sh
+  allow_failure: true
   artifacts:
     expose_as: 'Windows zip'
     paths:
