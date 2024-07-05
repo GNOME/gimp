@@ -821,7 +821,7 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
       gimp_color_dialog_image_changed (viewable_dialog->context,
                                        image, dialog);
       gimp_color_dialog_update_base_type (dialog);
-      gimp_color_dialog_style_updated (dialog);
+      gimp_color_dialog_style_updated (GTK_WIDGET (dialog));
     }
   else
     {
