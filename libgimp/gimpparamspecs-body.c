@@ -980,7 +980,7 @@ gimp_param_resource_validate (GParamSpec *pspec,
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether %NULL is a valid value.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecResource specifying a
@@ -1060,7 +1060,7 @@ gimp_param_brush_init (GParamSpec *pspec)
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether %NULL is a valid value.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecBrush specifying a
@@ -1140,7 +1140,7 @@ gimp_param_pattern_init (GParamSpec *pspec)
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether %NULL is a valid value.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPattern specifying a
@@ -1220,7 +1220,7 @@ gimp_param_gradient_init (GParamSpec *pspec)
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether %NULL is a valid value.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecGradient specifying a
@@ -1300,7 +1300,7 @@ gimp_param_palette_init (GParamSpec *pspec)
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether %NULL is a valid value.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPalette specifying a
@@ -1380,7 +1380,7 @@ gimp_param_font_init (GParamSpec *pspec)
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether %NULL is a valid value.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecFont specifying a

@@ -217,7 +217,7 @@ film_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_font_argument (procedure, "number-font",
                                         _("Number _font"),
                                         _("Font for drawing numbers"),
-                                        G_PARAM_READWRITE);
+                                        FALSE, G_PARAM_READWRITE);
 
       gimp_procedure_add_color_argument (procedure, "number-color",
                                          _("_Number color"),

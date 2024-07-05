@@ -964,6 +964,7 @@ void gimp_procedure_add_resource_argument              (GimpProcedure *procedure
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
+                                                        gboolean       none_ok,
                                                         GParamFlags    flags);
 void gimp_procedure_add_resource_aux_argument          (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -980,6 +981,7 @@ void gimp_procedure_add_brush_argument                 (GimpProcedure *procedure
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
+                                                        gboolean       none_ok,
                                                         GParamFlags    flags);
 void gimp_procedure_add_brush_aux_argument             (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -996,6 +998,7 @@ void gimp_procedure_add_font_argument                  (GimpProcedure *procedure
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
+                                                        gboolean       none_ok,
                                                         GParamFlags    flags);
 void gimp_procedure_add_font_aux_argument              (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1012,6 +1015,7 @@ void gimp_procedure_add_gradient_argument              (GimpProcedure *procedure
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
+                                                        gboolean       none_ok,
                                                         GParamFlags    flags);
 void gimp_procedure_add_gradient_aux_argument          (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1028,6 +1032,7 @@ void gimp_procedure_add_palette_argument               (GimpProcedure *procedure
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
+                                                        gboolean       none_ok,
                                                         GParamFlags    flags);
 void gimp_procedure_add_palette_aux_argument           (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1044,6 +1049,7 @@ void gimp_procedure_add_pattern_argument               (GimpProcedure *procedure
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
+                                                        gboolean       none_ok,
                                                         GParamFlags    flags);
 void gimp_procedure_add_pattern_aux_argument           (GimpProcedure *procedure,
                                                         const gchar   *name,

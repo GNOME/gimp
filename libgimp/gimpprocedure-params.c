@@ -2358,6 +2358,7 @@ gimp_procedure_add_file_return_value (GimpProcedure *procedure,
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
+ * @none_ok:     whether %NULL is a valid value.
  * @flags:       argument flags.
  *
  * Add a new #GimpResource argument to @procedure.
@@ -2370,12 +2371,12 @@ gimp_procedure_add_resource_argument (GimpProcedure *procedure,
                                       const gchar   *name,
                                       const gchar   *nick,
                                       const gchar   *blurb,
+                                      gboolean       none_ok,
                                       GParamFlags    flags)
 {
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_resource (name, nick, blurb,
-                                                         GIMP_TYPE_RESOURCE,
-                                                         flags));
+                                                         none_ok, flags));
 }
 
 /**
@@ -2400,8 +2401,7 @@ gimp_procedure_add_resource_aux_argument (GimpProcedure *procedure,
 {
   gimp_procedure_add_aux_argument (procedure,
                                    gimp_param_spec_resource (name, nick, blurb,
-                                                             GIMP_TYPE_RESOURCE,
-                                                             flags));
+                                                             TRUE, flags));
 }
 
 /**
@@ -2426,8 +2426,7 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
 {
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_resource (name, nick, blurb,
-                                                             GIMP_TYPE_RESOURCE,
-                                                             flags));
+                                                             TRUE, flags));
 }
 
 /**
@@ -2436,6 +2435,7 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
+ * @none_ok:     whether %NULL is a valid value.
  * @flags:       argument flags.
  *
  * Add a new #GimpBrush argument to @procedure.
@@ -2448,11 +2448,12 @@ gimp_procedure_add_brush_argument (GimpProcedure *procedure,
                                    const gchar   *name,
                                    const gchar   *nick,
                                    const gchar   *blurb,
+                                   gboolean       none_ok,
                                    GParamFlags    flags)
 {
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_brush (name, nick, blurb,
-                                                      GIMP_TYPE_BRUSH, flags));
+                                                      none_ok, flags));
 }
 
 /**
@@ -2477,7 +2478,7 @@ gimp_procedure_add_brush_aux_argument (GimpProcedure *procedure,
 {
   gimp_procedure_add_aux_argument (procedure,
                                    gimp_param_spec_brush (name, nick, blurb,
-                                                          GIMP_TYPE_BRUSH, flags));
+                                                          TRUE, flags));
 }
 
 /**
@@ -2502,7 +2503,7 @@ gimp_procedure_add_brush_return_value (GimpProcedure *procedure,
 {
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_brush (name, nick, blurb,
-                                                          GIMP_TYPE_BRUSH, flags));
+                                                          TRUE, flags));
 }
 
 /**
@@ -2511,6 +2512,7 @@ gimp_procedure_add_brush_return_value (GimpProcedure *procedure,
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
+ * @none_ok:     whether %NULL is a valid value.
  * @flags:       argument flags.
  *
  * Add a new #GimpFont argument to @procedure.
@@ -2523,11 +2525,12 @@ gimp_procedure_add_font_argument (GimpProcedure *procedure,
                                   const gchar   *name,
                                   const gchar   *nick,
                                   const gchar   *blurb,
+                                  gboolean       none_ok,
                                   GParamFlags    flags)
 {
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_font (name, nick, blurb,
-                                                     GIMP_TYPE_FONT, flags));
+                                                     none_ok, flags));
 }
 
 /**
@@ -2552,7 +2555,7 @@ gimp_procedure_add_font_aux_argument (GimpProcedure *procedure,
 {
   gimp_procedure_add_aux_argument (procedure,
                                    gimp_param_spec_font (name, nick, blurb,
-                                                         GIMP_TYPE_FONT, flags));
+                                                         TRUE, flags));
 }
 
 /**
@@ -2577,7 +2580,7 @@ gimp_procedure_add_font_return_value (GimpProcedure *procedure,
 {
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_font (name, nick, blurb,
-                                                         GIMP_TYPE_FONT, flags));
+                                                         TRUE, flags));
 }
 
 /**
@@ -2586,6 +2589,7 @@ gimp_procedure_add_font_return_value (GimpProcedure *procedure,
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
+ * @none_ok:     whether %NULL is a valid value.
  * @flags:       argument flags.
  *
  * Add a new #GimpGradient argument to @procedure.
@@ -2598,11 +2602,12 @@ gimp_procedure_add_gradient_argument (GimpProcedure *procedure,
                                       const gchar   *name,
                                       const gchar   *nick,
                                       const gchar   *blurb,
+                                      gboolean       none_ok,
                                       GParamFlags    flags)
 {
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_gradient (name, nick, blurb,
-                                                         GIMP_TYPE_GRADIENT, flags));
+                                                         none_ok, flags));
 }
 
 /**
@@ -2627,7 +2632,7 @@ gimp_procedure_add_gradient_aux_argument (GimpProcedure *procedure,
 {
   gimp_procedure_add_aux_argument (procedure,
                                    gimp_param_spec_gradient (name, nick, blurb,
-                                                             GIMP_TYPE_GRADIENT, flags));
+                                                             TRUE, flags));
 }
 
 /**
@@ -2652,7 +2657,7 @@ gimp_procedure_add_gradient_return_value (GimpProcedure *procedure,
 {
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_gradient (name, nick, blurb,
-                                                             GIMP_TYPE_GRADIENT, flags));
+                                                             TRUE, flags));
 }
 
 /**
@@ -2661,6 +2666,7 @@ gimp_procedure_add_gradient_return_value (GimpProcedure *procedure,
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
+ * @none_ok:     whether %NULL is a valid value.
  * @flags:       argument flags.
  *
  * Add a new #GimpPalette argument to @procedure.
@@ -2673,11 +2679,12 @@ gimp_procedure_add_palette_argument (GimpProcedure *procedure,
                                      const gchar   *name,
                                      const gchar   *nick,
                                      const gchar   *blurb,
+                                     gboolean       none_ok,
                                      GParamFlags    flags)
 {
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_palette (name, nick, blurb,
-                                                        GIMP_TYPE_PALETTE, flags));
+                                                        none_ok, flags));
 }
 
 /**
@@ -2702,7 +2709,7 @@ gimp_procedure_add_palette_aux_argument (GimpProcedure *procedure,
 {
   gimp_procedure_add_aux_argument (procedure,
                                    gimp_param_spec_palette (name, nick, blurb,
-                                                            GIMP_TYPE_PALETTE, flags));
+                                                            TRUE, flags));
 }
 
 /**
@@ -2727,7 +2734,7 @@ gimp_procedure_add_palette_return_value (GimpProcedure *procedure,
 {
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_palette (name, nick, blurb,
-                                                            GIMP_TYPE_PALETTE, flags));
+                                                            TRUE, flags));
 }
 
 /**
@@ -2736,6 +2743,7 @@ gimp_procedure_add_palette_return_value (GimpProcedure *procedure,
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
+ * @none_ok:     whether %NULL is a valid value.
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern argument to @procedure.
@@ -2748,11 +2756,12 @@ gimp_procedure_add_pattern_argument (GimpProcedure *procedure,
                                      const gchar   *name,
                                      const gchar   *nick,
                                      const gchar   *blurb,
+                                     gboolean       none_ok,
                                      GParamFlags    flags)
 {
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_pattern (name, nick, blurb,
-                                                        GIMP_TYPE_PATTERN, flags));
+                                                        none_ok, flags));
 }
 
 /**
@@ -2777,7 +2786,7 @@ gimp_procedure_add_pattern_aux_argument (GimpProcedure *procedure,
 {
   gimp_procedure_add_aux_argument (procedure,
                                    gimp_param_spec_pattern (name, nick, blurb,
-                                                            GIMP_TYPE_PATTERN, flags));
+                                                            TRUE, flags));
 }
 
 /**
@@ -2802,5 +2811,5 @@ gimp_procedure_add_pattern_return_value (GimpProcedure *procedure,
 {
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_pattern (name, nick, blurb,
-                                                            GIMP_TYPE_PATTERN, flags));
+                                                            TRUE, flags));
 }
