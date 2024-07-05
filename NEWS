@@ -32,12 +32,17 @@ Core:
   - Internal procedures are not shown as search actions.
   - Non-destructive layer effects are copied together with the layer they belong
     to.
+  - Accessibility: if the "Reduced Motion" (or other names for the same
+    feature depending on OS/desktop) is checked in macOS, Windows, GNOME
+    or KDE, then the following animations are disabled: animated credits
+    in About dialog and some easter eggs.
 
 Tools:
 
   - Gradient tool: the "Repeat" mode "Truncate" has been renamed "None
     (truncate)" and reordered to be second in the list, just after "None
     (extend)".
+  - Measure tool: guides can now be created off-canvas.
 
 Graphical User Interface:
 
@@ -51,7 +56,7 @@ Graphical User Interface:
 Plug-ins:
 
   - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
-    file-pdf-save-multi, qbist, file-xmc.
+    file-pdf-save-multi, qbist, file-xmc, file-tiff-load.
   - PSD: unsupported layers are not dropped anymore (they will usually show
     empty instead).
   - Script-Fu:
@@ -70,6 +75,7 @@ Plug-ins:
   - file-darktable: use the new API which darktable developed from us
     since version 4.6 (a new `--gimp` flag on command line). Fallback to
     old usage for older versions.
+  - guides-new: guides can now be created off-canvas.
 
 API:
 
@@ -100,14 +106,27 @@ API:
       which are ensured to be run exactly once, unlike fill_list().
     * gimp_image_add_(h|v)guide() functions can now creates off-canvas
       guides (same as we can in GUI, now).
+    * GimpChoice arguments can now generate a GimpIntRadioFrame as
+      alternative widget in a GimpProcedureDialog (combo box is still
+      the default widget).
+    * All GIMP_PROC_ARG_*() macros are now proper gimp_procedure_add_*_argument()
+      functions (same for aux argument and return value macros).
+    * gimp_procedure_add_*_from_property() functions were removed.
+    * gimp_procedure_add_argument(), gimp_procedure_add_aux_argument()
+      and gimp_procedure_add_return_value() were removed from public API.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
+    * New functions:
+      - gimp_prop_choice_radio_frame_new()
+      - gimp_int_radio_frame_set_title()
+      - gimp_widget_animation_enabled()
   - Changes in libgimpbase:
     * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
       Protocol (only GeglColor and GimpColorArray).
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
+    * GimpCMYK type and all usage was removed.
 
 Build:
 
@@ -123,6 +142,7 @@ Build:
     * x86 (32-bit) cross-build job for Windows removed.
     * "packaging" stage merged back with "build" stage.
     * "gimp-debian-x64" job now also generates an AppImage for every commit.
+    * LLD linker now used in Debian and flatpak jobs.
   - New gimp-data repository used as a git submodule:
     * Various data were moved to gimp-data: icons, cursors, patterns, brushes
       and application icon/logo.
@@ -133,6 +153,9 @@ Build:
       splash image contributed as XCF.
   - Support for .pdb debug symbol files (Visual Studio) was added for
     Windows.
+  - Windows installer: new option to launch GIMP after install.
+  - Nightly flatpak: HEIC support is now an extension as in our beta
+    flatpak.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
