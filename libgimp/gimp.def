@@ -734,8 +734,6 @@ EXPORTS
 	gimp_plug_in_remove_temp_procedure
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_pdb_error_handler
-	gimp_procedure_add_argument
-	gimp_procedure_add_aux_argument
 	gimp_procedure_add_boolean_argument
 	gimp_procedure_add_boolean_aux_argument
 	gimp_procedure_add_boolean_return_value
@@ -818,7 +816,6 @@ EXPORTS
 	gimp_procedure_add_resource_argument
 	gimp_procedure_add_resource_aux_argument
 	gimp_procedure_add_resource_return_value
-	gimp_procedure_add_return_value
 	gimp_procedure_add_selection_argument
 	gimp_procedure_add_selection_aux_argument
 	gimp_procedure_add_selection_return_value

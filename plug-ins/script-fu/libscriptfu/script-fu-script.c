@@ -191,13 +191,11 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
 
       script_fu_script_set_proc_metadata (procedure, script);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                        "Run mode", "The run mode",
+                                        GIMP_TYPE_RUN_MODE,
+                                        GIMP_RUN_INTERACTIVE,
+                                        G_PARAM_READWRITE);
 
       script_fu_script_set_proc_args (procedure, script, 0);
 
@@ -608,15 +606,11 @@ script_fu_script_set_proc_args (GimpProcedure *procedure,
   script_fu_arg_reset_name_generator ();
   for (gint i = first_conveyed_arg; i < script->n_args; i++)
     {
-      GParamSpec  *pspec = NULL;
-      const gchar *name  = NULL;
-      const gchar *nick  = NULL;
+      const gchar *name = NULL;
+      const gchar *nick = NULL;
 
       script_fu_arg_generate_name_and_nick (&script->args[i], &name, &nick);
-      pspec = script_fu_arg_get_param_spec (&script->args[i],
-                                            name,
-                                            nick);
-      gimp_procedure_add_argument (procedure, pspec);
+      script_fu_arg_add_argument (&script->args[i], procedure, name, nick);
     }
 }
 

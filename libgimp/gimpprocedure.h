@@ -189,13 +189,6 @@ const gchar    * gimp_procedure_get_authors        (GimpProcedure        *proced
 const gchar    * gimp_procedure_get_copyright      (GimpProcedure        *procedure);
 const gchar    * gimp_procedure_get_date           (GimpProcedure        *procedure);
 
-GParamSpec     * gimp_procedure_add_argument       (GimpProcedure        *procedure,
-                                                    GParamSpec           *pspec);
-GParamSpec     * gimp_procedure_add_aux_argument   (GimpProcedure        *procedure,
-                                                    GParamSpec           *pspec);
-GParamSpec     * gimp_procedure_add_return_value   (GimpProcedure        *procedure,
-                                                    GParamSpec           *pspec);
-
 GParamSpec     * gimp_procedure_find_argument      (GimpProcedure        *procedure,
                                                     const gchar          *name);
 GParamSpec     * gimp_procedure_find_aux_argument  (GimpProcedure        *procedure,
@@ -236,6 +229,13 @@ GimpProcedureConfig *
 
 
 /* Internal use */
+
+G_GNUC_INTERNAL GParamSpec          * _gimp_procedure_add_argument       (GimpProcedure  *procedure,
+                                                                         GParamSpec     *pspec);
+G_GNUC_INTERNAL GParamSpec          * _gimp_procedure_add_aux_argument   (GimpProcedure  *procedure,
+                                                                         GParamSpec     *pspec);
+G_GNUC_INTERNAL GParamSpec          * _gimp_procedure_add_return_value   (GimpProcedure  *procedure,
+                                                                         GParamSpec     *pspec);
 
 G_GNUC_INTERNAL GimpProcedureConfig * _gimp_procedure_create_run_config (GimpProcedure  *procedure);
 

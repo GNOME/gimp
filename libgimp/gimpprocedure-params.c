@@ -40,7 +40,6 @@
  * @flags:       argument flags.
  *
  * Add a new boolean argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -52,9 +51,9 @@ gimp_procedure_add_boolean_argument (GimpProcedure *procedure,
                                      gboolean       value,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean (name, nick, blurb,
-                                                     value, flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_boolean (name, nick, blurb,
+                                                      value, flags));
 }
 
 /**
@@ -67,7 +66,6 @@ gimp_procedure_add_boolean_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new boolean auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -79,9 +77,9 @@ gimp_procedure_add_boolean_aux_argument (GimpProcedure *procedure,
                                          gboolean       value,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_boolean (name, nick, blurb,
-                                                         value, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_boolean (name, nick, blurb,
+                                                          value, flags));
 }
 
 /**
@@ -94,7 +92,6 @@ gimp_procedure_add_boolean_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new boolean return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -106,9 +103,9 @@ gimp_procedure_add_boolean_return_value (GimpProcedure *procedure,
                                          gboolean       value,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean (name, nick, blurb,
-                                                         value, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_boolean (name, nick, blurb,
+                                                          value, flags));
 }
 
 /**
@@ -123,7 +120,6 @@ gimp_procedure_add_boolean_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -137,10 +133,10 @@ gimp_procedure_add_int_argument (GimpProcedure *procedure,
                                  gint           value,
                                  GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int (name, nick, blurb,
-                                                 min, max, value,
-                                                 flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_int (name, nick, blurb,
+                                                  min, max, value,
+                                                  flags));
 }
 
 /**
@@ -155,7 +151,6 @@ gimp_procedure_add_int_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -169,10 +164,10 @@ gimp_procedure_add_int_aux_argument (GimpProcedure *procedure,
                                      gint           value,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_int (name, nick, blurb,
-                                                     min, max, value,
-                                                     flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_int (name, nick, blurb,
+                                                      min, max, value,
+                                                      flags));
 }
 
 /**
@@ -187,7 +182,6 @@ gimp_procedure_add_int_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -201,10 +195,10 @@ gimp_procedure_add_int_return_value (GimpProcedure *procedure,
                                      gint           value,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int (name, nick, blurb,
-                                                     min, max, value,
-                                                     flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_int (name, nick, blurb,
+                                                      min, max, value,
+                                                      flags));
 }
 
 /**
@@ -219,7 +213,6 @@ gimp_procedure_add_int_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new unsigned integer argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -233,10 +226,10 @@ gimp_procedure_add_uint_argument (GimpProcedure *procedure,
                                   guint          value,
                                   GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_uint (name, nick, blurb,
-                                                  min, max, value,
-                                                  flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_uint (name, nick, blurb,
+                                                   min, max, value,
+                                                   flags));
 }
 
 /**
@@ -251,7 +244,6 @@ gimp_procedure_add_uint_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new unsigned integer auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -265,10 +257,10 @@ gimp_procedure_add_uint_aux_argument (GimpProcedure *procedure,
                                       guint          value,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_uint (name, nick, blurb,
-                                                      min, max, value,
-                                                      flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_uint (name, nick, blurb,
+                                                       min, max, value,
+                                                       flags));
 }
 
 /**
@@ -283,7 +275,6 @@ gimp_procedure_add_uint_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new unsigned integer return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -297,10 +288,10 @@ gimp_procedure_add_uint_return_value (GimpProcedure *procedure,
                                       guint          value,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_uint (name, nick, blurb,
-                                                      min, max, value,
-                                                      flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_uint (name, nick, blurb,
+                                                       min, max, value,
+                                                       flags));
 }
 
 /**
@@ -315,7 +306,6 @@ gimp_procedure_add_uint_return_value (GimpProcedure *procedure,
  * @flags:        argument flags.
  *
  * Add a new #GimpUnit argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -329,10 +319,10 @@ gimp_procedure_add_unit_argument (GimpProcedure *procedure,
                                   GimpUnit       value,
                                   GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_unit (name, nick, blurb,
-                                                     show_pixels, show_percent,
-                                                     value, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_unit (name, nick, blurb,
+                                                      show_pixels, show_percent,
+                                                      value, flags));
 }
 
 /**
@@ -347,7 +337,6 @@ gimp_procedure_add_unit_argument (GimpProcedure *procedure,
  * @flags:        argument flags.
  *
  * Add a new #GimpUnit auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -361,10 +350,10 @@ gimp_procedure_add_unit_aux_argument (GimpProcedure *procedure,
                                       GimpUnit       value,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_unit (name, nick, blurb,
-                                                         show_pixels, show_percent,
-                                                         value, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_unit (name, nick, blurb,
+                                                          show_pixels, show_percent,
+                                                          value, flags));
 }
 
 /**
@@ -379,7 +368,6 @@ gimp_procedure_add_unit_aux_argument (GimpProcedure *procedure,
  * @flags:        argument flags.
  *
  * Add a new #GimpUnit return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -393,10 +381,10 @@ gimp_procedure_add_unit_return_value (GimpProcedure *procedure,
                                       GimpUnit       value,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_unit (name, nick, blurb,
-                                                         show_pixels, show_percent,
-                                                         value, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_unit (name, nick, blurb,
+                                                          show_pixels, show_percent,
+                                                          value, flags));
 }
 
 /**
@@ -411,7 +399,6 @@ gimp_procedure_add_unit_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new double argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -425,10 +412,10 @@ gimp_procedure_add_double_argument (GimpProcedure *procedure,
                                     gdouble        value,
                                     GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double (name, nick, blurb,
-                                                    min, max, value,
-                                                    flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_double (name, nick, blurb,
+                                                     min, max, value,
+                                                     flags));
 }
 
 /**
@@ -443,7 +430,6 @@ gimp_procedure_add_double_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new double auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -457,10 +443,10 @@ gimp_procedure_add_double_aux_argument (GimpProcedure *procedure,
                                         gdouble        value,
                                         GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_double (name, nick, blurb,
-                                                        min, max, value,
-                                                        flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_double (name, nick, blurb,
+                                                         min, max, value,
+                                                         flags));
 }
 
 /**
@@ -475,7 +461,6 @@ gimp_procedure_add_double_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new double return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -489,10 +474,10 @@ gimp_procedure_add_double_return_value (GimpProcedure *procedure,
                                         gdouble        value,
                                         GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double (name, nick, blurb,
-                                                        min, max, value,
-                                                        flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_double (name, nick, blurb,
+                                                         min, max, value,
+                                                         flags));
 }
 
 /**
@@ -506,7 +491,6 @@ gimp_procedure_add_double_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new enum argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -519,10 +503,10 @@ gimp_procedure_add_enum_argument (GimpProcedure *procedure,
                                   gint           value,
                                   GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum (name, nick, blurb,
-                                                  enum_type, value,
-                                                  flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_enum (name, nick, blurb,
+                                                   enum_type, value,
+                                                   flags));
 }
 
 /**
@@ -536,7 +520,6 @@ gimp_procedure_add_enum_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new enum auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -549,10 +532,10 @@ gimp_procedure_add_enum_aux_argument (GimpProcedure *procedure,
                                       gint           value,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_enum (name, nick, blurb,
-                                                      enum_type, value,
-                                                      flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_enum (name, nick, blurb,
+                                                       enum_type, value,
+                                                       flags));
 }
 
 /**
@@ -566,7 +549,6 @@ gimp_procedure_add_enum_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new enum return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -579,10 +561,10 @@ gimp_procedure_add_enum_return_value (GimpProcedure *procedure,
                                       gint           value,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_enum (name, nick, blurb,
-                                                      enum_type, value,
-                                                      flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_enum (name, nick, blurb,
+                                                       enum_type, value,
+                                                       flags));
 }
 
 /**
@@ -596,7 +578,6 @@ gimp_procedure_add_enum_return_value (GimpProcedure *procedure,
  * @flags:                   argument flags.
  *
  * Add a new #GimpChoice argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -609,9 +590,9 @@ gimp_procedure_add_choice_argument (GimpProcedure *procedure,
                                     const gchar   *value,
                                     GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_choice (name, nick, blurb,
-                                                       choice, value, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_choice (name, nick, blurb,
+                                                        choice, value, flags));
 }
 
 /**
@@ -625,7 +606,6 @@ gimp_procedure_add_choice_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChoice auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -638,9 +618,9 @@ gimp_procedure_add_choice_aux_argument (GimpProcedure *procedure,
                                         const gchar    *value,
                                         GParamFlags     flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_choice (name, nick, blurb,
-                                                           choice, value, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_choice (name, nick, blurb,
+                                                            choice, value, flags));
 }
 
 /**
@@ -654,7 +634,6 @@ gimp_procedure_add_choice_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChoice return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -667,9 +646,9 @@ gimp_procedure_add_choice_return_value (GimpProcedure *procedure,
                                         const gchar    *value,
                                         GParamFlags     flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_choice (name, nick, blurb,
-                                                           choice, value, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_choice (name, nick, blurb,
+                                                            choice, value, flags));
 }
 
 /**
@@ -682,7 +661,6 @@ gimp_procedure_add_choice_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -694,9 +672,9 @@ gimp_procedure_add_string_argument (GimpProcedure *procedure,
                                     const gchar   *value,
                                     GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string (name, nick, blurb,
-                                                    value, flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_string (name, nick, blurb,
+                                                     value, flags));
 }
 
 /**
@@ -709,7 +687,6 @@ gimp_procedure_add_string_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -721,9 +698,9 @@ gimp_procedure_add_string_aux_argument (GimpProcedure *procedure,
                                         const gchar   *value,
                                         GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_string (name, nick, blurb,
-                                                        value, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_string (name, nick, blurb,
+                                                         value, flags));
 }
 
 /**
@@ -736,7 +713,6 @@ gimp_procedure_add_string_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -748,9 +724,9 @@ gimp_procedure_add_string_return_value (GimpProcedure *procedure,
                                         const gchar   *value,
                                         GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_string (name, nick, blurb,
-                                                        value, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_string (name, nick, blurb,
+                                                         value, flags));
 }
 
 /**
@@ -764,7 +740,6 @@ gimp_procedure_add_string_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -777,9 +752,9 @@ gimp_procedure_add_color_argument (GimpProcedure *procedure,
                                    GeglColor     *value,
                                    GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_color (name, nick, blurb,
-                                                      has_alpha, value, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_color (name, nick, blurb,
+                                                       has_alpha, value, flags));
 }
 
 /**
@@ -793,7 +768,6 @@ gimp_procedure_add_color_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -806,9 +780,9 @@ gimp_procedure_add_color_aux_argument (GimpProcedure *procedure,
                                        GeglColor     *value,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_color (name, nick, blurb,
-                                                          has_alpha, value, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_color (name, nick, blurb,
+                                                           has_alpha, value, flags));
 }
 
 /**
@@ -822,7 +796,6 @@ gimp_procedure_add_color_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -835,9 +808,9 @@ gimp_procedure_add_color_return_value (GimpProcedure *procedure,
                                        GeglColor     *value,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_color (name, nick, blurb,
-                                                          has_alpha, value, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_color (name, nick, blurb,
+                                                           has_alpha, value, flags));
 }
 
 /**
@@ -851,7 +824,6 @@ gimp_procedure_add_color_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor argument to @procedure from a string representation.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -864,10 +836,10 @@ gimp_procedure_add_color_from_string_argument (GimpProcedure *procedure,
                                                const gchar   *value,
                                                GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_color_from_string (name, nick, blurb,
-                                                                  has_alpha, value,
-                                                                  flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_color_from_string (name, nick, blurb,
+                                                                   has_alpha, value,
+                                                                   flags));
 }
 
 /**
@@ -881,7 +853,6 @@ gimp_procedure_add_color_from_string_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor auxiliary argument to @procedure from a string representation.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -894,10 +865,10 @@ gimp_procedure_add_color_from_string_aux_argument (GimpProcedure *procedure,
                                                    const gchar   *value,
                                                    GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_color_from_string (name, nick, blurb,
-                                                                      has_alpha, value,
-                                                                      flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_color_from_string (name, nick, blurb,
+                                                                       has_alpha, value,
+                                                                       flags));
 }
 
 /**
@@ -911,7 +882,6 @@ gimp_procedure_add_color_from_string_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GeglColor return value to @procedure from a string representation.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -924,10 +894,10 @@ gimp_procedure_add_color_from_string_return_value (GimpProcedure *procedure,
                                                    const gchar   *value,
                                                    GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_color_from_string (name, nick, blurb,
-                                                                      has_alpha, value,
-                                                                      flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_color_from_string (name, nick, blurb,
+                                                                       has_alpha, value,
+                                                                       flags));
 }
 
 /**
@@ -939,7 +909,6 @@ gimp_procedure_add_color_from_string_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -950,9 +919,9 @@ gimp_procedure_add_parasite_argument (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_parasite (name, nick, blurb,
-                                                         flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_parasite (name, nick, blurb,
+                                                          flags));
 }
 
 /**
@@ -964,7 +933,6 @@ gimp_procedure_add_parasite_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -975,9 +943,9 @@ gimp_procedure_add_parasite_aux_argument (GimpProcedure *procedure,
                                           const gchar   *blurb,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_parasite (name, nick, blurb,
-                                                             flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_parasite (name, nick, blurb,
+                                                              flags));
 }
 
 /**
@@ -989,7 +957,6 @@ gimp_procedure_add_parasite_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpParasite return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1000,9 +967,9 @@ gimp_procedure_add_parasite_return_value (GimpProcedure *procedure,
                                           const gchar   *blurb,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_parasite (name, nick, blurb,
-                                                             flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_parasite (name, nick, blurb,
+                                                              flags));
 }
 
 /**
@@ -1015,7 +982,6 @@ gimp_procedure_add_parasite_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new param argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1027,9 +993,9 @@ gimp_procedure_add_param_argument (GimpProcedure *procedure,
                                    GType          param_type,
                                    GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_param (name, nick, blurb,
-                                                   param_type, flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_param (name, nick, blurb,
+                                                    param_type, flags));
 }
 
 /**
@@ -1042,7 +1008,6 @@ gimp_procedure_add_param_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new param auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1054,9 +1019,9 @@ gimp_procedure_add_param_aux_argument (GimpProcedure *procedure,
                                        GType          param_type,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_param (name, nick, blurb,
-                                                       param_type, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_param (name, nick, blurb,
+                                                        param_type, flags));
 }
 
 /**
@@ -1069,7 +1034,6 @@ gimp_procedure_add_param_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new param return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1081,9 +1045,9 @@ gimp_procedure_add_param_return_value (GimpProcedure *procedure,
                                        GType          param_type,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_param (name, nick, blurb,
-                                                       param_type, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_param (name, nick, blurb,
+                                                        param_type, flags));
 }
 
 /**
@@ -1095,7 +1059,6 @@ gimp_procedure_add_param_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GBytes argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1106,8 +1069,8 @@ gimp_procedure_add_bytes_argument (GimpProcedure *procedure,
                                    const gchar   *blurb,
                                    GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boxed (name, nick, blurb,
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_boxed (name, nick, blurb,
                                                     G_TYPE_BYTES, flags));
 }
 
@@ -1120,7 +1083,6 @@ gimp_procedure_add_bytes_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GBytes auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1131,8 +1093,8 @@ gimp_procedure_add_bytes_aux_argument (GimpProcedure *procedure,
                                        const gchar   *blurb,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_boxed (name, nick, blurb,
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_boxed (name, nick, blurb,
                                                         G_TYPE_BYTES, flags));
 }
 
@@ -1145,7 +1107,6 @@ gimp_procedure_add_bytes_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GBytes return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1156,8 +1117,8 @@ gimp_procedure_add_bytes_return_value (GimpProcedure *procedure,
                                        const gchar   *blurb,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boxed (name, nick, blurb,
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_boxed (name, nick, blurb,
                                                         G_TYPE_BYTES, flags));
 }
 
@@ -1170,7 +1131,6 @@ gimp_procedure_add_bytes_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer array argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1181,9 +1141,9 @@ gimp_procedure_add_int32_array_argument (GimpProcedure *procedure,
                                          const gchar   *blurb,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32_array (name, nick, blurb,
-                                                            flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_int32_array (name, nick, blurb,
+                                                             flags));
 }
 
 /**
@@ -1195,7 +1155,6 @@ gimp_procedure_add_int32_array_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer array auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1206,9 +1165,9 @@ gimp_procedure_add_int32_array_aux_argument (GimpProcedure *procedure,
                                              const gchar   *blurb,
                                              GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_int32_array (name, nick, blurb,
-                                                                flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_int32_array (name, nick, blurb,
+                                                                 flags));
 }
 
 /**
@@ -1220,7 +1179,6 @@ gimp_procedure_add_int32_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new integer array return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1231,9 +1189,9 @@ gimp_procedure_add_int32_array_return_value (GimpProcedure *procedure,
                                              const gchar   *blurb,
                                              GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32_array (name, nick, blurb,
-                                                                flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_int32_array (name, nick, blurb,
+                                                                 flags));
 }
 
 /**
@@ -1245,7 +1203,6 @@ gimp_procedure_add_int32_array_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new float array argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1256,9 +1213,9 @@ gimp_procedure_add_float_array_argument (GimpProcedure *procedure,
                                          const gchar   *blurb,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array (name, nick, blurb,
-                                                            flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_float_array (name, nick, blurb,
+                                                             flags));
 }
 
 /**
@@ -1270,7 +1227,6 @@ gimp_procedure_add_float_array_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new float array auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1281,9 +1237,9 @@ gimp_procedure_add_float_array_aux_argument (GimpProcedure *procedure,
                                              const gchar   *blurb,
                                              GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_float_array (name, nick, blurb,
-                                                                flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_float_array (name, nick, blurb,
+                                                                 flags));
 }
 
 /**
@@ -1295,7 +1251,6 @@ gimp_procedure_add_float_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new float array return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1306,9 +1261,9 @@ gimp_procedure_add_float_array_return_value (GimpProcedure *procedure,
                                              const gchar   *blurb,
                                              GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_float_array (name, nick, blurb,
-                                                                flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_float_array (name, nick, blurb,
+                                                                 flags));
 }
 
 /**
@@ -1320,7 +1275,6 @@ gimp_procedure_add_float_array_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string array argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1331,9 +1285,9 @@ gimp_procedure_add_string_array_argument (GimpProcedure *procedure,
                                          const gchar    *blurb,
                                          GParamFlags     flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boxed (name, nick, blurb,
-                                                   G_TYPE_STRV, flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_boxed (name, nick, blurb,
+                                                    G_TYPE_STRV, flags));
 }
 
 /**
@@ -1345,7 +1299,6 @@ gimp_procedure_add_string_array_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string array auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1356,9 +1309,9 @@ gimp_procedure_add_string_array_aux_argument (GimpProcedure *procedure,
                                               const gchar   *blurb,
                                               GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_boxed (name, nick, blurb,
-                                                       G_TYPE_STRV, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_boxed (name, nick, blurb,
+                                                        G_TYPE_STRV, flags));
 }
 
 /**
@@ -1370,7 +1323,6 @@ gimp_procedure_add_string_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new string array return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1381,9 +1333,9 @@ gimp_procedure_add_string_array_return_value (GimpProcedure *procedure,
                                               const gchar   *blurb,
                                               GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boxed (name, nick, blurb,
-                                                       G_TYPE_STRV, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_boxed (name, nick, blurb,
+                                                        G_TYPE_STRV, flags));
 }
 
 /**
@@ -1396,7 +1348,6 @@ gimp_procedure_add_string_array_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new object array argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1408,9 +1359,9 @@ gimp_procedure_add_object_array_argument (GimpProcedure *procedure,
                                           GType          object_type,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array (name, nick, blurb,
-                                                             object_type, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_object_array (name, nick, blurb,
+                                                              object_type, flags));
 }
 
 /**
@@ -1423,7 +1374,6 @@ gimp_procedure_add_object_array_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new object array auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1435,9 +1385,9 @@ gimp_procedure_add_object_array_aux_argument (GimpProcedure *procedure,
                                               GType          object_type,
                                               GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_object_array (name, nick, blurb,
-                                                                 object_type, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_object_array (name, nick, blurb,
+                                                                  object_type, flags));
 }
 
 /**
@@ -1450,7 +1400,6 @@ gimp_procedure_add_object_array_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new object array return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1462,9 +1411,9 @@ gimp_procedure_add_object_array_return_value (GimpProcedure *procedure,
                                               GType          object_type,
                                               GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array (name, nick, blurb,
-                                                                 object_type, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_object_array (name, nick, blurb,
+                                                                  object_type, flags));
 }
 
 /**
@@ -1477,7 +1426,6 @@ gimp_procedure_add_object_array_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDisplay argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1489,9 +1437,9 @@ gimp_procedure_add_display_argument (GimpProcedure *procedure,
                                      gboolean       none_ok,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display (name, nick, blurb,
-                                                        none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_display (name, nick, blurb,
+                                                         none_ok, flags));
 }
 
 /**
@@ -1504,7 +1452,6 @@ gimp_procedure_add_display_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDisplay auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1516,9 +1463,9 @@ gimp_procedure_add_display_aux_argument (GimpProcedure *procedure,
                                          gboolean       none_ok,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_display (name, nick, blurb,
-                                                            none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_display (name, nick, blurb,
+                                                             none_ok, flags));
 }
 
 /**
@@ -1531,7 +1478,6 @@ gimp_procedure_add_display_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDisplay return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1543,9 +1489,9 @@ gimp_procedure_add_display_return_value (GimpProcedure *procedure,
                                          gboolean       none_ok,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_display (name, nick, blurb,
-                                                            none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_display (name, nick, blurb,
+                                                             none_ok, flags));
 }
 
 /**
@@ -1558,7 +1504,6 @@ gimp_procedure_add_display_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpImage argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1570,9 +1515,9 @@ gimp_procedure_add_image_argument (GimpProcedure *procedure,
                                    gboolean       none_ok,
                                    GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image (name, nick, blurb,
-                                                      none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_image (name, nick, blurb,
+                                                       none_ok, flags));
 }
 
 /**
@@ -1585,7 +1530,6 @@ gimp_procedure_add_image_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpImage auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1597,9 +1541,9 @@ gimp_procedure_add_image_aux_argument (GimpProcedure *procedure,
                                        gboolean       none_ok,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_image (name, nick, blurb,
-                                                          none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_image (name, nick, blurb,
+                                                           none_ok, flags));
 }
 
 /**
@@ -1612,7 +1556,6 @@ gimp_procedure_add_image_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpImage return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1624,9 +1567,9 @@ gimp_procedure_add_image_return_value (GimpProcedure *procedure,
                                        gboolean       none_ok,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image (name, nick, blurb,
-                                                          none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_image (name, nick, blurb,
+                                                           none_ok, flags));
 }
 
 /**
@@ -1639,7 +1582,6 @@ gimp_procedure_add_image_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpItem argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1651,9 +1593,9 @@ gimp_procedure_add_item_argument (GimpProcedure *procedure,
                                   gboolean       none_ok,
                                   GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item (name, nick, blurb,
-                                                     none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_item (name, nick, blurb,
+                                                      none_ok, flags));
 }
 
 /**
@@ -1666,7 +1608,6 @@ gimp_procedure_add_item_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpItem auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1678,9 +1619,9 @@ gimp_procedure_add_item_aux_argument (GimpProcedure *procedure,
                                       gboolean       none_ok,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_item (name, nick, blurb,
-                                                         none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_item (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**
@@ -1693,7 +1634,6 @@ gimp_procedure_add_item_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpItem return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1705,9 +1645,9 @@ gimp_procedure_add_item_return_value (GimpProcedure *procedure,
                                       gboolean       none_ok,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_item (name, nick, blurb,
-                                                         none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_item (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**
@@ -1720,7 +1660,6 @@ gimp_procedure_add_item_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDrawable argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1732,9 +1671,9 @@ gimp_procedure_add_drawable_argument (GimpProcedure *procedure,
                                       gboolean       none_ok,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable (name, nick, blurb,
-                                                         none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_drawable (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**
@@ -1747,7 +1686,6 @@ gimp_procedure_add_drawable_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDrawable auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1759,9 +1697,9 @@ gimp_procedure_add_drawable_aux_argument (GimpProcedure *procedure,
                                           gboolean       none_ok,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_drawable (name, nick, blurb,
-                                                             none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_drawable (name, nick, blurb,
+                                                              none_ok, flags));
 }
 
 /**
@@ -1774,7 +1712,6 @@ gimp_procedure_add_drawable_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpDrawable return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1786,9 +1723,9 @@ gimp_procedure_add_drawable_return_value (GimpProcedure *procedure,
                                           gboolean       none_ok,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_drawable (name, nick, blurb,
-                                                             none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_drawable (name, nick, blurb,
+                                                              none_ok, flags));
 }
 
 /**
@@ -1801,7 +1738,6 @@ gimp_procedure_add_drawable_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayer argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1813,9 +1749,9 @@ gimp_procedure_add_layer_argument (GimpProcedure *procedure,
                                    gboolean       none_ok,
                                    GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer (name, nick, blurb,
-                                                      none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_layer (name, nick, blurb,
+                                                       none_ok, flags));
 }
 
 /**
@@ -1828,7 +1764,6 @@ gimp_procedure_add_layer_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayer auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1840,9 +1775,9 @@ gimp_procedure_add_layer_aux_argument (GimpProcedure *procedure,
                                        gboolean       none_ok,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_layer (name, nick, blurb,
-                                                          none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_layer (name, nick, blurb,
+                                                           none_ok, flags));
 }
 
 /**
@@ -1855,7 +1790,6 @@ gimp_procedure_add_layer_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayer return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1867,9 +1801,9 @@ gimp_procedure_add_layer_return_value (GimpProcedure *procedure,
                                        gboolean       none_ok,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer (name, nick, blurb,
-                                                          none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_layer (name, nick, blurb,
+                                                           none_ok, flags));
 }
 
 /**
@@ -1882,7 +1816,6 @@ gimp_procedure_add_layer_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpTextLayer argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1894,9 +1827,9 @@ gimp_procedure_add_text_layer_argument (GimpProcedure *procedure,
                                         gboolean       none_ok,
                                         GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_text_layer (name, nick, blurb,
-                                                           none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_text_layer (name, nick, blurb,
+                                                            none_ok, flags));
 }
 
 /**
@@ -1909,7 +1842,6 @@ gimp_procedure_add_text_layer_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpTextLayer auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -1921,9 +1853,9 @@ gimp_procedure_add_text_layer_aux_argument (GimpProcedure *procedure,
                                             gboolean       none_ok,
                                             GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_text_layer (name, nick, blurb,
-                                                               none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_text_layer (name, nick, blurb,
+                                                                none_ok, flags));
 }
 
 /**
@@ -1936,7 +1868,6 @@ gimp_procedure_add_text_layer_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpTextLayer return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -1948,9 +1879,9 @@ gimp_procedure_add_text_layer_return_value (GimpProcedure *procedure,
                                             gboolean       none_ok,
                                             GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_text_layer (name, nick, blurb,
-                                                               none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_text_layer (name, nick, blurb,
+                                                                none_ok, flags));
 }
 
 /**
@@ -1963,7 +1894,6 @@ gimp_procedure_add_text_layer_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChannel argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -1975,9 +1905,9 @@ gimp_procedure_add_channel_argument (GimpProcedure *procedure,
                                      gboolean       none_ok,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel (name, nick, blurb,
-                                                        none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_channel (name, nick, blurb,
+                                                         none_ok, flags));
 }
 
 /**
@@ -1990,7 +1920,6 @@ gimp_procedure_add_channel_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChannel auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2002,9 +1931,9 @@ gimp_procedure_add_channel_aux_argument (GimpProcedure *procedure,
                                          gboolean       none_ok,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_channel (name, nick, blurb,
-                                                            none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_channel (name, nick, blurb,
+                                                             none_ok, flags));
 }
 
 /**
@@ -2017,7 +1946,6 @@ gimp_procedure_add_channel_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpChannel return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2029,9 +1957,9 @@ gimp_procedure_add_channel_return_value (GimpProcedure *procedure,
                                          gboolean       none_ok,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_channel (name, nick, blurb,
-                                                            none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_channel (name, nick, blurb,
+                                                             none_ok, flags));
 }
 
 /**
@@ -2044,7 +1972,6 @@ gimp_procedure_add_channel_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayerMask argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2056,9 +1983,9 @@ gimp_procedure_add_layer_mask_argument (GimpProcedure *procedure,
                                         gboolean       none_ok,
                                         GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_mask (name, nick, blurb,
-                                                           none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_layer_mask (name, nick, blurb,
+                                                            none_ok, flags));
 }
 
 /**
@@ -2071,7 +1998,6 @@ gimp_procedure_add_layer_mask_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayerMask auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2083,9 +2009,9 @@ gimp_procedure_add_layer_mask_aux_argument (GimpProcedure *procedure,
                                             gboolean       none_ok,
                                             GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_layer_mask (name, nick, blurb,
-                                                               none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_layer_mask (name, nick, blurb,
+                                                                none_ok, flags));
 }
 
 /**
@@ -2098,7 +2024,6 @@ gimp_procedure_add_layer_mask_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpLayerMask return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2110,9 +2035,9 @@ gimp_procedure_add_layer_mask_return_value (GimpProcedure *procedure,
                                             gboolean       none_ok,
                                             GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_mask (name, nick, blurb,
-                                                               none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_layer_mask (name, nick, blurb,
+                                                                none_ok, flags));
 }
 
 /**
@@ -2125,7 +2050,6 @@ gimp_procedure_add_layer_mask_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpSelection argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2137,9 +2061,9 @@ gimp_procedure_add_selection_argument (GimpProcedure *procedure,
                                        gboolean       none_ok,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_selection (name, nick, blurb,
-                                                          none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_selection (name, nick, blurb,
+                                                           none_ok, flags));
 }
 
 /**
@@ -2152,7 +2076,6 @@ gimp_procedure_add_selection_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpSelection auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2164,9 +2087,9 @@ gimp_procedure_add_selection_aux_argument (GimpProcedure *procedure,
                                            gboolean       none_ok,
                                            GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_selection (name, nick, blurb,
-                                                              none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_selection (name, nick, blurb,
+                                                               none_ok, flags));
 }
 
 /**
@@ -2179,7 +2102,6 @@ gimp_procedure_add_selection_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpSelection return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2191,9 +2113,9 @@ gimp_procedure_add_selection_return_value (GimpProcedure *procedure,
                                            gboolean       none_ok,
                                            GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_selection (name, nick, blurb,
-                                                              none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_selection (name, nick, blurb,
+                                                               none_ok, flags));
 }
 
 /**
@@ -2206,7 +2128,6 @@ gimp_procedure_add_selection_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpVectors argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2218,9 +2139,9 @@ gimp_procedure_add_vectors_argument (GimpProcedure *procedure,
                                      gboolean       none_ok,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors (name, nick, blurb,
-                                                        none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_vectors (name, nick, blurb,
+                                                         none_ok, flags));
 }
 
 /**
@@ -2233,7 +2154,6 @@ gimp_procedure_add_vectors_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpVectors auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2245,9 +2165,9 @@ gimp_procedure_add_vectors_aux_argument (GimpProcedure *procedure,
                                          gboolean       none_ok,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_vectors (name, nick, blurb,
-                                                            none_ok, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_vectors (name, nick, blurb,
+                                                             none_ok, flags));
 }
 
 /**
@@ -2260,7 +2180,6 @@ gimp_procedure_add_vectors_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpVectors return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2272,9 +2191,9 @@ gimp_procedure_add_vectors_return_value (GimpProcedure *procedure,
                                          gboolean       none_ok,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors (name, nick, blurb,
-                                                            none_ok, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_vectors (name, nick, blurb,
+                                                             none_ok, flags));
 }
 
 /**
@@ -2286,7 +2205,6 @@ gimp_procedure_add_vectors_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GFile argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2297,9 +2215,9 @@ gimp_procedure_add_file_argument (GimpProcedure *procedure,
                                   const gchar   *blurb,
                                   GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_object (name, nick, blurb,
-                                                    G_TYPE_FILE, flags));
+  _gimp_procedure_add_argument (procedure,
+                                g_param_spec_object (name, nick, blurb,
+                                                     G_TYPE_FILE, flags));
 }
 
 /**
@@ -2311,7 +2229,6 @@ gimp_procedure_add_file_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GFile auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2322,9 +2239,9 @@ gimp_procedure_add_file_aux_argument (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   g_param_spec_object (name, nick, blurb,
-                                                        G_TYPE_FILE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    g_param_spec_object (name, nick, blurb,
+                                                         G_TYPE_FILE, flags));
 }
 
 /**
@@ -2336,7 +2253,6 @@ gimp_procedure_add_file_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GFile return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2347,9 +2263,9 @@ gimp_procedure_add_file_return_value (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_object (name, nick, blurb,
-                                                        G_TYPE_FILE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    g_param_spec_object (name, nick, blurb,
+                                                         G_TYPE_FILE, flags));
 }
 
 /**
@@ -2362,7 +2278,6 @@ gimp_procedure_add_file_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpResource argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2374,9 +2289,9 @@ gimp_procedure_add_resource_argument (GimpProcedure *procedure,
                                       gboolean       none_ok,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_resource (name, nick, blurb,
-                                                         none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_resource (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**
@@ -2388,7 +2303,6 @@ gimp_procedure_add_resource_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpResource auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2399,9 +2313,9 @@ gimp_procedure_add_resource_aux_argument (GimpProcedure *procedure,
                                           const gchar   *blurb,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_resource (name, nick, blurb,
-                                                             TRUE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_resource (name, nick, blurb,
+                                                              TRUE, flags));
 }
 
 /**
@@ -2413,7 +2327,6 @@ gimp_procedure_add_resource_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpResource return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2424,9 +2337,9 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
                                           const gchar   *blurb,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_resource (name, nick, blurb,
-                                                             TRUE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_resource (name, nick, blurb,
+                                                              TRUE, flags));
 }
 
 /**
@@ -2439,7 +2352,6 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpBrush argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2451,9 +2363,9 @@ gimp_procedure_add_brush_argument (GimpProcedure *procedure,
                                    gboolean       none_ok,
                                    GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_brush (name, nick, blurb,
-                                                      none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_brush (name, nick, blurb,
+                                                       none_ok, flags));
 }
 
 /**
@@ -2465,7 +2377,6 @@ gimp_procedure_add_brush_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpBrush auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2476,9 +2387,9 @@ gimp_procedure_add_brush_aux_argument (GimpProcedure *procedure,
                                        const gchar   *blurb,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_brush (name, nick, blurb,
-                                                          TRUE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_brush (name, nick, blurb,
+                                                           TRUE, flags));
 }
 
 /**
@@ -2490,7 +2401,6 @@ gimp_procedure_add_brush_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpBrush return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2501,9 +2411,9 @@ gimp_procedure_add_brush_return_value (GimpProcedure *procedure,
                                        const gchar   *blurb,
                                        GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_brush (name, nick, blurb,
-                                                          TRUE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_brush (name, nick, blurb,
+                                                           TRUE, flags));
 }
 
 /**
@@ -2516,7 +2426,6 @@ gimp_procedure_add_brush_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpFont argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2528,9 +2437,9 @@ gimp_procedure_add_font_argument (GimpProcedure *procedure,
                                   gboolean       none_ok,
                                   GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_font (name, nick, blurb,
-                                                     none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_font (name, nick, blurb,
+                                                      none_ok, flags));
 }
 
 /**
@@ -2542,7 +2451,6 @@ gimp_procedure_add_font_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpFont auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2553,9 +2461,9 @@ gimp_procedure_add_font_aux_argument (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_font (name, nick, blurb,
-                                                         TRUE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_font (name, nick, blurb,
+                                                          TRUE, flags));
 }
 
 /**
@@ -2567,7 +2475,6 @@ gimp_procedure_add_font_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpFont return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2578,9 +2485,9 @@ gimp_procedure_add_font_return_value (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_font (name, nick, blurb,
-                                                         TRUE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_font (name, nick, blurb,
+                                                          TRUE, flags));
 }
 
 /**
@@ -2593,7 +2500,6 @@ gimp_procedure_add_font_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpGradient argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2605,9 +2511,9 @@ gimp_procedure_add_gradient_argument (GimpProcedure *procedure,
                                       gboolean       none_ok,
                                       GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_gradient (name, nick, blurb,
-                                                         none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_gradient (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**
@@ -2619,7 +2525,6 @@ gimp_procedure_add_gradient_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpGradient auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2630,9 +2535,9 @@ gimp_procedure_add_gradient_aux_argument (GimpProcedure *procedure,
                                           const gchar   *blurb,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_gradient (name, nick, blurb,
-                                                             TRUE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_gradient (name, nick, blurb,
+                                                              TRUE, flags));
 }
 
 /**
@@ -2644,7 +2549,6 @@ gimp_procedure_add_gradient_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpGradient return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2655,9 +2559,9 @@ gimp_procedure_add_gradient_return_value (GimpProcedure *procedure,
                                           const gchar   *blurb,
                                           GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_gradient (name, nick, blurb,
-                                                             TRUE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_gradient (name, nick, blurb,
+                                                              TRUE, flags));
 }
 
 /**
@@ -2670,7 +2574,6 @@ gimp_procedure_add_gradient_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPalette argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2682,9 +2585,9 @@ gimp_procedure_add_palette_argument (GimpProcedure *procedure,
                                      gboolean       none_ok,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_palette (name, nick, blurb,
-                                                        none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_palette (name, nick, blurb,
+                                                         none_ok, flags));
 }
 
 /**
@@ -2696,7 +2599,6 @@ gimp_procedure_add_palette_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPalette auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2707,9 +2609,9 @@ gimp_procedure_add_palette_aux_argument (GimpProcedure *procedure,
                                          const gchar   *blurb,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_palette (name, nick, blurb,
-                                                            TRUE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_palette (name, nick, blurb,
+                                                             TRUE, flags));
 }
 
 /**
@@ -2721,7 +2623,6 @@ gimp_procedure_add_palette_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPalette return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2732,9 +2633,9 @@ gimp_procedure_add_palette_return_value (GimpProcedure *procedure,
                                          const gchar   *blurb,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_palette (name, nick, blurb,
-                                                            TRUE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_palette (name, nick, blurb,
+                                                             TRUE, flags));
 }
 
 /**
@@ -2747,7 +2648,6 @@ gimp_procedure_add_palette_return_value (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_argument].
  *
  * Since: 3.0
  **/
@@ -2759,9 +2659,9 @@ gimp_procedure_add_pattern_argument (GimpProcedure *procedure,
                                      gboolean       none_ok,
                                      GParamFlags    flags)
 {
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_pattern (name, nick, blurb,
-                                                        none_ok, flags));
+  _gimp_procedure_add_argument (procedure,
+                                gimp_param_spec_pattern (name, nick, blurb,
+                                                         none_ok, flags));
 }
 
 /**
@@ -2773,7 +2673,6 @@ gimp_procedure_add_pattern_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern auxiliary argument to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_aux_argument].
  *
  * Since: 3.0
  **/
@@ -2784,9 +2683,9 @@ gimp_procedure_add_pattern_aux_argument (GimpProcedure *procedure,
                                          const gchar   *blurb,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_aux_argument (procedure,
-                                   gimp_param_spec_pattern (name, nick, blurb,
-                                                            TRUE, flags));
+  _gimp_procedure_add_aux_argument (procedure,
+                                    gimp_param_spec_pattern (name, nick, blurb,
+                                                             TRUE, flags));
 }
 
 /**
@@ -2798,7 +2697,6 @@ gimp_procedure_add_pattern_aux_argument (GimpProcedure *procedure,
  * @flags:       argument flags.
  *
  * Add a new #GimpPattern return value to @procedure.
- * This function is a utility wrapper over the generic [method@Procedure.add_return_value].
  *
  * Since: 3.0
  **/
@@ -2809,7 +2707,7 @@ gimp_procedure_add_pattern_return_value (GimpProcedure *procedure,
                                          const gchar   *blurb,
                                          GParamFlags    flags)
 {
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_pattern (name, nick, blurb,
-                                                            TRUE, flags));
+  _gimp_procedure_add_return_value (procedure,
+                                    gimp_param_spec_pattern (name, nick, blurb,
+                                                             TRUE, flags));
 }

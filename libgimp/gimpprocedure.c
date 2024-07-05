@@ -1278,13 +1278,12 @@ gimp_procedure_get_date (GimpProcedure *procedure)
 }
 
 /**
- * gimp_procedure_add_argument:
+ * _gimp_procedure_add_argument:
  * @procedure: the #GimpProcedure.
  * @pspec:     (transfer floating): the argument specification.
  *
  * Add a new argument to @procedure according to @pspec specifications.
- * The arguments will be ordered according to the call order to
- * [method@Procedure.add_argument].
+ * The arguments will be ordered according to the calls order.
  *
  * If @pspec is floating, ownership will be taken over by @procedure,
  * allowing to pass directly `g*_param_spec_*()` calls as arguments.
@@ -1294,8 +1293,8 @@ gimp_procedure_get_date (GimpProcedure *procedure)
  * Since: 3.0
  **/
 GParamSpec *
-gimp_procedure_add_argument (GimpProcedure *procedure,
-                             GParamSpec    *pspec)
+_gimp_procedure_add_argument (GimpProcedure *procedure,
+                              GParamSpec    *pspec)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), NULL);
@@ -1333,7 +1332,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_aux_argument:
+ * _gimp_procedure_add_aux_argument:
  * @procedure: the #GimpProcedure.
  * @pspec:     (transfer full): the argument specification.
  *
@@ -1351,8 +1350,8 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
  * Since: 3.0
  **/
 GParamSpec *
-gimp_procedure_add_aux_argument (GimpProcedure *procedure,
-                                 GParamSpec    *pspec)
+_gimp_procedure_add_aux_argument (GimpProcedure *procedure,
+                                  GParamSpec    *pspec)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), pspec);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), pspec);
@@ -1388,23 +1387,22 @@ gimp_procedure_add_aux_argument (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_return_value:
+ * _gimp_procedure_add_return_value:
  * @procedure: the #GimpProcedure.
  * @pspec:     (transfer full): the return value specification.
  *
  * Add a new return value to @procedure according to @pspec
  * specifications.
  *
- * The returned values will be ordered according to the call order to
- * [method@Procedure.add_return_value].
+ * The returned values will be ordered according to the calls order.
  *
  * Returns: (transfer none): the same @pspec.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_procedure_add_return_value (GimpProcedure *procedure,
-                                 GParamSpec    *pspec)
+_gimp_procedure_add_return_value (GimpProcedure *procedure,
+                                  GParamSpec    *pspec)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), pspec);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), pspec);
@@ -1522,8 +1520,7 @@ gimp_procedure_find_return_value (GimpProcedure *procedure,
  * @n_arguments: (out): Returns the number of arguments.
  *
  * Returns: (transfer none) (array length=n_arguments): An array
- *          of @GParamSpec in the order added with
- *          [method@Procedure.add_argument].
+ *          of @GParamSpec in the order they were added in.
  *
  * Since: 3.0
  **/
@@ -1545,8 +1542,7 @@ gimp_procedure_get_arguments (GimpProcedure *procedure,
  * @n_arguments: (out): Returns the number of auxiliary arguments.
  *
  * Returns: (transfer none) (array length=n_arguments): An array
- *          of @GParamSpec in the order added with
- *          gimp_procedure_add_aux_argument().
+ *          of @GParamSpec in the order they were added in.
  *
  * Since: 3.0
  **/
@@ -1568,8 +1564,7 @@ gimp_procedure_get_aux_arguments (GimpProcedure *procedure,
  * @n_return_values: (out): Returns the number of return values.
  *
  * Returns: (transfer none) (array length=n_return_values): An array
- *          of @GParamSpec in the order added with
- *          [method@Procedure.add_return_value].
+ *          of @GParamSpec in the order they were added in.
  *
  * Since: 3.0
  **/
@@ -1680,8 +1675,7 @@ gimp_procedure_get_argument_sync (GimpProcedure *procedure,
  *             @status is either #GIMP_PDB_EXECUTION_ERROR or
  *             #GIMP_PDB_CALLING_ERROR.
  *
- * Format the expected return values from procedures, using the return
- * values set with [method@Procedure.add_return_value].
+ * Format the expected return values from procedures.
  *
  * Returns: (transfer full): the expected #GimpValueArray as could be returned
  * by a [callback@RunFunc].

@@ -18,25 +18,26 @@
 #ifndef __SCRIPT_FU_ARG_H__
 #define __SCRIPT_FU_ARG_H__
 
-void        script_fu_arg_free                    (SFArg    *arg);
-void        script_fu_arg_reset                   (SFArg    *arg,
-                                                   gboolean should_reset_ids);
+void        script_fu_arg_free                    (SFArg         *arg);
+void        script_fu_arg_reset                   (SFArg         *arg,
+                                                   gboolean       should_reset_ids);
 
-GParamSpec *script_fu_arg_get_param_spec          (SFArg       *arg,
-                                                   const gchar *name,
-                                                   const gchar *nick);
-void        script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
-                                                   GString     *result_string,
-                                                   GValue      *gvalue);
-void        script_fu_arg_append_repr_from_self   (SFArg       *arg,
-                                                   GString     *result_string);
+void        script_fu_arg_add_argument            (SFArg         *arg,
+                                                   GimpProcedure *procedure,
+                                                   const gchar   *name,
+                                                   const gchar   *nick);
+void        script_fu_arg_append_repr_from_gvalue (SFArg         *arg,
+                                                   GString       *result_string,
+                                                   GValue        *gvalue);
+void        script_fu_arg_append_repr_from_self   (SFArg         *arg,
+                                                   GString       *result_string);
 
 void        script_fu_arg_reset_name_generator    (void);
-void        script_fu_arg_generate_name_and_nick  (SFArg        *arg,
-                                                   const gchar **name,
-                                                   const gchar **nick);
+void        script_fu_arg_generate_name_and_nick  (SFArg         *arg,
+                                                   const gchar  **name,
+                                                   const gchar  **nick);
 
-void        script_fu_arg_init_resource           (SFArg *arg,
-                                                   GType resource_type);
+void        script_fu_arg_init_resource           (SFArg         *arg,
+                                                   GType          resource_type);
 
 #endif /*  __SCRIPT_FU_ARG__  */

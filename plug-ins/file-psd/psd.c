@@ -286,14 +286,12 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_int_argument (procedure, "size",
                                        "Metadata size",
                                        NULL,
-                                      0, G_MAXINT, 0,
+                                       0, G_MAXINT, 0,
                                        G_PARAM_READWRITE);
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image ("image",
-                                                          "image",
-                                                          "The image",
-                                                          FALSE,
-                                                          GIMP_PARAM_READWRITE));
+      gimp_procedure_add_image_argument (procedure, "image",
+                                         "image", "The image",
+                                         FALSE,
+                                         GIMP_PARAM_READWRITE);
       gimp_procedure_add_boolean_argument (procedure, "metadata-type",
                                            "Metadata type",
                                            "If the metadata contains image or "

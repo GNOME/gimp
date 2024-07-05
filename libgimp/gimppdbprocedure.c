@@ -229,14 +229,14 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
     {
       GParamSpec *pspec = _gimp_pdb_get_proc_argument (name, i);
 
-      gimp_procedure_add_argument (procedure, pspec);
+      _gimp_procedure_add_argument (procedure, pspec);
     }
 
   for (i = 0; i < n_return_vals; i++)
     {
       GParamSpec *pspec = _gimp_pdb_get_proc_return_value (name, i);
 
-      gimp_procedure_add_return_value (procedure, pspec);
+      _gimp_procedure_add_return_value (procedure, pspec);
     }
 
   if (type != GIMP_PDB_PROC_TYPE_INTERNAL)

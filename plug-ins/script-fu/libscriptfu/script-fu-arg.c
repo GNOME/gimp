@@ -239,80 +239,73 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
  * this should convey what SFArg denotes about desired widget kind,
  * but it doesn't fully do that yet.
  */
-GParamSpec *
-script_fu_arg_get_param_spec (SFArg       *arg,
-                              const gchar *name,
-                              const gchar *nick)
+void
+script_fu_arg_add_argument (SFArg         *arg,
+                            GimpProcedure *procedure,
+                            const gchar   *name,
+                            const gchar   *nick)
 {
-  GParamSpec * pspec = NULL;
-
   switch (arg->type)
     {
       /* No defaults for GIMP objects: Image, Item subclasses, Display */
     case SF_IMAGE:
-      pspec = gimp_param_spec_image (name,
-                                     nick,
-                                     arg->label,
-                                     TRUE,  /* None is valid. */
-                                     G_PARAM_READWRITE);
+      gimp_procedure_add_image_argument (procedure, name,
+                                         nick, arg->label,
+                                         TRUE,  /* None is valid. */
+                                         G_PARAM_READWRITE);
       break;
 
     case SF_DRAWABLE:
-      pspec = gimp_param_spec_drawable (name,
-                                        nick,
-                                        arg->label,
-                                        TRUE,
-                                        G_PARAM_READWRITE);
+      gimp_procedure_add_drawable_argument (procedure, name,
+                                            nick, arg->label,
+                                            TRUE,
+                                            G_PARAM_READWRITE);
       break;
 
     case SF_LAYER:
-      pspec = gimp_param_spec_layer (name,
-                                     nick,
-                                     arg->label,
-                                     TRUE,
-                                     G_PARAM_READWRITE);
+      gimp_procedure_add_layer_argument (procedure, name,
+                                         nick, arg->label,
+                                         TRUE,
+                                         G_PARAM_READWRITE);
       break;
 
     case SF_CHANNEL:
-      pspec = gimp_param_spec_channel (name,
-                                       nick,
-                                       arg->label,
-                                       TRUE,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_channel_argument (procedure, name,
+                                           nick, arg->label,
+                                           TRUE,
+                                           G_PARAM_READWRITE);
       break;
 
     case SF_VECTORS:
-      pspec = gimp_param_spec_vectors (name,
-                                       nick,
-                                       arg->label,
-                                       TRUE,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_vectors_argument (procedure, name,
+                                           nick, arg->label,
+                                           TRUE,
+                                           G_PARAM_READWRITE);
       break;
 
     case SF_DISPLAY:
-      pspec = gimp_param_spec_display (name,
-                                       nick,
-                                       arg->label,
-                                       TRUE,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_display_argument (procedure, name,
+                                           nick, arg->label,
+                                           TRUE,
+                                           G_PARAM_READWRITE);
       break;
 
     case SF_COLOR:
       {
         GeglColor *color = sf_color_arg_get_default_color (arg);
 
-        pspec = gimp_param_spec_color (name, nick, arg->label, TRUE, color, G_PARAM_READWRITE);
+        gimp_procedure_add_color_argument (procedure, name, nick, arg->label, TRUE,
+                                           color, G_PARAM_READWRITE);
         g_object_unref (color);
       }
       break;
 
     case SF_TOGGLE:
       /* Implicit conversion from gint32 to gboolean. */
-      pspec = g_param_spec_boolean (name,
-                                    nick,
-                                    arg->label,
-                                    arg->default_value.sfa_toggle,
-                                    G_PARAM_READWRITE);
+      gimp_procedure_add_boolean_argument (procedure, name,
+                                           nick, arg->label,
+                                           arg->default_value.sfa_toggle,
+                                           G_PARAM_READWRITE);
       break;
 
     /* FUTURE special widgets for multiline text.
@@ -321,11 +314,10 @@ script_fu_arg_get_param_spec (SFArg       *arg,
     case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
-      pspec = g_param_spec_string (name,
-                                   nick,
-                                   arg->label,
-                                   arg->default_value.sfa_value,
-                                   G_PARAM_READWRITE);
+      gimp_procedure_add_string_argument (procedure, name,
+                                          nick, arg->label,
+                                          arg->default_value.sfa_value,
+                                          G_PARAM_READWRITE);
       break;
 
     /* Subclasses of GimpResource.  Special widgets. */
@@ -335,42 +327,37 @@ script_fu_arg_get_param_spec (SFArg       *arg,
      * each should pass arg sf_resource_get_name_of_default (arg).
      */
     case SF_FONT:
-      pspec = gimp_param_spec_font (name,
-                                    nick,
-                                    arg->label,
-                                    FALSE,  /* none OK */
-                                    G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
-      break;
-    case SF_PALETTE:
-      pspec = gimp_param_spec_palette (name,
-                                       nick,
-                                       arg->label,
-                                       FALSE,  /* none OK */
-                                       G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
-      break;
-
-    case SF_PATTERN:
-      pspec = gimp_param_spec_pattern (name,
-                                       nick,
-                                       arg->label,
-                                       FALSE,  /* none OK */
-                                       G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
-      break;
-
-    case SF_GRADIENT:
-      pspec = gimp_param_spec_gradient (name,
-                                        nick,
-                                        arg->label,
+      gimp_procedure_add_font_argument (procedure, name,
+                                        nick, arg->label,
                                         FALSE,  /* none OK */
                                         G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
+    case SF_PALETTE:
+      gimp_procedure_add_palette_argument (procedure, name,
+                                           nick, arg->label,
+                                           FALSE,  /* none OK */
+                                           G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
+
+    case SF_PATTERN:
+      gimp_procedure_add_pattern_argument (procedure, name,
+                                           nick, arg->label,
+                                           FALSE,  /* none OK */
+                                           G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
+
+    case SF_GRADIENT:
+      gimp_procedure_add_gradient_argument (procedure, name,
+                                            nick, arg->label,
+                                            FALSE,  /* none OK */
+                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
 
     case SF_BRUSH:
-      pspec = gimp_param_spec_brush (name,
-                                     nick,
-                                     arg->label,
-                                     FALSE,  /* none OK */
-                                     G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      gimp_procedure_add_brush_argument (procedure, name,
+                                         nick, arg->label,
+                                         FALSE,  /* none OK */
+                                         G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
     case SF_ADJUSTMENT:
@@ -379,29 +366,32 @@ script_fu_arg_get_param_spec (SFArg       *arg,
        * Decimal places == 0 means type integer, else float
        */
       if (arg->default_value.sfa_adjustment.digits == 0)
-        pspec = g_param_spec_int (name, nick, arg->label,
-                                  arg->default_value.sfa_adjustment.lower,
-                                  arg->default_value.sfa_adjustment.upper,
-                                  arg->default_value.sfa_adjustment.value,
-                                  G_PARAM_READWRITE);
+        gimp_procedure_add_int_argument (procedure, name, nick, arg->label,
+                                         arg->default_value.sfa_adjustment.lower,
+                                         arg->default_value.sfa_adjustment.upper,
+                                         arg->default_value.sfa_adjustment.value,
+                                         G_PARAM_READWRITE);
       else
-        pspec = g_param_spec_double (name, nick, arg->label,
-                                     arg->default_value.sfa_adjustment.lower,
-                                     arg->default_value.sfa_adjustment.upper,
-                                     arg->default_value.sfa_adjustment.value,
-                                     G_PARAM_READWRITE);
+        gimp_procedure_add_double_argument (procedure, name, nick, arg->label,
+                                            arg->default_value.sfa_adjustment.lower,
+                                            arg->default_value.sfa_adjustment.upper,
+                                            arg->default_value.sfa_adjustment.value,
+                                            G_PARAM_READWRITE);
       break;
 
     case SF_FILENAME:
     case SF_DIRNAME:
-      pspec = g_param_spec_object (name,
-                                   nick,
-                                   arg->label,
-                                   G_TYPE_FILE,
-                                   G_PARAM_READWRITE |
-                                   GIMP_PARAM_NO_VALIDATE);
-      pspec_set_default_file (pspec, arg->default_value.sfa_file.filename);
-      /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
+        {
+          GParamSpec *pspec = NULL;
+
+          gimp_procedure_add_file_argument (procedure, name,
+                                            nick, arg->label,
+                                            G_PARAM_READWRITE |
+                                            GIMP_PARAM_NO_VALIDATE);
+          pspec = gimp_procedure_find_argument (procedure, name);
+          pspec_set_default_file (pspec, arg->default_value.sfa_file.filename);
+          /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
+        }
       break;
 
       /* Not necessary to have a more specific pspec:
@@ -410,28 +400,24 @@ script_fu_arg_get_param_spec (SFArg       *arg,
 
     case SF_ENUM:
       /* history is the last used value AND the default. */
-      pspec = g_param_spec_enum (name,
-                                 nick,
-                                 arg->label,
-                                 g_type_from_name (arg->default_value.sfa_enum.type_name),
-                                 arg->default_value.sfa_enum.history,
-                                 G_PARAM_READWRITE);
+      gimp_procedure_add_enum_argument (procedure, name,
+                                        nick, arg->label,
+                                        g_type_from_name (arg->default_value.sfa_enum.type_name),
+                                        arg->default_value.sfa_enum.history,
+                                        G_PARAM_READWRITE);
       break;
 
     case SF_OPTION:
-      pspec = g_param_spec_int (name,
-                                nick,
-                                arg->label,
-                                0,        /* Always zero based. */
-                                g_slist_length (arg->default_value.sfa_option.list) - 1,
-                                arg->default_value.sfa_option.history,
-                                G_PARAM_READWRITE);
+      gimp_procedure_add_int_argument (procedure, name,
+                                       nick, arg->label,
+                                       0,        /* Always zero based. */
+                                       g_slist_length (arg->default_value.sfa_option.list) - 1,
+                                       arg->default_value.sfa_option.history,
+                                       G_PARAM_READWRITE);
       /* FUTURE: Model values not now appear in PDB browser NOR in widgets? */
       /* FUTURE: Does not show a combo box widget ??? */
       break;
     }
-
-  return pspec;
 }
 
 
