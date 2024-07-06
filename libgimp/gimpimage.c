@@ -186,7 +186,7 @@ gimp_image_is_valid (GimpImage *image)
 }
 
 /**
- * gimp_list_images:
+ * gimp_list_images: (skip)
  *
  * Returns the list of images currently open.
  *
@@ -218,7 +218,7 @@ gimp_list_images (void)
 }
 
 /**
- * gimp_image_list_layers:
+ * gimp_image_list_layers: (skip)
  * @image: The image.
  *
  * Returns the list of layers contained in the specified image.
@@ -252,7 +252,7 @@ gimp_image_list_layers (GimpImage *image)
 }
 
 /**
- * gimp_image_list_selected_layers:
+ * gimp_image_list_selected_layers: (skip)
  * @image: The image.
  *
  * Returns the list of layers selected in the specified image.
@@ -321,7 +321,7 @@ gimp_image_take_selected_layers (GimpImage *image,
 }
 
 /**
- * gimp_image_list_selected_channels:
+ * gimp_image_list_selected_channels: (skip)
  * @image: The image.
  *
  * Returns the list of channels selected in the specified image.
@@ -389,7 +389,7 @@ gimp_image_take_selected_channels (GimpImage *image,
 }
 
 /**
- * gimp_image_list_selected_vectors:
+ * gimp_image_list_selected_vectors: (skip)
  * @image: The image.
  *
  * Returns the list of paths selected in the specified image.
@@ -455,7 +455,7 @@ gimp_image_take_selected_vectors (GimpImage *image,
 }
 
 /**
- * gimp_image_list_channels:
+ * gimp_image_list_channels: (skip)
  * @image: The image.
  *
  * Returns the list of channels contained in the specified image.
@@ -492,7 +492,7 @@ gimp_image_list_channels (GimpImage *image)
 }
 
 /**
- * gimp_image_list_vectors:
+ * gimp_image_list_vectors: (skip)
  * @image: The image.
  *
  * Returns the list of vectors contained in the specified image.
@@ -526,7 +526,7 @@ gimp_image_list_vectors (GimpImage *image)
 }
 
 /**
- * gimp_image_list_selected_drawables:
+ * gimp_image_list_selected_drawables: (skip)
  * @image: The image.
  *
  * Returns the list of drawables selected in the specified image.

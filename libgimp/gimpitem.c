@@ -330,7 +330,7 @@ gimp_item_is_vectors (GimpItem *item)
 }
 
 /**
- * gimp_item_list_children:
+ * gimp_item_list_children: (skip)
  * @item: The item.
  *
  * Returns the item's list of children.
