@@ -35,7 +35,7 @@ def export_relative_img(scale):
     sys.exit(os.EX_SOFTWARE)
 
   tmp_image = v.index(1)
-  drawables = tmp_image.list_selected_drawables()
+  drawables = tmp_image.get_selected_drawables()
   layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
   image.insert_layer(layer2, None, 0)
   layer2.set_offsets(0, (size - wilber_size) * 5 / 6)
@@ -47,7 +47,7 @@ def export_relative_img(scale):
   if scale == 100:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
-    drawables = image.list_selected_drawables()
+    drawables = image.get_selected_drawables()
     # Needed otherwise it doesn't save the proper size because of bug #8855.
     drawables[0].resize_to_image_size()
     config.set_property("image", image)
@@ -56,7 +56,7 @@ def export_relative_img(scale):
 
   procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
   config    = procedure.create_config()
-  drawables = image.list_selected_drawables()
+  drawables = image.get_selected_drawables()
   # Needed otherwise it doesn't save the proper size because of bug #8855.
   drawables[0].resize_to_image_size()
   config.set_property("image", image)
@@ -92,7 +92,7 @@ def export_absolute_img(size):
     sys.exit(os.EX_SOFTWARE)
 
   tmp_image = v.index(1)
-  drawables = tmp_image.list_selected_drawables()
+  drawables = tmp_image.get_selected_drawables()
   layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
   image.insert_layer(layer2, None, 0)
   layer2.set_offsets(0, (size - wilber_size) * 5 / 6)
@@ -104,7 +104,7 @@ def export_absolute_img(size):
   if size == 44:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
-    drawables = image.list_selected_drawables()
+    drawables = image.get_selected_drawables()
     # Needed otherwise it doesn't save the proper size because of bug #8855.
     drawables[0].resize_to_image_size()
     config.set_property("image", image)
@@ -114,7 +114,7 @@ def export_absolute_img(size):
   else:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
-    drawables = image.list_selected_drawables()
+    drawables = image.get_selected_drawables()
     # Needed otherwise it doesn't save the proper size because of bug #8855.
     drawables[0].resize_to_image_size()
     config.set_property("image", image)

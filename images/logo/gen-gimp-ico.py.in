@@ -37,14 +37,14 @@ for size in sizes:
     sys.exit(os.EX_SOFTWARE)
 
   tmp_image = v.index(1)
-  drawables = tmp_image.list_selected_drawables()
+  drawables = tmp_image.get_selected_drawables()
   layer = Gimp.Layer.new_from_drawable (drawables[0], image)
   image.insert_layer(layer, None, 0)
   tmp_image.delete()
 
 procedure = Gimp.get_pdb().lookup_procedure("file-ico-export")
 config    = procedure.create_config()
-drawables = image.list_selected_drawables()
+drawables = image.get_selected_drawables()
 config.set_property("image", image)
 config.set_property("num-drawables", len(drawables))
 config.set_property("drawables", Gimp.ObjectArray.new(Gimp.Drawable, drawables, False))

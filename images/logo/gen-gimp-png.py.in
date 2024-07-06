@@ -39,7 +39,7 @@ def export_relative_img(scale):
   if scale == 100:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
-    drawables = image.list_selected_drawables()
+    drawables = image.get_selected_drawables()
     # Needed otherwise it doesn't save the proper size because of bug #8855.
     drawables[0].resize_to_image_size()
     config.set_property("image", image)
@@ -49,7 +49,7 @@ def export_relative_img(scale):
 
   procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
   config    = procedure.create_config()
-  drawables = image.list_selected_drawables()
+  drawables = image.get_selected_drawables()
   # Needed otherwise it doesn't save the proper size because of bug #8855.
   drawables[0].resize_to_image_size()
   config.set_property("image", image)
@@ -75,7 +75,7 @@ def export_absolute_img(size):
   if size == 44:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
-    drawables = image.list_selected_drawables()
+    drawables = image.get_selected_drawables()
     # Needed otherwise it doesn't save the proper size because of bug #8855.
     drawables[0].resize_to_image_size()
     config.set_property("image", image)
@@ -86,7 +86,7 @@ def export_absolute_img(size):
   else:
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
-    drawables = image.list_selected_drawables()
+    drawables = image.get_selected_drawables()
     # Needed otherwise it doesn't save the proper size because of bug #8855.
     drawables[0].resize_to_image_size()
     config.set_property("image", image)
@@ -97,7 +97,7 @@ def export_absolute_img(size):
     if '@PLATE_FIX@' =='yes':
       procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
       config    = procedure.create_config()
-      drawables = image.list_selected_drawables()
+      drawables = image.get_selected_drawables()
       # Needed otherwise it doesn't save the proper size because of bug #8855.
       drawables[0].resize_to_image_size()
       config.set_property("image", image)
@@ -107,7 +107,7 @@ def export_absolute_img(size):
 
       procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
       config    = procedure.create_config()
-      drawables = image.list_selected_drawables()
+      drawables = image.get_selected_drawables()
       # Needed otherwise it doesn't save the proper size because of bug #8855.
       drawables[0].resize_to_image_size()
       config.set_property("image", image)

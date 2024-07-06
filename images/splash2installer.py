@@ -2,7 +2,7 @@ import pathlib
 import os
 import sys
 
-image     = Gimp.list_images()[0]
+image     = Gimp.get_images()[0]
 procedure = Gimp.get_pdb().lookup_procedure("file-bmp-export")
 if procedure is None:
   sys.exit(os.EX_OK)
@@ -28,7 +28,7 @@ def export_scaled_img(image, target_width, target_height, export_path):
   # XXX: should we rather use the average color as border?
   black = Gegl.Color.new("black")
   Gimp.context_set_background(black)
-  drawables = img.list_selected_drawables()
+  drawables = img.get_selected_drawables()
   for d in drawables:
     d.resize_to_image_size()
 
@@ -48,7 +48,7 @@ def export_cropped_img(image, target_width, target_height, export_path):
   new_width = target_height / h * w
   img.scale(new_width, target_height)
   img.resize(new_width, target_height, 0, 0)
-  drawables = img.list_selected_drawables()
+  drawables = img.get_selected_drawables()
   for d in drawables:
     d.resize_to_image_size()
   offx      = new_width * 0.6

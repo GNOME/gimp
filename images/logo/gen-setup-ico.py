@@ -39,7 +39,7 @@ for size in sizes:
     sys.exit(os.EX_SOFTWARE)
 
   tmp_image = v.index(1)
-  drawables = tmp_image.list_selected_drawables()
+  drawables = tmp_image.get_selected_drawables()
   layer1 = Gimp.Layer.new_from_drawable (drawables[0], image)
   image.insert_layer(layer1, None, 0)
   tmp_image.delete()
@@ -57,7 +57,7 @@ for size in sizes:
     sys.exit(os.EX_SOFTWARE)
 
   tmp_image = v.index(1)
-  drawables = tmp_image.list_selected_drawables()
+  drawables = tmp_image.get_selected_drawables()
   layer2 = Gimp.Layer.new_from_drawable (drawables[0], image)
   image.insert_layer(layer2, None, 0)
   layer2.set_offsets((size - wilber_size) * 0.4, (size - wilber_size) * -0.4)
@@ -79,7 +79,7 @@ for size in sizes:
     sys.exit(os.EX_SOFTWARE)
 
   tmp_image = v.index(1)
-  drawables = tmp_image.list_selected_drawables()
+  drawables = tmp_image.get_selected_drawables()
   layer3 = Gimp.Layer.new_from_drawable (drawables[0], image)
   image.insert_layer(layer3, None, 0)
   tmp_image.delete()
@@ -89,7 +89,7 @@ for size in sizes:
 
 procedure = Gimp.get_pdb().lookup_procedure("file-ico-export")
 config    = procedure.create_config()
-drawables = image.list_selected_drawables()
+drawables = image.get_selected_drawables()
 config.set_property("image", image)
 config.set_property("file", Gio.file_new_for_path(output_path))
 Gimp.Procedure.run(procedure, config)
