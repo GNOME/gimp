@@ -491,28 +491,6 @@ g_param_spec_int ("$name",
                   $flags)
 CODE
     }
-    elsif ($pdbtype eq 'uchar') {
-	if (defined $typeinfo[0]) {
-	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
-	}
-	else {
-	    $min = 0;
-	}
-	if (defined $typeinfo[2]) {
-	    $max = ($typeinfo[3] eq '<') ? ($typeinfo[2] - 1) : $typeinfo[2];
-	}
-	else {
-	    $max = G_MAXUINT8;
-	}
-	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
-	$pspec = <<CODE;
-g_param_spec_uchar ("$name",
-                    "$nick",
-                    "$blurb",
-                    $min, $max, $default,
-                    $flags)
-CODE
-    }
     elsif ($pdbtype eq 'boolean') {
 	$default = exists $arg->{default} ? $arg->{default} : FALSE;
 	$pspec = <<CODE;

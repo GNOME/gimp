@@ -1768,26 +1768,26 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  guchar from_red;
-  guchar from_green;
-  guchar from_blue;
-  guchar to_red;
-  guchar to_green;
-  guchar to_blue;
-  guchar red_threshold;
-  guchar green_threshold;
-  guchar blue_threshold;
+  gdouble from_red;
+  gdouble from_green;
+  gdouble from_blue;
+  gdouble to_red;
+  gdouble to_green;
+  gdouble to_blue;
+  gdouble red_threshold;
+  gdouble green_threshold;
+  gdouble blue_threshold;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  from_red = g_value_get_uchar (gimp_value_array_index (args, 3));
-  from_green = g_value_get_uchar (gimp_value_array_index (args, 4));
-  from_blue = g_value_get_uchar (gimp_value_array_index (args, 5));
-  to_red = g_value_get_uchar (gimp_value_array_index (args, 6));
-  to_green = g_value_get_uchar (gimp_value_array_index (args, 7));
-  to_blue = g_value_get_uchar (gimp_value_array_index (args, 8));
-  red_threshold = g_value_get_uchar (gimp_value_array_index (args, 9));
-  green_threshold = g_value_get_uchar (gimp_value_array_index (args, 10));
-  blue_threshold = g_value_get_uchar (gimp_value_array_index (args, 11));
+  from_red = g_value_get_double (gimp_value_array_index (args, 3));
+  from_green = g_value_get_double (gimp_value_array_index (args, 4));
+  from_blue = g_value_get_double (gimp_value_array_index (args, 5));
+  to_red = g_value_get_double (gimp_value_array_index (args, 6));
+  to_green = g_value_get_double (gimp_value_array_index (args, 7));
+  to_blue = g_value_get_double (gimp_value_array_index (args, 8));
+  red_threshold = g_value_get_double (gimp_value_array_index (args, 9));
+  green_threshold = g_value_get_double (gimp_value_array_index (args, 10));
+  blue_threshold = g_value_get_double (gimp_value_array_index (args, 11));
 
   if (success)
     {
@@ -1799,18 +1799,18 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
           GeglColor *gegl_to = gegl_color_new (NULL);
           GeglNode  *node;
 
-          gegl_color_set_rgba (gegl_from, from_red / 255.0, from_green / 255.0,
-                               from_blue / 255.0, 1.0);
-          gegl_color_set_rgba (gegl_to, to_red / 255.0, to_green / 255.0,
-                               to_blue / 255.0, 1.0);
+          gegl_color_set_rgba (gegl_from, from_red, from_green,
+                               from_blue, 1.0);
+          gegl_color_set_rgba (gegl_to, to_red, to_green,
+                               to_blue, 1.0);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:color-exchange",
                                       "from-color",      gegl_from,
                                       "to-color",        gegl_to,
-                                      "red-threshold",   red_threshold   / 255.0,
-                                      "green-threshold", green_threshold / 255.0,
-                                      "blue-threshold",  blue_threshold  / 255.0,
+                                      "red-threshold",   red_threshold,
+                                      "green-threshold", green_threshold,
+                                      "blue-threshold",  blue_threshold,
                                       NULL);
 
           g_object_unref (gegl_from);
@@ -6328,59 +6328,59 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("from-red",
-                                                   "from red",
-                                                   "Red value (from)",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("from-red",
+                                                    "from red",
+                                                    "Red value (from)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("from-green",
-                                                   "from green",
-                                                   "Green value (from)",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("from-green",
+                                                    "from green",
+                                                    "Green value (from)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("from-blue",
-                                                   "from blue",
-                                                   "Blue value (from)",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("from-blue",
+                                                    "from blue",
+                                                    "Blue value (from)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("to-red",
-                                                   "to red",
-                                                   "Red value (to)",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("to-red",
+                                                    "to red",
+                                                    "Red value (to)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("to-green",
-                                                   "to green",
-                                                   "Green value (to)",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("to-green",
+                                                    "to green",
+                                                    "Green value (to)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("to-blue",
-                                                   "to blue",
-                                                   "Blue value (to)",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("to-blue",
+                                                    "to blue",
+                                                    "Blue value (to)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("red-threshold",
-                                                   "red threshold",
-                                                   "Red threshold",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("red-threshold",
+                                                    "red threshold",
+                                                    "Red threshold",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("green-threshold",
-                                                   "green threshold",
-                                                   "Green threshold",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("green-threshold",
+                                                    "green threshold",
+                                                    "Green threshold",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_uchar ("blue-threshold",
-                                                   "blue threshold",
-                                                   "Blue threshold",
-                                                   0, G_MAXUINT8, 0,
-                                                   GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("blue-threshold",
+                                                    "blue threshold",
+                                                    "Blue threshold",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

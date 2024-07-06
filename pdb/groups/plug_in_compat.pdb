@@ -1548,23 +1548,23 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
 
-	{ name => 'from_red', type => 'uchar',
+	{ name => 'from_red', type => '0.0 <= float <= 1.0',
 	  desc => 'Red value (from)' },
-	{ name => 'from_green', type => 'uchar',
+	{ name => 'from_green', type => '0.0 <= float <= 1.0',
 	  desc => 'Green value (from)' },
-	{ name => 'from_blue', type => 'uchar',
+	{ name => 'from_blue', type => '0.0 <= float <= 1.0',
 	  desc => 'Blue value (from)' },
-	{ name => 'to_red', type => 'uchar',
+	{ name => 'to_red', type => '0.0 <= float <= 1.0',
 	  desc => 'Red value (to)' },
-	{ name => 'to_green', type => 'uchar',
+	{ name => 'to_green', type => '0.0 <= float <= 1.0',
 	  desc => 'Green value (to)' },
-	{ name => 'to_blue', type => 'uchar',
+	{ name => 'to_blue', type => '0.0 <= float <= 1.0',
 	  desc => 'Blue value (to)' },
-	{ name => 'red_threshold', type => 'uchar',
+	{ name => 'red_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'Red threshold' },
-	{ name => 'green_threshold', type => 'uchar',
+	{ name => 'green_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'Green threshold' },
-	{ name => 'blue_threshold', type => 'uchar',
+	{ name => 'blue_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'Blue threshold' }
     );
 
@@ -1579,18 +1579,18 @@ HELP
       GeglColor *gegl_to = gegl_color_new (NULL);
       GeglNode  *node;
 
-      gegl_color_set_rgba (gegl_from, from_red / 255.0, from_green / 255.0,
-                           from_blue / 255.0, 1.0);
-      gegl_color_set_rgba (gegl_to, to_red / 255.0, to_green / 255.0,
-                           to_blue / 255.0, 1.0);
+      gegl_color_set_rgba (gegl_from, from_red, from_green,
+                           from_blue, 1.0);
+      gegl_color_set_rgba (gegl_to, to_red, to_green,
+                           to_blue, 1.0);
 
       node = gegl_node_new_child (NULL,
                                   "operation",       "gegl:color-exchange",
 			          "from-color",      gegl_from,
                                   "to-color",        gegl_to,
-				  "red-threshold",   red_threshold   / 255.0,
-				  "green-threshold", green_threshold / 255.0,
-				  "blue-threshold",  blue_threshold  / 255.0,
+				  "red-threshold",   red_threshold,
+				  "green-threshold", green_threshold,
+				  "blue-threshold",  blue_threshold,
                                   NULL);
 
       g_object_unref (gegl_from);

@@ -27,16 +27,6 @@ package Gimp::CodeGen::pdb;
 		     set_value_func  => 'g_value_set_int ($value, $var)',
 		     take_value_func => 'g_value_set_int ($value, $var)' },
 
-    uchar       => { name            => 'UCHAR',
-		     gtype           => 'G_TYPE_UCHAR',
-		     type            => 'guchar ',
-		     const_type      => 'guchar ',
-		     init_value      => '0',
-		     get_value_func  => '$var = g_value_get_uchar ($value)',
-		     dup_value_func  => '$var = GIMP_VALUES_GET_UCHAR ($value)',
-		     set_value_func  => 'g_value_set_uchar ($value, $var)',
-		     take_value_func => 'g_value_set_uchar ($value, $var)' },
-
     float       => { name            => 'FLOAT',
 		     gtype           => 'G_TYPE_DOUBLE',
 		     type            => 'gdouble ',
