@@ -209,9 +209,8 @@ wavelet_run (GimpProcedure        *procedure,
 
   if (create_group)
     {
-      parent = gimp_layer_group_new (image);
+      parent = GIMP_LAYER (gimp_group_layer_new (image, _("Decomposition")));
 
-      gimp_item_set_name (GIMP_ITEM (parent), _("Decomposition"));
       gimp_item_set_visible (GIMP_ITEM (parent), FALSE);
       gimp_image_insert_layer (image, parent,
                                GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (drawable))),

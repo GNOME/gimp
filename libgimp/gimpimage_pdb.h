@@ -113,8 +113,6 @@ GimpLayer*               gimp_image_merge_visible_layers       (GimpImage       
 GimpLayer*               gimp_image_merge_down                 (GimpImage           *image,
                                                                 GimpLayer           *merge_layer,
                                                                 GimpMergeType        merge_type);
-GimpLayer*               gimp_image_merge_layer_group          (GimpImage           *image,
-                                                                GimpLayer           *layer_group);
 G_GNUC_INTERNAL GBytes*  _gimp_image_get_colormap              (GimpImage           *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage           *image,
                                                                 GBytes              *colormap);

@@ -24,7 +24,7 @@ gimp_c_test_run (GimpProcedure        *procedure,
                           GIMP_RGBA_IMAGE, 100.0, GIMP_LAYER_MODE_NORMAL));
   layer2 = GIMP_DRAWABLE (gimp_layer_new (img, "layer2", 10, 20,
                           GIMP_RGBA_IMAGE, 100.0, GIMP_LAYER_MODE_NORMAL));
-  group1 = GIMP_DRAWABLE (gimp_layer_group_new (img));
+  group1 = GIMP_DRAWABLE (gimp_group_layer_new (img, NULL));
 
   GIMP_TEST_START("insert layer")
   GIMP_TEST_END(gimp_image_insert_layer (img, GIMP_LAYER (layer1), NULL, 0))

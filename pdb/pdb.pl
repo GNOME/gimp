@@ -335,6 +335,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("text/gimptextlayer.h") ] },
 
+    group_layer => { name            => 'GROUP_LAYER',
+		     gtype           => 'GIMP_TYPE_GROUP_LAYER',
+		     type            => 'GimpGroupLayer *',
+		     const_type      => 'GimpGroupLayer *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_GROUP_LAYER ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("core/gimpgrouplayer.h") ] },
+
     channel     => { name            => 'CHANNEL',
 		     gtype           => 'GIMP_TYPE_CHANNEL',
 		     type            => 'GimpChannel *',

@@ -51,6 +51,7 @@
 #include <libgimp/gimpgradient_pdb.h>
 #include <libgimp/gimpgradients_pdb.h>
 #include <libgimp/gimpgradientselect_pdb.h>
+#include <libgimp/gimpgrouplayer_pdb.h>
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
 #include <libgimp/gimpimagecolorprofile_pdb.h>

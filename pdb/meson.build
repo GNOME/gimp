@@ -26,6 +26,7 @@ pdb_names = [
   'gradient_select',
   'gradient',
   'gradients',
+  'group_layer',
   'help',
   'image_color_profile',
   'image_convert',

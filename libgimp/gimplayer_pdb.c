@@ -182,48 +182,6 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
 }
 
 /**
- * gimp_layer_group_new:
- * @image: The image to which to add the layer group.
- *
- * Create a new layer group.
- *
- * This procedure creates a new layer group. Attributes such as layer
- * mode and opacity should be set with explicit procedure calls. Add
- * the new layer group (which is a kind of layer) with the
- * gimp_image_insert_layer() command.
- * Other procedures useful with layer groups:
- * gimp_image_reorder_item(), gimp_item_get_parent(),
- * gimp_item_get_children(), gimp_item_is_group().
- *
- * Returns: (transfer none): The newly created layer group.
- *
- * Since: 2.8
- **/
-GimpLayer *
-gimp_layer_group_new (GimpImage *image)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer_group = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-layer-group-new",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_group = GIMP_VALUES_GET_LAYER (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_group;
-}
-
-/**
  * _gimp_layer_copy:
  * @layer: The layer to copy.
  * @add_alpha: Add an alpha channel to the copied layer.

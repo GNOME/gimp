@@ -183,6 +183,43 @@ gimp_item_id_is_text_layer (gint item_id)
 }
 
 /**
+ * gimp_item_id_is_group_layer:
+ * @item_id: The item ID.
+ *
+ * Returns whether the item ID is a group layer.
+ *
+ * This procedure returns TRUE if the specified item ID is a group
+ * layer.
+ *
+ * Returns: TRUE if the item is a group layer, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_item_id_is_group_layer (gint item_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean group_layer = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_INT, item_id,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-item-id-is-group-layer",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    group_layer = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return group_layer;
+}
+
+/**
  * gimp_item_id_is_channel:
  * @item_id: The item ID.
  *

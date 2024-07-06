@@ -36,6 +36,7 @@ typedef struct _GimpProcedureConfig GimpProcedureConfig;
 typedef struct _GimpImage           GimpImage;
 typedef struct _GimpItem            GimpItem;
 typedef struct _GimpDrawable        GimpDrawable;
+typedef struct _GimpGroupLayer      GimpGroupLayer;
 typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpChannel         GimpChannel;
 typedef struct _GimpLayerMask       GimpLayerMask;

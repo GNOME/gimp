@@ -44,7 +44,6 @@ GimpLayer*                 gimp_layer_new_from_visible     (GimpImage           
                                                             const gchar            *name);
 GimpLayer*                 gimp_layer_new_from_drawable    (GimpDrawable           *drawable,
                                                             GimpImage              *dest_image);
-GimpLayer*                 gimp_layer_group_new            (GimpImage              *image);
 G_GNUC_INTERNAL GimpLayer* _gimp_layer_copy                (GimpLayer              *layer,
                                                             gboolean                add_alpha);
 gboolean                   gimp_layer_add_alpha            (GimpLayer              *layer);

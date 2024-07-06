@@ -28,6 +28,7 @@
 #include "gimpbrush.h"
 #include "gimpdisplay.h"
 #include "gimpgradient.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"

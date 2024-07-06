@@ -257,6 +257,25 @@ gimp_item_is_text_layer (GimpItem *item)
 }
 
 /**
+ * gimp_item_is_group_layer:
+ * @item: The item.
+ *
+ * Returns whether the item is a group layer.
+ *
+ * This procedure returns TRUE if the specified item is a group
+ * layer.
+ *
+ * Returns: TRUE if the item is a group layer, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_item_is_group_layer (GimpItem *item)
+{
+  return gimp_item_id_is_group_layer (gimp_item_get_id (item));
+}
+
+/**
  * gimp_item_is_channel:
  * @item: The item.
  *

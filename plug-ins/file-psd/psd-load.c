@@ -2365,7 +2365,7 @@ add_layers (GimpImage     *image,
                * assemble the layer structure in a single pass
                */
               IFDBG(2) g_debug ("Create placeholder group layer");
-              layer = gimp_layer_group_new (image);
+              layer = GIMP_LAYER (gimp_group_layer_new (image, NULL));
               /* add this group layer as the new parent */
               g_array_append_val (parent_group_stack, layer);
             }
@@ -3180,9 +3180,8 @@ add_clipping_group (GimpImage  *image,
    * composition mode in a different manner than PS. */
   IFDBG(2) g_debug ("Creating a layer group to handle PS transparency clipping correctly.");
 
-  clipping_group = gimp_layer_group_new (image);
+  clipping_group = GIMP_LAYER (gimp_group_layer_new (image, "Group added by GIMP"));
 
-  gimp_item_set_name (GIMP_ITEM (clipping_group), "Group added by GIMP");
   gimp_layer_set_blend_space (clipping_group, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
   gimp_layer_set_composite_space (clipping_group, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
   gimp_layer_set_composite_mode (clipping_group, GIMP_LAYER_COMPOSITE_UNION);

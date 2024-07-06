@@ -51,17 +51,18 @@ struct _GimpItemClass
 };
 
 
-gint32      gimp_item_get_id        (GimpItem *item);
-GimpItem  * gimp_item_get_by_id     (gint32    item_id);
+gint32      gimp_item_get_id         (GimpItem *item);
+GimpItem  * gimp_item_get_by_id      (gint32    item_id);
 
-gboolean    gimp_item_is_valid      (GimpItem *item);
-gboolean    gimp_item_is_drawable   (GimpItem *item);
-gboolean    gimp_item_is_layer      (GimpItem *item);
-gboolean    gimp_item_is_text_layer (GimpItem *item);
-gboolean    gimp_item_is_channel    (GimpItem *item);
-gboolean    gimp_item_is_layer_mask (GimpItem *item);
-gboolean    gimp_item_is_selection  (GimpItem *item);
-gboolean    gimp_item_is_vectors    (GimpItem *item);
+gboolean    gimp_item_is_valid       (GimpItem *item);
+gboolean    gimp_item_is_drawable    (GimpItem *item);
+gboolean    gimp_item_is_layer       (GimpItem *item);
+gboolean    gimp_item_is_text_layer  (GimpItem *item);
+gboolean    gimp_item_is_group_layer (GimpItem *item);
+gboolean    gimp_item_is_channel     (GimpItem *item);
+gboolean    gimp_item_is_layer_mask  (GimpItem *item);
+gboolean    gimp_item_is_selection   (GimpItem *item);
+gboolean    gimp_item_is_vectors     (GimpItem *item);
 
 GList     * gimp_item_list_children (GimpItem *item);
 

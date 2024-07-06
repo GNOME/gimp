@@ -24,6 +24,7 @@
     gradient
     gradient_select
     gradients
+    group_layer
     help
     image
     image_color_profile

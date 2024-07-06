@@ -36,7 +36,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpgrouplayer.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
@@ -245,38 +244,6 @@ layer_new_from_drawable_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_set_object (gimp_value_array_index (return_vals, 1), layer_copy);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-layer_group_new_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpLayer *layer_group = NULL;
-
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      layer_group = gimp_group_layer_new (image);
-
-      if (! layer_group)
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer_group);
 
   return return_vals;
 }
@@ -1389,36 +1356,6 @@ register_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer ("layer-copy",
                                                           "layer copy",
                                                           "The newly copied layer",
-                                                          FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-layer-group-new
-   */
-  procedure = gimp_procedure_new (layer_group_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-group-new");
-  gimp_procedure_set_static_help (procedure,
-                                  "Create a new layer group.",
-                                  "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.\n"
-                                  "Other procedures useful with layer groups: 'gimp-image-reorder-item', 'gimp-item-get-parent', 'gimp-item-get-children', 'gimp-item-is-group'.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Barak Itkin <lightningismyname@gmail.com>",
-                                         "Barak Itkin",
-                                         "2010");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "The image to which to add the layer group",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer-group",
-                                                          "layer group",
-                                                          "The newly created layer group",
                                                           FALSE,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -32,6 +32,7 @@ libappinternalprocs_sources = [
   'gradient-cmds.c',
   'gradient-select-cmds.c',
   'gradients-cmds.c',
+  'group-layer-cmds.c',
   'help-cmds.c',
   'image-cmds.c',
   'image-color-profile-cmds.c',

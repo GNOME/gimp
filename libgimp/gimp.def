@@ -368,6 +368,10 @@ EXPORTS
 	gimp_gradients_popup
 	gimp_gradients_refresh
 	gimp_gradients_set_popup
+	gimp_group_layer_get_by_id
+	gimp_group_layer_get_type
+	gimp_group_layer_merge
+	gimp_group_layer_new
 	gimp_heal
 	gimp_heal_default
 	gimp_help
@@ -474,7 +478,6 @@ EXPORTS
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
 	gimp_image_merge_down
-	gimp_image_merge_layer_group
 	gimp_image_merge_visible_layers
 	gimp_image_metadata_load_finish
 	gimp_image_metadata_load_prepare
@@ -559,6 +562,7 @@ EXPORTS
 	gimp_item_get_visible
 	gimp_item_id_is_channel
 	gimp_item_id_is_drawable
+	gimp_item_id_is_group_layer
 	gimp_item_id_is_layer
 	gimp_item_id_is_layer_mask
 	gimp_item_id_is_selection
@@ -568,6 +572,7 @@ EXPORTS
 	gimp_item_is_channel
 	gimp_item_is_drawable
 	gimp_item_is_group
+	gimp_item_is_group_layer
 	gimp_item_is_layer
 	gimp_item_is_layer_mask
 	gimp_item_is_selection
@@ -613,7 +618,6 @@ EXPORTS
 	gimp_layer_get_opacity
 	gimp_layer_get_show_mask
 	gimp_layer_get_type
-	gimp_layer_group_new
 	gimp_layer_is_floating_sel
 	gimp_layer_mask_get_by_id
 	gimp_layer_mask_get_type
@@ -675,6 +679,7 @@ EXPORTS
 	gimp_param_drawable_get_type
 	gimp_param_font_get_type
 	gimp_param_gradient_get_type
+	gimp_param_group_layer_get_type
 	gimp_param_image_get_type
 	gimp_param_item_get_type
 	gimp_param_layer_get_type
@@ -690,6 +695,7 @@ EXPORTS
 	gimp_param_spec_font
 	gimp_param_spec_get_desc
 	gimp_param_spec_gradient
+	gimp_param_spec_group_layer
 	gimp_param_spec_image
 	gimp_param_spec_item
 	gimp_param_spec_layer
@@ -779,6 +785,9 @@ EXPORTS
 	gimp_procedure_add_gradient_argument
 	gimp_procedure_add_gradient_aux_argument
 	gimp_procedure_add_gradient_return_value
+	gimp_procedure_add_group_layer_argument
+	gimp_procedure_add_group_layer_aux_argument
+	gimp_procedure_add_group_layer_return_value
 	gimp_procedure_add_image_argument
 	gimp_procedure_add_image_aux_argument
 	gimp_procedure_add_image_return_value

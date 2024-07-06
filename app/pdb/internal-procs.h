@@ -48,6 +48,7 @@ void   register_gimprc_procs              (GimpPDB *pdb);
 void   register_gradient_procs            (GimpPDB *pdb);
 void   register_gradient_select_procs     (GimpPDB *pdb);
 void   register_gradients_procs           (GimpPDB *pdb);
+void   register_group_layer_procs         (GimpPDB *pdb);
 void   register_help_procs                (GimpPDB *pdb);
 void   register_image_procs               (GimpPDB *pdb);
 void   register_image_color_profile_procs (GimpPDB *pdb);

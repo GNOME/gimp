@@ -46,6 +46,7 @@
 #include <libgimp/gimpfont.h>
 #include <libgimp/gimpgimprc.h>
 #include <libgimp/gimpgradient.h>
+#include <libgimp/gimpgrouplayer.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimpimagemetadata.h>

@@ -242,7 +242,7 @@ export_apply_masks (GimpImage  *image,
            * first
            */
           if (gimp_item_is_group (iter->data))
-            iter->data = gimp_image_merge_layer_group (image, iter->data);
+            iter->data = gimp_group_layer_merge (iter->data);
 
           gimp_layer_remove_mask (iter->data, GIMP_MASK_APPLY);
         }

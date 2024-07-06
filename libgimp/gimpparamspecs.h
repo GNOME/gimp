@@ -168,6 +168,34 @@ GParamSpec * gimp_param_spec_text_layer     (const gchar  *name,
                                              gboolean      none_ok,
                                              GParamFlags   flags);
 
+
+/*
+ * GIMP_TYPE_PARAM_GROUP_LAYER
+ */
+
+#define GIMP_VALUE_HOLDS_GROUP_LAYER(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
+                                               GIMP_TYPE_GROUP_LAYER))
+
+#define GIMP_TYPE_PARAM_GROUP_LAYER           (gimp_param_group_layer_get_type ())
+#define GIMP_PARAM_SPEC_GROUP_LAYER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_GROUP_LAYER, GimpParamSpecGroupLayer))
+#define GIMP_IS_PARAM_SPEC_GROUP_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_GROUP_LAYER))
+
+typedef struct _GimpParamSpecGroupLayer GimpParamSpecGroupLayer;
+
+struct _GimpParamSpecGroupLayer
+{
+  GimpParamSpecLayer parent_instance;
+};
+
+GType        gimp_param_group_layer_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_group_layer     (const gchar  *name,
+                                              const gchar  *nick,
+                                              const gchar  *blurb,
+                                              gboolean      none_ok,
+                                              GParamFlags   flags);
+
+
 /*
  * GIMP_TYPE_PARAM_CHANNEL
  */

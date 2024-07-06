@@ -1,0 +1,114 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+sub group_layer_new {
+    $blurb = 'Create a new group layer.';
+
+    $help = <<'HELP';
+This procedure creates a new group layer. Attributes such as layer mode
+and opacity should be set with explicit procedure calls. Add the new
+group layer (which is a kind of layer) with [method@image.insert_layer].
+
+Other procedures useful with group layers: [method@image_reorder_item],
+[method@item.get_parent], [method@item.get_children], [method@item.is_group].
+HELP
+
+    &barak_pdb_misc('2010', '2.8');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the group layer' }
+    );
+
+    @outargs = (
+	{ name => 'group_layer', type => 'group_layer',
+	  desc => 'The newly created group layer' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  group_layer = GIMP_GROUP_LAYER (gimp_group_layer_new (image));
+
+  if (! group_layer)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub group_layer_merge {
+    $blurb = 'Merge the passed group layer\'s layers into one normal layer.';
+
+    $help = <<'HELP';
+This procedure combines the layers of the passed group layer into
+a single normal layer, replacing the group.
+
+The group layer is expected to be attached to an image.
+HELP
+
+    &ell_pdb_misc('2019', '2.10.14');
+
+    @inargs = (
+        { name => 'group_layer', type => 'group_layer',
+          desc => 'The group layer to merge' },
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The resulting layer' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-merge.h") ],
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (group_layer), NULL, 0, error) &&
+      gimp_pdb_item_is_group (GIMP_ITEM (group_layer), error))
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (group_layer));
+
+      layer = gimp_image_merge_group_layer (image, group_layer);
+
+      if (! layer)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+@headers = qw(<cairo.h>
+              "libgimpbase/gimpbase.h"
+              "core/gimp.h"
+              "core/gimpgrouplayer.h"
+              "gimppdb-utils.h"
+              "gimp-intl.h");
+
+@procs = qw(group_layer_new
+            group_layer_merge);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Group Layer';
+$doc_title = 'gimpgrouplayer';
+$doc_short_desc = 'Operations on a group layer.';
+$doc_long_desc = 'Operations on a group layer.';
+
+1;
