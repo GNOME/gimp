@@ -30,6 +30,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpchannel.h>
+
+
 #define GIMP_TYPE_SELECTION (gimp_selection_get_type ())
 G_DECLARE_FINAL_TYPE (GimpSelection, gimp_selection, GIMP, SELECTION, GimpChannel)
 

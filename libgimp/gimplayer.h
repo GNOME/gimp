@@ -30,6 +30,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#include <libgimp/gimpdrawable.h>
+
+
 #define GIMP_TYPE_LAYER (gimp_layer_get_type ())
 G_DECLARE_DERIVABLE_TYPE (GimpLayer, gimp_layer, GIMP, LAYER, GimpDrawable)
 

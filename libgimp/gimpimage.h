@@ -35,48 +35,48 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpImage, gimp_image, GIMP, IMAGE, GObject)
 
 
-gint32         gimp_image_get_id             (GimpImage    *image);
-GimpImage    * gimp_image_get_by_id          (gint32        image_id);
+gint32         gimp_image_get_id                  (GimpImage    *image);
+GimpImage    * gimp_image_get_by_id               (gint32        image_id);
 
-gboolean       gimp_image_is_valid           (GimpImage    *image);
+gboolean       gimp_image_is_valid                (GimpImage    *image);
 
-GList        * gimp_list_images              (void);
+GList        * gimp_list_images                   (void);
 
-GList        * gimp_image_list_layers        (GimpImage    *image);
-GList        * gimp_image_list_channels      (GimpImage    *image);
-GList        * gimp_image_list_vectors       (GimpImage    *image);
+GList        * gimp_image_list_layers             (GimpImage    *image);
+GList        * gimp_image_list_channels           (GimpImage    *image);
+GList        * gimp_image_list_vectors            (GimpImage    *image);
 
-GList    * gimp_image_list_selected_layers   (GimpImage    *image);
-gboolean   gimp_image_take_selected_layers   (GimpImage    *image,
-                                              GList        *layers);
-GList    * gimp_image_list_selected_channels (GimpImage    *image);
-gboolean   gimp_image_take_selected_channels (GimpImage    *image,
-                                              GList        *channels);
-GList    * gimp_image_list_selected_vectors  (GimpImage    *image);
-gboolean   gimp_image_take_selected_vectors  (GimpImage    *image,
-                                              GList        *vectors);
+GList        * gimp_image_list_selected_layers    (GimpImage    *image);
+gboolean       gimp_image_take_selected_layers    (GimpImage    *image,
+                                                   GList        *layers);
+GList        * gimp_image_list_selected_channels  (GimpImage    *image);
+gboolean       gimp_image_take_selected_channels  (GimpImage    *image,
+                                                   GList        *channels);
+GList        * gimp_image_list_selected_vectors   (GimpImage    *image);
+gboolean       gimp_image_take_selected_vectors   (GimpImage    *image,
+                                                   GList        *vectors);
 
-GList    * gimp_image_list_selected_drawables(GimpImage    *image);
+GList        * gimp_image_list_selected_drawables (GimpImage    *image);
 
-guchar       * gimp_image_get_colormap       (GimpImage    *image,
-                                              gint         *colormap_len,
-                                              gint         *num_colors);
-gboolean       gimp_image_set_colormap       (GimpImage    *image,
-                                              const guchar *colormap,
-                                              gint          num_colors);
+guchar       * gimp_image_get_colormap            (GimpImage    *image,
+                                                   gint         *colormap_len,
+                                                   gint         *num_colors);
+gboolean       gimp_image_set_colormap            (GimpImage    *image,
+                                                   const guchar *colormap,
+                                                   gint          num_colors);
 
-GBytes       * gimp_image_get_thumbnail_data (GimpImage    *image,
-                                              gint         *width,
-                                              gint         *height,
-                                              gint         *bpp);
-GdkPixbuf    * gimp_image_get_thumbnail      (GimpImage    *image,
-                                              gint          width,
-                                              gint          height,
-                                              GimpPixbufTransparency  alpha);
+GBytes       * gimp_image_get_thumbnail_data      (GimpImage    *image,
+                                                   gint         *width,
+                                                   gint         *height,
+                                                   gint         *bpp);
+GdkPixbuf    * gimp_image_get_thumbnail           (GimpImage    *image,
+                                                   gint          width,
+                                                   gint          height,
+                                                   GimpPixbufTransparency  alpha);
 
-GimpMetadata * gimp_image_get_metadata       (GimpImage    *image);
-gboolean       gimp_image_set_metadata       (GimpImage    *image,
-                                              GimpMetadata *metadata);
+GimpMetadata * gimp_image_get_metadata            (GimpImage    *image);
+gboolean       gimp_image_set_metadata            (GimpImage    *image,
+                                                   GimpMetadata *metadata);
 
 
 G_END_DECLS
