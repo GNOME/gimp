@@ -828,9 +828,8 @@
             ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/gimp.git",
-                    "branch": "master"
+                    "type": "dir",
+                    "path": "../../.."
                 },
                 {
                     "type": "shell",
