@@ -332,41 +332,59 @@ gimp-debian-x64:
       junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
     expire_in: 2 days
 
-gimp-flatpak-x64:
+.flatpak-x64:
   extends: .default
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Flatpak package.*/'
       interruptible: true
     - if: '$GIMP_CI_FLATPAK != null'
-  needs: []
-  stage: gimp
   tags:
     - flatpak
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  # FIXME: Flatpak design mandates to build everything from scratch on CI
+
+deps-flatpak-x64:
+  extends: .flatpak-x64
+  rules:
+    - !reference [.flatpak-x64, rules]
+  needs: []
+  stage: dependencies
+  # FIXME: GitLab CI caching does NOT work with flatpak
   # See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
   cache: []
     # key: ${CI_JOB_NAME}-pkg
     # paths:
-        # .flatpak-builder/downloads
-        # .flatpak-builder/git
-    # !reference [.default, cache]
+        # .flatpak-builder/
+    # key: $CI_JOB_NAME
+    # paths:
+        # _ccache/
   script:
-    # FIXME: Flatpak design mandates to build monolithically (aka in one job) on CI
     - bash build/linux/flatpak/1_build-deps-flatpak.sh
-    - bash build/linux/flatpak/2_build-gimp-flatpak.sh
-    # FIXME: Flatpak design mandates to run in the same CI job even the dist commands!
-    - bash build/linux/flatpak/4_dist-gimp-flatpak.sh
   artifacts:
     paths:
+      - .flatpak-builder.tar
       - flatpak-builder.log
-      - gimp-git.flatpak
+      - babl-meson-log.tar
+      - gegl-meson-log.tar
+    expire_in: 2 hours
+
+gimp-flatpak-x64:
+  extends: .flatpak-x64
+  rules:
+    - !reference [.flatpak-x64, rules]
+  needs: ["deps-flatpak-x64"]
+  stage: gimp
+  # FIXME: GitLab CI caching does NOT work with flatpak
+  # See: https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1502
+  cache: []
+    # key: $CI_JOB_NAME
+    # paths:
+        # _ccache/
+  script:
+    - bash build/linux/flatpak/2_build-gimp-flatpak.sh
+  artifacts:
+    paths:
       - repo.tar
-      # FIXME: these can't be fetched, even if we bypass the symlink (module -> module-1)
-      #        maybe also due to flatpak design?
-      # .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
-      # .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
-      # .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
+      - gimp-meson-log.tar
     expire_in: 2 days
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
@@ -757,10 +775,7 @@ dist-flatpak-weekly:
   stage: distribution
   cache: []
   script:
-    - if [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
-        exit 0;
-      fi
-    - !reference [.publish_nightly, script]
+    - bash build/linux/flatpak/4_dist-gimp-flatpak.sh
   artifacts:
     expose_as: 'Linux flatpak'
     paths:

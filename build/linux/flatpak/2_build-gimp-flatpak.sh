@@ -16,7 +16,6 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
     export GIMP_PREFIX="$PWD/../_install-$ARCH"
   fi
 
-
   # Build GIMP only
   if [ ! -f "_build-$ARCH/build.ninja" ]; then
     mkdir -p _build-$ARCH && cd _build-$ARCH
@@ -34,14 +33,26 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   export GIMP_PREFIX="$PWD/_install-$ARCH"
 
+  if [ "$1" != '--ci' ]; then
+    # Extract deps from previous job
+    echo 'Extracting previously built dependencies'
+    tar xf .flatpak-builder.tar
+  fi
 
   # GNOME script to customize gimp module in the manifest (not needed)
   #rewrite-flatpak-manifest build/linux/flatpak/org.gimp.GIMP-nightly.json gimp ${CONFIG_OPTS}
 
+  # Build GIMP only
+  flatpak-builder --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only \
+                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+  if [ "$1" != '--ci' ]; then
+    tar cf gimp-meson-log.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
+  fi
 
-  # Clone and build the deps not present in GNOME runtime (and GIMP)
-  # (The deps building is too long and no complete output would be collected,
-  # even from GitLab runner messages. So, let's silent and save logs as a file.)
-  flatpak-builder --force-clean --user --disable-rofiles-fuse --repo=repo ${BRANCH:+--default-branch=$BRANCH} \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
+  # Cleanup GIMP_PREFIX and export it to OSTree repo
+  flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo \
+                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+  if [ "$1" != '--ci' ]; then
+    tar cf repo.tar repo/
+  fi
 fi
