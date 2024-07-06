@@ -89,7 +89,7 @@ class StringEnum:
 
 def histogram_export(procedure, img, layers, gio_file,
                      bucket_size, sample_average, output_format):
-    layers = img.list_selected_layers()
+    layers = img.get_selected_layers()
     layer = layers[0]
     if sample_average:
         new_img = img.duplicate()

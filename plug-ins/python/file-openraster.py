@@ -277,7 +277,7 @@ def export_ora(procedure, run_mode, image, file, metadata, config, data):
                 yield layer
             else:
                 yield layer
-                for sublayer in enumerate_layers(layer.list_children()):
+                for sublayer in enumerate_layers(layer.get_children()):
                     yield sublayer
                 yield NESTED_STACK_END
 
@@ -285,7 +285,7 @@ def export_ora(procedure, run_mode, image, file, metadata, config, data):
     parent_groups = []
     i = 0
 
-    layer_stack = image.list_layers()
+    layer_stack = image.get_layers()
     # Number of top level layers for tracking progress
     lay_cnt = len(layer_stack)
 

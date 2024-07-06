@@ -75,7 +75,7 @@ gimp_image_id_is_valid (gint image_id)
 }
 
 /**
- * gimp_get_images: (skip)
+ * gimp_get_images:
  * @num_images: (out): The number of images currently open.
  *
  * Returns the list of images currently open.
@@ -463,7 +463,7 @@ gimp_image_get_height (GimpImage *image)
 }
 
 /**
- * gimp_image_get_layers: (skip)
+ * gimp_image_get_layers:
  * @image: The image.
  * @num_layers: (out): The number of root layers contained in the image.
  *
@@ -513,7 +513,7 @@ gimp_image_get_layers (GimpImage *image,
 }
 
 /**
- * gimp_image_get_channels: (skip)
+ * gimp_image_get_channels:
  * @image: The image.
  * @num_channels: (out): The number of channels contained in the image.
  *
@@ -560,7 +560,7 @@ gimp_image_get_channels (GimpImage *image,
 }
 
 /**
- * gimp_image_get_vectors: (skip)
+ * gimp_image_get_vectors:
  * @image: The image.
  * @num_vectors: (out): The number of vectors contained in the image.
  *
@@ -2070,7 +2070,7 @@ _gimp_image_thumbnail (GimpImage  *image,
 }
 
 /**
- * gimp_image_get_selected_layers: (skip)
+ * gimp_image_get_selected_layers:
  * @image: The image.
  * @num_layers: (out): The number of selected layers in the image.
  *
@@ -2161,7 +2161,7 @@ gimp_image_set_selected_layers (GimpImage        *image,
 }
 
 /**
- * gimp_image_get_selected_channels: (skip)
+ * gimp_image_get_selected_channels:
  * @image: The image.
  * @num_channels: (out): The number of selected channels in the image.
  *
@@ -2252,7 +2252,7 @@ gimp_image_set_selected_channels (GimpImage          *image,
 }
 
 /**
- * gimp_image_get_selected_vectors: (skip)
+ * gimp_image_get_selected_vectors:
  * @image: The image.
  * @num_vectors: (out): The number of selected vectors in the image.
  *

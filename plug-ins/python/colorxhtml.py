@@ -97,7 +97,7 @@ def export_colorxhtml(procedure, run_mode, image, file, metadata, config, data):
         characters = aux_file.get_path()
 
     #For now, work with a single layer
-    layer = image.list_layers()[0]
+    layer = image.get_layers()[0]
 
     width = layer.get_width()
     height = layer.get_height()

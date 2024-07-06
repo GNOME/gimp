@@ -52,7 +52,7 @@ class BmpExportTests(GimpExportTest):
             return None
 
     def export_bmp(self, img, bmp_exp_name, rle, space, rgb):
-        drw = img.list_layers()
+        drw = img.get_layers()
         export_file_path = self.output_path + bmp_exp_name
 
         pdb_proc   = Gimp.get_pdb().lookup_procedure(self.file_export)

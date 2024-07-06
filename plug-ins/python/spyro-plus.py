@@ -383,7 +383,7 @@ class SelectionToPath:
         config.set_property('image', self.image)
         result = proc.run(config)
 
-        self.path = self.image.list_vectors()[0]
+        self.path = self.image.get_vectors()[0]
         self.stroke_ids = self.path.get_strokes()
 
         # A path may contain several strokes. If so lets throw away a stroke that
@@ -1871,7 +1871,7 @@ class SpyroWindow():
         shelf_parameters(self.p)
 
         if self.p.save_option == SAVE_AS_NEW_LAYER:
-            if self.spyro_layer in self.img.list_layers():
+            if self.spyro_layer in self.img.get_layers():
                 self.img.active_layer = self.spyro_layer
 
             # If we are in the middle of incremental draw, we want to complete it, and only then to exit.
@@ -1892,7 +1892,7 @@ class SpyroWindow():
             # If there is an incremental drawing taking place, lets stop it.
             self.clear_idle_task()
 
-            if self.spyro_layer in self.img.list_layers():
+            if self.spyro_layer in self.img.get_layers():
                 self.img.remove_layer(self.spyro_layer)
                 self.img.active_layer = self.active_layer
 
@@ -1926,7 +1926,7 @@ class SpyroWindow():
 
         # We want to delete the temporary layer, but as a precaution, lets ask first,
         # maybe it was already deleted by the user.
-        if self.spyro_layer in self.img.list_layers():
+        if self.spyro_layer in self.img.get_layers():
             self.img.remove_layer(self.spyro_layer)
             Gimp.displays_flush()
 

@@ -54,8 +54,6 @@ HELP
 
     &std_pdb_misc;
 
-    $skip_gi = 1;
-
     @outargs = (
         { name => 'images', type => 'imagearray',
           desc => 'The list of images currently open.',
@@ -256,8 +254,6 @@ HELP
 
     &std_pdb_misc;
 
-    $skip_gi = 1;
-
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' }
@@ -303,8 +299,6 @@ HELP
 
     &std_pdb_misc;
 
-    $skip_gi = 1;
-
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' }
@@ -346,8 +340,6 @@ This procedure returns the list of vectors contained in the specified image.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
-
-    $skip_gi = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -1842,8 +1834,6 @@ HELP
 
     &jehan_pdb_misc('2020', '3.0.0');
 
-    $skip_gi = 1;
-
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' }
@@ -1926,8 +1916,6 @@ HELP
 
     &jehan_pdb_misc('2022', '3.0.0');
 
-    $skip_gi = 1;
-
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' }
@@ -2009,8 +1997,6 @@ This procedure returns the list of selected vectors in the specified image.
 HELP
 
     &jehan_pdb_misc('2022', '3.0.0');
-
-    $skip_gi = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
