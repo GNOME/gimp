@@ -143,7 +143,7 @@ register_group_layer_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image ("image",
                                                       "image",
-                                                      "The image to which to add the layer group",
+                                                      "The image to which to add the group layer",
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -173,7 +173,7 @@ register_group_layer_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_group_layer ("group-layer",
                                                             "group layer",
-                                                            "The layer group to merge",
+                                                            "The group layer to merge",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

@@ -38,7 +38,7 @@
 
 /**
  * _gimp_group_layer_new:
- * @image: The image to which to add the layer group.
+ * @image: The image to which to add the group layer.
  *
  * Create a new group layer.
  *
@@ -80,7 +80,7 @@ _gimp_group_layer_new (GimpImage *image)
 
 /**
  * gimp_group_layer_merge:
- * @group_layer: The layer group to merge.
+ * @group_layer: The group layer to merge.
  *
  * Merge the passed group layer's layers into one normal layer.
  *
