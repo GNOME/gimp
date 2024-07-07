@@ -757,9 +757,6 @@ dist-flatpak-weekly:
   stage: distribution
   cache: []
   script:
-    - if [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
-        exit 0;
-      fi
     - !reference [.publish_nightly, script]
   artifacts:
     expose_as: 'Linux flatpak'
