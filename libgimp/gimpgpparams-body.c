@@ -522,10 +522,17 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         {
           type_name = "GimpParamDrawable";
         }
-      else if (g_type_is_a (value_type, GIMP_TYPE_LAYER))
+      else if (value_type == GIMP_TYPE_LAYER)
         {
-          /* g_type_is_a() because the core has layer subclasses */
           type_name = "GimpParamLayer";
+        }
+      else if (value_type == GIMP_TYPE_TEXT_LAYER)
+        {
+          type_name = "GimpParamTextLayer";
+        }
+      else if (value_type == GIMP_TYPE_GROUP_LAYER)
+        {
+          type_name = "GimpParamGroupLayer";
         }
       else if (value_type == GIMP_TYPE_CHANNEL)
         {

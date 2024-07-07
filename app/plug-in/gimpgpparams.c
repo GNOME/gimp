@@ -34,13 +34,16 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdisplay.h"
 #include "core/gimpgradient.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimpselection.h"
+
 #include "text/gimpfont.h"
+#include "text/gimptextlayer.h"
 
 #include "core/gimpparamspecs.h"
 
