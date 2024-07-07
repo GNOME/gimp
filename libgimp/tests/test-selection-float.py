@@ -8,7 +8,7 @@ layer1 = Gimp.Layer.new(image, "layer1", 20, 10,
                         Gimp.LayerMode.NORMAL)
 image.insert_layer(layer1,None,0)
 
-group1 = Gimp.Layer.group_new(image)
+group1 = Gimp.GroupLayer.new(image, None)
 image.insert_layer(group1,None,-1)
 
 layer2 = Gimp.Layer.new(image, "layer2", 10, 20,

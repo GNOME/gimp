@@ -389,7 +389,7 @@ def load_ora(procedure, run_mode, file, metadata, flags, config, data):
 
         if item.tag == 'stack':
             name, x, y, opac, visible, layer_mode = get_group_layer_attributes(item)
-            gimp_layer = Gimp.Layer.group_new(img)
+            gimp_layer = Gimp.GroupLayer.new(img, name)
 
         else:
             path, name, x, y, opac, visible, layer_mode = get_layer_attributes(item)
