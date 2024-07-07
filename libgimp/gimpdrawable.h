@@ -56,8 +56,8 @@ struct _GimpDrawableClass
 
 GimpDrawable * gimp_drawable_get_by_id              (gint32        drawable_id);
 
-GeglBuffer   * gimp_drawable_get_buffer             (GimpDrawable  *drawable);
-GeglBuffer   * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable);
+GeglBuffer   * gimp_drawable_get_buffer             (GimpDrawable  *drawable) G_GNUC_WARN_UNUSED_RESULT;
+GeglBuffer   * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable) G_GNUC_WARN_UNUSED_RESULT;
 
 const Babl   * gimp_drawable_get_format             (GimpDrawable  *drawable);
 const Babl   * gimp_drawable_get_thumbnail_format   (GimpDrawable  *drawable);

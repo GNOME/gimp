@@ -63,7 +63,7 @@ GimpLayer * gimp_layer_new                (GimpImage       *image,
                                            gint             height,
                                            GimpImageType    type,
                                            gdouble          opacity,
-                                           GimpLayerMode    mode);
+                                           GimpLayerMode    mode) G_GNUC_WARN_UNUSED_RESULT;
 
 GimpLayer * gimp_layer_new_from_pixbuf    (GimpImage       *image,
                                            const gchar     *name,
@@ -71,12 +71,12 @@ GimpLayer * gimp_layer_new_from_pixbuf    (GimpImage       *image,
                                            gdouble          opacity,
                                            GimpLayerMode    mode,
                                            gdouble          progress_start,
-                                           gdouble          progress_end);
+                                           gdouble          progress_end) G_GNUC_WARN_UNUSED_RESULT;
 GimpLayer * gimp_layer_new_from_surface   (GimpImage       *image,
                                            const gchar     *name,
                                            cairo_surface_t *surface,
                                            gdouble          progress_start,
-                                           gdouble          progress_end);
+                                           gdouble          progress_end) G_GNUC_WARN_UNUSED_RESULT;
 
 GimpLayer * gimp_layer_copy               (GimpLayer       *layer);
 

@@ -41,7 +41,7 @@ G_DECLARE_FINAL_TYPE (GimpGroupLayer, gimp_group_layer, GIMP, GROUP_LAYER, GimpL
 GimpGroupLayer * gimp_group_layer_get_by_id (gint32       layer_id);
 
 GimpGroupLayer * gimp_group_layer_new       (GimpImage   *image,
-                                             const gchar *name);
+                                             const gchar *name) G_GNUC_WARN_UNUSED_RESULT;
 
 
 G_END_DECLS
