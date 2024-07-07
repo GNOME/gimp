@@ -145,7 +145,7 @@ class PaletteToGradient (Gimp.PlugIn):
                                          Gimp.RunMode.NONINTERACTIVE,
                                          GObject.ParamFlags.READWRITE)
             procedure.add_palette_argument ("palette", _("_Palette"),
-                                            _("Palette"), False,
+                                            _("Palette"), True,
                                             GObject.ParamFlags.READWRITE)
             procedure.add_gradient_return_value ("new-gradient", _("The newly created gradient"),
                                                  _("The newly created gradient"),
