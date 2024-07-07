@@ -57,7 +57,7 @@ class PaletteOffset (Gimp.PlugIn):
                                          Gimp.RunMode.NONINTERACTIVE,
                                          GObject.ParamFlags.READWRITE)
             procedure.add_palette_argument ("palette", _("_Palette"),
-                                            _("Palette"),
+                                            _("Palette"), False,
                                             GObject.ParamFlags.READWRITE)
             procedure.add_int_argument ("amount", _("O_ffset"), _("Offset"),
                                         1, GLib.MAXINT, 1, GObject.ParamFlags.READWRITE)

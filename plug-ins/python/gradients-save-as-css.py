@@ -203,7 +203,7 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                                          Gimp.RunMode.NONINTERACTIVE,
                                          GObject.ParamFlags.READWRITE)
             procedure.add_gradient_argument ("gradient", _("_Gradient to use"),
-                                             "", GObject.ParamFlags.READWRITE)
+                                             "", False, GObject.ParamFlags.READWRITE)
             procedure.add_file_argument ("file", _("_File"),
                                          "", GObject.ParamFlags.READWRITE)
         return procedure

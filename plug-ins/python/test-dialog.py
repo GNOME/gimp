@@ -152,18 +152,18 @@ class TestDialogPlugin (Gimp.PlugIn):
         # Top level menu "Test"
         procedure.add_menu_path ("<Image>/Filters/Development/Demos")
 
-        procedure.add_brush_argument ("brush", "_Brush", "Brush",
+        procedure.add_brush_argument ("brush", "_Brush", "Brush", True,
                                       GObject.ParamFlags.READWRITE)
-        procedure.add_font_argument ("font", "_Font", "Font",
+        procedure.add_font_argument ("font", "_Font", "Font", True,
                                      GObject.ParamFlags.READWRITE)
         procedure.add_gradient_argument ("gradient", "_Gradient",
-                                         "Gradient",
+                                         "Gradient", True,
                                          GObject.ParamFlags.READWRITE)
         procedure.add_palette_argument ("palette", "_Palette",
-                                        "Palette",
+                                        "Palette", True,
                                         GObject.ParamFlags.READWRITE)
         procedure.add_pattern_argument ("pattern", "Pa_ttern",
-                                        "Pattern",
+                                        "Pattern", True,
                                         GObject.ParamFlags.READWRITE)
 
         return procedure
