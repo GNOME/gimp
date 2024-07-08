@@ -67,6 +67,7 @@ void   register_paint_tools_procs         (GimpPDB *pdb);
 void   register_palette_procs             (GimpPDB *pdb);
 void   register_palette_select_procs      (GimpPDB *pdb);
 void   register_palettes_procs            (GimpPDB *pdb);
+void   register_path_procs                (GimpPDB *pdb);
 void   register_pattern_procs             (GimpPDB *pdb);
 void   register_pattern_select_procs      (GimpPDB *pdb);
 void   register_patterns_procs            (GimpPDB *pdb);
@@ -79,6 +80,5 @@ void   register_selection_procs           (GimpPDB *pdb);
 void   register_text_layer_procs          (GimpPDB *pdb);
 void   register_text_tool_procs           (GimpPDB *pdb);
 void   register_unit_procs                (GimpPDB *pdb);
-void   register_vectors_procs             (GimpPDB *pdb);
 
 #endif /* __INTERNAL_PROCS_H__ */

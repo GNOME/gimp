@@ -80,6 +80,7 @@ internal_procs_init (GimpPDB *pdb)
   register_palette_procs (pdb);
   register_palette_select_procs (pdb);
   register_palettes_procs (pdb);
+  register_path_procs (pdb);
   register_pattern_procs (pdb);
   register_pattern_select_procs (pdb);
   register_patterns_procs (pdb);
@@ -92,5 +93,4 @@ internal_procs_init (GimpPDB *pdb)
   register_text_layer_procs (pdb);
   register_text_tool_procs (pdb);
   register_unit_procs (pdb);
-  register_vectors_procs (pdb);
 }
