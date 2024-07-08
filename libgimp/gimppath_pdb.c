@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpvectors_pdb.c
+ * gimppath_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,36 +28,36 @@
 
 
 /**
- * SECTION: gimpvectors
- * @title: gimpvectors
- * @short_description: Functions for querying and manipulating vectors.
+ * SECTION: gimppath
+ * @title: gimppath
+ * @short_description: Functions for querying and manipulating path.
  *
- * Functions for querying and manipulating vectors.
+ * Functions for querying and manipulating path.
  **/
 
 
 /**
- * gimp_vectors_new:
+ * gimp_path_new:
  * @image: The image.
- * @name: the name of the new vector object.
+ * @name: the name of the new path object.
  *
- * Creates a new empty vectors object.
+ * Creates a new empty path object.
  *
- * Creates a new empty vectors object. The vectors object needs to be
- * added to the image using gimp_image_insert_vectors().
+ * Creates a new empty path object. The path object needs to be added
+ * to the image using gimp_image_insert_vectors().
  *
  * Returns: (transfer none):
- *          the current vector object, 0 if no vector exists in the image.
+ *          the current path object, 0 if no path exists in the image.
  *
  * Since: 2.4
  **/
 GimpVectors *
-gimp_vectors_new (GimpImage   *image,
-                  const gchar *name)
+gimp_path_new (GimpImage   *image,
+               const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -65,39 +65,39 @@ gimp_vectors_new (GimpImage   *image,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-new",
+                                               "gimp-path-new",
                                                args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+    path = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return vectors;
+  return path;
 }
 
 /**
- * gimp_vectors_new_from_text_layer:
+ * gimp_path_new_from_text_layer:
  * @image: The image.
  * @layer: The text layer.
  *
- * Creates a new vectors object from a text layer.
+ * Creates a new path object from a text layer.
  *
- * Creates a new vectors object from a text layer. The vectors object
- * needs to be added to the image using gimp_image_insert_vectors().
+ * Creates a new path object from a text layer. The path object needs
+ * to be added to the image using gimp_image_insert_vectors().
  *
- * Returns: (transfer none): The vectors of the text layer.
+ * Returns: (transfer none): The path of the text layer.
  *
  * Since: 2.6
  **/
 GimpVectors *
-gimp_vectors_new_from_text_layer (GimpImage *image,
-                                  GimpLayer *layer)
+gimp_path_new_from_text_layer (GimpImage *image,
+                               GimpLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -105,58 +105,58 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-new-from-text-layer",
+                                               "gimp-path-new-from-text-layer",
                                                args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+    path = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return vectors;
+  return path;
 }
 
 /**
- * gimp_vectors_copy:
- * @vectors: The vectors object to copy.
+ * gimp_path_copy:
+ * @path: The path object to copy.
  *
- * Copy a vectors object.
+ * Copy a path object.
  *
- * This procedure copies the specified vectors object and returns the
+ * This procedure copies the specified path object and returns the
  * copy.
  *
- * Returns: (transfer none): The newly copied vectors object.
+ * Returns: (transfer none): The newly copied path object.
  *
  * Since: 2.6
  **/
 GimpVectors *
-gimp_vectors_copy (GimpVectors *vectors)
+gimp_path_copy (GimpVectors *path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors *vectors_copy = NULL;
+  GimpVectors *path_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-copy",
+                                               "gimp-path-copy",
                                                args);
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors_copy = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+    path_copy = GIMP_VALUES_GET_VECTORS (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return vectors_copy;
+  return path_copy;
 }
 
 /**
- * gimp_vectors_get_strokes:
- * @vectors: The vectors object.
+ * gimp_path_get_strokes:
+ * @path: The path object.
  * @num_strokes: (out): The number of strokes returned.
  *
  * List the strokes associated with the passed path.
@@ -171,19 +171,19 @@ gimp_vectors_copy (GimpVectors *vectors)
  * Since: 2.4
  **/
 gint *
-gimp_vectors_get_strokes (GimpVectors *vectors,
-                          gint        *num_strokes)
+gimp_path_get_strokes (GimpVectors *path,
+                       gint        *num_strokes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint *stroke_ids = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-get-strokes",
+                                               "gimp-path-get-strokes",
                                                args);
   gimp_value_array_unref (args);
 
@@ -201,8 +201,8 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_get_length:
- * @vectors: The vectors object.
+ * gimp_path_stroke_get_length:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @precision: The precision used for approximating straight portions of the stroke.
  *
@@ -215,22 +215,22 @@ gimp_vectors_get_strokes (GimpVectors *vectors,
  * Since: 2.4
  **/
 gdouble
-gimp_vectors_stroke_get_length (GimpVectors *vectors,
-                                gint         stroke_id,
-                                gdouble      precision)
+gimp_path_stroke_get_length (GimpVectors *path,
+                             gint         stroke_id,
+                             gdouble      precision)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble length = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-get-length",
+                                               "gimp-path-stroke-get-length",
                                                args);
   gimp_value_array_unref (args);
 
@@ -243,8 +243,8 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_get_point_at_dist:
- * @vectors: The vectors object.
+ * gimp_path_stroke_get_point_at_dist:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @dist: The given distance.
  * @precision: The precision used for the approximation.
@@ -267,28 +267,28 @@ gimp_vectors_stroke_get_length (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
-                                       gint         stroke_id,
-                                       gdouble      dist,
-                                       gdouble      precision,
-                                       gdouble     *x_point,
-                                       gdouble     *y_point,
-                                       gdouble     *slope,
-                                       gboolean    *valid)
+gimp_path_stroke_get_point_at_dist (GimpVectors *path,
+                                    gint         stroke_id,
+                                    gdouble      dist,
+                                    gdouble      precision,
+                                    gdouble     *x_point,
+                                    gdouble     *y_point,
+                                    gdouble     *slope,
+                                    gboolean    *valid)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, dist,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-get-point-at-dist",
+                                               "gimp-path-stroke-get-point-at-dist",
                                                args);
   gimp_value_array_unref (args);
 
@@ -313,33 +313,33 @@ gimp_vectors_stroke_get_point_at_dist (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_remove_stroke:
- * @vectors: The vectors object.
+ * gimp_path_remove_stroke:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  *
- * remove the stroke from a vectors object.
+ * remove the stroke from a path object.
  *
- * Remove the stroke from a vectors object.
+ * Remove the stroke from a path object.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_remove_stroke (GimpVectors *vectors,
-                            gint         stroke_id)
+gimp_path_remove_stroke (GimpVectors *path,
+                         gint         stroke_id)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-remove-stroke",
+                                               "gimp-path-remove-stroke",
                                                args);
   gimp_value_array_unref (args);
 
@@ -351,8 +351,8 @@ gimp_vectors_remove_stroke (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_close:
- * @vectors: The vectors object.
+ * gimp_path_stroke_close:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  *
  * closes the specified stroke.
@@ -364,20 +364,20 @@ gimp_vectors_remove_stroke (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_close (GimpVectors *vectors,
-                           gint         stroke_id)
+gimp_path_stroke_close (GimpVectors *path,
+                        gint         stroke_id)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-close",
+                                               "gimp-path-stroke-close",
                                                args);
   gimp_value_array_unref (args);
 
@@ -389,8 +389,8 @@ gimp_vectors_stroke_close (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_reverse:
- * @vectors: The vectors object.
+ * gimp_path_stroke_reverse:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  *
  * reverses the specified stroke.
@@ -402,20 +402,20 @@ gimp_vectors_stroke_close (GimpVectors *vectors,
  * Since: 3.0
  **/
 gboolean
-gimp_vectors_stroke_reverse (GimpVectors *vectors,
-                             gint         stroke_id)
+gimp_path_stroke_reverse (GimpVectors *path,
+                          gint         stroke_id)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-reverse",
+                                               "gimp-path-stroke-reverse",
                                                args);
   gimp_value_array_unref (args);
 
@@ -427,8 +427,8 @@ gimp_vectors_stroke_reverse (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_translate:
- * @vectors: The vectors object.
+ * gimp_path_stroke_translate:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @off_x: Offset in x direction.
  * @off_y: Offset in y direction.
@@ -442,24 +442,24 @@ gimp_vectors_stroke_reverse (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_translate (GimpVectors *vectors,
-                               gint         stroke_id,
-                               gdouble      off_x,
-                               gdouble      off_y)
+gimp_path_stroke_translate (GimpVectors *path,
+                            gint         stroke_id,
+                            gdouble      off_x,
+                            gdouble      off_y)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, off_x,
                                           G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-translate",
+                                               "gimp-path-stroke-translate",
                                                args);
   gimp_value_array_unref (args);
 
@@ -471,8 +471,8 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_scale:
- * @vectors: The vectors object.
+ * gimp_path_stroke_scale:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @scale_x: Scale factor in x direction.
  * @scale_y: Scale factor in y direction.
@@ -486,24 +486,24 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_scale (GimpVectors *vectors,
-                           gint         stroke_id,
-                           gdouble      scale_x,
-                           gdouble      scale_y)
+gimp_path_stroke_scale (GimpVectors *path,
+                        gint         stroke_id,
+                        gdouble      scale_x,
+                        gdouble      scale_y)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, scale_x,
                                           G_TYPE_DOUBLE, scale_y,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-scale",
+                                               "gimp-path-stroke-scale",
                                                args);
   gimp_value_array_unref (args);
 
@@ -515,8 +515,8 @@ gimp_vectors_stroke_scale (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_rotate:
- * @vectors: The vectors object.
+ * gimp_path_stroke_rotate:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @center_x: X coordinate of the rotation center.
  * @center_y: Y coordinate of the rotation center.
@@ -531,18 +531,18 @@ gimp_vectors_stroke_scale (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_rotate (GimpVectors *vectors,
-                            gint         stroke_id,
-                            gdouble      center_x,
-                            gdouble      center_y,
-                            gdouble      angle)
+gimp_path_stroke_rotate (GimpVectors *path,
+                         gint         stroke_id,
+                         gdouble      center_x,
+                         gdouble      center_y,
+                         gdouble      angle)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
@@ -550,7 +550,7 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-rotate",
+                                               "gimp-path-stroke-rotate",
                                                args);
   gimp_value_array_unref (args);
 
@@ -562,8 +562,8 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_flip:
- * @vectors: The vectors object.
+ * gimp_path_stroke_flip:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @flip_type: Flip orientation, either vertical or horizontal.
  * @axis: axis coordinate about which to flip, in pixels.
@@ -577,24 +577,24 @@ gimp_vectors_stroke_rotate (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_flip (GimpVectors         *vectors,
-                          gint                 stroke_id,
-                          GimpOrientationType  flip_type,
-                          gdouble              axis)
+gimp_path_stroke_flip (GimpVectors         *path,
+                       gint                 stroke_id,
+                       GimpOrientationType  flip_type,
+                       gdouble              axis)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-flip",
+                                               "gimp-path-stroke-flip",
                                                args);
   gimp_value_array_unref (args);
 
@@ -606,8 +606,8 @@ gimp_vectors_stroke_flip (GimpVectors         *vectors,
 }
 
 /**
- * gimp_vectors_stroke_flip_free:
- * @vectors: The vectors object.
+ * gimp_path_stroke_flip_free:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @x1: X coordinate of the first point of the flipping axis.
  * @y1: Y coordinate of the first point of the flipping axis.
@@ -625,19 +625,19 @@ gimp_vectors_stroke_flip (GimpVectors         *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_stroke_flip_free (GimpVectors *vectors,
-                               gint         stroke_id,
-                               gdouble      x1,
-                               gdouble      y1,
-                               gdouble      x2,
-                               gdouble      y2)
+gimp_path_stroke_flip_free (GimpVectors *path,
+                            gint         stroke_id,
+                            gdouble      x1,
+                            gdouble      y1,
+                            gdouble      x2,
+                            gdouble      y2)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
@@ -646,7 +646,7 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-flip-free",
+                                               "gimp-path-stroke-flip-free",
                                                args);
   gimp_value_array_unref (args);
 
@@ -658,8 +658,8 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_stroke_get_points:
- * @vectors: The vectors object.
+ * gimp_path_stroke_get_points:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @num_points: (out): The number of floats returned.
  * @controlpoints: (out) (array length=num_points) (element-type gdouble) (transfer full): List of the control points for the stroke (x0, y0, x1, y1, ...).
@@ -677,23 +677,23 @@ gimp_vectors_stroke_flip_free (GimpVectors *vectors,
  * Since: 2.4
  **/
 GimpVectorsStrokeType
-gimp_vectors_stroke_get_points (GimpVectors  *vectors,
-                                gint          stroke_id,
-                                gint         *num_points,
-                                gdouble     **controlpoints,
-                                gboolean     *closed)
+gimp_path_stroke_get_points (GimpVectors  *path,
+                             gint          stroke_id,
+                             gint         *num_points,
+                             gdouble     **controlpoints,
+                             gboolean     *closed)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpVectorsStrokeType type = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-get-points",
+                                               "gimp-path-stroke-get-points",
                                                args);
   gimp_value_array_unref (args);
 
@@ -713,17 +713,17 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
 }
 
 /**
- * gimp_vectors_stroke_new_from_points:
- * @vectors: The vectors object.
+ * gimp_path_stroke_new_from_points:
+ * @path: The path object.
  * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
  * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
  * @controlpoints: (array length=num_points) (element-type gdouble): List of the x- and y-coordinates of the control points.
  * @closed: Whether the stroke is to be closed or not.
  *
- * Adds a stroke of a given type to the vectors object.
+ * Adds a stroke of a given type to the path object.
  *
- * Adds a stroke of a given type to the vectors object. The coordinates
- * of the control points can be specified. For now only strokes of the
+ * Adds a stroke of a given type to the path object. The coordinates of
+ * the control points can be specified. For now only strokes of the
  * type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control
  * points are specified as a pair of float values for the x- and
  * y-coordinate. The Bezier stroke type needs a multiple of three
@@ -736,18 +736,18 @@ gimp_vectors_stroke_get_points (GimpVectors  *vectors,
  * Since: 2.4
  **/
 gint
-gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
-                                     GimpVectorsStrokeType  type,
-                                     gint                   num_points,
-                                     const gdouble         *controlpoints,
-                                     gboolean               closed)
+gimp_path_stroke_new_from_points (GimpVectors           *path,
+                                  GimpVectorsStrokeType  type,
+                                  gint                   num_points,
+                                  const gdouble         *controlpoints,
+                                  gboolean               closed)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           GIMP_TYPE_VECTORS_STROKE_TYPE, type,
                                           G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -756,7 +756,7 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
   gimp_value_set_float_array (gimp_value_array_index (args, 3), controlpoints, num_points);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-new-from-points",
+                                               "gimp-path-stroke-new-from-points",
                                                args);
   gimp_value_array_unref (args);
 
@@ -769,8 +769,8 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
 }
 
 /**
- * gimp_vectors_stroke_interpolate:
- * @vectors: The vectors object.
+ * gimp_path_stroke_interpolate:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @precision: The precision used for the approximation.
  * @num_coords: (out): The number of floats returned.
@@ -787,24 +787,24 @@ gimp_vectors_stroke_new_from_points (GimpVectors           *vectors,
  * Since: 2.4
  **/
 gdouble *
-gimp_vectors_stroke_interpolate (GimpVectors *vectors,
-                                 gint         stroke_id,
-                                 gdouble      precision,
-                                 gint        *num_coords,
-                                 gboolean    *closed)
+gimp_path_stroke_interpolate (GimpVectors *path,
+                              gint         stroke_id,
+                              gdouble      precision,
+                              gint        *num_coords,
+                              gboolean    *closed)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble *coords = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-stroke-interpolate",
+                                               "gimp-path-stroke-interpolate",
                                                args);
   gimp_value_array_unref (args);
 
@@ -823,36 +823,36 @@ gimp_vectors_stroke_interpolate (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_bezier_stroke_new_moveto:
- * @vectors: The vectors object.
+ * gimp_path_bezier_stroke_new_moveto:
+ * @path: The path object.
  * @x0: The x-coordinate of the moveto.
  * @y0: The y-coordinate of the moveto.
  *
- * Adds a bezier stroke with a single moveto to the vectors object.
+ * Adds a bezier stroke with a single moveto to the path object.
  *
- * Adds a bezier stroke with a single moveto to the vectors object.
+ * Adds a bezier stroke with a single moveto to the path object.
  *
  * Returns: The resulting stroke.
  *
  * Since: 2.4
  **/
 gint
-gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
-                                       gdouble      x0,
-                                       gdouble      y0)
+gimp_path_bezier_stroke_new_moveto (GimpVectors *path,
+                                    gdouble      x0,
+                                    gdouble      y0)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-bezier-stroke-new-moveto",
+                                               "gimp-path-bezier-stroke-new-moveto",
                                                args);
   gimp_value_array_unref (args);
 
@@ -865,8 +865,8 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_bezier_stroke_lineto:
- * @vectors: The vectors object.
+ * gimp_path_bezier_stroke_lineto:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @x0: The x-coordinate of the lineto.
  * @y0: The y-coordinate of the lineto.
@@ -880,24 +880,24 @@ gimp_vectors_bezier_stroke_new_moveto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
-                                   gint         stroke_id,
-                                   gdouble      x0,
-                                   gdouble      y0)
+gimp_path_bezier_stroke_lineto (GimpVectors *path,
+                                gint         stroke_id,
+                                gdouble      x0,
+                                gdouble      y0)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-bezier-stroke-lineto",
+                                               "gimp-path-bezier-stroke-lineto",
                                                args);
   gimp_value_array_unref (args);
 
@@ -909,8 +909,8 @@ gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_bezier_stroke_conicto:
- * @vectors: The vectors object.
+ * gimp_path_bezier_stroke_conicto:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @x0: The x-coordinate of the control point.
  * @y0: The y-coordinate of the control point.
@@ -928,19 +928,19 @@ gimp_vectors_bezier_stroke_lineto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
-                                    gint         stroke_id,
-                                    gdouble      x0,
-                                    gdouble      y0,
-                                    gdouble      x1,
-                                    gdouble      y1)
+gimp_path_bezier_stroke_conicto (GimpVectors *path,
+                                 gint         stroke_id,
+                                 gdouble      x0,
+                                 gdouble      y0,
+                                 gdouble      x1,
+                                 gdouble      y1)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -949,7 +949,7 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-bezier-stroke-conicto",
+                                               "gimp-path-bezier-stroke-conicto",
                                                args);
   gimp_value_array_unref (args);
 
@@ -961,8 +961,8 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_bezier_stroke_cubicto:
- * @vectors: The vectors object.
+ * gimp_path_bezier_stroke_cubicto:
+ * @path: The path object.
  * @stroke_id: The stroke ID.
  * @x0: The x-coordinate of the first control point.
  * @y0: The y-coordinate of the first control point.
@@ -980,21 +980,21 @@ gimp_vectors_bezier_stroke_conicto (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
-                                    gint         stroke_id,
-                                    gdouble      x0,
-                                    gdouble      y0,
-                                    gdouble      x1,
-                                    gdouble      y1,
-                                    gdouble      x2,
-                                    gdouble      y2)
+gimp_path_bezier_stroke_cubicto (GimpVectors *path,
+                                 gint         stroke_id,
+                                 gdouble      x0,
+                                 gdouble      y0,
+                                 gdouble      x1,
+                                 gdouble      y1,
+                                 gdouble      x2,
+                                 gdouble      y2)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
@@ -1005,7 +1005,7 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-bezier-stroke-cubicto",
+                                               "gimp-path-bezier-stroke-cubicto",
                                                args);
   gimp_value_array_unref (args);
 
@@ -1017,36 +1017,36 @@ gimp_vectors_bezier_stroke_cubicto (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_bezier_stroke_new_ellipse:
- * @vectors: The vectors object.
+ * gimp_path_bezier_stroke_new_ellipse:
+ * @path: The path object.
  * @x0: The x-coordinate of the center.
  * @y0: The y-coordinate of the center.
  * @radius_x: The radius in x direction.
  * @radius_y: The radius in y direction.
  * @angle: The angle the x-axis of the ellipse (radians, counterclockwise).
  *
- * Adds a bezier stroke describing an ellipse the vectors object.
+ * Adds a bezier stroke describing an ellipse the path object.
  *
- * Adds a bezier stroke describing an ellipse the vectors object.
+ * Adds a bezier stroke describing an ellipse on the path object.
  *
  * Returns: The resulting stroke.
  *
  * Since: 2.4
  **/
 gint
-gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
-                                        gdouble      x0,
-                                        gdouble      y0,
-                                        gdouble      radius_x,
-                                        gdouble      radius_y,
-                                        gdouble      angle)
+gimp_path_bezier_stroke_new_ellipse (GimpVectors *path,
+                                     gdouble      x0,
+                                     gdouble      y0,
+                                     gdouble      radius_x,
+                                     gdouble      radius_y,
+                                     gdouble      angle)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, radius_x,
@@ -1055,7 +1055,7 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-bezier-stroke-new-ellipse",
+                                               "gimp-path-bezier-stroke-new-ellipse",
                                                args);
   gimp_value_array_unref (args);
 
@@ -1068,13 +1068,13 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
 }
 
 /**
- * gimp_vectors_import_from_file:
+ * gimp_path_import_from_file:
  * @image: The image.
  * @file: The SVG file to import.
- * @merge: Merge paths into a single vectors object.
+ * @merge: Merge paths into a single path object.
  * @scale: Scale the SVG to image dimensions.
- * @num_vectors: (out): The number of newly created vectors.
- * @vectors: (out) (array length=num_vectors) (element-type GimpVectors) (transfer container): The list of newly created vectors.
+ * @num_paths: (out): The number of newly created path.
+ * @path: (out) (array length=num_paths) (element-type GimpVectors) (transfer container): The list of newly created path.
  *
  * Import paths from an SVG file.
  *
@@ -1086,12 +1086,12 @@ gimp_vectors_bezier_stroke_new_ellipse (GimpVectors *vectors,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_file (GimpImage     *image,
-                               GFile         *file,
-                               gboolean       merge,
-                               gboolean       scale,
-                               gint          *num_vectors,
-                               GimpVectors ***vectors)
+gimp_path_import_from_file (GimpImage     *image,
+                            GFile         *file,
+                            gboolean       merge,
+                            gboolean       scale,
+                            gint          *num_paths,
+                            GimpVectors ***path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1105,19 +1105,19 @@ gimp_vectors_import_from_file (GimpImage     *image,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-import-from-file",
+                                               "gimp-path-import-from-file",
                                                args);
   gimp_value_array_unref (args);
 
-  *num_vectors = 0;
-  *vectors = NULL;
+  *num_paths = 0;
+  *path = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *path = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
   gimp_value_array_unref (return_vals);
@@ -1126,14 +1126,14 @@ gimp_vectors_import_from_file (GimpImage     *image,
 }
 
 /**
- * gimp_vectors_import_from_string:
+ * gimp_path_import_from_string:
  * @image: The image.
  * @string: A string that must be a complete and valid SVG document.
  * @length: Number of bytes in string or -1 if the string is NULL terminated.
- * @merge: Merge paths into a single vectors object.
+ * @merge: Merge paths into a single path object.
  * @scale: Scale the SVG to image dimensions.
- * @num_vectors: (out): The number of newly created vectors.
- * @vectors: (out) (array length=num_vectors) (element-type GimpVectors) (transfer container): The list of newly created vectors.
+ * @num_paths: (out): The number of newly created path.
+ * @path: (out) (array length=num_paths) (element-type GimpVectors) (transfer container): The list of newly created path.
  *
  * Import paths from an SVG string.
  *
@@ -1146,13 +1146,13 @@ gimp_vectors_import_from_file (GimpImage     *image,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_string (GimpImage     *image,
-                                 const gchar   *string,
-                                 gint           length,
-                                 gboolean       merge,
-                                 gboolean       scale,
-                                 gint          *num_vectors,
-                                 GimpVectors ***vectors)
+gimp_path_import_from_string (GimpImage     *image,
+                              const gchar   *string,
+                              gint           length,
+                              gboolean       merge,
+                              gboolean       scale,
+                              gint          *num_paths,
+                              GimpVectors ***path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1167,19 +1167,19 @@ gimp_vectors_import_from_string (GimpImage     *image,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-import-from-string",
+                                               "gimp-path-import-from-string",
                                                args);
   gimp_value_array_unref (args);
 
-  *num_vectors = 0;
-  *vectors = NULL;
+  *num_paths = 0;
+  *path = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *path = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
   gimp_value_array_unref (return_vals);
@@ -1188,26 +1188,26 @@ gimp_vectors_import_from_string (GimpImage     *image,
 }
 
 /**
- * gimp_vectors_export_to_file:
+ * gimp_path_export_to_file:
  * @image: The image.
  * @file: The SVG file to create.
- * @vectors: (nullable): The vectors object to export, or %NULL for all in the image.
+ * @path: (nullable): The path object to export, or %NULL for all in the image.
  *
  * save a path as an SVG file.
  *
- * This procedure creates an SVG file to save a Vectors object, that
- * is, a path. The resulting file can be edited using a vector graphics
- * application, or later reloaded into GIMP. Pass %NULL as the
- * 'vectors' argument to export all paths in the image.
+ * This procedure creates an SVG file to save a Path object, that is, a
+ * path. The resulting file can be edited using a vector graphics
+ * application, or later reloaded into GIMP. Pass %NULL as the 'path'
+ * argument to export all paths in the image.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.6
  **/
 gboolean
-gimp_vectors_export_to_file (GimpImage   *image,
-                             GFile       *file,
-                             GimpVectors *vectors)
+gimp_path_export_to_file (GimpImage   *image,
+                          GFile       *file,
+                          GimpVectors *path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1216,11 +1216,11 @@ gimp_vectors_export_to_file (GimpImage   *image,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-export-to-file",
+                                               "gimp-path-export-to-file",
                                                args);
   gimp_value_array_unref (args);
 
@@ -1232,16 +1232,16 @@ gimp_vectors_export_to_file (GimpImage   *image,
 }
 
 /**
- * gimp_vectors_export_to_string:
+ * gimp_path_export_to_string:
  * @image: The image.
- * @vectors: (nullable): The vectors object to export, or %NULL for all in the image.
+ * @path: (nullable): The path object to export, or %NULL for all in the image.
  *
  * Save a path as an SVG string.
  *
- * This procedure works like gimp_vectors_export_to_file() but creates
- * a string rather than a file. The string is NULL-terminated and holds
- * a complete XML document. Pass %NULL as the 'vectors' argument to
- * export all paths in the image.
+ * This procedure works like gimp_path_export_to_file() but creates a
+ * string rather than a file. The string is NULL-terminated and holds a
+ * complete XML document. Pass %NULL as the 'path' argument to export
+ * all paths in the image.
  *
  * Returns: (transfer full):
  *          A string whose contents are a complete SVG document.
@@ -1250,8 +1250,8 @@ gimp_vectors_export_to_file (GimpImage   *image,
  * Since: 2.6
  **/
 gchar *
-gimp_vectors_export_to_string (GimpImage   *image,
-                               GimpVectors *vectors)
+gimp_path_export_to_string (GimpImage   *image,
+                            GimpVectors *path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1259,11 +1259,11 @@ gimp_vectors_export_to_string (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_VECTORS, vectors,
+                                          GIMP_TYPE_VECTORS, path,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-vectors-export-to-string",
+                                               "gimp-path-export-to-string",
                                                args);
   gimp_value_array_unref (args);
 

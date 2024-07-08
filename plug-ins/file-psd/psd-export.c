@@ -1151,20 +1151,20 @@ save_paths (GOutputStream  *output,
   gshort  id     = 0x07D0; /* Photoshop paths have IDs >= 2000 */
   gdouble width  = gimp_image_get_width (image);
   gdouble height = gimp_image_get_height (image);
-  GList  *vectors;
+  GList  *paths;
   GList  *iter;
   gint    v;
   gint    num_strokes;
   gint   *strokes;
   gint    s;
 
-  vectors = gimp_image_list_paths (image);
+  paths = gimp_image_list_paths (image);
 
-  if (! vectors)
+  if (! paths)
     return;
 
   /* Only up to 997 paths supported */
-  for (iter = vectors, v = 0;
+  for (iter = paths, v = 0;
        iter && v <= 997;
        iter = g_list_next (iter), v++)
     {
@@ -1221,7 +1221,7 @@ save_paths (GOutputStream  *output,
       pointrecord[1] = 6;  /* fill rule record */
       g_string_append_len (data, pointrecord, 26);
 
-      strokes = gimp_vectors_get_strokes (iter->data, &num_strokes);
+      strokes = gimp_path_get_strokes (iter->data, &num_strokes);
 
       for (s = 0; s < num_strokes; s++)
         {
@@ -1231,8 +1231,8 @@ save_paths (GOutputStream  *output,
           gboolean  closed;
           gint      p = 0;
 
-          type = gimp_vectors_stroke_get_points (iter->data, strokes[s],
-                                                 &num_points, &points, &closed);
+          type = gimp_path_stroke_get_points (iter->data, strokes[s],
+                                              &num_points, &points, &closed);
 
           if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
               num_points > 65535 ||
@@ -1279,7 +1279,7 @@ save_paths (GOutputStream  *output,
       id += 0x01;
     }
 
-  g_list_free (vectors);
+  g_list_free (paths);
 }
 
 static void

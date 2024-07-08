@@ -331,21 +331,21 @@ gimp_item_is_selection (GimpItem *item)
 }
 
 /**
- * gimp_item_is_vectors:
+ * gimp_item_is_path:
  * @item: The item.
  *
- * Returns whether the item is a vectors.
+ * Returns whether the item is a path.
  *
- * This procedure returns TRUE if the specified item is a vectors.
+ * This procedure returns TRUE if the specified item is a path.
  *
- * Returns: TRUE if the item is a vectors, FALSE otherwise.
+ * Returns: TRUE if the item is a path, FALSE otherwise.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_vectors (GimpItem *item)
+gimp_item_is_path (GimpItem *item)
 {
-  return gimp_item_id_is_vectors (gimp_item_get_id (item));
+  return gimp_item_id_is_path (gimp_item_get_id (item));
 }
 
 /**

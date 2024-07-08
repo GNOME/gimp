@@ -103,6 +103,7 @@ pdb_wrappers_sources = [
   'gimppalette_pdb.c',
   'gimppalettes_pdb.c',
   'gimppaletteselect_pdb.c',
+  'gimppath_pdb.c',
   'gimppattern_pdb.c',
   'gimppatterns_pdb.c',
   'gimppatternselect_pdb.c',
@@ -111,7 +112,6 @@ pdb_wrappers_sources = [
   'gimpselection_pdb.c',
   'gimptextlayer_pdb.c',
   'gimptexttool_pdb.c',
-  'gimpvectors_pdb.c',
 ]
 
 pdb_wrappers_headers = [
@@ -159,6 +159,7 @@ pdb_wrappers_headers = [
   'gimppalette_pdb.h',
   'gimppalettes_pdb.h',
   'gimppaletteselect_pdb.h',
+  'gimppath_pdb.h',
   'gimppattern_pdb.h',
   'gimppatterns_pdb.h',
   'gimppatternselect_pdb.h',
@@ -167,7 +168,6 @@ pdb_wrappers_headers = [
   'gimpselection_pdb.h',
   'gimptextlayer_pdb.h',
   'gimptexttool_pdb.h',
-  'gimpvectors_pdb.h',
 ]
 
 libgimp_sources_introspectable = [

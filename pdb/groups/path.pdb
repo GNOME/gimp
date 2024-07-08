@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-sub vectors_new {
-    $blurb = 'Creates a new empty vectors object.';
+sub path_new {
+    $blurb = 'Creates a new empty path object.';
 
     $help = <<'HELP';
-Creates a new empty vectors object. The vectors object needs to be added to
+Creates a new empty path object. The path object needs to be added to
 the image using gimp_image_insert_vectors().
 HELP
 
@@ -28,29 +28,29 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
         { name => 'name', type => 'string',
-          desc => 'the name of the new vector object.' }
+          desc => 'the name of the new path object.' }
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectors',
-          desc => 'the current vector object, 0 if no vector exists
+        { name => 'path', type => 'vectors',
+          desc => 'the current path object, 0 if no path exists
                    in the image.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  vectors = gimp_vectors_new (image, name);
+  path = gimp_vectors_new (image, name);
 }
 CODE
     );
 }
 
-sub vectors_new_from_text_layer {
-    $blurb = 'Creates a new vectors object from a text layer.';
+sub path_new_from_text_layer {
+    $blurb = 'Creates a new path object from a text layer.';
 
     $help = <<'HELP';
-Creates a new vectors object from a text layer. The vectors object needs to
+Creates a new path object from a text layer. The path object needs to
 be added to the image using gimp_image_insert_vectors().
 HELP
 
@@ -64,8 +64,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectors',
-	  desc => 'The vectors of the text layer.' }
+        { name => 'path', type => 'vectors',
+	  desc => 'The path of the text layer.' }
     );
 
     %invoke = (
@@ -75,11 +75,11 @@ HELP
     {
       gint x, y;
 
-      vectors = gimp_text_vectors_new (image,
+      path = gimp_text_vectors_new (image,
 				       gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
 
       gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
-      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+      gimp_item_translate (GIMP_ITEM (path), x, y, FALSE);
     }
   else
     {
@@ -90,39 +90,39 @@ CODE
     );
 }
 
-sub vectors_copy {
-    $blurb = 'Copy a vectors object.';
+sub path_copy {
+    $blurb = 'Copy a path object.';
 
     $help = <<'HELP';
-This procedure copies the specified vectors object and returns the copy.
+This procedure copies the specified path object and returns the copy.
 HELP
 
     barak_pdb_misc('2008', '2.6');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object to copy' }
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object to copy' }
     );
 
     @outargs = (
-	{ name => 'vectors_copy', type => 'vectors',
-	  desc => 'The newly copied vectors object' }
+	{ name => 'path_copy', type => 'vectors',
+	  desc => 'The newly copied path object' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  vectors_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                               G_TYPE_FROM_INSTANCE (vectors)));
+  path_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (path),
+                            G_TYPE_FROM_INSTANCE (path)));
 
-  if (! vectors_copy)
+  if (! path_copy)
     success = FALSE;
 }
 CODE
     );
 }
 
-sub vectors_get_strokes {
+sub path_get_strokes {
     $blurb = 'List the strokes associated with the passed path.';
 
     $help = <<'HELP';
@@ -132,8 +132,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' }
     );
 
     @outargs = (
@@ -146,7 +146,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  num_strokes = gimp_vectors_get_n_strokes (vectors);
+  num_strokes = gimp_vectors_get_n_strokes (path);
 
   if (num_strokes)
     {
@@ -155,9 +155,9 @@ HELP
 
       stroke_ids = g_new (gint32, num_strokes);
 
-      for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+      for (cur_stroke = gimp_vectors_stroke_get_next (path, NULL);
            cur_stroke;
-           cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+           cur_stroke = gimp_vectors_stroke_get_next (path, cur_stroke))
         {
           stroke_ids[i] = gimp_stroke_get_id (cur_stroke);
           i++;
@@ -168,15 +168,15 @@ CODE
     );
 }
 
-sub vectors_stroke_get_length {
+sub path_stroke_get_length {
     $blurb = 'Measure the length of the given stroke.';
     $help  = 'Measure the length of the given stroke.';
 
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'precision', type => '0.0 <= float', default => 0.1,
@@ -191,7 +191,7 @@ sub vectors_stroke_get_length {
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
   if (stroke)
     length = gimp_stroke_get_length (stroke, precision);
@@ -202,7 +202,7 @@ CODE
     );
 }
 
-sub vectors_stroke_get_point_at_dist {
+sub path_stroke_get_point_at_dist {
     $blurb = 'Get point at a specified distance along the stroke.';
 
     $help = <<'HELP';
@@ -216,8 +216,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'dist', type => 'float',
@@ -240,7 +240,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
   if (stroke)
     {
@@ -258,18 +258,18 @@ CODE
     );
 }
 
-sub vectors_remove_stroke {
-    $blurb = 'remove the stroke from a vectors object.';
+sub path_remove_stroke {
+    $blurb = 'remove the stroke from a path object.';
 
     $help = <<'HELP';
-Remove the stroke from a vectors object.
+Remove the stroke from a path object.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
     );
@@ -277,17 +277,17 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Remove path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_stroke_remove (vectors, stroke);
+      gimp_vectors_stroke_remove (path, stroke);
     }
   else
     success = FALSE;
@@ -296,7 +296,7 @@ CODE
     );
 }
 
-sub vectors_stroke_close {
+sub path_stroke_close {
     $blurb = 'closes the specified stroke.';
 
     $help = <<'HELP';
@@ -306,8 +306,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
     );
@@ -315,19 +315,19 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Close path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_close (stroke);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -337,7 +337,7 @@ CODE
 }
 
 
-sub vectors_stroke_reverse {
+sub path_stroke_reverse {
     $blurb = 'reverses the specified stroke.';
 
     $help = <<'HELP';
@@ -347,8 +347,8 @@ HELP
     &simon_pdb_misc('2020', '3.0');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
     );
@@ -356,19 +356,19 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Reverse path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_reverse (stroke);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -378,7 +378,7 @@ CODE
 }
 
 
-sub vectors_stroke_translate {
+sub path_stroke_translate {
     $blurb = 'translate the given stroke.';
 
     $help = <<'HELP';
@@ -388,8 +388,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
 	{ name => "off_x", type => 'float',
@@ -401,21 +401,21 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT |
-                                                    GIMP_PDB_ITEM_POSITION,
-                                                    error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT |
+                                                 GIMP_PDB_ITEM_POSITION,
+                                                 error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Translate path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_translate (stroke, off_x, off_y);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -424,7 +424,7 @@ CODE
     );
 }
 
-sub vectors_stroke_scale {
+sub path_stroke_scale {
     $blurb = 'scales the given stroke.';
 
     $help = <<'HELP';
@@ -434,8 +434,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
 	{ name => "scale_x", type => 'float',
@@ -447,21 +447,21 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT |
-                                                    GIMP_PDB_ITEM_POSITION,
-                                                    error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT |
+                                                 GIMP_PDB_ITEM_POSITION,
+                                                 error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Scale path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_scale (stroke, scale_x, scale_y);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -470,7 +470,7 @@ CODE
     );
 }
 
-sub vectors_stroke_rotate {
+sub path_stroke_rotate {
     $blurb = 'rotates the given stroke.';
 
     $help = <<'HELP';
@@ -479,8 +479,8 @@ HELP
 
     &joao_pdb_misc('2006', '2.4');
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
 	{ name => "center_x", type => 'float',
@@ -494,21 +494,21 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT |
-                                                    GIMP_PDB_ITEM_POSITION,
-                                                    error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT |
+                                                 GIMP_PDB_ITEM_POSITION,
+                                                 error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Rotate path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_rotate (stroke, center_x, center_y, angle);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -517,7 +517,7 @@ CODE
     );
 }
 
-sub vectors_stroke_flip {
+sub path_stroke_flip {
     $blurb = 'flips the given stroke.';
 
     $help = <<'HELP';
@@ -526,8 +526,8 @@ HELP
 
     &joao_pdb_misc('2006', '2.4');
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
 	{ name => "flip_type",
@@ -540,21 +540,21 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT |
-                                                    GIMP_PDB_ITEM_POSITION,
-                                                    error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT |
+                                                 GIMP_PDB_ITEM_POSITION,
+                                                 error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Flip path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_flip (stroke, flip_type, axis);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -563,7 +563,7 @@ CODE
     );
 }
 
-sub vectors_stroke_flip_free {
+sub path_stroke_flip_free {
     $blurb = 'flips the given stroke about an arbitrary axis.';
 
     $help = <<'HELP';
@@ -573,8 +573,8 @@ HELP
 
     &joao_pdb_misc('2006', '2.4');
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
 	{ name => "x1", type => 'float',
@@ -591,21 +591,21 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT |
-                                                    GIMP_PDB_ITEM_POSITION,
-                                                    error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT |
+                                                 GIMP_PDB_ITEM_POSITION,
+                                                 error);
 
   if (stroke)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Flip path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -614,7 +614,7 @@ CODE
     );
 }
 
-sub vectors_stroke_get_points {
+sub path_stroke_get_points {
     $blurb = 'returns the control points of a stroke.';
 
     $help = <<'HELP';
@@ -626,8 +626,8 @@ HELP
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
     );
@@ -646,7 +646,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
   if (GIMP_IS_BEZIER_STROKE (stroke))
     {
@@ -682,7 +682,7 @@ CODE
 }
 
 
-sub vectors_stroke_interpolate {
+sub path_stroke_interpolate {
     $blurb = 'returns polygonal approximation of the stroke.';
 
     $help = <<'HELP';
@@ -692,8 +692,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'precision', type => 'float',
@@ -712,7 +712,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
   if (stroke)
     {
@@ -745,11 +745,11 @@ CODE
 }
 
 
-sub vectors_stroke_new_from_points {
-    $blurb = 'Adds a stroke of a given type to the vectors object.';
+sub path_stroke_new_from_points {
+    $blurb = 'Adds a stroke of a given type to the path object.';
 
     $help = <<'HELP';
-Adds a stroke of a given type to the vectors object. The coordinates of the
+Adds a stroke of a given type to the path object. The coordinates of the
 control points can be specified.
 For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported.
 The control points are specified as a pair of float values for the x- and
@@ -762,8 +762,8 @@ HELP
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'type', type => 'enum GimpVectorsStrokeType',
 	  desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
 	{ name => 'controlpoints', type => 'floatarray',
@@ -805,12 +805,12 @@ HELP
       stroke = gimp_stroke_new_from_coords (type, coords, num_points/2, closed);
       if (stroke)
         {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                               _("Add path stroke"),
-                                              vectors);
+                                              path);
 
-	  gimp_vectors_stroke_add (vectors, stroke);
+	  gimp_vectors_stroke_add (path, stroke);
 	  g_object_unref (stroke);
 
 	  stroke_id = gimp_stroke_get_id (stroke);
@@ -825,18 +825,18 @@ CODE
     );
 }
 
-sub vectors_bezier_stroke_new_moveto {
-    $blurb = 'Adds a bezier stroke with a single moveto to the vectors object.';
+sub path_bezier_stroke_new_moveto {
+    $blurb = 'Adds a bezier stroke with a single moveto to the path object.';
 
     $help = <<'HELP';
-Adds a bezier stroke with a single moveto to the vectors object.
+Adds a bezier stroke with a single moveto to the path object.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
         { name => 'x0', type => 'float',
           desc => 'The x-coordinate of the moveto' },
         { name => 'y0', type => 'float',
@@ -851,9 +851,9 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
+  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (path),
                                    GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+      gimp_pdb_item_is_not_group (GIMP_ITEM (path), error))
     {
       GimpStroke *stroke;
       GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
@@ -863,12 +863,12 @@ HELP
 
       stroke = gimp_bezier_stroke_new_moveto (&coord0);
 
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Add path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      gimp_vectors_stroke_add (path, stroke);
       g_object_unref (stroke);
 
       stroke_id = gimp_stroke_get_id (stroke);
@@ -880,7 +880,7 @@ CODE
     );
 }
 
-sub vectors_bezier_stroke_lineto {
+sub path_bezier_stroke_lineto {
     $blurb = 'Extends a bezier stroke with a lineto.';
 
     $help = <<'HELP';
@@ -890,8 +890,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'x0', type => 'float',
@@ -903,8 +903,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
@@ -913,14 +913,14 @@ HELP
       coord0.x = x0;
       coord0.y = y0;
 
-     if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+     if (gimp_item_is_attached (GIMP_ITEM (path)))
+       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                          _("Extend path stroke"),
-                                         vectors);
+                                         path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_bezier_stroke_lineto (stroke, &coord0);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -929,7 +929,7 @@ CODE
     );
 }
 
-sub vectors_bezier_stroke_conicto {
+sub path_bezier_stroke_conicto {
     $blurb = 'Extends a bezier stroke with a conic bezier spline.';
 
     $help = <<'HELP';
@@ -941,8 +941,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'x0', type => 'float',
@@ -958,8 +958,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
@@ -972,14 +972,14 @@ HELP
       coord1.x = x1;
       coord1.y = y1;
 
-     if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+     if (gimp_item_is_attached (GIMP_ITEM (path)))
+       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                          _("Extend path stroke"),
-                                         vectors);
+                                         path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -988,7 +988,7 @@ CODE
     );
 }
 
-sub vectors_bezier_stroke_cubicto {
+sub path_bezier_stroke_cubicto {
     $blurb = 'Extends a bezier stroke with a cubic bezier spline.';
 
     $help = <<'HELP';
@@ -998,8 +998,8 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
         { name => 'x0', type => 'float',
@@ -1019,8 +1019,8 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                    GIMP_PDB_ITEM_CONTENT, error);
+  GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                 GIMP_PDB_ITEM_CONTENT, error);
 
   if (stroke)
     {
@@ -1037,14 +1037,14 @@ HELP
       coord2.x = x2;
       coord2.y = y2;
 
-     if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+     if (gimp_item_is_attached (GIMP_ITEM (path)))
+       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                          _("Extend path stroke"),
-                                         vectors);
+                                         path);
 
-      gimp_vectors_freeze (vectors);
+      gimp_vectors_freeze (path);
       gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
-      gimp_vectors_thaw (vectors);
+      gimp_vectors_thaw (path);
     }
   else
     success = FALSE;
@@ -1053,18 +1053,18 @@ CODE
     );
 }
 
-sub vectors_bezier_stroke_new_ellipse {
-    $blurb = 'Adds a bezier stroke describing an ellipse the vectors object.';
+sub path_bezier_stroke_new_ellipse {
+    $blurb = 'Adds a bezier stroke describing an ellipse the path object.';
 
     $help = <<'HELP';
-Adds a bezier stroke describing an ellipse the vectors object.
+Adds a bezier stroke describing an ellipse on the path object.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
+	{ name => 'path', type => 'vectors',
+	  desc => 'The path object' },
         { name => 'x0', type => 'float',
           desc => 'The x-coordinate of the center' },
         { name => 'y0', type => 'float',
@@ -1086,9 +1086,9 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
+  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (path),
                                    GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+      gimp_pdb_item_is_not_group (GIMP_ITEM (path), error))
     {
       GimpStroke *stroke;
       GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
@@ -1098,12 +1098,12 @@ HELP
 
       stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
 
-      if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+      if (gimp_item_is_attached (GIMP_ITEM (path)))
+        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                           _("Add path stroke"),
-                                          vectors);
+                                          path);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      gimp_vectors_stroke_add (path, stroke);
       g_object_unref (stroke);
 
       stroke_id = gimp_stroke_get_id (stroke);
@@ -1115,7 +1115,7 @@ CODE
     );
 }
 
-sub vectors_import_from_file {
+sub path_import_from_file {
     $blurb = 'Import paths from an SVG file.';
 
     $help = <<'HELP';
@@ -1131,48 +1131,48 @@ HELP
         { name => 'file', type => 'file',
           desc => 'The SVG file to import.' },
         { name => 'merge', type => 'boolean',
-          desc => 'Merge paths into a single vectors object.' },
+          desc => 'Merge paths into a single path object.' },
         { name => 'scale', type => 'boolean',
           desc => 'Scale the SVG to image dimensions.' }
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectorarray', void_ret => 1,
-          desc => 'The list of newly created vectors',
-          array => { name => 'num_vectors',
-                     desc => 'The number of newly created vectors' } }
+        { name => 'path', type => 'vectorarray', void_ret => 1,
+          desc => 'The list of newly created path',
+          array => { name => 'num_paths',
+                     desc => 'The number of newly created path' } }
     );
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-import.h") ],
         code    => <<'CODE'
 {
-  GList *vectors_list = NULL;
+  GList *path_list = NULL;
 
   /* FIXME tree */
   success = gimp_vectors_import_file (image, file,
                                       merge, scale, NULL, -1,
-                                      &vectors_list, error);
+                                      &path_list, error);
 
   if (success)
     {
-      num_vectors = g_list_length (vectors_list);
+      num_paths = g_list_length (path_list);
 
-      if (num_vectors)
+      if (num_paths)
         {
           GList *list;
           gint   i;
 
-          vectors = g_new (GimpVectors *, num_vectors);
+          path = g_new (GimpVectors *, num_paths);
 
-          for (i = 0, list = vectors_list;
-               i < num_vectors;
+          for (i = 0, list = path_list;
+               i < num_paths;
                i++, list = g_list_next (list))
             {
-              vectors[i] = g_object_ref (list->data);
+              path[i] = g_object_ref (list->data);
             }
 
-          g_list_free (vectors_list);
+          g_list_free (path_list);
         }
     }
 }
@@ -1180,7 +1180,7 @@ CODE
     );
 }
 
-sub vectors_import_from_string {
+sub path_import_from_string {
     $blurb = 'Import paths from an SVG string.';
 
     $help = <<'HELP';
@@ -1200,48 +1200,48 @@ HELP
           desc => 'Number of bytes in string or -1 if the string is NULL
                    terminated.' },
         { name => 'merge', type => 'boolean',
-          desc => 'Merge paths into a single vectors object.' },
+          desc => 'Merge paths into a single path object.' },
         { name => 'scale', type => 'boolean',
           desc => 'Scale the SVG to image dimensions.' }
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectorarray', void_ret => 1,
-          desc => 'The list of newly created vectors',
-          array => { name => 'num_vectors',
-                     desc => 'The number of newly created vectors' } }
+        { name => 'path', type => 'vectorarray', void_ret => 1,
+          desc => 'The list of newly created path',
+          array => { name => 'num_paths',
+                     desc => 'The number of newly created path' } }
     );
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-import.h") ],
         code    => <<'CODE'
 {
-  GList *vectors_list = NULL;
+  GList *path_list = NULL;
 
   /* FIXME tree */
   success = gimp_vectors_import_buffer (image, string, length,
                                         merge, scale, NULL, -1,
-                                        &vectors_list, error);
+                                        &path_list, error);
 
   if (success)
     {
-      num_vectors = g_list_length (vectors_list);
+      num_paths = g_list_length (path_list);
 
-      if (num_vectors)
+      if (num_paths)
         {
           GList *list;
           gint   i;
 
-          vectors = g_new (GimpVectors *, num_vectors);
+          path = g_new (GimpVectors *, num_paths);
 
-          for (i = 0, list = vectors_list;
-               i < num_vectors;
+          for (i = 0, list = path_list;
+               i < num_paths;
                i++, list = g_list_next (list))
             {
-              vectors[i] = g_object_ref (list->data);
+              path[i] = g_object_ref (list->data);
             }
 
-          g_list_free (vectors_list);
+          g_list_free (path_list);
         }
     }
 }
@@ -1249,13 +1249,13 @@ CODE
     );
 }
 
-sub vectors_export_to_file {
+sub path_export_to_file {
     $blurb = 'save a path as an SVG file.';
 
     $help = <<'HELP';
-This procedure creates an SVG file to save a Vectors object, that is,
+This procedure creates an SVG file to save a Path object, that is,
 a path.  The resulting file can be edited using a vector graphics
-application, or later reloaded into GIMP.  Pass %NULL as the 'vectors'
+application, or later reloaded into GIMP.  Pass %NULL as the 'path'
 argument to export all paths in the image.
 HELP
 
@@ -1266,35 +1266,35 @@ HELP
           desc => 'The image' },
         { name => 'file', type => 'file',
           desc => 'The SVG file to create.' },
-        { name => 'vectors', type => 'vectors',
+        { name => 'path', type => 'vectors',
           no_validate => 1, none_ok => 1,
-          desc => 'The vectors object to export, or %NULL for all in the image' }
+          desc => 'The path object to export, or %NULL for all in the image' }
     );
 
     %invoke = (
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GList *vectors_list = NULL;
+  GList *path_list = NULL;
 
-  if (vectors != NULL)
-    vectors_list = g_list_prepend (vectors_list, vectors);
+  if (path != NULL)
+    path_list = g_list_prepend (path_list, path);
 
-  success = gimp_vectors_export_file (image, vectors_list, file, error);
+  success = gimp_vectors_export_file (image, path_list, file, error);
 
-  g_list_free (vectors_list);
+  g_list_free (path_list);
 }
 CODE
     );
 }
 
-sub vectors_export_to_string {
+sub path_export_to_string {
     $blurb = 'Save a path as an SVG string.';
 
     $help = <<'HELP';
-This procedure works like gimp_vectors_export_to_file() but creates a string
+This procedure works like gimp_path_export_to_file() but creates a string
 rather than a file. The string is NULL-terminated and holds a
-complete XML document.  Pass %NULL as the 'vectors' argument to export
+complete XML document.  Pass %NULL as the 'path' argument to export
 all paths in the image.
 HELP
 
@@ -1303,9 +1303,9 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'vectors', type => 'vectors',
+        { name => 'path', type => 'vectors',
           no_validate => 1, none_ok => 1,
-          desc => 'The vectors object to export, or %NULL for all in the image' }
+          desc => 'The path object to export, or %NULL for all in the image' }
     );
 
     @outargs = (
@@ -1317,13 +1317,13 @@ HELP
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GList *vectors_list = NULL;
+  GList *path_list = NULL;
 
-  if (vectors != NULL)
-    vectors_list = g_list_prepend (vectors_list, vectors);
+  if (path != NULL)
+    path_list = g_list_prepend (path_list, path);
 
-  string = gimp_vectors_export_string (image, vectors_list);
-  g_list_free (vectors_list);
+  string = gimp_vectors_export_string (image, path_list);
+  g_list_free (path_list);
 
   success = (string != NULL);
 }
@@ -1336,8 +1336,8 @@ CODE
               "core/gimplist.h"
               "core/gimpimage.h"
               "core/gimpimage-undo-push.h"
-	      "text/gimptext-vectors.h"
-	      "text/gimptextlayer.h"
+	          "text/gimptext-vectors.h"
+	          "text/gimptextlayer.h"
               "vectors/gimpanchor.h"
               "vectors/gimpstroke-new.h"
               "vectors/gimpbezierstroke.h"
@@ -1345,38 +1345,38 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(vectors_new
-	    vectors_new_from_text_layer
-            vectors_copy
-            vectors_get_strokes
-            vectors_stroke_get_length
-            vectors_stroke_get_point_at_dist
-            vectors_remove_stroke
-            vectors_stroke_close
-            vectors_stroke_reverse
-            vectors_stroke_translate
-            vectors_stroke_scale
-            vectors_stroke_rotate
-            vectors_stroke_flip
-            vectors_stroke_flip_free
-            vectors_stroke_get_points
-            vectors_stroke_new_from_points
-            vectors_stroke_interpolate
-            vectors_bezier_stroke_new_moveto
-            vectors_bezier_stroke_lineto
-            vectors_bezier_stroke_conicto
-            vectors_bezier_stroke_cubicto
-            vectors_bezier_stroke_new_ellipse
-            vectors_import_from_file
-            vectors_import_from_string
-            vectors_export_to_file
-            vectors_export_to_string);
+@procs = qw(path_new
+	        path_new_from_text_layer
+            path_copy
+            path_get_strokes
+            path_stroke_get_length
+            path_stroke_get_point_at_dist
+            path_remove_stroke
+            path_stroke_close
+            path_stroke_reverse
+            path_stroke_translate
+            path_stroke_scale
+            path_stroke_rotate
+            path_stroke_flip
+            path_stroke_flip_free
+            path_stroke_get_points
+            path_stroke_new_from_points
+            path_stroke_interpolate
+            path_bezier_stroke_new_moveto
+            path_bezier_stroke_lineto
+            path_bezier_stroke_conicto
+            path_bezier_stroke_cubicto
+            path_bezier_stroke_new_ellipse
+            path_import_from_file
+            path_import_from_string
+            path_export_to_file
+            path_export_to_string);
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Vectors';
-$doc_title = 'gimpvectors';
-$doc_short_desc = 'Functions for querying and manipulating vectors.';
-$doc_long_desc = 'Functions for querying and manipulating vectors.';
+$desc = 'Path';
+$doc_title = 'gimppath';
+$doc_short_desc = 'Functions for querying and manipulating path.';
+$doc_long_desc = 'Functions for querying and manipulating path.';
 
 1;

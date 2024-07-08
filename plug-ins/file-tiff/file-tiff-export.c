@@ -108,21 +108,21 @@ save_paths (TIFF      *tif,
             gint       offset_y)
 {
   gint id = 2000; /* Photoshop paths have IDs >= 2000 */
-  GList *vectors;
+  GList *path;
   GList *iter;
   gint   v;
   gint num_strokes, *strokes, s;
   GString *ps_tag;
 
-  vectors = gimp_image_list_paths (image);
+  path = gimp_image_list_paths (image);
 
-  if (! vectors)
+  if (! path)
     return FALSE;
 
   ps_tag = g_string_new ("");
 
   /* Only up to 1000 paths supported */
-  for (iter = vectors, v = 0;
+  for (iter = path, v = 0;
        iter && v < 1000;
        iter = g_list_next (iter), v++)
     {
@@ -179,7 +179,7 @@ save_paths (TIFF      *tif,
       pointrecord[1] = 6;  /* fill rule record */
       g_string_append_len (data, pointrecord, 26);
 
-      strokes = gimp_vectors_get_strokes (iter->data, &num_strokes);
+      strokes = gimp_path_get_strokes (iter->data, &num_strokes);
 
       for (s = 0; s < num_strokes; s++)
         {
@@ -189,8 +189,8 @@ save_paths (TIFF      *tif,
           gboolean  closed;
           gint      p = 0;
 
-          type = gimp_vectors_stroke_get_points (iter->data, strokes[s],
-                                                 &num_points, &points, &closed);
+          type = gimp_path_stroke_get_points (iter->data, strokes[s],
+                                              &num_points, &points, &closed);
 
           if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
               num_points > 65535 ||
@@ -240,7 +240,7 @@ save_paths (TIFF      *tif,
   TIFFSetField (tif, TIFFTAG_PHOTOSHOP, ps_tag->len, ps_tag->str);
   g_string_free (ps_tag, TRUE);
 
-  g_list_free (vectors);
+  g_list_free (path);
 
   return TRUE;
 }

@@ -54,49 +54,49 @@
 
 
 static GimpValueArray *
-vectors_new_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
-                     GError               **error)
+path_new_invoker (GimpProcedure         *procedure,
+                  Gimp                  *gimp,
+                  GimpContext           *context,
+                  GimpProgress          *progress,
+                  const GimpValueArray  *args,
+                  GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      vectors = gimp_vectors_new (image, name);
+      path = gimp_vectors_new (image, name);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), vectors);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), path);
 
   return return_vals;
 }
 
 static GimpValueArray *
-vectors_new_from_text_layer_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
+path_new_from_text_layer_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
   GimpLayer *layer;
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   layer = g_value_get_object (gimp_value_array_index (args, 1));
@@ -107,11 +107,11 @@ vectors_new_from_text_layer_invoker (GimpProcedure         *procedure,
         {
           gint x, y;
 
-          vectors = gimp_text_vectors_new (image,
+          path = gimp_text_vectors_new (image,
                                            gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
 
           gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
-          gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+          gimp_item_translate (GIMP_ITEM (path), x, y, FALSE);
         }
       else
         {
@@ -123,32 +123,32 @@ vectors_new_from_text_layer_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), vectors);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), path);
 
   return return_vals;
 }
 
 static GimpValueArray *
-vectors_copy_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
-                      GError               **error)
+path_copy_invoker (GimpProcedure         *procedure,
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
-  GimpVectors *vectors_copy = NULL;
+  GimpVectors *path;
+  GimpVectors *path_copy = NULL;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      vectors_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                   G_TYPE_FROM_INSTANCE (vectors)));
+      path_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (path),
+                                G_TYPE_FROM_INSTANCE (path)));
 
-      if (! vectors_copy)
+      if (! path_copy)
         success = FALSE;
     }
 
@@ -156,30 +156,30 @@ vectors_copy_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), vectors_copy);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), path_copy);
 
   return return_vals;
 }
 
 static GimpValueArray *
-vectors_get_strokes_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
-                             GError               **error)
+path_get_strokes_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint num_strokes = 0;
   gint32 *stroke_ids = NULL;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      num_strokes = gimp_vectors_get_n_strokes (vectors);
+      num_strokes = gimp_vectors_get_n_strokes (path);
 
       if (num_strokes)
         {
@@ -188,9 +188,9 @@ vectors_get_strokes_invoker (GimpProcedure         *procedure,
 
           stroke_ids = g_new (gint32, num_strokes);
 
-          for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+          for (cur_stroke = gimp_vectors_stroke_get_next (path, NULL);
                cur_stroke;
-               cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+               cur_stroke = gimp_vectors_stroke_get_next (path, cur_stroke))
             {
               stroke_ids[i] = gimp_stroke_get_id (cur_stroke);
               i++;
@@ -211,27 +211,27 @@ vectors_get_strokes_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_get_length_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
-                                   GError               **error)
+path_stroke_get_length_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gdouble precision;
   gdouble length = 0.0;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   precision = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
       if (stroke)
         length = gimp_stroke_get_length (stroke, precision);
@@ -249,16 +249,16 @@ vectors_stroke_get_length_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
-                                          GError               **error)
+path_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gdouble dist;
   gdouble precision;
@@ -267,14 +267,14 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
   gdouble slope = 0.0;
   gboolean valid = FALSE;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   dist = g_value_get_double (gimp_value_array_index (args, 2));
   precision = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
       if (stroke)
         {
@@ -304,33 +304,33 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_remove_stroke_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
-                               GError               **error)
+path_remove_stroke_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT, error);
 
       if (stroke)
         {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                               _("Remove path stroke"),
-                                              vectors);
+                                              path);
 
-          gimp_vectors_stroke_remove (vectors, stroke);
+          gimp_vectors_stroke_remove (path, stroke);
         }
       else
         success = FALSE;
@@ -341,35 +341,35 @@ vectors_remove_stroke_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_close_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+path_stroke_close_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT, error);
 
       if (stroke)
         {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                               _("Close path stroke"),
-                                              vectors);
+                                              path);
 
-          gimp_vectors_freeze (vectors);
+          gimp_vectors_freeze (path);
           gimp_stroke_close (stroke);
-          gimp_vectors_thaw (vectors);
+          gimp_vectors_thaw (path);
         }
       else
         success = FALSE;
@@ -380,183 +380,7 @@ vectors_stroke_close_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_reverse_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gint stroke_id;
-
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
-  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
-
-      if (stroke)
-        {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                              _("Reverse path stroke"),
-                                              vectors);
-
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_reverse (stroke);
-          gimp_vectors_thaw (vectors);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-vectors_stroke_translate_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
-                                  GError               **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gint stroke_id;
-  gdouble off_x;
-  gdouble off_y;
-
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
-  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
-  off_x = g_value_get_double (gimp_value_array_index (args, 2));
-  off_y = g_value_get_double (gimp_value_array_index (args, 3));
-
-  if (success)
-    {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION,
-                                                        error);
-
-      if (stroke)
-        {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                              _("Translate path stroke"),
-                                              vectors);
-
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_translate (stroke, off_x, off_y);
-          gimp_vectors_thaw (vectors);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-vectors_stroke_scale_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gint stroke_id;
-  gdouble scale_x;
-  gdouble scale_y;
-
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
-  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
-  scale_x = g_value_get_double (gimp_value_array_index (args, 2));
-  scale_y = g_value_get_double (gimp_value_array_index (args, 3));
-
-  if (success)
-    {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION,
-                                                        error);
-
-      if (stroke)
-        {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                              _("Scale path stroke"),
-                                              vectors);
-
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_scale (stroke, scale_x, scale_y);
-          gimp_vectors_thaw (vectors);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-vectors_stroke_rotate_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
-                               GError               **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gint stroke_id;
-  gdouble center_x;
-  gdouble center_y;
-  gdouble angle;
-
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
-  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
-  center_x = g_value_get_double (gimp_value_array_index (args, 2));
-  center_y = g_value_get_double (gimp_value_array_index (args, 3));
-  angle = g_value_get_double (gimp_value_array_index (args, 4));
-
-  if (success)
-    {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION,
-                                                        error);
-
-      if (stroke)
-        {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                              _("Rotate path stroke"),
-                                              vectors);
-
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_rotate (stroke, center_x, center_y, angle);
-          gimp_vectors_thaw (vectors);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-vectors_stroke_flip_invoker (GimpProcedure         *procedure,
+path_stroke_reverse_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
                              GimpProgress          *progress,
@@ -564,33 +388,27 @@ vectors_stroke_flip_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
-  gint flip_type;
-  gdouble axis;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
-  flip_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  axis = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION,
-                                                        error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT, error);
 
       if (stroke)
         {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
-                                              _("Flip path stroke"),
-                                              vectors);
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                              _("Reverse path stroke"),
+                                              path);
 
-          gimp_vectors_freeze (vectors);
-          gimp_stroke_flip (stroke, flip_type, axis);
-          gimp_vectors_thaw (vectors);
+          gimp_vectors_freeze (path);
+          gimp_stroke_reverse (stroke);
+          gimp_vectors_thaw (path);
         }
       else
         success = FALSE;
@@ -601,22 +419,204 @@ vectors_stroke_flip_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
-                                  GError               **error)
+path_stroke_translate_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
+  gint stroke_id;
+  gdouble off_x;
+  gdouble off_y;
+
+  path = g_value_get_object (gimp_value_array_index (args, 0));
+  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
+  off_x = g_value_get_double (gimp_value_array_index (args, 2));
+  off_y = g_value_get_double (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT |
+                                                     GIMP_PDB_ITEM_POSITION,
+                                                     error);
+
+      if (stroke)
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                              _("Translate path stroke"),
+                                              path);
+
+          gimp_vectors_freeze (path);
+          gimp_stroke_translate (stroke, off_x, off_y);
+          gimp_vectors_thaw (path);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+path_stroke_scale_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpVectors *path;
+  gint stroke_id;
+  gdouble scale_x;
+  gdouble scale_y;
+
+  path = g_value_get_object (gimp_value_array_index (args, 0));
+  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
+  scale_x = g_value_get_double (gimp_value_array_index (args, 2));
+  scale_y = g_value_get_double (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT |
+                                                     GIMP_PDB_ITEM_POSITION,
+                                                     error);
+
+      if (stroke)
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                              _("Scale path stroke"),
+                                              path);
+
+          gimp_vectors_freeze (path);
+          gimp_stroke_scale (stroke, scale_x, scale_y);
+          gimp_vectors_thaw (path);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+path_stroke_rotate_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpVectors *path;
+  gint stroke_id;
+  gdouble center_x;
+  gdouble center_y;
+  gdouble angle;
+
+  path = g_value_get_object (gimp_value_array_index (args, 0));
+  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
+  center_x = g_value_get_double (gimp_value_array_index (args, 2));
+  center_y = g_value_get_double (gimp_value_array_index (args, 3));
+  angle = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT |
+                                                     GIMP_PDB_ITEM_POSITION,
+                                                     error);
+
+      if (stroke)
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                              _("Rotate path stroke"),
+                                              path);
+
+          gimp_vectors_freeze (path);
+          gimp_stroke_rotate (stroke, center_x, center_y, angle);
+          gimp_vectors_thaw (path);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+path_stroke_flip_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpVectors *path;
+  gint stroke_id;
+  gint flip_type;
+  gdouble axis;
+
+  path = g_value_get_object (gimp_value_array_index (args, 0));
+  stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
+  flip_type = g_value_get_enum (gimp_value_array_index (args, 2));
+  axis = g_value_get_double (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT |
+                                                     GIMP_PDB_ITEM_POSITION,
+                                                     error);
+
+      if (stroke)
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                              _("Flip path stroke"),
+                                              path);
+
+          gimp_vectors_freeze (path);
+          gimp_stroke_flip (stroke, flip_type, axis);
+          gimp_vectors_thaw (path);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+path_stroke_flip_free_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpVectors *path;
   gint stroke_id;
   gdouble x1;
   gdouble y1;
   gdouble x2;
   gdouble y2;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   x1 = g_value_get_double (gimp_value_array_index (args, 2));
   y1 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -625,21 +625,21 @@ vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION,
-                                                        error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT |
+                                                     GIMP_PDB_ITEM_POSITION,
+                                                     error);
 
       if (stroke)
         {
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                               _("Flip path stroke"),
-                                              vectors);
+                                              path);
 
-          gimp_vectors_freeze (vectors);
+          gimp_vectors_freeze (path);
           gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
-          gimp_vectors_thaw (vectors);
+          gimp_vectors_thaw (path);
         }
       else
         success = FALSE;
@@ -650,28 +650,28 @@ vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_get_points_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
-                                   GError               **error)
+path_stroke_get_points_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gint type = 0;
   gint num_points = 0;
   gdouble *controlpoints = NULL;
   gboolean closed = FALSE;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
       if (GIMP_IS_BEZIER_STROKE (stroke))
         {
@@ -718,23 +718,23 @@ vectors_stroke_get_points_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
-                                        GError               **error)
+path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint type;
   gint num_points;
   const gdouble *controlpoints;
   gboolean closed;
   gint stroke_id = 0;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   type = g_value_get_enum (gimp_value_array_index (args, 1));
   num_points = g_value_get_int (gimp_value_array_index (args, 2));
   controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 3));
@@ -763,12 +763,12 @@ vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
           stroke = gimp_stroke_new_from_coords (type, coords, num_points/2, closed);
           if (stroke)
             {
-              if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-                gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+              if (gimp_item_is_attached (GIMP_ITEM (path)))
+                gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                                   _("Add path stroke"),
-                                                  vectors);
+                                                  path);
 
-              gimp_vectors_stroke_add (vectors, stroke);
+              gimp_vectors_stroke_add (path, stroke);
               g_object_unref (stroke);
 
               stroke_id = gimp_stroke_get_id (stroke);
@@ -790,29 +790,29 @@ vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_stroke_interpolate_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
-                                    GError               **error)
+path_stroke_interpolate_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gdouble precision;
   gint num_coords = 0;
   gdouble *coords = NULL;
   gboolean closed = FALSE;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   precision = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id, 0, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id, 0, error);
 
       if (stroke)
         {
@@ -855,29 +855,29 @@ vectors_stroke_interpolate_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
-                                          Gimp                  *gimp,
-                                          GimpContext           *context,
-                                          GimpProgress          *progress,
-                                          const GimpValueArray  *args,
-                                          GError               **error)
+path_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gdouble x0;
   gdouble y0;
   gint stroke_id = 0;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
   y0 = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (path),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+          gimp_pdb_item_is_not_group (GIMP_ITEM (path), error))
         {
           GimpStroke *stroke;
           GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
@@ -887,12 +887,12 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
 
           stroke = gimp_bezier_stroke_new_moveto (&coord0);
 
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                               _("Add path stroke"),
-                                              vectors);
+                                              path);
 
-          gimp_vectors_stroke_add (vectors, stroke);
+          gimp_vectors_stroke_add (path, stroke);
           g_object_unref (stroke);
 
           stroke_id = gimp_stroke_get_id (stroke);
@@ -911,28 +911,28 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
-                                      GError               **error)
+path_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gdouble x0;
   gdouble y0;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   x0 = g_value_get_double (gimp_value_array_index (args, 2));
   y0 = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT, error);
 
       if (stroke)
         {
@@ -941,14 +941,14 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
           coord0.x = x0;
           coord0.y = y0;
 
-         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+         if (gimp_item_is_attached (GIMP_ITEM (path)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                              _("Extend path stroke"),
-                                             vectors);
+                                             path);
 
-          gimp_vectors_freeze (vectors);
+          gimp_vectors_freeze (path);
           gimp_bezier_stroke_lineto (stroke, &coord0);
-          gimp_vectors_thaw (vectors);
+          gimp_vectors_thaw (path);
         }
       else
         success = FALSE;
@@ -959,22 +959,22 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
-                                       GError               **error)
+path_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gdouble x0;
   gdouble y0;
   gdouble x1;
   gdouble y1;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   x0 = g_value_get_double (gimp_value_array_index (args, 2));
   y0 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -983,8 +983,8 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT, error);
 
       if (stroke)
         {
@@ -997,14 +997,14 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
           coord1.x = x1;
           coord1.y = y1;
 
-         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+         if (gimp_item_is_attached (GIMP_ITEM (path)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                              _("Extend path stroke"),
-                                             vectors);
+                                             path);
 
-          gimp_vectors_freeze (vectors);
+          gimp_vectors_freeze (path);
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
-          gimp_vectors_thaw (vectors);
+          gimp_vectors_thaw (path);
         }
       else
         success = FALSE;
@@ -1015,15 +1015,15 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
-                                       GError               **error)
+path_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint stroke_id;
   gdouble x0;
   gdouble y0;
@@ -1032,7 +1032,7 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
   gdouble x2;
   gdouble y2;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
   x0 = g_value_get_double (gimp_value_array_index (args, 2));
   y0 = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1043,8 +1043,8 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpStroke *stroke = gimp_pdb_get_vectors_stroke (vectors, stroke_id,
-                                                        GIMP_PDB_ITEM_CONTENT, error);
+      GimpStroke *stroke = gimp_pdb_get_path_stroke (path, stroke_id,
+                                                     GIMP_PDB_ITEM_CONTENT, error);
 
       if (stroke)
         {
@@ -1061,14 +1061,14 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
           coord2.x = x2;
           coord2.y = y2;
 
-         if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+         if (gimp_item_is_attached (GIMP_ITEM (path)))
+           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                              _("Extend path stroke"),
-                                             vectors);
+                                             path);
 
-          gimp_vectors_freeze (vectors);
+          gimp_vectors_freeze (path);
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
-          gimp_vectors_thaw (vectors);
+          gimp_vectors_thaw (path);
         }
       else
         success = FALSE;
@@ -1079,16 +1079,16 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
-                                           Gimp                  *gimp,
-                                           GimpContext           *context,
-                                           GimpProgress          *progress,
-                                           const GimpValueArray  *args,
-                                           GError               **error)
+path_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gdouble x0;
   gdouble y0;
   gdouble radius_x;
@@ -1096,7 +1096,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
   gdouble angle;
   gint stroke_id = 0;
 
-  vectors = g_value_get_object (gimp_value_array_index (args, 0));
+  path = g_value_get_object (gimp_value_array_index (args, 0));
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
   y0 = g_value_get_double (gimp_value_array_index (args, 2));
   radius_x = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1105,9 +1105,9 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (path),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+          gimp_pdb_item_is_not_group (GIMP_ITEM (path), error))
         {
           GimpStroke *stroke;
           GimpCoords  coord0 = GIMP_COORDS_DEFAULT_VALUES;
@@ -1117,12 +1117,12 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
 
           stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
 
-          if (gimp_item_is_attached (GIMP_ITEM (vectors)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (vectors)),
+          if (gimp_item_is_attached (GIMP_ITEM (path)))
+            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
                                               _("Add path stroke"),
-                                              vectors);
+                                              path);
 
-          gimp_vectors_stroke_add (vectors, stroke);
+          gimp_vectors_stroke_add (path, stroke);
           g_object_unref (stroke);
 
           stroke_id = gimp_stroke_get_id (stroke);
@@ -1141,12 +1141,12 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_import_from_file_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
-                                  GError               **error)
+path_import_from_file_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -1154,8 +1154,8 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
   GFile *file;
   gboolean merge;
   gboolean scale;
-  gint num_vectors = 0;
-  GimpVectors **vectors = NULL;
+  gint num_paths = 0;
+  GimpVectors **path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   file = g_value_get_object (gimp_value_array_index (args, 1));
@@ -1164,32 +1164,32 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *vectors_list = NULL;
+      GList *path_list = NULL;
 
       /* FIXME tree */
       success = gimp_vectors_import_file (image, file,
                                           merge, scale, NULL, -1,
-                                          &vectors_list, error);
+                                          &path_list, error);
 
       if (success)
         {
-          num_vectors = g_list_length (vectors_list);
+          num_paths = g_list_length (path_list);
 
-          if (num_vectors)
+          if (num_paths)
             {
               GList *list;
               gint   i;
 
-              vectors = g_new (GimpVectors *, num_vectors);
+              path = g_new (GimpVectors *, num_paths);
 
-              for (i = 0, list = vectors_list;
-                   i < num_vectors;
+              for (i = 0, list = path_list;
+                   i < num_paths;
                    i++, list = g_list_next (list))
                 {
-                  vectors[i] = g_object_ref (list->data);
+                  path[i] = g_object_ref (list->data);
                 }
 
-              g_list_free (vectors_list);
+              g_list_free (path_list);
             }
         }
     }
@@ -1199,20 +1199,20 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) path, num_paths);
     }
 
   return return_vals;
 }
 
 static GimpValueArray *
-vectors_import_from_string_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
-                                    GError               **error)
+path_import_from_string_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -1221,8 +1221,8 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
   gint length;
   gboolean merge;
   gboolean scale;
-  gint num_vectors = 0;
-  GimpVectors **vectors = NULL;
+  gint num_paths = 0;
+  GimpVectors **path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   string = g_value_get_string (gimp_value_array_index (args, 1));
@@ -1232,32 +1232,32 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *vectors_list = NULL;
+      GList *path_list = NULL;
 
       /* FIXME tree */
       success = gimp_vectors_import_buffer (image, string, length,
                                             merge, scale, NULL, -1,
-                                            &vectors_list, error);
+                                            &path_list, error);
 
       if (success)
         {
-          num_vectors = g_list_length (vectors_list);
+          num_paths = g_list_length (path_list);
 
-          if (num_vectors)
+          if (num_paths)
             {
               GList *list;
               gint   i;
 
-              vectors = g_new (GimpVectors *, num_vectors);
+              path = g_new (GimpVectors *, num_paths);
 
-              for (i = 0, list = vectors_list;
-                   i < num_vectors;
+              for (i = 0, list = path_list;
+                   i < num_paths;
                    i++, list = g_list_next (list))
                 {
-                  vectors[i] = g_object_ref (list->data);
+                  path[i] = g_object_ref (list->data);
                 }
 
-              g_list_free (vectors_list);
+              g_list_free (path_list);
             }
         }
     }
@@ -1267,40 +1267,40 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) path, num_paths);
     }
 
   return return_vals;
 }
 
 static GimpValueArray *
-vectors_export_to_file_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+path_export_to_file_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
   GFile *file;
-  GimpVectors *vectors;
+  GimpVectors *path;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   file = g_value_get_object (gimp_value_array_index (args, 1));
-  vectors = g_value_get_object (gimp_value_array_index (args, 2));
+  path = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GList *vectors_list = NULL;
+      GList *path_list = NULL;
 
-      if (vectors != NULL)
-        vectors_list = g_list_prepend (vectors_list, vectors);
+      if (path != NULL)
+        path_list = g_list_prepend (path_list, path);
 
-      success = gimp_vectors_export_file (image, vectors_list, file, error);
+      success = gimp_vectors_export_file (image, path_list, file, error);
 
-      g_list_free (vectors_list);
+      g_list_free (path_list);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1308,31 +1308,31 @@ vectors_export_to_file_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_export_to_string_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
-                                  GError               **error)
+path_export_to_string_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpVectors *vectors;
+  GimpVectors *path;
   gchar *string = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  vectors = g_value_get_object (gimp_value_array_index (args, 1));
+  path = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      GList *vectors_list = NULL;
+      GList *path_list = NULL;
 
-      if (vectors != NULL)
-        vectors_list = g_list_prepend (vectors_list, vectors);
+      if (path != NULL)
+        path_list = g_list_prepend (path_list, path);
 
-      string = gimp_vectors_export_string (image, vectors_list);
-      g_list_free (vectors_list);
+      string = gimp_vectors_export_string (image, path_list);
+      g_list_free (path_list);
 
       success = (string != NULL);
     }
@@ -1347,19 +1347,19 @@ vectors_export_to_string_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_vectors_procs (GimpPDB *pdb)
+register_path_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
   /*
-   * gimp-vectors-new
+   * gimp-path-new
    */
-  procedure = gimp_procedure_new (vectors_new_invoker);
+  procedure = gimp_procedure_new (path_new_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-new");
+                               "gimp-path-new");
   gimp_procedure_set_static_help (procedure,
-                                  "Creates a new empty vectors object.",
-                                  "Creates a new empty vectors object. The vectors object needs to be added to the image using 'gimp-image-insert-vectors'.",
+                                  "Creates a new empty path object.",
+                                  "Creates a new empty path object. The path object needs to be added to the image using 'gimp-image-insert-vectors'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -1374,28 +1374,28 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
-                                                       "the name of the new vector object.",
+                                                       "the name of the new path object.",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("vectors",
-                                                            "vectors",
-                                                            "the current vector object, 0 if no vector exists in the image.",
+                                   gimp_param_spec_vectors ("path",
+                                                            "path",
+                                                            "the current path object, 0 if no path exists in the image.",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-new-from-text-layer
+   * gimp-path-new-from-text-layer
    */
-  procedure = gimp_procedure_new (vectors_new_from_text_layer_invoker);
+  procedure = gimp_procedure_new (path_new_from_text_layer_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-new-from-text-layer");
+                               "gimp-path-new-from-text-layer");
   gimp_procedure_set_static_help (procedure,
-                                  "Creates a new vectors object from a text layer.",
-                                  "Creates a new vectors object from a text layer. The vectors object needs to be added to the image using 'gimp-image-insert-vectors'.",
+                                  "Creates a new path object from a text layer.",
+                                  "Creates a new path object from a text layer. The path object needs to be added to the image using 'gimp-image-insert-vectors'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Marcus Heese <heese@cip.ifi.lmu.de>",
@@ -1414,49 +1414,49 @@ register_vectors_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("vectors",
-                                                            "vectors",
-                                                            "The vectors of the text layer.",
+                                   gimp_param_spec_vectors ("path",
+                                                            "path",
+                                                            "The path of the text layer.",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-copy
+   * gimp-path-copy
    */
-  procedure = gimp_procedure_new (vectors_copy_invoker);
+  procedure = gimp_procedure_new (path_copy_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-copy");
+                               "gimp-path-copy");
   gimp_procedure_set_static_help (procedure,
-                                  "Copy a vectors object.",
-                                  "This procedure copies the specified vectors object and returns the copy.",
+                                  "Copy a path object.",
+                                  "This procedure copies the specified path object and returns the copy.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Barak Itkin <lightningismyname@gmail.com>",
                                          "Barak Itkin",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object to copy",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object to copy",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("vectors-copy",
-                                                            "vectors copy",
-                                                            "The newly copied vectors object",
+                                   gimp_param_spec_vectors ("path-copy",
+                                                            "path copy",
+                                                            "The newly copied path object",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-get-strokes
+   * gimp-path-get-strokes
    */
-  procedure = gimp_procedure_new (vectors_get_strokes_invoker);
+  procedure = gimp_procedure_new (path_get_strokes_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-get-strokes");
+                               "gimp-path-get-strokes");
   gimp_procedure_set_static_help (procedure,
                                   "List the strokes associated with the passed path.",
                                   "Returns an Array with the stroke-IDs associated with the passed path.",
@@ -1466,9 +1466,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1486,11 +1486,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-get-length
+   * gimp-path-stroke-get-length
    */
-  procedure = gimp_procedure_new (vectors_stroke_get_length_invoker);
+  procedure = gimp_procedure_new (path_stroke_get_length_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-get-length");
+                               "gimp-path-stroke-get-length");
   gimp_procedure_set_static_help (procedure,
                                   "Measure the length of the given stroke.",
                                   "Measure the length of the given stroke.",
@@ -1500,9 +1500,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1527,11 +1527,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-get-point-at-dist
+   * gimp-path-stroke-get-point-at-dist
    */
-  procedure = gimp_procedure_new (vectors_stroke_get_point_at_dist_invoker);
+  procedure = gimp_procedure_new (path_stroke_get_point_at_dist_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-get-point-at-dist");
+                               "gimp-path-stroke-get-point-at-dist");
   gimp_procedure_set_static_help (procedure,
                                   "Get point at a specified distance along the stroke.",
                                   "This will return the x,y position of a point at a given distance along the stroke. The distance will be obtained by first digitizing the curve internally and then walking along the curve. For a closed stroke the start of the path is the first point on the path that was created. This might not be obvious. If the stroke is not long enough, a \"valid\" flag will be FALSE.",
@@ -1541,9 +1541,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1592,23 +1592,23 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-remove-stroke
+   * gimp-path-remove-stroke
    */
-  procedure = gimp_procedure_new (vectors_remove_stroke_invoker);
+  procedure = gimp_procedure_new (path_remove_stroke_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-remove-stroke");
+                               "gimp-path-remove-stroke");
   gimp_procedure_set_static_help (procedure,
-                                  "remove the stroke from a vectors object.",
-                                  "Remove the stroke from a vectors object.",
+                                  "remove the stroke from a path object.",
+                                  "Remove the stroke from a path object.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1621,11 +1621,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-close
+   * gimp-path-stroke-close
    */
-  procedure = gimp_procedure_new (vectors_stroke_close_invoker);
+  procedure = gimp_procedure_new (path_stroke_close_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-close");
+                               "gimp-path-stroke-close");
   gimp_procedure_set_static_help (procedure,
                                   "closes the specified stroke.",
                                   "Closes the specified stroke.",
@@ -1635,9 +1635,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1650,11 +1650,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-reverse
+   * gimp-path-stroke-reverse
    */
-  procedure = gimp_procedure_new (vectors_stroke_reverse_invoker);
+  procedure = gimp_procedure_new (path_stroke_reverse_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-reverse");
+                               "gimp-path-stroke-reverse");
   gimp_procedure_set_static_help (procedure,
                                   "reverses the specified stroke.",
                                   "Reverses the specified stroke.",
@@ -1664,9 +1664,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2020");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1679,11 +1679,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-translate
+   * gimp-path-stroke-translate
    */
-  procedure = gimp_procedure_new (vectors_stroke_translate_invoker);
+  procedure = gimp_procedure_new (path_stroke_translate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-translate");
+                               "gimp-path-stroke-translate");
   gimp_procedure_set_static_help (procedure,
                                   "translate the given stroke.",
                                   "Translate the given stroke.",
@@ -1693,9 +1693,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1720,11 +1720,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-scale
+   * gimp-path-stroke-scale
    */
-  procedure = gimp_procedure_new (vectors_stroke_scale_invoker);
+  procedure = gimp_procedure_new (path_stroke_scale_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-scale");
+                               "gimp-path-stroke-scale");
   gimp_procedure_set_static_help (procedure,
                                   "scales the given stroke.",
                                   "Scale the given stroke.",
@@ -1734,9 +1734,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1761,11 +1761,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-rotate
+   * gimp-path-stroke-rotate
    */
-  procedure = gimp_procedure_new (vectors_stroke_rotate_invoker);
+  procedure = gimp_procedure_new (path_stroke_rotate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-rotate");
+                               "gimp-path-stroke-rotate");
   gimp_procedure_set_static_help (procedure,
                                   "rotates the given stroke.",
                                   "Rotates the given stroke around given center by angle (in degrees).",
@@ -1775,9 +1775,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Jo\xc3\xa3o S. O. Bueno",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1808,11 +1808,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-flip
+   * gimp-path-stroke-flip
    */
-  procedure = gimp_procedure_new (vectors_stroke_flip_invoker);
+  procedure = gimp_procedure_new (path_stroke_flip_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-flip");
+                               "gimp-path-stroke-flip");
   gimp_procedure_set_static_help (procedure,
                                   "flips the given stroke.",
                                   "Rotates the given stroke around given center by angle (in degrees).",
@@ -1822,9 +1822,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Jo\xc3\xa3o S. O. Bueno",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1852,11 +1852,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-flip-free
+   * gimp-path-stroke-flip-free
    */
-  procedure = gimp_procedure_new (vectors_stroke_flip_free_invoker);
+  procedure = gimp_procedure_new (path_stroke_flip_free_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-flip-free");
+                               "gimp-path-stroke-flip-free");
   gimp_procedure_set_static_help (procedure,
                                   "flips the given stroke about an arbitrary axis.",
                                   "Flips the given stroke about an arbitrary axis. Axis is defined by two coordinates in the image (in pixels), through which the flipping axis passes.",
@@ -1866,9 +1866,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Jo\xc3\xa3o S. O. Bueno",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1905,11 +1905,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-get-points
+   * gimp-path-stroke-get-points
    */
-  procedure = gimp_procedure_new (vectors_stroke_get_points_invoker);
+  procedure = gimp_procedure_new (path_stroke_get_points_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-get-points");
+                               "gimp-path-stroke-get-points");
   gimp_procedure_set_static_help (procedure,
                                   "returns the control points of a stroke.",
                                   "returns the control points of a stroke. The interpretation of the coordinates returned depends on the type of the stroke. For Gimp 2.4 this is always a bezier stroke, where the coordinates are the control points.",
@@ -1919,9 +1919,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1958,23 +1958,23 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-new-from-points
+   * gimp-path-stroke-new-from-points
    */
-  procedure = gimp_procedure_new (vectors_stroke_new_from_points_invoker);
+  procedure = gimp_procedure_new (path_stroke_new_from_points_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-new-from-points");
+                               "gimp-path-stroke-new-from-points");
   gimp_procedure_set_static_help (procedure,
-                                  "Adds a stroke of a given type to the vectors object.",
-                                  "Adds a stroke of a given type to the vectors object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
+                                  "Adds a stroke of a given type to the path object.",
+                                  "Adds a stroke of a given type to the path object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2011,11 +2011,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-stroke-interpolate
+   * gimp-path-stroke-interpolate
    */
-  procedure = gimp_procedure_new (vectors_stroke_interpolate_invoker);
+  procedure = gimp_procedure_new (path_stroke_interpolate_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-stroke-interpolate");
+                               "gimp-path-stroke-interpolate");
   gimp_procedure_set_static_help (procedure,
                                   "returns polygonal approximation of the stroke.",
                                   "returns polygonal approximation of the stroke.",
@@ -2025,9 +2025,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2063,23 +2063,23 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-bezier-stroke-new-moveto
+   * gimp-path-bezier-stroke-new-moveto
    */
-  procedure = gimp_procedure_new (vectors_bezier_stroke_new_moveto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_new_moveto_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-bezier-stroke-new-moveto");
+                               "gimp-path-bezier-stroke-new-moveto");
   gimp_procedure_set_static_help (procedure,
-                                  "Adds a bezier stroke with a single moveto to the vectors object.",
-                                  "Adds a bezier stroke with a single moveto to the vectors object.",
+                                  "Adds a bezier stroke with a single moveto to the path object.",
+                                  "Adds a bezier stroke with a single moveto to the path object.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2104,11 +2104,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-bezier-stroke-lineto
+   * gimp-path-bezier-stroke-lineto
    */
-  procedure = gimp_procedure_new (vectors_bezier_stroke_lineto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_lineto_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-bezier-stroke-lineto");
+                               "gimp-path-bezier-stroke-lineto");
   gimp_procedure_set_static_help (procedure,
                                   "Extends a bezier stroke with a lineto.",
                                   "Extends a bezier stroke with a lineto.",
@@ -2118,9 +2118,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2145,11 +2145,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-bezier-stroke-conicto
+   * gimp-path-bezier-stroke-conicto
    */
-  procedure = gimp_procedure_new (vectors_bezier_stroke_conicto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_conicto_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-bezier-stroke-conicto");
+                               "gimp-path-bezier-stroke-conicto");
   gimp_procedure_set_static_help (procedure,
                                   "Extends a bezier stroke with a conic bezier spline.",
                                   "Extends a bezier stroke with a conic bezier spline. Actually a cubic bezier spline gets added that realizes the shape of a conic bezier spline.",
@@ -2159,9 +2159,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2198,11 +2198,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-bezier-stroke-cubicto
+   * gimp-path-bezier-stroke-cubicto
    */
-  procedure = gimp_procedure_new (vectors_bezier_stroke_cubicto_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_cubicto_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-bezier-stroke-cubicto");
+                               "gimp-path-bezier-stroke-cubicto");
   gimp_procedure_set_static_help (procedure,
                                   "Extends a bezier stroke with a cubic bezier spline.",
                                   "Extends a bezier stroke with a cubic bezier spline.",
@@ -2212,9 +2212,9 @@ register_vectors_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2263,23 +2263,23 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-bezier-stroke-new-ellipse
+   * gimp-path-bezier-stroke-new-ellipse
    */
-  procedure = gimp_procedure_new (vectors_bezier_stroke_new_ellipse_invoker);
+  procedure = gimp_procedure_new (path_bezier_stroke_new_ellipse_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-bezier-stroke-new-ellipse");
+                               "gimp-path-bezier-stroke-new-ellipse");
   gimp_procedure_set_static_help (procedure,
-                                  "Adds a bezier stroke describing an ellipse the vectors object.",
-                                  "Adds a bezier stroke describing an ellipse the vectors object.",
+                                  "Adds a bezier stroke describing an ellipse the path object.",
+                                  "Adds a bezier stroke describing an ellipse on the path object.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2322,11 +2322,11 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-import-from-file
+   * gimp-path-import-from-file
    */
-  procedure = gimp_procedure_new (vectors_import_from_file_invoker);
+  procedure = gimp_procedure_new (path_import_from_file_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-import-from-file");
+                               "gimp-path-import-from-file");
   gimp_procedure_set_static_help (procedure,
                                   "Import paths from an SVG file.",
                                   "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
@@ -2350,7 +2350,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("merge",
                                                      "merge",
-                                                     "Merge paths into a single vectors object.",
+                                                     "Merge paths into a single path object.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2360,26 +2360,26 @@ register_vectors_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-vectors",
-                                                     "num vectors",
-                                                     "The number of newly created vectors",
+                                   g_param_spec_int ("num-paths",
+                                                     "num paths",
+                                                     "The number of newly created path",
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("vectors",
-                                                                 "vectors",
-                                                                 "The list of newly created vectors",
+                                   gimp_param_spec_object_array ("path",
+                                                                 "path",
+                                                                 "The list of newly created path",
                                                                  GIMP_TYPE_VECTORS,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-import-from-string
+   * gimp-path-import-from-string
    */
-  procedure = gimp_procedure_new (vectors_import_from_string_invoker);
+  procedure = gimp_procedure_new (path_import_from_string_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-import-from-string");
+                               "gimp-path-import-from-string");
   gimp_procedure_set_static_help (procedure,
                                   "Import paths from an SVG string.",
                                   "This procedure works like 'gimp-vectors-import-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
@@ -2410,7 +2410,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("merge",
                                                      "merge",
-                                                     "Merge paths into a single vectors object.",
+                                                     "Merge paths into a single path object.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2420,29 +2420,29 @@ register_vectors_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-vectors",
-                                                     "num vectors",
-                                                     "The number of newly created vectors",
+                                   g_param_spec_int ("num-paths",
+                                                     "num paths",
+                                                     "The number of newly created path",
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("vectors",
-                                                                 "vectors",
-                                                                 "The list of newly created vectors",
+                                   gimp_param_spec_object_array ("path",
+                                                                 "path",
+                                                                 "The list of newly created path",
                                                                  GIMP_TYPE_VECTORS,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-export-to-file
+   * gimp-path-export-to-file
    */
-  procedure = gimp_procedure_new (vectors_export_to_file_invoker);
+  procedure = gimp_procedure_new (path_export_to_file_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-export-to-file");
+                               "gimp-path-export-to-file");
   gimp_procedure_set_static_help (procedure,
                                   "save a path as an SVG file.",
-                                  "This procedure creates an SVG file to save a Vectors object, that is, a path. The resulting file can be edited using a vector graphics application, or later reloaded into GIMP. Pass %NULL as the 'vectors' argument to export all paths in the image.",
+                                  "This procedure creates an SVG file to save a Path object, that is, a path. The resulting file can be edited using a vector graphics application, or later reloaded into GIMP. Pass %NULL as the 'path' argument to export all paths in the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -2461,23 +2461,23 @@ register_vectors_procs (GimpPDB *pdb)
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object to export, or %NULL for all in the image",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object to export, or %NULL for all in the image",
                                                         TRUE,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-export-to-string
+   * gimp-path-export-to-string
    */
-  procedure = gimp_procedure_new (vectors_export_to_string_invoker);
+  procedure = gimp_procedure_new (path_export_to_string_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-export-to-string");
+                               "gimp-path-export-to-string");
   gimp_procedure_set_static_help (procedure,
                                   "Save a path as an SVG string.",
-                                  "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The string is NULL-terminated and holds a complete XML document. Pass %NULL as the 'vectors' argument to export all paths in the image.",
+                                  "This procedure works like 'gimp-path-export-to-file' but creates a string rather than a file. The string is NULL-terminated and holds a complete XML document. Pass %NULL as the 'path' argument to export all paths in the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -2490,9 +2490,9 @@ register_vectors_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object to export, or %NULL for all in the image",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object to export, or %NULL for all in the image",
                                                         TRUE,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
