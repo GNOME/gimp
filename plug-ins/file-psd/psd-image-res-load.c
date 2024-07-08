@@ -1588,7 +1588,7 @@ load_resource_2000 (const PSDimageres  *res_a,
       vectors = gimp_vectors_new (image, res_a->name);
     }
 
-  gimp_image_insert_vectors (image, vectors, NULL, -1);
+  gimp_image_insert_path (image, vectors, NULL, -1);
 
   while (path_rec > 0)
     {

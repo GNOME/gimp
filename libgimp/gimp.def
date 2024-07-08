@@ -402,7 +402,7 @@ EXPORTS
 	gimp_image_floating_sel_attached_to
 	gimp_image_freeze_channels
 	gimp_image_freeze_layers
-	gimp_image_freeze_vectors
+	gimp_image_freeze_paths
 	gimp_image_get_base_type
 	gimp_image_get_by_id
 	gimp_image_get_channel_by_name
@@ -437,7 +437,7 @@ EXPORTS
 	gimp_image_get_selected_channels
 	gimp_image_get_selected_drawables
 	gimp_image_get_selected_layers
-	gimp_image_get_selected_vectors
+	gimp_image_get_selected_paths
 	gimp_image_get_selection
 	gimp_image_get_simulation_bpc
 	gimp_image_get_simulation_intent
@@ -447,9 +447,9 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_type
 	gimp_image_get_unit
-	gimp_image_get_vectors
-	gimp_image_get_vectors_by_name
-	gimp_image_get_vectors_by_tattoo
+	gimp_image_get_paths
+	gimp_image_get_path_by_name
+	gimp_image_get_path_by_tattoo
 	gimp_image_get_width
 	gimp_image_get_xcf_file
 	gimp_image_grid_get_background_color
@@ -465,7 +465,7 @@ EXPORTS
 	gimp_image_id_is_valid
 	gimp_image_insert_channel
 	gimp_image_insert_layer
-	gimp_image_insert_vectors
+	gimp_image_insert_path
 	gimp_image_is_dirty
 	gimp_image_is_valid
 	gimp_image_list_channels
@@ -473,8 +473,8 @@ EXPORTS
 	gimp_image_list_selected_channels
 	gimp_image_list_selected_drawables
 	gimp_image_list_selected_layers
-	gimp_image_list_selected_vectors
-	gimp_image_list_vectors
+	gimp_image_list_selected_paths
+	gimp_image_list_paths
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
 	gimp_image_merge_down
@@ -497,7 +497,7 @@ EXPORTS
 	gimp_image_raise_item_to_top
 	gimp_image_remove_channel
 	gimp_image_remove_layer
-	gimp_image_remove_vectors
+	gimp_image_remove_path
 	gimp_image_reorder_item
 	gimp_image_resize
 	gimp_image_resize_to_layers
@@ -520,7 +520,7 @@ EXPORTS
 	gimp_image_set_resolution
 	gimp_image_set_selected_channels
 	gimp_image_set_selected_layers
-	gimp_image_set_selected_vectors
+	gimp_image_set_selected_paths
 	gimp_image_set_simulation_bpc
 	gimp_image_set_simulation_intent
 	gimp_image_set_simulation_profile
@@ -529,10 +529,10 @@ EXPORTS
 	gimp_image_set_unit
 	gimp_image_take_selected_channels
 	gimp_image_take_selected_layers
-	gimp_image_take_selected_vectors
+	gimp_image_take_selected_paths
 	gimp_image_thaw_channels
 	gimp_image_thaw_layers
-	gimp_image_thaw_vectors
+	gimp_image_thaw_paths
 	gimp_image_undo_disable
 	gimp_image_undo_enable
 	gimp_image_undo_freeze

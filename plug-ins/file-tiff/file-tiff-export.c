@@ -114,7 +114,7 @@ save_paths (TIFF      *tif,
   gint num_strokes, *strokes, s;
   GString *ps_tag;
 
-  vectors = gimp_image_list_vectors (image);
+  vectors = gimp_image_list_paths (image);
 
   if (! vectors)
     return FALSE;

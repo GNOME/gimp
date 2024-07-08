@@ -44,7 +44,7 @@ GList        * gimp_list_images                   (void);
 
 GList        * gimp_image_list_layers             (GimpImage    *image);
 GList        * gimp_image_list_channels           (GimpImage    *image);
-GList        * gimp_image_list_vectors            (GimpImage    *image);
+GList        * gimp_image_list_paths              (GimpImage    *image);
 
 GList        * gimp_image_list_selected_layers    (GimpImage    *image);
 gboolean       gimp_image_take_selected_layers    (GimpImage    *image,
@@ -52,9 +52,9 @@ gboolean       gimp_image_take_selected_layers    (GimpImage    *image,
 GList        * gimp_image_list_selected_channels  (GimpImage    *image);
 gboolean       gimp_image_take_selected_channels  (GimpImage    *image,
                                                    GList        *channels);
-GList        * gimp_image_list_selected_vectors   (GimpImage    *image);
-gboolean       gimp_image_take_selected_vectors   (GimpImage    *image,
-                                                   GList        *vectors);
+GList        * gimp_image_list_selected_paths     (GimpImage    *image);
+gboolean       gimp_image_take_selected_paths     (GimpImage    *image,
+                                                   GList        *paths);
 
 GList        * gimp_image_list_selected_drawables (GimpImage    *image);
 

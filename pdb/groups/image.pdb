@@ -332,11 +332,11 @@ CODE
     );
 }
 
-sub image_get_vectors {
-    $blurb = 'Returns the list of vectors contained in the specified image.';
+sub image_get_paths {
+    $blurb = 'Returns the list of paths contained in the specified image.';
 
     $help = <<HELP;
-This procedure returns the list of vectors contained in the specified image.
+This procedure returns the list of paths contained in the specified image.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -347,10 +347,10 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectorarray',
-          desc => 'The list of vectors contained in the image.',
-          array => { name => 'num_vectors',
-                     desc => 'The number of vectors contained in the image' } }
+        { name => 'paths', type => 'vectorarray',
+          desc => 'The list of paths contained in the image.',
+          array => { name => 'num_paths',
+                     desc => 'The number of paths contained in the image' } }
     );
 
     %invoke = (
@@ -358,16 +358,16 @@ HELP
 {
   GList *list = gimp_image_get_vectors_iter (image);
 
-  num_vectors = g_list_length (list);
+  num_paths = g_list_length (list);
 
-  if (num_vectors)
+  if (num_paths)
     {
       gint i;
 
-      vectors = g_new (GimpVectors *, num_vectors);
+      paths = g_new (GimpVectors *, num_paths);
 
-      for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-        vectors[i] = g_object_ref (list->data);
+      for (i = 0; i < num_paths; i++, list = g_list_next (list))
+        paths[i] = g_object_ref (list->data);
     }
 }
 CODE
@@ -1208,16 +1208,16 @@ CODE
     );
 }
 
-sub image_insert_vectors {
-    $blurb = 'Add the specified vectors to the image.';
+sub image_insert_path {
+    $blurb = 'Add the specified path to the image.';
 
     $help = <<'HELP';
-This procedure adds the specified vectors to the image at the given
-position. Since vectors groups are not currently supported, the parent
+This procedure adds the specified path to the image at the given
+position. Since path groups are not currently supported, the parent
 argument must always be 0. The position argument specifies the
-location of the vectors inside the stack, starting from the top (0) and
-increasing. If the position is specified as -1, then the vectors is
-inserted above the active vectors.
+location of the path inside the stack, starting from the top (0) and
+increasing. If the position is specified as -1, then the path is
+inserted above the active path.
 HELP
 
     &std_pdb_misc;
@@ -1225,17 +1225,17 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'vectors', type => 'vectors',
-          desc => 'The vectors' },
+        { name => 'path', type => 'vectors',
+          desc => 'The path' },
         { name => 'parent', type => 'vectors', none_ok => 1,
-          desc => 'The parent vectors' },
+          desc => 'The parent path' },
         { name => 'position', type => 'int32',
-          desc => 'The vectors position' }
+          desc => 'The path position' }
     );
 
     $invoke{code} = <<'CODE';
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (path), image, error) &&
       (parent == NULL ||
        (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
         gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
@@ -1243,7 +1243,7 @@ HELP
       if (position == -1 && parent == NULL)
         parent = GIMP_IMAGE_ACTIVE_PARENT;
 
-      success = gimp_image_add_vectors (image, vectors,
+      success = gimp_image_add_vectors (image, path,
                                         parent, MAX (position, -1), TRUE);
     }
   else
@@ -1254,7 +1254,7 @@ HELP
 CODE
 }
 
-sub image_remove_vectors {
+sub image_remove_path {
     $blurb = 'Remove the specified path from the image.';
 
     $help = <<'HELP';
@@ -1267,15 +1267,15 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'vectors', type => 'vectors',
-          desc => 'The vectors object' }
+        { name => 'path', type => 'vectors',
+          desc => 'The path object' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, 0, error))
-    gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (path), image, 0, error))
+    gimp_image_remove_vectors (image, path, TRUE, NULL);
   else
     success = FALSE;
 }
@@ -1283,20 +1283,20 @@ CODE
     );
 }
 
-sub image_freeze_vectors {
-    $blurb = "Freeze the image's vectors list.";
+sub image_freeze_paths {
+    $blurb = "Freeze the image's path list.";
 
     &ell_pdb_misc('2018', '2.10.2');
 
     $help = <<'HELP';
-This procedure freezes the vectors list of the image, suppressing any
+This procedure freezes the path list of the image, suppressing any
 updates to the Paths dialog in response to changes to the image's
-vectors.  This can significantly improve performance while applying
-changes affecting the vectors list.
+path.  This can significantly improve performance while applying
+changes affecting the path list.
 
 
-Each call to gimp_image_freeze_vectors() should be matched by a
-corresponding call to gimp_image_thaw_vectors(), undoing its
+Each call to gimp_image_freeze_paths() should be matched by a
+corresponding call to gimp_image_thaw_paths (), undoing its
 effects.
 HELP
 
@@ -1312,7 +1312,7 @@ HELP
   GimpContainer *container = gimp_image_get_vectors (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
+    success = gimp_plug_in_cleanup_paths_freeze (plug_in, image);
 
   if (success)
     gimp_container_freeze (container);
@@ -1321,18 +1321,18 @@ CODE
     );
 }
 
-sub image_thaw_vectors {
-    $blurb = "Thaw the image's vectors list.";
+sub image_thaw_paths {
+    $blurb = "Thaw the image's path list.";
 
     &ell_pdb_misc('2018', '2.10.2');
 
     $help = <<'HELP';
-This procedure thaws the vectors list of the image, re-enabling
+This procedure thaws the path list of the image, re-enabling
 updates to the Paths dialog.
 
 
 This procedure should match a corresponding call to
-gimp_image_freeze_vectors().
+gimp_image_freeze_paths().
 HELP
 
     @inargs = (
@@ -1347,7 +1347,7 @@ HELP
   GimpContainer *container = gimp_image_get_vectors (image);
 
   if (plug_in)
-    success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+    success = gimp_plug_in_cleanup_paths_thaw (plug_in, image);
 
   if (success)
     success = gimp_container_frozen (container);
@@ -1947,11 +1947,11 @@ CODE
     );
 }
 
-sub image_get_selected_vectors {
-    $blurb = "Returns the specified image's selected vectors.";
+sub image_get_selected_paths {
+    $blurb = "Returns the specified image's selected paths.";
 
     $help = <<'HELP';
-This procedure returns the list of selected vectors in the specified image.
+This procedure returns the list of selected paths in the specified image.
 HELP
 
     &jehan_pdb_misc('2022', '3.0.0');
@@ -1962,10 +1962,10 @@ HELP
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectorarray',
-          desc => 'The list of selected vectors in the image.',
-          array => { name => 'num_vectors',
-                     desc => 'The number of selected vectors in the image' } }
+        { name => 'paths', type => 'vectorarray',
+          desc => 'The list of selected paths in the image.',
+          array => { name => 'num_paths',
+                     desc => 'The number of selected paths in the image' } }
     );
 
     %invoke = (
@@ -1973,27 +1973,27 @@ HELP
 {
   GList *list = gimp_image_get_selected_vectors (image);
 
-  num_vectors = g_list_length (list);
+  num_paths = g_list_length (list);
 
-  if (num_vectors)
+  if (num_paths)
     {
       gint i;
 
-      vectors = g_new (GimpVectors *, num_vectors);
+      paths = g_new (GimpVectors *, num_paths);
 
-      for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-        vectors[i] = g_object_ref (list->data);
+      for (i = 0; i < num_paths; i++, list = g_list_next (list))
+        paths[i] = g_object_ref (list->data);
     }
 }
 CODE
     );
 }
 
-sub image_set_selected_vectors {
-    $blurb = "Sets the specified image's selected vectors.";
+sub image_set_selected_paths {
+    $blurb = "Sets the specified image's selected paths.";
 
     $help = <<'HELP';
-The vectors are set as the selected vectors in the image.
+The paths are set as the selected paths in the image.
 HELP
 
     &jehan_pdb_misc('2022', '3.0.0');
@@ -2001,26 +2001,26 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'vectors', type => 'vectorarray',
-          desc => 'The list of vectors to select',
+        { name => 'paths', type => 'vectorarray',
+          desc => 'The list of paths to select',
           no_validate => 1,
-          array => { name => 'num_vectors',
+          array => { name => 'num_paths',
                      type => '0 <= int32',
-                     desc => 'The number of vectors to select' } }
+                     desc => 'The number of paths to select' } }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GList *selected_vectors = NULL;
+  GList *selected_paths = NULL;
   gint   i;
 
-  for (i = 0; i < num_vectors; i++)
-    selected_vectors = g_list_prepend (selected_vectors,
-                                       GIMP_LAYER (vectors[i]));
+  for (i = 0; i < num_paths; i++)
+    selected_paths = g_list_prepend (selected_paths,
+                                       GIMP_LAYER (paths[i]));
 
-  gimp_image_set_selected_vectors (image, selected_vectors);
-  g_list_free (selected_vectors);
+  gimp_image_set_selected_vectors (image, selected_paths);
+  g_list_free (selected_paths);
 }
 CODE
     );
@@ -2742,11 +2742,11 @@ CODE
     );
 }
 
-sub image_get_vectors_by_tattoo {
-    $blurb = 'Find a vectors with a given tattoo in an image.';
+sub image_get_path_by_tattoo {
+    $blurb = 'Find a path with a given tattoo in an image.';
 
     $help = <<'HELP';
-This procedure returns the vectors with the given tattoo in the
+This procedure returns the path with the given tattoo in the
 specified image.
 HELP
 
@@ -2756,18 +2756,18 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'tattoo', type => 'tattoo',
-          desc => 'The tattoo of the vectors to find' }
+          desc => 'The tattoo of the path to find' }
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectors',
-          desc => 'The vectors with the specified tattoo' }
+        { name => 'path', type => 'vectors',
+          desc => 'The path with the specified tattoo' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
+  path = gimp_image_get_vectors_by_tattoo (image, tattoo);
 }
 CODE
     );
@@ -2833,11 +2833,11 @@ CODE
     );
 }
 
-sub image_get_vectors_by_name {
-    $blurb = 'Find a vectors with a given name in an image.';
+sub image_get_path_by_name {
+    $blurb = 'Find a path with a given name in an image.';
 
     $help = <<'HELP';
-This procedure returns the vectors with the given name in the
+This procedure returns the path with the given name in the
 specified image.
 HELP
 
@@ -2847,18 +2847,18 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'name', type => 'string', non_empty => 1,
-          desc => 'The name of the vectors to find' }
+          desc => 'The name of the path to find' }
     );
 
     @outargs = (
-        { name => 'vectors', type => 'vectors',
-          desc => 'The vectors with the specified name' }
+        { name => 'path', type => 'vectors',
+          desc => 'The path with the specified name' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (image, name);
+  path = gimp_image_get_vectors_by_name (image, name);
 }
 CODE
     );
@@ -3160,7 +3160,7 @@ CODE
             image_get_width image_get_height
             image_get_layers
             image_get_channels
-            image_get_vectors
+            image_get_paths
             image_unset_active_channel
             image_get_floating_sel
             image_floating_sel_attached_to
@@ -3170,8 +3170,8 @@ CODE
             image_freeze_layers image_thaw_layers
             image_insert_channel image_remove_channel
             image_freeze_channels image_thaw_channels
-            image_insert_vectors image_remove_vectors
-            image_freeze_vectors image_thaw_vectors
+            image_insert_path image_remove_path
+            image_freeze_paths image_thaw_paths
             image_get_item_position
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
@@ -3184,7 +3184,7 @@ CODE
             image_thumbnail
             image_get_selected_layers image_set_selected_layers
             image_get_selected_channels image_set_selected_channels
-            image_get_selected_vectors image_set_selected_vectors
+            image_get_selected_paths image_set_selected_paths
             image_get_selected_drawables
             image_get_selection
             image_get_component_active image_set_component_active
@@ -3200,10 +3200,10 @@ CODE
             image_get_tattoo_state image_set_tattoo_state
             image_get_layer_by_tattoo
             image_get_channel_by_tattoo
-            image_get_vectors_by_tattoo
+            image_get_path_by_tattoo
             image_get_layer_by_name
             image_get_channel_by_name
-            image_get_vectors_by_name
+            image_get_path_by_name
             image_attach_parasite image_detach_parasite
             image_get_parasite
             image_get_parasite_list

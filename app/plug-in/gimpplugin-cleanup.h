@@ -36,9 +36,9 @@ gboolean   gimp_plug_in_cleanup_channels_freeze  (GimpPlugIn          *plug_in,
 gboolean   gimp_plug_in_cleanup_channels_thaw    (GimpPlugIn          *plug_in,
                                                   GimpImage           *image);
 
-gboolean   gimp_plug_in_cleanup_vectors_freeze   (GimpPlugIn          *plug_in,
+gboolean   gimp_plug_in_cleanup_paths_freeze     (GimpPlugIn          *plug_in,
                                                   GimpImage           *image);
-gboolean   gimp_plug_in_cleanup_vectors_thaw     (GimpPlugIn          *plug_in,
+gboolean   gimp_plug_in_cleanup_paths_thaw       (GimpPlugIn          *plug_in,
                                                   GimpImage           *image);
 
 gboolean   gimp_plug_in_cleanup_add_shadow       (GimpPlugIn          *plug_in,

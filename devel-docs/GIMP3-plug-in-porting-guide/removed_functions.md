@@ -106,7 +106,7 @@ possible in the previous API is obviously still possible.
 | `gimp_fuzzy_select_full()`                      | `gimp_image_select_contiguous_color()`            |
 | `gimp_gamma()`                                  | `gimp_drawable_get_format()`                      |
 | `gimp_get_icon_theme_dir()`                     | *N/A*                                             |
-| `gimp_get_path_by_tattoo()`                     | `gimp_image_get_vectors_by_tattoo()`              |
+| `gimp_get_path_by_tattoo()`                     | `gimp_image_get_path_by_tattoo()`                 |
 | `gimp_get_theme_dir()`                          | *N/A*                                             |
 | `gimp_gradients_get_gradient_data()`            | `gimp_gradient_get_uniform_samples()`             |
 | `gimp_gradients_sample_custom()`                | `gimp_gradient_get_custom_samples()`              |
@@ -115,7 +115,7 @@ possible in the previous API is obviously still possible.
 | `gimp_hue_saturation()`                         | `gimp_drawable_hue_saturation()`                  |
 | `gimp_image_add_channel()`                      | `gimp_image_insert_channel()`                     |
 | `gimp_image_add_layer()`                        | `gimp_image_insert_layer()`                       |
-| `gimp_image_add_vectors()`                      | `gimp_image_insert_vectors()`                     |
+| `gimp_image_add_vectors()`                      | `gimp_image_insert_path()`                        |
 | `gimp_image_attach_new_parasite()`              | `gimp_image_attach_parasite()`                    |
 | `gimp_image_base_type()`                        | `gimp_image_get_base_type()`                      |
 | `gimp_image_free_shadow()`                      | `gimp_drawable_free_shadow()`                     |
@@ -163,15 +163,15 @@ possible in the previous API is obviously still possible.
 | `gimp_parasite_flags()`                         | `gimp_parasite_get_flags()`                       |
 | `gimp_parasite_list()`                          | `gimp_get_parasite_list()`                        |
 | `gimp_parasite_name()`                          | `gimp_parasite_get_name()`                        |
-| `gimp_path_delete()`                            | `gimp_image_remove_vectors()`                     |
-| `gimp_path_get_current()`                       | `gimp_image_get_active_vectors()`                 |
+| `gimp_path_delete()`                            | `gimp_image_remove_path()`                        |
+| `gimp_path_get_current()`                       | `gimp_image_get_selected_paths()`                 |
 | `gimp_path_get_locked()`                        | *N/A*                                             |
 | `gimp_path_get_points()`                        | `gimp_vectors_stroke_get_points()`                |
 | `gimp_path_get_point_at_dist()`                 | `gimp_vectors_stroke_get_point_at_dist()`         |
 | `gimp_path_get_tattoo()`                        | `gimp_item_get_tattoo()`                          |
 | `gimp_path_import()`                            | `gimp_vectors_import_from_file()`                 |
-| `gimp_path_list()`                              | `gimp_image_get_vectors()`                        |
-| `gimp_path_set_current()`                       | `gimp_image_set_active_vectors()`                 |
+| `gimp_path_list()`                              | `gimp_image_get_paths()`                          |
+| `gimp_path_set_current()`                       | `gimp_image_set_selected_paths()`                 |
 | `gimp_path_set_locked()`                        | *N/A*                                             |
 | `gimp_path_set_points()`                        | `gimp_vectors_stroke_new_from_points()`           |
 | `gimp_path_set_tattoo()`                        | `gimp_item_set_tattoo()`                          |

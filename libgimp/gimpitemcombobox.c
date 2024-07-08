@@ -43,7 +43,7 @@
  * @short_description: Widgets providing popup menus of items.
  *
  * Widgets providing popup menus of items (layers, channels,
- * drawables, vectors).
+ * drawables, paths).
  **/
 
 
@@ -418,7 +418,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 
       if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
         {
-          items = gimp_image_list_vectors (image);
+          items = gimp_image_list_paths (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);

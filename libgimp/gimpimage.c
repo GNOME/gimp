@@ -389,7 +389,7 @@ gimp_image_take_selected_channels (GimpImage *image,
 }
 
 /**
- * gimp_image_list_selected_vectors: (skip)
+ * gimp_image_list_selected_paths: (skip)
  * @image: The image.
  *
  * Returns the list of paths selected in the specified image.
@@ -405,27 +405,27 @@ gimp_image_take_selected_channels (GimpImage *image,
  * Since: 3.0
  **/
 GList *
-gimp_image_list_selected_vectors (GimpImage *image)
+gimp_image_list_selected_paths (GimpImage *image)
 {
-  GimpVectors **vectors;
-  gint          num_vectors;
+  GimpVectors **paths;
+  gint          num_paths;
   GList        *list = NULL;
   gint          i;
 
-  vectors = gimp_image_get_selected_vectors (image, &num_vectors);
+  paths = gimp_image_get_selected_paths (image, &num_paths);
 
-  for (i = 0; i < num_vectors; i++)
-    list = g_list_prepend (list, vectors[i]);
+  for (i = 0; i < num_paths; i++)
+    list = g_list_prepend (list, paths[i]);
 
-  g_free (vectors);
+  g_free (paths);
 
   return g_list_reverse (list);
 }
 
 /**
- * gimp_image_take_selected_vectors:
+ * gimp_image_take_selected_paths:
  * @image: The image.
- * @vectors: (transfer container) (element-type GimpVectors): The list of paths to select.
+ * @paths: (transfer container) (element-type GimpVectors): The list of paths to select.
  *
  * The paths are set as the selected paths in the image. Any previous
  * selected paths are unselected.
@@ -435,21 +435,21 @@ gimp_image_list_selected_vectors (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_take_selected_vectors (GimpImage *image,
-                                  GList     *vectors)
+gimp_image_take_selected_paths (GimpImage *image,
+                                GList     *paths)
 {
-  GimpVectors **sel_vectors;
+  GimpVectors **sel_paths;
   GList        *list;
   gboolean      success;
   gint          i;
 
-  sel_vectors = g_new0 (GimpVectors *, g_list_length (vectors));
-  for (list = vectors, i = 0; list; list = list->next, i++)
-    sel_vectors[i] = list->data;
+  sel_paths = g_new0 (GimpVectors *, g_list_length (paths));
+  for (list = paths, i = 0; list; list = list->next, i++)
+    sel_paths[i] = list->data;
 
-  success = gimp_image_set_selected_vectors (image, g_list_length (vectors),
-                                             (const GimpVectors **) sel_vectors);
-  g_list_free (vectors);
+  success = gimp_image_set_selected_paths (image, g_list_length (paths),
+                                           (const GimpVectors **) sel_paths);
+  g_list_free (paths);
 
   return success;
 }
@@ -492,35 +492,35 @@ gimp_image_list_channels (GimpImage *image)
 }
 
 /**
- * gimp_image_list_vectors: (skip)
+ * gimp_image_list_paths: (skip)
  * @image: The image.
  *
- * Returns the list of vectors contained in the specified image.
+ * Returns the list of paths contained in the specified image.
  *
- * This procedure returns the list of vectors contained in the
+ * This procedure returns the list of paths contained in the
  * specified image.
  *
  * Returns: (element-type GimpVectors) (transfer container):
- *          The list of vectors contained in the image.
- *          The returned value must be freed with g_list_free(). Vectors
+ *          The list of paths contained in the image.
+ *          The returned value must be freed with g_list_free(). Path
  *          elements belong to libgimp and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_vectors (GimpImage *image)
+gimp_image_list_paths (GimpImage *image)
 {
-  GimpVectors **vectors;
-  gint          num_vectors;
+  GimpVectors **paths;
+  gint          num_paths;
   GList        *list = NULL;
   gint          i;
 
-  vectors = gimp_image_get_vectors (image, &num_vectors);
+  paths = gimp_image_get_paths (image, &num_paths);
 
-  for (i = 0; i < num_vectors; i++)
-    list = g_list_prepend (list, vectors[i]);
+  for (i = 0; i < num_paths; i++)
+    list = g_list_prepend (list, paths[i]);
 
-  g_free (vectors);
+  g_free (paths);
 
   return g_list_reverse (list);
 }

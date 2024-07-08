@@ -509,18 +509,18 @@ image_get_channels_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_get_vectors_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
+image_get_paths_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_vectors = 0;
-  GimpVectors **vectors = NULL;
+  gint num_paths = 0;
+  GimpVectors **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -528,16 +528,16 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
     {
       GList *list = gimp_image_get_vectors_iter (image);
 
-      num_vectors = g_list_length (list);
+      num_paths = g_list_length (list);
 
-      if (num_vectors)
+      if (num_paths)
         {
           gint i;
 
-          vectors = g_new (GimpVectors *, num_vectors);
+          paths = g_new (GimpVectors *, num_paths);
 
-          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vectors[i] = g_object_ref (list->data);
+          for (i = 0; i < num_paths; i++, list = g_list_next (list))
+            paths[i] = g_object_ref (list->data);
         }
     }
 
@@ -546,8 +546,8 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) paths, num_paths);
     }
 
   return return_vals;
@@ -1036,27 +1036,27 @@ image_thaw_channels_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_insert_vectors_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+image_insert_path_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpVectors *vectors;
+  GimpVectors *path;
   GimpVectors *parent;
   gint position;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  vectors = g_value_get_object (gimp_value_array_index (args, 1));
+  path = g_value_get_object (gimp_value_array_index (args, 1));
   parent = g_value_get_object (gimp_value_array_index (args, 2));
   position = g_value_get_int (gimp_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (path), image, error) &&
           (parent == NULL ||
            (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, 0, error) &&
             gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
@@ -1064,7 +1064,7 @@ image_insert_vectors_invoker (GimpProcedure         *procedure,
           if (position == -1 && parent == NULL)
             parent = GIMP_IMAGE_ACTIVE_PARENT;
 
-          success = gimp_image_add_vectors (image, vectors,
+          success = gimp_image_add_vectors (image, path,
                                             parent, MAX (position, -1), TRUE);
         }
       else
@@ -1078,24 +1078,24 @@ image_insert_vectors_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_remove_vectors_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+image_remove_path_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpVectors *vectors;
+  GimpVectors *path;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  vectors = g_value_get_object (gimp_value_array_index (args, 1));
+  path = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, 0, error))
-        gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (path), image, 0, error))
+        gimp_image_remove_vectors (image, path, TRUE, NULL);
       else
         success = FALSE;
     }
@@ -1105,36 +1105,7 @@ image_remove_vectors_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_freeze_vectors_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-      GimpContainer *container = gimp_image_get_vectors (image);
-
-      if (plug_in)
-        success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
-
-      if (success)
-        gimp_container_freeze (container);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-image_thaw_vectors_invoker (GimpProcedure         *procedure,
+image_freeze_paths_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
                             GimpProgress          *progress,
@@ -1152,7 +1123,36 @@ image_thaw_vectors_invoker (GimpProcedure         *procedure,
       GimpContainer *container = gimp_image_get_vectors (image);
 
       if (plug_in)
-        success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+        success = gimp_plug_in_cleanup_paths_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_paths_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_vectors (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_paths_thaw (plug_in, image);
 
       if (success)
         success = gimp_container_frozen (container);
@@ -1902,18 +1902,18 @@ image_set_selected_channels_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_get_selected_vectors_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
-                                    GError               **error)
+image_get_selected_paths_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_vectors = 0;
-  GimpVectors **vectors = NULL;
+  gint num_paths = 0;
+  GimpVectors **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -1921,16 +1921,16 @@ image_get_selected_vectors_invoker (GimpProcedure         *procedure,
     {
       GList *list = gimp_image_get_selected_vectors (image);
 
-      num_vectors = g_list_length (list);
+      num_paths = g_list_length (list);
 
-      if (num_vectors)
+      if (num_paths)
         {
           gint i;
 
-          vectors = g_new (GimpVectors *, num_vectors);
+          paths = g_new (GimpVectors *, num_paths);
 
-          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vectors[i] = g_object_ref (list->data);
+          for (i = 0; i < num_paths; i++, list = g_list_next (list))
+            paths[i] = g_object_ref (list->data);
         }
     }
 
@@ -1939,41 +1939,41 @@ image_get_selected_vectors_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) paths, num_paths);
     }
 
   return return_vals;
 }
 
 static GimpValueArray *
-image_set_selected_vectors_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
-                                    GError               **error)
+image_set_selected_paths_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint num_vectors;
-  const GimpVectors **vectors;
+  gint num_paths;
+  const GimpVectors **paths;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  num_vectors = g_value_get_int (gimp_value_array_index (args, 1));
-  vectors = (const GimpVectors **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  num_paths = g_value_get_int (gimp_value_array_index (args, 1));
+  paths = (const GimpVectors **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      GList *selected_vectors = NULL;
+      GList *selected_paths = NULL;
       gint   i;
 
-      for (i = 0; i < num_vectors; i++)
-        selected_vectors = g_list_prepend (selected_vectors,
-                                           GIMP_LAYER (vectors[i]));
+      for (i = 0; i < num_paths; i++)
+        selected_paths = g_list_prepend (selected_paths,
+                                           GIMP_LAYER (paths[i]));
 
-      gimp_image_set_selected_vectors (image, selected_vectors);
-      g_list_free (selected_vectors);
+      gimp_image_set_selected_vectors (image, selected_paths);
+      g_list_free (selected_paths);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2639,32 +2639,32 @@ image_get_channel_by_tattoo_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_get_vectors_by_tattoo_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
+image_get_path_by_tattoo_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
   guint tattoo;
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   tattoo = g_value_get_uint (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_tattoo (image, tattoo);
+      path = gimp_image_get_vectors_by_tattoo (image, tattoo);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), vectors);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), path);
 
   return return_vals;
 }
@@ -2732,32 +2732,32 @@ image_get_channel_by_name_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_get_vectors_by_name_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
-                                   GError               **error)
+image_get_path_by_name_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (image, name);
+      path = gimp_image_get_vectors_by_name (image, name);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), vectors);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), path);
 
   return return_vals;
 }
@@ -3352,14 +3352,14 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-vectors
+   * gimp-image-get-paths
    */
-  procedure = gimp_procedure_new (image_get_vectors_invoker);
+  procedure = gimp_procedure_new (image_get_paths_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-vectors");
+                               "gimp-image-get-paths");
   gimp_procedure_set_static_help (procedure,
-                                  "Returns the list of vectors contained in the specified image.",
-                                  "This procedure returns the list of vectors contained in the specified image.",
+                                  "Returns the list of paths contained in the specified image.",
+                                  "This procedure returns the list of paths contained in the specified image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -3372,15 +3372,15 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-vectors",
-                                                     "num vectors",
-                                                     "The number of vectors contained in the image",
+                                   g_param_spec_int ("num-paths",
+                                                     "num paths",
+                                                     "The number of paths contained in the image",
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("vectors",
-                                                                 "vectors",
-                                                                 "The list of vectors contained in the image.",
+                                   gimp_param_spec_object_array ("paths",
+                                                                 "paths",
+                                                                 "The list of paths contained in the image.",
                                                                  GIMP_TYPE_VECTORS,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3823,14 +3823,14 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-insert-vectors
+   * gimp-image-insert-path
    */
-  procedure = gimp_procedure_new (image_insert_vectors_invoker);
+  procedure = gimp_procedure_new (image_insert_path_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-insert-vectors");
+                               "gimp-image-insert-path");
   gimp_procedure_set_static_help (procedure,
-                                  "Add the specified vectors to the image.",
-                                  "This procedure adds the specified vectors to the image at the given position. Since vectors groups are not currently supported, the parent argument must always be 0. The position argument specifies the location of the vectors inside the stack, starting from the top (0) and increasing. If the position is specified as -1, then the vectors is inserted above the active vectors.",
+                                  "Add the specified path to the image.",
+                                  "This procedure adds the specified path to the image at the given position. Since path groups are not currently supported, the parent argument must always be 0. The position argument specifies the location of the path inside the stack, starting from the top (0) and increasing. If the position is specified as -1, then the path is inserted above the active path.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -3843,32 +3843,32 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors ("parent",
                                                         "parent",
-                                                        "The parent vectors",
+                                                        "The parent path",
                                                         TRUE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("position",
                                                  "position",
-                                                 "The vectors position",
+                                                 "The path position",
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-remove-vectors
+   * gimp-image-remove-path
    */
-  procedure = gimp_procedure_new (image_remove_vectors_invoker);
+  procedure = gimp_procedure_new (image_remove_path_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-remove-vectors");
+                               "gimp-image-remove-path");
   gimp_procedure_set_static_help (procedure,
                                   "Remove the specified path from the image.",
                                   "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
@@ -3884,25 +3884,25 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("vectors",
-                                                        "vectors",
-                                                        "The vectors object",
+                               gimp_param_spec_vectors ("path",
+                                                        "path",
+                                                        "The path object",
                                                         FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-freeze-vectors
+   * gimp-image-freeze-paths
    */
-  procedure = gimp_procedure_new (image_freeze_vectors_invoker);
+  procedure = gimp_procedure_new (image_freeze_paths_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-freeze-vectors");
+                               "gimp-image-freeze-paths");
   gimp_procedure_set_static_help (procedure,
-                                  "Freeze the image's vectors list.",
-                                  "This procedure freezes the vectors list of the image, suppressing any updates to the Paths dialog in response to changes to the image's vectors. This can significantly improve performance while applying changes affecting the vectors list.\n"
+                                  "Freeze the image's path list.",
+                                  "This procedure freezes the path list of the image, suppressing any updates to the Paths dialog in response to changes to the image's path. This can significantly improve performance while applying changes affecting the path list.\n"
                                   "\n"
-                                  "Each call to 'gimp-image-freeze-vectors' should be matched by a corresponding call to 'gimp-image-thaw-vectors', undoing its effects.",
+                                  "Each call to 'gimp-image-freeze-paths' should be matched by a corresponding call to gimp_image_thaw_paths (), undoing its effects.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -3918,16 +3918,16 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-thaw-vectors
+   * gimp-image-thaw-paths
    */
-  procedure = gimp_procedure_new (image_thaw_vectors_invoker);
+  procedure = gimp_procedure_new (image_thaw_paths_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-thaw-vectors");
+                               "gimp-image-thaw-paths");
   gimp_procedure_set_static_help (procedure,
-                                  "Thaw the image's vectors list.",
-                                  "This procedure thaws the vectors list of the image, re-enabling updates to the Paths dialog.\n"
+                                  "Thaw the image's path list.",
+                                  "This procedure thaws the path list of the image, re-enabling updates to the Paths dialog.\n"
                                   "\n"
-                                  "This procedure should match a corresponding call to 'gimp-image-freeze-vectors'.",
+                                  "This procedure should match a corresponding call to 'gimp-image-freeze-paths'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -4644,14 +4644,14 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-selected-vectors
+   * gimp-image-get-selected-paths
    */
-  procedure = gimp_procedure_new (image_get_selected_vectors_invoker);
+  procedure = gimp_procedure_new (image_get_selected_paths_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-selected-vectors");
+                               "gimp-image-get-selected-paths");
   gimp_procedure_set_static_help (procedure,
-                                  "Returns the specified image's selected vectors.",
-                                  "This procedure returns the list of selected vectors in the specified image.",
+                                  "Returns the specified image's selected paths.",
+                                  "This procedure returns the list of selected paths in the specified image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -4664,29 +4664,29 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-vectors",
-                                                     "num vectors",
-                                                     "The number of selected vectors in the image",
+                                   g_param_spec_int ("num-paths",
+                                                     "num paths",
+                                                     "The number of selected paths in the image",
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("vectors",
-                                                                 "vectors",
-                                                                 "The list of selected vectors in the image.",
+                                   gimp_param_spec_object_array ("paths",
+                                                                 "paths",
+                                                                 "The list of selected paths in the image.",
                                                                  GIMP_TYPE_VECTORS,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-set-selected-vectors
+   * gimp-image-set-selected-paths
    */
-  procedure = gimp_procedure_new (image_set_selected_vectors_invoker);
+  procedure = gimp_procedure_new (image_set_selected_paths_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-set-selected-vectors");
+                               "gimp-image-set-selected-paths");
   gimp_procedure_set_static_help (procedure,
-                                  "Sets the specified image's selected vectors.",
-                                  "The vectors are set as the selected vectors in the image.",
+                                  "Sets the specified image's selected paths.",
+                                  "The paths are set as the selected paths in the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -4699,15 +4699,15 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-vectors",
-                                                 "num vectors",
-                                                 "The number of vectors to select",
+                               g_param_spec_int ("num-paths",
+                                                 "num paths",
+                                                 "The number of paths to select",
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("vectors",
-                                                             "vectors",
-                                                             "The list of vectors to select",
+                               gimp_param_spec_object_array ("paths",
+                                                             "paths",
+                                                             "The list of paths to select",
                                                              GIMP_TYPE_VECTORS,
                                                              GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -5359,14 +5359,14 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-vectors-by-tattoo
+   * gimp-image-get-path-by-tattoo
    */
-  procedure = gimp_procedure_new (image_get_vectors_by_tattoo_invoker);
+  procedure = gimp_procedure_new (image_get_path_by_tattoo_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-vectors-by-tattoo");
+                               "gimp-image-get-path-by-tattoo");
   gimp_procedure_set_static_help (procedure,
-                                  "Find a vectors with a given tattoo in an image.",
-                                  "This procedure returns the vectors with the given tattoo in the specified image.",
+                                  "Find a path with a given tattoo in an image.",
+                                  "This procedure returns the path with the given tattoo in the specified image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -5381,13 +5381,13 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uint ("tattoo",
                                                   "tattoo",
-                                                  "The tattoo of the vectors to find",
+                                                  "The tattoo of the path to find",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("vectors",
-                                                            "vectors",
-                                                            "The vectors with the specified tattoo",
+                                   gimp_param_spec_vectors ("path",
+                                                            "path",
+                                                            "The path with the specified tattoo",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -5466,14 +5466,14 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-vectors-by-name
+   * gimp-image-get-path-by-name
    */
-  procedure = gimp_procedure_new (image_get_vectors_by_name_invoker);
+  procedure = gimp_procedure_new (image_get_path_by_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-vectors-by-name");
+                               "gimp-image-get-path-by-name");
   gimp_procedure_set_static_help (procedure,
-                                  "Find a vectors with a given name in an image.",
-                                  "This procedure returns the vectors with the given name in the specified image.",
+                                  "Find a path with a given name in an image.",
+                                  "This procedure returns the path with the given name in the specified image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -5488,14 +5488,14 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
-                                                       "The name of the vectors to find",
+                                                       "The name of the path to find",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("vectors",
-                                                            "vectors",
-                                                            "The vectors with the specified name",
+                                   gimp_param_spec_vectors ("path",
+                                                            "path",
+                                                            "The path with the specified name",
                                                             FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

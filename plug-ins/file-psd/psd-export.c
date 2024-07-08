@@ -1158,7 +1158,7 @@ save_paths (GOutputStream  *output,
   gint   *strokes;
   gint    s;
 
-  vectors = gimp_image_list_vectors (image);
+  vectors = gimp_image_list_paths (image);
 
   if (! vectors)
     return;
@@ -1296,7 +1296,7 @@ save_clipping_path (GOutputStream  *output,
   GList   *paths;
   GError  *err = NULL;
 
-  paths = gimp_image_list_vectors (image);
+  paths = gimp_image_list_paths (image);
 
   if (! paths)
     return;
@@ -2524,7 +2524,7 @@ save_dialog (GimpImage     *image,
      }
 
   /* Clipping Path */
-  paths = gimp_image_list_vectors (image);
+  paths = gimp_image_list_paths (image);
   if (paths)
     {
       GtkWidget    *vbox;
