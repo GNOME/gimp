@@ -70,6 +70,7 @@
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimppalettes_pdb.h>
 #include <libgimp/gimppaletteselect_pdb.h>
+#include <libgimp/gimppath_pdb.h>
 #include <libgimp/gimppattern_pdb.h>
 #include <libgimp/gimppatterns_pdb.h>
 #include <libgimp/gimppatternselect_pdb.h>
@@ -78,6 +79,5 @@
 #include <libgimp/gimpselection_pdb.h>
 #include <libgimp/gimptextlayer_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
-#include <libgimp/gimpvectors_pdb.h>
 
 #endif /* __GIMP_PDB_HEADERS_H__ */
