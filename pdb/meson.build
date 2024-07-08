@@ -45,6 +45,7 @@ pdb_names = [
   'palette_select',
   'palette',
   'palettes',
+  'path',
   'pattern_select',
   'pattern',
   'patterns',
@@ -57,7 +58,6 @@ pdb_names = [
   'text_layer',
   'text_tool',
   'unit',
-  'vectors',
 ]
 
 pdb_sources = []

@@ -565,20 +565,20 @@ EXPORTS
 	gimp_item_id_is_group_layer
 	gimp_item_id_is_layer
 	gimp_item_id_is_layer_mask
+	gimp_item_id_is_path
 	gimp_item_id_is_selection
 	gimp_item_id_is_text_layer
 	gimp_item_id_is_valid
-	gimp_item_id_is_vectors
 	gimp_item_is_channel
 	gimp_item_is_drawable
 	gimp_item_is_group
 	gimp_item_is_group_layer
 	gimp_item_is_layer
 	gimp_item_is_layer_mask
+	gimp_item_is_path
 	gimp_item_is_selection
 	gimp_item_is_text_layer
 	gimp_item_is_valid
-	gimp_item_is_vectors
 	gimp_item_list_children
 	gimp_item_set_color_tag
 	gimp_item_set_expanded
@@ -708,6 +708,32 @@ EXPORTS
 	gimp_param_spec_vectors
 	gimp_param_text_layer_get_type
 	gimp_param_vectors_get_type
+	gimp_path_bezier_stroke_conicto
+	gimp_path_bezier_stroke_cubicto
+	gimp_path_bezier_stroke_lineto
+	gimp_path_bezier_stroke_new_ellipse
+	gimp_path_bezier_stroke_new_moveto
+	gimp_path_copy
+	gimp_path_export_to_file
+	gimp_path_export_to_string
+	gimp_path_get_strokes
+	gimp_path_import_from_file
+	gimp_path_import_from_string
+	gimp_path_new
+	gimp_path_new_from_text_layer
+	gimp_path_remove_stroke
+	gimp_path_stroke_close
+	gimp_path_stroke_flip
+	gimp_path_stroke_flip_free
+	gimp_path_stroke_get_length
+	gimp_path_stroke_get_point_at_dist
+	gimp_path_stroke_get_points
+	gimp_path_stroke_interpolate
+	gimp_path_stroke_new_from_points
+	gimp_path_stroke_reverse
+	gimp_path_stroke_rotate
+	gimp_path_stroke_scale
+	gimp_path_stroke_translate
 	gimp_pattern_get_buffer
 	gimp_pattern_get_by_name
 	gimp_pattern_get_info
@@ -913,13 +939,13 @@ EXPORTS
 	gimp_resource_get_id
 	gimp_resource_get_name
 	gimp_resource_get_type
-    	gimp_resource_id_is_brush
-     	gimp_resource_id_is_font
-     	gimp_resource_id_is_gradient
-     	gimp_resource_id_is_palette
-     	gimp_resource_id_is_pattern
-     	gimp_resource_id_is_valid
-    	gimp_resource_is_brush
+    gimp_resource_id_is_brush
+    gimp_resource_id_is_font
+    gimp_resource_id_is_gradient
+    gimp_resource_id_is_palette
+    gimp_resource_id_is_pattern
+    gimp_resource_id_is_valid
+    gimp_resource_is_brush
 	gimp_resource_is_editable
    	gimp_resource_is_font
 	gimp_resource_is_gradient
@@ -992,33 +1018,7 @@ EXPORTS
 	gimp_vector_load_procedure_extract_dimensions
 	gimp_vector_load_procedure_get_type
 	gimp_vector_load_procedure_new
-	gimp_vectors_bezier_stroke_conicto
-	gimp_vectors_bezier_stroke_cubicto
-	gimp_vectors_bezier_stroke_lineto
-	gimp_vectors_bezier_stroke_new_ellipse
-	gimp_vectors_bezier_stroke_new_moveto
-	gimp_vectors_copy
-	gimp_vectors_export_to_file
-	gimp_vectors_export_to_string
 	gimp_vectors_get_by_id
-	gimp_vectors_get_strokes
 	gimp_vectors_get_type
-	gimp_vectors_import_from_file
-	gimp_vectors_import_from_string
-	gimp_vectors_new
-	gimp_vectors_new_from_text_layer
-	gimp_vectors_remove_stroke
-	gimp_vectors_stroke_close
-	gimp_vectors_stroke_flip
-	gimp_vectors_stroke_flip_free
-	gimp_vectors_stroke_get_length
-	gimp_vectors_stroke_get_point_at_dist
-	gimp_vectors_stroke_get_points
-	gimp_vectors_stroke_interpolate
-	gimp_vectors_stroke_new_from_points
-	gimp_vectors_stroke_reverse
-	gimp_vectors_stroke_rotate
-	gimp_vectors_stroke_scale
-	gimp_vectors_stroke_translate
 	gimp_version
 	gimp_wm_class

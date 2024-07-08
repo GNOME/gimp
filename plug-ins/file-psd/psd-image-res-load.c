@@ -1533,7 +1533,7 @@ load_resource_2000 (const PSDimageres  *res_a,
   gdouble      *controlpoints;
   gint32        x[3];
   gint32        y[3];
-  GimpVectors  *vectors = NULL;
+  GimpVectors  *path = NULL;
   gint16        type;
   gint16        init_fill;
   gint16        num_rec;
@@ -1580,15 +1580,15 @@ load_resource_2000 (const PSDimageres  *res_a,
   if (res_a->id == PSD_WORKING_PATH)
     {
       /* use "Working Path" for the path name to match the Photoshop display */
-      vectors = gimp_vectors_new (image, "Working Path");
+      path = gimp_path_new (image, "Working Path");
     }
   else
     {
       /* Use the name stored in the PSD to name the path */
-      vectors = gimp_vectors_new (image, res_a->name);
+      path = gimp_path_new (image, res_a->name);
     }
 
-  gimp_image_insert_path (image, vectors, NULL, -1);
+  gimp_image_insert_path (image, path, NULL, -1);
 
   while (path_rec > 0)
     {
@@ -1703,9 +1703,9 @@ load_resource_2000 (const PSDimageres  *res_a,
               num_rec--;
             }
           /* Add sub-path */
-          gimp_vectors_stroke_new_from_points (vectors,
-                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
-                                               cntr, controlpoints, closed);
+          gimp_path_stroke_new_from_points (path,
+                                            GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                            cntr, controlpoints, closed);
           g_free (controlpoints);
         }
 

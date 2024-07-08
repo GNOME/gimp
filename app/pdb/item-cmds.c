@@ -275,6 +275,38 @@ item_id_is_layer_mask_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+item_id_is_path_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gint item_id;
+  gboolean path = FALSE;
+
+  item_id = g_value_get_int (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpItem *item = gimp_item_get_by_id (gimp, item_id);
+
+      path = (GIMP_IS_VECTORS (item) &&
+              ! gimp_item_is_removed (item));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), path);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 item_id_is_selection_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -302,38 +334,6 @@ item_id_is_selection_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_set_boolean (gimp_value_array_index (return_vals, 1), selection);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-item_id_is_vectors_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  gint item_id;
-  gboolean vectors = FALSE;
-
-  item_id = g_value_get_int (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      GimpItem *item = gimp_item_get_by_id (gimp, item_id);
-
-      vectors = (GIMP_IS_VECTORS (item) &&
-                 ! gimp_item_is_removed (item));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), vectors);
 
   return return_vals;
 }
@@ -1265,6 +1265,35 @@ register_item_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-item-id-is-path
+   */
+  procedure = gimp_procedure_new (item_id_is_path_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-id-is-path");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether the item ID is a path.",
+                                  "This procedure returns TRUE if the specified item ID is a path.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Spencer Kimball & Peter Mattis",
+                                         "Spencer Kimball & Peter Mattis",
+                                         "1995-1996");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("item-id",
+                                                 "item id",
+                                                 "The item ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("path",
+                                                         "path",
+                                                         "TRUE if the item ID is a path, FALSE otherwise",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-item-id-is-selection
    */
   procedure = gimp_procedure_new (item_id_is_selection_invoker);
@@ -1288,35 +1317,6 @@ register_item_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("selection",
                                                          "selection",
                                                          "TRUE if the item ID is a selection, FALSE otherwise",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-item-id-is-vectors
-   */
-  procedure = gimp_procedure_new (item_id_is_vectors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-id-is-vectors");
-  gimp_procedure_set_static_help (procedure,
-                                  "Returns whether the item ID is a vectors.",
-                                  "This procedure returns TRUE if the specified item ID is a vectors.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("item-id",
-                                                 "item id",
-                                                 "The item ID",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("vectors",
-                                                         "vectors",
-                                                         "TRUE if the item ID is a vectors, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

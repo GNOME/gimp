@@ -789,28 +789,28 @@ gimp_pdb_image_get_sample_point (GimpImage  *image,
 }
 
 GimpStroke *
-gimp_pdb_get_vectors_stroke (GimpVectors        *vectors,
-                             gint                stroke_id,
-                             GimpPDBItemModify   modify,
-                             GError            **error)
+gimp_pdb_get_path_stroke (GimpVectors        *path,
+                          gint                stroke_id,
+                          GimpPDBItemModify   modify,
+                          GError            **error)
 {
   GimpStroke *stroke = NULL;
 
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTORS (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (! gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
+  if (! gimp_pdb_item_is_not_group (GIMP_ITEM (path), error))
     return NULL;
 
-  if (! modify || gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
+  if (! modify || gimp_pdb_item_is_modifiable (GIMP_ITEM (path),
                                                modify, error))
     {
-      stroke = gimp_vectors_stroke_get_by_id (vectors, stroke_id);
+      stroke = gimp_vectors_stroke_get_by_id (path, stroke_id);
 
       if (! stroke)
         g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
-                     _("Vectors object %d does not contain stroke with ID %d"),
-                     gimp_item_get_id (GIMP_ITEM (vectors)), stroke_id);
+                     _("Path object %d does not contain stroke with ID %d"),
+                     gimp_item_get_id (GIMP_ITEM (path)), stroke_id);
     }
 
   return stroke;

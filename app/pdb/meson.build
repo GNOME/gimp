@@ -52,6 +52,7 @@ libappinternalprocs_sources = [
   'palette-cmds.c',
   'palette-select-cmds.c',
   'palettes-cmds.c',
+  'path-cmds.c',
   'pattern-cmds.c',
   'pattern-select-cmds.c',
   'patterns-cmds.c',
@@ -64,7 +65,6 @@ libappinternalprocs_sources = [
   'text-layer-cmds.c',
   'text-tool-cmds.c',
   'unit-cmds.c',
-  'vectors-cmds.c',
 ]
 
 libapppdb = static_library('apppdb',

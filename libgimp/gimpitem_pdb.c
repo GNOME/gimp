@@ -293,6 +293,42 @@ gimp_item_id_is_layer_mask (gint item_id)
 }
 
 /**
+ * gimp_item_id_is_path:
+ * @item_id: The item ID.
+ *
+ * Returns whether the item ID is a path.
+ *
+ * This procedure returns TRUE if the specified item ID is a path.
+ *
+ * Returns: TRUE if the item ID is a path, FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_item_id_is_path (gint item_id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean path = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_INT, item_id,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-item-id-is-path",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    path = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return path;
+}
+
+/**
  * gimp_item_id_is_selection:
  * @item_id: The item ID.
  *
@@ -326,42 +362,6 @@ gimp_item_id_is_selection (gint item_id)
   gimp_value_array_unref (return_vals);
 
   return selection;
-}
-
-/**
- * gimp_item_id_is_vectors:
- * @item_id: The item ID.
- *
- * Returns whether the item ID is a vectors.
- *
- * This procedure returns TRUE if the specified item ID is a vectors.
- *
- * Returns: TRUE if the item ID is a vectors, FALSE otherwise.
- *
- * Since: 3.0
- **/
-gboolean
-gimp_item_id_is_vectors (gint item_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean vectors = FALSE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_INT, item_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-item-id-is-vectors",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return vectors;
 }
 
 /**

@@ -43,6 +43,7 @@
     palette
     palette_select
     palettes
+    path
     pattern
     pattern_select
     patterns
@@ -55,5 +56,4 @@
     text_layer
     text_tool
     unit
-    vectors
 );

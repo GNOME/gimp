@@ -512,7 +512,7 @@ static void
 do_points (spline_list_array_type  in_splines,
            GimpImage              *image)
 {
-  GimpVectors *vectors;
+  GimpVectors *path;
   gint32       stroke;
   gint         i, j;
   gboolean     have_points = FALSE;
@@ -532,7 +532,7 @@ do_points (spline_list_array_type  in_splines,
   if (! have_points)
     return;
 
-  vectors = gimp_vectors_new (image, _("Selection"));
+  path = gimp_path_new (image, _("Selection"));
 
   for (j = 0; j < SPLINE_LIST_ARRAY_LENGTH (in_splines); j++)
     {
@@ -549,41 +549,41 @@ do_points (spline_list_array_type  in_splines,
        * to have the result of least surprise for "Text along Path".
        */
       seg = SPLINE_LIST_ELT (spline_list, SPLINE_LIST_LENGTH (spline_list) - 1);
-      stroke = gimp_vectors_bezier_stroke_new_moveto (vectors,
-                                                      END_POINT (seg).x,
-                                                      END_POINT (seg).y);
+      stroke = gimp_path_bezier_stroke_new_moveto (path,
+                                                   END_POINT (seg).x,
+                                                   END_POINT (seg).y);
 
       for (i = SPLINE_LIST_LENGTH (spline_list); i > 0; i--)
         {
           seg = SPLINE_LIST_ELT (spline_list, i-1);
 
           if (SPLINE_DEGREE (seg) == LINEAR)
-            gimp_vectors_bezier_stroke_lineto (vectors, stroke,
+            gimp_path_bezier_stroke_lineto (path, stroke,
                                                START_POINT (seg).x,
                                                START_POINT (seg).y);
           else if (SPLINE_DEGREE (seg) == CUBIC)
-            gimp_vectors_bezier_stroke_cubicto (vectors, stroke,
-                                                CONTROL2 (seg).x,
-                                                CONTROL2 (seg).y,
-                                                CONTROL1 (seg).x,
-                                                CONTROL1 (seg).y,
-                                                START_POINT (seg).x,
-                                                START_POINT (seg).y);
+            gimp_path_bezier_stroke_cubicto (path, stroke,
+                                             CONTROL2 (seg).x,
+                                             CONTROL2 (seg).y,
+                                             CONTROL1 (seg).x,
+                                             CONTROL1 (seg).y,
+                                             START_POINT (seg).x,
+                                             START_POINT (seg).y);
           else
             g_warning ("print_spline: strange degree (%d)",
                        SPLINE_DEGREE (seg));
         }
 
-      gimp_vectors_stroke_close (vectors, stroke);
+      gimp_path_stroke_close (path, stroke);
 
       /* transform to GIMPs coordinate system, taking the selections
        * bounding box into account  */
-      gimp_vectors_stroke_scale (vectors, stroke, 1.0, -1.0);
-      gimp_vectors_stroke_translate (vectors, stroke,
-                                     sel_x1, sel_y1 + sel_height + 1);
+      gimp_path_stroke_scale (path, stroke, 1.0, -1.0);
+      gimp_path_stroke_translate (path, stroke,
+                                  sel_x1, sel_y1 + sel_height + 1);
     }
 
-  gimp_image_insert_path (image, vectors, NULL, -1);
+  gimp_image_insert_path (image, path, NULL, -1);
 }
 
 

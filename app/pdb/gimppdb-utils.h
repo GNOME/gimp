@@ -102,7 +102,7 @@ GimpSamplePoint * gimp_pdb_image_get_sample_point (GimpImage          *image,
                                                    gint                sample_point_id,
                                                    GError            **error);
 
-GimpStroke      * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
+GimpStroke      * gimp_pdb_get_path_stroke        (GimpVectors        *path,
                                                    gint                stroke_id,
                                                    GimpPDBItemModify   modify,
                                                    GError            **error);

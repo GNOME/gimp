@@ -103,6 +103,7 @@ pdb_wrappers_sources = [
   'gimppalette_pdb.c',
   'gimppalettes_pdb.c',
   'gimppaletteselect_pdb.c',
+  'gimppath_pdb.c',
   'gimppattern_pdb.c',
   'gimppatterns_pdb.c',
   'gimppatternselect_pdb.c',
@@ -111,7 +112,6 @@ pdb_wrappers_sources = [
   'gimpselection_pdb.c',
   'gimptextlayer_pdb.c',
   'gimptexttool_pdb.c',
-  'gimpvectors_pdb.c',
 ]
 
 pdb_wrappers_headers = [
