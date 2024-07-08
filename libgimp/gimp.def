@@ -431,6 +431,9 @@ EXPORTS
 	gimp_image_get_palette
 	gimp_image_get_parasite
 	gimp_image_get_parasite_list
+	gimp_image_get_path_by_name
+	gimp_image_get_path_by_tattoo
+	gimp_image_get_paths
 	gimp_image_get_precision
 	gimp_image_get_resolution
 	gimp_image_get_sample_point_position
@@ -447,9 +450,6 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_type
 	gimp_image_get_unit
-	gimp_image_get_paths
-	gimp_image_get_path_by_name
-	gimp_image_get_path_by_tattoo
 	gimp_image_get_width
 	gimp_image_get_xcf_file
 	gimp_image_grid_get_background_color
@@ -470,11 +470,11 @@ EXPORTS
 	gimp_image_is_valid
 	gimp_image_list_channels
 	gimp_image_list_layers
+	gimp_image_list_paths
 	gimp_image_list_selected_channels
 	gimp_image_list_selected_drawables
 	gimp_image_list_selected_layers
 	gimp_image_list_selected_paths
-	gimp_image_list_paths
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
 	gimp_image_merge_down
