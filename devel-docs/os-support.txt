@@ -17,7 +17,7 @@ After GIMP 3.0 release, we might get back to depend on Debian Testing.
 
 ### macOS
 
-Compatibility with MacOS 10.13 and over for the 2.10 series. From GIMP 3.0, compatibility with MacOS 11 and over.
+Compatibility with MacOS 11 and over.
 
 Hardware:
 * x86_64 (Intel)
