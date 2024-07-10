@@ -55,32 +55,9 @@ typedef GimpValueArray * (* GimpRunImageFunc) (GimpProcedure         *procedure,
                                                gpointer               run_data);
 
 
-#define GIMP_TYPE_IMAGE_PROCEDURE            (gimp_image_procedure_get_type ())
-#define GIMP_IMAGE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedure))
-#define GIMP_IMAGE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedureClass))
-#define GIMP_IS_IMAGE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_PROCEDURE))
-#define GIMP_IS_IMAGE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_PROCEDURE))
-#define GIMP_IMAGE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_PROCEDURE, GimpImageProcedureClass))
+#define GIMP_TYPE_IMAGE_PROCEDURE (gimp_image_procedure_get_type ())
+G_DECLARE_FINAL_TYPE (GimpImageProcedure, gimp_image_procedure, GIMP, IMAGE_PROCEDURE, GimpProcedure)
 
-
-typedef struct _GimpImageProcedure        GimpImageProcedure;
-typedef struct _GimpImageProcedureClass   GimpImageProcedureClass;
-typedef struct _GimpImageProcedurePrivate GimpImageProcedurePrivate;
-
-struct _GimpImageProcedure
-{
-  GimpProcedure              parent_instance;
-
-  GimpImageProcedurePrivate *priv;
-};
-
-struct _GimpImageProcedureClass
-{
-  GimpProcedureClass parent_class;
-};
-
-
-GType           gimp_image_procedure_get_type (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_image_procedure_new      (GimpPlugIn       *plug_in,
                                                const gchar      *name,

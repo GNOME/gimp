@@ -55,8 +55,10 @@ enum
   N_PROPS
 };
 
-struct _GimpExportProcedurePrivate
+struct _GimpExportProcedure
 {
+  GimpFileProcedure  parent_instance;
+
   GimpRunExportFunc  run_func;
   gpointer           run_data;
   GDestroyNotify     run_data_destroy;
@@ -95,8 +97,7 @@ static GimpProcedureConfig *
 static void   gimp_export_procedure_add_metadata  (GimpExportProcedure  *export_procedure);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpExportProcedure, gimp_export_procedure,
-                            GIMP_TYPE_FILE_PROCEDURE)
+G_DEFINE_TYPE (GimpExportProcedure, gimp_export_procedure, GIMP_TYPE_FILE_PROCEDURE)
 
 #define parent_class gimp_export_procedure_parent_class
 
@@ -202,9 +203,7 @@ gimp_export_procedure_class_init (GimpExportProcedureClass *klass)
 static void
 gimp_export_procedure_init (GimpExportProcedure *procedure)
 {
-  procedure->priv = gimp_export_procedure_get_instance_private (procedure);
-
-  procedure->priv->export_metadata = FALSE;
+  procedure->export_metadata = FALSE;
 }
 
 static void
@@ -231,8 +230,8 @@ gimp_export_procedure_finalize (GObject *object)
 {
   GimpExportProcedure *procedure = GIMP_EXPORT_PROCEDURE (object);
 
-  if (procedure->priv->run_data_destroy)
-    procedure->priv->run_data_destroy (procedure->priv->run_data);
+  if (procedure->run_data_destroy)
+    procedure->run_data_destroy (procedure->run_data);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -248,22 +247,22 @@ gimp_export_procedure_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_SUPPORTS_EXIF:
-      procedure->priv->supports_exif = g_value_get_boolean (value);
+      procedure->supports_exif = g_value_get_boolean (value);
       break;
     case PROP_SUPPORTS_IPTC:
-      procedure->priv->supports_iptc = g_value_get_boolean (value);
+      procedure->supports_iptc = g_value_get_boolean (value);
       break;
     case PROP_SUPPORTS_XMP:
-      procedure->priv->supports_xmp = g_value_get_boolean (value);
+      procedure->supports_xmp = g_value_get_boolean (value);
       break;
     case PROP_SUPPORTS_PROFILE:
-      procedure->priv->supports_profile = g_value_get_boolean (value);
+      procedure->supports_profile = g_value_get_boolean (value);
       break;
     case PROP_SUPPORTS_THUMBNAIL:
-      procedure->priv->supports_thumbnail = g_value_get_boolean (value);
+      procedure->supports_thumbnail = g_value_get_boolean (value);
       break;
     case PROP_SUPPORTS_COMMENT:
-      procedure->priv->supports_comment = g_value_get_boolean (value);
+      procedure->supports_comment = g_value_get_boolean (value);
       break;
 
     default:
@@ -283,22 +282,22 @@ gimp_export_procedure_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_SUPPORTS_EXIF:
-      g_value_set_boolean (value, procedure->priv->supports_exif);
+      g_value_set_boolean (value, procedure->supports_exif);
       break;
     case PROP_SUPPORTS_IPTC:
-      g_value_set_boolean (value, procedure->priv->supports_iptc);
+      g_value_set_boolean (value, procedure->supports_iptc);
       break;
     case PROP_SUPPORTS_XMP:
-      g_value_set_boolean (value, procedure->priv->supports_xmp);
+      g_value_set_boolean (value, procedure->supports_xmp);
       break;
     case PROP_SUPPORTS_PROFILE:
-      g_value_set_boolean (value, procedure->priv->supports_profile);
+      g_value_set_boolean (value, procedure->supports_profile);
       break;
     case PROP_SUPPORTS_THUMBNAIL:
-      g_value_set_boolean (value, procedure->priv->supports_thumbnail);
+      g_value_set_boolean (value, procedure->supports_thumbnail);
       break;
     case PROP_SUPPORTS_COMMENT:
-      g_value_set_boolean (value, procedure->priv->supports_comment);
+      g_value_set_boolean (value, procedure->supports_comment);
       break;
 
     default:
@@ -367,7 +366,7 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
     }
 
   config = _gimp_procedure_create_run_config (procedure);
-  if (export_proc->priv->export_metadata)
+  if (export_proc->export_metadata)
     {
       mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
       if (mimetype == NULL)
@@ -399,9 +398,9 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   metadata = _gimp_procedure_config_begin_export (config, image, run_mode, remaining, mimetype);
   g_free (mimetype);
 
-  return_values = export_proc->priv->run_func (procedure, run_mode, image,
-                                               file, metadata, config,
-                                               export_proc->priv->run_data);
+  return_values = export_proc->run_func (procedure, run_mode, image,
+                                         file, metadata, config,
+                                         export_proc->run_data);
 
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
@@ -457,37 +456,37 @@ gimp_export_procedure_add_metadata (GimpExportProcedure *export_procedure)
   if (ran_once)
     return;
 
-  if (export_procedure->priv->supports_exif)
+  if (export_procedure->supports_exif)
     gimp_procedure_add_boolean_aux_argument (procedure, "save-exif",
                                              _("Save _Exif"),
                                              _("Save Exif (Exchangeable image file format) metadata"),
                                              gimp_export_exif (),
                                              G_PARAM_READWRITE);
-  if (export_procedure->priv->supports_iptc)
+  if (export_procedure->supports_iptc)
     gimp_procedure_add_boolean_aux_argument (procedure, "save-iptc",
                                              _("Save _IPTC"),
                                              _("Save IPTC (International Press Telecommunications Council) metadata"),
                                              gimp_export_iptc (),
                                              G_PARAM_READWRITE);
-  if (export_procedure->priv->supports_xmp)
+  if (export_procedure->supports_xmp)
     gimp_procedure_add_boolean_aux_argument (procedure, "save-xmp",
                                              _("Save _XMP"),
                                              _("Save XMP (Extensible Metadata Platform) metadata"),
                                              gimp_export_xmp (),
                                              G_PARAM_READWRITE);
-  if (export_procedure->priv->supports_profile)
+  if (export_procedure->supports_profile)
     gimp_procedure_add_boolean_aux_argument (procedure, "save-color-profile",
                                              _("Save color _profile"),
                                              _("Save the ICC color profile as metadata"),
                                              gimp_export_color_profile (),
                                              G_PARAM_READWRITE);
-  if (export_procedure->priv->supports_thumbnail)
+  if (export_procedure->supports_thumbnail)
     gimp_procedure_add_boolean_aux_argument (procedure, "save-thumbnail",
                                              _("Save _thumbnail"),
                                              _("Save a smaller representation of the image as metadata"),
                                              gimp_export_thumbnail (),
                                              G_PARAM_READWRITE);
-  if (export_procedure->priv->supports_comment)
+  if (export_procedure->supports_comment)
     {
       gimp_procedure_add_boolean_aux_argument (procedure, "save-comment",
                                                _("Save c_omment"),
@@ -571,10 +570,10 @@ gimp_export_procedure_new (GimpPlugIn       *plug_in,
                             "procedure-type", proc_type,
                             NULL);
 
-  procedure->priv->run_func         = run_func;
-  procedure->priv->export_metadata  = export_metadata;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
+  procedure->run_func         = run_func;
+  procedure->export_metadata  = export_metadata;
+  procedure->run_data         = run_data;
+  procedure->run_data_destroy = run_data_destroy;
 
   return GIMP_PROCEDURE (procedure);
 }
@@ -828,7 +827,7 @@ gimp_export_procedure_get_support_exif (GimpExportProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
-  return procedure->priv->supports_exif;
+  return procedure->supports_exif;
 }
 
 /**
@@ -844,7 +843,7 @@ gimp_export_procedure_get_support_iptc (GimpExportProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
-  return procedure->priv->supports_iptc;
+  return procedure->supports_iptc;
 }
 
 /**
@@ -860,7 +859,7 @@ gimp_export_procedure_get_support_xmp (GimpExportProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
-  return procedure->priv->supports_xmp;
+  return procedure->supports_xmp;
 }
 
 /**
@@ -876,7 +875,7 @@ gimp_export_procedure_get_support_profile (GimpExportProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
-  return procedure->priv->supports_profile;
+  return procedure->supports_profile;
 }
 
 /**
@@ -892,7 +891,7 @@ gimp_export_procedure_get_support_thumbnail (GimpExportProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
-  return procedure->priv->supports_thumbnail;
+  return procedure->supports_thumbnail;
 }
 
 /**
@@ -908,5 +907,5 @@ gimp_export_procedure_get_support_comment (GimpExportProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
 
-  return procedure->priv->supports_comment;
+  return procedure->supports_comment;
 }

@@ -62,32 +62,9 @@ typedef GimpValueArray * (* GimpRunExportFunc) (GimpProcedure        *procedure,
                                                 gpointer              run_data);
 
 
-#define GIMP_TYPE_EXPORT_PROCEDURE            (gimp_export_procedure_get_type ())
-#define GIMP_EXPORT_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EXPORT_PROCEDURE, GimpExportProcedure))
-#define GIMP_EXPORT_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EXPORT_PROCEDURE, GimpExportProcedureClass))
-#define GIMP_IS_EXPORT_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EXPORT_PROCEDURE))
-#define GIMP_IS_EXPORT_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EXPORT_PROCEDURE))
-#define GIMP_EXPORT_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EXPORT_PROCEDURE, GimpExportProcedureClass))
+#define GIMP_TYPE_EXPORT_PROCEDURE (gimp_export_procedure_get_type ())
+G_DECLARE_FINAL_TYPE (GimpExportProcedure, gimp_export_procedure, GIMP, EXPORT_PROCEDURE, GimpFileProcedure)
 
-
-typedef struct _GimpExportProcedure        GimpExportProcedure;
-typedef struct _GimpExportProcedureClass   GimpExportProcedureClass;
-typedef struct _GimpExportProcedurePrivate GimpExportProcedurePrivate;
-
-struct _GimpExportProcedure
-{
-  GimpFileProcedure           parent_instance;
-
-  GimpExportProcedurePrivate *priv;
-};
-
-struct _GimpExportProcedureClass
-{
-  GimpFileProcedureClass parent_class;
-};
-
-
-GType           gimp_export_procedure_get_type              (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_export_procedure_new                   (GimpPlugIn        *plug_in,
                                                              const gchar       *name,

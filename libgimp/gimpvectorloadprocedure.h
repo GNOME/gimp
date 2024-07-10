@@ -166,8 +166,6 @@ typedef gboolean         (* GimpExtractVectorFunc) (GimpProcedure             *p
 #define GIMP_TYPE_VECTOR_LOAD_PROCEDURE (gimp_vector_load_procedure_get_type ())
 G_DECLARE_FINAL_TYPE (GimpVectorLoadProcedure, gimp_vector_load_procedure, GIMP, VECTOR_LOAD_PROCEDURE, GimpLoadProcedure)
 
-typedef struct _GimpVectorLoadProcedure        GimpVectorLoadProcedure;
-
 
 GimpProcedure * gimp_vector_load_procedure_new                (GimpPlugIn                 *plug_in,
                                                                const gchar                *name,

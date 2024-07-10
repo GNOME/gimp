@@ -29,8 +29,10 @@
 #include "gimpprocedureconfig-private.h"
 
 
-struct _GimpThumbnailProcedurePrivate
+struct _GimpThumbnailProcedure
 {
+  GimpProcedure         parent_instance;
+
   GimpRunThumbnailFunc  run_func;
   gpointer              run_data;
   GDestroyNotify        run_data_destroy;
@@ -50,8 +52,7 @@ static GimpProcedureConfig *
                                                     gint                  n_args);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpThumbnailProcedure, gimp_thumbnail_procedure,
-                            GIMP_TYPE_PROCEDURE)
+G_DEFINE_TYPE (GimpThumbnailProcedure, gimp_thumbnail_procedure, GIMP_TYPE_PROCEDURE)
 
 #define parent_class gimp_thumbnail_procedure_parent_class
 
@@ -72,7 +73,6 @@ gimp_thumbnail_procedure_class_init (GimpThumbnailProcedureClass *klass)
 static void
 gimp_thumbnail_procedure_init (GimpThumbnailProcedure *procedure)
 {
-  procedure->priv = gimp_thumbnail_procedure_get_instance_private (procedure);
 }
 
 static void
@@ -130,8 +130,8 @@ gimp_thumbnail_procedure_finalize (GObject *object)
 {
   GimpThumbnailProcedure *procedure = GIMP_THUMBNAIL_PROCEDURE (object);
 
-  if (procedure->priv->run_data_destroy)
-    procedure->priv->run_data_destroy (procedure->priv->run_data);
+  if (procedure->run_data_destroy)
+    procedure->run_data_destroy (procedure->run_data);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -168,11 +168,8 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
   _gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_NONINTERACTIVE, remaining);
   gimp_value_array_unref (remaining);
 
-  return_values = thumbnail_proc->priv->run_func (procedure,
-                                                  file,
-                                                  size,
-                                                  config,
-                                                  thumbnail_proc->priv->run_data);
+  return_values = thumbnail_proc->run_func (procedure, file, size,
+                                            config, thumbnail_proc->run_data);
 
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
@@ -280,9 +277,9 @@ gimp_thumbnail_procedure_new (GimpPlugIn           *plug_in,
                             "procedure-type", proc_type,
                             NULL);
 
-  procedure->priv->run_func         = run_func;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
+  procedure->run_func         = run_func;
+  procedure->run_data         = run_data;
+  procedure->run_data_destroy = run_data_destroy;
 
   return GIMP_PROCEDURE (procedure);
 }

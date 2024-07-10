@@ -65,24 +65,9 @@ typedef enum
 } GimpArgumentSync;
 
 
-#define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
-#define GIMP_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROCEDURE, GimpProcedure))
-#define GIMP_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
-#define GIMP_IS_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROCEDURE))
-#define GIMP_IS_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROCEDURE))
-#define GIMP_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROCEDURE, GimpProcedureClass))
+#define GIMP_TYPE_PROCEDURE (gimp_procedure_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpProcedure, gimp_procedure, GIMP, PROCEDURE, GObject)
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpProcedure, g_object_unref);
-
-typedef struct _GimpProcedureClass   GimpProcedureClass;
-typedef struct _GimpProcedurePrivate GimpProcedurePrivate;
-
-struct _GimpProcedure
-{
-  GObject               parent_instance;
-
-  GimpProcedurePrivate *priv;
-};
 
 /**
  * GimpProcedureClass:
@@ -130,8 +115,6 @@ struct _GimpProcedureClass
   void (*_gimp_reserved8) (void);
 };
 
-
-GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 
 GimpProcedure  * gimp_procedure_new                (GimpPlugIn           *plug_in,
                                                     const gchar          *name,

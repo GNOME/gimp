@@ -64,7 +64,7 @@ enum
 };
 
 
-struct _GimpProcedurePrivate
+typedef struct _GimpProcedurePrivate
 {
   GimpPlugIn       *plug_in;
 
@@ -108,7 +108,7 @@ struct _GimpProcedurePrivate
   GHashTable       *images;
   GHashTable       *items;
   GHashTable       *resources;
-};
+} GimpProcedurePrivate;
 
 
 static void                  gimp_procedure_constructed        (GObject              *object);
@@ -202,68 +202,69 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
-  procedure->priv = gimp_procedure_get_instance_private (procedure);
 }
 
 static void
 gimp_procedure_constructed (GObject *object)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+  GimpProcedure        *procedure = GIMP_PROCEDURE (object);
+  GimpProcedurePrivate *priv      = gimp_procedure_get_instance_private (procedure);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_PLUG_IN (procedure->priv->plug_in));
-  g_assert (procedure->priv->name != NULL);
+  g_assert (GIMP_IS_PLUG_IN (priv->plug_in));
+  g_assert (priv->name != NULL);
 }
 
 static void
 gimp_procedure_finalize (GObject *object)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (object);
-  gint           i;
+  GimpProcedure        *procedure = GIMP_PROCEDURE (object);
+  GimpProcedurePrivate *priv      = gimp_procedure_get_instance_private (procedure);
+  gint                  i;
 
-  if (procedure->priv->run_data_destroy)
-    procedure->priv->run_data_destroy (procedure->priv->run_data);
+  if (priv->run_data_destroy)
+    priv->run_data_destroy (priv->run_data);
 
-  g_clear_object  (&procedure->priv->plug_in);
+  g_clear_object  (&priv->plug_in);
 
-  g_clear_pointer (&procedure->priv->name,        g_free);
-  g_clear_pointer (&procedure->priv->image_types, g_free);
-  g_clear_pointer (&procedure->priv->menu_label,  g_free);
-  g_clear_pointer (&procedure->priv->blurb,       g_free);
-  g_clear_pointer (&procedure->priv->help,        g_free);
-  g_clear_pointer (&procedure->priv->help_id,     g_free);
-  g_clear_pointer (&procedure->priv->authors,     g_free);
-  g_clear_pointer (&procedure->priv->copyright,   g_free);
-  g_clear_pointer (&procedure->priv->date,        g_free);
+  g_clear_pointer (&priv->name,        g_free);
+  g_clear_pointer (&priv->image_types, g_free);
+  g_clear_pointer (&priv->menu_label,  g_free);
+  g_clear_pointer (&priv->blurb,       g_free);
+  g_clear_pointer (&priv->help,        g_free);
+  g_clear_pointer (&priv->help_id,     g_free);
+  g_clear_pointer (&priv->authors,     g_free);
+  g_clear_pointer (&priv->copyright,   g_free);
+  g_clear_pointer (&priv->date,        g_free);
 
-  g_list_free_full (procedure->priv->menu_paths, g_free);
-  procedure->priv->menu_paths = NULL;
+  g_list_free_full (priv->menu_paths, g_free);
+  priv->menu_paths = NULL;
 
   gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME, NULL);
 
-  if (procedure->priv->args)
+  if (priv->args)
     {
-      for (i = 0; i < procedure->priv->n_args; i++)
-        g_param_spec_unref (procedure->priv->args[i]);
+      for (i = 0; i < priv->n_args; i++)
+        g_param_spec_unref (priv->args[i]);
 
-      g_clear_pointer (&procedure->priv->args, g_free);
+      g_clear_pointer (&priv->args, g_free);
     }
 
-  if (procedure->priv->aux_args)
+  if (priv->aux_args)
     {
-      for (i = 0; i < procedure->priv->n_aux_args; i++)
-        g_param_spec_unref (procedure->priv->aux_args[i]);
+      for (i = 0; i < priv->n_aux_args; i++)
+        g_param_spec_unref (priv->aux_args[i]);
 
-      g_clear_pointer (&procedure->priv->aux_args, g_free);
+      g_clear_pointer (&priv->aux_args, g_free);
     }
 
-  if (procedure->priv->values)
+  if (priv->values)
     {
-      for (i = 0; i < procedure->priv->n_values; i++)
-        g_param_spec_unref (procedure->priv->values[i]);
+      for (i = 0; i < priv->n_values; i++)
+        g_param_spec_unref (priv->values[i]);
 
-      g_clear_pointer (&procedure->priv->values, g_free);
+      g_clear_pointer (&priv->values, g_free);
     }
 
   _gimp_procedure_destroy_proxies (procedure);
@@ -277,21 +278,22 @@ gimp_procedure_set_property (GObject      *object,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+  GimpProcedure        *procedure = GIMP_PROCEDURE (object);
+  GimpProcedurePrivate *priv      = gimp_procedure_get_instance_private (procedure);
 
   switch (property_id)
     {
     case PROP_PLUG_IN:
-      g_set_object (&procedure->priv->plug_in, g_value_get_object (value));
+      g_set_object (&priv->plug_in, g_value_get_object (value));
       break;
 
     case PROP_NAME:
-      g_free (procedure->priv->name);
-      procedure->priv->name = g_value_dup_string (value);
+      g_free (priv->name);
+      priv->name = g_value_dup_string (value);
       break;
 
     case PROP_PROCEDURE_TYPE:
-      procedure->priv->proc_type = g_value_get_enum (value);
+      priv->proc_type = g_value_get_enum (value);
       break;
 
     default:
@@ -306,20 +308,21 @@ gimp_procedure_get_property (GObject    *object,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+  GimpProcedure        *procedure = GIMP_PROCEDURE (object);
+  GimpProcedurePrivate *priv      = gimp_procedure_get_instance_private (procedure);
 
   switch (property_id)
     {
     case PROP_PLUG_IN:
-      g_value_set_object (value, procedure->priv->plug_in);
+      g_value_set_object (value, priv->plug_in);
       break;
 
     case PROP_NAME:
-      g_value_set_string (value, procedure->priv->name);
+      g_value_set_string (value, priv->name);
       break;
 
     case PROP_PROCEDURE_TYPE:
-      g_value_set_enum (value, procedure->priv->proc_type);
+      g_value_set_enum (value, priv->proc_type);
       break;
 
     default:
@@ -386,16 +389,19 @@ gimp_procedure_install_icon (GimpProcedure *procedure)
 static void
 gimp_procedure_real_install (GimpProcedure *procedure)
 {
-  GParamSpec   **args;
-  GParamSpec   **return_vals;
-  gint           n_args        = 0;
-  gint           n_return_vals = 0;
-  GList         *list;
-  GimpPlugIn    *plug_in;
-  GPProcInstall  proc_install;
-  gint           i;
+  GimpProcedurePrivate  *priv;
+  GParamSpec           **args;
+  GParamSpec           **return_vals;
+  gint                   n_args        = 0;
+  gint                   n_return_vals = 0;
+  GList                 *list;
+  GimpPlugIn            *plug_in;
+  GPProcInstall          proc_install;
+  gint                   i;
 
-  g_return_if_fail (procedure->priv->installed == FALSE);
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  g_return_if_fail (priv->installed == FALSE);
 
   args        = gimp_procedure_get_arguments (procedure, &n_args);
   return_vals = gimp_procedure_get_return_values (procedure, &n_return_vals);
@@ -430,20 +436,20 @@ gimp_procedure_real_install (GimpProcedure *procedure)
 
   gimp_procedure_install_icon (procedure);
 
-  if (procedure->priv->image_types)
+  if (priv->image_types)
     {
       _gimp_pdb_set_proc_image_types (gimp_procedure_get_name (procedure),
-                                      procedure->priv->image_types);
+                                      priv->image_types);
     }
 
-  if (procedure->priv->menu_label)
+  if (priv->menu_label)
     {
       _gimp_pdb_set_proc_menu_label (gimp_procedure_get_name (procedure),
-                                     procedure->priv->menu_label);
+                                     priv->menu_label);
     }
 
   _gimp_pdb_set_proc_sensitivity_mask (gimp_procedure_get_name (procedure),
-                                       procedure->priv->sensitivity_mask);
+                                       priv->sensitivity_mask);
 
   for (list = gimp_procedure_get_menu_paths (procedure);
        list;
@@ -453,36 +459,37 @@ gimp_procedure_real_install (GimpProcedure *procedure)
                                     list->data);
     }
 
-  if (procedure->priv->blurb ||
-      procedure->priv->help  ||
-      procedure->priv->help_id)
+  if (priv->blurb ||
+      priv->help  ||
+      priv->help_id)
     {
       _gimp_pdb_set_proc_documentation (gimp_procedure_get_name (procedure),
-                                        procedure->priv->blurb,
-                                        procedure->priv->help,
-                                        procedure->priv->help_id);
+                                        priv->blurb,
+                                        priv->help,
+                                        priv->help_id);
     }
 
-  if (procedure->priv->authors   ||
-      procedure->priv->copyright ||
-      procedure->priv->date)
+  if (priv->authors   ||
+      priv->copyright ||
+      priv->date)
     {
       _gimp_pdb_set_proc_attribution (gimp_procedure_get_name (procedure),
-                                      procedure->priv->authors,
-                                      procedure->priv->copyright,
-                                      procedure->priv->date);
+                                      priv->authors,
+                                      priv->copyright,
+                                      priv->date);
     }
 
-  procedure->priv->installed = TRUE;
+  priv->installed = TRUE;
 }
 
 static void
 gimp_procedure_real_uninstall (GimpProcedure *procedure)
 {
-  GimpPlugIn      *plug_in;
-  GPProcUninstall  proc_uninstall;
+  GimpProcedurePrivate *priv = gimp_procedure_get_instance_private (procedure);
+  GimpPlugIn           *plug_in;
+  GPProcUninstall       proc_uninstall;
 
-  g_return_if_fail (procedure->priv->installed == TRUE);
+  g_return_if_fail (priv->installed == TRUE);
 
   proc_uninstall.name = (gchar *) gimp_procedure_get_name (procedure);
 
@@ -492,19 +499,20 @@ gimp_procedure_real_uninstall (GimpProcedure *procedure)
                                  &proc_uninstall, plug_in))
     gimp_quit ();
 
-  procedure->priv->installed = FALSE;
+  priv->installed = FALSE;
 }
 
 static GimpValueArray *
 gimp_procedure_real_run (GimpProcedure        *procedure,
                          const GimpValueArray *args)
 {
-  GimpPlugIn          *plug_in;
-  GimpProcedureConfig *config;
-  GimpImage           *image    = NULL;
-  GimpRunMode          run_mode = GIMP_RUN_NONINTERACTIVE;
-  GimpValueArray      *retvals;
-  GimpPDBStatusType    status   = GIMP_PDB_EXECUTION_ERROR;
+  GimpProcedurePrivate *priv     = gimp_procedure_get_instance_private (procedure);
+  GimpPlugIn           *plug_in;
+  GimpProcedureConfig  *config;
+  GimpImage            *image    = NULL;
+  GimpRunMode           run_mode = GIMP_RUN_NONINTERACTIVE;
+  GimpValueArray       *retvals;
+  GimpPDBStatusType     status   = GIMP_PDB_EXECUTION_ERROR;
 
   if (gimp_value_array_length (args) > 0 &&
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (args, 0)))
@@ -519,8 +527,8 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
   config = _gimp_procedure_create_run_config (procedure);
   _gimp_procedure_config_begin_run (config, image, run_mode, args);
 
-  retvals = procedure->priv->run_func (procedure, config,
-                                       procedure->priv->run_data);
+  retvals = priv->run_func (procedure, config, priv->run_data);
+
   if (retvals != NULL                       &&
       gimp_value_array_length (retvals) > 0 &&
       G_VALUE_HOLDS_ENUM (gimp_value_array_index (retvals, 0)))
@@ -558,8 +566,9 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
                                           GParamSpec    **args,
                                           gint            n_args)
 {
-  gchar *type_name;
-  GType  type;
+  GimpProcedurePrivate *priv = gimp_procedure_get_instance_private (procedure);
+  gchar                *type_name;
+  GType                 type;
 
   type_name = g_strdup_printf ("%s-%s", prefix,
                                gimp_procedure_get_name (procedure));
@@ -571,7 +580,7 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
       GParamSpec **config_args;
       gint         n_config_args;
 
-      n_config_args = n_args + procedure->priv->n_aux_args;
+      n_config_args = n_args + priv->n_aux_args;
 
       config_args = g_new0 (GParamSpec *, n_config_args);
 
@@ -579,8 +588,8 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
               args,
               n_args * sizeof (GParamSpec *));
       memcpy (config_args + n_args,
-              procedure->priv->aux_args,
-              procedure->priv->n_aux_args * sizeof (GParamSpec *));
+              priv->aux_args,
+              priv->n_aux_args * sizeof (GParamSpec *));
 
       type = gimp_config_type_register (GIMP_TYPE_PROCEDURE_CONFIG,
                                         type_name,
@@ -654,7 +663,8 @@ gimp_procedure_new (GimpPlugIn        *plug_in,
                     gpointer           run_data,
                     GDestroyNotify     run_data_destroy)
 {
-  GimpProcedure *procedure;
+  GimpProcedure        *procedure;
+  GimpProcedurePrivate *priv;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
@@ -667,9 +677,11 @@ gimp_procedure_new (GimpPlugIn        *plug_in,
                             "procedure-type", proc_type,
                             NULL);
 
-  procedure->priv->run_func         = run_func;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  priv->run_func         = run_func;
+  priv->run_data         = run_data;
+  priv->run_data_destroy = run_data_destroy;
 
   return procedure;
 }
@@ -684,9 +696,13 @@ gimp_procedure_new (GimpPlugIn        *plug_in,
 GimpPlugIn *
 gimp_procedure_get_plug_in (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->plug_in;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->plug_in;
 }
 
 /**
@@ -700,9 +716,13 @@ gimp_procedure_get_plug_in (GimpProcedure *procedure)
 const gchar *
 gimp_procedure_get_name (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->name;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->name;
 }
 
 /**
@@ -716,10 +736,14 @@ gimp_procedure_get_name (GimpProcedure *procedure)
 GimpPDBProcType
 gimp_procedure_get_proc_type (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure),
                         GIMP_PDB_PROC_TYPE_PLUGIN);
 
-  return procedure->priv->proc_type;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->proc_type;
 }
 
 /**
@@ -741,14 +765,18 @@ void
 gimp_procedure_set_image_types (GimpProcedure *procedure,
                                 const gchar   *image_types)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_free (procedure->priv->image_types);
-  procedure->priv->image_types = g_strdup (image_types);
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  if (procedure->priv->installed)
+  g_free (priv->image_types);
+  priv->image_types = g_strdup (image_types);
+
+  if (priv->installed)
     _gimp_pdb_set_proc_image_types (gimp_procedure_get_name (procedure),
-                                    procedure->priv->image_types);
+                                    priv->image_types);
 }
 
 /**
@@ -765,9 +793,13 @@ gimp_procedure_set_image_types (GimpProcedure *procedure,
 const gchar *
 gimp_procedure_get_image_types (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->image_types;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->image_types;
 }
 
 /**
@@ -798,9 +830,12 @@ void
 gimp_procedure_set_sensitivity_mask (GimpProcedure *procedure,
                                      gint           sensitivity_mask)
 {
-  gboolean success = TRUE;
+  GimpProcedurePrivate *priv;
+  gboolean              success = TRUE;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   if (GIMP_PROCEDURE_GET_CLASS (procedure)->set_sensitivity)
     success = GIMP_PROCEDURE_GET_CLASS (procedure)->set_sensitivity (procedure,
@@ -808,11 +843,11 @@ gimp_procedure_set_sensitivity_mask (GimpProcedure *procedure,
 
   if (success)
     {
-      procedure->priv->sensitivity_mask = sensitivity_mask;
+      priv->sensitivity_mask = sensitivity_mask;
 
-      if (procedure->priv->installed)
+      if (priv->installed)
         _gimp_pdb_set_proc_sensitivity_mask (gimp_procedure_get_name (procedure),
-                                             procedure->priv->sensitivity_mask);
+                                             priv->sensitivity_mask);
     }
 }
 
@@ -828,9 +863,13 @@ gimp_procedure_set_sensitivity_mask (GimpProcedure *procedure,
 gint
 gimp_procedure_get_sensitivity_mask (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), 0);
 
-  return procedure->priv->sensitivity_mask;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->sensitivity_mask;
 }
 
 /**
@@ -851,15 +890,19 @@ void
 gimp_procedure_set_menu_label (GimpProcedure *procedure,
                                const gchar   *menu_label)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (menu_label != NULL && strlen (menu_label));
 
-  g_clear_pointer (&procedure->priv->menu_label, g_free);
-  procedure->priv->menu_label = g_strdup (menu_label);
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  if (procedure->priv->installed)
+  g_clear_pointer (&priv->menu_label, g_free);
+  priv->menu_label = g_strdup (menu_label);
+
+  if (priv->installed)
     _gimp_pdb_set_proc_menu_label (gimp_procedure_get_name (procedure),
-                                   procedure->priv->menu_label);
+                                   priv->menu_label);
 }
 
 /**
@@ -874,9 +917,13 @@ gimp_procedure_set_menu_label (GimpProcedure *procedure,
 const gchar *
 gimp_procedure_get_menu_label (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->menu_label;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->menu_label;
 }
 
 /**
@@ -920,14 +967,18 @@ void
 gimp_procedure_add_menu_path (GimpProcedure *procedure,
                               const gchar   *menu_path)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (menu_path != NULL);
-  g_return_if_fail (procedure->priv->menu_label != NULL);
 
-  procedure->priv->menu_paths = g_list_append (procedure->priv->menu_paths,
-                                               g_strdup (menu_path));
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  if (procedure->priv->installed)
+  g_return_if_fail (priv->menu_label != NULL);
+
+  priv->menu_paths = g_list_append (priv->menu_paths, g_strdup (menu_path));
+
+  if (priv->installed)
     _gimp_pdb_add_proc_menu_path (gimp_procedure_get_name (procedure),
                                   menu_path);
 }
@@ -944,9 +995,13 @@ gimp_procedure_add_menu_path (GimpProcedure *procedure,
 GList *
 gimp_procedure_get_menu_paths (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->menu_paths;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->menu_paths;
 }
 
 /**
@@ -1026,9 +1081,13 @@ gimp_procedure_set_icon_file (GimpProcedure *procedure,
 GimpIconType
 gimp_procedure_get_icon_type (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), -1);
 
-  return procedure->priv->icon_type;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->icon_type;
 }
 
 /**
@@ -1044,10 +1103,15 @@ gimp_procedure_get_icon_type (GimpProcedure *procedure)
 const gchar *
 gimp_procedure_get_icon_name (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_ICON_NAME)
-    return (const gchar *) procedure->priv->icon_data;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (priv->icon_type == GIMP_ICON_TYPE_ICON_NAME)
+    return (const gchar *) priv->icon_data;
 
   return NULL;
 }
@@ -1066,10 +1130,15 @@ gimp_procedure_get_icon_name (GimpProcedure *procedure)
 GFile *
 gimp_procedure_get_icon_file (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_IMAGE_FILE)
-    return (GFile *) procedure->priv->icon_data;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (priv->icon_type == GIMP_ICON_TYPE_IMAGE_FILE)
+    return (GFile *) priv->icon_data;
 
   return NULL;
 }
@@ -1089,10 +1158,15 @@ gimp_procedure_get_icon_file (GimpProcedure *procedure)
 GdkPixbuf *
 gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_PIXBUF)
-    return (GdkPixbuf *) procedure->priv->icon_data;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (priv->icon_type == GIMP_ICON_TYPE_PIXBUF)
+    return (GdkPixbuf *) priv->icon_data;
 
   return NULL;
 }
@@ -1126,21 +1200,26 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
                                   const gchar   *help,
                                   const gchar   *help_id)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_clear_pointer (&procedure->priv->blurb,   g_free);
-  g_clear_pointer (&procedure->priv->help,    g_free);
-  g_clear_pointer (&procedure->priv->help_id, g_free);
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  procedure->priv->blurb   = g_strdup (blurb);
-  procedure->priv->help    = g_strdup (help);
-  procedure->priv->help_id = g_strdup (help_id);
+  g_clear_pointer (&priv->blurb,   g_free);
+  g_clear_pointer (&priv->help,    g_free);
+  g_clear_pointer (&priv->help_id, g_free);
 
-  if (procedure->priv->installed)
+  priv->blurb   = g_strdup (blurb);
+  priv->help    = g_strdup (help);
+  priv->help_id = g_strdup (help_id);
+
+  if (priv->installed)
     _gimp_pdb_set_proc_documentation (gimp_procedure_get_name (procedure),
-                                      procedure->priv->blurb,
-                                      procedure->priv->help,
-                                      procedure->priv->help_id);
+                                      priv->blurb,
+                                      priv->help,
+                                      priv->help_id);
 }
 
 /**
@@ -1155,9 +1234,14 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
 const gchar *
 gimp_procedure_get_blurb (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->blurb;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->blurb;
 }
 
 /**
@@ -1172,9 +1256,14 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
 const gchar *
 gimp_procedure_get_help (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->help;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->help;
 }
 
 /**
@@ -1189,9 +1278,14 @@ gimp_procedure_get_help (GimpProcedure *procedure)
 const gchar *
 gimp_procedure_get_help_id (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->help_id;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->help_id;
 }
 
 /**
@@ -1211,21 +1305,26 @@ gimp_procedure_set_attribution (GimpProcedure *procedure,
                                 const gchar   *copyright,
                                 const gchar   *date)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_free (procedure->priv->authors);
-  g_free (procedure->priv->copyright);
-  g_free (procedure->priv->date);
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  procedure->priv->authors   = g_strdup (authors);
-  procedure->priv->copyright = g_strdup (copyright);
-  procedure->priv->date      = g_strdup (date);
+  g_free (priv->authors);
+  g_free (priv->copyright);
+  g_free (priv->date);
 
-  if (procedure->priv->installed)
+  priv->authors   = g_strdup (authors);
+  priv->copyright = g_strdup (copyright);
+  priv->date      = g_strdup (date);
+
+  if (priv->installed)
     _gimp_pdb_set_proc_attribution (gimp_procedure_get_name (procedure),
-                                    procedure->priv->authors,
-                                    procedure->priv->copyright,
-                                    procedure->priv->date);
+                                    priv->authors,
+                                    priv->copyright,
+                                    priv->date);
 }
 
 /**
@@ -1239,9 +1338,14 @@ gimp_procedure_set_attribution (GimpProcedure *procedure,
 const gchar *
 gimp_procedure_get_authors (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->authors;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->authors;
 }
 
 /**
@@ -1256,9 +1360,14 @@ gimp_procedure_get_authors (GimpProcedure *procedure)
 const gchar *
 gimp_procedure_get_copyright (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->copyright;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->copyright;
 }
 
 /**
@@ -1272,9 +1381,14 @@ gimp_procedure_get_copyright (GimpProcedure *procedure)
 const gchar *
 gimp_procedure_get_date (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->date;
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  return priv->date;
 }
 
 /**
@@ -1296,9 +1410,14 @@ GParamSpec *
 _gimp_procedure_add_argument (GimpProcedure *procedure,
                               GParamSpec    *pspec)
 {
+  GimpProcedurePrivate *priv;
+
+  priv = gimp_procedure_get_instance_private (procedure);
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), NULL);
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   if (gimp_procedure_find_argument (procedure, pspec->name))
     {
@@ -1319,14 +1438,14 @@ _gimp_procedure_add_argument (GimpProcedure *procedure,
       return NULL;
     }
 
-  procedure->priv->args = g_renew (GParamSpec *, procedure->priv->args,
-                                   procedure->priv->n_args + 1);
+  priv->args = g_renew (GParamSpec *, priv->args,
+                                   priv->n_args + 1);
 
-  procedure->priv->args[procedure->priv->n_args] = pspec;
+  priv->args[priv->n_args] = pspec;
 
   g_param_spec_ref_sink (pspec);
 
-  procedure->priv->n_args++;
+  priv->n_args++;
 
   return pspec;
 }
@@ -1353,9 +1472,13 @@ GParamSpec *
 _gimp_procedure_add_aux_argument (GimpProcedure *procedure,
                                   GParamSpec    *pspec)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), pspec);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), pspec);
   g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), pspec);
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   if (gimp_procedure_find_argument (procedure, pspec->name))
     {
@@ -1374,14 +1497,14 @@ _gimp_procedure_add_aux_argument (GimpProcedure *procedure,
       return pspec;
     }
 
-  procedure->priv->aux_args = g_renew (GParamSpec *, procedure->priv->aux_args,
-                                       procedure->priv->n_aux_args + 1);
+  priv->aux_args = g_renew (GParamSpec *, priv->aux_args,
+                                       priv->n_aux_args + 1);
 
-  procedure->priv->aux_args[procedure->priv->n_aux_args] = pspec;
+  priv->aux_args[priv->n_aux_args] = pspec;
 
   g_param_spec_ref_sink (pspec);
 
-  procedure->priv->n_aux_args++;
+  priv->n_aux_args++;
 
   return pspec;
 }
@@ -1404,9 +1527,13 @@ GParamSpec *
 _gimp_procedure_add_return_value (GimpProcedure *procedure,
                                   GParamSpec    *pspec)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), pspec);
   g_return_val_if_fail (G_IS_PARAM_SPEC (pspec), pspec);
   g_return_val_if_fail (gimp_is_canonical_identifier (pspec->name), pspec);
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   if (gimp_procedure_find_return_value (procedure, pspec->name))
     {
@@ -1416,14 +1543,14 @@ _gimp_procedure_add_return_value (GimpProcedure *procedure,
       return pspec;
     }
 
-  procedure->priv->values = g_renew (GParamSpec *, procedure->priv->values,
-                                     procedure->priv->n_values + 1);
+  priv->values = g_renew (GParamSpec *, priv->values,
+                                     priv->n_values + 1);
 
-  procedure->priv->values[procedure->priv->n_values] = pspec;
+  priv->values[priv->n_values] = pspec;
 
   g_param_spec_ref_sink (pspec);
 
-  procedure->priv->n_values++;
+  priv->n_values++;
 
   return pspec;
 }
@@ -1444,14 +1571,17 @@ GParamSpec *
 gimp_procedure_find_argument (GimpProcedure *procedure,
                               const gchar   *name)
 {
-  gint i;
+  GimpProcedurePrivate *priv;
+  gint                  i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  for (i = 0; i < procedure->priv->n_args; i++)
-    if (! strcmp (name, procedure->priv->args[i]->name))
-      return procedure->priv->args[i];
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  for (i = 0; i < priv->n_args; i++)
+    if (! strcmp (name, priv->args[i]->name))
+      return priv->args[i];
 
   return NULL;
 }
@@ -1473,14 +1603,17 @@ GParamSpec *
 gimp_procedure_find_aux_argument (GimpProcedure *procedure,
                                   const gchar   *name)
 {
-  gint i;
+  GimpProcedurePrivate *priv;
+  gint                  i;
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  for (i = 0; i < procedure->priv->n_aux_args; i++)
-    if (! strcmp (name, procedure->priv->aux_args[i]->name))
-      return procedure->priv->aux_args[i];
+  for (i = 0; i < priv->n_aux_args; i++)
+    if (! strcmp (name, priv->aux_args[i]->name))
+      return priv->aux_args[i];
 
   return NULL;
 }
@@ -1502,14 +1635,17 @@ GParamSpec *
 gimp_procedure_find_return_value (GimpProcedure *procedure,
                                   const gchar   *name)
 {
-  gint i;
+  GimpProcedurePrivate *priv;
+  gint                  i;
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  for (i = 0; i < procedure->priv->n_values; i++)
-    if (! strcmp (name, procedure->priv->values[i]->name))
-      return procedure->priv->values[i];
+  for (i = 0; i < priv->n_values; i++)
+    if (! strcmp (name, priv->values[i]->name))
+      return priv->values[i];
 
   return NULL;
 }
@@ -1528,12 +1664,16 @@ GParamSpec **
 gimp_procedure_get_arguments (GimpProcedure *procedure,
                               gint          *n_arguments)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (n_arguments != NULL, NULL);
 
-  *n_arguments = procedure->priv->n_args;
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  return procedure->priv->args;
+  *n_arguments = priv->n_args;
+
+  return priv->args;
 }
 
 /**
@@ -1550,12 +1690,16 @@ GParamSpec **
 gimp_procedure_get_aux_arguments (GimpProcedure *procedure,
                                   gint          *n_arguments)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (n_arguments != NULL, NULL);
 
-  *n_arguments = procedure->priv->n_aux_args;
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  return procedure->priv->aux_args;
+  *n_arguments = priv->n_aux_args;
+
+  return priv->aux_args;
 }
 
 /**
@@ -1572,12 +1716,16 @@ GParamSpec **
 gimp_procedure_get_return_values (GimpProcedure *procedure,
                                   gint          *n_return_values)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (n_return_values != NULL, NULL);
 
-  *n_return_values = procedure->priv->n_values;
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  return procedure->priv->values;
+  *n_return_values = priv->n_values;
+
+  return priv->values;
 }
 
 /**
@@ -1687,11 +1835,14 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
                                   GimpPDBStatusType  status,
                                   GError            *error)
 {
-  GimpValueArray *args;
-  GValue          value = G_VALUE_INIT;
-  gint            i;
+  GimpProcedurePrivate *priv;
+  GimpValueArray       *args;
+  GValue                value = G_VALUE_INIT;
+  gint                  i;
 
   g_return_val_if_fail (status != GIMP_PDB_PASS_THROUGH, NULL);
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   switch (status)
     {
@@ -1699,16 +1850,16 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
     case GIMP_PDB_CANCEL:
       g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-      args = gimp_value_array_new (procedure->priv->n_values + 1);
+      args = gimp_value_array_new (priv->n_values + 1);
 
       g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
       g_value_set_enum (&value, status);
       gimp_value_array_append (args, &value);
       g_value_unset (&value);
 
-      for (i = 0; i < procedure->priv->n_values; i++)
+      for (i = 0; i < priv->n_values; i++)
         {
-          GParamSpec *pspec = procedure->priv->values[i];
+          GParamSpec *pspec = priv->values[i];
 
           g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
           g_param_value_set_default (pspec, &value);
@@ -1916,27 +2067,34 @@ gimp_procedure_run_config (GimpProcedure       *procedure,
 GimpProcedureConfig *
 _gimp_procedure_create_run_config (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
+  priv = gimp_procedure_get_instance_private (procedure);
+
   return GIMP_PROCEDURE_GET_CLASS (procedure)->create_config (procedure,
-                                                              procedure->priv->args,
-                                                              procedure->priv->n_args);
+                                                              priv->args,
+                                                              priv->n_args);
 }
 
 GimpValueArray *
 _gimp_procedure_run_array (GimpProcedure  *procedure,
                            GimpValueArray *args)
 {
-  GimpValueArray *return_vals;
-  GError         *error = NULL;
-  gint            i;
+  GimpProcedurePrivate *priv;
+  GimpValueArray       *return_vals;
+  GError               *error = NULL;
+  gint                  i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
+  priv = gimp_procedure_get_instance_private (procedure);
+
   if (! gimp_procedure_validate_args (procedure,
-                                      procedure->priv->args,
-                                      procedure->priv->n_args,
+                                      priv->args,
+                                      priv->n_args,
                                       args, FALSE, &error))
     {
       return_vals = gimp_procedure_new_return_values (procedure,
@@ -1946,7 +2104,7 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
     }
 
   /*  add missing args with default values  */
-  if (gimp_value_array_length (args) < procedure->priv->n_args)
+  if (gimp_value_array_length (args) < priv->n_args)
     {
       GimpProcedureConfig *config;
       GObjectClass        *config_class = NULL;
@@ -1959,11 +2117,11 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
       else
         g_clear_object (&config);
 
-      complete = gimp_value_array_new (procedure->priv->n_args);
+      complete = gimp_value_array_new (priv->n_args);
 
-      for (i = 0; i < procedure->priv->n_args; i++)
+      for (i = 0; i < priv->n_args; i++)
         {
-          GParamSpec *pspec = procedure->priv->args[i];
+          GParamSpec *pspec = priv->args[i];
           GValue      value = G_VALUE_INIT;
 
           g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
@@ -2040,10 +2198,14 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
 void
 gimp_procedure_extension_ready (GimpProcedure *procedure)
 {
-  GimpPlugIn *plug_in;
+  GimpProcedurePrivate *priv;
+  GimpPlugIn           *plug_in;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (procedure->priv->proc_type == GIMP_PDB_PROC_TYPE_EXTENSION);
+
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  g_return_if_fail (priv->proc_type == GIMP_PDB_PROC_TYPE_EXTENSION);
 
   plug_in = gimp_procedure_get_plug_in (procedure);
 
@@ -2066,12 +2228,16 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
 GimpProcedureConfig *
 gimp_procedure_create_config (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  priv = gimp_procedure_get_instance_private (procedure);
 
   return gimp_procedure_create_config_with_prefix (procedure,
                                                    "GimpProcedureConfig",
-                                                   procedure->priv->args,
-                                                   procedure->priv->n_args);
+                                                   priv->args,
+                                                   priv->n_args);
 }
 
 
@@ -2093,17 +2259,20 @@ gimp_procedure_create_config (GimpProcedure *procedure)
 static GimpValueArray *
 gimp_procedure_new_arguments (GimpProcedure *procedure)
 {
-  GimpValueArray *args;
-  GValue          value = G_VALUE_INIT;
-  gint            i;
+  GimpProcedurePrivate *priv;
+  GimpValueArray       *args;
+  GValue                value = G_VALUE_INIT;
+  gint                  i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  args = gimp_value_array_new (procedure->priv->n_args);
+  priv = gimp_procedure_get_instance_private (procedure);
 
-  for (i = 0; i < procedure->priv->n_args; i++)
+  args = gimp_value_array_new (priv->n_args);
+
+  for (i = 0; i < priv->n_args; i++)
     {
-      GParamSpec *pspec = procedure->priv->args[i];
+      GParamSpec *pspec = priv->args[i];
 
       g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
       g_param_value_set_default (pspec, &value);
@@ -2276,41 +2445,45 @@ gimp_procedure_set_icon (GimpProcedure *procedure,
                          GimpIconType   icon_type,
                          gconstpointer  icon_data)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  if (icon_data == procedure->priv->icon_data)
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (icon_data == priv->icon_data)
     return;
 
-  switch (procedure->priv->icon_type)
+  switch (priv->icon_type)
     {
     case GIMP_ICON_TYPE_ICON_NAME:
-      g_clear_pointer (&procedure->priv->icon_data, g_free);
+      g_clear_pointer (&priv->icon_data, g_free);
       break;
 
     case GIMP_ICON_TYPE_PIXBUF:
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      g_clear_object (&procedure->priv->icon_data);
+      g_clear_object (&priv->icon_data);
       break;
     }
 
-  procedure->priv->icon_type = icon_type;
+  priv->icon_type = icon_type;
 
   switch (icon_type)
     {
     case GIMP_ICON_TYPE_ICON_NAME:
-      procedure->priv->icon_data = g_strdup (icon_data);
+      priv->icon_data = g_strdup (icon_data);
       break;
 
     case GIMP_ICON_TYPE_PIXBUF:
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      g_set_object (&procedure->priv->icon_data, (GObject *) icon_data);
+      g_set_object (&priv->icon_data, (GObject *) icon_data);
       break;
 
     default:
       g_return_if_reached ();
     }
 
-  if (procedure->priv->installed)
+  if (priv->installed)
     gimp_procedure_install_icon (procedure);
 }
 
@@ -2321,28 +2494,31 @@ GimpDisplay *
 _gimp_procedure_get_display (GimpProcedure *procedure,
                              gint32         display_id)
 {
-  GimpDisplay *display = NULL;
+  GimpProcedurePrivate *priv;
+  GimpDisplay          *display = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (gimp_display_id_is_valid (display_id), NULL);
 
-  if (G_UNLIKELY (! procedure->priv->displays))
-    procedure->priv->displays =
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (G_UNLIKELY (! priv->displays))
+    priv->displays =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  display = g_hash_table_lookup (procedure->priv->displays,
+  display = g_hash_table_lookup (priv->displays,
                                  GINT_TO_POINTER (display_id));
 
   if (! display)
     {
-      display = _gimp_plug_in_get_display (procedure->priv->plug_in,
+      display = _gimp_plug_in_get_display (priv->plug_in,
                                            display_id);
 
       if (display)
-        g_hash_table_insert (procedure->priv->displays,
+        g_hash_table_insert (priv->displays,
                              GINT_TO_POINTER (display_id),
                              g_object_ref (display));
     }
@@ -2354,28 +2530,31 @@ GimpImage *
 _gimp_procedure_get_image (GimpProcedure *procedure,
                            gint32         image_id)
 {
-  GimpImage *image = NULL;
+  GimpProcedurePrivate *priv;
+  GimpImage            *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (gimp_image_id_is_valid (image_id), NULL);
 
-  if (G_UNLIKELY (! procedure->priv->images))
-    procedure->priv->images =
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (G_UNLIKELY (! priv->images))
+    priv->images =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  image = g_hash_table_lookup (procedure->priv->images,
+  image = g_hash_table_lookup (priv->images,
                                GINT_TO_POINTER (image_id));
 
   if (! image)
     {
-      image = _gimp_plug_in_get_image (procedure->priv->plug_in,
+      image = _gimp_plug_in_get_image (priv->plug_in,
                                        image_id);
 
       if (image)
-        g_hash_table_insert (procedure->priv->images,
+        g_hash_table_insert (priv->images,
                              GINT_TO_POINTER (image_id),
                              g_object_ref (image));
     }
@@ -2387,28 +2566,31 @@ GimpItem *
 _gimp_procedure_get_item (GimpProcedure *procedure,
                           gint32         item_id)
 {
-  GimpItem *item = NULL;
+  GimpProcedurePrivate *priv;
+  GimpItem             *item = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (gimp_item_id_is_valid (item_id), NULL);
 
-  if (G_UNLIKELY (! procedure->priv->items))
-    procedure->priv->items =
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (G_UNLIKELY (! priv->items))
+    priv->items =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  item = g_hash_table_lookup (procedure->priv->items,
+  item = g_hash_table_lookup (priv->items,
                               GINT_TO_POINTER (item_id));
 
   if (! item)
     {
-      item = _gimp_plug_in_get_item (procedure->priv->plug_in,
+      item = _gimp_plug_in_get_item (priv->plug_in,
                                      item_id);
 
       if (item)
-        g_hash_table_insert (procedure->priv->items,
+        g_hash_table_insert (priv->items,
                              GINT_TO_POINTER (item_id),
                              g_object_ref (item));
     }
@@ -2420,28 +2602,31 @@ GimpResource *
 _gimp_procedure_get_resource (GimpProcedure *procedure,
                               gint32         resource_id)
 {
-  GimpResource *resource = NULL;
+  GimpProcedurePrivate *priv;
+  GimpResource         *resource = NULL;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (gimp_resource_id_is_valid (resource_id), NULL);
 
-  if (G_UNLIKELY (! procedure->priv->resources))
-    procedure->priv->resources =
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  if (G_UNLIKELY (! priv->resources))
+    priv->resources =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  resource = g_hash_table_lookup (procedure->priv->resources,
+  resource = g_hash_table_lookup (priv->resources,
                                   GINT_TO_POINTER (resource_id));
 
   if (! resource)
     {
-      resource = _gimp_plug_in_get_resource (procedure->priv->plug_in,
+      resource = _gimp_plug_in_get_resource (priv->plug_in,
                                              resource_id);
 
       if (resource)
-        g_hash_table_insert (procedure->priv->resources,
+        g_hash_table_insert (priv->resources,
                              GINT_TO_POINTER (resource_id),
                              g_object_ref (resource));
     }
@@ -2452,10 +2637,14 @@ _gimp_procedure_get_resource (GimpProcedure *procedure,
 void
 _gimp_procedure_destroy_proxies (GimpProcedure *procedure)
 {
+  GimpProcedurePrivate *priv;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_clear_pointer (&procedure->priv->displays,  g_hash_table_unref);
-  g_clear_pointer (&procedure->priv->images,    g_hash_table_unref);
-  g_clear_pointer (&procedure->priv->items,     g_hash_table_unref);
-  g_clear_pointer (&procedure->priv->resources, g_hash_table_unref);
+  priv = gimp_procedure_get_instance_private (procedure);
+
+  g_clear_pointer (&priv->displays,  g_hash_table_unref);
+  g_clear_pointer (&priv->images,    g_hash_table_unref);
+  g_clear_pointer (&priv->items,     g_hash_table_unref);
+  g_clear_pointer (&priv->resources, g_hash_table_unref);
 }

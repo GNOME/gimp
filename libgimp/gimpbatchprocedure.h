@@ -50,32 +50,9 @@ typedef GimpValueArray * (* GimpBatchFunc) (GimpProcedure        *procedure,
                                             gpointer              run_data);
 
 
-#define GIMP_TYPE_BATCH_PROCEDURE            (gimp_batch_procedure_get_type ())
-#define GIMP_BATCH_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BATCH_PROCEDURE, GimpBatchProcedure))
-#define GIMP_BATCH_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BATCH_PROCEDURE, GimpBatchProcedureClass))
-#define GIMP_IS_BATCH_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BATCH_PROCEDURE))
-#define GIMP_IS_BATCH_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BATCH_PROCEDURE))
-#define GIMP_BATCH_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BATCH_PROCEDURE, GimpBatchProcedureClass))
+#define GIMP_TYPE_BATCH_PROCEDURE (gimp_batch_procedure_get_type ())
+G_DECLARE_FINAL_TYPE (GimpBatchProcedure, gimp_batch_procedure, GIMP, BATCH_PROCEDURE, GimpProcedure)
 
-
-typedef struct _GimpBatchProcedure        GimpBatchProcedure;
-typedef struct _GimpBatchProcedureClass   GimpBatchProcedureClass;
-typedef struct _GimpBatchProcedurePrivate GimpBatchProcedurePrivate;
-
-struct _GimpBatchProcedure
-{
-  GimpProcedure              parent_instance;
-
-  GimpBatchProcedurePrivate *priv;
-};
-
-struct _GimpBatchProcedureClass
-{
-  GimpProcedureClass parent_class;
-};
-
-
-GType           gimp_batch_procedure_get_type             (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_batch_procedure_new                  (GimpPlugIn      *plug_in,
                                                            const gchar     *name,

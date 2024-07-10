@@ -63,32 +63,26 @@ typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure         *procedure,
                                               gpointer               run_data);
 
 
-#define GIMP_TYPE_LOAD_PROCEDURE            (gimp_load_procedure_get_type ())
-#define GIMP_LOAD_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedure))
-#define GIMP_LOAD_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedureClass))
-#define GIMP_IS_LOAD_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LOAD_PROCEDURE))
-#define GIMP_IS_LOAD_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LOAD_PROCEDURE))
-#define GIMP_LOAD_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LOAD_PROCEDURE, GimpLoadProcedureClass))
+#define GIMP_TYPE_LOAD_PROCEDURE (gimp_load_procedure_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpLoadProcedure, gimp_load_procedure, GIMP, LOAD_PROCEDURE, GimpFileProcedure)
 
-
-typedef struct _GimpLoadProcedure        GimpLoadProcedure;
-typedef struct _GimpLoadProcedureClass   GimpLoadProcedureClass;
-typedef struct _GimpLoadProcedurePrivate GimpLoadProcedurePrivate;
-
-struct _GimpLoadProcedure
-{
-  GimpFileProcedure         parent_instance;
-
-  GimpLoadProcedurePrivate *priv;
-};
 
 struct _GimpLoadProcedureClass
 {
   GimpFileProcedureClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
 };
 
-
-GType           gimp_load_procedure_get_type             (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_load_procedure_new                  (GimpPlugIn        *plug_in,
                                                           const gchar       *name,
@@ -104,8 +98,6 @@ gboolean        gimp_load_procedure_get_handles_raw      (GimpLoadProcedure *pro
 void            gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *procedure,
                                                           const gchar       *thumbnail_proc);
 const gchar   * gimp_load_procedure_get_thumbnail_loader (GimpLoadProcedure *procedure);
-
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpLoadProcedure, g_object_unref);
 
 
 G_END_DECLS

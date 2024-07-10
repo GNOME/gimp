@@ -35,9 +35,11 @@ enum
 };
 
 
-struct _GimpPDBProcedurePrivate
+struct _GimpPDBProcedure
 {
-  GimpPDB *pdb;
+  GimpProcedure  parent_instance;
+
+  GimpPDB       *pdb;
 };
 
 
@@ -59,8 +61,7 @@ static GimpValueArray *
                                                     const GimpValueArray *args);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPDBProcedure, _gimp_pdb_procedure,
-                            GIMP_TYPE_PROCEDURE)
+G_DEFINE_TYPE (GimpPDBProcedure, _gimp_pdb_procedure, GIMP_TYPE_PROCEDURE)
 
 #define parent_class _gimp_pdb_procedure_parent_class
 
@@ -96,7 +97,6 @@ _gimp_pdb_procedure_class_init (GimpPDBProcedureClass *klass)
 static void
 _gimp_pdb_procedure_init (GimpPDBProcedure *procedure)
 {
-  procedure->priv = _gimp_pdb_procedure_get_instance_private (procedure);
 }
 
 static void
@@ -106,7 +106,7 @@ gimp_pdb_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_PDB (procedure->priv->pdb));
+  g_assert (GIMP_IS_PDB (procedure->pdb));
 }
 
 static void
@@ -114,7 +114,7 @@ gimp_pdb_procedure_finalize (GObject *object)
 {
   GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
 
-  g_clear_object (&procedure->priv->pdb);
+  g_clear_object (&procedure->pdb);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -130,7 +130,7 @@ gimp_pdb_procedure_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PDB:
-      g_set_object (&procedure->priv->pdb, g_value_get_object (value));
+      g_set_object (&procedure->pdb, g_value_get_object (value));
       break;
 
     default:
@@ -150,7 +150,7 @@ gimp_pdb_procedure_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_PDB:
-      g_value_set_object (value, procedure->priv->pdb);
+      g_value_set_object (value, procedure->pdb);
       break;
 
     default:
@@ -177,7 +177,7 @@ gimp_pdb_procedure_run (GimpProcedure        *procedure,
 {
   GimpPDBProcedure *pdb_procedure = GIMP_PDB_PROCEDURE (procedure);
 
-  return _gimp_pdb_run_procedure_array (pdb_procedure->priv->pdb,
+  return _gimp_pdb_run_procedure_array (pdb_procedure->pdb,
                                         gimp_procedure_get_name (procedure),
                                         (GimpValueArray *) args);
 }

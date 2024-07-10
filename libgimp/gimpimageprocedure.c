@@ -49,8 +49,10 @@
  */
 
 
-struct _GimpImageProcedurePrivate
+struct _GimpImageProcedure
 {
+  GimpProcedure    parent_instance;
+
   GimpRunImageFunc run_func;
   gpointer         run_data;
   GDestroyNotify   run_data_destroy;
@@ -72,8 +74,7 @@ static gboolean
                                                   gint                  sensitivity_mask);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpImageProcedure, gimp_image_procedure,
-                            GIMP_TYPE_PROCEDURE)
+G_DEFINE_TYPE (GimpImageProcedure, gimp_image_procedure, GIMP_TYPE_PROCEDURE)
 
 #define parent_class gimp_image_procedure_parent_class
 
@@ -95,7 +96,6 @@ gimp_image_procedure_class_init (GimpImageProcedureClass *klass)
 static void
 gimp_image_procedure_init (GimpImageProcedure *procedure)
 {
-  procedure->priv = gimp_image_procedure_get_instance_private (procedure);
 }
 
 static void
@@ -136,8 +136,8 @@ gimp_image_procedure_finalize (GObject *object)
 {
   GimpImageProcedure *procedure = GIMP_IMAGE_PROCEDURE (object);
 
-  if (procedure->priv->run_data_destroy)
-    procedure->priv->run_data_destroy (procedure->priv->run_data);
+  if (procedure->run_data_destroy)
+    procedure->run_data_destroy (procedure->run_data);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -177,11 +177,9 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   config = _gimp_procedure_create_run_config (procedure);
   _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
 
-  return_values = image_proc->priv->run_func (procedure,
-                                              run_mode,
-                                              image, n_drawables, drawables,
-                                              config,
-                                              image_proc->priv->run_data);
+  return_values = image_proc->run_func (procedure, run_mode,
+                                        image, n_drawables, drawables,
+                                        config, image_proc->run_data);
 
   if (return_values != NULL                       &&
       gimp_value_array_length (return_values) > 0 &&
@@ -287,9 +285,9 @@ gimp_image_procedure_new (GimpPlugIn       *plug_in,
                             "procedure-type", proc_type,
                             NULL);
 
-  procedure->priv->run_func         = run_func;
-  procedure->priv->run_data         = run_data;
-  procedure->priv->run_data_destroy = run_data_destroy;
+  procedure->run_func         = run_func;
+  procedure->run_data         = run_data;
+  procedure->run_data_destroy = run_data_destroy;
 
   return GIMP_PROCEDURE (procedure);
 }
