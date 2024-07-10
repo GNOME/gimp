@@ -49,13 +49,14 @@
     ],
     "desktop-file-name-prefix": "(Nightly) ",
     "cleanup": [
-        "/include",
-        "/lib/pkgconfig",
-        "/share/pkgconfig",
-        "/share/aclocal",
+        "/lib/cmake",
         "/man",
-        "/share/man",
+        "/share/aclocal",
+        "/share/doc",
+        "/share/gir-1.0",
         "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
         "/share/vala",
         "*.la",
         "*.a"
@@ -76,7 +77,16 @@
                 "-Dstemmer=false",
                 "-Drpm=false",
                 "-Dfonts=false",
-                "-Ddep11=false"
+                "-Ddep11=false",
+                "-Dbuilder=false",
+                "-Dman=false",
+                "-Dintrospection=false"
+            ],
+            "cleanup": [
+              "/bin",
+              "/include",
+              "/lib/pkgconfig",
+              "/share"
             ],
             "sources": [
                 {
@@ -99,13 +109,14 @@
                     "name": "exiv2",
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
-                        "-DEXIV2_ENABLE_BMFF=ON",
-                        "-DEXIV2_ENABLE_INIH=OFF"
+                        "-DEXIV2_BUILD_EXIV2_COMMAND=OFF",
+                        "-DEXIV2_ENABLE_INIH=OFF",
+                        "-DEXIV2_ENABLE_VIDEO=OFF"
                     ],
                     "builddir": true,
                     "cleanup": [
-                        "/bin",
-                        "/share"
+                        "/include",
+                        "/lib/pkgconfig"
                     ],
                     "sources": [
                         {
@@ -126,7 +137,12 @@
             "config-opts": [
                 "-Dintrospection=false",
                 "-Dpython3=false",
+                "-Dtools=false",
                 "-Dvapi=false"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
             ],
             "sources": [
                 {
@@ -145,15 +161,13 @@
         {
             "name": "openexr",
             "config-opts": [
-                "-DBUILD_SHARED_LIBS=ON",
+                "-DOPENEXR_BUILD_TOOLS=OFF",
                 "-DOPENEXR_BUILD_EXAMPLES=OFF",
-                "-DBUILD_TESTING=OFF",
-                "-DOPENEXR_INSTALL_PKG_CONFIG=ON"
+                "-DBUILD_TESTING=OFF"
             ],
             "cleanup": [
-                "/bin",
-                "/share/doc",
-                "/lib/libIlmImfUtil*"
+                "/include",
+                "/lib/pkgconfig"
             ],
             "builddir" : true,
             "buildsystem" : "cmake-ninja",
@@ -174,13 +188,14 @@
                 {
                     "name" : "imath",
                     "config-opts": [
-                        "-DBUILD_SHARED_LIBS=ON",
-                        "-DBUILD_TESTING=OFF",
-                        "-DIMATH_INSTALL_PKG_CONFIG=ON"
+                        "-DBUILD_TESTING=OFF"
                     ],
-
                     "builddir" : true,
                     "buildsystem" : "cmake-ninja",
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ],
                     "sources" : [
                         {
                             "type": "archive",
@@ -220,17 +235,23 @@
                 }
             ],
             "config-opts": [
+                "-DBUILD_GTK_TEST=OFF",
+                "-DBUILD_QT5_TESTS=OFF",
+                "-DBUILD_QT6_TESTS=OFF",
+                "-DBUILD_CPP_TESTS=OFF",
+                "-DBUILD_MANUAL_TESTS=OFF",
                 "-DENABLE_GOBJECT_INTROSPECTION=OFF",
+                "-DENABLE_UTILS=OFF",
                 "-DENABLE_CPP=OFF",
                 "-DENABLE_LIBOPENJPEG=openjpeg2",
                 "-DENABLE_BOOST=OFF",
-                "-DWITH_NSS3:BOOL=OFF",
-                "-DENABLE_QT5:BOOL=OFF",
-                "-DENABLE_QT6:BOOL=OFF"
+                "-DENABLE_NSS3=OFF",
+                "-DENABLE_QT5=OFF",
+                "-DENABLE_QT6=OFF"
             ],
             "cleanup": [
-                "/bin",
-                "/share"
+                "/include",
+                "/lib/pkgconfig"
             ],
             "buildsystem": "cmake-ninja",
             "builddir": true,
@@ -254,7 +275,8 @@
                 "--disable-static"
             ],
             "cleanup": [
-                "/share"
+                "/include",
+                "/lib/pkgconfig"
             ],
             "sources": [
                 {
@@ -271,8 +293,10 @@
                 "--disable-dependency-tracking"
             ],
             "cleanup": [
-                "/share/doc",
-                "/bin"
+                "/bin",
+                "/include",
+                "/lib/gdk-pixbuf-*",
+                "/lib/pkgconfig"
             ],
             "sources": [
                 {
@@ -298,7 +322,11 @@
         {
             "name": "ghostscript",
             "config-opts": [
-                "--disable-cups"
+                "--disable-cups",
+                "--disable-gtk",
+                "--without-tesseract",
+                "--without-libpaper",
+                "--without-pdftoraster"
             ],
             "make-args": [
                 "so"
@@ -308,8 +336,9 @@
             ],
             "cleanup": [
                 "/bin",
-                "/share/man",
-                "/share/doc"
+                "/include",
+                "/lib/pkgconfig",
+                "/share"
             ],
             "sources": [
                 {
@@ -344,6 +373,10 @@
                 "--disable-gegl",
                 "--disable-introspection"
             ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -362,7 +395,12 @@
                     "name": "json-c",
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
-                        "-DDISABLE_WERROR=ON"
+                        "-DDISABLE_WERROR=ON",
+                        "-DBUILD_TESTING=OFF"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
                     ],
                     "sources": [
                         {
@@ -425,10 +463,17 @@
             "builddir": true,
             "config-opts": [
                 "-DBLA_VENDOR=OpenBLAS",
+                "-DGRAPHBLAS_COMPACT=ON",
                 "-DSUITESPARSE_USE_OPENMP=OFF",
                 "-DSUITESPARSE_DEMOS=OFF",
+                "-DBUILD_TESTING=OFF",
                 "-DCMAKE_INSTALL_LIBDIR=/app/lib",
-                "-DCMAKE_INSTALL_INCLUDEDIR=/app/include/suitesparse"
+                "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig"
             ],
             "sources": [
                 {
@@ -449,12 +494,15 @@
                     "no-autogen": true,
                     "make-args": [
                         "DYNAMIC_ARCH=0",
-                        "DNOFORTRAN=1",
-                        "DC_LAPACK=0",
-                        "USE_OPENMP=0"
+                        "USE_OPENMP=0",
+                        "NO_LAPACKE=1"
                     ],
                     "make-install-args": [
                         "PREFIX=/app"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
                     ],
                     "sources": [
                         {
@@ -495,6 +543,8 @@
             },
             "cleanup": [
                 "/bin",
+                "/include/libheif",
+                "/lib/pkgconfig",
                 "/share/thumbnailers"
             ],
             "modules": [
@@ -645,10 +695,9 @@
                 "DEFAULT_CC=ccache clang"
             ],
             "cleanup": [
-                "/lib/*.a",
                 "/include",
                 "/lib/pkgconfig",
-                "/share/man"
+                "/share"
             ],
             "sources": [
                 {
@@ -676,6 +725,9 @@
         {
             "name": "lua-lgi",
             "buildsystem": "meson",
+            "config-opts": [
+                "-Dtests=false"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -686,6 +738,10 @@
         },
         {
             "name": "xmu",
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ],
             "sources": [
                 {
                     "type": "archive",
@@ -700,6 +756,10 @@
             "build-commands": [
                 "install -D qoi.h /app/include/qoi.h"
             ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -713,11 +773,11 @@
             "config-opts": [
                 "--enable-reentrant"
             ],
-            "make-args": ["shared"],
+            "make-args": [
+                "shared"
+            ],
             "cleanup": [
                 "/include",
-                "/lib/*.a",
-                "/lib/*.la",
                 "/lib/pkgconfig"
             ],
             "sources": [
@@ -732,7 +792,11 @@
             "name": "babl",
             "buildsystem": "meson",
             "config-opts": [
-                "-Dwith-docs=false"
+                "-Dwith-docs=false",
+                "-Dgi-docgen=disabled"
+            ],
+            "cleanup": [
+                "/bin"
             ],
             "sources": [
                 {
@@ -747,10 +811,11 @@
             "buildsystem": "meson",
             "config-opts": [
                 "-Ddocs=false",
+                "-Dgi-docgen=disabled",
                 "-Dworkshop=true"
             ],
             "cleanup": [
-                "/bin"
+                "/share/gegl*"
             ],
             "sources": [
                 {
@@ -764,7 +829,8 @@
                     "name": "maxflow",
                     "buildsystem": "cmake-ninja",
                     "cleanup": [
-                        "/bin"
+                        "/include",
+                        "/lib/pkgconfig"
                     ],
                     "sources": [
                         {
@@ -777,6 +843,15 @@
                 {
                     "name": "graphviz",
                     "buildsystem": "autotools",
+                    "config-opts": [
+                        "--with-gdk=no",
+                        "--with-gtk=no",
+                        "--with-poppler=no",
+                        "--with-rsvg=no",
+                        "--with-webp=no",
+                        "--with-x=no",
+                        "--with-xlib=no"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -795,17 +870,14 @@
                         "/bin/????*",
                         "/bin/fdp",
                         "/bin/nop",
+                        "/include",
                         "/lib/libgvpr*",
                         "/lib/liblab*",
-                        "*.la",
                         "/lib/graphviz/libgvplugin_core*",
-                        "/lib/graphviz/libgvplugin_g*",
+                        "/lib/graphviz/libgvplugin_kitty*",
                         "/lib/graphviz/libgvplugin_neato_layout*",
-                        "/lib/graphviz/libgvplugin_poppler*",
-                        "/lib/graphviz/libgvplugin_rsvg*",
-                        "/lib/graphviz/libgvplugin_visio*",
-                        "/lib/graphviz/libgvplugin_webp*",
-                        "/lib/graphviz/libgvplugin_xlib*",
+                        "/lib/graphviz/libgvplugin_vt*",
+                        "/lib/pkgconfig",
                         "/share"
                     ]
                 }
