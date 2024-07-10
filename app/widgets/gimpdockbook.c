@@ -261,6 +261,8 @@ gimp_dockbook_style_updated (GtkWidget *widget)
   GtkWidget    *tab_widget;
   GList        *children;
   GList        *iter;
+  GtkIconSize   tab_size = DEFAULT_TAB_ICON_SIZE;
+  gint          icon_size = 12;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -268,6 +270,7 @@ gimp_dockbook_style_updated (GtkWidget *widget)
       ! (context = gimp_dock_get_context (dockbook->p->dock)))
     return;
 
+  /* Update size of 'Configure this tab' icon */
   children = gtk_container_get_children (GTK_CONTAINER (dockbook));
   for (iter = children; iter; iter = g_list_next (iter))
     {
@@ -278,6 +281,14 @@ gimp_dockbook_style_updated (GtkWidget *widget)
                                   GTK_WIDGET (dockable),
                                   tab_widget);
     }
+  g_list_free (children);
+
+  children = gtk_container_get_children (GTK_CONTAINER (dockbook->p->menu_button));
+  gtk_widget_style_get (GTK_WIDGET (dockbook),
+                        "tab-icon-size", &tab_size,
+                        NULL);
+  gtk_icon_size_lookup (tab_size, &icon_size, NULL);
+  gtk_image_set_pixel_size (GTK_IMAGE (children->data), icon_size * 0.75f);
   g_list_free (children);
 
   gimp_dock_invalidate_geometry (GIMP_DOCK (dockbook->p->dock));
