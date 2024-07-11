@@ -23,6 +23,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -849,7 +853,16 @@ gimp_display_shell_dispose (GObject *object)
 
   shell->display = NULL;
 
-  gimp_widget_free_native_handle (GTK_WIDGET (shell), &shell->window_handle);
+  if (shell->window_handle != NULL)
+    {
+#ifdef GDK_WINDOWING_WAYLAND
+      if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
+          /* The GdkWindow is likely already destroyed. */
+          gtk_widget_get_window (GTK_WIDGET (shell)) != NULL)
+        gdk_wayland_window_unexport_handle (gtk_widget_get_window (GTK_WIDGET (shell)));
+#endif
+      g_clear_pointer (&shell->window_handle, g_bytes_unref);
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -1679,7 +1692,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   gboolean   snap_to_guides       = FALSE;
   gboolean   snap_to_grid         = FALSE;
   gboolean   snap_to_canvas       = FALSE;
-  gboolean   snap_to_vectors      = FALSE;
+  gboolean   snap_to_path      = FALSE;
   gboolean   snap_to_bbox         = FALSE;
   gboolean   snap_to_equidistance = FALSE;
   gboolean   snapped              = FALSE;
@@ -1704,9 +1717,9 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   snap_to_canvas = gimp_display_shell_get_snap_to_canvas (shell);
 
   if (gimp_display_shell_get_snap_to_vectors (shell) &&
-      gimp_image_get_selected_vectors (image))
+      gimp_image_get_selected_paths (image))
     {
-      snap_to_vectors = TRUE;
+      snap_to_path = TRUE;
     }
 
   if (gimp_display_shell_get_snap_to_bbox (shell))
@@ -1725,7 +1738,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   shell->equidistance_side_horizontal = GIMP_ARRANGE_HFILL;
   shell->equidistance_side_vertical = GIMP_ARRANGE_HFILL;
 
-  if (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors || snap_to_bbox || snap_to_equidistance)
+  if (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_path || snap_to_bbox || snap_to_equidistance)
     {
       gint    snap_distance;
       gdouble tx, ty;
@@ -1749,7 +1762,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                                snap_to_guides,
                                                snap_to_grid,
                                                snap_to_canvas,
-                                               snap_to_vectors,
+                                               snap_to_path,
                                                snap_to_bbox,
                                                snap_to_equidistance);
 
@@ -1776,7 +1789,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                            snap_to_guides,
                                            snap_to_grid,
                                            snap_to_canvas,
-                                           snap_to_vectors,
+                                           snap_to_path,
                                            snap_to_bbox,
                                            shell->show_all);
         }

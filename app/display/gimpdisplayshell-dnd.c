@@ -67,7 +67,7 @@ static void   gimp_display_shell_drop_drawable  (GtkWidget       *widget,
                                                  gint             y,
                                                  GimpViewable    *viewable,
                                                  gpointer         data);
-static void   gimp_display_shell_drop_vectors   (GtkWidget       *widget,
+static void   gimp_display_shell_drop_path      (GtkWidget       *widget,
                                                  gint             x,
                                                  gint             y,
                                                  GimpViewable    *viewable,
@@ -128,7 +128,7 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
                                gimp_display_shell_drop_drawable,
                                shell);
   gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_VECTORS,
-                               gimp_display_shell_drop_vectors,
+                               gimp_display_shell_drop_path,
                                shell);
   gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_PATTERN,
                                gimp_display_shell_drop_pattern,
@@ -262,11 +262,11 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 }
 
 static void
-gimp_display_shell_drop_vectors (GtkWidget    *widget,
-                                 gint          x,
-                                 gint          y,
-                                 GimpViewable *viewable,
-                                 gpointer      data)
+gimp_display_shell_drop_path (GtkWidget    *widget,
+                              gint          x,
+                              gint          y,
+                              GimpViewable *viewable,
+                              gpointer      data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
   GimpImage        *image = gimp_display_get_image (shell->display);
@@ -285,13 +285,13 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
 
   if (new_item)
     {
-      GimpVectors *new_vectors = GIMP_VECTORS (new_item);
+      GimpVectors *new_path = GIMP_VECTORS (new_item);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Path"));
 
-      gimp_image_add_vectors (image, new_vectors,
-                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      gimp_image_add_path (image, new_path,
+                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
       gimp_image_undo_group_end (image);
 

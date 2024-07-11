@@ -1052,16 +1052,16 @@ layers_text_to_vectors_cmd_callback (GimpAction *action,
 
       if (GIMP_IS_TEXT_LAYER (layer))
         {
-          GimpVectors *vectors;
+          GimpVectors *path;
           gint         x, y;
 
-          vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
+          path = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
 
           gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
-          gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+          gimp_item_translate (GIMP_ITEM (path), x, y, FALSE);
 
-          gimp_image_add_vectors (image, vectors,
-                                  GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+          gimp_image_add_path (image, path,
+                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
           gimp_image_flush (image);
         }
     }
@@ -1127,8 +1127,8 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
 
       gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
 
-      gimp_image_add_vectors (image, new_vectors,
-                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      gimp_image_add_path (image, new_vectors,
+                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
       gimp_image_flush (image);
     }
 }

@@ -105,7 +105,7 @@ enum
   ALPHA_CHANGED,
   FLOATING_SELECTION_CHANGED,
   SELECTED_CHANNELS_CHANGED,
-  SELECTED_VECTORS_CHANGED,
+  SELECTED_PATHS_CHANGED,
   SELECTED_LAYERS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
@@ -275,7 +275,7 @@ static void     gimp_image_selected_layers_notify   (GimpItemTree      *tree,
 static void     gimp_image_selected_channels_notify (GimpItemTree      *tree,
                                                      const GParamSpec  *pspec,
                                                      GimpImage         *image);
-static void     gimp_image_selected_vectors_notify  (GimpItemTree      *tree,
+static void     gimp_image_selected_paths_notify    (GimpItemTree      *tree,
                                                      const GParamSpec  *pspec,
                                                      GimpImage         *image);
 
@@ -362,11 +362,11 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTED_VECTORS_CHANGED] =
-    g_signal_new ("selected-vectors-changed",
+  gimp_image_signals[SELECTED_PATHS_CHANGED] =
+    g_signal_new ("selected-paths-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selected_vectors_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, selected_paths_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -610,7 +610,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->floating_selection_changed   = NULL;
   klass->selected_layers_changed      = NULL;
   klass->selected_channels_changed    = NULL;
-  klass->selected_vectors_changed     = NULL;
+  klass->selected_paths_changed       = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
@@ -816,7 +816,7 @@ gimp_image_init (GimpImage *image)
                     G_CALLBACK (gimp_image_selected_channels_notify),
                     image);
   g_signal_connect (private->vectors, "notify::selected-items",
-                    G_CALLBACK (gimp_image_selected_vectors_notify),
+                    G_CALLBACK (gimp_image_selected_paths_notify),
                     image);
 
   g_signal_connect_swapped (private->layers->container, "update",
@@ -1341,7 +1341,7 @@ gimp_image_size_changed (GimpViewable *viewable)
   all_items = gimp_image_get_channel_list (image);
   g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
 
-  all_items = gimp_image_get_vectors_list (image);
+  all_items = gimp_image_get_path_list (image);
   g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
@@ -1866,11 +1866,11 @@ gimp_image_selected_channels_notify (GimpItemTree     *tree,
 }
 
 static void
-gimp_image_selected_vectors_notify (GimpItemTree     *tree,
+gimp_image_selected_paths_notify (GimpItemTree     *tree,
                                     const GParamSpec *pspec,
                                     GimpImage        *image)
 {
-  g_signal_emit (image, gimp_image_signals[SELECTED_VECTORS_CHANGED], 0);
+  g_signal_emit (image, gimp_image_signals[SELECTED_PATHS_CHANGED], 0);
 }
 
 static void
@@ -2957,14 +2957,14 @@ gimp_image_get_xcf_version (GimpImage    *image,
     }
   g_list_free (items);
 
-  if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+  if (g_list_length (gimp_image_get_selected_paths (image)) > 1)
     {
       ADD_REASON (g_strdup_printf (_("Multiple path selection was "
                                      "added in %s"), "GIMP 3.0.0"));
       version = MAX (18, version);
     }
 
-  items = gimp_image_get_vectors_list (image);
+  items = gimp_image_get_path_list (image);
   for (list = items; list; list = g_list_next (list))
     {
       GimpVectors *vectors = GIMP_VECTORS (list->data);
@@ -4453,13 +4453,13 @@ gimp_image_set_tattoo_state (GimpImage  *image,
       if (gimp_image_get_channel_by_tattoo (image, ltattoo))
         retval = FALSE; /* Oopps duplicated tattoo in channel */
 
-      if (gimp_image_get_vectors_by_tattoo (image, ltattoo))
-        retval = FALSE; /* Oopps duplicated tattoo in vectors */
+      if (gimp_image_get_path_by_tattoo (image, ltattoo))
+        retval = FALSE; /* Oopps duplicated tattoo in path */
     }
 
   g_list_free (all_items);
 
-  /* Now check that the channel and vectors tattoos don't overlap */
+  /* Now check that the channel and path tattoos don't overlap */
   all_items = gimp_image_get_channel_list (image);
 
   for (list = all_items; list; list = g_list_next (list))
@@ -4470,14 +4470,14 @@ gimp_image_set_tattoo_state (GimpImage  *image,
       if (ctattoo > maxval)
         maxval = ctattoo;
 
-      if (gimp_image_get_vectors_by_tattoo (image, ctattoo))
-        retval = FALSE; /* Oopps duplicated tattoo in vectors */
+      if (gimp_image_get_path_by_tattoo (image, ctattoo))
+        retval = FALSE; /* Oopps duplicated tattoo in path */
     }
 
   g_list_free (all_items);
 
-  /* Find the max tattoo value in the vectors */
-  all_items = gimp_image_get_vectors_list (image);
+  /* Find the max tattoo value in the path */
+  all_items = gimp_image_get_path_list (image);
 
   for (list = all_items; list; list = g_list_next (list))
     {
@@ -4531,7 +4531,7 @@ gimp_image_get_channel_tree (GimpImage *image)
 }
 
 GimpItemTree *
-gimp_image_get_vectors_tree (GimpImage *image)
+gimp_image_get_path_tree (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -4555,7 +4555,7 @@ gimp_image_get_channels (GimpImage *image)
 }
 
 GimpContainer *
-gimp_image_get_vectors (GimpImage *image)
+gimp_image_get_paths (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -4587,13 +4587,13 @@ gimp_image_get_n_channels (GimpImage *image)
 }
 
 gint
-gimp_image_get_n_vectors (GimpImage *image)
+gimp_image_get_n_paths (GimpImage *image)
 {
   GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = GIMP_ITEM_STACK (gimp_image_get_paths (image));
 
   return gimp_item_stack_get_n_items (stack);
 }
@@ -4623,13 +4623,13 @@ gimp_image_get_channel_iter (GimpImage *image)
 }
 
 GList *
-gimp_image_get_vectors_iter (GimpImage *image)
+gimp_image_get_path_iter (GimpImage *image)
 {
   GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = GIMP_ITEM_STACK (gimp_image_get_paths (image));
 
   return gimp_item_stack_get_item_iter (stack);
 }
@@ -4659,13 +4659,13 @@ gimp_image_get_channel_list (GimpImage *image)
 }
 
 GList *
-gimp_image_get_vectors_list (GimpImage *image)
+gimp_image_get_path_list (GimpImage *image)
 {
   GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = GIMP_ITEM_STACK (gimp_image_get_paths (image));
 
   return gimp_item_stack_get_item_list (stack);
 }
@@ -4824,7 +4824,7 @@ gimp_image_get_selected_channels (GimpImage *image)
 }
 
 GList *
-gimp_image_get_selected_vectors (GimpImage *image)
+gimp_image_get_selected_paths (GimpImage *image)
 {
   GimpImagePrivate *private;
 
@@ -4934,15 +4934,15 @@ gimp_image_set_selected_channels (GimpImage *image,
 }
 
 void
-gimp_image_set_selected_vectors (GimpImage *image,
-                                 GList     *vectors)
+gimp_image_set_selected_paths (GimpImage *image,
+                               GList     *paths)
 {
   GimpImagePrivate *private;
   GList            *iter;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  for (iter = vectors; iter; iter = iter->next)
+  for (iter = paths; iter; iter = iter->next)
     {
       g_return_if_fail (GIMP_IS_VECTORS (iter->data));
       g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
@@ -4951,11 +4951,11 @@ gimp_image_set_selected_vectors (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  gimp_item_tree_set_selected_items (private->vectors, g_list_copy (vectors));
+  gimp_item_tree_set_selected_items (private->vectors, g_list_copy (paths));
 }
 
 
-/*  layer, channel, vectors by tattoo  */
+/*  layer, channel, path by tattoo  */
 
 GimpLayer *
 gimp_image_get_layer_by_tattoo (GimpImage  *image,
@@ -4984,14 +4984,14 @@ gimp_image_get_channel_by_tattoo (GimpImage  *image,
 }
 
 GimpVectors *
-gimp_image_get_vectors_by_tattoo (GimpImage  *image,
-                                  GimpTattoo  tattoo)
+gimp_image_get_path_by_tattoo (GimpImage  *image,
+                               GimpTattoo  tattoo)
 {
   GimpItemStack *stack;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  stack = GIMP_ITEM_STACK (gimp_image_get_vectors (image));
+  stack = GIMP_ITEM_STACK (gimp_image_get_paths (image));
 
   return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
@@ -5028,15 +5028,15 @@ gimp_image_get_channel_by_name (GimpImage   *image,
 }
 
 GimpVectors *
-gimp_image_get_vectors_by_name (GimpImage   *image,
-                                const gchar *name)
+gimp_image_get_path_by_name (GimpImage   *image,
+                              const gchar *name)
 {
   GimpItemTree *tree;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  tree = gimp_image_get_vectors_tree (image);
+  tree = gimp_image_get_path_tree (image);
 
   return GIMP_VECTORS (gimp_item_tree_get_item_by_name (tree, name));
 }
@@ -5582,7 +5582,7 @@ gimp_image_select_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, items);
       else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+        gimp_image_set_selected_paths (image, items);
       else
         g_return_if_reached ();
     }
@@ -5622,7 +5622,7 @@ gimp_image_add_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         selected = gimp_image_get_selected_channels (image);
       else if (item_type == GIMP_TYPE_VECTORS)
-        selected = gimp_image_get_selected_vectors (image);
+        selected = gimp_image_get_selected_paths (image);
       else
         g_return_if_reached ();
 
@@ -5638,7 +5638,7 @@ gimp_image_add_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, selected);
       else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+        gimp_image_set_selected_paths (image, items);
 
       g_list_free (selected);
     }
@@ -5680,7 +5680,7 @@ gimp_image_remove_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         selected = gimp_image_get_selected_channels (image);
       else if (item_type == GIMP_TYPE_VECTORS)
-        selected = gimp_image_get_selected_vectors (image);
+        selected = gimp_image_get_selected_paths (image);
       else
         g_return_if_reached ();
 
@@ -5698,7 +5698,7 @@ gimp_image_remove_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, selected);
       else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+        gimp_image_set_selected_paths (image, items);
 
       g_list_free (selected);
     }
@@ -5742,7 +5742,7 @@ gimp_image_intersect_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         selected = gimp_image_get_selected_channels (image);
       else if (item_type == GIMP_TYPE_VECTORS)
-        selected = gimp_image_get_selected_vectors (image);
+        selected = gimp_image_get_selected_paths (image);
       else
         g_return_if_reached ();
 
@@ -5764,7 +5764,7 @@ gimp_image_intersect_item_set (GimpImage    *image,
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, selected);
       else if (item_type == GIMP_TYPE_VECTORS)
-        gimp_image_set_selected_vectors (image, items);
+        gimp_image_set_selected_paths (image, items);
 
       g_list_free (selected);
     }
@@ -5887,14 +5887,14 @@ gimp_image_remove_channel (GimpImage   *image,
 }
 
 
-/*  vectors  */
+/*  path  */
 
 gboolean
-gimp_image_add_vectors (GimpImage   *image,
-                        GimpVectors *vectors,
-                        GimpVectors *parent,
-                        gint         position,
-                        gboolean     push_undo)
+gimp_image_add_path (GimpImage   *image,
+                     GimpVectors *path,
+                     GimpVectors *parent,
+                     gint         position,
+                     gboolean     push_undo)
 {
   GimpImagePrivate *private;
   GList            *list = NULL;
@@ -5906,23 +5906,23 @@ gimp_image_add_vectors (GimpImage   *image,
   /*  item and parent are type-checked in GimpItemTree
    */
   if (! gimp_item_tree_get_insert_pos (private->vectors,
-                                       (GimpItem *) vectors,
+                                       (GimpItem *) path,
                                        (GimpItem **) &parent,
                                        &position))
     return FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_vectors_add (image, C_("undo-type", "Add Path"),
-                                      vectors,
-                                      gimp_image_get_selected_vectors (image));
+    gimp_image_undo_push_path_add (image, C_("undo-type", "Add Path"),
+                                   path,
+                                   gimp_image_get_selected_paths (image));
 
-  gimp_item_tree_add_item (private->vectors, GIMP_ITEM (vectors),
+  gimp_item_tree_add_item (private->vectors, GIMP_ITEM (path),
                            GIMP_ITEM (parent), position);
 
-  if (vectors != NULL)
-    list = g_list_prepend (NULL, vectors);
+  if (path != NULL)
+    list = g_list_prepend (NULL, path);
 
-  gimp_image_set_selected_vectors (image, list);
+  gimp_image_set_selected_paths (image, list);
 
   g_list_free (list);
 
@@ -5930,18 +5930,18 @@ gimp_image_add_vectors (GimpImage   *image,
 }
 
 void
-gimp_image_remove_vectors (GimpImage   *image,
-                           GimpVectors *vectors,
-                           gboolean     push_undo,
-                           GList       *new_selected)
+gimp_image_remove_path (GimpImage   *image,
+                        GimpVectors *path,
+                        gboolean     push_undo,
+                        GList       *new_selected)
 {
   GimpImagePrivate *private;
-  GList            *selected_vectors;
+  GList            *selected_path;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)));
-  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (vectors)) == image);
+  g_return_if_fail (GIMP_IS_VECTORS (path));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (path)));
+  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (path)) == image);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
@@ -5949,36 +5949,36 @@ gimp_image_remove_vectors (GimpImage   *image,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
                                  C_("undo-type", "Remove Path"));
 
-  gimp_item_start_move (GIMP_ITEM (vectors), push_undo);
+  gimp_item_start_move (GIMP_ITEM (path), push_undo);
 
-  selected_vectors = gimp_image_get_selected_vectors (image);
-  selected_vectors = g_list_copy (selected_vectors);
+  selected_path = gimp_image_get_selected_paths (image);
+  selected_path = g_list_copy (selected_path);
 
   if (push_undo)
-    gimp_image_undo_push_vectors_remove (image, C_("undo-type", "Remove Path"), vectors,
-                                         gimp_vectors_get_parent (vectors),
-                                         gimp_item_get_index (GIMP_ITEM (vectors)),
-                                         selected_vectors);
+    gimp_image_undo_push_path_remove (image, C_("undo-type", "Remove Path"), path,
+                                      gimp_vectors_get_parent (path),
+                                      gimp_item_get_index (GIMP_ITEM (path)),
+                                      selected_path);
 
-  g_object_ref (vectors);
+  g_object_ref (path);
 
   new_selected = gimp_item_tree_remove_item (private->vectors,
-                                             GIMP_ITEM (vectors),
+                                             GIMP_ITEM (path),
                                              new_selected);
 
-  if (selected_vectors &&
-      (g_list_find (selected_vectors, vectors) ||
-       g_list_find_custom (selected_vectors, vectors,
+  if (selected_path &&
+      (g_list_find (selected_path, path) ||
+       g_list_find_custom (selected_path, path,
                            (GCompareFunc) gimp_image_selected_is_descendant)))
     {
-      gimp_image_set_selected_vectors (image, new_selected);
+      gimp_image_set_selected_paths (image, new_selected);
     }
 
-  g_list_free (selected_vectors);
+  g_list_free (selected_path);
 
-  gimp_item_end_move (GIMP_ITEM (vectors), push_undo);
+  gimp_item_end_move (GIMP_ITEM (path), push_undo);
 
-  g_object_unref (vectors);
+  g_object_unref (path);
   if (new_selected)
     g_list_free (new_selected);
 

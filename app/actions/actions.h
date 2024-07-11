@@ -111,7 +111,7 @@ void               action_message          (GimpDisplay          *display,
 
 #define return_if_no_vectors_list(image,list,data) \
   return_if_no_image (image,data); \
-  list = gimp_image_get_selected_vectors (image); \
+  list = gimp_image_get_selected_paths (image); \
   if (! list) \
     return
 

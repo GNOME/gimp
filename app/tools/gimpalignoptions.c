@@ -72,7 +72,7 @@ struct _GimpAlignOptionsPrivate
   GimpImage *image;
 
   gboolean   align_layers;
-  gboolean   align_vectors;
+  gboolean   align_paths;
   gboolean   align_contents;
   gdouble    pivot_x;
   gdouble    pivot_y;
@@ -227,7 +227,7 @@ gimp_align_options_set_property (GObject      *object,
       gimp_align_options_update_area (options);
       break;
     case PROP_ALIGN_VECTORS:
-      options->priv->align_vectors = g_value_get_boolean (value);
+      options->priv->align_paths = g_value_get_boolean (value);
       gimp_align_options_update_area (options);
       break;
 
@@ -266,7 +266,7 @@ gimp_align_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->priv->align_layers);
       break;
     case PROP_ALIGN_VECTORS:
-      g_value_set_boolean (value, options->priv->align_vectors);
+      g_value_set_boolean (value, options->priv->align_paths);
       break;
 
     case PROP_ALIGN_CONTENTS:
@@ -573,11 +573,11 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
           layers = g_list_copy (layers);
           objects = g_list_concat (objects, layers);
         }
-      if (options->priv->align_vectors)
+      if (options->priv->align_paths)
         {
           GList *vectors;
 
-          vectors = gimp_image_get_selected_vectors (image);
+          vectors = gimp_image_get_selected_paths (image);
           vectors = g_list_copy (vectors);
           objects = g_list_concat (objects, vectors);
         }
@@ -738,7 +738,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
 {
   GimpImage *image;
   GList     *layers           = NULL;
-  GList     *vectors          = NULL;
+  GList     *paths            = NULL;
   gboolean   enable_ver_align = FALSE;
   gboolean   enable_hor_align = FALSE;
   gboolean   enable_ver_distr = FALSE;
@@ -755,12 +755,12 @@ gimp_align_options_update_area (GimpAlignOptions *options)
   if (image)
     {
       layers = gimp_image_get_selected_layers (image);
-      vectors = gimp_image_get_selected_vectors (image);
+      paths  = gimp_image_get_selected_paths (image);
 
       if (options->priv->align_layers)
         n_items += g_list_length (layers);
-      if (options->priv->align_vectors)
-        n_items += g_list_length (vectors);
+      if (options->priv->align_paths)
+        n_items += g_list_length (paths);
 
       n_items += g_list_length (options->priv->selected_guides);
     }

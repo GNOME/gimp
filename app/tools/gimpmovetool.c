@@ -205,19 +205,19 @@ gimp_move_tool_button_press (GimpTool            *tool,
         {
           GimpVectors *vectors;
 
-          vectors = gimp_image_pick_vectors (image,
-                                             coords->x, coords->y,
-                                             FUNSCALEX (shell, snap_distance),
-                                             FUNSCALEY (shell, snap_distance));
+          vectors = gimp_image_pick_path (image,
+                                          coords->x, coords->y,
+                                          FUNSCALEX (shell, snap_distance),
+                                          FUNSCALEY (shell, snap_distance));
           if (vectors)
             {
-              GList *new_selected_vectors = g_list_prepend (NULL, vectors);
+              GList *new_selected_paths = g_list_prepend (NULL, vectors);
 
               move->old_selected_vectors =
-                g_list_copy (gimp_image_get_selected_vectors (image));
+                g_list_copy (gimp_image_get_selected_paths (image));
 
-              gimp_image_set_selected_vectors (image, new_selected_vectors);
-              g_list_free (new_selected_vectors);
+              gimp_image_set_selected_paths (image, new_selected_paths);
+              g_list_free (new_selected_paths);
             }
           else
             {
@@ -283,7 +283,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
     {
     case GIMP_TRANSFORM_TYPE_PATH:
       {
-        selected_items = gimp_image_get_selected_vectors (image);
+        selected_items = gimp_image_get_selected_paths (image);
         selected_items = g_list_copy (selected_items);
 
         translate_mode = GIMP_TRANSLATE_MODE_VECTORS;
@@ -429,7 +429,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
 
       if (move->old_selected_vectors)
         {
-          gimp_image_set_selected_vectors (image, move->old_selected_vectors);
+          gimp_image_set_selected_paths (image, move->old_selected_vectors);
           g_clear_pointer (&move->old_selected_vectors, g_list_free);
 
           flush = TRUE;
@@ -592,7 +592,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
 
       if (options->move_current)
         {
-          GList *selected = gimp_image_get_selected_vectors (image);
+          GList *selected = gimp_image_get_selected_paths (image);
           GList *iter;
           gint   n_items = 0;
 
@@ -607,10 +607,10 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
         }
       else
         {
-          if (gimp_image_pick_vectors (image,
-                                       coords->x, coords->y,
-                                       FUNSCALEX (shell, snap_distance),
-                                       FUNSCALEY (shell, snap_distance)))
+          if (gimp_image_pick_path (image,
+                                    coords->x, coords->y,
+                                    FUNSCALEX (shell, snap_distance),
+                                    FUNSCALEY (shell, snap_distance)))
             {
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
             }

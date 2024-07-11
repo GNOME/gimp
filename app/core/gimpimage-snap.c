@@ -599,7 +599,7 @@ gimp_image_snap_point (GimpImage *image,
                        gboolean   snap_to_guides,
                        gboolean   snap_to_grid,
                        gboolean   snap_to_canvas,
-                       gboolean   snap_to_vectors,
+                       gboolean   snap_to_path,
                        gboolean   snap_to_bbox,
                        gboolean   show_all)
 {
@@ -618,10 +618,10 @@ gimp_image_snap_point (GimpImage *image,
     snap_to_guides  = FALSE;
   if (! gimp_image_get_grid (image))
     snap_to_grid    = FALSE;
-  if (! gimp_image_get_selected_vectors (image))
-    snap_to_vectors = FALSE;
+  if (! gimp_image_get_selected_paths (image))
+    snap_to_path = FALSE;
 
-  if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors || snap_to_bbox))
+  if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_path || snap_to_bbox))
     return FALSE;
 
   if (! show_all &&
@@ -716,9 +716,9 @@ gimp_image_snap_point (GimpImage *image,
                                            &mindist_y, ty);
     }
 
-  if (snap_to_vectors)
+  if (snap_to_path)
     {
-      GList      *selected_vectors = gimp_image_get_selected_vectors (image);
+      GList      *selected_path = gimp_image_get_selected_paths (image);
       GList      *iter;
       GimpStroke *stroke           = NULL;
       GimpCoords  coords           = { 0, 0, 0, 0, 0 };
@@ -726,7 +726,7 @@ gimp_image_snap_point (GimpImage *image,
       coords.x = x;
       coords.y = y;
 
-      for (iter = selected_vectors; iter; iter = iter->next)
+      for (iter = selected_path; iter; iter = iter->next)
         {
           GimpVectors *vectors = iter->data;
 
@@ -816,7 +816,7 @@ gimp_image_snap_rectangle (GimpImage         *image,
                            gboolean           snap_to_guides,
                            gboolean           snap_to_grid,
                            gboolean           snap_to_canvas,
-                           gboolean           snap_to_vectors,
+                           gboolean           snap_to_path,
                            gboolean           snap_to_bbox,
                            gboolean           snap_to_equidistance)
 {
@@ -842,10 +842,10 @@ gimp_image_snap_rectangle (GimpImage         *image,
     snap_to_guides  = FALSE;
   if (! gimp_image_get_grid (image))
     snap_to_grid    = FALSE;
-  if (! gimp_image_get_selected_vectors (image))
-    snap_to_vectors = FALSE;
+  if (! gimp_image_get_selected_paths (image))
+    snap_to_path = FALSE;
 
-  if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors || snap_to_bbox || snap_to_equidistance))
+  if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_path || snap_to_bbox || snap_to_equidistance))
     return FALSE;
 
   /*  center, vertical  */
@@ -967,15 +967,15 @@ gimp_image_snap_rectangle (GimpImage         *image,
   mindist_tx = mindist_x;
   mindist_ty = mindist_y;
 
-  if (snap_to_vectors)
+  if (snap_to_path)
     {
-      GList      *selected_vectors = gimp_image_get_selected_vectors (image);
+      GList      *selected_path = gimp_image_get_selected_paths (image);
       GList      *iter;
       GimpStroke *stroke           = NULL;
       GimpCoords  coords1          = GIMP_COORDS_DEFAULT_VALUES;
       GimpCoords  coords2          = GIMP_COORDS_DEFAULT_VALUES;
 
-      for (iter = selected_vectors; iter; iter = iter->next)
+      for (iter = selected_path; iter; iter = iter->next)
         {
           GimpVectors *vectors = iter->data;
 

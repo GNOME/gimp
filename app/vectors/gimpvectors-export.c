@@ -159,7 +159,7 @@ gimp_vectors_export (GimpImage *image,
                           gimp_image_get_height (image));
 
   if (! vectors)
-    vectors = gimp_image_get_vectors_iter (image);
+    vectors = gimp_image_get_path_iter (image);
 
   for (list = vectors; list; list = list->next)
     gimp_vectors_export_path (GIMP_VECTORS (list->data), str);

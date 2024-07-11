@@ -63,7 +63,7 @@ static GList       * gimp_image_duplicate_layers           (GimpImage *image,
                                                             GimpImage *new_image);
 static GList       * gimp_image_duplicate_channels         (GimpImage *image,
                                                             GimpImage *new_image);
-static GList       * gimp_image_duplicate_vectors          (GimpImage *image,
+static GList       * gimp_image_duplicate_paths            (GimpImage *image,
                                                             GimpImage *new_image);
 static void          gimp_image_duplicate_floating_sel     (GimpImage *image,
                                                             GimpImage *new_image);
@@ -93,7 +93,7 @@ gimp_image_duplicate (GimpImage *image)
   GimpImage    *new_image;
   GList        *active_layers;
   GList        *active_channels;
-  GList        *active_vectors;
+  GList        *active_path;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -128,7 +128,7 @@ gimp_image_duplicate (GimpImage *image)
   active_channels = gimp_image_duplicate_channels (image, new_image);
 
   /*  Copy any vectors  */
-  active_vectors = gimp_image_duplicate_vectors (image, new_image);
+  active_path = gimp_image_duplicate_paths (image, new_image);
 
   /*  Copy floating layer  */
   gimp_image_duplicate_floating_sel (image, new_image);
@@ -143,8 +143,8 @@ gimp_image_duplicate (GimpImage *image)
   if (active_channels)
     gimp_image_set_selected_channels (new_image, active_channels);
 
-  if (active_vectors)
-    gimp_image_set_selected_vectors (new_image, active_vectors);
+  if (active_path)
+    gimp_image_set_selected_paths (new_image, active_path);
 
   /*  Copy state of all color components  */
   gimp_image_duplicate_components (image, new_image);
@@ -337,35 +337,35 @@ gimp_image_duplicate_channels (GimpImage *image,
 }
 
 static GList *
-gimp_image_duplicate_vectors (GimpImage *image,
-                              GimpImage *new_image)
+gimp_image_duplicate_paths (GimpImage *image,
+                            GimpImage *new_image)
 {
-  GList *new_selected_vectors = NULL;
-  GList *selected_vectors;
+  GList *new_selected_path = NULL;
+  GList *selected_path;
   GList *list;
   gint   count;
 
-  selected_vectors = gimp_image_get_selected_vectors (image);
+  selected_path = gimp_image_get_selected_paths (image);
 
-  for (list = gimp_image_get_vectors_iter (image), count = 0;
+  for (list = gimp_image_get_path_iter (image), count = 0;
        list;
        list = g_list_next (list))
     {
-      GimpVectors  *vectors = list->data;
-      GimpVectors  *new_vectors;
+      GimpVectors  *path = list->data;
+      GimpVectors  *new_path;
 
-      new_vectors = GIMP_VECTORS (gimp_image_duplicate_item (GIMP_ITEM (vectors),
-                                                             new_image));
+      new_path = GIMP_VECTORS (gimp_image_duplicate_item (GIMP_ITEM (path),
+                                                          new_image));
 
-      if (g_list_find (selected_vectors, vectors))
-        new_selected_vectors = g_list_prepend (new_selected_vectors, new_vectors);
+      if (g_list_find (selected_path, path))
+        new_selected_path = g_list_prepend (new_selected_path, new_path);
 
 
-      gimp_image_add_vectors (new_image, new_vectors,
-                              NULL, count++, FALSE);
+      gimp_image_add_path (new_image, new_path,
+                           NULL, count++, FALSE);
     }
 
-  return new_selected_vectors;
+  return new_selected_path;
 }
 
 static void

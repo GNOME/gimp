@@ -344,7 +344,7 @@ gimp_image_item_list_get_list (GimpImage        *image,
 
   if (type & GIMP_ITEM_TYPE_VECTORS)
     {
-      all_items = gimp_image_get_vectors_list (image);
+      all_items = gimp_image_get_path_list (image);
 
       for (list = all_items; list; list = g_list_next (list))
         {

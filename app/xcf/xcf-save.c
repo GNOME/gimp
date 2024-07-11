@@ -353,7 +353,7 @@ xcf_save_image (XcfInfo    *info,
 
   if (write_paths)
     {
-      all_paths = gimp_image_get_vectors_list (image);
+      all_paths = gimp_image_get_path_list (image);
       n_paths   = (guint) g_list_length (all_paths);
     }
 
@@ -522,7 +522,7 @@ xcf_save_image_props (XcfInfo    *info,
   if (unit < gimp_unit_get_number_of_built_in_units ())
     xcf_check_error (xcf_save_prop (info, image, PROP_UNIT, error, unit), ;);
 
-  if (gimp_container_get_n_children (gimp_image_get_vectors (image)) > 0 &&
+  if (gimp_container_get_n_children (gimp_image_get_paths (image)) > 0 &&
       info->file_version < 18)
     {
       if (gimp_vectors_compat_is_compatible (image))
@@ -946,7 +946,7 @@ xcf_save_path_props (XcfInfo      *info,
 {
   GimpParasiteList *parasites;
 
-  if (g_list_find (gimp_image_get_selected_vectors (image), vectors))
+  if (g_list_find (gimp_image_get_selected_paths (image), vectors))
     xcf_check_error (xcf_save_prop (info, image, PROP_SELECTED_PATH, error), ;);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
@@ -2897,7 +2897,7 @@ xcf_save_old_paths (XcfInfo    *info,
                     GimpImage  *image,
                     GError    **error)
 {
-  GimpVectors *active_vectors = NULL;
+  GimpVectors *active_path = NULL;
   guint32      num_paths;
   guint32      active_index = 0;
   GList       *list;
@@ -2911,27 +2911,27 @@ xcf_save_old_paths (XcfInfo    *info,
    * then each path:-
    */
 
-  num_paths = gimp_container_get_n_children (gimp_image_get_vectors (image));
+  num_paths = gimp_container_get_n_children (gimp_image_get_paths (image));
 
-  if (gimp_image_get_selected_vectors (image))
+  if (gimp_image_get_selected_paths (image))
     {
-      active_vectors = gimp_image_get_selected_vectors (image)->data;
+      active_path = gimp_image_get_selected_paths (image)->data;
       /* Having more than 1 selected vectors should not have happened in this
        * code path but let's not break saving, only produce a critical.
        */
-      if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+      if (g_list_length (gimp_image_get_selected_paths (image)) > 1)
         g_critical ("%s: this code path should not happen with multiple paths selected",
                     G_STRFUNC);
     }
 
-  if (active_vectors)
-    active_index = gimp_container_get_child_index (gimp_image_get_vectors (image),
-                                                   GIMP_OBJECT (active_vectors));
+  if (active_path)
+    active_index = gimp_container_get_child_index (gimp_image_get_paths (image),
+                                                   GIMP_OBJECT (active_path));
 
   xcf_write_int32_check_error (info, &active_index, 1, ;);
   xcf_write_int32_check_error (info, &num_paths,    1, ;);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = gimp_image_get_path_iter (image);
        list;
        list = g_list_next (list))
     {
@@ -3019,7 +3019,7 @@ xcf_save_old_vectors (XcfInfo    *info,
                       GimpImage  *image,
                       GError    **error)
 {
-  GimpVectors *active_vectors = NULL;
+  GimpVectors *active_path = NULL;
   guint32      version        = 1;
   guint32      active_index   = 0;
   guint32      num_paths;
@@ -3036,28 +3036,28 @@ xcf_save_old_vectors (XcfInfo    *info,
    * then each path:-
    */
 
-  if (gimp_image_get_selected_vectors (image))
+  if (gimp_image_get_selected_paths (image))
     {
-      active_vectors = gimp_image_get_selected_vectors (image)->data;
+      active_path = gimp_image_get_selected_paths (image)->data;
       /* Having more than 1 selected vectors should not have happened in this
        * code path but let's not break saving, only produce a critical.
        */
-      if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+      if (g_list_length (gimp_image_get_selected_paths (image)) > 1)
         g_critical ("%s: this code path should not happen with multiple paths selected",
                     G_STRFUNC);
     }
 
-  if (active_vectors)
-    active_index = gimp_container_get_child_index (gimp_image_get_vectors (image),
-                                                   GIMP_OBJECT (active_vectors));
+  if (active_path)
+    active_index = gimp_container_get_child_index (gimp_image_get_paths (image),
+                                                   GIMP_OBJECT (active_path));
 
-  num_paths = gimp_container_get_n_children (gimp_image_get_vectors (image));
+  num_paths = gimp_container_get_n_children (gimp_image_get_paths (image));
 
   xcf_write_int32_check_error (info, &version,      1, ;);
   xcf_write_int32_check_error (info, &active_index, 1, ;);
   xcf_write_int32_check_error (info, &num_paths,    1, ;);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = gimp_image_get_path_iter (image);
        list;
        list = g_list_next (list))
     {

@@ -2313,24 +2313,24 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
-  GimpVectors *vectors;
+  GimpVectors *path;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
   if (! text_tool->text || ! text_tool->image)
     return;
 
-  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
+  path = gimp_text_vectors_new (text_tool->image, text_tool->text);
 
   if (text_tool->layer)
     {
       gint x, y;
 
       gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &x, &y);
-      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+      gimp_item_translate (GIMP_ITEM (path), x, y, FALSE);
     }
 
-  gimp_image_add_vectors (text_tool->image, vectors,
+  gimp_image_add_path (text_tool->image, path,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (text_tool->image);
@@ -2366,7 +2366,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
   box_width  = gimp_item_get_width  (GIMP_ITEM (text_tool->layer));
   box_height = gimp_item_get_height (GIMP_ITEM (text_tool->layer));
 
-  vectors0 = gimp_image_get_selected_vectors (text_tool->image);
+  vectors0 = gimp_image_get_selected_paths (text_tool->image);
   if (g_list_length (vectors0) != 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
@@ -2405,8 +2405,8 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
 
   gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 
-  gimp_image_add_vectors (text_tool->image, vectors,
-                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_add_path (text_tool->image, vectors,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (text_tool->image);
 

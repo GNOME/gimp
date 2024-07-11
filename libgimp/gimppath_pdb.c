@@ -44,7 +44,7 @@
  * Creates a new empty path object.
  *
  * Creates a new empty path object. The path object needs to be added
- * to the image using gimp_image_insert_vectors().
+ * to the image using gimp_image_insert_path().
  *
  * Returns: (transfer none):
  *          the current path object, 0 if no path exists in the image.
@@ -85,7 +85,7 @@ gimp_path_new (GimpImage   *image,
  * Creates a new path object from a text layer.
  *
  * Creates a new path object from a text layer. The path object needs
- * to be added to the image using gimp_image_insert_vectors().
+ * to be added to the image using gimp_image_insert_path().
  *
  * Returns: (transfer none): The path of the text layer.
  *

@@ -326,9 +326,9 @@ path_remove_stroke_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Remove path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Remove path stroke"),
+                                           path);
 
           gimp_vectors_stroke_remove (path, stroke);
         }
@@ -363,9 +363,9 @@ path_stroke_close_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Close path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Close path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_close (stroke);
@@ -402,9 +402,9 @@ path_stroke_reverse_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Reverse path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Reverse path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_reverse (stroke);
@@ -447,9 +447,9 @@ path_stroke_translate_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Translate path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Translate path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_translate (stroke, off_x, off_y);
@@ -492,9 +492,9 @@ path_stroke_scale_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Scale path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Scale path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_scale (stroke, scale_x, scale_y);
@@ -539,9 +539,9 @@ path_stroke_rotate_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Rotate path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Rotate path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_rotate (stroke, center_x, center_y, angle);
@@ -584,9 +584,9 @@ path_stroke_flip_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Flip path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Flip path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_flip (stroke, flip_type, axis);
@@ -633,9 +633,9 @@ path_stroke_flip_free_invoker (GimpProcedure         *procedure,
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Flip path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Flip path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
@@ -764,9 +764,9 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
           if (stroke)
             {
               if (gimp_item_is_attached (GIMP_ITEM (path)))
-                gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                                  _("Add path stroke"),
-                                                  path);
+                gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                               _("Add path stroke"),
+                                               path);
 
               gimp_vectors_stroke_add (path, stroke);
               g_object_unref (stroke);
@@ -888,9 +888,9 @@ path_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
           stroke = gimp_bezier_stroke_new_moveto (&coord0);
 
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Add path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Add path stroke"),
+                                           path);
 
           gimp_vectors_stroke_add (path, stroke);
           g_object_unref (stroke);
@@ -942,9 +942,9 @@ path_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
           coord0.y = y0;
 
          if (gimp_item_is_attached (GIMP_ITEM (path)))
-           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                             _("Extend path stroke"),
-                                             path);
+           gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                          _("Extend path stroke"),
+                                          path);
 
           gimp_vectors_freeze (path);
           gimp_bezier_stroke_lineto (stroke, &coord0);
@@ -998,9 +998,9 @@ path_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
           coord1.y = y1;
 
          if (gimp_item_is_attached (GIMP_ITEM (path)))
-           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                             _("Extend path stroke"),
-                                             path);
+           gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                          _("Extend path stroke"),
+                                          path);
 
           gimp_vectors_freeze (path);
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
@@ -1062,9 +1062,9 @@ path_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
           coord2.y = y2;
 
          if (gimp_item_is_attached (GIMP_ITEM (path)))
-           gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                             _("Extend path stroke"),
-                                             path);
+           gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Extend path stroke"),
+                                           path);
 
           gimp_vectors_freeze (path);
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
@@ -1118,9 +1118,9 @@ path_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
           stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
 
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Add path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Add path stroke"),
+                                           path);
 
           gimp_vectors_stroke_add (path, stroke);
           g_object_unref (stroke);
@@ -1359,7 +1359,7 @@ register_path_procs (GimpPDB *pdb)
                                "gimp-path-new");
   gimp_procedure_set_static_help (procedure,
                                   "Creates a new empty path object.",
-                                  "Creates a new empty path object. The path object needs to be added to the image using 'gimp-image-insert-vectors'.",
+                                  "Creates a new empty path object. The path object needs to be added to the image using 'gimp-image-insert-path'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -1395,7 +1395,7 @@ register_path_procs (GimpPDB *pdb)
                                "gimp-path-new-from-text-layer");
   gimp_procedure_set_static_help (procedure,
                                   "Creates a new path object from a text layer.",
-                                  "Creates a new path object from a text layer. The path object needs to be added to the image using 'gimp-image-insert-vectors'.",
+                                  "Creates a new path object from a text layer. The path object needs to be added to the image using 'gimp-image-insert-path'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Marcus Heese <heese@cip.ifi.lmu.de>",

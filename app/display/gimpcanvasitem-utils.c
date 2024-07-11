@@ -288,20 +288,20 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
 }
 
 gboolean
-gimp_canvas_item_on_vectors (GimpCanvasItem    *item,
-                             const GimpCoords  *coords,
-                             gint               width,
-                             gint               height,
-                             GimpCoords        *ret_coords,
-                             gdouble           *ret_pos,
-                             GimpAnchor       **ret_segment_start,
-                             GimpAnchor       **ret_segment_end,
-                             GimpStroke       **ret_stroke,
-                             GimpVectors      **ret_vectors)
+gimp_canvas_item_on_path (GimpCanvasItem    *item,
+                          const GimpCoords  *coords,
+                          gint               width,
+                          gint               height,
+                          GimpCoords        *ret_coords,
+                          gdouble           *ret_pos,
+                          GimpAnchor       **ret_segment_start,
+                          GimpAnchor       **ret_segment_end,
+                          GimpStroke       **ret_stroke,
+                          GimpVectors      **ret_path)
 {
   GimpDisplayShell *shell;
   GimpImage        *image;
-  GList            *all_vectors;
+  GList            *all_path;
   GList            *list;
 
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
@@ -315,11 +315,11 @@ gimp_canvas_item_on_vectors (GimpCanvasItem    *item,
   if (ret_segment_start) *ret_segment_start  = NULL;
   if (ret_segment_end)   *ret_segment_end    = NULL;
   if (ret_stroke)        *ret_stroke         = NULL;
-  if (ret_vectors)       *ret_vectors        = NULL;
+  if (ret_path)          *ret_path           = NULL;
 
-  all_vectors = gimp_image_get_vectors_list (image);
+  all_path = gimp_image_get_path_list (image);
 
-  for (list = all_vectors; list; list = g_list_next (list))
+  for (list = all_path; list; list = g_list_next (list))
     {
       GimpVectors *vectors = list->data;
 
@@ -335,16 +335,16 @@ gimp_canvas_item_on_vectors (GimpCanvasItem    *item,
                                              ret_segment_end,
                                              ret_stroke))
         {
-          if (ret_vectors)
-            *ret_vectors = vectors;
+          if (ret_path)
+            *ret_path = vectors;
 
-          g_list_free (all_vectors);
+          g_list_free (all_path);
 
           return TRUE;
         }
     }
 
-  g_list_free (all_vectors);
+  g_list_free (all_path);
 
   return FALSE;
 }

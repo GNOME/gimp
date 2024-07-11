@@ -491,12 +491,12 @@ gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
         }
     }
 
-  container = gimp_image_get_vectors (image);
+  container = gimp_image_get_paths (image);
 
   if (cleanup->vectors_freeze_count > 0)
     {
-      g_message ("Plug-in '%s' left image's vectors frozen, "
-                 "thawing vectors.",
+      g_message ("Plug-in '%s' left image's paths frozen, "
+                 "thawing paths.",
                  gimp_procedure_get_label (proc_frame->procedure));
 
       while (cleanup->vectors_freeze_count > 0 &&

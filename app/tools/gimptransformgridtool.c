@@ -830,12 +830,12 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
     {
       GList *iter;
 
-      for (iter = gimp_image_get_selected_vectors (image); iter; iter = iter->next)
+      for (iter = gimp_image_get_selected_paths (image); iter; iter = iter->next)
         {
-          GimpVectors *vectors = iter->data;
-          GimpStroke  *stroke  = NULL;
+          GimpVectors *path   = iter->data;
+          GimpStroke  *stroke = NULL;
 
-          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+          while ((stroke = gimp_vectors_stroke_get_next (path, stroke)))
             {
               GArray   *coords;
               gboolean  closed;

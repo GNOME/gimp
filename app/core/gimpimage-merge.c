@@ -466,34 +466,34 @@ gimp_image_merge_group_layer (GimpImage      *image,
 }
 
 
-/* merging vectors */
+/* merging paths */
 
 GimpVectors *
-gimp_image_merge_visible_vectors (GimpImage  *image,
-                                  GError    **error)
+gimp_image_merge_visible_paths (GimpImage  *image,
+                                GError    **error)
 {
   GList       *list;
   GList       *merge_list = NULL;
-  GimpVectors *vectors;
+  GimpVectors *path;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = gimp_image_get_path_iter (image);
        list;
        list = g_list_next (list))
     {
-      vectors = list->data;
+      path = list->data;
 
-      if (gimp_item_get_visible (GIMP_ITEM (vectors)))
-        merge_list = g_list_prepend (merge_list, vectors);
+      if (gimp_item_get_visible (GIMP_ITEM (path)))
+        merge_list = g_list_prepend (merge_list, path);
     }
 
   merge_list = g_list_reverse (merge_list);
 
   if (merge_list && merge_list->next)
     {
-      GimpVectors *target_vectors;
+      GimpVectors *target_path;
       gchar       *name;
       gint         pos;
 
@@ -502,36 +502,36 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
                                    C_("undo-type", "Merge Visible Paths"));
 
-      vectors = GIMP_VECTORS (merge_list->data);
+      path = GIMP_VECTORS (merge_list->data);
 
-      name = g_strdup (gimp_object_get_name (vectors));
-      pos = gimp_item_get_index (GIMP_ITEM (vectors));
+      name = g_strdup (gimp_object_get_name (path));
+      pos = gimp_item_get_index (GIMP_ITEM (path));
 
-      target_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                                          GIMP_TYPE_VECTORS));
-      gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+      target_path = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (path),
+                                                       GIMP_TYPE_VECTORS));
+      gimp_image_remove_path (image, path, TRUE, NULL);
 
       for (list = g_list_next (merge_list);
            list;
            list = g_list_next (list))
         {
-          vectors = list->data;
+          path = list->data;
 
-          gimp_vectors_add_strokes (vectors, target_vectors);
-          gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+          gimp_vectors_add_strokes (path, target_path);
+          gimp_image_remove_path (image, path, TRUE, NULL);
         }
 
-      gimp_object_take_name (GIMP_OBJECT (target_vectors), name);
+      gimp_object_take_name (GIMP_OBJECT (target_path), name);
 
       g_list_free (merge_list);
 
       /* FIXME tree */
-      gimp_image_add_vectors (image, target_vectors, NULL, pos, TRUE);
+      gimp_image_add_path (image, target_path, NULL, pos, TRUE);
       gimp_unset_busy (image->gimp);
 
       gimp_image_undo_group_end (image);
 
-      return target_vectors;
+      return target_path;
     }
   else
     {

@@ -55,7 +55,7 @@ struct _GimpImageClass
   void (* alpha_changed)                (GimpImage            *image);
   void (* floating_selection_changed)   (GimpImage            *image);
   void (* selected_channels_changed)    (GimpImage            *image);
-  void (* selected_vectors_changed)     (GimpImage            *image);
+  void (* selected_paths_changed)       (GimpImage            *image);
   void (* selected_layers_changed)      (GimpImage            *image);
   void (* component_visibility_changed) (GimpImage            *image,
                                          GimpChannelType       channel);
@@ -349,27 +349,27 @@ GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *image);
 GimpProjection * gimp_image_get_projection       (GimpImage          *image);
 
 
-/*  layers / channels / vectors  */
+/*  layers / channels / paths  */
 
 GimpItemTree  * gimp_image_get_layer_tree        (GimpImage          *image);
 GimpItemTree  * gimp_image_get_channel_tree      (GimpImage          *image);
-GimpItemTree  * gimp_image_get_vectors_tree      (GimpImage          *image);
+GimpItemTree  * gimp_image_get_path_tree         (GimpImage          *image);
 
 GimpContainer * gimp_image_get_layers            (GimpImage          *image);
 GimpContainer * gimp_image_get_channels          (GimpImage          *image);
-GimpContainer * gimp_image_get_vectors           (GimpImage          *image);
+GimpContainer * gimp_image_get_paths             (GimpImage          *image);
 
 gint            gimp_image_get_n_layers          (GimpImage          *image);
 gint            gimp_image_get_n_channels        (GimpImage          *image);
-gint            gimp_image_get_n_vectors         (GimpImage          *image);
+gint            gimp_image_get_n_paths           (GimpImage          *image);
 
 GList         * gimp_image_get_layer_iter        (GimpImage          *image);
 GList         * gimp_image_get_channel_iter      (GimpImage          *image);
-GList         * gimp_image_get_vectors_iter      (GimpImage          *image);
+GList         * gimp_image_get_path_iter         (GimpImage          *image);
 
 GList         * gimp_image_get_layer_list        (GimpImage          *image);
 GList         * gimp_image_get_channel_list      (GimpImage          *image);
-GList         * gimp_image_get_vectors_list      (GimpImage          *image);
+GList         * gimp_image_get_path_list         (GimpImage          *image);
 
 void          gimp_image_unset_selected_channels (GimpImage          *image);
 
@@ -381,27 +381,27 @@ gboolean     gimp_image_equal_selected_drawables (GimpImage          *image,
 GList        * gimp_image_get_selected_drawables (GimpImage          *image);
 GList         * gimp_image_get_selected_layers   (GimpImage          *image);
 GList         * gimp_image_get_selected_channels (GimpImage          *image);
-GList         * gimp_image_get_selected_vectors  (GimpImage          *image);
+GList         * gimp_image_get_selected_paths    (GimpImage          *image);
 
 void            gimp_image_set_selected_layers   (GimpImage          *image,
                                                   GList              *layers);
 void            gimp_image_set_selected_channels (GimpImage          *image,
                                                   GList              *channels);
-void            gimp_image_set_selected_vectors  (GimpImage          *image,
-                                                  GList              *vectors);
+void            gimp_image_set_selected_paths    (GimpImage          *image,
+                                                  GList              *paths);
 
 GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
                                                   GimpTattoo          tattoo);
 GimpChannel   * gimp_image_get_channel_by_tattoo (GimpImage          *image,
                                                   GimpTattoo          tattoo);
-GimpVectors   * gimp_image_get_vectors_by_tattoo (GimpImage          *image,
+GimpVectors   * gimp_image_get_path_by_tattoo    (GimpImage          *image,
                                                   GimpTattoo          tattoo);
 
 GimpLayer     * gimp_image_get_layer_by_name     (GimpImage          *image,
                                                   const gchar        *name);
 GimpChannel   * gimp_image_get_channel_by_name   (GimpImage          *image,
                                                   const gchar        *name);
-GimpVectors   * gimp_image_get_vectors_by_name   (GimpImage          *image,
+GimpVectors   * gimp_image_get_path_by_name      (GimpImage          *image,
                                                   const gchar        *name);
 
 gboolean        gimp_image_reorder_item          (GimpImage          *image,
@@ -466,13 +466,13 @@ void            gimp_image_remove_channel        (GimpImage          *image,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 
-gboolean        gimp_image_add_vectors           (GimpImage          *image,
-                                                  GimpVectors        *vectors,
+gboolean        gimp_image_add_path              (GimpImage          *image,
+                                                  GimpVectors        *path,
                                                   GimpVectors        *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
-void            gimp_image_remove_vectors        (GimpImage          *image,
-                                                  GimpVectors        *vectors,
+void            gimp_image_remove_path           (GimpImage          *image,
+                                                  GimpVectors        *path,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 

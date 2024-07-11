@@ -324,7 +324,7 @@ gimp_vectors_is_attached (GimpItem *item)
   GimpImage *image = gimp_item_get_image (item);
 
   return (GIMP_IS_IMAGE (image) &&
-          gimp_container_have (gimp_image_get_vectors (image),
+          gimp_container_have (gimp_image_get_paths (image),
                                GIMP_OBJECT (item)));
 }
 
@@ -335,7 +335,7 @@ gimp_vectors_get_tree (GimpItem *item)
     {
       GimpImage *image = gimp_item_get_image (item);
 
-      return gimp_image_get_vectors_tree (image);
+      return gimp_image_get_path_tree (image);
     }
 
   return NULL;
@@ -446,24 +446,24 @@ gimp_vectors_translate (GimpItem *item,
                         gdouble   offset_y,
                         gboolean  push_undo)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  gimp_vectors_freeze (path);
 
   if (push_undo)
-    gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                      _("Move Path"),
-                                      vectors);
+    gimp_image_undo_push_path_mod (gimp_item_get_image (item),
+                                   _("Move Path"),
+                                   path);
 
-  for (list = vectors->strokes->head; list; list = g_list_next (list))
+  for (list = path->strokes->head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
       gimp_stroke_translate (stroke, offset_x, offset_y);
     }
 
-  gimp_vectors_thaw (vectors);
+  gimp_vectors_thaw (path);
 }
 
 static void
@@ -475,16 +475,16 @@ gimp_vectors_scale (GimpItem              *item,
                     GimpInterpolationType  interpolation_type,
                     GimpProgress          *progress)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GimpImage   *image   = gimp_item_get_image (item);
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  gimp_vectors_freeze (path);
 
   if (gimp_item_is_attached (item))
-    gimp_image_undo_push_vectors_mod (image, NULL, vectors);
+    gimp_image_undo_push_path_mod (image, NULL, path);
 
-  for (list = vectors->strokes->head; list; list = g_list_next (list))
+  for (list = path->strokes->head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
@@ -500,7 +500,7 @@ gimp_vectors_scale (GimpItem              *item,
                                          0, 0,
                                          interpolation_type, progress);
 
-  gimp_vectors_thaw (vectors);
+  gimp_vectors_thaw (path);
 }
 
 static void
@@ -512,16 +512,16 @@ gimp_vectors_resize (GimpItem     *item,
                      gint          offset_x,
                      gint          offset_y)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GimpImage   *image   = gimp_item_get_image (item);
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  gimp_vectors_freeze (path);
 
   if (gimp_item_is_attached (item))
-    gimp_image_undo_push_vectors_mod (image, NULL, vectors);
+    gimp_image_undo_push_path_mod (image, NULL, path);
 
-  for (list = vectors->strokes->head; list; list = g_list_next (list))
+  for (list = path->strokes->head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
@@ -533,7 +533,7 @@ gimp_vectors_resize (GimpItem     *item,
                                           gimp_image_get_height (image),
                                           0, 0);
 
-  gimp_vectors_thaw (vectors);
+  gimp_vectors_thaw (path);
 }
 
 static void
@@ -543,27 +543,27 @@ gimp_vectors_flip (GimpItem            *item,
                    gdouble              axis,
                    gboolean             clip_result)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GList       *list;
   GimpMatrix3  matrix;
 
   gimp_matrix3_identity (&matrix);
   gimp_transform_matrix_flip (&matrix, flip_type, axis);
 
-  gimp_vectors_freeze (vectors);
+  gimp_vectors_freeze (path);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                    _("Flip Path"),
-                                    vectors);
+  gimp_image_undo_push_path_mod (gimp_item_get_image (item),
+                                 _("Flip Path"),
+                                 path);
 
-  for (list = vectors->strokes->head; list; list = g_list_next (list))
+  for (list = path->strokes->head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
       gimp_stroke_transform (stroke, &matrix, NULL);
     }
 
-  gimp_vectors_thaw (vectors);
+  gimp_vectors_thaw (path);
 }
 
 static void
@@ -574,27 +574,27 @@ gimp_vectors_rotate (GimpItem         *item,
                      gdouble           center_y,
                      gboolean          clip_result)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GList       *list;
   GimpMatrix3  matrix;
 
   gimp_matrix3_identity (&matrix);
   gimp_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
 
-  gimp_vectors_freeze (vectors);
+  gimp_vectors_freeze (path);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                    _("Rotate Path"),
-                                    vectors);
+  gimp_image_undo_push_path_mod (gimp_item_get_image (item),
+                                 _("Rotate Path"),
+                                 path);
 
-  for (list = vectors->strokes->head; list; list = g_list_next (list))
+  for (list = path->strokes->head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
       gimp_stroke_transform (stroke, &matrix, NULL);
     }
 
-  gimp_vectors_thaw (vectors);
+  gimp_vectors_thaw (path);
 }
 
 static void
@@ -606,16 +606,16 @@ gimp_vectors_transform (GimpItem               *item,
                         GimpTransformResize     clip_result,
                         GimpProgress           *progress)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GimpMatrix3  local_matrix;
   GQueue       strokes;
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  gimp_vectors_freeze (path);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                    _("Transform Path"),
-                                    vectors);
+  gimp_image_undo_push_path_mod (gimp_item_get_image (item),
+                                 _("Transform Path"),
+                                 path);
 
   local_matrix = *matrix;
 
@@ -624,33 +624,33 @@ gimp_vectors_transform (GimpItem               *item,
 
   g_queue_init (&strokes);
 
-  while (! g_queue_is_empty (vectors->strokes))
+  while (! g_queue_is_empty (path->strokes))
     {
-      GimpStroke *stroke = g_queue_peek_head (vectors->strokes);
+      GimpStroke *stroke = g_queue_peek_head (path->strokes);
 
       g_object_ref (stroke);
 
-      gimp_vectors_stroke_remove (vectors, stroke);
+      gimp_vectors_stroke_remove (path, stroke);
 
       gimp_stroke_transform (stroke, &local_matrix, &strokes);
 
       g_object_unref (stroke);
     }
 
-  vectors->last_stroke_id = 0;
+  path->last_stroke_id = 0;
 
   for (list = strokes.head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      gimp_vectors_stroke_add (path, stroke);
 
       g_object_unref (stroke);
     }
 
   g_queue_clear (&strokes);
 
-  gimp_vectors_thaw (vectors);
+  gimp_vectors_thaw (path);
 }
 
 static GimpTransformResize
@@ -744,12 +744,12 @@ gimp_vectors_to_selection (GimpItem       *item,
                            gdouble         feather_radius_x,
                            gdouble         feather_radius_y)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpVectors *path = GIMP_VECTORS (item);
   GimpImage   *image   = gimp_item_get_image (item);
 
   gimp_channel_select_vectors (gimp_image_get_mask (image),
                                GIMP_ITEM_GET_CLASS (item)->to_selection_desc,
-                               vectors,
+                               path,
                                op, antialias,
                                feather, feather_radius_x, feather_radius_x,
                                TRUE);

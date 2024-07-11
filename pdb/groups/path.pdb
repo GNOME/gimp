@@ -19,7 +19,7 @@ sub path_new {
 
     $help = <<'HELP';
 Creates a new empty path object. The path object needs to be added to
-the image using gimp_image_insert_vectors().
+the image using gimp_image_insert_path().
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -51,7 +51,7 @@ sub path_new_from_text_layer {
 
     $help = <<'HELP';
 Creates a new path object from a text layer. The path object needs to
-be added to the image using gimp_image_insert_vectors().
+be added to the image using gimp_image_insert_path().
 HELP
 
     &marcus_pdb_misc('2008', '2.6');
@@ -283,9 +283,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Remove path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Remove path stroke"),
+                                       path);
 
       gimp_vectors_stroke_remove (path, stroke);
     }
@@ -321,9 +321,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Close path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Close path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_close (stroke);
@@ -362,9 +362,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Reverse path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Reverse path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_reverse (stroke);
@@ -409,9 +409,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Translate path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Translate path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_translate (stroke, off_x, off_y);
@@ -455,9 +455,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Scale path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Scale path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_scale (stroke, scale_x, scale_y);
@@ -502,9 +502,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Rotate path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Rotate path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_rotate (stroke, center_x, center_y, angle);
@@ -548,9 +548,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Flip path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Flip path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_flip (stroke, flip_type, axis);
@@ -599,9 +599,9 @@ HELP
   if (stroke)
     {
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Flip path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Flip path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
@@ -806,9 +806,9 @@ HELP
       if (stroke)
         {
           if (gimp_item_is_attached (GIMP_ITEM (path)))
-            gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                              _("Add path stroke"),
-                                              path);
+            gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                           _("Add path stroke"),
+                                           path);
 
 	  gimp_vectors_stroke_add (path, stroke);
 	  g_object_unref (stroke);
@@ -864,9 +864,9 @@ HELP
       stroke = gimp_bezier_stroke_new_moveto (&coord0);
 
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Add path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Add path stroke"),
+                                       path);
 
       gimp_vectors_stroke_add (path, stroke);
       g_object_unref (stroke);
@@ -914,9 +914,9 @@ HELP
       coord0.y = y0;
 
      if (gimp_item_is_attached (GIMP_ITEM (path)))
-       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                         _("Extend path stroke"),
-                                         path);
+       gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                      _("Extend path stroke"),
+                                      path);
 
       gimp_vectors_freeze (path);
       gimp_bezier_stroke_lineto (stroke, &coord0);
@@ -973,9 +973,9 @@ HELP
       coord1.y = y1;
 
      if (gimp_item_is_attached (GIMP_ITEM (path)))
-       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                         _("Extend path stroke"),
-                                         path);
+       gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                      _("Extend path stroke"),
+                                      path);
 
       gimp_vectors_freeze (path);
       gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
@@ -1038,9 +1038,9 @@ HELP
       coord2.y = y2;
 
      if (gimp_item_is_attached (GIMP_ITEM (path)))
-       gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                         _("Extend path stroke"),
-                                         path);
+       gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Extend path stroke"),
+                                       path);
 
       gimp_vectors_freeze (path);
       gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
@@ -1099,9 +1099,9 @@ HELP
       stroke = gimp_bezier_stroke_new_ellipse (&coord0, radius_x, radius_y, angle);
 
       if (gimp_item_is_attached (GIMP_ITEM (path)))
-        gimp_image_undo_push_vectors_mod (gimp_item_get_image (GIMP_ITEM (path)),
-                                          _("Add path stroke"),
-                                          path);
+        gimp_image_undo_push_path_mod (gimp_item_get_image (GIMP_ITEM (path)),
+                                       _("Add path stroke"),
+                                       path);
 
       gimp_vectors_stroke_add (path, stroke);
       g_object_unref (stroke);

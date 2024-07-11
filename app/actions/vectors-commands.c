@@ -245,8 +245,8 @@ vectors_new_last_vals_cmd_callback (GimpAction *action,
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   vectors = gimp_vectors_new (image, config->vectors_new_name);
-  gimp_image_add_vectors (image, vectors,
-                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_add_path (image, vectors,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -423,22 +423,22 @@ vectors_duplicate_cmd_callback (GimpAction *action,
                                _("Duplicate Paths"));
   for (iter = paths; iter; iter = iter->next)
     {
-      GimpVectors *new_vectors;
+      GimpVectors *new_path;
 
-      new_vectors = GIMP_VECTORS (gimp_item_duplicate (iter->data,
-                                                       G_TYPE_FROM_INSTANCE (iter->data)));
+      new_path = GIMP_VECTORS (gimp_item_duplicate (iter->data,
+                                                    G_TYPE_FROM_INSTANCE (iter->data)));
       /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
        *  the latter would add a duplicated group inside itself instead of
        *  above it
        */
-      gimp_image_add_vectors (image, new_vectors,
-                              gimp_vectors_get_parent (iter->data), -1,
-                              TRUE);
-      new_paths = g_list_prepend (new_paths, new_vectors);
+      gimp_image_add_path (image, new_path,
+                           gimp_vectors_get_parent (iter->data), -1,
+                           TRUE);
+      new_paths = g_list_prepend (new_paths, new_path);
     }
   if (new_paths)
     {
-      gimp_image_set_selected_vectors (image, new_paths);
+      gimp_image_set_selected_paths (image, new_paths);
       gimp_image_flush (image);
     }
   gimp_image_undo_group_end (image);
@@ -461,7 +461,7 @@ vectors_delete_cmd_callback (GimpAction *action,
                                _("Remove Paths"));
 
   for (GList *iter = paths; iter; iter = iter->next)
-    gimp_image_remove_vectors (image, iter->data, TRUE, NULL);
+    gimp_image_remove_path (image, iter->data, TRUE, NULL);
 
   gimp_image_undo_group_end (image);
   gimp_image_flush (image);
@@ -480,7 +480,7 @@ vectors_merge_visible_cmd_callback (GimpAction *action,
   return_if_no_vectors_list (image, vectors, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_image_merge_visible_vectors (image, &error))
+  if (! gimp_image_merge_visible_paths (image, &error))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -843,8 +843,8 @@ vectors_new_callback (GtkWidget    *dialog,
   gimp_item_set_lock_position (GIMP_ITEM (vectors), vectors_lock_position, FALSE);
   gimp_item_set_lock_visibility (GIMP_ITEM (vectors), vectors_lock_visibility, FALSE);
 
-  gimp_image_add_vectors (image, vectors,
-                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_add_path (image, vectors,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 
   gtk_widget_destroy (dialog);
@@ -972,7 +972,7 @@ vectors_export_callback (GtkWidget *dialog,
     g_free (path);
 
   if (config->vectors_export_active_only)
-    vectors = gimp_image_get_selected_vectors (image);
+    vectors = gimp_image_get_selected_paths (image);
 
   if (! gimp_vectors_export_file (image, vectors, file, &error))
     {
@@ -1001,7 +1001,7 @@ vectors_select_cmd_callback (GimpAction *action,
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  vectors = gimp_image_get_selected_vectors (image);
+  vectors = gimp_image_get_selected_paths (image);
   run_once = (g_list_length (vectors) == 0);
 
   for (iter = vectors; iter || run_once; iter = iter ? iter->next : NULL)
@@ -1015,7 +1015,7 @@ vectors_select_cmd_callback (GimpAction *action,
         }
       else /* run_once */
         {
-          container = gimp_image_get_vectors (image);
+          container = gimp_image_get_paths (image);
           run_once  = FALSE;
         }
       new_vec = (GimpVectors *) action_select_object (select_type,
@@ -1027,7 +1027,7 @@ vectors_select_cmd_callback (GimpAction *action,
 
   if (new_vectors)
     {
-      gimp_image_set_selected_vectors (image, new_vectors);
+      gimp_image_set_selected_paths (image, new_vectors);
       gimp_image_flush (image);
     }
 

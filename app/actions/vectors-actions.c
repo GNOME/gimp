@@ -344,11 +344,11 @@ void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage    *image              = action_data_get_image (data);
-  GList        *selected_vectors   = NULL;
-  gint          n_selected_vectors = 0;
+  GimpImage    *image           = action_data_get_image (data);
+  GList        *selected_path   = NULL;
+  gint          n_selected_path = 0;
 
-  gint          n_vectors     = 0;
+  gint          n_paths       = 0;
   gboolean      mask_empty    = TRUE;
   gboolean      dr_writable   = FALSE;
   gboolean      dr_children   = FALSE;
@@ -361,13 +361,13 @@ vectors_actions_update (GimpActionGroup *group,
       GList *drawables;
       GList *iter;
 
-      n_vectors  = gimp_image_get_n_vectors (image);
+      n_paths    = gimp_image_get_n_paths (image);
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
-      selected_vectors = gimp_image_get_selected_vectors (image);
-      n_selected_vectors = g_list_length (selected_vectors);
+      selected_path = gimp_image_get_selected_paths (image);
+      n_selected_path = g_list_length (selected_path);
 
-      for (iter = selected_vectors; iter; iter = iter->next)
+      for (iter = selected_path; iter; iter = iter->next)
         {
           GList *vectors_list;
           GList *iter2;
@@ -406,53 +406,53 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-edit",            n_selected_vectors == 1);
-  SET_SENSITIVE ("vectors-edit-attributes", n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-edit",            n_selected_path == 1);
+  SET_SENSITIVE ("vectors-edit-attributes", n_selected_path == 1);
 
   SET_SENSITIVE ("vectors-new",             image);
   SET_SENSITIVE ("vectors-new-last-values", image);
-  SET_SENSITIVE ("vectors-duplicate",       n_selected_vectors > 0);
-  SET_SENSITIVE ("vectors-delete",          n_selected_vectors > 0);
-  SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
+  SET_SENSITIVE ("vectors-duplicate",       n_selected_path > 0);
+  SET_SENSITIVE ("vectors-delete",          n_selected_path > 0);
+  SET_SENSITIVE ("vectors-merge-visible",   n_paths > 1);
 
-  SET_SENSITIVE ("vectors-raise",           n_selected_vectors > 0 && have_prev);
-  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_vectors > 0 && have_prev);
-  SET_SENSITIVE ("vectors-lower",           n_selected_vectors > 0 && have_next);
-  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors > 0 && have_next);
+  SET_SENSITIVE ("vectors-raise",           n_selected_path > 0 && have_prev);
+  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_path > 0 && have_prev);
+  SET_SENSITIVE ("vectors-lower",           n_selected_path > 0 && have_next);
+  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_path > 0 && have_next);
 
-  SET_SENSITIVE ("vectors-copy",   n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-copy",   n_selected_path > 0);
   SET_SENSITIVE ("vectors-paste",  image);
-  SET_SENSITIVE ("vectors-export", n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-export", n_selected_path > 0);
   SET_SENSITIVE ("vectors-import", image);
 
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
-  SET_SENSITIVE ("vectors-fill",                          n_selected_vectors > 0 &&
+  SET_SENSITIVE ("vectors-fill",                          n_selected_path > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-fill-last-values",              n_selected_vectors > 0 &&
+  SET_SENSITIVE ("vectors-fill-last-values",              n_selected_path > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-stroke",                        n_selected_vectors > 0 &&
+  SET_SENSITIVE ("vectors-stroke",                        n_selected_path > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-stroke-last-values",            n_selected_vectors > 0 &&
+  SET_SENSITIVE ("vectors-stroke-last-values",            n_selected_path > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
 
-  SET_SENSITIVE ("vectors-selection-replace",      n_selected_vectors > 0);
-  SET_SENSITIVE ("vectors-selection-from-vectors", n_selected_vectors > 0);
-  SET_SENSITIVE ("vectors-selection-add",          n_selected_vectors > 0);
-  SET_SENSITIVE ("vectors-selection-subtract",     n_selected_vectors > 0);
-  SET_SENSITIVE ("vectors-selection-intersect",    n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-selection-replace",      n_selected_path > 0);
+  SET_SENSITIVE ("vectors-selection-from-vectors", n_selected_path > 0);
+  SET_SENSITIVE ("vectors-selection-add",          n_selected_path > 0);
+  SET_SENSITIVE ("vectors-selection-subtract",     n_selected_path > 0);
+  SET_SENSITIVE ("vectors-selection-intersect",    n_selected_path > 0);
 
-  SET_SENSITIVE ("vectors-select-top",       n_selected_vectors > 0 && have_prev);
-  SET_SENSITIVE ("vectors-select-bottom",    n_selected_vectors > 0 && have_next);
-  SET_SENSITIVE ("vectors-select-previous",  n_selected_vectors > 0 && have_prev);
-  SET_SENSITIVE ("vectors-select-next",      n_selected_vectors > 0 && have_next);
+  SET_SENSITIVE ("vectors-select-top",       n_selected_path > 0 && have_prev);
+  SET_SENSITIVE ("vectors-select-bottom",    n_selected_path > 0 && have_next);
+  SET_SENSITIVE ("vectors-select-previous",  n_selected_path > 0 && have_prev);
+  SET_SENSITIVE ("vectors-select-next",      n_selected_path > 0 && have_next);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
 
-  items_actions_update (group, "vectors", selected_vectors);
+  items_actions_update (group, "vectors", selected_path);
 }

@@ -134,7 +134,7 @@ static gboolean        xcf_load_channel_props (XcfInfo       *info,
                                                GimpChannel  **channel);
 static gboolean        xcf_load_effect_props  (XcfInfo       *info,
                                                FilterData    *filter);
-static gboolean        xcf_load_vectors_props (XcfInfo       *info,
+static gboolean        xcf_load_path_props    (XcfInfo       *info,
                                                GimpImage     *image,
                                                GimpVectors  **vectors);
 static gboolean        xcf_load_prop          (XcfInfo       *info,
@@ -150,7 +150,7 @@ static FilterData    * xcf_load_effect        (XcfInfo       *info,
                                                GimpDrawable  *drawable);
 static void            xcf_load_free_effect   (FilterData    *data);
 static void            xcf_load_free_effects  (GList         *effects);
-static GimpVectors   * xcf_load_vectors       (XcfInfo       *info,
+static GimpVectors   * xcf_load_path          (XcfInfo       *info,
                                                GimpImage     *image);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
                                                GimpImage     *image);
@@ -215,7 +215,7 @@ xcf_load_image (Gimp     *gimp,
   gint                num_successful_elements = 0;
   gint                n_broken_layers         = 0;
   gint                n_broken_channels       = 0;
-  gint                n_broken_vectors        = 0;
+  gint                n_broken_paths          = 0;
   GList              *broken_paths            = NULL;
   GList              *group_layers            = NULL;
   GList              *syms;
@@ -850,10 +850,10 @@ xcf_load_image (Gimp     *gimp,
             goto error;
 
           /* read in the path */
-          vectors = xcf_load_vectors (info, image);
+          vectors = xcf_load_path (info, image);
           if (! vectors)
             {
-              n_broken_vectors++;
+              n_broken_paths++;
               GIMP_LOG (XCF, "Failed to load path.");
 
               if (! xcf_seek_pos (info, saved_pos, NULL))
@@ -866,10 +866,10 @@ xcf_load_image (Gimp     *gimp,
 
           xcf_progress_update (info);
 
-          gimp_image_add_vectors (image, vectors,
-                                  NULL, /* can't be a tree */
-                                  gimp_container_get_n_children (gimp_image_get_vectors (image)),
-                                  FALSE);
+          gimp_image_add_path (image, vectors,
+                               NULL, /* can't be a tree */
+                               gimp_container_get_n_children (gimp_image_get_paths (image)),
+                               FALSE);
 
           /* restore the saved position so we'll be ready to
            *  read the next offset.
@@ -889,7 +889,7 @@ xcf_load_image (Gimp     *gimp,
     gimp_image_set_selected_channels (image, info->selected_channels);
 
   if (info->selected_vectors)
-    gimp_image_set_selected_vectors (image, info->selected_vectors);
+    gimp_image_set_selected_paths (image, info->selected_vectors);
 
   /* We don't have linked items concept anymore. We transform formerly
    * linked items into stored sets of named items instead.
@@ -961,7 +961,7 @@ xcf_load_image (Gimp     *gimp,
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (image, info->tattoo_state);
 
-  if (n_broken_layers > 0 || n_broken_channels > 0 || n_broken_vectors > 0)
+  if (n_broken_layers > 0 || n_broken_channels > 0 || n_broken_paths > 0)
     goto error;
 
   gimp_image_undo_enable (image);
@@ -2743,9 +2743,9 @@ set_or_seek_node_property:
 }
 
 static gboolean
-xcf_load_vectors_props (XcfInfo      *info,
-                        GimpImage    *image,
-                        GimpVectors **vectors)
+xcf_load_path_props (XcfInfo      *info,
+                     GimpImage    *image,
+                     GimpVectors **vectors)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -3411,8 +3411,8 @@ xcf_load_free_effects (GList *effects)
 
 /* The new path structure since XCF 18. */
 static GimpVectors *
-xcf_load_vectors (XcfInfo   *info,
-                  GimpImage *image)
+xcf_load_path (XcfInfo   *info,
+               GimpImage *image)
 {
   GimpVectors *vectors = NULL;
   gchar       *name;
@@ -3438,7 +3438,7 @@ xcf_load_vectors (XcfInfo   *info,
   base = info->cp;
 
   /* read in the path properties */
-  if (! xcf_load_vectors_props (info, image, &vectors))
+  if (! xcf_load_path_props (info, image, &vectors))
     goto error;
 
   GIMP_LOG (XCF, "path props loaded");
@@ -4207,13 +4207,13 @@ xcf_load_old_paths (XcfInfo   *info,
       return FALSE;
 
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
+    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_paths (image),
                                                      last_selected_row));
 
   if (active_vectors)
     {
       GList *list = g_list_prepend (NULL, active_vectors);
-      gimp_image_set_selected_vectors (image, list);
+      gimp_image_set_selected_paths (image, list);
       g_list_free (list);
     }
 
@@ -4313,10 +4313,10 @@ xcf_load_old_path (XcfInfo   *info,
   if (tattoo)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 
-  gimp_image_add_vectors (image, vectors,
-                          NULL, /* can't be a tree */
-                          gimp_container_get_n_children (gimp_image_get_vectors (image)),
-                          FALSE);
+  gimp_image_add_path (image, vectors,
+                       NULL, /* can't be a tree */
+                       gimp_container_get_n_children (gimp_image_get_paths (image)),
+                       FALSE);
 
   return TRUE;
 }
@@ -4358,13 +4358,13 @@ xcf_load_old_vectors (XcfInfo   *info,
 
   /* FIXME tree */
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
+    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_paths (image),
                                                      active_index));
 
   if (active_vectors)
     {
       GList *list = g_list_prepend (NULL, active_vectors);
-      gimp_image_set_selected_vectors (image, list);
+      gimp_image_set_selected_paths (image, list);
       g_list_free (list);
     }
 
@@ -4526,10 +4526,10 @@ xcf_load_old_vector (XcfInfo   *info,
       gimp_value_array_unref (control_points);
     }
 
-  gimp_image_add_vectors (image, vectors,
-                          NULL, /* FIXME tree */
-                          gimp_container_get_n_children (gimp_image_get_vectors (image)),
-                          FALSE);
+  gimp_image_add_path (image, vectors,
+                       NULL, /* FIXME tree */
+                       gimp_container_get_n_children (gimp_image_get_paths (image)),
+                       FALSE);
 
   return TRUE;
 }

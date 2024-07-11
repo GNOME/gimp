@@ -195,7 +195,7 @@ write_and_read_gimp_2_6_format (gconstpointer data)
  *
  * Do a write and read test on a file that could as well be
  * constructed with GIMP 2.6, and make it unusual, like compatible
- * vectors and with a floating selection.
+ * paths and with a floating selection.
  **/
 static void
 write_and_read_gimp_2_6_format_unusual (gconstpointer data)
@@ -549,11 +549,11 @@ gimp_create_mainimage (Gimp     *gimp,
                                                G_N_ELEMENTS (vectors1_coords),
                                                TRUE /*closed*/);
   gimp_vectors_stroke_add (vectors, stroke);
-  gimp_image_add_vectors (image,
-                          vectors,
-                          NULL /*parent*/,
-                          -1 /*position*/,
-                          FALSE /*push_undo*/);
+  gimp_image_add_path (image,
+                       vectors,
+                       NULL /*parent*/,
+                       -1 /*position*/,
+                       FALSE /*push_undo*/);
 
   /* Vectors 2 */
   vectors = gimp_vectors_new (image,
@@ -563,11 +563,11 @@ gimp_create_mainimage (Gimp     *gimp,
                                                G_N_ELEMENTS (vectors2_coords),
                                                TRUE /*closed*/);
   gimp_vectors_stroke_add (vectors, stroke);
-  gimp_image_add_vectors (image,
-                          vectors,
-                          NULL /*parent*/,
-                          -1 /*position*/,
-                          FALSE /*push_undo*/);
+  gimp_image_add_path (image,
+                       vectors,
+                       NULL /*parent*/,
+                       -1 /*position*/,
+                       FALSE /*push_undo*/);
 
   /* Some of these things are pretty unusual, parameterize the
    * inclusion of this in the written file so we can do our test both
@@ -693,7 +693,7 @@ gimp_assert_vectors (GimpImage   *image,
   gboolean     closed         = FALSE;
   gint         i              = 0;
 
-  vectors = gimp_image_get_vectors_by_name (image, name);
+  vectors = gimp_image_get_path_by_name (image, name);
   stroke = gimp_vectors_stroke_get_next (vectors, NULL);
   g_assert_true (stroke != NULL);
   control_points = gimp_stroke_control_points_get (stroke,

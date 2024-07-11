@@ -366,12 +366,12 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
     {
       GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_PATHS;
 
-      if (gimp_image_pick_vectors (gimp_display_get_image (display),
-                                   coords->x, coords->y,
-                                   FUNSCALEX (shell,
-                                              GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2),
-                                   FUNSCALEY (shell,
-                                              GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2)))
+      if (gimp_image_pick_path (gimp_display_get_image (display),
+                                coords->x, coords->y,
+                                FUNSCALEX (shell,
+                                           GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2),
+                                FUNSCALEY (shell,
+                                           GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2)))
         {
           tool_cursor = GIMP_TOOL_CURSOR_HAND;
         }
@@ -460,8 +460,8 @@ gimp_vector_tool_path_changed (GimpToolWidget *path,
     {
       if (vectors && ! gimp_item_is_attached (GIMP_ITEM (vectors)))
         {
-          gimp_image_add_vectors (image, vectors,
-                                  GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+          gimp_image_add_path (image, vectors,
+                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
           gimp_image_flush (image);
 
           gimp_vector_tool_set_vectors (vector_tool, vectors);
@@ -474,7 +474,7 @@ gimp_vector_tool_path_changed (GimpToolWidget *path,
             {
               GList *list = g_list_prepend (NULL, vectors);
 
-              gimp_image_set_selected_vectors (image, list);
+              gimp_image_set_selected_paths (image, list);
               g_list_free (list);
             }
         }
@@ -492,7 +492,7 @@ gimp_vector_tool_path_begin_change (GimpToolWidget *path,
   GimpDisplayShell *shell = gimp_tool_widget_get_shell (path);
   GimpImage        *image = gimp_display_get_image (shell->display);
 
-  gimp_image_undo_push_vectors_mod (image, desc, vector_tool->vectors);
+  gimp_image_undo_push_path_mod (image, desc, vector_tool->vectors);
 }
 
 static void
@@ -532,13 +532,13 @@ static void
 gimp_vector_tool_vectors_changed (GimpImage      *image,
                                   GimpVectorTool *vector_tool)
 {
-  GimpVectors *vectors = NULL;
+  GimpVectors *path = NULL;
 
-  /* The vectors tool can only work on one path at a time. */
-  if (g_list_length (gimp_image_get_selected_vectors (image)) == 1)
-    vectors = gimp_image_get_selected_vectors (image)->data;
+  /* The path tool can only work on one path at a time. */
+  if (g_list_length (gimp_image_get_selected_paths (image)) == 1)
+    path = gimp_image_get_selected_paths (image)->data;
 
-  gimp_vector_tool_set_vectors (vector_tool, vectors);
+  gimp_vector_tool_set_vectors (vector_tool, path);
 }
 
 static void
@@ -623,7 +623,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   vector_tool->vectors = g_object_ref (vectors);
 
-  g_signal_connect_object (gimp_item_get_image (item), "selected-vectors-changed",
+  g_signal_connect_object (gimp_item_get_image (item), "selected-paths-changed",
                            G_CALLBACK (gimp_vector_tool_vectors_changed),
                            vector_tool, 0);
   g_signal_connect_object (vectors, "removed",

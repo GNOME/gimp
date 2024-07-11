@@ -88,13 +88,13 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   view_class->drop_svg      = gimp_vectors_tree_view_drop_svg;
 
   iv_class->item_type       = GIMP_TYPE_VECTORS;
-  iv_class->signal_name     = "selected-vectors-changed";
+  iv_class->signal_name     = "selected-paths-changed";
 
-  iv_class->get_container   = gimp_image_get_vectors;
-  iv_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_vectors;
-  iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_vectors;
-  iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
-  iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+  iv_class->get_container   = gimp_image_get_paths;
+  iv_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_paths;
+  iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_paths;
+  iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_path;
+  iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_path;
   iv_class->new_item        = gimp_vectors_tree_view_item_new;
 
   iv_class->action_group            = "vectors";
@@ -245,14 +245,14 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
 static GimpItem *
 gimp_vectors_tree_view_item_new (GimpImage *image)
 {
-  GimpVectors *new_vectors;
+  GimpVectors *new_path;
 
-  new_vectors = gimp_vectors_new (image, _("Path"));
+  new_path = gimp_vectors_new (image, _("Path"));
 
-  gimp_image_add_vectors (image, new_vectors,
-                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_add_path (image, new_path,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
-  return GIMP_ITEM (new_vectors);
+  return GIMP_ITEM (new_path);
 }
 
 static guchar *

@@ -559,7 +559,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
             tr_tool->x2 = G_MININT;
             tr_tool->y2 = G_MININT;
 
-            for (iter = gimp_image_get_selected_vectors (image); iter; iter = iter->next)
+            for (iter = gimp_image_get_selected_paths (image); iter; iter = iter->next)
               {
                 GimpItem *item   = iter->data;
                 gint      x;
@@ -659,7 +659,7 @@ gimp_transform_tool_get_selected_objects (GimpTransformTool  *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      objects = g_list_copy (gimp_image_get_selected_vectors (image));
+      objects = g_list_copy (gimp_image_get_selected_paths (image));
       break;
 
     case GIMP_TRANSFORM_TYPE_IMAGE:

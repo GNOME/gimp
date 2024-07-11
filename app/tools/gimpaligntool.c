@@ -351,10 +351,10 @@ gimp_align_tool_button_release (GimpTool              *tool,
           previously_picked = gimp_align_options_get_reference (options, FALSE);
 
 
-          if ((vectors = gimp_image_pick_vectors (image,
-                                                  coords->x, coords->y,
-                                                  FUNSCALEX (shell, snap_distance),
-                                                  FUNSCALEY (shell, snap_distance))))
+          if ((vectors = gimp_image_pick_path (image,
+                                               coords->x, coords->y,
+                                               FUNSCALEX (shell, snap_distance),
+                                               FUNSCALEY (shell, snap_distance))))
             {
               object = G_OBJECT (vectors);
             }
@@ -438,10 +438,10 @@ gimp_align_tool_oper_update (GimpTool         *tool,
 
   align_tool->function = ALIGN_TOOL_NO_ACTION;
 
-  if (gimp_image_pick_vectors (image,
-                               coords->x, coords->y,
-                               FUNSCALEX (shell, snap_distance),
-                               FUNSCALEY (shell, snap_distance)))
+  if (gimp_image_pick_path (image,
+                            coords->x, coords->y,
+                            FUNSCALEX (shell, snap_distance),
+                            FUNSCALEY (shell, snap_distance)))
     {
       if (options->align_reference == GIMP_ALIGN_REFERENCE_PICK)
         align_tool->function = ALIGN_TOOL_REF_PICK_PATH;

@@ -69,7 +69,7 @@ gboolean    gimp_image_snap_point     (GimpImage         *image,
                                        gboolean           snap_to_guides,
                                        gboolean           snap_to_grid,
                                        gboolean           snap_to_canvas,
-                                       gboolean           snap_to_vectors,
+                                       gboolean           snap_to_path,
                                        gboolean           snap_to_bbox,
                                        gboolean           show_all);
 gboolean   gimp_image_snap_rectangle  (GimpImage         *image,
@@ -85,7 +85,7 @@ gboolean   gimp_image_snap_rectangle  (GimpImage         *image,
                                        gboolean           snap_to_guides,
                                        gboolean           snap_to_grid,
                                        gboolean           snap_to_canvas,
-                                       gboolean           snap_to_vectors,
+                                       gboolean           snap_to_path,
                                        gboolean           snap_to_bbox,
                                        gboolean           snap_to_equidistance);
 

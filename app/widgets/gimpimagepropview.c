@@ -531,7 +531,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   /*  number of vectors  */
   g_snprintf (buf, sizeof (buf), "%d",
-              gimp_image_get_n_vectors (image));
+              gimp_image_get_n_paths (image));
   gtk_label_set_text (GTK_LABEL (view->vectors_label), buf);
 }
 

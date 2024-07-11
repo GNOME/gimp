@@ -273,7 +273,7 @@ gimp_image_transform (GimpImage              *image,
   gimp_object_queue_push_container (queue, gimp_image_get_layers (image));
   gimp_object_queue_push (queue, gimp_image_get_mask (image));
   gimp_object_queue_push_container (queue, gimp_image_get_channels (image));
-  gimp_object_queue_push_container (queue, gimp_image_get_vectors (image));
+  gimp_object_queue_push_container (queue, gimp_image_get_paths (image));
 
   g_object_freeze_notify (G_OBJECT (image));
 

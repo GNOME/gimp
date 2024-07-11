@@ -1005,74 +1005,74 @@ gimp_image_undo_push_channel_color (GimpImage   *image,
 
 
 /*******************/
-/*  Vectors Undos  */
+/*  Path Undos  */
 /*******************/
 
 GimpUndo *
-gimp_image_undo_push_vectors_add (GimpImage   *image,
-                                  const gchar *undo_desc,
-                                  GimpVectors *vectors,
-                                  GList       *prev_vectors)
+gimp_image_undo_push_path_add (GimpImage   *image,
+                               const gchar *undo_desc,
+                               GimpVectors *path,
+                               GList       *prev_paths)
 {
   GList *iter;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (vectors)), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTORS (path), NULL);
+  g_return_val_if_fail (! gimp_item_is_attached (GIMP_ITEM (path)), NULL);
 
-  for (iter = prev_vectors; iter; iter = iter->next)
+  for (iter = prev_paths; iter; iter = iter->next)
     g_return_val_if_fail (GIMP_IS_VECTORS (iter->data), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_UNDO,
                                GIMP_UNDO_VECTORS_ADD, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
-                               "item",         vectors,
-                               "prev-vectors", prev_vectors,
+                               "item",         path,
+                               "prev-vectors", prev_paths,
                                NULL);
 }
 
 GimpUndo *
-gimp_image_undo_push_vectors_remove (GimpImage   *image,
-                                     const gchar *undo_desc,
-                                     GimpVectors *vectors,
-                                     GimpVectors *prev_parent,
-                                     gint         prev_position,
-                                     GList       *prev_vectors)
+gimp_image_undo_push_path_remove (GimpImage   *image,
+                                  const gchar *undo_desc,
+                                  GimpVectors *path,
+                                  GimpVectors *prev_parent,
+                                  gint         prev_position,
+                                  GList       *prev_paths)
 {
   GList *iter;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTORS (path), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (path)), NULL);
   g_return_val_if_fail (prev_parent == NULL || GIMP_IS_VECTORS (prev_parent),
                         NULL);
 
-  for (iter = prev_vectors; iter; iter = iter->next)
+  for (iter = prev_paths; iter; iter = iter->next)
     g_return_val_if_fail (GIMP_IS_VECTORS (iter->data), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_UNDO,
                                GIMP_UNDO_VECTORS_REMOVE, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
-                               "item",          vectors,
+                               "item",          path,
                                "prev-parent",   prev_parent,
                                "prev-position", prev_position,
-                               "prev-vectors",  prev_vectors,
+                               "prev-vectors",  prev_paths,
                                NULL);
 }
 
 GimpUndo *
-gimp_image_undo_push_vectors_mod (GimpImage   *image,
-                                  const gchar *undo_desc,
-                                  GimpVectors *vectors)
+gimp_image_undo_push_path_mod (GimpImage   *image,
+                               const gchar *undo_desc,
+                               GimpVectors *path)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTORS (path), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (path)), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_MOD_UNDO,
                                GIMP_UNDO_VECTORS_MOD, undo_desc,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_VECTORS,
-                               "item", vectors,
+                               "item", path,
                                NULL);
 }
 

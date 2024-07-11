@@ -131,7 +131,7 @@ gimp_vectors_compat_is_compatible (GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = gimp_image_get_path_iter (image);
        list;
        list = g_list_next (list))
     {

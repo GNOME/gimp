@@ -593,11 +593,11 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
     {
       GimpVectors *vectors;
 
-      if (gimp_canvas_item_on_vectors (private->path,
-                                       coords,
-                                       GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                       GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                       NULL, NULL, NULL, NULL, NULL, &vectors))
+      if (gimp_canvas_item_on_path (private->path,
+                                    coords,
+                                    GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                    GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                    NULL, NULL, NULL, NULL, NULL, &vectors))
         {
           gimp_tool_path_set_vectors (path, vectors);
         }
@@ -1367,12 +1367,12 @@ gimp_tool_path_get_function (GimpToolPath     *path,
 
   if (! on_handle && ! on_curve)
     {
-      on_vectors = gimp_canvas_item_on_vectors (private->path,
-                                                coords,
-                                                GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                                NULL, NULL, NULL, NULL, NULL,
-                                                NULL);
+      on_vectors = gimp_canvas_item_on_path (private->path,
+                                             coords,
+                                             GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                             GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                             NULL, NULL, NULL, NULL, NULL,
+                                             NULL);
     }
 
   private->cur_position = position;

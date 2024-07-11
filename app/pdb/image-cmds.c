@@ -526,7 +526,7 @@ image_get_paths_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *list = gimp_image_get_vectors_iter (image);
+      GList *list = gimp_image_get_path_iter (image);
 
       num_paths = g_list_length (list);
 
@@ -1064,8 +1064,8 @@ image_insert_path_invoker (GimpProcedure         *procedure,
           if (position == -1 && parent == NULL)
             parent = GIMP_IMAGE_ACTIVE_PARENT;
 
-          success = gimp_image_add_vectors (image, path,
-                                            parent, MAX (position, -1), TRUE);
+          success = gimp_image_add_path (image, path,
+                                         parent, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1095,7 +1095,7 @@ image_remove_path_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (path), image, 0, error))
-        gimp_image_remove_vectors (image, path, TRUE, NULL);
+        gimp_image_remove_path (image, path, TRUE, NULL);
       else
         success = FALSE;
     }
@@ -1120,7 +1120,7 @@ image_freeze_paths_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-      GimpContainer *container = gimp_image_get_vectors (image);
+      GimpContainer *container = gimp_image_get_paths (image);
 
       if (plug_in)
         success = gimp_plug_in_cleanup_paths_freeze (plug_in, image);
@@ -1149,7 +1149,7 @@ image_thaw_paths_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
-      GimpContainer *container = gimp_image_get_vectors (image);
+      GimpContainer *container = gimp_image_get_paths (image);
 
       if (plug_in)
         success = gimp_plug_in_cleanup_paths_thaw (plug_in, image);
@@ -1919,7 +1919,7 @@ image_get_selected_paths_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *list = gimp_image_get_selected_vectors (image);
+      GList *list = gimp_image_get_selected_paths (image);
 
       num_paths = g_list_length (list);
 
@@ -1972,7 +1972,7 @@ image_set_selected_paths_invoker (GimpProcedure         *procedure,
         selected_paths = g_list_prepend (selected_paths,
                                            GIMP_LAYER (paths[i]));
 
-      gimp_image_set_selected_vectors (image, selected_paths);
+      gimp_image_set_selected_paths (image, selected_paths);
       g_list_free (selected_paths);
     }
 
@@ -2657,7 +2657,7 @@ image_get_path_by_tattoo_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      path = gimp_image_get_vectors_by_tattoo (image, tattoo);
+      path = gimp_image_get_path_by_tattoo (image, tattoo);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -2750,7 +2750,7 @@ image_get_path_by_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      path = gimp_image_get_vectors_by_name (image, name);
+      path = gimp_image_get_path_by_name (image, name);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
