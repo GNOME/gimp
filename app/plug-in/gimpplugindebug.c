@@ -120,7 +120,12 @@ gimp_plug_in_debug_argv (GimpPlugInDebug    *debug,
 
   basename = g_path_get_basename (name);
 
-  if (!(debug->flags & flag) || (strcmp (debug->name, basename) != 0))
+  /* Return NULL when flags don't match OR
+   * (targeted plugin is not "all" AND targeted plugin not match passed filename )
+   */
+  if (!(debug->flags & flag) ||
+      ((strcmp (debug->name, basename) != 0) &&
+       (strcmp (debug->name, "all") != 0)))
     {
       g_free (basename);
       return NULL;
