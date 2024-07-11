@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-23 23:05+0000\n"
-"PO-Revision-Date: 2024-06-24 09:07+0200\n"
+"POT-Creation-Date: 2024-07-11 15:16+0000\n"
+"PO-Revision-Date: 2024-07-12 00:12+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -325,7 +325,7 @@ msgstr "Urejevalnik čopiča"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:115 app/core/gimp-data-factories.c:358
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3398
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3503
 msgid "Brushes"
 msgstr "Čopiči"
 
@@ -374,7 +374,7 @@ msgstr "Sidranje omogočeno"
 
 #. Document History
 #: app/actions/actions.c:148 app/dialogs/dialogs.c:368
-#: app/dialogs/preferences-dialog.c:1176
+#: app/dialogs/preferences-dialog.c:1267
 msgid "Document History"
 msgstr "Zgodovina dokumenta"
 
@@ -409,7 +409,7 @@ msgstr "Filtri"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:172 app/core/gimp-data-factories.c:392
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3428
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3533
 msgid "Fonts"
 msgstr "Pisave"
 
@@ -420,12 +420,12 @@ msgstr "Urejevalnik prelivov"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:178 app/core/gimp-data-factories.c:383
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3422
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3527
 msgid "Gradients"
 msgstr "Prelivi"
 
 #: app/actions/actions.c:181 app/core/gimp-data-factories.c:399
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3434
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3539
 msgid "Tool Presets"
 msgstr "Prednastavitve orodja"
 
@@ -454,7 +454,7 @@ msgstr "Plasti"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:199 app/core/gimp-data-factories.c:368
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3440
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3545
 msgid "MyPaint Brushes"
 msgstr "Čopiči MyPaint"
 
@@ -465,23 +465,23 @@ msgstr "Urejevalnik palet"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:205 app/core/gimp-data-factories.c:378
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3416
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3521
 msgid "Palettes"
 msgstr "Palete"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:208 app/core/gimp-data-factories.c:373
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3410
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3515
 msgid "Patterns"
 msgstr "Vzorci"
 
-#: app/actions/actions.c:211 app/dialogs/preferences-dialog.c:3446
+#: app/actions/actions.c:211 app/dialogs/preferences-dialog.c:3551
 msgid "Plug-ins"
 msgstr "Vstavki"
 
 #. Quick Mask Color
 #: app/actions/actions.c:214 app/core/gimpchannel.c:362
-#: app/dialogs/preferences-dialog.c:1729
+#: app/dialogs/preferences-dialog.c:1820
 msgid "Quick Mask"
 msgstr "Hitra maska"
 
@@ -1052,7 +1052,7 @@ msgstr[3] "Spusti kanale na dno"
 
 #: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:565
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
-#: app/widgets/gimplayertreeview.c:855
+#: app/widgets/gimplayertreeview.c:856
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopija kanala %s"
@@ -1076,7 +1076,7 @@ msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "_Uredi barvo ..."
 
-#: app/actions/colormap-actions.c:48 app/widgets/gimpcolordialog.c:199
+#: app/actions/colormap-actions.c:48 app/widgets/gimpcolordialog.c:204
 msgctxt "colormap-action"
 msgid "Edit this color"
 msgstr "Uredi to barvo"
@@ -1096,7 +1096,7 @@ msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "_Dodaj barvo iz ospredja"
 
-#: app/actions/colormap-actions.c:63 app/widgets/gimpcolordialog.c:217
+#: app/actions/colormap-actions.c:63 app/widgets/gimpcolordialog.c:222
 msgctxt "colormap-action"
 msgid "Add current foreground color"
 msgstr "Dodaj trenutno barvo ospredja"
@@ -2437,8 +2437,8 @@ msgstr "240 s"
 #: app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66
 #: app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
 #: app/dialogs/layer-add-mask-dialog.c:120
-#: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:213
-#: app/dialogs/preferences-dialog.c:593 app/dialogs/preferences-dialog.c:1081
+#: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:220
+#: app/dialogs/preferences-dialog.c:611 app/dialogs/preferences-dialog.c:1172
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
@@ -2452,7 +2452,7 @@ msgstr "240 s"
 #: app/tools/gimpfiltertool.c:358 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:465 app/widgets/gimpcontrollereditor.c:662
+#: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:439
@@ -2519,8 +2519,8 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1238 app/display/gimpdisplayshell-dnd.c:630
-#: app/widgets/gimplayertreeview.c:813 app/widgets/gimptoolbox.c:752
+#: app/dialogs/welcome-dialog.c:1234 app/display/gimpdisplayshell-dnd.c:630
+#: app/widgets/gimplayertreeview.c:814 app/widgets/gimptoolbox.c:752
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3398,7 +3398,7 @@ msgid "Clear Document History"
 msgstr "Počisti zgodovino dokumenta"
 
 #: app/actions/documents-commands.c:239 app/actions/edit-commands.c:173
-#: app/dialogs/preferences-dialog.c:594
+#: app/dialogs/preferences-dialog.c:612
 msgid "Cl_ear"
 msgstr "Po_čisti"
 
@@ -6051,8 +6051,8 @@ msgstr "Spremeni merilo slike"
 
 #. Scaling
 #: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2512
-#: app/dialogs/preferences-dialog.c:1647 app/pdb/image-transform-cmds.c:124
-#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:411
+#: app/dialogs/preferences-dialog.c:1738 app/pdb/image-transform-cmds.c:124
+#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "Spreminjanje merila"
@@ -6251,7 +6251,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "_Zasidraj plavajočo plast ali masko"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1305
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1306
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Zasidraj plavajočo plast ali masko"
@@ -6886,7 +6886,7 @@ msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
 #: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:932
+#: app/widgets/gimplayertreeview.c:933
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Novih plasti"
@@ -7091,7 +7091,7 @@ msgid "Empty Selection"
 msgstr "Izprazni izbor"
 
 #: app/actions/layers-commands.c:1859 app/actions/layers-commands.c:1903
-#: app/widgets/gimplayertreeview.c:1108
+#: app/widgets/gimplayertreeview.c:1109
 msgid "Set layers opacity"
 msgstr "Nastavi prekrivnost plasti"
 
@@ -7441,12 +7441,12 @@ msgstr "Ponastavi vse filtre"
 #: app/actions/plug-in-commands.c:186 app/actions/tool-options-commands.c:211
 #: app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
-#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:214
-#: app/dialogs/preferences-dialog.c:1080 app/dialogs/print-size-dialog.c:122
+#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:221
+#: app/dialogs/preferences-dialog.c:1171 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:357 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:464 app/widgets/gimpcolordisplayeditor.c:332
+#: app/widgets/gimpcolordialog.c:482 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "_Ponastavi"
 
@@ -9984,13 +9984,13 @@ msgstr "Odpri zaslon"
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148
 #: app/dialogs/keyboard-shortcuts-dialog.c:65
-#: app/dialogs/preferences-dialog.c:1082 app/dialogs/print-size-dialog.c:124
+#: app/dialogs/preferences-dialog.c:1173 app/dialogs/print-size-dialog.c:124
 #: app/dialogs/resolution-calibrate-dialog.c:74
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:466
+#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:484
 #: app/widgets/gimpcontrollereditor.c:663
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -10367,7 +10367,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Napaka pri razločevanju »%%s«: vrstica daljša od %s znakov."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:522
+#: app/core/gimp-tags.c:145 app/gui/themes.c:524
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10388,7 +10388,7 @@ msgstr ""
 "Napaka pri razčlenjevanju datoteke »%s«. Uporabljene bodo privzete "
 "vrednosti. Varnostna kopija nastavitev je bila shranjena v »%s«."
 
-#: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1812
+#: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1903
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Skladnja vzorca za iskanje in izbiranje elementov:"
 
@@ -10647,7 +10647,7 @@ msgstr "Privzeto izvozi barvni profil slike."
 msgid "Export the image's comment by default."
 msgstr "Privzeto izvozi komentar slike."
 
-#: app/config/gimprc-blurbs.h:242 app/dialogs/preferences-dialog.c:1469
+#: app/config/gimprc-blurbs.h:242 app/dialogs/preferences-dialog.c:1560
 msgid "Export the image's thumbnail by default"
 msgstr "Privzeto izvozi ogledno sličico slike"
 
@@ -12617,7 +12617,7 @@ msgid "Parasites"
 msgstr "Zajedalci"
 
 #. initialize the module list
-#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3458
+#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3563
 msgid "Modules"
 msgstr "Gradniki"
 
@@ -12671,7 +12671,7 @@ msgstr "Brisanje »%s« ni uspelo: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3404 app/tools/gimppaintoptions-gui.c:327
+#: app/dialogs/preferences-dialog.c:3509 app/tools/gimppaintoptions-gui.c:327
 msgid "Dynamics"
 msgstr "Dinamika"
 
@@ -12840,7 +12840,7 @@ msgstr "Izvajanje podrejenega procesa »%s« je spodletelo (%s)"
 msgid "tags-locale:C"
 msgstr "tips-locale:sl"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:534
+#: app/core/gimp-tags.c:156 app/gui/themes.c:536
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Napaka pri zapiranju »%s«: %s"
@@ -13311,7 +13311,7 @@ msgstr "Barva ozadja"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:288
+#: app/widgets/gimplayertreeview.c:289
 msgid "Opacity"
 msgstr "Prekrivnost"
 
@@ -15825,7 +15825,7 @@ msgstr "_Opusti nevidne plasti"
 msgid "Create a New Image"
 msgstr "Ustvari novo sliko"
 
-#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1712
+#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1803
 #: app/dialogs/resize-dialog.c:256
 msgid "_Template:"
 msgstr "_Predloga:"
@@ -16183,7 +16183,7 @@ msgid "Select Source"
 msgstr "Izberite vir"
 
 #: app/dialogs/palette-import-dialog.c:211
-#: app/dialogs/preferences-dialog.c:1672
+#: app/dialogs/preferences-dialog.c:1763
 msgid "_Gradient"
 msgstr "_Preliv"
 
@@ -16255,20 +16255,20 @@ msgstr "Paleta ni bila uvožena: %s"
 msgid "There is no palette to import."
 msgstr "Ni palete za uvoz."
 
-#: app/dialogs/preferences-dialog.c:206
+#: app/dialogs/preferences-dialog.c:213
 msgid "Reset All Preferences"
 msgstr "Ponastavi vse"
 
-#: app/dialogs/preferences-dialog.c:224
+#: app/dialogs/preferences-dialog.c:231
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Resnično želite ponastaviti vse možnosti na privzete vrednosti?"
 
-#: app/dialogs/preferences-dialog.c:303 app/dialogs/welcome-dialog.c:353
+#: app/dialogs/preferences-dialog.c:310 app/dialogs/welcome-dialog.c:353
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "Morali boste ponovno zagnati GIMP, da bodo naslednje spremembe učinkovale:"
 
-#: app/dialogs/preferences-dialog.c:575
+#: app/dialogs/preferences-dialog.c:593
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -16276,15 +16276,15 @@ msgstr ""
 "Tipke za bližnjice bodo ponastavljene na privzete vrednosti ob naslednjem "
 "zagonu GIMP-a."
 
-#: app/dialogs/preferences-dialog.c:586
+#: app/dialogs/preferences-dialog.c:604
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Odstrani vse tipke za bližnjice"
 
-#: app/dialogs/preferences-dialog.c:608
+#: app/dialogs/preferences-dialog.c:626
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Resnično želite odstraniti vse tipke za bližnjice iz vseh menijev?"
 
-#: app/dialogs/preferences-dialog.c:649
+#: app/dialogs/preferences-dialog.c:667
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -16292,7 +16292,7 @@ msgstr ""
 "Nastavitve oken bodo ponastavljene na privzete vrednosti ob naslednjem "
 "zagonu GIMP-a."
 
-#: app/dialogs/preferences-dialog.c:684
+#: app/dialogs/preferences-dialog.c:702
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -16300,7 +16300,7 @@ msgstr ""
 "Nastavitve vhodne naprave bodo ponastavljene na privzete vrednosti ob "
 "naslednjem zagonu GIMP-a."
 
-#: app/dialogs/preferences-dialog.c:764
+#: app/dialogs/preferences-dialog.c:782
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -16308,161 +16308,161 @@ msgstr ""
 "Nastavitve orodij bodo ponastavljene na privzete vrednosti ob naslednjem "
 "zagonu GIMP-a."
 
-#: app/dialogs/preferences-dialog.c:816 app/dialogs/preferences-dialog.c:2585
+#: app/dialogs/preferences-dialog.c:834 app/dialogs/preferences-dialog.c:2690
 msgid "There's a local installation of the user manual."
 msgstr "Uporabniški priročnik je nameščen na računalnik."
 
-#: app/dialogs/preferences-dialog.c:821 app/dialogs/preferences-dialog.c:2591
+#: app/dialogs/preferences-dialog.c:839 app/dialogs/preferences-dialog.c:2696
 msgid "The user manual is not installed locally."
 msgstr "Uporabniški priročnik ni nameščen na računalnik."
 
-#: app/dialogs/preferences-dialog.c:921
+#: app/dialogs/preferences-dialog.c:1012
 msgid "Show s_election"
 msgstr "Pokaži _izbor"
 
-#: app/dialogs/preferences-dialog.c:924
+#: app/dialogs/preferences-dialog.c:1015
 msgid "Show _layer boundary"
 msgstr "Pokaži meje pla_sti"
 
-#: app/dialogs/preferences-dialog.c:927
+#: app/dialogs/preferences-dialog.c:1018
 msgid "Show can_vas boundary"
 msgstr "Pokaži meje pla_tna"
 
-#: app/dialogs/preferences-dialog.c:930
+#: app/dialogs/preferences-dialog.c:1021
 msgid "Show _guides"
 msgstr "Pokaži _vodila"
 
-#: app/dialogs/preferences-dialog.c:933
+#: app/dialogs/preferences-dialog.c:1024
 msgid "Show gri_d"
 msgstr "Pokaži mre_žo"
 
-#: app/dialogs/preferences-dialog.c:936
+#: app/dialogs/preferences-dialog.c:1027
 msgid "Show _sample points"
 msgstr "Pokaži vzor_čne točke"
 
-#: app/dialogs/preferences-dialog.c:945
+#: app/dialogs/preferences-dialog.c:1036
 msgid "Show _menubar"
 msgstr "Pokaži _menijsko vrstico"
 
-#: app/dialogs/preferences-dialog.c:949
+#: app/dialogs/preferences-dialog.c:1040
 msgid "Show _rulers"
 msgstr "Pokaži _merila"
 
-#: app/dialogs/preferences-dialog.c:952
+#: app/dialogs/preferences-dialog.c:1043
 msgid "Show scroll_bars"
 msgstr "Pokaži _drsnike"
 
-#: app/dialogs/preferences-dialog.c:955
+#: app/dialogs/preferences-dialog.c:1046
 msgid "Show s_tatusbar"
 msgstr "Pokaži vrstico s_tanja"
 
-#: app/dialogs/preferences-dialog.c:961
+#: app/dialogs/preferences-dialog.c:1052
 msgid "Canvas _padding mode:"
 msgstr "Način _zapolnjevanja platna:"
 
-#: app/dialogs/preferences-dialog.c:966
+#: app/dialogs/preferences-dialog.c:1057
 msgid "Custom p_adding color:"
 msgstr "Barva po meri za _zapolnjevanje platna:"
 
-#: app/dialogs/preferences-dialog.c:967
+#: app/dialogs/preferences-dialog.c:1058
 msgid "Select Custom Canvas Padding Color"
 msgstr "Izberite želeno barvo za zapolnjevanje platna"
 
-#: app/dialogs/preferences-dialog.c:976
+#: app/dialogs/preferences-dialog.c:1067
 msgid "_Keep canvas padding in \"Show All\" mode"
 msgstr "_Ohrani način zapolnjevanja platna v načinu »Pokaži vse«"
 
-#: app/dialogs/preferences-dialog.c:1001
+#: app/dialogs/preferences-dialog.c:1092
 msgid "Snap to _Guides"
 msgstr "Pripni na _vodila"
 
-#: app/dialogs/preferences-dialog.c:1004
+#: app/dialogs/preferences-dialog.c:1095
 msgid "S_nap to Grid"
 msgstr "Prip_ni na mrežo"
 
-#: app/dialogs/preferences-dialog.c:1007
+#: app/dialogs/preferences-dialog.c:1098
 msgid "Snap to Canvas _Edges"
 msgstr "Pripni na _rob platna"
 
-#: app/dialogs/preferences-dialog.c:1015
+#: app/dialogs/preferences-dialog.c:1106
 msgid "Snap to _Active Path"
 msgstr "Pripni na _aktivno pot"
 
-#: app/dialogs/preferences-dialog.c:1018
+#: app/dialogs/preferences-dialog.c:1109
 msgid "Snap to _Bounding Box"
 msgstr "Pripni na _omejujoči okvir"
 
-#: app/dialogs/preferences-dialog.c:1021
+#: app/dialogs/preferences-dialog.c:1112
 msgid "Snap to _Equidistance"
 msgstr "Pripni na _enakomerno oddaljenost"
 
-#: app/dialogs/preferences-dialog.c:1075
+#: app/dialogs/preferences-dialog.c:1166
 msgid "Preferences"
 msgstr "Nastavitve"
 
-#: app/dialogs/preferences-dialog.c:1111 app/dialogs/preferences-dialog.c:1112
+#: app/dialogs/preferences-dialog.c:1202 app/dialogs/preferences-dialog.c:1203
 msgid "System Resources"
 msgstr "Sistemski viri"
 
-#: app/dialogs/preferences-dialog.c:1120
+#: app/dialogs/preferences-dialog.c:1211
 msgid "Resource Consumption"
 msgstr "Poraba virov"
 
-#: app/dialogs/preferences-dialog.c:1126
+#: app/dialogs/preferences-dialog.c:1217
 msgid "Minimal number of _undo levels:"
 msgstr "Najmanjše število ravni _razveljavitev:"
 
-#: app/dialogs/preferences-dialog.c:1129
+#: app/dialogs/preferences-dialog.c:1220
 msgid "Maximum undo _memory:"
 msgstr "Največ po_mnilnika za razveljavitve:"
 
-#: app/dialogs/preferences-dialog.c:1132
+#: app/dialogs/preferences-dialog.c:1223
 msgid "Tile cache _size:"
 msgstr "_Velikost medpomnilnika za tlakovanje:"
 
-#: app/dialogs/preferences-dialog.c:1135
+#: app/dialogs/preferences-dialog.c:1226
 msgid "Maximum _new image size:"
 msgstr "Največja velikost _nove slike:"
 
-#: app/dialogs/preferences-dialog.c:1139
+#: app/dialogs/preferences-dialog.c:1230
 msgid "S_wap compression:"
 msgstr "Raven stis_kanja izmenjalne datoteke:"
 
-#: app/dialogs/preferences-dialog.c:1144
+#: app/dialogs/preferences-dialog.c:1235
 msgid "Number of _threads to use:"
 msgstr "Število uporabljenih _niti:"
 
-#: app/dialogs/preferences-dialog.c:1152
+#: app/dialogs/preferences-dialog.c:1243
 msgid "Network access"
 msgstr "Omrežni dostop"
 
-#: app/dialogs/preferences-dialog.c:1156
+#: app/dialogs/preferences-dialog.c:1247
 msgid "Check for updates (requires internet)"
 msgstr "Preveri obstoj posodobitev (potrebna je internetna povezava)"
 
 #. Image Thumbnails
-#: app/dialogs/preferences-dialog.c:1163
+#: app/dialogs/preferences-dialog.c:1254
 msgid "Image Thumbnails"
 msgstr "Sličice za predogled"
 
-#: app/dialogs/preferences-dialog.c:1168
+#: app/dialogs/preferences-dialog.c:1259
 msgid "Size of _thumbnails:"
 msgstr "Velikost _sličic za predogled:"
 
-#: app/dialogs/preferences-dialog.c:1172
+#: app/dialogs/preferences-dialog.c:1263
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Največja velikost _datoteke sličic za predogled:"
 
-#: app/dialogs/preferences-dialog.c:1179
+#: app/dialogs/preferences-dialog.c:1270
 msgid "_Keep record of used files in the Recent Documents list"
 msgstr "_Beleži uporabljene datoteke v seznamu zadnje odprtih dokumentov"
 
 #. TODO: icon needed.
-#: app/dialogs/preferences-dialog.c:1197 app/dialogs/preferences-dialog.c:1198
+#: app/dialogs/preferences-dialog.c:1288 app/dialogs/preferences-dialog.c:1289
 msgid "Debugging"
 msgstr "Razhroščevanje"
 
-#: app/dialogs/preferences-dialog.c:1205
+#: app/dialogs/preferences-dialog.c:1296
 msgid ""
 "We hope you will never need these settings, but as all software, GIMP has "
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
@@ -16472,21 +16472,21 @@ msgstr ""
 "tudi GIMP hrošče in do sesutja lahko pride. Če se to zgodi, nam lahko "
 "pomagate s poročanjem o hroščih."
 
-#: app/dialogs/preferences-dialog.c:1214
+#: app/dialogs/preferences-dialog.c:1305
 msgid "Bug Reporting"
 msgstr "Poročanje o hroščih"
 
-#: app/dialogs/preferences-dialog.c:1220
+#: app/dialogs/preferences-dialog.c:1311
 msgid "Debug _policy:"
 msgstr "_Politika razhroščevanja:"
 
-#: app/dialogs/preferences-dialog.c:1232
+#: app/dialogs/preferences-dialog.c:1323
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr ""
 "Če želite uporabljati to funkcijo, morate imeti na računalniku nameščeno "
 "»gdb« ali »lldb«."
 
-#: app/dialogs/preferences-dialog.c:1236
+#: app/dialogs/preferences-dialog.c:1327
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
@@ -16494,160 +16494,160 @@ msgstr ""
 "Ta funkcija je veliko učinkovitejša, če imate na sistemu nameščeno »gdb« ali "
 "»lldb«."
 
-#: app/dialogs/preferences-dialog.c:1249 app/dialogs/preferences-dialog.c:1250
+#: app/dialogs/preferences-dialog.c:1340 app/dialogs/preferences-dialog.c:1341
 msgid "Color Management"
 msgstr "Upravljanje z barvami"
 
-#: app/dialogs/preferences-dialog.c:1259
+#: app/dialogs/preferences-dialog.c:1350
 msgid "R_eset Color Management"
 msgstr "P_onastavi upravljanje z barvami"
 
-#: app/dialogs/preferences-dialog.c:1282
+#: app/dialogs/preferences-dialog.c:1373
 msgid "Image display _mode:"
 msgstr "_Način prikaza slike:"
 
 #. Color Managed Display
-#: app/dialogs/preferences-dialog.c:1286
+#: app/dialogs/preferences-dialog.c:1377
 msgid "Color Managed Display"
 msgstr "Zaslon z upravljanjem barv"
 
-#: app/dialogs/preferences-dialog.c:1295
+#: app/dialogs/preferences-dialog.c:1386
 msgid "Select Monitor Color Profile"
 msgstr "Izberite barvni profil monitorja"
 
-#: app/dialogs/preferences-dialog.c:1296
+#: app/dialogs/preferences-dialog.c:1387
 msgid "_Monitor profile:"
 msgstr "Profil _monitorja:"
 
-#: app/dialogs/preferences-dialog.c:1302
+#: app/dialogs/preferences-dialog.c:1393
 msgid "_Try to use the system monitor profile"
 msgstr "_Poskusi uporabiti sistemski profil zaslona"
 
-#: app/dialogs/preferences-dialog.c:1309
+#: app/dialogs/preferences-dialog.c:1400
 msgid "_Rendering intent:"
 msgstr "_Namen upodabljanja:"
 
-#: app/dialogs/preferences-dialog.c:1314
+#: app/dialogs/preferences-dialog.c:1405
 msgid "Use _black point compensation"
 msgstr "Uporabi kompenzacijo _črne točke"
 
-#: app/dialogs/preferences-dialog.c:1320 app/dialogs/preferences-dialog.c:1335
+#: app/dialogs/preferences-dialog.c:1411 app/dialogs/preferences-dialog.c:1426
 #: app/display/gimpstatusbar.c:577 app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "Hitrost"
 
-#: app/dialogs/preferences-dialog.c:1321 app/dialogs/preferences-dialog.c:1336
+#: app/dialogs/preferences-dialog.c:1412 app/dialogs/preferences-dialog.c:1427
 #: app/display/gimpstatusbar.c:578
 msgid "Precision / Color Fidelity"
 msgstr "Natančnost / barvna zvestoba"
 
-#: app/dialogs/preferences-dialog.c:1322
+#: app/dialogs/preferences-dialog.c:1413
 msgid "_Optimize image display for:"
 msgstr "Optimizitaj prikaz slike za:"
 
 #. Print Simulation (Soft-proofing)
-#: app/dialogs/preferences-dialog.c:1326 app/display/gimpstatusbar.c:489
+#: app/dialogs/preferences-dialog.c:1417 app/display/gimpstatusbar.c:489
 msgid "Soft-Proofing"
 msgstr "Preverjanje videza"
 
-#: app/dialogs/preferences-dialog.c:1337
+#: app/dialogs/preferences-dialog.c:1428
 msgid "O_ptimize soft-proofing for:"
 msgstr "O_ptimiziraj preverjanje za:"
 
-#: app/dialogs/preferences-dialog.c:1346
+#: app/dialogs/preferences-dialog.c:1437
 msgid "Mar_k out of gamut colors"
 msgstr "Ozna_či barve zunaj barvnega obsega"
 
-#: app/dialogs/preferences-dialog.c:1350
+#: app/dialogs/preferences-dialog.c:1441
 msgid "Select Warning Color"
 msgstr "Izberite opozorilno barvo"
 
 #. Preferred profiles
-#: app/dialogs/preferences-dialog.c:1360
+#: app/dialogs/preferences-dialog.c:1451
 msgid "Preferred Profiles"
 msgstr "Prednostni profili"
 
-#: app/dialogs/preferences-dialog.c:1369
+#: app/dialogs/preferences-dialog.c:1460
 msgid "Select Preferred RGB Color Profile"
 msgstr "Izberite prednostni barvni profil RGB"
 
-#: app/dialogs/preferences-dialog.c:1370
+#: app/dialogs/preferences-dialog.c:1461
 msgid "_RGB profile:"
 msgstr "Profil _RGB:"
 
-#: app/dialogs/preferences-dialog.c:1377
+#: app/dialogs/preferences-dialog.c:1468
 msgid "Select Preferred Grayscale Color Profile"
 msgstr "Izberite prednostni sivinski barvni profil"
 
-#: app/dialogs/preferences-dialog.c:1378
+#: app/dialogs/preferences-dialog.c:1469
 msgid "_Grayscale profile:"
 msgstr "_Sivinski profil:"
 
-#: app/dialogs/preferences-dialog.c:1385
+#: app/dialogs/preferences-dialog.c:1476
 msgid "Select CMYK Color Profile"
 msgstr "Izberite barvni profil CMYK"
 
-#: app/dialogs/preferences-dialog.c:1386
+#: app/dialogs/preferences-dialog.c:1477
 msgid "_CMYK profile:"
 msgstr "Profil _CMYK:"
 
 #. Policies
-#: app/dialogs/preferences-dialog.c:1391
+#: app/dialogs/preferences-dialog.c:1482
 msgid "Policies"
 msgstr "Politike"
 
-#: app/dialogs/preferences-dialog.c:1396
+#: app/dialogs/preferences-dialog.c:1487
 msgid "_File Open behavior:"
 msgstr "Vedenje _odpiranja datoteke:"
 
 #. Filter Dialogs
-#: app/dialogs/preferences-dialog.c:1400 app/dialogs/preferences-dialog.c:2299
+#: app/dialogs/preferences-dialog.c:1491 app/dialogs/preferences-dialog.c:2404
 msgid "Filter Dialogs"
 msgstr "Okna odpiranja datotek"
 
-#: app/dialogs/preferences-dialog.c:1404
+#: app/dialogs/preferences-dialog.c:1495
 msgid "Show _advanced color options"
 msgstr "Pokaži n_apredne barvne možnosti"
 
-#: app/dialogs/preferences-dialog.c:1418 app/dialogs/preferences-dialog.c:1419
+#: app/dialogs/preferences-dialog.c:1509 app/dialogs/preferences-dialog.c:1510
 msgid "Image Import & Export"
 msgstr "Uvoz in izvoz slik"
 
 #. Import Policies
-#: app/dialogs/preferences-dialog.c:1429
+#: app/dialogs/preferences-dialog.c:1520
 msgid "Import Policies"
 msgstr "Politike uvoza"
 
-#: app/dialogs/preferences-dialog.c:1433
+#: app/dialogs/preferences-dialog.c:1524
 msgid "Promote imported images to _floating point precision"
 msgstr "Pretvori uvožene slike v natančnost s p_lavajočo vejico"
 
-#: app/dialogs/preferences-dialog.c:1442
+#: app/dialogs/preferences-dialog.c:1533
 msgid "_Dither images when promoting to floating point"
 msgstr "_Razprši slike pri pretvorbi v plavajočo vejico"
 
-#: app/dialogs/preferences-dialog.c:1447
+#: app/dialogs/preferences-dialog.c:1538
 msgid "_Add an alpha channel to imported images"
 msgstr "_Dodaj kanal alfa uvoženim slikam"
 
-#: app/dialogs/preferences-dialog.c:1452
+#: app/dialogs/preferences-dialog.c:1543
 msgid "Color _profile policy:"
 msgstr "Politika _barvnega profila:"
 
-#: app/dialogs/preferences-dialog.c:1455
+#: app/dialogs/preferences-dialog.c:1546
 msgid "Metadata _rotation policy:"
 msgstr "Politika _sukanja metapodatkov:"
 
 #. Export Policies
-#: app/dialogs/preferences-dialog.c:1459
+#: app/dialogs/preferences-dialog.c:1550
 msgid "Export Policies"
 msgstr "Izvozna pravila"
 
-#: app/dialogs/preferences-dialog.c:1463
+#: app/dialogs/preferences-dialog.c:1554
 msgid "Export the i_mage's color profile by default"
 msgstr "Privzeto izvozi barvni profil sli_ke"
 
-#: app/dialogs/preferences-dialog.c:1466
+#: app/dialogs/preferences-dialog.c:1557
 msgid "Export the image's comment by default"
 msgstr "Privzeto izvozi komentar slike"
 
@@ -16656,7 +16656,7 @@ msgstr "Privzeto izvozi komentar slike"
 #. * It determines how file export
 #. * plug-ins handle Exif by default.
 #.
-#: app/dialogs/preferences-dialog.c:1477
+#: app/dialogs/preferences-dialog.c:1568
 msgid "Export _Exif metadata by default when available"
 msgstr "Privzeto izvozi metapodatke _Exif, ko so na voljo"
 
@@ -16665,7 +16665,7 @@ msgstr "Privzeto izvozi metapodatke _Exif, ko so na voljo"
 #. * It determines how file export
 #. * plug-ins handle XMP by default.
 #.
-#: app/dialogs/preferences-dialog.c:1485
+#: app/dialogs/preferences-dialog.c:1576
 msgid "Export _XMP metadata by default when available"
 msgstr "Privzeto izvozi metapodatke _XMP, ko so na voljo"
 
@@ -16674,37 +16674,37 @@ msgstr "Privzeto izvozi metapodatke _XMP, ko so na voljo"
 #. * It determines how file export
 #. * plug-ins handle IPTC by default.
 #.
-#: app/dialogs/preferences-dialog.c:1493
+#: app/dialogs/preferences-dialog.c:1584
 msgid "Export _IPTC metadata by default when available"
 msgstr "Privzeto izvozi metapodatke _IPTC, ko so na voljo"
 
-#: app/dialogs/preferences-dialog.c:1496
+#: app/dialogs/preferences-dialog.c:1587
 msgid "Metadata can contain sensitive information."
 msgstr "Metapodatki lahko vsebujejo občutljive informacije."
 
 #. Export File Type
-#: app/dialogs/preferences-dialog.c:1500
+#: app/dialogs/preferences-dialog.c:1591
 msgid "Export File Type"
 msgstr "Vrsta datoteke za izvoz"
 
-#: app/dialogs/preferences-dialog.c:1504
+#: app/dialogs/preferences-dialog.c:1595
 msgid "Default export file t_ype:"
 msgstr "Privzeta v_rsta izvozne datoteke:"
 
 #. Raw Image Importer
-#: app/dialogs/preferences-dialog.c:1508
+#: app/dialogs/preferences-dialog.c:1599
 msgid "Raw Image Importer"
 msgstr "Uvoznik slik iz surovih podatkov"
 
-#: app/dialogs/preferences-dialog.c:1544
+#: app/dialogs/preferences-dialog.c:1635
 msgid "Experimental Playground"
 msgstr "Poskusno igrišče"
 
-#: app/dialogs/preferences-dialog.c:1545
+#: app/dialogs/preferences-dialog.c:1636
 msgid "Playground"
 msgstr "Igrišče"
 
-#: app/dialogs/preferences-dialog.c:1552
+#: app/dialogs/preferences-dialog.c:1643
 msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
@@ -16714,11 +16714,11 @@ msgstr ""
 "jih, razen če dejansko veste, kaj počnete ali nameravate prispevati popravke."
 
 #. Hardware Acceleration
-#: app/dialogs/preferences-dialog.c:1562
+#: app/dialogs/preferences-dialog.c:1653
 msgid "Hardware Acceleration"
 msgstr "Strojno pospeševanje"
 
-#: app/dialogs/preferences-dialog.c:1566
+#: app/dialogs/preferences-dialog.c:1657
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
@@ -16726,28 +16726,28 @@ msgstr ""
 "Gonilniki in podpora za OpenCL so poskusni, pričakujte upočasnjeno delovanje "
 "in možna sesutja (o katerih, prosimo, poročajte)."
 
-#: app/dialogs/preferences-dialog.c:1572
+#: app/dialogs/preferences-dialog.c:1663
 msgid "Use O_penCL"
 msgstr "Uporabi O_penCL"
 
 #. Very unstable tools
-#: app/dialogs/preferences-dialog.c:1577
+#: app/dialogs/preferences-dialog.c:1668
 msgid "Experimental"
 msgstr "Poskusno"
 
-#: app/dialogs/preferences-dialog.c:1581
+#: app/dialogs/preferences-dialog.c:1672
 msgid "_N-Point Deformation tool"
 msgstr "Orodje _N-točkovna deformacija"
 
-#: app/dialogs/preferences-dialog.c:1584
+#: app/dialogs/preferences-dialog.c:1675
 msgid "_Seamless Clone tool"
 msgstr "Orodje _Neopazno kloniraj"
 
-#: app/dialogs/preferences-dialog.c:1587
+#: app/dialogs/preferences-dialog.c:1678
 msgid "_Paint Select tool"
 msgstr "Orodje Iz_beri barvo"
 
-#: app/dialogs/preferences-dialog.c:1609 app/dialogs/preferences-dialog.c:1610
+#: app/dialogs/preferences-dialog.c:1700 app/dialogs/preferences-dialog.c:1701
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "Možnosti orodja"
@@ -16756,569 +16756,569 @@ msgstr "Možnosti orodja"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1619 app/dialogs/preferences-dialog.c:2532
-#: app/dialogs/preferences-dialog.c:2970 app/dialogs/preferences-dialog.c:2994
+#: app/dialogs/preferences-dialog.c:1710 app/dialogs/preferences-dialog.c:2637
+#: app/dialogs/preferences-dialog.c:3075 app/dialogs/preferences-dialog.c:3099
 #: app/widgets/gimpcontrollereditor.c:188
 #: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "Splošno"
 
-#: app/dialogs/preferences-dialog.c:1622
+#: app/dialogs/preferences-dialog.c:1713
 msgid "Allow _editing on non-visible layers"
 msgstr "Dovoli _urejanje na ne vidnih plasteh"
 
-#: app/dialogs/preferences-dialog.c:1626
+#: app/dialogs/preferences-dialog.c:1717
 msgid "_Save tool options on exit"
 msgstr "_Shrani možnosti orodja ob izhodu"
 
-#: app/dialogs/preferences-dialog.c:1630
+#: app/dialogs/preferences-dialog.c:1721
 msgid "Save Tool Options _Now"
 msgstr "Shrani možnosti orodja _zdaj"
 
-#: app/dialogs/preferences-dialog.c:1637
+#: app/dialogs/preferences-dialog.c:1728
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Ponastavi shranjene možnosti orodij na privzete vrednosti"
 
-#: app/dialogs/preferences-dialog.c:1651
+#: app/dialogs/preferences-dialog.c:1742
 msgid "Default _interpolation:"
 msgstr "Privzeta _interpolacija:"
 
 #. Global Brush, Pattern, ...
-#: app/dialogs/preferences-dialog.c:1659
+#: app/dialogs/preferences-dialog.c:1750
 msgid "Paint Options Shared Between Tools"
 msgstr "Možnosti barvanja si deli več orodij"
 
-#: app/dialogs/preferences-dialog.c:1663
+#: app/dialogs/preferences-dialog.c:1754
 msgid "_Brush"
 msgstr "_Čopič"
 
-#: app/dialogs/preferences-dialog.c:1666
+#: app/dialogs/preferences-dialog.c:1757
 msgid "_Dynamics"
 msgstr "_Dinamika"
 
-#: app/dialogs/preferences-dialog.c:1669
+#: app/dialogs/preferences-dialog.c:1760
 msgid "_Pattern"
 msgstr "_Vzorec"
 
-#: app/dialogs/preferences-dialog.c:1675
+#: app/dialogs/preferences-dialog.c:1766
 msgid "E_xpand Layers"
 msgstr "Ra_zširi plasti"
 
 #. Move Tool
-#: app/dialogs/preferences-dialog.c:1679
+#: app/dialogs/preferences-dialog.c:1770
 msgid "Move Tool"
 msgstr "Orodje za premikanje"
 
-#: app/dialogs/preferences-dialog.c:1683
+#: app/dialogs/preferences-dialog.c:1774
 msgid "Set _layer or path as active"
 msgstr "Nastavi p_last ali pot kot aktivno"
 
-#: app/dialogs/preferences-dialog.c:1695
+#: app/dialogs/preferences-dialog.c:1786
 msgid "Default New Image"
 msgstr "Privzeta nova slika"
 
-#: app/dialogs/preferences-dialog.c:1696
+#: app/dialogs/preferences-dialog.c:1787
 msgid "Default Image"
 msgstr "Privzeta slika"
 
-#: app/dialogs/preferences-dialog.c:1733
+#: app/dialogs/preferences-dialog.c:1824
 msgid "Quick Mask color:"
 msgstr "Barva hitre maske:"
 
-#: app/dialogs/preferences-dialog.c:1734
+#: app/dialogs/preferences-dialog.c:1825
 msgid "Set the default Quick Mask color"
 msgstr "Določite privzeto barvo za hitro maskiranje"
 
-#: app/dialogs/preferences-dialog.c:1744
+#: app/dialogs/preferences-dialog.c:1835
 msgid "Default Image Grid"
 msgstr "Privzeta mreža slike"
 
-#: app/dialogs/preferences-dialog.c:1745
+#: app/dialogs/preferences-dialog.c:1836
 msgid "Default Grid"
 msgstr "Privzeta mreža"
 
-#: app/dialogs/preferences-dialog.c:1765
+#: app/dialogs/preferences-dialog.c:1856
 msgid "User Interface"
 msgstr "Uporabniški vmesnik"
 
-#: app/dialogs/preferences-dialog.c:1766
+#: app/dialogs/preferences-dialog.c:1857
 msgid "Interface"
 msgstr "Vmesnik"
 
-#: app/dialogs/preferences-dialog.c:1776 app/tools/gimptextoptions.c:194
+#: app/dialogs/preferences-dialog.c:1867 app/tools/gimptextoptions.c:194
 msgid "Language"
 msgstr "Jezik"
 
 #. Previews
-#: app/dialogs/preferences-dialog.c:1782
+#: app/dialogs/preferences-dialog.c:1873
 msgid "Previews"
 msgstr "Predogledi"
 
-#: app/dialogs/preferences-dialog.c:1785
+#: app/dialogs/preferences-dialog.c:1876
 msgid "_Enable layer & channel previews"
 msgstr "_Omogoči predoglede plasti in kanalov"
 
-#: app/dialogs/preferences-dialog.c:1793
+#: app/dialogs/preferences-dialog.c:1884
 msgid "Enable layer _group previews"
 msgstr "Omogoči predoglede _skupin plasti"
 
-#: app/dialogs/preferences-dialog.c:1799
+#: app/dialogs/preferences-dialog.c:1890
 msgid "_Default layer & channel preview size:"
 msgstr "Privzeta _velikost predogleda plasti in kanalov:"
 
-#: app/dialogs/preferences-dialog.c:1802
+#: app/dialogs/preferences-dialog.c:1893
 msgid "_Undo preview size:"
 msgstr "Razve_ljavi velikost predogleda:"
 
-#: app/dialogs/preferences-dialog.c:1805
+#: app/dialogs/preferences-dialog.c:1896
 msgid "Na_vigation preview size:"
 msgstr "Velikost predogleda _krmarjenja:"
 
 #. Item
-#: app/dialogs/preferences-dialog.c:1809
+#: app/dialogs/preferences-dialog.c:1900
 msgid "Item search"
 msgstr "Iskanje elementov"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1816
+#: app/dialogs/preferences-dialog.c:1907
 msgid "Keyboard Shortcuts"
 msgstr "Bližnjice"
 
-#: app/dialogs/preferences-dialog.c:1820
+#: app/dialogs/preferences-dialog.c:1911
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Prilagodi _tipke za bližnjice ..."
 
-#: app/dialogs/preferences-dialog.c:1827
+#: app/dialogs/preferences-dialog.c:1918
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Shrani tipke za bližnjice ob izhodu"
 
-#: app/dialogs/preferences-dialog.c:1831
+#: app/dialogs/preferences-dialog.c:1922
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Shrani bližnjice _zdaj"
 
-#: app/dialogs/preferences-dialog.c:1838
+#: app/dialogs/preferences-dialog.c:1929
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Ponastavi tipke za bližnjice na privzete vrednosti"
 
-#: app/dialogs/preferences-dialog.c:1847
+#: app/dialogs/preferences-dialog.c:1938
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Odstrani _vse tipke za bližnjice"
 
 #. Themes
-#: app/dialogs/preferences-dialog.c:1859 app/dialogs/preferences-dialog.c:1860
+#: app/dialogs/preferences-dialog.c:1950 app/dialogs/preferences-dialog.c:1951
 #: app/dialogs/welcome-dialog.c:537
 msgid "Theme"
 msgstr "Tema"
 
-#: app/dialogs/preferences-dialog.c:1865
+#: app/dialogs/preferences-dialog.c:1956
 msgid "Select Theme"
 msgstr "Izberi temo"
 
-#: app/dialogs/preferences-dialog.c:1939
+#: app/dialogs/preferences-dialog.c:2037
 msgid "Color scheme variant (if available)"
 msgstr "Različica barvne sheme (če je na voljo)"
 
-#: app/dialogs/preferences-dialog.c:1944 app/dialogs/welcome-dialog.c:589
+#: app/dialogs/preferences-dialog.c:2042 app/dialogs/welcome-dialog.c:589
 msgid "_Override icon sizes set by the theme"
 msgstr "_Preglasi velikost ikon, kot jo določa tema"
 
-#: app/dialogs/preferences-dialog.c:1957 app/dialogs/welcome-dialog.c:598
+#: app/dialogs/preferences-dialog.c:2055 app/dialogs/welcome-dialog.c:598
 msgid "Small"
 msgstr "Majhno"
 
-#: app/dialogs/preferences-dialog.c:1959 app/dialogs/welcome-dialog.c:600
+#: app/dialogs/preferences-dialog.c:2057 app/dialogs/welcome-dialog.c:600
 msgid "Medium"
 msgstr "Srednje"
 
-#: app/dialogs/preferences-dialog.c:1961 app/dialogs/welcome-dialog.c:602
+#: app/dialogs/preferences-dialog.c:2059 app/dialogs/welcome-dialog.c:602
 msgid "Large"
 msgstr "Veliko"
 
-#: app/dialogs/preferences-dialog.c:1963 app/dialogs/welcome-dialog.c:604
+#: app/dialogs/preferences-dialog.c:2061 app/dialogs/welcome-dialog.c:604
 msgid "Huge"
 msgstr "Ogromno"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:1976 app/dialogs/welcome-dialog.c:620
+#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:620
 msgid "Font Scaling"
 msgstr "Spreminjanje velikosti pisave"
 
-#: app/dialogs/preferences-dialog.c:1978 app/dialogs/welcome-dialog.c:622
+#: app/dialogs/preferences-dialog.c:2076 app/dialogs/welcome-dialog.c:622
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Spreminjanje velikosti pisave ne bo delovalo z motivi, ki uporabljajo "
 "absolutne velikosti."
 
-#: app/dialogs/preferences-dialog.c:1984 app/dialogs/welcome-dialog.c:628
+#: app/dialogs/preferences-dialog.c:2082 app/dialogs/welcome-dialog.c:628
 msgid "50%"
 msgstr "50 %"
 
-#: app/dialogs/preferences-dialog.c:1986 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2084 app/dialogs/welcome-dialog.c:630
 msgid "100%"
 msgstr "100 %"
 
-#: app/dialogs/preferences-dialog.c:1988 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2086 app/dialogs/welcome-dialog.c:632
 msgid "200%"
 msgstr "200 %"
 
-#: app/dialogs/preferences-dialog.c:2006
+#: app/dialogs/preferences-dialog.c:2104
 msgid "Reload C_urrent Theme"
 msgstr "Ponovno naloži _trenutno temo"
 
-#: app/dialogs/preferences-dialog.c:2018 app/dialogs/preferences-dialog.c:2019
+#: app/dialogs/preferences-dialog.c:2116 app/dialogs/preferences-dialog.c:2117
 msgid "Icon Theme"
 msgstr "Tema ikon"
 
-#: app/dialogs/preferences-dialog.c:2024
+#: app/dialogs/preferences-dialog.c:2122
 msgid "Select an Icon Theme"
 msgstr "Izberite temo ikon"
 
-#: app/dialogs/preferences-dialog.c:2133 app/dialogs/welcome-dialog.c:582
+#: app/dialogs/preferences-dialog.c:2238 app/dialogs/welcome-dialog.c:582
 msgid "Use symbolic icons if available"
 msgstr "Uporabi simbolne ikone, če so na voljo"
 
-#: app/dialogs/preferences-dialog.c:2143 app/dialogs/preferences-dialog.c:2144
+#: app/dialogs/preferences-dialog.c:2248 app/dialogs/preferences-dialog.c:2249
 #: app/widgets/gimptoolbox.c:467
 msgid "Toolbox"
 msgstr "Orodjarna"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2152 app/dialogs/preferences-dialog.c:3053
+#: app/dialogs/preferences-dialog.c:2257 app/dialogs/preferences-dialog.c:3158
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Videz"
 
-#: app/dialogs/preferences-dialog.c:2156
+#: app/dialogs/preferences-dialog.c:2261
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "Prikaži _logotip GIMP (tarča povleci-in-spusti)"
 
-#: app/dialogs/preferences-dialog.c:2160
+#: app/dialogs/preferences-dialog.c:2265
 msgid "Show _foreground & background color"
 msgstr "Pokaži barvo _ospredja in ozadja"
 
-#: app/dialogs/preferences-dialog.c:2164
+#: app/dialogs/preferences-dialog.c:2269
 msgid "Show active _brush, pattern & gradient"
 msgstr "Pokaži aktivne _čopiče, vzorce in prelive"
 
-#: app/dialogs/preferences-dialog.c:2168
+#: app/dialogs/preferences-dialog.c:2273
 msgid "Show active _image"
 msgstr "Pokaži aktivno _sliko"
 
-#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:668
+#: app/dialogs/preferences-dialog.c:2282 app/dialogs/welcome-dialog.c:668
 msgid "Use tool _groups"
 msgstr "Uporabi _skupine orodij"
 
 #. Tool Editor
-#: app/dialogs/preferences-dialog.c:2184
+#: app/dialogs/preferences-dialog.c:2289
 msgid "Tools Configuration"
 msgstr "Prilagoditev orodij"
 
-#: app/dialogs/preferences-dialog.c:2199 app/dialogs/preferences-dialog.c:2200
+#: app/dialogs/preferences-dialog.c:2304 app/dialogs/preferences-dialog.c:2305
 msgid "Dialog Defaults"
 msgstr "Privzete vrednosti pogovornih oken"
 
-#: app/dialogs/preferences-dialog.c:2209
+#: app/dialogs/preferences-dialog.c:2314
 msgid "Reset Dialog _Defaults"
 msgstr "Ponastavi privzete vre_dnosti pogovornih oken"
 
 #. Color profile import dialog
-#: app/dialogs/preferences-dialog.c:2217
+#: app/dialogs/preferences-dialog.c:2322
 msgid "Color Profile Import Dialog"
 msgstr "Pogovorno okno Uvoz barvnega profila"
 
-#: app/dialogs/preferences-dialog.c:2222
+#: app/dialogs/preferences-dialog.c:2327
 msgid "Color profile policy:"
 msgstr "Politika barvnega profila:"
 
 #. All color profile chooser dialogs
-#: app/dialogs/preferences-dialog.c:2226
+#: app/dialogs/preferences-dialog.c:2331
 msgid "Color Profile File Dialogs"
 msgstr "Pogovorna okna datoteke barvnega profila"
 
-#: app/dialogs/preferences-dialog.c:2231
+#: app/dialogs/preferences-dialog.c:2336
 msgid "Profile folder:"
 msgstr "Mapa profila:"
 
-#: app/dialogs/preferences-dialog.c:2232
+#: app/dialogs/preferences-dialog.c:2337
 msgid "Select Default Folder for Color Profiles"
 msgstr "Izberite privzeto mapo za barvne profile"
 
 #. Convert to Color Profile Dialog
-#: app/dialogs/preferences-dialog.c:2236
+#: app/dialogs/preferences-dialog.c:2341
 msgid "Convert to Color Profile Dialog"
 msgstr "Pogovorno okno Pretvori v barvni profil"
 
-#: app/dialogs/preferences-dialog.c:2241
+#: app/dialogs/preferences-dialog.c:2346
 msgid "Rendering intent:"
 msgstr "Namen upodabljanja:"
 
-#: app/dialogs/preferences-dialog.c:2245
+#: app/dialogs/preferences-dialog.c:2350
 msgid "Black point compensation"
 msgstr "Kompenzacija črne točke"
 
 #. Convert Precision Dialog
-#: app/dialogs/preferences-dialog.c:2249
+#: app/dialogs/preferences-dialog.c:2354
 msgid "Precision Conversion Dialog"
 msgstr "Pogovorno okno Natančna pretvorba"
 
-#: app/dialogs/preferences-dialog.c:2256
+#: app/dialogs/preferences-dialog.c:2361
 msgid "Dither layers:"
 msgstr "Stresaj plasti:"
 
-#: app/dialogs/preferences-dialog.c:2261
+#: app/dialogs/preferences-dialog.c:2366
 msgid "Dither text layers:"
 msgstr "Stresaj plasti besedila:"
 
-#: app/dialogs/preferences-dialog.c:2266
+#: app/dialogs/preferences-dialog.c:2371
 msgid "Dither channels/masks:"
 msgstr "Stresaj kanale/maske:"
 
 #. Convert Indexed Dialog
-#: app/dialogs/preferences-dialog.c:2270
+#: app/dialogs/preferences-dialog.c:2375
 msgid "Indexed Conversion Dialog"
 msgstr "Pogovorno okno Pretvorba v indeksirane barve"
 
-#: app/dialogs/preferences-dialog.c:2275
+#: app/dialogs/preferences-dialog.c:2380
 msgid "Colormap:"
 msgstr "Katalog barv:"
 
-#: app/dialogs/preferences-dialog.c:2278
+#: app/dialogs/preferences-dialog.c:2383
 msgid "Maximum number of colors:"
 msgstr "Največje število barv:"
 
-#: app/dialogs/preferences-dialog.c:2282
+#: app/dialogs/preferences-dialog.c:2387
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "Odstrani neuporabljene in podvojene barve iz kataloga barv"
 
-#: app/dialogs/preferences-dialog.c:2288
+#: app/dialogs/preferences-dialog.c:2393
 msgid "Color dithering:"
 msgstr "Stresanje barv:"
 
-#: app/dialogs/preferences-dialog.c:2292
+#: app/dialogs/preferences-dialog.c:2397
 msgid "Enable dithering of transparency"
 msgstr "Omogoči stresanje prosojnosti"
 
-#: app/dialogs/preferences-dialog.c:2295
+#: app/dialogs/preferences-dialog.c:2400
 msgid "Enable dithering of text layers"
 msgstr "Omogoči stresanje plasti besedila"
 
-#: app/dialogs/preferences-dialog.c:2304
+#: app/dialogs/preferences-dialog.c:2409
 msgid "Keep recent settings:"
 msgstr "Ohrani nedavne nastavitve:"
 
-#: app/dialogs/preferences-dialog.c:2308
+#: app/dialogs/preferences-dialog.c:2413
 msgid "Default to the last used settings"
 msgstr "Nazadnje uporabljene nastavitve naj bodo privzete"
 
-#: app/dialogs/preferences-dialog.c:2311
+#: app/dialogs/preferences-dialog.c:2416
 msgid "Show advanced color options"
 msgstr "Pokaži napredne barvne možnosti"
 
 #. Canvas Size Dialog
-#: app/dialogs/preferences-dialog.c:2315
+#: app/dialogs/preferences-dialog.c:2420
 msgid "Canvas Size Dialog"
 msgstr "Pogovorno okno Velikost platna"
 
-#: app/dialogs/preferences-dialog.c:2320 app/dialogs/preferences-dialog.c:2349
+#: app/dialogs/preferences-dialog.c:2425 app/dialogs/preferences-dialog.c:2454
 msgid "Fill with:"
 msgstr "Napolni z:"
 
-#: app/dialogs/preferences-dialog.c:2323
+#: app/dialogs/preferences-dialog.c:2428
 msgid "Resize layers:"
 msgstr "Spremeni velikost plasti:"
 
-#: app/dialogs/preferences-dialog.c:2327
+#: app/dialogs/preferences-dialog.c:2432
 msgid "Resize text layers"
 msgstr "Spremeni velikost plastem z besedilom"
 
 #. New Layer Dialog
-#: app/dialogs/preferences-dialog.c:2331
+#: app/dialogs/preferences-dialog.c:2436
 msgid "New Layer Dialog"
 msgstr "Pogovorno okno Nova plast"
 
-#: app/dialogs/preferences-dialog.c:2336
+#: app/dialogs/preferences-dialog.c:2441
 msgid "Layer name:"
 msgstr "Ime plasti:"
 
-#: app/dialogs/preferences-dialog.c:2340
+#: app/dialogs/preferences-dialog.c:2445
 msgid "Fill type:"
 msgstr "Vrsta datoteke:"
 
 #. Layer Boundary Size Dialog
-#: app/dialogs/preferences-dialog.c:2344
+#: app/dialogs/preferences-dialog.c:2449
 msgid "Layer Boundary Size Dialog"
 msgstr "Pogovorno okno Mere robov plasti"
 
 #. Add Layer Mask Dialog
-#: app/dialogs/preferences-dialog.c:2353
+#: app/dialogs/preferences-dialog.c:2458
 msgid "Add Layer Mask Dialog"
 msgstr "Pogovorno okno Dodaj masko plasti"
 
-#: app/dialogs/preferences-dialog.c:2358
+#: app/dialogs/preferences-dialog.c:2463
 msgid "Layer mask type:"
 msgstr "Vrsta maske plasti:"
 
-#: app/dialogs/preferences-dialog.c:2362
+#: app/dialogs/preferences-dialog.c:2467
 msgid "Invert mask"
 msgstr "Preobrni masko"
 
 #. Merge Layers Dialog
-#: app/dialogs/preferences-dialog.c:2366
+#: app/dialogs/preferences-dialog.c:2471
 msgid "Merge Layers Dialog"
 msgstr "Pogovorno okno Spoji plasti"
 
-#: app/dialogs/preferences-dialog.c:2373
+#: app/dialogs/preferences-dialog.c:2478
 msgid "Merged layer size:"
 msgstr "Velikost spojene plasti:"
 
-#: app/dialogs/preferences-dialog.c:2377
+#: app/dialogs/preferences-dialog.c:2482
 msgid "Merge within active groups only"
 msgstr "Spoji le v okviru aktivnih skupin"
 
-#: app/dialogs/preferences-dialog.c:2380
+#: app/dialogs/preferences-dialog.c:2485
 msgid "Discard invisible layers"
 msgstr "Opusti nevidne plasti"
 
 #. New Channel Dialog
-#: app/dialogs/preferences-dialog.c:2384
+#: app/dialogs/preferences-dialog.c:2489
 msgid "New Channel Dialog"
 msgstr "Pogovorno okno Nov kanal"
 
-#: app/dialogs/preferences-dialog.c:2389
+#: app/dialogs/preferences-dialog.c:2494
 msgid "Channel name:"
 msgstr "Ime kanala:"
 
-#: app/dialogs/preferences-dialog.c:2393
+#: app/dialogs/preferences-dialog.c:2498
 msgid "Color and opacity:"
 msgstr "Barva in prekrivnost:"
 
-#: app/dialogs/preferences-dialog.c:2394
+#: app/dialogs/preferences-dialog.c:2499
 msgid "Default New Channel Color and Opacity"
 msgstr "Privzeta barva in prekrivnost novega kanala"
 
 #. New Path Dialog
-#: app/dialogs/preferences-dialog.c:2399
+#: app/dialogs/preferences-dialog.c:2504
 msgid "New Path Dialog"
 msgstr "Pogovorno okno Nova pot"
 
-#: app/dialogs/preferences-dialog.c:2404
+#: app/dialogs/preferences-dialog.c:2509
 msgid "Path name:"
 msgstr "Ime poti:"
 
 #. Export Path Dialog
-#: app/dialogs/preferences-dialog.c:2408
+#: app/dialogs/preferences-dialog.c:2513
 msgid "Export Paths Dialog"
 msgstr "Pogovorno okno Izvozi poti"
 
-#: app/dialogs/preferences-dialog.c:2413
+#: app/dialogs/preferences-dialog.c:2518
 msgid "Export folder:"
 msgstr "Izvozna mapa:"
 
-#: app/dialogs/preferences-dialog.c:2414
+#: app/dialogs/preferences-dialog.c:2519
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Izberite privzeto mapo za izvoz poti"
 
-#: app/dialogs/preferences-dialog.c:2418
+#: app/dialogs/preferences-dialog.c:2523
 msgid "Export the selected paths only"
 msgstr "Izvozi le izbrane poti"
 
 #. Import Path Dialog
-#: app/dialogs/preferences-dialog.c:2422
+#: app/dialogs/preferences-dialog.c:2527
 msgid "Import Paths Dialog"
 msgstr "Pogovorno okno Uvozi poti"
 
-#: app/dialogs/preferences-dialog.c:2427
+#: app/dialogs/preferences-dialog.c:2532
 msgid "Import folder:"
 msgstr "Uvozna mapa:"
 
-#: app/dialogs/preferences-dialog.c:2428
+#: app/dialogs/preferences-dialog.c:2533
 msgid "Select Default Folder for Importing Paths"
 msgstr "Izberite privzeto mapo za uvoz poti"
 
-#: app/dialogs/preferences-dialog.c:2432
+#: app/dialogs/preferences-dialog.c:2537
 msgid "Merge imported paths"
 msgstr "Spoji uvožene poti"
 
-#: app/dialogs/preferences-dialog.c:2435
+#: app/dialogs/preferences-dialog.c:2540
 msgid "Scale imported paths"
 msgstr "Umeri uvožene poti"
 
 #. Feather Selection Dialog
-#: app/dialogs/preferences-dialog.c:2439
+#: app/dialogs/preferences-dialog.c:2544
 msgid "Feather Selection Dialog"
 msgstr "Pogovorno okno Operjeni izbor"
 
-#: app/dialogs/preferences-dialog.c:2444
+#: app/dialogs/preferences-dialog.c:2549
 msgid "Feather radius:"
 msgstr "Polmer operjanja:"
 
-#: app/dialogs/preferences-dialog.c:2448 app/dialogs/preferences-dialog.c:2470
-#: app/dialogs/preferences-dialog.c:2487
+#: app/dialogs/preferences-dialog.c:2553 app/dialogs/preferences-dialog.c:2575
+#: app/dialogs/preferences-dialog.c:2592
 msgid "Selected areas continue outside the image"
 msgstr "Izbrana območja se nadaljujejo zunaj slike"
 
 #. Grow Selection Dialog
-#: app/dialogs/preferences-dialog.c:2452
+#: app/dialogs/preferences-dialog.c:2557
 msgid "Grow Selection Dialog"
 msgstr "Pogovorno okno Razširi izbor"
 
-#: app/dialogs/preferences-dialog.c:2457
+#: app/dialogs/preferences-dialog.c:2562
 msgid "Grow radius:"
 msgstr "Razširi polmer:"
 
 #. Shrink Selection Dialog
-#: app/dialogs/preferences-dialog.c:2461
+#: app/dialogs/preferences-dialog.c:2566
 msgid "Shrink Selection Dialog"
 msgstr "Pogovorno okno Zoži izbor"
 
-#: app/dialogs/preferences-dialog.c:2466
+#: app/dialogs/preferences-dialog.c:2571
 msgid "Shrink radius:"
 msgstr "Skrči polmer:"
 
 #. Border Selection Dialog
-#: app/dialogs/preferences-dialog.c:2474
+#: app/dialogs/preferences-dialog.c:2579
 msgid "Border Selection Dialog"
 msgstr "Pogovorno okno Izbor robu"
 
-#: app/dialogs/preferences-dialog.c:2479
+#: app/dialogs/preferences-dialog.c:2584
 msgid "Border radius:"
 msgstr "Polmer obrobe:"
 
-#: app/dialogs/preferences-dialog.c:2483
+#: app/dialogs/preferences-dialog.c:2588
 msgid "Border style:"
 msgstr "Slog obrobe:"
 
 #. Fill Options Dialog
-#: app/dialogs/preferences-dialog.c:2491
+#: app/dialogs/preferences-dialog.c:2596
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Pogovorni okni Zapolni oris izbora in Zapolni pot"
 
 #. Stroke Options Dialog
-#: app/dialogs/preferences-dialog.c:2500
+#: app/dialogs/preferences-dialog.c:2605
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Pogovorna okna izbor poteze in pot poteze"
 
-#: app/dialogs/preferences-dialog.c:2523 app/dialogs/preferences-dialog.c:2524
+#: app/dialogs/preferences-dialog.c:2628 app/dialogs/preferences-dialog.c:2629
 msgid "Help System"
 msgstr "Sistem pomoči"
 
-#: app/dialogs/preferences-dialog.c:2535
+#: app/dialogs/preferences-dialog.c:2640
 msgid "Show help _buttons"
 msgstr "Pokaži _gumbe pomoči"
 
-#: app/dialogs/preferences-dialog.c:2540
+#: app/dialogs/preferences-dialog.c:2645
 msgid "Use the online version"
 msgstr "Uporabi spletno različico"
 
-#: app/dialogs/preferences-dialog.c:2541
+#: app/dialogs/preferences-dialog.c:2646
 msgid "Use a locally installed copy"
 msgstr "Uporabi nameščeno kopijo"
 
-#: app/dialogs/preferences-dialog.c:2542
+#: app/dialogs/preferences-dialog.c:2647
 msgid "U_ser manual:"
 msgstr "Uporabni_ški priročnik:"
 
-#: app/dialogs/preferences-dialog.c:2553
+#: app/dialogs/preferences-dialog.c:2658
 msgid "User interface language"
 msgstr "Jezik uporabniškega vmesnika"
 
@@ -17326,15 +17326,15 @@ msgstr "Jezik uporabniškega vmesnika"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: app/dialogs/preferences-dialog.c:2612
+#: app/dialogs/preferences-dialog.c:2717
 msgid "Help Browser"
 msgstr "Brskalnik pomoči"
 
-#: app/dialogs/preferences-dialog.c:2619
+#: app/dialogs/preferences-dialog.c:2724
 msgid "H_elp browser to use:"
 msgstr "Uporabljen _brskalnik pomoči:"
 
-#: app/dialogs/preferences-dialog.c:2625
+#: app/dialogs/preferences-dialog.c:2730
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -17343,186 +17343,186 @@ msgstr ""
 "brskalnik."
 
 #. Action Search
-#: app/dialogs/preferences-dialog.c:2642
+#: app/dialogs/preferences-dialog.c:2747
 msgid "Action Search"
 msgstr "Iskanje dejanj"
 
-#: app/dialogs/preferences-dialog.c:2646
+#: app/dialogs/preferences-dialog.c:2751
 msgid "_Maximum History Size:"
 msgstr "_Največja velikost zgodovine:"
 
-#: app/dialogs/preferences-dialog.c:2650
+#: app/dialogs/preferences-dialog.c:2755
 msgid "C_lear Action History"
 msgstr "Po_čisti zgodovino dejanj"
 
-#: app/dialogs/preferences-dialog.c:2664 app/dialogs/preferences-dialog.c:2665
+#: app/dialogs/preferences-dialog.c:2769 app/dialogs/preferences-dialog.c:2770
 msgid "Display"
 msgstr "Prikaz"
 
 #. Transparency
-#: app/dialogs/preferences-dialog.c:2674
+#: app/dialogs/preferences-dialog.c:2779
 msgid "Transparency"
 msgstr "prosojnostjo"
 
-#: app/dialogs/preferences-dialog.c:2678
+#: app/dialogs/preferences-dialog.c:2783
 msgid "_Check style:"
 msgstr "Slog _šahovnice:"
 
-#: app/dialogs/preferences-dialog.c:2712
+#: app/dialogs/preferences-dialog.c:2817
 msgid "Check _size:"
 msgstr "_Velikost kvadratov šahovnice:"
 
 #. Zoom Quality
-#: app/dialogs/preferences-dialog.c:2716
+#: app/dialogs/preferences-dialog.c:2821
 msgid "Zoom Quality"
 msgstr "Kakovost povečave"
 
-#: app/dialogs/preferences-dialog.c:2720
+#: app/dialogs/preferences-dialog.c:2825
 msgid "_Zoom quality:"
 msgstr "_Kakovost povečave:"
 
 #. Monitor Resolution
-#: app/dialogs/preferences-dialog.c:2724
+#: app/dialogs/preferences-dialog.c:2829
 msgid "Monitor Resolution"
 msgstr "Ločljivost zaslona"
 
 #. Pixels
-#: app/dialogs/preferences-dialog.c:2728 app/display/gimpcursorview.c:223
+#: app/dialogs/preferences-dialog.c:2833 app/display/gimpcursorview.c:223
 #: app/widgets/gimpgrideditor.c:201 app/widgets/gimpgrideditor.c:236
 msgid "Pixels"
 msgstr "slikovnih točk"
 
-#: app/dialogs/preferences-dialog.c:2746 app/widgets/gimpgrideditor.c:197
+#: app/dialogs/preferences-dialog.c:2851 app/widgets/gimpgrideditor.c:197
 #: app/widgets/gimpgrideditor.c:232
 msgid "Horizontal"
 msgstr "Vodoravno"
 
-#: app/dialogs/preferences-dialog.c:2748 app/widgets/gimpgrideditor.c:199
+#: app/dialogs/preferences-dialog.c:2853 app/widgets/gimpgrideditor.c:199
 #: app/widgets/gimpgrideditor.c:234
 msgid "Vertical"
 msgstr "Navpično"
 
-#: app/dialogs/preferences-dialog.c:2750 app/widgets/gimpimagepropview.c:466
+#: app/dialogs/preferences-dialog.c:2855 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
-#: app/dialogs/preferences-dialog.c:2768
+#: app/dialogs/preferences-dialog.c:2873
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Razpoznaj samodejno (trenutno %d × %d ppi)"
 
-#: app/dialogs/preferences-dialog.c:2786
+#: app/dialogs/preferences-dialog.c:2891
 msgid "_Enter manually"
 msgstr "Vnesi _ročno"
 
-#: app/dialogs/preferences-dialog.c:2801
+#: app/dialogs/preferences-dialog.c:2906
 msgid "C_alibrate..."
 msgstr "K_alibriraj ..."
 
-#: app/dialogs/preferences-dialog.c:2831 app/dialogs/preferences-dialog.c:2832
+#: app/dialogs/preferences-dialog.c:2936 app/dialogs/preferences-dialog.c:2937
 msgid "Window Management"
 msgstr "Upravljanje oken"
 
-#: app/dialogs/preferences-dialog.c:2837
+#: app/dialogs/preferences-dialog.c:2942
 msgid "Window Manager Hints"
 msgstr "Namigi upravitelja oken"
 
-#: app/dialogs/preferences-dialog.c:2843
+#: app/dialogs/preferences-dialog.c:2948
 msgid "Hint for _docks and toolbox:"
 msgstr "Namig za sidrišča in _orodjarno:"
 
-#: app/dialogs/preferences-dialog.c:2846
+#: app/dialogs/preferences-dialog.c:2951
 msgid "Focus"
 msgstr "Pozornost"
 
-#: app/dialogs/preferences-dialog.c:2850
+#: app/dialogs/preferences-dialog.c:2955
 msgid "Activate the _focused image"
 msgstr "Aktiviraj sliko s _pozornostjo"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2854
+#: app/dialogs/preferences-dialog.c:2959
 msgid "Window Positions"
 msgstr "Položaji oken"
 
-#: app/dialogs/preferences-dialog.c:2857
+#: app/dialogs/preferences-dialog.c:2962
 msgid "_Save window positions on exit"
 msgstr "_Shrani položaj oken ob izhodu"
 
-#: app/dialogs/preferences-dialog.c:2860
+#: app/dialogs/preferences-dialog.c:2965
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Okna odpri na istem _zaslonu, kot so bila odprta prej"
 
-#: app/dialogs/preferences-dialog.c:2864
+#: app/dialogs/preferences-dialog.c:2969
 msgid "Save Window Positions _Now"
 msgstr "_Takoj shrani položaje oken"
 
-#: app/dialogs/preferences-dialog.c:2871
+#: app/dialogs/preferences-dialog.c:2976
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Obnovi postavitev oken na privzete vrednosti"
 
-#: app/dialogs/preferences-dialog.c:2886 app/dialogs/preferences-dialog.c:2887
+#: app/dialogs/preferences-dialog.c:2991 app/dialogs/preferences-dialog.c:2992
 msgid "Canvas Interaction"
 msgstr "Interakcija s platnom"
 
 #. Space Bar
-#: app/dialogs/preferences-dialog.c:2896
+#: app/dialogs/preferences-dialog.c:3001
 msgid "Space Bar"
 msgstr "Preslednica"
 
-#: app/dialogs/preferences-dialog.c:2902
+#: app/dialogs/preferences-dialog.c:3007
 msgid "_While space bar is pressed:"
 msgstr "_Medtem ko je pritisnjena preslednica:"
 
 #. Zoom by drag Behavior
-#: app/dialogs/preferences-dialog.c:2906 app/tools/gimpmagnifytool.c:93
+#: app/dialogs/preferences-dialog.c:3011 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
 msgstr "Povečava"
 
-#: app/dialogs/preferences-dialog.c:2912
+#: app/dialogs/preferences-dialog.c:3017
 msgid "Dra_g-to-zoom behavior:"
 msgstr "Vedenje povle_ci-za-približanje:"
 
-#: app/dialogs/preferences-dialog.c:2918
+#: app/dialogs/preferences-dialog.c:3023
 msgid "Drag-to-zoom spe_ed:"
 msgstr "_Hitrost povleci-za-približanje:"
 
-#: app/dialogs/preferences-dialog.c:2928 app/dialogs/preferences-dialog.c:2929
+#: app/dialogs/preferences-dialog.c:3033 app/dialogs/preferences-dialog.c:3034
 msgid "Modifiers"
 msgstr "Spremenilniki"
 
-#: app/dialogs/preferences-dialog.c:2940
+#: app/dialogs/preferences-dialog.c:3045
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr "_Ponastavi shranjene nastavitve spremenilnikov na privzete vrednosti"
 
-#: app/dialogs/preferences-dialog.c:2954
+#: app/dialogs/preferences-dialog.c:3059
 msgid "Snapping Behavior"
 msgstr "Vedenje pripenjanja"
 
-#: app/dialogs/preferences-dialog.c:2955
+#: app/dialogs/preferences-dialog.c:3060
 msgid "Snapping"
 msgstr "Pripenjanje"
 
-#: app/dialogs/preferences-dialog.c:2962
+#: app/dialogs/preferences-dialog.c:3067
 msgid "Default Behavior in Normal Mode"
 msgstr "Privzeto vedenje v navadnem načinu"
 
-#: app/dialogs/preferences-dialog.c:2966
+#: app/dialogs/preferences-dialog.c:3071
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Privzeto vedenje v celozaslonskem načinu"
 
-#: app/dialogs/preferences-dialog.c:2975
+#: app/dialogs/preferences-dialog.c:3080
 msgid "_Snapping distance:"
 msgstr "Oddaljenost za _pripenjanje:"
 
-#: app/dialogs/preferences-dialog.c:2984 app/dialogs/preferences-dialog.c:2985
+#: app/dialogs/preferences-dialog.c:3089 app/dialogs/preferences-dialog.c:3090
 msgid "Image Windows"
 msgstr "Okna slik"
 
-#: app/dialogs/preferences-dialog.c:3002
+#: app/dialogs/preferences-dialog.c:3107
 msgid "Merge menu and title bar"
 msgstr "Spoji menijsko in naslovno vrstico"
 
-#: app/dialogs/preferences-dialog.c:3005
+#: app/dialogs/preferences-dialog.c:3110
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please "
@@ -17532,381 +17532,381 @@ msgstr ""
 "pravilno na vašem sistemu (npr. povzroči dve naslovni vrstici namesto ene), "
 "poročajte o napaki."
 
-#: app/dialogs/preferences-dialog.c:3015
+#: app/dialogs/preferences-dialog.c:3120
 msgid "Use \"Show _all\" by default"
 msgstr "Privzeto uporabi »Pokaži _vse«"
 
-#: app/dialogs/preferences-dialog.c:3019
+#: app/dialogs/preferences-dialog.c:3124
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Privzeto uporabi »_Piko za piko«"
 
-#: app/dialogs/preferences-dialog.c:3025
+#: app/dialogs/preferences-dialog.c:3130
 msgid "Marching ants s_peed:"
 msgstr "Hitrost korakajočih m_ravljic:"
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3029
+#: app/dialogs/preferences-dialog.c:3134
 msgid "Zoom & Resize Behavior"
 msgstr "Vedenje povečave in spreminjanja velikosti"
 
-#: app/dialogs/preferences-dialog.c:3033
+#: app/dialogs/preferences-dialog.c:3138
 msgid "Resize window on _zoom"
 msgstr "Prilagodi velikost okna _povečavi"
 
-#: app/dialogs/preferences-dialog.c:3036
+#: app/dialogs/preferences-dialog.c:3141
 msgid "Resize window on image _size change"
 msgstr "Prilagodi velikost okna spremenjeni _velikosti slike"
 
-#: app/dialogs/preferences-dialog.c:3042
+#: app/dialogs/preferences-dialog.c:3147
 msgid "Show entire image"
 msgstr "Pokaži celo sliko"
 
-#: app/dialogs/preferences-dialog.c:3044
+#: app/dialogs/preferences-dialog.c:3149
 msgid "Initial zoom _ratio:"
 msgstr "Začetno _razmerje povečave:"
 
-#: app/dialogs/preferences-dialog.c:3052
+#: app/dialogs/preferences-dialog.c:3157
 msgid "Image Window Appearance"
 msgstr "Videz okna slike"
 
-#: app/dialogs/preferences-dialog.c:3062
+#: app/dialogs/preferences-dialog.c:3167
 msgid "Default Appearance in Normal Mode"
 msgstr "Privzeti videz v navadnem načinu"
 
-#: app/dialogs/preferences-dialog.c:3067
+#: app/dialogs/preferences-dialog.c:3172
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Privzeti videz v celozaslonskem načinu"
 
-#: app/dialogs/preferences-dialog.c:3076
+#: app/dialogs/preferences-dialog.c:3181
 msgid "Image Title & Statusbar Format"
 msgstr "Oblika naslova slike in vrstice stanja"
 
-#: app/dialogs/preferences-dialog.c:3077
+#: app/dialogs/preferences-dialog.c:3182
 msgid "Title & Status"
 msgstr "Naslov in stanje"
 
-#: app/dialogs/preferences-dialog.c:3095
+#: app/dialogs/preferences-dialog.c:3200
 msgid "Current format"
 msgstr "Trenutna oblika"
 
-#: app/dialogs/preferences-dialog.c:3096
+#: app/dialogs/preferences-dialog.c:3201
 msgid "Default format"
 msgstr "Privzeta oblika"
 
-#: app/dialogs/preferences-dialog.c:3097
+#: app/dialogs/preferences-dialog.c:3202
 msgid "Show zoom percentage"
 msgstr "Pokaži odstotek povečave"
 
-#: app/dialogs/preferences-dialog.c:3098
+#: app/dialogs/preferences-dialog.c:3203
 msgid "Show zoom ratio"
 msgstr "Pokaži razmerje povečave"
 
-#: app/dialogs/preferences-dialog.c:3099
+#: app/dialogs/preferences-dialog.c:3204
 msgid "Show image size"
 msgstr "Pokaži velikost slike"
 
-#: app/dialogs/preferences-dialog.c:3100
+#: app/dialogs/preferences-dialog.c:3205
 msgid "Show drawable size"
 msgstr "Pokaži velikost risanega predmeta"
 
-#: app/dialogs/preferences-dialog.c:3113
+#: app/dialogs/preferences-dialog.c:3218
 msgid "Image Title Format"
 msgstr "Oblika naslova slike"
 
-#: app/dialogs/preferences-dialog.c:3115
+#: app/dialogs/preferences-dialog.c:3220
 msgid "Image Statusbar Format"
 msgstr "Oblika vrstice stanja"
 
-#: app/dialogs/preferences-dialog.c:3209 app/dialogs/preferences-dialog.c:3210
+#: app/dialogs/preferences-dialog.c:3314 app/dialogs/preferences-dialog.c:3315
 msgid "Input Devices"
 msgstr "Vhodne naprave"
 
-#: app/dialogs/preferences-dialog.c:3221
+#: app/dialogs/preferences-dialog.c:3326
 msgid "Pointers"
 msgstr "Kazalci"
 
-#: app/dialogs/preferences-dialog.c:3228
+#: app/dialogs/preferences-dialog.c:3333
 msgid "Pointer _mode:"
 msgstr "Način _kazalca:"
 
-#: app/dialogs/preferences-dialog.c:3231
+#: app/dialogs/preferences-dialog.c:3336
 msgid "Pointer _handedness:"
 msgstr "Ro_čnost kazalca:"
 
-#: app/dialogs/preferences-dialog.c:3235
+#: app/dialogs/preferences-dialog.c:3340
 msgid "Paint Tools"
 msgstr "Orodja barvanja"
 
-#: app/dialogs/preferences-dialog.c:3239
+#: app/dialogs/preferences-dialog.c:3344
 msgid "Show _brush outline"
 msgstr "Pokaži obris _čopiča"
 
-#: app/dialogs/preferences-dialog.c:3247
+#: app/dialogs/preferences-dialog.c:3352
 msgid "S_nap brush outline to stroke"
 msgstr "Prip_ni obris čopiča na potezo"
 
-#: app/dialogs/preferences-dialog.c:3251
+#: app/dialogs/preferences-dialog.c:3356
 msgid "Show pointer for paint _tools"
 msgstr "Pokaži kazalec orodij za _barvanje"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3255
+#: app/dialogs/preferences-dialog.c:3360
 msgid "Extended Input Devices"
 msgstr "Razširjene vhodne naprave"
 
-#: app/dialogs/preferences-dialog.c:3271
+#: app/dialogs/preferences-dialog.c:3376
 msgid "Pointer Input API:"
 msgstr "Vnosni API kazalca:"
 
-#: app/dialogs/preferences-dialog.c:3282
+#: app/dialogs/preferences-dialog.c:3387
 msgid "S_hare tool and tool options between input devices"
 msgstr "So_uporaba orodja in možnosti orodja med vhodnimi napravami"
 
-#: app/dialogs/preferences-dialog.c:3286
+#: app/dialogs/preferences-dialog.c:3391
 msgid "Configure E_xtended Input Devices..."
 msgstr "Prilagodi _dodatne zunanje naprave ..."
 
-#: app/dialogs/preferences-dialog.c:3293
+#: app/dialogs/preferences-dialog.c:3398
 msgid "_Save input device settings on exit"
 msgstr "_Shrani nastavitve vhodnih naprav ob izhodu iz programa"
 
-#: app/dialogs/preferences-dialog.c:3297
+#: app/dialogs/preferences-dialog.c:3402
 msgid "Save Input Device Settings _Now"
 msgstr "_Takoj shrani nastavitve vhodnih naprav"
 
-#: app/dialogs/preferences-dialog.c:3304
+#: app/dialogs/preferences-dialog.c:3409
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Ponastavi nastavitve vhodnih naprav na privzete vrednosti"
 
-#: app/dialogs/preferences-dialog.c:3319
+#: app/dialogs/preferences-dialog.c:3424
 msgid "Additional Input Controllers"
 msgstr "Dodatni vhodni kontrolniki"
 
-#: app/dialogs/preferences-dialog.c:3320
+#: app/dialogs/preferences-dialog.c:3425
 msgid "Input Controllers"
 msgstr "Vhodni kontrolniki"
 
-#: app/dialogs/preferences-dialog.c:3335 app/dialogs/preferences-dialog.c:3336
+#: app/dialogs/preferences-dialog.c:3440 app/dialogs/preferences-dialog.c:3441
 msgid "Folders"
 msgstr "Mape"
 
-#: app/dialogs/preferences-dialog.c:3343
+#: app/dialogs/preferences-dialog.c:3448
 msgid "Reset _Folders"
 msgstr "Ponastavi _mape"
 
-#: app/dialogs/preferences-dialog.c:3359
+#: app/dialogs/preferences-dialog.c:3464
 msgid "_Temporary folder:"
 msgstr "_Delovna mapa:"
 
-#: app/dialogs/preferences-dialog.c:3360
+#: app/dialogs/preferences-dialog.c:3465
 msgid "Select Folder for Temporary Files"
 msgstr "Izberite mapo za delovne datoteke"
 
-#: app/dialogs/preferences-dialog.c:3364
+#: app/dialogs/preferences-dialog.c:3469
 msgid "_Swap folder:"
 msgstr "_Izmenjalna mapa:"
 
-#: app/dialogs/preferences-dialog.c:3365
+#: app/dialogs/preferences-dialog.c:3470
 msgid "Select Swap Folder"
 msgstr "Izberite izmenjalno mapo"
 
-#: app/dialogs/preferences-dialog.c:3398
+#: app/dialogs/preferences-dialog.c:3503
 msgid "Brush Folders"
 msgstr "Mape čopičev"
 
-#: app/dialogs/preferences-dialog.c:3401
+#: app/dialogs/preferences-dialog.c:3506
 msgid "Reset Brush _Folders"
 msgstr "Ponastavi _mape čopičev"
 
-#: app/dialogs/preferences-dialog.c:3402
+#: app/dialogs/preferences-dialog.c:3507
 msgid "Select Brush Folders"
 msgstr "Izberi mape čopičev"
 
-#: app/dialogs/preferences-dialog.c:3404
+#: app/dialogs/preferences-dialog.c:3509
 msgid "Dynamics Folders"
 msgstr "Mape dinamik"
 
-#: app/dialogs/preferences-dialog.c:3407
+#: app/dialogs/preferences-dialog.c:3512
 msgid "Reset Dynamics _Folders"
 msgstr "Ponastavi _mape dinamik"
 
-#: app/dialogs/preferences-dialog.c:3408
+#: app/dialogs/preferences-dialog.c:3513
 msgid "Select Dynamics Folders"
 msgstr "Izberite mape dinamik"
 
-#: app/dialogs/preferences-dialog.c:3410
+#: app/dialogs/preferences-dialog.c:3515
 msgid "Pattern Folders"
 msgstr "Mape vzorcev"
 
-#: app/dialogs/preferences-dialog.c:3413
+#: app/dialogs/preferences-dialog.c:3518
 msgid "Reset Pattern _Folders"
 msgstr "Ponastavi _mape vzorcev"
 
-#: app/dialogs/preferences-dialog.c:3414
+#: app/dialogs/preferences-dialog.c:3519
 msgid "Select Pattern Folders"
 msgstr "Izberite mape vzorcev"
 
-#: app/dialogs/preferences-dialog.c:3416
+#: app/dialogs/preferences-dialog.c:3521
 msgid "Palette Folders"
 msgstr "Mape palet"
 
-#: app/dialogs/preferences-dialog.c:3419
+#: app/dialogs/preferences-dialog.c:3524
 msgid "Reset Palette _Folders"
 msgstr "Ponastavi _mape palet"
 
-#: app/dialogs/preferences-dialog.c:3420
+#: app/dialogs/preferences-dialog.c:3525
 msgid "Select Palette Folders"
 msgstr "Izberite mape palet"
 
-#: app/dialogs/preferences-dialog.c:3422
+#: app/dialogs/preferences-dialog.c:3527
 msgid "Gradient Folders"
 msgstr "Mape prelivov"
 
-#: app/dialogs/preferences-dialog.c:3425
+#: app/dialogs/preferences-dialog.c:3530
 msgid "Reset Gradient _Folders"
 msgstr "Ponastavi _mape prelivov"
 
-#: app/dialogs/preferences-dialog.c:3426
+#: app/dialogs/preferences-dialog.c:3531
 msgid "Select Gradient Folders"
 msgstr "Izberite mape prelivov"
 
-#: app/dialogs/preferences-dialog.c:3428
+#: app/dialogs/preferences-dialog.c:3533
 msgid "Font Folders"
 msgstr "Mape pisav"
 
-#: app/dialogs/preferences-dialog.c:3431
+#: app/dialogs/preferences-dialog.c:3536
 msgid "Reset Font _Folders"
 msgstr "Ponastavi _mape pisav"
 
-#: app/dialogs/preferences-dialog.c:3432
+#: app/dialogs/preferences-dialog.c:3537
 msgid "Select Font Folders"
 msgstr "Izberite mape pisav"
 
-#: app/dialogs/preferences-dialog.c:3434
+#: app/dialogs/preferences-dialog.c:3539
 msgid "Tool Preset Folders"
 msgstr "Mape s prednastavitvami orodij"
 
-#: app/dialogs/preferences-dialog.c:3437
+#: app/dialogs/preferences-dialog.c:3542
 msgid "Reset Tool Preset _Folders"
 msgstr "Ponastavi _mape s prednastavitvami orodij"
 
-#: app/dialogs/preferences-dialog.c:3438
+#: app/dialogs/preferences-dialog.c:3543
 msgid "Select Tool Preset Folders"
 msgstr "Izberite mape s prednastavitvami orodij"
 
-#: app/dialogs/preferences-dialog.c:3440
+#: app/dialogs/preferences-dialog.c:3545
 msgid "MyPaint Brush Folders"
 msgstr "Mape čopičev MyPaint"
 
-#: app/dialogs/preferences-dialog.c:3443
+#: app/dialogs/preferences-dialog.c:3548
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Ponastavi _mape čopičev MyPaint"
 
-#: app/dialogs/preferences-dialog.c:3444
+#: app/dialogs/preferences-dialog.c:3549
 msgid "Select MyPaint Brush Folders"
 msgstr "Izberite mape čopičev MyPaint"
 
-#: app/dialogs/preferences-dialog.c:3446
+#: app/dialogs/preferences-dialog.c:3551
 msgid "Plug-in Folders"
 msgstr "Mape vstavkov"
 
-#: app/dialogs/preferences-dialog.c:3449
+#: app/dialogs/preferences-dialog.c:3554
 msgid "Reset plug-in _Folders"
 msgstr "Ponastavi _mape vstavkov"
 
-#: app/dialogs/preferences-dialog.c:3450
+#: app/dialogs/preferences-dialog.c:3555
 msgid "Select plug-in Folders"
 msgstr "Izberite mape vstavkov"
 
-#: app/dialogs/preferences-dialog.c:3452
+#: app/dialogs/preferences-dialog.c:3557
 msgid "Scripts"
 msgstr "Skripti"
 
-#: app/dialogs/preferences-dialog.c:3452
+#: app/dialogs/preferences-dialog.c:3557
 msgid "Script-Fu Folders"
 msgstr "Mape Skript-Fu"
 
-#: app/dialogs/preferences-dialog.c:3455
+#: app/dialogs/preferences-dialog.c:3560
 msgid "Reset Script-Fu _Folders"
 msgstr "Ponastavi _mape Skript-Fu"
 
-#: app/dialogs/preferences-dialog.c:3456
+#: app/dialogs/preferences-dialog.c:3561
 msgid "Select Script-Fu Folders"
 msgstr "Izberite mape Skript-Fu"
 
-#: app/dialogs/preferences-dialog.c:3458
+#: app/dialogs/preferences-dialog.c:3563
 msgid "Module Folders"
 msgstr "Mape gradnikov"
 
-#: app/dialogs/preferences-dialog.c:3461
+#: app/dialogs/preferences-dialog.c:3566
 msgid "Reset Module _Folders"
 msgstr "Ponastavi _mape modulov"
 
-#: app/dialogs/preferences-dialog.c:3462
+#: app/dialogs/preferences-dialog.c:3567
 msgid "Select Module Folders"
 msgstr "Izberite mape gradnikov"
 
-#: app/dialogs/preferences-dialog.c:3464
+#: app/dialogs/preferences-dialog.c:3569
 msgid "Interpreters"
 msgstr "Prevajalniki"
 
-#: app/dialogs/preferences-dialog.c:3464
+#: app/dialogs/preferences-dialog.c:3569
 msgid "Interpreter Folders"
 msgstr "Mape prevajalnika"
 
-#: app/dialogs/preferences-dialog.c:3467
+#: app/dialogs/preferences-dialog.c:3572
 msgid "Reset Interpreter _Folders"
 msgstr "Ponastavi _mape prevajalnika"
 
-#: app/dialogs/preferences-dialog.c:3468
+#: app/dialogs/preferences-dialog.c:3573
 msgid "Select Interpreter Folders"
 msgstr "Izberite mape prevajalnika"
 
-#: app/dialogs/preferences-dialog.c:3470
+#: app/dialogs/preferences-dialog.c:3575
 msgid "Environment"
 msgstr "Okolje"
 
-#: app/dialogs/preferences-dialog.c:3470
+#: app/dialogs/preferences-dialog.c:3575
 msgid "Environment Folders"
 msgstr "Okoljske mape"
 
-#: app/dialogs/preferences-dialog.c:3473
+#: app/dialogs/preferences-dialog.c:3578
 msgid "Reset Environment _Folders"
 msgstr "Ponastavi _mape okolja"
 
-#: app/dialogs/preferences-dialog.c:3474
+#: app/dialogs/preferences-dialog.c:3579
 msgid "Select Environment Folders"
 msgstr "Izberite mape okolja"
 
-#: app/dialogs/preferences-dialog.c:3476
+#: app/dialogs/preferences-dialog.c:3581
 msgid "Themes"
 msgstr "Teme"
 
-#: app/dialogs/preferences-dialog.c:3476
+#: app/dialogs/preferences-dialog.c:3581
 msgid "Theme Folders"
 msgstr "Mape tem"
 
-#: app/dialogs/preferences-dialog.c:3479
+#: app/dialogs/preferences-dialog.c:3584
 msgid "Reset Theme _Folders"
 msgstr "Ponastavi _mape tem"
 
-#: app/dialogs/preferences-dialog.c:3480
+#: app/dialogs/preferences-dialog.c:3585
 msgid "Select Theme Folders"
 msgstr "Izberite mape tem"
 
-#: app/dialogs/preferences-dialog.c:3482
+#: app/dialogs/preferences-dialog.c:3587
 msgid "Icon Themes"
 msgstr "Teme ikon"
 
-#: app/dialogs/preferences-dialog.c:3482
+#: app/dialogs/preferences-dialog.c:3587
 msgid "Icon Theme Folders"
 msgstr "Mape tem ikon"
 
-#: app/dialogs/preferences-dialog.c:3485
+#: app/dialogs/preferences-dialog.c:3590
 msgid "Reset Icon Theme _Folders"
 msgstr "Ponastavi _mape tem ikon"
 
-#: app/dialogs/preferences-dialog.c:3486
+#: app/dialogs/preferences-dialog.c:3591
 msgid "Select Icon Theme Folders"
 msgstr "Izberite mape tem ikon"
 
@@ -18177,7 +18177,7 @@ msgid "_Next Tip"
 msgstr "_Naslednji nasvet"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1084
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1080
 msgid "Learn more"
 msgstr "Želim izvedeti več"
 
@@ -18370,27 +18370,27 @@ msgstr "Odpri obstoječo sliko"
 msgid "Recent Images"
 msgstr "Nedavne slike"
 
-#: app/dialogs/welcome-dialog.c:812
+#: app/dialogs/welcome-dialog.c:808
 msgid "O_pen Selected Images"
 msgstr "O_dpri izbrane slike"
 
-#: app/dialogs/welcome-dialog.c:821
+#: app/dialogs/welcome-dialog.c:817
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 "Pokaži ob zagonu (okno dobrodošlice lahko znova prikažete prek menija "
 "»Pomoč«)"
 
-#: app/dialogs/welcome-dialog.c:849
+#: app/dialogs/welcome-dialog.c:845
 #, c-format
 msgid "Ways to contribute"
 msgstr "Načini, kako lahko prispevate"
 
-#: app/dialogs/welcome-dialog.c:858 app/dialogs/welcome-dialog.c:869
+#: app/dialogs/welcome-dialog.c:854 app/dialogs/welcome-dialog.c:865
 msgid "Report Bugs"
 msgstr "Prijavite napake"
 
-#: app/dialogs/welcome-dialog.c:860
+#: app/dialogs/welcome-dialog.c:856
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18399,11 +18399,11 @@ msgstr ""
 "Kot vsak program tudi GIMP ni brez hroščev, zato je poročanje o napakah, na "
 "katere naletite, zelo pomembno za razvoj."
 
-#: app/dialogs/welcome-dialog.c:873 app/dialogs/welcome-dialog.c:883
+#: app/dialogs/welcome-dialog.c:869 app/dialogs/welcome-dialog.c:879
 msgid "Write Code"
 msgstr "Programirajte"
 
-#: app/dialogs/welcome-dialog.c:875
+#: app/dialogs/welcome-dialog.c:871
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18412,39 +18412,39 @@ msgstr ""
 "Na našem spletnem mestu za razvijalce se lahko začete učiti o tem, kako "
 "prispevate kodo."
 
-#: app/dialogs/welcome-dialog.c:887 app/dialogs/welcome-dialog.c:897
+#: app/dialogs/welcome-dialog.c:883 app/dialogs/welcome-dialog.c:893
 msgid "Translate"
 msgstr "Prevajajte"
 
-#: app/dialogs/welcome-dialog.c:889
+#: app/dialogs/welcome-dialog.c:885
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Obrnite se na ustrezno prevajalsko ekipo za svoj jezik"
 
-#: app/dialogs/welcome-dialog.c:901
+#: app/dialogs/welcome-dialog.c:897
 msgid "Donate"
 msgstr "Donirajte"
 
-#: app/dialogs/welcome-dialog.c:903
+#: app/dialogs/welcome-dialog.c:899
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Doniranje denarja je pomembno: GIMP je trajnosten."
 
-#: app/dialogs/welcome-dialog.c:911
+#: app/dialogs/welcome-dialog.c:907
 msgid "Donate via Liberapay"
 msgstr "Donirajte preko storitve Liberapay"
 
-#: app/dialogs/welcome-dialog.c:914
+#: app/dialogs/welcome-dialog.c:910
 msgid "Other donation options"
 msgstr "Druge možnosti doniranja"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:948
+#: app/dialogs/welcome-dialog.c:944
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Opombe ob izdaji GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1059
+#: app/dialogs/welcome-dialog.c:1055
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Kliknite postavke izdaje z oznako %s, da si ogledate predstavitev."
@@ -18655,23 +18655,23 @@ msgstr "V"
 msgid "_Sample Merged"
 msgstr "_Vzorči spojeno"
 
-#: app/display/gimpdisplayshell.c:525
+#: app/display/gimpdisplayshell.c:521
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: app/display/gimpdisplayshell.c:675
+#: app/display/gimpdisplayshell.c:671
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: app/display/gimpdisplayshell.c:704
+#: app/display/gimpdisplayshell.c:700
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
-#: app/display/gimpdisplayshell.c:719
+#: app/display/gimpdisplayshell.c:715
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
-#: app/display/gimpdisplayshell.c:772 app/display/gimpdisplayshell.c:1489
+#: app/display/gimpdisplayshell.c:768 app/display/gimpdisplayshell.c:1476
 #: app/widgets/gimptoolbox.c:252
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
@@ -18787,12 +18787,12 @@ msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
 #: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1877
-#: app/widgets/gimplayertreeview.c:804
+#: app/widgets/gimplayertreeview.c:805
 msgid "Drop layers"
 msgstr "Spusti plasti"
 
 #: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:881
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:882
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Spuščen medpomnilnik"
@@ -20296,7 +20296,7 @@ msgstr "Spremeni barve v sivinske odtenke"
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1272
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
-#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:273
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:274
 msgid "Mode"
 msgstr "Način"
 
@@ -21140,8 +21140,8 @@ msgstr "Slika »%s« (%d) ne vsebuje vzorčne točke z identifikacijo %d"
 
 #: app/pdb/gimppdb-utils.c:812
 #, c-format
-msgid "Vectors object %d does not contain stroke with ID %d"
-msgstr "Vektorski predmet %d ne vsebuje poteze z identifikacijo %d"
+msgid "Path object %d does not contain stroke with ID %d"
+msgstr "Predmet poti %d ne vsebuje poteze z identifikacijo %d"
 
 #: app/pdb/gimppdb-utils.c:828
 #, c-format
@@ -21343,7 +21343,7 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: app/pdb/image-cmds.c:2501
+#: app/pdb/image-cmds.c:2459
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -21371,6 +21371,42 @@ msgstr "2D-preoblikovanje"
 #: app/pdb/item-transform-cmds.c:898
 msgid "2D Transforming"
 msgstr "2D-preoblikovanje"
+
+#: app/pdb/path-cmds.c:330
+msgid "Remove path stroke"
+msgstr "Odstrani potezo poti"
+
+#: app/pdb/path-cmds.c:367
+msgid "Close path stroke"
+msgstr "Zapri potezo poti"
+
+#: app/pdb/path-cmds.c:406
+msgid "Reverse path stroke"
+msgstr "Obratna poteza poti"
+
+#: app/pdb/path-cmds.c:451
+msgid "Translate path stroke"
+msgstr "Premakni potezo poti"
+
+#: app/pdb/path-cmds.c:496
+msgid "Scale path stroke"
+msgstr "Spremeni merilo poteze poti"
+
+#: app/pdb/path-cmds.c:543
+msgid "Rotate path stroke"
+msgstr "Zasukaj potezo poti"
+
+#: app/pdb/path-cmds.c:588 app/pdb/path-cmds.c:637
+msgid "Flip path stroke"
+msgstr "Prezrcali potezo poti"
+
+#: app/pdb/path-cmds.c:768 app/pdb/path-cmds.c:892 app/pdb/path-cmds.c:1122
+msgid "Add path stroke"
+msgstr "Dodaj potezo poti"
+
+#: app/pdb/path-cmds.c:946 app/pdb/path-cmds.c:1002 app/pdb/path-cmds.c:1066
+msgid "Extend path stroke"
+msgstr "Razširi potezo poti"
 
 #: app/pdb/pdb-cmds.c:1183 app/pdb/pdb-cmds.c:1225
 #, c-format
@@ -21758,44 +21794,6 @@ msgstr "Določite atribute plasti besedila"
 #: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "Določite označevanje plasti besedila"
-
-#: app/pdb/vectors-cmds.c:330
-msgid "Remove path stroke"
-msgstr "Odstrani potezo poti"
-
-#: app/pdb/vectors-cmds.c:367
-msgid "Close path stroke"
-msgstr "Zapri potezo poti"
-
-#: app/pdb/vectors-cmds.c:406
-msgid "Reverse path stroke"
-msgstr "Obratna poteza poti"
-
-#: app/pdb/vectors-cmds.c:451
-msgid "Translate path stroke"
-msgstr "Premakni potezo poti"
-
-#: app/pdb/vectors-cmds.c:496
-msgid "Scale path stroke"
-msgstr "Spremeni merilo poteze poti"
-
-#: app/pdb/vectors-cmds.c:543
-msgid "Rotate path stroke"
-msgstr "Zasukaj potezo poti"
-
-#: app/pdb/vectors-cmds.c:588 app/pdb/vectors-cmds.c:637
-msgid "Flip path stroke"
-msgstr "Prezrcali potezo poti"
-
-#: app/pdb/vectors-cmds.c:768 app/pdb/vectors-cmds.c:892
-#: app/pdb/vectors-cmds.c:1122
-msgid "Add path stroke"
-msgstr "Dodaj potezo poti"
-
-#: app/pdb/vectors-cmds.c:946 app/pdb/vectors-cmds.c:1002
-#: app/pdb/vectors-cmds.c:1066
-msgid "Extend path stroke"
-msgstr "Razširi potezo poti"
 
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
@@ -26112,7 +26110,7 @@ msgstr "(brez)"
 msgid "Clipboard"
 msgstr "Odložišče"
 
-#: app/widgets/gimpcolordialog.c:247
+#: app/widgets/gimpcolordialog.c:252
 msgid "Add the current color to the color history"
 msgstr "Dodaj trenutno barvo zgodovini barv."
 
@@ -27484,16 +27482,16 @@ msgstr "Vse izvožene slike"
 msgid "_Help"
 msgstr "Po_moč"
 
-#: app/widgets/gimpfiledialog.c:782
+#: app/widgets/gimpfiledialog.c:784
 msgid "Show _All Files"
 msgstr "Pokaži _vse datoteke"
 
-#: app/widgets/gimpfiledialog.c:814
+#: app/widgets/gimpfiledialog.c:816
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Izberite vrsto datotek (%s)"
 
-#: app/widgets/gimpfiledialog.c:816
+#: app/widgets/gimpfiledialog.c:818
 msgid "Select File _Type"
 msgstr "Izberite _vrsto datotek"
 
@@ -27968,35 +27966,35 @@ msgstr "Sistemski jezik"
 msgid "Switch to another group of modes"
 msgstr "Preklopi na drugo skupino načinov"
 
-#: app/widgets/gimplayertreeview.c:412 app/widgets/gimplayertreeview.c:415
+#: app/widgets/gimplayertreeview.c:413 app/widgets/gimplayertreeview.c:416
 msgid "Lock alpha channel"
 msgstr "Zakleni kanal alfa"
 
-#: app/widgets/gimplayertreeview.c:413
+#: app/widgets/gimplayertreeview.c:414
 msgid "Unlock alpha channel"
 msgstr "Odkleni kanal alfa"
 
-#: app/widgets/gimplayertreeview.c:414
+#: app/widgets/gimplayertreeview.c:415
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Predmetu določite izključen zaklep kanala alfa"
 
-#: app/widgets/gimplayertreeview.c:1051
+#: app/widgets/gimplayertreeview.c:1052
 msgid "Set layers mode"
 msgstr "Določi način plasti"
 
-#: app/widgets/gimplayertreeview.c:1297
+#: app/widgets/gimplayertreeview.c:1298
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Zasidraj plavajočo plast"
 
-#: app/widgets/gimplayertreeview.c:1300
+#: app/widgets/gimplayertreeview.c:1301
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Zasidraj plavajočo plast"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1561
+#: app/widgets/gimplayertreeview.c:1562
 msgid "No channels to create a layer mask from."
 msgstr "Ni kanalov, da bi iz njih ustvarili masko plasti."
 
