@@ -195,7 +195,7 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
                        GimpUndoAccumulator *accum)
 {
   GimpVectorsUndo *vectors_undo = GIMP_VECTORS_UNDO (undo);
-  GimpVectors     *vectors      = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
+  GimpVectors     *path         = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -204,25 +204,25 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       (undo_mode       == GIMP_UNDO_MODE_REDO &&
        undo->undo_type == GIMP_UNDO_VECTORS_REMOVE))
     {
-      /*  remove vectors  */
+      /*  remove path  */
 
       /*  record the current parent and position  */
-      vectors_undo->prev_parent   = gimp_vectors_get_parent (vectors);
-      vectors_undo->prev_position = gimp_item_get_index (GIMP_ITEM (vectors));
+      vectors_undo->prev_parent   = gimp_vectors_get_parent (path);
+      vectors_undo->prev_position = gimp_item_get_index (GIMP_ITEM (path));
 
-      gimp_image_remove_vectors (undo->image, vectors, FALSE,
-                                 vectors_undo->prev_vectors);
+      gimp_image_remove_path (undo->image, path, FALSE,
+                              vectors_undo->prev_vectors);
     }
   else
     {
-      /*  restore vectors  */
+      /*  restore path  */
 
-      /*  record the active vectors  */
+      /*  record the active path  */
       g_clear_pointer (&vectors_undo->prev_vectors, g_list_free);
-      vectors_undo->prev_vectors = g_list_copy (gimp_image_get_selected_vectors (undo->image));
+      vectors_undo->prev_vectors = g_list_copy (gimp_image_get_selected_paths (undo->image));
 
-      gimp_image_add_vectors (undo->image, vectors,
-                              vectors_undo->prev_parent,
-                              vectors_undo->prev_position, FALSE);
+      gimp_image_add_path (undo->image, path,
+                           vectors_undo->prev_parent,
+                           vectors_undo->prev_position, FALSE);
     }
 }
