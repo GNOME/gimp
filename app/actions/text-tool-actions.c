@@ -172,7 +172,7 @@ text_tool_actions_update (GimpActionGroup *group,
   if (g_list_length (layers) == 1)
     text_layer = gimp_item_is_text_layer (GIMP_ITEM (layers->data));
 
-  paths = gimp_image_get_selected_vectors (image);
+  paths = gimp_image_get_selected_paths (image);
 
   text_sel = gimp_text_tool_get_has_text_selection (text_tool);
 
