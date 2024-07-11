@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-01 19:09+0000\n"
-"PO-Revision-Date: 2024-07-02 19:05+0800\n"
+"POT-Creation-Date: 2024-07-08 15:20+0000\n"
+"PO-Revision-Date: 2024-07-11 21:02+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -5890,22 +5890,22 @@ msgstr "将图像向左旋转 90 度"
 #: app/actions/image-actions.c:299
 msgctxt "image-action"
 msgid "_Perceptual"
-msgstr "感官的(_P)"
+msgstr "感知(_P)"
 
 #: app/actions/image-actions.c:300
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "软打样渲染意向是感官的"
+msgstr "软打样再现意图切换为感知"
 
 #: app/actions/image-actions.c:305
 msgctxt "image-action"
 msgid "_Relative Colorimetric"
-msgstr "相关色度(_R)"
+msgstr "相对色度(_R)"
 
 #: app/actions/image-actions.c:306
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "软打样渲染意向是相关色度"
+msgstr "软打样再现意图切换为相对色度"
 
 #: app/actions/image-actions.c:311
 msgctxt "image-action"
@@ -5915,7 +5915,7 @@ msgstr "饱和度(_S)"
 #: app/actions/image-actions.c:312
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "软打样渲染意向是饱和度"
+msgstr "软打样再现意图切换为饱和度"
 
 #: app/actions/image-actions.c:317
 msgctxt "image-action"
@@ -5925,7 +5925,7 @@ msgstr "绝对色度(_A)"
 #: app/actions/image-actions.c:318
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "软打样渲染意向是绝对色度"
+msgstr "软打样再现意图切换为绝对色度"
 
 #: app/actions/image-actions.c:509
 msgctxt "image-convert-action"
@@ -6020,7 +6020,7 @@ msgstr "缩放图像"
 #. Scaling
 #: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2512
 #: app/dialogs/preferences-dialog.c:1738 app/pdb/image-transform-cmds.c:124
-#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:411
+#: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "缩放"
@@ -9670,17 +9670,17 @@ msgstr "感知(_P)"
 #: app/actions/view-actions.c:523
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "显示渲染效果是可感知的"
+msgstr "显示再现意图切换为感知"
 
 #: app/actions/view-actions.c:528
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
-msgstr "相关色度(_R)"
+msgstr "相对色度(_R)"
 
 #: app/actions/view-actions.c:529
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "显示渲染效果是相关色度的"
+msgstr "显示再现意图切换为相对色度"
 
 #: app/actions/view-actions.c:534
 msgctxt "view-action"
@@ -9690,7 +9690,7 @@ msgstr "饱和度(_S)"
 #: app/actions/view-actions.c:535
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "显示渲染效果是色饱和的"
+msgstr "显示再现意图切换为饱和度"
 
 #: app/actions/view-actions.c:540
 msgctxt "view-action"
@@ -9700,7 +9700,7 @@ msgstr "绝对色度(_A)"
 #: app/actions/view-actions.c:541
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "显示渲染效果是绝对色度的"
+msgstr "显示再现意图切换为绝对色度"
 
 #: app/actions/view-actions.c:549
 msgctxt "view-padding-color"
@@ -10956,7 +10956,7 @@ msgstr "调整图形界面的字体大小。"
 #: app/config/gimprc-blurbs.h:574
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
-msgstr "为“转换到色彩配置文件”对话框设置默认渲染效果。"
+msgstr "为“转换到色彩配置文件”对话框设置默认再现意图。"
 
 #: app/config/gimprc-blurbs.h:577
 msgid ""
@@ -11842,7 +11842,7 @@ msgstr "非线性"
 #: app/core/core-enums.c:1093
 msgctxt "trc-type"
 msgid "Perceptual"
-msgstr "感官"
+msgstr "感知"
 
 #: app/core/core-enums.c:1296
 msgctxt "undo-type"
@@ -14817,7 +14817,7 @@ msgstr "模拟配置文件"
 
 #: app/core/gimptemplate.c:235
 msgid "Simulation Rendering Intent"
-msgstr "模拟渲染效果"
+msgstr "模拟再现意图"
 
 #: app/core/gimptemplate.c:243
 msgid "Use Black Point Compensation for Simulation"
@@ -15136,7 +15136,7 @@ msgstr "配置文件详情(_D)"
 #: app/dialogs/color-profile-dialog.c:290
 #: app/dialogs/color-profile-import-dialog.c:197
 msgid "_Rendering Intent:"
-msgstr "渲染效果(_R)："
+msgstr "再现意图(_R)："
 
 #: app/dialogs/color-profile-dialog.c:306
 #: app/dialogs/color-profile-import-dialog.c:213
@@ -16214,7 +16214,7 @@ msgstr "尝试使用系统显示器配置文件(_T)"
 
 #: app/dialogs/preferences-dialog.c:1400
 msgid "_Rendering intent:"
-msgstr "渲染效果(_R)："
+msgstr "再现意图(_R)："
 
 #: app/dialogs/preferences-dialog.c:1405
 msgid "Use _black point compensation"
@@ -16735,7 +16735,7 @@ msgstr "转换到色彩配置文件对话框"
 
 #: app/dialogs/preferences-dialog.c:2346
 msgid "Rendering intent:"
-msgstr "渲染效果："
+msgstr "再现意图："
 
 #: app/dialogs/preferences-dialog.c:2350
 msgid "Black point compensation"
@@ -18588,7 +18588,7 @@ msgstr "软打样配置文件(_S)："
 
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
-msgstr "渲染效果(_R)："
+msgstr "再现意图(_R)："
 
 #: app/display/gimpstatusbar.c:562
 msgid "Use _Black Point Compensation"
@@ -20964,7 +20964,7 @@ msgid ""
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: app/pdb/image-cmds.c:2501
+#: app/pdb/image-cmds.c:2459
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
@@ -27845,7 +27845,7 @@ msgstr "软打样色彩配置文件(_S)："
 
 #: app/widgets/gimptemplateeditor.c:466
 msgid "_Soft-proofing rendering intent:"
-msgstr "软打样渲染效果(_S)："
+msgstr "软打样再现意图(_S)："
 
 #: app/widgets/gimptemplateeditor.c:475
 msgid "_Use Black Point Compensation"
@@ -28592,7 +28592,7 @@ msgstr "色彩管理(_C)"
 #: menus/image-menu.ui.in.in:252
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "显示渲染效果(_R)"
+msgstr "显示再现意图(_R)"
 
 #: menus/image-menu.ui.in.in:284
 msgctxt "view-action"
@@ -28622,7 +28622,7 @@ msgstr "色彩管理(_N)"
 #: menus/image-menu.ui.in.in:354
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "软打样渲染效果(_N)"
+msgstr "软打样再现意图(_N)"
 
 #: menus/image-menu.ui.in.in:368
 msgctxt "image-action"
@@ -29402,7 +29402,7 @@ msgstr "路径菜单"
 #~ msgstr "所有选中图层的位置已被锁定。"
 
 #~ msgid "Re_ndering intent:"
-#~ msgstr "渲染效果(_N)："
+#~ msgstr "再现意图(_N)："
 
 #~ msgid "Use black _point compensation"
 #~ msgstr "使用黑点补偿(_P)"
