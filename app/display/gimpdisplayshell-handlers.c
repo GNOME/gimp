@@ -1038,8 +1038,8 @@ gimp_display_shell_path_add_handler (GimpContainer    *container,
 
 static void
 gimp_display_shell_path_remove_handler (GimpContainer    *container,
-                                           GimpVectors      *path,
-                                           GimpDisplayShell *shell)
+                                        GimpVectors      *path,
+                                        GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
 

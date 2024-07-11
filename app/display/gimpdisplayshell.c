@@ -23,10 +23,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/gdkwayland.h>
-#endif
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -853,16 +849,7 @@ gimp_display_shell_dispose (GObject *object)
 
   shell->display = NULL;
 
-  if (shell->window_handle != NULL)
-    {
-#ifdef GDK_WINDOWING_WAYLAND
-      if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()) &&
-          /* The GdkWindow is likely already destroyed. */
-          gtk_widget_get_window (GTK_WIDGET (shell)) != NULL)
-        gdk_wayland_window_unexport_handle (gtk_widget_get_window (GTK_WIDGET (shell)));
-#endif
-      g_clear_pointer (&shell->window_handle, g_bytes_unref);
-    }
+  gimp_widget_free_native_handle (GTK_WIDGET (shell), &shell->window_handle);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

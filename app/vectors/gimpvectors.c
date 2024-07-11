@@ -475,8 +475,8 @@ gimp_vectors_scale (GimpItem              *item,
                     GimpInterpolationType  interpolation_type,
                     GimpProgress          *progress)
 {
-  GimpVectors *path = GIMP_VECTORS (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  GimpVectors *path  = GIMP_VECTORS (item);
+  GimpImage   *image = gimp_item_get_image (item);
   GList       *list;
 
   gimp_vectors_freeze (path);
@@ -512,8 +512,8 @@ gimp_vectors_resize (GimpItem     *item,
                      gint          offset_x,
                      gint          offset_y)
 {
-  GimpVectors *path = GIMP_VECTORS (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  GimpVectors *path  = GIMP_VECTORS (item);
+  GimpImage   *image = gimp_item_get_image (item);
   GList       *list;
 
   gimp_vectors_freeze (path);
@@ -744,8 +744,8 @@ gimp_vectors_to_selection (GimpItem       *item,
                            gdouble         feather_radius_x,
                            gdouble         feather_radius_y)
 {
-  GimpVectors *path = GIMP_VECTORS (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  GimpVectors *path  = GIMP_VECTORS (item);
+  GimpImage   *image = gimp_item_get_image (item);
 
   gimp_channel_select_vectors (gimp_image_get_mask (image),
                                GIMP_ITEM_GET_CLASS (item)->to_selection_desc,
