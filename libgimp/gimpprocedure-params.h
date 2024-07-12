@@ -365,13 +365,13 @@ G_BEGIN_DECLS
 
 /*  vectors  */
 
-#define GIMP_VALUES_GET_VECTORS(args, n) \
+#define GIMP_VALUES_GET_PATH(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 
-#define GIMP_VALUES_GET_VECTORS_ID(args, n) \
+#define GIMP_VALUES_GET_PATH_ID(args, n) \
   gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
 
-#define GIMP_VALUES_SET_VECTORS(args, n, value) \
+#define GIMP_VALUES_SET_PATH(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
