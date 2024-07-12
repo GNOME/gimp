@@ -394,14 +394,14 @@ GimpLayer     * gimp_image_get_layer_by_tattoo   (GimpImage          *image,
                                                   GimpTattoo          tattoo);
 GimpChannel   * gimp_image_get_channel_by_tattoo (GimpImage          *image,
                                                   GimpTattoo          tattoo);
-GimpVectors   * gimp_image_get_path_by_tattoo    (GimpImage          *image,
+GimpPath      * gimp_image_get_path_by_tattoo    (GimpImage          *image,
                                                   GimpTattoo          tattoo);
 
 GimpLayer     * gimp_image_get_layer_by_name     (GimpImage          *image,
                                                   const gchar        *name);
 GimpChannel   * gimp_image_get_channel_by_name   (GimpImage          *image,
                                                   const gchar        *name);
-GimpVectors   * gimp_image_get_path_by_name      (GimpImage          *image,
+GimpPath      * gimp_image_get_path_by_name      (GimpImage          *image,
                                                   const gchar        *name);
 
 gboolean        gimp_image_reorder_item          (GimpImage          *image,
@@ -467,12 +467,12 @@ void            gimp_image_remove_channel        (GimpImage          *image,
                                                   GList              *new_selected);
 
 gboolean        gimp_image_add_path              (GimpImage          *image,
-                                                  GimpVectors        *path,
-                                                  GimpVectors        *parent,
+                                                  GimpPath           *path,
+                                                  GimpPath           *parent,
                                                   gint                position,
                                                   gboolean            push_undo);
 void            gimp_image_remove_path           (GimpImage          *image,
-                                                  GimpVectors        *path,
+                                                  GimpPath           *path,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 

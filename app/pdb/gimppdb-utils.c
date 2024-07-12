@@ -46,7 +46,7 @@
 #include "text/gimptextlayer.h"
 #include "text/gimpfont.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimppdb-utils.h"
 #include "gimppdberror.h"
@@ -789,14 +789,14 @@ gimp_pdb_image_get_sample_point (GimpImage  *image,
 }
 
 GimpStroke *
-gimp_pdb_get_path_stroke (GimpVectors        *path,
+gimp_pdb_get_path_stroke (GimpPath           *path,
                           gint                stroke_id,
                           GimpPDBItemModify   modify,
                           GError            **error)
 {
   GimpStroke *stroke = NULL;
 
-  g_return_val_if_fail (GIMP_IS_VECTORS (path), NULL);
+  g_return_val_if_fail (GIMP_IS_PATH (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! gimp_pdb_item_is_not_group (GIMP_ITEM (path), error))

@@ -44,7 +44,7 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
 
@@ -73,7 +73,7 @@
 
 static void   vectors_new_callback             (GtkWidget    *dialog,
                                                 GimpImage    *image,
-                                                GimpVectors  *vectors,
+                                                GimpPath     *vectors,
                                                 GimpContext  *context,
                                                 const gchar  *vectors_name,
                                                 gboolean      vectors_visible,
@@ -84,7 +84,7 @@ static void   vectors_new_callback             (GtkWidget    *dialog,
                                                 gpointer      user_data);
 static void   vectors_edit_attributes_callback (GtkWidget    *dialog,
                                                 GimpImage    *image,
-                                                GimpVectors  *vectors,
+                                                GimpPath     *vectors,
                                                 GimpContext  *context,
                                                 const gchar  *vectors_name,
                                                 gboolean      vectors_visible,
@@ -148,7 +148,7 @@ vectors_edit_attributes_cmd_callback (GimpAction *action,
 {
   GimpImage   *image;
   GList       *paths;
-  GimpVectors *vectors;
+  GimpPath    *vectors;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_vectors_list (image, paths, data);
@@ -238,7 +238,7 @@ vectors_new_last_vals_cmd_callback (GimpAction *action,
                                     gpointer    data)
 {
   GimpImage        *image;
-  GimpVectors      *vectors;
+  GimpPath         *vectors;
   GimpDialogConfig *config;
   return_if_no_image (image, data);
 
@@ -423,10 +423,10 @@ vectors_duplicate_cmd_callback (GimpAction *action,
                                _("Duplicate Paths"));
   for (iter = paths; iter; iter = iter->next)
     {
-      GimpVectors *new_path;
+      GimpPath *new_path;
 
-      new_path = GIMP_VECTORS (gimp_item_duplicate (iter->data,
-                                                    G_TYPE_FROM_INSTANCE (iter->data)));
+      new_path = GIMP_PATH (gimp_item_duplicate (iter->data,
+                                                 G_TYPE_FROM_INSTANCE (iter->data)));
       /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
        *  the latter would add a duplicated group inside itself instead of
        *  above it
@@ -820,7 +820,7 @@ vectors_color_tag_cmd_callback (GimpAction *action,
 static void
 vectors_new_callback (GtkWidget    *dialog,
                       GimpImage    *image,
-                      GimpVectors  *vectors,
+                      GimpPath     *vectors,
                       GimpContext  *context,
                       const gchar  *vectors_name,
                       gboolean      vectors_visible,
@@ -853,7 +853,7 @@ vectors_new_callback (GtkWidget    *dialog,
 static void
 vectors_edit_attributes_callback (GtkWidget    *dialog,
                                   GimpImage    *image,
-                                  GimpVectors  *vectors,
+                                  GimpPath     *vectors,
                                   GimpContext  *context,
                                   const gchar  *vectors_name,
                                   gboolean      vectors_visible,
@@ -1006,7 +1006,7 @@ vectors_select_cmd_callback (GimpAction *action,
 
   for (iter = vectors; iter || run_once; iter = iter ? iter->next : NULL)
     {
-      GimpVectors   *new_vec;
+      GimpPath      *new_vec;
       GimpContainer *container;
 
       if (iter)
@@ -1018,7 +1018,7 @@ vectors_select_cmd_callback (GimpAction *action,
           container = gimp_image_get_paths (image);
           run_once  = FALSE;
         }
-      new_vec = (GimpVectors *) action_select_object (select_type,
+      new_vec = (GimpPath *) action_select_object (select_type,
                                                       container,
                                                       iter ? iter->data : NULL);
       if (new_vec)

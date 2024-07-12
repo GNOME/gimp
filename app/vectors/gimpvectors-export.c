@@ -28,9 +28,9 @@
 #include "core/gimpitem.h"
 
 #include "gimpanchor.h"
-#include "gimpstroke.h"
 #include "gimpbezierstroke.h"
-#include "gimpvectors.h"
+#include "gimpstroke.h"
+#include "gimppath.h"
 #include "gimpvectors-export.h"
 
 #include "gimp-intl.h"
@@ -40,15 +40,15 @@ static GString * gimp_vectors_export            (GimpImage   *image,
                                                  GList       *vectors);
 static void      gimp_vectors_export_image_size (GimpImage   *image,
                                                  GString     *str);
-static void      gimp_vectors_export_path       (GimpVectors *vectors,
+static void      gimp_vectors_export_path       (GimpPath    *vectors,
                                                  GString     *str);
-static gchar   * gimp_vectors_export_path_data  (GimpVectors *vectors);
+static gchar   * gimp_vectors_export_path_data  (GimpPath    *vectors);
 
 
 /**
  * gimp_vectors_export_file:
  * @image: the #GimpImage from which to export
- * @path_list: a #GList of #GimpVectors objects or %NULL to export all paths in @image
+ * @path_list: a #GList of #GimpPath objects or %NULL to export all paths in @image
  * @file: the file to write
  * @error: return location for errors
  *
@@ -115,7 +115,7 @@ gimp_vectors_export_file (GimpImage    *image,
 /**
  * gimp_vectors_export_string:
  * @image: the #GimpImage from which to export
- * @path_list: a #GList of #GimpVectors objects, or %NULL to export all paths in @image
+ * @path_list: a #GList of #GimpPath objects, or %NULL to export all paths in @image
  *
  * Exports one or more vectors aka path to a SVG string.
  *
@@ -162,7 +162,7 @@ gimp_vectors_export (GimpImage *image,
     vectors = gimp_image_get_path_iter (image);
 
   for (list = vectors; list; list = list->next)
-    gimp_vectors_export_path (GIMP_VECTORS (list->data), str);
+    gimp_vectors_export_path (GIMP_PATH (list->data), str);
 
   g_string_append (str, "</svg>\n");
 
@@ -210,8 +210,8 @@ gimp_vectors_export_image_size (GimpImage *image,
 }
 
 static void
-gimp_vectors_export_path (GimpVectors *vectors,
-                          GString     *str)
+gimp_vectors_export_path (GimpPath *vectors,
+                          GString  *str)
 {
   const gchar *name = gimp_object_get_name (vectors);
   gchar       *data = gimp_vectors_export_path_data (vectors);
@@ -233,7 +233,7 @@ gimp_vectors_export_path (GimpVectors *vectors,
 #define NEWLINE "\n           "
 
 static gchar *
-gimp_vectors_export_path_data (GimpVectors *vectors)
+gimp_vectors_export_path_data (GimpPath *vectors)
 {
   GString  *str;
   GList    *strokes;

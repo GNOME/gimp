@@ -497,8 +497,8 @@ svg_load (GimpProcedure         *procedure,
   g_object_get (config, "paths", &import_paths, NULL);
   if (g_strcmp0 (import_paths, "no-import") != 0)
     {
-      GimpVectors **paths;
-      gint          num_paths;
+      GimpPath **paths;
+      gint       num_paths;
 
       gimp_path_import_from_file (image, file,
                                   g_strcmp0 (import_paths, "import-merged") == 0,

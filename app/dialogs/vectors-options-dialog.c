@@ -27,7 +27,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "item-options-dialog.h"
 #include "vectors-options-dialog.h"
@@ -64,7 +64,7 @@ static void  vectors_options_dialog_callback (GtkWidget            *dialog,
 
 GtkWidget *
 vectors_options_dialog_new (GimpImage                  *image,
-                            GimpVectors                *vectors,
+                            GimpPath                   *vectors,
                             GimpContext                *context,
                             GtkWidget                  *parent,
                             const gchar                *title,
@@ -85,7 +85,7 @@ vectors_options_dialog_new (GimpImage                  *image,
   GtkWidget            *dialog;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (vectors == NULL || GIMP_IS_PATH (vectors), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -149,7 +149,7 @@ vectors_options_dialog_callback (GtkWidget    *dialog,
 
   private->callback (dialog,
                      image,
-                     GIMP_VECTORS (item),
+                     GIMP_PATH (item),
                      context,
                      item_name,
                      item_visible,

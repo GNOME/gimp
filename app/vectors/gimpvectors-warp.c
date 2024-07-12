@@ -32,7 +32,7 @@
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectors-warp.h"
 
 
@@ -47,16 +47,16 @@ static void   gimp_stroke_warp_point   (GimpStroke  *stroke,
                                         gdouble      y_offset,
                                         gdouble      x_len);
 
-static void   gimp_vectors_warp_stroke (GimpVectors *vectors,
+static void   gimp_vectors_warp_stroke (GimpPath    *vectors,
                                         GimpStroke  *stroke,
                                         gdouble      y_offset);
 
 
 void
-gimp_vectors_warp_point (GimpVectors *vectors,
-                         GimpCoords  *point,
-                         GimpCoords  *point_warped,
-                         gdouble      y_offset)
+gimp_vectors_warp_point (GimpPath   *vectors,
+                         GimpCoords *point,
+                         GimpCoords *point_warped,
+                         gdouble     y_offset)
 {
   gdouble     x      = point->x;
   gdouble     y      = point->y;
@@ -176,9 +176,9 @@ gimp_stroke_warp_point (GimpStroke *stroke,
 }
 
 static void
-gimp_vectors_warp_stroke (GimpVectors *vectors,
-                          GimpStroke  *stroke,
-                          gdouble      y_offset)
+gimp_vectors_warp_stroke (GimpPath   *vectors,
+                          GimpStroke *stroke,
+                          gdouble     y_offset)
 {
   GList *list;
 
@@ -193,9 +193,9 @@ gimp_vectors_warp_stroke (GimpVectors *vectors,
 }
 
 void
-gimp_vectors_warp_vectors (GimpVectors *vectors,
-                           GimpVectors *vectors_in,
-                           gdouble      y_offset)
+gimp_vectors_warp_vectors (GimpPath *vectors,
+                           GimpPath *vectors_in,
+                           gdouble   y_offset)
 {
   GList *list;
 

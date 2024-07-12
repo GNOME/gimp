@@ -33,7 +33,7 @@ gboolean   gimp_canvas_item_on_handle           (GimpCanvasItem    *item,
                                                  GimpHandleAnchor   anchor);
 
 gboolean   gimp_canvas_item_on_vectors_handle   (GimpCanvasItem    *item,
-                                                 GimpVectors       *vectors,
+                                                 GimpPath          *vectors,
                                                  const GimpCoords  *coord,
                                                  gint               width,
                                                  gint               height,
@@ -42,7 +42,7 @@ gboolean   gimp_canvas_item_on_vectors_handle   (GimpCanvasItem    *item,
                                                  GimpAnchor       **ret_anchor,
                                                  GimpStroke       **ret_stroke);
 gboolean   gimp_canvas_item_on_vectors_curve    (GimpCanvasItem    *item,
-                                                 GimpVectors       *vectors,
+                                                 GimpPath          *vectors,
                                                  const GimpCoords  *coord,
                                                  gint               width,
                                                  gint               height,
@@ -60,7 +60,7 @@ gboolean   gimp_canvas_item_on_path             (GimpCanvasItem    *item,
                                                  GimpAnchor       **ret_segment_start,
                                                  GimpAnchor       **ret_segment_end,
                                                  GimpStroke       **ret_stroke,
-                                                 GimpVectors      **ret_path);
+                                                 GimpPath         **ret_path);
 
 void       gimp_canvas_item_shift_to_north_west (GimpHandleAnchor   anchor,
                                                  gdouble            x,

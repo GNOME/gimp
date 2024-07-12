@@ -27,7 +27,7 @@
 
 #include "core-types.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimp.h"
 #include "gimp-transform-resize.h"
@@ -279,7 +279,7 @@ gimp_image_transform (GimpImage              *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_TRANSFORM, NULL);
 
-  /*  Transform all layers, channels (including selection mask), and vectors  */
+  /*  Transform all layers, channels (including selection mask), and path  */
   while ((item = gimp_object_queue_pop (queue)))
     {
       GimpTransformResize clip = GIMP_TRANSFORM_RESIZE_ADJUST;
@@ -293,7 +293,7 @@ gimp_image_transform (GimpImage              *image,
                            interpolation_type, clip,
                            progress);
 
-      if (GIMP_IS_VECTORS (item))
+      if (GIMP_IS_PATH (item))
         gimp_item_set_size (item, new_bounds.width, new_bounds.height);
     }
 

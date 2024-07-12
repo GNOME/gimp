@@ -1530,19 +1530,19 @@ load_resource_2000 (const PSDimageres  *res_a,
                     GInputStream       *input,
                     GError            **error)
 {
-  gdouble      *controlpoints;
-  gint32        x[3];
-  gint32        y[3];
-  GimpVectors  *path = NULL;
-  gint16        type;
-  gint16        init_fill;
-  gint16        num_rec;
-  gint16        path_rec;
-  gint16        cntr;
-  gint          image_width;
-  gint          image_height;
-  gint          i;
-  gboolean      closed;
+  gdouble   *controlpoints;
+  gint32     x[3];
+  gint32     y[3];
+  GimpPath  *path = NULL;
+  gint16     type;
+  gint16     init_fill;
+  gint16     num_rec;
+  gint16     path_rec;
+  gint16     cntr;
+  gint       image_width;
+  gint       image_height;
+  gint       i;
+  gboolean   closed;
 
   /* Load path data from image resources 2000-2998 */
 

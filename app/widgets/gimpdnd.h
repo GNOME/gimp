@@ -61,7 +61,7 @@
 #define GIMP_TARGET_LAYER_MASK \
         { "application/x-gimp-layer-mask-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER_MASK }
 
-#define GIMP_TARGET_VECTORS \
+#define GIMP_TARGET_PATH \
         { "application/x-gimp-vectors-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS }
 
 #define GIMP_TARGET_BRUSH \
@@ -100,7 +100,7 @@
 #define GIMP_TARGET_CHANNEL_LIST \
         { "application/x-gimp-channel-list", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_CHANNEL_LIST }
 
-#define GIMP_TARGET_VECTORS_LIST \
+#define GIMP_TARGET_PATH_LIST \
         { "application/x-gimp-vectors-list", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS_LIST }
 
 /*  dnd initialization  */

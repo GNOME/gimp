@@ -37,7 +37,7 @@
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 
 typedef struct
@@ -492,7 +492,7 @@ gimp_channel_combine_buffer (GimpChannel    *mask,
  * their opacity, mode, visibility, etc. properties within the image
  * (similar as if a "merge visible" had been applied to the image then
  * the resulting layer used alone).
- * If @items contain channels or vectors, they will be added as a set
+ * If @items contain channels or paths, they will be added as a set
  * (i.e. as a single item which is an union of other items). E.g. an
  * combine in GIMP_CHANNEL_OP_INTERSECT mode does not intersect all
  * @items with each other and @channel. It first adds-alike all @items
@@ -518,7 +518,7 @@ gimp_channel_combine_items (GimpChannel    *mask,
     {
       g_return_if_fail (GIMP_IS_LAYER (iter->data)   ||
                         GIMP_IS_CHANNEL (iter->data) ||
-                        GIMP_IS_VECTORS (iter->data));
+                        GIMP_IS_PATH (iter->data));
 
       if (items_image == NULL)
         items_image = gimp_item_get_image (iter->data);

@@ -34,8 +34,8 @@
 
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
 
 
 GimpLayer *
@@ -185,17 +185,17 @@ gimp_image_pick_text_layer (GimpImage *image,
   return NULL;
 }
 
-GimpVectors *
+GimpPath *
 gimp_image_pick_path (GimpImage *image,
                       gdouble    x,
                       gdouble    y,
                       gdouble    epsilon_x,
                       gdouble    epsilon_y)
 {
-  GimpVectors *ret = NULL;
-  GList       *all_path;
-  GList       *list;
-  gdouble      mindist = G_MAXDOUBLE;
+  GimpPath *ret = NULL;
+  GList    *all_path;
+  GList    *list;
+  gdouble   mindist = G_MAXDOUBLE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -203,7 +203,7 @@ gimp_image_pick_path (GimpImage *image,
 
   for (list = all_path; list; list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
+      GimpPath *vectors = list->data;
 
       if (gimp_item_is_visible (GIMP_ITEM (vectors)))
         {

@@ -347,7 +347,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'paths', type => 'vectorarray',
+        { name => 'paths', type => 'patharray',
           desc => 'The list of paths contained in the image.',
           array => { name => 'num_paths',
                      desc => 'The number of paths contained in the image' } }
@@ -364,7 +364,7 @@ HELP
     {
       gint i;
 
-      paths = g_new (GimpVectors *, num_paths);
+      paths = g_new (GimpPath *, num_paths);
 
       for (i = 0; i < num_paths; i++, list = g_list_next (list))
         paths[i] = g_object_ref (list->data);
@@ -1225,9 +1225,9 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           desc => 'The path' },
-        { name => 'parent', type => 'vectors', none_ok => 1,
+        { name => 'parent', type => 'path', none_ok => 1,
           desc => 'The parent path' },
         { name => 'position', type => 'int32',
           desc => 'The path position' }
@@ -1267,7 +1267,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           desc => 'The path object' }
     );
 
@@ -1962,7 +1962,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'paths', type => 'vectorarray',
+        { name => 'paths', type => 'patharray',
           desc => 'The list of selected paths in the image.',
           array => { name => 'num_paths',
                      desc => 'The number of selected paths in the image' } }
@@ -1979,7 +1979,7 @@ HELP
     {
       gint i;
 
-      paths = g_new (GimpVectors *, num_paths);
+      paths = g_new (GimpPath *, num_paths);
 
       for (i = 0; i < num_paths; i++, list = g_list_next (list))
         paths[i] = g_object_ref (list->data);
@@ -2001,7 +2001,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'paths', type => 'vectorarray',
+        { name => 'paths', type => 'patharray',
           desc => 'The list of paths to select',
           no_validate => 1,
           array => { name => 'num_paths',
@@ -2760,7 +2760,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           desc => 'The path with the specified tattoo' }
     );
 
@@ -2851,7 +2851,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           desc => 'The path with the specified name' }
     );
 

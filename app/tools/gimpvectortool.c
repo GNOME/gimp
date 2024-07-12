@@ -40,7 +40,7 @@
 
 #include "paint/gimppaintoptions.h" /* GIMP_PAINT_OPTIONS_CONTEXT_MASK */
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -121,7 +121,7 @@ static void     gimp_vector_tool_path_activate   (GimpToolWidget        *path,
 
 static void     gimp_vector_tool_vectors_changed (GimpImage             *image,
                                                   GimpVectorTool        *vector_tool);
-static void     gimp_vector_tool_vectors_removed (GimpVectors           *vectors,
+static void     gimp_vector_tool_vectors_removed (GimpPath              *vectors,
                                                   GimpVectorTool        *vector_tool);
 
 static void     gimp_vector_tool_to_selection    (GimpVectorTool        *vector_tool);
@@ -450,7 +450,7 @@ gimp_vector_tool_path_changed (GimpToolWidget *path,
 {
   GimpDisplayShell *shell = gimp_tool_widget_get_shell (path);
   GimpImage        *image = gimp_display_get_image (shell->display);
-  GimpVectors      *vectors;
+  GimpPath         *vectors;
 
   g_object_get (path,
                 "vectors", &vectors,
@@ -532,7 +532,7 @@ static void
 gimp_vector_tool_vectors_changed (GimpImage      *image,
                                   GimpVectorTool *vector_tool)
 {
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   /* The path tool can only work on one path at a time. */
   if (g_list_length (gimp_image_get_selected_paths (image)) == 1)
@@ -542,7 +542,7 @@ gimp_vector_tool_vectors_changed (GimpImage      *image,
 }
 
 static void
-gimp_vector_tool_vectors_removed (GimpVectors    *vectors,
+gimp_vector_tool_vectors_removed (GimpPath       *vectors,
                                   GimpVectorTool *vector_tool)
 {
   gimp_vector_tool_set_vectors (vector_tool, NULL);
@@ -550,14 +550,14 @@ gimp_vector_tool_vectors_removed (GimpVectors    *vectors,
 
 void
 gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
-                              GimpVectors    *vectors)
+                              GimpPath       *vectors)
 {
   GimpTool          *tool;
   GimpItem          *item = NULL;
   GimpVectorOptions *options;
 
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
-  g_return_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (vectors == NULL || GIMP_IS_PATH (vectors));
 
   tool    = GIMP_TOOL (vector_tool);
   options = GIMP_VECTOR_TOOL_GET_OPTIONS (vector_tool);

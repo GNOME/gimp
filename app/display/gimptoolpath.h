@@ -62,7 +62,7 @@ GType            gimp_tool_path_get_type    (void) G_GNUC_CONST;
 GimpToolWidget * gimp_tool_path_new         (GimpDisplayShell *shell);
 
 void             gimp_tool_path_set_vectors (GimpToolPath     *path,
-                                             GimpVectors      *vectors);
+                                             GimpPath         *vectors);
 
 void             gimp_tool_path_get_popup_state (GimpToolPath *path,
                                                  gboolean     *on_handle,

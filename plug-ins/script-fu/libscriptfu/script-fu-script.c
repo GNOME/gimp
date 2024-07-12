@@ -289,7 +289,7 @@ script_fu_script_collect_standard_args (SFScript             *script,
       params_consumed++;
 
       /*  and may be followed by a DRAWABLE, LAYER, CHANNEL or
-       *  VECTORS id
+       *  PATH id
        */
       if (script_fu_script_param_init (script, pspecs, n_pspecs,
                                        config, SF_DRAWABLE,
@@ -543,7 +543,7 @@ script_fu_script_param_init (SFScript             *script,
           break;
 
         case SF_VECTORS:
-          if (GIMP_VALUE_HOLDS_VECTORS (&value))
+          if (GIMP_VALUE_HOLDS_PATH (&value))
             {
               GimpItem *item = g_value_get_object (&value);
 

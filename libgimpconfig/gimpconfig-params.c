@@ -348,7 +348,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           g_strcmp0 (type_name, "GimpGradient")  == 0 ||
           g_strcmp0 (type_name, "GimpPalette")   == 0 ||
           g_strcmp0 (type_name, "GimpPattern")   == 0 ||
-          g_strcmp0 (type_name, "GimpVectors")   == 0)
+          g_strcmp0 (type_name, "GimpPath")   == 0)
         {
           copy = g_param_spec_object (name, nick, blurb,
                                       value_type,

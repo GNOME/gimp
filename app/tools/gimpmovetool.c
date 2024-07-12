@@ -203,7 +203,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
       if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
         {
-          GimpVectors *vectors;
+          GimpPath *vectors;
 
           vectors = gimp_image_pick_path (image,
                                           coords->x, coords->y,

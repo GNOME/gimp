@@ -799,14 +799,14 @@ gimp_param_spec_selection (const gchar *name,
 
 
 /*
- * GIMP_TYPE_PARAM_VECTORS
+ * GIMP_TYPE_PARAM_PATH
  */
 
-static void   gimp_param_vectors_class_init (GParamSpecClass *klass);
-static void   gimp_param_vectors_init       (GParamSpec      *pspec);
+static void   gimp_param_path_class_init (GParamSpecClass *klass);
+static void   gimp_param_path_init       (GParamSpec      *pspec);
 
 GType
-gimp_param_vectors_get_type (void)
+gimp_param_path_get_type (void)
 {
   static GType type = 0;
 
@@ -816,58 +816,58 @@ gimp_param_vectors_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_vectors_class_init,
+        (GClassInitFunc) gimp_param_path_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecVectors),
+        sizeof (GimpParamSpecPath),
         0,
-        (GInstanceInitFunc) gimp_param_vectors_init
+        (GInstanceInitFunc) gimp_param_path_init
       };
 
       type = g_type_register_static (GIMP_TYPE_PARAM_ITEM,
-                                     "GimpParamVectors", &info, 0);
+                                     "GimpParamPath", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_vectors_class_init (GParamSpecClass *klass)
+gimp_param_path_class_init (GParamSpecClass *klass)
 {
-  klass->value_type = GIMP_TYPE_VECTORS;
+  klass->value_type = GIMP_TYPE_PATH;
 }
 
 static void
-gimp_param_vectors_init (GParamSpec *pspec)
+gimp_param_path_init (GParamSpec *pspec)
 {
 }
 
 /**
- * gimp_param_spec_vectors:
+ * gimp_param_spec_path:
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
- * @none_ok: Whether no  is a valid value.
+ * @none_ok: Whether no is a valid value.
  * @flags:   Flags for the property specified.
  *
- * Creates a new #GimpParamSpecVectors specifying a
- * [type@Vectors] property.
+ * Creates a new #GimpParamSpecPath specifying a
+ * [type@Path] property.
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecVectors.
+ * Returns: (transfer full): The newly created #GimpParamSpecPath.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_vectors (const gchar *name,
-                         const gchar *nick,
-                         const gchar *blurb,
-                         gboolean     none_ok,
-                         GParamFlags  flags)
+gimp_param_spec_path (const gchar *name,
+                      const gchar *nick,
+                      const gchar *blurb,
+                      gboolean     none_ok,
+                      GParamFlags  flags)
 {
   GimpParamSpecItem *ispec;
 
-  ispec = g_param_spec_internal (GIMP_TYPE_PARAM_VECTORS,
+  ispec = g_param_spec_internal (GIMP_TYPE_PARAM_PATH,
                                  name, nick, blurb, flags);
 
   g_return_val_if_fail (ispec, NULL);

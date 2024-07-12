@@ -31,7 +31,7 @@
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimpcanvasitem.h"
 #include "gimpcanvasitem-utils.h"
@@ -105,7 +105,7 @@ gimp_canvas_item_on_handle (GimpCanvasItem  *item,
 
 gboolean
 gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
-                                    GimpVectors       *vectors,
+                                    GimpPath          *vectors,
                                     const GimpCoords  *coord,
                                     gint               width,
                                     gint               height,
@@ -123,7 +123,7 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
   gdouble     mindist      = -1;
 
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (GIMP_IS_PATH (vectors), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_anchor) *ret_anchor = NULL;
@@ -221,7 +221,7 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
 
 gboolean
 gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
-                                   GimpVectors       *vectors,
+                                   GimpPath          *vectors,
                                    const GimpCoords  *coord,
                                    gint               width,
                                    gint               height,
@@ -239,7 +239,7 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
   gdouble     min_dist, cur_dist, cur_pos;
 
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (GIMP_IS_PATH (vectors), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
 
   if (ret_coords)        *ret_coords        = *coord;
@@ -297,7 +297,7 @@ gimp_canvas_item_on_path (GimpCanvasItem    *item,
                           GimpAnchor       **ret_segment_start,
                           GimpAnchor       **ret_segment_end,
                           GimpStroke       **ret_stroke,
-                          GimpVectors      **ret_path)
+                          GimpPath         **ret_path)
 {
   GimpDisplayShell *shell;
   GimpImage        *image;
@@ -321,7 +321,7 @@ gimp_canvas_item_on_path (GimpCanvasItem    *item,
 
   for (list = all_path; list; list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
+      GimpPath *vectors = list->data;
 
       if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
         continue;

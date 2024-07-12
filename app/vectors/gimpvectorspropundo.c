@@ -24,7 +24,7 @@
 
 #include "core/gimpimage.h"
 
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectorspropundo.h"
 
 
@@ -63,9 +63,9 @@ gimp_vectors_prop_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  gimp_assert (GIMP_IS_PATH (GIMP_ITEM_UNDO (object)->item));
 
-  /* vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (object)->item); */
+  /* vectors = GIMP_PATH (GIMP_ITEM_UNDO (object)->item); */
 
   switch (GIMP_UNDO (object)->undo_type)
     {
@@ -81,7 +81,7 @@ gimp_vectors_prop_undo_pop (GimpUndo            *undo,
 {
 #if 0
   GimpVectorsPropUndo *vectors_prop_undo = GIMP_VECTORS_PROP_UNDO (undo);
-  GimpVectors         *vectors           = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
+  GimpPath            *vectors           = GIMP_PATH (GIMP_ITEM_UNDO (undo)->item);
 #endif
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);

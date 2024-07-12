@@ -34,7 +34,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
 
@@ -87,7 +87,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 
   view_class->drop_svg      = gimp_vectors_tree_view_drop_svg;
 
-  iv_class->item_type       = GIMP_TYPE_VECTORS;
+  iv_class->item_type       = GIMP_TYPE_PATH;
   iv_class->signal_name     = "selected-paths-changed";
 
   iv_class->get_container   = gimp_image_get_paths;
@@ -156,7 +156,7 @@ gimp_vectors_tree_view_constructed (GObject *object)
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
                                   GTK_BUTTON (view->toselection_button),
-                                  GIMP_TYPE_VECTORS);
+                                  GIMP_TYPE_PATH);
   gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          view->toselection_button, 4);
 
@@ -177,7 +177,7 @@ gimp_vectors_tree_view_constructed (GObject *object)
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
                                   GTK_BUTTON (view->stroke_button),
-                                  GIMP_TYPE_VECTORS);
+                                  GIMP_TYPE_PATH);
   gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          view->stroke_button, 6);
 
@@ -217,7 +217,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
-  GimpVectors      *parent;
+  GimpPath         *parent;
   gint              index;
   GError           *error = NULL;
 
@@ -245,7 +245,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
 static GimpItem *
 gimp_vectors_tree_view_item_new (GimpImage *image)
 {
-  GimpVectors *new_path;
+  GimpPath *new_path;
 
   new_path = gimp_vectors_new (image, _("Path"));
 

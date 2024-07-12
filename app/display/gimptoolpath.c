@@ -38,7 +38,7 @@
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -103,7 +103,7 @@ enum
 
 struct _GimpToolPathPrivate
 {
-  GimpVectors          *vectors;        /* the current Vector data           */
+  GimpPath             *vectors;        /* the current Vector data           */
   GimpVectorMode        edit_mode;
   gboolean              polygonal;
 
@@ -197,11 +197,11 @@ static void     gimp_tool_path_begin_change    (GimpToolPath          *path,
 static void     gimp_tool_path_end_change      (GimpToolPath          *path,
                                                 gboolean               success);
 
-static void     gimp_tool_path_vectors_visible (GimpVectors           *vectors,
+static void     gimp_tool_path_vectors_visible (GimpPath              *vectors,
                                                 GimpToolPath          *path);
-static void     gimp_tool_path_vectors_freeze  (GimpVectors           *vectors,
+static void     gimp_tool_path_vectors_freeze  (GimpPath              *vectors,
                                                 GimpToolPath          *path);
-static void     gimp_tool_path_vectors_thaw    (GimpVectors           *vectors,
+static void     gimp_tool_path_vectors_thaw    (GimpPath              *vectors,
                                                 GimpToolPath          *path);
 static void     gimp_tool_path_verify_state    (GimpToolPath          *path);
 
@@ -271,7 +271,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
 
   g_object_class_install_property (object_class, PROP_VECTORS,
                                    g_param_spec_object ("vectors", NULL, NULL,
-                                                        GIMP_TYPE_VECTORS,
+                                                        GIMP_TYPE_PATH,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -389,7 +389,7 @@ gimp_tool_path_changed (GimpToolWidget *widget)
 {
   GimpToolPath        *path    = GIMP_TOOL_PATH (widget);
   GimpToolPathPrivate *private = path->private;
-  GimpVectors         *vectors = private->vectors;
+  GimpPath            *vectors = private->vectors;
 
   if (private->items)
     {
@@ -591,7 +591,7 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
 
   if (private->function == VECTORS_SELECT_VECTOR)
     {
-      GimpVectors *vectors;
+      GimpPath *vectors;
 
       if (gimp_canvas_item_on_path (private->path,
                                     coords,
@@ -612,7 +612,7 @@ gimp_tool_path_button_press (GimpToolWidget      *widget,
     {
       GimpDisplayShell *shell = gimp_tool_widget_get_shell (widget);
       GimpImage        *image = gimp_display_get_image (shell->display);
-      GimpVectors      *vectors;
+      GimpPath         *vectors;
 
       vectors = gimp_vectors_new (image, _("Unnamed"));
       g_object_ref_sink (vectors);
@@ -1733,7 +1733,7 @@ gimp_tool_path_end_change (GimpToolPath *path,
 }
 
 static void
-gimp_tool_path_vectors_visible (GimpVectors  *vectors,
+gimp_tool_path_vectors_visible (GimpPath     *vectors,
                                 GimpToolPath *path)
 {
   GimpToolPathPrivate *private = path->private;
@@ -1743,13 +1743,13 @@ gimp_tool_path_vectors_visible (GimpVectors  *vectors,
 }
 
 static void
-gimp_tool_path_vectors_freeze (GimpVectors  *vectors,
+gimp_tool_path_vectors_freeze (GimpPath     *vectors,
                                GimpToolPath *path)
 {
 }
 
 static void
-gimp_tool_path_vectors_thaw (GimpVectors  *vectors,
+gimp_tool_path_vectors_thaw (GimpPath     *vectors,
                              GimpToolPath *path)
 {
   /*  Ok, the vector might have changed externally (e.g. Undo) we need
@@ -1937,12 +1937,12 @@ gimp_tool_path_new (GimpDisplayShell *shell)
 
 void
 gimp_tool_path_set_vectors (GimpToolPath *path,
-                            GimpVectors  *vectors)
+                            GimpPath     *vectors)
 {
   GimpToolPathPrivate *private;
 
   g_return_if_fail (GIMP_IS_TOOL_PATH (path));
-  g_return_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (vectors == NULL || GIMP_IS_PATH (vectors));
 
   private = path->private;
 

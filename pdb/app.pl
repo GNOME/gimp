@@ -379,14 +379,14 @@ gimp_param_spec_selection ("$name",
                            $flags)
 CODE
     }
-    elsif ($pdbtype eq 'vectors') {
+    elsif ($pdbtype eq 'path') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
-gimp_param_spec_vectors ("$name",
-                         "$nick",
-                         "$blurb",
-                         $none_ok,
-                         $flags)
+gimp_param_spec_path ("$name",
+                      "$nick",
+                      "$blurb",
+                      $none_ok,
+                      $flags)
 CODE
     }
     elsif ($pdbtype eq 'display') {
@@ -675,12 +675,12 @@ gimp_param_spec_object_array ("$name",
                               $flags)
 CODE
     }
-    elsif ($pdbtype eq 'vectorarray') {
+    elsif ($pdbtype eq 'patharray') {
 	$pspec = <<CODE;
 gimp_param_spec_object_array ("$name",
                               "$nick",
                               "$blurb",
-                              GIMP_TYPE_VECTORS,
+                              GIMP_TYPE_PATH,
                               $flags)
 CODE
     }

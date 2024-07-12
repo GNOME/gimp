@@ -1,6 +1,7 @@
 libappvectors_sources = [
   'gimpanchor.c',
   'gimpbezierstroke.c',
+  'gimppath.c',
   'gimpstroke-new.c',
   'gimpstroke.c',
   'gimpvectors-compat.c',
@@ -8,7 +9,6 @@ libappvectors_sources = [
   'gimpvectors-import.c',
   'gimpvectors-preview.c',
   'gimpvectors-warp.c',
-  'gimpvectors.c',
   'gimpvectorsmodundo.c',
   'gimpvectorspropundo.c',
   'gimpvectorsundo.c',

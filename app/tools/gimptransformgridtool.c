@@ -50,8 +50,8 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpviewable.h"
 
-#include "vectors/gimpvectors.h"
 #include "vectors/gimpstroke.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -832,8 +832,8 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 
       for (iter = gimp_image_get_selected_paths (image); iter; iter = iter->next)
         {
-          GimpVectors *path   = iter->data;
-          GimpStroke  *stroke = NULL;
+          GimpPath   *path   = iter->data;
+          GimpStroke *stroke = NULL;
 
           while ((stroke = gimp_vectors_stroke_get_next (path, stroke)))
             {

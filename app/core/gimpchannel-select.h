@@ -81,7 +81,7 @@ void   gimp_channel_select_polygon      (GimpChannel         *channel,
                                          gboolean             push_undo);
 void   gimp_channel_select_vectors      (GimpChannel         *channel,
                                          const gchar         *undo_desc,
-                                         GimpVectors         *vectors,
+                                         GimpPath            *vectors,
                                          GimpChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,

@@ -49,7 +49,7 @@
 
 #include "gimpbezierstroke.h"
 #include "gimpstroke.h"
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectors-import.h"
 
 #include "gimp-intl.h"
@@ -111,7 +111,7 @@ static gboolean  gimp_vectors_import  (GimpImage            *image,
                                        gsize                 len,
                                        gboolean              merge,
                                        gboolean              scale,
-                                       GimpVectors          *parent,
+                                       GimpPath             *parent,
                                        gint                  position,
                                        GList               **ret_vectors,
                                        GError              **error);
@@ -199,7 +199,7 @@ static GList    * parse_path_data     (const gchar  *data);
  * gimp_vectors_import_file:
  * @image:    the #GimpImage to add the paths to
  * @file:     a SVG file
- * @merge:    should multiple paths be merged into a single #GimpVectors object
+ * @merge:    should multiple paths be merged into a single #GimpPath object
  * @scale:    should the SVG be scaled to fit the image dimensions
  * @position: position in the image's vectors stack where to add the vectors
  * @error:    location to store possible errors
@@ -213,7 +213,7 @@ gimp_vectors_import_file (GimpImage    *image,
                           GFile        *file,
                           gboolean      merge,
                           gboolean      scale,
-                          GimpVectors  *parent,
+                          GimpPath     *parent,
                           gint          position,
                           GList       **ret_vectors,
                           GError      **error)
@@ -222,7 +222,7 @@ gimp_vectors_import_file (GimpImage    *image,
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_VECTORS (parent), FALSE);
+                        GIMP_IS_PATH (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
@@ -247,7 +247,7 @@ gimp_vectors_import_file (GimpImage    *image,
  * @image:  the #GimpImage to add the paths to
  * @buffer: a character buffer to parse
  * @len:    number of bytes in @str or -1 if @str is %NUL-terminated
- * @merge:  should multiple paths be merged into a single #GimpVectors object
+ * @merge:  should multiple paths be merged into a single #GimpPath object
  * @scale:  should the SVG be scaled to fit the image dimensions
  * @error:  location to store possible errors
  *
@@ -261,7 +261,7 @@ gimp_vectors_import_buffer (GimpImage    *image,
                             gsize         len,
                             gboolean      merge,
                             gboolean      scale,
-                            GimpVectors  *parent,
+                            GimpPath     *parent,
                             gint          position,
                             GList       **ret_vectors,
                             GError      **error)
@@ -270,7 +270,7 @@ gimp_vectors_import_buffer (GimpImage    *image,
   g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
-                        GIMP_IS_VECTORS (parent), FALSE);
+                        GIMP_IS_PATH (parent), FALSE);
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_item_is_attached (GIMP_ITEM (parent)), FALSE);
@@ -297,7 +297,7 @@ gimp_vectors_import (GimpImage    *image,
                      gsize         len,
                      gboolean      merge,
                      gboolean      scale,
-                     GimpVectors  *parent,
+                     GimpPath     *parent,
                      gint          position,
                      GList       **ret_vectors,
                      GError      **error)
@@ -334,7 +334,7 @@ gimp_vectors_import (GimpImage    *image,
     {
       if (base->paths)
         {
-          GimpVectors *vectors = NULL;
+          GimpPath *vectors = NULL;
 
           base->paths = g_list_reverse (base->paths);
 

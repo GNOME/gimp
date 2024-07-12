@@ -569,19 +569,19 @@ gimp_image_get_channels (GimpImage *image,
  * This procedure returns the list of paths contained in the specified
  * image.
  *
- * Returns: (array length=num_paths) (element-type GimpVectors) (transfer container):
+ * Returns: (array length=num_paths) (element-type GimpPath) (transfer container):
  *          The list of paths contained in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
-GimpVectors **
+GimpPath **
 gimp_image_get_paths (GimpImage *image,
                       gint      *num_paths)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors **paths = NULL;
+  GimpPath **paths = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -1189,10 +1189,10 @@ gimp_image_thaw_channels (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_insert_path (GimpImage   *image,
-                        GimpVectors *path,
-                        GimpVectors *parent,
-                        gint         position)
+gimp_image_insert_path (GimpImage *image,
+                        GimpPath  *path,
+                        GimpPath  *parent,
+                        gint       position)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1200,8 +1200,8 @@ gimp_image_insert_path (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_VECTORS, path,
-                                          GIMP_TYPE_VECTORS, parent,
+                                          GIMP_TYPE_PATH, path,
+                                          GIMP_TYPE_PATH, parent,
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
@@ -1232,8 +1232,8 @@ gimp_image_insert_path (GimpImage   *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_remove_path (GimpImage   *image,
-                        GimpVectors *path)
+gimp_image_remove_path (GimpImage *image,
+                        GimpPath  *path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1241,7 +1241,7 @@ gimp_image_remove_path (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_VECTORS, path,
+                                          GIMP_TYPE_PATH, path,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -2220,19 +2220,19 @@ gimp_image_set_selected_channels (GimpImage          *image,
  * This procedure returns the list of selected paths in the specified
  * image.
  *
- * Returns: (array length=num_paths) (element-type GimpVectors) (transfer container):
+ * Returns: (array length=num_paths) (element-type GimpPath) (transfer container):
  *          The list of selected paths in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
-GimpVectors **
+GimpPath **
 gimp_image_get_selected_paths (GimpImage *image,
                                gint      *num_paths)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors **paths = NULL;
+  GimpPath **paths = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -2260,7 +2260,7 @@ gimp_image_get_selected_paths (GimpImage *image,
  * gimp_image_set_selected_paths:
  * @image: The image.
  * @num_paths: The number of paths to select.
- * @paths: (array length=num_paths) (element-type GimpVectors): The list of paths to select.
+ * @paths: (array length=num_paths) (element-type GimpPath): The list of paths to select.
  *
  * Sets the specified image's selected paths.
  *
@@ -2271,9 +2271,9 @@ gimp_image_get_selected_paths (GimpImage *image,
  * Since: 3.0.0
  **/
 gboolean
-gimp_image_set_selected_paths (GimpImage          *image,
-                               gint                num_paths,
-                               const GimpVectors **paths)
+gimp_image_set_selected_paths (GimpImage       *image,
+                               gint             num_paths,
+                               const GimpPath **paths)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -2284,7 +2284,7 @@ gimp_image_set_selected_paths (GimpImage          *image,
                                           G_TYPE_INT, num_paths,
                                           GIMP_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_VECTORS, (GObject **) paths, num_paths);
+  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_PATH, (GObject **) paths, num_paths);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-image-set-selected-paths",
@@ -3123,13 +3123,13 @@ gimp_image_get_channel_by_tattoo (GimpImage *image,
  *
  * Since: 2.6
  **/
-GimpVectors *
+GimpPath *
 gimp_image_get_path_by_tattoo (GimpImage *image,
                                guint      tattoo)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -3142,7 +3142,7 @@ gimp_image_get_path_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    path = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+    path = GIMP_VALUES_GET_PATH (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -3243,13 +3243,13 @@ gimp_image_get_channel_by_name (GimpImage   *image,
  *
  * Since: 2.8
  **/
-GimpVectors *
+GimpPath *
 gimp_image_get_path_by_name (GimpImage   *image,
                              const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -3262,7 +3262,7 @@ gimp_image_get_path_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    path = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+    path = GIMP_VALUES_GET_PATH (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 

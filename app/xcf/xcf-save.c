@@ -66,9 +66,9 @@
 #include "text/gimptextlayer-xcf.h"
 
 #include "vectors/gimpanchor.h"
-#include "vectors/gimpstroke.h"
 #include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
+#include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors-compat.h"
 
 #include "xcf-private.h"
@@ -124,7 +124,7 @@ static gboolean xcf_save_effect_props  (XcfInfo           *info,
                                         GError           **error);
 static gboolean xcf_save_path_props    (XcfInfo           *info,
                                         GimpImage         *image,
-                                        GimpVectors       *vectors,
+                                        GimpPath          *vectors,
                                         GError           **error);
 static gboolean xcf_save_prop          (XcfInfo           *info,
                                         GimpImage         *image,
@@ -145,7 +145,7 @@ static gboolean xcf_save_effect        (XcfInfo           *info,
                                         GError           **error);
 static gboolean xcf_save_path          (XcfInfo           *info,
                                         GimpImage         *image,
-                                        GimpVectors       *vectors,
+                                        GimpPath          *vectors,
                                         GError           **error);
 static gboolean xcf_save_buffer        (XcfInfo           *info,
                                         GimpImage         *image,
@@ -435,7 +435,7 @@ xcf_save_image (XcfInfo    *info,
 
       for (list = all_paths; list; list = g_list_next (list))
         {
-          GimpVectors *vectors = list->data;
+          GimpPath *vectors = list->data;
 
           /* seek back to the next slot in the offset table and write the
            * offset of the channel
@@ -941,7 +941,7 @@ xcf_save_effect_props (XcfInfo      *info,
 static gboolean
 xcf_save_path_props (XcfInfo      *info,
                      GimpImage    *image,
-                     GimpVectors  *vectors,
+                     GimpPath     *vectors,
                      GError      **error)
 {
   GimpParasiteList *parasites;
@@ -1706,7 +1706,7 @@ xcf_save_prop (XcfInfo    *info,
           item_type = 0;
         else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_CHANNEL)
           item_type = 1;
-        else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_VECTORS)
+        else if (gimp_item_list_get_item_type (set) == GIMP_TYPE_PATH)
           item_type = 2;
         else
           g_return_val_if_reached (FALSE);
@@ -2897,11 +2897,11 @@ xcf_save_old_paths (XcfInfo    *info,
                     GimpImage  *image,
                     GError    **error)
 {
-  GimpVectors *active_path = NULL;
-  guint32      num_paths;
-  guint32      active_index = 0;
-  GList       *list;
-  GError      *tmp_error = NULL;
+  GimpPath *active_path = NULL;
+  guint32   num_paths;
+  guint32   active_index = 0;
+  GList    *list;
+  GError   *tmp_error = NULL;
 
   /* Write out the following:-
    *
@@ -2935,7 +2935,7 @@ xcf_save_old_paths (XcfInfo    *info,
        list;
        list = g_list_next (list))
     {
-      GimpVectors            *vectors = list->data;
+      GimpPath               *vectors = list->data;
       gchar                  *name;
       guint32                 locked;
       guint8                  state;
@@ -3019,13 +3019,13 @@ xcf_save_old_vectors (XcfInfo    *info,
                       GimpImage  *image,
                       GError    **error)
 {
-  GimpVectors *active_path = NULL;
-  guint32      version        = 1;
-  guint32      active_index   = 0;
-  guint32      num_paths;
-  GList       *list;
-  GList       *stroke_list;
-  GError      *tmp_error = NULL;
+  GimpPath *active_path = NULL;
+  guint32   version        = 1;
+  guint32   active_index   = 0;
+  guint32   num_paths;
+  GList    *list;
+  GList    *stroke_list;
+  GError   *tmp_error = NULL;
 
   /* Write out the following:-
    *
@@ -3061,7 +3061,7 @@ xcf_save_old_vectors (XcfInfo    *info,
        list;
        list = g_list_next (list))
     {
-      GimpVectors      *vectors = list->data;
+      GimpPath         *vectors = list->data;
       GimpParasiteList *parasites;
       const gchar      *name;
       guint32           tattoo;
@@ -3182,7 +3182,7 @@ xcf_save_old_vectors (XcfInfo    *info,
 static gboolean
 xcf_save_path (XcfInfo      *info,
                GimpImage    *image,
-               GimpVectors  *vectors,
+               GimpPath     *vectors,
                GError      **error)
 {
   const gchar *string;

@@ -2218,8 +2218,8 @@ gimp_procedure_add_vectors_argument (GimpProcedure *procedure,
                                      GParamFlags    flags)
 {
   _gimp_procedure_add_argument (procedure,
-                                gimp_param_spec_vectors (name, nick, blurb,
-                                                         none_ok, flags));
+                                gimp_param_spec_path (name, nick, blurb,
+                                                      none_ok, flags));
 }
 
 /**
@@ -2244,8 +2244,8 @@ gimp_procedure_add_vectors_aux_argument (GimpProcedure *procedure,
                                          GParamFlags    flags)
 {
   _gimp_procedure_add_aux_argument (procedure,
-                                    gimp_param_spec_vectors (name, nick, blurb,
-                                                             none_ok, flags));
+                                    gimp_param_spec_path (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**
@@ -2270,8 +2270,8 @@ gimp_procedure_add_vectors_return_value (GimpProcedure *procedure,
                                          GParamFlags    flags)
 {
   _gimp_procedure_add_return_value (procedure,
-                                    gimp_param_spec_vectors (name, nick, blurb,
-                                                             none_ok, flags));
+                                    gimp_param_spec_path (name, nick, blurb,
+                                                          none_ok, flags));
 }
 
 /**

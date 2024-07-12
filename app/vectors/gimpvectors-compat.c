@@ -29,7 +29,7 @@
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectors-compat.h"
 
 
@@ -44,14 +44,14 @@ enum
 static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 
 
-GimpVectors *
+GimpPath *
 gimp_vectors_compat_new (GimpImage              *image,
                          const gchar            *name,
                          GimpVectorsCompatPoint *points,
                          gint                    n_points,
                          gboolean                closed)
 {
-  GimpVectors *vectors;
+  GimpPath    *vectors;
   GimpStroke  *stroke;
   GimpCoords  *coords;
   GimpCoords  *curr_stroke;
@@ -135,7 +135,7 @@ gimp_vectors_compat_is_compatible (GimpImage *image)
        list;
        list = g_list_next (list))
     {
-      GimpVectors *vectors    = GIMP_VECTORS (list->data);
+      GimpPath    *vectors    = GIMP_PATH (list->data);
       GList       *strokes;
       gint         open_count = 0;
 
@@ -163,9 +163,9 @@ gimp_vectors_compat_is_compatible (GimpImage *image)
 }
 
 GimpVectorsCompatPoint *
-gimp_vectors_compat_get_points (GimpVectors *vectors,
-                                gint32      *n_points,
-                                gint32      *closed)
+gimp_vectors_compat_get_points (GimpPath *vectors,
+                                gint32   *n_points,
+                                gint32   *closed)
 {
   GimpVectorsCompatPoint *points;
   GList                  *strokes;
@@ -174,7 +174,7 @@ gimp_vectors_compat_get_points (GimpVectors *vectors,
   gint                    open_count;
   gboolean                first_stroke = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (GIMP_IS_PATH (vectors), NULL);
   g_return_val_if_fail (n_points != NULL, NULL);
   g_return_val_if_fail (closed != NULL, NULL);
 

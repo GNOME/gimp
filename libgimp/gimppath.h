@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpvectors.h
+ * gimppath.h
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -23,21 +23,21 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_VECTORS_H__
-#define __GIMP_VECTORS_H__
+#ifndef __GIMP_PATH_H__
+#define __GIMP_PATH_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_VECTORS (gimp_vectors_get_type ())
-G_DECLARE_FINAL_TYPE (GimpVectors, gimp_vectors, GIMP, VECTORS, GimpItem)
+#define GIMP_TYPE_PATH (gimp_path_get_type ())
+G_DECLARE_FINAL_TYPE (GimpPath, gimp_path, GIMP, PATH, GimpItem)
 
 
-GimpVectors * gimp_vectors_get_by_id (gint32 vectors_id);
+GimpPath * gimp_path_get_by_id (gint32 path_id);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_VECTORS_H__ */
+#endif /* __GIMP_PATH_H__ */

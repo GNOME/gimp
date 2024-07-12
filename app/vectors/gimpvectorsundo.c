@@ -26,7 +26,7 @@
 
 #include "core/gimpimage.h"
 
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectorsundo.h"
 
 
@@ -82,7 +82,7 @@ gimp_vectors_undo_class_init (GimpVectorsUndoClass *klass)
   g_object_class_install_property (object_class, PROP_PREV_PARENT,
                                    g_param_spec_object ("prev-parent",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_VECTORS,
+                                                        GIMP_TYPE_PATH,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -109,7 +109,7 @@ gimp_vectors_undo_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  gimp_assert (GIMP_IS_PATH (GIMP_ITEM_UNDO (object)->item));
 }
 
 static void
@@ -195,7 +195,7 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
                        GimpUndoAccumulator *accum)
 {
   GimpVectorsUndo *vectors_undo = GIMP_VECTORS_UNDO (undo);
-  GimpVectors     *path         = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
+  GimpPath        *path         = GIMP_PATH (GIMP_ITEM_UNDO (undo)->item);
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 

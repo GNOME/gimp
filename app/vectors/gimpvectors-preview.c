@@ -30,7 +30,7 @@
 #include "core/gimptempbuf.h"
 
 #include "gimpstroke.h"
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectors-preview.h"
 
 
@@ -42,14 +42,14 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
                               gint          width,
                               gint          height)
 {
-  GimpVectors *vectors;
+  GimpPath    *vectors;
   GimpItem    *item;
   GimpStroke  *cur_stroke;
   gdouble      xscale, yscale;
   guchar      *data;
   GimpTempBuf *temp_buf;
 
-  vectors = GIMP_VECTORS (viewable);
+  vectors = GIMP_PATH (viewable);
   item    = GIMP_ITEM (viewable);
 
   xscale = ((gdouble) width)  / gimp_image_get_width  (gimp_item_get_image (item));

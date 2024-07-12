@@ -250,17 +250,17 @@ GimpUndo * gimp_image_undo_push_channel_color       (GimpImage     *image,
 
 GimpUndo * gimp_image_undo_push_path_add            (GimpImage     *image,
                                                      const gchar   *undo_desc,
-                                                     GimpVectors   *path,
+                                                     GimpPath      *path,
                                                      GList         *prev_paths);
 GimpUndo * gimp_image_undo_push_path_remove         (GimpImage     *image,
                                                      const gchar   *undo_desc,
-                                                     GimpVectors   *path,
-                                                     GimpVectors   *prev_parent,
+                                                     GimpPath      *path,
+                                                     GimpPath      *prev_parent,
                                                      gint           prev_position,
                                                      GList         *prev_paths);
 GimpUndo * gimp_image_undo_push_path_mod            (GimpImage     *image,
                                                      const gchar   *undo_desc,
-                                                     GimpVectors   *path);
+                                                     GimpPath      *path);
 
 
 /*  floating selection undos  */

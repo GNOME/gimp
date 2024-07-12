@@ -43,8 +43,8 @@
 #include "gimppickable-contiguous-region.h"
 #include "gimpscanconvert.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
 
 #include "gimp-intl.h"
 
@@ -281,7 +281,7 @@ gimp_channel_select_polygon (GimpChannel       *channel,
 void
 gimp_channel_select_vectors (GimpChannel    *channel,
                              const gchar    *undo_desc,
-                             GimpVectors    *vectors,
+                             GimpPath       *vectors,
                              GimpChannelOps  op,
                              gboolean        antialias,
                              gboolean        feather,
@@ -294,7 +294,7 @@ gimp_channel_select_vectors (GimpChannel    *channel,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (GIMP_IS_PATH (vectors));
 
   bezier = gimp_vectors_get_bezier (vectors);
 

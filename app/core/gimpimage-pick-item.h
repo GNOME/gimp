@@ -30,7 +30,7 @@ GimpTextLayer   * gimp_image_pick_text_layer      (GimpImage *image,
                                                    gint       x,
                                                    gint       y);
 
-GimpVectors     * gimp_image_pick_path            (GimpImage *image,
+GimpPath        * gimp_image_pick_path            (GimpImage *image,
                                                    gdouble    x,
                                                    gdouble    y,
                                                    gdouble    epsilon_x,

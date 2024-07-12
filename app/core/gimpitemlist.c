@@ -36,7 +36,7 @@
 #include "gimplayer.h"
 #include "gimpmarshal.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimp-intl.h"
 
@@ -187,7 +187,7 @@ gimp_item_list_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_IMAGE (set->p->image));
   gimp_assert (set->p->item_type == GIMP_TYPE_LAYER   ||
-               set->p->item_type == GIMP_TYPE_VECTORS ||
+               set->p->item_type == GIMP_TYPE_PATH ||
                set->p->item_type == GIMP_TYPE_CHANNEL);
 
   if (! set->p->is_pattern)
@@ -196,7 +196,7 @@ gimp_item_list_constructed (GObject *object)
 
       if (set->p->item_type == GIMP_TYPE_LAYER)
         container = gimp_image_get_layers (set->p->image);
-      else if (set->p->item_type == GIMP_TYPE_VECTORS)
+      else if (set->p->item_type == GIMP_TYPE_PATH)
         container = gimp_image_get_paths (set->p->image);
       else
         container = gimp_image_get_channels (set->p->image);
@@ -220,7 +220,7 @@ gimp_item_list_dispose (GObject *object)
 
       if (set->p->item_type == GIMP_TYPE_LAYER)
         container = gimp_image_get_layers (set->p->image);
-      else if (set->p->item_type == GIMP_TYPE_VECTORS)
+      else if (set->p->item_type == GIMP_TYPE_PATH)
         container = gimp_image_get_paths (set->p->image);
       else
         container = gimp_image_get_channels (set->p->image);
@@ -349,7 +349,7 @@ gimp_item_list_named_new (GimpImage   *image,
     {
       if (item_type == GIMP_TYPE_LAYER)
         items = gimp_image_get_selected_layers (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         items = gimp_image_get_selected_paths (image);
       else if (item_type == GIMP_TYPE_CHANNEL)
         items = gimp_image_get_selected_channels (image);

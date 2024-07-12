@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors.h
+ * gimppath.h
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,22 +18,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_H__
-#define __GIMP_VECTORS_H__
+#ifndef __GIMP_PATH_H__
+#define __GIMP_PATH_H__
 
 #include "core/gimpitem.h"
 
-#define GIMP_TYPE_VECTORS            (gimp_vectors_get_type ())
-#define GIMP_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS, GimpVectors))
-#define GIMP_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS, GimpVectorsClass))
-#define GIMP_IS_VECTORS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTORS))
-#define GIMP_IS_VECTORS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTORS))
-#define GIMP_VECTORS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS, GimpVectorsClass))
+#define GIMP_TYPE_PATH            (gimp_path_get_type ())
+#define GIMP_PATH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH, GimpPath))
+#define GIMP_PATH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH, GimpPathClass))
+#define GIMP_IS_PATH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH))
+#define GIMP_IS_PATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH))
+#define GIMP_PATH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH, GimpPathClass))
 
 
-typedef struct _GimpVectorsClass  GimpVectorsClass;
+typedef struct _GimpPathClass  GimpPathClass;
 
-struct _GimpVectors
+struct _GimpPath
 {
   GimpItem        parent_instance;
 
@@ -54,122 +54,122 @@ struct _GimpVectors
   gdouble         bounds_y2;
 };
 
-struct _GimpVectorsClass
+struct _GimpPathClass
 {
   GimpItemClass  parent_class;
 
   /*  signals  */
-  void          (* freeze)            (GimpVectors       *vectors);
-  void          (* thaw)              (GimpVectors       *vectors);
+  void          (* freeze)            (GimpPath       *path);
+  void          (* thaw)              (GimpPath       *path);
 
   /*  virtual functions  */
-  void          (* stroke_add)        (GimpVectors       *vectors,
+  void          (* stroke_add)        (GimpPath          *path,
                                        GimpStroke        *stroke);
-  void          (* stroke_remove)     (GimpVectors       *vectors,
+  void          (* stroke_remove)     (GimpPath          *path,
                                        GimpStroke        *stroke);
-  GimpStroke  * (* stroke_get)        (GimpVectors       *vectors,
+  GimpStroke  * (* stroke_get)        (GimpPath          *path,
                                        const GimpCoords  *coord);
-  GimpStroke  * (* stroke_get_next)   (GimpVectors       *vectors,
+  GimpStroke  * (* stroke_get_next)   (GimpPath          *path,
                                        GimpStroke        *prev);
-  gdouble       (* stroke_get_length) (GimpVectors       *vectors,
+  gdouble       (* stroke_get_length) (GimpPath          *path,
                                        GimpStroke        *stroke);
-  GimpAnchor  * (* anchor_get)        (GimpVectors       *vectors,
+  GimpAnchor  * (* anchor_get)        (GimpPath          *path,
                                        const GimpCoords  *coord,
                                        GimpStroke       **ret_stroke);
-  void          (* anchor_delete)     (GimpVectors       *vectors,
+  void          (* anchor_delete)     (GimpPath          *path,
                                        GimpAnchor        *anchor);
-  gdouble       (* get_length)        (GimpVectors       *vectors,
+  gdouble       (* get_length)        (GimpPath          *path,
                                        const GimpAnchor  *start);
-  gdouble       (* get_distance)      (GimpVectors       *vectors,
+  gdouble       (* get_distance)      (GimpPath          *path,
                                        const GimpCoords  *coord);
-  gint          (* interpolate)       (GimpVectors       *vectors,
+  gint          (* interpolate)       (GimpPath          *path,
                                        GimpStroke        *stroke,
                                        gdouble            precision,
                                        gint               max_points,
                                        GimpCoords        *ret_coords);
-  GimpBezierDesc * (* make_bezier)    (GimpVectors       *vectors);
+  GimpBezierDesc * (* make_bezier)    (GimpPath          *path);
 };
 
 
-/*  vectors utility functions  */
+/*  path utility functions  */
 
-GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
+GType           gimp_path_get_type              (void) G_GNUC_CONST;
 
-GimpVectors   * gimp_vectors_new                (GimpImage         *image,
-                                                 const gchar       *name);
+GimpPath      * gimp_vectors_new                (GimpImage      *image,
+                                                 const gchar    *name);
 
-GimpVectors   * gimp_vectors_get_parent         (GimpVectors       *vectors);
+GimpPath      * gimp_vectors_get_parent         (GimpPath       *path);
 
-void            gimp_vectors_freeze             (GimpVectors       *vectors);
-void            gimp_vectors_thaw               (GimpVectors       *vectors);
+void            gimp_vectors_freeze             (GimpPath       *path);
+void            gimp_vectors_thaw               (GimpPath       *path);
 
-void            gimp_vectors_copy_strokes       (GimpVectors       *src_vectors,
-                                                 GimpVectors       *dest_vectors);
-void            gimp_vectors_add_strokes        (GimpVectors       *src_vectors,
-                                                 GimpVectors       *dest_vectors);
+void            gimp_vectors_copy_strokes       (GimpPath       *src_vectors,
+                                                 GimpPath       *dest_vectors);
+void            gimp_vectors_add_strokes        (GimpPath       *src_vectors,
+                                                 GimpPath       *dest_vectors);
 
 
 /* accessing / modifying the anchors */
 
-GimpAnchor    * gimp_vectors_anchor_get         (GimpVectors       *vectors,
+GimpAnchor    * gimp_vectors_anchor_get         (GimpPath          *path,
                                                  const GimpCoords  *coord,
                                                  GimpStroke       **ret_stroke);
 
 /* prev == NULL: "first" anchor */
-GimpAnchor    * gimp_vectors_anchor_get_next    (GimpVectors        *vectors,
+GimpAnchor    * gimp_vectors_anchor_get_next    (GimpPath           *path,
                                                  const GimpAnchor   *prev);
 
 /* type will be an xorable enum:
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
  */
-void          gimp_vectors_anchor_move_relative (GimpVectors        *vectors,
+void          gimp_vectors_anchor_move_relative (GimpPath           *path,
                                                  GimpAnchor         *anchor,
                                                  const GimpCoords   *deltacoord,
                                                  gint                type);
-void          gimp_vectors_anchor_move_absolute (GimpVectors        *vectors,
+void          gimp_vectors_anchor_move_absolute (GimpPath           *path,
                                                  GimpAnchor         *anchor,
                                                  const GimpCoords   *coord,
                                                  gint                type);
 
-void          gimp_vectors_anchor_delete        (GimpVectors        *vectors,
+void          gimp_vectors_anchor_delete        (GimpPath           *path,
                                                  GimpAnchor         *anchor);
 
-void          gimp_vectors_anchor_select        (GimpVectors        *vectors,
+void          gimp_vectors_anchor_select        (GimpPath           *path,
                                                  GimpStroke         *target_stroke,
                                                  GimpAnchor         *anchor,
                                                  gboolean            selected,
                                                  gboolean            exclusive);
 
 
-/* GimpStroke is a connected component of a GimpVectors object */
+/* GimpStroke is a connected component of a GimpPath object */
 
-void            gimp_vectors_stroke_add         (GimpVectors        *vectors,
+void            gimp_vectors_stroke_add         (GimpPath           *path,
                                                  GimpStroke         *stroke);
-void            gimp_vectors_stroke_remove      (GimpVectors        *vectors,
+void            gimp_vectors_stroke_remove      (GimpPath           *path,
                                                  GimpStroke         *stroke);
-gint            gimp_vectors_get_n_strokes      (GimpVectors        *vectors);
-GimpStroke    * gimp_vectors_stroke_get         (GimpVectors        *vectors,
+gint            gimp_vectors_get_n_strokes      (GimpPath           *path);
+GimpStroke    * gimp_vectors_stroke_get         (GimpPath           *path,
                                                  const GimpCoords   *coord);
-GimpStroke    * gimp_vectors_stroke_get_by_id   (GimpVectors        *vectors,
+GimpStroke    * gimp_vectors_stroke_get_by_id   (GimpPath           *path,
                                                  gint                id);
 
 /* prev == NULL: "first" stroke */
-GimpStroke    * gimp_vectors_stroke_get_next    (GimpVectors        *vectors,
+GimpStroke    * gimp_vectors_stroke_get_next    (GimpPath           *path,
                                                  GimpStroke         *prev);
-gdouble         gimp_vectors_stroke_get_length  (GimpVectors        *vectors,
+gdouble         gimp_vectors_stroke_get_length  (GimpPath           *path,
                                                  GimpStroke         *stroke);
 
 /* accessing the shape of the curve */
 
-gdouble         gimp_vectors_get_length         (GimpVectors        *vectors,
+gdouble         gimp_vectors_get_length         (GimpPath           *path,
                                                  const GimpAnchor   *start);
-gdouble         gimp_vectors_get_distance       (GimpVectors        *vectors,
+gdouble         gimp_vectors_get_distance       (GimpPath           *path,
                                                  const GimpCoords   *coord);
 
 /* returns the number of valid coordinates */
 
-gint            gimp_vectors_interpolate        (GimpVectors        *vectors,
+gint            gimp_vectors_interpolate        (GimpPath           *path,
                                                  GimpStroke         *stroke,
                                                  gdouble             precision,
                                                  gint                max_points,
@@ -178,7 +178,7 @@ gint            gimp_vectors_interpolate        (GimpVectors        *vectors,
 /* usually overloaded */
 
 /* returns a bezier representation */
-const GimpBezierDesc * gimp_vectors_get_bezier  (GimpVectors        *vectors);
+const GimpBezierDesc * gimp_vectors_get_bezier  (GimpPath           *path);
 
 
 #endif /* __GIMP_VECTORS_H__ */
