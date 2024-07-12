@@ -1867,8 +1867,8 @@ gimp_image_selected_channels_notify (GimpItemTree     *tree,
 
 static void
 gimp_image_selected_paths_notify (GimpItemTree     *tree,
-                                    const GParamSpec *pspec,
-                                    GimpImage        *image)
+                                  const GParamSpec *pspec,
+                                  GimpImage        *image)
 {
   g_signal_emit (image, gimp_image_signals[SELECTED_PATHS_CHANGED], 0);
 }
@@ -5890,11 +5890,11 @@ gimp_image_remove_channel (GimpImage   *image,
 /*  path  */
 
 gboolean
-gimp_image_add_path (GimpImage   *image,
-                     GimpPath    *path,
-                     GimpPath    *parent,
-                     gint         position,
-                     gboolean     push_undo)
+gimp_image_add_path (GimpImage *image,
+                     GimpPath  *path,
+                     GimpPath  *parent,
+                     gint       position,
+                     gboolean   push_undo)
 {
   GimpImagePrivate *private;
   GList            *list = NULL;
@@ -5930,10 +5930,10 @@ gimp_image_add_path (GimpImage   *image,
 }
 
 void
-gimp_image_remove_path (GimpImage   *image,
-                        GimpPath    *path,
-                        gboolean     push_undo,
-                        GList       *new_selected)
+gimp_image_remove_path (GimpImage *image,
+                        GimpPath  *path,
+                        gboolean   push_undo,
+                        GList     *new_selected)
 {
   GimpImagePrivate *private;
   GList            *selected_path;

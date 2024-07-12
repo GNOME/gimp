@@ -29,8 +29,8 @@
 #include "core/gimpimage.h"
 #include "core/gimptempbuf.h"
 
-#include "gimpstroke.h"
 #include "gimppath.h"
+#include "gimpstroke.h"
 #include "gimpvectors-preview.h"
 
 

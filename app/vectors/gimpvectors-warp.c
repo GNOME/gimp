@@ -31,8 +31,8 @@
 #include "core/gimpcoords.h"
 
 #include "gimpanchor.h"
-#include "gimpstroke.h"
 #include "gimppath.h"
+#include "gimpstroke.h"
 #include "gimpvectors-warp.h"
 
 

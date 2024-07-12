@@ -103,7 +103,7 @@ enum
 
 struct _GimpToolPathPrivate
 {
-  GimpPath             *vectors;        /* the current Vector data           */
+  GimpPath             *vectors;        /* the current Path data             */
   GimpVectorMode        edit_mode;
   gboolean              polygonal;
 

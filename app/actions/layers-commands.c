@@ -63,7 +63,6 @@
 
 #include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimppath.h"
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpaction.h"

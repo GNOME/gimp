@@ -29,8 +29,8 @@
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
-#include "gimpstroke.h"
 #include "gimppath.h"
+#include "gimpstroke.h"
 #include "gimpvectors-export.h"
 
 #include "gimp-intl.h"
