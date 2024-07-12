@@ -44,7 +44,7 @@
 #include "core/gimpsamplepoint.h"
 #include "core/gimptreehandler.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -139,17 +139,17 @@ static void   gimp_display_shell_exported_handler           (GimpImage        *i
 static void   gimp_display_shell_active_paths_handler       (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 
-static void   gimp_display_shell_path_freeze_handler        (GimpVectors      *path,
+static void   gimp_display_shell_path_freeze_handler        (GimpPath         *path,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_path_thaw_handler          (GimpVectors      *path,
+static void   gimp_display_shell_path_thaw_handler          (GimpPath         *path,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_path_visible_handler       (GimpVectors      *path,
+static void   gimp_display_shell_path_visible_handler       (GimpPath         *path,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_path_add_handler           (GimpContainer    *container,
-                                                             GimpVectors      *path,
+                                                             GimpPath         *path,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_path_remove_handler        (GimpContainer    *container,
-                                                             GimpVectors      *path,
+                                                             GimpPath         *path,
                                                              GimpDisplayShell *shell);
 
 static void   gimp_display_shell_check_notify_handler       (GObject          *config,
@@ -974,7 +974,7 @@ gimp_display_shell_active_paths_handler (GimpImage        *image,
        list;
        list = g_list_next (list))
     {
-      GimpVectors    *path = list->data;
+      GimpPath       *path = list->data;
       GimpCanvasItem *item;
 
       item = gimp_canvas_proxy_group_get_item (group, path);
@@ -985,14 +985,14 @@ gimp_display_shell_active_paths_handler (GimpImage        *image,
 }
 
 static void
-gimp_display_shell_path_freeze_handler (GimpVectors      *path,
+gimp_display_shell_path_freeze_handler (GimpPath         *path,
                                         GimpDisplayShell *shell)
 {
   /* do nothing */
 }
 
 static void
-gimp_display_shell_path_thaw_handler (GimpVectors      *path,
+gimp_display_shell_path_thaw_handler (GimpPath         *path,
                                       GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
@@ -1004,7 +1004,7 @@ gimp_display_shell_path_thaw_handler (GimpVectors      *path,
 }
 
 static void
-gimp_display_shell_path_visible_handler (GimpVectors      *path,
+gimp_display_shell_path_visible_handler (GimpPath         *path,
                                          GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
@@ -1018,7 +1018,7 @@ gimp_display_shell_path_visible_handler (GimpVectors      *path,
 
 static void
 gimp_display_shell_path_add_handler (GimpContainer    *container,
-                                     GimpVectors      *path,
+                                     GimpPath         *path,
                                      GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
@@ -1038,7 +1038,7 @@ gimp_display_shell_path_add_handler (GimpContainer    *container,
 
 static void
 gimp_display_shell_path_remove_handler (GimpContainer    *container,
-                                        GimpVectors      *path,
+                                        GimpPath         *path,
                                         GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);

@@ -71,7 +71,7 @@ struct _GimpAlignToolClass
 
 
 void    gimp_align_tool_register (GimpToolRegisterCallback  callback,
-                                 gpointer                  data);
+                                  gpointer                  data);
 
 GType   gimp_align_tool_get_type (void) G_GNUC_CONST;
 

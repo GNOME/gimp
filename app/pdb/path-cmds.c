@@ -40,10 +40,10 @@
 #include "text/gimptextlayer.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke-new.h"
 #include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
-#include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -65,7 +65,7 @@ path_new_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   name = g_value_get_string (gimp_value_array_index (args, 1));
@@ -96,7 +96,7 @@ path_new_from_text_layer_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   GimpLayer *layer;
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   layer = g_value_get_object (gimp_value_array_index (args, 1));
@@ -138,15 +138,15 @@ path_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
-  GimpVectors *path_copy = NULL;
+  GimpPath *path;
+  GimpPath *path_copy = NULL;
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      path_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (path),
-                                G_TYPE_FROM_INSTANCE (path)));
+      path_copy = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
+                             G_TYPE_FROM_INSTANCE (path)));
 
       if (! path_copy)
         success = FALSE;
@@ -171,7 +171,7 @@ path_get_strokes_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gint num_strokes = 0;
   gint32 *stroke_ids = NULL;
 
@@ -220,7 +220,7 @@ path_stroke_get_length_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble precision;
   gdouble length = 0.0;
@@ -258,7 +258,7 @@ path_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble dist;
   gdouble precision;
@@ -312,7 +312,7 @@ path_remove_stroke_invoker (GimpProcedure         *procedure,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
@@ -349,7 +349,7 @@ path_stroke_close_invoker (GimpProcedure         *procedure,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
@@ -388,7 +388,7 @@ path_stroke_reverse_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
@@ -427,7 +427,7 @@ path_stroke_translate_invoker (GimpProcedure         *procedure,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble off_x;
   gdouble off_y;
@@ -472,7 +472,7 @@ path_stroke_scale_invoker (GimpProcedure         *procedure,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble scale_x;
   gdouble scale_y;
@@ -517,7 +517,7 @@ path_stroke_rotate_invoker (GimpProcedure         *procedure,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble center_x;
   gdouble center_y;
@@ -564,7 +564,7 @@ path_stroke_flip_invoker (GimpProcedure         *procedure,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gint flip_type;
   gdouble axis;
@@ -609,7 +609,7 @@ path_stroke_flip_free_invoker (GimpProcedure         *procedure,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble x1;
   gdouble y1;
@@ -659,7 +659,7 @@ path_stroke_get_points_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gint type = 0;
   gint num_points = 0;
@@ -727,7 +727,7 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gint type;
   gint num_points;
   const gdouble *controlpoints;
@@ -799,7 +799,7 @@ path_stroke_interpolate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble precision;
   gint num_coords = 0;
@@ -864,7 +864,7 @@ path_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gdouble x0;
   gdouble y0;
   gint stroke_id = 0;
@@ -919,7 +919,7 @@ path_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble x0;
   gdouble y0;
@@ -967,7 +967,7 @@ path_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble x0;
   gdouble y0;
@@ -1023,7 +1023,7 @@ path_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpVectors *path;
+  GimpPath *path;
   gint stroke_id;
   gdouble x0;
   gdouble y0;
@@ -1088,7 +1088,7 @@ path_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpVectors *path;
+  GimpPath *path;
   gdouble x0;
   gdouble y0;
   gdouble radius_x;
@@ -1155,7 +1155,7 @@ path_import_from_file_invoker (GimpProcedure         *procedure,
   gboolean merge;
   gboolean scale;
   gint num_paths = 0;
-  GimpVectors **path = NULL;
+  GimpPath **path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   file = g_value_get_object (gimp_value_array_index (args, 1));
@@ -1180,7 +1180,7 @@ path_import_from_file_invoker (GimpProcedure         *procedure,
               GList *list;
               gint   i;
 
-              path = g_new (GimpVectors *, num_paths);
+              path = g_new (GimpPath *, num_paths);
 
               for (i = 0, list = path_list;
                    i < num_paths;
@@ -1200,7 +1200,7 @@ path_import_from_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) path, num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) path, num_paths);
     }
 
   return return_vals;
@@ -1222,7 +1222,7 @@ path_import_from_string_invoker (GimpProcedure         *procedure,
   gboolean merge;
   gboolean scale;
   gint num_paths = 0;
-  GimpVectors **path = NULL;
+  GimpPath **path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   string = g_value_get_string (gimp_value_array_index (args, 1));
@@ -1248,7 +1248,7 @@ path_import_from_string_invoker (GimpProcedure         *procedure,
               GList *list;
               gint   i;
 
-              path = g_new (GimpVectors *, num_paths);
+              path = g_new (GimpPath *, num_paths);
 
               for (i = 0, list = path_list;
                    i < num_paths;
@@ -1268,7 +1268,7 @@ path_import_from_string_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) path, num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) path, num_paths);
     }
 
   return return_vals;
@@ -1285,7 +1285,7 @@ path_export_to_file_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpImage *image;
   GFile *file;
-  GimpVectors *path;
+  GimpPath *path;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   file = g_value_get_object (gimp_value_array_index (args, 1));
@@ -1318,7 +1318,7 @@ path_export_to_string_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpVectors *path;
+  GimpPath *path;
   gchar *string = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -1379,11 +1379,11 @@ register_path_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("path",
-                                                            "path",
-                                                            "the current path object, 0 if no path exists in the image.",
-                                                            FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_path ("path",
+                                                         "path",
+                                                         "the current path object, 0 if no path exists in the image.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1414,11 +1414,11 @@ register_path_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("path",
-                                                            "path",
-                                                            "The path of the text layer.",
-                                                            FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_path ("path",
+                                                         "path",
+                                                         "The path of the text layer.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1437,17 +1437,17 @@ register_path_procs (GimpPDB *pdb)
                                          "Barak Itkin",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object to copy",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object to copy",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("path-copy",
-                                                            "path copy",
-                                                            "The newly copied path object",
-                                                            FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_path ("path-copy",
+                                                         "path copy",
+                                                         "The newly copied path object",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1466,11 +1466,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-strokes",
                                                      "num strokes",
@@ -1500,11 +1500,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1541,11 +1541,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1606,11 +1606,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1635,11 +1635,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1664,11 +1664,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2020");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1693,11 +1693,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1734,11 +1734,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1775,11 +1775,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Jo\xc3\xa3o S. O. Bueno",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1822,11 +1822,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Jo\xc3\xa3o S. O. Bueno",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1866,11 +1866,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Jo\xc3\xa3o S. O. Bueno",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1919,11 +1919,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -1972,11 +1972,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2006");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
@@ -2025,11 +2025,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -2077,11 +2077,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -2118,11 +2118,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -2159,11 +2159,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -2212,11 +2212,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("stroke-id",
                                                  "stroke id",
@@ -2277,11 +2277,11 @@ register_path_procs (GimpPDB *pdb)
                                          "Simon Budig",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -2369,7 +2369,7 @@ register_path_procs (GimpPDB *pdb)
                                    gimp_param_spec_object_array ("path",
                                                                  "path",
                                                                  "The list of newly created path",
-                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_TYPE_PATH,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2429,7 +2429,7 @@ register_path_procs (GimpPDB *pdb)
                                    gimp_param_spec_object_array ("path",
                                                                  "path",
                                                                  "The list of newly created path",
-                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_TYPE_PATH,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2461,11 +2461,11 @@ register_path_procs (GimpPDB *pdb)
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object to export, or %NULL for all in the image",
-                                                        TRUE,
-                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object to export, or %NULL for all in the image",
+                                                     TRUE,
+                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2490,11 +2490,11 @@ register_path_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object to export, or %NULL for all in the image",
-                                                        TRUE,
-                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object to export, or %NULL for all in the image",
+                                                     TRUE,
+                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("string",
                                                            "string",

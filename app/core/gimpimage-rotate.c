@@ -25,7 +25,7 @@
 
 #include "config/gimpdialogconfig.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimp.h"
 #include "gimpcontainer.h"
@@ -132,7 +132,7 @@ gimp_image_rotate (GimpImage        *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ROTATE, NULL);
 
-  /*  Rotate all layers, channels (including selection mask), and vectors  */
+  /*  Rotate all layers, channels (including selection mask), and path  */
   while ((item = gimp_object_queue_pop (queue)))
     {
       gint off_x;
@@ -150,7 +150,7 @@ gimp_image_rotate (GimpImage        *image,
         {
           gimp_item_set_offset (item, 0, 0);
 
-          if (GIMP_IS_VECTORS (item))
+          if (GIMP_IS_PATH (item))
             {
               gimp_item_set_size (item, new_image_width, new_image_height);
 

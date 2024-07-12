@@ -61,7 +61,7 @@
 #include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
@@ -520,7 +520,7 @@ image_get_paths_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint num_paths = 0;
-  GimpVectors **paths = NULL;
+  GimpPath **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -534,7 +534,7 @@ image_get_paths_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          paths = g_new (GimpVectors *, num_paths);
+          paths = g_new (GimpPath *, num_paths);
 
           for (i = 0; i < num_paths; i++, list = g_list_next (list))
             paths[i] = g_object_ref (list->data);
@@ -547,7 +547,7 @@ image_get_paths_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) paths, num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) paths, num_paths);
     }
 
   return return_vals;
@@ -1045,8 +1045,8 @@ image_insert_path_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpVectors *path;
-  GimpVectors *parent;
+  GimpPath *path;
+  GimpPath *parent;
   gint position;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -1087,7 +1087,7 @@ image_remove_path_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpVectors *path;
+  GimpPath *path;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   path = g_value_get_object (gimp_value_array_index (args, 1));
@@ -1913,7 +1913,7 @@ image_get_selected_paths_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint num_paths = 0;
-  GimpVectors **paths = NULL;
+  GimpPath **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -1927,7 +1927,7 @@ image_get_selected_paths_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          paths = g_new (GimpVectors *, num_paths);
+          paths = g_new (GimpPath *, num_paths);
 
           for (i = 0; i < num_paths; i++, list = g_list_next (list))
             paths[i] = g_object_ref (list->data);
@@ -1940,7 +1940,7 @@ image_get_selected_paths_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) paths, num_paths);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) paths, num_paths);
     }
 
   return return_vals;
@@ -1957,11 +1957,11 @@ image_set_selected_paths_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpImage *image;
   gint num_paths;
-  const GimpVectors **paths;
+  const GimpPath **paths;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   num_paths = g_value_get_int (gimp_value_array_index (args, 1));
-  paths = (const GimpVectors **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  paths = (const GimpPath **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -2650,7 +2650,7 @@ image_get_path_by_tattoo_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   guint tattoo;
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   tattoo = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -2743,7 +2743,7 @@ image_get_path_by_name_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   const gchar *name;
-  GimpVectors *path = NULL;
+  GimpPath *path = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   name = g_value_get_string (gimp_value_array_index (args, 1));
@@ -3381,7 +3381,7 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_object_array ("paths",
                                                                  "paths",
                                                                  "The list of paths contained in the image.",
-                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_TYPE_PATH,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3843,17 +3843,17 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("parent",
-                                                        "parent",
-                                                        "The parent path",
-                                                        TRUE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("parent",
+                                                     "parent",
+                                                     "The parent path",
+                                                     TRUE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("position",
                                                  "position",
@@ -3884,11 +3884,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors ("path",
-                                                        "path",
-                                                        "The path object",
-                                                        FALSE,
-                                                        GIMP_PARAM_READWRITE));
+                               gimp_param_spec_path ("path",
+                                                     "path",
+                                                     "The path object",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4673,7 +4673,7 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_object_array ("paths",
                                                                  "paths",
                                                                  "The list of selected paths in the image.",
-                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_TYPE_PATH,
                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4708,7 +4708,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_object_array ("paths",
                                                              "paths",
                                                              "The list of paths to select",
-                                                             GIMP_TYPE_VECTORS,
+                                                             GIMP_TYPE_PATH,
                                                              GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -5385,11 +5385,11 @@ register_image_procs (GimpPDB *pdb)
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("path",
-                                                            "path",
-                                                            "The path with the specified tattoo",
-                                                            FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_path ("path",
+                                                         "path",
+                                                         "The path with the specified tattoo",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5493,11 +5493,11 @@ register_image_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_vectors ("path",
-                                                            "path",
-                                                            "The path with the specified name",
-                                                            FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_path ("path",
+                                                         "path",
+                                                         "The path with the specified name",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

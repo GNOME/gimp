@@ -781,11 +781,11 @@ typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_ITEM_TYPE_LAYERS   = 1 << 0,
   GIMP_ITEM_TYPE_CHANNELS = 1 << 1,
-  GIMP_ITEM_TYPE_VECTORS  = 1 << 2,
+  GIMP_ITEM_TYPE_PATHS    = 1 << 2,
 
   GIMP_ITEM_TYPE_ALL      = (GIMP_ITEM_TYPE_LAYERS   |
                              GIMP_ITEM_TYPE_CHANNELS |
-                             GIMP_ITEM_TYPE_VECTORS)
+                             GIMP_ITEM_TYPE_PATHS)
 } GimpItemTypeMask;
 
 

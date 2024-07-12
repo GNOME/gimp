@@ -57,7 +57,7 @@
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "plug-in/gimppluginmanager-file.h"
 
@@ -381,7 +381,7 @@ gimp_create_mainimage (Gimp     *gimp,
   GimpChannel   *channel           = NULL;
   GeglColor     *channel_color     = gegl_color_new (NULL);
   GimpChannel   *selection         = NULL;
-  GimpVectors   *vectors           = NULL;
+  GimpPath      *vectors           = NULL;
   GimpCoords     vectors1_coords[] = GIMP_MAINIMAGE_VECTORS1_COORDS;
   GimpCoords     vectors2_coords[] = GIMP_MAINIMAGE_VECTORS2_COORDS;
   GimpStroke    *stroke            = NULL;
@@ -687,7 +687,7 @@ gimp_assert_vectors (GimpImage   *image,
                      gsize        coords_size,
                      gboolean     visible)
 {
-  GimpVectors *vectors        = NULL;
+  GimpPath    *vectors        = NULL;
   GimpStroke  *stroke         = NULL;
   GArray      *control_points = NULL;
   gboolean     closed         = FALSE;

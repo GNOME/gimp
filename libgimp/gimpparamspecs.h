@@ -278,30 +278,30 @@ GParamSpec * gimp_param_spec_selection     (const gchar   *name,
 
 
 /*
- * GIMP_TYPE_PARAM_VECTORS
+ * GIMP_TYPE_PARAM_PATH
  */
 
-#define GIMP_VALUE_HOLDS_VECTORS(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
-                                           GIMP_TYPE_VECTORS))
+#define GIMP_VALUE_HOLDS_PATH(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
+                                        GIMP_TYPE_PATH))
 
-#define GIMP_TYPE_PARAM_VECTORS           (gimp_param_vectors_get_type ())
-#define GIMP_PARAM_SPEC_VECTORS(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_VECTORS, GimpParamSpecVectors))
-#define GIMP_IS_PARAM_SPEC_VECTORS(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VECTORS))
+#define GIMP_TYPE_PARAM_PATH           (gimp_param_path_get_type ())
+#define GIMP_PARAM_SPEC_PATH(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PATH, GimpParamSpecPath))
+#define GIMP_IS_PARAM_SPEC_PATH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATH))
 
-typedef struct _GimpParamSpecVectors GimpParamSpecVectors;
+typedef struct _GimpParamSpecPath GimpParamSpecPath;
 
-struct _GimpParamSpecVectors
+struct _GimpParamSpecPath
 {
   GimpParamSpecItem parent_instance;
 };
 
-GType        gimp_param_vectors_get_type (void) G_GNUC_CONST;
+GType        gimp_param_path_get_type (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_vectors     (const gchar  *name,
-                                          const gchar  *nick,
-                                          const gchar  *blurb,
-                                          gboolean      none_ok,
-                                          GParamFlags   flags);
+GParamSpec * gimp_param_spec_path     (const gchar  *name,
+                                       const gchar  *nick,
+                                       const gchar  *blurb,
+                                       gboolean      none_ok,
+                                       GParamFlags   flags);
 
 
 /*

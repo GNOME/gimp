@@ -57,7 +57,7 @@
 #include "text/gimptextundo.h"
 
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -2313,7 +2313,7 @@ gimp_text_tool_paste_clipboard (GimpTextTool *text_tool)
 void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
-  GimpVectors *path;
+  GimpPath *path;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
@@ -2341,7 +2341,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
                                       GError       **error)
 {
   GList             *vectors0;
-  GimpVectors       *vectors;
+  GimpPath          *vectors;
   gdouble            box_width;
   gdouble            box_height;
   GimpTextDirection  dir;

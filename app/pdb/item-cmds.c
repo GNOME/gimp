@@ -39,7 +39,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpselection.h"
 #include "text/gimptextlayer.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -293,7 +293,7 @@ item_id_is_path_invoker (GimpProcedure         *procedure,
     {
       GimpItem *item = gimp_item_get_by_id (gimp, item_id);
 
-      path = (GIMP_IS_VECTORS (item) &&
+      path = (GIMP_IS_PATH (item) &&
               ! gimp_item_is_removed (item));
     }
 

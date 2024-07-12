@@ -21,7 +21,7 @@
 
 typedef void (* GimpVectorsOptionsCallback) (GtkWidget    *dialog,
                                              GimpImage    *image,
-                                             GimpVectors  *vectors,
+                                             GimpPath     *vectors,
                                              GimpContext  *context,
                                              const gchar  *vectors_name,
                                              gboolean      vectors_visible,
@@ -33,7 +33,7 @@ typedef void (* GimpVectorsOptionsCallback) (GtkWidget    *dialog,
 
 
 GtkWidget * vectors_options_dialog_new (GimpImage                  *image,
-                                        GimpVectors                *vectors,
+                                        GimpPath                   *vectors,
                                         GimpContext                *context,
                                         GtkWidget                  *parent,
                                         const gchar                *title,

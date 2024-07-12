@@ -29,8 +29,8 @@
 #include "core/gimperror.h"
 #include "core/gimpcoords.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
 
 #include "gimppaintcore.h"
 #include "gimppaintcore-stroke.h"
@@ -234,7 +234,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
                                 GimpDrawable      *drawable,
                                 GimpPaintOptions  *paint_options,
                                 gboolean           emulate_dynamics,
-                                GimpVectors       *vectors,
+                                GimpPath          *path,
                                 gboolean           push_undo,
                                 GError           **error)
 {
@@ -248,14 +248,14 @@ gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (GIMP_IS_PATH (path), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  gimp_item_get_offset (GIMP_ITEM (vectors),  &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (path),  &off_x, &off_y);
 
   drawables = g_list_prepend (NULL, drawable);
 
-  for (stroke = vectors->strokes->head;
+  for (stroke = path->strokes->head;
        stroke;
        stroke = stroke->next)
     {

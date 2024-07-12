@@ -193,6 +193,7 @@ libgimp_sources_introspectable = [
   'gimploadprocedure.c',
   'gimppalette.c',
   'gimpparamspecs.c',
+  'gimppath.c',
   'gimppattern.c',
   'gimppdb.c',
   'gimpplugin.c',
@@ -206,7 +207,6 @@ libgimp_sources_introspectable = [
   'gimpselection.c',
   'gimptextlayer.c',
   'gimpthumbnailprocedure.c',
-  'gimpvectors.c',
   'gimpvectorloadprocedure.c',
   gimpenums,
   pdb_wrappers_sources,
@@ -254,6 +254,7 @@ libgimp_headers_introspectable = [
   'gimploadprocedure.h',
   'gimppalette.h',
   'gimpparamspecs.h',
+  'gimppath.h',
   'gimppattern.h',
   'gimppdb.h',
   'gimpplugin.h',
@@ -268,7 +269,6 @@ libgimp_headers_introspectable = [
   'gimptextlayer.h',
   'gimpthumbnailprocedure.h',
   'gimpvectorloadprocedure.h',
-  'gimpvectors.h',
   pdb_wrappers_headers,
 ]
 

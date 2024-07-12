@@ -46,7 +46,7 @@
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 #include "vectors/gimpvectors-import.h"
 
 #include "widgets/gimpdnd.h"
@@ -127,7 +127,7 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
   gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_CHANNEL,
                                gimp_display_shell_drop_drawable,
                                shell);
-  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_VECTORS,
+  gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_PATH,
                                gimp_display_shell_drop_path,
                                shell);
   gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_PATTERN,
@@ -285,7 +285,7 @@ gimp_display_shell_drop_path (GtkWidget    *widget,
 
   if (new_item)
     {
-      GimpVectors *new_path = GIMP_VECTORS (new_item);
+      GimpPath *new_path = GIMP_PATH (new_item);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Path"));

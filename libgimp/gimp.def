@@ -685,6 +685,7 @@ EXPORTS
 	gimp_param_layer_get_type
 	gimp_param_layer_mask_get_type
 	gimp_param_palette_get_type
+	gimp_param_path_get_type
 	gimp_param_pattern_get_type
 	gimp_param_resource_get_type
 	gimp_param_selection_get_type
@@ -701,13 +702,12 @@ EXPORTS
 	gimp_param_spec_layer
 	gimp_param_spec_layer_mask
 	gimp_param_spec_palette
+	gimp_param_spec_path
 	gimp_param_spec_pattern
 	gimp_param_spec_resource
 	gimp_param_spec_selection
 	gimp_param_spec_text_layer
-	gimp_param_spec_vectors
 	gimp_param_text_layer_get_type
-	gimp_param_vectors_get_type
 	gimp_path_bezier_stroke_conicto
 	gimp_path_bezier_stroke_cubicto
 	gimp_path_bezier_stroke_lineto
@@ -716,7 +716,9 @@ EXPORTS
 	gimp_path_copy
 	gimp_path_export_to_file
 	gimp_path_export_to_string
+	gimp_path_get_by_id
 	gimp_path_get_strokes
+	gimp_path_get_type
 	gimp_path_import_from_file
 	gimp_path_import_from_string
 	gimp_path_new
@@ -1018,7 +1020,5 @@ EXPORTS
 	gimp_vector_load_procedure_extract_dimensions
 	gimp_vector_load_procedure_get_type
 	gimp_vector_load_procedure_new
-	gimp_vectors_get_by_id
-	gimp_vectors_get_type
 	gimp_version
 	gimp_wm_class

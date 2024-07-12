@@ -49,7 +49,7 @@
 
 #include "pdb/gimppdb-utils.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "libgimp/gimpgpparams.h"
 

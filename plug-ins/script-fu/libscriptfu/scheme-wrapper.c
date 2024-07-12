@@ -1033,16 +1033,16 @@ script_fu_marshal_procedure_call (scheme   *sc,
                 return error;
             }
         }
-      else if (GIMP_VALUE_HOLDS_VECTORS (&value))
+      else if (GIMP_VALUE_HOLDS_PATH (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpVectors *vectors =
-                gimp_vectors_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              GimpPath *path =
+                gimp_path_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
-              g_value_set_object (&value, vectors);
+              g_value_set_object (&value, path);
             }
         }
       else if (GIMP_VALUE_HOLDS_ITEM (&value))

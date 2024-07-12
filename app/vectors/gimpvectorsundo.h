@@ -37,7 +37,7 @@ struct _GimpVectorsUndo
 {
   GimpItemUndo  parent_instance;
 
-  GimpVectors  *prev_parent;
+  GimpPath     *prev_parent;
   gint          prev_position;   /*  former position in list    */
   GList        *prev_vectors;    /*  previous selected vectors  */
 };

@@ -32,7 +32,7 @@
 #include "core/gimplayer.h"
 #include "core/gimpchannel.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimppivotselector.h"
 #include "widgets/gimppropwidgets.h"
@@ -824,7 +824,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
           else if (GIMP_IS_CHANNEL (options->priv->reference))
             tmp_txt = g_strdup_printf (_("Reference channel: %s"),
                                        gimp_object_get_name (options->priv->reference));
-          else if (GIMP_IS_VECTORS (options->priv->reference))
+          else if (GIMP_IS_PATH (options->priv->reference))
             tmp_txt = g_strdup_printf (_("Reference path: %s"),
                                        gimp_object_get_name (options->priv->reference));
           else if (GIMP_IS_GUIDE (options->priv->reference))

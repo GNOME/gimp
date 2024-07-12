@@ -37,7 +37,7 @@ struct _GimpVectorsModUndo
 {
   GimpItemUndo  parent_instance;
 
-  GimpVectors  *vectors;
+  GimpPath     *vectors;
 };
 
 struct _GimpVectorsModUndoClass

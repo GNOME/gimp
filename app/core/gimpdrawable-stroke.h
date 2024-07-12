@@ -32,7 +32,7 @@ void       gimp_drawable_stroke_boundary     (GimpDrawable       *drawable,
 
 gboolean   gimp_drawable_stroke_vectors      (GimpDrawable       *drawable,
                                               GimpStrokeOptions  *options,
-                                              GimpVectors        *vectors,
+                                              GimpPath           *vectors,
                                               gboolean            push_undo,
                                               GError            **error);
 

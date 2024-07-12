@@ -38,7 +38,7 @@
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -342,7 +342,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
 
       if (object == NULL)
         {
-          GimpVectors *vectors;
+          GimpPath    *path;
           GimpGuide   *guide;
           GimpLayer   *layer;
           GObject     *previously_picked;
@@ -351,12 +351,12 @@ gimp_align_tool_button_release (GimpTool              *tool,
           previously_picked = gimp_align_options_get_reference (options, FALSE);
 
 
-          if ((vectors = gimp_image_pick_path (image,
+          if ((path = gimp_image_pick_path (image,
                                                coords->x, coords->y,
                                                FUNSCALEX (shell, snap_distance),
                                                FUNSCALEY (shell, snap_distance))))
             {
-              object = G_OBJECT (vectors);
+              object = G_OBJECT (path);
             }
           else if (gimp_display_shell_get_show_guides (shell) &&
                    (guide = gimp_image_pick_guide (image,

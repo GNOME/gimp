@@ -22,14 +22,14 @@
 #define __GIMP_VECTORS_WARP_H__
 
 
-void gimp_vectors_warp_point   (GimpVectors *vectors,
-                                GimpCoords  *point,
-                                GimpCoords  *point_warped,
-                                gdouble      y_offset);
+void gimp_vectors_warp_point   (GimpPath   *vectors,
+                                GimpCoords *point,
+                                GimpCoords *point_warped,
+                                gdouble     y_offset);
 
-void gimp_vectors_warp_vectors (GimpVectors *vectors,
-                                GimpVectors *vectors_in,
-                                gdouble      yoffset);
+void gimp_vectors_warp_vectors (GimpPath   *vectors,
+                                GimpPath   *vectors_in,
+                                gdouble     yoffset);
 
 
 #endif /* __GIMP_VECTORS_WARP_H__ */

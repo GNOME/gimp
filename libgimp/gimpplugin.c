@@ -1602,7 +1602,7 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
         }
       else if (gimp_item_id_is_path (item_id))
         {
-          item = g_object_new (GIMP_TYPE_VECTORS,
+          item = g_object_new (GIMP_TYPE_PATH,
                                "id", item_id,
                                NULL);
         }

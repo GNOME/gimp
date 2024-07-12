@@ -32,7 +32,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           desc => 'the current path object, 0 if no path exists
                    in the image.' }
     );
@@ -64,7 +64,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
 	  desc => 'The path of the text layer.' }
     );
 
@@ -100,20 +100,20 @@ HELP
     barak_pdb_misc('2008', '2.6');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object to copy' }
     );
 
     @outargs = (
-	{ name => 'path_copy', type => 'vectors',
+	{ name => 'path_copy', type => 'path',
 	  desc => 'The newly copied path object' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  path_copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (path),
-                            G_TYPE_FROM_INSTANCE (path)));
+  path_copy = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
+                         G_TYPE_FROM_INSTANCE (path)));
 
   if (! path_copy)
     success = FALSE;
@@ -132,7 +132,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' }
     );
 
@@ -175,7 +175,7 @@ sub path_stroke_get_length {
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -216,7 +216,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -268,7 +268,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
@@ -306,7 +306,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
@@ -347,7 +347,7 @@ HELP
     &simon_pdb_misc('2020', '3.0');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
@@ -388,7 +388,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -434,7 +434,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -479,7 +479,7 @@ HELP
 
     &joao_pdb_misc('2006', '2.4');
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -526,7 +526,7 @@ HELP
 
     &joao_pdb_misc('2006', '2.4');
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -573,7 +573,7 @@ HELP
 
     &joao_pdb_misc('2006', '2.4');
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -626,7 +626,7 @@ HELP
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' }
@@ -692,7 +692,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -762,7 +762,7 @@ HELP
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'type', type => 'enum GimpVectorsStrokeType',
 	  desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
@@ -835,7 +835,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
         { name => 'x0', type => 'float',
           desc => 'The x-coordinate of the moveto' },
@@ -890,7 +890,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -941,7 +941,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -998,7 +998,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
@@ -1063,7 +1063,7 @@ HELP
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'path', type => 'vectors',
+	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
         { name => 'x0', type => 'float',
           desc => 'The x-coordinate of the center' },
@@ -1137,7 +1137,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'path', type => 'vectorarray', void_ret => 1,
+        { name => 'path', type => 'patharray', void_ret => 1,
           desc => 'The list of newly created path',
           array => { name => 'num_paths',
                      desc => 'The number of newly created path' } }
@@ -1163,7 +1163,7 @@ HELP
           GList *list;
           gint   i;
 
-          path = g_new (GimpVectors *, num_paths);
+          path = g_new (GimpPath *, num_paths);
 
           for (i = 0, list = path_list;
                i < num_paths;
@@ -1206,7 +1206,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'path', type => 'vectorarray', void_ret => 1,
+        { name => 'path', type => 'patharray', void_ret => 1,
           desc => 'The list of newly created path',
           array => { name => 'num_paths',
                      desc => 'The number of newly created path' } }
@@ -1232,7 +1232,7 @@ HELP
           GList *list;
           gint   i;
 
-          path = g_new (GimpVectors *, num_paths);
+          path = g_new (GimpPath *, num_paths);
 
           for (i = 0, list = path_list;
                i < num_paths;
@@ -1266,7 +1266,7 @@ HELP
           desc => 'The image' },
         { name => 'file', type => 'file',
           desc => 'The SVG file to create.' },
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           no_validate => 1, none_ok => 1,
           desc => 'The path object to export, or %NULL for all in the image' }
     );
@@ -1303,7 +1303,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'path', type => 'vectors',
+        { name => 'path', type => 'path',
           no_validate => 1, none_ok => 1,
           desc => 'The path object to export, or %NULL for all in the image' }
     );
@@ -1341,7 +1341,7 @@ CODE
               "vectors/gimpanchor.h"
               "vectors/gimpstroke-new.h"
               "vectors/gimpbezierstroke.h"
-              "vectors/gimpvectors.h"
+              "vectors/gimppath.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 

@@ -42,7 +42,7 @@ typedef struct _GimpChannel         GimpChannel;
 typedef struct _GimpLayerMask       GimpLayerMask;
 typedef struct _GimpSelection       GimpSelection;
 typedef struct _GimpTextLayer       GimpTextLayer;
-typedef struct _GimpVectors         GimpVectors;
+typedef struct _GimpPath            GimpPath;
 
 typedef struct _GimpDisplay         GimpDisplay;
 

@@ -26,7 +26,7 @@
 
 #include "gegl/gimp-gegl-loops.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
@@ -127,7 +127,7 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy the channels  */
   active_channels = gimp_image_duplicate_channels (image, new_image);
 
-  /*  Copy any vectors  */
+  /*  Copy any path  */
   active_path = gimp_image_duplicate_paths (image, new_image);
 
   /*  Copy floating layer  */
@@ -136,7 +136,7 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy the selection mask  */
   gimp_image_duplicate_mask (image, new_image);
 
-  /*  Set active layer, active channel, active vectors  */
+  /*  Set active layer, active channel, active path  */
   if (active_layers)
     gimp_image_set_selected_layers (new_image, active_layers);
 
@@ -351,11 +351,11 @@ gimp_image_duplicate_paths (GimpImage *image,
        list;
        list = g_list_next (list))
     {
-      GimpVectors  *path = list->data;
-      GimpVectors  *new_path;
+      GimpPath *path = list->data;
+      GimpPath *new_path;
 
-      new_path = GIMP_VECTORS (gimp_image_duplicate_item (GIMP_ITEM (path),
-                                                          new_image));
+      new_path = GIMP_PATH (gimp_image_duplicate_item (GIMP_ITEM (path),
+                                                       new_image));
 
       if (g_list_find (selected_path, path))
         new_selected_path = g_list_prepend (new_selected_path, new_path);

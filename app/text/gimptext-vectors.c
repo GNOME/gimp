@@ -29,9 +29,9 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
 #include "vectors/gimpanchor.h"
+#include "vectors/gimpbezierstroke.h"
+#include "vectors/gimppath.h"
 
 #include "gimptext.h"
 #include "gimptext-vectors.h"
@@ -41,7 +41,7 @@
 
 typedef struct
 {
-  GimpVectors *vectors;
+  GimpPath    *vectors;
   GimpStroke  *stroke;
   GimpAnchor  *anchor;
 } RenderContext;
@@ -51,11 +51,11 @@ static void  gimp_text_render_vectors (cairo_t       *cr,
                                        RenderContext *context);
 
 
-GimpVectors *
+GimpPath *
 gimp_text_vectors_new (GimpImage *image,
                        GimpText  *text)
 {
-  GimpVectors   *vectors;
+  GimpPath      *vectors;
   RenderContext  context = { NULL, };
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);

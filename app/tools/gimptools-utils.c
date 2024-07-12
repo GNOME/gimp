@@ -28,7 +28,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimplayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdialogfactory.h"
@@ -58,7 +58,7 @@ gimp_tools_blink_lock_box (Gimp     *gimp,
     identifier = "gimp-layer-list";
   else if (GIMP_IS_CHANNEL (item))
     identifier = "gimp-channel-list";
-  else if (GIMP_IS_VECTORS (item))
+  else if (GIMP_IS_PATH (item))
     identifier = "gimp-vectors-list";
   else
     return;

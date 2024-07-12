@@ -85,7 +85,7 @@
 
 #include "text/gimptextlayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -798,7 +798,7 @@ gimp_image_init (GimpImage *image)
                                                      GIMP_TYPE_CHANNEL);
   private->vectors             = gimp_item_tree_new (image,
                                                      GIMP_TYPE_ITEM_STACK,
-                                                     GIMP_TYPE_VECTORS);
+                                                     GIMP_TYPE_PATH);
   private->layer_stack         = NULL;
 
   private->stored_layer_sets   = NULL;
@@ -2967,7 +2967,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
   items = gimp_image_get_path_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpVectors *vectors = GIMP_VECTORS (list->data);
+      GimpPath *vectors = GIMP_PATH (list->data);
 
       if (gimp_item_get_color_tag (GIMP_ITEM (vectors)) != GIMP_COLOR_TAG_NONE)
         {
@@ -4512,7 +4512,7 @@ gimp_image_get_projection (GimpImage *image)
 }
 
 
-/*  layers / channels / vectors  */
+/*  layers / channels / path  */
 
 GimpItemTree *
 gimp_image_get_layer_tree (GimpImage *image)
@@ -4671,7 +4671,7 @@ gimp_image_get_path_list (GimpImage *image)
 }
 
 
-/*  active drawable, layer, channel, vectors  */
+/*  active drawable, layer, channel, path  */
 
 void
 gimp_image_unset_selected_channels (GimpImage *image)
@@ -4944,7 +4944,7 @@ gimp_image_set_selected_paths (GimpImage *image,
 
   for (iter = paths; iter; iter = iter->next)
     {
-      g_return_if_fail (GIMP_IS_VECTORS (iter->data));
+      g_return_if_fail (GIMP_IS_PATH (iter->data));
       g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)) &&
                         gimp_item_get_image (GIMP_ITEM (iter->data)) == image);
     }
@@ -4983,7 +4983,7 @@ gimp_image_get_channel_by_tattoo (GimpImage  *image,
   return GIMP_CHANNEL (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
-GimpVectors *
+GimpPath *
 gimp_image_get_path_by_tattoo (GimpImage  *image,
                                GimpTattoo  tattoo)
 {
@@ -4993,11 +4993,11 @@ gimp_image_get_path_by_tattoo (GimpImage  *image,
 
   stack = GIMP_ITEM_STACK (gimp_image_get_paths (image));
 
-  return GIMP_VECTORS (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
+  return GIMP_PATH (gimp_item_stack_get_item_by_tattoo (stack, tattoo));
 }
 
 
-/*  layer, channel, vectors by name  */
+/*  layer, channel, path by name  */
 
 GimpLayer *
 gimp_image_get_layer_by_name (GimpImage   *image,
@@ -5027,7 +5027,7 @@ gimp_image_get_channel_by_name (GimpImage   *image,
   return GIMP_CHANNEL (gimp_item_tree_get_item_by_name (tree, name));
 }
 
-GimpVectors *
+GimpPath *
 gimp_image_get_path_by_name (GimpImage   *image,
                              const gchar *name)
 {
@@ -5038,7 +5038,7 @@ gimp_image_get_path_by_name (GimpImage   *image,
 
   tree = gimp_image_get_path_tree (image);
 
-  return GIMP_VECTORS (gimp_item_tree_get_item_by_name (tree, name));
+  return GIMP_PATH (gimp_item_tree_get_item_by_name (tree, name));
 }
 
 
@@ -5447,7 +5447,7 @@ gimp_image_store_item_set (GimpImage    *image,
     stored_sets = &private->stored_layer_sets;
   else if (item_type == GIMP_TYPE_CHANNEL)
     stored_sets = &private->stored_channel_sets;
-  else if (item_type == GIMP_TYPE_VECTORS)
+  else if (item_type == GIMP_TYPE_PATH)
     stored_sets = &private->stored_vectors_sets;
   else
     g_return_if_reached ();
@@ -5508,7 +5508,7 @@ gimp_image_unlink_item_set (GimpImage    *image,
     stored_sets = &private->stored_layer_sets;
   else if (item_type == GIMP_TYPE_CHANNEL)
     stored_sets = &private->stored_channel_sets;
-  else if (item_type == GIMP_TYPE_VECTORS)
+  else if (item_type == GIMP_TYPE_PATH)
     stored_sets = &private->stored_vectors_sets;
   else
     g_return_val_if_reached (FALSE);
@@ -5547,7 +5547,7 @@ gimp_image_get_stored_item_sets (GimpImage *image,
     return private->stored_layer_sets;
   else if (item_type == GIMP_TYPE_CHANNEL)
     return private->stored_channel_sets;
-  else if (item_type == GIMP_TYPE_VECTORS)
+  else if (item_type == GIMP_TYPE_PATH)
     return private->stored_vectors_sets;
 
   g_return_val_if_reached (FALSE);
@@ -5581,7 +5581,7 @@ gimp_image_select_item_set (GimpImage    *image,
         gimp_image_set_selected_layers (image, items);
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, items);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         gimp_image_set_selected_paths (image, items);
       else
         g_return_if_reached ();
@@ -5621,7 +5621,7 @@ gimp_image_add_item_set (GimpImage    *image,
         selected = gimp_image_get_selected_layers (image);
       else if (item_type == GIMP_TYPE_CHANNEL)
         selected = gimp_image_get_selected_channels (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         selected = gimp_image_get_selected_paths (image);
       else
         g_return_if_reached ();
@@ -5637,7 +5637,7 @@ gimp_image_add_item_set (GimpImage    *image,
         gimp_image_set_selected_layers (image, selected);
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, selected);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         gimp_image_set_selected_paths (image, items);
 
       g_list_free (selected);
@@ -5679,7 +5679,7 @@ gimp_image_remove_item_set (GimpImage    *image,
         selected = gimp_image_get_selected_layers (image);
       else if (item_type == GIMP_TYPE_CHANNEL)
         selected = gimp_image_get_selected_channels (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         selected = gimp_image_get_selected_paths (image);
       else
         g_return_if_reached ();
@@ -5697,7 +5697,7 @@ gimp_image_remove_item_set (GimpImage    *image,
         gimp_image_set_selected_layers (image, selected);
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, selected);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         gimp_image_set_selected_paths (image, items);
 
       g_list_free (selected);
@@ -5741,7 +5741,7 @@ gimp_image_intersect_item_set (GimpImage    *image,
         selected = gimp_image_get_selected_layers (image);
       else if (item_type == GIMP_TYPE_CHANNEL)
         selected = gimp_image_get_selected_channels (image);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         selected = gimp_image_get_selected_paths (image);
       else
         g_return_if_reached ();
@@ -5763,7 +5763,7 @@ gimp_image_intersect_item_set (GimpImage    *image,
         gimp_image_set_selected_layers (image, selected);
       else if (item_type == GIMP_TYPE_CHANNEL)
         gimp_image_set_selected_channels (image, selected);
-      else if (item_type == GIMP_TYPE_VECTORS)
+      else if (item_type == GIMP_TYPE_PATH)
         gimp_image_set_selected_paths (image, items);
 
       g_list_free (selected);
@@ -5890,11 +5890,11 @@ gimp_image_remove_channel (GimpImage   *image,
 /*  path  */
 
 gboolean
-gimp_image_add_path (GimpImage   *image,
-                     GimpVectors *path,
-                     GimpVectors *parent,
-                     gint         position,
-                     gboolean     push_undo)
+gimp_image_add_path (GimpImage *image,
+                     GimpPath  *path,
+                     GimpPath  *parent,
+                     gint       position,
+                     gboolean   push_undo)
 {
   GimpImagePrivate *private;
   GList            *list = NULL;
@@ -5930,16 +5930,16 @@ gimp_image_add_path (GimpImage   *image,
 }
 
 void
-gimp_image_remove_path (GimpImage   *image,
-                        GimpVectors *path,
-                        gboolean     push_undo,
-                        GList       *new_selected)
+gimp_image_remove_path (GimpImage *image,
+                        GimpPath  *path,
+                        gboolean   push_undo,
+                        GList     *new_selected)
 {
   GimpImagePrivate *private;
   GList            *selected_path;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_VECTORS (path));
+  g_return_if_fail (GIMP_IS_PATH (path));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (path)));
   g_return_if_fail (gimp_item_get_image (GIMP_ITEM (path)) == image);
 

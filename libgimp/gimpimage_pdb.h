@@ -52,7 +52,7 @@ GimpLayer**              gimp_image_get_layers                 (GimpImage       
                                                                 gint                *num_layers);
 GimpChannel**            gimp_image_get_channels               (GimpImage           *image,
                                                                 gint                *num_channels);
-GimpVectors**            gimp_image_get_paths                  (GimpImage           *image,
+GimpPath**               gimp_image_get_paths                  (GimpImage           *image,
                                                                 gint                *num_paths);
 gboolean                 gimp_image_unset_active_channel       (GimpImage           *image);
 GimpLayer*               gimp_image_get_floating_sel           (GimpImage           *image);
@@ -86,11 +86,11 @@ gboolean                 gimp_image_remove_channel             (GimpImage       
 gboolean                 gimp_image_freeze_channels            (GimpImage           *image);
 gboolean                 gimp_image_thaw_channels              (GimpImage           *image);
 gboolean                 gimp_image_insert_path                (GimpImage           *image,
-                                                                GimpVectors         *path,
-                                                                GimpVectors         *parent,
+                                                                GimpPath            *path,
+                                                                GimpPath            *parent,
                                                                 gint                 position);
 gboolean                 gimp_image_remove_path                (GimpImage           *image,
-                                                                GimpVectors         *path);
+                                                                GimpPath            *path);
 gboolean                 gimp_image_freeze_paths               (GimpImage           *image);
 gboolean                 gimp_image_thaw_paths                 (GimpImage           *image);
 gint                     gimp_image_get_item_position          (GimpImage           *image,
@@ -139,11 +139,11 @@ GimpChannel**            gimp_image_get_selected_channels      (GimpImage       
 gboolean                 gimp_image_set_selected_channels      (GimpImage           *image,
                                                                 gint                 num_channels,
                                                                 const GimpChannel  **channels);
-GimpVectors**            gimp_image_get_selected_paths         (GimpImage           *image,
+GimpPath**               gimp_image_get_selected_paths         (GimpImage           *image,
                                                                 gint                *num_paths);
 gboolean                 gimp_image_set_selected_paths         (GimpImage           *image,
                                                                 gint                 num_paths,
-                                                                const GimpVectors  **paths);
+                                                                const GimpPath     **paths);
 GimpItem**               gimp_image_get_selected_drawables     (GimpImage           *image,
                                                                 gint                *num_drawables);
 GimpSelection*           gimp_image_get_selection              (GimpImage           *image);
@@ -180,13 +180,13 @@ GimpLayer*               gimp_image_get_layer_by_tattoo        (GimpImage       
                                                                 guint                tattoo);
 GimpChannel*             gimp_image_get_channel_by_tattoo      (GimpImage           *image,
                                                                 guint                tattoo);
-GimpVectors*             gimp_image_get_path_by_tattoo         (GimpImage           *image,
+GimpPath*                gimp_image_get_path_by_tattoo         (GimpImage           *image,
                                                                 guint                tattoo);
 GimpLayer*               gimp_image_get_layer_by_name          (GimpImage           *image,
                                                                 const gchar         *name);
 GimpChannel*             gimp_image_get_channel_by_name        (GimpImage           *image,
                                                                 const gchar         *name);
-GimpVectors*             gimp_image_get_path_by_name           (GimpImage           *image,
+GimpPath*                gimp_image_get_path_by_name           (GimpImage           *image,
                                                                 const gchar         *name);
 gboolean                 gimp_image_attach_parasite            (GimpImage           *image,
                                                                 const GimpParasite  *parasite);

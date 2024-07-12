@@ -40,7 +40,7 @@
 #include "text/gimpfont.h"
 #include "text/gimptextlayer.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 
 /*

@@ -72,7 +72,7 @@
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 #include "vectors/gimpvectors-compat.h"
 
 #include "xcf-private.h"
@@ -136,7 +136,7 @@ static gboolean        xcf_load_effect_props  (XcfInfo       *info,
                                                FilterData    *filter);
 static gboolean        xcf_load_path_props    (XcfInfo       *info,
                                                GimpImage     *image,
-                                               GimpVectors  **vectors);
+                                               GimpPath     **vectors);
 static gboolean        xcf_load_prop          (XcfInfo       *info,
                                                PropType      *prop_type,
                                                guint32       *prop_size);
@@ -150,7 +150,7 @@ static FilterData    * xcf_load_effect        (XcfInfo       *info,
                                                GimpDrawable  *drawable);
 static void            xcf_load_free_effect   (FilterData    *data);
 static void            xcf_load_free_effects  (GList         *effects);
-static GimpVectors   * xcf_load_path          (XcfInfo       *info,
+static GimpPath      * xcf_load_path          (XcfInfo       *info,
                                                GimpImage     *image);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
                                                GimpImage     *image);
@@ -822,7 +822,7 @@ xcf_load_image (Gimp     *gimp,
     {
       while (TRUE)
         {
-          GimpVectors *vectors;
+          GimpPath *vectors;
 
           /* read in the offset of the next path */
           xcf_read_offset (info, &offset, 1);
@@ -933,7 +933,7 @@ xcf_load_image (Gimp     *gimp,
 #if 0
       GimpItemList *set;
 
-      set = gimp_item_list_named_new (image, GIMP_TYPE_VECTORS,
+      set = gimp_item_list_named_new (image, GIMP_TYPE_PATH,
                                       _("Linked Paths"),
                                       info->linked_paths);
       gimp_image_store_item_set (image, set);
@@ -2743,9 +2743,9 @@ set_or_seek_node_property:
 }
 
 static gboolean
-xcf_load_path_props (XcfInfo      *info,
-                     GimpImage    *image,
-                     GimpVectors **vectors)
+xcf_load_path_props (XcfInfo    *info,
+                     GimpImage  *image,
+                     GimpPath  **vectors)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -3410,17 +3410,17 @@ xcf_load_free_effects (GList *effects)
 }
 
 /* The new path structure since XCF 18. */
-static GimpVectors *
+static GimpPath *
 xcf_load_path (XcfInfo   *info,
                GimpImage *image)
 {
-  GimpVectors *vectors = NULL;
-  gchar       *name;
-  guint32      version;
-  guint32      plength;
-  guint32      num_strokes;
-  goffset      base;
-  gint         i;
+  GimpPath *vectors = NULL;
+  gchar    *name;
+  guint32   version;
+  guint32   plength;
+  guint32   num_strokes;
+  goffset   base;
+  gint      i;
 
   /* read in the path name. */
   xcf_read_string (info, &name,   1);
@@ -4193,9 +4193,9 @@ static gboolean
 xcf_load_old_paths (XcfInfo   *info,
                     GimpImage *image)
 {
-  guint32      num_paths;
-  guint32      last_selected_row;
-  GimpVectors *active_vectors;
+  guint32   num_paths;
+  guint32   last_selected_row;
+  GimpPath *active_vectors;
 
   xcf_read_int32 (info, &last_selected_row, 1);
   xcf_read_int32 (info, &num_paths,         1);
@@ -4207,7 +4207,7 @@ xcf_load_old_paths (XcfInfo   *info,
       return FALSE;
 
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_paths (image),
+    GIMP_PATH (gimp_container_get_child_by_index (gimp_image_get_paths (image),
                                                      last_selected_row));
 
   if (active_vectors)
@@ -4231,7 +4231,7 @@ xcf_load_old_path (XcfInfo   *info,
   guint32                 num_points;
   guint32                 version; /* changed from num_paths */
   GimpTattoo              tattoo = 0;
-  GimpVectors            *vectors;
+  GimpPath               *vectors;
   GimpVectorsCompatPoint *points;
   gint                    i;
 
@@ -4326,10 +4326,10 @@ static gboolean
 xcf_load_old_vectors (XcfInfo   *info,
                       GimpImage *image)
 {
-  guint32      version;
-  guint32      active_index;
-  guint32      num_paths;
-  GimpVectors *active_vectors;
+  guint32   version;
+  guint32   active_index;
+  guint32   num_paths;
+  GimpPath *active_vectors;
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vectors\n");
@@ -4358,8 +4358,8 @@ xcf_load_old_vectors (XcfInfo   *info,
 
   /* FIXME tree */
   active_vectors =
-    GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_paths (image),
-                                                     active_index));
+    GIMP_PATH (gimp_container_get_child_by_index (gimp_image_get_paths (image),
+                                                  active_index));
 
   if (active_vectors)
     {
@@ -4378,14 +4378,14 @@ static gboolean
 xcf_load_old_vector (XcfInfo   *info,
                      GimpImage *image)
 {
-  gchar       *name;
-  GimpTattoo   tattoo = 0;
-  guint32      visible;
-  guint32      linked;
-  guint32      num_parasites;
-  guint32      num_strokes;
-  GimpVectors *vectors;
-  gint         i;
+  gchar      *name;
+  GimpTattoo  tattoo = 0;
+  guint32     visible;
+  guint32     linked;
+  guint32     num_parasites;
+  guint32     num_strokes;
+  GimpPath   *vectors;
+  gint        i;
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vector\n");

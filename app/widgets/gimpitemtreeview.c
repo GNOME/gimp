@@ -56,7 +56,7 @@
 #include "core/gimptreehandler.h"
 #include "core/gimpundostack.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimpaction.h"
 #include "gimpcontainertreestore.h"

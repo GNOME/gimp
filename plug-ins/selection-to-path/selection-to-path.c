@@ -512,7 +512,7 @@ static void
 do_points (spline_list_array_type  in_splines,
            GimpImage              *image)
 {
-  GimpVectors *path;
+  GimpPath    *path;
   gint32       stroke;
   gint         i, j;
   gboolean     have_points = FALSE;

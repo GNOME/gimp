@@ -486,6 +486,7 @@ EXPORTS
 	gimp_parameters_append
 	gimp_parameters_append_valist
 	gimp_parameters_free
+	gimp_path_get_type
 	gimp_pattern_get_standard
 	gimp_pattern_get_type
 	gimp_pencil_options_get_type
@@ -574,7 +575,6 @@ EXPORTS
 	gimp_vectors_export_file
 	gimp_vectors_export_string
 	gimp_vectors_freeze
-	gimp_vectors_get_type
 	gimp_vectors_import_buffer
 	gimp_vectors_import_file
 	gimp_vectors_new

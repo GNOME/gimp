@@ -32,7 +32,7 @@
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -468,13 +468,13 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
 /* merging paths */
 
-GimpVectors *
+GimpPath *
 gimp_image_merge_visible_paths (GimpImage  *image,
                                 GError    **error)
 {
   GList       *list;
   GList       *merge_list = NULL;
-  GimpVectors *path;
+  GimpPath    *path;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -493,22 +493,22 @@ gimp_image_merge_visible_paths (GimpImage  *image,
 
   if (merge_list && merge_list->next)
     {
-      GimpVectors *target_path;
-      gchar       *name;
-      gint         pos;
+      GimpPath *target_path;
+      gchar    *name;
+      gint      pos;
 
       gimp_set_busy (image->gimp);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
                                    C_("undo-type", "Merge Visible Paths"));
 
-      path = GIMP_VECTORS (merge_list->data);
+      path = GIMP_PATH (merge_list->data);
 
       name = g_strdup (gimp_object_get_name (path));
       pos = gimp_item_get_index (GIMP_ITEM (path));
 
-      target_path = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (path),
-                                                       GIMP_TYPE_VECTORS));
+      target_path = GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (path),
+                                                    GIMP_TYPE_PATH));
       gimp_image_remove_path (image, path, TRUE, NULL);
 
       for (list = g_list_next (merge_list);

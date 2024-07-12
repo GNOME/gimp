@@ -61,8 +61,8 @@
 #include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpaction.h"
@@ -1052,8 +1052,8 @@ layers_text_to_vectors_cmd_callback (GimpAction *action,
 
       if (GIMP_IS_TEXT_LAYER (layer))
         {
-          GimpVectors *path;
-          gint         x, y;
+          GimpPath *path;
+          gint      x, y;
 
           path = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
 
@@ -1077,7 +1077,7 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
   GList       *layers;
   GList       *paths;
   GimpLayer   *layer;
-  GimpVectors *vectors;
+  GimpPath    *vectors;
   return_if_no_layers (image, layers, data);
   return_if_no_vectors_list (image, paths, data);
 
@@ -1088,10 +1088,10 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
   vectors = paths->data;
   if (GIMP_IS_TEXT_LAYER (layer))
     {
-      gdouble      box_width;
-      gdouble      box_height;
-      GimpVectors *new_vectors;
-      gdouble      offset;
+      gdouble   box_width;
+      gdouble   box_height;
+      GimpPath *new_vectors;
+      gdouble   offset;
 
       box_width  = gimp_item_get_width  (GIMP_ITEM (layer));
       box_height = gimp_item_get_height (GIMP_ITEM (layer));

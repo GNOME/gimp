@@ -32,8 +32,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
 
 #include "gimpviewrenderervectors.h"
 
@@ -71,7 +71,7 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
                                  gint              available_width,
                                  gint              available_height)
 {
-  GimpVectors          *vectors = GIMP_VECTORS (renderer->viewable);
+  GimpPath             *vectors = GIMP_PATH (renderer->viewable);
   const GimpBezierDesc *desc;
 
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);

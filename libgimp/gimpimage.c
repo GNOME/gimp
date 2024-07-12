@@ -397,7 +397,7 @@ gimp_image_take_selected_channels (GimpImage *image,
  * This procedure returns the list of paths selected in the specified
  * image.
  *
- * Returns: (element-type GimpVectors) (transfer container):
+ * Returns: (element-type GimpPath) (transfer container):
  *          The list of selected paths in the image.
  *          The returned list must be freed with g_list_free().
  *          Path elements belong to libgimp and must not be freed.
@@ -407,10 +407,10 @@ gimp_image_take_selected_channels (GimpImage *image,
 GList *
 gimp_image_list_selected_paths (GimpImage *image)
 {
-  GimpVectors **paths;
-  gint          num_paths;
-  GList        *list = NULL;
-  gint          i;
+  GimpPath **paths;
+  gint       num_paths;
+  GList     *list = NULL;
+  gint       i;
 
   paths = gimp_image_get_selected_paths (image, &num_paths);
 
@@ -425,7 +425,7 @@ gimp_image_list_selected_paths (GimpImage *image)
 /**
  * gimp_image_take_selected_paths:
  * @image: The image.
- * @paths: (transfer container) (element-type GimpVectors): The list of paths to select.
+ * @paths: (transfer container) (element-type GimpPath): The list of paths to select.
  *
  * The paths are set as the selected paths in the image. Any previous
  * selected paths are unselected.
@@ -438,17 +438,17 @@ gboolean
 gimp_image_take_selected_paths (GimpImage *image,
                                 GList     *paths)
 {
-  GimpVectors **sel_paths;
-  GList        *list;
-  gboolean      success;
-  gint          i;
+  GimpPath **sel_paths;
+  GList     *list;
+  gboolean   success;
+  gint       i;
 
-  sel_paths = g_new0 (GimpVectors *, g_list_length (paths));
+  sel_paths = g_new0 (GimpPath *, g_list_length (paths));
   for (list = paths, i = 0; list; list = list->next, i++)
     sel_paths[i] = list->data;
 
   success = gimp_image_set_selected_paths (image, g_list_length (paths),
-                                           (const GimpVectors **) sel_paths);
+                                           (const GimpPath **) sel_paths);
   g_list_free (paths);
 
   return success;
@@ -500,7 +500,7 @@ gimp_image_list_channels (GimpImage *image)
  * This procedure returns the list of paths contained in the
  * specified image.
  *
- * Returns: (element-type GimpVectors) (transfer container):
+ * Returns: (element-type GimpPath) (transfer container):
  *          The list of paths contained in the image.
  *          The returned value must be freed with g_list_free(). Path
  *          elements belong to libgimp and must not be freed.
@@ -510,10 +510,10 @@ gimp_image_list_channels (GimpImage *image)
 GList *
 gimp_image_list_paths (GimpImage *image)
 {
-  GimpVectors **paths;
-  gint          num_paths;
-  GList        *list = NULL;
-  gint          i;
+  GimpPath **paths;
+  gint       num_paths;
+  GList     *list = NULL;
+  gint       i;
 
   paths = gimp_image_get_paths (image, &num_paths);
 

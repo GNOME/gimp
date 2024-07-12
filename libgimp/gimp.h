@@ -57,6 +57,7 @@
 #include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimppalette.h>
 #include <libgimp/gimpparamspecs.h>
+#include <libgimp/gimppath.h>
 #include <libgimp/gimppattern.h>
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimpplugin.h>
@@ -68,7 +69,6 @@
 #include <libgimp/gimptextlayer.h>
 #include <libgimp/gimpthumbnailprocedure.h>
 #include <libgimp/gimpvectorloadprocedure.h>
-#include <libgimp/gimpvectors.h>
 
 /* Resources and their widgets. Order important. */
 #include <libgimp/gimpresourceselect.h>

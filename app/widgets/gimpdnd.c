@@ -47,7 +47,7 @@
 
 #include "text/gimpfont.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/gimppath.h"
 
 #include "gimpdnd.h"
 #include "gimpdnd-xds.h"
@@ -476,7 +476,7 @@ static const GimpDndDataDef dnd_data_defs[] =
   },
 
   {
-    GIMP_TARGET_VECTORS,
+    GIMP_TARGET_PATH,
 
     "gimp-dnd-get-vectors-func",
     "gimp-dnd-get-vectors-data",
@@ -658,7 +658,7 @@ static const GimpDndDataDef dnd_data_defs[] =
   },
 
   {
-    GIMP_TARGET_VECTORS_LIST,
+    GIMP_TARGET_PATH_LIST,
 
     "gimp-dnd-get-vectors-list-func",
     "gimp-dnd-get-vectors-list-data",
@@ -1948,7 +1948,7 @@ gimp_dnd_data_type_get_by_g_type (GType    type,
     {
       dnd_type = list ? GIMP_DND_TYPE_CHANNEL_LIST : GIMP_DND_TYPE_CHANNEL;
     }
-  else if (g_type_is_a (type, GIMP_TYPE_VECTORS))
+  else if (g_type_is_a (type, GIMP_TYPE_PATH))
     {
       dnd_type = list ? GIMP_DND_TYPE_VECTORS_LIST : GIMP_DND_TYPE_VECTORS;
     }

@@ -33,8 +33,8 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-snap.h"
 
+#include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
 
 #include "gimp-intl.h"
 
@@ -728,7 +728,7 @@ gimp_image_snap_point (GimpImage *image,
 
       for (iter = selected_path; iter; iter = iter->next)
         {
-          GimpVectors *vectors = iter->data;
+          GimpPath *vectors = iter->data;
 
           while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {
@@ -977,7 +977,7 @@ gimp_image_snap_rectangle (GimpImage         *image,
 
       for (iter = selected_path; iter; iter = iter->next)
         {
-          GimpVectors *vectors = iter->data;
+          GimpPath *vectors = iter->data;
 
           while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {

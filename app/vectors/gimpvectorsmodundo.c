@@ -22,7 +22,7 @@
 
 #include "vectors-types.h"
 
-#include "gimpvectors.h"
+#include "gimppath.h"
 #include "gimpvectorsmodundo.h"
 
 
@@ -67,17 +67,17 @@ static void
 gimp_vectors_mod_undo_constructed (GObject *object)
 {
   GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (object);
-  GimpVectors        *vectors;
+  GimpPath           *vectors;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  gimp_assert (GIMP_IS_PATH (GIMP_ITEM_UNDO (object)->item));
 
-  vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (object)->item);
+  vectors = GIMP_PATH (GIMP_ITEM_UNDO (object)->item);
 
   vectors_mod_undo->vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                       G_TYPE_FROM_INSTANCE (vectors)));
+    GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                    G_TYPE_FROM_INSTANCE (vectors)));
 }
 
 static gint64
@@ -100,8 +100,8 @@ gimp_vectors_mod_undo_pop (GimpUndo            *undo,
                            GimpUndoAccumulator *accum)
 {
   GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (undo);
-  GimpVectors        *vectors          = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
-  GimpVectors        *temp;
+  GimpPath           *vectors          = GIMP_PATH (GIMP_ITEM_UNDO (undo)->item);
+  GimpPath           *temp;
   gint                offset_x;
   gint                offset_y;
 
@@ -110,8 +110,8 @@ gimp_vectors_mod_undo_pop (GimpUndo            *undo,
   temp = vectors_mod_undo->vectors;
 
   vectors_mod_undo->vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                       G_TYPE_FROM_INSTANCE (vectors)));
+    GIMP_PATH (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                    G_TYPE_FROM_INSTANCE (vectors)));
 
   gimp_vectors_freeze (vectors);
 

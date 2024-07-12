@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpvectors.c
+ * gimppath.c
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -24,48 +24,48 @@
 #include "gimp.h"
 
 
-struct _GimpVectors
+struct _GimpPath
 {
   GimpItem parent_instance;
 };
 
-G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
+G_DEFINE_TYPE (GimpPath, gimp_path, GIMP_TYPE_ITEM)
 
-#define parent_class gimp_vectors_parent_class
+#define parent_class gimp_path_parent_class
 
 
 static void
-gimp_vectors_class_init (GimpVectorsClass *klass)
+gimp_path_class_init (GimpPathClass *klass)
 {
 }
 
 static void
-gimp_vectors_init (GimpVectors *vectors)
+gimp_path_init (GimpPath *path)
 {
 }
 
 /**
- * gimp_vectors_get_by_id:
- * @vectors_id: The vectors id.
+ * gimp_path_get_by_id:
+ * @path_id: The path id.
  *
- * Returns a #GimpVectors representing @vectors_id. This function
- * calls gimp_item_get_by_id() and returns the item if it is vectors
+ * Returns a #GimpPath representing @path_id. This function
+ * calls gimp_item_get_by_id() and returns the item if it is a path
  * or %NULL otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpVectors for @vectors_id
- *          or %NULL if @vectors_id does not represent a valid
- *          vectors. The object belongs to libgimp and you must not
+ * Returns: (nullable) (transfer none): a #GimpPath for @path_id
+ *          or %NULL if @path_id does not represent a valid
+ *          path. The object belongs to libgimp and you must not
  *          modify or unref it.
  *
  * Since: 3.0
  **/
-GimpVectors *
-gimp_vectors_get_by_id (gint32 vectors_id)
+GimpPath *
+gimp_path_get_by_id (gint32 path_id)
 {
-  GimpItem *item = gimp_item_get_by_id (vectors_id);
+  GimpItem *item = gimp_item_get_by_id (path_id);
 
-  if (GIMP_IS_VECTORS (item))
-    return (GimpVectors *) item;
+  if (GIMP_IS_PATH (item))
+    return (GimpPath *) item;
 
   return NULL;
 }
