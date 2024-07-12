@@ -529,7 +529,7 @@ app/tools/gimpwarpoptions.c
 app/tools/gimpwarptool.c
 app/tools/tools-enums.c
 
-app/vectors/gimpvectors.c
+app/vectors/gimppath.c
 app/vectors/gimpvectors-export.c
 app/vectors/gimpvectors-import.c
 
