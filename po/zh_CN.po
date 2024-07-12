@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-08 15:20+0000\n"
-"PO-Revision-Date: 2024-07-11 21:02+0800\n"
+"POT-Creation-Date: 2024-07-11 15:16+0000\n"
+"PO-Revision-Date: 2024-07-12 16:38+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -18326,23 +18326,23 @@ msgstr "高"
 msgid "_Sample Merged"
 msgstr "位样合并(_S)"
 
-#: app/display/gimpdisplayshell.c:525
+#: app/display/gimpdisplayshell.c:521
 msgid "Access the image menu"
 msgstr "获取图像菜单"
 
-#: app/display/gimpdisplayshell.c:675
+#: app/display/gimpdisplayshell.c:671
 msgid "Zoom image when window size changes"
 msgstr "当窗口大小改变时缩放图像"
 
-#: app/display/gimpdisplayshell.c:704
+#: app/display/gimpdisplayshell.c:700
 msgid "Toggle Quick Mask"
 msgstr "切换快速蒙版"
 
-#: app/display/gimpdisplayshell.c:719
+#: app/display/gimpdisplayshell.c:715
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: app/display/gimpdisplayshell.c:772 app/display/gimpdisplayshell.c:1489
+#: app/display/gimpdisplayshell.c:768 app/display/gimpdisplayshell.c:1476
 #: app/widgets/gimptoolbox.c:252
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
@@ -20771,8 +20771,8 @@ msgstr "“%s” (%d) 图像没有包含 ID 为 %d 的采样点"
 
 #: app/pdb/gimppdb-utils.c:812
 #, c-format
-msgid "Vectors object %d does not contain stroke with ID %d"
-msgstr "矢量对象 %d 不包括 ID 为 %d 的笔触"
+msgid "Path object %d does not contain stroke with ID %d"
+msgstr "路径对象 %d 不包括 ID 为 %d 的笔触"
 
 #: app/pdb/gimppdb-utils.c:828
 #, c-format
@@ -20990,6 +20990,42 @@ msgstr "2D 变换"
 #: app/pdb/item-transform-cmds.c:898
 msgid "2D Transforming"
 msgstr "2D 变换"
+
+#: app/pdb/path-cmds.c:330
+msgid "Remove path stroke"
+msgstr "删除路径笔触"
+
+#: app/pdb/path-cmds.c:367
+msgid "Close path stroke"
+msgstr "闭合路径笔触"
+
+#: app/pdb/path-cmds.c:406
+msgid "Reverse path stroke"
+msgstr "反转路径笔触"
+
+#: app/pdb/path-cmds.c:451
+msgid "Translate path stroke"
+msgstr "转换路径笔触"
+
+#: app/pdb/path-cmds.c:496
+msgid "Scale path stroke"
+msgstr "缩放路径笔触"
+
+#: app/pdb/path-cmds.c:543
+msgid "Rotate path stroke"
+msgstr "旋转路径笔触"
+
+#: app/pdb/path-cmds.c:588 app/pdb/path-cmds.c:637
+msgid "Flip path stroke"
+msgstr "翻转路径笔触"
+
+#: app/pdb/path-cmds.c:768 app/pdb/path-cmds.c:892 app/pdb/path-cmds.c:1122
+msgid "Add path stroke"
+msgstr "添加路径笔触"
+
+#: app/pdb/path-cmds.c:946 app/pdb/path-cmds.c:1002 app/pdb/path-cmds.c:1066
+msgid "Extend path stroke"
+msgstr "扩展路径笔触"
 
 #: app/pdb/pdb-cmds.c:1183 app/pdb/pdb-cmds.c:1225
 #, c-format
@@ -21377,44 +21413,6 @@ msgstr "设定文字图层属性"
 #: app/pdb/text-layer-cmds.c:231
 msgid "Set text layer markup"
 msgstr "设定文字图层标记"
-
-#: app/pdb/vectors-cmds.c:330
-msgid "Remove path stroke"
-msgstr "删除路径笔触"
-
-#: app/pdb/vectors-cmds.c:367
-msgid "Close path stroke"
-msgstr "闭合路径笔触"
-
-#: app/pdb/vectors-cmds.c:406
-msgid "Reverse path stroke"
-msgstr "反转路径笔触"
-
-#: app/pdb/vectors-cmds.c:451
-msgid "Translate path stroke"
-msgstr "转换路径笔触"
-
-#: app/pdb/vectors-cmds.c:496
-msgid "Scale path stroke"
-msgstr "缩放路径笔触"
-
-#: app/pdb/vectors-cmds.c:543
-msgid "Rotate path stroke"
-msgstr "旋转路径笔触"
-
-#: app/pdb/vectors-cmds.c:588 app/pdb/vectors-cmds.c:637
-msgid "Flip path stroke"
-msgstr "翻转路径笔触"
-
-#: app/pdb/vectors-cmds.c:768 app/pdb/vectors-cmds.c:892
-#: app/pdb/vectors-cmds.c:1122
-msgid "Add path stroke"
-msgstr "添加路径笔触"
-
-#: app/pdb/vectors-cmds.c:946 app/pdb/vectors-cmds.c:1002
-#: app/pdb/vectors-cmds.c:1066
-msgid "Extend path stroke"
-msgstr "扩展路径笔触"
 
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
@@ -27015,16 +27013,16 @@ msgstr "全部导出图像"
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: app/widgets/gimpfiledialog.c:782
+#: app/widgets/gimpfiledialog.c:784
 msgid "Show _All Files"
 msgstr "显示全部文件(_A)"
 
-#: app/widgets/gimpfiledialog.c:814
+#: app/widgets/gimpfiledialog.c:816
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "选择文件类型 (%s)(_T)"
 
-#: app/widgets/gimpfiledialog.c:816
+#: app/widgets/gimpfiledialog.c:818
 msgid "Select File _Type"
 msgstr "选择文件类型 (_T)"
 
