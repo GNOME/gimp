@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-04-22 10:31+0000\n"
-"PO-Revision-Date: 2024-04-22 19:13+0200\n"
+"PO-Revision-Date: 2024-07-13 11:59+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -395,7 +395,7 @@ msgstr "Indlæg"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:221
 msgid "Stencil C_arve..."
-msgstr "Skabelon_udskæring …"
+msgstr "Sk_abelonudskæring …"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:222
 msgid ""
@@ -443,7 +443,7 @@ msgstr "Fremhævning"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Stencil C_hrome..."
-msgstr "_Skabelonkrom …"
+msgstr "Ska_belonkrom …"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid ""
@@ -526,7 +526,7 @@ msgstr "Separat lag"
 
 #: plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
-msgstr "T_ekstileffekt …"
+msgstr "Tek_stileffekt …"
 
 #: plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
@@ -698,7 +698,7 @@ msgstr "Aktive farver"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
-msgstr "Ud_flydende kant …"
+msgstr "_Udflydende kant …"
 
 # Her synes jeg ikke at fuzzy->udflydende passer særlig godt
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:150
@@ -1405,7 +1405,7 @@ msgstr "Maskens uigennemsigtighed"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
-msgstr "_Bølger …"
+msgstr "B_ølger …"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:96
 msgid ""
