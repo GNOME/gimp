@@ -29,7 +29,7 @@
     <Resource uap:Scale="400" />
   </Resources>
   <Applications>
-    <Application Id="GIMP" Executable="VFS\ProgramFilesX64\GIMP @GIMP_APP_VERSION@\bin\gimp-@GIMP_APP_VERSION@.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="GIMP" Executable="VFS\ProgramFilesX64\GIMP\bin\gimp-@GIMP_APP_VERSION@.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements DisplayName="GIMP @GIMP_VERSION@" Description="GNU Image Manipulation Program" BackgroundColor="transparent" Square150x150Logo="Assets\MedTile.png" Square44x44Logo="Assets\AppList.png">
         <uap:DefaultTile Wide310x150Logo="Assets\WideTile.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
@@ -71,7 +71,7 @@
   <Extensions>
     <uap6:Extension Category="windows.loaderSearchPathOverride">
       <uap6:LoaderSearchPathOverride>
-        <uap6:LoaderSearchPathEntry FolderPath="VFS\ProgramFilesX64\GIMP @GIMP_APP_VERSION@\bin"/>
+        <uap6:LoaderSearchPathEntry FolderPath="VFS\ProgramFilesX64\GIMP\bin"/>
       </uap6:LoaderSearchPathOverride>
     </uap6:Extension>
   </Extensions>

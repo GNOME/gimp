@@ -816,10 +816,10 @@ dist-store-weekly:
     - win32-ps
   cache: []
   script:
-    - build\windows\store\3_dist-gimp-winsdk.ps1 | Out-File -FilePath store.log
+    - build\windows\store\3_dist-gimp-winsdk.ps1 | Out-File -FilePath winsdk.log
   artifacts:
     expose_as: 'Windows msix'
     paths:
     - build/windows/store/_Output/
-    - store.log
+    - winsdk.log
     expire_in: 8 days
