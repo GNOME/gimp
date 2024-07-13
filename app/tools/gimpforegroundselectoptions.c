@@ -129,7 +129,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   GIMP_CONFIG_PROP_INT  (object_class, PROP_LEVELS,
                          "levels",
-                         _("Levels"),
+                         C_("scale-levels", "Levels"),
                          _("Number of downsampled levels to use"),
                          1, 10, 2,
                          GIMP_PARAM_STATIC_STRINGS);

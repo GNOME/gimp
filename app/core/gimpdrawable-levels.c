@@ -69,7 +69,8 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
                  "config", config,
                  NULL);
 
-  gimp_drawable_apply_operation (drawable, progress, _("Levels"),
+  gimp_drawable_apply_operation (drawable, progress,
+                                 C_("color-levels", "Levels"),
                                  levels);
 
   g_object_unref (levels);
