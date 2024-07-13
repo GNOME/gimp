@@ -62,9 +62,8 @@
 #include "text/gimptextlayer.h"
 
 #include "vectors/gimppath.h"
-#include "vectors/gimpstroke.h"
-#include "vectors/gimppath.h"
 #include "vectors/gimppath-warp.h"
+#include "vectors/gimpstroke.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"
