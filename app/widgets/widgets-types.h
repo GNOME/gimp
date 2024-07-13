@@ -95,7 +95,7 @@ typedef struct _GimpContainerView            GimpContainerView; /* dummy typedef
 typedef struct _GimpDrawableTreeView         GimpDrawableTreeView;
 typedef struct _GimpItemTreeView             GimpItemTreeView;
 typedef struct _GimpLayerTreeView            GimpLayerTreeView;
-typedef struct _GimpVectorsTreeView          GimpVectorsTreeView;
+typedef struct _GimpPathTreeView             GimpPathTreeView;
 
 typedef struct _GimpContainerPopup           GimpContainerPopup;
 typedef struct _GimpViewableButton           GimpViewableButton;
@@ -266,7 +266,7 @@ typedef struct _GimpViewRendererImage        GimpViewRendererImage;
 typedef struct _GimpViewRendererImagefile    GimpViewRendererImagefile;
 typedef struct _GimpViewRendererLayer        GimpViewRendererLayer;
 typedef struct _GimpViewRendererPalette      GimpViewRendererPalette;
-typedef struct _GimpViewRendererVectors      GimpViewRendererVectors;
+typedef struct _GimpViewRendererPath         GimpViewRendererPath;
 
 
 /*  cell renderers  */

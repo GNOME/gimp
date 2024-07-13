@@ -277,10 +277,10 @@ script_fu_arg_add_argument (SFArg         *arg,
       break;
 
     case SF_VECTORS:
-      gimp_procedure_add_vectors_argument (procedure, name,
-                                           nick, arg->label,
-                                           TRUE,
-                                           G_PARAM_READWRITE);
+      gimp_procedure_add_path_argument (procedure, name,
+                                        nick, arg->label,
+                                        TRUE,
+                                        G_PARAM_READWRITE);
       break;
 
     case SF_DISPLAY:

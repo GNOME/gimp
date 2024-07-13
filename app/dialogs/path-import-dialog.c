@@ -28,50 +28,50 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
-#include "vectors-import-dialog.h"
+#include "path-import-dialog.h"
 
 #include "gimp-intl.h"
 
 
-typedef struct _VectorsImportDialog VectorsImportDialog;
+typedef struct _PathImportDialog PathImportDialog;
 
-struct _VectorsImportDialog
+struct _PathImportDialog
 {
-  GimpImage                 *image;
-  gboolean                   merge_vectors;
-  gboolean                   scale_vectors;
-  GimpVectorsImportCallback  callback;
-  gpointer                   user_data;
+  GimpImage              *image;
+  gboolean                merge_path;
+  gboolean                scale_path;
+  GimpPathImportCallback  callback;
+  gpointer                user_data;
 };
 
 
 /*  local function prototypes  */
 #ifdef G_OS_WIN32
-static void   vectors_import_dialog_realize  (GtkWidget           *dialog,
-                                              VectorsImportDialog *data);
+static void   path_import_dialog_realize  (GtkWidget        *dialog,
+                                           PathImportDialog *data);
 #endif
-static void   vectors_import_dialog_free     (VectorsImportDialog *private);
-static void   vectors_import_dialog_response (GtkWidget           *dialog,
-                                              gint                 response_id,
-                                              VectorsImportDialog *private);
+static void   path_import_dialog_free     (PathImportDialog *private);
+static void   path_import_dialog_response (GtkWidget        *dialog,
+                                           gint              response_id,
+                                           PathImportDialog *private);
 
 
 /*  public function  */
 
 GtkWidget *
-vectors_import_dialog_new (GimpImage                 *image,
-                           GtkWidget                 *parent,
-                           GFile                     *import_folder,
-                           gboolean                   merge_vectors,
-                           gboolean                   scale_vectors,
-                           GimpVectorsImportCallback  callback,
-                           gpointer                   user_data)
+path_import_dialog_new (GimpImage                 *image,
+                           GtkWidget              *parent,
+                           GFile                  *import_folder,
+                           gboolean                merge_path,
+                           gboolean                scale_path,
+                           GimpPathImportCallback  callback,
+                           gpointer                user_data)
 {
-  VectorsImportDialog *private;
-  GtkWidget           *dialog;
-  GtkWidget           *vbox;
-  GtkWidget           *button;
-  GtkFileFilter       *filter;
+  PathImportDialog *private;
+  GtkWidget        *dialog;
+  GtkWidget        *vbox;
+  GtkWidget        *button;
+  GtkFileFilter    *filter;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -79,13 +79,13 @@ vectors_import_dialog_new (GimpImage                 *image,
                         NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  private = g_slice_new0 (VectorsImportDialog);
+  private = g_slice_new0 (PathImportDialog);
 
-  private->image         = image;
-  private->merge_vectors = merge_vectors;
-  private->scale_vectors = scale_vectors;
-  private->callback      = callback;
-  private->user_data     = user_data;
+  private->image      = image;
+  private->merge_path = merge_path;
+  private->scale_path = scale_path;
+  private->callback   = callback;
+  private->user_data  = user_data;
 
   dialog = gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -111,7 +111,7 @@ vectors_import_dialog_new (GimpImage                 *image,
                                               import_folder, NULL);
 
   g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) vectors_import_dialog_free, private);
+                     (GWeakNotify) path_import_dialog_free, private);
 
   g_signal_connect_object (image, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
@@ -119,7 +119,7 @@ vectors_import_dialog_new (GimpImage                 *image,
 
 #ifdef G_OS_WIN32
   g_signal_connect (dialog, "realize",
-                    G_CALLBACK (vectors_import_dialog_realize),
+                    G_CALLBACK (path_import_dialog_realize),
                     private);
 #endif
   g_signal_connect (dialog, "delete-event",
@@ -127,7 +127,7 @@ vectors_import_dialog_new (GimpImage                 *image,
                     NULL);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (vectors_import_dialog_response),
+                    G_CALLBACK (path_import_dialog_response),
                     private);
 
   filter = gtk_file_filter_new ();
@@ -149,24 +149,24 @@ vectors_import_dialog_new (GimpImage                 *image,
 
   button = gtk_check_button_new_with_mnemonic (_("_Merge imported paths"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                private->merge_vectors);
+                                private->merge_path);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->merge_vectors);
+                    &private->merge_path);
 
   button = gtk_check_button_new_with_mnemonic (_("_Scale imported paths "
                                                  "to fit image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                private->scale_vectors);
+                                private->scale_path);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &private->scale_vectors);
+                    &private->scale_path);
 
   return dialog;
 }
@@ -176,23 +176,23 @@ vectors_import_dialog_new (GimpImage                 *image,
 
 #ifdef G_OS_WIN32
 static void
-vectors_import_dialog_realize (GtkWidget           *dialog,
-                               VectorsImportDialog *data)
+path_import_dialog_realize (GtkWidget        *dialog,
+                            PathImportDialog *data)
 {
   gimp_window_set_title_bar_theme (data->image->gimp, dialog);
 }
 #endif
 
 static void
-vectors_import_dialog_free (VectorsImportDialog *private)
+path_import_dialog_free (PathImportDialog *private)
 {
-  g_slice_free (VectorsImportDialog, private);
+  g_slice_free (PathImportDialog, private);
 }
 
 static void
-vectors_import_dialog_response (GtkWidget           *dialog,
-                                gint                 response_id,
-                                VectorsImportDialog *private)
+path_import_dialog_response (GtkWidget        *dialog,
+                             gint              response_id,
+                             PathImportDialog *private)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -211,8 +211,8 @@ vectors_import_dialog_response (GtkWidget           *dialog,
                              private->image,
                              file,
                              folder,
-                             private->merge_vectors,
-                             private->scale_vectors,
+                             private->merge_path,
+                             private->scale_path,
                              private->user_data);
 
           if (folder)

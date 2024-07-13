@@ -43,7 +43,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
-#include "vectors/gimpvectors-import.h"
+#include "vectors/gimppath-import.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
@@ -658,10 +658,10 @@ edit_paste (GimpDisplay   *display,
 
       if (svg)
         {
-          if (gimp_vectors_import_buffer (image, svg, svg_size,
-                                          TRUE, FALSE,
-                                          GIMP_IMAGE_ACTIVE_PARENT, -1,
-                                          NULL, NULL))
+          if (gimp_path_import_buffer (image, svg, svg_size,
+                                       TRUE, FALSE,
+                                       GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                       NULL, NULL))
             {
               gimp_image_flush (image);
             }

@@ -28,46 +28,46 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
-#include "vectors-export-dialog.h"
+#include "path-export-dialog.h"
 
 #include "gimp-intl.h"
 
 
-typedef struct _VectorsExportDialog VectorsExportDialog;
+typedef struct _PathExportDialog PathExportDialog;
 
-struct _VectorsExportDialog
+struct _PathExportDialog
 {
-  GimpImage                 *image;
-  gboolean                   active_only;
-  GimpVectorsExportCallback  callback;
-  gpointer                   user_data;
+  GimpImage              *image;
+  gboolean                active_only;
+  GimpPathExportCallback  callback;
+  gpointer                user_data;
 };
 
 
 /*  local function prototypes  */
 #ifdef G_OS_WIN32
-static void   vectors_export_dialog_realize  (GtkWidget           *dialog,
-                                              VectorsExportDialog *data);
+static void   path_export_dialog_realize  (GtkWidget           *dialog,
+                                           PathExportDialog *data);
 #endif
-static void   vectors_export_dialog_free     (VectorsExportDialog *private);
-static void   vectors_export_dialog_response (GtkWidget           *widget,
-                                              gint                 response_id,
-                                              VectorsExportDialog *private);
+static void   path_export_dialog_free     (PathExportDialog *private);
+static void   path_export_dialog_response (GtkWidget           *widget,
+                                           gint                 response_id,
+                                           PathExportDialog *private);
 
 
 /*  public function  */
 
 GtkWidget *
-vectors_export_dialog_new (GimpImage                 *image,
-                           GtkWidget                 *parent,
-                           GFile                     *export_folder,
-                           gboolean                   active_only,
-                           GimpVectorsExportCallback  callback,
-                           gpointer                   user_data)
+path_export_dialog_new (GimpImage              *image,
+                        GtkWidget              *parent,
+                        GFile                  *export_folder,
+                        gboolean                active_only,
+                        GimpPathExportCallback  callback,
+                        gpointer                user_data)
 {
-  VectorsExportDialog *private;
-  GtkWidget           *dialog;
-  GtkWidget           *combo;
+  PathExportDialog *private;
+  GtkWidget        *dialog;
+  GtkWidget        *combo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -75,7 +75,7 @@ vectors_export_dialog_new (GimpImage                 *image,
                         NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  private = g_slice_new0 (VectorsExportDialog);
+  private = g_slice_new0 (PathExportDialog);
 
   private->image       = image;
   private->active_only = active_only;
@@ -92,9 +92,9 @@ vectors_export_dialog_new (GimpImage                 *image,
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-export");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
@@ -109,7 +109,7 @@ vectors_export_dialog_new (GimpImage                 *image,
                                               export_folder, NULL);
 
   g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) vectors_export_dialog_free, private);
+                     (GWeakNotify) path_export_dialog_free, private);
 
   g_signal_connect_object (image, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
@@ -117,7 +117,7 @@ vectors_export_dialog_new (GimpImage                 *image,
 
 #ifdef G_OS_WIN32
   g_signal_connect (dialog, "realize",
-                    G_CALLBACK (vectors_export_dialog_realize),
+                    G_CALLBACK (path_export_dialog_realize),
                     private);
 #endif
   g_signal_connect (dialog, "delete-event",
@@ -125,7 +125,7 @@ vectors_export_dialog_new (GimpImage                 *image,
                     NULL);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (vectors_export_dialog_response),
+                    G_CALLBACK (path_export_dialog_response),
                     private);
 
   combo = gimp_int_combo_box_new (_("Export the selected paths"),           TRUE,
@@ -147,23 +147,23 @@ vectors_export_dialog_new (GimpImage                 *image,
 
 #ifdef G_OS_WIN32
 static void
-vectors_export_dialog_realize (GtkWidget           *dialog,
-                               VectorsExportDialog *data)
+path_export_dialog_realize (GtkWidget           *dialog,
+                            PathExportDialog *data)
 {
   gimp_window_set_title_bar_theme (data->image->gimp, dialog);
 }
 #endif
 
 static void
-vectors_export_dialog_free (VectorsExportDialog *private)
+path_export_dialog_free (PathExportDialog *private)
 {
-  g_slice_free (VectorsExportDialog, private);
+  g_slice_free (PathExportDialog, private);
 }
 
 static void
-vectors_export_dialog_response (GtkWidget           *dialog,
-                                gint                 response_id,
-                                VectorsExportDialog *private)
+path_export_dialog_response (GtkWidget           *dialog,
+                             gint                 response_id,
+                             PathExportDialog *private)
 {
   if (response_id == GTK_RESPONSE_OK)
     {

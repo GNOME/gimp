@@ -47,7 +47,7 @@
 #include "text/gimptextlayer.h"
 
 #include "vectors/gimppath.h"
-#include "vectors/gimpvectors-import.h"
+#include "vectors/gimppath-import.h"
 
 #include "widgets/gimpdnd.h"
 
@@ -319,11 +319,11 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   if (! image)
     return;
 
-  if (! gimp_vectors_import_buffer (image,
-                                    (const gchar *) svg_data, svg_data_len,
-                                    TRUE, FALSE,
-                                    GIMP_IMAGE_ACTIVE_PARENT, -1,
-                                    NULL, &error))
+  if (! gimp_path_import_buffer (image,
+                                 (const gchar *) svg_data, svg_data_len,
+                                 TRUE, FALSE,
+                                 GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                 NULL, &error))
     {
       gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                             GIMP_MESSAGE_ERROR,

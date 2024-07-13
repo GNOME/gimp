@@ -1,9 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors-warp.h
- * Copyright (C) 2005 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -18,19 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_WARP_H__
-#define __GIMP_VECTORS_WARP_H__
+#ifndef __GIMP_PATH_PREVIEW_H__
+#define __GIMP_PATH_PREVIEW_H__
 
 
-void gimp_vectors_warp_point   (GimpPath   *vectors,
-                                GimpCoords *point,
-                                GimpCoords *point_warped,
-                                gdouble     y_offset);
+/*
+ *  virtual function of GimpPath -- don't call directly
+ */
 
-void gimp_vectors_warp_vectors (GimpPath   *vectors,
-                                GimpPath   *vectors_in,
-                                gdouble     yoffset);
+GimpTempBuf * gimp_path_get_new_preview (GimpViewable *viewable,
+                                         GimpContext  *context,
+                                         gint          width,
+                                         gint          height);
 
 
-#endif /* __GIMP_VECTORS_WARP_H__ */
-
+#endif /* __GIMP_PATH_PREVIEW_H__ */

@@ -805,7 +805,7 @@ gimp_pdb_get_path_stroke (GimpPath           *path,
   if (! modify || gimp_pdb_item_is_modifiable (GIMP_ITEM (path),
                                                modify, error))
     {
-      stroke = gimp_vectors_stroke_get_by_id (path, stroke_id);
+      stroke = gimp_path_stroke_get_by_id (path, stroke_id);
 
       if (! stroke)
         g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,

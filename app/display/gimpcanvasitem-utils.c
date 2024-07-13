@@ -129,7 +129,7 @@ gimp_canvas_item_on_vectors_handle (GimpCanvasItem    *item,
   if (ret_anchor) *ret_anchor = NULL;
   if (ret_stroke) *ret_stroke = NULL;
 
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+  while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
     {
       GList *anchor_list;
       GList *list;
@@ -250,7 +250,7 @@ gimp_canvas_item_on_vectors_curve (GimpCanvasItem    *item,
 
   min_dist = -1.0;
 
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+  while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
     {
       cur_dist = gimp_stroke_nearest_point_get (stroke, coord, 1.0,
                                                 &cur_coords,

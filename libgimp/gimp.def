@@ -847,6 +847,9 @@ EXPORTS
 	gimp_procedure_add_parasite_argument
 	gimp_procedure_add_parasite_aux_argument
 	gimp_procedure_add_parasite_return_value
+	gimp_procedure_add_path_argument
+	gimp_procedure_add_path_aux_argument
+	gimp_procedure_add_path_return_value
 	gimp_procedure_add_pattern_argument
 	gimp_procedure_add_pattern_aux_argument
 	gimp_procedure_add_pattern_return_value
@@ -871,9 +874,6 @@ EXPORTS
 	gimp_procedure_add_unit_argument
 	gimp_procedure_add_unit_aux_argument
 	gimp_procedure_add_unit_return_value
-	gimp_procedure_add_vectors_argument
-	gimp_procedure_add_vectors_aux_argument
-	gimp_procedure_add_vectors_return_value
 	gimp_procedure_config_get_choice_id
 	gimp_procedure_config_get_procedure
 	gimp_procedure_config_get_type

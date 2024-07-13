@@ -1137,8 +1137,8 @@ gimp_path_import_from_file (GimpImage   *image,
  *
  * Import paths from an SVG string.
  *
- * This procedure works like gimp_vectors_import_from_file() but takes
- * a string rather than reading the SVG from a file. This allows you to
+ * This procedure works like gimp_path_import_from_file() but takes a
+ * string rather than reading the SVG from a file. This allows you to
  * write scripts that generate SVG and feed it to GIMP.
  *
  * Returns: TRUE on success.

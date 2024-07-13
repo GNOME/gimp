@@ -45,7 +45,7 @@
 #include "gimpviewrendererimage.h"
 #include "gimpviewrendererimagefile.h"
 #include "gimpviewrendererpalette.h"
-#include "gimpviewrenderervectors.h"
+#include "gimpviewrendererpath.h"
 
 
 GType
@@ -83,7 +83,7 @@ gimp_view_renderer_type_from_viewable_type (GType viewable_type)
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_PATH))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_VECTORS;
+      type = GIMP_TYPE_VIEW_RENDERER_PATH;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
     {

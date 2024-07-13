@@ -262,7 +262,7 @@ typedef enum  /*< pdb-skip >*/
   GIMP_DIRTY_ITEM            = 1 << 4,
   GIMP_DIRTY_ITEM_META       = 1 << 5,
   GIMP_DIRTY_DRAWABLE        = 1 << 6,
-  GIMP_DIRTY_VECTORS         = 1 << 7,
+  GIMP_DIRTY_PATH            = 1 << 7,
   GIMP_DIRTY_SELECTION       = 1 << 8,
   GIMP_DIRTY_ACTIVE_DRAWABLE = 1 << 9,
 
@@ -541,7 +541,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,     /*< desc="Remove item"                    >*/
   GIMP_UNDO_GROUP_IMAGE_ITEM_REORDER,    /*< desc="Reorder item"                   >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,    /*< desc="Merge layers"                   >*/
-  GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,   /*< desc="Merge paths"                    >*/
+  GIMP_UNDO_GROUP_IMAGE_PATHS_MERGE,     /*< desc="Merge paths"                    >*/
   GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,      /*< desc="Quick Mask"                     >*/
   GIMP_UNDO_GROUP_IMAGE_GRID,            /*< desc="Grid"                           >*/
   GIMP_UNDO_GROUP_IMAGE_COLORMAP_REMAP,  /*< desc="Colormap remapping"             >*/
@@ -577,7 +577,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_PAINT,                 /*< desc="Paint"                          >*/
   GIMP_UNDO_GROUP_PARASITE_ATTACH,       /*< desc="Attach parasite"                >*/
   GIMP_UNDO_GROUP_PARASITE_REMOVE,       /*< desc="Remove parasite"                >*/
-  GIMP_UNDO_GROUP_VECTORS_IMPORT,        /*< desc="Import paths"                   >*/
+  GIMP_UNDO_GROUP_PATHS_IMPORT,           /*< desc="Import paths"                   >*/
   GIMP_UNDO_GROUP_MISC,                  /*< desc="Plug-In"                        >*/
 
   GIMP_UNDO_GROUP_LAST = GIMP_UNDO_GROUP_MISC, /*< skip >*/
@@ -628,9 +628,9 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_CHANNEL_ADD,                 /*< desc="New channel"                    >*/
   GIMP_UNDO_CHANNEL_REMOVE,              /*< desc="Delete channel"                 >*/
   GIMP_UNDO_CHANNEL_COLOR,               /*< desc="Channel color"                  >*/
-  GIMP_UNDO_VECTORS_ADD,                 /*< desc="New path"                       >*/
-  GIMP_UNDO_VECTORS_REMOVE,              /*< desc="Delete path"                    >*/
-  GIMP_UNDO_VECTORS_MOD,                 /*< desc="Path modification"              >*/
+  GIMP_UNDO_PATH_ADD,                    /*< desc="New path"                       >*/
+  GIMP_UNDO_PATH_REMOVE,                 /*< desc="Delete path"                    >*/
+  GIMP_UNDO_PATH_MOD,                    /*< desc="Path modification"              >*/
   GIMP_UNDO_FS_TO_LAYER,                 /*< desc="Floating selection to layer"    >*/
   GIMP_UNDO_TRANSFORM_GRID,              /*< desc="Transform grid"                 >*/
   GIMP_UNDO_PAINT,                       /*< desc="Paint"                          >*/

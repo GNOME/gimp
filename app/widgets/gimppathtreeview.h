@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectorstreeview.h
+ * gimppathtreeview.h
  * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,24 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_TREE_VIEW_H__
-#define __GIMP_VECTORS_TREE_VIEW_H__
+#ifndef __GIMP_PATH_TREE_VIEW_H__
+#define __GIMP_PATH_TREE_VIEW_H__
 
 
 #include "gimpitemtreeview.h"
 
 
-#define GIMP_TYPE_VECTORS_TREE_VIEW            (gimp_vectors_tree_view_get_type ())
-#define GIMP_VECTORS_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS_TREE_VIEW, GimpVectorsTreeView))
-#define GIMP_VECTORS_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS_TREE_VIEW, GimpVectorsTreeViewClass))
-#define GIMP_IS_VECTORS_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTORS_TREE_VIEW))
-#define GIMP_IS_VECTORS_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTORS_TREE_VIEW))
-#define GIMP_VECTORS_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS_TREE_VIEW, GimpVectorsTreeViewClass))
+#define GIMP_TYPE_PATH_TREE_VIEW            (gimp_path_tree_view_get_type ())
+#define GIMP_PATH_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_TREE_VIEW, GimpPathTreeView))
+#define GIMP_PATH_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_TREE_VIEW, GimpPathTreeViewClass))
+#define GIMP_IS_PATH_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH_TREE_VIEW))
+#define GIMP_IS_PATH_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_TREE_VIEW))
+#define GIMP_PATH_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_TREE_VIEW, GimpPathTreeViewClass))
 
 
-typedef struct _GimpVectorsTreeViewClass  GimpVectorsTreeViewClass;
+typedef struct _GimpPathTreeViewClass  GimpPathTreeViewClass;
 
-struct _GimpVectorsTreeView
+struct _GimpPathTreeView
 {
   GimpItemTreeView  parent_instance;
 
@@ -44,13 +44,13 @@ struct _GimpVectorsTreeView
   GtkWidget        *stroke_button;
 };
 
-struct _GimpVectorsTreeViewClass
+struct _GimpPathTreeViewClass
 {
   GimpItemTreeViewClass  parent_class;
 };
 
 
-GType   gimp_vectors_tree_view_get_type (void) G_GNUC_CONST;
+GType   gimp_path_tree_view_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_VECTORS_TREE_VIEW_H__  */
+#endif  /*  __GIMP_PATH_TREE_VIEW_H__  */

@@ -749,7 +749,7 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
             locked_message = _("The selected path's strokes are locked.");
           else if (gimp_item_is_position_locked (item, &locked_item))
             locked_message = _("The selected path's position is locked.");
-          else if (! gimp_vectors_get_n_strokes (GIMP_PATH (item)))
+          else if (! gimp_path_get_n_strokes (GIMP_PATH (item)))
             locked_message = _("The selected path has no strokes.");
         }
       break;

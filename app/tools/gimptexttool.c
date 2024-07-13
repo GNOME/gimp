@@ -51,14 +51,14 @@
 #include "menus/menus.h"
 
 #include "text/gimptext.h"
-#include "text/gimptext-vectors.h"
+#include "text/gimptext-path.h"
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayout.h"
 #include "text/gimptextundo.h"
 
 #include "vectors/gimpstroke.h"
 #include "vectors/gimppath.h"
-#include "vectors/gimpvectors-warp.h"
+#include "vectors/gimppath-warp.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockcontainer.h"
@@ -2320,7 +2320,7 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
   if (! text_tool->text || ! text_tool->image)
     return;
 
-  path = gimp_text_vectors_new (text_tool->image, text_tool->text);
+  path = gimp_text_path_new (text_tool->image, text_tool->text);
 
   if (text_tool->layer)
     {
@@ -2374,7 +2374,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
       return FALSE;
     }
 
-  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
+  vectors = gimp_text_path_new (text_tool->image, text_tool->text);
 
   offset = 0;
   dir = gimp_text_tool_get_direction (text_tool);
@@ -2391,7 +2391,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
       {
         GimpStroke *stroke = NULL;
 
-        while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+        while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
           {
             gimp_stroke_rotate (stroke, 0, 0, 270);
             gimp_stroke_translate (stroke, 0, box_width);
@@ -2401,7 +2401,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool  *text_tool,
       break;
     }
 
-  gimp_vectors_warp_vectors (vectors0->data, vectors, offset);
+  gimp_path_warp_path (vectors0->data, vectors, offset);
 
   gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 

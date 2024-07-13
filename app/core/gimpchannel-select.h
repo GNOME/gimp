@@ -79,7 +79,7 @@ void   gimp_channel_select_polygon      (GimpChannel         *channel,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-void   gimp_channel_select_vectors      (GimpChannel         *channel,
+void   gimp_channel_select_path         (GimpChannel         *channel,
                                          const gchar         *undo_desc,
                                          GimpPath            *vectors,
                                          GimpChannelOps       op,

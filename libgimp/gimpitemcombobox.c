@@ -65,7 +65,7 @@ struct _GimpItemComboBoxPrivate
 typedef struct _GimpDrawableComboBoxClass GimpDrawableComboBoxClass;
 typedef struct _GimpChannelComboBoxClass  GimpChannelComboBoxClass;
 typedef struct _GimpLayerComboBoxClass    GimpLayerComboBoxClass;
-typedef struct _GimpVectorsComboBoxClass  GimpVectorsComboBoxClass;
+typedef struct _GimpPathComboBoxClass     GimpPathComboBoxClass;
 
 struct _GimpDrawableComboBox
 {
@@ -97,12 +97,12 @@ struct _GimpLayerComboBoxClass
   GimpIntComboBoxClass  parent_class;
 };
 
-struct _GimpVectorsComboBox
+struct _GimpPathComboBox
 {
   GimpIntComboBox  parent_instance;
 };
 
-struct _GimpVectorsComboBoxClass
+struct _GimpPathComboBoxClass
 {
   GimpIntComboBoxClass  parent_class;
 };
@@ -135,7 +135,7 @@ static const GtkTargetEntry targets[] =
 {
   { "application/x-gimp-channel-id", 0 },
   { "application/x-gimp-layer-id",   0 },
-  { "application/x-gimp-vectors-id", 0 }
+  { "application/x-gimp-path-id",    0 }
 };
 
 
@@ -293,11 +293,11 @@ gimp_layer_combo_box_new (GimpItemConstraintFunc constraint,
 }
 
 
-G_DEFINE_TYPE (GimpVectorsComboBox, gimp_vectors_combo_box,
+G_DEFINE_TYPE (GimpPathComboBox, gimp_path_combo_box,
                GIMP_TYPE_INT_COMBO_BOX)
 
 static void
-gimp_vectors_combo_box_class_init (GimpVectorsComboBoxClass *klass)
+gimp_path_combo_box_class_init (GimpPathComboBoxClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
@@ -305,7 +305,7 @@ gimp_vectors_combo_box_class_init (GimpVectorsComboBoxClass *klass)
 }
 
 static void
-gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
+gimp_path_combo_box_init (GimpPathComboBox *combo_box)
 {
   gtk_drag_dest_set (GTK_WIDGET (combo_box),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -321,31 +321,31 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
 
 
 /**
- * gimp_vectors_combo_box_new:
+ * gimp_path_combo_box_new:
  * @constraint: (nullable):       A #GimpItemConstraintFunc or %NULL
  * @data: (closure constraint):   A pointer that is passed to @constraint
  * @data_destroy: (destroy data): Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
- * vectors objects. If a @constraint function is specified, it is called for
- * each vectors object and only if the function returns %TRUE, the vectors
+ * path objects. If a @constraint function is specified, it is called for
+ * each path object and only if the function returns %TRUE, the path
  * object is added to the combobox.
  *
  * You should use gimp_int_combo_box_connect() to initialize and connect
  * the combo.  Use gimp_int_combo_box_set_active() to set the active
- * vectors ID and gimp_int_combo_box_get_active() to retrieve the ID
- * of the selected vectors object.
+ * path ID and gimp_int_combo_box_get_active() to retrieve the ID
+ * of the selected path object.
  *
  * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_vectors_combo_box_new (GimpItemConstraintFunc constraint,
+gimp_path_combo_box_new (GimpItemConstraintFunc constraint,
                             gpointer               data,
                             GDestroyNotify         data_destroy)
 {
-  return gimp_item_combo_box_new (GIMP_TYPE_VECTORS_COMBO_BOX,
+  return gimp_item_combo_box_new (GIMP_TYPE_PATH_COMBO_BOX,
                                   constraint, data, data_destroy);
 }
 
@@ -416,7 +416,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
           g_list_free (items);
         }
 
-      if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
+      if (GIMP_IS_PATH_COMBO_BOX (combo_box))
         {
           items = gimp_image_list_paths (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
@@ -476,7 +476,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           g_free (item_name);
           g_free (image_name);
 
-          if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
+          if (GIMP_IS_PATH_COMBO_BOX (combo_box))
             thumb = NULL;
           else
             thumb = gimp_drawable_get_thumbnail (GIMP_DRAWABLE (item),

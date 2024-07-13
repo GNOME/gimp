@@ -363,7 +363,7 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
-/*  vectors  */
+/*  path  */
 
 #define GIMP_VALUES_GET_PATH(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
@@ -956,19 +956,19 @@ void gimp_procedure_add_selection_return_value         (GimpProcedure *procedure
                                                         gboolean       none_ok,
                                                         GParamFlags    flags);
 
-void gimp_procedure_add_vectors_argument               (GimpProcedure *procedure,
+void gimp_procedure_add_path_argument                  (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GParamFlags    flags);
-void gimp_procedure_add_vectors_aux_argument           (GimpProcedure *procedure,
+void gimp_procedure_add_path_aux_argument              (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GParamFlags    flags);
-void gimp_procedure_add_vectors_return_value           (GimpProcedure *procedure,
+void gimp_procedure_add_path_return_value              (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,

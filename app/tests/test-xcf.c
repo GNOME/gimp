@@ -529,11 +529,11 @@ gimp_create_mainimage (Gimp     *gimp,
                                  FALSE /*push_undo*/);
 
   /* Vectors 1 */
-  vectors = gimp_vectors_new (image,
-                              GIMP_MAINIMAGE_VECTORS1_NAME);
+  vectors = gimp_path_new (image,
+                           GIMP_MAINIMAGE_VECTORS1_NAME);
   /* The XCF file can save vectors in two kind of ways, one old way
    * and a new way. Parameterize the way so we can test both variants,
-   * i.e. gimp_vectors_compat_is_compatible() must return both TRUE
+   * i.e. gimp_path_compat_is_compatible() must return both TRUE
    * and FALSE.
    */
   if (! compat_paths)
@@ -548,7 +548,7 @@ gimp_create_mainimage (Gimp     *gimp,
   stroke = gimp_bezier_stroke_new_from_coords (vectors1_coords,
                                                G_N_ELEMENTS (vectors1_coords),
                                                TRUE /*closed*/);
-  gimp_vectors_stroke_add (vectors, stroke);
+  gimp_path_stroke_add (vectors, stroke);
   gimp_image_add_path (image,
                        vectors,
                        NULL /*parent*/,
@@ -556,13 +556,13 @@ gimp_create_mainimage (Gimp     *gimp,
                        FALSE /*push_undo*/);
 
   /* Vectors 2 */
-  vectors = gimp_vectors_new (image,
-                              GIMP_MAINIMAGE_VECTORS2_NAME);
+  vectors = gimp_path_new (image,
+                           GIMP_MAINIMAGE_VECTORS2_NAME);
 
   stroke = gimp_bezier_stroke_new_from_coords (vectors2_coords,
                                                G_N_ELEMENTS (vectors2_coords),
                                                TRUE /*closed*/);
-  gimp_vectors_stroke_add (vectors, stroke);
+  gimp_path_stroke_add (vectors, stroke);
   gimp_image_add_path (image,
                        vectors,
                        NULL /*parent*/,
@@ -694,7 +694,7 @@ gimp_assert_vectors (GimpImage   *image,
   gint         i              = 0;
 
   vectors = gimp_image_get_path_by_name (image, name);
-  stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+  stroke = gimp_path_stroke_get_next (vectors, NULL);
   g_assert_true (stroke != NULL);
   control_points = gimp_stroke_control_points_get (stroke,
                                                    &closed);

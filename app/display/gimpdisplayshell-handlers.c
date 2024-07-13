@@ -1000,7 +1000,7 @@ gimp_display_shell_path_thaw_handler (GimpPath         *path,
 
   item = gimp_canvas_proxy_group_get_item (group, path);
 
-  gimp_canvas_path_set (item, gimp_vectors_get_bezier (path));
+  gimp_canvas_path_set (item, gimp_path_get_bezier (path));
 }
 
 static void
@@ -1025,7 +1025,7 @@ gimp_display_shell_path_add_handler (GimpContainer    *container,
   GimpCanvasItem       *item;
 
   item = gimp_canvas_path_new (shell,
-                               gimp_vectors_get_bezier (path),
+                               gimp_path_get_bezier (path),
                                0, 0,
                                FALSE,
                                GIMP_PATH_STYLE_VECTORS);

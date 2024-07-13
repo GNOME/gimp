@@ -17,1212 +17,1019 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpdisplayoptions.h"
-#include "config/gimpguiconfig.h"
+#include "config/gimpdialogconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpgrouplayer.h"
+#include "core/gimpimage-merge.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpparamspecs.h"
+#include "core/gimpprogress.h"
+#include "core/gimptoolinfo.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcolordialog.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimptoggleaction.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "pdb/gimppdb.h"
+#include "pdb/gimpprocedure.h"
+
+#include "vectors/gimppath.h"
+#include "vectors/gimppath-export.h"
+#include "vectors/gimppath-import.h"
+
+#include "widgets/gimpaction.h"
+#include "widgets/gimpclipboard.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-filter-dialog.h"
-#include "display/gimpdisplayshell-rotate.h"
-#include "display/gimpdisplayshell-rotate-dialog.h"
-#include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-scale-dialog.h"
-#include "display/gimpdisplayshell-scroll.h"
-#include "display/gimpdisplayshell-close.h"
-#include "display/gimpimagewindow.h"
 
-#include "dialogs/color-profile-dialog.h"
+#include "tools/gimpvectortool.h"
+#include "tools/tool_manager.h"
+
 #include "dialogs/dialogs.h"
-
-#include "menus/menus.h"
+#include "dialogs/path-export-dialog.h"
+#include "dialogs/path-import-dialog.h"
+#include "dialogs/path-options-dialog.h"
 
 #include "actions.h"
-#include "view-commands.h"
+#include "items-commands.h"
+#include "vectors-commands.h"
 
 #include "gimp-intl.h"
 
 
-#define SET_ACTIVE(manager,action_name,active) \
-  { GimpActionGroup *group = \
-      gimp_ui_manager_get_action_group (manager, "view"); \
-    gimp_action_group_set_action_active (group, action_name, active); }
-
-#define IS_ACTIVE_DISPLAY(display) \
-  ((display) == \
-   gimp_context_get_display (gimp_get_user_context ((display)->gimp)))
-
-
 /*  local function prototypes  */
 
-static void   view_padding_color_dialog_update (GimpColorDialog          *dialog,
-                                                GeglColor                *color,
-                                                GimpColorDialogState      state,
-                                                GimpDisplayShell         *shell);
+static void   vectors_new_callback             (GtkWidget    *dialog,
+                                                GimpImage    *image,
+                                                GimpPath     *path,
+                                                GimpContext  *context,
+                                                const gchar  *path_name,
+                                                gboolean      path_visible,
+                                                GimpColorTag  path_color_tag,
+                                                gboolean      path_lock_content,
+                                                gboolean      path_lock_position,
+                                                gboolean      path_lock_visibility,
+                                                gpointer      user_data);
+static void   vectors_edit_attributes_callback (GtkWidget    *dialog,
+                                                GimpImage    *image,
+                                                GimpPath     *path,
+                                                GimpContext  *context,
+                                                const gchar  *path_name,
+                                                gboolean      path_visible,
+                                                GimpColorTag  path_color_tag,
+                                                gboolean      path_lock_content,
+                                                gboolean      path_lock_position,
+                                                gboolean      path_lock_visibility,
+                                                gpointer      user_data);
+static void   vectors_import_callback          (GtkWidget    *dialog,
+                                                GimpImage    *image,
+                                                GFile        *file,
+                                                GFile        *import_folder,
+                                                gboolean      merge_paths,
+                                                gboolean      scale_paths,
+                                                gpointer      user_data);
+static void   vectors_export_callback          (GtkWidget    *dialog,
+                                                GimpImage    *image,
+                                                GFile        *file,
+                                                GFile        *export_folder,
+                                                gboolean      active_only,
+                                                gpointer      user_data);
 
 
 /*  public functions  */
 
 void
-view_new_cmd_callback (GimpAction *action,
-                       GVariant   *value,
-                       gpointer    data)
+vectors_edit_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  return_if_no_display (display, data);
+  GimpImage *image;
+  GList     *paths;
+  GimpTool  *active_tool;
+  return_if_no_vectors_list (image, paths, data);
 
-  shell = gimp_display_get_shell (display);
+  if (g_list_length (paths) != 1)
+    return;
 
-  gimp_create_display (display->gimp,
-                       gimp_display_get_image (display),
-                       shell->unit, gimp_zoom_model_get_factor (shell->zoom),
-                       G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (shell))));
+  active_tool = tool_manager_get_active (image->gimp);
+
+  if (! GIMP_IS_VECTOR_TOOL (active_tool))
+    {
+      GimpToolInfo  *tool_info = gimp_get_tool_info (image->gimp,
+                                                     "gimp-vector-tool");
+
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (action_data_get_context (data), tool_info);
+          active_tool = tool_manager_get_active (image->gimp);
+        }
+    }
+
+  if (GIMP_IS_VECTOR_TOOL (active_tool))
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), paths->data);
 }
 
 void
-view_close_cmd_callback (GimpAction *action,
-                         GVariant   *value,
-                         gpointer    data)
+vectors_edit_attributes_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  GimpImage        *image;
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-  image = gimp_display_get_image (display);
-
-  /* Check for the image so we don't close the last display. */
-  if (image)
-    gimp_display_shell_close (shell, FALSE);
-}
-
-void
-view_scroll_center_cmd_callback (GimpAction *action,
-                                 GVariant   *value,
-                                 gpointer    data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
-
-  gimp_display_shell_scroll_center_image (gimp_display_get_shell (display),
-                                          TRUE, TRUE);
-}
-
-void
-view_zoom_fit_in_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
-
-  gimp_display_shell_scale_fit_in (gimp_display_get_shell (display));
-}
-
-void
-view_zoom_fill_cmd_callback (GimpAction *action,
-                             GVariant   *value,
-                             gpointer    data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
-
-  gimp_display_shell_scale_fill (gimp_display_get_shell (display));
-}
-
-void
-view_zoom_selection_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpDisplay *display;
   GimpImage   *image;
-  gint         x, y, width, height;
-  return_if_no_display (display, data);
-  return_if_no_image (image, data);
+  GList       *paths;
+  GimpPath    *vectors;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
+  return_if_no_vectors_list (image, paths, data);
+  return_if_no_widget (widget, data);
 
-  gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
-                    &x, &y, &width, &height);
+  if (g_list_length (paths) != 1)
+    return;
 
-  gimp_display_shell_scale_to_rectangle (gimp_display_get_shell (display),
-                                         GIMP_ZOOM_IN,
-                                         x, y, width, height,
-                                         FALSE);
-}
+  vectors = paths->data;
 
-void
-view_zoom_revert_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
+#define EDIT_DIALOG_KEY "gimp-vectors-edit-attributes-dialog"
 
-  gimp_display_shell_scale_revert (gimp_display_get_shell (display));
-}
-
-void
-view_zoom_cmd_callback (GimpAction *action,
-                        GVariant   *value,
-                        gpointer    data)
-{
-  GimpDisplayShell     *shell;
-  GimpActionSelectType  select_type;
-  return_if_no_shell (shell, data);
-
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
-
-  switch (select_type)
-    {
-    case GIMP_ACTION_SELECT_FIRST:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_OUT_MAX,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
-      break;
-
-    case GIMP_ACTION_SELECT_LAST:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_IN_MAX,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
-      break;
-
-    case GIMP_ACTION_SELECT_PREVIOUS:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_OUT,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
-      break;
-
-    case GIMP_ACTION_SELECT_NEXT:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_IN,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
-      break;
-
-    case GIMP_ACTION_SELECT_SKIP_PREVIOUS:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_OUT_MORE,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
-      break;
-
-    case GIMP_ACTION_SELECT_SKIP_NEXT:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_IN_MORE,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
-      break;
-
-    default:
-      {
-        gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
-
-        scale = action_select_value (select_type,
-                                     scale,
-                                     0.0, 512.0, 1.0,
-                                     1.0 / 8.0, 1.0, 16.0, 0.0,
-                                     FALSE);
-
-        /* min = 1.0 / 256,  max = 256.0                */
-        /* scale = min *  (max / min)**(i/n), i = 0..n  */
-        scale = pow (65536.0, scale / 512.0) / 256.0;
-
-        gimp_display_shell_scale (shell,
-                                  GIMP_ZOOM_TO,
-                                  scale,
-                                  GIMP_ZOOM_FOCUS_BEST_GUESS);
-        break;
-      }
-    }
-}
-
-void
-view_zoom_explicit_cmd_callback (GimpAction *action,
-                                 GVariant   *value,
-                                 gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gint              factor;
-  return_if_no_shell (shell, data);
-
-  factor = g_variant_get_int32 (value);
-
-  if (factor != 0 /* not Other... */)
-    {
-      if (fabs (factor - gimp_zoom_model_get_factor (shell->zoom)) > 0.0001)
-        gimp_display_shell_scale (shell,
-                                  GIMP_ZOOM_TO,
-                                  (gdouble) factor / 10000,
-                                  GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
-    }
-  else
-    {
-      gimp_display_shell_scale_dialog (shell);
-    }
-}
-
-void
-view_show_all_cmd_callback (GimpAction *action,
-                            GVariant   *value,
-                            gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != shell->show_all)
-    {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-      gimp_display_shell_set_show_all (shell, active);
-
-      if (window)
-        SET_ACTIVE (menus_get_image_manager_singleton (display->gimp),
-                    "view-show-all", shell->show_all);
-
-      if (IS_ACTIVE_DISPLAY (display))
-        SET_ACTIVE (shell->popup_manager, "view-show-all",
-                    shell->show_all);
-    }
-}
-
-void
-view_dot_for_dot_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != shell->dot_for_dot)
-    {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-      gimp_display_shell_scale_set_dot_for_dot (shell, active);
-
-      if (window)
-        SET_ACTIVE (menus_get_image_manager_singleton (display->gimp),
-                    "view-dot-for-dot", shell->dot_for_dot);
-
-      if (IS_ACTIVE_DISPLAY (display))
-        SET_ACTIVE (shell->popup_manager, "view-dot-for-dot",
-                    shell->dot_for_dot);
-    }
-}
-
-void
-view_flip_horizontally_cmd_callback (GimpAction *action,
-                                     GVariant   *value,
-                                     gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != shell->flip_horizontally)
-    {
-      gimp_display_shell_flip (shell, active, shell->flip_vertically);
-    }
-}
-
-void
-view_flip_vertically_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != shell->flip_vertically)
-    {
-      gimp_display_shell_flip (shell, shell->flip_horizontally, active);
-    }
-}
-
-void
-view_flip_reset_cmd_callback (GimpAction *action,
-                              GVariant   *value,
-                              gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-  gimp_display_shell_flip (shell, FALSE, FALSE);
-}
-
-void
-view_rotate_absolute_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
-{
-  GimpDisplay          *display;
-  GimpDisplayShell     *shell;
-  GimpActionSelectType  select_type;
-  gdouble               angle = 0.0;
-  return_if_no_display (display, data);
-
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
-
-  shell = gimp_display_get_shell (display);
-
-  angle = action_select_value (select_type,
-                               0.0,
-                               -180.0, 180.0, 0.0,
-                               1.0, 15.0, 90.0, 0.0,
-                               TRUE);
-
-  gimp_display_shell_rotate_to (shell, angle);
-}
-
-void
-view_rotate_relative_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
-{
-  GimpDisplay          *display;
-  GimpDisplayShell     *shell;
-  GimpActionSelectType  select_type;
-  gdouble               delta = 0.0;
-  return_if_no_display (display, data);
-
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
-
-  shell = gimp_display_get_shell (display);
-
-  delta = action_select_value (select_type,
-                               0.0,
-                               -180.0, 180.0, 0.0,
-                               1.0, 15.0, 90.0, 0.0,
-                               TRUE);
-
-  gimp_display_shell_rotate (shell, delta);
-}
-
-void
-view_rotate_other_cmd_callback (GimpAction *action,
-                                GVariant   *value,
-                                gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-
-  gimp_display_shell_rotate_dialog (shell);
-}
-
-void
-view_reset_cmd_callback (GimpAction *action,
-                         GVariant   *value,
-                         gpointer    data)
-{
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-
-  return_if_no_display (display, data);
-
-  shell = gimp_display_get_shell (display);
-  gimp_display_shell_rotate_to (shell, 0.0);
-  gimp_display_shell_flip (shell, FALSE, FALSE);
-}
-
-void
-view_scroll_horizontal_cmd_callback (GimpAction *action,
-                                     GVariant   *value,
-                                     gpointer    data)
-{
-  GimpDisplayShell     *shell;
-  GtkAdjustment        *adj;
-  GimpActionSelectType  select_type;
-  gdouble               offset;
-  return_if_no_shell (shell, data);
-
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
-
-  adj = shell->hsbdata;
-
-  offset = action_select_value (select_type,
-                                gtk_adjustment_get_value (adj),
-                                gtk_adjustment_get_lower (adj),
-                                gtk_adjustment_get_upper (adj) -
-                                gtk_adjustment_get_page_size (adj),
-                                gtk_adjustment_get_lower (adj),
-                                1,
-                                gtk_adjustment_get_step_increment (adj),
-                                gtk_adjustment_get_page_increment (adj),
-                                0,
-                                FALSE);
-
-  gtk_adjustment_set_value (shell->hsbdata, offset);
-}
-
-void
-view_scroll_vertical_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
-{
-  GimpDisplayShell     *shell;
-  GtkAdjustment        *adj;
-  GimpActionSelectType  select_type;
-  gdouble               offset;
-  return_if_no_shell (shell, data);
-
-  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
-
-  adj = shell->vsbdata;
-
-  offset = action_select_value (select_type,
-                                gtk_adjustment_get_value (adj),
-                                gtk_adjustment_get_lower (adj),
-                                gtk_adjustment_get_upper (adj) -
-                                gtk_adjustment_get_page_size (adj),
-                                gtk_adjustment_get_lower (adj),
-                                1,
-                                gtk_adjustment_get_step_increment (adj),
-                                gtk_adjustment_get_page_increment (adj),
-                                0,
-                                FALSE);
-
-  gtk_adjustment_set_value (shell->vsbdata, offset);
-}
-
-void
-view_navigation_window_cmd_callback (GimpAction *action,
-                                     GVariant   *value,
-                                     gpointer    data)
-{
-  Gimp             *gimp;
-  GimpDisplayShell *shell;
-  return_if_no_gimp (gimp, data);
-  return_if_no_shell (shell, data);
-
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                             gimp,
-                                             gimp_dialog_factory_get_singleton (),
-                                             gimp_widget_get_monitor (GTK_WIDGET (shell)),
-                                             "gimp-navigation-view");
-}
-
-void
-view_display_filters_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
-{
-  GimpDisplayShell *shell;
-  GtkWidget        *dialog;
-  return_if_no_shell (shell, data);
-
-#define FILTERS_DIALOG_KEY "gimp-display-filters-dialog"
-
-  dialog = dialogs_get_dialog (G_OBJECT (shell), FILTERS_DIALOG_KEY);
+  dialog = dialogs_get_dialog (G_OBJECT (vectors), EDIT_DIALOG_KEY);
 
   if (! dialog)
     {
-      dialog = gimp_display_shell_filter_dialog_new (shell);
+      GimpItem *item = GIMP_ITEM (vectors);
 
-      dialogs_attach_dialog (G_OBJECT (shell), FILTERS_DIALOG_KEY, dialog);
+      dialog = path_options_dialog_new (image, vectors,
+                                        action_data_get_context (data),
+                                        widget,
+                                        _("Path Attributes"),
+                                        "gimp-vectors-edit",
+                                        GIMP_ICON_EDIT,
+                                        _("Edit Path Attributes"),
+                                        GIMP_HELP_PATH_EDIT,
+                                        gimp_object_get_name (vectors),
+                                        gimp_item_get_visible (item),
+                                        gimp_item_get_color_tag (item),
+                                        gimp_item_get_lock_content (item),
+                                        gimp_item_get_lock_position (item),
+                                        gimp_item_get_lock_visibility (item),
+                                        vectors_edit_attributes_callback,
+                                        NULL);
+
+      dialogs_attach_dialog (G_OBJECT (vectors), EDIT_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-view_color_management_reset_cmd_callback (GimpAction *action,
-                                          GVariant   *value,
-                                          gpointer    data)
+vectors_new_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
-  GimpDisplayShell *shell;
-  GimpColorConfig  *global_config;
-  GimpColorConfig  *shell_config;
-  return_if_no_shell (shell, data);
+  GimpImage *image;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
-  global_config = GIMP_CORE_CONFIG (shell->display->config)->color_management;
-  shell_config  = gimp_display_shell_get_color_config (shell);
+#define NEW_DIALOG_KEY "gimp-vectors-new-dialog"
 
-  gimp_config_copy (GIMP_CONFIG (global_config),
-                    GIMP_CONFIG (shell_config),
-                    0);
-  shell->color_config_set = FALSE;
+  dialog = dialogs_get_dialog (G_OBJECT (image), NEW_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      dialog = path_options_dialog_new (image, NULL,
+                                        action_data_get_context (data),
+                                        widget,
+                                        _("New Path"),
+                                        "gimp-vectors-new",
+                                        GIMP_ICON_PATH,
+                                        _("Create a New Path"),
+                                        GIMP_HELP_PATH_NEW,
+                                        config->vectors_new_name,
+                                        FALSE,
+                                        GIMP_COLOR_TAG_NONE,
+                                        FALSE,
+                                        FALSE,
+                                        FALSE,
+                                        vectors_new_callback,
+                                        NULL);
+
+      dialogs_attach_dialog (G_OBJECT (image), NEW_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-view_color_management_enable_cmd_callback (GimpAction *action,
-                                           GVariant   *value,
-                                           gpointer    data)
-{
-  GimpDisplayShell        *shell;
-  GimpColorConfig         *color_config;
-  GimpColorManagementMode  mode;
-  gboolean                 active;
-  return_if_no_shell (shell, data);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  active = g_variant_get_boolean (value);
-
-  mode = gimp_color_config_get_mode (color_config);
-
-  if (active)
-    {
-      if (mode != GIMP_COLOR_MANAGEMENT_SOFTPROOF)
-        mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
-    }
-  else
-    {
-      mode = GIMP_COLOR_MANAGEMENT_OFF;
-    }
-
-  if (mode != gimp_color_config_get_mode (color_config))
-    {
-      g_object_set (color_config,
-                    "mode", mode,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_color_management_softproof_cmd_callback (GimpAction *action,
-                                              GVariant   *value,
-                                              gpointer    data)
-{
-  GimpDisplayShell        *shell;
-  GimpColorConfig         *color_config;
-  GimpColorManagementMode  mode;
-  gboolean                 active;
-  return_if_no_shell (shell, data);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  active = g_variant_get_boolean (value);
-
-  mode = gimp_color_config_get_mode (color_config);
-
-  if (active)
-    {
-      mode = GIMP_COLOR_MANAGEMENT_SOFTPROOF;
-    }
-  else
-    {
-      if (mode != GIMP_COLOR_MANAGEMENT_OFF)
-        mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
-    }
-
-  if (mode != gimp_color_config_get_mode (color_config))
-    {
-      g_object_set (color_config,
-                    "mode", mode,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_display_intent_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpDisplayShell          *shell;
-  GimpColorConfig           *color_config;
-  GimpColorRenderingIntent   intent;
-  return_if_no_shell (shell, data);
-
-  intent = (GimpColorRenderingIntent) g_variant_get_int32 (value);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  if (intent != gimp_color_config_get_display_intent (color_config))
-    {
-      g_object_set (color_config,
-                    "display-rendering-intent", intent,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_display_bpc_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
-{
-  GimpDisplayShell *shell;
-  GimpColorConfig  *color_config;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_color_config_get_display_bpc (color_config))
-    {
-      g_object_set (color_config,
-                    "display-use-black-point-compensation", active,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_softproof_gamut_check_cmd_callback (GimpAction *action,
-                                         GVariant   *value,
-                                         gpointer    data)
-{
-  GimpDisplayShell *shell;
-  GimpColorConfig  *color_config;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_color_config_get_simulation_gamut_check (color_config))
-    {
-      g_object_set (color_config,
-                    "simulation-gamut-check", active,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_toggle_selection_cmd_callback (GimpAction *action,
+vectors_new_last_vals_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
+  GimpImage        *image;
+  GimpPath         *vectors;
+  GimpDialogConfig *config;
+  return_if_no_image (image, data);
 
-  active = g_variant_get_boolean (value);
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  if (active != gimp_display_shell_get_show_selection (shell))
-    {
-      gimp_display_shell_set_show_selection (shell, active);
-    }
+  vectors = gimp_path_new (image, config->vectors_new_name);
+  gimp_image_add_path (image, vectors,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_flush (image);
 }
 
 void
-view_toggle_layer_boundary_cmd_callback (GimpAction *action,
-                                         GVariant   *value,
-                                         gpointer    data)
+vectors_raise_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
+  GimpImage *image;
+  GList     *list;
+  GList     *iter;
+  GList     *moved_list = NULL;
+  return_if_no_vectors_list (image, list, data);
 
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_layer (shell))
+  for (iter = list; iter; iter = iter->next)
     {
-      gimp_display_shell_set_show_layer (shell, active);
+      gint index;
+
+      index = gimp_item_get_index (iter->data);
+      if (index > 0)
+        moved_list = g_list_prepend (moved_list, iter->data);
+    }
+
+  if (moved_list)
+    {
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   ngettext ("Raise Path",
+                                             "Raise Paths",
+                                             g_list_length (moved_list)));
+      for (iter = moved_list; iter; iter = iter->next)
+        gimp_image_raise_item (image, GIMP_ITEM (iter->data), NULL);
+
+      gimp_image_flush (image);
+      gimp_image_undo_group_end (image);
+      g_list_free (moved_list);
     }
 }
 
 void
-view_toggle_canvas_boundary_cmd_callback (GimpAction *action,
-                                          GVariant   *value,
-                                          gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_canvas (shell))
-    {
-      gimp_display_shell_set_show_canvas (shell, active);
-    }
-}
-
-void
-view_toggle_menubar_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_menubar (shell))
-    {
-      gimp_display_shell_set_show_menubar (shell, active);
-    }
-}
-
-void
-view_toggle_rulers_cmd_callback (GimpAction *action,
-                                 GVariant   *value,
-                                 gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_rulers (shell))
-    {
-      gimp_display_shell_set_show_rulers (shell, active);
-    }
-}
-
-void
-view_toggle_scrollbars_cmd_callback (GimpAction *action,
-                                     GVariant   *value,
-                                     gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_scrollbars (shell))
-    {
-      gimp_display_shell_set_show_scrollbars (shell, active);
-    }
-}
-
-void
-view_toggle_statusbar_cmd_callback (GimpAction *action,
-                                    GVariant   *value,
-                                    gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_statusbar (shell))
-    {
-      gimp_display_shell_set_show_statusbar (shell, active);
-    }
-}
-
-void
-view_toggle_guides_cmd_callback (GimpAction *action,
-                                 GVariant   *value,
-                                 gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_guides (shell))
-    {
-      gimp_display_shell_set_show_guides (shell, active);
-    }
-}
-
-void
-view_toggle_grid_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_grid (shell))
-    {
-      gimp_display_shell_set_show_grid (shell, active);
-    }
-}
-
-void
-view_toggle_sample_points_cmd_callback (GimpAction *action,
-                                        GVariant   *value,
-                                        gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_show_sample_points (shell))
-    {
-      gimp_display_shell_set_show_sample_points (shell, active);
-    }
-}
-
-void
-view_snap_to_guides_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_snap_to_guides (shell))
-    {
-      gimp_display_shell_set_snap_to_guides (shell, active);
-    }
-}
-
-void
-view_snap_to_grid_cmd_callback (GimpAction *action,
-                                GVariant   *value,
-                                gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_snap_to_grid (shell))
-    {
-      gimp_display_shell_set_snap_to_grid (shell, active);
-    }
-}
-
-void
-view_snap_to_canvas_cmd_callback (GimpAction *action,
-                                  GVariant   *value,
-                                  gpointer    data)
-{
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_snap_to_canvas (shell))
-    {
-      gimp_display_shell_set_snap_to_canvas (shell, active);
-    }
-}
-
-void
-view_snap_to_vectors_cmd_callback (GimpAction *action,
+vectors_raise_to_top_cmd_callback (GimpAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
+  GimpImage *image;
+  GList     *list;
+  GList     *iter;
+  GList     *moved_list = NULL;
+  return_if_no_vectors_list (image, list, data);
 
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_snap_to_vectors (shell))
+  for (iter = list; iter; iter = iter->next)
     {
-      gimp_display_shell_set_snap_to_vectors (shell, active);
+      gint index;
+
+      index = gimp_item_get_index (iter->data);
+      if (index > 0)
+        moved_list = g_list_prepend (moved_list, iter->data);
+    }
+
+  if (moved_list)
+    {
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   ngettext ("Raise Path to Top",
+                                             "Raise Paths to Top",
+                                             g_list_length (moved_list)));
+
+      for (iter = moved_list; iter; iter = iter->next)
+        gimp_image_raise_item_to_top (image, GIMP_ITEM (iter->data));
+
+      gimp_image_flush (image);
+      gimp_image_undo_group_end (image);
+      g_list_free (moved_list);
     }
 }
 
 void
-view_snap_to_bbox_cmd_callback (GimpAction *action,
+vectors_lower_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
+{
+  GimpImage *image;
+  GList     *list;
+  GList     *iter;
+  GList     *moved_list = NULL;
+  return_if_no_vectors_list (image, list, data);
+
+  for (iter = list; iter; iter = iter->next)
+    {
+      GList *vectors_list;
+      gint   index;
+
+      vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      index = gimp_item_get_index (iter->data);
+      if (index < g_list_length (vectors_list) - 1)
+        moved_list = g_list_prepend (moved_list, iter->data);
+    }
+
+  if (moved_list)
+    {
+      moved_list = g_list_reverse (moved_list);
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   ngettext ("Lower Path",
+                                             "Lower Paths",
+                                             g_list_length (moved_list)));
+
+      for (iter = moved_list; iter; iter = iter->next)
+        gimp_image_lower_item (image, GIMP_ITEM (iter->data), NULL);
+
+      gimp_image_flush (image);
+      gimp_image_undo_group_end (image);
+      g_list_free (moved_list);
+    }
+}
+
+void
+vectors_lower_to_bottom_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
+{
+  GimpImage *image;
+  GList     *list;
+  GList     *iter;
+  GList     *moved_list = NULL;
+  return_if_no_vectors_list (image, list, data);
+
+  for (iter = list; iter; iter = iter->next)
+    {
+      GList *vectors_list;
+      gint   index;
+
+      vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      index = gimp_item_get_index (iter->data);
+      if (index < g_list_length (vectors_list) - 1)
+        moved_list = g_list_prepend (moved_list, iter->data);
+    }
+
+  if (moved_list)
+    {
+      moved_list = g_list_reverse (moved_list);
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   ngettext ("Lower Path to Bottom",
+                                             "Lower Paths to Bottom",
+                                             g_list_length (moved_list)));
+
+      for (iter = moved_list; iter; iter = iter->next)
+        gimp_image_lower_item_to_bottom (image, GIMP_ITEM (iter->data));
+
+      gimp_image_flush (image);
+      gimp_image_undo_group_end (image);
+      g_list_free (moved_list);
+    }
+}
+
+void
+vectors_duplicate_cmd_callback (GimpAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
+  GimpImage *image;
+  GList     *paths;
+  GList     *new_paths = NULL;
+  GList     *iter;
+  return_if_no_vectors_list (image, paths, data);
 
-  active = g_variant_get_boolean (value);
+  paths = g_list_copy (paths);
+  paths = g_list_reverse (paths);
 
-  if (active != gimp_display_shell_get_snap_to_bbox (shell))
+  /* TODO: proper undo group. */
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_PATHS_IMPORT,
+                               _("Duplicate Paths"));
+  for (iter = paths; iter; iter = iter->next)
     {
-      gimp_display_shell_set_snap_to_bbox (shell, active);
+      GimpPath *new_path;
+
+      new_path = GIMP_PATH (gimp_item_duplicate (iter->data,
+                                                 G_TYPE_FROM_INSTANCE (iter->data)));
+      /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+       *  the latter would add a duplicated group inside itself instead of
+       *  above it
+       */
+      gimp_image_add_path (image, new_path,
+                           gimp_path_get_parent (iter->data), -1,
+                           TRUE);
+      new_paths = g_list_prepend (new_paths, new_path);
+    }
+  if (new_paths)
+    {
+      gimp_image_set_selected_paths (image, new_paths);
+      gimp_image_flush (image);
+    }
+  gimp_image_undo_group_end (image);
+  g_list_free (paths);
+}
+
+void
+vectors_delete_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
+{
+  GimpImage *image;
+  GList     *paths;
+  return_if_no_vectors_list (image, paths, data);
+
+  paths = g_list_copy (paths);
+  /* TODO: proper undo group. */
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_PATHS_IMPORT,
+                               _("Remove Paths"));
+
+  for (GList *iter = paths; iter; iter = iter->next)
+    gimp_image_remove_path (image, iter->data, TRUE, NULL);
+
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
+  g_list_free (paths);
+}
+
+void
+vectors_merge_visible_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
+{
+  GimpImage   *image;
+  GList       *vectors;
+  GtkWidget   *widget;
+  GError      *error = NULL;
+  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_widget (widget, data);
+
+  if (! gimp_image_merge_visible_paths (image, &error))
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+}
+
+void
+vectors_to_selection_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
+{
+  GimpImage      *image;
+  GList          *vectors;
+  GList          *iter;
+  GimpChannelOps  operation;
+  return_if_no_vectors_list (image, vectors, data);
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               _("Paths to selection"));
+
+  operation = (GimpChannelOps) g_variant_get_int32 (value);
+
+  for (iter = vectors; iter; iter = iter->next)
+    {
+      gimp_item_to_selection (iter->data, operation, TRUE, FALSE, 0, 0);
+
+      if (operation == GIMP_CHANNEL_OP_REPLACE && iter == vectors)
+        operation = GIMP_CHANNEL_OP_ADD;
+    }
+
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
+}
+
+void
+vectors_selection_to_vectors_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
+                                           gpointer    data)
+{
+  GimpImage      *image;
+  GtkWidget      *widget;
+  GimpProcedure  *procedure;
+  GimpValueArray *args;
+  GimpDisplay    *display;
+  gboolean        advanced;
+  GError         *error = NULL;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+  advanced = (gboolean) g_variant_get_int32 (value);
+
+  procedure = gimp_pdb_lookup_procedure (image->gimp->pdb,
+                                         "plug-in-sel2path");
+
+  if (! procedure)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                            "Selection to path procedure lookup failed.");
+      return;
+    }
+
+  display = gimp_context_get_display (action_data_get_context (data));
+
+  args = gimp_procedure_get_arguments (procedure);
+
+  g_value_set_enum   (gimp_value_array_index (args, 0),
+                      advanced ?
+                      GIMP_RUN_INTERACTIVE : GIMP_RUN_NONINTERACTIVE);
+  g_value_set_object (gimp_value_array_index (args, 1),
+                      image);
+
+  gimp_procedure_execute_async (procedure, image->gimp,
+                                action_data_get_context (data),
+                                GIMP_PROGRESS (display), args,
+                                display, &error);
+
+  gimp_value_array_unref (args);
+
+  if (error)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                            error->message);
+      g_error_free (error);
     }
 }
 
 void
-view_snap_to_equidistance_cmd_callback (GimpAction *action,
-                                        GVariant   *value,
-                                        gpointer    data)
+vectors_fill_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_display_shell_get_snap_to_equidistance (shell))
-    gimp_display_shell_set_snap_to_equidistance (shell, active);
+  items_fill_cmd_callback (action, image, vectors,
+                           _("Fill Path"),
+                           GIMP_ICON_TOOL_BUCKET_FILL,
+                           GIMP_HELP_PATH_FILL,
+                           data);
 }
 
 void
-view_padding_color_cmd_callback (GimpAction *action,
-                                 GVariant   *value,
-                                 gpointer    data)
+vectors_fill_last_vals_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
-  GimpDisplay           *display;
-  GimpImageWindow       *window;
-  GimpDisplayShell      *shell;
-  GimpDisplayOptions    *options;
-  GimpCanvasPaddingMode  padding_mode;
-  gboolean               fullscreen;
-  return_if_no_display (display, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  padding_mode = (GimpCanvasPaddingMode) g_variant_get_int32 (value);
+  items_fill_last_vals_cmd_callback (action, image, vectors, data);
+}
 
-  shell  = gimp_display_get_shell (display);
-  window = gimp_display_shell_get_window (shell);
+void
+vectors_stroke_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
+{
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  if (window)
-    fullscreen = gimp_image_window_get_fullscreen (window);
-  else
-    fullscreen = FALSE;
+  items_stroke_cmd_callback (action, image, vectors,
+                             _("Stroke Path"),
+                             GIMP_ICON_PATH_STROKE,
+                             GIMP_HELP_PATH_STROKE,
+                             data);
+}
 
-  if (fullscreen)
-    options = shell->fullscreen_options;
-  else
-    options = shell->options;
+void
+vectors_stroke_last_vals_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
+{
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-#define PADDING_COLOR_DIALOG_KEY "gimp-padding-color-dialog"
+  items_stroke_last_vals_cmd_callback (action, image, vectors, data);
+}
 
-  switch (padding_mode)
+void
+vectors_copy_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
+{
+  GimpImage   *image;
+  GList       *vectors;
+  gchar       *svg;
+  return_if_no_vectors_list (image, vectors, data);
+
+  svg = gimp_path_export_string (image, vectors);
+
+  if (svg)
     {
-    case GIMP_CANVAS_PADDING_MODE_DEFAULT:
-    case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
-    case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      dialogs_destroy_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
-
-      options->padding_mode_set = TRUE;
-
-      gimp_display_shell_set_padding (shell, padding_mode,
-                                      options->padding_color);
-      break;
-
-    case GIMP_CANVAS_PADDING_MODE_CUSTOM:
-      {
-        GtkWidget             *dialog;
-        GeglColor             *old_color;
-        GimpCanvasPaddingMode  old_padding_mode;
-
-        dialog = dialogs_get_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
-
-        if (! dialog)
-          {
-            GimpImage        *image = gimp_display_get_image (display);
-            GimpDisplayShell *shell = gimp_display_get_shell (display);
-
-            dialog =
-              gimp_color_dialog_new (GIMP_VIEWABLE (image),
-                                     action_data_get_context (data),
-                                     FALSE,
-                                     _("Set Canvas Padding Color"),
-                                     GIMP_ICON_FONT,
-                                     _("Set Custom Canvas Padding Color"),
-                                     GTK_WIDGET (shell),
-                                     NULL, NULL,
-                                     options->padding_color,
-                                     TRUE, FALSE);
-
-            g_signal_connect (dialog, "update",
-                              G_CALLBACK (view_padding_color_dialog_update),
-                              shell);
-
-            dialogs_attach_dialog (G_OBJECT (shell),
-                                   PADDING_COLOR_DIALOG_KEY, dialog);
-          }
-        old_color        = gegl_color_duplicate (options->padding_color);
-        old_padding_mode = options->padding_mode;
-        g_object_set_data_full (G_OBJECT (dialog), "old-color",
-                                old_color, g_object_unref);
-        g_object_set_data (G_OBJECT (dialog), "old-padding-mode",
-                           GINT_TO_POINTER (old_padding_mode));
-
-        gtk_window_present (GTK_WINDOW (dialog));
-      }
-      break;
-
-    case GIMP_CANVAS_PADDING_MODE_RESET:
-      dialogs_destroy_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
-
-      {
-        GimpDisplayOptions *default_options;
-
-        options->padding_mode_set = FALSE;
-
-        if (fullscreen)
-          default_options = display->config->default_fullscreen_view;
-        else
-          default_options = display->config->default_view;
-
-        gimp_display_shell_set_padding (shell,
-                                        default_options->padding_mode,
-                                        default_options->padding_color);
-        gimp_display_shell_set_padding_in_show_all (shell,
-                                                    default_options->padding_in_show_all);
-      }
-      break;
+      gimp_clipboard_set_svg (image->gimp, svg);
+      g_free (svg);
     }
 }
 
 void
-view_padding_color_in_show_all_cmd_callback (GimpAction *action,
-                                             GVariant   *value,
-                                             gpointer    data)
+vectors_paste_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
-  GimpDisplayShell *shell;
-  gboolean          active;
-  return_if_no_shell (shell, data);
+  GimpImage *image;
+  GtkWidget *widget;
+  gchar     *svg;
+  gsize      svg_size;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
-  active = g_variant_get_boolean (value);
+  svg = gimp_clipboard_get_svg (image->gimp, &svg_size);
 
-  if (active != gimp_display_shell_get_padding_in_show_all (shell))
+  if (svg)
     {
-      gimp_display_shell_set_padding_in_show_all (shell, active);
+      GError *error = NULL;
+
+      if (! gimp_path_import_buffer (image, svg, svg_size,
+                                     TRUE, FALSE,
+                                     GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                     NULL, &error))
+        {
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          gimp_image_flush (image);
+        }
+
+      g_free (svg);
     }
 }
 
 void
-view_shrink_wrap_cmd_callback (GimpAction *action,
-                               GVariant   *value,
-                               gpointer    data)
+vectors_export_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
-  GimpDisplayShell *shell;
-  return_if_no_shell (shell, data);
+  GimpImage   *image;
+  GList       *vectors;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
+  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_widget (widget, data);
 
-  gimp_display_shell_scale_shrink_wrap (shell, FALSE);
+#define EXPORT_DIALOG_KEY "gimp-vectors-export-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GFile            *folder = NULL;
+
+      if (config->vectors_export_path)
+        folder = gimp_file_new_for_config_path (config->vectors_export_path,
+                                                NULL);
+
+      dialog = path_export_dialog_new (image, widget,
+                                       folder,
+                                       config->vectors_export_active_only,
+                                       vectors_export_callback,
+                                       NULL);
+
+      if (folder)
+        g_object_unref (folder);
+
+      dialogs_attach_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-view_fullscreen_cmd_callback (GimpAction *action,
+vectors_import_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
+{
+  GimpImage *image;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
+
+#define IMPORT_DIALOG_KEY "gimp-vectors-import-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (image), IMPORT_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GFile            *folder = NULL;
+
+      if (config->vectors_import_path)
+        folder = gimp_file_new_for_config_path (config->vectors_import_path,
+                                                NULL);
+
+      dialog = path_import_dialog_new (image, widget,
+                                       folder,
+                                       config->vectors_import_merge,
+                                       config->vectors_import_scale,
+                                       vectors_import_callback,
+                                       NULL);
+
+      dialogs_attach_dialog (G_OBJECT (image), IMPORT_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
+vectors_visible_cmd_callback (GimpAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpDisplay      *display;
-  GimpDisplayShell *shell;
-  GimpImageWindow  *window;
-  return_if_no_display (display, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  shell  = gimp_display_get_shell (display);
-  window = gimp_display_shell_get_window (shell);
+  items_visible_cmd_callback (action, value, image, vectors);
+}
 
-  if (window)
-    {
-      gboolean active = g_variant_get_boolean (value);
+void
+vectors_lock_content_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
+{
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-      gimp_image_window_set_fullscreen (window, active);
-    }
+  items_lock_content_cmd_callback (action, value, image, vectors);
+}
+
+void
+vectors_lock_position_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
+{
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
+
+  items_lock_position_cmd_callback (action, value, image, vectors);
+}
+
+void
+vectors_color_tag_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  GimpImage    *image;
+  GList        *vectors;
+  GimpColorTag  color_tag;
+  return_if_no_vectors_list (image, vectors, data);
+
+  color_tag = (GimpColorTag) g_variant_get_int32 (value);
+
+  items_color_tag_cmd_callback (action, image, vectors, color_tag);
 }
 
 
 /*  private functions  */
 
 static void
-view_padding_color_dialog_update (GimpColorDialog      *dialog,
-                                  GeglColor            *color,
-                                  GimpColorDialogState  state,
-                                  GimpDisplayShell     *shell)
+vectors_new_callback (GtkWidget    *dialog,
+                      GimpImage    *image,
+                      GimpPath     *vectors,
+                      GimpContext  *context,
+                      const gchar  *vectors_name,
+                      gboolean      vectors_visible,
+                      GimpColorTag  vectors_color_tag,
+                      gboolean      vectors_lock_content,
+                      gboolean      vectors_lock_position,
+                      gboolean      vectors_lock_visibility,
+                      gpointer      user_data)
 {
-  GimpImageWindow       *window;
-  GimpDisplayOptions    *options;
-  GeglColor             *old_color;
-  GimpCanvasPaddingMode  old_padding_mode;
-  gboolean               fullscreen;
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  window           = gimp_display_shell_get_window (shell);
-  old_color        = g_object_get_data (G_OBJECT (dialog), "old-color");
-  old_padding_mode = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "old-padding-mode"));
+  g_object_set (config,
+                "path-new-name", vectors_name,
+                NULL);
 
-  g_return_if_fail (old_color);
+  vectors = gimp_path_new (image, config->vectors_new_name);
+  gimp_item_set_visible (GIMP_ITEM (vectors), vectors_visible, FALSE);
+  gimp_item_set_color_tag (GIMP_ITEM (vectors), vectors_color_tag, FALSE);
+  gimp_item_set_lock_content (GIMP_ITEM (vectors), vectors_lock_content, FALSE);
+  gimp_item_set_lock_position (GIMP_ITEM (vectors), vectors_lock_position, FALSE);
+  gimp_item_set_lock_visibility (GIMP_ITEM (vectors), vectors_lock_visibility, FALSE);
 
-  if (window)
-    fullscreen = gimp_image_window_get_fullscreen (window);
-  else
-    fullscreen = FALSE;
+  gimp_image_add_path (image, vectors,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_image_flush (image);
 
-  if (fullscreen)
-    options = shell->fullscreen_options;
-  else
-    options = shell->options;
+  gtk_widget_destroy (dialog);
+}
 
-  switch (state)
+static void
+vectors_edit_attributes_callback (GtkWidget    *dialog,
+                                  GimpImage    *image,
+                                  GimpPath     *vectors,
+                                  GimpContext  *context,
+                                  const gchar  *vectors_name,
+                                  gboolean      vectors_visible,
+                                  GimpColorTag  vectors_color_tag,
+                                  gboolean      vectors_lock_content,
+                                  gboolean      vectors_lock_position,
+                                  gboolean      vectors_lock_visibility,
+                                  gpointer      user_data)
+{
+  GimpItem *item = GIMP_ITEM (vectors);
+
+  if (strcmp (vectors_name, gimp_object_get_name (vectors))         ||
+      vectors_visible         != gimp_item_get_visible (item)       ||
+      vectors_color_tag       != gimp_item_get_color_tag (item)     ||
+      vectors_lock_content    != gimp_item_get_lock_content (item)  ||
+      vectors_lock_position   != gimp_item_get_lock_position (item) ||
+      vectors_lock_visibility != gimp_item_get_lock_visibility (item))
     {
-    case GIMP_COLOR_DIALOG_OK:
-      options->padding_mode_set = TRUE;
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   _("Path Attributes"));
 
-      gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
-                                      color);
-      gtk_widget_destroy (GTK_WIDGET (dialog));
-      break;
+      if (strcmp (vectors_name, gimp_object_get_name (vectors)))
+        gimp_item_rename (GIMP_ITEM (vectors), vectors_name, NULL);
 
-    case GIMP_COLOR_DIALOG_CANCEL:
-      gimp_display_shell_set_padding (shell,
-                                      old_padding_mode,
-                                      old_color);
-      gtk_widget_destroy (GTK_WIDGET (dialog));
-      break;
+      if (vectors_visible != gimp_item_get_visible (item))
+        gimp_item_set_visible (item, vectors_visible, TRUE);
 
-    case GIMP_COLOR_DIALOG_UPDATE:
-      gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
-                                      color);
-      break;
+      if (vectors_color_tag != gimp_item_get_color_tag (item))
+        gimp_item_set_color_tag (item, vectors_color_tag, TRUE);
 
-    default:
-      break;
+      if (vectors_lock_content != gimp_item_get_lock_content (item))
+        gimp_item_set_lock_content (item, vectors_lock_content, TRUE);
+
+      if (vectors_lock_position != gimp_item_get_lock_position (item))
+        gimp_item_set_lock_position (item, vectors_lock_position, TRUE);
+
+      if (vectors_lock_visibility != gimp_item_get_lock_visibility (item))
+        gimp_item_set_lock_visibility (item, vectors_lock_visibility, TRUE);
+
+      gimp_image_undo_group_end (image);
+
+      gimp_image_flush (image);
     }
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+vectors_import_callback (GtkWidget *dialog,
+                         GimpImage *image,
+                         GFile     *file,
+                         GFile     *import_folder,
+                         gboolean   merge_vectors,
+                         gboolean   scale_vectors,
+                         gpointer   user_data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  gchar            *path   = NULL;
+  GError           *error  = NULL;
+
+  if (import_folder)
+    path = gimp_file_get_config_path (import_folder, NULL);
+
+  g_object_set (config,
+                "path-import-path",  path,
+                "path-import-merge", merge_vectors,
+                "path-import-scale", scale_vectors,
+                NULL);
+
+  if (path)
+    g_free (path);
+
+  if (gimp_path_import_file (image, file,
+                             config->vectors_import_merge,
+                             config->vectors_import_scale,
+                             GIMP_IMAGE_ACTIVE_PARENT, -1,
+                             NULL, &error))
+    {
+      gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_error_free (error);
+      return;
+    }
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+vectors_export_callback (GtkWidget *dialog,
+                         GimpImage *image,
+                         GFile     *file,
+                         GFile     *export_folder,
+                         gboolean   active_only,
+                         gpointer   user_data)
+{
+  GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GList            *vectors = NULL;
+  gchar            *path    = NULL;
+  GError           *error   = NULL;
+
+  if (export_folder)
+    path = gimp_file_get_config_path (export_folder, NULL);
+
+  g_object_set (config,
+                "path-export-path",        path,
+                "path-export-active-only", active_only,
+                NULL);
+
+  if (path)
+    g_free (path);
+
+  if (config->vectors_export_active_only)
+    vectors = gimp_image_get_selected_paths (image);
+
+  if (! gimp_path_export_file (image, vectors, file, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (dialog),
+                    GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+      return;
+    }
+
+  gtk_widget_destroy (dialog);
+}
+
+void
+vectors_select_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
+{
+  GimpImage            *image;
+  GList                *new_vectors = NULL;
+  GList                *vectors;
+  GList                *iter;
+  GimpActionSelectType  select_type;
+  gboolean              run_once;
+  return_if_no_image (image, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  vectors = gimp_image_get_selected_paths (image);
+  run_once = (g_list_length (vectors) == 0);
+
+  for (iter = vectors; iter || run_once; iter = iter ? iter->next : NULL)
+    {
+      GimpPath      *new_vec;
+      GimpContainer *container;
+
+      if (iter)
+        {
+          container = gimp_item_get_container (GIMP_ITEM (iter->data));
+        }
+      else /* run_once */
+        {
+          container = gimp_image_get_paths (image);
+          run_once  = FALSE;
+        }
+      new_vec = (GimpPath *) action_select_object (select_type,
+                                                      container,
+                                                      iter ? iter->data : NULL);
+      if (new_vec)
+        new_vectors = g_list_prepend (new_vectors, new_vec);
+    }
+
+  if (new_vectors)
+    {
+      gimp_image_set_selected_paths (image, new_vectors);
+      gimp_image_flush (image);
+    }
+
+  g_list_free (new_vectors);
 }

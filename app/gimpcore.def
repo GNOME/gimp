@@ -95,9 +95,9 @@ EXPORTS
 	gimp_channel_select_channel
 	gimp_channel_select_component
 	gimp_channel_select_ellipse
+	gimp_channel_select_path
 	gimp_channel_select_polygon
 	gimp_channel_select_rectangle
-	gimp_channel_select_vectors
 	gimp_channel_set_color
 	gimp_channel_sharpen
 	gimp_channel_shrink
@@ -486,7 +486,19 @@ EXPORTS
 	gimp_parameters_append
 	gimp_parameters_append_valist
 	gimp_parameters_free
-	gimp_path_get_type
+    gimp_path_get_type
+	gimp_path_anchor_select
+	gimp_path_bounds
+	gimp_path_export_file
+	gimp_path_export_string
+	gimp_path_freeze
+	gimp_path_import_buffer
+	gimp_path_import_file
+	gimp_path_new
+	gimp_path_stroke_add
+	gimp_path_stroke_get_next
+	gimp_path_stroke_remove
+	gimp_path_thaw
 	gimp_pattern_get_standard
 	gimp_pattern_get_type
 	gimp_pencil_options_get_type
@@ -546,7 +558,7 @@ EXPORTS
 	gimp_text_layer_new
 	gimp_text_layer_set
 	gimp_text_undo_get_type
-	gimp_text_vectors_new
+	gimp_text_path_new
 	gimp_tool_info_get_standard
 	gimp_tool_info_get_type
 	gimp_tool_info_new
@@ -570,18 +582,6 @@ EXPORTS
 	gimp_undo_stack_peek
 	gimp_undo_stack_pop_undo
 	gimp_unset_busy
-	gimp_vectors_anchor_select
-	gimp_vectors_bounds
-	gimp_vectors_export_file
-	gimp_vectors_export_string
-	gimp_vectors_freeze
-	gimp_vectors_import_buffer
-	gimp_vectors_import_file
-	gimp_vectors_new
-	gimp_vectors_stroke_add
-	gimp_vectors_stroke_get_next
-	gimp_vectors_stroke_remove
-	gimp_vectors_thaw
 	gimp_viewable_calc_preview_size
 	gimp_viewable_get_description
 	gimp_viewable_get_new_preview
@@ -680,7 +680,7 @@ gimp_gradient_segment_split_midpoint
 gimp_image_resize_with_layers
 gimp_image_update_sample_point
 gimp_palette_set_columns
-gimp_vectors_warp_vectors
+gimp_path_warp_path
 gimp_buffer_new_from_pixbuf
 gimp_container_is_empty
 gimp_data_factory_data_refresh
@@ -949,6 +949,7 @@ gimp_marshal_VOID__DOUBLE
 gimp_marshal_VOID__DOUBLE_DOUBLE_DOUBLE_DOUBLE
 gimp_operation_hue_saturation_map
 gimp_operation_levels_map_input
+gimp_path_make_bezier
 gimp_perspective_clone_set_transform
 gimp_posterize_config_get_type
 gimp_recent_list_load
@@ -958,4 +959,3 @@ gimp_threshold_config_get_type
 gimp_threshold_config_to_cruft
 gimp_tool_info_build_options_filename
 gimp_use_gegl
-gimp_vectors_make_bezier

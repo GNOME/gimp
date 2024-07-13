@@ -40,7 +40,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  path = gimp_vectors_new (image, name);
+  path = gimp_path_new (image, name);
 }
 CODE
     );
@@ -75,7 +75,7 @@ HELP
     {
       gint x, y;
 
-      path = gimp_text_vectors_new (image,
+      path = gimp_text_path_new (image,
 				       gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
 
       gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
@@ -146,7 +146,7 @@ HELP
     %invoke = (
         code => <<"CODE"
 {
-  num_strokes = gimp_vectors_get_n_strokes (path);
+  num_strokes = gimp_path_get_n_strokes (path);
 
   if (num_strokes)
     {
@@ -155,9 +155,9 @@ HELP
 
       stroke_ids = g_new (gint32, num_strokes);
 
-      for (cur_stroke = gimp_vectors_stroke_get_next (path, NULL);
+      for (cur_stroke = gimp_path_stroke_get_next (path, NULL);
            cur_stroke;
-           cur_stroke = gimp_vectors_stroke_get_next (path, cur_stroke))
+           cur_stroke = gimp_path_stroke_get_next (path, cur_stroke))
         {
           stroke_ids[i] = gimp_stroke_get_id (cur_stroke);
           i++;
@@ -287,7 +287,7 @@ HELP
                                        _("Remove path stroke"),
                                        path);
 
-      gimp_vectors_stroke_remove (path, stroke);
+      gimp_path_stroke_remove (path, stroke);
     }
   else
     success = FALSE;
@@ -325,9 +325,9 @@ HELP
                                        _("Close path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_close (stroke);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -366,9 +366,9 @@ HELP
                                        _("Reverse path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_reverse (stroke);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -413,9 +413,9 @@ HELP
                                        _("Translate path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_translate (stroke, off_x, off_y);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -459,9 +459,9 @@ HELP
                                        _("Scale path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_scale (stroke, scale_x, scale_y);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -506,9 +506,9 @@ HELP
                                        _("Rotate path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_rotate (stroke, center_x, center_y, angle);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -552,9 +552,9 @@ HELP
                                        _("Flip path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_flip (stroke, flip_type, axis);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -603,9 +603,9 @@ HELP
                                        _("Flip path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -810,7 +810,7 @@ HELP
                                            _("Add path stroke"),
                                            path);
 
-	  gimp_vectors_stroke_add (path, stroke);
+	  gimp_path_stroke_add (path, stroke);
 	  g_object_unref (stroke);
 
 	  stroke_id = gimp_stroke_get_id (stroke);
@@ -868,7 +868,7 @@ HELP
                                        _("Add path stroke"),
                                        path);
 
-      gimp_vectors_stroke_add (path, stroke);
+      gimp_path_stroke_add (path, stroke);
       g_object_unref (stroke);
 
       stroke_id = gimp_stroke_get_id (stroke);
@@ -918,9 +918,9 @@ HELP
                                       _("Extend path stroke"),
                                       path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_bezier_stroke_lineto (stroke, &coord0);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -977,9 +977,9 @@ HELP
                                       _("Extend path stroke"),
                                       path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -1042,9 +1042,9 @@ HELP
                                        _("Extend path stroke"),
                                        path);
 
-      gimp_vectors_freeze (path);
+      gimp_path_freeze (path);
       gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
-      gimp_vectors_thaw (path);
+      gimp_path_thaw (path);
     }
   else
     success = FALSE;
@@ -1103,7 +1103,7 @@ HELP
                                        _("Add path stroke"),
                                        path);
 
-      gimp_vectors_stroke_add (path, stroke);
+      gimp_path_stroke_add (path, stroke);
       g_object_unref (stroke);
 
       stroke_id = gimp_stroke_get_id (stroke);
@@ -1144,15 +1144,15 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimpvectors-import.h") ],
+        headers => [ qw("vectors/gimppath-import.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
 
   /* FIXME tree */
-  success = gimp_vectors_import_file (image, file,
-                                      merge, scale, NULL, -1,
-                                      &path_list, error);
+  success = gimp_path_import_file (image, file,
+                                   merge, scale, NULL, -1,
+                                   &path_list, error);
 
   if (success)
     {
@@ -1184,7 +1184,7 @@ sub path_import_from_string {
     $blurb = 'Import paths from an SVG string.';
 
     $help = <<'HELP';
-This procedure works like gimp_vectors_import_from_file() but takes a string
+This procedure works like gimp_path_import_from_file() but takes a string
 rather than reading the SVG from a file. This allows you to write scripts that
 generate SVG and feed it to GIMP.
 HELP
@@ -1213,15 +1213,15 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimpvectors-import.h") ],
+        headers => [ qw("vectors/gimppath-import.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
 
   /* FIXME tree */
-  success = gimp_vectors_import_buffer (image, string, length,
-                                        merge, scale, NULL, -1,
-                                        &path_list, error);
+  success = gimp_path_import_buffer (image, string, length,
+                                     merge, scale, NULL, -1,
+                                     &path_list, error);
 
   if (success)
     {
@@ -1272,7 +1272,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimpvectors-export.h") ],
+        headers => [ qw("vectors/gimppath-export.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
@@ -1280,7 +1280,7 @@ HELP
   if (path != NULL)
     path_list = g_list_prepend (path_list, path);
 
-  success = gimp_vectors_export_file (image, path_list, file, error);
+  success = gimp_path_export_file (image, path_list, file, error);
 
   g_list_free (path_list);
 }
@@ -1314,7 +1314,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("vectors/gimpvectors-export.h") ],
+        headers => [ qw("vectors/gimppath-export.h") ],
         code    => <<'CODE'
 {
   GList *path_list = NULL;
@@ -1322,7 +1322,7 @@ HELP
   if (path != NULL)
     path_list = g_list_prepend (path_list, path);
 
-  string = gimp_vectors_export_string (image, path_list);
+  string = gimp_path_export_string (image, path_list);
   g_list_free (path_list);
 
   success = (string != NULL);
@@ -1336,8 +1336,8 @@ CODE
               "core/gimplist.h"
               "core/gimpimage.h"
               "core/gimpimage-undo-push.h"
-	          "text/gimptext-vectors.h"
-	          "text/gimptextlayer.h"
+              "text/gimptext-path.h"
+              "text/gimptextlayer.h"
               "vectors/gimpanchor.h"
               "vectors/gimpstroke-new.h"
               "vectors/gimpbezierstroke.h"
@@ -1346,7 +1346,7 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(path_new
-	        path_new_from_text_layer
+            path_new_from_text_layer
             path_copy
             path_get_strokes
             path_stroke_get_length

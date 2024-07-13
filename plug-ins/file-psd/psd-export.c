@@ -2558,7 +2558,7 @@ save_dialog (GimpImage     *image,
         }
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-      combo = gimp_vectors_combo_box_new (NULL, NULL, NULL);
+      combo = gimp_path_combo_box_new (NULL, NULL, NULL);
 
       /* Alert user if they have more than 998 paths */
       if (g_list_length (paths) > 998)

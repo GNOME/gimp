@@ -22,7 +22,7 @@ libapptext_sources = [
   'gimpfontfactory.c',
   'gimptext-compat.c',
   'gimptext-parasite.c',
-  'gimptext-vectors.c',
+  'gimptext-path.c',
   'gimptext-xlfd.c',
   'gimptext.c',
   'gimptextlayer-transform.c',

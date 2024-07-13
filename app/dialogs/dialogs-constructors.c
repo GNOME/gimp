@@ -64,7 +64,7 @@
 #include "widgets/gimptoolpresetfactoryview.h"
 #include "widgets/gimptoolpreseteditor.h"
 #include "widgets/gimpundoeditor.h"
-#include "widgets/gimpvectorstreeview.h"
+#include "widgets/gimppathtreeview.h"
 
 #include "display/gimpcursorview.h"
 #include "display/gimpnavigationeditor.h"
@@ -774,7 +774,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   if (view_size < 1)
     view_size = context->gimp->config->layer_preview_size;
 
-  return gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
+  return gimp_item_tree_view_new (GIMP_TYPE_PATH_TREE_VIEW,
                                   view_size, 1, TRUE,
                                   gimp_context_get_image (context),
                                   menus_get_global_menu_factory (context->gimp),

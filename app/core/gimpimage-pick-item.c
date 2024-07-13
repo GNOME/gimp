@@ -210,7 +210,7 @@ gimp_image_pick_path (GimpImage *image,
           GimpStroke *stroke = NULL;
           GimpCoords  coords = GIMP_COORDS_DEFAULT_VALUES;
 
-          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+          while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
             {
               gdouble dist;
 

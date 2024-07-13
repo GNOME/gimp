@@ -177,11 +177,11 @@ gimp_drawable_fill_boundary (GimpDrawable       *drawable,
 }
 
 gboolean
-gimp_drawable_fill_vectors (GimpDrawable     *drawable,
-                            GimpFillOptions  *options,
-                            GimpPath         *vectors,
-                            gboolean          push_undo,
-                            GError          **error)
+gimp_drawable_fill_path (GimpDrawable     *drawable,
+                         GimpFillOptions  *options,
+                         GimpPath         *vectors,
+                         gboolean          push_undo,
+                         GError          **error)
 {
   const GimpBezierDesc *bezier;
 
@@ -195,7 +195,7 @@ gimp_drawable_fill_vectors (GimpDrawable     *drawable,
                         FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  bezier = gimp_vectors_get_bezier (vectors);
+  bezier = gimp_path_get_bezier (vectors);
 
   if (bezier && bezier->num_data > 4)
     {
