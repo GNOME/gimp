@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-04-22 10:31+0000\n"
-"PO-Revision-Date: 2024-07-13 11:59+0200\n"
+"PO-Revision-Date: 2024-07-13 14:11+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -1294,7 +1294,7 @@ msgstr "Palet"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
-msgstr "Afrundet _rektangel …"
+msgstr "Afrundet rektan_gel …"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
