@@ -33,10 +33,12 @@
 #include "libgimp-intl.h"
 
 
-struct _GimpVectorLoadProcedureDialogPrivate
+struct _GimpVectorLoadProcedureDialog
 {
-  GFile              *file;
-  GimpVectorLoadData *extracted_data;
+  GimpProcedureDialog  parent_instance;
+
+  GFile               *file;
+  GimpVectorLoadData  *extracted_data;
 };
 
 
@@ -53,7 +55,7 @@ static void gimp_vector_load_procedure_dialog_preview_allocate (GtkWidget       
                                                                 GimpVectorLoadProcedureDialog *dialog);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpVectorLoadProcedureDialog, gimp_vector_load_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
+G_DEFINE_TYPE (GimpVectorLoadProcedureDialog, gimp_vector_load_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
 
 #define parent_class gimp_vector_load_procedure_dialog_parent_class
 
@@ -69,9 +71,7 @@ gimp_vector_load_procedure_dialog_class_init (GimpVectorLoadProcedureDialogClass
 static void
 gimp_vector_load_procedure_dialog_init (GimpVectorLoadProcedureDialog *dialog)
 {
-  dialog->priv = gimp_vector_load_procedure_dialog_get_instance_private (dialog);
-
-  dialog->priv->file        = NULL;
+  dialog->file = NULL;
 }
 
 static void
@@ -108,7 +108,7 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
 
   /* Preview */
 
-  if (vector_dialog->priv->file)
+  if (vector_dialog->file)
     {
       GtkWidget *image;
 
@@ -121,43 +121,43 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
       gtk_widget_show (image);
     }
 
-  if (vector_dialog->priv->extracted_data)
+  if (vector_dialog->extracted_data)
     {
-      if (vector_dialog->priv->extracted_data->exact_width && vector_dialog->priv->extracted_data->exact_height)
+      if (vector_dialog->extracted_data->exact_width && vector_dialog->extracted_data->exact_height)
         {
           /* TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
            * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
            */
           text = g_strdup_printf (_("Source %s file size: %%.%df %s × %%.%df %s"),
                                   gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)),
-                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->width_unit),
-                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->width_unit),
-                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->height_unit),
-                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->height_unit));
-          markup = g_strdup_printf (text, vector_dialog->priv->extracted_data->width, vector_dialog->priv->extracted_data->height);
+                                  gimp_unit_get_digits (vector_dialog->extracted_data->width_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->extracted_data->width_unit),
+                                  gimp_unit_get_digits (vector_dialog->extracted_data->height_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->extracted_data->height_unit));
+          markup = g_strdup_printf (text, vector_dialog->extracted_data->width, vector_dialog->extracted_data->height);
         }
-      else if (vector_dialog->priv->extracted_data->correct_ratio)
+      else if (vector_dialog->extracted_data->correct_ratio)
         {
           gdouble ratio_width         = 0.0;
           gint    ratio_width_digits  = 0;
           gdouble ratio_height        = 0.0;
           gint    ratio_height_digits = 0;
 
-          if (vector_dialog->priv->extracted_data->width_unit == vector_dialog->priv->extracted_data->height_unit)
+          if (vector_dialog->extracted_data->width_unit == vector_dialog->extracted_data->height_unit)
             {
-              ratio_width  = vector_dialog->priv->extracted_data->width;
-              ratio_height = vector_dialog->priv->extracted_data->height;
-              if (vector_dialog->priv->extracted_data->width_unit == GIMP_UNIT_PIXEL ||
-                  vector_dialog->priv->extracted_data->width_unit == GIMP_UNIT_PERCENT)
+              ratio_width  = vector_dialog->extracted_data->width;
+              ratio_height = vector_dialog->extracted_data->height;
+              if (vector_dialog->extracted_data->width_unit == GIMP_UNIT_PIXEL ||
+                  vector_dialog->extracted_data->width_unit == GIMP_UNIT_PERCENT)
                 ratio_width_digits = ratio_height_digits = 0;
               else
-                ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (vector_dialog->priv->extracted_data->width_unit);
+                ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (vector_dialog->extracted_data->width_unit);
             }
-          else if (vector_dialog->priv->extracted_data->width_unit != GIMP_UNIT_PIXEL && vector_dialog->priv->extracted_data->height_unit != GIMP_UNIT_PIXEL &&
-                   vector_dialog->priv->extracted_data->width_unit != GIMP_UNIT_PERCENT && vector_dialog->priv->extracted_data->height_unit != GIMP_UNIT_PERCENT)
+          else if (vector_dialog->extracted_data->width_unit != GIMP_UNIT_PIXEL && vector_dialog->extracted_data->height_unit != GIMP_UNIT_PIXEL &&
+                   vector_dialog->extracted_data->width_unit != GIMP_UNIT_PERCENT && vector_dialog->extracted_data->height_unit != GIMP_UNIT_PERCENT)
             {
-              ratio_width = vector_dialog->priv->extracted_data->width / gimp_unit_get_factor (vector_dialog->priv->extracted_data->width_unit);
-              ratio_height = vector_dialog->priv->extracted_data->height / gimp_unit_get_factor (vector_dialog->priv->extracted_data->height_unit);
+              ratio_width = vector_dialog->extracted_data->width / gimp_unit_get_factor (vector_dialog->extracted_data->width_unit);
+              ratio_height = vector_dialog->extracted_data->height / gimp_unit_get_factor (vector_dialog->extracted_data->height_unit);
 
               ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (GIMP_UNIT_INCH);
             }
@@ -171,15 +171,15 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
               markup = g_strdup_printf (text, ratio_width, ratio_height);
             }
         }
-      else if (vector_dialog->priv->extracted_data->width != 0.0 && vector_dialog->priv->extracted_data->height != 0.0)
+      else if (vector_dialog->extracted_data->width != 0.0 && vector_dialog->extracted_data->height != 0.0)
         {
           text = g_strdup_printf (_("Approximated source %s file size: %%.%df %s × %%.%df %s"),
                                   gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)),
-                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->width_unit),
-                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->width_unit),
-                                  gimp_unit_get_digits (vector_dialog->priv->extracted_data->height_unit),
-                                  gimp_unit_get_abbreviation (vector_dialog->priv->extracted_data->height_unit));
-          markup = g_strdup_printf (text, vector_dialog->priv->extracted_data->width, vector_dialog->priv->extracted_data->height);
+                                  gimp_unit_get_digits (vector_dialog->extracted_data->width_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->extracted_data->width_unit),
+                                  gimp_unit_get_digits (vector_dialog->extracted_data->height_unit),
+                                  gimp_unit_get_abbreviation (vector_dialog->extracted_data->height_unit));
+          markup = g_strdup_printf (text, vector_dialog->extracted_data->width, vector_dialog->extracted_data->height);
         }
     }
 
@@ -237,7 +237,7 @@ gimp_vector_load_procedure_dialog_preview_allocate (GtkWidget                   
                                                     GtkAllocation                 *allocation,
                                                     GimpVectorLoadProcedureDialog *dialog)
 {
-  if (dialog->priv->file)
+  if (dialog->file)
     {
       GimpProcedure     *procedure = NULL;
       GimpValueArray    *retval;
@@ -246,9 +246,9 @@ gimp_vector_load_procedure_dialog_preview_allocate (GtkWidget                   
       g_object_get (dialog, "procedure", &procedure, NULL);
 
       retval = gimp_procedure_run (procedure,
-                                   "file",   dialog->priv->file,
-                                   "width",  allocation->height,
-                                   "height", allocation->height,
+                                   "file",       dialog->file,
+                                   "width",      allocation->height,
+                                   "height",     allocation->height,
                                    "keep-ratio", TRUE,
                                    NULL);
 
@@ -343,8 +343,8 @@ gimp_vector_load_procedure_dialog_new (GimpVectorLoadProcedure *procedure,
                          "help-id",        help_id,
                          "use-header-bar", use_header_bar,
                          NULL);
-  GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog)->priv->file = file;
-  GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog)->priv->extracted_data = extracted_data;
+  GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog)->file           = file;
+  GIMP_VECTOR_LOAD_PROCEDURE_DIALOG (dialog)->extracted_data = extracted_data;
   g_free (title);
 
   return dialog;

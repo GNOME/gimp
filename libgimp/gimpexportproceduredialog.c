@@ -31,13 +31,15 @@
 #include "libgimp-intl.h"
 
 
-struct _GimpExportProcedureDialogPrivate
+struct _GimpExportProcedureDialog
 {
-  GList     *additional_metadata;
-  GimpImage *image;
+  GimpProcedureDialog  parent_instance;
 
-  GThread   *metadata_thread;
-  GMutex     metadata_thread_mutex;
+  GList               *additional_metadata;
+  GimpImage           *image;
+
+  GThread             *metadata_thread;
+  GMutex               metadata_thread_mutex;
 };
 
 
@@ -56,7 +58,7 @@ static gboolean gimp_export_procedure_dialog_activate_edit_metadata (GtkLinkButt
                                                                      GimpExportProcedureDialog *dialog);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpExportProcedureDialog, gimp_export_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
+G_DEFINE_TYPE (GimpExportProcedureDialog, gimp_export_procedure_dialog, GIMP_TYPE_PROCEDURE_DIALOG)
 
 #define parent_class gimp_export_procedure_dialog_parent_class
 
@@ -77,12 +79,10 @@ gimp_export_procedure_dialog_class_init (GimpExportProcedureDialogClass *klass)
 static void
 gimp_export_procedure_dialog_init (GimpExportProcedureDialog *dialog)
 {
-  dialog->priv = gimp_export_procedure_dialog_get_instance_private (dialog);
-
-  dialog->priv->additional_metadata = NULL;
-  dialog->priv->image               = NULL;
-  dialog->priv->metadata_thread     = NULL;
-  g_mutex_init (&dialog->priv->metadata_thread_mutex);
+  dialog->additional_metadata = NULL;
+  dialog->image               = NULL;
+  dialog->metadata_thread     = NULL;
+  g_mutex_init (&dialog->metadata_thread_mutex);
 }
 
 static void
@@ -90,9 +90,9 @@ gimp_export_procedure_dialog_finalize (GObject *object)
 {
   GimpExportProcedureDialog *dialog = GIMP_EXPORT_PROCEDURE_DIALOG (object);
 
-  g_list_free_full (dialog->priv->additional_metadata, g_free);
-  g_clear_pointer (&dialog->priv->metadata_thread, g_thread_unref);
-  g_mutex_clear (&dialog->priv->metadata_thread_mutex);
+  g_list_free_full (dialog->additional_metadata, g_free);
+  g_clear_pointer (&dialog->metadata_thread, g_thread_unref);
+  g_mutex_clear (&dialog->metadata_thread_mutex);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -117,7 +117,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       gimp_export_procedure_get_support_xmp       (export_procedure) ||
       gimp_export_procedure_get_support_profile   (export_procedure) ||
       gimp_export_procedure_get_support_thumbnail (export_procedure) ||
-      g_list_length (export_dialog->priv->additional_metadata) > 0   ||
+      g_list_length (export_dialog->additional_metadata) > 0         ||
       gimp_export_procedure_get_support_comment   (export_procedure))
     {
       GtkWidget      *frame;
@@ -230,7 +230,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
 
       /* Custom metadata: n_metadata items per line. */
       left = 0;
-      for (GList *iter = export_dialog->priv->additional_metadata; iter; iter = iter->next)
+      for (GList *iter = export_dialog->additional_metadata; iter; iter = iter->next)
         {
           widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
           gtk_grid_attach (GTK_GRID (grid), widget, left, top, 6 / n_metadata, 1);
@@ -331,7 +331,7 @@ gimp_export_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           (gimp_export_procedure_get_support_comment (export_procedure) &&
            (g_strcmp0 (propname, "save-comment") == 0 ||
             g_strcmp0 (propname, "gimp-comment") == 0))            ||
-          g_list_find (export_dialog->priv->additional_metadata, propname))
+          g_list_find (export_dialog->additional_metadata, propname))
         /* Ignoring the standards and custom metadata. */
         continue;
 
@@ -351,13 +351,13 @@ gimp_export_procedure_dialog_edit_metadata_thread (gpointer data)
   procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), "plug-in-metadata-editor");
   gimp_procedure_run (procedure,
                       "run-mode", GIMP_RUN_INTERACTIVE,
-                      "image",    dialog->priv->image,
+                      "image",    dialog->image,
                       NULL);
 
-  g_mutex_lock (&dialog->priv->metadata_thread_mutex);
-  g_thread_unref (dialog->priv->metadata_thread);
-  dialog->priv->metadata_thread = NULL;
-  g_mutex_unlock (&dialog->priv->metadata_thread_mutex);
+  g_mutex_lock (&dialog->metadata_thread_mutex);
+  g_thread_unref (dialog->metadata_thread);
+  dialog->metadata_thread = NULL;
+  g_mutex_unlock (&dialog->metadata_thread_mutex);
 
   return NULL;
 }
@@ -368,15 +368,15 @@ gimp_export_procedure_dialog_activate_edit_metadata (GtkLinkButton             *
 {
   gtk_link_button_set_visited (link, TRUE);
 
-  g_mutex_lock (&dialog->priv->metadata_thread_mutex);
+  g_mutex_lock (&dialog->metadata_thread_mutex);
 
-  if (! dialog->priv->metadata_thread)
+  if (! dialog->metadata_thread)
     /* Only run if not already running. */
-    dialog->priv->metadata_thread = g_thread_try_new ("Edit Metadata",
+    dialog->metadata_thread = g_thread_try_new ("Edit Metadata",
                                                       gimp_export_procedure_dialog_edit_metadata_thread,
                                                       dialog, NULL);
 
-  g_mutex_unlock (&dialog->priv->metadata_thread_mutex);
+  g_mutex_unlock (&dialog->metadata_thread_mutex);
 
   /* Stop propagation as the URI is bogus. */
   return TRUE;
@@ -429,7 +429,7 @@ gimp_export_procedure_dialog_new (GimpExportProcedure *procedure,
                          "help-id",        help_id,
                          "use-header-bar", use_header_bar,
                          NULL);
-  GIMP_EXPORT_PROCEDURE_DIALOG (dialog)->priv->image = image;
+  GIMP_EXPORT_PROCEDURE_DIALOG (dialog)->image = image;
   g_free (title);
 
   return dialog;
@@ -439,7 +439,6 @@ void
 gimp_export_procedure_dialog_add_metadata (GimpExportProcedureDialog *dialog,
                                            const gchar               *property)
 {
-  if (! g_list_find (dialog->priv->additional_metadata, property))
-    dialog->priv->additional_metadata = g_list_append (dialog->priv->additional_metadata,
-                                                       g_strdup (property));
+  if (! g_list_find (dialog->additional_metadata, property))
+    dialog->additional_metadata = g_list_append (dialog->additional_metadata, g_strdup (property));
 }

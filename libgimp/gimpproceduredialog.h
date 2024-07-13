@@ -30,23 +30,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PROCEDURE_DIALOG            (gimp_procedure_dialog_get_type ())
-#define GIMP_PROCEDURE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROCEDURE_DIALOG, GimpProcedureDialog))
-#define GIMP_PROCEDURE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROCEDURE_DIALOG, GimpProcedureDialogClass))
-#define GIMP_IS_PROCEDURE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROCEDURE_DIALOG))
-#define GIMP_IS_PROCEDURE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROCEDURE_DIALOG))
-#define GIMP_PROCEDURE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROCEDURE_DIALOG, GimpProcedureDialogClass))
-
-
-typedef struct _GimpProcedureDialogClass   GimpProcedureDialogClass;
-typedef struct _GimpProcedureDialogPrivate GimpProcedureDialogPrivate;
-
-struct _GimpProcedureDialog
-{
-  GimpDialog                  parent_instance;
-
-  GimpProcedureDialogPrivate *priv;
-};
+#define GIMP_TYPE_PROCEDURE_DIALOG (gimp_procedure_dialog_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpProcedureDialog, gimp_procedure_dialog, GIMP, PROCEDURE_DIALOG, GimpDialog)
 
 struct _GimpProcedureDialogClass
 {
@@ -74,8 +59,6 @@ struct _GimpProcedureDialogClass
   void (*_gimp_reserved8) (void);
 };
 
-
-GType       gimp_procedure_dialog_get_type          (void) G_GNUC_CONST;
 
 GtkWidget * gimp_procedure_dialog_new               (GimpProcedure       *procedure,
                                                      GimpProcedureConfig *config,

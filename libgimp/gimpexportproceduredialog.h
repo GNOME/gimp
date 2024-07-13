@@ -30,48 +30,16 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_EXPORT_PROCEDURE_DIALOG            (gimp_export_procedure_dialog_get_type ())
-#define GIMP_EXPORT_PROCEDURE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EXPORT_PROCEDURE_DIALOG, GimpExportProcedureDialog))
-#define GIMP_EXPORT_PROCEDURE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EXPORT_PROCEDURE_DIALOG, GimpExportProcedureDialogClass))
-#define GIMP_IS_EXPORT_PROCEDURE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EXPORT_PROCEDURE_DIALOG))
-#define GIMP_IS_EXPORT_PROCEDURE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EXPORT_PROCEDURE_DIALOG))
-#define GIMP_EXPORT_PROCEDURE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EXPORT_PROCEDURE_DIALOG, GimpExportProcedureDialogClass))
+#define GIMP_TYPE_EXPORT_PROCEDURE_DIALOG (gimp_export_procedure_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GimpExportProcedureDialog, gimp_export_procedure_dialog, GIMP, EXPORT_PROCEDURE_DIALOG, GimpProcedureDialog)
 
 
-typedef struct _GimpExportProcedureDialogClass   GimpExportProcedureDialogClass;
-typedef struct _GimpExportProcedureDialogPrivate GimpExportProcedureDialogPrivate;
+GtkWidget * gimp_export_procedure_dialog_new          (GimpExportProcedure       *procedure,
+                                                       GimpProcedureConfig       *config,
+                                                       GimpImage                 *image);
 
-struct _GimpExportProcedureDialog
-{
-  GimpProcedureDialog               parent_instance;
-
-  GimpExportProcedureDialogPrivate *priv;
-};
-
-struct _GimpExportProcedureDialogClass
-{
-  GimpProcedureDialogClass  parent_class;
-
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-};
-
-
-GType       gimp_export_procedure_dialog_get_type          (void) G_GNUC_CONST;
-
-GtkWidget * gimp_export_procedure_dialog_new               (GimpExportProcedure       *procedure,
-                                                            GimpProcedureConfig       *config,
-                                                            GimpImage                 *image);
-
-void        gimp_export_procedure_dialog_add_metadata      (GimpExportProcedureDialog *dialog,
-                                                            const gchar               *property);
+void        gimp_export_procedure_dialog_add_metadata (GimpExportProcedureDialog *dialog,
+                                                       const gchar               *property);
 
 
 G_END_DECLS
