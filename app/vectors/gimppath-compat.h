@@ -34,7 +34,7 @@ struct _GimpPathCompatPoint
 
 GimpPath *    gimp_path_compat_new (GimpImage              *image,
                                     const gchar            *name,
-                                    GimpPathCompatPoint *points,
+                                    GimpPathCompatPoint    *points,
                                     gint                    n_points,
                                     gboolean                closed);
 

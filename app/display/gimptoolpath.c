@@ -107,7 +107,7 @@ struct _GimpToolPathPrivate
   GimpVectorMode        edit_mode;
   gboolean              polygonal;
 
-  GimpPathFunction    function;       /* function we're performing         */
+  GimpPathFunction      function;       /* function we're performing         */
   GimpAnchorFeatureType restriction;    /* movement restriction              */
   gboolean              modifier_lock;  /* can we toggle the Shift key?      */
   GdkModifierType       saved_state;    /* modifier state at button_press    */

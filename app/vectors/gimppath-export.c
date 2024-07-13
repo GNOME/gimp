@@ -171,7 +171,7 @@ gimp_path_export (GimpImage *image,
 
 static void
 gimp_path_export_image_size (GimpImage *image,
-                                GString   *str)
+                             GString   *str)
 {
   GimpUnit     unit;
   const gchar *abbrev;

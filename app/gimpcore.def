@@ -486,7 +486,7 @@ EXPORTS
 	gimp_parameters_append
 	gimp_parameters_append_valist
 	gimp_parameters_free
-    gimp_path_get_type
+	gimp_path_get_type
 	gimp_path_anchor_select
 	gimp_path_bounds
 	gimp_path_export_file

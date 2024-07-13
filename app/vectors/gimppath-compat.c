@@ -135,9 +135,9 @@ gimp_path_compat_is_compatible (GimpImage *image)
        list;
        list = g_list_next (list))
     {
-      GimpPath    *path       = GIMP_PATH (list->data);
-      GList       *strokes;
-      gint         open_count = 0;
+      GimpPath *path       = GIMP_PATH (list->data);
+      GList    *strokes;
+      gint      open_count = 0;
 
       if (gimp_item_get_visible (GIMP_ITEM (path)))
         return FALSE;

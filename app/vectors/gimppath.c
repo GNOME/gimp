@@ -703,7 +703,7 @@ gimp_path_stroke (GimpItem           *item,
     {
     case GIMP_STROKE_LINE:
       retval = gimp_drawable_stroke_path (drawable, stroke_options,
-                                             path, push_undo, error);
+                                          path, push_undo, error);
       break;
 
     case GIMP_STROKE_PAINT_METHOD:
@@ -1046,7 +1046,7 @@ gimp_path_stroke_get_length (GimpPath    *path,
 
 static gdouble
 gimp_path_real_stroke_get_length (GimpPath    *path,
-                                     GimpStroke  *stroke)
+                                  GimpStroke  *stroke)
 {
   g_return_val_if_fail (GIMP_IS_PATH (path), 0.0);
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);

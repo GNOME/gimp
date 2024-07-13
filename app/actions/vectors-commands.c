@@ -1020,7 +1020,7 @@ vectors_select_cmd_callback (GimpAction *action,
         }
       new_vec = (GimpPath *) action_select_object (select_type,
                                                    container,
-                                                  iter ? iter->data : NULL);
+                                                   iter ? iter->data : NULL);
       if (new_vec)
         new_vectors = g_list_prepend (new_vectors, new_vec);
     }

@@ -1867,8 +1867,8 @@ gimp_image_selected_channels_notify (GimpItemTree     *tree,
 
 static void
 gimp_image_selected_paths_notify (GimpItemTree     *tree,
-                                    const GParamSpec *pspec,
-                                    GimpImage        *image)
+                                  const GParamSpec *pspec,
+                                  GimpImage        *image)
 {
   g_signal_emit (image, gimp_image_signals[SELECTED_PATHS_CHANGED], 0);
 }

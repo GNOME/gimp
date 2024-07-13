@@ -577,7 +577,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_PAINT,                 /*< desc="Paint"                          >*/
   GIMP_UNDO_GROUP_PARASITE_ATTACH,       /*< desc="Attach parasite"                >*/
   GIMP_UNDO_GROUP_PARASITE_REMOVE,       /*< desc="Remove parasite"                >*/
-  GIMP_UNDO_GROUP_PATHS_IMPORT,           /*< desc="Import paths"                   >*/
+  GIMP_UNDO_GROUP_PATHS_IMPORT,          /*< desc="Import paths"                   >*/
   GIMP_UNDO_GROUP_MISC,                  /*< desc="Plug-In"                        >*/
 
   GIMP_UNDO_GROUP_LAST = GIMP_UNDO_GROUP_MISC, /*< skip >*/
