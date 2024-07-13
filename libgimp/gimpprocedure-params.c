@@ -2197,7 +2197,7 @@ gimp_procedure_add_selection_return_value (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_vectors_argument:
+ * gimp_procedure_add_path_argument:
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
@@ -2205,17 +2205,17 @@ gimp_procedure_add_selection_return_value (GimpProcedure *procedure,
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
- * Add a new #GimpVectors argument to @procedure.
+ * Add a new #GimpPath argument to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_vectors_argument (GimpProcedure *procedure,
-                                     const gchar   *name,
-                                     const gchar   *nick,
-                                     const gchar   *blurb,
-                                     gboolean       none_ok,
-                                     GParamFlags    flags)
+gimp_procedure_add_path_argument (GimpProcedure *procedure,
+                                  const gchar   *name,
+                                  const gchar   *nick,
+                                  const gchar   *blurb,
+                                  gboolean       none_ok,
+                                  GParamFlags    flags)
 {
   _gimp_procedure_add_argument (procedure,
                                 gimp_param_spec_path (name, nick, blurb,
@@ -2223,7 +2223,7 @@ gimp_procedure_add_vectors_argument (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_vectors_aux_argument:
+ * gimp_procedure_add_path_aux_argument:
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
@@ -2231,17 +2231,17 @@ gimp_procedure_add_vectors_argument (GimpProcedure *procedure,
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
- * Add a new #GimpVectors auxiliary argument to @procedure.
+ * Add a new #GimpPath auxiliary argument to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_vectors_aux_argument (GimpProcedure *procedure,
-                                         const gchar   *name,
-                                         const gchar   *nick,
-                                         const gchar   *blurb,
-                                         gboolean       none_ok,
-                                         GParamFlags    flags)
+gimp_procedure_add_path_aux_argument (GimpProcedure *procedure,
+                                      const gchar   *name,
+                                      const gchar   *nick,
+                                      const gchar   *blurb,
+                                      gboolean       none_ok,
+                                      GParamFlags    flags)
 {
   _gimp_procedure_add_aux_argument (procedure,
                                     gimp_param_spec_path (name, nick, blurb,
@@ -2249,7 +2249,7 @@ gimp_procedure_add_vectors_aux_argument (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_vectors_return_value:
+ * gimp_procedure_add_path_return_value:
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
@@ -2257,17 +2257,17 @@ gimp_procedure_add_vectors_aux_argument (GimpProcedure *procedure,
  * @none_ok:     Whether no is a valid value.
  * @flags:       argument flags.
  *
- * Add a new #GimpVectors return value to @procedure.
+ * Add a new #GimpPath return value to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_vectors_return_value (GimpProcedure *procedure,
-                                         const gchar   *name,
-                                         const gchar   *nick,
-                                         const gchar   *blurb,
-                                         gboolean       none_ok,
-                                         GParamFlags    flags)
+gimp_procedure_add_path_return_value (GimpProcedure *procedure,
+                                      const gchar   *name,
+                                      const gchar   *nick,
+                                      const gchar   *blurb,
+                                      gboolean       none_ok,
+                                      GParamFlags    flags)
 {
   _gimp_procedure_add_return_value (procedure,
                                     gimp_param_spec_path (name, nick, blurb,

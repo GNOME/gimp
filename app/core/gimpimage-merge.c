@@ -499,7 +499,7 @@ gimp_image_merge_visible_paths (GimpImage  *image,
 
       gimp_set_busy (image->gimp);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_PATHS_MERGE,
                                    C_("undo-type", "Merge Visible Paths"));
 
       path = GIMP_PATH (merge_list->data);
@@ -517,7 +517,7 @@ gimp_image_merge_visible_paths (GimpImage  *image,
         {
           path = list->data;
 
-          gimp_vectors_add_strokes (path, target_path);
+          gimp_path_add_strokes (path, target_path);
           gimp_image_remove_path (image, path, TRUE, NULL);
         }
 

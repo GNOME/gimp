@@ -58,12 +58,12 @@
 #include "core/gimpprogress.h"
 
 #include "text/gimptext.h"
-#include "text/gimptext-vectors.h"
+#include "text/gimptext-path.h"
 #include "text/gimptextlayer.h"
 
 #include "vectors/gimppath.h"
+#include "vectors/gimppath-warp.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"
@@ -1044,7 +1044,7 @@ layers_text_to_vectors_cmd_callback (GimpAction *action,
   return_if_no_layers (image, layers, data);
 
   /* TODO: have the proper undo group. */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PATHS_IMPORT,
                                _("Add Paths"));
   for (iter = layers; iter; iter = iter->next)
     {
@@ -1055,7 +1055,7 @@ layers_text_to_vectors_cmd_callback (GimpAction *action,
           GimpPath *path;
           gint      x, y;
 
-          path = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
+          path = gimp_text_path_new (image, GIMP_TEXT_LAYER (layer)->text);
 
           gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
           gimp_item_translate (GIMP_ITEM (path), x, y, FALSE);
@@ -1077,26 +1077,26 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
   GList       *layers;
   GList       *paths;
   GimpLayer   *layer;
-  GimpPath    *vectors;
+  GimpPath    *path;
   return_if_no_layers (image, layers, data);
   return_if_no_vectors_list (image, paths, data);
 
   if (g_list_length (layers) != 1 || g_list_length (paths) != 1)
     return;
 
-  layer   = layers->data;
-  vectors = paths->data;
+  layer = layers->data;
+  path  = paths->data;
   if (GIMP_IS_TEXT_LAYER (layer))
     {
       gdouble   box_width;
       gdouble   box_height;
-      GimpPath *new_vectors;
+      GimpPath *new_path;
       gdouble   offset;
 
       box_width  = gimp_item_get_width  (GIMP_ITEM (layer));
       box_height = gimp_item_get_height (GIMP_ITEM (layer));
 
-      new_vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
+      new_path = gimp_text_path_new (image, GIMP_TEXT_LAYER (layer)->text);
 
       offset = 0;
       switch (GIMP_TEXT_LAYER (layer)->text->base_dir)
@@ -1112,7 +1112,7 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
           {
             GimpStroke *stroke = NULL;
 
-            while ((stroke = gimp_vectors_stroke_get_next (new_vectors, stroke)))
+            while ((stroke = gimp_path_stroke_get_next (new_path, stroke)))
               {
                 gimp_stroke_rotate (stroke, 0, 0, 270);
                 gimp_stroke_translate (stroke, 0, box_width);
@@ -1122,12 +1122,11 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
           break;
         }
 
+      gimp_path_warp_path (path, new_path, offset);
 
-      gimp_vectors_warp_vectors (vectors, new_vectors, offset);
+      gimp_item_set_visible (GIMP_ITEM (new_path), TRUE, FALSE);
 
-      gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
-
-      gimp_image_add_path (image, new_vectors,
+      gimp_image_add_path (image, new_path,
                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
       gimp_image_flush (image);
     }

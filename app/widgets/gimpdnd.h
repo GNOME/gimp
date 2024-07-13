@@ -62,7 +62,7 @@
         { "application/x-gimp-layer-mask-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER_MASK }
 
 #define GIMP_TARGET_PATH \
-        { "application/x-gimp-vectors-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS }
+        { "application/x-gimp-path-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS }
 
 #define GIMP_TARGET_BRUSH \
         { "application/x-gimp-brush-name", 0, GIMP_DND_TYPE_BRUSH }

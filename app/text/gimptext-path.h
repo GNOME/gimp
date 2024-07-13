@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpText-path
+ * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,16 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_EXPORT_H__
-#define __GIMP_VECTORS_EXPORT_H__
+#ifndef __GIMP_TEXT_PATH_H__
+#define __GIMP_TEXT_PATH_H__
 
 
-gboolean   gimp_vectors_export_file   (GimpImage    *image,
-                                       GList        *vectors,
-                                       GFile        *file,
-                                       GError      **error);
-gchar    * gimp_vectors_export_string (GimpImage    *image,
-                                       GList        *vectors);
+GimpPath * gimp_text_path_new    (GimpImage *image,
+                                  GimpText  *text);
 
 
-#endif /* __GIMP_VECTORS_IMPORT_H__ */
+#endif /* __GIMP_TEXT_PATH_H__ */

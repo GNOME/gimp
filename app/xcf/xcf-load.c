@@ -73,7 +73,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimppath.h"
-#include "vectors/gimpvectors-compat.h"
+#include "vectors/gimppath-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-load.h"
@@ -3428,7 +3428,7 @@ xcf_load_path (XcfInfo   *info,
   GIMP_LOG (XCF, "Path name='%s'", name);
 
   /* create a new path */
-  vectors = gimp_vectors_new (image, name);
+  vectors = gimp_path_new (image, name);
   g_free (name);
   if (! vectors)
     return NULL;
@@ -3540,7 +3540,7 @@ xcf_load_path (XcfInfo   *info,
                              "control-points", control_points,
                              NULL);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      gimp_path_stroke_add (vectors, stroke);
 
       g_object_unref (stroke);
       gimp_value_array_unref (control_points);
@@ -4232,7 +4232,7 @@ xcf_load_old_path (XcfInfo   *info,
   guint32                 version; /* changed from num_paths */
   GimpTattoo              tattoo = 0;
   GimpPath               *vectors;
-  GimpVectorsCompatPoint *points;
+  GimpPathCompatPoint    *points;
   gint                    i;
 
   xcf_read_string (info, &name,       1);
@@ -4272,7 +4272,7 @@ xcf_load_old_path (XcfInfo   *info,
       return FALSE;
     }
 
-  points = g_new0 (GimpVectorsCompatPoint, num_points);
+  points = g_new0 (GimpPathCompatPoint, num_points);
 
   for (i = 0; i < num_points; i++)
     {
@@ -4302,7 +4302,7 @@ xcf_load_old_path (XcfInfo   *info,
         }
     }
 
-  vectors = gimp_vectors_compat_new (image, name, points, num_points, closed);
+  vectors = gimp_path_compat_new (image, name, points, num_points, closed);
 
   g_free (name);
   g_free (points);
@@ -4404,7 +4404,7 @@ xcf_load_old_vector (XcfInfo   *info,
               name, tattoo, visible, linked, num_parasites, num_strokes);
 #endif
 
-  vectors = gimp_vectors_new (image, name);
+  vectors = gimp_path_new (image, name);
   g_free (name);
 
   gimp_item_set_visible (GIMP_ITEM (vectors), visible, FALSE);
@@ -4520,7 +4520,7 @@ xcf_load_old_vector (XcfInfo   *info,
                              "control-points", control_points,
                              NULL);
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      gimp_path_stroke_add (vectors, stroke);
 
       g_object_unref (stroke);
       gimp_value_array_unref (control_points);

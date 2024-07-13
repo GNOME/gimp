@@ -15,18 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_PREVIEW_H__
-#define __GIMP_VECTORS_PREVIEW_H__
+#ifndef __GIMP_PATH_EXPORT_H__
+#define __GIMP_PATH_EXPORT_H__
 
 
-/*
- *  virtual function of GimpVectors -- don't call directly
- */
-
-GimpTempBuf * gimp_vectors_get_new_preview (GimpViewable *viewable,
-                                            GimpContext  *context,
-                                            gint          width,
-                                            gint          height);
+gboolean   gimp_path_export_file   (GimpImage    *image,
+                                    GList        *path_list,
+                                    GFile        *file,
+                                    GError      **error);
+gchar    * gimp_path_export_string (GimpImage    *image,
+                                    GList        *path_list);
 
 
-#endif /* __GIMP_VECTORS_PREVIEW_H__ */
+#endif /* __GIMP_PATH_IMPORT_H__ */

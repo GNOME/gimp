@@ -29,28 +29,28 @@
 #include "core/gimpimage.h"
 #include "core/gimptempbuf.h"
 
-#include "gimppath.h"
 #include "gimpstroke.h"
-#include "gimpvectors-preview.h"
+#include "gimppath.h"
+#include "gimppath-preview.h"
 
 
 /*  public functions  */
 
 GimpTempBuf *
-gimp_vectors_get_new_preview (GimpViewable *viewable,
-                              GimpContext  *context,
-                              gint          width,
-                              gint          height)
+gimp_path_get_new_preview (GimpViewable *viewable,
+                           GimpContext  *context,
+                           gint          width,
+                           gint          height)
 {
-  GimpPath    *vectors;
+  GimpPath    *path;
   GimpItem    *item;
   GimpStroke  *cur_stroke;
   gdouble      xscale, yscale;
   guchar      *data;
   GimpTempBuf *temp_buf;
 
-  vectors = GIMP_PATH (viewable);
-  item    = GIMP_ITEM (viewable);
+  path = GIMP_PATH (viewable);
+  item = GIMP_ITEM (viewable);
 
   xscale = ((gdouble) width)  / gimp_image_get_width  (gimp_item_get_image (item));
   yscale = ((gdouble) height) / gimp_image_get_height (gimp_item_get_image (item));
@@ -59,9 +59,9 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
   data = gimp_temp_buf_get_data (temp_buf);
   memset (data, 255, width * height);
 
-  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+  for (cur_stroke = gimp_path_stroke_get_next (path, NULL);
        cur_stroke;
-       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+       cur_stroke = gimp_path_stroke_get_next (path, cur_stroke))
     {
       GArray   *coords;
       gboolean  closed;

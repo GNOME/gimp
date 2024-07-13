@@ -57,9 +57,9 @@
 #include "text/gimptextundo.h"
 
 #include "vectors/gimppath.h"
-#include "vectors/gimpvectorsmodundo.h"
-#include "vectors/gimpvectorspropundo.h"
-#include "vectors/gimpvectorsundo.h"
+#include "vectors/gimppathmodundo.h"
+#include "vectors/gimppathpropundo.h"
+#include "vectors/gimppathundo.h"
 
 #include "gimp-intl.h"
 
@@ -451,7 +451,7 @@ gimp_image_undo_push_item_displace (GimpImage   *image,
                                GIMP_UNDO_ITEM_DISPLACE, undo_desc,
                                GIMP_IS_DRAWABLE (item) ?
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE :
-                               GIMP_DIRTY_ITEM | GIMP_DIRTY_VECTORS,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_PATH,
                                "item", item,
                                NULL);
 }
@@ -1023,11 +1023,11 @@ gimp_image_undo_push_path_add (GimpImage   *image,
   for (iter = prev_paths; iter; iter = iter->next)
     g_return_val_if_fail (GIMP_IS_PATH (iter->data), NULL);
 
-  return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_UNDO,
-                               GIMP_UNDO_VECTORS_ADD, undo_desc,
+  return gimp_image_undo_push (image, GIMP_TYPE_PATH_UNDO,
+                               GIMP_UNDO_PATH_ADD, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",         path,
-                               "prev-vectors", prev_paths,
+                               "prev-paths", prev_paths,
                                NULL);
 }
 
@@ -1050,13 +1050,13 @@ gimp_image_undo_push_path_remove (GimpImage   *image,
   for (iter = prev_paths; iter; iter = iter->next)
     g_return_val_if_fail (GIMP_IS_PATH (iter->data), NULL);
 
-  return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_UNDO,
-                               GIMP_UNDO_VECTORS_REMOVE, undo_desc,
+  return gimp_image_undo_push (image, GIMP_TYPE_PATH_UNDO,
+                               GIMP_UNDO_PATH_REMOVE, undo_desc,
                                GIMP_DIRTY_IMAGE_STRUCTURE,
                                "item",          path,
                                "prev-parent",   prev_parent,
                                "prev-position", prev_position,
-                               "prev-vectors",  prev_paths,
+                               "prev-paths",    prev_paths,
                                NULL);
 }
 
@@ -1069,9 +1069,9 @@ gimp_image_undo_push_path_mod (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_PATH (path), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (path)), NULL);
 
-  return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_MOD_UNDO,
-                               GIMP_UNDO_VECTORS_MOD, undo_desc,
-                               GIMP_DIRTY_ITEM | GIMP_DIRTY_VECTORS,
+  return gimp_image_undo_push (image, GIMP_TYPE_PATH_MOD_UNDO,
+                               GIMP_UNDO_PATH_MOD, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_PATH,
                                "item", path,
                                NULL);
 }

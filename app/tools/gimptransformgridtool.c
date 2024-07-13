@@ -50,8 +50,8 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpviewable.h"
 
-#include "vectors/gimpstroke.h"
 #include "vectors/gimppath.h"
+#include "vectors/gimpstroke.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -835,7 +835,7 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
           GimpPath   *path   = iter->data;
           GimpStroke *stroke = NULL;
 
-          while ((stroke = gimp_vectors_stroke_get_next (path, stroke)))
+          while ((stroke = gimp_path_stroke_get_next (path, stroke)))
             {
               GArray   *coords;
               gboolean  closed;

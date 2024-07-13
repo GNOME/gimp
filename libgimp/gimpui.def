@@ -31,6 +31,8 @@ EXPORTS
 	gimp_layer_combo_box_new
 	gimp_palette_chooser_get_type
 	gimp_palette_chooser_new
+	gimp_path_combo_box_get_type
+	gimp_path_combo_box_new
 	gimp_pattern_chooser_get_type
 	gimp_pattern_chooser_new
 	gimp_proc_browser_dialog_get_selected
@@ -95,8 +97,6 @@ EXPORTS
 	gimp_ui_init
 	gimp_vector_load_procedure_dialog_get_type
 	gimp_vector_load_procedure_dialog_new
-	gimp_vectors_combo_box_get_type
-	gimp_vectors_combo_box_new
 	gimp_window_set_transient
 	gimp_window_set_transient_for_display
 	gimp_zoom_preview_get_drawable

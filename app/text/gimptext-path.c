@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText-vectors
+ * GimpText-path
  * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,34 +34,34 @@
 #include "vectors/gimppath.h"
 
 #include "gimptext.h"
-#include "gimptext-vectors.h"
+#include "gimptext-path.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
 
 typedef struct
 {
-  GimpPath    *vectors;
+  GimpPath    *path;
   GimpStroke  *stroke;
   GimpAnchor  *anchor;
 } RenderContext;
 
 
-static void  gimp_text_render_vectors (cairo_t       *cr,
-                                       RenderContext *context);
+static void  gimp_text_render_path (cairo_t       *cr,
+                                    RenderContext *context);
 
 
 GimpPath *
-gimp_text_vectors_new (GimpImage *image,
-                       GimpText  *text)
+gimp_text_path_new (GimpImage *image,
+                    GimpText  *text)
 {
-  GimpPath      *vectors;
+  GimpPath      *path;
   RenderContext  context = { NULL, };
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
-  vectors = gimp_vectors_new (image, NULL);
+  path = gimp_path_new (image, NULL);
 
   if (text->text || text->markup)
     {
@@ -73,9 +73,9 @@ gimp_text_vectors_new (GimpImage *image,
       GError          *error = NULL;
 
       if (text->text)
-        gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
+        gimp_object_set_name_safe (GIMP_OBJECT (path), text->text);
 
-      context.vectors = vectors;
+      context.path = path;
 
       surface = cairo_recording_surface_create (CAIRO_CONTENT_ALPHA, NULL);
       cr = cairo_create (surface);
@@ -91,7 +91,7 @@ gimp_text_vectors_new (GimpImage *image,
       gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
       g_object_unref (layout);
 
-      gimp_text_render_vectors (cr, &context);
+      gimp_text_render_path (cr, &context);
 
       cairo_destroy (cr);
       cairo_surface_destroy (surface);
@@ -100,7 +100,7 @@ gimp_text_vectors_new (GimpImage *image,
         gimp_stroke_close (context.stroke);
     }
 
-  return vectors;
+  return path;
 }
 
 
@@ -135,7 +135,7 @@ moveto (RenderContext *context,
 
   context->stroke = gimp_bezier_stroke_new_moveto (&start);
 
-  gimp_vectors_stroke_add (context->vectors, context->stroke);
+  gimp_path_stroke_add (context->path, context->stroke);
   g_object_unref (context->stroke);
 
   return 0;
@@ -209,8 +209,8 @@ closepath (RenderContext *context)
 }
 
 static void
-gimp_text_render_vectors (cairo_t       *cr,
-                          RenderContext *context)
+gimp_text_render_path (cairo_t       *cr,
+                       RenderContext *context)
 {
   cairo_path_t *path;
   gint          i;

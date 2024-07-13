@@ -36,14 +36,14 @@
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
-#include "text/gimptext-vectors.h"
+#include "text/gimptext-path.h"
 #include "text/gimptextlayer.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
+#include "vectors/gimppath-export.h"
+#include "vectors/gimppath-import.h"
 #include "vectors/gimppath.h"
 #include "vectors/gimpstroke-new.h"
-#include "vectors/gimpvectors-export.h"
-#include "vectors/gimpvectors-import.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -72,7 +72,7 @@ path_new_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      path = gimp_vectors_new (image, name);
+      path = gimp_path_new (image, name);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -107,7 +107,7 @@ path_new_from_text_layer_invoker (GimpProcedure         *procedure,
         {
           gint x, y;
 
-          path = gimp_text_vectors_new (image,
+          path = gimp_text_path_new (image,
                                            gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
 
           gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
@@ -179,7 +179,7 @@ path_get_strokes_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      num_strokes = gimp_vectors_get_n_strokes (path);
+      num_strokes = gimp_path_get_n_strokes (path);
 
       if (num_strokes)
         {
@@ -188,9 +188,9 @@ path_get_strokes_invoker (GimpProcedure         *procedure,
 
           stroke_ids = g_new (gint32, num_strokes);
 
-          for (cur_stroke = gimp_vectors_stroke_get_next (path, NULL);
+          for (cur_stroke = gimp_path_stroke_get_next (path, NULL);
                cur_stroke;
-               cur_stroke = gimp_vectors_stroke_get_next (path, cur_stroke))
+               cur_stroke = gimp_path_stroke_get_next (path, cur_stroke))
             {
               stroke_ids[i] = gimp_stroke_get_id (cur_stroke);
               i++;
@@ -330,7 +330,7 @@ path_remove_stroke_invoker (GimpProcedure         *procedure,
                                            _("Remove path stroke"),
                                            path);
 
-          gimp_vectors_stroke_remove (path, stroke);
+          gimp_path_stroke_remove (path, stroke);
         }
       else
         success = FALSE;
@@ -367,9 +367,9 @@ path_stroke_close_invoker (GimpProcedure         *procedure,
                                            _("Close path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_close (stroke);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -406,9 +406,9 @@ path_stroke_reverse_invoker (GimpProcedure         *procedure,
                                            _("Reverse path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_reverse (stroke);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -451,9 +451,9 @@ path_stroke_translate_invoker (GimpProcedure         *procedure,
                                            _("Translate path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_translate (stroke, off_x, off_y);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -496,9 +496,9 @@ path_stroke_scale_invoker (GimpProcedure         *procedure,
                                            _("Scale path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_scale (stroke, scale_x, scale_y);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -543,9 +543,9 @@ path_stroke_rotate_invoker (GimpProcedure         *procedure,
                                            _("Rotate path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_rotate (stroke, center_x, center_y, angle);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -588,9 +588,9 @@ path_stroke_flip_invoker (GimpProcedure         *procedure,
                                            _("Flip path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_flip (stroke, flip_type, axis);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -637,9 +637,9 @@ path_stroke_flip_free_invoker (GimpProcedure         *procedure,
                                            _("Flip path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_stroke_flip_free (stroke, x1, y1, x2, y2);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -768,7 +768,7 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
                                                _("Add path stroke"),
                                                path);
 
-              gimp_vectors_stroke_add (path, stroke);
+              gimp_path_stroke_add (path, stroke);
               g_object_unref (stroke);
 
               stroke_id = gimp_stroke_get_id (stroke);
@@ -892,7 +892,7 @@ path_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
                                            _("Add path stroke"),
                                            path);
 
-          gimp_vectors_stroke_add (path, stroke);
+          gimp_path_stroke_add (path, stroke);
           g_object_unref (stroke);
 
           stroke_id = gimp_stroke_get_id (stroke);
@@ -946,9 +946,9 @@ path_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
                                           _("Extend path stroke"),
                                           path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_bezier_stroke_lineto (stroke, &coord0);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -1002,9 +1002,9 @@ path_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
                                           _("Extend path stroke"),
                                           path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_bezier_stroke_conicto (stroke, &coord0, &coord1);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -1066,9 +1066,9 @@ path_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
                                            _("Extend path stroke"),
                                            path);
 
-          gimp_vectors_freeze (path);
+          gimp_path_freeze (path);
           gimp_bezier_stroke_cubicto (stroke, &coord0, &coord1, &coord2);
-          gimp_vectors_thaw (path);
+          gimp_path_thaw (path);
         }
       else
         success = FALSE;
@@ -1122,7 +1122,7 @@ path_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
                                            _("Add path stroke"),
                                            path);
 
-          gimp_vectors_stroke_add (path, stroke);
+          gimp_path_stroke_add (path, stroke);
           g_object_unref (stroke);
 
           stroke_id = gimp_stroke_get_id (stroke);
@@ -1167,9 +1167,9 @@ path_import_from_file_invoker (GimpProcedure         *procedure,
       GList *path_list = NULL;
 
       /* FIXME tree */
-      success = gimp_vectors_import_file (image, file,
-                                          merge, scale, NULL, -1,
-                                          &path_list, error);
+      success = gimp_path_import_file (image, file,
+                                       merge, scale, NULL, -1,
+                                       &path_list, error);
 
       if (success)
         {
@@ -1235,9 +1235,9 @@ path_import_from_string_invoker (GimpProcedure         *procedure,
       GList *path_list = NULL;
 
       /* FIXME tree */
-      success = gimp_vectors_import_buffer (image, string, length,
-                                            merge, scale, NULL, -1,
-                                            &path_list, error);
+      success = gimp_path_import_buffer (image, string, length,
+                                         merge, scale, NULL, -1,
+                                         &path_list, error);
 
       if (success)
         {
@@ -1298,7 +1298,7 @@ path_export_to_file_invoker (GimpProcedure         *procedure,
       if (path != NULL)
         path_list = g_list_prepend (path_list, path);
 
-      success = gimp_vectors_export_file (image, path_list, file, error);
+      success = gimp_path_export_file (image, path_list, file, error);
 
       g_list_free (path_list);
     }
@@ -1331,7 +1331,7 @@ path_export_to_string_invoker (GimpProcedure         *procedure,
       if (path != NULL)
         path_list = g_list_prepend (path_list, path);
 
-      string = gimp_vectors_export_string (image, path_list);
+      string = gimp_path_export_string (image, path_list);
       g_list_free (path_list);
 
       success = (string != NULL);
@@ -2382,7 +2382,7 @@ register_path_procs (GimpPDB *pdb)
                                "gimp-path-import-from-string");
   gimp_procedure_set_static_help (procedure,
                                   "Import paths from an SVG string.",
-                                  "This procedure works like 'gimp-vectors-import-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
+                                  "This procedure works like 'gimp-path-import-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",

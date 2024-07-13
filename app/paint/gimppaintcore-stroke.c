@@ -230,13 +230,13 @@ gimp_paint_core_stroke_boundary (GimpPaintCore      *core,
 }
 
 gboolean
-gimp_paint_core_stroke_vectors (GimpPaintCore     *core,
-                                GimpDrawable      *drawable,
-                                GimpPaintOptions  *paint_options,
-                                gboolean           emulate_dynamics,
-                                GimpPath          *path,
-                                gboolean           push_undo,
-                                GError           **error)
+gimp_paint_core_stroke_path (GimpPaintCore     *core,
+                             GimpDrawable      *drawable,
+                             GimpPaintOptions  *paint_options,
+                             gboolean           emulate_dynamics,
+                             GimpPath          *path,
+                             gboolean           push_undo,
+                             GError           **error)
 {
   GList    *drawables;
   GList    *stroke;

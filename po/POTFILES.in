@@ -245,9 +245,9 @@ app/dialogs/template-options-dialog.c
 app/dialogs/tips-dialog.c
 app/dialogs/tips-parser.c
 app/dialogs/user-install-dialog.c
-app/dialogs/vectors-export-dialog.c
-app/dialogs/vectors-import-dialog.c
-app/dialogs/vectors-options-dialog.c
+app/dialogs/path-export-dialog.c
+app/dialogs/path-import-dialog.c
+app/dialogs/path-options-dialog.c
 app/dialogs/welcome-dialog.c
 
 app/display/display-enums.c
@@ -530,8 +530,8 @@ app/tools/gimpwarptool.c
 app/tools/tools-enums.c
 
 app/vectors/gimppath.c
-app/vectors/gimpvectors-export.c
-app/vectors/gimpvectors-import.c
+app/vectors/gimppath-export.c
+app/vectors/gimppath-import.c
 
 app/widgets/gimpactioneditor.c
 app/widgets/gimpactiongroup.c
@@ -641,7 +641,7 @@ app/widgets/gimptoolpreseteditor.c
 app/widgets/gimptranslationstore.c
 app/widgets/gimpuimanager.c
 app/widgets/gimpundoeditor.c
-app/widgets/gimpvectorstreeview.c
+app/widgets/gimppathtreeview.c
 app/widgets/gimpviewablebox.c
 app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c

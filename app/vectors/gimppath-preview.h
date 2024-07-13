@@ -1,9 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText-vectors
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -18,12 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_VECTORS_H__
-#define __GIMP_TEXT_VECTORS_H__
+#ifndef __GIMP_PATH_PREVIEW_H__
+#define __GIMP_PATH_PREVIEW_H__
 
 
-GimpPath * gimp_text_vectors_new    (GimpImage *image,
-                                     GimpText  *text);
+/*
+ *  virtual function of GimpPath -- don't call directly
+ */
+
+GimpTempBuf * gimp_path_get_new_preview (GimpViewable *viewable,
+                                         GimpContext  *context,
+                                         gint          width,
+                                         gint          height);
 
 
-#endif /* __GIMP_TEXT_VECTORS_H__ */
+#endif /* __GIMP_PATH_PREVIEW_H__ */

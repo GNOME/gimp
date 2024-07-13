@@ -30,29 +30,29 @@
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
 #include "gimppath.h"
+#include "gimppath-export.h"
 #include "gimpstroke.h"
-#include "gimpvectors-export.h"
 
 #include "gimp-intl.h"
 
 
-static GString * gimp_vectors_export            (GimpImage   *image,
-                                                 GList       *vectors);
-static void      gimp_vectors_export_image_size (GimpImage   *image,
-                                                 GString     *str);
-static void      gimp_vectors_export_path       (GimpPath    *vectors,
-                                                 GString     *str);
-static gchar   * gimp_vectors_export_path_data  (GimpPath    *vectors);
+static GString * gimp_path_export            (GimpImage   *image,
+                                              GList       *paths);
+static void      gimp_path_export_image_size (GimpImage   *image,
+                                              GString     *str);
+static void      gimp_path_export_path       (GimpPath    *paths,
+                                              GString     *str);
+static gchar   * gimp_path_export_path_data  (GimpPath    *paths);
 
 
 /**
- * gimp_vectors_export_file:
+ * gimp_path_export_file:
  * @image: the #GimpImage from which to export
  * @path_list: a #GList of #GimpPath objects or %NULL to export all paths in @image
  * @file: the file to write
  * @error: return location for errors
  *
- * Exports one or more vectors aka path to an SVG file aka XML doc.
+ * Exports one or more paths to an SVG file aka XML doc.
  *
  * When @path_list is %NULL aka empty list, exports all paths in image.
  *
@@ -65,10 +65,10 @@ static gchar   * gimp_vectors_export_path_data  (GimpPath    *vectors);
  *          %FALSE when there was an error writing the file
  **/
 gboolean
-gimp_vectors_export_file (GimpImage    *image,
-                          GList        *path_list,
-                          GFile        *file,
-                          GError      **error)
+gimp_path_export_file (GimpImage    *image,
+                          GList     *path_list,
+                          GFile     *file,
+                          GError   **error)
 {
   GOutputStream *output;
   GString       *string;
@@ -84,7 +84,7 @@ gimp_vectors_export_file (GimpImage    *image,
   if (! output)
     return FALSE;
 
-  string = gimp_vectors_export (image, path_list);
+  string = gimp_path_export (image, path_list);
 
   if (! g_output_stream_write_all (output, string->str, string->len,
                                    NULL, NULL, &my_error))
@@ -113,11 +113,11 @@ gimp_vectors_export_file (GimpImage    *image,
 }
 
 /**
- * gimp_vectors_export_string:
+ * gimp_path_export_string:
  * @image: the #GimpImage from which to export
  * @path_list: a #GList of #GimpPath objects, or %NULL to export all paths in @image
  *
- * Exports one or more vectors aka path to a SVG string.
+ * Exports one or more paths to a SVG string.
  *
  * When @path_list is %NULL aka empty list, exports all paths in image.
  *
@@ -127,17 +127,17 @@ gimp_vectors_export_file (GimpImage    *image,
  * Returns: a NULL-terminated string that holds a complete XML document
  **/
 gchar *
-gimp_vectors_export_string (GimpImage *image,
-                            GList     *path_list)
+gimp_path_export_string (GimpImage *image,
+                         GList     *path_list)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_string_free (gimp_vectors_export (image, path_list), FALSE);
+  return g_string_free (gimp_path_export (image, path_list), FALSE);
 }
 
 static GString *
-gimp_vectors_export (GimpImage *image,
-                     GList     *vectors)
+gimp_path_export (GimpImage *image,
+                  GList     *path)
 {
   GString *str = g_string_new (NULL);
   GList   *list;
@@ -150,7 +150,7 @@ gimp_vectors_export (GimpImage *image,
                           "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
 
   g_string_append (str, "     ");
-  gimp_vectors_export_image_size (image, str);
+  gimp_path_export_image_size (image, str);
   g_string_append_c (str, '\n');
 
   g_string_append_printf (str,
@@ -158,11 +158,11 @@ gimp_vectors_export (GimpImage *image,
                           gimp_image_get_width  (image),
                           gimp_image_get_height (image));
 
-  if (! vectors)
-    vectors = gimp_image_get_path_iter (image);
+  if (! path)
+    path = gimp_image_get_path_iter (image);
 
-  for (list = vectors; list; list = list->next)
-    gimp_vectors_export_path (GIMP_PATH (list->data), str);
+  for (list = path; list; list = list->next)
+    gimp_path_export_path (GIMP_PATH (list->data), str);
 
   g_string_append (str, "</svg>\n");
 
@@ -170,8 +170,8 @@ gimp_vectors_export (GimpImage *image,
 }
 
 static void
-gimp_vectors_export_image_size (GimpImage *image,
-                                GString   *str)
+gimp_path_export_image_size (GimpImage *image,
+                             GString   *str)
 {
   GimpUnit     unit;
   const gchar *abbrev;
@@ -210,11 +210,11 @@ gimp_vectors_export_image_size (GimpImage *image,
 }
 
 static void
-gimp_vectors_export_path (GimpPath *vectors,
-                          GString  *str)
+gimp_path_export_path (GimpPath *path,
+                       GString  *str)
 {
-  const gchar *name = gimp_object_get_name (vectors);
-  gchar       *data = gimp_vectors_export_path_data (vectors);
+  const gchar *name = gimp_object_get_name (path);
+  gchar       *data = gimp_path_export_path_data (path);
   gchar       *esc_name;
 
   esc_name = g_markup_escape_text (name, strlen (name));
@@ -233,7 +233,7 @@ gimp_vectors_export_path (GimpPath *vectors,
 #define NEWLINE "\n           "
 
 static gchar *
-gimp_vectors_export_path_data (GimpPath *vectors)
+gimp_path_export_path_data (GimpPath *path)
 {
   GString  *str;
   GList    *strokes;
@@ -243,7 +243,7 @@ gimp_vectors_export_path_data (GimpPath *vectors)
 
   str = g_string_new (NULL);
 
-  for (strokes = vectors->strokes->head;
+  for (strokes = path->strokes->head;
        strokes;
        strokes = strokes->next)
     {

@@ -730,7 +730,7 @@ gimp_image_snap_point (GimpImage *image,
         {
           GimpPath *vectors = iter->data;
 
-          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+          while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
             {
               GimpCoords nearest;
 
@@ -979,7 +979,7 @@ gimp_image_snap_rectangle (GimpImage         *image,
         {
           GimpPath *vectors = iter->data;
 
-          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+          while ((stroke = gimp_path_stroke_get_next (vectors, stroke)))
             {
               GimpCoords nearest;
               gdouble    dist;

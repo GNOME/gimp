@@ -251,7 +251,7 @@ script_fu_interface_dialog (SFScript  *script,
               break;
 
             case SF_VECTORS:
-              widget = gimp_vectors_combo_box_new (NULL, NULL, NULL);
+              widget = gimp_path_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_vectors;
               break;
 

@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrenderervectors.c
+ * gimpviewrendererpath.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *                    Simon Budig <simon@gimp.org>
  *
@@ -35,43 +35,43 @@
 #include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
 
-#include "gimpviewrenderervectors.h"
+#include "gimpviewrendererpath.h"
 
 
-static void   gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
-                                               GtkWidget        *widget,
-                                               cairo_t          *cr,
-                                               gint              available_width,
-                                               gint              available_height);
+static void   gimp_view_renderer_path_draw (GimpViewRenderer *renderer,
+                                            GtkWidget        *widget,
+                                            cairo_t          *cr,
+                                            gint              available_width,
+                                            gint              available_height);
 
 
-G_DEFINE_TYPE (GimpViewRendererVectors, gimp_view_renderer_vectors,
+G_DEFINE_TYPE (GimpViewRendererPath, gimp_view_renderer_path,
                GIMP_TYPE_VIEW_RENDERER)
 
-#define parent_class gimp_view_renderer_vectors_parent_class
+#define parent_class gimp_view_renderer_path_parent_class
 
 
 static void
-gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass)
+gimp_view_renderer_path_class_init (GimpViewRendererPathClass *klass)
 {
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
-  renderer_class->draw = gimp_view_renderer_vectors_draw;
+  renderer_class->draw = gimp_view_renderer_path_draw;
 }
 
 static void
-gimp_view_renderer_vectors_init (GimpViewRendererVectors *renderer)
+gimp_view_renderer_path_init (GimpViewRendererPath *renderer)
 {
 }
 
 static void
-gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
-                                 GtkWidget        *widget,
-                                 cairo_t          *cr,
-                                 gint              available_width,
-                                 gint              available_height)
+gimp_view_renderer_path_draw (GimpViewRenderer *renderer,
+                              GtkWidget        *widget,
+                              cairo_t          *cr,
+                              gint              available_width,
+                              gint              available_height)
 {
-  GimpPath             *vectors = GIMP_PATH (renderer->viewable);
+  GimpPath             *path = GIMP_PATH (renderer->viewable);
   const GimpBezierDesc *desc;
 
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
@@ -83,7 +83,7 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
   cairo_clip_preserve (cr);
   cairo_fill (cr);
 
-  desc = gimp_vectors_get_bezier (vectors);
+  desc = gimp_path_get_bezier (path);
 
   if (desc)
     {
@@ -91,9 +91,9 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
       gdouble yscale;
 
       xscale = ((gdouble) renderer->width /
-                (gdouble) gimp_item_get_width  (GIMP_ITEM (vectors)));
+                (gdouble) gimp_item_get_width  (GIMP_ITEM (path)));
       yscale = ((gdouble) renderer->height /
-                (gdouble) gimp_item_get_height (GIMP_ITEM (vectors)));
+                (gdouble) gimp_item_get_height (GIMP_ITEM (path)));
 
       cairo_scale (cr, xscale, yscale);
 

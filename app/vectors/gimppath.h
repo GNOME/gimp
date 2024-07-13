@@ -95,47 +95,47 @@ struct _GimpPathClass
 
 GType           gimp_path_get_type              (void) G_GNUC_CONST;
 
-GimpPath      * gimp_vectors_new                (GimpImage      *image,
-                                                 const gchar    *name);
+GimpPath      * gimp_path_new                   (GimpImage   *image,
+                                                 const gchar *name);
 
-GimpPath      * gimp_vectors_get_parent         (GimpPath       *path);
+GimpPath      * gimp_path_get_parent            (GimpPath    *path);
 
-void            gimp_vectors_freeze             (GimpPath       *path);
-void            gimp_vectors_thaw               (GimpPath       *path);
+void            gimp_path_freeze                (GimpPath    *path);
+void            gimp_path_thaw                  (GimpPath    *path);
 
-void            gimp_vectors_copy_strokes       (GimpPath       *src_vectors,
-                                                 GimpPath       *dest_vectors);
-void            gimp_vectors_add_strokes        (GimpPath       *src_vectors,
-                                                 GimpPath       *dest_vectors);
+void            gimp_path_copy_strokes          (GimpPath    *src_path,
+                                                 GimpPath    *dest_path);
+void            gimp_path_add_strokes           (GimpPath    *src_path,
+                                                 GimpPath    *dest_path);
 
 
 /* accessing / modifying the anchors */
 
-GimpAnchor    * gimp_vectors_anchor_get         (GimpPath          *path,
+GimpAnchor    * gimp_path_anchor_get            (GimpPath          *path,
                                                  const GimpCoords  *coord,
                                                  GimpStroke       **ret_stroke);
 
 /* prev == NULL: "first" anchor */
-GimpAnchor    * gimp_vectors_anchor_get_next    (GimpPath           *path,
+GimpAnchor    * gimp_path_anchor_get_next       (GimpPath           *path,
                                                  const GimpAnchor   *prev);
 
 /* type will be an xorable enum:
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
  */
-void          gimp_vectors_anchor_move_relative (GimpPath           *path,
+void          gimp_path_anchor_move_relative    (GimpPath           *path,
                                                  GimpAnchor         *anchor,
                                                  const GimpCoords   *deltacoord,
                                                  gint                type);
-void          gimp_vectors_anchor_move_absolute (GimpPath           *path,
+void          gimp_path_anchor_move_absolute    (GimpPath           *path,
                                                  GimpAnchor         *anchor,
                                                  const GimpCoords   *coord,
                                                  gint                type);
 
-void          gimp_vectors_anchor_delete        (GimpPath           *path,
+void          gimp_path_anchor_delete           (GimpPath           *path,
                                                  GimpAnchor         *anchor);
 
-void          gimp_vectors_anchor_select        (GimpPath           *path,
+void          gimp_path_anchor_select           (GimpPath           *path,
                                                  GimpStroke         *target_stroke,
                                                  GimpAnchor         *anchor,
                                                  gboolean            selected,
@@ -144,32 +144,32 @@ void          gimp_vectors_anchor_select        (GimpPath           *path,
 
 /* GimpStroke is a connected component of a GimpPath object */
 
-void            gimp_vectors_stroke_add         (GimpPath           *path,
+void            gimp_path_stroke_add            (GimpPath           *path,
                                                  GimpStroke         *stroke);
-void            gimp_vectors_stroke_remove      (GimpPath           *path,
+void            gimp_path_stroke_remove         (GimpPath           *path,
                                                  GimpStroke         *stroke);
-gint            gimp_vectors_get_n_strokes      (GimpPath           *path);
-GimpStroke    * gimp_vectors_stroke_get         (GimpPath           *path,
+gint            gimp_path_get_n_strokes         (GimpPath           *path);
+GimpStroke    * gimp_path_stroke_get            (GimpPath           *path,
                                                  const GimpCoords   *coord);
-GimpStroke    * gimp_vectors_stroke_get_by_id   (GimpPath           *path,
+GimpStroke    * gimp_path_stroke_get_by_id      (GimpPath           *path,
                                                  gint                id);
 
 /* prev == NULL: "first" stroke */
-GimpStroke    * gimp_vectors_stroke_get_next    (GimpPath           *path,
+GimpStroke    * gimp_path_stroke_get_next       (GimpPath           *path,
                                                  GimpStroke         *prev);
-gdouble         gimp_vectors_stroke_get_length  (GimpPath           *path,
+gdouble         gimp_path_stroke_get_length     (GimpPath           *path,
                                                  GimpStroke         *stroke);
 
 /* accessing the shape of the curve */
 
-gdouble         gimp_vectors_get_length         (GimpPath           *path,
+gdouble         gimp_path_get_length            (GimpPath           *path,
                                                  const GimpAnchor   *start);
-gdouble         gimp_vectors_get_distance       (GimpPath           *path,
+gdouble         gimp_path_get_distance          (GimpPath           *path,
                                                  const GimpCoords   *coord);
 
 /* returns the number of valid coordinates */
 
-gint            gimp_vectors_interpolate        (GimpPath           *path,
+gint            gimp_path_interpolate           (GimpPath           *path,
                                                  GimpStroke         *stroke,
                                                  gdouble             precision,
                                                  gint                max_points,
@@ -178,7 +178,7 @@ gint            gimp_vectors_interpolate        (GimpPath           *path,
 /* usually overloaded */
 
 /* returns a bezier representation */
-const GimpBezierDesc * gimp_vectors_get_bezier  (GimpPath           *path);
+const GimpBezierDesc * gimp_path_get_bezier     (GimpPath           *path);
 
 
-#endif /* __GIMP_VECTORS_H__ */
+#endif /* __GIMP_PATH_H__ */

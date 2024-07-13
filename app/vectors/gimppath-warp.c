@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors-warp.c
+ * gimppath-warp.c
  * Copyright (C) 2005 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,9 +31,9 @@
 #include "core/gimpcoords.h"
 
 #include "gimpanchor.h"
-#include "gimppath.h"
 #include "gimpstroke.h"
-#include "gimpvectors-warp.h"
+#include "gimppath.h"
+#include "gimppath-warp.h"
 
 
 #define EPSILON 0.2
@@ -47,16 +47,16 @@ static void   gimp_stroke_warp_point   (GimpStroke  *stroke,
                                         gdouble      y_offset,
                                         gdouble      x_len);
 
-static void   gimp_vectors_warp_stroke (GimpPath    *vectors,
+static void   gimp_path_warp_stroke    (GimpPath    *path,
                                         GimpStroke  *stroke,
                                         gdouble      y_offset);
 
 
 void
-gimp_vectors_warp_point (GimpPath   *vectors,
-                         GimpCoords *point,
-                         GimpCoords *point_warped,
-                         gdouble     y_offset)
+gimp_path_warp_point (GimpPath   *path,
+                      GimpCoords *point,
+                      GimpCoords *point_warped,
+                      gdouble     y_offset)
 {
   gdouble     x      = point->x;
   gdouble     y      = point->y;
@@ -64,13 +64,13 @@ gimp_vectors_warp_point (GimpPath   *vectors,
   GList      *list;
   GimpStroke *stroke;
 
-  for (list = vectors->strokes->head;
+  for (list = path->strokes->head;
        list;
        list = g_list_next (list))
     {
       stroke = list->data;
 
-      len = gimp_vectors_stroke_get_length (vectors, stroke);
+      len = gimp_path_stroke_get_length (path, stroke);
 
       if (x < len || ! list->next)
         break;
@@ -176,9 +176,9 @@ gimp_stroke_warp_point (GimpStroke *stroke,
 }
 
 static void
-gimp_vectors_warp_stroke (GimpPath   *vectors,
-                          GimpStroke *stroke,
-                          gdouble     y_offset)
+gimp_path_warp_stroke (GimpPath   *path,
+                       GimpStroke *stroke,
+                       gdouble     y_offset)
 {
   GList *list;
 
@@ -186,25 +186,25 @@ gimp_vectors_warp_stroke (GimpPath   *vectors,
     {
       GimpAnchor *anchor = list->data;
 
-      gimp_vectors_warp_point (vectors,
-                               &anchor->position, &anchor->position,
-                               y_offset);
+      gimp_path_warp_point (path,
+                            &anchor->position, &anchor->position,
+                            y_offset);
     }
 }
 
 void
-gimp_vectors_warp_vectors (GimpPath *vectors,
-                           GimpPath *vectors_in,
-                           gdouble   y_offset)
+gimp_path_warp_path (GimpPath *path,
+                     GimpPath *path_in,
+                     gdouble   y_offset)
 {
   GList *list;
 
-  for (list = vectors_in->strokes->head;
+  for (list = path_in->strokes->head;
        list;
        list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
-      gimp_vectors_warp_stroke (vectors, stroke, y_offset);
+      gimp_path_warp_stroke (path, stroke, y_offset);
     }
 }

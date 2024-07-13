@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectorstreeview.c
+ * gimppathstreeview.c
  * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,57 +35,57 @@
 #include "core/gimpimage.h"
 
 #include "vectors/gimppath.h"
-#include "vectors/gimpvectors-export.h"
-#include "vectors/gimpvectors-import.h"
+#include "vectors/gimppath-export.h"
+#include "vectors/gimppath-import.h"
 
 #include "gimpactiongroup.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
-#include "gimpvectorstreeview.h"
+#include "gimppathtreeview.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
 
-static void    gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *iface);
+static void    gimp_path_tree_view_view_iface_init (GimpContainerViewInterface  *iface);
 
-static void      gimp_vectors_tree_view_constructed   (GObject                  *object);
+static void      gimp_path_tree_view_constructed   (GObject                     *object);
 
-static void      gimp_vectors_tree_view_set_container (GimpContainerView        *view,
-                                                       GimpContainer            *container);
-static void      gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView    *tree_view,
-                                                       const gchar              *svg_data,
-                                                       gsize                     svg_data_len,
-                                                       GimpViewable             *dest_viewable,
-                                                       GtkTreeViewDropPosition   drop_pos);
-static GimpItem * gimp_vectors_tree_view_item_new     (GimpImage                *image);
-static guchar   * gimp_vectors_tree_view_drag_svg     (GtkWidget                *widget,
-                                                       gsize                    *svg_data_len,
-                                                       gpointer                  data);
+static void      gimp_path_tree_view_set_container (GimpContainerView           *view,
+                                                    GimpContainer               *container);
+static void      gimp_path_tree_view_drop_svg      (GimpContainerTreeView       *tree_view,
+                                                    const gchar                 *svg_data,
+                                                    gsize                        svg_data_len,
+                                                    GimpViewable                *dest_viewable,
+                                                    GtkTreeViewDropPosition      drop_pos);
+static GimpItem * gimp_path_tree_view_item_new     (GimpImage                   *image);
+static guchar   * gimp_path_tree_view_drag_svg     (GtkWidget                   *widget,
+                                                    gsize                       *svg_data_len,
+                                                    gpointer                     data);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpVectorsTreeView, gimp_vectors_tree_view,
+G_DEFINE_TYPE_WITH_CODE (GimpPathTreeView, gimp_path_tree_view,
                          GIMP_TYPE_ITEM_TREE_VIEW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
-                                                gimp_vectors_tree_view_view_iface_init))
+                                                gimp_path_tree_view_view_iface_init))
 
-#define parent_class gimp_vectors_tree_view_parent_class
+#define parent_class gimp_path_tree_view_parent_class
 
 static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 static void
-gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
+gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
 {
   GObjectClass               *object_class = G_OBJECT_CLASS (klass);
   GimpContainerTreeViewClass *view_class   = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   GimpItemTreeViewClass      *iv_class     = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructed = gimp_vectors_tree_view_constructed;
+  object_class->constructed = gimp_path_tree_view_constructed;
 
-  view_class->drop_svg      = gimp_vectors_tree_view_drop_svg;
+  view_class->drop_svg      = gimp_path_tree_view_drop_svg;
 
   iv_class->item_type       = GIMP_TYPE_PATH;
   iv_class->signal_name     = "selected-paths-changed";
@@ -95,7 +95,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_paths;
   iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_path;
   iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_path;
-  iv_class->new_item        = gimp_vectors_tree_view_item_new;
+  iv_class->new_item        = gimp_path_tree_view_item_new;
 
   iv_class->action_group            = "vectors";
   iv_class->activate_action         = "vectors-edit";
@@ -116,24 +116,24 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 }
 
 static void
-gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *iface)
+gimp_path_tree_view_view_iface_init (GimpContainerViewInterface *iface)
 {
   parent_view_iface = g_type_interface_peek_parent (iface);
 
-  iface->set_container = gimp_vectors_tree_view_set_container;
+  iface->set_container = gimp_path_tree_view_set_container;
 }
 
 static void
-gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
+gimp_path_tree_view_init (GimpPathTreeView *view)
 {
 }
 
 static void
-gimp_vectors_tree_view_constructed (GObject *object)
+gimp_path_tree_view_constructed (GObject *object)
 {
   GimpEditor            *editor    = GIMP_EDITOR (object);
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
-  GimpVectorsTreeView   *view      = GIMP_VECTORS_TREE_VIEW (object);
+  GimpPathTreeView      *view      = GIMP_PATH_TREE_VIEW (object);
   GdkModifierType        extend_mask;
   GdkModifierType        modify_mask;
 
@@ -185,8 +185,8 @@ gimp_vectors_tree_view_constructed (GObject *object)
 }
 
 static void
-gimp_vectors_tree_view_set_container (GimpContainerView *view,
-                                      GimpContainer     *container)
+gimp_path_tree_view_set_container (GimpContainerView *view,
+                                   GimpContainer     *container)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GimpContainer         *old_container;
@@ -203,17 +203,17 @@ gimp_vectors_tree_view_set_container (GimpContainerView *view,
   if (! old_container && container)
     {
       gimp_dnd_svg_source_add (GTK_WIDGET (tree_view->view),
-                               gimp_vectors_tree_view_drag_svg,
+                               gimp_path_tree_view_drag_svg,
                                tree_view);
     }
 }
 
 static void
-gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
-                                 const gchar             *svg_data,
-                                 gsize                    svg_data_len,
-                                 GimpViewable            *dest_viewable,
-                                 GtkTreeViewDropPosition  drop_pos)
+gimp_path_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
+                              const gchar             *svg_data,
+                              gsize                    svg_data_len,
+                              GimpViewable            *dest_viewable,
+                              GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
@@ -228,8 +228,8 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                               drop_pos,
                                               (GimpViewable **) &parent);
 
-  if (! gimp_vectors_import_buffer (image, svg_data, svg_data_len,
-                                    TRUE, FALSE, parent, index, NULL, &error))
+  if (! gimp_path_import_buffer (image, svg_data, svg_data_len,
+                                 TRUE, FALSE, parent, index, NULL, &error))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (tree_view), GIMP_MESSAGE_ERROR,
@@ -243,11 +243,11 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
 }
 
 static GimpItem *
-gimp_vectors_tree_view_item_new (GimpImage *image)
+gimp_path_tree_view_item_new (GimpImage *image)
 {
   GimpPath *new_path;
 
-  new_path = gimp_vectors_new (image, _("Path"));
+  new_path = gimp_path_new (image, _("Path"));
 
   gimp_image_add_path (image, new_path,
                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -256,9 +256,9 @@ gimp_vectors_tree_view_item_new (GimpImage *image)
 }
 
 static guchar *
-gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
-                                 gsize     *svg_data_len,
-                                 gpointer   data)
+gimp_path_tree_view_drag_svg (GtkWidget *widget,
+                              gsize     *svg_data_len,
+                              gpointer   data)
 {
   GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (data);
   GimpImage        *image = gimp_item_tree_view_get_image (view);
@@ -271,7 +271,7 @@ gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
 
   if (items)
     {
-      svg_data = gimp_vectors_export_string (image, items);
+      svg_data = gimp_path_export_string (image, items);
 
       if (svg_data)
         *svg_data_len = strlen (svg_data);

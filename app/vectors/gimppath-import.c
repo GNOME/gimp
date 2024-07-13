@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpVectors Import
+ * GimpPath Import
  * Copyright (C) 2003-2004  Sven Neumann <sven@gimp.org>
  *
  * Some code here is based on code from librsvg that was originally
@@ -50,7 +50,7 @@
 #include "gimpbezierstroke.h"
 #include "gimpstroke.h"
 #include "gimppath.h"
-#include "gimpvectors-import.h"
+#include "gimppath-import.h"
 
 #include "gimp-intl.h"
 
@@ -105,16 +105,16 @@ typedef struct
 } SvgPath;
 
 
-static gboolean  gimp_vectors_import  (GimpImage            *image,
-                                       GFile                *file,
-                                       const gchar          *str,
-                                       gsize                 len,
-                                       gboolean              merge,
-                                       gboolean              scale,
-                                       GimpPath             *parent,
-                                       gint                  position,
-                                       GList               **ret_vectors,
-                                       GError              **error);
+static gboolean  gimp_path_import  (GimpImage            *image,
+                                    GFile                *file,
+                                    const gchar          *str,
+                                    gsize                 len,
+                                    gboolean              merge,
+                                    gboolean              scale,
+                                    GimpPath             *parent,
+                                    gint                  position,
+                                    GList               **ret_paths,
+                                    GError              **error);
 
 static void  svg_parser_start_element (GMarkupParseContext  *context,
                                        const gchar          *element_name,
@@ -196,12 +196,12 @@ static GList    * parse_path_data     (const gchar  *data);
 
 
 /**
- * gimp_vectors_import_file:
+ * gimp_path_import_file:
  * @image:    the #GimpImage to add the paths to
  * @file:     a SVG file
  * @merge:    should multiple paths be merged into a single #GimpPath object
  * @scale:    should the SVG be scaled to fit the image dimensions
- * @position: position in the image's vectors stack where to add the vectors
+ * @position: position in the image's path stack where to add the paths
  * @error:    location to store possible errors
  *
  * Imports one or more paths and basic shapes from a SVG file.
@@ -209,14 +209,14 @@ static GList    * parse_path_data     (const gchar  *data);
  * Returns: %TRUE on success, %FALSE if an error occurred
  **/
 gboolean
-gimp_vectors_import_file (GimpImage    *image,
-                          GFile        *file,
-                          gboolean      merge,
-                          gboolean      scale,
-                          GimpPath     *parent,
-                          gint          position,
-                          GList       **ret_vectors,
-                          GError      **error)
+gimp_path_import_file (GimpImage    *image,
+                       GFile        *file,
+                       gboolean      merge,
+                       gboolean      scale,
+                       GimpPath     *parent,
+                       gint          position,
+                       GList       **ret_paths,
+                       GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
@@ -234,16 +234,16 @@ gimp_vectors_import_file (GimpImage    *image,
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
                         FALSE);
-  g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
+  g_return_val_if_fail (ret_paths == NULL || *ret_paths == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, file, NULL, 0, merge, scale,
-                              parent, position,
-                              ret_vectors, error);
+  return gimp_path_import (image, file, NULL, 0, merge, scale,
+                           parent, position,
+                           ret_paths, error);
 }
 
 /**
- * gimp_vectors_import_string:
+ * gimp_path_import_string:
  * @image:  the #GimpImage to add the paths to
  * @buffer: a character buffer to parse
  * @len:    number of bytes in @str or -1 if @str is %NUL-terminated
@@ -256,15 +256,15 @@ gimp_vectors_import_file (GimpImage    *image,
  * Returns: %TRUE on success, %FALSE if an error occurred
  **/
 gboolean
-gimp_vectors_import_buffer (GimpImage    *image,
-                            const gchar  *buffer,
-                            gsize         len,
-                            gboolean      merge,
-                            gboolean      scale,
-                            GimpPath     *parent,
-                            gint          position,
-                            GList       **ret_vectors,
-                            GError      **error)
+gimp_path_import_buffer (GimpImage    *image,
+                         const gchar  *buffer,
+                         gsize         len,
+                         gboolean      merge,
+                         gboolean      scale,
+                         GimpPath     *parent,
+                         gint          position,
+                         GList       **ret_paths,
+                         GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
@@ -282,25 +282,25 @@ gimp_vectors_import_buffer (GimpImage    *image,
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         gimp_viewable_get_children (GIMP_VIEWABLE (parent)),
                         FALSE);
-  g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
+  g_return_val_if_fail (ret_paths == NULL || *ret_paths == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, NULL, buffer, len, merge, scale,
-                              parent, position,
-                              ret_vectors, error);
+  return gimp_path_import (image, NULL, buffer, len, merge, scale,
+                           parent, position,
+                           ret_paths, error);
 }
 
 static gboolean
-gimp_vectors_import (GimpImage    *image,
-                     GFile        *file,
-                     const gchar  *str,
-                     gsize         len,
-                     gboolean      merge,
-                     gboolean      scale,
-                     GimpPath     *parent,
-                     gint          position,
-                     GList       **ret_vectors,
-                     GError      **error)
+gimp_path_import (GimpImage    *image,
+                  GFile        *file,
+                  const gchar  *str,
+                  gsize         len,
+                  gboolean      merge,
+                  gboolean      scale,
+                  GimpPath     *parent,
+                  gint          position,
+                  GList       **ret_paths,
+                  GError      **error)
 {
   GimpXmlParser *xml_parser;
   SvgParser      parser;
@@ -334,48 +334,48 @@ gimp_vectors_import (GimpImage    *image,
     {
       if (base->paths)
         {
-          GimpPath *vectors = NULL;
+          GimpPath *path = NULL;
 
           base->paths = g_list_reverse (base->paths);
 
           merge = merge && base->paths->next;
 
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PATHS_IMPORT,
                                        _("Import Paths"));
 
           for (paths = base->paths; paths; paths = paths->next)
             {
-              SvgPath *path = paths->data;
+              SvgPath *svg_path = paths->data;
               GList   *list;
 
-              if (! merge || ! vectors)
+              if (! merge || ! path)
                 {
-                  vectors = gimp_vectors_new (image,
-                                              ((merge || ! path->id) ?
-                                               _("Imported Path") : path->id));
-                  gimp_image_add_path (image, vectors,
+                  path = gimp_path_new (image,
+                                        ((merge || ! svg_path->id) ?
+                                         _("Imported Path") : svg_path->id));
+                  gimp_image_add_path (image, path,
                                        parent, position, TRUE);
-                  gimp_vectors_freeze (vectors);
+                  gimp_path_freeze (path);
 
-                  if (ret_vectors)
-                    *ret_vectors = g_list_prepend (*ret_vectors, vectors);
+                  if (ret_paths)
+                    *ret_paths = g_list_prepend (*ret_paths, path);
 
                   if (position != -1)
                     position++;
                 }
 
-              for (list = path->strokes; list; list = list->next)
-                gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
+              for (list = svg_path->strokes; list; list = list->next)
+                gimp_path_stroke_add (path, GIMP_STROKE (list->data));
 
               if (! merge)
-                gimp_vectors_thaw (vectors);
+                gimp_path_thaw (path);
 
-              g_list_free_full (path->strokes, g_object_unref);
-              path->strokes = NULL;
+              g_list_free_full (svg_path->strokes, g_object_unref);
+              svg_path->strokes = NULL;
             }
 
           if (merge)
-            gimp_vectors_thaw (vectors);
+            gimp_path_thaw (path);
 
           gimp_image_undo_group_end (image);
         }
@@ -407,17 +407,17 @@ gimp_vectors_import (GimpImage    *image,
     {
       for (paths = base->paths; paths; paths = paths->next)
         {
-          SvgPath *path = paths->data;
+          SvgPath *svg_path = paths->data;
           GList   *list;
 
-          g_free (path->id);
+          g_free (svg_path->id);
 
-          for (list = path->strokes; list; list = list->next)
+          for (list = svg_path->strokes; list; list = list->next)
             g_object_unref (list->data);
 
-          g_list_free (path->strokes);
+          g_list_free (svg_path->strokes);
 
-          g_slice_free (SvgPath, path);
+          g_slice_free (SvgPath, svg_path);
         }
 
       g_list_free (base->paths);
@@ -494,10 +494,10 @@ svg_parser_end_element (GMarkupParseContext  *context,
         {
           for (paths = handler->paths; paths; paths = paths->next)
             {
-              SvgPath *path = paths->data;
+              SvgPath *svg_path = paths->data;
               GList   *list;
 
-              for (list = path->strokes; list; list = list->next)
+              for (list = svg_path->strokes; list; list = list->next)
                 gimp_stroke_transform (GIMP_STROKE (list->data),
                                        handler->transform, NULL);
             }

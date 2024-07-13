@@ -69,7 +69,7 @@
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimppath.h"
 #include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors-compat.h"
+#include "vectors/gimppath-compat.h"
 
 #include "xcf-private.h"
 #include "xcf-read.h"
@@ -525,7 +525,7 @@ xcf_save_image_props (XcfInfo    *info,
   if (gimp_container_get_n_children (gimp_image_get_paths (image)) > 0 &&
       info->file_version < 18)
     {
-      if (gimp_vectors_compat_is_compatible (image))
+      if (gimp_path_compat_is_compatible (image))
         xcf_check_error (xcf_save_prop (info, image, PROP_PATHS, error), ;);
       else
         xcf_check_error (xcf_save_prop (info, image, PROP_VECTORS, error), ;);
@@ -2942,7 +2942,7 @@ xcf_save_old_paths (XcfInfo    *info,
       guint32                 version;
       guint32                 pathtype;
       guint32                 tattoo;
-      GimpVectorsCompatPoint *points;
+      GimpPathCompatPoint    *points;
       guint32                 num_points;
       guint32                 closed;
       gint                    i;
@@ -2959,9 +2959,9 @@ xcf_save_old_paths (XcfInfo    *info,
        * then each point.
        */
 
-      points = gimp_vectors_compat_get_points (vectors,
-                                               (gint32 *) &num_points,
-                                               (gint32 *) &closed);
+      points = gimp_path_compat_get_points (vectors,
+                                            (gint32 *) &num_points,
+                                            (gint32 *) &closed);
 
       /* if no points are generated because of a faulty path we should
        * skip saving the path - this is unfortunately impossible, because
