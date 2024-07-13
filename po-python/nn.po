@@ -7,19 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-02 18:47+0000\n"
-"PO-Revision-Date: 2023-12-25 14:44+0100\n"
+"POT-Creation-Date: 2024-07-13 17:13+0000\n"
+"PO-Revision-Date: 2024-07-13 20:12+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:396
 msgid "Missing exception information"
-msgstr "Manglar informasjon om unntak"
+msgstr "Manglar informasjon om unnatak"
 
 #: ../plug-ins/pygimp/gimpfu.py:405
 #, python-format
@@ -104,47 +104,47 @@ msgstr "Fargeovergang som skal brukast"
 msgid "File Name"
 msgstr "Filnamn"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Eksporter bilethistogrammet til ei tekstfil (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "_Export histogram..."
 msgstr "_Eksporter histogram …"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:105
 msgid "_Image"
 msgstr "_Bilete"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:106
 msgid "_Drawable"
 msgstr "Teikneobjekt"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:107
 msgid "Histogram _File"
 msgstr "Histogram_fil"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:108
 msgid "_Bucket Size"
 msgstr "_Bøttestorleik"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:109
 msgid "Sample _Average"
 msgstr "_Gjennomsnitt"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:110
 msgid "Output format"
 msgstr "Utformat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:111
 msgid "Pixel count"
 msgstr "Pikselteljing"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:112
 msgid "Normalized"
 msgstr "Normalisert"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:113
 msgid "Percent"
 msgstr "Prosent"
 
@@ -281,7 +281,7 @@ msgstr "Oppskore / Matrise"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Autoslice (fg->bg)"
-msgstr "Auto-oppskjering"
+msgstr "Auto-oppskjering (fg → bg)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Partitioned"
@@ -289,7 +289,7 @@ msgstr "Partisjonert"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Slice _expression"
-msgstr ""
+msgstr "Del opp _uttrykk"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:340
 msgid "Channel to _sort"
@@ -491,7 +491,7 @@ msgstr "Humpar"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
 msgid "Rack"
-msgstr ""
+msgstr "Hylle"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
 msgid "Frame"
@@ -646,7 +646,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
-msgstr "Blomsterblad"
+msgstr "Blomeblad"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "The number of petals in the pattern."
@@ -654,11 +654,11 @@ msgstr "Talet på blad i mønsteret."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
 msgid "Petal Skip"
-msgstr ""
+msgstr "Hopp over blad"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
 msgid "The number of petals to advance for drawing the next petal."
-msgstr ""
+msgstr "Talet på blad som skal hoppast over for å teikna neste blad."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
@@ -684,10 +684,13 @@ msgid ""
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
 "fixed gear."
 msgstr ""
+"Breidda på mønsteret som ein prosentdel av storleiken på mønsteret. Ein "
+"verdi på 1 vil teikna eit tynt mønster, ein verdi på 100 vil fylla heile det "
+"faste hjulet."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
 msgid "Visual"
-msgstr ""
+msgstr "Visuell"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
@@ -707,6 +710,8 @@ msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
+"Rotering av mønsteret i grader. Startposisjonen for det roterande hjulet i "
+"det faste hjulet."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
 msgid "Shape"
@@ -720,6 +725,11 @@ msgid ""
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
 msgstr ""
+"Forma på det faste hjulet som skal brukast i det gjeldande valet. Hylle er "
+"ei lang form med avrunda kantar som følgjer med i leikesettet. Ramma "
+"omsluttar grensene til det rektangulære utvalet. Bruk hol=100 i Gir-"
+"notasjonen for å berøre grensa. Utval vil klemme grensene for gjeldande "
+"utval ‒ prøv noko ikkje-rektangulært."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Sides"
@@ -731,11 +741,11 @@ msgstr "Talet på sider i forma."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph"
-msgstr ""
+msgstr "Morf"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
-msgstr ""
+msgstr "Morf fast girform. Det påverkar berre nokre av formene."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
