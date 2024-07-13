@@ -162,7 +162,7 @@ class _ReadLine(object):
         self.run_on_raw_input = None
         self.tab_pressed = 0
         self.history = _ReadLine.History()
-        self.nonword_re = re.compile("[^\w\._]")
+        self.nonword_re = re.compile(r"[^\w\._]")
 
     def freeze_undo(self):
         try: self.begin_not_undoable_action()
