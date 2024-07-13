@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-10-28 01:33+0000\n"
-"PO-Revision-Date: 2023-12-29 14:01+0100\n"
+"POT-Creation-Date: 2024-07-13 17:13+0000\n"
+"PO-Revision-Date: 2024-07-13 19:47+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -65,9 +65,9 @@ msgstr "Innrett synlege lag"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
+#: ../plug-ins/common/van-gogh-lic.c:655 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1397 ../plug-ins/file-dds/ddswrite.c:1983
+#: ../plug-ins/file-dds/ddsread.c:1401 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -123,9 +123,9 @@ msgstr "_Avbryt"
 #: ../plug-ins/common/smooth-palette.c:439 ../plug-ins/common/softglow.c:633
 #: ../plug-ins/common/sparkle.c:336 ../plug-ins/common/sphere-designer.c:2562
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
-#: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
+#: ../plug-ins/common/van-gogh-lic.c:656 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1398 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1402 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -184,7 +184,7 @@ msgstr "Høgre kant"
 
 #: ../plug-ins/common/align-layers.c:678
 msgid "Ho_rizontal base:"
-msgstr "Ho_risontal basis:"
+msgstr "_Vassrett basis:"
 
 #: ../plug-ins/common/align-layers.c:683
 msgid "Fill (top to bottom)"
@@ -196,7 +196,7 @@ msgstr "Fyll (frå botn til topp)"
 
 #: ../plug-ins/common/align-layers.c:694
 msgid "_Vertical style:"
-msgstr "_Vertikal stil:"
+msgstr "_Loddrett stil:"
 
 #: ../plug-ins/common/align-layers.c:697
 msgid "Top edge"
@@ -208,7 +208,7 @@ msgstr "Botnkant"
 
 #: ../plug-ins/common/align-layers.c:708
 msgid "Ver_tical base:"
-msgstr "Ver_tikal basis:"
+msgstr "_Loddrett basis:"
 
 #: ../plug-ins/common/align-layers.c:712
 msgid "_Grid size:"
@@ -425,12 +425,12 @@ msgstr "Orientering"
 #: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:423
 #: ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Horizontal"
-msgstr "_Horisontal"
+msgstr "_Vassrett"
 
 #: ../plug-ins/common/blinds.c:263 ../plug-ins/common/tile-small.c:433
 #: ../plug-ins/pagecurl/pagecurl.c:528
 msgid "_Vertical"
-msgstr "_Vertikal"
+msgstr "_Loddrett"
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -450,7 +450,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2153 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2161 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -532,9 +532,8 @@ msgid "Simulate a cartoon by enhancing edges"
 msgstr "Simulerer ei strekteikning ved å forsterka kantane"
 
 #: ../plug-ins/common/cartoon.c:147
-#| msgid "Ca_rtoon..."
 msgid "Ca_rtoon (legacy)..."
-msgstr "_Teikneserie (legacy)…"
+msgstr "_Teikneserie (tradisjonell)…"
 
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
 #: ../plug-ins/common/photocopy.c:244 ../plug-ins/common/softglow.c:224
@@ -559,9 +558,8 @@ msgid "Create a checkerboard pattern"
 msgstr "Lag eit sjakkbrettmønster"
 
 #: ../plug-ins/common/checkerboard.c:96
-#| msgid "_Checkerboard..."
 msgid "_Checkerboard (legacy)..."
-msgstr "_Sjakkbrett (legacy)…"
+msgstr "_Sjakkbrett (tradisjonell)…"
 
 #: ../plug-ins/common/checkerboard.c:299 ../plug-ins/common/checkerboard.c:424
 msgid "Checkerboard"
@@ -860,7 +858,7 @@ msgid "_Save"
 msgstr "_Lagra"
 
 #: ../plug-ins/common/cml-explorer.c:1336 ../plug-ins/common/filter-pack.c:758
-#: ../plug-ins/common/van-gogh-lic.c:677
+#: ../plug-ins/common/van-gogh-lic.c:682
 msgid "_Hue"
 msgstr "_Kulør"
 
@@ -878,7 +876,7 @@ msgstr "_Utvida"
 
 #: ../plug-ins/common/cml-explorer.c:1363
 msgid "Channel Independent Parameters"
-msgstr "Kanaluavhengige parametrar"
+msgstr "Kanaluavhengige parameterar"
 
 #: ../plug-ins/common/cml-explorer.c:1385
 msgid "Initial value:"
@@ -902,7 +900,7 @@ msgstr "Frø:"
 
 #: ../plug-ins/common/cml-explorer.c:1433
 msgid "Switch to \"From seed\" With the Last Seed"
-msgstr "Bytt til «Frå frø» med det siste frøet"
+msgstr "Byt til «Frå frø» med det siste frøet"
 
 #: ../plug-ins/common/cml-explorer.c:1445
 msgid ""
@@ -935,7 +933,7 @@ msgstr "Målkanal:"
 
 #: ../plug-ins/common/cml-explorer.c:1506
 msgid "Copy Parameters"
-msgstr "Kopier parametra"
+msgstr "Kopier parameterane"
 
 #: ../plug-ins/common/cml-explorer.c:1515
 msgid "Selective Load Settings"
@@ -1037,7 +1035,7 @@ msgstr "Åtvaring: Kjelde- og målkanalen er den same."
 
 #: ../plug-ins/common/cml-explorer.c:2022
 msgid "Save CML Explorer Parameters"
-msgstr "Lagra parametra for CML-utforskaren"
+msgstr "Lagra parameterane for CML-utforskaren"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
@@ -1062,11 +1060,11 @@ msgstr "Kan ikkje opna «%s» for skriving: %s"
 #: ../plug-ins/common/cml-explorer.c:2133
 #, c-format
 msgid "Parameters were saved to '%s'"
-msgstr "Parametra vart lagra i «%s»"
+msgstr "Parameterane vart lagra i «%s»"
 
 #: ../plug-ins/common/cml-explorer.c:2155
 msgid "Load CML Explorer Parameters"
-msgstr "Opna parametra for CML-utforskaren"
+msgstr "Opna parameterane for CML-utforskaren"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
@@ -1112,7 +1110,7 @@ msgstr "Åtvaring: «%s» er ei parameterfil for nyare CML-utforskar enn denne."
 
 #: ../plug-ins/common/cml-explorer.c:2347
 msgid "Error: failed to load parameters"
-msgstr "Feil: fekk ikkje opna parametra"
+msgstr "Feil: fekk ikkje opna parameterane"
 
 #: ../plug-ins/common/color-cube-analyze.c:106
 msgid "Analyze the set of colors in the image"
@@ -1149,12 +1147,11 @@ msgstr "Talet på unike fargar: %d"
 
 #: ../plug-ins/common/color-enhance.c:68
 msgid "Stretch color saturation to cover maximum possible range"
-msgstr "Strekker biletmetning for å dekke størst mogleg område"
+msgstr "Strekkjer biletmetninga for å dekkja størst mogleg område"
 
 #: ../plug-ins/common/color-enhance.c:80
-#| msgid "_Color Enhance"
 msgid "_Color Enhance (legacy)"
-msgstr "_Fargeforbetring (legacy)"
+msgstr "_Fargeforbetring (tradisjonell)"
 
 #: ../plug-ins/common/color-enhance.c:114
 msgid "Color Enhance"
@@ -1162,7 +1159,7 @@ msgstr "Fargeforbetring"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr "Bytt ut alle fargane med ulike toner av ein spesifisert farge"
+msgstr "Byt ut alle fargane med ulike toner av ein spesifisert farge"
 
 #: ../plug-ins/common/colorify.c:108
 msgid "Colorif_y..."
@@ -1194,11 +1191,11 @@ msgstr "_Ordna fargekartet på nytt …"
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
-msgstr "Bytt to fargar i fargekartet"
+msgstr "Byt to fargar i fargekartet"
 
 #: ../plug-ins/common/colormap-remap.c:123
 msgid "_Swap Colors"
-msgstr "Bytt fargane"
+msgstr "Byt fargane"
 
 #: ../plug-ins/common/colormap-remap.c:287
 #: ../plug-ins/common/colormap-remap.c:298
@@ -1308,22 +1305,18 @@ msgid "_Black:"
 msgstr "_Svart:"
 
 #: ../plug-ins/common/compose.c:171
-#| msgid "_X:"
 msgid "_L:"
 msgstr "_L:"
 
 #: ../plug-ins/common/compose.c:172
-#| msgid "_X:"
 msgid "_A:"
 msgstr "_A:"
 
 #: ../plug-ins/common/compose.c:173
-#| msgid "_X:"
 msgid "_B:"
 msgstr "_B:"
 
 #: ../plug-ins/common/compose.c:175
-#| msgid "_RLE"
 msgid "_L"
 msgstr "_L"
 
@@ -1332,7 +1325,6 @@ msgid "_C"
 msgstr "_C"
 
 #: ../plug-ins/common/compose.c:177
-#| msgid "_Hue"
 msgid "_H"
 msgstr "_H"
 
@@ -1688,15 +1680,15 @@ msgstr "Speglar den aktive kurva til den andre kanten"
 #. The Swap button
 #: ../plug-ins/common/curve-bend.c:1526
 msgid "S_wap"
-msgstr "_Bytt"
+msgstr "_Byt"
 
 #: ../plug-ins/common/curve-bend.c:1531
 msgid "Swap the two curves"
-msgstr "Bytt kurvene"
+msgstr "Byt kurvene"
 
 #: ../plug-ins/common/curve-bend.c:1543
 msgid "Reset the active curve"
-msgstr "Resett den aktive kurven"
+msgstr "Tilbakestill den aktive kurva"
 
 #: ../plug-ins/common/curve-bend.c:1560
 msgid "Load the curves from a file"
@@ -2014,9 +2006,8 @@ msgid "Edge detection with control of edge thickness"
 msgstr "Kantfinning med kontroll av kantbreidda"
 
 #: ../plug-ins/common/edge-dog.c:142
-#| msgid "_Difference of Gaussians..."
 msgid "_Difference of Gaussians (legacy)..."
-msgstr "_Gaussisk skilnad (legacy)…"
+msgstr "_Gaussisk skilnad (tradisjonell)…"
 
 #: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
 msgid "DoG Edge Detect"
@@ -2024,7 +2015,7 @@ msgstr "DoG kantfinning"
 
 #: ../plug-ins/common/edge-dog.c:332
 msgid "Smoothing Parameters"
-msgstr "Utglattingsparametra"
+msgstr "Utglattingsparameterane"
 
 #: ../plug-ins/common/edge-dog.c:346
 msgid "_Radius 1:"
@@ -2047,9 +2038,8 @@ msgid "Simulate an image created by embossing"
 msgstr "Simulerer bilete utført i opphøgd stil (embosering)"
 
 #: ../plug-ins/common/emboss.c:131
-#| msgid "_Emboss..."
 msgid "_Emboss (legacy)..."
-msgstr "_Relieff (legacy)..."
+msgstr "_Relieff (tradisjonell)…"
 
 #: ../plug-ins/common/emboss.c:387 ../plug-ins/common/emboss.c:449
 msgid "Emboss"
@@ -2236,7 +2226,7 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-jpegxl.c:787 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-jpegxl.c:794 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
@@ -2247,7 +2237,6 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #: ../plug-ins/file-psd/psd-save.c:1868 ../plug-ins/file-sgi/sgi.c:584
 #: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
-#| msgid "Opening '%s'"
 msgid "Exporting '%s'"
 msgstr "Eksporterer '%s'"
 
@@ -2310,7 +2299,6 @@ msgid "bzip archive"
 msgstr "bzip-arkiv"
 
 #: ../plug-ins/common/file-compressor.c:214
-#| msgid "gzip archive"
 msgid "xz archive"
 msgstr "xz-arkiv"
 
@@ -2329,7 +2317,7 @@ msgstr "Ukjent filtype. Prøver å opna ved hjelp av «filmagi»."
 
 #: ../plug-ins/common/file-desktop-link.c:83
 msgid "Desktop Link"
-msgstr "Skrivebordlenke"
+msgstr "Skrivebordlenkje"
 
 #: ../plug-ins/common/file-desktop-link.c:175
 #, c-format
@@ -2387,12 +2375,10 @@ msgid "_Spacing:"
 msgstr "_Avstand:"
 
 #: ../plug-ins/common/file-gegl.c:77
-#| msgid "Radians"
 msgid "Radiance RGBE"
 msgstr "Radians RGBE"
 
 #: ../plug-ins/common/file-gegl.c:93 ../plug-ins/file-exr/file-exr.c:86
-#| msgid "Open File"
 msgid "OpenEXR image"
 msgstr "OpenEXR-bilete"
 
@@ -2441,15 +2427,11 @@ msgstr ""
 "hende animasjonen ikkje spelar skikkeleg eller ikkje kan lagrast på nytt."
 
 #: ../plug-ins/common/file-gif-save.c:556
-#| msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Kunne ikkje redusera fargane vidare. Eksporterer som gjennomsiktig."
 
 #: ../plug-ins/common/file-gif-save.c:675
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The GIF file format does not support images that "
-#| "are more than %d pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
@@ -2466,8 +2448,6 @@ msgstr ""
 "er lagra."
 
 #: ../plug-ins/common/file-gif-save.c:868
-#| msgid ""
-#| "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
@@ -2479,9 +2459,6 @@ msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Er lagt inn forsinkingar for å unngå unødig prosessorbelastning."
 
 #: ../plug-ins/common/file-gif-save.c:1122
-#| msgid ""
-#| "The image you are trying to save as a GIF contains layers which extend "
-#| "beyond the actual borders of the image."
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2494,9 +2471,6 @@ msgid "Cr_op"
 msgstr "_Klipp"
 
 #: ../plug-ins/common/file-gif-save.c:1139
-#| msgid ""
-#| "The GIF file format does not allow this.  You may choose whether to crop "
-#| "all of the layers to the image borders, or cancel this save."
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2544,7 +2518,6 @@ msgid "Brush Pipe"
 msgstr "Penselanimasjon"
 
 #: ../plug-ins/common/file-gih.c:582
-#| msgid "Spacing (percent):"
 msgid "_Spacing (percent):"
 msgstr "_Avstand (prosent):"
 
@@ -2553,12 +2526,10 @@ msgid "Pixels"
 msgstr "Pikslar"
 
 #: ../plug-ins/common/file-gih.c:642
-#| msgid "Cell size:"
 msgid "Ce_ll size:"
 msgstr "_Cellestorleik:"
 
 #: ../plug-ins/common/file-gih.c:655
-#| msgid "Number of cells:"
 msgid "_Number of cells:"
 msgstr "_Tal på celler:"
 
@@ -2583,7 +2554,6 @@ msgid "Display as:"
 msgstr "Vis som:"
 
 #: ../plug-ins/common/file-gih.c:716
-#| msgid "Dimension:"
 msgid "Di_mension:"
 msgstr "_Dimensjon:"
 
@@ -2596,7 +2566,6 @@ msgid "C source code header"
 msgstr "Header for kjeldeteksten i C-kode"
 
 #: ../plug-ins/common/file-heif.c:147
-#| msgid "Load Image Map"
 msgid "Loads HEIF images"
 msgstr "Lastar inn HEIF-bilete"
 
@@ -2631,7 +2600,6 @@ msgstr "Lagra bilete i AV1 biletfilformat (AVIF)"
 #: ../plug-ins/common/file-heif.c:776 ../plug-ins/common/file-heif.c:809
 #: ../plug-ins/common/file-heif.c:848 ../plug-ins/common/file-heif.c:914
 #, c-format
-#| msgid "Uploading image (%s of %s)"
 msgid "Loading HEIF image failed: %s"
 msgstr "Lastinga av HEIF-biletet mislukkast: %s"
 
@@ -2641,7 +2609,6 @@ msgstr ""
 "Lastinga av HEIF-biletet mislukkast. Fila inneheld ingen lesbare bilete"
 
 #: ../plug-ins/common/file-heif.c:1041
-#| msgid "C_ell content:"
 msgid "image content"
 msgstr "biletinnhald"
 
@@ -2657,7 +2624,6 @@ msgstr "Kodinga av HEIF-biletet var mislukka: %s"
 
 #: ../plug-ins/common/file-heif.c:1689
 #, c-format
-#| msgid "Writing to file '%s' failed: %s"
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivinga av HEIF-biletet var mislukka: %s"
 
@@ -2666,12 +2632,10 @@ msgid "primary"
 msgstr "primær"
 
 #: ../plug-ins/common/file-heif.c:1923
-#| msgid "Load Image Map"
 msgid "Load HEIF Image"
 msgstr "Lastar HEIF-bilete"
 
 #: ../plug-ins/common/file-heif.c:1937
-#| msgid "Select Image File"
 msgid "Select Image"
 msgstr "Vel bilete"
 
@@ -2684,7 +2648,6 @@ msgid "_Quality:"
 msgstr "_Kvalitet:"
 
 #: ../plug-ins/common/file-heif.c:2150
-#| msgid "Ma_x depth:"
 msgid "Bit depth:"
 msgstr "Bitdjupn:"
 
@@ -2757,7 +2720,7 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"Dersom denne er slått på, vil GTM bytte ut alle rektangulære markeringar i "
+"Dersom denne er slått på, vil GTM byta ut alle rektangulære markeringar i "
 "einsfarga blokker med verdiar for ROWSPAN og COLSPAN."
 
 #: ../plug-ins/common/file-html-table.c:554
@@ -2844,7 +2807,6 @@ msgid "JPEG 2000 image"
 msgstr "JPEG 2000 bilete"
 
 #: ../plug-ins/common/file-jp2-load.c:186
-#| msgid "JPEG 2000 image"
 msgid "JPEG 2000 codestream"
 msgstr "JPEG 2000 kodestraum"
 
@@ -2881,37 +2843,31 @@ msgstr "Klarte ikkje opna for lesing frå «%s»"
 
 #: ../plug-ins/common/file-jp2-load.c:1095
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Klarte ikkje å setja parametera på dekodaren for «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1103
 #, c-format
-#| msgid "Could not read header from '%s'"
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Kunne ikkje lesa JP2-toppteksten frå «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1111
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Klarte ikkje å dekode JP2-bilete i «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1119
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Klarte ikkje å dekomprimera JP2-biletet i «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1150
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Klarte ikkje å dekode CIELAB JP2-bilete i «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1207
 #, c-format
-#| msgid "Unknown color model in PNG file '%s'."
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Ukjent fargemodell i JP2-kodene «%s»."
 
@@ -2932,12 +2888,10 @@ msgstr "Klarte ikkje å konvertera xvYCC JP2-biletet i «%s» til RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1265
 #, c-format
-#| msgid "Unsupported color mode: %s"
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Fargemodell utan støtte i JP2-biletet «%s»."
 
 #: ../plug-ins/common/file-jpegxl.c:82 ../plug-ins/common/file-jpegxl.c:99
-#| msgid "JPEG image"
 msgid "JPEG XL image"
 msgstr "JPEG XL-bilete"
 
@@ -2956,7 +2910,6 @@ msgid "MNG Options"
 msgstr "MNG-innstillingar"
 
 #: ../plug-ins/common/file-mng.c:1355
-#| msgid "Interlace"
 msgid "_Interlace"
 msgstr "_Linjevis"
 
@@ -2965,7 +2918,6 @@ msgid "Save _background color"
 msgstr "Lagra _bakgrunnsfarge"
 
 #: ../plug-ins/common/file-mng.c:1378
-#| msgid "Save gamma"
 msgid "Save _gamma"
 msgstr "Lagra _gamma"
 
@@ -3012,15 +2964,13 @@ msgstr "Kombiner"
 
 #: ../plug-ins/common/file-mng.c:1441
 msgid "Replace"
-msgstr "Bytt ut"
+msgstr "Byt ut"
 
 #: ../plug-ins/common/file-mng.c:1452
-#| msgid "Default frame disposal:"
 msgid "Default _frame disposal:"
 msgstr "Standard ramme_overgang:"
 
 #: ../plug-ins/common/file-mng.c:1464
-#| msgid "PNG compression level:"
 msgid "_PNG compression level:"
 msgstr "_PNG-komprimeringsnivå:"
 
@@ -3119,7 +3069,6 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Uvanleg PCX-variant, gir opp"
 
 #: ../plug-ins/common/file-pcx.c:827 ../plug-ins/common/file-pnm.c:1245
-#| msgid "Cannot save images with alpha channel."
 msgid "Cannot export images with alpha channel."
 msgstr "Kan ikkje eksportera bilete med alfakanal."
 
@@ -3210,7 +3159,6 @@ msgstr "Feil ved sidenummera frå denne PDF-fila."
 
 #. "Load in reverse order" toggle button
 #: ../plug-ins/common/file-pdf-load.c:1435
-#| msgid "Reverse Order"
 msgid "Load in reverse order"
 msgstr "Last inn i omvendt rekkjefølgje"
 
@@ -3254,11 +3202,6 @@ msgstr "Du må merka ei fil som skal lagrast!"
 
 #: ../plug-ins/common/file-pdf-save.c:561
 #, c-format
-#| msgid ""
-#| "An error occured while creating the PDF file:\n"
-#| "%s\n"
-#| "Make sure you entered a valid filename and that the selected location "
-#| "isn't read only!"
 msgid ""
 "An error occurred while creating the PDF file:\n"
 "%s\n"
@@ -3272,25 +3215,21 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:899
 #: ../plug-ins/common/file-pdf-save.c:1067
-#| msgid "Replace partial transparency with the current background color"
 msgid "_Fill transparent areas with background color"
 msgstr "_Fyll gjennomsiktige område med bakgrunnsfargen"
 
 #: ../plug-ins/common/file-pdf-save.c:904
 #: ../plug-ins/common/file-pdf-save.c:1072
-#| msgid "Omit hidden layers and layers with zero opacity"
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Utelat gøymde lag og lag med null gjennomsnitt"
 
 #: ../plug-ins/common/file-pdf-save.c:909
 #: ../plug-ins/common/file-pdf-save.c:1077
-#| msgid "Convert bitmaps to vector graphics where possible"
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Konverter bilete i _punktgrafikk til vektorgrafikk når dette er mogleg"
 
 #: ../plug-ins/common/file-pdf-save.c:914
 #: ../plug-ins/common/file-pdf-save.c:1082
-#| msgid "Apply layer masks before saving"
 msgid "_Apply layer masks before saving"
 msgstr "_Legg til lagmaske før lagringa"
 
@@ -3311,12 +3250,10 @@ msgstr "topplaget først"
 
 #: ../plug-ins/common/file-pdf-save.c:926
 #: ../plug-ins/common/file-pdf-save.c:1135
-#| msgid "Bottom left"
 msgid "bottom layers first"
 msgstr "botnlaget først"
 
 #: ../plug-ins/common/file-pdf-save.c:934
-#| msgid "Reverse Order"
 msgid "_Reverse the pages order"
 msgstr "_Byt om siderekkjefølgja"
 
@@ -3373,19 +3310,16 @@ msgstr "PNG-bilete"
 
 #: ../plug-ins/common/file-png.c:782
 #, c-format
-#| msgid "Error loading PNG file: %s"
 msgid "Error loading PNG file: %s\n"
 msgstr "Ved ved innlasting av PNG-fila: %s\n"
 
 #: ../plug-ins/common/file-png.c:899
 #, c-format
-#| msgid "Error creating PNG read struct while saving '%s'."
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Feil ved oppretting av PNG-lesestruktur under innlasting av «%s»."
 
 #: ../plug-ins/common/file-png.c:908
 #, c-format
-#| msgid "Error while saving '%s'. Could not save image."
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Feil ved lesing av «%s». Kunne ikkje laga infostrukturen i PNG-toppteksten."
@@ -3435,13 +3369,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1577
 #, c-format
-#| msgid "Error creating PNG write struct while saving '%s'."
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Feil ved oppretting av PNG-skrivestruktur ved eksport av «%s»."
 
 #: ../plug-ins/common/file-png.c:1586
 #, c-format
-#| msgid "Error while saving '%s'. Could not save image."
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Feil ved eksporten av «%s». Kunne ikkje laga infostrukturen i PNG-"
@@ -3449,7 +3381,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1594
 #, c-format
-#| msgid "Error while saving '%s'. Could not save image."
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Feil ved eksporten av «%s». Kunne ikkje eksportera bietet."
 
@@ -3485,7 +3416,6 @@ msgid "PPM image"
 msgstr "PPM-bilete"
 
 #: ../plug-ins/common/file-pnm.c:335
-#| msgid "PNM image"
 msgid "PFM image"
 msgstr "PFM-bilete"
 
@@ -3526,7 +3456,6 @@ msgid "Bogus scale factor."
 msgstr "Bogus skaleringsfaktor."
 
 #: ../plug-ins/common/file-pnm.c:650
-#| msgid "Unsupported brush format"
 msgid "Unsupported scale factor."
 msgstr "Ustøtta skaleringsfaktor."
 
@@ -3548,7 +3477,6 @@ msgid "_Raw"
 msgstr "_Raw"
 
 #: ../plug-ins/common/file-pnm.c:1622
-#| msgid "ASCII"
 msgid "_ASCII"
 msgstr "_ASCII"
 
@@ -3562,18 +3490,15 @@ msgstr "Innekapsla PostScript-bilete"
 
 #: ../plug-ins/common/file-ps.c:1085
 #, c-format
-#| msgid "Could not interpret Postscript file '%s'"
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Kunne ikkje tolka PostScript-fila «%s»"
 
 #: ../plug-ins/common/file-ps.c:1173
-#| msgid "Rendered SVG"
 msgid "Rendered EPS"
 msgstr "Teikna EPS"
 
 #: ../plug-ins/common/file-ps.c:1260
 #, c-format
-#| msgid "PostScript save cannot handle images with alpha channels"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript-eksport kan ikkje handsama bilete med alfakanal"
 
@@ -3757,7 +3682,6 @@ msgstr "LZ77"
 
 #: ../plug-ins/common/file-psp.c:783
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading block header"
 msgstr "Feil ved lesinga av blokktoppteksten"
 
@@ -3768,7 +3692,6 @@ msgstr "Ugyldig blokktopptekst ved %ld"
 
 #: ../plug-ins/common/file-psp.c:793
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid block header"
 msgstr "Ugyldig blokktopptekst"
 
@@ -3789,20 +3712,18 @@ msgstr "Feil ved lesing av generell biletattributtblokk."
 
 #: ../plug-ins/common/file-psp.c:885
 #, c-format
-#| msgid "Compression type"
 msgid "Unknown compression type %d"
 msgstr "Ukjend komprrimeringstype %d"
 
 #: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth %d"
 msgstr "Ikkje støtta bitdjupn %d"
 
 #: ../plug-ins/common/file-psp.c:975
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading creator keyword chunk"
-msgstr "Feil ved lesing av nøkkelordelement"
+msgstr "Feil ved lesing av søkjeorddel for opprettaren"
 
 #: ../plug-ins/common/file-psp.c:981
 #, c-format
@@ -3812,24 +3733,21 @@ msgstr "Ugyldig nøkkelordelementtopptekst"
 #: ../plug-ins/common/file-psp.c:996 ../plug-ins/common/file-psp.c:1023
 #, c-format
 msgid "Error reading creator keyword data"
-msgstr ""
+msgstr "Feil ved lesing av nøkkelorddata for opprettaren"
 
 #: ../plug-ins/common/file-psp.c:1107 ../plug-ins/common/file-psp.c:1116
 #: ../plug-ins/common/file-psp.c:1125
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading color block"
 msgstr "Feil ved lesing av fargeblokk"
 
 #: ../plug-ins/common/file-psp.c:1136
 #, c-format
-#| msgid "Unsupported or invalid channel size"
 msgid "Error: Unsupported palette size"
 msgstr "Feil: Palettstorleiken har ikkje støtte"
 
 #: ../plug-ins/common/file-psp.c:1147
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading color palette"
 msgstr "Feil ved lesing av fargepaletten"
 
@@ -3846,7 +3764,6 @@ msgstr "Feil ved ølesiga av utvidingsinformasjonen"
 
 #: ../plug-ins/common/file-psp.c:1671
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading block information"
 msgstr "Feil ved lesing av blokkinformasjonen"
 
@@ -3857,19 +3774,16 @@ msgstr "Ugyldig lag-underblokk %s, må vera LAGET"
 
 #: ../plug-ins/common/file-psp.c:1782 ../plug-ins/common/file-psp.c:1839
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error reading layer information chunk"
 msgstr "Feil ved lesing av informasjonselementet for laget"
 
 #: ../plug-ins/common/file-psp.c:1881
 #, c-format
-#| msgid "Image dimensions: %d × %d"
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Ugyldige laginformasjonar: %dx%d"
 
 #: ../plug-ins/common/file-psp.c:1942
 #, c-format
-#| msgid "Error reading file"
 msgid "Error creating layer"
 msgstr "Feil ved oppretting av laget"
 
@@ -3890,13 +3804,11 @@ msgstr "Ugyldig kanaltype %d i kanalinformasjonsdelen"
 
 #: ../plug-ins/common/file-psp.c:2130 ../plug-ins/common/file-psp.c:2147
 #, c-format
-#| msgid "Error reading file"
 msgid "Error reading tube data chunk"
-msgstr ""
+msgstr "Feil ved lesing av delar av animasjonsdataa"
 
 #: ../plug-ins/common/file-psp.c:2248
 #, c-format
-#| msgid "Error reading file."
 msgid "Error reading file header."
 msgstr "Feil ved lesing av filhovudet."
 
@@ -3907,7 +3819,6 @@ msgstr "Feil filsignatur."
 
 #: ../plug-ins/common/file-psp.c:2269
 #, c-format
-#| msgid "Unsupported file format version: %d"
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Har ikkje støtte for PSP-filformatversjonen %d.%d."
 
@@ -3918,12 +3829,12 @@ msgstr "ugyldig blokkstorleik"
 #: ../plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Duplicate General Image Attributes block."
-msgstr ""
+msgstr "Dupliser den generelle biletattributtblokka."
 
 #: ../plug-ins/common/file-psp.c:2328
 #, c-format
 msgid "Missing General Image Attributes block."
-msgstr ""
+msgstr "Manglar den generelle biletattributtblokka."
 
 #: ../plug-ins/common/file-psp.c:2442
 #, c-format
@@ -3943,7 +3854,6 @@ msgstr "Digital elevadjon modeldata"
 
 #: ../plug-ins/common/file-raw-data.c:424
 #, c-format
-#| msgid "Could not open '%s' for writing: %s"
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Kunne ikkje opna «%s» for verifisering av storleik: %s"
 
@@ -4004,7 +3914,6 @@ msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 bogesekund)"
 
 #: ../plug-ins/common/file-raw-data.c:1903
-#| msgid "Spacing:"
 msgid "_Sample Spacing:"
 msgstr "_Prøveavstand:"
 
@@ -4033,7 +3942,6 @@ msgid "Planar RGB"
 msgstr "Planar RGB"
 
 #: ../plug-ins/common/file-raw-data.c:1927
-#| msgid "16 bits"
 msgid "B&W 1 bit"
 msgstr "S/K 1 bit"
 
@@ -4178,7 +4086,6 @@ msgstr "Har ikkje støtte for denne typen fargedjupn"
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
-#| msgid "SUNRAS save cannot handle images with alpha channels"
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "SUNRAS-eksport kan ikkje handsama bilete med alfakanalar"
 
@@ -4210,12 +4117,10 @@ msgid "Data Formatting"
 msgstr "Dataformatering"
 
 #: ../plug-ins/common/file-sunras.c:1758
-#| msgid "_Run-Length Encoded"
 msgid "_RunLength Encoded"
 msgstr "_RunLength koda"
 
 #: ../plug-ins/common/file-sunras.c:1759
-#| msgid "Standard"
 msgid "_Standard"
 msgstr "_Standard"
 
@@ -4375,12 +4280,6 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:1004
-#| msgid ""
-#| "The image which you are trying to save as an XBM contains more than two "
-#| "colors.\n"
-#| "\n"
-#| "Please convert it to a black and white (1-bit) indexed image and try "
-#| "again."
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -4425,7 +4324,7 @@ msgstr "Kommentar:"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1305
 msgid "_Write hot spot values"
-msgstr "_Skriv koordinata for lenkeområde"
+msgstr "_Skriv koordinata for lenkjeområdet"
 
 #: ../plug-ins/common/file-xbm.c:1331 ../plug-ins/common/file-xmc.c:1102
 msgid "Hot spot _X:"
@@ -4459,7 +4358,7 @@ msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
-"Kan ikkje setja lenkepunktet!\n"
+"Kan ikkje setja lenkjepunktet!\n"
 "Du må arrangera laga slik at dei har eit felles skjeringspunkt."
 
 #: ../plug-ins/common/file-xmc.c:672
@@ -4507,13 +4406,13 @@ msgstr "XMC innstillingar"
 #: ../plug-ins/common/file-xmc.c:1110
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
-"Skriv inn X-koordinat for lenkepunktet. Utgangspunktet er øvre, venstre "
+"Skriv inn X-koordinat for lenkjepunktet. Utgangspunktet er øvre, venstre "
 "hjørne."
 
 #: ../plug-ins/common/file-xmc.c:1133
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
-"Skriv inn Y-koordinat for lenkepunktet. Utgangspunktet er øvre, venstre "
+"Skriv inn Y-koordinat for lenkjepunktet. Utgangspunktet er øvre, venstre "
 "hjørne."
 
 #: ../plug-ins/common/file-xmc.c:1142
@@ -4647,10 +4546,6 @@ msgstr "Breidda og/eller høgda for ramma «%s» er null!"
 
 #: ../plug-ins/common/file-xmc.c:1621
 #, c-format
-#| msgid ""
-#| "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-#| "Try to change the hot spot position, layer geometry or save without auto-"
-#| "crop."
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or export without auto-"
@@ -4662,10 +4557,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1791
 #, c-format
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose width or height is more than %ipx, a historical max dimension value "
@@ -4678,11 +4569,6 @@ msgstr ""
 "Det kan hende det ikkje er støtta i alle samanhengar."
 
 #: ../plug-ins/common/file-xmc.c:1799
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose nominal size is not supported by GNOME settings.\n"
-#| "You can satisfy it by checking \"Replace the size of all frames...\" in "
-#| "the save dialog, or your cursor may not appear in GNOME settings."
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4705,10 +4591,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:2151
 #, c-format
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose size is over 8 digits.\n"
@@ -4743,7 +4625,6 @@ msgstr "Ugyldig XPM-fil"
 
 #: ../plug-ins/common/file-xpm.c:664
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported drawable type"
 msgstr "Teikneelementtypen er ikkje støtta"
 
@@ -4766,7 +4647,6 @@ msgstr "Klarte ikkje lesa XWD-header frå «%s»"
 
 #: ../plug-ins/common/file-xwd.c:485
 #, c-format
-#| msgid "'%s': illegal number of colors: %u"
 msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %ld"
@@ -4797,19 +4677,16 @@ msgstr ""
 "kombinasjonen er førebels ikkje gyldig."
 
 #: ../plug-ins/common/file-xwd.c:636
-#| msgid "Cannot save images with alpha channels."
 msgid "Cannot export images with alpha channels."
 msgstr "Kan ikkje opna bilete med alfakanalar."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
-#| msgid "Could not open '%s' for writing: %s"
 msgid "Could not open '%s' for writing: "
 msgstr "Kunne ikkje opna «%s» for skriving: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "Error exporting '%s': "
 msgstr "Feil ved eksport av «%s»: "
 
@@ -5053,7 +4930,7 @@ msgstr "_Høglys"
 msgid "Windows"
 msgstr "Vindauge"
 
-#: ../plug-ins/common/filter-pack.c:762 ../plug-ins/common/van-gogh-lic.c:678
+#: ../plug-ins/common/filter-pack.c:762 ../plug-ins/common/van-gogh-lic.c:683
 msgid "_Saturation"
 msgstr "_Metning"
 
@@ -5095,7 +4972,7 @@ msgstr "_Heile biletet"
 
 #: ../plug-ins/common/filter-pack.c:927
 msgid "Se_lection only"
-msgstr "_Bare utvalet"
+msgstr "_Berre utvalet"
 
 #: ../plug-ins/common/filter-pack.c:928
 msgid "Selec_tion in context"
@@ -5131,9 +5008,8 @@ msgid "Transform image with the Mandelbrot Fractal"
 msgstr "Transformer biletet med Mandelbrotfraktalen"
 
 #: ../plug-ins/common/fractal-trace.c:121
-#| msgid "_Fractal Trace..."
 msgid "_Fractal Trace (legacy)..."
-msgstr "_Fraktalspor (legacy)…"
+msgstr "_Fraktalspor (tradisjonell)…"
 
 #: ../plug-ins/common/fractal-trace.c:471
 #: ../plug-ins/common/fractal-trace.c:707
@@ -5214,9 +5090,8 @@ msgid "Draw a grid on the image"
 msgstr "Teikan eit rutemønster på biletet"
 
 #: ../plug-ins/common/grid.c:148
-#| msgid "_Grid..."
 msgid "_Grid (legacy)..."
-msgstr "_Rutenett (legacy)…"
+msgstr "_Rutenett (tradisjonell)…"
 
 #: ../plug-ins/common/grid.c:242
 msgid "Drawing grid"
@@ -5241,7 +5116,7 @@ msgid ""
 "Vertical\n"
 "Lines"
 msgstr ""
-"Vertikall\n"
+"Loddrett\n"
 "Linjer"
 
 #: ../plug-ins/common/grid.c:759
@@ -5261,11 +5136,11 @@ msgstr "Forskyving:"
 #. attach color selectors
 #: ../plug-ins/common/grid.c:932
 msgid "Horizontal Color"
-msgstr "Horisontal farge"
+msgstr "Vassrett farge"
 
 #: ../plug-ins/common/grid.c:954
 msgid "Vertical Color"
-msgstr "Vertikal farge"
+msgstr "Loddrett farge"
 
 #: ../plug-ins/common/grid.c:975
 msgid "Intersection Color"
@@ -5341,7 +5216,7 @@ msgstr "Talet på bitar"
 
 #: ../plug-ins/common/jigsaw.c:2453
 msgid "_Horizontal:"
-msgstr "_Horisontal:"
+msgstr "_Vassrett:"
 
 #: ../plug-ins/common/jigsaw.c:2456
 msgid "Number of pieces going across"
@@ -5349,7 +5224,7 @@ msgstr "Talet på bitar bortover"
 
 #: ../plug-ins/common/jigsaw.c:2470
 msgid "_Vertical:"
-msgstr "_Vertikal:"
+msgstr "_Loddrett:"
 
 #: ../plug-ins/common/jigsaw.c:2473
 msgid "Number of pieces going down"
@@ -5485,7 +5360,7 @@ msgstr "Filter"
 
 #: ../plug-ins/common/nl-filter.c:1090
 msgid "_Alpha trimmed mean"
-msgstr "Alfabasert _middelverdi"
+msgstr "Alfa trimma _middelverdi"
 
 #: ../plug-ins/common/nl-filter.c:1092
 msgid "Op_timal estimation"
@@ -5504,9 +5379,8 @@ msgid "Simulate color distortion produced by a copy machine"
 msgstr "Simulerer fargeforstyrringane i ein kopimaskin"
 
 #: ../plug-ins/common/photocopy.c:158
-#| msgid "_Photocopy..."
 msgid "_Photocopy (legacy)..."
-msgstr "_Fotokopi (legacy)…"
+msgstr "_Fotokopi (tradisjonell)…"
 
 #: ../plug-ins/common/photocopy.c:836
 msgid "Photocopy"
@@ -5530,7 +5404,6 @@ msgid "Display information about plug-ins"
 msgstr "Vis informasjon om programtillegga"
 
 #: ../plug-ins/common/plugin-browser.c:144
-#| msgid "_Plug-In Browser"
 msgid "_Plug-in Browser"
 msgstr "Lesar for _programtillegg"
 
@@ -5561,7 +5434,6 @@ msgid "No matches"
 msgstr "Ingen treff"
 
 #: ../plug-ins/common/plugin-browser.c:546
-#| msgid "Plug-In Browser"
 msgid "Plug-in Browser"
 msgstr "Lesar for programtillegg"
 
@@ -5683,25 +5555,21 @@ msgstr "Frå fargeovergang"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1406
-#| msgid "Show selection"
 msgid "Sho_w selection"
 msgstr "Vis _utval"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1417
-#| msgid "Show color"
 msgid "Show co_lor"
 msgstr "Vis _farge"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1433
-#| msgid "Show selection"
 msgid "Show selec_tion"
 msgstr "Vis _utvalet"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1444
-#| msgid "Show color"
 msgid "Show c_olor"
 msgstr "Vis _farge"
 
@@ -5715,25 +5583,21 @@ msgstr "Utverdiar:"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1649
-#| msgid "Hold intensity"
 msgid "Hold _intensity"
 msgstr "Hald _intensiteten"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1660
-#| msgid "Original intensity"
 msgid "Original i_ntensity"
 msgstr "_Opphavleg intensitet"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1678
-#| msgid "Use subcolors"
 msgid "Us_e subcolors"
 msgstr "Bruk _underfargar"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1689
-#| msgid "Smooth samples"
 msgid "S_mooth samples"
 msgstr "_Utglattingsprøver"
 
@@ -5789,9 +5653,8 @@ msgid "Simulate glow by making highlights intense and fuzzy"
 msgstr "Simulerer glød ved å lage høglysa meir intense og ullne"
 
 #: ../plug-ins/common/softglow.c:139
-#| msgid "_Softglow..."
 msgid "_Softglow (legacy)..."
-msgstr "_Mjukglød (legacy)…"
+msgstr "_Mjukglød (tradisjonell)…"
 
 #: ../plug-ins/common/softglow.c:628
 msgid "Softglow"
@@ -6366,71 +6229,71 @@ msgstr "Einingshandterar"
 msgid "_Refresh"
 msgstr "_Oppdater"
 
-#: ../plug-ins/common/van-gogh-lic.c:575 ../plug-ins/common/van-gogh-lic.c:646
+#: ../plug-ins/common/van-gogh-lic.c:580 ../plug-ins/common/van-gogh-lic.c:651
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: ../plug-ins/common/van-gogh-lic.c:672
+#: ../plug-ins/common/van-gogh-lic.c:677
 msgid "Effect Channel"
 msgstr "Effektkanal"
 
-#: ../plug-ins/common/van-gogh-lic.c:679
+#: ../plug-ins/common/van-gogh-lic.c:684
 msgid "_Brightness"
 msgstr "_Lysstyrke"
 
-#: ../plug-ins/common/van-gogh-lic.c:685
+#: ../plug-ins/common/van-gogh-lic.c:690
 msgid "Effect Operator"
 msgstr "Effektoperatør"
 
-#: ../plug-ins/common/van-gogh-lic.c:690
+#: ../plug-ins/common/van-gogh-lic.c:695
 msgid "_Derivative"
 msgstr "_Avleidd"
 
-#: ../plug-ins/common/van-gogh-lic.c:691
+#: ../plug-ins/common/van-gogh-lic.c:696
 msgid "_Gradient"
 msgstr "_Fargeovergang"
 
-#: ../plug-ins/common/van-gogh-lic.c:697
+#: ../plug-ins/common/van-gogh-lic.c:702
 msgid "Convolve"
 msgstr "Konturutjamning"
 
-#: ../plug-ins/common/van-gogh-lic.c:702
+#: ../plug-ins/common/van-gogh-lic.c:707
 msgid "_With white noise"
 msgstr "_Med kvit støy"
 
-#: ../plug-ins/common/van-gogh-lic.c:703
+#: ../plug-ins/common/van-gogh-lic.c:708
 msgid "W_ith source image"
 msgstr "M_ed kjeldebiletet"
 
-#: ../plug-ins/common/van-gogh-lic.c:722
+#: ../plug-ins/common/van-gogh-lic.c:727
 msgid "_Effect image:"
 msgstr "_Effektbilete:"
 
-#: ../plug-ins/common/van-gogh-lic.c:733
+#: ../plug-ins/common/van-gogh-lic.c:738
 msgid "_Filter length:"
 msgstr "_Filterlengde:"
 
-#: ../plug-ins/common/van-gogh-lic.c:742
+#: ../plug-ins/common/van-gogh-lic.c:747
 msgid "_Noise magnitude:"
 msgstr "_Støymengdel:"
 
-#: ../plug-ins/common/van-gogh-lic.c:751
+#: ../plug-ins/common/van-gogh-lic.c:756
 msgid "In_tegration steps:"
 msgstr "In_tegrasjonssteg:"
 
-#: ../plug-ins/common/van-gogh-lic.c:760
+#: ../plug-ins/common/van-gogh-lic.c:765
 msgid "_Minimum value:"
 msgstr "_Minimumverdi:"
 
-#: ../plug-ins/common/van-gogh-lic.c:769
+#: ../plug-ins/common/van-gogh-lic.c:774
 msgid "M_aximum value:"
 msgstr "M_aksimumverdi:"
 
-#: ../plug-ins/common/van-gogh-lic.c:815
+#: ../plug-ins/common/van-gogh-lic.c:820
 msgid "Special effects that nobody understands"
 msgstr "Spesialeffektar som ingen forstår"
 
-#: ../plug-ins/common/van-gogh-lic.c:820
+#: ../plug-ins/common/van-gogh-lic.c:825
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC) …"
 
@@ -6558,28 +6421,23 @@ msgstr "Flytsteg %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
 #: ../plug-ins/common/wavelet-decompose.c:350
-#| msgid "Decompose"
 msgid "Wavelet decompose"
-msgstr "Wavelet nedbryting"
+msgstr "Wavelet separering"
 
 #: ../plug-ins/common/wavelet-decompose.c:102
-#| msgid "_Decompose..."
 msgid "_Wavelet-decompose..."
-msgstr "_Wavelet nedbryting…"
+msgstr "_Wavelet separering…"
 
 #: ../plug-ins/common/wavelet-decompose.c:177
-#| msgid "Decompose"
 msgid "Wavelet-Decompose"
-msgstr "Wavelet-nedbryting"
+msgstr "Wavelet-separering"
 
 #: ../plug-ins/common/wavelet-decompose.c:186
-#| msgid "Decomposing"
 msgid "Decomposition"
 msgstr "Dekomponering"
 
 #: ../plug-ins/common/wavelet-decompose.c:248
 #, c-format
-#| msgid "Scale X:"
 msgid "Scale %d"
 msgstr "Skaler %d"
 
@@ -6755,7 +6613,6 @@ msgstr "Feil ved lesing av header for BMP-fila «%s»"
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
 #, c-format
-#| msgid "Unsupported compression (%lu) in BMP file from '%s'"
 msgid "Unsupported compression (%u) in BMP file from '%s'"
 msgstr "Ikkje støtta komprimering (%u) i BMP-fila frå «%s»"
 
@@ -6773,7 +6630,6 @@ msgid "The bitmap ends unexpectedly."
 msgstr "Punktgrafikken slutta uventa."
 
 #: ../plug-ins/file-bmp/bmp-save.c:186 ../plug-ins/file-bmp/bmp-save.c:219
-#| msgid "Cannot save indexed image with transparency in BMP file format."
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "Kan ikkje eksportera endekserte bilete med gjennomsikt i BMP-filformatet."
@@ -6833,7 +6689,6 @@ msgstr "Microsoft Windows BMP-bilete"
 
 #: ../plug-ins/file-dds/dds.c:162 ../plug-ins/file-dds/dds.c:181
 #: ../plug-ins/file-dds/dds.c:200
-#| msgid "SVG image"
 msgid "DDS image"
 msgstr "DDS-bilete"
 
@@ -6849,15 +6704,15 @@ msgstr "Dekod YCoCg (skalert)"
 msgid "Decode Alpha exponent"
 msgstr "Dekod alfaeksponenten"
 
-#: ../plug-ins/file-dds/ddsread.c:1395
+#: ../plug-ins/file-dds/ddsread.c:1399
 msgid "Load DDS"
 msgstr "Last inn DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1414
+#: ../plug-ins/file-dds/ddsread.c:1418
 msgid "_Load mipmaps"
 msgstr "_Last inn mijpmaps"
 
-#: ../plug-ins/file-dds/ddsread.c:1421
+#: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Dekod automatisk YCoCg-/AExp-bilete når dei vert oppdaga"
 
@@ -6891,32 +6746,26 @@ msgid "_Mipmaps:"
 msgstr "_Mipmaps:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2098
-#| msgid "Transparent"
 msgid "Transparent index:"
 msgstr "Gjennomsiktsindeks:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2142
-#| msgid "Main Options"
 msgid "Mipmap Options"
 msgstr "Innstillingar for mitmaps"
 
 #: ../plug-ins/file-dds/ddswrite.c:2155
-#| msgid "Filter"
 msgid "F_ilter:"
 msgstr "_Filter:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2168
-#| msgid "_Wrap around"
 msgid "_Wrap mode:"
 msgstr "_Brytingsmodus:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2178
-#| msgid "Applying convolution"
 msgid "Appl_y gamma correction"
 msgstr "_Bruk gammakorreksjon"
 
 #: ../plug-ins/file-dds/ddswrite.c:2192
-#| msgid "Use subcolors"
 msgid "Use s_RGB colorspace"
 msgstr "Bruk _RGB-fargemodell"
 
@@ -6929,37 +6778,31 @@ msgid "Preserve alpha _test coverage"
 msgstr "_Bevar alfa-testdekning"
 
 #: ../plug-ins/file-dds/ddswrite.c:2240
-#| msgid "_Alpha threshold:"
 msgid "_Alpha test threshold:"
 msgstr "Grense for _alfatest:"
 
 #: ../plug-ins/file-exr/file-exr.c:191
 #, c-format
-#| msgid "Error opening file '%s'"
 msgid "Error opening file '%s' for reading"
 msgstr "Feil ved opning av fila «%s» for lesing"
 
 #: ../plug-ins/file-exr/file-exr.c:202
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image dimensions from '%s'"
 msgstr "Feil ved førespurnad om biletdimensjonar frå «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:222
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image precision from '%s'"
 msgstr "Feil ved førespurnad om biletpresisjon frå «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:239
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error querying image type from '%s'"
 msgstr "Feil ved førespurnad om bilettype frå «%s»"
 
 #: ../plug-ins/file-exr/file-exr.c:298
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Error reading pixel data from '%s'"
 msgstr "Feil ved lesinga av pikseldata frå «%s"
 
@@ -6969,7 +6812,6 @@ msgstr "G3-Fax-bilete"
 
 #: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
 #, c-format
-#| msgid "Could not get layers for image %d"
 msgid "Could not create buffer to process image data."
 msgstr "Kunne ikkje laga buffer for å handsama biletdata."
 
@@ -6980,7 +6822,6 @@ msgstr "Ugyldig biletstorleik (%d x %d). Biletet kan vera øydelagt."
 
 #: ../plug-ins/file-faxg3/faxg3.c:550
 #, c-format
-#| msgid "Could not close the file"
 msgid "Could not create image."
 msgstr "Greidde ikkje å laga biletet."
 
@@ -6997,7 +6838,6 @@ msgid "FITS file keeps no displayable images"
 msgstr "FITS-fila inneheld ingen bilete som kan visast"
 
 #: ../plug-ins/file-fits/fits.c:457
-#| msgid "FITS save cannot handle images with alpha channels"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS-eksport kan ikkje handsama bilete med alfakanalar"
 
@@ -7018,7 +6858,6 @@ msgid "_Automatic"
 msgstr "_Automatisk"
 
 #: ../plug-ins/file-fits/fits.c:1187
-#| msgid "By DATAMIN/DATAMAX"
 msgid "By _DATAMIN/DATAMAX"
 msgstr "Ved _DATAMIN/DATAMAX"
 
@@ -7041,7 +6880,6 @@ msgid "Frame (%i)"
 msgstr "Ramme (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:721
-#| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Kan eksportera berre INDEKSERTE og GRÅ bilete."
 
@@ -7055,8 +6893,6 @@ msgid "_From:"
 msgstr "_Frå:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:913 ../plug-ins/file-fli/fli-gimp.c:971
-#| msgctxt "email-address"
-#| msgid "_To:"
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Til:"
@@ -7107,7 +6943,6 @@ msgstr "Komprimert (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "Could not read '%lu' bytes"
 msgstr "Kunne ikkje lesa '%lu' byte"
 
@@ -7182,7 +7017,6 @@ msgid "Sho_w preview in image window"
 msgstr "_Vis førehandsvisinga i biletvindauget"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:918
-#| msgid "Save _EXIF data"
 msgid "Save _Exif data"
 msgstr "Lagra _Exif-data"
 
@@ -7195,7 +7029,6 @@ msgstr "Lagra _XMP-data"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:946
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
-#| msgid "Save _XMP data"
 msgid "Save _IPTC data"
 msgstr "Lagra _IPTC-data"
 
@@ -7251,11 +7084,11 @@ msgstr "4:4:4  (best kvalitet)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1170
 msgid "4:2:2 horizontal (chroma halved)"
-msgstr "4:2:2 horisontal (chroma halvert)"
+msgstr "4:2:2 vassrett (kroma halvert)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1172
 msgid "4:2:2 vertical (chroma halved)"
-msgstr "4:2:2 vertikall (chroma halvert)"
+msgstr "4:2:2 loddrettl (kroma halvert)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1174
 msgid "4:2:0 (chroma quartered)"
@@ -7361,7 +7194,6 @@ msgstr "Ustøtta eller ugyldig lagstorleik:  %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:671
 #, c-format
-#| msgid "Unsupported or invalid image size: %dx%d"
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Ugyldig eller ikkje støtta maskestorleik: %d"
 
@@ -7380,23 +7212,22 @@ msgstr "Ustøtta eller ugyldig lagmaskebreidde:  %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Ustøtta eller ugyldig lagmaskestorleik:   %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1540 ../plug-ins/file-psd/psd-load.c:2126
+#: ../plug-ins/file-psd/psd-load.c:1548 ../plug-ins/file-psd/psd-load.c:2134
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Har ikkje støtte for kompresjonsmodus %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2273
+#: ../plug-ins/file-psd/psd-load.c:2281
 msgid "Extra"
 msgstr "Ekstra"
 
-#: ../plug-ins/file-psd/psd-load.c:2473
+#: ../plug-ins/file-psd/psd-load.c:2481
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ustøtta eller ugyldig kanalstorleik"
 
-#: ../plug-ins/file-psd/psd-load.c:2539
+#: ../plug-ins/file-psd/psd-load.c:2547
 #, c-format
-#| msgid "Failed to open '%s': %s"
 msgid "Failed to decompress data"
 msgstr "Kunne ikkje dekomprimera data"
 
@@ -7406,9 +7237,6 @@ msgstr "Feil: Kan ikkje omforma GIMP bilettype til PSD-modus"
 
 #: ../plug-ins/file-psd/psd-save.c:1861
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
@@ -7418,9 +7246,6 @@ msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:1882
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
@@ -7437,7 +7262,6 @@ msgid "Photoshop image"
 msgstr "Photoshop-bilete"
 
 #: ../plug-ins/file-psd/psd.c:130
-#| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
 msgstr "Photoshop-bilete (fletta)"
 
@@ -7602,9 +7426,6 @@ msgid "_No compression"
 msgstr "_Inga komprimering"
 
 #: ../plug-ins/file-sgi/sgi.c:685
-#| msgid ""
-#| "Aggressive RLE\n"
-#| "(not supported by SGI)"
 msgid ""
 "_Aggressive RLE\n"
 "(not supported by SGI)"
@@ -7688,19 +7509,16 @@ msgstr "Mistenkeleg bitdjupn: %d for side %d. Biletet kan vera øydelagt."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
-#| msgid "Unsupported bit depth: %d"
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Ikkje støtte for bit-djupna: %d for side %d."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:720
 #, c-format
-#| msgid "Could not read header from '%s'"
 msgid "Could not get image width from '%s'"
 msgstr "Fekk ikkje tak i biletbreidda frå «%s»"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:728
 #, c-format
-#| msgid "Could not read color entries from '%s'"
 msgid "Could not get image length from '%s'"
 msgstr "Fekk ikkje tak i biletlengda frå «%s»"
 
@@ -7754,7 +7572,6 @@ msgstr "Ugyldig eller ukjend komprimering %u. Set kompresjonen til null."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1168
 #, c-format
-#| msgid "Could not create new image for '%s': %s"
 msgid "Could not create a new image: %s"
 msgstr "Kunne ikkje oppretta eit nytt bilete: %s"
 
@@ -7786,7 +7603,6 @@ msgstr "Ugyldig info om biletoppløysing, brukar standard"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1427
 #, c-format
-#| msgid "Could not read color entries from '%s'"
 msgid "Could not get colormaps from '%s'"
 msgstr "Kunne ikkje få fargekartet frå «%s»"
 
@@ -7844,7 +7660,6 @@ msgid "_Keep empty space around imported layers"
 msgstr "_Behald tom plass rundt importerte lag"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2732
-#| msgid "Source channel:"
 msgid "Process extra channel as:"
 msgstr "Prosesser ekstra kanal som:"
 
@@ -7857,7 +7672,6 @@ msgid "Pre_multiplied alpha"
 msgstr "_Premultiplisert alfa"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2737
-#| msgid "Channels"
 msgid "Channe_l"
 msgstr "_Kanal"
 
@@ -7937,7 +7751,6 @@ msgstr "CCITT Group _4 faks"
 
 #: ../plug-ins/file-webp/file-webp.c:124 ../plug-ins/file-webp/file-webp.c:145
 #: ../plug-ins/file-webp/file-webp.c:163
-#| msgid "PNG image"
 msgid "WebP image"
 msgstr "WebP-bilete"
 
@@ -7960,27 +7773,22 @@ msgid "_Lossless"
 msgstr "_Tapsfri"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:142
-#| msgid "Image _title:"
 msgid "Image _quality:"
 msgstr "Bilet_kvalitet:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:150
-#| msgid "Image _title:"
 msgid "Image quality"
 msgstr "Biletkvalitet"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:161
-#| msgid "_Quality:"
 msgid "Alpha q_uality:"
 msgstr "Alfa_kvalitet:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:169
-#| msgid "Alpha Channels"
 msgid "Alpha channel quality"
 msgstr "Kvaliteten på alfakanalen"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:194
-#| msgid "Lightsource type:"
 msgid "Source _type:"
 msgstr "Kjelde_type:"
 
@@ -7990,13 +7798,11 @@ msgstr "WebP-kodar «førehandsinnstilt»"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:229
-#| msgid "As _animation"
 msgid "As A_nimation"
 msgstr "Som _animering"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:258
-#| msgid "_Loop forever"
 msgid "Loop _forever"
 msgstr "_Gå i evig sløyfe"
 
@@ -8012,19 +7818,16 @@ msgstr "_Minimer utdatastorleik (saktare)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:333
-#| msgid "_Delay between frames where unspecified:"
 msgid "Delay between frames where unspecified:"
 msgstr "Forseinking mellom rammene når uspesifisert:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:356
-#| msgid "_Use delay entered above for all frames"
 msgid "Use _delay entered above for all frames"
 msgstr "Bruk forseinkinga som er oppgjeve ovanfor for alle rammene"
 
 #. Save EXIF data
 #: ../plug-ins/file-webp/file-webp-dialog.c:368
-#| msgid "Save _EXIF data"
 msgid "_Save Exif data"
 msgstr "_Lagra Exif-data"
 
@@ -8035,13 +7838,11 @@ msgstr "Lagra _IPTC"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid WebP file '%s'"
 msgstr "Ugyldig WebP-fil «%s»"
 
 #: ../plug-ins/file-webp/file-webp-load.c:200
 #, c-format
-#| msgid "Failed to save PPM file '%s': %s"
 msgid "Failed to decode animated WebP file '%s'"
 msgstr "Lukkast ikkje å dekoda animert WebP-fila «%s»"
 
@@ -8057,7 +7858,6 @@ msgstr "Lukkast ikkje å dekoda animert WebP-ramme frå «%s»"
 
 #: ../plug-ins/file-webp/file-webp-load.c:232
 #, c-format
-#| msgid "Frame %d (%d%s)"
 msgid "Frame %d (%dms)"
 msgstr "Ramme %d (%dms)"
 
@@ -8067,22 +7867,19 @@ msgstr "ikkje meir minne"
 
 #: ../plug-ins/file-webp/file-webp-save.c:118
 msgid "not enough memory to flush bits"
-msgstr ""
+msgstr "ikkje nok minne til å oppdatera bits"
 
 #: ../plug-ins/file-webp/file-webp-save.c:120
-#| msgid "Parameters"
 msgid "NULL parameter"
 msgstr "NULL-parameter"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
-#| msgid "Invalid X resolution."
 msgid "invalid configuration"
 msgstr "ugyldig konfigurasjon"
 
 #. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
 #: ../plug-ins/file-webp/file-webp-save.c:125
 #, c-format
-#| msgid "Image dimensions: %d × %d"
 msgid "bad image dimensions (maximum: %d×%d)"
 msgstr "dårleg bilete-dimensjonar (maksimalt: %d×%d)"
 
@@ -8096,7 +7893,7 @@ msgstr "partisjonen er større enn 16M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "unable to flush bytes"
-msgstr ""
+msgstr "kunne ikkje oppdatera bytes"
 
 #: ../plug-ins/file-webp/file-webp-save.c:134
 msgid "file is larger than 4GiB"
@@ -8111,22 +7908,17 @@ msgid "list terminator"
 msgstr "listeterminator"
 
 #: ../plug-ins/file-webp/file-webp-save.c:140
-#| msgid "Unknown error"
 msgid "unknown error"
 msgstr "ukjend feil"
 
 #: ../plug-ins/file-webp/file-webp-save.c:190
 #: ../plug-ins/file-webp/file-webp-save.c:534
 #, c-format
-#| msgid "Could not open '%s' for writing: %s"
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Kunne ikkje opna «%s» for skriving: %s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:274
 #, c-format
-#| msgid ""
-#| "Parse error in '%s':\n"
-#| "%s"
 msgid "WebP error: '%s'"
 msgstr "WebP-feil: '%s'"
 
@@ -8379,7 +8171,6 @@ msgid "Fractal Explorer"
 msgstr "Fraktalutforskaren"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
-#| msgid "Realtime preview"
 msgid "Re_altime preview"
 msgstr "Førehandsvising i sanntid"
 
@@ -8399,7 +8190,6 @@ msgstr "_Forstørr"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
 #: ../plug-ins/imagemap/imap_menu.c:198
-#| msgid "Zoom out"
 msgid "Zoom _Out"
 msgstr "_Forminsk"
 
@@ -8410,7 +8200,6 @@ msgstr "Angre siste zoomendringa"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
 #: ../plug-ins/ifs-compose/ifs-compose.c:1039
 #: ../plug-ins/imagemap/imap_menu.c:164
-#| msgid "Redo"
 msgid "_Redo"
 msgstr "_Angra"
 
@@ -8420,11 +8209,11 @@ msgstr "Gjenta siste zoomendringa"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
 msgid "_Parameters"
-msgstr "_Parametrar"
+msgstr "_Parameterar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:722
 msgid "Fractal Parameters"
-msgstr "Fraktalparametrar"
+msgstr "Fraktalparameterar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
 #: ../plug-ins/map-object/map-object-ui.c:1086
@@ -8604,7 +8393,7 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Dette alternativet fører til at høge fargeverdiar vert bytt om med låge "
+"Dette alternativet fører til at høge fargeverdiar vert byt om med låge "
 "verdiar, og omvendt"
 
 #. Colormode toggle box
@@ -8649,11 +8438,11 @@ msgstr "Klarte ikkje skriva til «%s»: %s"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1637
 msgid "Load Fractal Parameters"
-msgstr "Hent fraktalparametrar"
+msgstr "Hent fraktalparameterane"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1675
 msgid "Save Fractal Parameters"
-msgstr "Lagra fraktalparametrar"
+msgstr "Lagra fraktalparameterane"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1873
 #, c-format
@@ -8731,7 +8520,7 @@ msgstr "Lukka"
 
 #: ../plug-ins/gfig/gfig-bezier.c:406
 msgid "Close curve on completion"
-msgstr "Lukk kurven ved avslutning"
+msgstr "Lukk kurva ved avslutning"
 
 #: ../plug-ins/gfig/gfig-bezier.c:411
 msgid "Show Line Frame"
@@ -8778,11 +8567,11 @@ msgstr "Form fargeovergang"
 
 #: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Vertical gradient"
-msgstr "Vertikal fargeovergang"
+msgstr "Loddrett fargeovergang"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Horizontal gradient"
-msgstr "Horisontal fargeovergang"
+msgstr "Vassrett fargeovergang"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:478
@@ -8829,7 +8618,6 @@ msgid "_Grid"
 msgstr "_Rutenett"
 
 #: ../plug-ins/gfig/gfig-dialog.c:898
-#| msgid "Preferences"
 msgid "_Preferences..."
 msgstr "_Innstillingar…"
 
@@ -8850,7 +8638,6 @@ msgid "Lower selected object"
 msgstr "Senk det valde objektet"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910
-#| msgid "pixels from _top"
 msgid "Raise to _top"
 msgstr "Reis til _toppen"
 
@@ -8859,7 +8646,6 @@ msgid "Raise selected object to top"
 msgstr "Hev det valde objektet til toppen"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
-#| msgid "To _bottom"
 msgid "Lower to _bottom"
 msgstr "Senk til _botnen"
 
@@ -9074,7 +8860,6 @@ msgid "Orientation:"
 msgstr "Orientering:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:580
-#| msgid "Hey where has the object gone ?"
 msgid "Hey, where has the object gone?"
 msgstr "Hei, kvar er objektet vorte av?"
 
@@ -9848,22 +9633,18 @@ msgid "S_ave Defaults"
 msgstr "_Lagra standardverdiane"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#| msgid "Save _EXIF data"
 msgid "Save Exif data"
 msgstr "Lagra Exif-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#| msgid "Save _XMP data"
 msgid "Save XMP data"
 msgstr "Lagra XMP-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#| msgid "Save _XMP data"
 msgid "Save IPTC data"
 msgstr "Lagra IPTC-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#| msgid "Save _thumbnail"
 msgid "Save thumbnail"
 msgstr "Lagra miniatyren"
 
@@ -9876,7 +9657,6 @@ msgid "Co_mpression level:"
 msgstr "_Komprimering:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:18
-#| msgid "Automatic pre_view"
 msgid "automatic pixelformat"
 msgstr "automatisk pikselformat"
 
@@ -9889,7 +9669,6 @@ msgid "8bpc GRAY"
 msgstr "8bpc GRÅ"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#| msgid "RGBA"
 msgid "8bpc RGBA"
 msgstr "8bpc RGBA"
 
@@ -9918,27 +9697,22 @@ msgid "RGB Save Type"
 msgstr "RGB-lagringstype"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:2
-#| msgid "Standard (R,G,B)"
 msgid "_Standard (R,G,B)"
 msgstr "_Standard (R,G,B)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:3
-#| msgid "Planar (RRR,GGG,BBB)"
 msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Planar (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
-#| msgid "_Palette Type:"
 msgid "Palette Type"
 msgstr "Palettype"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
-#| msgid "R, G, B (normal)"
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (normal)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:6
-#| msgid "B, G, R, X (BMP style)"
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (BMP-stil)"
 
@@ -9955,12 +9729,10 @@ msgid "Export in _BigTIFF variant file format"
 msgstr "Eksporter i _BigTIFF-variant-filformat"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
-#| msgid "Save layer o_ffset"
 msgid "Save _layers"
 msgstr "_Lagra laga"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
-#| msgid "Could not get layers for image %d"
 msgid "Cr_op layers to image bounds"
 msgstr "Klipp lag til billetgrenser"
 
@@ -9970,17 +9742,14 @@ msgstr ""
 "Fargar vert ikkje lagra før dei er multipliserte med den tilhøyrande alfa"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
-#| msgid "Comment"
 msgid "<b>Comment</b>"
 msgstr "<b>Merknad</b>"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
-#| msgid "Save _EXIF data"
 msgid "S_ave Exif data"
 msgstr "Lagra _Exif-data"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:13
-#| msgid "Save _EXIF data"
 msgid "Save _GeoTIFF data"
 msgstr "Lagra _Geo TIFF-data"
 
@@ -9989,7 +9758,6 @@ msgid "Keep the GeoTIFF metadata if it was present on import"
 msgstr "Behald GeoTIFF metadata viss dei var til stades ved importen"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
-#| msgid "PDF document"
 msgid "Document Title"
 msgstr "Tittel på dokumentet"
 
@@ -9998,7 +9766,6 @@ msgid "Author"
 msgstr "Forfattar"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
-#| msgid "_Author:"
 msgid "Author Title"
 msgstr "Forfattaren sin tittel"
 
@@ -10007,32 +9774,26 @@ msgid "Description"
 msgstr "Beskriving"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
-#| msgid "Description _writer:"
 msgid "Description Writer\t"
 msgstr "Beskriving skribent "
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
-#| msgid "Rotating"
 msgid "Rating"
 msgstr "Rangering"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
-#| msgid "_Keywords:"
 msgid "Keywords"
 msgstr "Nøkkelord"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
-#| msgid "Copyright"
 msgid "Copyright Status"
 msgstr "Status for opphavsrett"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
-#| msgid "Copyright"
 msgid "Copyright Notice"
 msgstr "Merknadar om opphavsrett"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
-#| msgid "Copyright"
 msgid "Copyright URL"
 msgstr "Nettadresse for opphavsrett"
 
@@ -10049,7 +9810,6 @@ msgid "Postal Code\t"
 msgstr "Postkode "
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
-#| msgid "Rotate / Scale"
 msgid "State / Province"
 msgstr "Delstat/region"
 
@@ -10058,7 +9818,6 @@ msgid "Country"
 msgstr "Land"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
-#| msgid "Phong"
 msgid "Phone(s)"
 msgstr "Telefon(ar)"
 
@@ -10071,7 +9830,6 @@ msgid "Website(s)"
 msgstr "Nettside(r)"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
-#| msgid "Installation Date"
 msgid "Creation Date"
 msgstr "Skapingsdato"
 
@@ -10084,7 +9842,6 @@ msgid "IPTC Scene Code"
 msgstr "IPTC-scenekode"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
-#| msgid "Curl Location"
 msgid "Sublocation\t"
 msgstr "Underplassering "
 
@@ -10097,7 +9854,6 @@ msgid "IPTC Subject Code"
 msgstr "IPTC subjektkode"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
-#| msgid "Create line"
 msgid "Headline"
 msgstr "Overskrift"
 
@@ -10122,7 +9878,6 @@ msgid "Source"
 msgstr "Kjelde"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
-#| msgid "Image Types"
 msgid "Usage Terms"
 msgstr "Bruksvilkår"
 
@@ -10132,7 +9887,6 @@ msgid "IPTC"
 msgstr "IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
-#| msgid "Curl Location"
 msgid "Sublocation"
 msgstr "Underplassering"
 
@@ -10149,7 +9903,6 @@ msgid "Country ISO-Code"
 msgstr "ISO-kode for landet"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
-#| msgid "Select Region"
 msgid "World Region"
 msgstr "Verdsregion"
 
@@ -10166,12 +9919,10 @@ msgid "Event"
 msgstr "HJending"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
-#| msgid "Add a New Unit"
 msgid "Add an entry"
 msgstr "Legg til ei oppføring"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:43
-#| msgid "Move an object"
 msgid "Remove an entry"
 msgstr "Fjern ei oppføring"
 
@@ -10188,7 +9939,6 @@ msgid "Country ISO Code"
 msgstr "ISO-kode for land"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
-#| msgid "Map to Object"
 msgid "Artwork or Object"
 msgstr "Kunstverk eller objekt"
 
@@ -10197,12 +9947,10 @@ msgid "Title"
 msgstr "Tittel"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:49
-#| msgid "Create"
 msgid "Date Created"
 msgstr "Dato laga"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:50
-#| msgid "Create"
 msgid "Creator"
 msgstr "Skapar"
 
@@ -10211,7 +9959,6 @@ msgid "Source Inventory ID"
 msgstr "Kjeldeinventar-ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
-#| msgid "Mode _1"
 msgid "Model Age"
 msgstr "Modellalder"
 
@@ -10224,7 +9971,6 @@ msgid "Model Release Status"
 msgstr "Modellutgjevingsstatus"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
-#| msgid "Add Additional Guides"
 msgid "Additional Model Info"
 msgstr "Ytterlegare informasjon om modellen"
 
@@ -10233,7 +9979,6 @@ msgid "Model Release Identifier"
 msgstr "Identifikator for modellutgjeving"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
-#| msgid "Image Size"
 msgid "Image Supplier ID"
 msgstr "Biletleverandør-ID"
 
@@ -10246,7 +9991,6 @@ msgid "Registry Entry"
 msgstr "Registeroppføring"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
-#| msgid "Image Size"
 msgid "Image Supplier Name"
 msgstr "Namn på bileteleverandøren"
 
@@ -10255,12 +9999,10 @@ msgid "Max. Available Width"
 msgstr "Høgste tilgjengelege breidd"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
-#| msgid "Available images:"
 msgid "Max. Available Height"
 msgstr "Høgste tilgjengelege høgd"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:63
-#| msgid "Lightsource type:"
 msgid "Digital Source Type"
 msgstr "Digital kjeldetype"
 
@@ -10273,12 +10015,10 @@ msgid "Item Identifier"
 msgstr "Intern identifikator"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:66
-#| msgid "Copyright"
 msgid "Copyright Owner"
 msgstr "Eigar av opphavsrett"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:67
-#| msgid "_License:"
 msgid "Licensor"
 msgstr "Lisensgjevar"
 
@@ -10287,12 +10027,10 @@ msgid "Property Release Status"
 msgstr "Status for lauslating av eigedelar"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
-#| msgid "Image Selection"
 msgid "Image Creator"
 msgstr "Biletskapar"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
-#| msgid "_Identifier prefix:"
 msgid "Identifier"
 msgstr "Identifikator"
 
@@ -10349,7 +10087,6 @@ msgid "Longitude"
 msgstr "Lengdegrad"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
-#| msgid "A_mplitude:"
 msgid "Altitude"
 msgstr "Høgd"
 
@@ -10366,12 +10103,10 @@ msgid "Altitude Reference"
 msgstr "Høgdereferanse"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
-#| msgid "PSP"
 msgid "GPS"
 msgstr "GPS"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:89
-#| msgid "Gradient"
 msgid "Patient"
 msgstr "Pasient"
 
@@ -10392,7 +10127,6 @@ msgid "Study ID"
 msgstr "Studie-ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
-#| msgid "Rendering wind"
 msgid "Referring Physician"
 msgstr "Tilvisande lege"
 
@@ -10401,17 +10135,14 @@ msgid "Study Date"
 msgstr "Studiedato"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
-#| msgid "Description"
 msgid "Study Description"
 msgstr "Studiebeskriving"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
-#| msgid "Select Number Color"
 msgid "Series Number"
 msgstr "Serienummer"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
-#| msgid "Quality:"
 msgid "Modality"
 msgstr "Modalitet"
 
@@ -10420,7 +10151,6 @@ msgid "Series Date"
 msgstr "Seriedato"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
-#| msgid "Description"
 msgid "Series Description"
 msgstr "Seriebeskriving"
 
@@ -10433,7 +10163,6 @@ msgid "Equipment Manufacturer"
 msgstr "Utsttyrsprodusent"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
-#| msgid "DICOM image"
 msgid "DICOM"
 msgstr "DICOM"
 
@@ -10450,7 +10179,6 @@ msgid "XMP Tag"
 msgstr "XMP-fane"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
-#| msgid "XBM"
 msgid "XMP"
 msgstr "XMP"
 
@@ -10522,7 +10250,6 @@ msgid "A_uto update preview"
 msgstr "Automatisk _førehandsvising"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2533
-#| msgid "`Default' is created."
 msgid "'Default' is created."
 msgstr "' Standard er laga."
 
@@ -10623,7 +10350,6 @@ msgid "Gradient Flare Editor"
 msgstr "Gradientreflekshandteraren"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3400
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
 msgstr "_Skann overgangane på nytt"
 
@@ -10841,9 +10567,6 @@ msgstr "Handboka for GIMP er ikkje tilgjengeleg."
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#| msgid ""
-#| "Please install the additional help package or use the online user manual "
-#| "at http://docs.gimp.org/."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "https://docs.gimp.org/"
@@ -10867,7 +10590,6 @@ msgstr "Les indeks frå «%s»"
 
 #: ../plug-ins/help/gimphelplocale.c:239
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "Could not load data from '%s': %s"
 msgstr "Kunne ikkje lasta inn data frå «%s»: %s"
 
@@ -11057,7 +10779,6 @@ msgid "Open IFS Fractal file"
 msgstr "Opna IFS-fraktal-fil"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#| msgid "Image Map Plug-In"
 msgid "Image Map Plug-in"
 msgstr "Programtillegg for biletkart"
 
@@ -11285,83 +11006,83 @@ msgstr "Avmarker"
 msgid "Unselect All"
 msgstr "Avmarker alle"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:204
+#: ../plug-ins/imagemap/imap_edit_area_info.c:249
 msgid "Link Type"
-msgstr "Lenketype"
+msgstr "Lenkjetype"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:213
+#: ../plug-ins/imagemap/imap_edit_area_info.c:258
 msgid "_Web Site"
 msgstr "_Nettside"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:219
+#: ../plug-ins/imagemap/imap_edit_area_info.c:264
 msgid "_Ftp Site"
 msgstr "FT_P-Side"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:225
+#: ../plug-ins/imagemap/imap_edit_area_info.c:270
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:231
+#: ../plug-ins/imagemap/imap_edit_area_info.c:276
 msgid "Ot_her"
 msgstr "_Andre"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:237
+#: ../plug-ins/imagemap/imap_edit_area_info.c:282
 msgid "F_ile"
 msgstr "_Fil"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:243
+#: ../plug-ins/imagemap/imap_edit_area_info.c:288
 msgid "WAI_S"
 msgstr "_WAIS"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:249
+#: ../plug-ins/imagemap/imap_edit_area_info.c:294
 msgid "Tel_net"
 msgstr "_Telnet"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:255
+#: ../plug-ins/imagemap/imap_edit_area_info.c:300
 msgid "e-_mail"
 msgstr "_e-post"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:261
+#: ../plug-ins/imagemap/imap_edit_area_info.c:306
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL som skal opnast ved klikk i dette området (nødvendig):"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:263
+#: ../plug-ins/imagemap/imap_edit_area_info.c:308
 msgid "Select HTML file"
 msgstr "Vel HTML-fil"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:272
+#: ../plug-ins/imagemap/imap_edit_area_info.c:317
 msgid "Relati_ve link"
-msgstr "_Relativ lenke"
+msgstr "_Relativ lenkje"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:278
+#: ../plug-ins/imagemap/imap_edit_area_info.c:323
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "Namn på _målramma/ID: (valfri – vert brukt i FRAMES)"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:281
+#: ../plug-ins/imagemap/imap_edit_area_info.c:326
 msgid "ALT te_xt: (optional)"
 msgstr "ALT-Te_kst (valfri):"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:284
+#: ../plug-ins/imagemap/imap_edit_area_info.c:329
 msgid "_Link"
-msgstr "_Lenke"
+msgstr "_Lenkje"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:318
+#: ../plug-ins/imagemap/imap_edit_area_info.c:363
 msgid "Dimensions"
 msgstr "Dimensjonar"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:322
+#: ../plug-ins/imagemap/imap_edit_area_info.c:367
 msgid "Pre_view"
 msgstr "_Førehandsvising"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:360
+#: ../plug-ins/imagemap/imap_edit_area_info.c:405
 msgid "_JavaScript"
 msgstr "_JavaScript"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:459
+#: ../plug-ins/imagemap/imap_edit_area_info.c:504
 msgid "Area Settings"
 msgstr "Områdeinnstillingar"
 
-#: ../plug-ins/imagemap/imap_edit_area_info.c:501
+#: ../plug-ins/imagemap/imap_edit_area_info.c:546
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Innstillingar for område nr  %d"
@@ -11536,7 +11257,6 @@ msgid "Edit selected area info"
 msgstr "Rediger info for vald område"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
-#| msgid "Preferences"
 msgid "_Preferences"
 msgstr "_Preferansar"
 
@@ -12392,7 +12112,6 @@ msgid "Update preview _live"
 msgstr "Automatisk _førehandsvising"
 
 #: ../plug-ins/metadata/metadata-editor.c:439
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Rediger metadata (IPTC, EXIF, XMP)"
 
@@ -12414,7 +12133,6 @@ msgid "_Write Metadata"
 msgstr "_Skriv metadata"
 
 #: ../plug-ins/metadata/metadata-editor.c:615
-#| msgid "Import _paths"
 msgid "Import metadata"
 msgstr "Importer metadata"
 
@@ -12424,7 +12142,6 @@ msgstr "Eksporter metadata"
 
 #: ../plug-ins/metadata/metadata-editor.c:921
 #, c-format
-#| msgid "Error loading PNG file: %s"
 msgid "Error loading calendar. %s"
 msgstr "Feil ved innlsting av kalenderen. %s"
 
@@ -12473,17 +12190,14 @@ msgstr "Ikkje rangert"
 
 #: ../plug-ins/metadata/metadata-editor.c:3782
 #, c-format
-#| msgid "Failed to save to temporary file '%s'"
 msgid "Failed to set metadata tag %s"
 msgstr "Kunne ikkje setja metadatataggen %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:4623
-#| msgid "Import XMP from File"
 msgid "Import Metadata File"
 msgstr "Importer metadatafila"
 
 #: ../plug-ins/metadata/metadata-editor.c:4658
-#| msgid "Export XMP to File"
 msgid "Export Metadata File"
 msgstr "Eksporter metadatafila"
 
@@ -12491,7 +12205,6 @@ msgstr "Eksporter metadatafila"
 #: ../plug-ins/metadata/metadata-tags.c:203
 #: ../plug-ins/metadata/metadata-tags.c:263
 #: ../plug-ins/metadata/metadata-tags.c:280
-#| msgid "Select Image File"
 msgid "Select a value"
 msgstr "Vel ein verdi"
 
@@ -12544,12 +12257,10 @@ msgid "Trained algorithmic media"
 msgstr "Opplærte algoritmiske media"
 
 #: ../plug-ins/metadata/metadata-tags.c:193
-#| msgid "Prim's algorithm"
 msgid "Pure algorithmic media"
 msgstr "Reine algoritmiske media"
 
 #: ../plug-ins/metadata/metadata-tags.c:194
-#| msgid "Create star"
 msgid "Created by software"
 msgstr "Laga med program"
 
@@ -12661,7 +12372,6 @@ msgstr "Ukjend"
 
 #. DO NOT SAVE
 #: ../plug-ins/metadata/metadata-tags.c:255
-#| msgid "Copyright"
 msgid "Copyrighted"
 msgstr "Opphavsrettar"
 
@@ -12679,7 +12389,6 @@ msgid "Cell"
 msgstr "Celle"
 
 #: ../plug-ins/metadata/metadata-tags.c:266
-#| msgid "Fan"
 msgid "Fax"
 msgstr "Faks"
 
@@ -12688,7 +12397,6 @@ msgid "Home"
 msgstr "Heim"
 
 #: ../plug-ins/metadata/metadata-tags.c:268
-#| msgid "Pages:"
 msgid "Pager"
 msgstr "Sider"
 
@@ -12709,7 +12417,6 @@ msgid "Above sea level"
 msgstr "Over havet"
 
 #: ../plug-ins/metadata/metadata-tags.c:290
-#| msgid "_Black level:"
 msgid "Below sea level"
 msgstr "Under havet"
 
@@ -12730,7 +12437,6 @@ msgid "West"
 msgstr "Vest"
 
 #: ../plug-ins/metadata/metadata-viewer.c:140
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Vis metadata (Exif, IPTC, XMP)"
 
@@ -12753,7 +12459,6 @@ msgid "(%lu more character(s))"
 msgstr "(%lu fleire tikn)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:554
-#| msgid "Parameters"
 msgid " meter"
 msgstr " meter"
 
@@ -12867,11 +12572,11 @@ msgstr "Ingen"
 
 #: ../plug-ins/print/print-page-layout.c:500
 msgid "Horizontally"
-msgstr "Horisontalt"
+msgstr "Vassrett"
 
 #: ../plug-ins/print/print-page-layout.c:501
 msgid "Vertically"
-msgstr "Vertikal"
+msgstr "Loddrett"
 
 #: ../plug-ins/print/print-page-layout.c:502
 msgid "Both"
@@ -12890,7 +12595,6 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Juster sidestorleiken og sideorienteringa for utskriving"
 
 #: ../plug-ins/print/print.c:131
-#| msgid "Page Set_up"
 msgid "Page Set_up..."
 msgstr "_Sideoppsett…"
 
@@ -12912,7 +12616,7 @@ msgstr "Opprett eit nytt bilete frå eit ormråde av skjermen"
 
 #: ../plug-ins/screenshot/screenshot.c:148
 msgid "_Screenshot..."
-msgstr "_Skjermenbilete …"
+msgstr "_Skjermbilete …"
 
 #: ../plug-ins/screenshot/screenshot.c:487
 #: ../plug-ins/screenshot/screenshot-x11.c:424
@@ -12954,7 +12658,6 @@ msgid "Delay"
 msgstr "Vent i"
 
 #: ../plug-ins/screenshot/screenshot.c:686
-#| msgid "Se_lection only"
 msgid "Selection delay: "
 msgstr "Utvalsforseinking: "
 
@@ -12978,7 +12681,6 @@ msgid "At the end of the delay, click in a window to snap it."
 msgstr "Klikk i eit vindauge etter pausen for å laga bilete av det."
 
 #: ../plug-ins/screenshot/screenshot.c:749
-#| msgid "Screenshot"
 msgid "Screenshot dela_y: "
 msgstr "_Skjermbiletforseinking: "
 
@@ -12995,7 +12697,6 @@ msgid "Once the window is selected, it will be captured after this delay."
 msgstr "Når vindauget er merkt, vert det fanga etter denne forseinkinga."
 
 #: ../plug-ins/screenshot/screenshot.c:794
-#| msgid "After the delay, the screenshot is taken."
 msgid "After the delay, the active window will be captured."
 msgstr "Etter forseinkinga vert det gjeldande vindauget fanga opp."
 
@@ -13008,7 +12709,6 @@ msgid "Tag image with _monitor profile"
 msgstr "Merk biletet med _monitor-profilen"
 
 #: ../plug-ins/screenshot/screenshot.c:810
-#| msgid "Environment image to use"
 msgid "Convert image to sR_GB"
 msgstr "Konverter biletet til s_RGB"
 
@@ -13046,7 +12746,6 @@ msgid "Selection to Path Advanced Settings"
 msgstr "Utval til bane. Avanserte innstillingar"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:116
-#| msgid "Threshold:"
 msgid "Align Threshold:"
 msgstr "Juster terskel:"
 
@@ -13055,7 +12754,6 @@ msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr "Viss to endepunkt er nærare enn dette, vert dei gjort like."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:129
-#| msgid "Gray Threshold"
 msgid "Corner Always Threshold:"
 msgstr "Hjørne alltid terskel:"
 
@@ -13070,7 +12768,6 @@ msgstr ""
 "hjørneomgjevnadspikslane til eit punkt med ein mindre vinkel."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
-#| msgid "Foreground"
 msgid "Corner Surround:"
 msgstr "Hjørneomgjevnadar:"
 
@@ -13082,7 +12779,6 @@ msgstr ""
 "hjørne eller ikkje."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:157
-#| msgid "Lower t_hreshold:"
 msgid "Corner Threshold:"
 msgstr "Hjørneterskel:"
 
@@ -13095,7 +12791,6 @@ msgstr ""
 "mindre enn dette, er det eit hjørne."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:172
-#| msgid "Threshold:"
 msgid "Error Threshold:"
 msgstr "Feilterskel:"
 
@@ -13116,7 +12811,6 @@ msgid "A second number of adjacent points to consider when filtering."
 msgstr "Eit anna tal på tilstøytande punkt å vurdera ved filtrering."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:201
-#| msgid "_Filter length:"
 msgid "Filter Epsilon:"
 msgstr "Filter Epsilon:"
 
@@ -13131,7 +12825,6 @@ msgstr ""
 "alternativ-omgjevnadar."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:216
-#| msgid "T_ile saturation:"
 msgid "Filter Iteration Count:"
 msgstr "Kor mange filteriterasjonar:"
 
@@ -13149,7 +12842,6 @@ msgstr ""
 "dette punktet."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
-#| msgid "_Filter length:"
 msgid "Filter Percent:"
 msgstr "Filter prodent:"
 
@@ -13190,7 +12882,6 @@ msgstr ""
 "Seier om knepunkta skal fjernast eller ikkje etter å ha funne omrisset."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
-#| msgid "Deviation threshold:"
 msgid "Line Reversion Threshold:"
 msgstr "Linjetilbakevendingsterskel:"
 
@@ -13207,7 +12898,6 @@ msgstr ""
 "sannsynlig å verta reverserte."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
-#| msgid "Threshold:"
 msgid "Line Threshold:"
 msgstr "Linjeterskel:"
 
@@ -13228,11 +12918,10 @@ msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
 msgstr ""
-"Viss reparametriseringa ikkje gjer passforma  betre med denne prosenten, "
-"slutt å gjera det. Feilmengd som det er meiningslaust å reparametrisera ved."
+"Viss reparametriseringa ikkje gjer passforma betre med denne prosenten, "
+"slutt å gjera det. Feilmengd som det er meiningslaust å reparametrisera."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:331
-#| msgid "Deviation threshold:"
 msgid "Reparametrize Threshold:"
 msgstr "Reparametrisk terskel:"
 
@@ -13251,7 +12940,6 @@ msgstr ""
 "tilfella der vi ikkje fann nokre hjørne."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
-#| msgid "Subdivide:"
 msgid "Subdivide Search:"
 msgstr "Del søket vidare:"
 
@@ -13264,7 +12952,6 @@ msgstr ""
 "stad å dela vidare."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
-#| msgid "Subdivide:"
 msgid "Subdivide Surround:"
 msgstr "Del omgjevnadane vidare:"
 
@@ -13277,7 +12964,6 @@ msgstr ""
 "betre stad å underinndela."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
-#| msgid "Threshold:"
 msgid "Subdivide Threshold:"
 msgstr "Vidaredelingsgrense:"
 
@@ -13290,7 +12976,6 @@ msgstr ""
 "vurdert som ein betre stad å underinndela."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:389
-#| msgid "Transparent background"
 msgid "Tangent Surround:"
 msgstr "Tangentomgivnadar:"
 
