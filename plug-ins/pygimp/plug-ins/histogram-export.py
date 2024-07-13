@@ -40,6 +40,7 @@ Check the gimp-histogram call
 from gimpfu import *
 import csv
 import gettext
+import sys
 
 
 gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
@@ -50,7 +51,7 @@ def histogram_export(img, drw, filename,
         new_img = pdb.gimp_image_duplicate(img)
         drw = pdb.gimp_image_merge_visible_layers(new_img, CLIP_TO_IMAGE)
     # TODO: grey images, alpha and non alpha images.
-    channels_txt = ["Value"] 
+    channels_txt = ["Value"]
     channels_gimp = [HISTOGRAM_VALUE]
     if drw.is_rgb:
         channels_txt += ["Red", "Green", "Blue"]
@@ -58,7 +59,15 @@ def histogram_export(img, drw, filename,
     if drw.has_alpha:
         channels_txt += ["Alpha"]
         channels_gimp += [HISTOGRAM_ALPHA]
-    with open(filename, "wt") as hfile:
+
+    # On Windows, we need to use 'wb' as the write mode so that
+    # extra newlines are not added into the output, per the
+    # documentation for csv.writer ()
+    write_mode = "wt"
+    if sys.platform == "win32" or sys.platform == "cygwin":
+        write_mode = "wb"
+
+    with open(filename, write_mode) as hfile:
         writer = csv.writer(hfile)
         #headers:
         writer.writerow(["Range start"] + channels_txt)
