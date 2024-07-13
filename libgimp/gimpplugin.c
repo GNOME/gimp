@@ -129,7 +129,7 @@ struct _GimpPlugInMenuBranch
   gchar *menu_label;
 };
 
-struct _GimpPlugInPrivate
+typedef struct _GimpPlugInPrivate
 {
   gchar      *program_name;
 
@@ -156,7 +156,7 @@ struct _GimpPlugInPrivate
   GHashTable *images;
   GHashTable *items;
   GHashTable *resources;
-};
+} GimpPlugInPrivate;
 
 
 static void       gimp_plug_in_constructed       (GObject         *object);
@@ -283,18 +283,20 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
 static void
 gimp_plug_in_init (GimpPlugIn *plug_in)
 {
-  plug_in->priv = gimp_plug_in_get_instance_private (plug_in);
 }
 
 static void
 gimp_plug_in_constructed (GObject *object)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugIn        *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugInPrivate *priv;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (plug_in->priv->read_channel != NULL);
-  g_assert (plug_in->priv->write_channel != NULL);
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  g_assert (priv->read_channel != NULL);
+  g_assert (priv->write_channel != NULL);
 
   gp_init ();
 
@@ -305,18 +307,21 @@ gimp_plug_in_constructed (GObject *object)
 static void
 gimp_plug_in_dispose (GObject *object)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugIn        *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugInPrivate *priv;
 
-  if (plug_in->priv->extension_source_id)
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (priv->extension_source_id)
     {
-      g_source_remove (plug_in->priv->extension_source_id);
-      plug_in->priv->extension_source_id = 0;
+      g_source_remove (priv->extension_source_id);
+      priv->extension_source_id = 0;
     }
 
-  if (plug_in->priv->temp_procedures)
+  if (priv->temp_procedures)
     {
-      g_list_free_full (plug_in->priv->temp_procedures, g_object_unref);
-      plug_in->priv->temp_procedures = NULL;
+      g_list_free_full (priv->temp_procedures, g_object_unref);
+      priv->temp_procedures = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -325,17 +330,20 @@ gimp_plug_in_dispose (GObject *object)
 static void
 gimp_plug_in_finalize (GObject *object)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
-  GList      *list;
+  GimpPlugIn        *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugInPrivate *priv;
+  GList             *list;
 
-  g_clear_pointer (&plug_in->priv->program_name, g_free);
-  g_clear_pointer (&plug_in->priv->translation_domain_name, g_free);
-  g_clear_object  (&plug_in->priv->translation_domain_path);
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
-  g_clear_pointer (&plug_in->priv->help_domain_name, g_free);
-  g_clear_object  (&plug_in->priv->help_domain_uri);
+  g_clear_pointer (&priv->program_name, g_free);
+  g_clear_pointer (&priv->translation_domain_name, g_free);
+  g_clear_object  (&priv->translation_domain_path);
 
-  for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))
+  g_clear_pointer (&priv->help_domain_name, g_free);
+  g_clear_object  (&priv->help_domain_uri);
+
+  for (list = priv->menu_branches; list; list = g_list_next (list))
     {
       GimpPlugInMenuBranch *branch = list->data;
 
@@ -344,12 +352,12 @@ gimp_plug_in_finalize (GObject *object)
       g_slice_free (GimpPlugInMenuBranch, branch);
     }
 
-  g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
+  g_clear_pointer (&priv->menu_branches, g_list_free);
 
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->displays,  "display",  TRUE);
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->images,    "image",    TRUE);
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->items,     "item",     TRUE);
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->resources, "resource", TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", TRUE);
 
   gimp_plug_in_destroy_hashes (plug_in);
 
@@ -362,20 +370,23 @@ gimp_plug_in_set_property (GObject      *object,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugIn        *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugInPrivate *priv;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   switch (property_id)
     {
     case PROP_PROGRAM_NAME:
-      plug_in->priv->program_name = g_value_dup_string (value);
+      priv->program_name = g_value_dup_string (value);
       break;
 
     case PROP_READ_CHANNEL:
-      plug_in->priv->read_channel = g_value_get_boxed (value);
+      priv->read_channel = g_value_get_boxed (value);
       break;
 
     case PROP_WRITE_CHANNEL:
-      plug_in->priv->write_channel = g_value_get_boxed (value);
+      priv->write_channel = g_value_get_boxed (value);
       break;
 
     default:
@@ -390,16 +401,19 @@ gimp_plug_in_get_property (GObject    *object,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugIn        *plug_in = GIMP_PLUG_IN (object);
+  GimpPlugInPrivate *priv;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   switch (property_id)
     {
     case PROP_READ_CHANNEL:
-      g_value_set_boxed (value, plug_in->priv->read_channel);
+      g_value_set_boxed (value, priv->read_channel);
       break;
 
     case PROP_WRITE_CHANNEL:
-      g_value_set_boxed (value, plug_in->priv->write_channel);
+      g_value_set_boxed (value, priv->write_channel);
       break;
 
     default:
@@ -448,14 +462,18 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
                               const gchar *domain_name,
                               GFile       *domain_uri)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (domain_name != NULL);
   g_return_if_fail (G_IS_FILE (domain_uri));
 
-  g_free (plug_in->priv->help_domain_name);
-  plug_in->priv->help_domain_name = g_strdup (domain_name);
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
-  g_set_object (&plug_in->priv->help_domain_uri, domain_uri);
+  g_free (priv->help_domain_name);
+  priv->help_domain_name = g_strdup (domain_name);
+
+  g_set_object (&priv->help_domain_uri, domain_uri);
 }
 
 /**
@@ -483,19 +501,21 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
                               const gchar *menu_path,
                               const gchar *menu_label)
 {
+  GimpPlugInPrivate    *priv;
   GimpPlugInMenuBranch *branch;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
 
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
   branch = g_slice_new (GimpPlugInMenuBranch);
 
   branch->menu_path  = g_strdup (menu_path);
   branch->menu_label = g_strdup (menu_label);
 
-  plug_in->priv->menu_branches = g_list_append (plug_in->priv->menu_branches,
-                                                branch);
+  priv->menu_branches = g_list_append (priv->menu_branches, branch);
 }
 
 /**
@@ -526,13 +546,17 @@ void
 gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
                                  GimpProcedure *procedure)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (gimp_procedure_get_proc_type (procedure) ==
                     GIMP_PDB_PROC_TYPE_TEMPORARY);
 
-  plug_in->priv->temp_procedures =
-    g_list_prepend (plug_in->priv->temp_procedures,
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  priv->temp_procedures =
+    g_list_prepend (priv->temp_procedures,
                     g_object_ref (procedure));
 
   GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
@@ -561,10 +585,14 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 
   if (procedure)
     {
+      GimpPlugInPrivate *priv;
+
       GIMP_PROCEDURE_GET_CLASS (procedure)->uninstall (procedure);
 
-      plug_in->priv->temp_procedures =
-        g_list_remove (plug_in->priv->temp_procedures,
+      priv = gimp_plug_in_get_instance_private (plug_in);
+
+      priv->temp_procedures =
+        g_list_remove (priv->temp_procedures,
                        procedure);
       g_object_unref (procedure);
     }
@@ -585,9 +613,13 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 GList *
 gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  return plug_in->priv->temp_procedures;
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  return priv->temp_procedures;
 }
 
 /**
@@ -606,12 +638,15 @@ GimpProcedure *
 gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
                                  const gchar *procedure_name)
 {
-  GList *list;
+  GimpPlugInPrivate *priv;
+  GList             *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
-  for (list = plug_in->priv->temp_procedures; list; list = g_list_next (list))
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  for (list = priv->temp_procedures; list; list = g_list_next (list))
     {
       GimpProcedure *procedure = list->data;
 
@@ -653,12 +688,16 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
 void
 gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  if (! plug_in->priv->extension_source_id)
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (! priv->extension_source_id)
     {
-      plug_in->priv->extension_source_id =
-        g_io_add_watch (plug_in->priv->read_channel, G_IO_IN | G_IO_PRI,
+      priv->extension_source_id =
+        g_io_add_watch (priv->read_channel, G_IO_IN | G_IO_PRI,
                         gimp_plug_in_extension_read,
                         plug_in);
     }
@@ -686,12 +725,22 @@ void
 gimp_plug_in_extension_process (GimpPlugIn *plug_in,
                                 guint       timeout)
 {
+  GimpPlugInPrivate *priv;
 #ifndef G_OS_WIN32
-
-  gint select_val;
+  gint               select_val;
+#else
+  /* Zero means infinite wait for us, but g_poll and
+   * g_io_channel_win32_poll use -1 to indicate
+   * infinite wait.
+   */
+  GPollFD            pollfd;
+#endif
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+#ifndef G_OS_WIN32
   do
     {
       fd_set readfds;
@@ -708,7 +757,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
         tvp = NULL;
 
       FD_ZERO (&readfds);
-      FD_SET (g_io_channel_unix_get_fd (plug_in->priv->read_channel),
+      FD_SET (g_io_channel_unix_get_fd (priv->read_channel),
               &readfds);
 
       if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
@@ -724,19 +773,10 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
   while (select_val == -1 && errno == EINTR);
 
 #else
-
-  /* Zero means infinite wait for us, but g_poll and
-   * g_io_channel_win32_poll use -1 to indicate
-   * infinite wait.
-   */
-  GPollFD pollfd;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-
   if (timeout == 0)
     timeout = -1;
 
-  g_io_channel_win32_make_pollfd (plug_in->priv->read_channel, G_IO_IN,
+  g_io_channel_win32_make_pollfd (priv->read_channel, G_IO_IN,
                                   &pollfd);
 
   if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
@@ -803,10 +843,14 @@ gimp_plug_in_get_pdb_error_handler (GimpPlugIn *plug_in)
 void
 _gimp_plug_in_query (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
-    gp_has_init_write (plug_in->priv->write_channel, plug_in);
+    gp_has_init_write (priv->write_channel, plug_in);
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
     {
@@ -834,9 +878,13 @@ _gimp_plug_in_init (GimpPlugIn *plug_in)
 void
 _gimp_plug_in_run (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  g_io_add_watch (plug_in->priv->read_channel,
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  g_io_add_watch (priv->read_channel,
                   G_IO_ERR | G_IO_HUP,
                   gimp_plug_in_io_error_handler,
                   NULL);
@@ -847,30 +895,42 @@ _gimp_plug_in_run (GimpPlugIn *plug_in)
 void
 _gimp_plug_in_quit (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->quit)
     GIMP_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
 
   _gimp_shm_close ();
 
-  gp_quit_write (plug_in->priv->write_channel, plug_in);
+  gp_quit_write (priv->write_channel, plug_in);
 }
 
 GIOChannel *
 _gimp_plug_in_get_read_channel (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  return plug_in->priv->read_channel;
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  return priv->read_channel;
 }
 
 GIOChannel *
 _gimp_plug_in_get_write_channel (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  return plug_in->priv->write_channel;
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  return priv->write_channel;
 }
 
 void
@@ -878,11 +938,15 @@ _gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
                                GimpWireMessage *msg,
                                gint             type)
 {
+  GimpPlugInPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   while (TRUE)
     {
-      if (! gimp_wire_read_msg (plug_in->priv->read_channel, msg, NULL))
+      if (! gimp_wire_read_msg (priv->read_channel, msg, NULL))
         gimp_quit ();
 
       if (msg->type == type)
@@ -907,14 +971,17 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                         gchar       **gettext_domain,
                         gchar       **catalog_dir)
 {
-  gboolean use_gettext;
+  GimpPlugInPrivate *priv;
+  gboolean           use_gettext;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (gettext_domain && *gettext_domain == NULL, FALSE);
   g_return_val_if_fail (catalog_dir && *catalog_dir == NULL, FALSE);
 
-  if (! plug_in->priv->translation_domain_path ||
-      ! plug_in->priv->translation_domain_name)
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (! priv->translation_domain_path ||
+      ! priv->translation_domain_name)
     gimp_plug_in_init_i18n (plug_in);
 
   if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->set_i18n)
@@ -935,7 +1002,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
 
           if (*gettext_domain == NULL)
             {
-              *gettext_domain = g_strdup (plug_in->priv->translation_domain_name);
+              *gettext_domain = g_strdup (priv->translation_domain_name);
             }
           else if (g_strcmp0 (*gettext_domain, GETTEXT_PACKAGE "-std-plug-ins") == 0 ||
                    g_strcmp0 (*gettext_domain, GETTEXT_PACKAGE "-script-fu") == 0 ||
@@ -1023,7 +1090,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
             }
           else if (! *catalog_dir)
             {
-              *catalog_dir = g_file_get_path (plug_in->priv->translation_domain_path);
+              *catalog_dir = g_file_get_path (priv->translation_domain_path);
             }
         }
 
@@ -1086,7 +1153,8 @@ static void
 gimp_plug_in_register (GimpPlugIn *plug_in,
                        GList      *procedures)
 {
-  GList *list;
+  GimpPlugInPrivate *priv;
+  GList             *list;
 
   for (list = procedures; list; list = g_list_next (list))
     {
@@ -1107,13 +1175,15 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
 
   g_list_free_full (procedures, g_free);
 
-  if (plug_in->priv->help_domain_name)
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (priv->help_domain_name)
     {
-      _gimp_plug_in_help_register (plug_in->priv->help_domain_name,
-                                   plug_in->priv->help_domain_uri);
+      _gimp_plug_in_help_register (priv->help_domain_name,
+                                   priv->help_domain_uri);
     }
 
-  for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))
+  for (list = priv->menu_branches; list; list = g_list_next (list))
     {
       GimpPlugInMenuBranch *branch = list->data;
 
@@ -1128,18 +1198,21 @@ gimp_plug_in_write (GIOChannel   *channel,
                     gulong        count,
                     gpointer      user_data)
 {
-  GimpPlugIn *plug_in = user_data;
+  GimpPlugIn        *plug_in = user_data;
+  GimpPlugInPrivate *priv;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   while (count > 0)
     {
       gulong bytes;
 
-      if ((plug_in->priv->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
+      if ((priv->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
         {
-          bytes = WRITE_BUFFER_SIZE - plug_in->priv->write_buffer_index;
-          memcpy (&plug_in->priv->write_buffer[plug_in->priv->write_buffer_index],
+          bytes = WRITE_BUFFER_SIZE - priv->write_buffer_index;
+          memcpy (&priv->write_buffer[priv->write_buffer_index],
                   buf, bytes);
-          plug_in->priv->write_buffer_index += bytes;
+          priv->write_buffer_index += bytes;
 
           if (! gimp_wire_flush (channel, plug_in))
             return FALSE;
@@ -1147,9 +1220,9 @@ gimp_plug_in_write (GIOChannel   *channel,
       else
         {
           bytes = count;
-          memcpy (&plug_in->priv->write_buffer[plug_in->priv->write_buffer_index],
+          memcpy (&priv->write_buffer[priv->write_buffer_index],
                   buf, bytes);
-          plug_in->priv->write_buffer_index += bytes;
+          priv->write_buffer_index += bytes;
         }
 
       buf   += bytes;
@@ -1163,13 +1236,16 @@ static gboolean
 gimp_plug_in_flush (GIOChannel *channel,
                     gpointer    user_data)
 {
-  GimpPlugIn *plug_in = user_data;
+  GimpPlugIn        *plug_in = user_data;
+  GimpPlugInPrivate *priv;
 
-  if (plug_in->priv->write_buffer_index > 0)
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (priv->write_buffer_index > 0)
     {
       gsize count = 0;
 
-      while (count != plug_in->priv->write_buffer_index)
+      while (count != priv->write_buffer_index)
         {
           GIOStatus status;
           gsize     bytes;
@@ -1179,8 +1255,8 @@ gimp_plug_in_flush (GIOChannel *channel,
             {
               bytes = 0;
               status = g_io_channel_write_chars (channel,
-                                                 &plug_in->priv->write_buffer[count],
-                                                 (plug_in->priv->write_buffer_index - count),
+                                                 &priv->write_buffer[count],
+                                                 (priv->write_buffer_index - count),
                                                  &bytes,
                                                  &error);
             }
@@ -1205,7 +1281,7 @@ gimp_plug_in_flush (GIOChannel *channel,
           count += bytes;
         }
 
-      plug_in->priv->write_buffer_index = 0;
+      priv->write_buffer_index = 0;
     }
 
   return TRUE;
@@ -1226,11 +1302,15 @@ gimp_plug_in_io_error_handler (GIOChannel   *channel,
 static void
 gimp_plug_in_loop (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
   while (TRUE)
     {
       GimpWireMessage msg;
 
-      if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
+      if (! gimp_wire_read_msg (priv->read_channel, &msg, NULL))
         return;
 
       switch (msg.type)
@@ -1282,10 +1362,13 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
 static void
 gimp_plug_in_single_message (GimpPlugIn *plug_in)
 {
-  GimpWireMessage msg;
+  GimpPlugInPrivate *priv;
+  GimpWireMessage    msg;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   /* Run a temp function */
-  if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
+  if (! gimp_wire_read_msg (priv->read_channel, &msg, NULL))
     gimp_quit ();
 
   gimp_plug_in_process_message (plug_in, &msg);
@@ -1335,10 +1418,12 @@ static void
 gimp_plug_in_proc_run (GimpPlugIn *plug_in,
                        GPProcRun  *proc_run)
 {
-  GPProcReturn   proc_return;
-  GimpProcedure *procedure;
+  GimpPlugInPrivate *priv;
+  GPProcReturn       proc_return;
+  GimpProcedure     *procedure;
 
   procedure = _gimp_plug_in_create_procedure (plug_in, proc_run->name);
+  priv      = gimp_plug_in_get_instance_private (plug_in);
 
   if (procedure)
     {
@@ -1348,7 +1433,7 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
       g_object_unref (procedure);
     }
 
-  if (! gp_proc_return_write (plug_in->priv->write_channel,
+  if (! gp_proc_return_write (priv->write_channel,
                               &proc_return, plug_in))
     gimp_quit ();
 
@@ -1359,10 +1444,12 @@ static void
 gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
                             GPProcRun  *proc_run)
 {
-  GPProcReturn   proc_return;
-  GimpProcedure *procedure;
+  GimpPlugInPrivate *priv;
+  GPProcReturn       proc_return;
+  GimpProcedure     *procedure;
 
   procedure = gimp_plug_in_get_temp_procedure (plug_in, proc_run->name);
+  priv      = gimp_plug_in_get_instance_private (plug_in);
 
   if (procedure)
     {
@@ -1371,7 +1458,7 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
                                       &proc_return);
     }
 
-  if (! gp_temp_proc_return_write (plug_in->priv->write_channel,
+  if (! gp_temp_proc_return_write (priv->write_channel,
                                    &proc_return, plug_in))
     gimp_quit ();
 
@@ -1441,40 +1528,48 @@ gimp_plug_in_extension_read (GIOChannel  *channel,
 GimpProcedure *
 _gimp_plug_in_get_procedure (GimpPlugIn *plug_in)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (plug_in->priv->procedure_stack != NULL, NULL);
+  GimpPlugInPrivate *priv;
 
-  return plug_in->priv->procedure_stack->data;
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  g_return_val_if_fail (priv->procedure_stack != NULL, NULL);
+
+  return priv->procedure_stack->data;
 }
 
 static void
 gimp_plug_in_push_procedure (GimpPlugIn    *plug_in,
                              GimpProcedure *procedure)
 {
-  plug_in->priv->procedure_stack =
-    g_list_prepend (plug_in->priv->procedure_stack, procedure);
+  GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
+
+  priv->procedure_stack =
+    g_list_prepend (priv->procedure_stack, procedure);
 }
 
 static void
 gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
                             GimpProcedure *procedure)
 {
-  plug_in->priv->procedure_stack =
-    g_list_remove (plug_in->priv->procedure_stack, procedure);
+  GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
+
+  priv->procedure_stack = g_list_remove (priv->procedure_stack, procedure);
 
   _gimp_procedure_destroy_proxies (procedure);
 
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->displays,  "display",  FALSE);
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->images,    "image",    FALSE);
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->items,     "item",     FALSE);
-  gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->resources, "resource", FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     FALSE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", FALSE);
 
-  if (! plug_in->priv->procedure_stack)
+  if (! priv->procedure_stack)
     {
-      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->displays,  "display",  TRUE);
-      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->images,    "image",    TRUE);
-      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->items,     "item",     TRUE);
-      gimp_plug_in_destroy_proxies (plug_in, plug_in->priv->resources, "resource", TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     TRUE);
+      gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", TRUE);
 
       gimp_plug_in_destroy_hashes (plug_in);
     }
@@ -1484,18 +1579,22 @@ GimpDisplay *
 _gimp_plug_in_get_display (GimpPlugIn *plug_in,
                            gint32      display_id)
 {
+  GimpPlugInPrivate *priv;
+
   GimpDisplay *display = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  if (G_UNLIKELY (! plug_in->priv->displays))
-    plug_in->priv->displays =
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (G_UNLIKELY (! priv->displays))
+    priv->displays =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  display = g_hash_table_lookup (plug_in->priv->displays,
+  display = g_hash_table_lookup (priv->displays,
                                  GINT_TO_POINTER (display_id));
 
   if (! display)
@@ -1504,7 +1603,7 @@ _gimp_plug_in_get_display (GimpPlugIn *plug_in,
                               "id", display_id,
                               NULL);
 
-      g_hash_table_insert (plug_in->priv->displays,
+      g_hash_table_insert (priv->displays,
                            GINT_TO_POINTER (display_id),
                            display);
     }
@@ -1516,18 +1615,21 @@ GimpImage *
 _gimp_plug_in_get_image (GimpPlugIn *plug_in,
                          gint32      image_id)
 {
-  GimpImage *image = NULL;
+  GimpPlugInPrivate *priv;
+  GimpImage         *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  if (G_UNLIKELY (! plug_in->priv->images))
-    plug_in->priv->images =
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (G_UNLIKELY (! priv->images))
+    priv->images =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  image = g_hash_table_lookup (plug_in->priv->images,
+  image = g_hash_table_lookup (priv->images,
                                GINT_TO_POINTER (image_id));
 
   if (! image)
@@ -1536,7 +1638,7 @@ _gimp_plug_in_get_image (GimpPlugIn *plug_in,
                             "id", image_id,
                             NULL);
 
-      g_hash_table_insert (plug_in->priv->images,
+      g_hash_table_insert (priv->images,
                            GINT_TO_POINTER (image_id),
                            image);
     }
@@ -1548,18 +1650,21 @@ GimpItem *
 _gimp_plug_in_get_item (GimpPlugIn *plug_in,
                         gint32      item_id)
 {
-  GimpItem *item = NULL;
+  GimpPlugInPrivate *priv;
+  GimpItem          *item = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  if (G_UNLIKELY (! plug_in->priv->items))
-    plug_in->priv->items =
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (G_UNLIKELY (! priv->items))
+    priv->items =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  item = g_hash_table_lookup (plug_in->priv->items,
+  item = g_hash_table_lookup (priv->items,
                               GINT_TO_POINTER (item_id));
 
   if (! item)
@@ -1608,7 +1713,7 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
         }
 
       if (item)
-        g_hash_table_insert (plug_in->priv->items,
+        g_hash_table_insert (priv->items,
                              GINT_TO_POINTER (item_id),
                              item);
     }
@@ -1620,18 +1725,21 @@ GimpResource *
 _gimp_plug_in_get_resource (GimpPlugIn *plug_in,
                             gint32      resource_id)
 {
-  GimpResource *resource = NULL;
+  GimpPlugInPrivate *priv;
+  GimpResource      *resource = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  if (G_UNLIKELY (! plug_in->priv->resources))
-    plug_in->priv->resources =
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (G_UNLIKELY (! priv->resources))
+    priv->resources =
       g_hash_table_new_full (g_direct_hash,
                              g_direct_equal,
                              NULL,
                              (GDestroyNotify) g_object_unref);
 
-  resource = g_hash_table_lookup (plug_in->priv->resources,
+  resource = g_hash_table_lookup (priv->resources,
                                   GINT_TO_POINTER (resource_id));
 
   if (! resource)
@@ -1668,7 +1776,7 @@ _gimp_plug_in_get_resource (GimpPlugIn *plug_in,
         }
 
       if (resource)
-        g_hash_table_insert (plug_in->priv->resources,
+        g_hash_table_insert (priv->resources,
                              GINT_TO_POINTER (resource_id),
                              resource);
     }
@@ -1679,11 +1787,14 @@ _gimp_plug_in_get_resource (GimpPlugIn *plug_in,
 gboolean
 _gimp_plug_in_manage_memory_manually (GimpPlugIn *plug_in)
 {
-  gboolean manual_management = TRUE;
+  GimpPlugInPrivate *priv;
+  gboolean           manual_management = TRUE;
 
-  if (plug_in->priv->program_name)
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (priv->program_name)
     {
-      GFile *file = g_file_new_for_path (plug_in->priv->program_name);
+      GFile *file = g_file_new_for_path (priv->program_name);
 
       /* Limitations:
        * 1. Checking a file extension (and trusting argv[0] in general) is not
@@ -1715,10 +1826,12 @@ _gimp_plug_in_manage_memory_manually (GimpPlugIn *plug_in)
 static void
 gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 {
-  g_clear_pointer (&plug_in->priv->displays,  g_hash_table_unref);
-  g_clear_pointer (&plug_in->priv->images,    g_hash_table_unref);
-  g_clear_pointer (&plug_in->priv->items,     g_hash_table_unref);
-  g_clear_pointer (&plug_in->priv->resources, g_hash_table_unref);
+  GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
+
+  g_clear_pointer (&priv->displays,  g_hash_table_unref);
+  g_clear_pointer (&priv->images,    g_hash_table_unref);
+  g_clear_pointer (&priv->items,     g_hash_table_unref);
+  g_clear_pointer (&priv->resources, g_hash_table_unref);
 }
 
 static void
@@ -1798,21 +1911,24 @@ gimp_plug_in_destroy_proxies (GimpPlugIn  *plug_in,
 static void
 gimp_plug_in_init_i18n (GimpPlugIn *plug_in)
 {
-  gchar *rootdir      = g_path_get_dirname (gimp_get_progname ());
-  GFile *root_file    = g_file_new_for_path (rootdir);
-  GFile *catalog_file = NULL;
+  GimpPlugInPrivate *priv;
+  gchar             *rootdir      = g_path_get_dirname (gimp_get_progname ());
+  GFile             *root_file    = g_file_new_for_path (rootdir);
+  GFile             *catalog_file = NULL;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
   /* Default domain name is the program directory name. */
-  g_free (plug_in->priv->translation_domain_name);
-  plug_in->priv->translation_domain_name = g_path_get_basename (rootdir);
+  g_free (priv->translation_domain_name);
+  priv->translation_domain_name = g_path_get_basename (rootdir);
 
   /* Default catalog path is the locale/ directory under the root
    * directory.
    */
   catalog_file = g_file_resolve_relative_path (root_file, "locale");
-  g_set_object (&plug_in->priv->translation_domain_path, catalog_file);
+  g_set_object (&priv->translation_domain_path, catalog_file);
 
   g_free (rootdir);
   g_object_unref (root_file);

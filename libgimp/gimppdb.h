@@ -31,64 +31,32 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PDB            (gimp_pdb_get_type ())
-#define GIMP_PDB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PDB, GimpPDB))
-#define GIMP_PDB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PDB, GimpPDBClass))
-#define GIMP_IS_PDB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PDB))
-#define GIMP_IS_PDB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PDB))
-#define GIMP_PDB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PDB, GimpPDBClass))
+#define GIMP_TYPE_PDB (gimp_pdb_get_type ())
+G_DECLARE_FINAL_TYPE (GimpPDB, gimp_pdb, GIMP, PDB, GObject)
 
 
-typedef struct _GimpPDBClass   GimpPDBClass;
-typedef struct _GimpPDBPrivate GimpPDBPrivate;
+gboolean             gimp_pdb_procedure_exists     (GimpPDB              *pdb,
+                                                    const gchar          *procedure_name);
 
-struct _GimpPDB
-{
-  GObject         parent_instance;
+GimpProcedure      * gimp_pdb_lookup_procedure     (GimpPDB              *pdb,
+                                                    const gchar          *procedure_name);
 
-  GimpPDBPrivate *priv;
-};
+gchar              * gimp_pdb_temp_procedure_name  (GimpPDB              *pdb);
 
-struct _GimpPDBClass
-{
-  GObjectClass parent_class;
+gboolean             gimp_pdb_dump_to_file         (GimpPDB              *pdb,
+                                                    GFile                *file);
+gchar             ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
+                                                    const gchar          *name,
+                                                    const gchar          *blurb,
+                                                    const gchar          *help,
+                                                    const gchar          *help_id,
+                                                    const gchar          *authors,
+                                                    const gchar          *copyright,
+                                                    const gchar          *date,
+                                                    const gchar          *proc_type);
 
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-};
-
-
-GType            gimp_pdb_get_type             (void) G_GNUC_CONST;
-
-gboolean         gimp_pdb_procedure_exists     (GimpPDB              *pdb,
-                                                const gchar          *procedure_name);
-
-GimpProcedure  * gimp_pdb_lookup_procedure     (GimpPDB              *pdb,
-                                                const gchar          *procedure_name);
-
-gchar          * gimp_pdb_temp_procedure_name  (GimpPDB              *pdb);
-
-gboolean         gimp_pdb_dump_to_file         (GimpPDB              *pdb,
-                                                GFile                *file);
-gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
-                                                const gchar          *name,
-                                                const gchar          *blurb,
-                                                const gchar          *help,
-                                                const gchar          *help_id,
-                                                const gchar          *authors,
-                                                const gchar          *copyright,
-                                                const gchar          *date,
-                                                const gchar          *proc_type);
-
-const gchar       * gimp_pdb_get_last_error    (GimpPDB              *pdb);
-GimpPDBStatusType   gimp_pdb_get_last_status   (GimpPDB              *pdb);
+const gchar        * gimp_pdb_get_last_error       (GimpPDB              *pdb);
+GimpPDBStatusType    gimp_pdb_get_last_status      (GimpPDB              *pdb);
 
 
 /* Internal use */

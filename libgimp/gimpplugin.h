@@ -33,23 +33,9 @@ G_BEGIN_DECLS
 
 #define GIMP_PLUG_IN_ERROR           (gimp_plug_in_error_quark ())
 
-#define GIMP_TYPE_PLUG_IN            (gimp_plug_in_get_type ())
-#define GIMP_PLUG_IN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PLUG_IN, GimpPlugIn))
-#define GIMP_PLUG_IN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PLUG_IN, GimpPlugInClass))
-#define GIMP_IS_PLUG_IN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PLUG_IN))
-#define GIMP_IS_PLUG_IN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PLUG_IN))
-#define GIMP_PLUG_IN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PLUG_IN, GimpPlugInClass))
+#define GIMP_TYPE_PLUG_IN (gimp_plug_in_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPlugIn, gimp_plug_in, GIMP, PLUG_IN, GObject)
 
-
-typedef struct _GimpPlugInClass   GimpPlugInClass;
-typedef struct _GimpPlugInPrivate GimpPlugInPrivate;
-
-struct _GimpPlugIn
-{
-  GObject            parent_instance;
-
-  GimpPlugInPrivate *priv;
-};
 
 /**
  * GimpPlugInClass:
@@ -200,8 +186,6 @@ struct _GimpPlugInClass
 
 GQuark          gimp_plug_in_error_quark            (void);
 
-GType           gimp_plug_in_get_type               (void) G_GNUC_CONST;
-
 void            gimp_plug_in_set_help_domain        (GimpPlugIn    *plug_in,
                                                      const gchar   *domain_name,
                                                      GFile         *domain_uri);
@@ -228,7 +212,6 @@ void            gimp_plug_in_set_pdb_error_handler  (GimpPlugIn    *plug_in,
 GimpPDBErrorHandler
                 gimp_plug_in_get_pdb_error_handler  (GimpPlugIn    *plug_in);
 
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpPlugIn, g_object_unref);
 
 G_END_DECLS
 

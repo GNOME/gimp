@@ -41,8 +41,10 @@
  */
 
 
-struct _GimpPDBPrivate
+struct _GimpPDB
 {
+  GObject             parent_instance;
+
   GimpPlugIn         *plug_in;
 
   GHashTable         *procedures;
@@ -59,7 +61,7 @@ static void   gimp_pdb_set_error (GimpPDB        *pdb,
                                   GimpValueArray *return_values);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPDB, gimp_pdb, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GimpPDB, gimp_pdb, G_TYPE_OBJECT)
 
 #define parent_class gimp_pdb_parent_class
 
@@ -76,12 +78,10 @@ gimp_pdb_class_init (GimpPDBClass *klass)
 static void
 gimp_pdb_init (GimpPDB *pdb)
 {
-  pdb->priv = gimp_pdb_get_instance_private (pdb);
+  pdb->procedures = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                           g_free, g_object_unref);
 
-  pdb->priv->procedures = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                 g_free, g_object_unref);
-
-  pdb->priv->error_status = GIMP_PDB_SUCCESS;
+  pdb->error_status = GIMP_PDB_SUCCESS;
 }
 
 static void
@@ -89,7 +89,7 @@ gimp_pdb_dispose (GObject *object)
 {
   GimpPDB *pdb = GIMP_PDB (object);
 
-  g_clear_pointer (&pdb->priv->procedures, g_hash_table_unref);
+  g_clear_pointer (&pdb->procedures, g_hash_table_unref);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -99,8 +99,8 @@ gimp_pdb_finalize (GObject *object)
 {
   GimpPDB *pdb = GIMP_PDB (object);
 
-  g_clear_object (&pdb->priv->plug_in);
-  g_clear_pointer (&pdb->priv->error_message, g_free);
+  g_clear_object (&pdb->plug_in);
+  g_clear_pointer (&pdb->error_message, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -114,7 +114,7 @@ _gimp_pdb_new (GimpPlugIn *plug_in)
 
   pdb = g_object_new (GIMP_TYPE_PDB, NULL);
 
-  pdb->priv->plug_in = g_object_ref (plug_in);
+  pdb->plug_in = g_object_ref (plug_in);
 
   return pdb;
 }
@@ -124,7 +124,7 @@ _gimp_pdb_get_plug_in (GimpPDB *pdb)
 {
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
 
-  return pdb->priv->plug_in;
+  return pdb->plug_in;
 }
 
 /**
@@ -172,7 +172,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
-  procedure = g_hash_table_lookup (pdb->priv->procedures, procedure_name);
+  procedure = g_hash_table_lookup (pdb->procedures, procedure_name);
 
   if (! procedure && gimp_is_canonical_identifier (procedure_name) &&
       gimp_pdb_procedure_exists (pdb, procedure_name))
@@ -180,7 +180,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
       procedure = _gimp_pdb_procedure_new (pdb, procedure_name);
 
       if (procedure)
-        g_hash_table_insert (pdb->priv->procedures,
+        g_hash_table_insert (pdb->procedures,
                              g_strdup (procedure_name), procedure);
     }
 
@@ -327,10 +327,10 @@ gimp_pdb_get_last_error (GimpPDB *pdb)
 {
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
 
-  if (pdb->priv->error_message && strlen (pdb->priv->error_message))
-    return pdb->priv->error_message;
+  if (pdb->error_message && strlen (pdb->error_message))
+    return pdb->error_message;
 
-  switch (pdb->priv->error_status)
+  switch (pdb->error_status)
     {
     case GIMP_PDB_SUCCESS:
       /*  procedure executed successfully  */
@@ -368,7 +368,7 @@ gimp_pdb_get_last_status (GimpPDB *pdb)
 {
   g_return_val_if_fail (GIMP_IS_PDB (pdb), GIMP_PDB_SUCCESS);
 
-  return pdb->priv->error_status;
+  return pdb->error_status;
 }
 
 /*  Cruft API  */
@@ -456,13 +456,13 @@ _gimp_pdb_run_procedure_array (GimpPDB              *pdb,
   proc_run.n_params = gimp_value_array_length (arguments);
   proc_run.params   = _gimp_value_array_to_gp_params (arguments, FALSE);
 
-  if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->priv->plug_in),
-                           &proc_run, pdb->priv->plug_in))
+  if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->plug_in),
+                           &proc_run, pdb->plug_in))
     gimp_quit ();
 
   _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
-  _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
+  _gimp_plug_in_read_expect_msg (pdb->plug_in, &msg, GP_PROC_RETURN);
 
   proc_return = msg.data;
 
@@ -486,14 +486,14 @@ static void
 gimp_pdb_set_error (GimpPDB        *pdb,
                     GimpValueArray *return_values)
 {
-  g_clear_pointer (&pdb->priv->error_message, g_free);
-  pdb->priv->error_status = GIMP_PDB_SUCCESS;
+  g_clear_pointer (&pdb->error_message, g_free);
+  pdb->error_status = GIMP_PDB_SUCCESS;
 
   if (gimp_value_array_length (return_values) > 0)
     {
-      pdb->priv->error_status = GIMP_VALUES_GET_ENUM (return_values, 0);
+      pdb->error_status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
-      switch (pdb->priv->error_status)
+      switch (pdb->error_status)
         {
         case GIMP_PDB_SUCCESS:
         case GIMP_PDB_PASS_THROUGH:
@@ -507,7 +507,7 @@ gimp_pdb_set_error (GimpPDB        *pdb,
               GValue *value = gimp_value_array_index (return_values, 1);
 
               if (G_VALUE_HOLDS_STRING (value))
-                pdb->priv->error_message = g_value_dup_string (value);
+                pdb->error_message = g_value_dup_string (value);
             }
           break;
         }
