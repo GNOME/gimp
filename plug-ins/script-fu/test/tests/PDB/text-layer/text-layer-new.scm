@@ -87,11 +87,11 @@
 
 ;              misc ops
 
-; vectors from text succeeds
-(assert `(gimp-vectors-new-from-text-layer
+; path from text succeeds
+(assert `(gimp-path-new-from-text-layer
               ,testImage
               ,testTextLayer))
-; not capturing returned ID of vectors
+; not capturing returned ID of path
 
 
 

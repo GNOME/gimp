@@ -8,14 +8,15 @@
 (define testImage (testing:load-test-image "gimp-logo.png"))
 (define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
                                   0))
-(define testPath (car (gimp-vectors-new testImage "Test Path")))
+(define testPath (car (gimp-path-new testImage "Test Path")))
 ; must add to image
-(gimp-image-insert-vectors
+(gimp-image-insert-path
                   testImage
                   testPath
                   0 0) ; parent=0 position=0
 ; Add stroke to path
-(gimp-vectors-stroke-new-from-points
+; TODO enum still named "VECTORS" => PATH
+(gimp-path-stroke-new-from-points
             testPath
             VECTORS-STROKE-TYPE-BEZIER
             12 ; count control points, 2*2

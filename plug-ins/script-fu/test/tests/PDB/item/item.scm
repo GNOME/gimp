@@ -168,9 +168,9 @@
 (gimp-layer-add-mask
             testLayer
             testLayerMask)
-(define testPath (car (gimp-vectors-new testImage "Test Path")))
+(define testPath (car (gimp-path-new testImage "Test Path")))
 ; must add to image
-(gimp-image-insert-vectors
+(gimp-image-insert-path
                   testImage
                   testPath
                   0 0) ; parent=0 position=0
@@ -194,7 +194,7 @@
 (test-item-in-image testImage testLayerMask)
 (test-item-parasite testLayerMask)
 
-; vectors
+; path
 (test-bare-item testPath)
 (test-item-in-image testImage testPath)
 (test-item-parasite testPath)

@@ -1,12 +1,15 @@
 
-; Test methods of vector class of the PDB
+; Test methods of Path class of the PDB
 
-; aka Path.  Image has set of Paths.  Path has strokes.
+; Formerly known as "Vectors".
+; Model: Image has set of Paths.  Path has strokes.
 
+
+(script-fu-use-v3)
 
 ;            setup
 
-(define testImage (car (gimp-image-new 21 22 RGB)))
+(define testImage (gimp-image-new 21 22 RGB))
 (gimp-message "testImage is:" (number->string testImage))
 
 
@@ -15,79 +18,88 @@
 
 ;      ID methods
 
-; ensure ID 0 and negative are not vectors
-; FIXME #f/#t
-(assert '(= (car (gimp-item-id-is-vectors 0))
-            0))  ; FUTURE #f
+; ensure ID 0 and negative are not paths
+(assert '(not (gimp-item-id-is-path 0)))
+
 
 ; Test valid ID is tested drive-by
 
 
 
-;         image get/set vectors methods
-; This sequence of tests requires image 6 has no vectors yet
+(test! "image get/set paths methods")
 
-; ensure get-vectors from image having no vectors yields zero vectors
+; This sequence of tests requires testImage has no paths yet
+
+; ensure get-paths from image having no paths yields list length zero
 ; FUTURE: returns just #(), not (0 #())
-(assert `(= (car (gimp-image-get-vectors ,testImage))
+(assert `(= (car (gimp-image-get-paths ,testImage))
             0))
 
 
 ; setup, not an assert
-; vectors-new succeeds
-(define testPath (car (gimp-vectors-new
+; path-new succeeds and returns a single ID.
+(define testPath (gimp-path-new
                         testImage
-                        "Test Path")))
+                        "Test Path"))
 
 
-; !!! id is valid even though vectors is not inserted in image
-(assert `(= (car (gimp-item-id-is-vectors ,testPath))
-            1))  ; #t
+; !!! id is valid even though path is not inserted in image
+(assert `(gimp-item-id-is-path ,testPath))
 
-; new path name is as given
+; new path's name is as given
 (assert `(string=?
-            (car (gimp-item-get-name ,testPath))
+            (gimp-item-get-name ,testPath)
             "Test Path"))
 
-; new vectors is not in image yet
-; image still has count of vectors == 0
-(assert `(= (car (gimp-image-get-vectors ,testImage))
+; new path is not in image yet
+; image still has count of paths == 0
+(assert `(= (car (gimp-image-get-paths ,testImage))
             0))
 
 ; new path has no strokes
 ; path has stroke count == 0
-(assert `(= (car (gimp-vectors-get-strokes ,testPath))
+(assert `(= (car (gimp-path-get-strokes ,testPath))
             0))
 
 
-; insert vector in image yields (#t)
-(assert  `(car (gimp-image-insert-vectors
+; insert path in image succeeds
+; C returns void, yields #t in scheme
+(assert  `(gimp-image-insert-path
                   ,testImage
                   ,testPath
-                  0 0))) ; parent=0 position=0
+                  0 0)) ; parent=0 position=0
 
-; image with inserted vectors now has count of vectors == 1
-(assert `(= (car (gimp-image-get-vectors ,testImage))
+; image with one inserted path now has count of paths == 1
+(assert `(= (car (gimp-image-get-paths ,testImage))
             1))
 
 
-; export methods
+(test! "path export methods")
 
-; export string succeeds
-(assert `(gimp-vectors-export-to-string
+; export single path to string succeeds
+(assert `(gimp-path-export-to-string
             ,testImage
             ,testPath))
 
-; export string all succeeds
+; export all paths to string all succeeds
 ; passing 0 for path means "all"
-(assert `(gimp-vectors-export-to-string
+; FIXME this is wierd, should be a separate method gimp-image-export-paths-to-string
+; The name implies a single path
+(assert `(gimp-path-export-to-string
             ,testImage
             0))
 
-; export file all succeeds
-(assert `(gimp-vectors-export-to-file
+; export single path to file succeeds
+(assert `(gimp-path-export-to-file
             ,testImage
             "tmp.svg"
+            ,testPath))
+
+; export all paths to file succeeds
+(assert `(gimp-path-export-to-file
+            ,testImage
+            "tmp2.svg"
             0))
 
+(script-fu-use-v2)
 

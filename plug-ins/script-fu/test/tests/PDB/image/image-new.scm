@@ -64,8 +64,8 @@
 (assert `(= (car (gimp-image-get-layers ,testImage))
             0))
 
-; new image has zero vectors
-(assert `(= (car (gimp-image-get-vectors ,testImage))
+; new image has zero paths
+(assert `(= (car (gimp-image-get-paths ,testImage))
             0))
 
 ; new image has no parasites

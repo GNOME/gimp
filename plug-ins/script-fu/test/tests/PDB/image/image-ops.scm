@@ -100,10 +100,10 @@
 ; Used for performance.
 (assert `(gimp-image-freeze-channels ,testImage))
 (assert `(gimp-image-freeze-layers ,testImage))
-(assert `(gimp-image-freeze-vectors ,testImage))
+(assert `(gimp-image-freeze-paths ,testImage))
 (assert `(gimp-image-thaw-channels ,testImage))
 (assert `(gimp-image-thaw-layers ,testImage))
-(assert `(gimp-image-thaw-vectors ,testImage))
+(assert `(gimp-image-thaw-paths ,testImage))
 
 (test! "clean-all makes image not dirty")
 (assert `(gimp-image-clean-all ,testImage))
