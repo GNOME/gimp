@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-06 15:41+0000\n"
-"PO-Revision-Date: 2024-03-07 16:29+0100\n"
+"POT-Creation-Date: 2024-07-14 10:51+0000\n"
+"PO-Revision-Date: 2024-07-14 18:07+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,81 +16,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsoll"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktive konsoll for programmering med  Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:309
 msgid "_GIMP Online"
 msgstr "_GIMP på Internett"
 
-#: plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:310
 msgid "_User Manual"
 msgstr "_Handboka"
 
-#: plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:313
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Test"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Buttons"
 msgstr "_Knappar"
 
-#: plug-ins/script-fu/script-fu.c:325
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Logos"
 msgstr "_Logoar"
 
-#: plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:322
 msgid "_Patterns"
 msgstr "_Mønsterelement"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Web Page Themes"
 msgstr "Tema for _nettside"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Alien Glow"
 msgstr "Alien Glow"
 
-#: plug-ins/script-fu/script-fu.c:334
+#: plug-ins/script-fu/script-fu.c:329
 msgid "_Beveled Pattern"
 msgstr "_Fasettert mønster"
 
-#: plug-ins/script-fu/script-fu.c:336
+#: plug-ins/script-fu/script-fu.c:331
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:339
+#: plug-ins/script-fu/script-fu.c:334
 msgid "Alpha to _Logo"
 msgstr "Alfa til _logo"
 
-#: plug-ins/script-fu/script-fu.c:345
-msgid "_Refresh Scripts"
-msgstr "_Oppdater skript"
-
-#: plug-ins/script-fu/script-fu.c:350
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Les alle dei tilgjengelege Script-Fu-skripta inn på nytt"
-
-#: plug-ins/script-fu/script-fu.c:376
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Du kan ikkje bruka «oppdater skript» når du har eit ope Script-Fu "
-"dialogvindauge. Lukk alle Script-Fu-vindauge og prøv igjen."
-
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu evalueringsmodus tillét berre ikkje-interaktiv køyring"
 
@@ -121,8 +105,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Lagra utdata frå Script-Fu konsollen"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -147,27 +131,27 @@ msgstr "Velkommen til TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Lag skript i GIMP i Scheme-språket"
 
-#: plug-ins/script-fu/server/script-fu-server.c:874
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tenaralternativ"
 
-#: plug-ins/script-fu/server/script-fu-server.c:879
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Start tenaren"
 
-#: plug-ins/script-fu/server/script-fu-server.c:912
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Lytt på IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:919
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Tenarport:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Loggfil for tenar:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:938
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -183,44 +167,45 @@ msgstr "_Start tenaren …"
 msgid "Server for remote Script-Fu operation"
 msgstr "Tenar for fjernoperering av Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan ikkje køyra to skript samtidig."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Skriptet «%s» er i bruk nå."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:329
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu fargeval"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:455
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu filval"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:458
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu mappeval"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:874
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Feil under utføringa av %s:"
@@ -281,7 +266,7 @@ msgstr "Kantfarge"
 
 #: plug-ins/script-fu/scripts/addborder.scm:188
 msgid "Delta value on color"
-msgstr "Skyggeverknad"
+msgstr "Deltaverdi for farge"
 
 #: plug-ins/script-fu/scripts/addborder.scm:189
 #: plug-ins/script-fu/scripts/drop-shadow.scm:183
@@ -506,7 +491,7 @@ msgstr "Startverdi"
 
 #: plug-ins/script-fu/scripts/circuit.scm:141
 msgid "No background (only for separate layer)"
-msgstr "Ingen bakgrunn (bare for delte lag)"
+msgstr "Ingen bakgrunn (berre for delte lag)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:142
 #: plug-ins/script-fu/scripts/lava.scm:141
@@ -566,7 +551,7 @@ msgstr "Kor mange flekkar som skal leggjast til"
 
 #: plug-ins/script-fu/scripts/coffee.scm:103
 msgid "Darken only"
-msgstr "Gjer bare mørkare"
+msgstr "Gjer berre mørkare"
 
 #: plug-ins/script-fu/scripts/coffee.scm:104
 msgid "Gradient to color stains"
@@ -614,11 +599,11 @@ msgstr "Glatt ut _loddrett"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
-msgstr "_Slagskugge (legacy)…"
+msgstr "_Slagskugge (tradisjonell)…"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr "Legg ein slagskygge til det valde området (eller alfakanalen)"
+msgstr "Legg ein slagskugge til det valde området (eller alfakanalen)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
@@ -645,50 +630,50 @@ msgstr "Farge"
 msgid "Opacity"
 msgstr "Dekkevne"
 
-#: plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "Render _Font Map..."
 msgstr "Lager _skrifttypekart …"
 
-#: plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "Lager eit bilete med førehandsvisingar av dei skrifttypane som er valde i "
 "filteret"
 
-#: plug-ins/script-fu/scripts/font-map.scm:167
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Text"
 msgstr "_Tekst"
 
-#: plug-ins/script-fu/scripts/font-map.scm:168
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "Use font _name as text"
 msgstr "Bruk skrifttype_namnet som tekst"
 
-#: plug-ins/script-fu/scripts/font-map.scm:169
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Labels"
 msgstr "_Merkelappar"
 
-#: plug-ins/script-fu/scripts/font-map.scm:170
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:171
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Font _size (pixels)"
 msgstr "Tekststorleik (pikslar)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:172
+#: plug-ins/script-fu/scripts/font-map.scm:178
 msgid "_Border (pixels)"
 msgstr "_Kantbreidde (pikslar)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "_Color scheme"
 msgstr "_Fargeskjema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Black on white"
 msgstr "Svart på kvit"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Active colors"
 msgstr "Aktive fargar"
 
@@ -715,11 +700,11 @@ msgstr "Korning (1 = låg)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
-msgstr "Legg til skygge"
+msgstr "Legg til skugge"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
-msgstr "Vekting av skygge (%)"
+msgstr "Vekting av skugge (%)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: plug-ins/script-fu/scripts/old-photo.scm:104
@@ -863,34 +848,34 @@ msgstr ""
 
 #. doesn't matter how many drawables are selected
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Retning"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
-msgstr "Horisontal"
+msgstr "Vassrett"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:38
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
-msgstr "Vertikal"
+msgstr "Loddrett"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "_Posisjon (i %)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Ny _hjelpelinje …"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Legg til ei hjelpelinje i den spesifiserte retninga og posisjonen i pikslar)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Posisjon"
 
@@ -900,7 +885,7 @@ msgstr "_Fjern alle hjelpelinjer"
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
-msgstr "Fjern alle horisontale og vertikale hjelpelinjer"
+msgstr "Fjern alle vassrette og loddrette hjelpelinjer"
 
 #. else
 #: plug-ins/script-fu/scripts/lava.scm:123
@@ -937,7 +922,7 @@ msgstr "Bruk gjeldande fargeovergang"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid "Line _Nova..."
-msgstr "Line _Nova …"
+msgstr "Linje_nova …"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:108
 msgid ""
@@ -1037,23 +1022,11 @@ msgstr "Bruntone (sepia)"
 msgid "Mottle"
 msgstr "Flekklegg"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Mappe for ut-fila"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-"Namnet på fila som skal lagast (dersom det finst ei fil med dette namnet frå "
-"før, vil ho bli byt ut)"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Filnamnet du skreiv inn kan ikkje brukast for ei fil."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1061,11 +1034,30 @@ msgstr ""
 "Alle teikna i namnet er anten mellomrom eller teikn som er ulovlege i "
 "filnamn."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:264
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Eksporterte paletten til fil: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:289
+msgid "Folder for the output file"
+msgstr "Mappe for ut-fila"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Namnet på fila som skal lagast (dersom det finst ei fil med dette namnet frå "
+"før, vil ho bli byt ut)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:319
 msgid "_CSS stylesheet..."
 msgstr "_CSS stilark..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:320
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1073,27 +1065,27 @@ msgstr ""
 "Eksporter den aktive paletten som eit CSS-stilark med fargenamna som "
 "klassenamn og fargen som fargeeigenskap"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:340
 msgid "P_HP dictionary..."
 msgstr "P_HP-ordbok..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:341
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Eksporter den aktive paletten som ei PHP-ordliste (namn => farge)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:322
+#: plug-ins/script-fu/scripts/palette-export.scm:365
 msgid "_Python dictionary..."
 msgstr "_Python-ordbok..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:366
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Eksporter den aktive paletten som ei Python-ordliste (namn: farge)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:351
+#: plug-ins/script-fu/scripts/palette-export.scm:387
 msgid "_Text file..."
 msgstr "_Tekstfil …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:388
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1101,11 +1093,11 @@ msgstr ""
 "Skriv alle fargane i ein palett til ei tekstfil med ein heksadesimal verdi "
 "på kvar linje (ingen namn)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:398
+#: plug-ins/script-fu/scripts/palette-export.scm:427
 msgid "J_ava map..."
 msgstr "J_ava-kart..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:428
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Eksporter den aktive paletten som ein java.util.Hashtable&lt;String,Color&gt;"
@@ -1166,11 +1158,11 @@ msgstr "mypattern"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
-msgstr "_Perspektivskygge …"
+msgstr "_Perspektivskugge …"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "Legg perspektivskygge til det valde området (eller alfakanalen)"
+msgstr "Legg perspektivskugge til det valde området (eller alfakanalen)"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Angle"
@@ -1182,7 +1174,7 @@ msgstr "Relativ avstand til horisonten"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Relative length of shadow"
-msgstr "Relativ skyggelengde"
+msgstr "Relativ skuggelengd"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
@@ -1238,7 +1230,7 @@ msgstr "_Avrunda hjørne …"
 #: plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr "Rund av bilethjørna og legg til slagskygge og bakgrunn"
+msgstr "Rund av bilethjørna og legg til slagskugge og bakgrunn"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
@@ -1246,15 +1238,15 @@ msgstr "Kantradius"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
-msgstr "Legg til slagskygge"
+msgstr "Legg til slagskugge"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
-msgstr "X-forskyving av skygge"
+msgstr "X-forskyving av skugge"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
-msgstr "Y-forskyving av skygge"
+msgstr "Y-forskyving av skugge"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
@@ -1262,7 +1254,7 @@ msgstr "Legg til bakgrunn"
 
 #: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
-msgstr "_Bytt palett …"
+msgstr "_Byt palett …"
 
 #: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -1337,10 +1329,6 @@ msgstr "Gjennomsiktig bakgrunn"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indekser til n fargar (0 = ingen indeksering)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Kule …"
-
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
 msgstr "_Slør flisfugene …"
@@ -1359,7 +1347,7 @@ msgstr "Slør _loddrett"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:81
 msgid "Blur _horizontally"
-msgstr "Slør _horisontalt"
+msgstr "Slør _vassrett"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "Blur _type"
@@ -1431,11 +1419,11 @@ msgstr "Stripeavstand"
 
 #: plug-ins/script-fu/scripts/weave.scm:428
 msgid "Shadow darkness"
-msgstr "Skyggemørkne"
+msgstr "Skuggemørkne"
 
 #: plug-ins/script-fu/scripts/weave.scm:429
 msgid "Shadow depth"
-msgstr "Skyggedjupn"
+msgstr "Skuggedjupn"
 
 #: plug-ins/script-fu/scripts/weave.scm:430
 msgid "Thread length"
@@ -1451,7 +1439,7 @@ msgstr "Trådintensitet"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:92
 msgid "Shadow"
-msgstr "Skygge"
+msgstr "Skugge"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:121
 msgid "_Xach-Effect..."
@@ -1481,23 +1469,39 @@ msgstr "Dekkevne for høglys"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
-msgstr "Farge på slagskyggen"
+msgstr "Farge på slagskuggen"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
-msgstr "Dekkevne for slagskyggen"
+msgstr "Dekkevne for slagskuggen"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
-msgstr "Sløringsradius for slagskygge"
+msgstr "Sløringsradius for slagskugge"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
-msgstr "X-forsyving av slagskyggen"
+msgstr "X-forskyving av slagskuggen"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
-msgstr "Y-forsyving av slagskyggen"
+msgstr "Y-forskyving av slagskuggen"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "_Oppdater skript"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Les alle dei tilgjengelege Script-Fu-skripta inn på nytt"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "Du kan ikkje bruka «oppdater skript» når du har eit ope Script-Fu "
+#~ "dialogvindauge. Lukk alle Script-Fu-vindauge og prøv igjen."
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Kule …"
 
 #~ msgid "Add realistic looking coffee stains to the image"
 #~ msgstr "Legg inn realistiske kaffiflekkar i biletet"
