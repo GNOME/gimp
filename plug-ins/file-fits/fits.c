@@ -195,17 +195,23 @@ fits_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,SIMPLE");
 
-      gimp_procedure_add_int_aux_argument (procedure, "replace",
-                                           _("Replacement for undefined pixels"),
-                                           _("Replacement for undefined pixels"),
-                                           0, 255, 0,
-                                           G_PARAM_READWRITE);
+      gimp_procedure_add_choice_aux_argument (procedure, "replace",
+                                              _("Re_placement for undefined pixels"),
+                                              _("Replacement for undefined pixels"),
+                                              gimp_choice_new_with_values ("black",  0,   _("Black"), NULL,
+                                                                           "white",  255, _("White"), NULL,
+                                                                           NULL),
+                                              "black",
+                                              G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_aux_argument (procedure, "use-data-min-max",
-                                           _("Pixel value scaling"),
-                                           _("Use DATAMIN/DATAMAX-scaling if possible"),
-                                           0, 1, 0,
-                                           G_PARAM_READWRITE);
+      gimp_procedure_add_choice_aux_argument (procedure, "use-data-min-max",
+                                              _("Pi_xel value scaling"),
+                                              _("Whether to use DATAMIN/DATAMAX-scaling if possible"),
+                                              gimp_choice_new_with_values ("automatic",    0, _("Automatic"),          NULL,
+                                                                           "data-min-max", 1, _("By DATAMIN/DATAMAX"), NULL,
+                                                                           NULL),
+                                              "automatic",
+                                              G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -366,10 +372,10 @@ load_image (GFile        *file,
   gdouble            replace_val = 0;
   gboolean           use_datamin;
 
-  g_object_get (config,
-                "replace",          &replace,
-                "use-data-min-max", &use_datamin,
-                NULL);
+  replace = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                 "replace");
+  use_datamin = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                     "use-data-min-max");
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -995,10 +1001,9 @@ static gboolean
 load_dialog (GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget    *dialog;
-  GtkListStore *store;
-  GtkWidget    *frame;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *frame;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -1006,22 +1011,12 @@ load_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Open FITS File"));
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  store = gimp_int_store_new (_("Black"), 0,
-                              _("White"), 255,
-                              NULL);
-  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "replace",
-                                               GIMP_INT_STORE (store));
+  frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "replace", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_widget_set_margin_bottom (frame, 12);
 
-  store = gimp_int_store_new (_("Automatic"),          0,
-                              _("By DATAMIN/DATAMAX"), 1,
-                              NULL);
-  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "use-data-min-max",
-                                               GIMP_INT_STORE (store));
+  frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "use-data-min-max", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_widget_set_margin_bottom (frame, 12);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),

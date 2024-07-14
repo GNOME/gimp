@@ -447,18 +447,24 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "curve-type",
-                                       _("Curve Type"),
-                                       _("{ 0 == smooth (use 17 points), "
-                                         "1 == freehand (use 256 val_y) }"),
-                                       0, 1, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "curve-type",
+                                          _("Cur_ve Type"),
+                                          _("Whether to use Smooth (17 points) or "
+                                            "Freehand (256 points) to draw the curve"),
+                                          gimp_choice_new_with_values ("smooth",   SMOOTH, _("Smooth"),   NULL,
+                                                                       "freehand", GFREE,  _("Freehand"), NULL,
+                                                                       NULL),
+                                          "smooth",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "curve-border",
-                                       _("Curve for Border"),
-                                       _("Choose the active border line to edit"),
-                                       0, 1, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "curve-border",
+                                          _("Curve for _Border"),
+                                          _("Choose the active border line to edit"),
+                                          gimp_choice_new_with_values ("upper", OUTLINE_UPPER, _("Upper"),               NULL,
+                                                                       "lower", OUTLINE_LOWER, C_("adjective", "Lower"), NULL,
+                                                                       NULL),
+                                          "upper",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "argc-upper-point-x",
                                        _("Argc upper point X"),
@@ -1025,7 +1031,6 @@ bender_new_dialog (GimpProcedure       *procedure,
   GtkWidget    *toggle;
   GtkWidget    *button;
   GdkDisplay   *display;
-  GtkListStore *store;
   gint          i, j;
 
   cd = g_new (BenderDialog, 1);
@@ -1151,19 +1156,13 @@ bender_new_dialog (GimpProcedure       *procedure,
 
   /* The curves graph  */
   /* Config-connected widgets first */
-  store = gimp_int_store_new (_("Smooth"), 0,
-                              _("Free"),   1,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (cd->shell),
-                                       "curve-type", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (cd->shell),
+                                    "curve-type", GIMP_TYPE_INT_RADIO_FRAME);
   g_signal_connect (config, "notify::curve-type",
                     G_CALLBACK (bender_type_callback), cd);
 
-  store = gimp_int_store_new (_("Upper"), OUTLINE_UPPER,
-                              C_("adjective", "Lower"), OUTLINE_LOWER,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (cd->shell),
-                                       "curve-border", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (cd->shell),
+                                    "curve-border", GIMP_TYPE_INT_RADIO_FRAME);
   g_signal_connect (config, "notify::curve-border",
                     G_CALLBACK (bender_global_notify), cd);
 
@@ -1363,9 +1362,8 @@ bender_plot_curve (BenderDialog *cd,
   gint32   i;
   gint     outline;
 
-  g_object_get (cd->config,
-                "curve-border", &outline,
-                NULL);
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   /* construct the geometry matrix from the segment */
   for (i = 0; i < 4; i++)
@@ -1484,10 +1482,10 @@ bender_calculate_curve (BenderDialog *cd,
   gint curve_type;
   gint outline;
 
-  g_object_get (cd->config,
-                "curve-type",   &curve_type,
-                "curve-border", &outline,
-                NULL);
+  curve_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                    "curve-type");
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   switch (curve_type)
     {
@@ -1571,10 +1569,10 @@ bender_type_callback (GtkWidget *widget,
   if (! cd)
     return;
 
-  g_object_get (cd->config,
-                "curve-type",   &curve_type,
-                "curve-border", &outline,
-                NULL);
+  curve_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                    "curve-type");
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   if (curve_type == SMOOTH)
     {
@@ -1608,9 +1606,8 @@ bender_reset_callback (GtkWidget *widget,
   gint          i;
   gint          outline;
 
-  g_object_get (cd->config,
-                "curve-border", &outline,
-                NULL);
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   /*  Initialize the values  */
   for (i = 0; i < 256; i++)
@@ -1641,9 +1638,8 @@ bender_copy_callback (GtkWidget *widget,
   gint          other;
   gint          outline;
 
-  g_object_get (cd->config,
-                "curve-border", &outline,
-                NULL);
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   other = (outline) ? 0 : 1;
 
@@ -1672,9 +1668,8 @@ bender_copy_inv_callback (GtkWidget *widget,
   gint          other;
   gint          outline;
 
-  g_object_get (cd->config,
-                "curve-border", &outline,
-                NULL);
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   other = (outline) ? 0 : 1;
 
@@ -1707,9 +1702,8 @@ bender_swap_callback (GtkWidget *widget,
   gdouble       hd;
   guchar        hu;
 
-  g_object_get (cd->config,
-                "curve-border", &outline,
-                NULL);
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   other = (outline) ? 0 : 1;
 
@@ -1877,10 +1871,10 @@ bender_graph_events (GtkWidget    *widget,
   gint curve_type;
   gint outline;
 
-  g_object_get (cd->config,
-                "curve-type",   &curve_type,
-                "curve-border", &outline,
-                NULL);
+  curve_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                    "curve-type");
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   new_type      = GDK_X_CURSOR;
   closest_point = 0;
@@ -2062,10 +2056,10 @@ bender_graph_draw (GtkWidget    *widget,
   gint    curve_type;
   gint    outline;
 
-  g_object_get (cd->config,
-                "curve-type",   &curve_type,
-                "curve-border", &outline,
-                NULL);
+  curve_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                    "curve-type");
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
   cairo_set_line_width (cr, 1.0);
   cairo_translate (cr, 0.5, 0.5);
@@ -2602,36 +2596,37 @@ p_bender_calculate_iter_curve (BenderDialog        *cd,
                                gint32               xmax,
                                gint32               ymax)
 {
-   gint outline;
-   gint curve_type;
+  gint outline;
+  gint curve_type;
 
-   g_object_get (config,
-                 "curve-type",   &curve_type,
-                 "curve-border", &outline,
-                 NULL);
+  curve_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                    "curve-type");
+  outline = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (cd->config),
+                                                 "curve-border");
 
-   if (gb_debug)
-     g_printf ("p_bender_calculate_iter_curve NORMAL1\n");
+  if (gb_debug)
+    g_printf ("p_bender_calculate_iter_curve NORMAL1\n");
 
-   if (curve_type == SMOOTH)
-     {
-       g_object_set (cd->config,
-                     "curve-border", OUTLINE_UPPER,
-                     NULL);
-       bender_calculate_curve (cd, xmax, ymax, FALSE);
-       g_object_set (cd->config,
-                     "curve-border", OUTLINE_LOWER,
-                     NULL);
-       bender_calculate_curve (cd, xmax, ymax, FALSE);
-     }
-   else
-     {
-       p_stretch_curves (cd, xmax, ymax);
-     }
+  if (curve_type == SMOOTH)
+    {
+      g_object_set (cd->config,
+                    "curve-border", "upper",
+                    NULL);
+      bender_calculate_curve (cd, xmax, ymax, FALSE);
+      g_object_set (cd->config,
+                    "curve-border", "lower",
+                    NULL);
+      bender_calculate_curve (cd, xmax, ymax, FALSE);
+    }
+  else
+    {
+      p_stretch_curves (cd, xmax, ymax);
+    }
 
-   g_object_set (config,
-                 "curve-border", outline,
-                 NULL);
+  g_object_set (config,
+                "curve-border", (outline == OUTLINE_UPPER) ?
+                                "upper" : "lower",
+                NULL);
 }
 
 /* ============================================================================

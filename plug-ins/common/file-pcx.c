@@ -218,12 +218,15 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "January 1997");
 
-      gimp_procedure_add_int_argument (procedure, "override-palette",
-                                       _("Palette Options"),
-                                       _("Use built-in palette (0) or override with "
-                                         "black/white (1)"),
-                                       0, 1, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "override-palette",
+                                          _("_Palette Options"),
+                                          _("Whether to use the built-in palette or "
+                                            "a black and white palette for 1 bit images."),
+                                          gimp_choice_new_with_values ("use-built-in-palette", 0, _("Use PCX image's built-in palette"), NULL,
+                                                                       "use-bw-palette",       1, _("Use black and white palette"),      NULL,
+                                                                       NULL),
+                                          "use-built-in-palette",
+                                          G_PARAM_READWRITE);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-pcx");
@@ -249,12 +252,15 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
                                       "Alex S.",
                                       "2023");
 
-      gimp_procedure_add_int_argument (procedure, "override-palette",
-                                       _("Palette Options"),
-                                       _("Use built-in palette (0) or override with "
-                                         "black/white (1)"),
-                                       0, 1, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "override-palette",
+                                          _("_Palette Options"),
+                                          _("Whether to use the built-in palette or "
+                                            "a black and white palette for 1 bit images."),
+                                          gimp_choice_new_with_values ("use-built-in-palette", 0, _("Use PCX image's built-in palette"), NULL,
+                                                                       "use-bw-palette",       1, _("Use black and white palette"),      NULL,
+                                                                       NULL),
+                                          "use-built-in-palette",
+                                          G_PARAM_READWRITE);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-dcx");
@@ -745,16 +751,13 @@ load_image (GimpProcedure  *procedure,
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          g_object_get (config,
-                        "override-palette", &override_palette,
-                        NULL);
+          override_palette = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                                  "override-palette");
+
           /* Only show dialogue once for DCX import */
           if (image_num == 0 && pcx_load_dialog (procedure, config))
-            {
-              g_object_get (config,
-                            "override-palette", &override_palette,
-                            NULL);
-            }
+            override_palette = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                                    "override-palette");
         }
       /* Monochrome does not mean necessarily B&W. Therefore we still
        * want to check the header palette, even for just 2 colors.
@@ -847,7 +850,6 @@ pcx_load_dialog (GimpProcedure *procedure,
                  GObject       *config)
 {
   GtkWidget    *dialog;
-  GtkListStore *store;
   gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -856,18 +858,8 @@ pcx_load_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Import from PCX"));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  store = gimp_int_store_new (_("Use PCX image's built-in palette"), 0,
-                              _("Use black and white palette"),      1,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "override-palette", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "override-palette", GIMP_TYPE_INT_RADIO_FRAME);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               NULL);

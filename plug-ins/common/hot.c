@@ -254,7 +254,7 @@ hot_create_procedure (GimpPlugIn  *plug_in,
                                           "be unsafely bright"),
                                         "hot scans an image for pixels that "
                                         "will give unsave values of "
-                                        "chrominance or composite signale "
+                                        "chrominance or composite signal "
                                         "amplitude when encoded into an NTSC "
                                         "or PAL signal. Three actions can be "
                                         "performed on these 'hot' pixels. "
@@ -266,18 +266,24 @@ hot_create_procedure (GimpPlugIn  *plug_in,
                                       "Eric L. Hernes",
                                       "1997");
 
-      gimp_procedure_add_int_argument (procedure, "mode",
-                                       _("Mode"),
-                                       _("Mode { NTSC (0), PAL (1) }"),
-                                       0, 1, MODE_NTSC,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "mode",
+                                          _("_Mode"),
+                                          _("Signal mode"),
+                                          gimp_choice_new_with_values ("ntsc", MODE_NTSC, _("NTSC"), NULL,
+                                                                       "pal",  MODE_PAL,  _("PAL"),   NULL,
+                                                                       NULL),
+                                          "ntsc",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "action",
-                                       _("Action"),
-                                       _("Action { (0) reduce luminance, "
-                                       "(1) reduce saturation, or (2) Blacken }"),
-                                       0, 2, ACT_LREDUX,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "action",
+                                          _("_Action"),
+                                          _("Action"),
+                                          gimp_choice_new_with_values ("reduce-luminance",   ACT_LREDUX, _("Reduce Luminance"),  NULL,
+                                                                       "reduce-saturation",  ACT_SREDUX, _("Reduce Saturation"), NULL,
+                                                                       "blacken",            ACT_FLAG,   _("Blacken"),           NULL,
+                                                                       NULL),
+                                          "reduce-luminance",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "new-layer",
                                            _("Create _new layer"),
@@ -365,10 +371,12 @@ pluginCore (GimpImage    *image,
   gdouble     py;
 
   g_object_get (config,
-                "mode",      &mode,
-                "action",    &action,
                 "new-layer", &new_layer,
                 NULL);
+  mode = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                              "mode");
+  action = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "action");
 
   width  = gimp_drawable_get_width  (drawable);
   height = gimp_drawable_get_height (drawable);
@@ -653,25 +661,10 @@ plugin_dialog (GimpProcedure *procedure,
                                    GIMP_PROCEDURE_CONFIG (config),
                                    _("Hot"));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dlg));
-
-  store = gimp_int_store_new (_("N_TSC"), MODE_NTSC,
-                              _("_PAL"),  MODE_PAL,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dlg),
-                                       "mode", GIMP_INT_STORE (store));
-
-  store = gimp_int_store_new (_("Reduce _Luminance"),  ACT_LREDUX,
-                              _("Reduce _Saturation"), ACT_SREDUX,
-                              _("_Blacken"),           ACT_FLAG,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dlg),
-                                       "action", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dlg),
+                                    "mode", GIMP_TYPE_INT_RADIO_FRAME);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dlg),
+                                    "action", GIMP_TYPE_INT_RADIO_FRAME);
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dlg),
                                          "hot-left-side",
