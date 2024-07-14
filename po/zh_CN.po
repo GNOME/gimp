@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-13 10:25+0000\n"
-"PO-Revision-Date: 2024-07-13 20:14+0800\n"
+"POT-Creation-Date: 2024-07-14 01:32+0000\n"
+"PO-Revision-Date: 2024-07-14 18:46+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3504,7 +3504,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "仅对使用 RGB 颜色的图层进行白平衡操作。"
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:132 app/tools/gimplevelstool.c:138
+#: app/tools/gimplevelstool.c:138
 msgid "Levels"
 msgstr "色阶"
 
@@ -23167,6 +23167,11 @@ msgstr "引擎"
 #: app/tools/gimpforegroundselectoptions.c:125
 msgid "Matting engine to use"
 msgstr "要使用的抠图引擎"
+
+#: app/tools/gimpforegroundselectoptions.c:132
+msgctxt "measurement"
+msgid "Levels"
+msgstr "级别"
 
 #: app/tools/gimpforegroundselectoptions.c:133
 msgid "Number of downsampled levels to use"
