@@ -436,33 +436,6 @@ jpeg_export (GimpProcedure        *procedure,
 
   orig_image = image;
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "JPEG",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
-
-      switch (export)
-        {
-        case GIMP_EXPORT_EXPORT:
-          display = NULL;
-          separate_display = TRUE;
-          break;
-
-        case GIMP_EXPORT_IGNORE:
-          break;
-        }
-      break;
-
-    default:
-      break;
-    }
-  drawables = gimp_image_list_layers (image);
-
   /* Override preferences from JPG export defaults (if saved). */
 
   switch (run_mode)
@@ -545,9 +518,16 @@ jpeg_export (GimpProcedure        *procedure,
                 "original-num-quant-tables", orig_num_quant_tables,
                 NULL);
 
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY);
+  drawables = gimp_image_list_layers (image);
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       gboolean show_preview = FALSE;
+
+      gimp_ui_init (PLUG_IN_BINARY);
 
       g_object_get (config, "show-preview", &show_preview, NULL);
       if (show_preview)
@@ -563,6 +543,8 @@ jpeg_export (GimpProcedure        *procedure,
       preview_image     = image;
       orig_image_global = orig_image;
       drawable_global   = drawables->data;
+      display           = NULL;
+      separate_display  = TRUE;
 
       /*  First acquire information with a dialog  */
       if (! save_dialog (procedure, config, drawables->data, orig_image))

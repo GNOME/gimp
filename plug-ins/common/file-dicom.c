@@ -279,19 +279,10 @@ dicom_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-      export = gimp_export_image (&image, "DICOM",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
-      break;
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY);
 
-    default:
-      break;
-    }
   drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)

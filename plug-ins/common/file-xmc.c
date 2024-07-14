@@ -531,8 +531,8 @@ xmc_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
   GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
-  GList             *drawables   = gimp_image_list_layers (image);
-  gint               n_drawables = g_list_length (drawables);
+  GList             *drawables   = NULL;
+  gint               n_drawables = NULL;
   GimpImage         *orig_image;
   GeglRectangle     *hotspot_range;
   gint               hot_spot_x;
@@ -560,25 +560,7 @@ xmc_export (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "XMC",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB    |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                                  GIMP_EXPORT_NEEDS_ALPHA);
-      break;
-
-    default:
-      break;
-    }
-  drawables = gimp_image_list_layers (image);
-  n_drawables = g_list_length (drawables);
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
       load_default_hotspot (image, hotspot_range, G_OBJECT (config));
 
       if (! save_dialog (procedure, G_OBJECT (config), image, hotspot_range))
@@ -609,6 +591,14 @@ xmc_export (GimpProcedure        *procedure,
     default:
       break;
     }
+
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB    |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA  |
+                              GIMP_EXPORT_CAN_HANDLE_LAYERS |
+                              GIMP_EXPORT_NEEDS_ALPHA);
+  drawables = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   if (! export_image (file, image, n_drawables, drawables,
                       orig_image, G_OBJECT (config), &error))

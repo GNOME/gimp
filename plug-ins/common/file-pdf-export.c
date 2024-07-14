@@ -716,7 +716,7 @@ pdf_export_image (GimpProcedure        *procedure,
        */
       cairo_save (cr);
 
-      if (! (gimp_export_image (&image, NULL,
+      if (! (gimp_export_image (&image,
                                 capabilities) == GIMP_EXPORT_EXPORT))
         {
           /* gimp_drawable_histogram() only works within the bounds of

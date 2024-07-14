@@ -230,22 +230,11 @@ qoi_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "qoi",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
-      break;
-
-    default:
-      break;
-    }
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
   drawables = gimp_image_list_layers (image);
 
   if (! export_image (file, image, drawables->data, &error))

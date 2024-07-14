@@ -554,7 +554,6 @@ export_action_perform (const ExportAction *action,
 /**
  * gimp_export_image:
  * @image:        Pointer to the image.
- * @format_name:  The (short) name of the image_format (e.g. JPEG or GIF).
  * @capabilities: What can the image_format do?
  *
  * Takes an image to be saved together with a description
@@ -573,16 +572,11 @@ export_action_perform (const ExportAction *action,
  * altered, GIMP_EXPORT_IGNORE is returned and the save_plugin
  * should try to save the original image.
  *
- * If @format_name is NULL, no dialogs will be shown and this function
- * will behave as if the user clicked on the 'Export' button, if a
- * dialog would have been shown.
- *
  * Returns: An enum of #GimpExportReturn describing the user_action.
  **/
 GimpExportReturn
-gimp_export_image (GimpImage               **image,
-                   const gchar              *format_name,
-                   GimpExportCapabilities    capabilities)
+gimp_export_image (GimpImage              **image,
+                   GimpExportCapabilities   capabilities)
 {
   GSList            *actions = NULL;
   GimpImageBaseType  type;

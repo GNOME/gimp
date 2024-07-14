@@ -757,24 +757,7 @@ ps_export (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image,
-                                  eps_flag ? "EPS" : "PostScript",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
-      break;
-
-    default:
-      break;
-    }
-  drawables = gimp_image_list_layers (image);
-
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
       ps_set_save_size (G_OBJECT (config), orig_image);
 
       if (! save_dialog (procedure, G_OBJECT (config), image))
@@ -788,6 +771,12 @@ ps_export (GimpProcedure        *procedure,
     default:
       break;
     }
+
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
+  drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)
     {

@@ -370,26 +370,22 @@ mng_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
-    {
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "MNG",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
-    }
-  drawables = gimp_image_list_layers (image);
-  n_drawables = g_list_length (drawables);
-
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
+      gimp_ui_init (PLUG_IN_BINARY);
+        
       if (! mng_save_dialog (image, procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
+
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                              GIMP_EXPORT_CAN_HANDLE_LAYERS);
+  drawables = gimp_image_list_layers (image);
+  n_drawables = g_list_length (drawables);
 
   if (status == GIMP_PDB_SUCCESS)
     {

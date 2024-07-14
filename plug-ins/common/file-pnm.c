@@ -603,65 +603,56 @@ pnm_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      switch (file_type)
-        {
-        case FILE_TYPE_PNM:
-          export = gimp_export_image (&image, "PNM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
-          break;
-
-        case FILE_TYPE_PBM:
-          export = gimp_export_image (&image, "PBM",
-                                      GIMP_EXPORT_CAN_HANDLE_BITMAP);
-          break;
-
-        case FILE_TYPE_PGM:
-          export = gimp_export_image (&image, "PGM",
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
-          break;
-
-        case FILE_TYPE_PPM:
-          export = gimp_export_image (&image, "PPM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
-          break;
-
-        case FILE_TYPE_PAM:
-          export = gimp_export_image (&image, "PAM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB   |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY  |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
-          break;
-
-        case FILE_TYPE_PFM:
-          export = gimp_export_image (&image, "PFM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
-          break;
-        }
-      break;
-
-    default:
-      break;
-    }
-  drawables = gimp_image_list_layers (image);
-
   if (file_type != FILE_TYPE_PFM &&
       file_type != FILE_TYPE_PAM &&
       run_mode  == GIMP_RUN_INTERACTIVE)
     {
+      gimp_ui_init (PLUG_IN_BINARY);
+
       if (! save_dialog (procedure, G_OBJECT (config), image))
         status = GIMP_PDB_CANCEL;
     }
+
+  switch (file_type)
+    {
+    case FILE_TYPE_PNM:
+      export = gimp_export_image (&image,
+                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      break;
+
+    case FILE_TYPE_PBM:
+      export = gimp_export_image (&image,
+                                  GIMP_EXPORT_CAN_HANDLE_BITMAP);
+      break;
+
+    case FILE_TYPE_PGM:
+      export = gimp_export_image (&image,
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
+      break;
+
+    case FILE_TYPE_PPM:
+      export = gimp_export_image (&image,
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      break;
+
+    case FILE_TYPE_PAM:
+      export = gimp_export_image (&image,
+                                  GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      break;
+
+    case FILE_TYPE_PFM:
+      export = gimp_export_image (&image,
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
+      break;
+    }
+  drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)
     {

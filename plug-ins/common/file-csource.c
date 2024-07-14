@@ -225,7 +225,7 @@ csource_export (GimpProcedure        *procedure,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  export = gimp_export_image (&image, "C Source",
+  export = gimp_export_image (&image,
                               GIMP_EXPORT_CAN_HANDLE_RGB |
                               GIMP_EXPORT_CAN_HANDLE_ALPHA);
   drawables = gimp_image_list_layers (image);

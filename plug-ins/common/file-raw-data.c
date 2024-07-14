@@ -677,7 +677,7 @@ raw_export (GimpProcedure        *procedure,
                                                NULL);
     }
 
-  export = gimp_export_image (&image, "RAW",
+  export = gimp_export_image (&image,
                               GIMP_EXPORT_CAN_HANDLE_RGB     |
                               GIMP_EXPORT_CAN_HANDLE_GRAY    |
                               GIMP_EXPORT_CAN_HANDLE_INDEXED |

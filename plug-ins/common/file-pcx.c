@@ -375,21 +375,10 @@ pcx_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "PCX",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
-      break;
-
-    default:
-      break;
-    }
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB  |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
   drawables = gimp_image_list_layers (image);
 
   if (! export_image (file,

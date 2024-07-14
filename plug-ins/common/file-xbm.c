@@ -349,22 +349,6 @@ xbm_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "XBM",
-                                  GIMP_EXPORT_CAN_HANDLE_BITMAP |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
-      break;
-
-    default:
-      break;
-    }
-  drawables = gimp_image_list_layers (image);
-
   if (run_mode == GIMP_RUN_INTERACTIVE ||
       run_mode == GIMP_RUN_WITH_LAST_VALS)
     {
@@ -372,10 +356,16 @@ xbm_export (GimpProcedure        *procedure,
       mask_basename = g_strdup (init_prefix (file, G_OBJECT (config)));
     }
 
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_BITMAP |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  drawables = gimp_image_list_layers (image);
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       GimpParasite *parasite;
 
+      gimp_ui_init (PLUG_IN_BINARY);
       parasite = gimp_image_get_parasite (image, "hot-spot");
 
       if (parasite)

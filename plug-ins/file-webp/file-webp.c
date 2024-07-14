@@ -295,8 +295,7 @@ webp_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_ui_init (PLUG_IN_BINARY);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -311,8 +310,7 @@ webp_export (GimpProcedure        *procedure,
                 "animation", &animation,
                 NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       GimpExportCapabilities capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
@@ -322,7 +320,7 @@ webp_export (GimpProcedure        *procedure,
       if (animation)
         capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
 
-      export = gimp_export_image (&image, "WebP", capabilities);
+      export = gimp_export_image (&image, capabilities);
     }
   drawables   = gimp_image_list_layers (image);
   n_drawables = g_list_length (drawables);

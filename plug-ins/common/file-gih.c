@@ -279,12 +279,6 @@ gih_export (GimpProcedure        *procedure,
 
       gimp_pixpipe_params_init (&gihparams);
 
-      export = gimp_export_image (&image, "GIH",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB   |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY  |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
-
       /*  Possibly retrieve data  */
       parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-name");
@@ -384,6 +378,12 @@ gih_export (GimpProcedure        *procedure,
           goto out;
         }
     }
+
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                              GIMP_EXPORT_CAN_HANDLE_LAYERS);
   layers      = gimp_image_list_layers (image);
   n_drawables = g_list_length (layers);
 

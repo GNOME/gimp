@@ -382,23 +382,15 @@ dds_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init ("dds");
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_ui_init ("dds");
 
-      export = gimp_export_image (&image, "DDS",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
-      break;
-
-    default:
-      break;
-    }
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                              GIMP_EXPORT_CAN_HANDLE_LAYERS);
   drawables = gimp_image_list_layers (image);
 
   g_object_get (config,

@@ -394,53 +394,45 @@ tiff_export_rec (GimpProcedure        *procedure,
         }
     }
 
-  switch (run_mode)
+  if (status == GIMP_PDB_SUCCESS)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      {
-        GimpExportCapabilities capabilities;
-        GimpCompression        compression;
-        gboolean               save_layers;
-        gboolean               crop_layers;
+      GimpExportCapabilities capabilities;
+      GimpCompression        compression;
+      gboolean               save_layers;
+      gboolean               crop_layers;
 
-        g_object_get (config,
-                      "bigtiff",     &bigtiff,
-                      "save-layers", &save_layers,
-                      "crop-layers", &crop_layers,
-                      NULL);
-        compression = gimp_procedure_config_get_choice_id (config, "compression");
+      g_object_get (config,
+                    "bigtiff",     &bigtiff,
+                    "save-layers", &save_layers,
+                    "crop-layers", &crop_layers,
+                    NULL);
+      compression = gimp_procedure_config_get_choice_id (config, "compression");
 
-        if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
-            compression == GIMP_COMPRESSION_CCITTFAX4)
-          {
-            /* G3/G4 are fax compressions. They only support
-             * monochrome images without alpha support.
-             */
-            capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED;
-          }
-        else
-          {
-            capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                            GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                            GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
-          }
+      if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
+          compression == GIMP_COMPRESSION_CCITTFAX4)
+        {
+          /* G3/G4 are fax compressions. They only support
+           * monochrome images without alpha support.
+           */
+          capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED;
+        }
+      else
+        {
+          capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
+                          GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                          GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                          GIMP_EXPORT_CAN_HANDLE_ALPHA);
+        }
 
-        if (save_layers && image_is_multi_layer (orig_image))
-          {
-            capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+      if (save_layers && image_is_multi_layer (orig_image))
+        {
+          capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-            if (crop_layers)
-              capabilities |= GIMP_EXPORT_NEEDS_CROP;
-          }
+          if (crop_layers)
+            capabilities |= GIMP_EXPORT_NEEDS_CROP;
+        }
 
-        export = gimp_export_image (&image, "TIFF", capabilities);
-      }
-      break;
-
-    default:
-      break;
+      export = gimp_export_image (&image, capabilities);
     }
   drawables = gimp_image_list_layers (image);
 

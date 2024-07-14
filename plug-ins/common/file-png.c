@@ -382,22 +382,11 @@ png_export (GimpProcedure        *procedure,
 
   orig_image = image;
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "PNG",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
-      break;
-
-    default:
-      break;
-    }
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
   drawables = gimp_image_list_layers (image);
   alpha = gimp_drawable_has_alpha (drawables->data);
 
@@ -412,6 +401,8 @@ png_export (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
+      gimp_ui_init (PLUG_IN_BINARY);
+
       if (! export_dialog (orig_image, procedure, G_OBJECT (config), alpha))
         status = GIMP_PDB_CANCEL;
     }

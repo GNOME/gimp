@@ -329,7 +329,12 @@ gif_export (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GList *drawables;
+      GList                  *drawables;
+      GimpExportCapabilities  capabilities;
+
+      capabilities = (GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
       /* Create an exportable image based on the export options */
       switch (run_mode)
@@ -337,12 +342,7 @@ gif_export (GimpProcedure        *procedure,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           {
-            GimpExportCapabilities capabilities;
-            gboolean               as_animation;
-
-            capabilities = (GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                            GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
+            gboolean as_animation;
 
             g_object_get (config,
                           "as-animation", &as_animation,
@@ -350,14 +350,13 @@ gif_export (GimpProcedure        *procedure,
 
             if (as_animation)
               capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
-
-            export = gimp_export_image (&image, "GIF", capabilities);
             break;
           }
 
         default:
           break;
         }
+      export = gimp_export_image (&image, capabilities);
       drawables = gimp_image_list_layers (image);
 
       if (! export_image (file, image, drawables->data, orig_image,

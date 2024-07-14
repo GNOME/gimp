@@ -432,32 +432,23 @@ psd_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
-
-      export = gimp_export_image (&image, "PSD",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS  |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
-      break;
-
-    default:
-      break;
-    }
-  drawables = gimp_image_list_layers (image);
-
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
+      gimp_ui_init (PLUG_IN_BINARY);
+
       if (! save_dialog (image, procedure, G_OBJECT (config)))
         return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
                                                  NULL);
     }
+
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB     |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                              GIMP_EXPORT_CAN_HANDLE_LAYERS  |
+                              GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
+  drawables = gimp_image_list_layers (image);
 
   if (export_image (file, image, G_OBJECT (config), &error))
     {

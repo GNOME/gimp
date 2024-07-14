@@ -267,22 +267,14 @@ bmp_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  switch (run_mode)
-    {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, "BMP",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB   |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY  |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
-      break;
-
-    default:
-      break;
-    }
+  export = gimp_export_image (&image,
+                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                              GIMP_EXPORT_CAN_HANDLE_INDEXED);
   drawables = gimp_image_list_layers (image);
 
   status = export_image (file, image, drawables->data, run_mode,
