@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-06 15:08+0000\n"
-"PO-Revision-Date: 2024-03-07 16:04+0100\n"
+"POT-Creation-Date: 2024-07-13 17:13+0000\n"
+"PO-Revision-Date: 2024-07-14 12:26+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -535,7 +535,7 @@ msgstr "Startverdi"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
-msgstr "Ingen bakgrunn (bare for delte lag)"
+msgstr "Ingen bakgrunn (berre for delte lag)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
@@ -597,7 +597,7 @@ msgstr "Talet på flekkar"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
-msgstr "Gjer bare mørkare"
+msgstr "Gjer berre mørkare"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds..."
@@ -641,7 +641,7 @@ msgstr "Glatt ut _loddrett"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
-msgstr "_Slagskugge (legacy)…"
+msgstr "_Slagskugge (tradisjonell)…"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
@@ -862,7 +862,7 @@ msgstr "Opprett og bruk _utval"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:166
 msgid "_[Table of Contents]"
-msgstr ""
+msgstr "_[Innhaldsliste]"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Main Web Site"
@@ -980,12 +980,12 @@ msgstr "_Retning"
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
-msgstr "Horisontal"
+msgstr "Vassrett"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Vertical"
-msgstr "Vertikal"
+msgstr "Loddrett"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
 msgid "_Position (in %)"
@@ -1010,7 +1010,7 @@ msgstr "_Fjern alle hjelpelinjer"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
-msgstr "Fjern alle horisontale og vertikale hjelpelinjer"
+msgstr "Fjern alle vassrette og loddrette hjelpelinjer"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
 msgid "_Lava..."
@@ -1043,7 +1043,7 @@ msgstr "Bruk gjeldande fargeovergang"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
-msgstr "Line _Nova …"
+msgstr "Linje_nova …"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
@@ -1299,7 +1299,7 @@ msgstr "_Krusning …"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"Oppretter eit bilete med fleire lag ved å legge ein krusningseffekt til det "
+"Oppretter eit bilete med fleire lag ved å leggja ein krusningseffekt til det "
 "aktive laget"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
@@ -1358,11 +1358,11 @@ msgstr "Legg til bakgrunn"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "_Bytt palett …"
+msgstr "_Byt palett …"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "Bytter ut den gjeldande paletten for biletet med ein annan palett."
+msgstr "Byter ut den gjeldande paletten for biletet med ein annan palett."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
@@ -1588,7 +1588,7 @@ msgstr "_Slør flisfugene …"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "Slører biletkantane slik at bileta kan flisleggast utan fuger"
+msgstr "Slører biletkantane slik at bileta kan flisleggjast utan fuger"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:76
 msgid "Radius"
@@ -1596,11 +1596,11 @@ msgstr "Radius"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "Blur vertically"
-msgstr "Slør vertikalt"
+msgstr "Slør loddrett"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur horizontally"
-msgstr "Slør horisontalt"
+msgstr "Slør vassrett"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "Blur type"
@@ -1655,7 +1655,7 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Opretter eit nytt lag fylt med bølgjer. Kan brukast som overlegg eller eit "
+"Opprettar eit nytt lag fylt med bølgjer. Kan brukast som overlegg eller eit "
 "avbildingskart"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
