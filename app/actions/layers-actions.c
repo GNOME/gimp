@@ -737,6 +737,9 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       last_mode      = FALSE;
   gboolean       first_mode     = FALSE;
 
+  gboolean       first_selected = FALSE; /* First layer is selected  */
+  gboolean       last_selected  = FALSE; /* Last layer is selected   */
+
   gboolean       have_masks     = FALSE; /* At least 1 selected layer has a mask.             */
   gboolean       have_no_masks  = FALSE; /* At least 1 selected layer has no mask.            */
   gboolean       have_groups    = FALSE; /* At least 1 selected layer is a group.             */
@@ -833,6 +836,11 @@ layers_actions_update (GimpActionGroup *group,
 
           layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
           iter2 = g_list_find (layer_list, iter->data);
+
+          if (gimp_item_get_index (iter2->data) == 0)
+            first_selected = TRUE;
+          if (gimp_item_get_index (iter2->data) == n_layers - 1)
+            last_selected = TRUE;
 
           if (iter2)
             {
@@ -982,9 +990,9 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-select-previous",  n_selected_layers > 0 && !fs && !ac && have_prev);
   SET_SENSITIVE ("layers-select-next",      n_selected_layers > 0 && !fs && !ac && have_next);
 
-  SET_SENSITIVE ("layers-raise",            n_selected_layers > 0 && !fs && !ac && have_prev);
+  SET_SENSITIVE ("layers-raise",            n_selected_layers > 0 && !fs && !ac && have_prev && !first_selected);
   SET_SENSITIVE ("layers-raise-to-top",     n_selected_layers > 0 && !fs && !ac && have_prev);
-  SET_SENSITIVE ("layers-lower",            n_selected_layers > 0 && !fs && !ac && have_next);
+  SET_SENSITIVE ("layers-lower",            n_selected_layers > 0 && !fs && !ac && have_next && !last_selected);
   SET_SENSITIVE ("layers-lower-to-bottom",  n_selected_layers > 0 && !fs && !ac && have_next);
 
   SET_VISIBLE   ("layers-anchor",            fs && !ac);

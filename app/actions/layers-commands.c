@@ -657,7 +657,15 @@ layers_raise_cmd_callback (GimpAction *action,
 
       index = gimp_item_get_index (iter->data);
       if (index > 0)
-        raised_layers = g_list_prepend (raised_layers, iter->data);
+        {
+          raised_layers = g_list_prepend (raised_layers, iter->data);
+        }
+      else
+        {
+          gimp_image_flush (image);
+          g_list_free (raised_layers);
+          return;
+        }
     }
 
   gimp_image_undo_group_start (image,
@@ -665,6 +673,8 @@ layers_raise_cmd_callback (GimpAction *action,
                                ngettext ("Raise Layer",
                                          "Raise Layers",
                                          g_list_length (raised_layers)));
+
+  raised_layers = g_list_reverse (raised_layers);
   for (iter = raised_layers; iter; iter = iter->next)
     gimp_image_raise_item (image, iter->data, NULL);
 
@@ -728,7 +738,15 @@ layers_lower_cmd_callback (GimpAction *action,
       layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
       index = gimp_item_get_index (iter->data);
       if (index < g_list_length (layer_list) - 1)
-        lowered_layers = g_list_prepend (lowered_layers, iter->data);
+        {
+          lowered_layers = g_list_prepend (lowered_layers, iter->data);
+        }
+      else
+        {
+          gimp_image_flush (image);
+          g_list_free (lowered_layers);
+          return;
+        }
     }
 
   gimp_image_undo_group_start (image,
