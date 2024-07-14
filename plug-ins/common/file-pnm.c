@@ -367,11 +367,14 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pnm");
 
-      gimp_procedure_add_int_argument (procedure, "raw",
-                                       _("Data formatting"),
-                                       _("TRUE for raw output, FALSE for ascii output"),
-                                       0, 1, 1,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "raw",
+                                          _("_Data formatting"),
+                                          _("Whether to export ASCII or raw output"),
+                                          gimp_choice_new_with_values ("ascii-output", 0, _("ASCII"), NULL,
+                                                                       "raw-output",   1, _("Raw"),   NULL,
+                                                                       NULL),
+                                          "raw-output",
+                                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PBM_EXPORT_PROC))
     {
@@ -403,11 +406,14 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pbm");
 
-      gimp_procedure_add_int_argument (procedure, "raw",
-                                       _("Data formatting"),
-                                       _("TRUE for raw output, FALSE for ascii output"),
-                                       0, 1, 1,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "raw",
+                                          _("_Data formatting"),
+                                          _("Whether to export ASCII or raw output"),
+                                          gimp_choice_new_with_values ("ascii-output", 0, _("ASCII"), NULL,
+                                                                       "raw-output",   1, _("Raw"),   NULL,
+                                                                       NULL),
+                                          "raw-output",
+                                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PGM_EXPORT_PROC))
     {
@@ -439,11 +445,14 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pgm");
 
-      gimp_procedure_add_int_argument (procedure, "raw",
-                                       _("Data formatting"),
-                                       _("TRUE for raw output, FALSE for ascii output"),
-                                       0, 1, 1,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "raw",
+                                          _("_Data formatting"),
+                                          _("Whether to export ASCII or raw output"),
+                                          gimp_choice_new_with_values ("ascii-output", 0, _("ASCII"), NULL,
+                                                                       "raw-output",   1, _("Raw"),   NULL,
+                                                                       NULL),
+                                          "raw-output",
+                                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PPM_EXPORT_PROC))
     {
@@ -475,11 +484,14 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ppm");
 
-      gimp_procedure_add_int_argument (procedure, "raw",
-                                       "Data formatting",
-                                       _("TRUE for raw output, FALSE for ascii output"),
-                                       0, 1, 1,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "raw",
+                                          _("_Data formatting"),
+                                          _("Whether to export ASCII or raw output"),
+                                          gimp_choice_new_with_values ("ascii-output", 0, _("ASCII"), NULL,
+                                                                       "raw-output",   1, _("Raw"),   NULL,
+                                                                       NULL),
+                                          "raw-output",
+                                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, PAM_EXPORT_PROC))
     {
@@ -1592,9 +1604,8 @@ export_image (GFile         *file,
   gboolean         config_raw = TRUE;
 
   if (file_type != FILE_TYPE_PFM && file_type != FILE_TYPE_PAM)
-    g_object_get (config,
-                  "raw", &config_raw,
-                  NULL);
+    config_raw = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                      "raw");
 
   /*  Make sure we're not saving an image with an alpha channel
    *  unless we're exporting a PAM file  */
@@ -1990,18 +2001,14 @@ save_dialog (GimpProcedure *procedure,
 {
   GtkWidget    *dialog;
   GtkWidget    *frame;
-  GtkListStore *store;
   gboolean      run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
   /*  file save type  */
-  store = gimp_int_store_new (_("_ASCII"), 0,
-                              _("_Raw"),   1,
-                              NULL);
-  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "raw", GIMP_INT_STORE (store));
+  frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "raw", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);

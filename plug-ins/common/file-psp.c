@@ -713,12 +713,15 @@ psp_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psp,tub");
 
-      gimp_procedure_add_int_argument (procedure, "compression",
-                                       "_Data Compression",
-                                       "Specify 0 for no compression, "
-                                       "1 for RLE, and 2 for LZ77",
-                                       0, 2, PSP_COMP_LZ77,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "compression",
+                                          _("_Data Compression"),
+                                          _("Type of compression"),
+                                          gimp_choice_new_with_values ("none", PSP_COMP_NONE, _("none"), NULL,
+                                                                       "rle",  PSP_COMP_RLE,  _("rle"),  NULL,
+                                                                       "lz77", PSP_COMP_LZ77, _("lz77"), NULL,
+                                                                       NULL),
+                                          "lz77",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -829,12 +832,8 @@ save_dialog (GimpProcedure *procedure,
                                              image);
 
   /*  file save type  */
-  store = gimp_int_store_new (_("None"), PSP_COMP_NONE,
-                              _("RLE"),  PSP_COMP_RLE,
-                              _("LZ77"), PSP_COMP_LZ77,
-                              NULL);
-  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "compression", GIMP_INT_STORE (store));
+  frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "compression", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);

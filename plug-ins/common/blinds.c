@@ -162,13 +162,14 @@ blinds_create_procedure (GimpPlugIn  *plug_in,
                                        1, MAX_FANS, 3,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "orientation",
-                                       _("Orientation"),
-                                       _("The orientation"),
-                                       GIMP_ORIENTATION_HORIZONTAL,
-                                       GIMP_ORIENTATION_VERTICAL,
-                                       GIMP_ORIENTATION_HORIZONTAL,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "orientation",
+                                          _("Orient_ation"),
+                                          _("The orientation"),
+                                          gimp_choice_new_with_values ("horizontal", GIMP_ORIENTATION_HORIZONTAL, _("Horizontal"),  NULL,
+                                                                       "vertical",   GIMP_ORIENTATION_VERTICAL,   _("Vertical"),    NULL,
+                                                                       NULL),
+                                          "horizontal",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "bg-transparent",
                                            _("_Transparent"),
@@ -246,7 +247,6 @@ blinds_dialog (GimpProcedure *procedure,
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *scale;
-  GtkListStore *store;
   gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -255,18 +255,8 @@ blinds_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Blinds"));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  store = gimp_int_store_new (_("Horizontal"), GIMP_ORIENTATION_HORIZONTAL,
-                              _("Vertical"),   GIMP_ORIENTATION_VERTICAL,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "orientation", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "orientation", GIMP_TYPE_INT_RADIO_FRAME);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "bg_label", _("Background"), FALSE, FALSE);
@@ -317,7 +307,7 @@ blinds_dialog (GimpProcedure *procedure,
                               "preview", "blinds-vbox",
                               NULL);
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
@@ -460,8 +450,9 @@ dialog_update_preview (GtkWidget *widget,
 
   g_object_get (config,
                 "bg-transparent", &bg_trans,
-                "orientation",    &orientation,
                 NULL);
+  orientation = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                     "orientation");
 
   gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
   cache = gimp_drawable_get_thumbnail_data (drawable,
@@ -593,8 +584,9 @@ apply_blinds (GObject      *config,
 
   g_object_get (config,
                 "bg-transparent", &bg_trans,
-                "orientation",    &orientation,
                 NULL);
+  orientation = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                     "orientation");
 
   background = gimp_context_get_background ();
 

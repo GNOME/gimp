@@ -421,12 +421,14 @@ jigsaw_create_procedure (GimpPlugIn  *plug_in,
                                        MIN_YTILES, MAX_YTILES, 5,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "style",
-                                       _("Jigsaw Style"),
-                                       _("The style/shape of the jigsaw puzzle "
-                                         "{ Square (0), Curved (1) }"),
-                                       0, 1, BEZIER_1,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "style",
+                                          _("_Jigsaw Style"),
+                                          _("The style/shape of the jigsaw puzzle"),
+                                          gimp_choice_new_with_values ("square", BEZIER_1, _("Square"), NULL,
+                                                                       "curved", BEZIER_2, _("Curved"), NULL,
+                                                                       NULL),
+                                          "square",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "blend-lines",
                                        _("_Blend width"),
@@ -654,8 +656,9 @@ draw_jigsaw (GObject  *config,
                 "y",            &ytiles,
                 "blend-lines",  &blend_lines,
                 "blend-amount", &blend_amount,
-                "style",        &style,
                 NULL);
+  style = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                               "style");
 
   xlines = xtiles - 1;
   ylines = ytiles - 1;
@@ -2468,7 +2471,6 @@ jigsaw_dialog (GimpProcedure *procedure,
   GtkWidget     *preview;
   GtkWidget     *frame;
   GtkWidget     *scale;
-  GtkListStore  *store;
   gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -2476,13 +2478,6 @@ jigsaw_dialog (GimpProcedure *procedure,
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Jigsaw"));
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   /* xtiles */
   scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
@@ -2522,11 +2517,8 @@ jigsaw_dialog (GimpProcedure *procedure,
                                     "bevel-vbox");
 
   /* frame for primitive radio buttons */
-  store = gimp_int_store_new (_("Square"), BEZIER_1,
-                              _("Curved"), BEZIER_2,
-                              NULL);
-  frame = gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "style", GIMP_INT_STORE (store));
+  frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "style", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_widget_set_margin_bottom (frame, 12);
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
