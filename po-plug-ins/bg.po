@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-07 08:55+0000\n"
-"PO-Revision-Date: 2024-07-07 09:55+0200\n"
+"POT-Creation-Date: 2024-07-14 19:22+0000\n"
+"PO-Revision-Date: 2024-07-14 21:09+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -28,15 +28,15 @@ msgstr ""
 msgid "Exercise a goat in the C language"
 msgstr ""
 
-#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:201
+#: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:190 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
 #: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
-#: plug-ins/common/curve-bend.c:642 plug-ins/common/decompose.c:387
+#: plug-ins/common/curve-bend.c:648 plug-ins/common/decompose.c:387
 #: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
-#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:310
-#: plug-ins/common/jigsaw.c:466 plug-ins/common/nl-filter.c:217
+#: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
+#: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
 #: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
@@ -63,7 +63,7 @@ msgstr ""
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
-#: plug-ins/common/curve-bend.c:1809 plug-ins/common/curve-bend.c:1844
+#: plug-ins/common/curve-bend.c:1803 plug-ins/common/curve-bend.c:1838
 #: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
@@ -312,11 +312,9 @@ msgstr "Няма достатъчно слоеве за подравняване
 msgid "Align Visible Layers"
 msgstr "Подравняване на видимите слоеве"
 
-#. file save type
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/common/file-psp.c:832 plug-ins/file-dds/dds.c:189
-#: plug-ins/file-tiff/file-tiff.c:236
+#: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
 #: plug-ins/fractal-explorer/fractal-explorer.c:364
@@ -426,7 +424,7 @@ msgstr "Оптимизиране на анимацията"
 
 #: plug-ins/common/animation-play.c:330
 msgid "_Playback..."
-msgstr "_Изпълняване…"
+msgstr "_Изпълнение…"
 
 #: plug-ins/common/animation-play.c:335
 msgid "Preview a GIMP layer-based animation"
@@ -440,7 +438,7 @@ msgstr "Процедурата „%s“ работи само в интерак�
 #: plug-ins/common/animation-play.c:389 plug-ins/common/animation-play.c:768
 #: plug-ins/common/animation-play.c:1384
 msgid "Start playback"
-msgstr "Пускане"
+msgstr "Изпълнение"
 
 #: plug-ins/common/animation-play.c:390 plug-ins/common/animation-play.c:770
 msgid "Step back to previous frame"
@@ -488,7 +486,7 @@ msgstr "%.1f %%"
 #. Image Name
 #: plug-ins/common/animation-play.c:690
 msgid "Animation Playback:"
-msgstr "Изпълняване на анимацията:"
+msgstr "Изпълнение на анимацията:"
 
 #: plug-ins/common/animation-play.c:770
 msgid "Step _back"
@@ -513,7 +511,7 @@ msgstr "Увеличение"
 #: plug-ins/common/animation-play.c:860
 #, c-format
 msgid "%d fps"
-msgstr "%d fps"
+msgstr "%d кдр./сек."
 
 #: plug-ins/common/animation-play.c:871
 msgid "Default framerate"
@@ -575,23 +573,32 @@ msgstr "_Брой сегменти"
 msgid "Number of segments in blinds"
 msgstr "_Брой сегменти в щорите"
 
-#: plug-ins/common/blinds.c:166
-msgid "Orientation"
+#: plug-ins/common/blinds.c:166 plug-ins/map-object/map-object-ui.c:439
+#, fuzzy
+msgid "Orient_ation"
 msgstr "Ориентация"
 
 #: plug-ins/common/blinds.c:167
 msgid "The orientation"
 msgstr "Ориентацията"
 
-#: plug-ins/common/blinds.c:174
+#: plug-ins/common/blinds.c:168 plug-ins/pagecurl/pagecurl.c:251
+msgid "Horizontal"
+msgstr "Хоризонтални"
+
+#: plug-ins/common/blinds.c:169 plug-ins/pagecurl/pagecurl.c:250
+msgid "Vertical"
+msgstr "Вертикални"
+
+#: plug-ins/common/blinds.c:175
 msgid "_Transparent"
 msgstr "_Прозрачно"
 
-#: plug-ins/common/blinds.c:175
+#: plug-ins/common/blinds.c:176
 msgid "Background transparent"
 msgstr "Прозрачен фон"
 
-#: plug-ins/common/blinds.c:221
+#: plug-ins/common/blinds.c:222
 msgid "Adding blinds"
 msgstr "Добавяне на щори"
 
@@ -599,32 +606,24 @@ msgstr "Добавяне на щори"
 msgid "Blinds"
 msgstr "Щори"
 
-#: plug-ins/common/blinds.c:265 plug-ins/pagecurl/pagecurl.c:251
-msgid "Horizontal"
-msgstr "Хоризонтални"
-
-#: plug-ins/common/blinds.c:266 plug-ins/pagecurl/pagecurl.c:250
-msgid "Vertical"
-msgstr "Вертикални"
-
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:272 plug-ins/common/compose.c:1183
+#: plug-ins/common/blinds.c:262 plug-ins/common/compose.c:1183
 #: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:476
 #: plug-ins/common/file-cel.c:481 plug-ins/common/file-dicom.c:732
 #: plug-ins/common/file-farbfeld.c:302 plug-ins/common/file-gegl.c:452
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:711
-#: plug-ins/common/file-pcx.c:719 plug-ins/common/file-pcx.c:727
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:717
+#: plug-ins/common/file-pcx.c:725 plug-ins/common/file-pcx.c:733
 #: plug-ins/common/file-pix.c:437 plug-ins/common/file-png.c:925
-#: plug-ins/common/file-pnm.c:841 plug-ins/common/file-qoi.c:304
+#: plug-ins/common/file-pnm.c:853 plug-ins/common/file-qoi.c:304
 #: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1061
 #: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:684
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:690
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:455
@@ -650,7 +649,7 @@ msgstr "_Дебелина"
 
 #: plug-ins/common/border-average.c:142
 msgid "Border size to take in count"
-msgstr "Размер на границата, който да се включи"
+msgstr "Размер на границата, която да се включи"
 
 #: plug-ins/common/border-average.c:146
 msgid "Thickness unit of measure"
@@ -670,7 +669,7 @@ msgstr "Битове за размера на кофите (стандартно
 
 #: plug-ins/common/border-average.c:157 plug-ins/common/border-average.c:158
 msgid "The average color of the specified border."
-msgstr "Усредненият по указаните граници цвят"
+msgstr "Усредненият по указаните граници цвят."
 
 #: plug-ins/common/border-average.c:217 plug-ins/common/border-average.c:395
 msgid "Border Average"
@@ -708,11 +707,11 @@ msgstr "Създаване на шахматна шарка"
 
 #: plug-ins/common/checkerboard.c:137
 msgid "_Psychobilly"
-msgstr "_Психоделично"
+msgstr "_Психеделично"
 
 #: plug-ins/common/checkerboard.c:138
 msgid "Render a psychobilly checkerboard"
-msgstr "Изобразяване на психедилична шахматна шарка"
+msgstr "Изобразяване на психеделична шахматна шарка"
 
 #: plug-ins/common/checkerboard.c:143 plug-ins/gimpressionist/size.c:94
 msgid "_Size"
@@ -962,7 +961,7 @@ msgstr ""
 "Създаване на изображение на база решетки със свързани карти (CML). Това са "
 "клетъчни автомати с непрекъснат домейн на стойностите. Във функцията "
 "GIMP_RUN_NONINTERACTIVE името на файла с параметрите се подава като четвърти "
-"аргумент. Може да управляване изследователа на CML чрез файла с параметрите."
+"аргумент. Може да управляване изследователя на CML чрез файла с параметрите."
 
 #: plug-ins/common/cml-explorer.c:536
 msgid "Parameter File"
@@ -973,7 +972,7 @@ msgid ""
 "The parameter file from which CML_explorer makes an image. This argument is "
 "only used in non-interactive runs."
 msgstr ""
-"Файл с параметри, от които изследователя на CML създава изображение. Този "
+"Файл с параметри, от които изследователят на CML създава изображение. Този "
 "аргумент се ползва само в неинтерактивно изпълнение."
 
 #: plug-ins/common/cml-explorer.c:904
@@ -998,7 +997,7 @@ msgstr "Случайна начална стойност"
 
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1452 plug-ins/common/cml-explorer.c:2353
-#: plug-ins/common/curve-bend.c:1267 plug-ins/common/curve-bend.c:1810
+#: plug-ins/common/curve-bend.c:1266 plug-ins/common/curve-bend.c:1804
 #: plug-ins/common/file-cel.c:990 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
@@ -1014,7 +1013,7 @@ msgstr "_Отваряне"
 
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1460 plug-ins/common/cml-explorer.c:2143
-#: plug-ins/common/curve-bend.c:1279 plug-ins/common/curve-bend.c:1845
+#: plug-ins/common/curve-bend.c:1278 plug-ins/common/curve-bend.c:1839
 #: plug-ins/common/file-pdf-export.c:1027 plug-ins/common/qbist.c:884
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
@@ -1201,10 +1200,10 @@ msgstr "Внимание: каналите източник и цел са ед�
 msgid "Save CML Explorer Parameters"
 msgstr "Запазване на параметрите за CML"
 
-#: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:781
+#: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:787
 #: plug-ins/common/file-dicom.c:1545 plug-ins/common/file-farbfeld.c:361
 #: plug-ins/common/file-mng.c:864 plug-ins/common/file-mng.c:1214
-#: plug-ins/common/file-pcx.c:1200 plug-ins/common/file-pdf-export.c:663
+#: plug-ins/common/file-pcx.c:1192 plug-ins/common/file-pdf-export.c:663
 #: plug-ins/common/file-png.c:1495 plug-ins/common/file-raw-data.c:1358
 #: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1218 plug-ins/common/file-xmc.c:1277
@@ -1234,7 +1233,7 @@ msgstr "Параметрите са запазени в „%s“"
 
 #: plug-ins/common/cml-explorer.c:2348
 msgid "Load CML Explorer Parameters"
-msgstr "Зареждане параметри на CML"
+msgstr "Зареждане на параметри на CML"
 
 #: plug-ins/common/cml-explorer.c:2482
 #, c-format
@@ -1257,7 +1256,7 @@ msgstr "Внимание: грешка при зареждането на пар
 
 #: plug-ins/common/colormap-remap.c:181
 msgid "R_earrange Colormap..."
-msgstr "Пренареждане на цветовата карта…"
+msgstr "_Пренареждане на цветовата карта…"
 
 #: plug-ins/common/colormap-remap.c:187
 msgid "Rearrange the colormap"
@@ -1269,7 +1268,7 @@ msgid ""
 "colors in the colormap without visually changing the image."
 msgstr ""
 "Тази процедура приема индексирано изображение и ви позволява да променяте "
-"позициите на цветовете в картата, без визуало да променяте изображението."
+"позициите на цветовете в картата, без визуално да променяте изображението."
 
 #: plug-ins/common/colormap-remap.c:199
 msgid "Map"
@@ -1293,7 +1292,7 @@ msgid ""
 "colors in the colormap without visually changing the image."
 msgstr ""
 "Тази процедура приема индексирано изображение и ви позволява да смените "
-"позициите на два цвята в картата, без визуало да променяте изображението."
+"позициите на два цвята в картата, без визуално да променяте изображението."
 
 #: plug-ins/common/colormap-remap.c:232
 msgid "Index 1"
@@ -1627,7 +1626,7 @@ msgstr "_Комбиниране наново"
 
 #: plug-ins/common/compose.c:538
 msgid "Recompose an image that was previously decomposed"
-msgstr "Сглобяване отново на вече разбито изображение"
+msgstr "Сглобяване отново на вече разложено изображение"
 
 #: plug-ins/common/compose.c:540
 msgid ""
@@ -1636,7 +1635,7 @@ msgid ""
 "the result."
 msgstr ""
 "Тази функция рекомбинира слоевете в степени на сивото, които са създадени от "
-"Разлагане в един слой в RGB илш RGBA, и заменя първоначалното разложено "
+"Разлагане в един слой в RGB или RGBA, и заменя първоначалното разложено "
 "изображение с резултата."
 
 #: plug-ins/common/compose.c:604
@@ -1724,9 +1723,9 @@ msgid ""
 "and color/lightness rendition."
 msgstr ""
 "Алгоритъмът за подобряване на изображение Retinex е автоматичен начин за "
-"коригиране, който подорява компресията на динамичните обхвати, "
-"независимостта на цветовете спрямо спекрталното разпределениет на "
-"осветлението на сцената, както и изобрязаването на цвета спрямо светлината."
+"коригиране, който подобрява компресията на динамичните обхвати, "
+"независимостта на цветовете спрямо спектралното разпределение на "
+"осветлението на сцената, както и изобразяването на цвета спрямо светлината."
 
 #: plug-ins/common/contrast-retinex.c:199
 msgid "Scal_e"
@@ -1752,7 +1751,7 @@ msgstr "_Ниво"
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
 msgstr ""
-"Разпределение ретинекс през мащаби { eднородно (0), ниско (1), високо (2) }"
+"Разпределение ретинекс през мащаби {eднородно (0), ниско (1), високо (2)}"
 
 #: plug-ins/common/contrast-retinex.c:218
 msgid "Dy_namic"
@@ -1768,7 +1767,7 @@ msgstr "Retinex"
 
 #: plug-ins/common/contrast-retinex.c:306
 msgid "Retinex Image Enhancement"
-msgstr "Подобряване на изображението с ретинекс "
+msgstr "Подобряване на изображението с retinex"
 
 #: plug-ins/common/contrast-retinex.c:321
 msgid "Uniform"
@@ -1825,6 +1824,16 @@ msgid ""
 "handled layer. This plug-in sets the offsets of the handled layer to keep "
 "its center at the same position."
 msgstr ""
+"Приставката деформира активния слой. Ако има нещо избрано, то се копира в "
+"плаваща селекция, която се деформира. Ако параметърът „work_on_copy“ е "
+"ИСТИНА, приставката работи с копие на активния слой (или плаваща селекция). "
+"Горният и долният ръб се деформират по 2 криви от сплайнове. И двете се "
+"определят с по до 17 точки или чрез 256 стойности за вертикал, ако "
+"параметърът „curve_type“ е 1 (свободен режим). Ако завъртането не е 0, слоят "
+"първо се завърта на посочените градуси, след това се деформира и след това "
+"се обръща обратно със същите градуси. Това позволява деформиране по посоки "
+"освен вертикала. Деформирането често променя размера на слоя. Приставката "
+"прилага отмествания, така че центърът да остане на същата позиция."
 
 #: plug-ins/common/curve-bend.c:426
 msgid "Rotat_e"
@@ -1832,11 +1841,11 @@ msgstr "За_въртане"
 
 #: plug-ins/common/curve-bend.c:427
 msgid "Direction {angle 0 to 360 degree } of the bend effect"
-msgstr ""
+msgstr "Посока на деформирането (ъгъл от 0° до 360°)"
 
 #: plug-ins/common/curve-bend.c:433
 msgid "Smoo_thing"
-msgstr "_Изглаждане"
+msgstr "_Заглаждане"
 
 #: plug-ins/common/curve-bend.c:434
 msgid "Smoothing"
@@ -1856,111 +1865,129 @@ msgstr "С _копие"
 
 #: plug-ins/common/curve-bend.c:446
 msgid "Copy the drawable and bend the copy"
-msgstr ""
+msgstr "Копиране на нарисуването и огъване на копието"
 
 #: plug-ins/common/curve-bend.c:451
-msgid "Curve Type"
+#, fuzzy
+msgid "Cur_ve Type"
 msgstr "Вид на кривата"
 
 #: plug-ins/common/curve-bend.c:452
-msgid "{ 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) }"
+msgid ""
+"Whether to use Smooth (17 points) or Freehand (256 points) to draw the curve"
 msgstr ""
 
-#: plug-ins/common/curve-bend.c:458
-msgid "Curve for Border"
+#: plug-ins/common/curve-bend.c:454
+msgid "Smooth"
+msgstr "Гладка"
+
+#: plug-ins/common/curve-bend.c:455
+#, fuzzy
+msgid "Freehand"
+msgstr "Свободна"
+
+#: plug-ins/common/curve-bend.c:461
+#, fuzzy
+msgid "Curve for _Border"
 msgstr "Крива за кант"
 
-#: plug-ins/common/curve-bend.c:459
+#: plug-ins/common/curve-bend.c:462
 msgid "Choose the active border line to edit"
-msgstr ""
+msgstr "Избор на активната граница за редактиране"
 
-#: plug-ins/common/curve-bend.c:464 plug-ins/common/curve-bend.c:465
+#: plug-ins/common/curve-bend.c:463
+msgid "Upper"
+msgstr "Горна"
+
+#: plug-ins/common/curve-bend.c:464
+msgctxt "adjective"
+msgid "Lower"
+msgstr "Долна"
+
+#: plug-ins/common/curve-bend.c:470 plug-ins/common/curve-bend.c:471
 msgid "Argc upper point X"
-msgstr ""
+msgstr "Аргумент за горния хоризонтал"
 
-#: plug-ins/common/curve-bend.c:470
-#, fuzzy
+#: plug-ins/common/curve-bend.c:476
 msgid "Upper point X"
-msgstr "Горе дясно"
+msgstr "Хоризонтал на горната точка"
 
-#: plug-ins/common/curve-bend.c:471 plug-ins/common/curve-bend.c:495
+#: plug-ins/common/curve-bend.c:477 plug-ins/common/curve-bend.c:501
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
 msgstr ""
+"Масив от 17 хоризонтални координати на точки (0,0 ≤ x ≤ 1,0 или -1 за "
+"неползвана точка)"
 
-#: plug-ins/common/curve-bend.c:476 plug-ins/common/curve-bend.c:477
+#: plug-ins/common/curve-bend.c:482 plug-ins/common/curve-bend.c:483
 msgid "Argc upper point Y"
-msgstr ""
+msgstr "Аргумент за горния вертикал"
 
-#: plug-ins/common/curve-bend.c:482
-#, fuzzy
+#: plug-ins/common/curve-bend.c:488
 msgid "Upper point Y"
-msgstr "Горе дясно"
+msgstr "Вертикал на горната точка"
 
-#: plug-ins/common/curve-bend.c:483 plug-ins/common/curve-bend.c:507
+#: plug-ins/common/curve-bend.c:489 plug-ins/common/curve-bend.c:513
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
 msgstr ""
+"Масив от 17 вертикални координати на точки (0,0 ≤ x ≤ 1,0 или -1 за "
+"неползвана точка)"
 
-#: plug-ins/common/curve-bend.c:488 plug-ins/common/curve-bend.c:489
+#: plug-ins/common/curve-bend.c:494 plug-ins/common/curve-bend.c:495
 msgid "Argc lower point X"
-msgstr ""
+msgstr "Аргумент за долния хоризонтал"
 
-#: plug-ins/common/curve-bend.c:494
-#, fuzzy
+#: plug-ins/common/curve-bend.c:500
 msgid "Lower point X"
-msgstr "Долу дясно"
+msgstr "Хоризонтал на долната точка"
 
-#: plug-ins/common/curve-bend.c:500 plug-ins/common/curve-bend.c:501
+#: plug-ins/common/curve-bend.c:506 plug-ins/common/curve-bend.c:507
 msgid "Argc lower point Y"
-msgstr ""
-
-#: plug-ins/common/curve-bend.c:506
-#, fuzzy
-msgid "Lower point Y"
-msgstr "Долу дясно"
+msgstr "Аргумент за долния вертикал"
 
 #: plug-ins/common/curve-bend.c:512
-#, fuzzy
-msgid "Upper val Y"
-msgstr "Горе ляво"
-
-#: plug-ins/common/curve-bend.c:513 plug-ins/common/curve-bend.c:519
-msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
-msgstr ""
+msgid "Lower point Y"
+msgstr "Вертикал на долната точка"
 
 #: plug-ins/common/curve-bend.c:518
-#, fuzzy
-msgid "Lower val Y"
-msgstr "Долу ляво"
+msgid "Upper val Y"
+msgstr "Стойности на горните вертикали"
+
+#: plug-ins/common/curve-bend.c:519 plug-ins/common/curve-bend.c:525
+msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
+msgstr "Масив от 256 координати по вертикала (0 ≤ y ≤ 255)"
 
 #: plug-ins/common/curve-bend.c:524
-#, fuzzy
+msgid "Lower val Y"
+msgstr "Стойности на долните вертикали"
+
+#: plug-ins/common/curve-bend.c:530
 msgid "Bent layer"
-msgstr "Избрано:"
+msgstr "Деформиран слой"
 
-#: plug-ins/common/curve-bend.c:525
+#: plug-ins/common/curve-bend.c:531
 msgid "The transformed layer"
-msgstr ""
+msgstr "Преобразуваният слой"
 
-#: plug-ins/common/curve-bend.c:661
+#: plug-ins/common/curve-bend.c:667
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Работи само върху слоеве (опит да се приложи върху канал или маска)."
 
-#: plug-ins/common/curve-bend.c:675
+#: plug-ins/common/curve-bend.c:681
 msgid "Cannot operate on layers with masks."
 msgstr "Не работи върху слоеве с маски."
 
-#: plug-ins/common/curve-bend.c:690
+#: plug-ins/common/curve-bend.c:696
 msgid "Cannot operate on empty selections."
 msgstr "Не работи върху празни селекции."
 
-#: plug-ins/common/curve-bend.c:834 plug-ins/common/file-cel.c:331
+#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:331
 #: plug-ins/common/file-cel.c:383 plug-ins/common/file-dicom.c:364
 #: plug-ins/common/file-farbfeld.c:279 plug-ins/common/file-gif-load.c:416
 #: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1398
-#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
+#: plug-ins/common/file-pcx.c:496 plug-ins/common/file-pcx.c:539
 #: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1165
-#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2626
-#: plug-ins/common/file-psp.c:2676 plug-ins/common/file-qoi.c:283
+#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2625
+#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-qoi.c:283
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
 #: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:540
 #: plug-ins/common/file-tga.c:428 plug-ins/common/file-wbmp.c:188
@@ -1968,7 +1995,7 @@ msgstr "Не работи върху празни селекции."
 #: plug-ins/common/file-xmc.c:900 plug-ins/common/file-xwd.c:473
 #: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:379 plug-ins/file-fli/fli-gimp.c:441
+#: plug-ins/file-fits/fits.c:385 plug-ins/file-fli/fli-gimp.c:441
 #: plug-ins/file-fli/fli-gimp.c:492 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
@@ -1982,118 +2009,95 @@ msgstr "Не работи върху празни селекции."
 #: plug-ins/lighting/lighting-ui.c:952
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Не може да се отвори „%s“ за четене: %s"
+msgstr "„%s“ не може да се отвори за четене: %s"
 
-#: plug-ins/common/curve-bend.c:844
+#: plug-ins/common/curve-bend.c:850
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Грешка при четене на „%s“. %s"
 
-#: plug-ins/common/curve-bend.c:1067 plug-ins/common/curve-bend.c:2702
+#: plug-ins/common/curve-bend.c:1072 plug-ins/common/curve-bend.c:2697
 msgid "Curve Bend"
 msgstr "Деформиране по крива"
 
-#: plug-ins/common/curve-bend.c:1083 plug-ins/gfig/gfig-dialog.c:1211
+#: plug-ins/common/curve-bend.c:1088 plug-ins/gfig/gfig-dialog.c:1211
 msgid "Options"
 msgstr "Настройки"
 
 #. GUI-only widgets
 #. Preview area, top of column
 #. preview
-#: plug-ins/common/curve-bend.c:1106 plug-ins/gimpressionist/orientmap.c:589
+#: plug-ins/common/curve-bend.c:1111 plug-ins/gimpressionist/orientmap.c:589
 #: plug-ins/gimpressionist/sizemap.c:458 plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Предварителен преглед"
 
 #. The preview button
-#: plug-ins/common/curve-bend.c:1134
+#: plug-ins/common/curve-bend.c:1139
 msgid "_Preview Once"
 msgstr "_Еднократен предварителен преглед"
 
 #. The preview toggle
-#: plug-ins/common/curve-bend.c:1143
+#: plug-ins/common/curve-bend.c:1148
 msgid "Automatic pre_view"
 msgstr "_Автоматичен предварителен преглед"
 
-#. The curves graph
-#. Config-connected widgets first
-#: plug-ins/common/curve-bend.c:1154
-#, fuzzy
-msgid "Smooth"
-msgstr "_Изглаждане"
-
-#: plug-ins/common/curve-bend.c:1155
-#, fuzzy
-msgid "Free"
-msgstr "_Свободно"
-
-#: plug-ins/common/curve-bend.c:1162
-#, fuzzy
-msgid "Upper"
-msgstr "_Горно"
-
-#: plug-ins/common/curve-bend.c:1163
-#, fuzzy
-msgctxt "adjective"
-msgid "Lower"
-msgstr "Снижаване"
-
-#: plug-ins/common/curve-bend.c:1181
+#: plug-ins/common/curve-bend.c:1180
 msgid "Modify Curves"
 msgstr "Промяна на кривите"
 
 #. The Copy button
-#: plug-ins/common/curve-bend.c:1213
+#: plug-ins/common/curve-bend.c:1212
 #: plug-ins/gradient-flare/gradient-flare.c:3047
 msgid "_Copy"
 msgstr "_Копие"
 
-#: plug-ins/common/curve-bend.c:1218
+#: plug-ins/common/curve-bend.c:1217
 msgid "Copy the active curve to the other border"
 msgstr "Копиране на активната крива в другия кант"
 
 #. The CopyInv button
-#: plug-ins/common/curve-bend.c:1225
+#: plug-ins/common/curve-bend.c:1224
 msgid "_Mirror"
 msgstr "_Огледало"
 
-#: plug-ins/common/curve-bend.c:1230
+#: plug-ins/common/curve-bend.c:1229
 msgid "Mirror the active curve to the other border"
 msgstr "Огледало на активната крива в другия кант"
 
 #. The Swap button
-#: plug-ins/common/curve-bend.c:1238
+#: plug-ins/common/curve-bend.c:1237
 msgid "S_wap"
 msgstr "_Размяна"
 
-#: plug-ins/common/curve-bend.c:1243
+#: plug-ins/common/curve-bend.c:1242
 msgid "Swap the two curves"
 msgstr "Размяна на двете криви"
 
 #. The Reset button
-#: plug-ins/common/curve-bend.c:1250 plug-ins/common/sphere-designer.c:2654
+#: plug-ins/common/curve-bend.c:1249 plug-ins/common/sphere-designer.c:2654
 #: plug-ins/common/tile-small.c:525 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:914
 msgid "_Reset"
 msgstr "_Зануляване"
 
-#: plug-ins/common/curve-bend.c:1255
+#: plug-ins/common/curve-bend.c:1254
 msgid "Reset the active curve"
 msgstr "Връщане на активната крива към начална позиция"
 
-#: plug-ins/common/curve-bend.c:1272
+#: plug-ins/common/curve-bend.c:1271
 msgid "Load the curves from a file"
 msgstr "Зареждане на кривите от файл"
 
-#: plug-ins/common/curve-bend.c:1284
+#: plug-ins/common/curve-bend.c:1283
 msgid "Save the curves to a file"
 msgstr "Запазване на кривите като файл"
 
-#: plug-ins/common/curve-bend.c:1805
+#: plug-ins/common/curve-bend.c:1799
 msgid "Load Curve Points from File"
 msgstr "Зареждане на точките на кривата от файл"
 
-#: plug-ins/common/curve-bend.c:1840
+#: plug-ins/common/curve-bend.c:1834
 msgid "Save Curve Points to File"
 msgstr "Запазване на точките на кривата като файл"
 
@@ -2233,7 +2237,7 @@ msgid "Yellow"
 msgstr "Жълто"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:269
-#: plug-ins/file-fits/fits.c:1011 plug-ins/flame/flame.c:1291
+#: plug-ins/file-fits/fits.c:201 plug-ins/flame/flame.c:1291
 #: plug-ins/gfig/gfig-dialog.c:1455
 msgid "Black"
 msgstr "Черно"
@@ -2280,7 +2284,7 @@ msgstr "Създаване на канали като слоеве в едно �
 
 #: plug-ins/common/decompose.c:323
 msgid "_Foreground as registration color"
-msgstr "Цвят за _рисуване като регеистрационния"
+msgstr "Цвят за _рисуване като регистрационния"
 
 #: plug-ins/common/decompose.c:324
 msgid ""
@@ -2289,7 +2293,7 @@ msgid ""
 "all channels."
 msgstr ""
 "Когато е включено, пикселите в цвета за рисуване ще изглеждат черни в "
-"получените изображения.  Това може да се използва за неща както знаци за "
+"получените изображения. Това може да се използва за неща както знаци за "
 "нарязване, които трябва да са видими във всички канали."
 
 #: plug-ins/common/decompose.c:402
@@ -2366,7 +2370,7 @@ msgstr "Отместване според дълбочината"
 
 #: plug-ins/common/depth-merge.c:259
 msgid "Sc_ale 1"
-msgstr "_Мащабиране _1"
+msgstr "_Мащабиране 1"
 
 #: plug-ins/common/depth-merge.c:260
 msgid "Depth relative scale 1"
@@ -2382,7 +2386,7 @@ msgstr "Мащаб според дълбочината 2"
 
 #: plug-ins/common/depth-merge.c:313
 msgid "The selection does not intersect with the input drawable."
-msgstr "Избраното не включва нищо от входното нарисуване."
+msgstr "Избраното не включва нищо от входното нарисувано."
 
 #: plug-ins/common/depth-merge.c:366
 msgid "Depth-merging"
@@ -2423,8 +2427,8 @@ msgid ""
 "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
 "ADAPTIVE (3) }"
 msgstr ""
-"Вид филтър { по медиана (0), адаптивно (1), рекурсивно по медиана (2), "
-"рекурсивно адаптивно (3) }"
+"Вид филтър {по медиана (0), адаптивно (1), рекурсивно по медиана (2), "
+"рекурсивно адаптивно (3)}"
 
 #: plug-ins/common/despeckle.c:198
 msgid "_Black level"
@@ -2579,9 +2583,9 @@ msgstr "Неочакван край или грешка при четене на
 #: plug-ins/common/file-cel.c:374 plug-ins/common/file-dicom.c:356
 #: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
 #: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
-#: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
+#: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pcx.c:531
 #: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
-#: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:686
+#: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:698
 #: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
 #: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
@@ -2660,13 +2664,13 @@ msgstr "'%s': неочакван край на файл или грешка пр
 #.
 #: plug-ins/common/file-cel.c:826 plug-ins/common/file-farbfeld.c:353
 #: plug-ins/common/file-gif-export.c:952 plug-ins/common/file-html-table.c:347
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1084
+#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1076
 #: plug-ins/common/file-pix.c:642 plug-ins/common/file-png.c:1487
-#: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1376
+#: plug-ins/common/file-pnm.c:1618 plug-ins/common/file-ps.c:1376
 #: plug-ins/common/file-qoi.c:358 plug-ins/common/file-sunras.c:607
 #: plug-ins/common/file-tga.c:1210 plug-ins/common/file-xbm.c:1031
 #: plug-ins/common/file-xpm.c:686 plug-ins/common/file-xwd.c:701
-#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:657
+#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:663
 #: plug-ins/file-fli/fli-gimp.c:767 plug-ins/file-icns/file-icns-export.c:610
 #: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
@@ -2718,7 +2722,7 @@ msgstr "Запазване на коментар"
 
 #: plug-ins/common/file-csource.c:164
 msgid "Use GLib types (guint_8*)"
-msgstr "Използване на типовете от GLib типове (guint_8*)"
+msgstr "Използване на типовете от GLib (guint_8*)"
 
 #: plug-ins/common/file-csource.c:165
 msgid "Use GLib types"
@@ -2758,7 +2762,7 @@ msgstr "Използване на поточно кодиране"
 
 #: plug-ins/common/file-csource.c:194 plug-ins/pagecurl/pagecurl.c:263
 msgid "Opaci_ty"
-msgstr "Плътност"
+msgstr "_Плътност"
 
 #: plug-ins/common/file-csource.c:195 plug-ins/pagecurl/pagecurl.c:264
 msgid "Opacity"
@@ -2800,11 +2804,11 @@ msgstr "Грешка при зареждане на файл на работни
 
 #: plug-ins/common/file-dicom.c:174
 msgid "DICOM image"
-msgstr "изображение DICOM"
+msgstr "Изображение DICOM"
 
 #: plug-ins/common/file-dicom.c:206
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr "DICM изображение"
+msgstr "Изображение DICOM"
 
 #: plug-ins/common/file-dicom.c:390
 #, c-format
@@ -2814,7 +2818,7 @@ msgstr "„%s“ не е във формат DICOM"
 #: plug-ins/common/file-dicom.c:563
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
-msgstr "Синтаксизът за пренос „%s“ не се поддържа от GIMP."
+msgstr "Синтаксисът за пренос „%s“ не се поддържа от GIMP."
 
 #: plug-ins/common/file-dicom.c:618
 #, c-format
@@ -2827,7 +2831,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Изображения с канал за прозрачност не може да се запазват."
 
 #: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1371
-#: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:652
+#: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:658
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Не работи върху изображения от непознат вид."
@@ -2865,7 +2869,7 @@ msgstr "Четка"
 
 #: plug-ins/common/file-gbr.c:130 plug-ins/common/file-gbr.c:132
 msgid "Exports files in the GIMP brush file format"
-msgstr "Изнасяне въъв формат на файл с четки на GIMP „%s“"
+msgstr "Изнасяне във формат на файл с четки на GIMP „%s“"
 
 #: plug-ins/common/file-gbr.c:150
 msgid "Sp_acing"
@@ -2882,7 +2886,7 @@ msgstr "_Описание"
 
 #: plug-ins/common/file-gbr.c:157
 msgid "Short description of the brush"
-msgstr "Кратко описане на четката"
+msgstr "Кратко описание на четката"
 
 #: plug-ins/common/file-gbr.c:158
 msgid "GIMP Brush"
@@ -2931,11 +2935,11 @@ msgstr ""
 
 #: plug-ins/common/file-gif-export.c:183 plug-ins/common/file-mng.c:276
 msgid "_Interlace"
-msgstr "_Преплитане"
+msgstr "_Презредовост"
 
 #: plug-ins/common/file-gif-export.c:184
 msgid "Try to export as interlaced"
-msgstr "Опит за изнасяне на преплетено изображение"
+msgstr "Опит за изнасяне на презредово изображение"
 
 #: plug-ins/common/file-gif-export.c:189
 msgid "Loop _Forever"
@@ -2957,7 +2961,7 @@ msgstr ""
 
 #: plug-ins/common/file-gif-export.c:202
 msgid "_Delay between frames when unspecified"
-msgstr "_Пауза между кадрите, където не е посочена:"
+msgstr "_Пауза между кадрите, където не е посочена"
 
 #: plug-ins/common/file-gif-export.c:203
 msgid "(animated gif) Default delay between frames in milliseconds"
@@ -3049,7 +3053,7 @@ msgstr ""
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Иизображенията в RGB не може да се изнесат като GIF. Преобразувайте ги в "
+"Изображенията в RGB не може да се изнесат като GIF. Преобразувайте ги в "
 "индексирани цветове или степени на сивото."
 
 #: plug-ins/common/file-gif-export.c:1145
@@ -3241,8 +3245,8 @@ msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
-"GIF: Недокументиран GIF съставен тип %d не се поддържа. Анимацията може да "
-"не се записва или възпроизвежда или презаписва чисто."
+"GIF: Недокументиран съставен вид %d в GIF не се поддържа. Анимацията може да "
+"не се възпроизвежда или презаписва чисто."
 
 #: plug-ins/common/file-gif-load.c:1244
 #, c-format
@@ -3256,7 +3260,7 @@ msgid ""
 "Please file a bug report at https://gitlab.gnome.org/GNOME/gimp/issues"
 msgstr ""
 "Не се поддържат кадри, които не са RGB.\n"
-"Моля, подайте доклад за грешка на https://gitlab.gnome.org/GNOME/gimp/issues"
+"Молим, подайте доклад за грешка на https://gitlab.gnome.org/GNOME/gimp/issues"
 
 #: plug-ins/common/file-gif-load.c:1410
 msgid "Too much compressed data, ignoring extra..."
@@ -3288,11 +3292,11 @@ msgstr "Последователност от четки"
 
 #: plug-ins/common/file-gih.c:185
 msgid "Spacing (_percent)"
-msgstr "Разстояние [_%]"
+msgstr "Отстояние [_%]"
 
 #: plug-ins/common/file-gih.c:192
 msgid "Short description of the GIH brush pipe"
-msgstr "Кратко описане на последователност от четки на GIH"
+msgstr "Кратко описание на последователност от четки на GIH"
 
 #: plug-ins/common/file-gih.c:197
 msgid "Cell _width"
@@ -3373,14 +3377,14 @@ msgstr "HEIF/HEIC"
 
 #: plug-ins/common/file-heif.c:196
 msgid "Loads HEIF images"
-msgstr "Зареждане на избражения във формат HEIF"
+msgstr "Зареждане на изображения във формат HEIF"
 
 #: plug-ins/common/file-heif.c:197
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
-"Зареждане на избражения във формат HEIF — високоефективен файлов формат за "
+"Зареждане на изображения във формат HEIF — високоефективен файлов формат за "
 "изображения (High Efficiency Image File Format). Типичните разширения на "
 "тези файлове са „.heif“ и „.heic“."
 
@@ -3419,7 +3423,7 @@ msgstr "Запазване на _цветовия профил"
 
 #: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:378
 msgid "Save the image's color profile"
-msgstr "Запазване на _ветовия профил на изображението"
+msgstr "Запазване на цветовия профил на изображението"
 
 #: plug-ins/common/file-heif.c:273 plug-ins/common/file-heif.c:383
 #: plug-ins/common/file-jpegxl.c:198
@@ -3470,27 +3474,27 @@ msgstr "Превключване на запазването на метадан
 
 #: plug-ins/common/file-heif.c:313
 msgid "Loads AVIF images"
-msgstr "Зареждане на избражения във формат AVIF"
+msgstr "Зареждане на изображения във формат AVIF"
 
 #: plug-ins/common/file-heif.c:314
 msgid "Load image stored in AV1 Image File Format (AVIF)"
-msgstr "Зареждане на избражения във формат AVIF (AV1 Image File Format)"
+msgstr "Зареждане на изображения във формат AVIF (AV1 Image File Format)"
 
 #: plug-ins/common/file-heif.c:347
 msgid "Exports AVIF images"
-msgstr "Изнасяне на избражения във формат AVIF"
+msgstr "Изнасяне на изображения във формат AVIF"
 
 #: plug-ins/common/file-heif.c:348
 msgid "Save image in AV1 Image File Format (AVIF)"
-msgstr "Запазване на избражения във формат AVIF (AV1 Image File Format)<"
+msgstr "Запазване на изображения във формат AVIF (AV1 Image File Format)"
 
 #: plug-ins/common/file-heif.c:420
 msgid "JPEG 2000 encapsulated in HEIF"
-msgstr "JPEG 2000 вградено в HEIF"
+msgstr "JPEG 2000 вграден в HEIF"
 
 #: plug-ins/common/file-heif.c:423
 msgid "Loads HEJ2 images"
-msgstr "Зареждане на избражения във формат HEJ2"
+msgstr "Зареждане на изображения във формат HEJ2"
 
 #: plug-ins/common/file-heif.c:424
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
@@ -3520,12 +3524,12 @@ msgstr "Изнасяне на „%s“ с кодер %s"
 #: plug-ins/common/file-heif.c:1537 plug-ins/common/file-heif.c:1922
 #, c-format
 msgid "Encoding HEIF image failed: %s"
-msgstr "Неспешно кодиране на изображение във формат HEIF: %s"
+msgstr "Неуспешно кодиране на изображение във формат HEIF: %s"
 
 #: plug-ins/common/file-heif.c:2043
 #, c-format
 msgid "Writing HEIF image failed: %s"
-msgstr "Неспешно запазване на изображение във формат HEIF: %s"
+msgstr "Неуспешно запазване на изображение във формат HEIF: %s"
 
 #: plug-ins/common/file-heif.c:2132
 msgid "primary"
@@ -3595,7 +3599,7 @@ msgstr "_Ползване на заглавие"
 
 #: plug-ins/common/file-html-table.c:175
 msgid "Enable if you would like to have the table captioned."
-msgstr "Вклюмете, ако искате  заглавие на таблицата."
+msgstr "Включете, ако искате заглавие на таблицата."
 
 #: plug-ins/common/file-html-table.c:181
 msgid "Capt_ion"
@@ -3687,7 +3691,7 @@ msgstr "_Разстояние между клетките"
 
 #: plug-ins/common/file-html-table.c:247
 msgid "The amount of cell spacing."
-msgstr "Количество разстояние между клетките."
+msgstr "Количество отстояние между клетките."
 
 #: plug-ins/common/file-html-table.c:597
 msgid ""
@@ -3695,9 +3699,8 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"Ще създадете голям\n"
-"файл в HTML, който вероятно\n"
-"ще блокира Интернет браузъра."
+"Ще създадете голям файл в HTML,\n"
+"който вероятно ще блокира браузъра."
 
 #: plug-ins/common/file-html-table.c:615
 msgid "Warning"
@@ -3757,7 +3760,7 @@ msgid ""
 "color space of your data."
 msgstr ""
 "Зареждане на потоци във формат JPEG 2000. Ако цветовият модел е непознат "
-"(0), ще се пробва да се отгатне, то това е възможно само в някои случаи (при "
+"(0), ще се пробва да се отгатне, което е възможно само в някои случаи (при "
 "степени на сивото). Повечето опити за отгатване ще завършат неуспешно — "
 "очаква се да знаете цветовия модел на данните."
 
@@ -3770,8 +3773,8 @@ msgid ""
 "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
 "xvYCC (5) }"
 msgstr ""
-"Цветови модел { 0 — непознат, 1 — степени на сивото, 2 — RGB, 3 — CMYK, 4 — "
-"YCbCr, 5 — xvYCC }"
+"Цветови модел {0 — непознат, 1 — степени на сивото, 2 — RGB, 3 — CMYK, 4 — "
+"YCbCr, 5 — xvYCC}"
 
 #. Can be RGB, YUV and YCC.
 #. Can be RGB, YUV and YCC with alpha or CMYK.
@@ -3864,39 +3867,40 @@ msgstr "Изображение във формат JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:143 plug-ins/common/file-jpegxl.c:144
 msgid "Loads files in the JPEG XL file format"
-msgstr ""
+msgstr "Зареждане на изображения във формат JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:170 plug-ins/common/file-jpegxl.c:171
 msgid "Saves files in the JPEG XL file format"
-msgstr ""
+msgstr "Запазване на изображения във формат JPEG XL"
 
 #: plug-ins/common/file-jpegxl.c:192
-#, fuzzy
 msgid "Co_mpression/maxError"
-msgstr "Компресия"
+msgstr "_Компресия/макс. грешка"
 
 #: plug-ins/common/file-jpegxl.c:193
 msgid ""
 "Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
 "visually lossless."
 msgstr ""
+"Максимална разлика по butteraugli. По-малка за по-високо качество. Диапазон: "
+"0…15. 1,0 е за визуално без загуба на качество."
 
 #: plug-ins/common/file-jpegxl.c:204
 msgid "Effort/S_peed"
-msgstr ""
+msgstr "_Усилие/скорост"
 
 #: plug-ins/common/file-jpegxl.c:205
 msgid "Encoder effort setting"
-msgstr ""
+msgstr "Усилие, които кодерът ще положи"
 
 #: plug-ins/common/file-jpegxl.c:211
-#, fuzzy
 msgid "Save ori_ginal profile"
-msgstr "Задаване на цветови профил"
+msgstr "_Запазване на първоначалния профил"
 
 #: plug-ins/common/file-jpegxl.c:212
 msgid "Store ICC profile to exported JXL file"
 msgstr ""
+"Запазване на цветовия профил във формат ICC към изнесения файл във формат JXL"
 
 #: plug-ins/common/file-jpegxl.c:217 plug-ins/file-tiff/file-tiff.c:254
 msgid "Export as CMY_K"
@@ -3905,51 +3909,52 @@ msgstr "Изнасяне като CMY_K"
 #: plug-ins/common/file-jpegxl.c:218
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
+"Създаване на изображение във формат CMYK JPEG XL с ползване на профил за "
+"коректура"
 
 #: plug-ins/common/file-jpegxl.c:2021
-#, fuzzy
 msgid "lightning (fastest)"
-msgstr "Светлинни ефекти"
+msgstr "светкавица (най-бързо)"
 
 #: plug-ins/common/file-jpegxl.c:2022
 msgid "thunder"
-msgstr ""
+msgstr "гръмотевица"
 
 #: plug-ins/common/file-jpegxl.c:2023
 msgid "falcon (faster)"
-msgstr ""
+msgstr "сокол (бързо)"
 
 #: plug-ins/common/file-jpegxl.c:2024
 msgid "cheetah"
-msgstr ""
+msgstr "гепард"
 
 #: plug-ins/common/file-jpegxl.c:2025
 msgid "hare"
-msgstr ""
+msgstr "заек"
 
 #: plug-ins/common/file-jpegxl.c:2026
 msgid "wombat"
-msgstr ""
+msgstr "вомбат"
 
 #: plug-ins/common/file-jpegxl.c:2027
 msgid "squirrel"
-msgstr ""
+msgstr "катерица"
 
 #: plug-ins/common/file-jpegxl.c:2028
 msgid "kitten"
-msgstr ""
+msgstr "коте"
 
 #: plug-ins/common/file-jpegxl.c:2029
 msgid "tortoise (slower)"
-msgstr ""
+msgstr "костенурка (най-бавно)"
 
 #: plug-ins/common/file-jpegxl.c:2036
 msgid "16 bit/channel"
-msgstr ""
+msgstr "16 бита/канал"
 
 #: plug-ins/common/file-jpegxl.c:2044
 msgid "CMYK profile required for export"
-msgstr ""
+msgstr "За изнасянето е необходим профил по CMYK"
 
 #: plug-ins/common/file-jpegxl.c:2052 plug-ins/file-jpeg/jpeg-export.c:899
 #: plug-ins/file-psd/psd-export.c:2464
@@ -3999,7 +4004,7 @@ msgstr "С високо ниво на компресия на PNG се полу�
 
 #: plug-ins/common/file-mng.c:289
 msgid "JPEG compression _quality"
-msgstr "Качество на компресията на JPEG:"
+msgstr "_Качество на компресията на JPEG:"
 
 #: plug-ins/common/file-mng.c:290
 msgid "JPEG quality factor"
@@ -4023,7 +4028,7 @@ msgstr "Безкрайно повтаряне (при анимация)"
 
 #: plug-ins/common/file-mng.c:307
 msgid "Default fra_me delay"
-msgstr "Стандартно забавяне на кадрите"
+msgstr "_Стандартно забавяне на кадрите"
 
 #: plug-ins/common/file-mng.c:308
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
@@ -4088,7 +4093,8 @@ msgstr "Запазване на откъс за времето на създав
 #.
 #: plug-ins/common/file-mng.c:717 plug-ins/common/file-png.c:2320
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Не може бъде записана прозрачност без загуби, записване на плътност."
+msgstr ""
+"Не може бъде записана прозрачност без загуби, вместо нея се записва плътност."
 
 #: plug-ins/common/file-mng.c:1587
 msgid "MNG Options"
@@ -4167,7 +4173,7 @@ msgstr "Кратко описание на шарката"
 msgid "GIMP Pattern"
 msgstr "Шарка на GIMP"
 
-#: plug-ins/common/file-pcx.c:210 plug-ins/common/file-pcx.c:274
+#: plug-ins/common/file-pcx.c:210 plug-ins/common/file-pcx.c:280
 msgid "ZSoft PCX image"
 msgstr "Изображение ZSoft PCX"
 
@@ -4175,136 +4181,139 @@ msgstr "Изображение ZSoft PCX"
 msgid "Loads files in Zsoft PCX file format"
 msgstr "Зареждане на изображение във формат Zsoft PCX"
 
-#: plug-ins/common/file-pcx.c:222 plug-ins/common/file-pcx.c:253
-msgid "Palette Options"
+#: plug-ins/common/file-pcx.c:222 plug-ins/common/file-pcx.c:256
+#, fuzzy
+msgid "_Palette Options"
 msgstr "Настройки на палитрата"
 
-#: plug-ins/common/file-pcx.c:223 plug-ins/common/file-pcx.c:254
-msgid "Use built-in palette (0) or override with black/white (1)"
-msgstr "Използване на вградената палитра (0) или заменяне с черно-бяло (1)"
+#: plug-ins/common/file-pcx.c:223 plug-ins/common/file-pcx.c:257
+msgid ""
+"Whether to use the built-in palette or a black and white palette for 1 bit "
+"images."
+msgstr ""
 
-#: plug-ins/common/file-pcx.c:241
+#: plug-ins/common/file-pcx.c:225 plug-ins/common/file-pcx.c:259
+msgid "Use PCX image's built-in palette"
+msgstr "Използване на вградената палитра в изображението PCX"
+
+#: plug-ins/common/file-pcx.c:226 plug-ins/common/file-pcx.c:260
+msgid "Use black and white palette"
+msgstr "Използване на черно-бяла палитра"
+
+#: plug-ins/common/file-pcx.c:244
 msgid "ZSoft DCX image"
 msgstr "Изображение ZSoft DCX"
 
-#: plug-ins/common/file-pcx.c:244
+#: plug-ins/common/file-pcx.c:247
 msgid "Loads files in Zsoft DCX file format"
-msgstr "Зареждане на изображения във формат Zsoft DCX"
+msgstr "Зареждане на изображения във формат ZSoft DCX"
 
-#: plug-ins/common/file-pcx.c:277
+#: plug-ins/common/file-pcx.c:283
 msgid "Exports files in ZSoft PCX file format"
-msgstr "Изнасяне на изображения във формат Zsoft PCX"
+msgstr "Изнасяне на изображения във формат ZSoft PCX"
 
-#: plug-ins/common/file-pcx.c:502
+#: plug-ins/common/file-pcx.c:508
 msgid "Could not load PCX image: "
 msgstr "Изображението във формат PCX не може да се зареди: "
 
-#: plug-ins/common/file-pcx.c:549
+#: plug-ins/common/file-pcx.c:555
 #, c-format
 msgid "DCX image offset exceeds the file size"
 msgstr ""
 "Отместването на изображението във формат DCX надвишава размера на файла"
 
-#: plug-ins/common/file-pcx.c:560
+#: plug-ins/common/file-pcx.c:566
 msgid "Could not load DCX image: "
 msgstr "Изображението във формат DCX не може да се зареди: "
 
-#: plug-ins/common/file-pcx.c:583
+#: plug-ins/common/file-pcx.c:589
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr ""
 "%s: Отместването на изображението във формат DCX надвишава размера на файла: "
 "%s\n"
 
-#: plug-ins/common/file-pcx.c:600
+#: plug-ins/common/file-pcx.c:606
 msgid "Mixed-mode DCX image not loaded"
 msgstr "Изображението във формат DCX в смесен режим не бе заредено"
 
-#: plug-ins/common/file-pcx.c:607
+#: plug-ins/common/file-pcx.c:613
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: Някои от изображенията във формат DCX не бяха заредени: %s\n"
 
-#: plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-pcx.c:653
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Заглавната част на „%s“ не може да се прочете"
 
-#: plug-ins/common/file-pcx.c:657
+#: plug-ins/common/file-pcx.c:663
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "„%s“ не е файл PCX"
 
-#: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Неподдържана или грешна широчина на изображението: %d"
 
-#: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:269
+#: plug-ins/common/file-pcx.c:686 plug-ins/common/file-wbmp.c:269
 #: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Неподдържана или грешна височина на изображението: %d"
 
-#: plug-ins/common/file-pcx.c:688
+#: plug-ins/common/file-pcx.c:694
 #, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Грешен брой байтове на ред в заглавната част на PCX"
 
-#: plug-ins/common/file-pcx.c:694
+#: plug-ins/common/file-pcx.c:700
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr ""
 "Разделителната способност в заглавната част XCX е извън диапазона. Ползва се "
 "72×72"
 
-#: plug-ins/common/file-pcx.c:703
+#: plug-ins/common/file-pcx.c:709
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
-msgstr "Прекалено големи размери на изображението: широчина %d на височина %d"
+msgstr "Прекалено големи размери на изображението: широчина %d × височина %d"
 
-#: plug-ins/common/file-pcx.c:831
+#: plug-ins/common/file-pcx.c:834
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Необичаен вид PCX, отказ"
 
-#: plug-ins/common/file-pcx.c:857
+#: plug-ins/common/file-pcx.c:859
 msgid "Import from PCX"
 msgstr "Внасяне на PCX"
 
-#: plug-ins/common/file-pcx.c:866
-msgid "Use PCX image's built-in palette"
-msgstr "Използване на вградената палитра в изображението PCX"
-
-#: plug-ins/common/file-pcx.c:867
-msgid "Use black and white palette"
-msgstr "Използване на черно-бяла палитра"
-
-#: plug-ins/common/file-pcx.c:1151 plug-ins/common/file-pnm.c:1603
+#: plug-ins/common/file-pcx.c:1143 plug-ins/common/file-pnm.c:1614
 msgid "Cannot export images with alpha channel."
 msgstr "Изображения с канал за прозрачност не може да се запазват."
 
-#: plug-ins/common/file-pcx.c:1171
+#: plug-ins/common/file-pcx.c:1163
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Неправилно хоризонтално отместване: %d"
 
-#: plug-ins/common/file-pcx.c:1177
+#: plug-ins/common/file-pcx.c:1169
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Неправилно вертикално отместване: %d"
 
-#: plug-ins/common/file-pcx.c:1183
+#: plug-ins/common/file-pcx.c:1175
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
-msgstr "Дясната граница е извън диапазона (трабва да е под %d): %d<"
+msgstr "Дясната граница е извън диапазона (трябва да е под %d): %d"
 
-#: plug-ins/common/file-pcx.c:1190
+#: plug-ins/common/file-pcx.c:1182
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
-msgstr "Долната граница е извън диапазона (трабва да е под %d): %d"
+msgstr "Долната граница е извън диапазона (трябва да е под %d): %d"
 
-#: plug-ins/common/file-pcx.c:1266 plug-ins/common/file-qoi.c:377
+#: plug-ins/common/file-pcx.c:1258 plug-ins/common/file-qoi.c:377
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Неуспешен запис във файл „%s“: %s"
@@ -4323,7 +4332,7 @@ msgid ""
 "easily processed by a variety of different platforms, and is a distant "
 "cousin of PostScript."
 msgstr ""
-"Запазване на файлове в преносимия форман на документи на Adobe (PDF). Той е "
+"Запазване на файлове в преносимия формат на документи на Adobe (PDF). Той е "
 "подходящ да лесна обработка на различни платформи и е далечен братовчед на "
 "PostScript."
 
@@ -4602,7 +4611,6 @@ msgstr ""
 msgid "Invalid Esm Software PIX file"
 msgstr "Неправилен файл във формат Esm Software PIX"
 
-# HERE
 #: plug-ins/common/file-png.c:185 plug-ins/common/file-png.c:215
 msgid "PNG image"
 msgstr "Изображение във формат PNG"
@@ -4672,7 +4680,7 @@ msgid "PNG export format"
 msgstr "Формат за изнасяне PNG"
 
 #: plug-ins/common/file-png.c:290 plug-ins/common/file-ps.c:423
-#: plug-ins/file-fits/fits.c:1019
+#: plug-ins/file-fits/fits.c:210
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -4767,7 +4775,7 @@ msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
-"Внясаното изображение във формат PNG указва отместване %d, %d. Искате ли да "
+"Внясяното изображение във формат PNG указва отместване %d, %d. Искате ли да "
 "го приложите към слоя?"
 
 #: plug-ins/common/file-png.c:1452
@@ -4786,7 +4794,7 @@ msgstr ""
 #: plug-ins/common/file-png.c:1469
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Грешка при изнасяне на „%s“. Изображението не може да бъде изнесено."
+msgstr "Грешка при изнасяне на „%s“. Изображението не може да се изнесе."
 
 #: plug-ins/common/file-pnm.c:316
 msgid "PNM Image"
@@ -4794,11 +4802,11 @@ msgstr "Изображение във формат PNM"
 
 #: plug-ins/common/file-pnm.c:319
 msgid "Loads files in the PNM file format"
-msgstr ""
+msgstr "Зареждане на файлове във формат PNM"
 
 #: plug-ins/common/file-pnm.c:320
 msgid "This plug-in loads files in the various Netpbm portable file formats."
-msgstr ""
+msgstr "Тази приставка зарежда файлове в различните преносими формати Netpbm."
 
 #: plug-ins/common/file-pnm.c:349
 msgid "PNM image"
@@ -4810,180 +4818,178 @@ msgstr "PNM"
 
 #: plug-ins/common/file-pnm.c:354
 msgid "Exports files in the PNM file format"
-msgstr ""
+msgstr "Изнасяне на изображения във формат PNM"
 
 #: plug-ins/common/file-pnm.c:355
 msgid "PNM export handles all image types without transparency."
-msgstr ""
+msgstr "Изнасянето във формат PNM не поддържа прозрачност."
 
-#: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:407
-#: plug-ins/common/file-pnm.c:443
-msgid "Data formatting"
+#: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:410
+#: plug-ins/common/file-pnm.c:449 plug-ins/common/file-pnm.c:488
+#, fuzzy
+msgid "_Data formatting"
 msgstr "Формат на данните"
 
-#: plug-ins/common/file-pnm.c:372 plug-ins/common/file-pnm.c:408
-#: plug-ins/common/file-pnm.c:444 plug-ins/common/file-pnm.c:480
-msgid "TRUE for raw output, FALSE for ascii output"
+#: plug-ins/common/file-pnm.c:372 plug-ins/common/file-pnm.c:411
+#: plug-ins/common/file-pnm.c:450 plug-ins/common/file-pnm.c:489
+msgid "Whether to export ASCII or raw output"
 msgstr ""
 
-#: plug-ins/common/file-pnm.c:386
+#: plug-ins/common/file-pnm.c:373 plug-ins/common/file-pnm.c:412
+#: plug-ins/common/file-pnm.c:451 plug-ins/common/file-pnm.c:490
+#, fuzzy
+msgid "ASCII"
+msgstr "_ASCII"
+
+#: plug-ins/common/file-pnm.c:374 plug-ins/common/file-pnm.c:413
+#: plug-ins/common/file-pnm.c:452 plug-ins/common/file-pnm.c:491
+msgid "Raw"
+msgstr "Суров"
+
+#: plug-ins/common/file-pnm.c:389
 msgid "PBM"
 msgstr "PBM"
 
-#: plug-ins/common/file-pnm.c:387
+#: plug-ins/common/file-pnm.c:390
 msgid "PBM image"
 msgstr "Изображение във формат PBM"
 
-#: plug-ins/common/file-pnm.c:390
+#: plug-ins/common/file-pnm.c:393
 msgid "Exports files in the PBM file format"
-msgstr ""
+msgstr "Изнасяне на изображения във формат PBM"
 
-#: plug-ins/common/file-pnm.c:391
+#: plug-ins/common/file-pnm.c:394
 msgid "PBM exporting produces mono images without transparency."
-msgstr ""
+msgstr "Изнасянето в PBM създава монохромни изображения без прозрачност."
 
-#: plug-ins/common/file-pnm.c:422
+#: plug-ins/common/file-pnm.c:428
 msgid "PGM image"
 msgstr "Изображение във формат PGM"
 
-#: plug-ins/common/file-pnm.c:424
+#: plug-ins/common/file-pnm.c:430
 msgid "PGM"
 msgstr "PGM"
 
-#: plug-ins/common/file-pnm.c:426
+#: plug-ins/common/file-pnm.c:432
 msgid "Exports files in the PGM file format"
-msgstr ""
+msgstr "Изнасяне на изображения във формат PGM"
 
-#: plug-ins/common/file-pnm.c:427
+#: plug-ins/common/file-pnm.c:433
 msgid "PGM exporting produces grayscale images without transparency."
 msgstr ""
+"Изнасянето в PGM създава изображения в степени на сивото без прозрачност."
 
-#: plug-ins/common/file-pnm.c:458
+#: plug-ins/common/file-pnm.c:467
 msgid "PPM image"
 msgstr "Изображение във формат PPM"
 
-#: plug-ins/common/file-pnm.c:460
+#: plug-ins/common/file-pnm.c:469
 msgid "PPM"
 msgstr "PPM"
 
-#: plug-ins/common/file-pnm.c:462
+#: plug-ins/common/file-pnm.c:471
 msgid "Exports files in the PPM file format"
-msgstr ""
+msgstr "Изнасяне на изображения във формат PPM"
 
-#: plug-ins/common/file-pnm.c:463
+#: plug-ins/common/file-pnm.c:472
 msgid "PPM export handles RGB images without transparency."
-msgstr ""
+msgstr "Изнасянето в PPM поддържа изображения в RGB без прозрачност."
 
-#: plug-ins/common/file-pnm.c:494
+#: plug-ins/common/file-pnm.c:506
 msgid "PAM image"
 msgstr "Изображение във формат PAM"
 
-#: plug-ins/common/file-pnm.c:497
+#: plug-ins/common/file-pnm.c:509
 msgid "Exports files in the PAM file format"
-msgstr ""
+msgstr "Изнасяне на изображения във формат PAM"
 
-#: plug-ins/common/file-pnm.c:498
+#: plug-ins/common/file-pnm.c:510
 msgid "PAM export handles RGB images with or without transparency."
-msgstr ""
+msgstr "Изнасянето в PPM поддържа изображения в RGB с или без прозрачност."
 
-#: plug-ins/common/file-pnm.c:523
+#: plug-ins/common/file-pnm.c:535
 msgid "PFM image"
 msgstr "Изображение във формат PFM"
 
-#: plug-ins/common/file-pnm.c:526
+#: plug-ins/common/file-pnm.c:538
 msgid "Exports files in the PFM file format"
-msgstr ""
+msgstr "Изнасяне на изображения във формат PFM"
 
-#: plug-ins/common/file-pnm.c:527
+#: plug-ins/common/file-pnm.c:539
 msgid "PFM export handles all images without transparency."
-msgstr ""
+msgstr "Изнасянето в PPM поддържа всякакви изображения без прозрачност."
 
-#: plug-ins/common/file-pnm.c:719 plug-ins/common/file-pnm.c:751
-#: plug-ins/common/file-pnm.c:760 plug-ins/common/file-pnm.c:775
-#: plug-ins/common/file-pnm.c:790 plug-ins/common/file-pnm.c:988
-#: plug-ins/common/file-pnm.c:1083 plug-ins/common/file-pnm.c:1168
-#: plug-ins/common/file-pnm.c:1229
+#: plug-ins/common/file-pnm.c:731 plug-ins/common/file-pnm.c:763
+#: plug-ins/common/file-pnm.c:772 plug-ins/common/file-pnm.c:787
+#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1000
+#: plug-ins/common/file-pnm.c:1095 plug-ins/common/file-pnm.c:1180
+#: plug-ins/common/file-pnm.c:1241
 msgid "Premature end of file."
 msgstr "Неочакван край на файла."
 
-#: plug-ins/common/file-pnm.c:721
+#: plug-ins/common/file-pnm.c:733
 msgid "Invalid file."
 msgstr "Повреден файл."
 
-#: plug-ins/common/file-pnm.c:739
+#: plug-ins/common/file-pnm.c:751
 msgid "File not in a supported format."
 msgstr "Файлът не е от поддържан формат."
 
-#: plug-ins/common/file-pnm.c:754
+#: plug-ins/common/file-pnm.c:766
 msgid "Invalid X resolution."
 msgstr "Неправилна хоризонтална разделителна способност."
 
-#: plug-ins/common/file-pnm.c:756 plug-ins/common/file-pnm.c:922
+#: plug-ins/common/file-pnm.c:768 plug-ins/common/file-pnm.c:934
 msgid "Image width is larger than GIMP can handle."
 msgstr "Широчината на изображението е прекалено голяма за GIMP"
 
-#: plug-ins/common/file-pnm.c:763
+#: plug-ins/common/file-pnm.c:775
 msgid "Invalid Y resolution."
 msgstr "Неправилна вертикална разделителна способност."
 
-#: plug-ins/common/file-pnm.c:765
+#: plug-ins/common/file-pnm.c:777
 msgid "Image height is larger than GIMP can handle."
 msgstr "Височината на изображението е прекалено голяма за GIMP"
 
-#: plug-ins/common/file-pnm.c:779
+#: plug-ins/common/file-pnm.c:791
 msgid "Bogus scale factor."
 msgstr "Неправилен коефициент на мащабиране."
 
-#: plug-ins/common/file-pnm.c:781
+#: plug-ins/common/file-pnm.c:793
 msgid "Unsupported scale factor."
 msgstr "Неподдържан коефициент на мащабиране."
 
-#: plug-ins/common/file-pnm.c:795
+#: plug-ins/common/file-pnm.c:807
 msgid "Unsupported maximum value."
 msgstr "Неправилна максимална стойност."
 
-#: plug-ins/common/file-pnm.c:916
-msgid "PAM: Unsupported unofficial PNM variant."
-msgstr ""
-
-#: plug-ins/common/file-pnm.c:920
-#, fuzzy
-msgid "PAM: Premature end of file."
-msgstr "Неочакван край на файла."
-
-#: plug-ins/common/file-pnm.c:924
-#, fuzzy
-msgid "PAM: Invalid X resolution."
-msgstr "Невалидна резолюция по хоризонтал."
-
-#: plug-ins/common/file-pnm.c:926
-#, fuzzy
-msgid "PAM: Invalid Y resolution."
-msgstr "Невалидна резолюция по вертикал."
-
 #: plug-ins/common/file-pnm.c:928
-#, fuzzy
-msgid "PAM: Invalid maximum value."
-msgstr "Невалидна максимална стойност."
-
-#: plug-ins/common/file-pnm.c:930
-#, fuzzy
-msgid "PAM: Invalid depth."
-msgstr "Невалиден файл."
+msgid "PAM: Unsupported unofficial PNM variant."
+msgstr "PAM: Неподдържан, неофициален вариант на PNM."
 
 #: plug-ins/common/file-pnm.c:932
+msgid "PAM: Premature end of file."
+msgstr "PAM: Неочакван край на файла."
+
+#: plug-ins/common/file-pnm.c:936
+msgid "PAM: Invalid X resolution."
+msgstr "PAM: Неправилна разделителна способност по хоризонтал."
+
+#: plug-ins/common/file-pnm.c:938
+msgid "PAM: Invalid Y resolution."
+msgstr "PAM: Неправилна разделителна способност по вертикал."
+
+#: plug-ins/common/file-pnm.c:940
+msgid "PAM: Invalid maximum value."
+msgstr "PAM: Неправилна максимална стойност."
+
+#: plug-ins/common/file-pnm.c:942
+msgid "PAM: Invalid depth."
+msgstr "PAM: Неправилна дълбочина на цвета."
+
+#: plug-ins/common/file-pnm.c:944
 msgid "PAM: Unsupported tupltype."
-msgstr ""
-
-#. file save type
-#: plug-ins/common/file-pnm.c:2000
-#, fuzzy
-msgid "_ASCII"
-msgstr "ASCII изкуство"
-
-#: plug-ins/common/file-pnm.c:2001
-msgid "_Raw"
-msgstr ""
+msgstr "PAM: Неподдържана n-орка."
 
 #: plug-ins/common/file-ps.c:361 plug-ins/common/file-ps.c:470
 msgid "PostScript document"
@@ -5114,7 +5120,7 @@ msgstr ""
 msgid "Height of the image in PostScript file (0: use input image size)"
 msgstr ""
 "Височина на изображението във файла с PostScript (0: ползване на височината "
-"на изображението)<"
+"на изображението)"
 
 #: plug-ins/common/file-ps.c:532
 msgid "_X offset"
@@ -5157,7 +5163,7 @@ msgid ""
 "If enabled, aspect ratio will be maintained on export. Otherwise, the width "
 "and height values will be used."
 msgstr ""
-"Когато е включено пропорциите на размерите се запазват при изнасяне. В "
+"Когато е включено, пропорциите на размерите се запазват при изнасяне. В "
 "противен случай ще се ползват зададените височина и широчина."
 
 #: plug-ins/common/file-ps.c:559 plug-ins/map-object/map-object-ui.c:738
@@ -5267,7 +5273,7 @@ msgstr "_270°"
 
 #: plug-ins/common/file-ps.c:3967
 msgid "Output"
-msgstr "Изходящ"
+msgstr "Изход"
 
 #: plug-ins/common/file-psp.c:665 plug-ins/common/file-psp.c:695
 msgid "Paint Shop Pro image"
@@ -5275,7 +5281,7 @@ msgstr "Изображение във формат Paint Shop Pro"
 
 #: plug-ins/common/file-psp.c:668
 msgid "Loads images from the Paint Shop Pro PSP file format"
-msgstr "Зареждане на изображения във форматe Paint Shop Pro"
+msgstr "Зареждане на изображения във форма̀та Paint Shop Pro"
 
 #: plug-ins/common/file-psp.c:670
 msgid ""
@@ -5286,228 +5292,243 @@ msgstr ""
 "Pro — PSP. Векторните слоеве не се поддържат. Изнасянето във формат PSP още "
 "не се поддържа."
 
-#: plug-ins/common/file-psp.c:833
-msgid "RLE"
-msgstr "RLE"
+#: plug-ins/common/file-psp.c:717
+#, fuzzy
+msgid "_Data Compression"
+msgstr "Компресия"
 
-#: plug-ins/common/file-psp.c:834
-msgid "LZ77"
-msgstr "LZ77"
+#: plug-ins/common/file-psp.c:718
+#, fuzzy
+msgid "Type of compression"
+msgstr "Без компресия"
 
-#: plug-ins/common/file-psp.c:926
+#: plug-ins/common/file-psp.c:719
+msgid "none"
+msgstr ""
+
+#: plug-ins/common/file-psp.c:720
+#, fuzzy
+msgid "rle"
+msgstr "червено"
+
+#: plug-ins/common/file-psp.c:721
+msgid "lz77"
+msgstr ""
+
+#: plug-ins/common/file-psp.c:925
 #, c-format
 msgid "Error reading block header"
 msgstr "Грешка при четене на заглавна част на блок"
 
-#: plug-ins/common/file-psp.c:933
+#: plug-ins/common/file-psp.c:932
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Неправилна заглавна част на блок при %ld"
 
-#: plug-ins/common/file-psp.c:936
+#: plug-ins/common/file-psp.c:935
 #, c-format
 msgid "Invalid block header"
 msgstr "Неправилна заглавна част на блок"
 
-#: plug-ins/common/file-psp.c:968
+#: plug-ins/common/file-psp.c:967
 #, c-format
 msgid "Seek error: %s"
 msgstr "Грешка при позициониране: %s"
 
-#: plug-ins/common/file-psp.c:991
+#: plug-ins/common/file-psp.c:990
 #, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "Неправилен размер на общ откъс с атрибути на изображението."
 
-#: plug-ins/common/file-psp.c:1013
+#: plug-ins/common/file-psp.c:1012
 #, c-format
 msgid "Error reading general image attribute block."
 msgstr "Грешка при изчитане на главния блок за атрибути на изображението."
 
-#: plug-ins/common/file-psp.c:1028
+#: plug-ins/common/file-psp.c:1027
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "Неправилен вид компресия %d"
 
-#: plug-ins/common/file-psp.c:1064 plug-ins/common/file-psp.c:1071
+#: plug-ins/common/file-psp.c:1063 plug-ins/common/file-psp.c:1070
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "Неподдържана дълбочина на цвета %d"
 
-#: plug-ins/common/file-psp.c:1118
+#: plug-ins/common/file-psp.c:1117
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Грешка при изчитане на откъса за създател"
 
-#: plug-ins/common/file-psp.c:1124
+#: plug-ins/common/file-psp.c:1123
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Неправилна заглавна част за ключови думи"
 
-#: plug-ins/common/file-psp.c:1139 plug-ins/common/file-psp.c:1166
+#: plug-ins/common/file-psp.c:1138 plug-ins/common/file-psp.c:1165
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Грешка при четене на данните за ключови думи за създателя"
 
-#: plug-ins/common/file-psp.c:1250 plug-ins/common/file-psp.c:1259
-#: plug-ins/common/file-psp.c:1268
+#: plug-ins/common/file-psp.c:1249 plug-ins/common/file-psp.c:1258
+#: plug-ins/common/file-psp.c:1267
 #, c-format
 msgid "Error reading color block"
 msgstr "Грешка при четене на блока за цветовете"
 
-#: plug-ins/common/file-psp.c:1279
+#: plug-ins/common/file-psp.c:1278
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Грешка: неподдържан брой цветове в палитрата"
 
-#: plug-ins/common/file-psp.c:1290
+#: plug-ins/common/file-psp.c:1289
 #, c-format
 msgid "Error reading color palette"
 msgstr "Грешка при четене на цветовата палитра"
 
-#: plug-ins/common/file-psp.c:1716 plug-ins/common/file-psp.c:1730
+#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
 #, c-format
 msgid "zlib error"
 msgstr "Грешка от zlib"
 
-#: plug-ins/common/file-psp.c:1793 plug-ins/common/file-psp.c:1827
-#: plug-ins/common/file-psp.c:1837
+#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
+#: plug-ins/common/file-psp.c:1836
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Грешка при четене на информацията с разширенията на слоевете"
 
-#: plug-ins/common/file-psp.c:1814
+#: plug-ins/common/file-psp.c:1813
 #, c-format
 msgid "Error reading block information"
 msgstr "Грешка при четене на блоковата информация"
 
-#: plug-ins/common/file-psp.c:1894
+#: plug-ins/common/file-psp.c:1893
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
-msgstr "Неправилен подбблок на слой „%s“, трябва да е „LAYER“"
+msgstr "Неправилен подблок на слой „%s“, трябва да е „LAYER“"
 
-#: plug-ins/common/file-psp.c:1925 plug-ins/common/file-psp.c:1982
+#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Грешка при четене на откъс с информация за слой"
 
-#: plug-ins/common/file-psp.c:2024
+#: plug-ins/common/file-psp.c:2023
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
-msgstr "Неправилни размери на изображението: %dx%d"
+msgstr "Неправилни размери на изображението: %d×%d"
 
-#: plug-ins/common/file-psp.c:2085
+#: plug-ins/common/file-psp.c:2084
 #, c-format
 msgid "Error creating layer"
 msgstr "Грешка при създаване на слой"
 
-#: plug-ins/common/file-psp.c:2130
+#: plug-ins/common/file-psp.c:2129
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr "Неправилен подбблок на слой „%s“, трябва да е „CHANNEL“"
+msgstr "Неправилен подблок на слой „%s“, трябва да е „CHANNEL“"
 
-#: plug-ins/common/file-psp.c:2146
+#: plug-ins/common/file-psp.c:2145
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Грешка при четене на откъс с информация за канал"
 
-#: plug-ins/common/file-psp.c:2169
+#: plug-ins/common/file-psp.c:2168
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Неправилен вид канал %d в откъса с информация за канали"
 
-#: plug-ins/common/file-psp.c:2273 plug-ins/common/file-psp.c:2290
+#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Грешка при четене на откъс с данни за потока"
 
-#: plug-ins/common/file-psp.c:2377 plug-ins/common/file-psp.c:2393
+#: plug-ins/common/file-psp.c:2376 plug-ins/common/file-psp.c:2392
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Грешка при четене на откъса за селекция"
 
-#: plug-ins/common/file-psp.c:2386
+#: plug-ins/common/file-psp.c:2385
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Неправилен размер на откъса за селекция"
 
-#: plug-ins/common/file-psp.c:2410
+#: plug-ins/common/file-psp.c:2409
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Грешка при четене на откъса за край на селекция"
 
-#: plug-ins/common/file-psp.c:2435
+#: plug-ins/common/file-psp.c:2434
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Грешка при четене на заглавната част на откъс за разширен блок"
 
-#: plug-ins/common/file-psp.c:2443
+#: plug-ins/common/file-psp.c:2442
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Неправилна заглавна част на откъс за разширен блок"
 
-#: plug-ins/common/file-psp.c:2454
+#: plug-ins/common/file-psp.c:2453
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Неправилен размер на заглавна част на откъс за разширен блок"
 
-#: plug-ins/common/file-psp.c:2475
+#: plug-ins/common/file-psp.c:2474
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Грешка при четене на данните за решетката на разширените откъси"
 
-#: plug-ins/common/file-psp.c:2503
+#: plug-ins/common/file-psp.c:2502
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Грешка при четене на данните за водачите на разширените откъси"
 
-#: plug-ins/common/file-psp.c:2521
+#: plug-ins/common/file-psp.c:2520
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Неправилна ориентация на водачите"
 
-#: plug-ins/common/file-psp.c:2535
+#: plug-ins/common/file-psp.c:2534
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Грешка при четене на откъс за разширен блок"
 
-#: plug-ins/common/file-psp.c:2561 plug-ins/common/file-psp.c:2573
-#: plug-ins/common/file-psp.c:2584
+#: plug-ins/common/file-psp.c:2560 plug-ins/common/file-psp.c:2572
+#: plug-ins/common/file-psp.c:2583
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Грешка при четене на откъс за цветовия профил"
 
-#: plug-ins/common/file-psp.c:2637
+#: plug-ins/common/file-psp.c:2636
 #, c-format
 msgid "Error reading file header."
 msgstr "Грешка при четене на заглавна част на файл."
 
-#: plug-ins/common/file-psp.c:2644
+#: plug-ins/common/file-psp.c:2643
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Неправилен подпис на файла."
 
 #
-#: plug-ins/common/file-psp.c:2658
+#: plug-ins/common/file-psp.c:2657
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Версия %d.%d на формата на файлове PSP не се поддържа."
 
-#: plug-ins/common/file-psp.c:2678
+#: plug-ins/common/file-psp.c:2677
 msgid "invalid block size"
 msgstr "неправилен размер на блок"
 
-#: plug-ins/common/file-psp.c:2687
+#: plug-ins/common/file-psp.c:2686
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повтарящ се главен блок с атрибути на изображението."
 
-#: plug-ins/common/file-psp.c:2715
+#: plug-ins/common/file-psp.c:2714
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Липсващ главен блок с атрибути на изображението."
 
-#: plug-ins/common/file-psp.c:2840
+#: plug-ins/common/file-psp.c:2839
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Изнасянето все още не е реализирано."
@@ -5600,7 +5621,7 @@ msgstr "BGR565"
 
 #: plug-ins/common/file-raw-data.c:379
 msgid "B&W 1 bit"
-msgstr "ЧБ 1-бит"
+msgstr "BW 1-бит"
 
 #: plug-ins/common/file-raw-data.c:380
 msgid "Grayscale 2-bit"
@@ -5664,38 +5685,35 @@ msgstr "Плаваща запетая"
 
 #: plug-ins/common/file-raw-data.c:401
 msgid "_Endianness"
-msgstr ""
+msgstr "_Краен формат"
 
 #: plug-ins/common/file-raw-data.c:402
 msgid "Order of sequences of bytes"
-msgstr ""
+msgstr "Последователност на байтовете"
 
 #: plug-ins/common/file-raw-data.c:403
 msgid "Little Endian"
-msgstr ""
+msgstr "Младши краен формат"
 
 #: plug-ins/common/file-raw-data.c:404
 msgid "Big Endian"
-msgstr ""
+msgstr "Старши краен формат"
 
 #: plug-ins/common/file-raw-data.c:408
-#, fuzzy
 msgid "Planar confi_guration"
-msgstr "Невалидна резолюция по хоризонтал."
+msgstr "_Структура на данните"
 
 #: plug-ins/common/file-raw-data.c:409 plug-ins/common/file-raw-data.c:518
 msgid "How color pixel data are stored"
-msgstr ""
+msgstr "Как се съхраняват пикселите"
 
 #: plug-ins/common/file-raw-data.c:410 plug-ins/common/file-raw-data.c:519
-#, fuzzy
 msgid "Contiguous"
-msgstr "Контури"
+msgstr "Последователно"
 
 #: plug-ins/common/file-raw-data.c:411 plug-ins/common/file-raw-data.c:520
-#, fuzzy
 msgid "Planar"
-msgstr "Чисто ЧЗС"
+msgstr "По слоеве"
 
 #: plug-ins/common/file-raw-data.c:418 plug-ins/common/file-raw-data.c:477
 msgid "Palette Offse_t"
@@ -5734,14 +5752,12 @@ msgid "The file containing palette data"
 msgstr "Файлът съдържа данни за палитра"
 
 #: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:2763
-#, fuzzy
 msgid "Digital Elevation Model data"
-msgstr "Данни за модела на цифровото издигане"
+msgstr "Данни за цифровия модел за издигането"
 
 #: plug-ins/common/file-raw-data.c:445
-#, fuzzy
 msgid "Load HGT data as images"
-msgstr "Зареждане карта на избражението"
+msgstr "Зареждане данни във формат HGT като изображение"
 
 #: plug-ins/common/file-raw-data.c:446
 msgid ""
@@ -5751,48 +5767,52 @@ msgid ""
 "earth relief. Therefore you will likely want to remap elevation to colors as "
 "a second step, for instance with the \"Gradient Map\" plug-in."
 msgstr ""
+"Зареждане на данните за цифровия модел на издигането във формат HGT от "
+"Мисията на совалките за радарна топография. Въпреки, че изходът е в RGB, "
+"всички цветове са степени на сивото и контрастът ще е много нисък за "
+"повечето релеф на Земята. Вероятно като втора стъпка ще искате да зададете "
+"различни цветове на издигането, напр. с приставката „Преоцветяване по "
+"преливка“."
 
 #: plug-ins/common/file-raw-data.c:466
-#, fuzzy
 msgid "Sa_mple spacing"
-msgstr "_Разстояние между плочките:"
+msgstr "_Разстояние между отчетите"
 
 #: plug-ins/common/file-raw-data.c:467
 msgid "The sample spacing of the data."
-msgstr ""
+msgstr "Разстояние между отчетите на данните."
 
 #: plug-ins/common/file-raw-data.c:468
-#, fuzzy
 msgid "Auto-Detect"
-msgstr "Автоматично"
+msgstr "Автоматично засичане"
 
 #: plug-ins/common/file-raw-data.c:469
 msgid "SRTM-1 (1 arc second)"
-msgstr ""
+msgstr "SRTM-1 (1 дъгова секунда)"
 
 #: plug-ins/common/file-raw-data.c:470
 msgid "SRTM-3 (3 arc seconds)"
-msgstr ""
+msgstr "SRTM-3 (3 дъгови секунди)"
 
 #: plug-ins/common/file-raw-data.c:505 plug-ins/common/file-raw-data.c:506
 msgid "Dump images to disk in raw format"
-msgstr ""
+msgstr "Запазване на суровите данни от изображенията на диска"
 
 #: plug-ins/common/file-raw-data.c:517
-#, fuzzy
 msgid "Planar configuration"
-msgstr "Невалидна резолюция по хоризонтал."
+msgstr "Структура на данните"
 
 #: plug-ins/common/file-raw-data.c:534
-#, fuzzy
 msgid "Raw Data"
-msgstr "Сурови данни на изображение"
+msgstr "Сурови данни"
 
 #: plug-ins/common/file-raw-data.c:599
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
 msgstr ""
+"%d не е валидно отстояние между отчетите. Възможните стойности са: 0 "
+"(автоматично засичане), 1 и 3."
 
 #: plug-ins/common/file-raw-data.c:612
 #, c-format
@@ -5801,11 +5821,15 @@ msgid ""
 "valid HGT file or its variant is not supported yet. Supported HGT files are: "
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
+"Неуспешно автоматично засичане на отстоянието между отчетите. „%s“ не е "
+"валиден файл HGT или този вариант не се поддържа. Поддържаните разновидности "
+"са: SRTM-1 и SRTM-3. Ако знаете варианта, изпълнете приставката с аргумент 1 "
+"или 3."
 
 #: plug-ins/common/file-raw-data.c:1566
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for size verification: %s"
-msgstr "Не може да се отвори „%s“ за записване: %s"
+msgstr "„%s“ не може да се отвори за проверка на размера: %s"
 
 #: plug-ins/common/file-raw-data.c:2654
 msgid "Load Image from Raw Data"
@@ -5817,11 +5841,11 @@ msgstr "Зареждане на изображение от сурови дан�
 #.
 #: plug-ins/common/file-raw-data.c:2757
 msgid "Digital Elevation Model data (1 arc-second)"
-msgstr ""
+msgstr "Цифров модел на издигането (1 дъгова секунда)"
 
 #: plug-ins/common/file-raw-data.c:2760
 msgid "Digital Elevation Model data (3 arc-seconds)"
-msgstr ""
+msgstr "Цифров модел на издигането (1 дъгови секунди)"
 
 #: plug-ins/common/file-raw-data.c:2767
 msgid "Image"
@@ -5835,27 +5859,25 @@ msgstr "Палитра"
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
 #: plug-ins/common/file-raw-data.c:2849
-#, fuzzy, c-format
+#, c-format
 msgid "_Contiguous (%s)"
-msgstr "_Продължаваща област"
+msgstr "_Последователно (%s)"
 
 #: plug-ins/common/file-raw-data.c:2851
-#, fuzzy
 msgid "_Contiguous"
-msgstr "Контури"
+msgstr "_Последователно"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
 #: plug-ins/common/file-raw-data.c:2857
-#, fuzzy, c-format
+#, c-format
 msgid "_Planar (%s)"
-msgstr "Чисто ЧЗС"
+msgstr "По _слоеве (%s)"
 
 #: plug-ins/common/file-raw-data.c:2859
-#, fuzzy
 msgid "_Planar"
-msgstr "Чисто ЧЗС"
+msgstr "По _слоеве"
 
 #: plug-ins/common/file-sunras.c:275 plug-ins/common/file-sunras.c:301
 msgid "SUN Rasterfile image"
@@ -5871,7 +5893,7 @@ msgstr "Форматиране на данните"
 
 #: plug-ins/common/file-sunras.c:324
 msgid "Use standard (0) or Run-Length Encoded (1) output"
-msgstr "Използване на стандартно (0) или or Run-Length Encoded (1) output"
+msgstr "Използване на стандартно (0) или кодиране по дължина (1)"
 
 #: plug-ins/common/file-sunras.c:447
 #, c-format
@@ -5981,7 +6003,7 @@ msgstr "_Пътеки"
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
-"Дали и как да се внасат пътеки, за да може да се използват от инструмента за "
+"Дали и как да се внасят пътеки, за да може да се използват от инструмента за "
 "пътеки на GIMP"
 
 #: plug-ins/common/file-svg.c:190
@@ -6172,7 +6194,7 @@ msgid ""
 "and-white (two color indexed) images."
 msgstr ""
 "Файл във формат X10/X11 bitmap (XBM). Форматът е без загуба на информация и "
-"поддържа двуцветни, индексирани изображения.<"
+"поддържа двуцветни, индексирани изображения."
 
 #: plug-ins/common/file-xbm.c:204
 msgid "XBM"
@@ -6267,7 +6289,7 @@ msgid ""
 "No image data type specified"
 msgstr ""
 "„%s“:\n"
-"Не е указан вид на данните а изображението"
+"Не е указан вид на данните в изображението"
 
 #. The image is not black-and-white.
 #: plug-ins/common/file-xbm.c:995
@@ -6303,121 +6325,109 @@ msgstr ""
 #: plug-ins/common/file-xmc.c:299 plug-ins/common/file-xmc.c:348
 #: plug-ins/common/file-xmc.c:350
 msgid "X11 Mouse Cursor"
-msgstr "Курсор на мишка за X11"
+msgstr "Показалец на мишка за X11"
 
 #: plug-ins/common/file-xmc.c:302
 msgid "Loads files of X11 Mouse Cursor file format"
-msgstr "Зареждане на изображение във формат курсор на мишка за X11"
+msgstr "Зареждане на изображение във формат показалец на мишка за X11"
 
 #: plug-ins/common/file-xmc.c:304
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
 msgstr ""
+"Тази приставка зарежда файлове във формат на показалец за мишка за X11 (XMC)."
 
 #: plug-ins/common/file-xmc.c:329
 msgid ""
 "Loads only first frame of X11 Mouse Cursor's animation sequence which "
 "nominal size is the closest of thumb-size to be used as a thumbnail"
 msgstr ""
+"Зарежда първия кадър от анимирана последователност за показалец за мишка за "
+"X11, като размерът е най-близкия от размерите на миниатюрите"
 
 #: plug-ins/common/file-xmc.c:353
-#, fuzzy
 msgid "Exports files of X11 cursor file"
-msgstr "Грешка във GIMP файл с четки „%s“"
+msgstr "Изнасяне на файлове с показалци за мишка за X11"
 
 #: plug-ins/common/file-xmc.c:354
 msgid "This plug-in exports X11 Mouse Cursor (XMC) files"
 msgstr ""
+"Приставката изнася файлове във формат на показалец за мишка за X11 (XMC)"
 
 #: plug-ins/common/file-xmc.c:368
-#, fuzzy
 msgid "Hot spot _X"
-msgstr "_X на активната точка:"
+msgstr "_X на активната точка"
 
 #: plug-ins/common/file-xmc.c:369
 msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr ""
+"Хоризонтална координата на активната точка (изберете -1, -1, за да запазите "
+"първоначалната)"
 
 #: plug-ins/common/file-xmc.c:376
 msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr ""
+"Вертикална координата на активната точка (изберете -1, -1, за да запазите "
+"първоначалната)"
 
 #: plug-ins/common/file-xmc.c:382
-#, fuzzy
 msgid "_Auto Crop all frames"
 msgstr "_Автоматично отрязване на всички кадри"
 
 #: plug-ins/common/file-xmc.c:383
-#, fuzzy
 msgid "Remove the empty borders of all frames."
-msgstr "Премахване празните граници от изображението"
+msgstr "Премахване на празните кантове от всички кадри."
 
 #: plug-ins/common/file-xmc.c:388
-#, fuzzy
 msgid "Si_ze where unspecified"
-msgstr ""
-"_Размер, когато\n"
-"не е указан:"
+msgstr "_Размер, когато не е указан:"
 
 #: plug-ins/common/file-xmc.c:389
-#, fuzzy
 msgid "Default frame size if unspecified"
-msgstr "_Пауза между кадрите, където не е посочена:"
+msgstr "Стандартен размер, когато не е указан"
 
 #: plug-ins/common/file-xmc.c:403
-#, fuzzy
 msgid "_Use default size for all frames"
-msgstr "_Използване на въведеното забавяне за всички кадри"
+msgstr "_Използване на стандартния размер за всички кадри"
 
 #: plug-ins/common/file-xmc.c:404
-#, fuzzy
 msgid "Use default size for all frames"
-msgstr "_Използване на въведеното забавяне за всички кадри"
+msgstr "Използване на стандартния размер за всички кадри"
 
 #: plug-ins/common/file-xmc.c:409
-#, fuzzy
 msgid "_Delay where unspecified"
-msgstr ""
-"_Пауза между кадрите,\n"
-"когато не е указана:"
+msgstr "_Пауза между кадрите, когато не е указана:"
 
 #: plug-ins/common/file-xmc.c:410
 msgid "Default time span in milliseconds in which each frame is rendered"
-msgstr ""
+msgstr "Стандартно време за изобразяване на всеки кадър [милисекунди]"
 
 #: plug-ins/common/file-xmc.c:416
-#, fuzzy
 msgid "Use default delay for all _frames"
-msgstr "_Използване на въведеното забавяне за всички кадри"
+msgstr "_Използване на стандартно забавяне за всички кадри"
 
 #: plug-ins/common/file-xmc.c:417
-#, fuzzy
 msgid "Use default delay for all frames"
-msgstr "_Използване на въведеното забавяне за всички кадри"
+msgstr "Използване на стандартно забавяне за всички кадри"
 
 #: plug-ins/common/file-xmc.c:422
-#, fuzzy
 msgid "C_opyright"
-msgstr "_Авторски права:"
+msgstr "_Авторски права"
 
 #: plug-ins/common/file-xmc.c:423
-#, fuzzy
 msgid "Copyright information"
-msgstr "Въведете информация за авторските права."
+msgstr "Информация за авторските права"
 
 #: plug-ins/common/file-xmc.c:431
-#, fuzzy
 msgid "Lice_nse"
-msgstr "_Лиценз:"
+msgstr "_Лиценз"
 
 #: plug-ins/common/file-xmc.c:432
-#, fuzzy
 msgid "License information"
-msgstr "Въведете информация за лиценза."
+msgstr "Информация за лиценза"
 
 #: plug-ins/common/file-xmc.c:441
-#, fuzzy
 msgid "Optional comment"
-msgstr "Запазване на _коментар"
+msgstr "Незадължителен коментар"
 
 #: plug-ins/common/file-xmc.c:551
 #, c-format
@@ -6425,41 +6435,43 @@ msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
+"Активната точка не може да се зададе!\n"
+"Слоевете трябва да са подредени така, че да имат поне една обща точка."
 
 #: plug-ins/common/file-xmc.c:668
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid X cursor."
-msgstr "„%s“ не е валиден BMP файл"
+msgstr "„%s“ не е валиден показалец на мишка на X11."
 
 #: plug-ins/common/file-xmc.c:681
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr ""
+msgstr "Кадър %d от „%s“ е прекалено широк за показалец на X11."
 
 #: plug-ins/common/file-xmc.c:689
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr ""
+msgstr "Кадър %d от „%s“ е прекалено висок за показалец на X11."
 
 #: plug-ins/common/file-xmc.c:960
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr ""
+msgstr "няма откъс за изображение в „%s“."
 
 #: plug-ins/common/file-xmc.c:1001
 #, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr ""
+msgstr "„%s“ е прекалено широк за показалец на X11."
 
 #: plug-ins/common/file-xmc.c:1010
 #, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr ""
+msgstr "„%s“ е прекалено висок за показалец на X11."
 
 #: plug-ins/common/file-xmc.c:1074
-#, fuzzy, c-format
+#, c-format
 msgid "A read error occurred."
-msgstr "Грешка при запис"
+msgstr "Грешка при четене"
 
 #: plug-ins/common/file-xmc.c:1113
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
@@ -6478,6 +6490,10 @@ msgid ""
 "disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
+"Изрязване на празните кантове от всички кадри.\n"
+"Това намалява размера и премахва проблема с големи показалци, които "
+"разместват екрана.\n"
+"Не избирайте това, ако смятате да го редактирате с други програми."
 
 #: plug-ins/common/file-xmc.c:1148
 msgid ""
@@ -6489,6 +6505,12 @@ msgid ""
 "sequence, and which sequence is used based on the value of \"gtk-cursor-"
 "theme-size\"."
 msgstr ""
+"Избор на номинален размер на всички кадри.\n"
+"Ако не знаете какво да зададете или няма да създавате показалец с множество "
+"размери, го оставете „32px“.\n"
+"Номиналният размер няма нищо общо с реалния размер, а се ползва за "
+"определяне на кои кадри зависят от анимираната последователност указана в "
+"ключа „gtk-cursor-theme-size“."
 
 #. Begin displaying export progress
 #: plug-ins/common/file-xmc.c:1264 plug-ins/file-webp/file-webp-export.c:198
@@ -6519,6 +6541,9 @@ msgid ""
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
+"Показалецът не може да се изнесе, защото активната точка не е в кадър „%s“.\n"
+"Пробвайте да смените местоположението на точката, да промените геометрията "
+"на слоя или да изнесете без автоматично изрязване."
 
 #: plug-ins/common/file-xmc.c:1575
 #, c-format
@@ -6528,6 +6553,10 @@ msgid ""
 "for X bitmap cursors.\n"
 "It might be unsupported by some environments."
 msgstr ""
+"Показалецът е изнесен успешно, но съдържа поне един кадър с размер по "
+"височина или широчина над %ipx, които исторически е максималният размер на "
+"растерните показалци на X11.\n"
+"Може и да не се поддържа навсякъде."
 
 #: plug-ins/common/file-xmc.c:1583
 msgid ""
@@ -6536,6 +6565,10 @@ msgid ""
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
+"Показалецът е изнесен успешно, но съдържа поне един кадър с номинален "
+"размер, който не се поддържа от настройките на GNOME. За да осигурите "
+"разпознаването на показалеца от настройките на GNOME, изберете „Замяна на "
+"размера на всички кадри…“."
 
 #: plug-ins/common/file-xmc.c:1866
 #, c-format
@@ -6544,6 +6577,9 @@ msgid ""
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
+"Показалецът е изнесен успешно, но съдържа поне един кадър с размер по "
+"височина или широчина с над 8 цифри, затова е и отрязан до %dpx. Проверете "
+"получения резултат."
 
 #. translators: the %i is *always* 8 here
 #: plug-ins/common/file-xmc.c:1963
@@ -6552,6 +6588,7 @@ msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
+"Тази приставка не поддържа показалци с над %i различни номинални размери."
 
 #: plug-ins/common/file-xpm.c:197 plug-ins/common/file-xpm.c:232
 msgid "X PixMap image"
@@ -6677,50 +6714,44 @@ msgid "Combine several images on a film strip"
 msgstr "Комбиниране на няколко изображения във филмова лента"
 
 #: plug-ins/common/film.c:200
-#, fuzzy
 msgid "Film _height"
-msgstr "_Височина на плочката:"
+msgstr "_Височина на филма:"
 
 #: plug-ins/common/film.c:201
 msgid "Height of film (0: fit to images)"
-msgstr ""
+msgstr "Височина на филма (0: напасване на изображенията)"
 
 #: plug-ins/common/film.c:206
-#, fuzzy
 msgid "_Film color"
-msgstr "Първи цвят"
+msgstr "_Филмов цвят"
 
 #: plug-ins/common/film.c:207
-#, fuzzy
 msgid "Color of the film"
-msgstr "Запълване с цвят"
+msgstr "Цвят на филма"
 
 #: plug-ins/common/film.c:212
-#, fuzzy
 msgid "Start _index"
-msgstr "Начален _индекс:"
+msgstr "Начален _индекс"
 
 #: plug-ins/common/film.c:213
 msgid "Start index for numbering"
-msgstr ""
+msgstr "Начален индекс на номерирането"
 
 #: plug-ins/common/film.c:218
-#, fuzzy
 msgid "Number _font"
-msgstr "Брой сегменти"
+msgstr "_Шрифт за числата"
 
 #: plug-ins/common/film.c:219
 msgid "Font for drawing numbers"
-msgstr ""
+msgstr "Шрифт за изписването на числата"
 
 #: plug-ins/common/film.c:223
-#, fuzzy
 msgid "_Number color"
-msgstr "Брой цветове:"
+msgstr "_Цвят за числата"
 
 #: plug-ins/common/film.c:224
 msgid "Color for numbers"
-msgstr ""
+msgstr "Цвят за изписването на числата"
 
 #: plug-ins/common/film.c:229
 msgid "At _top"
@@ -6728,7 +6759,7 @@ msgstr "От_горе"
 
 #: plug-ins/common/film.c:230
 msgid "Draw numbers at top"
-msgstr ""
+msgstr "Числата да са отгоре"
 
 #: plug-ins/common/film.c:235
 msgid "At _bottom"
@@ -6736,87 +6767,72 @@ msgstr "От_долу"
 
 #: plug-ins/common/film.c:236
 msgid "Draw numbers at bottom"
-msgstr ""
+msgstr "Числата да са отдолу"
 
 #: plug-ins/common/film.c:251
-#, fuzzy
 msgid "Image _height"
-msgstr "_Височина на изображението:"
+msgstr "_Височина на изображението"
 
 #: plug-ins/common/film.c:252
-#, fuzzy
 msgid "As fraction of the strip height"
-msgstr "Всички стойности са части от височината на лентата"
+msgstr "Като част от височината на лентата"
 
 #: plug-ins/common/film.c:257
-#, fuzzy
 msgid "Image s_pacing"
-msgstr "_Отстояния между изображенията:"
+msgstr "_Отстояния между изображенията"
 
 #: plug-ins/common/film.c:258
-#, fuzzy
 msgid "The spacing between 2 images, as fraction of the strip height"
-msgstr "Всички стойности са части от височината на лентата"
+msgstr "Отстояния между изображенията като част от височината на лентата"
 
 #: plug-ins/common/film.c:263
-#, fuzzy
 msgid "Hole offse_t"
-msgstr "_Отместване на перфорацията:"
+msgstr "_Отместване на перфорацията"
 
 #: plug-ins/common/film.c:264
-#, fuzzy
 msgid "The offset from the edge of film, as fraction of the strip height"
-msgstr "Разстоянието от центъра на изображението определя посоката на рисунъка"
+msgstr ""
+"Разстоянието от края на изображението като част от височината на лентата"
 
 #: plug-ins/common/film.c:269
-#, fuzzy
 msgid "Hole _width"
-msgstr "_Широчина на дупките:"
+msgstr "_Широчина на дупките"
 
 #: plug-ins/common/film.c:270
-#, fuzzy
 msgid "The width of the holes, as fraction of the strip height"
-msgstr "Всички стойности са части от височината на лентата"
+msgstr "Широчина на дупките като част от височината на лентата"
 
 #: plug-ins/common/film.c:275
-#, fuzzy
 msgid "Hole hei_ght"
-msgstr "_Височина на дупките:"
+msgstr "_Височина на дупките"
 
 #: plug-ins/common/film.c:276
-#, fuzzy
 msgid "The height of the holes, as fraction of the strip height"
-msgstr "Всички стойности са части от височината на лентата"
+msgstr "Височина на дупките като част от височината на лентата"
 
 #: plug-ins/common/film.c:281
-#, fuzzy
 msgid "Hole _distance"
-msgstr "Разстояние:"
+msgstr "Разстояние между _дупките"
 
 #: plug-ins/common/film.c:282
-#, fuzzy
 msgid "The distance between holes, as fraction of the strip height"
-msgstr "Всички стойности са части от височината на лентата"
+msgstr "Разстояние между дупките като част от височината на лентата"
 
 #: plug-ins/common/film.c:287
-#, fuzzy
 msgid "_Number height"
-msgstr "_Височина на цифрите:"
+msgstr "_Височина на цифрите"
 
 #: plug-ins/common/film.c:288
-#, fuzzy
 msgid "The height of drawn numbers, as fraction of the strip height"
-msgstr "Всички стойности са части от височината на лентата"
+msgstr "Височина на цифрите като част от височината на лентата"
 
 #: plug-ins/common/film.c:295
-#, fuzzy
 msgid "F_it height to images"
 msgstr "_Напасване на височината по изображенията"
 
 #: plug-ins/common/film.c:296
-#, fuzzy
 msgid "Keep maximum image height"
-msgstr "_Максимална височина:"
+msgstr "_Максимална височина"
 
 #: plug-ins/common/film.c:374
 msgid "Composing images"
@@ -6824,7 +6840,7 @@ msgstr "Комбиниране на изображения"
 
 #: plug-ins/common/film.c:723
 msgid "\"Filmstrip\" cannot be run without any input images"
-msgstr ""
+msgstr "„Филмова лента“ изисква входно изображение"
 
 #: plug-ins/common/film.c:992
 msgid "Available images:"
@@ -6977,54 +6993,59 @@ msgid "Find and fix pixels that may be unsafely bright"
 msgstr "Намиране и поправяне на пиксели, които са опасно ярки"
 
 #: plug-ins/common/hot.c:270
-msgid "Mode"
+#, fuzzy
+msgid "_Mode"
 msgstr "Режим"
 
 #: plug-ins/common/hot.c:271
-msgid "Mode { NTSC (0), PAL (1) }"
-msgstr "Режим {0 — NTSC; 1 — PAL}"
+#, fuzzy
+msgid "Signal mode"
+msgstr "Вид рисуване:"
 
-#: plug-ins/common/hot.c:276
+#: plug-ins/common/hot.c:272
+msgid "NTSC"
+msgstr ""
+
+#: plug-ins/common/hot.c:273
+#, fuzzy
+msgid "PAL"
+msgstr "_PAL"
+
+#: plug-ins/common/hot.c:279
+#, fuzzy
+msgid "_Action"
+msgstr "Действие"
+
+#: plug-ins/common/hot.c:280
 msgid "Action"
 msgstr "Действие"
 
-#: plug-ins/common/hot.c:277
-msgid "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
-msgstr ""
-"Действие {0 — намаляване на яркостта; 1 — намаляване на наситеността;, 2 — "
-"потъмняване}"
+#: plug-ins/common/hot.c:281
+#, fuzzy
+msgid "Reduce Luminance"
+msgstr "Намаляване на _яркостта"
+
+#: plug-ins/common/hot.c:282
+#, fuzzy
+msgid "Reduce Saturation"
+msgstr "Намаляване на _насищането"
 
 #: plug-ins/common/hot.c:283
+#, fuzzy
+msgid "Blacken"
+msgstr "По_черняне"
+
+#: plug-ins/common/hot.c:289
 msgid "Create _new layer"
 msgstr "Създаване на _нов слой"
 
-#: plug-ins/common/hot.c:284
+#: plug-ins/common/hot.c:290
 msgid "Create a new layer"
 msgstr "Създаване на нов слой"
 
-#: plug-ins/common/hot.c:447 plug-ins/common/hot.c:654
+#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:662
 msgid "Hot"
 msgstr "Парещи"
-
-#: plug-ins/common/hot.c:663
-msgid "N_TSC"
-msgstr "N_TSC"
-
-#: plug-ins/common/hot.c:664
-msgid "_PAL"
-msgstr "_PAL"
-
-#: plug-ins/common/hot.c:669
-msgid "Reduce _Luminance"
-msgstr "Намаляване на _яркостта"
-
-#: plug-ins/common/hot.c:670
-msgid "Reduce _Saturation"
-msgstr "Намаляване на _насищането"
-
-#: plug-ins/common/hot.c:671
-msgid "_Blacken"
-msgstr "По_черняне"
 
 #: plug-ins/common/jigsaw.c:398
 msgid "_Jigsaw..."
@@ -7055,61 +7076,62 @@ msgid "Number of pieces going down"
 msgstr "Парчета по вертикал"
 
 #: plug-ins/common/jigsaw.c:425
-msgid "Jigsaw Style"
+#, fuzzy
+msgid "_Jigsaw Style"
 msgstr "Стил на пъзела"
 
 #: plug-ins/common/jigsaw.c:426
-msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
+#, fuzzy
+msgid "The style/shape of the jigsaw puzzle"
 msgstr "Стил/форма на пъзела (0 — квадратен, 1 — с извивки)"
 
-#: plug-ins/common/jigsaw.c:432
-msgid "_Blend width"
-msgstr "_Широчина на смесване"
-
-#: plug-ins/common/jigsaw.c:433
-msgid "Degree of slope of each piece's edge"
-msgstr "Градус на наклон за ръбовете на всяко парче"
-
-#: plug-ins/common/jigsaw.c:438
-msgid "Hi_ghlight"
-msgstr "_Отблясък"
-
-#: plug-ins/common/jigsaw.c:439
-msgid "The amount of highlighting on the edges of each piece"
-msgstr "Сила на отблясъка по ръбовете на всяко парче"
-
-#: plug-ins/common/jigsaw.c:483
-msgid "Assembling jigsaw"
-msgstr "Сглобяване на пъзел"
-
-#: plug-ins/common/jigsaw.c:715
-msgid "draw_jigsaw: bad style\n"
-msgstr "Изобразяване с „draw_jigsaw“: неправилен стил\n"
-
-#: plug-ins/common/jigsaw.c:2478
-msgid "Jigsaw"
-msgstr "Пъзел"
-
-#: plug-ins/common/jigsaw.c:2497
-msgid "Number of Tiles"
-msgstr "Брой елементи"
-
-#: plug-ins/common/jigsaw.c:2515
-msgid "Bevel Edges"
-msgstr "Релеф на ръбовете"
-
-#. frame for primitive radio buttons
-#: plug-ins/common/jigsaw.c:2525
+#: plug-ins/common/jigsaw.c:427
 msgid "Square"
 msgstr "Квадрати"
 
-#: plug-ins/common/jigsaw.c:2526
+#: plug-ins/common/jigsaw.c:428
 msgid "Curved"
 msgstr "С извивки"
 
+#: plug-ins/common/jigsaw.c:434
+msgid "_Blend width"
+msgstr "_Широчина на смесване"
+
+#: plug-ins/common/jigsaw.c:435
+msgid "Degree of slope of each piece's edge"
+msgstr "Градус на наклон за ръбовете на всяко парче"
+
+#: plug-ins/common/jigsaw.c:440
+msgid "Hi_ghlight"
+msgstr "_Отблясък"
+
+#: plug-ins/common/jigsaw.c:441
+msgid "The amount of highlighting on the edges of each piece"
+msgstr "Сила на отблясъка по ръбовете на всяко парче"
+
+#: plug-ins/common/jigsaw.c:485
+msgid "Assembling jigsaw"
+msgstr "Сглобяване на пъзел"
+
+#: plug-ins/common/jigsaw.c:718
+msgid "draw_jigsaw: bad style\n"
+msgstr "Изобразяване с „draw_jigsaw“: неправилен стил\n"
+
+#: plug-ins/common/jigsaw.c:2480
+msgid "Jigsaw"
+msgstr "Пъзел"
+
+#: plug-ins/common/jigsaw.c:2492
+msgid "Number of Tiles"
+msgstr "Брой елементи"
+
+#: plug-ins/common/jigsaw.c:2510
+msgid "Bevel Edges"
+msgstr "Релеф на ръбовете"
+
 #: plug-ins/common/mail.c:188
 msgid "Send by E_mail..."
-msgstr "Изпращане като е-писмо…"
+msgstr "_Изпращане като е-писмо…"
 
 #: plug-ins/common/mail.c:193
 msgid "Send the image by email"
@@ -7118,14 +7140,14 @@ msgstr "Изпращане на изображението по е-поща"
 #: plug-ins/common/mail.c:195
 msgid "Sendmail is used to send emails and must be properly configured."
 msgstr ""
-"За изпращането на е-писма се ползва програмата sendmail, затова тя трабва да "
+"За изпращането на е-писма се ползва програмата sendmail, затова тя трябва да "
 "е настроена правилно."
 
 #: plug-ins/common/mail.c:198
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
-msgstr "Програмата за е-писма трабва да е настроена правилно."
+msgstr "Програмата за е-писма трябва да е настроена правилно."
 
 #: plug-ins/common/mail.c:211
 msgid "File_name"
@@ -7213,32 +7235,30 @@ msgid "The filter radius"
 msgstr "Радиус на филтъра"
 
 #: plug-ins/common/nl-filter.c:186
-msgid "Filter"
-msgstr "Филър"
+#, fuzzy
+msgid "_Filter"
+msgstr "Филтър"
 
 #: plug-ins/common/nl-filter.c:187
-msgid ""
-"The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
-"controls noise variance); 2 - edge enhancement"
-msgstr ""
-"Филтър, който да се изпълни: 0 — осредняване, без прозрачността; 1 — "
-"оптимална оценка; 2 — подобряване на ръбовете"
+#, fuzzy
+msgid "The Filter to Run"
+msgstr "Радиус на филтъра"
 
-#: plug-ins/common/nl-filter.c:1008 plug-ins/common/nl-filter.c:1106
-msgid "NL Filter"
-msgstr "Нелинеен филтър"
-
-#: plug-ins/common/nl-filter.c:1115
+#: plug-ins/common/nl-filter.c:188
 msgid "Alpha trimmed mean"
 msgstr "Осредняване, без прозрачността"
 
-#: plug-ins/common/nl-filter.c:1116
+#: plug-ins/common/nl-filter.c:189
 msgid "Optimal estimation"
 msgstr "Оптимална оценка"
 
-#: plug-ins/common/nl-filter.c:1117
+#: plug-ins/common/nl-filter.c:190
 msgid "Edge enhancement"
 msgstr "Подобряване на ръбовете"
+
+#: plug-ins/common/nl-filter.c:1009 plug-ins/common/nl-filter.c:1106
+msgid "NL Filter"
+msgstr "Нелинеен филтър"
 
 #: plug-ins/common/plugin-browser.c:169
 msgid "_Plug-In Browser"
@@ -7255,7 +7275,7 @@ msgid ""
 "of the plug-in menus. Can also be of help to find where new plug-ins have "
 "installed themselves in the menus."
 msgstr ""
-"Позволява разглеждането на менютото на приставките. Може да търсите по имена "
+"Позволява разглеждането на менюто на приставките. Може да търсите по имена "
 "на приставки, да подреждате по име или местоположение на менюто и може да "
 "разглеждате менютата във вид на дърво. Това помага и да откриете къде са се "
 "поместили новите приставки в менютата."
@@ -7410,7 +7430,7 @@ msgstr "Запазване на интензитета на яркостта"
 
 #: plug-ins/common/sample-colorize.c:352
 msgid "Original i_ntensity"
-msgstr "Първоначален интензитет"
+msgstr "Първоначален _интензитет"
 
 #: plug-ins/common/sample-colorize.c:353
 msgid ""
@@ -7685,7 +7705,7 @@ msgstr "Промяна на случайността на нюанса"
 
 #: plug-ins/common/sparkle.c:246
 msgid "R_andom saturation"
-msgstr "Случайно насищане"
+msgstr "_Случайно насищане"
 
 #: plug-ins/common/sparkle.c:247
 msgid "Adjust how much the saturation should be changed randomly"
@@ -7693,7 +7713,7 @@ msgstr "Промяна на случайността на насищането"
 
 #: plug-ins/common/sparkle.c:253
 msgid "Preserve l_uminosity"
-msgstr "Запазване на осветеността"
+msgstr "Запазване на _осветеността"
 
 #: plug-ins/common/sparkle.c:254
 msgid "Should the luminosity be preserved?"
@@ -7963,7 +7983,7 @@ msgstr "Нова _височина"
 
 #: plug-ins/common/tile.c:168
 msgid "New (tiled) image height"
-msgstr "Нова височина на изображението с плочки<"
+msgstr "Нова височина на изображението с плочки"
 
 #: plug-ins/common/tile.c:173
 msgid "New _image"
@@ -8324,9 +8344,9 @@ msgid ""
 "control matrix. The effect can look like brushstrokes of acrylic or "
 "watercolor paint, in some cases."
 msgstr ""
-"Размазмазване на изображението по пътища на вектора, изчислени като градиент "
-"на отделна управляваща матрица. В някои случаи ефектът изглежда като щрихи "
-"от четка с акрилни или акварелни бои."
+"Размазванена изображението по пътища на вектора, изчислени като градиент на "
+"отделна управляваща матрица. В някои случаи ефектът изглежда като щрихи от "
+"четка с акрилни или акварелни бои."
 
 #: plug-ins/common/warp.c:235
 msgid "Step si_ze"
@@ -8610,7 +8630,7 @@ msgstr "Създаване изображение от уеб страница"
 
 #: plug-ins/common/web-page.c:139
 msgid "Enter location (_URI)"
-msgstr "Въведете адрес (_URI):"
+msgstr "Въведете адрес (_URI)"
 
 #: plug-ins/common/web-page.c:140
 msgid "URL of the webpage to screenshot"
@@ -8678,7 +8698,7 @@ msgstr "Изтегляне на уеб страницата „%s“"
 #: plug-ins/common/web-page.c:401
 #, c-format
 msgid "Transferring webpage image for '%s'"
-msgstr "Пренасяне на изображение за уеб страницана „%s“"
+msgstr "Пренасяне на изображение за уеб страница „%s“"
 
 #: plug-ins/file-bmp/bmp-export.c:199 plug-ins/file-bmp/bmp-export.c:232
 #, fuzzy
@@ -9365,7 +9385,7 @@ msgstr ""
 msgid "Could not create image."
 msgstr "Не може да бъде създадено ново изображение"
 
-#: plug-ins/file-fits/fits.c:178 plug-ins/file-fits/fits.c:219
+#: plug-ins/file-fits/fits.c:178 plug-ins/file-fits/fits.c:225
 msgid "Flexible Image Transport System"
 msgstr "Flexible Image Transport System"
 
@@ -9379,61 +9399,67 @@ msgstr "Зареждане на изображение във формат Wirel
 msgid "Load file of the FITS file format (Flexible Image Transport System)"
 msgstr "Flexible Image Transport System"
 
-#: plug-ins/file-fits/fits.c:199 plug-ins/file-fits/fits.c:200
+#: plug-ins/file-fits/fits.c:199
+#, fuzzy
+msgid "Re_placement for undefined pixels"
+msgstr "Заместване на необозначените пиксели"
+
+#: plug-ins/file-fits/fits.c:200
 msgid "Replacement for undefined pixels"
 msgstr "Заместване на необозначените пиксели"
 
-#: plug-ins/file-fits/fits.c:205
-msgid "Pixel value scaling"
+#: plug-ins/file-fits/fits.c:202 plug-ins/gfig/gfig-dialog.c:1288
+#: plug-ins/gfig/gfig-dialog.c:1456
+msgid "White"
+msgstr "Бяло"
+
+#: plug-ins/file-fits/fits.c:208
+#, fuzzy
+msgid "Pi_xel value scaling"
 msgstr "Мащабиране стойностите на пикселите"
 
-#: plug-ins/file-fits/fits.c:206
-msgid "Use DATAMIN/DATAMAX-scaling if possible"
+#: plug-ins/file-fits/fits.c:209
+msgid "Whether to use DATAMIN/DATAMAX-scaling if possible"
 msgstr ""
 
-#: plug-ins/file-fits/fits.c:222
+#: plug-ins/file-fits/fits.c:211
+#, fuzzy
+msgid "By DATAMIN/DATAMAX"
+msgstr "По DATAMIN/DATAMAX"
+
+#: plug-ins/file-fits/fits.c:228
 #, fuzzy
 msgid "Export file in the FITS file format"
 msgstr "Грешка във GIMP файл с четки „%s“"
 
-#: plug-ins/file-fits/fits.c:223
+#: plug-ins/file-fits/fits.c:229
 #, fuzzy
 msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr "FITS не поддържа изображения с канали на прозрачност"
 
-#: plug-ins/file-fits/fits.c:392
+#: plug-ins/file-fits/fits.c:398
 #, fuzzy
 msgid "Error during opening of FITS file"
 msgstr "Грешка при отваряне на FITS файл"
 
-#: plug-ins/file-fits/fits.c:405 plug-ins/file-fits/fits.c:611
+#: plug-ins/file-fits/fits.c:411 plug-ins/file-fits/fits.c:617
 msgid "FITS file keeps no displayable images"
 msgstr "FITS файла не съдържа показваеми изображения"
 
-#: plug-ins/file-fits/fits.c:503
+#: plug-ins/file-fits/fits.c:509
 msgid "FITS HDU"
 msgstr ""
 
-#: plug-ins/file-fits/fits.c:641
+#: plug-ins/file-fits/fits.c:647
 #, fuzzy
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS не поддържа изображения с канали на прозрачност"
 
-#: plug-ins/file-fits/fits.c:1007
+#: plug-ins/file-fits/fits.c:1012
 #, fuzzy
 msgid "Open FITS File"
 msgstr "Отваряне на файл"
-
-#: plug-ins/file-fits/fits.c:1012 plug-ins/gfig/gfig-dialog.c:1288
-#: plug-ins/gfig/gfig-dialog.c:1456
-msgid "White"
-msgstr "Бяло"
-
-#: plug-ins/file-fits/fits.c:1020
-#, fuzzy
-msgid "By DATAMIN/DATAMAX"
-msgstr "По DATAMIN/DATAMAX"
 
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
@@ -15104,11 +15130,6 @@ msgstr "_Отблясък"
 msgid "_Viewpoint"
 msgstr "_Изглед"
 
-#: plug-ins/map-object/map-object-ui.c:439
-#, fuzzy
-msgid "Orient_ation"
-msgstr "Ориентация"
-
 #: plug-ins/map-object/map-object-ui.c:442
 #, fuzzy
 msgid "Sp_here"
@@ -16498,6 +16519,46 @@ msgstr ""
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Прехвърляне на данни от скенер/фотоапарат"
+
+#~ msgid "{ 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) }"
+#~ msgstr "0 е гладка (със 17 точки), 1 е свободна (ползва 256)"
+
+#~ msgid "Use built-in palette (0) or override with black/white (1)"
+#~ msgstr "Използване на вградената палитра (0) или заменяне с черно-бяло (1)"
+
+#~ msgid "TRUE for raw output, FALSE for ascii output"
+#~ msgstr "ИСТИНА за изнасяне на сурови данни, ЛЪЖА за форматиране в ASCII"
+
+#~ msgid "_Raw"
+#~ msgstr "_Сурови данни"
+
+#~ msgid "RLE"
+#~ msgstr "RLE"
+
+#~ msgid "LZ77"
+#~ msgstr "LZ77"
+
+#~ msgid "Mode { NTSC (0), PAL (1) }"
+#~ msgstr "Режим {0 — NTSC; 1 — PAL}"
+
+#~ msgid ""
+#~ "Action { (0) reduce luminance, (1) reduce saturation, or (2) Blacken }"
+#~ msgstr ""
+#~ "Действие {0 — намаляване на яркостта; 1 — намаляване на наситеността; 2 — "
+#~ "потъмняване}"
+
+#~ msgid "N_TSC"
+#~ msgstr "N_TSC"
+
+#~ msgid ""
+#~ "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha "
+#~ "controls noise variance); 2 - edge enhancement"
+#~ msgstr ""
+#~ "Филтър, който да се изпълни: 0 — осредняване, без прозрачността; 1 — "
+#~ "оптимална оценка; 2 — подобряване на ръбовете"
+
+#~ msgid "Orientation"
+#~ msgstr "Ориентация"
 
 #, c-format
 #~ msgid "%d × %d"
@@ -18486,9 +18547,6 @@ msgstr "Прехвърляне на данни от скенер/фотоапа�
 
 #~ msgid "Save as PNM"
 #~ msgstr "Запазване като PNM"
-
-#~ msgid "Raw"
-#~ msgstr "Суров"
 
 #~ msgid "Ascii"
 #~ msgstr "Ascii"
