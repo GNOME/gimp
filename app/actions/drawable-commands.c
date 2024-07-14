@@ -100,7 +100,7 @@ drawable_levels_stretch_cmd_callback (GimpAction *action,
   if (g_list_length (drawables) > 1)
     gimp_image_undo_group_start (image,
                                  GIMP_UNDO_GROUP_DRAWABLE_MOD,
-                                 C_("color-levels", "Levels"));
+                                 _("Levels"));
 
   for (iter = drawables; iter; iter = iter->next)
     gimp_drawable_levels_stretch (iter->data, GIMP_PROGRESS (display));
