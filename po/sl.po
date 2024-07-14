@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-11 15:16+0000\n"
-"PO-Revision-Date: 2024-07-12 00:12+0200\n"
+"POT-Creation-Date: 2024-07-14 01:32+0000\n"
+"PO-Revision-Date: 2024-07-14 11:16+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2443,8 +2443,7 @@ msgstr "240 s"
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
-#: app/dialogs/vectors-export-dialog.c:88
-#: app/dialogs/vectors-import-dialog.c:93
+#: app/dialogs/path-export-dialog.c:88 app/dialogs/path-import-dialog.c:93
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
@@ -3518,7 +3517,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Uravnovešanje beline deluje le na barvnih plasteh RGB."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:132 app/tools/gimplevelstool.c:138
+#: app/tools/gimplevelstool.c:138
 msgid "Levels"
 msgstr "Ravni"
 
@@ -4070,7 +4069,7 @@ msgid "Save Error Log to File"
 msgstr "Shrani dnevnik napak v datoteko"
 
 #: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81
-#: app/dialogs/file-save-dialog.c:759 app/dialogs/vectors-export-dialog.c:89
+#: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Save"
@@ -6001,7 +6000,7 @@ msgstr "Prevračanje"
 msgid "Rotating"
 msgstr "Sukanje"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1282
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1281
 msgid "Cannot crop because the current selection is empty."
 msgstr "Obrezava ni možna, ker je trenutni izbor prazen."
 
@@ -6050,7 +6049,7 @@ msgid "Scale Image"
 msgstr "Spremeni merilo slike"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2512
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2511
 #: app/dialogs/preferences-dialog.c:1738 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6877,7 +6876,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "V _novo plast"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2354
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2353
 msgid "Layer Attributes"
 msgstr "Lastnosti plasti"
 
@@ -6903,7 +6902,7 @@ msgstr[1] "Ustvari %d novo plast"
 msgstr[2] "Ustvari %d novi plasti"
 msgstr[3] "Ustvari %d nove plasti"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2239
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2238
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Novij plasti"
@@ -6979,19 +6978,19 @@ msgstr "Zavrži besedilne podatke"
 msgid "Add Paths"
 msgstr "Dodaj poti"
 
-#: app/actions/layers-commands.c:1170
+#: app/actions/layers-commands.c:1169
 msgid "Set Layer Boundary Size"
 msgstr "Nastavi mere robov plasti"
 
-#: app/actions/layers-commands.c:1200
+#: app/actions/layers-commands.c:1199
 msgid "Layers to Image Size"
 msgstr "Plasti na velikost slike"
 
-#: app/actions/layers-commands.c:1248
+#: app/actions/layers-commands.c:1247
 msgid "Scale Layer"
 msgstr "Spremeni merilo plasti"
 
-#: app/actions/layers-commands.c:1287
+#: app/actions/layers-commands.c:1286
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
@@ -7000,7 +6999,7 @@ msgstr[1] "Obreži %d plast na vsebino"
 msgstr[2] "Obreži %d plasti na vsebino"
 msgstr[3] "Obreži %d plasti na vsebino"
 
-#: app/actions/layers-commands.c:1352
+#: app/actions/layers-commands.c:1351
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7008,7 +7007,7 @@ msgstr ""
 "Obrezava ni možna, ker imajo izbrane plasti vsebino ali so že obrezana do "
 "svoje vsebine."
 
-#: app/actions/layers-commands.c:1358
+#: app/actions/layers-commands.c:1357
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
@@ -7017,101 +7016,101 @@ msgstr[1] "Obreži %d plast na vsebino"
 msgstr[2] "Obreži %d plasti na vsebino"
 msgstr[3] "Obreži %d plasti na vsebino"
 
-#: app/actions/layers-commands.c:1495 app/actions/layers-commands.c:2447
+#: app/actions/layers-commands.c:1494 app/actions/layers-commands.c:2446
 msgid "Add Layer Masks"
 msgstr "Dodaj maske plasti"
 
-#: app/actions/layers-commands.c:1547
+#: app/actions/layers-commands.c:1546
 msgid "Apply Layer Masks"
 msgstr "Uporabi maske plasti"
 
-#: app/actions/layers-commands.c:1551
+#: app/actions/layers-commands.c:1550
 msgid "Delete Layer Masks"
 msgstr "Izbriši maske plasti"
 
-#: app/actions/layers-commands.c:1638
+#: app/actions/layers-commands.c:1637
 msgid "Show Layer Masks"
 msgstr "Pokaži maske plasti"
 
-#: app/actions/layers-commands.c:1685
+#: app/actions/layers-commands.c:1684
 msgid "Disable Layer Masks"
 msgstr "Onemogoči maske plasti"
 
-#: app/actions/layers-commands.c:1724
+#: app/actions/layers-commands.c:1723
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Maske v izbor"
 
-#: app/actions/layers-commands.c:1728
+#: app/actions/layers-commands.c:1727
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Dodaj maske v izbor"
 
-#: app/actions/layers-commands.c:1732
+#: app/actions/layers-commands.c:1731
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Odštej maske od izbora"
 
-#: app/actions/layers-commands.c:1736
+#: app/actions/layers-commands.c:1735
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Presekaj maske z izborom"
 
-#: app/actions/layers-commands.c:1757
+#: app/actions/layers-commands.c:1756
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: app/actions/layers-commands.c:1778
+#: app/actions/layers-commands.c:1777
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: app/actions/layers-commands.c:1806 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1805 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa v izbor"
 
-#: app/actions/layers-commands.c:1810 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1809 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Dodaj alfo v izbor"
 
-#: app/actions/layers-commands.c:1814 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1813 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Odštej alfo od izbora"
 
-#: app/actions/layers-commands.c:1818 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1817 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Presekaj alfo z izborom"
 
-#: app/actions/layers-commands.c:1829
+#: app/actions/layers-commands.c:1828
 msgid "Empty Selection"
 msgstr "Izprazni izbor"
 
-#: app/actions/layers-commands.c:1859 app/actions/layers-commands.c:1903
+#: app/actions/layers-commands.c:1858 app/actions/layers-commands.c:1902
 #: app/widgets/gimplayertreeview.c:1109
 msgid "Set layers opacity"
 msgstr "Nastavi prekrivnost plasti"
 
-#: app/actions/layers-commands.c:1973
+#: app/actions/layers-commands.c:1972
 msgid "Set layers' blend space"
 msgstr "Nastavi prostor spajanja plasti"
 
-#: app/actions/layers-commands.c:2026
+#: app/actions/layers-commands.c:2025
 msgid "Set layers' composite space"
 msgstr "Nastavi prostor skladanja plasti"
 
-#: app/actions/layers-commands.c:2079
+#: app/actions/layers-commands.c:2078
 msgid "Set layers' composite mode"
 msgstr "Nastavi način skladanja plasti"
 
-#: app/actions/layers-commands.c:2163
+#: app/actions/layers-commands.c:2162
 msgid "Lock alpha channels"
 msgstr "Zakleni kanale alfa"
 
-#: app/actions/layers-commands.c:2163
+#: app/actions/layers-commands.c:2162
 msgid "Unlock alpha channels"
 msgstr "Odkleni kanale alfa"
 
@@ -7898,7 +7897,7 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -10403,8 +10402,8 @@ msgstr "Plast"
 msgid "Channel"
 msgstr "Kanal"
 
-#: app/config/gimpdialogconfig.c:432 app/vectors/gimpvectors.c:224
-#: app/widgets/gimpvectorstreeview.c:250
+#: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
+#: app/widgets/gimppathtreeview.c:250
 msgid "Path"
 msgstr "Pot"
 
@@ -13482,7 +13481,7 @@ msgstr "Plavajoči izbor"
 msgid "Computing alpha of unknown pixels"
 msgstr "Izračunavanje alfe neznanih slikovnih točk"
 
-#: app/core/gimpdrawable-fill.c:214 app/vectors/gimpvectors.c:676
+#: app/core/gimpdrawable-fill.c:214 app/vectors/gimppath.c:676
 msgid "Not enough points to fill"
 msgstr "Ni dovolj točk za zapolnjevanje"
 
@@ -13515,7 +13514,7 @@ msgid "Offset Drawable"
 msgstr "Zamakni risani predmet"
 
 #: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335
-#: app/vectors/gimpvectors.c:698
+#: app/vectors/gimppath.c:698
 msgid "Not enough points to stroke"
 msgstr "Premalo točk za potezo"
 
@@ -18207,51 +18206,51 @@ msgstr ""
 msgid "Installation Log"
 msgstr "Dnevnik namestitve"
 
-#: app/dialogs/vectors-export-dialog.c:85
+#: app/dialogs/path-export-dialog.c:85
 msgid "Export Path to SVG"
 msgstr "Izvoz poti v SVG"
 
-#: app/dialogs/vectors-export-dialog.c:131
+#: app/dialogs/path-export-dialog.c:131
 msgid "Export the selected paths"
 msgstr "Izvozi izbrane poti"
 
-#: app/dialogs/vectors-export-dialog.c:132
+#: app/dialogs/path-export-dialog.c:132
 msgid "Export all paths from this image"
 msgstr "Izvozi vse poti iz te slike"
 
-#: app/dialogs/vectors-import-dialog.c:90
+#: app/dialogs/path-import-dialog.c:90
 msgid "Import Paths from SVG"
 msgstr "Uvozi poti iz SVG"
 
-#: app/dialogs/vectors-import-dialog.c:134
+#: app/dialogs/path-import-dialog.c:134
 msgid "All files (*.*)"
 msgstr "Vse datoteke (*.*)"
 
-#: app/dialogs/vectors-import-dialog.c:139
+#: app/dialogs/path-import-dialog.c:139
 msgid "Scalable SVG image (*.svg)"
 msgstr "Vektorska slika SVG (*.svg)"
 
-#: app/dialogs/vectors-import-dialog.c:150
+#: app/dialogs/path-import-dialog.c:150
 msgid "_Merge imported paths"
 msgstr "_Spoji uvožene poti"
 
-#: app/dialogs/vectors-import-dialog.c:160
+#: app/dialogs/path-import-dialog.c:160
 msgid "_Scale imported paths to fit image"
 msgstr "_Umeri uvožene poti, da bodo ustrezale sliki"
 
-#: app/dialogs/vectors-options-dialog.c:106
+#: app/dialogs/path-options-dialog.c:106
 msgid "Path _name:"
 msgstr "I_me poti:"
 
-#: app/dialogs/vectors-options-dialog.c:108
+#: app/dialogs/path-options-dialog.c:108
 msgid "Lock path _strokes"
 msgstr "Zakleni pote_ze poti"
 
-#: app/dialogs/vectors-options-dialog.c:109
+#: app/dialogs/path-options-dialog.c:109
 msgid "Lock path _position"
 msgstr "Zakleni polo_žaj poti"
 
-#: app/dialogs/vectors-options-dialog.c:110
+#: app/dialogs/path-options-dialog.c:110
 msgid "Lock path _visibility"
 msgstr "Zakleni _vidljivost poti"
 
@@ -23596,6 +23595,11 @@ msgstr "Pogon"
 msgid "Matting engine to use"
 msgstr "Pogon za obkrožno masko"
 
+#: app/tools/gimpforegroundselectoptions.c:132
+msgctxt "measurement"
+msgid "Levels"
+msgstr "Ravni"
+
 #: app/tools/gimpforegroundselectoptions.c:133
 msgid "Number of downsampled levels to use"
 msgstr "Število uporabljenih podvzorčenih ravni"
@@ -25904,128 +25908,128 @@ msgctxt "paint-select-mode"
 msgid "Subtract from selection"
 msgstr "Odštej od izbora"
 
-#: app/vectors/gimpvectors.c:225
+#: app/vectors/gimppath.c:225
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Preimenuj pot"
 
-#: app/vectors/gimpvectors.c:226
+#: app/vectors/gimppath.c:226
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Premakni pot"
 
-#: app/vectors/gimpvectors.c:227
+#: app/vectors/gimppath.c:227
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Spremeni merilo poti"
 
-#: app/vectors/gimpvectors.c:228
+#: app/vectors/gimppath.c:228
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Spremeni velikost poti"
 
-#: app/vectors/gimpvectors.c:229
+#: app/vectors/gimppath.c:229
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Prezrcali pot"
 
-#: app/vectors/gimpvectors.c:230
+#: app/vectors/gimppath.c:230
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Zasukaj pot"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimppath.c:231
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Preoblikuj pot"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimppath.c:232
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Zapolni pot"
 
-#: app/vectors/gimpvectors.c:233
+#: app/vectors/gimppath.c:233
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Vleci poteze po poti"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimppath.c:234
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Pot v izbor"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimppath.c:235
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Preuredi pot"
 
-#: app/vectors/gimpvectors.c:236
+#: app/vectors/gimppath.c:236
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Dvigni pot"
 
-#: app/vectors/gimpvectors.c:237
+#: app/vectors/gimppath.c:237
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Dvigni pot na vrh"
 
-#: app/vectors/gimpvectors.c:238
+#: app/vectors/gimppath.c:238
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Spusti pot"
 
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimppath.c:239
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Spusti pot na dno"
 
-#: app/vectors/gimpvectors.c:240
+#: app/vectors/gimppath.c:240
 msgid "Path cannot be raised higher."
 msgstr "Poti ni mogoče dvigniti višje."
 
-#: app/vectors/gimpvectors.c:241
+#: app/vectors/gimppath.c:241
 msgid "Path cannot be lowered more."
 msgstr "Poti ni mogoče bolj spustiti."
 
-#: app/vectors/gimpvectors.c:456
+#: app/vectors/gimppath.c:456
 msgid "Move Path"
 msgstr "Premakni pot"
 
-#: app/vectors/gimpvectors.c:556
+#: app/vectors/gimppath.c:556
 msgid "Flip Path"
 msgstr "Prezrcali pot"
 
-#: app/vectors/gimpvectors.c:587
+#: app/vectors/gimppath.c:587
 msgid "Rotate Path"
 msgstr "Zasukaj pot"
 
-#: app/vectors/gimpvectors.c:617
+#: app/vectors/gimppath.c:617
 msgid "Transform Path"
 msgstr "Preoblikuj pot"
 
-#: app/vectors/gimpvectors-export.c:95
+#: app/vectors/gimppath-export.c:95
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Zapisovanje datoteke SVG »%s« ni uspelo: %s"
 
-#: app/vectors/gimpvectors-import.c:344
+#: app/vectors/gimppath-import.c:344
 msgid "Import Paths"
 msgstr "Uvozi poti"
 
-#: app/vectors/gimpvectors-import.c:355
+#: app/vectors/gimppath-import.c:355
 msgid "Imported Path"
 msgstr "Uvožena pot"
 
-#: app/vectors/gimpvectors-import.c:386
+#: app/vectors/gimppath-import.c:386
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "V »%s« ne obstajajo poti"
 
-#: app/vectors/gimpvectors-import.c:390
+#: app/vectors/gimppath-import.c:390
 msgid "No paths found in the buffer"
 msgstr "V medpomnilniku ni poti"
 
-#: app/vectors/gimpvectors-import.c:400
+#: app/vectors/gimppath-import.c:400
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Poti ni mogoče uvoziti iz »%s«: %s"
@@ -28582,11 +28586,11 @@ msgstr "Prednastavitev orodja %s"
 msgid "[ Base Image ]"
 msgstr "[ Osnovna slika ]"
 
-#: app/widgets/gimpvectorstreeview.c:111
+#: app/widgets/gimppathtreeview.c:111
 msgid "Lock path"
 msgstr "Zakleni pot"
 
-#: app/widgets/gimpvectorstreeview.c:114
+#: app/widgets/gimppathtreeview.c:114
 msgid "Lock path position"
 msgstr "Zakleni položaj poti"
 
