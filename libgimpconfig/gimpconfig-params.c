@@ -333,22 +333,23 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           /* These types are not visibile in libgimpconfig so we compare
            * with type names instead.
            */
-          g_strcmp0 (type_name, "GimpImage")     == 0 ||
-          g_strcmp0 (type_name, "GimpDisplay")   == 0 ||
-          g_strcmp0 (type_name, "GimpDrawable")  == 0 ||
-          g_strcmp0 (type_name, "GimpLayer")     == 0 ||
-          g_strcmp0 (type_name, "GimpTextLayer") == 0 ||
-          g_strcmp0 (type_name, "GimpChannel")   == 0 ||
-          g_strcmp0 (type_name, "GimpItem")      == 0 ||
-          g_strcmp0 (type_name, "GimpLayerMask") == 0 ||
-          g_strcmp0 (type_name, "GimpSelection") == 0 ||
-          g_strcmp0 (type_name, "GimpResource")  == 0 ||
-          g_strcmp0 (type_name, "GimpBrush")     == 0 ||
-          g_strcmp0 (type_name, "GimpFont")      == 0 ||
-          g_strcmp0 (type_name, "GimpGradient")  == 0 ||
-          g_strcmp0 (type_name, "GimpPalette")   == 0 ||
-          g_strcmp0 (type_name, "GimpPattern")   == 0 ||
-          g_strcmp0 (type_name, "GimpPath")   == 0)
+          g_strcmp0 (type_name, "GimpImage")      == 0 ||
+          g_strcmp0 (type_name, "GimpDisplay")    == 0 ||
+          g_strcmp0 (type_name, "GimpDrawable")   == 0 ||
+          g_strcmp0 (type_name, "GimpLayer")      == 0 ||
+          g_strcmp0 (type_name, "GimpGroupLayer") == 0 ||
+          g_strcmp0 (type_name, "GimpTextLayer")  == 0 ||
+          g_strcmp0 (type_name, "GimpChannel")    == 0 ||
+          g_strcmp0 (type_name, "GimpItem")       == 0 ||
+          g_strcmp0 (type_name, "GimpLayerMask")  == 0 ||
+          g_strcmp0 (type_name, "GimpSelection")  == 0 ||
+          g_strcmp0 (type_name, "GimpResource")   == 0 ||
+          g_strcmp0 (type_name, "GimpBrush")      == 0 ||
+          g_strcmp0 (type_name, "GimpFont")       == 0 ||
+          g_strcmp0 (type_name, "GimpGradient")   == 0 ||
+          g_strcmp0 (type_name, "GimpPalette")    == 0 ||
+          g_strcmp0 (type_name, "GimpPattern")    == 0 ||
+          g_strcmp0 (type_name, "GimpPath")       == 0)
         {
           copy = g_param_spec_object (name, nick, blurb,
                                       value_type,
