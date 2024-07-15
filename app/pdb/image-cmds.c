@@ -1491,8 +1491,11 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
       guchar *colormap_data;
       gint    n_colors;
 
-      colormap_data = _gimp_image_get_colormap (image, &n_colors);
-      colormap = g_bytes_new_take (colormap_data, 3 * n_colors);
+      if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+        {
+          colormap_data = _gimp_image_get_colormap (image, &n_colors);
+          colormap = g_bytes_new_take (colormap_data, 3 * n_colors);
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
