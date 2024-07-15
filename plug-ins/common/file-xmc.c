@@ -532,7 +532,7 @@ xmc_export (GimpProcedure        *procedure,
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
   GimpExportReturn   export      = GIMP_EXPORT_IGNORE;
   GList             *drawables   = NULL;
-  gint               n_drawables = NULL;
+  gint               n_drawables = 0;
   GimpImage         *orig_image;
   GeglRectangle     *hotspot_range;
   gint               hot_spot_x;
