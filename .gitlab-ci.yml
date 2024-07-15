@@ -68,7 +68,7 @@ workflow:
       - 'runner_system_failure'
       - 'scheduler_failure'
   # Default Docker image (unless otherwise defined)
-  image: debian:bookworm
+  image: debian:testing
   # Caching support
   variables:
     CCACHE_BASEDIR: "$CI_PROJECT_DIR"
@@ -150,7 +150,7 @@ image-debian-x64:
     - export container=docker
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - echo "FROM debian:bookworm" > Dockerfile
+    - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     # libjxl uses C++ features that require posix threads so we install
@@ -203,14 +203,14 @@ image-debian-x64:
             libopenjp2-7-dev
             libpoppler-glib-dev
             libraw-dev
-            libraw20
+            libraw23t64
             librsvg2-dev
             libspiro-dev
             libsuitesparse-dev
             libtiff-dev
             libtiff5-dev
             libtool
-            libumfpack5
+            libumfpack6
             libwebp-dev
             libwmf-dev
             libxmu-dev
