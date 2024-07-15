@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-11 15:16+0000\n"
-"PO-Revision-Date: 2024-07-11 17:36+0200\n"
+"POT-Creation-Date: 2024-07-14 10:48+0000\n"
+"PO-Revision-Date: 2024-07-15 13:53+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -2438,9 +2438,8 @@ msgstr "240 segundos"
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:178
 #: app/dialogs/resize-dialog.c:225 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
-#: app/dialogs/template-options-dialog.c:118
-#: app/dialogs/vectors-export-dialog.c:88 app/dialogs/vectors-import-dialog.c:93
-#: app/display/gimpdisplayshell-close.c:181
+#: app/dialogs/template-options-dialog.c:118 app/dialogs/path-export-dialog.c:88
+#: app/dialogs/path-import-dialog.c:93 app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
@@ -3523,7 +3522,7 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "El balance de blancos sólo funciona sobre capas con color RGB."
 
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:132 app/tools/gimplevelstool.c:138
+#: app/tools/gimplevelstool.c:138
 msgid "Levels"
 msgstr "Niveles"
 
@@ -4081,7 +4080,7 @@ msgid "Save Error Log to File"
 msgstr "Guardar registro de errores en un archivo"
 
 #: app/actions/error-console-commands.c:102 app/actions/gradients-commands.c:81
-#: app/dialogs/file-save-dialog.c:759 app/dialogs/vectors-export-dialog.c:89
+#: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Save"
@@ -6030,7 +6029,7 @@ msgstr "Volteando"
 msgid "Rotating"
 msgstr "Rotando"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1282
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1281
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
@@ -6079,7 +6078,7 @@ msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2512
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2511
 #: app/dialogs/preferences-dialog.c:1738 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6912,7 +6911,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A una capa _nueva"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2354
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2353
 msgid "Layer Attributes"
 msgstr "Atributos de la capa"
 
@@ -6934,7 +6933,7 @@ msgid_plural "Create %d New Layers"
 msgstr[0] "Crear una capa nueva"
 msgstr[1] "Crear %d capas nuevas"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2239
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2238
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Capa nueva"
@@ -6998,26 +6997,26 @@ msgstr "Eliminar la información de texto"
 msgid "Add Paths"
 msgstr "Añadir rutas"
 
-#: app/actions/layers-commands.c:1170
+#: app/actions/layers-commands.c:1169
 msgid "Set Layer Boundary Size"
 msgstr "Establecer el tamaño de borde de capa"
 
-#: app/actions/layers-commands.c:1200
+#: app/actions/layers-commands.c:1199
 msgid "Layers to Image Size"
 msgstr "Capas a tamaño de imagen"
 
-#: app/actions/layers-commands.c:1248
+#: app/actions/layers-commands.c:1247
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
-#: app/actions/layers-commands.c:1287
+#: app/actions/layers-commands.c:1286
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Recortar capa a la selección"
 msgstr[1] "Recortar %d capas a la selección"
 
-#: app/actions/layers-commands.c:1352
+#: app/actions/layers-commands.c:1351
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7025,108 +7024,108 @@ msgstr ""
 "No se puede recortar porque ninguna de las capas activas tiene contenido o ya "
 "están recortadas a su contenido."
 
-#: app/actions/layers-commands.c:1358
+#: app/actions/layers-commands.c:1357
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Recortar capa al contenido"
 msgstr[1] "Recortar %d capas al contenido"
 
-#: app/actions/layers-commands.c:1495 app/actions/layers-commands.c:2447
+#: app/actions/layers-commands.c:1494 app/actions/layers-commands.c:2446
 msgid "Add Layer Masks"
 msgstr "Añadir máscaras de capa"
 
-#: app/actions/layers-commands.c:1547
+#: app/actions/layers-commands.c:1546
 msgid "Apply Layer Masks"
 msgstr "Aplicar máscaras de capa"
 
-#: app/actions/layers-commands.c:1551
+#: app/actions/layers-commands.c:1550
 msgid "Delete Layer Masks"
 msgstr "Eliminar máscaras de capa"
 
-#: app/actions/layers-commands.c:1638
+#: app/actions/layers-commands.c:1637
 msgid "Show Layer Masks"
 msgstr "Mostrar máscaras de la capa"
 
-#: app/actions/layers-commands.c:1685
+#: app/actions/layers-commands.c:1684
 msgid "Disable Layer Masks"
 msgstr "Desactivar máscaras de capa"
 
-#: app/actions/layers-commands.c:1724
+#: app/actions/layers-commands.c:1723
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Máscaras a selección"
 
-#: app/actions/layers-commands.c:1728
+#: app/actions/layers-commands.c:1727
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Añadir máscaras a la selección"
 
-#: app/actions/layers-commands.c:1732
+#: app/actions/layers-commands.c:1731
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Sustraer máscaras de la selección"
 
-#: app/actions/layers-commands.c:1736
+#: app/actions/layers-commands.c:1735
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "_Intersecar máscaras con la selección"
 
-#: app/actions/layers-commands.c:1757
+#: app/actions/layers-commands.c:1756
 msgid "Add Alpha Channel"
 msgstr "Añadir canal alfa"
 
-#: app/actions/layers-commands.c:1778
+#: app/actions/layers-commands.c:1777
 msgid "Remove Alpha Channel"
 msgstr "Eliminar el canal alfa"
 
-#: app/actions/layers-commands.c:1806 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1805 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selección"
 
-#: app/actions/layers-commands.c:1810 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1809 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Añadir alfa a la selección"
 
-#: app/actions/layers-commands.c:1814 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1813 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Sustraer alfa de la selección"
 
-#: app/actions/layers-commands.c:1818 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1817 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Intersecar alfa con la selección"
 
-#: app/actions/layers-commands.c:1829
+#: app/actions/layers-commands.c:1828
 msgid "Empty Selection"
 msgstr "Vaciar selección"
 
-#: app/actions/layers-commands.c:1859 app/actions/layers-commands.c:1903
+#: app/actions/layers-commands.c:1858 app/actions/layers-commands.c:1902
 #: app/widgets/gimplayertreeview.c:1109
 msgid "Set layers opacity"
 msgstr "Definir la opacidad de las capas"
 
-#: app/actions/layers-commands.c:1973
+#: app/actions/layers-commands.c:1972
 msgid "Set layers' blend space"
 msgstr "Definir el espacio de mezcla de las capas"
 
-#: app/actions/layers-commands.c:2026
+#: app/actions/layers-commands.c:2025
 msgid "Set layers' composite space"
 msgstr "Definir el espacio compuesto de las capas"
 
-#: app/actions/layers-commands.c:2079
+#: app/actions/layers-commands.c:2078
 msgid "Set layers' composite mode"
 msgstr "Definir el modo de composición de las capas"
 
-#: app/actions/layers-commands.c:2163
+#: app/actions/layers-commands.c:2162
 msgid "Lock alpha channels"
 msgstr "Bloquear canales alfa"
 
-#: app/actions/layers-commands.c:2163
+#: app/actions/layers-commands.c:2162
 msgid "Unlock alpha channels"
 msgstr "Desbloquear canales alfa"
 
@@ -7918,7 +7917,7 @@ msgstr "Abrir archivo de texto (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/vectors-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -10423,8 +10422,8 @@ msgstr "Capa"
 msgid "Channel"
 msgstr "Canal"
 
-#: app/config/gimpdialogconfig.c:432 app/vectors/gimpvectors.c:224
-#: app/widgets/gimpvectorstreeview.c:250
+#: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
+#: app/widgets/gimppathtreeview.c:250
 msgid "Path"
 msgstr "Ruta"
 
@@ -13610,7 +13609,7 @@ msgstr "Selección flotante"
 msgid "Computing alpha of unknown pixels"
 msgstr "Calculando alfa de píxeles desconocidos"
 
-#: app/core/gimpdrawable-fill.c:214 app/vectors/gimpvectors.c:676
+#: app/core/gimpdrawable-fill.c:214 app/vectors/gimppath.c:676
 msgid "Not enough points to fill"
 msgstr "No hay suficientes puntos que rellenar"
 
@@ -13644,7 +13643,7 @@ msgid "Offset Drawable"
 msgstr "Desplazar el dibujable"
 
 #: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335
-#: app/vectors/gimpvectors.c:698
+#: app/vectors/gimppath.c:698
 msgid "Not enough points to stroke"
 msgstr "No hay suficientes puntos para trazar"
 
@@ -18376,51 +18375,51 @@ msgstr ""
 msgid "Installation Log"
 msgstr "Informe de la instalación"
 
-#: app/dialogs/vectors-export-dialog.c:85
+#: app/dialogs/path-export-dialog.c:85
 msgid "Export Path to SVG"
 msgstr "Exportar ruta a un SVG"
 
-#: app/dialogs/vectors-export-dialog.c:131
+#: app/dialogs/path-export-dialog.c:131
 msgid "Export the selected paths"
 msgstr "Exportar las rutas seleccionadas"
 
-#: app/dialogs/vectors-export-dialog.c:132
+#: app/dialogs/path-export-dialog.c:132
 msgid "Export all paths from this image"
 msgstr "Exportar todas las rutas desde esta imagen"
 
-#: app/dialogs/vectors-import-dialog.c:90
+#: app/dialogs/path-import-dialog.c:90
 msgid "Import Paths from SVG"
 msgstr "Importar rutas desde SVG"
 
-#: app/dialogs/vectors-import-dialog.c:134
+#: app/dialogs/path-import-dialog.c:134
 msgid "All files (*.*)"
 msgstr "Todos los archivos (*.*)"
 
-#: app/dialogs/vectors-import-dialog.c:139
+#: app/dialogs/path-import-dialog.c:139
 msgid "Scalable SVG image (*.svg)"
 msgstr "Imagen escalable SVG (*.svg)"
 
-#: app/dialogs/vectors-import-dialog.c:150
+#: app/dialogs/path-import-dialog.c:150
 msgid "_Merge imported paths"
 msgstr "_Combinar rutas importadas"
 
-#: app/dialogs/vectors-import-dialog.c:160
+#: app/dialogs/path-import-dialog.c:160
 msgid "_Scale imported paths to fit image"
 msgstr "_Escalar las rutas importadas para ajustar la imagen"
 
-#: app/dialogs/vectors-options-dialog.c:106
+#: app/dialogs/path-options-dialog.c:106
 msgid "Path _name:"
 msgstr "_Nombre de la ruta:"
 
-#: app/dialogs/vectors-options-dialog.c:108
+#: app/dialogs/path-options-dialog.c:108
 msgid "Lock path _strokes"
 msgstr "Bloquear los _trazos de ruta"
 
-#: app/dialogs/vectors-options-dialog.c:109
+#: app/dialogs/path-options-dialog.c:109
 msgid "Lock path _position"
 msgstr "Bloquear _posición de la ruta"
 
-#: app/dialogs/vectors-options-dialog.c:110
+#: app/dialogs/path-options-dialog.c:110
 msgid "Lock path _visibility"
 msgstr "Bloquear la _visibilidad de la ruta"
 
@@ -23798,6 +23797,11 @@ msgstr "Motor"
 msgid "Matting engine to use"
 msgstr "Motor de matizado que utilizar"
 
+#: app/tools/gimpforegroundselectoptions.c:132
+msgctxt "measurement"
+msgid "Levels"
+msgstr "Niveles"
+
 #: app/tools/gimpforegroundselectoptions.c:133
 msgid "Number of downsampled levels to use"
 msgstr "Número de niveles de submuestreo que usar"
@@ -26136,128 +26140,128 @@ msgctxt "paint-select-mode"
 msgid "Subtract from selection"
 msgstr "Sustraer de la selección"
 
-#: app/vectors/gimpvectors.c:225
+#: app/vectors/gimppath.c:225
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Renombrar la ruta"
 
-#: app/vectors/gimpvectors.c:226
+#: app/vectors/gimppath.c:226
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Mover la ruta"
 
-#: app/vectors/gimpvectors.c:227
+#: app/vectors/gimppath.c:227
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Escalar la ruta"
 
-#: app/vectors/gimpvectors.c:228
+#: app/vectors/gimppath.c:228
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Redimensionar la ruta"
 
-#: app/vectors/gimpvectors.c:229
+#: app/vectors/gimppath.c:229
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Voltear la ruta"
 
-#: app/vectors/gimpvectors.c:230
+#: app/vectors/gimppath.c:230
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Rotar la ruta"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimppath.c:231
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimppath.c:232
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Rellenar ruta"
 
-#: app/vectors/gimpvectors.c:233
+#: app/vectors/gimppath.c:233
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Trazar ruta"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimppath.c:234
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Ruta a selección"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimppath.c:235
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Reordenar la ruta"
 
-#: app/vectors/gimpvectors.c:236
+#: app/vectors/gimppath.c:236
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: app/vectors/gimpvectors.c:237
+#: app/vectors/gimppath.c:237
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Subir la ruta al lugar más alto"
 
-#: app/vectors/gimpvectors.c:238
+#: app/vectors/gimppath.c:238
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimppath.c:239
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Bajar la ruta al lugar más bajo"
 
-#: app/vectors/gimpvectors.c:240
+#: app/vectors/gimppath.c:240
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: app/vectors/gimpvectors.c:241
+#: app/vectors/gimppath.c:241
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: app/vectors/gimpvectors.c:456
+#: app/vectors/gimppath.c:456
 msgid "Move Path"
 msgstr "Mover la ruta"
 
-#: app/vectors/gimpvectors.c:556
+#: app/vectors/gimppath.c:556
 msgid "Flip Path"
 msgstr "Voltear la ruta"
 
-#: app/vectors/gimpvectors.c:587
+#: app/vectors/gimppath.c:587
 msgid "Rotate Path"
 msgstr "Rotar la ruta"
 
-#: app/vectors/gimpvectors.c:617
+#: app/vectors/gimppath.c:617
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
-#: app/vectors/gimpvectors-export.c:95
+#: app/vectors/gimppath-export.c:95
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Falló al escribir el archivo SVG «%s»: %s"
 
-#: app/vectors/gimpvectors-import.c:344
+#: app/vectors/gimppath-import.c:344
 msgid "Import Paths"
 msgstr "Importar rutas"
 
-#: app/vectors/gimpvectors-import.c:355
+#: app/vectors/gimppath-import.c:355
 msgid "Imported Path"
 msgstr "Ruta importada"
 
-#: app/vectors/gimpvectors-import.c:386
+#: app/vectors/gimppath-import.c:386
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "No se encontraron rutas en «%s»"
 
-#: app/vectors/gimpvectors-import.c:390
+#: app/vectors/gimppath-import.c:390
 msgid "No paths found in the buffer"
 msgstr "No se encontraron rutas en el búfer"
 
-#: app/vectors/gimpvectors-import.c:400
+#: app/vectors/gimppath-import.c:400
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Fallo al importar rutas desde «%s»: %s"
@@ -28805,11 +28809,11 @@ msgstr "Preajuste de %s"
 msgid "[ Base Image ]"
 msgstr "[ Imagen Base ]"
 
-#: app/widgets/gimpvectorstreeview.c:111
+#: app/widgets/gimppathtreeview.c:111
 msgid "Lock path"
 msgstr "Bloquear ruta"
 
-#: app/widgets/gimpvectorstreeview.c:114
+#: app/widgets/gimppathtreeview.c:114
 msgid "Lock path position"
 msgstr "Bloquear posición de la ruta"
 
