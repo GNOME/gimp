@@ -311,12 +311,14 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                           -2.5000, 2.5000, -0.2,
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "color-mode",
-                                       _("Color mode"),
-                                       _("0: Apply colormap as specified by the parameters "
-                                         "above; 1: Apply active gradient to final image"),
-                                       0, 1, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "color-mode",
+                                          _("Color mode"),
+                                          _("Apply specified color map or active gradient to final image"),
+                                          gimp_choice_new_with_values ("colormap", 0, _("As specified above"),                   NULL,
+                                                                       "gradient", 1, _("Apply active gradient to final image"), NULL,
+                                                                       NULL),
+                                          "colormap",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_double_argument (procedure, "red-stretch",
                                           _("Red stretch"),

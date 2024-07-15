@@ -813,10 +813,9 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config,
              GimpImage     *image)
 {
-  GtkWidget    *dialog;
-  GtkListStore *store;
-  GtkWidget    *frame;
-  gint          run;
+  GtkWidget *dialog;
+  GtkWidget *frame;
+  gint       run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),

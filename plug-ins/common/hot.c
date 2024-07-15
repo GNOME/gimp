@@ -649,11 +649,10 @@ static gboolean
 plugin_dialog (GimpProcedure *procedure,
                GObject       *config)
 {
-  GtkWidget    *dlg;
-  GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkListStore *store;
-  gboolean      run;
+  GtkWidget  *dlg;
+  GtkWidget  *vbox;
+  GtkWidget  *hbox;
+  gboolean    run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 

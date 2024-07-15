@@ -267,12 +267,15 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
                                            FALSE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "color-type",
-                                       _("Color type"),
-                                       _("Color of sparkles: { NATURAL (0), "
-                                         "FOREGROUND (1), BACKGROUND (2) }"),
-                                       0, 2, NATURAL,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "color-type",
+                                          _("_Color type"),
+                                          _("Color of sparkles"),
+                                          gimp_choice_new_with_values ("natural-color",    NATURAL,    _("Natural color"),    NULL,
+                                                                       "foreground-color", FOREGROUND, _("Foreground color"), NULL,
+                                                                       "background-color", BACKGROUND, _("Background color"), NULL,
+                                                                       NULL),
+                                          "natural-color",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -348,12 +351,11 @@ sparkle_dialog (GimpProcedure *procedure,
                 GObject       *config,
                 GimpDrawable  *drawable)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *preview;
-  GtkWidget    *hbox;
-  GtkWidget    *scale;
-  GtkListStore *store;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *preview;
+  GtkWidget *hbox;
+  GtkWidget *scale;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -361,12 +363,6 @@ sparkle_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Sparkle"));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
   gtk_widget_set_size_request (dialog, 430, -1);
   gtk_container_set_border_width (
     GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 12);
@@ -416,12 +412,8 @@ sparkle_dialog (GimpProcedure *procedure,
                                     FALSE, "sparkle-bool-vbox");
 
   /*  colortype  */
-  store = gimp_int_store_new (_("Natural color"),    NATURAL,
-                              _("Foreground color"), FOREGROUND,
-                              _("Background color"), BACKGROUND,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "color-type", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "color-type", GIMP_TYPE_INT_RADIO_FRAME);
 
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                         "sparkle-row", "sparkle-bool-frame",
@@ -1007,8 +999,9 @@ fspike (GObject      *config,
                 "random-hue",        &random_hue,
                 "random-saturation", &random_saturation,
                 "inverse",           &inverse,
-                "color-type",        &colortype,
                 NULL);
+  colortype = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                   "color-type");
 
   theta = angle;
 

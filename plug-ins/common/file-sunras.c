@@ -319,11 +319,14 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "im1,im8,im24,im32,rs,ras,sun");
 
-      gimp_procedure_add_int_argument (procedure, "rle",
-                                       _("Data Formatting"),
-                                       _("Use standard (0) or Run-Length Encoded (1) output"),
-                                       0, 1, 1,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "rle",
+                                          _("_Data Formatting"),
+                                          _("Use standard or Run-Length Encoded output"),
+                                           gimp_choice_new_with_values ("standard", 0, _("Standard"),           NULL,
+                                                                        "rle",      1, _("Run-Length Encoding"), NULL,
+                                                                        NULL),
+                                          "rle",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -571,9 +574,8 @@ export_image (GFile         *file,
 
   drawable_type = gimp_drawable_type (drawable);
 
-  g_object_get (config,
-                "rle", &rle,
-                NULL);
+  rle = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                             "rle");
 
   /*  Make sure we're not exporting an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable))
@@ -1753,19 +1755,15 @@ save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget    *dialog;
-  GtkListStore *store;
-  gboolean      run;
+  GtkWidget *dialog;
+  gboolean   run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
 
-  store = gimp_int_store_new (_("S_tandard"),           FALSE,
-                              _("R_un-Length Encoded"), TRUE,
-                              NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "rle", GIMP_INT_STORE (store));
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "rle", GIMP_TYPE_INT_RADIO_FRAME);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               NULL);
