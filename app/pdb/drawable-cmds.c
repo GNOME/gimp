@@ -613,12 +613,8 @@ drawable_merge_filters_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          gimp_drawable_merge_filters (drawable);
-        }
+      if (gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        gimp_drawable_merge_filters (drawable);
       else
         success = FALSE;
     }
