@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-14 04:13+0000\n"
-"PO-Revision-Date: 2024-07-14 19:00+0800\n"
+"POT-Creation-Date: 2024-07-15 18:12+0000\n"
+"PO-Revision-Date: 2024-07-16 19:02+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -40,11 +40,11 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
-#: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
+#: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:303
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:244
 #: plug-ins/common/warp.c:346 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
@@ -66,16 +66,16 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1803 plug-ins/common/curve-bend.c:1838
-#: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
+#: plug-ins/common/file-gif-export.c:1198 plug-ins/common/file-heif.c:2263
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1560
-#: plug-ins/fractal-explorer/fractal-explorer.c:887
-#: plug-ins/fractal-explorer/fractal-explorer.c:1390
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer.c:889
+#: plug-ins/fractal-explorer/fractal-explorer.c:1392
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:777
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
@@ -142,11 +142,11 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
+#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -320,9 +320,9 @@ msgstr "对齐可见图层"
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
-#: plug-ins/fractal-explorer/fractal-explorer.c:344
-#: plug-ins/fractal-explorer/fractal-explorer.c:354
-#: plug-ins/fractal-explorer/fractal-explorer.c:364
+#: plug-ins/fractal-explorer/fractal-explorer.c:346
+#: plug-ins/fractal-explorer/fractal-explorer.c:356
+#: plug-ins/fractal-explorer/fractal-explorer.c:366
 #: plug-ins/lighting/lighting-main.c:214 plug-ins/lighting/lighting-main.c:337
 #: plug-ins/lighting/lighting-main.c:396 plug-ins/lighting/lighting-main.c:455
 #: plug-ins/lighting/lighting-main.c:514 plug-ins/lighting/lighting-main.c:573
@@ -504,7 +504,7 @@ msgstr "分离"
 
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:681
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "缩放"
@@ -526,11 +526,11 @@ msgstr "回放速度"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1343
+#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1342
 msgid "Cumulative layers (combine)"
 msgstr "累积图层（组合）"
 
-#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1345
+#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1344
 msgid "One frame per layer (replace)"
 msgstr "每图层一帧（替换）"
 
@@ -611,23 +611,23 @@ msgstr "百叶窗"
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/common/blinds.c:262 plug-ins/common/compose.c:1183
-#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:476
-#: plug-ins/common/file-cel.c:481 plug-ins/common/file-dicom.c:732
-#: plug-ins/common/file-farbfeld.c:302 plug-ins/common/file-gegl.c:452
+#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:466
+#: plug-ins/common/file-cel.c:471 plug-ins/common/file-dicom.c:723
+#: plug-ins/common/file-farbfeld.c:291 plug-ins/common/file-gegl.c:441
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:717
-#: plug-ins/common/file-pcx.c:725 plug-ins/common/file-pcx.c:733
-#: plug-ins/common/file-pix.c:437 plug-ins/common/file-png.c:925
-#: plug-ins/common/file-pnm.c:853 plug-ins/common/file-qoi.c:304
-#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1061
-#: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
-#: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:706
+#: plug-ins/common/file-pcx.c:714 plug-ins/common/file-pcx.c:722
+#: plug-ins/common/file-pix.c:426 plug-ins/common/file-png.c:916
+#: plug-ins/common/file-pnm.c:844 plug-ins/common/file-qoi.c:293
+#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1054
+#: plug-ins/common/file-tga.c:1088 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-xbm.c:882 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:690
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:683
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:455
+#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
@@ -681,7 +681,7 @@ msgid "Border Size"
 msgstr "边界大小"
 
 #: plug-ins/common/border-average.c:433
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "颜色数量"
 
@@ -843,7 +843,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/cml-explorer.c:201
+#: plug-ins/common/cml-explorer.c:201 plug-ins/common/file-sunras.c:325
 msgid "Standard"
 msgstr "标准"
 
@@ -996,12 +996,12 @@ msgstr "随机种子"
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1452 plug-ins/common/cml-explorer.c:2353
 #: plug-ins/common/curve-bend.c:1266 plug-ins/common/curve-bend.c:1804
-#: plug-ins/common/file-cel.c:990 plug-ins/common/qbist.c:842
+#: plug-ins/common/file-cel.c:980 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1242
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1519
 #: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1016,8 +1016,8 @@ msgstr "打开(_O)"
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1250
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:803
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1557
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2604 plug-ins/imagemap/imap_file.c:129
@@ -1197,19 +1197,19 @@ msgid "Save CML Explorer Parameters"
 msgstr "保存 CML 探索器参数"
 
 #: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:787
-#: plug-ins/common/file-dicom.c:1545 plug-ins/common/file-farbfeld.c:361
-#: plug-ins/common/file-mng.c:864 plug-ins/common/file-mng.c:1214
-#: plug-ins/common/file-pcx.c:1192 plug-ins/common/file-pdf-export.c:663
-#: plug-ins/common/file-png.c:1495 plug-ins/common/file-raw-data.c:1358
-#: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1218 plug-ins/common/file-xmc.c:1277
+#: plug-ins/common/file-dicom.c:1536 plug-ins/common/file-farbfeld.c:350
+#: plug-ins/common/file-mng.c:860 plug-ins/common/file-mng.c:1210
+#: plug-ins/common/file-pcx.c:1181 plug-ins/common/file-pdf-export.c:663
+#: plug-ins/common/file-png.c:1486 plug-ins/common/file-raw-data.c:1358
+#: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:609
+#: plug-ins/common/file-tga.c:1209 plug-ins/common/file-xmc.c:1267
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
-#: plug-ins/file-fli/fli-gimp.c:800 plug-ins/file-icns/file-icns-export.c:427
+#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:427
 #: plug-ins/file-ico/ico-export.c:1343 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
 #: plug-ins/file-tiff/file-tiff-export.c:1084
 #: plug-ins/file-tiff/file-tiff-export.c:1173 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1424
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2463
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -1447,7 +1447,7 @@ msgstr "红色差 cr709(_R)："
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2442
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2424
 msgid "RGB"
 msgstr "RGB"
 
@@ -1948,31 +1948,31 @@ msgstr "无法对带蒙板的图层进行操作。"
 msgid "Cannot operate on empty selections."
 msgstr "无法对空选区进行操作。"
 
-#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:331
-#: plug-ins/common/file-cel.c:383 plug-ins/common/file-dicom.c:364
-#: plug-ins/common/file-farbfeld.c:279 plug-ins/common/file-gif-load.c:416
-#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1398
-#: plug-ins/common/file-pcx.c:496 plug-ins/common/file-pcx.c:539
-#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1165
-#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2625
-#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-qoi.c:283
+#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:321
+#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:355
+#: plug-ins/common/file-farbfeld.c:268 plug-ins/common/file-gif-load.c:416
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1394
+#: plug-ins/common/file-pcx.c:485 plug-ins/common/file-pcx.c:528
+#: plug-ins/common/file-png.c:634 plug-ins/common/file-ps.c:1154
+#: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
+#: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:540
-#: plug-ins/common/file-tga.c:428 plug-ins/common/file-wbmp.c:188
-#: plug-ins/common/file-xbm.c:730 plug-ins/common/file-xmc.c:661
-#: plug-ins/common/file-xmc.c:900 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
+#: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
+#: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
 #: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:385 plug-ins/file-fli/fli-gimp.c:441
-#: plug-ins/file-fli/fli-gimp.c:492 plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-fits/fits.c:378 plug-ins/file-fli/fli-gimp.c:432
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
 #: plug-ins/file-psd/psd-export.c:2224 plug-ins/file-psd/psd-load.c:180
 #: plug-ins/file-psd/psd-load.c:185 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
-#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1780
+#: plug-ins/fractal-explorer/fractal-explorer.c:1161 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
 #, c-format
@@ -2162,17 +2162,17 @@ msgid "redness-cr709"
 msgstr "红色差-cr709"
 
 #: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:880
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:879
 msgid "Red"
 msgstr "红色"
 
 #: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:893
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:892
 msgid "Green"
 msgstr "绿色"
 
 #: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:905
 msgid "Blue"
 msgstr "蓝色"
 
@@ -2518,8 +2518,8 @@ msgstr "加载 KISS 色板"
 msgid "This KISS CEL image requires a palette file."
 msgstr "该 KISS CEL 图像需要色板文件。"
 
-#: plug-ins/common/file-cel.c:343 plug-ins/common/file-cel.c:395
-#: plug-ins/common/file-cel.c:416
+#: plug-ins/common/file-cel.c:333 plug-ins/common/file-cel.c:385
+#: plug-ins/common/file-cel.c:406
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "读取图像头部信息时遇到文件尾或错误"
@@ -2543,78 +2543,78 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #. * Open the file for reading...
 #.
-#: plug-ins/common/file-cel.c:374 plug-ins/common/file-dicom.c:356
-#: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
-#: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pcx.c:531
-#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
-#: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:698
-#: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
-#: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
+#: plug-ins/common/file-cel.c:364 plug-ins/common/file-dicom.c:347
+#: plug-ins/common/file-gegl.c:328 plug-ins/common/file-gif-load.c:408
+#: plug-ins/common/file-heif.c:834 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-pcx.c:477 plug-ins/common/file-pcx.c:520
+#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:363
+#: plug-ins/common/file-png.c:626 plug-ins/common/file-pnm.c:689
+#: plug-ins/common/file-ps.c:1144 plug-ins/common/file-raw-data.c:1682
+#: plug-ins/common/file-sunras.c:422 plug-ins/common/file-tga.c:411
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:722 plug-ins/common/file-xmc.c:651
-#: plug-ins/common/file-xpm.c:365 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/file-xbm.c:712 plug-ins/common/file-xmc.c:641
+#: plug-ins/common/file-xpm.c:356 plug-ins/common/file-xwd.c:452
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
-#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:484
+#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:475
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
-#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:314
+#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
 #: plug-ins/file-tiff/file-tiff-load.c:293
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
 
-#: plug-ins/common/file-cel.c:425
+#: plug-ins/common/file-cel.c:415
 #, c-format
 msgid "is not a CEL image file"
 msgstr "不是 CEL 图像文件"
 
-#: plug-ins/common/file-cel.c:440
+#: plug-ins/common/file-cel.c:430
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "图像中有非法 bpp 值：%hhu"
 
-#: plug-ins/common/file-cel.c:455
+#: plug-ins/common/file-cel.c:445
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr "非法图像尺寸：宽度：%d，水平偏移：%d，高度：%d，竖直偏移：%d"
 
-#: plug-ins/common/file-cel.c:469
+#: plug-ins/common/file-cel.c:459
 #, c-format
 msgid "Can't create a new image"
 msgstr "无法创建新图像"
 
-#: plug-ins/common/file-cel.c:506 plug-ins/common/file-cel.c:543
-#: plug-ins/common/file-cel.c:569
+#: plug-ins/common/file-cel.c:496 plug-ins/common/file-cel.c:533
+#: plug-ins/common/file-cel.c:559
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "读取图像数据时遇到文件尾或错误"
 
-#: plug-ins/common/file-cel.c:587
+#: plug-ins/common/file-cel.c:577
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "不支持的位深度（%d）！"
 
-#: plug-ins/common/file-cel.c:674
+#: plug-ins/common/file-cel.c:664
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "“%s”：不是 KCF 色板文件"
 
-#: plug-ins/common/file-cel.c:684
+#: plug-ins/common/file-cel.c:674
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "“%s”：色板中有非法 bpp 值：%hhu"
 
-#: plug-ins/common/file-cel.c:694
+#: plug-ins/common/file-cel.c:684
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "“%s”：非法颜色数量：%u"
 
-#: plug-ins/common/file-cel.c:710 plug-ins/common/file-cel.c:738
-#: plug-ins/common/file-cel.c:769
+#: plug-ins/common/file-cel.c:700 plug-ins/common/file-cel.c:728
+#: plug-ins/common/file-cel.c:759
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "“%s”：读取色板数据时遇到文件尾或错误"
@@ -2623,19 +2623,19 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:826 plug-ins/common/file-farbfeld.c:353
-#: plug-ins/common/file-gif-export.c:952 plug-ins/common/file-html-table.c:347
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1076
-#: plug-ins/common/file-pix.c:642 plug-ins/common/file-png.c:1487
-#: plug-ins/common/file-pnm.c:1618 plug-ins/common/file-ps.c:1376
-#: plug-ins/common/file-qoi.c:358 plug-ins/common/file-sunras.c:607
-#: plug-ins/common/file-tga.c:1210 plug-ins/common/file-xbm.c:1031
-#: plug-ins/common/file-xpm.c:686 plug-ins/common/file-xwd.c:701
-#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:663
-#: plug-ins/file-fli/fli-gimp.c:767 plug-ins/file-icns/file-icns-export.c:610
+#: plug-ins/common/file-cel.c:816 plug-ins/common/file-farbfeld.c:342
+#: plug-ins/common/file-gif-export.c:951 plug-ins/common/file-html-table.c:347
+#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1065
+#: plug-ins/common/file-pix.c:631 plug-ins/common/file-png.c:1478
+#: plug-ins/common/file-pnm.c:1609 plug-ins/common/file-ps.c:1365
+#: plug-ins/common/file-qoi.c:347 plug-ins/common/file-sunras.c:600
+#: plug-ins/common/file-tga.c:1201 plug-ins/common/file-xbm.c:1021
+#: plug-ins/common/file-xpm.c:677 plug-ins/common/file-xwd.c:688
+#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:656
+#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:610
 #: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
-#: plug-ins/file-sgi/sgi.c:626 plug-ins/file-tiff/file-tiff-export.c:1074
+#: plug-ins/file-sgi/sgi.c:617 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "正在导出“%s”"
@@ -2770,27 +2770,27 @@ msgstr "DICOM 图像"
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "医学数字成像和通信图像"
 
-#: plug-ins/common/file-dicom.c:390
+#: plug-ins/common/file-dicom.c:381
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "“%s”不是 DICOM 文件。"
 
-#: plug-ins/common/file-dicom.c:563
+#: plug-ins/common/file-dicom.c:554
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "GIMP 不支持转移语法 %s。"
 
-#: plug-ins/common/file-dicom.c:618
+#: plug-ins/common/file-dicom.c:609
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "在与每像素采样组合中 GIMP 不支持 %s：%d"
 
-#: plug-ins/common/file-dicom.c:1510
+#: plug-ins/common/file-dicom.c:1501
 msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有透明通道的图像。"
 
-#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1371
-#: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:658
+#: plug-ins/common/file-dicom.c:1520 plug-ins/common/file-ps.c:1360
+#: plug-ins/common/file-xwd.c:683 plug-ins/file-fits/fits.c:651
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "无法对未知的图像类型操作。"
@@ -2807,12 +2807,12 @@ msgstr "加载 Farbfeld 格式的文件"
 msgid "Export image in the Farbfeld file format"
 msgstr "以 Farbfeld 文件格式导出图像"
 
-#: plug-ins/common/file-farbfeld.c:290
+#: plug-ins/common/file-farbfeld.c:279
 #, c-format
 msgid "Failed to read Farbfeld header"
 msgstr "读取 Farbfeld 头部信息失败"
 
-#: plug-ins/common/file-farbfeld.c:316
+#: plug-ins/common/file-farbfeld.c:305
 #, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "过早的 Farbfeld 像素数据结尾"
@@ -2858,7 +2858,7 @@ msgstr "光辉 RGBE"
 msgid "OpenEXR image"
 msgstr "OpenEXR 图像"
 
-#: plug-ins/common/file-gegl.c:362
+#: plug-ins/common/file-gegl.c:351
 #, c-format
 msgid "Could not open '%s'"
 msgstr "无法打开“%s”"
@@ -2969,18 +2969,18 @@ msgstr "注释(_T)"
 msgid "Image comment"
 msgstr "图像注释"
 
-#: plug-ins/common/file-gif-export.c:560
+#: plug-ins/common/file-gif-export.c:559
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "无法简单地进一步减少颜色。正在作为不透明导出。"
 
-#: plug-ins/common/file-gif-export.c:679
+#: plug-ins/common/file-gif-export.c:678
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法导出“%s”。GIF 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: plug-ins/common/file-gif-export.c:702
+#: plug-ins/common/file-gif-export.c:701
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -2988,32 +2988,32 @@ msgid ""
 msgstr ""
 "无法导出“%s”。请将您的图像转换为 8 位整数精度，GIF 文件格式不支持更高的精度。"
 
-#: plug-ins/common/file-gif-export.c:829
+#: plug-ins/common/file-gif-export.c:828
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr "GIF 格式只支持 7 位 ASCII 编码的注释。注释没有被保存。"
 
-#: plug-ins/common/file-gif-export.c:925
+#: plug-ins/common/file-gif-export.c:924
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr "无法导出 RGB 颜色图像。请先转换成索引颜色或灰阶。"
 
-#: plug-ins/common/file-gif-export.c:1145
+#: plug-ins/common/file-gif-export.c:1144
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "插入了延时以防止生成严重阻塞 CPU 的动画。"
 
-#: plug-ins/common/file-gif-export.c:1194
+#: plug-ins/common/file-gif-export.c:1193
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr "您试图导出为 GIF 的图像含有超出图像实际边界的图层。"
 
-#: plug-ins/common/file-gif-export.c:1200
+#: plug-ins/common/file-gif-export.c:1199
 msgid "Cr_op"
 msgstr "剪裁(_O)"
 
-#: plug-ins/common/file-gif-export.c:1211
+#: plug-ins/common/file-gif-export.c:1210
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3021,7 +3021,7 @@ msgstr ""
 "GIF 文件格式不允许这种情况。您可以选择裁掉所有图层中超出图像边界的部分，或者"
 "取消导出。"
 
-#: plug-ins/common/file-gif-export.c:1266
+#: plug-ins/common/file-gif-export.c:1265
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3029,19 +3029,19 @@ msgstr ""
 "GIF 格式仅支持 8 位整数精度。\n"
 "您的图像将在导出时被转换，这可能会改变像素值。"
 
-#: plug-ins/common/file-gif-export.c:1335 plug-ins/common/file-mng.c:1634
+#: plug-ins/common/file-gif-export.c:1334 plug-ins/common/file-mng.c:1630
 msgid "milliseconds"
 msgstr "毫秒"
 
-#: plug-ins/common/file-gif-export.c:1341
+#: plug-ins/common/file-gif-export.c:1340
 msgid "I don't care"
 msgstr "我不关心"
 
-#: plug-ins/common/file-gif-export.c:1377
+#: plug-ins/common/file-gif-export.c:1376
 msgid "Animated GIF"
 msgstr "GIF 动画"
 
-#: plug-ins/common/file-gif-export.c:1384
+#: plug-ins/common/file-gif-export.c:1383
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3430,76 +3430,76 @@ msgstr "载入 HEJ2 图像"
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "加载在 HEIF（HEJ2）中封装的 JPEG 2000 图像"
 
-#: plug-ins/common/file-heif.c:892 plug-ins/common/file-heif.c:925
-#: plug-ins/common/file-heif.c:966 plug-ins/common/file-heif.c:1028
+#: plug-ins/common/file-heif.c:874 plug-ins/common/file-heif.c:907
+#: plug-ins/common/file-heif.c:948 plug-ins/common/file-heif.c:1010
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "加载 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:914
+#: plug-ins/common/file-heif.c:896
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr "加载 HEIF 图像失败：输入的文件未包含可读取图像"
 
-#: plug-ins/common/file-heif.c:1150
+#: plug-ins/common/file-heif.c:1132
 msgid "image content"
 msgstr "图像内容"
 
-#: plug-ins/common/file-heif.c:1489
+#: plug-ins/common/file-heif.c:1471
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "正在使用 %2$s 编码器导出“%1$s”"
 
-#: plug-ins/common/file-heif.c:1537 plug-ins/common/file-heif.c:1922
+#: plug-ins/common/file-heif.c:1519 plug-ins/common/file-heif.c:1904
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "编码 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2043
+#: plug-ins/common/file-heif.c:2025
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "写入 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2132
+#: plug-ins/common/file-heif.c:2114
 msgid "primary"
 msgstr "主要"
 
-#: plug-ins/common/file-heif.c:2277
+#: plug-ins/common/file-heif.c:2259
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:2291
+#: plug-ins/common/file-heif.c:2273
 msgid "Select Image"
 msgstr "选择图像"
 
-#: plug-ins/common/file-heif.c:2443
+#: plug-ins/common/file-heif.c:2425
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2444
+#: plug-ins/common/file-heif.c:2426
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2450 plug-ins/common/file-jpegxl.c:2035
+#: plug-ins/common/file-heif.c:2432 plug-ins/common/file-jpegxl.c:2035
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: plug-ins/common/file-heif.c:2451
+#: plug-ins/common/file-heif.c:2433
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: plug-ins/common/file-heif.c:2452
+#: plug-ins/common/file-heif.c:2434
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
-#: plug-ins/common/file-heif.c:2458
+#: plug-ins/common/file-heif.c:2440
 msgid "Slow"
 msgstr "慢"
 
-#: plug-ins/common/file-heif.c:2459
+#: plug-ins/common/file-heif.c:2441
 msgid "Balanced"
 msgstr "平衡"
 
-#: plug-ins/common/file-heif.c:2460
+#: plug-ins/common/file-heif.c:2442
 msgid "Fast"
 msgstr "快"
 
@@ -3995,51 +3995,51 @@ msgstr "写入 tIME（创建时间）数据块"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:717 plug-ins/common/file-png.c:2320
+#: plug-ins/common/file-mng.c:713 plug-ins/common/file-png.c:2311
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "无法无损地保存透明度，以不透明保存。"
 
-#: plug-ins/common/file-mng.c:1587
+#: plug-ins/common/file-mng.c:1583
 msgid "MNG Options"
 msgstr "MNG 选项"
 
-#: plug-ins/common/file-mng.c:1596 plug-ins/common/file-png.c:231
+#: plug-ins/common/file-mng.c:1592 plug-ins/common/file-png.c:231
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-mng.c:1597
+#: plug-ins/common/file-mng.c:1593
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/file-mng.c:1600
+#: plug-ins/common/file-mng.c:1596
 msgid "PNG + delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/file-mng.c:1601
+#: plug-ins/common/file-mng.c:1597
 msgid "JNG + delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: plug-ins/common/file-mng.c:1602
+#: plug-ins/common/file-mng.c:1598
 msgid "All PNG"
 msgstr "全部 PNG"
 
-#: plug-ins/common/file-mng.c:1603
+#: plug-ins/common/file-mng.c:1599
 msgid "All JNG"
 msgstr "全部 JNG"
 
-#: plug-ins/common/file-mng.c:1611
+#: plug-ins/common/file-mng.c:1607
 msgid "Combine"
 msgstr "组合"
 
-#: plug-ins/common/file-mng.c:1612
+#: plug-ins/common/file-mng.c:1608
 msgid "Replace"
 msgstr "替换"
 
-#: plug-ins/common/file-mng.c:1647
+#: plug-ins/common/file-mng.c:1643
 msgid "Animated MNG Options"
 msgstr "动画 MNG 选项"
 
-#: plug-ins/common/file-mng.c:1657
+#: plug-ins/common/file-mng.c:1653
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -4111,103 +4111,103 @@ msgstr "加载 Zsoft DCX 格式的文件"
 msgid "Exports files in ZSoft PCX file format"
 msgstr "以 Zsoft PCX 格式导出文件"
 
-#: plug-ins/common/file-pcx.c:508
+#: plug-ins/common/file-pcx.c:497
 msgid "Could not load PCX image: "
 msgstr "无法加载 PCX 图像："
 
-#: plug-ins/common/file-pcx.c:555
+#: plug-ins/common/file-pcx.c:544
 #, c-format
 msgid "DCX image offset exceeds the file size"
 msgstr "DCX 图像偏移超出文件大小"
 
-#: plug-ins/common/file-pcx.c:566
+#: plug-ins/common/file-pcx.c:555
 msgid "Could not load DCX image: "
 msgstr "无法加载 DCX 图像："
 
-#: plug-ins/common/file-pcx.c:589
+#: plug-ins/common/file-pcx.c:578
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr "%s：DCX 图像偏移超出文件大小：%s\n"
 
-#: plug-ins/common/file-pcx.c:606
+#: plug-ins/common/file-pcx.c:595
 msgid "Mixed-mode DCX image not loaded"
 msgstr "未加载混合模式 DCX 图像"
 
-#: plug-ins/common/file-pcx.c:613
+#: plug-ins/common/file-pcx.c:602
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s：无法加载所有 DCX 图像：%s\n"
 
-#: plug-ins/common/file-pcx.c:653
+#: plug-ins/common/file-pcx.c:642
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "无法从“%s”读取文件头"
 
-#: plug-ins/common/file-pcx.c:663
+#: plug-ins/common/file-pcx.c:652
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:668 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
-#: plug-ins/common/file-pcx.c:686 plug-ins/common/file-wbmp.c:269
+#: plug-ins/common/file-pcx.c:675 plug-ins/common/file-wbmp.c:269
 #: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
 
-#: plug-ins/common/file-pcx.c:694
+#: plug-ins/common/file-pcx.c:683
 #, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "PCX 文件头中的无效的每行字节数"
 
-#: plug-ins/common/file-pcx.c:700
+#: plug-ins/common/file-pcx.c:689
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "XCX 文件头中的分辨率超出边界，将使用 72×72"
 
-#: plug-ins/common/file-pcx.c:709
+#: plug-ins/common/file-pcx.c:698
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
 
-#: plug-ins/common/file-pcx.c:834
+#: plug-ins/common/file-pcx.c:823
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "异常的 PCX 类型，放弃"
 
-#: plug-ins/common/file-pcx.c:859
+#: plug-ins/common/file-pcx.c:848
 msgid "Import from PCX"
 msgstr "从 PCX 导入"
 
-#: plug-ins/common/file-pcx.c:1143 plug-ins/common/file-pnm.c:1614
+#: plug-ins/common/file-pcx.c:1132 plug-ins/common/file-pnm.c:1605
 msgid "Cannot export images with alpha channel."
 msgstr "无法导出带有透明通道的图像。"
 
-#: plug-ins/common/file-pcx.c:1163
+#: plug-ins/common/file-pcx.c:1152
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "无效的 X 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1169
+#: plug-ins/common/file-pcx.c:1158
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "无效的 Y 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1175
+#: plug-ins/common/file-pcx.c:1164
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "右边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1182
+#: plug-ins/common/file-pcx.c:1171
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1258 plug-ins/common/file-qoi.c:377
+#: plug-ins/common/file-pcx.c:1247 plug-ins/common/file-qoi.c:366
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4374,7 +4374,7 @@ msgstr "添加该图像"
 
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
-#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2225
+#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
 #: plug-ins/file-tiff/file-tiff-load.c:1532
 #, c-format
 msgid "Page %d"
@@ -4476,14 +4476,14 @@ msgstr "从指定 PDF 文件获取页数时出错。"
 msgid "Alias Pix image"
 msgstr "别名 Pix 图像"
 
-#: plug-ins/common/file-pix.c:570
+#: plug-ins/common/file-pix.c:559
 #, c-format
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
 "%s"
 msgstr "试图打开临时 JPEG 文件“%s”用于加载 Esm 软件的 pix 文件时出错：%s"
 
-#: plug-ins/common/file-pix.c:588
+#: plug-ins/common/file-pix.c:577
 msgid "Invalid Esm Software PIX file"
 msgstr "无效的 Esm 软件 PIX 文件"
 
@@ -4591,72 +4591,72 @@ msgstr "16 位 RGBA"
 msgid "16 bpc GRAYA"
 msgstr "16 位灰阶透明"
 
-#: plug-ins/common/file-png.c:466
+#: plug-ins/common/file-png.c:457
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "载入 PNG 文件出错：%s\n"
 
-#: plug-ins/common/file-png.c:600
+#: plug-ins/common/file-png.c:591
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "加载“%s”时创建 PNG 读取结构出错。"
 
-#: plug-ins/common/file-png.c:609
+#: plug-ins/common/file-png.c:600
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr "读取“%s”出错。无法创建 PNG 文件头信息结构。"
 
-#: plug-ins/common/file-png.c:617
+#: plug-ins/common/file-png.c:608
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "读取“%s”出错。文件已损坏？"
 
-#: plug-ins/common/file-png.c:877
+#: plug-ins/common/file-png.c:868
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "PNG 文件“%s”存在未知色彩模型。"
 
-#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:265
+#: plug-ins/common/file-png.c:881 plug-ins/file-exr/file-exr.c:265
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "无法为“%s”创建新图像：%s"
 
-#: plug-ins/common/file-png.c:958
+#: plug-ins/common/file-png.c:949
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr "PNG 文件中指定的位移导致图层定位在图像以外。"
 
-#: plug-ins/common/file-png.c:1209
+#: plug-ins/common/file-png.c:1200
 msgid "Apply PNG Offset"
 msgstr "应用 PNG 位移"
 
-#: plug-ins/common/file-png.c:1213
+#: plug-ins/common/file-png.c:1204
 msgid "Ignore PNG offset"
 msgstr "忽略 PNG 位移"
 
-#: plug-ins/common/file-png.c:1214
+#: plug-ins/common/file-png.c:1205
 msgid "Apply PNG offset to layer"
 msgstr "对图层应用 PNG 位移"
 
-#: plug-ins/common/file-png.c:1239
+#: plug-ins/common/file-png.c:1230
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr "您导入的 PNG 图像指定了“%d，%d”位移。您想要对图层应用该位移吗？"
 
-#: plug-ins/common/file-png.c:1452
+#: plug-ins/common/file-png.c:1443
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "导出“%s”时创建 PNG 写入结构出错。"
 
-#: plug-ins/common/file-png.c:1461
+#: plug-ins/common/file-png.c:1452
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr "导出“%s”出错。无法创建 PNG 文件头信息结构。"
 
-#: plug-ins/common/file-png.c:1469
+#: plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "导出“%s”出错。无法导出图像。"
@@ -4781,75 +4781,75 @@ msgstr "以 PFM 格式导出文件"
 msgid "PFM export handles all images without transparency."
 msgstr "PFM 导出会处理所有不带透明度的图像。"
 
-#: plug-ins/common/file-pnm.c:731 plug-ins/common/file-pnm.c:763
-#: plug-ins/common/file-pnm.c:772 plug-ins/common/file-pnm.c:787
-#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1000
-#: plug-ins/common/file-pnm.c:1095 plug-ins/common/file-pnm.c:1180
-#: plug-ins/common/file-pnm.c:1241
+#: plug-ins/common/file-pnm.c:722 plug-ins/common/file-pnm.c:754
+#: plug-ins/common/file-pnm.c:763 plug-ins/common/file-pnm.c:778
+#: plug-ins/common/file-pnm.c:793 plug-ins/common/file-pnm.c:991
+#: plug-ins/common/file-pnm.c:1086 plug-ins/common/file-pnm.c:1171
+#: plug-ins/common/file-pnm.c:1232
 msgid "Premature end of file."
 msgstr "过早的文件结尾。"
 
-#: plug-ins/common/file-pnm.c:733
+#: plug-ins/common/file-pnm.c:724
 msgid "Invalid file."
 msgstr "无效文件。"
 
-#: plug-ins/common/file-pnm.c:751
+#: plug-ins/common/file-pnm.c:742
 msgid "File not in a supported format."
 msgstr "不支持的文件格式。"
 
-#: plug-ins/common/file-pnm.c:766
+#: plug-ins/common/file-pnm.c:757
 msgid "Invalid X resolution."
 msgstr "无效的 X 分辨率。"
 
-#: plug-ins/common/file-pnm.c:768 plug-ins/common/file-pnm.c:934
+#: plug-ins/common/file-pnm.c:759 plug-ins/common/file-pnm.c:925
 msgid "Image width is larger than GIMP can handle."
 msgstr "图像宽度超出 GIMP 能够处理的范围。"
 
-#: plug-ins/common/file-pnm.c:775
+#: plug-ins/common/file-pnm.c:766
 msgid "Invalid Y resolution."
 msgstr "无效的 Y 分辨率。"
 
-#: plug-ins/common/file-pnm.c:777
+#: plug-ins/common/file-pnm.c:768
 msgid "Image height is larger than GIMP can handle."
 msgstr "图像高度超出 GIMP 能够处理的范围。"
 
-#: plug-ins/common/file-pnm.c:791
+#: plug-ins/common/file-pnm.c:782
 msgid "Bogus scale factor."
 msgstr "伪造的缩放系数。"
 
-#: plug-ins/common/file-pnm.c:793
+#: plug-ins/common/file-pnm.c:784
 msgid "Unsupported scale factor."
 msgstr "不支持的缩放系数。"
 
-#: plug-ins/common/file-pnm.c:807
+#: plug-ins/common/file-pnm.c:798
 msgid "Unsupported maximum value."
 msgstr "不支持的最大值。"
 
-#: plug-ins/common/file-pnm.c:928
+#: plug-ins/common/file-pnm.c:919
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM：不支持的非官方 PNM 变种。"
 
-#: plug-ins/common/file-pnm.c:932
+#: plug-ins/common/file-pnm.c:923
 msgid "PAM: Premature end of file."
 msgstr "PAM：过早的文件末尾。"
 
-#: plug-ins/common/file-pnm.c:936
+#: plug-ins/common/file-pnm.c:927
 msgid "PAM: Invalid X resolution."
 msgstr "PAM：无效的 X 分辨率。"
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:929
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM：无效的 Y 分辨率。"
 
-#: plug-ins/common/file-pnm.c:940
+#: plug-ins/common/file-pnm.c:931
 msgid "PAM: Invalid maximum value."
 msgstr "PAM：无效的最大值。"
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:933
 msgid "PAM: Invalid depth."
 msgstr "PAM：无效的深度。"
 
-#: plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:935
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM：不支持的 tupltype。"
 
@@ -4909,7 +4909,7 @@ msgstr "黑/白"
 msgid "Gray"
 msgstr "灰度"
 
-#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:492
+#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:483
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5060,65 +5060,65 @@ msgstr "预览大小(_Z)"
 msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr "预览的最大大小。设为 0 为无预览。"
 
-#: plug-ins/common/file-ps.c:1176
+#: plug-ins/common/file-ps.c:1165
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "无法解析 Postscript 文件“%s”"
 
-#: plug-ins/common/file-ps.c:1258
+#: plug-ins/common/file-ps.c:1247
 msgid "Rendered EPS"
 msgstr "已渲染的 EPS"
 
-#: plug-ins/common/file-ps.c:1286
+#: plug-ins/common/file-ps.c:1275
 #, c-format
 msgid "%s-pages"
 msgstr "%s 页"
 
-#: plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-ps.c:1347
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript 导出无法处理带有透明通道的图像"
 
-#: plug-ins/common/file-ps.c:3830
+#: plug-ins/common/file-ps.c:3819
 msgid "Pages:"
 msgstr "页数："
 
-#: plug-ins/common/file-ps.c:3834
+#: plug-ins/common/file-ps.c:3823
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "加载页码（如：1-4 或 1,3,5-7）"
 
-#: plug-ins/common/file-ps.c:3840
+#: plug-ins/common/file-ps.c:3829
 msgid "Open as"
 msgstr "打开为"
 
-#: plug-ins/common/file-ps.c:3931
+#: plug-ins/common/file-ps.c:3920
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr "选中时，图像将会缩放到给定的大小并且不会改变原来的宽高比。"
 
-#: plug-ins/common/file-ps.c:3937
+#: plug-ins/common/file-ps.c:3926
 msgid "Image Size"
 msgstr "图像大小"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3957
+#: plug-ins/common/file-ps.c:3946
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3958
+#: plug-ins/common/file-ps.c:3947
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3959
+#: plug-ins/common/file-ps.c:3948
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3960
+#: plug-ins/common/file-ps.c:3949
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3967
+#: plug-ins/common/file-ps.c:3956
 msgid "Output"
 msgstr "输出"
 
@@ -5158,220 +5158,220 @@ msgstr "rle"
 msgid "lz77"
 msgstr "lz77"
 
-#: plug-ins/common/file-psp.c:925
+#: plug-ins/common/file-psp.c:915
 #, c-format
 msgid "Error reading block header"
 msgstr "读取数据块头部信息出错"
 
-#: plug-ins/common/file-psp.c:932
+#: plug-ins/common/file-psp.c:922
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "在 %ld 中存在无效数据块头部信息"
 
-#: plug-ins/common/file-psp.c:935
+#: plug-ins/common/file-psp.c:925
 #, c-format
 msgid "Invalid block header"
 msgstr "无效数据块头部信息"
 
 # 告译者：这里指 fseek() 函数调用出错
-#: plug-ins/common/file-psp.c:967
+#: plug-ins/common/file-psp.c:957
 #, c-format
 msgid "Seek error: %s"
 msgstr "Seek 错误：%s"
 
-#: plug-ins/common/file-psp.c:990
+#: plug-ins/common/file-psp.c:980
 #, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "无效的常规图像属性数据块大小。"
 
-#: plug-ins/common/file-psp.c:1012
+#: plug-ins/common/file-psp.c:1002
 #, c-format
 msgid "Error reading general image attribute block."
 msgstr "读取常规图像属性数据块时出错。"
 
-#: plug-ins/common/file-psp.c:1027
+#: plug-ins/common/file-psp.c:1017
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "未知的压缩类型 %d"
 
-#: plug-ins/common/file-psp.c:1063 plug-ins/common/file-psp.c:1070
+#: plug-ins/common/file-psp.c:1053 plug-ins/common/file-psp.c:1060
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "不支持的位深 %d"
 
-#: plug-ins/common/file-psp.c:1117
+#: plug-ins/common/file-psp.c:1107
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "读取创建者关键词数据块出错"
 
-#: plug-ins/common/file-psp.c:1123
+#: plug-ins/common/file-psp.c:1113
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "无效的关键词数据块头部信息"
 
-#: plug-ins/common/file-psp.c:1138 plug-ins/common/file-psp.c:1165
+#: plug-ins/common/file-psp.c:1128 plug-ins/common/file-psp.c:1155
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "读取创建者关键词数据出错"
 
-#: plug-ins/common/file-psp.c:1249 plug-ins/common/file-psp.c:1258
-#: plug-ins/common/file-psp.c:1267
+#: plug-ins/common/file-psp.c:1239 plug-ins/common/file-psp.c:1248
+#: plug-ins/common/file-psp.c:1257
 #, c-format
 msgid "Error reading color block"
 msgstr "读取颜色数据块时出错"
 
-#: plug-ins/common/file-psp.c:1278
+#: plug-ins/common/file-psp.c:1268
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "错误：不支持的色板大小"
 
-#: plug-ins/common/file-psp.c:1289
+#: plug-ins/common/file-psp.c:1279
 #, c-format
 msgid "Error reading color palette"
 msgstr "读取颜色色板时出错"
 
-#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
+#: plug-ins/common/file-psp.c:1705 plug-ins/common/file-psp.c:1719
 #, c-format
 msgid "zlib error"
 msgstr "zlib 错误"
 
-#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
-#: plug-ins/common/file-psp.c:1836
+#: plug-ins/common/file-psp.c:1782 plug-ins/common/file-psp.c:1816
+#: plug-ins/common/file-psp.c:1826
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "读取图层扩展信息时出错"
 
-#: plug-ins/common/file-psp.c:1813
+#: plug-ins/common/file-psp.c:1803
 #, c-format
 msgid "Error reading block information"
 msgstr "读取数据块信息时出错"
 
-#: plug-ins/common/file-psp.c:1893
+#: plug-ins/common/file-psp.c:1883
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "无效的图层子数据块 %s，应该为图层"
 
-#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
+#: plug-ins/common/file-psp.c:1914 plug-ins/common/file-psp.c:1971
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "读取图层信息数据块出错"
 
-#: plug-ins/common/file-psp.c:2023
+#: plug-ins/common/file-psp.c:2013
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "无效的图层尺寸：%dx%d"
 
-#: plug-ins/common/file-psp.c:2084
+#: plug-ins/common/file-psp.c:2074
 #, c-format
 msgid "Error creating layer"
 msgstr "创建图层出错"
 
-#: plug-ins/common/file-psp.c:2129
+#: plug-ins/common/file-psp.c:2119
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "无效的图层子数据块 %s，应该为通道"
 
-#: plug-ins/common/file-psp.c:2145
+#: plug-ins/common/file-psp.c:2135
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "读取通道信息数据块出错"
 
-#: plug-ins/common/file-psp.c:2168
+#: plug-ins/common/file-psp.c:2158
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "通道信息数据块中的无效通道类型 %d"
 
-#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
+#: plug-ins/common/file-psp.c:2262 plug-ins/common/file-psp.c:2279
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
-#: plug-ins/common/file-psp.c:2376 plug-ins/common/file-psp.c:2392
+#: plug-ins/common/file-psp.c:2366 plug-ins/common/file-psp.c:2382
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "读取选区块时出错"
 
-#: plug-ins/common/file-psp.c:2385
+#: plug-ins/common/file-psp.c:2375
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "无效的选区块大小"
 
-#: plug-ins/common/file-psp.c:2409
+#: plug-ins/common/file-psp.c:2399
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "读取选区块末尾时出错"
 
-#: plug-ins/common/file-psp.c:2434
+#: plug-ins/common/file-psp.c:2424
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "读取扩展的数据块头部信息出错"
 
-#: plug-ins/common/file-psp.c:2442
+#: plug-ins/common/file-psp.c:2432
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "无效的扩展数据块头部信息"
 
-#: plug-ins/common/file-psp.c:2453
+#: plug-ins/common/file-psp.c:2443
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "无效的扩展数据块大小"
 
-#: plug-ins/common/file-psp.c:2474
+#: plug-ins/common/file-psp.c:2464
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "读取扩展的数据块网格数据出错"
 
-#: plug-ins/common/file-psp.c:2502
+#: plug-ins/common/file-psp.c:2492
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "读取扩展的数据块参考线数据出错"
 
-#: plug-ins/common/file-psp.c:2520
+#: plug-ins/common/file-psp.c:2510
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "无效的参考线方向"
 
-#: plug-ins/common/file-psp.c:2534
+#: plug-ins/common/file-psp.c:2524
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "读取扩展的数据块出错"
 
-#: plug-ins/common/file-psp.c:2560 plug-ins/common/file-psp.c:2572
-#: plug-ins/common/file-psp.c:2583
+#: plug-ins/common/file-psp.c:2550 plug-ins/common/file-psp.c:2562
+#: plug-ins/common/file-psp.c:2573
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "读取颜色配置文件数据块时出错"
 
-#: plug-ins/common/file-psp.c:2636
+#: plug-ins/common/file-psp.c:2626
 #, c-format
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: plug-ins/common/file-psp.c:2643
+#: plug-ins/common/file-psp.c:2633
 #, c-format
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: plug-ins/common/file-psp.c:2657
+#: plug-ins/common/file-psp.c:2647
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: plug-ins/common/file-psp.c:2677
+#: plug-ins/common/file-psp.c:2667
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2676
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2714
+#: plug-ins/common/file-psp.c:2704
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2839
+#: plug-ins/common/file-psp.c:2829
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
@@ -5396,7 +5396,7 @@ msgstr "以 QOI 格式导出图像"
 msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "以 QOI（Quite OK 图像）格式导出图像"
 
-#: plug-ins/common/file-qoi.c:295
+#: plug-ins/common/file-qoi.c:284
 #, c-format
 msgid "Failed to read QOI file"
 msgstr "读取 QOI 文件失败"
@@ -5723,33 +5723,37 @@ msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #: plug-ins/common/file-sunras.c:323
-msgid "Data Formatting"
-msgstr "数据格式"
+msgid "_Data Formatting"
+msgstr "数据格式(_D)"
 
 #: plug-ins/common/file-sunras.c:324
-msgid "Use standard (0) or Run-Length Encoded (1) output"
-msgstr "使用标准（0）或行程长度编码（1）输出"
+msgid "Use standard or Run-Length Encoded output"
+msgstr "使用标准或行程长度编码输出"
 
-#: plug-ins/common/file-sunras.c:447
+#: plug-ins/common/file-sunras.c:326
+msgid "Run-Length Encoding"
+msgstr "行程长度编码"
+
+#: plug-ins/common/file-sunras.c:441
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "无法以 SUN-raster-file 打开“%s”"
 
-#: plug-ins/common/file-sunras.c:457
+#: plug-ins/common/file-sunras.c:451
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "不支持这个类型的 SUN-rasterfile"
 
-#: plug-ins/common/file-sunras.c:486
+#: plug-ins/common/file-sunras.c:480
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "无法从“%s”读取颜色项"
 
-#: plug-ins/common/file-sunras.c:495
+#: plug-ins/common/file-sunras.c:489
 msgid "Type of colormap not supported"
 msgstr "颜色表类型不支持"
 
-#: plug-ins/common/file-sunras.c:502 plug-ins/common/file-xbm.c:818
-#: plug-ins/common/file-xwd.c:577
+#: plug-ins/common/file-sunras.c:496 plug-ins/common/file-xbm.c:808
+#: plug-ins/common/file-xwd.c:564
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5758,8 +5762,8 @@ msgstr ""
 "“%s”:\n"
 "没有指定图像宽度"
 
-#: plug-ins/common/file-sunras.c:510 plug-ins/common/file-xbm.c:826
-#: plug-ins/common/file-xwd.c:586
+#: plug-ins/common/file-sunras.c:504 plug-ins/common/file-xbm.c:816
+#: plug-ins/common/file-xwd.c:573
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5768,8 +5772,8 @@ msgstr ""
 "“%s”：\n"
 "图像宽度大于 GIMP 所能处理的范围"
 
-#: plug-ins/common/file-sunras.c:518 plug-ins/common/file-xbm.c:834
-#: plug-ins/common/file-xwd.c:594
+#: plug-ins/common/file-sunras.c:512 plug-ins/common/file-xbm.c:824
+#: plug-ins/common/file-xwd.c:581
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5778,8 +5782,8 @@ msgstr ""
 "“%s”:\n"
 "没有指定图像高度"
 
-#: plug-ins/common/file-sunras.c:526 plug-ins/common/file-xbm.c:842
-#: plug-ins/common/file-xwd.c:602
+#: plug-ins/common/file-sunras.c:520 plug-ins/common/file-xbm.c:832
+#: plug-ins/common/file-xwd.c:589
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5788,39 +5792,31 @@ msgstr ""
 "“%s”：\n"
 "图像高度大于 GIMP 所能处理的范围"
 
-#: plug-ins/common/file-sunras.c:562
+#: plug-ins/common/file-sunras.c:556
 msgid "This image depth is not supported"
 msgstr "不支持这个图像深度"
 
-#: plug-ins/common/file-sunras.c:591
+#: plug-ins/common/file-sunras.c:584
 #, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "SUNRAS 导出无法处理带透明通道的图像"
 
-#: plug-ins/common/file-sunras.c:602
+#: plug-ins/common/file-sunras.c:595
 msgid "Can't operate on unknown image types"
 msgstr "无法对未知的图像类型操作"
 
-#: plug-ins/common/file-sunras.c:1171 plug-ins/common/file-sunras.c:1266
-#: plug-ins/common/file-sunras.c:1350 plug-ins/common/file-sunras.c:1450
-#: plug-ins/common/file-xwd.c:1500 plug-ins/common/file-xwd.c:1614
-#: plug-ins/common/file-xwd.c:1785 plug-ins/common/file-xwd.c:2025
-#: plug-ins/common/file-xwd.c:2214 plug-ins/common/file-xwd.c:2490
+#: plug-ins/common/file-sunras.c:1164 plug-ins/common/file-sunras.c:1259
+#: plug-ins/common/file-sunras.c:1343 plug-ins/common/file-sunras.c:1443
+#: plug-ins/common/file-xwd.c:1487 plug-ins/common/file-xwd.c:1601
+#: plug-ins/common/file-xwd.c:1772 plug-ins/common/file-xwd.c:2012
+#: plug-ins/common/file-xwd.c:2201 plug-ins/common/file-xwd.c:2477
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "读入时遇到文件结束符"
 
-#: plug-ins/common/file-sunras.c:1629 plug-ins/common/file-sunras.c:1750
+#: plug-ins/common/file-sunras.c:1622 plug-ins/common/file-sunras.c:1743
 msgid "Write error occurred"
 msgstr "出现写错误"
-
-#: plug-ins/common/file-sunras.c:1773
-msgid "S_tandard"
-msgstr "标准(_T)"
-
-#: plug-ins/common/file-sunras.c:1774
-msgid "R_un-Length Encoded"
-msgstr "行程长度编码(_U)"
 
 #: plug-ins/common/file-svg.c:166
 msgid "SVG image"
@@ -5932,26 +5928,26 @@ msgstr "原点(_G)"
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "图像原点（0 = 左上，1 = 左下）"
 
-#: plug-ins/common/file-tga.c:438
+#: plug-ins/common/file-tga.c:429
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "无法从“%s”读取脚注"
 
-#: plug-ins/common/file-tga.c:457
+#: plug-ins/common/file-tga.c:448
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "无法从“%s”读取扩展"
 
-#: plug-ins/common/file-tga.c:470
+#: plug-ins/common/file-tga.c:461
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "无法从“%s”读取文件头"
 
-#: plug-ins/common/file-tga.c:1433
+#: plug-ins/common/file-tga.c:1424
 msgid "Bottom left"
 msgstr "左下"
 
-#: plug-ins/common/file-tga.c:1434
+#: plug-ins/common/file-tga.c:1425
 msgid "Top left"
 msgstr "左上"
 
@@ -6100,7 +6096,7 @@ msgstr "蒙板文件扩展名(_K)"
 msgid "Suffix of the mask file"
 msgstr "蒙板文件的后缀名"
 
-#: plug-ins/common/file-xbm.c:810
+#: plug-ins/common/file-xbm.c:800
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6109,7 +6105,7 @@ msgstr ""
 "“%s”：\n"
 "无法读取文件头(ftell == %ld)"
 
-#: plug-ins/common/file-xbm.c:850
+#: plug-ins/common/file-xbm.c:840
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6119,7 +6115,7 @@ msgstr ""
 "没有指定图像数据类型"
 
 #. The image is not black-and-white.
-#: plug-ins/common/file-xbm.c:995
+#: plug-ins/common/file-xbm.c:985
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -6130,7 +6126,7 @@ msgstr ""
 "\n"
 "请将它转换为黑白（1 位）索引图像并重试。"
 
-#: plug-ins/common/file-xbm.c:1007
+#: plug-ins/common/file-xbm.c:997
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -6138,7 +6134,7 @@ msgstr ""
 "您不能对一幅没有透明通道的\n"
 "图像保存光标蒙板。"
 
-#: plug-ins/common/file-xbm.c:1239
+#: plug-ins/common/file-xbm.c:1229
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
@@ -6256,50 +6252,50 @@ msgstr ""
 "无法设置热点！\n"
 "您需要调整图层位置以使它们全部都有一个交集。"
 
-#: plug-ins/common/file-xmc.c:668
+#: plug-ins/common/file-xmc.c:658
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "“%s”不是有效的 X 指针。"
 
-#: plug-ins/common/file-xmc.c:681
+#: plug-ins/common/file-xmc.c:671
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "“%2$s”的第 %1$d 帧对于 X 指针太宽了。"
 
-#: plug-ins/common/file-xmc.c:689
+#: plug-ins/common/file-xmc.c:679
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "“%2$s”的第 %1$d 帧对于 X 指针太高了。"
 
-#: plug-ins/common/file-xmc.c:960
+#: plug-ins/common/file-xmc.c:950
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "“%s”中没有图像块。"
 
-#: plug-ins/common/file-xmc.c:1001
+#: plug-ins/common/file-xmc.c:991
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "“%s”对于 X 指针太宽了。"
 
-#: plug-ins/common/file-xmc.c:1010
+#: plug-ins/common/file-xmc.c:1000
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "“%s”对于 X 指针太高了。"
 
-#: plug-ins/common/file-xmc.c:1074
+#: plug-ins/common/file-xmc.c:1064
 #, c-format
 msgid "A read error occurred."
 msgstr "出现读取错误。"
 
-#: plug-ins/common/file-xmc.c:1113
+#: plug-ins/common/file-xmc.c:1103
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "输入热点的 X 坐标。原点是左上角。"
 
-#: plug-ins/common/file-xmc.c:1124
+#: plug-ins/common/file-xmc.c:1114
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "输入热点的 Y 坐标。原点是左上角。"
 
-#: plug-ins/common/file-xmc.c:1136
+#: plug-ins/common/file-xmc.c:1126
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -6310,7 +6306,7 @@ msgstr ""
 "这将减小文件的尺寸并可能修复一些大的指针扰乱屏幕的问题。\n"
 "如果您打算在其他程序中编辑导出的指针则不要选取。"
 
-#: plug-ins/common/file-xmc.c:1148
+#: plug-ins/common/file-xmc.c:1138
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -6327,28 +6323,28 @@ msgstr ""
 "哪个动画序列。"
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1264 plug-ins/file-webp/file-webp-export.c:198
+#: plug-ins/common/file-xmc.c:1254 plug-ins/file-webp/file-webp-export.c:198
 #: plug-ins/file-webp/file-webp-export.c:597
 #, c-format
 msgid "Saving '%s'"
 msgstr "保存“%s”"
 
-#: plug-ins/common/file-xmc.c:1339
+#: plug-ins/common/file-xmc.c:1329
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "帧“%s”太宽了。请减少至不超过 %d 像素。"
 
-#: plug-ins/common/file-xmc.c:1349
+#: plug-ins/common/file-xmc.c:1339
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "帧“%s”太高了。请减少至不超过 %d 像素。"
 
-#: plug-ins/common/file-xmc.c:1359
+#: plug-ins/common/file-xmc.c:1349
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "帧“%s”的宽度和/或高度为零！"
 
-#: plug-ins/common/file-xmc.c:1401
+#: plug-ins/common/file-xmc.c:1391
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -6358,7 +6354,7 @@ msgstr ""
 "不能导出该指针，因为热点不在帧“%s”上。\n"
 "请尝试改变热点位置、图层几何形状或导出时不要自动裁切。"
 
-#: plug-ins/common/file-xmc.c:1575
+#: plug-ins/common/file-xmc.c:1565
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6370,7 +6366,7 @@ msgstr ""
 "值）的帧。\n"
 "它可能不被某些环境支持。"
 
-#: plug-ins/common/file-xmc.c:1583
+#: plug-ins/common/file-xmc.c:1573
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -6381,7 +6377,7 @@ msgstr ""
 "您可以在导出对话框中选中“替换所有帧的尺寸”以解决这个问题，否则您的光标在 "
 "GNOME 设置中可能无法显示。"
 
-#: plug-ins/common/file-xmc.c:1866
+#: plug-ins/common/file-xmc.c:1856
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6392,7 +6388,7 @@ msgstr ""
 "我们限制它至 %d 像素。您应该检查导出的光标。"
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:1963
+#: plug-ins/common/file-xmc.c:1953
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6415,16 +6411,16 @@ msgstr "阈值(_T)"
 msgid "Alpha threshold"
 msgstr "透明阈值"
 
-#: plug-ins/common/file-xpm.c:377 plug-ins/common/file-xpm.c:836
+#: plug-ins/common/file-xpm.c:368 plug-ins/common/file-xpm.c:827
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "打开文件“%s”出错"
 
-#: plug-ins/common/file-xpm.c:383 plug-ins/common/file-xpm.c:842
+#: plug-ins/common/file-xpm.c:374 plug-ins/common/file-xpm.c:833
 msgid "XPM file invalid"
 msgstr "无效的 XPM 文件"
 
-#: plug-ins/common/file-xpm.c:676
+#: plug-ins/common/file-xpm.c:667
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "不支持的可绘制类型"
@@ -6433,13 +6429,13 @@ msgstr "不支持的可绘制类型"
 msgid "X window dump"
 msgstr "X Window 转存"
 
-#: plug-ins/common/file-xwd.c:504
+#: plug-ins/common/file-xwd.c:491
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "无法从“%s”读取 XWD 文件头"
 
 # 告译者：这里指 fseek() 函数调用出错
-#: plug-ins/common/file-xwd.c:522
+#: plug-ins/common/file-xwd.c:509
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6448,7 +6444,7 @@ msgstr ""
 "“%s”：\n"
 "Seek 错误"
 
-#: plug-ins/common/file-xwd.c:532
+#: plug-ins/common/file-xwd.c:519
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6457,7 +6453,7 @@ msgstr ""
 "“%s”：\n"
 "无效的颜色表条目数量：%u"
 
-#: plug-ins/common/file-xwd.c:543
+#: plug-ins/common/file-xwd.c:530
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6466,12 +6462,12 @@ msgstr ""
 "“%s”：\n"
 "颜色表条目数量 < 颜色数量"
 
-#: plug-ins/common/file-xwd.c:569
+#: plug-ins/common/file-xwd.c:556
 #, c-format
 msgid "Can't read color entries"
 msgstr "无法读取颜色项"
 
-#: plug-ins/common/file-xwd.c:654
+#: plug-ins/common/file-xwd.c:641
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -6479,34 +6475,34 @@ msgid ""
 msgstr ""
 "XWD 文件 %s 的格式为 %d，深度为 %d，单位像素的位数为 %d。目前还不支持。"
 
-#: plug-ins/common/file-xwd.c:685
+#: plug-ins/common/file-xwd.c:672
 msgid "Cannot export images with alpha channels."
 msgstr "无法导出带有透明通道的图像。"
 
-#: plug-ins/common/file-xwd.c:708
+#: plug-ins/common/file-xwd.c:695
 #, c-format
 msgid "Could not open '%s' for writing: "
 msgstr "无法打开“%s”并写入："
 
-#: plug-ins/common/file-xwd.c:735
+#: plug-ins/common/file-xwd.c:722
 #, c-format
 msgid "Error exporting '%s': "
 msgstr "导出“%s”时出错："
 
 # 告译者：这里指 fseek() 函数调用出错
-#: plug-ins/common/file-xwd.c:942 plug-ins/common/file-xwd.c:976
-#: plug-ins/common/file-xwd.c:1013
+#: plug-ins/common/file-xwd.c:929 plug-ins/common/file-xwd.c:963
+#: plug-ins/common/file-xwd.c:1000
 #, c-format
 msgid "Seek error"
 msgstr "Seek 错误"
 
-#: plug-ins/common/file-xwd.c:1865 plug-ins/common/file-xwd.c:2116
-#: plug-ins/common/file-xwd.c:2311
+#: plug-ins/common/file-xwd.c:1852 plug-ins/common/file-xwd.c:2103
+#: plug-ins/common/file-xwd.c:2298
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "XWD 文件“%s”已损坏。"
 
-#: plug-ins/common/file-xwd.c:2064
+#: plug-ins/common/file-xwd.c:2051
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6845,7 +6841,7 @@ msgstr "创建新图层(_N)"
 msgid "Create a new layer"
 msgstr "创建一个新的图层"
 
-#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:662
+#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:661
 msgid "Hot"
 msgstr "热点"
 
@@ -7190,7 +7186,7 @@ msgid "G-Qbist"
 msgstr "量子贝叶斯"
 
 #: plug-ins/common/qbist.c:989
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:714
 msgid "_Undo"
 msgstr "撤消(_U)"
 
@@ -7519,41 +7515,40 @@ msgid "Draw a border of spikes around the image"
 msgstr "在图像的边缘处添加闪光边框"
 
 #: plug-ins/common/sparkle.c:271
-msgid "Color type"
-msgstr "颜色类型"
+msgid "_Color type"
+msgstr "颜色类型(_C)"
 
 #: plug-ins/common/sparkle.c:272
-msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
-msgstr "闪光的颜色：{自然（0），前景（1），背景（2）}"
+msgid "Color of sparkles"
+msgstr "闪耀的颜色"
 
-#: plug-ins/common/sparkle.c:314
-msgid "Region selected for filter is empty"
-msgstr "为滤镜选中的范围是空的"
-
-#: plug-ins/common/sparkle.c:329
-msgid "Sparkling"
-msgstr "闪耀"
-
-#: plug-ins/common/sparkle.c:362
-msgid "Sparkle"
-msgstr "闪耀"
-
-#: plug-ins/common/sparkle.c:412
-msgid "Additional Options"
-msgstr "附加选项"
-
-#. colortype
-#: plug-ins/common/sparkle.c:419
+#: plug-ins/common/sparkle.c:273
 msgid "Natural color"
 msgstr "自然色"
 
-#: plug-ins/common/sparkle.c:420
+#: plug-ins/common/sparkle.c:274
 msgid "Foreground color"
 msgstr "前景色"
 
-#: plug-ins/common/sparkle.c:421
+#: plug-ins/common/sparkle.c:275
 msgid "Background color"
 msgstr "背景色"
+
+#: plug-ins/common/sparkle.c:317
+msgid "Region selected for filter is empty"
+msgstr "为滤镜选中的范围是空的"
+
+#: plug-ins/common/sparkle.c:332
+msgid "Sparkling"
+msgstr "闪耀"
+
+#: plug-ins/common/sparkle.c:364
+msgid "Sparkle"
+msgstr "闪耀"
+
+#: plug-ins/common/sparkle.c:408
+msgid "Additional Options"
+msgstr "附加选项"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:173
 msgid "Solid"
@@ -7645,8 +7640,8 @@ msgid "D_uplicate"
 msgstr "再制(_U)"
 
 #: plug-ins/common/sphere-designer.c:2774
-#: plug-ins/fractal-explorer/fractal-explorer.c:887
-#: plug-ins/fractal-explorer/fractal-explorer.c:1357
+#: plug-ins/fractal-explorer/fractal-explorer.c:889
+#: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
 #: plug-ins/gradient-flare/gradient-flare.c:3048
 #: plug-ins/gradient-flare/gradient-flare.c:3331
@@ -7840,7 +7835,7 @@ msgid "Col_umn:"
 msgstr "列(_U)："
 
 #: plug-ins/common/tile-small.c:629
-#: plug-ins/fractal-explorer/fractal-explorer.c:1346
+#: plug-ins/fractal-explorer/fractal-explorer.c:1348
 #: plug-ins/gimpressionist/orientmap.c:527
 #: plug-ins/gimpressionist/presets.c:1064 plug-ins/gimpressionist/sizemap.c:400
 #: plug-ins/imagemap/imap_default_dialog.c:103
@@ -7947,7 +7942,7 @@ msgstr "单位编辑器"
 #. destroy model automatically with view
 #. Put buttons in
 #: plug-ins/common/unit-editor.c:251
-#: plug-ins/fractal-explorer/fractal-explorer.c:1335
+#: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "刷新(_R)"
@@ -9170,23 +9165,23 @@ msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr "FITS 导出无法处理带透明通道的图像类型。"
 
-#: plug-ins/file-fits/fits.c:398
+#: plug-ins/file-fits/fits.c:391
 msgid "Error during opening of FITS file"
 msgstr "打开 FITS 文件时出错"
 
-#: plug-ins/file-fits/fits.c:411 plug-ins/file-fits/fits.c:617
+#: plug-ins/file-fits/fits.c:404 plug-ins/file-fits/fits.c:610
 msgid "FITS file keeps no displayable images"
 msgstr "FITS 文件没有包含可显示图像"
 
-#: plug-ins/file-fits/fits.c:509
+#: plug-ins/file-fits/fits.c:502
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:647
+#: plug-ins/file-fits/fits.c:640
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS 导出无法处理带透明通道的图像"
 
-#: plug-ins/file-fits/fits.c:1012
+#: plug-ins/file-fits/fits.c:1005
 msgid "Open FITS File"
 msgstr "打开 FITS 文件"
 
@@ -9351,17 +9346,17 @@ msgstr "从该帧开始导出"
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr "到该帧结束导出（或 -1 导出全部帧）"
 
-#: plug-ins/file-fli/fli-gimp.c:569
+#: plug-ins/file-fli/fli-gimp.c:560
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "第 %d 帧（%ums）"
 
-#: plug-ins/file-fli/fli-gimp.c:596
+#: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "读取第 %d 帧失败。动画可能已损坏。\n"
 
-#: plug-ins/file-fli/fli-gimp.c:928
+#: plug-ins/file-fli/fli-gimp.c:919
 msgid "Open FLIC Animation"
 msgstr "打开 FLIC 动画"
 
@@ -10018,11 +10013,11 @@ msgstr "如果在原始导入时附加了双色调颜色空间信息则导出为
 msgid "Import PSD"
 msgstr "导入 PSD"
 
-#: plug-ins/file-psd/psd.c:528
+#: plug-ins/file-psd/psd.c:519
 msgid "Import PSD metadata"
 msgstr "导入 PSD 元数据"
 
-#: plug-ins/file-psd/psd.c:532
+#: plug-ins/file-psd/psd.c:523
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr "不支持元数据填充图层且将会显示为空白图层。"
@@ -10183,40 +10178,40 @@ msgstr "压缩类型(_T)"
 msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
 msgstr "压缩级别（0 = 无，1 = RLE，2 = ARLE）"
 
-#: plug-ins/file-sgi/sgi.c:322
+#: plug-ins/file-sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "无法打开“%s”并读取。"
 
-#: plug-ins/file-sgi/sgi.c:338
+#: plug-ins/file-sgi/sgi.c:329
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "无效的宽度：%hu"
 
-#: plug-ins/file-sgi/sgi.c:346
+#: plug-ins/file-sgi/sgi.c:337
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "无效的高度：%hu"
 
-#: plug-ins/file-sgi/sgi.c:354
+#: plug-ins/file-sgi/sgi.c:345
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "无效的通道数：%hu"
 
-#: plug-ins/file-sgi/sgi.c:635
+#: plug-ins/file-sgi/sgi.c:626
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "无法打开“%s”并写入。"
 
-#: plug-ins/file-sgi/sgi.c:725
+#: plug-ins/file-sgi/sgi.c:716
 msgid "No compression"
 msgstr "无压缩"
 
-#: plug-ins/file-sgi/sgi.c:727
+#: plug-ins/file-sgi/sgi.c:718
 msgid "RLE compression"
 msgstr "RLE 压缩"
 
-#: plug-ins/file-sgi/sgi.c:729
+#: plug-ins/file-sgi/sgi.c:720
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "侵略性 RLE（不被 SGI 支持）"
 
@@ -10326,7 +10321,7 @@ msgstr "保存 GeoTIFF 数据(_G)"
 msgid "Save GeoTIFF data"
 msgstr "保存 GeoTIFF 数据"
 
-#: plug-ins/file-tiff/file-tiff.c:452
+#: plug-ins/file-tiff/file-tiff.c:444
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr "尝试导出多个图层时未设置“保存图层”选项。"
@@ -10961,9 +10956,9 @@ msgstr "指数"
 msgid "Power"
 msgstr "幂值"
 
-#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:343
-#: plug-ins/fractal-explorer/fractal-explorer.c:353
-#: plug-ins/fractal-explorer/fractal-explorer.c:363
+#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:345
+#: plug-ins/fractal-explorer/fractal-explorer.c:355
+#: plug-ins/fractal-explorer/fractal-explorer.c:365
 msgid "Cosine"
 msgstr "余弦"
 
@@ -11033,7 +11028,7 @@ msgstr "渲染(_R)"
 msgid "C_amera"
 msgstr "相机(_A)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:596
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:595
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
 #, c-format
@@ -11048,113 +11043,105 @@ msgstr ""
 "（%s \"%s\"）\n"
 "到您的 %s 文件。"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:612
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:611
 msgid "Fractal Explorer"
 msgstr "分形探索器"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:661
 msgid "Re_altime preview"
 msgstr "实时预览(_A)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "如果启用预览将会自动重绘"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:673
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:672
 msgid "R_edraw preview"
 msgstr "重绘预览(_E)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
 msgid "Zoom _In"
 msgstr "放大(_I)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:701
 msgid "Zoom _Out"
 msgstr "缩小(_O)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:718
 msgid "Undo last zoom change"
 msgstr "撤消上次缩放变化"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:725
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:724
 msgid "_Redo"
 msgstr "重做(_R)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:729
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:728
 msgid "Redo last zoom change"
 msgstr "重做上次缩放变化"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:737
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:736
 msgid "_Parameters"
 msgstr "参数(_P)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:738
 msgid "_Colors"
 msgstr "颜色(_C)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:741
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
 msgid "_Fractals"
 msgstr "分形(_F)"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:759
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:758
 msgid "Fractal Parameters"
 msgstr "分形参数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:772
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:771
 msgid "Fractal Type"
 msgstr "分形类型"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 msgid "Load a fractal from file"
 msgstr "从文件加载分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:810
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
 msgid "Save active fractal to file"
 msgstr "保存活动分形到文件"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:862
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:861
 msgid "Color Density"
 msgstr "颜色密度"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:876
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:875
 msgid "Color Function"
 msgstr "颜色函数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
-msgid "As specified above"
-msgstr "如上设定"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:933
-msgid "Apply active gradient to final image"
-msgstr "将活动渐变应用到最终图像"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:951
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:947
 msgid "FractalExplorer Gradient"
 msgstr "分形探索器渐变"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
 msgid "Presets"
 msgstr "预设"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1438
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1434
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "无法写入“%s”：%s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
 msgid "Load Fractal Parameters"
 msgstr "加载分形参数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
 msgid "Save Fractal Parameters"
 msgstr "保存分形参数"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1792
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1788
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "“%s”不是一个分形探索器文件"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1799
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1795
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "“%s”已损坏。第 %d 行选项部分错误"
@@ -11271,125 +11258,131 @@ msgid "Color mode"
 msgstr "色彩模式"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
-msgid ""
-"0: Apply colormap as specified by the parameters above; 1: Apply active "
-"gradient to final image"
-msgstr "0：应用通过上面参数指定的颜色表；1：应用活动渐变至最终图像"
+msgid "Apply specified color map or active gradient to final image"
+msgstr "对最终图像应用指定色彩映射或活动渐变"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:322
+#: plug-ins/fractal-explorer/fractal-explorer.c:317
+msgid "As specified above"
+msgstr "如上设定"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:318
+msgid "Apply active gradient to final image"
+msgstr "将活动渐变应用到最终图像"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:324
 msgid "Red stretch"
 msgstr "红色拉伸"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:323
+#: plug-ins/fractal-explorer/fractal-explorer.c:325
 msgid "Red stretching factor"
 msgstr "红色拉伸系数"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:328
+#: plug-ins/fractal-explorer/fractal-explorer.c:330
 msgid "Green stretch"
 msgstr "绿色拉伸"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:329
+#: plug-ins/fractal-explorer/fractal-explorer.c:331
 msgid "Green stretching factor"
 msgstr "绿色拉伸系数"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:334
+#: plug-ins/fractal-explorer/fractal-explorer.c:336
 msgid "Blue stretch"
 msgstr "蓝色拉伸"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:335
+#: plug-ins/fractal-explorer/fractal-explorer.c:337
 msgid "Blue stretching factor"
 msgstr "蓝色拉伸系数"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:340
+#: plug-ins/fractal-explorer/fractal-explorer.c:342
 msgid "_Red"
 msgstr "红色(_R)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:341
+#: plug-ins/fractal-explorer/fractal-explorer.c:343
 msgid "Red application mode"
 msgstr "红色应用模式"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:342
-#: plug-ins/fractal-explorer/fractal-explorer.c:352
-#: plug-ins/fractal-explorer/fractal-explorer.c:362
+#: plug-ins/fractal-explorer/fractal-explorer.c:344
+#: plug-ins/fractal-explorer/fractal-explorer.c:354
+#: plug-ins/fractal-explorer/fractal-explorer.c:364
 msgid "Sine"
 msgstr "正弦"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:350
+#: plug-ins/fractal-explorer/fractal-explorer.c:352
 msgid "_Green"
 msgstr "绿色(_G)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:351
+#: plug-ins/fractal-explorer/fractal-explorer.c:353
 msgid "Green application mode"
 msgstr "绿色应用模式"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:360
+#: plug-ins/fractal-explorer/fractal-explorer.c:362
 msgid "_Blue"
 msgstr "蓝色(_B)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:361
+#: plug-ins/fractal-explorer/fractal-explorer.c:363
 msgid "Blue application mode"
 msgstr "蓝色应用模式"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:370
+#: plug-ins/fractal-explorer/fractal-explorer.c:372
 msgid "In_version"
 msgstr "反转(_V)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:371
+#: plug-ins/fractal-explorer/fractal-explorer.c:373
 msgid "Red inversion mode"
 msgstr "红色反转模式"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:376
+#: plug-ins/fractal-explorer/fractal-explorer.c:378
 msgid "I_nversion"
 msgstr "反转(_N)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:377
+#: plug-ins/fractal-explorer/fractal-explorer.c:379
 msgid "Green inversion mode"
 msgstr "绿色反转模式"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:382
+#: plug-ins/fractal-explorer/fractal-explorer.c:384
 msgid "_Inversion"
 msgstr "反转(_I)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:383
+#: plug-ins/fractal-explorer/fractal-explorer.c:385
 msgid "Blue inversion mode"
 msgstr "蓝色反转模式"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:388
+#: plug-ins/fractal-explorer/fractal-explorer.c:390
 msgid "_Number of colors"
 msgstr "颜色数量(_N)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:389
+#: plug-ins/fractal-explorer/fractal-explorer.c:391
 msgid "Number of Colors for mapping"
 msgstr "用于映射的颜色数量"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:393
+#: plug-ins/fractal-explorer/fractal-explorer.c:395
 msgid "_Use log log smoothing"
 msgstr "使用双对数平滑(_U)"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:394
+#: plug-ins/fractal-explorer/fractal-explorer.c:396
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr "使用双对数平滑以消除结果中的“色带”"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:493
+#: plug-ins/fractal-explorer/fractal-explorer.c:495
 msgid "Rendering fractal"
 msgstr "渲染分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:878
+#: plug-ins/fractal-explorer/fractal-explorer.c:880
 #: plug-ins/gradient-flare/gradient-flare.c:3322
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "您确认要从列表和磁盘中删除“%s”吗？"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:882
+#: plug-ins/fractal-explorer/fractal-explorer.c:884
 msgid "Delete Fractal"
 msgstr "删除分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1180
+#: plug-ins/fractal-explorer/fractal-explorer.c:1182
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "文件“%s”不是一个分形探索器文件"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1190
+#: plug-ins/fractal-explorer/fractal-explorer.c:1192
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -11398,27 +11391,27 @@ msgstr ""
 "文件“%s”已损坏。\n"
 "第 %d 行选项部分错误"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1276
+#: plug-ins/fractal-explorer/fractal-explorer.c:1278
 msgid "My first fractal"
 msgstr "我的第一个分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1340
+#: plug-ins/fractal-explorer/fractal-explorer.c:1342
 msgid "Select folder and rescan collection"
 msgstr "选择文件夹并重新扫描集合"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1351
+#: plug-ins/fractal-explorer/fractal-explorer.c:1353
 msgid "Apply currently selected fractal"
 msgstr "应用当前选中的分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1362
+#: plug-ins/fractal-explorer/fractal-explorer.c:1364
 msgid "Delete currently selected fractal"
 msgstr "删除当前选中的分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1385
+#: plug-ins/fractal-explorer/fractal-explorer.c:1387
 msgid "Rescan for Fractals"
 msgstr "重新查找分形"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1404
+#: plug-ins/fractal-explorer/fractal-explorer.c:1406
 msgid "Add FractalExplorer Path"
 msgstr "添加分形探索器路径"
 
@@ -15957,6 +15950,17 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "S_tandard"
+#~ msgstr "标准(_T)"
+
+#~ msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
+#~ msgstr "闪光的颜色：{自然（0），前景（1），背景（2）}"
+
+#~ msgid ""
+#~ "0: Apply colormap as specified by the parameters above; 1: Apply active "
+#~ "gradient to final image"
+#~ msgstr "0：应用通过上面参数指定的颜色表；1：应用活动渐变至最终图像"
 
 #~ msgid "Orientation"
 #~ msgstr "方向"
