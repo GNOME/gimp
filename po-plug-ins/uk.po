@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-14 10:50+0000\n"
-"PO-Revision-Date: 2024-07-15 09:07+0300\n"
-"Last-Translator: Fracture dept <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"POT-Creation-Date: 2024-07-15 18:12+0000\n"
+"PO-Revision-Date: 2024-07-16 08:48+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,11 +39,11 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
-#: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
+#: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:303
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:244
 #: plug-ins/common/warp.c:346 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
@@ -65,16 +65,16 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1803 plug-ins/common/curve-bend.c:1838
-#: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
+#: plug-ins/common/file-gif-export.c:1198 plug-ins/common/file-heif.c:2263
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1560
-#: plug-ins/fractal-explorer/fractal-explorer.c:887
-#: plug-ins/fractal-explorer/fractal-explorer.c:1390
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer.c:889
+#: plug-ins/fractal-explorer/fractal-explorer.c:1392
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:777
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
@@ -142,11 +142,11 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
+#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -323,9 +323,9 @@ msgstr "Вирівнювання видимих шарів"
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
-#: plug-ins/fractal-explorer/fractal-explorer.c:344
-#: plug-ins/fractal-explorer/fractal-explorer.c:354
-#: plug-ins/fractal-explorer/fractal-explorer.c:364
+#: plug-ins/fractal-explorer/fractal-explorer.c:346
+#: plug-ins/fractal-explorer/fractal-explorer.c:356
+#: plug-ins/fractal-explorer/fractal-explorer.c:366
 #: plug-ins/lighting/lighting-main.c:214 plug-ins/lighting/lighting-main.c:337
 #: plug-ins/lighting/lighting-main.c:396 plug-ins/lighting/lighting-main.c:455
 #: plug-ins/lighting/lighting-main.c:514 plug-ins/lighting/lighting-main.c:573
@@ -509,7 +509,7 @@ msgstr "Від’єднати"
 
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:681
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Масштаб"
@@ -531,11 +531,11 @@ msgstr "Швидкість відтворення"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1343
+#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1342
 msgid "Cumulative layers (combine)"
 msgstr "Накладання шарів (об'єднання)"
 
-#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1345
+#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1344
 msgid "One frame per layer (replace)"
 msgstr "Один кадр на шар (заміна)"
 
@@ -616,23 +616,23 @@ msgstr "Жалюзі"
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/common/blinds.c:262 plug-ins/common/compose.c:1183
-#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:476
-#: plug-ins/common/file-cel.c:481 plug-ins/common/file-dicom.c:732
-#: plug-ins/common/file-farbfeld.c:302 plug-ins/common/file-gegl.c:452
+#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:466
+#: plug-ins/common/file-cel.c:471 plug-ins/common/file-dicom.c:723
+#: plug-ins/common/file-farbfeld.c:291 plug-ins/common/file-gegl.c:441
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:717
-#: plug-ins/common/file-pcx.c:725 plug-ins/common/file-pcx.c:733
-#: plug-ins/common/file-pix.c:437 plug-ins/common/file-png.c:925
-#: plug-ins/common/file-pnm.c:853 plug-ins/common/file-qoi.c:304
-#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1061
-#: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
-#: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:706
+#: plug-ins/common/file-pcx.c:714 plug-ins/common/file-pcx.c:722
+#: plug-ins/common/file-pix.c:426 plug-ins/common/file-png.c:916
+#: plug-ins/common/file-pnm.c:844 plug-ins/common/file-qoi.c:293
+#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1054
+#: plug-ins/common/file-tga.c:1088 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-xbm.c:882 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:690
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:683
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:455
+#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
@@ -688,7 +688,7 @@ msgid "Border Size"
 msgstr "Розмір рамки"
 
 #: plug-ins/common/border-average.c:433
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
 
@@ -850,7 +850,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (x < 0.5)"
 
-#: plug-ins/common/cml-explorer.c:201
+#: plug-ins/common/cml-explorer.c:201 plug-ins/common/file-sunras.c:325
 msgid "Standard"
 msgstr "Стандарт"
 
@@ -1006,12 +1006,12 @@ msgstr "База випадковості"
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1452 plug-ins/common/cml-explorer.c:2353
 #: plug-ins/common/curve-bend.c:1266 plug-ins/common/curve-bend.c:1804
-#: plug-ins/common/file-cel.c:990 plug-ins/common/qbist.c:842
+#: plug-ins/common/file-cel.c:980 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1242
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1519
 #: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1026,8 +1026,8 @@ msgstr "_Відкрити"
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1250
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:803
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1557
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2604 plug-ins/imagemap/imap_file.c:129
@@ -1208,19 +1208,19 @@ msgid "Save CML Explorer Parameters"
 msgstr "Збереження параметрів CML Explorer"
 
 #: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:787
-#: plug-ins/common/file-dicom.c:1545 plug-ins/common/file-farbfeld.c:361
-#: plug-ins/common/file-mng.c:864 plug-ins/common/file-mng.c:1214
-#: plug-ins/common/file-pcx.c:1192 plug-ins/common/file-pdf-export.c:663
-#: plug-ins/common/file-png.c:1495 plug-ins/common/file-raw-data.c:1358
-#: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1218 plug-ins/common/file-xmc.c:1277
+#: plug-ins/common/file-dicom.c:1536 plug-ins/common/file-farbfeld.c:350
+#: plug-ins/common/file-mng.c:860 plug-ins/common/file-mng.c:1210
+#: plug-ins/common/file-pcx.c:1181 plug-ins/common/file-pdf-export.c:663
+#: plug-ins/common/file-png.c:1486 plug-ins/common/file-raw-data.c:1358
+#: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:609
+#: plug-ins/common/file-tga.c:1209 plug-ins/common/file-xmc.c:1267
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
-#: plug-ins/file-fli/fli-gimp.c:800 plug-ins/file-icns/file-icns-export.c:427
+#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:427
 #: plug-ins/file-ico/ico-export.c:1343 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
 #: plug-ins/file-tiff/file-tiff-export.c:1084
 #: plug-ins/file-tiff/file-tiff-export.c:1173 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1424
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2463
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -1462,7 +1462,7 @@ msgstr "_Redness cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2442
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2424
 msgid "RGB"
 msgstr "RGB"
 
@@ -1875,7 +1875,6 @@ msgid "Copy the drawable and bend the copy"
 msgstr "Копіювати малюнок і нахилити копію"
 
 #: plug-ins/common/curve-bend.c:451
-#| msgid "Curve Type"
 msgid "Cur_ve Type"
 msgstr "Тип к_ривої"
 
@@ -1883,20 +1882,18 @@ msgstr "Тип к_ривої"
 msgid ""
 "Whether to use Smooth (17 points) or Freehand (256 points) to draw the curve"
 msgstr ""
-"Визначає, слід використовувати згладжену (17 точок) чи довільну (256 точок)"
-" форму малювання кривої"
+"Визначає, слід використовувати згладжену (17 точок) чи довільну (256 точок) "
+"форму малювання кривої"
 
 #: plug-ins/common/curve-bend.c:454
 msgid "Smooth"
 msgstr "Згладжена"
 
 #: plug-ins/common/curve-bend.c:455
-#| msgid "Free"
 msgid "Freehand"
 msgstr "Довільна"
 
 #: plug-ins/common/curve-bend.c:461
-#| msgid "Curve for Border"
 msgid "Curve for _Border"
 msgstr "Крива для _межі"
 
@@ -1990,31 +1987,31 @@ msgstr "Не можна використовувати на шарах з мас
 msgid "Cannot operate on empty selections."
 msgstr "Неможливо виконувати дії з порожнім виділенням."
 
-#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:331
-#: plug-ins/common/file-cel.c:383 plug-ins/common/file-dicom.c:364
-#: plug-ins/common/file-farbfeld.c:279 plug-ins/common/file-gif-load.c:416
-#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1398
-#: plug-ins/common/file-pcx.c:496 plug-ins/common/file-pcx.c:539
-#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1165
-#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2625
-#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-qoi.c:283
+#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:321
+#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:355
+#: plug-ins/common/file-farbfeld.c:268 plug-ins/common/file-gif-load.c:416
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1394
+#: plug-ins/common/file-pcx.c:485 plug-ins/common/file-pcx.c:528
+#: plug-ins/common/file-png.c:634 plug-ins/common/file-ps.c:1154
+#: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
+#: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:540
-#: plug-ins/common/file-tga.c:428 plug-ins/common/file-wbmp.c:188
-#: plug-ins/common/file-xbm.c:730 plug-ins/common/file-xmc.c:661
-#: plug-ins/common/file-xmc.c:900 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
+#: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
+#: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
 #: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:385 plug-ins/file-fli/fli-gimp.c:441
-#: plug-ins/file-fli/fli-gimp.c:492 plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-fits/fits.c:378 plug-ins/file-fli/fli-gimp.c:432
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
 #: plug-ins/file-psd/psd-export.c:2224 plug-ins/file-psd/psd-load.c:180
 #: plug-ins/file-psd/psd-load.c:185 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
-#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1780
+#: plug-ins/fractal-explorer/fractal-explorer.c:1161 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
 #, c-format
@@ -2204,17 +2201,17 @@ msgid "redness-cr709"
 msgstr "redness-cr709"
 
 #: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:880
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:879
 msgid "Red"
 msgstr "Червоний"
 
 #: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:893
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:892
 msgid "Green"
 msgstr "Зелений"
 
 #: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:905
 msgid "Blue"
 msgstr "Синій"
 
@@ -2567,8 +2564,8 @@ msgstr "Завантаження палітри KISS"
 msgid "This KISS CEL image requires a palette file."
 msgstr "Для цього зображення CEL KISS потрібен файл палітри."
 
-#: plug-ins/common/file-cel.c:343 plug-ins/common/file-cel.c:395
-#: plug-ins/common/file-cel.c:416
+#: plug-ins/common/file-cel.c:333 plug-ins/common/file-cel.c:385
+#: plug-ins/common/file-cel.c:406
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "Кінець файлу або помилка при читанні заголовка зображення"
@@ -2592,39 +2589,39 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #. * Open the file for reading...
 #.
-#: plug-ins/common/file-cel.c:374 plug-ins/common/file-dicom.c:356
-#: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
-#: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pcx.c:531
-#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
-#: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:698
-#: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
-#: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
+#: plug-ins/common/file-cel.c:364 plug-ins/common/file-dicom.c:347
+#: plug-ins/common/file-gegl.c:328 plug-ins/common/file-gif-load.c:408
+#: plug-ins/common/file-heif.c:834 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-pcx.c:477 plug-ins/common/file-pcx.c:520
+#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:363
+#: plug-ins/common/file-png.c:626 plug-ins/common/file-pnm.c:689
+#: plug-ins/common/file-ps.c:1144 plug-ins/common/file-raw-data.c:1682
+#: plug-ins/common/file-sunras.c:422 plug-ins/common/file-tga.c:411
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:722 plug-ins/common/file-xmc.c:651
-#: plug-ins/common/file-xpm.c:365 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/file-xbm.c:712 plug-ins/common/file-xmc.c:641
+#: plug-ins/common/file-xpm.c:356 plug-ins/common/file-xwd.c:452
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
-#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:484
+#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:475
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
-#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:314
+#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
 #: plug-ins/file-tiff/file-tiff-load.c:293
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
 
-#: plug-ins/common/file-cel.c:425
+#: plug-ins/common/file-cel.c:415
 #, c-format
 msgid "is not a CEL image file"
 msgstr "не є файлом зображення CEL"
 
-#: plug-ins/common/file-cel.c:440
+#: plug-ins/common/file-cel.c:430
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "недопустиме значення БНП в зображенні: %hhu"
 
-#: plug-ins/common/file-cel.c:455
+#: plug-ins/common/file-cel.c:445
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -2633,39 +2630,39 @@ msgstr ""
 "хибні розміри зображення: ширина: %d, горизонтальне зміщення: %d, висота: "
 "%d, вертикальне зміщення: %d"
 
-#: plug-ins/common/file-cel.c:469
+#: plug-ins/common/file-cel.c:459
 #, c-format
 msgid "Can't create a new image"
 msgstr "Не вдається створити нове зображення"
 
-#: plug-ins/common/file-cel.c:506 plug-ins/common/file-cel.c:543
-#: plug-ins/common/file-cel.c:569
+#: plug-ins/common/file-cel.c:496 plug-ins/common/file-cel.c:533
+#: plug-ins/common/file-cel.c:559
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "Кінець файлу або помилка при читанні даних зображення"
 
-#: plug-ins/common/file-cel.c:587
+#: plug-ins/common/file-cel.c:577
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Непідтримувана кількість кольорів (%d)!"
 
-#: plug-ins/common/file-cel.c:674
+#: plug-ins/common/file-cel.c:664
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "«%s»: не є файлом палітри KCF"
 
-#: plug-ins/common/file-cel.c:684
+#: plug-ins/common/file-cel.c:674
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "«%s»: недопустиме значення БНП в палітрі: %hhu"
 
-#: plug-ins/common/file-cel.c:694
+#: plug-ins/common/file-cel.c:684
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "«%s»: хибне число кольорів: %u"
 
-#: plug-ins/common/file-cel.c:710 plug-ins/common/file-cel.c:738
-#: plug-ins/common/file-cel.c:769
+#: plug-ins/common/file-cel.c:700 plug-ins/common/file-cel.c:728
+#: plug-ins/common/file-cel.c:759
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "«%s»: Кінець файлу або помилка при читанні даних палітри"
@@ -2674,19 +2671,19 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:826 plug-ins/common/file-farbfeld.c:353
-#: plug-ins/common/file-gif-export.c:952 plug-ins/common/file-html-table.c:347
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1076
-#: plug-ins/common/file-pix.c:642 plug-ins/common/file-png.c:1487
-#: plug-ins/common/file-pnm.c:1618 plug-ins/common/file-ps.c:1376
-#: plug-ins/common/file-qoi.c:358 plug-ins/common/file-sunras.c:607
-#: plug-ins/common/file-tga.c:1210 plug-ins/common/file-xbm.c:1031
-#: plug-ins/common/file-xpm.c:686 plug-ins/common/file-xwd.c:701
-#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:663
-#: plug-ins/file-fli/fli-gimp.c:767 plug-ins/file-icns/file-icns-export.c:610
+#: plug-ins/common/file-cel.c:816 plug-ins/common/file-farbfeld.c:342
+#: plug-ins/common/file-gif-export.c:951 plug-ins/common/file-html-table.c:347
+#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1065
+#: plug-ins/common/file-pix.c:631 plug-ins/common/file-png.c:1478
+#: plug-ins/common/file-pnm.c:1609 plug-ins/common/file-ps.c:1365
+#: plug-ins/common/file-qoi.c:347 plug-ins/common/file-sunras.c:600
+#: plug-ins/common/file-tga.c:1201 plug-ins/common/file-xbm.c:1021
+#: plug-ins/common/file-xpm.c:677 plug-ins/common/file-xwd.c:688
+#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:656
+#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:610
 #: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
-#: plug-ins/file-sgi/sgi.c:626 plug-ins/file-tiff/file-tiff-export.c:1074
+#: plug-ins/file-sgi/sgi.c:617 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2822,29 +2819,29 @@ msgstr "Зображення DICOM"
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Зображення формату Digital Imaging and Communications in Medicine"
 
-#: plug-ins/common/file-dicom.c:390
+#: plug-ins/common/file-dicom.c:381
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "«%s»: не DICOM файлом"
 
-#: plug-ins/common/file-dicom.c:563
+#: plug-ins/common/file-dicom.c:554
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "У GIMP не передбачено підтримки перехідного синтаксису %s."
 
-#: plug-ins/common/file-dicom.c:618
+#: plug-ins/common/file-dicom.c:609
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr ""
 "Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на "
 "піксель %d"
 
-#: plug-ins/common/file-dicom.c:1510
+#: plug-ins/common/file-dicom.c:1501
 msgid "Cannot save images with alpha channel."
 msgstr "Неможливо зберегти зображення з альфа-каналом."
 
-#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1371
-#: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:658
+#: plug-ins/common/file-dicom.c:1520 plug-ins/common/file-ps.c:1360
+#: plug-ins/common/file-xwd.c:683 plug-ins/file-fits/fits.c:651
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Не вдається виконати дії із зображеннями невідомого типу."
@@ -2861,12 +2858,12 @@ msgstr "Завантажити файл у форматі Farbfeld"
 msgid "Export image in the Farbfeld file format"
 msgstr "Експортувати зображення у форматі Farbfeld"
 
-#: plug-ins/common/file-farbfeld.c:290
+#: plug-ins/common/file-farbfeld.c:279
 #, c-format
 msgid "Failed to read Farbfeld header"
 msgstr "Не вдалося прочитати заголовок Farbfeld"
 
-#: plug-ins/common/file-farbfeld.c:316
+#: plug-ins/common/file-farbfeld.c:305
 #, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "Передчасне закінчення піксельних даних Farbfeld"
@@ -2912,7 +2909,7 @@ msgstr "Radiance RGBE"
 msgid "OpenEXR image"
 msgstr "Зображення OpenEXR"
 
-#: plug-ins/common/file-gegl.c:362
+#: plug-ins/common/file-gegl.c:351
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Не вдалось відкрити «%s»"
@@ -3028,11 +3025,11 @@ msgstr "_Коментар"
 msgid "Image comment"
 msgstr "Коментар до зображення"
 
-#: plug-ins/common/file-gif-export.c:560
+#: plug-ins/common/file-gif-export.c:559
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Неможливе подальше зменшення кольорів. Експортується як непрозоре."
 
-#: plug-ins/common/file-gif-export.c:679
+#: plug-ins/common/file-gif-export.c:678
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -3041,7 +3038,7 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату GIF не підтримує зображень "
 "шириною чи висотою більше ніж %d точок."
 
-#: plug-ins/common/file-gif-export.c:702
+#: plug-ins/common/file-gif-export.c:701
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -3051,7 +3048,7 @@ msgstr ""
 "бітової цілочисельної точності, оскільки у форматі файлів GIF не передбачено "
 "підтримки більшої точності."
 
-#: plug-ins/common/file-gif-export.c:829
+#: plug-ins/common/file-gif-export.c:828
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3059,20 +3056,20 @@ msgstr ""
 "Формат GIF підтримує коментарі лише у 7-розрядному ASCII. Коментар не "
 "збережений."
 
-#: plug-ins/common/file-gif-export.c:925
+#: plug-ins/common/file-gif-export.c:924
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Не вдається експортувати зображення у формат RGB. Спершу перетворіть його на "
 "індексоване чи у градації сірого."
 
-#: plug-ins/common/file-gif-export.c:1145
+#: plug-ins/common/file-gif-export.c:1144
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Затримка передбачена для запобігання перевантаження процесора складною "
 "анімацією."
 
-#: plug-ins/common/file-gif-export.c:1194
+#: plug-ins/common/file-gif-export.c:1193
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3080,11 +3077,11 @@ msgstr ""
 "Зображення, яке ви намагаєтесь експортувати як GIF містить шари, що виходять "
 "за дійсні межі зображення."
 
-#: plug-ins/common/file-gif-export.c:1200
+#: plug-ins/common/file-gif-export.c:1199
 msgid "Cr_op"
 msgstr "_Обрізати"
 
-#: plug-ins/common/file-gif-export.c:1211
+#: plug-ins/common/file-gif-export.c:1210
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3092,7 +3089,7 @@ msgstr ""
 "Це неприпустимо у форматі GIF. Можна або обрізати всі шари по межі "
 "зображення, або скасувати це експортування."
 
-#: plug-ins/common/file-gif-export.c:1266
+#: plug-ins/common/file-gif-export.c:1265
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3101,19 +3098,19 @@ msgstr ""
 "Ваше зображення буде перетворено при експортуванні, що призведе до зміни "
 "значень пікселів."
 
-#: plug-ins/common/file-gif-export.c:1335 plug-ins/common/file-mng.c:1634
+#: plug-ins/common/file-gif-export.c:1334 plug-ins/common/file-mng.c:1630
 msgid "milliseconds"
 msgstr "мілісекунд"
 
-#: plug-ins/common/file-gif-export.c:1341
+#: plug-ins/common/file-gif-export.c:1340
 msgid "I don't care"
 msgstr "Неважливо"
 
-#: plug-ins/common/file-gif-export.c:1377
+#: plug-ins/common/file-gif-export.c:1376
 msgid "Animated GIF"
 msgstr "Анімаційний GIF"
 
-#: plug-ins/common/file-gif-export.c:1384
+#: plug-ins/common/file-gif-export.c:1383
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3511,78 +3508,78 @@ msgstr "Завантажує зображення HEJ2"
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Завантаження зображення JPEG 2000, яке вбудовано до HEIF (HEJ2)"
 
-#: plug-ins/common/file-heif.c:892 plug-ins/common/file-heif.c:925
-#: plug-ins/common/file-heif.c:966 plug-ins/common/file-heif.c:1028
+#: plug-ins/common/file-heif.c:874 plug-ins/common/file-heif.c:907
+#: plug-ins/common/file-heif.c:948 plug-ins/common/file-heif.c:1010
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:914
+#: plug-ins/common/file-heif.c:896
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: plug-ins/common/file-heif.c:1150
+#: plug-ins/common/file-heif.c:1132
 msgid "image content"
 msgstr "вміст зображення"
 
-#: plug-ins/common/file-heif.c:1489
+#: plug-ins/common/file-heif.c:1471
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Експортуємо «%s» за допомогою кодувальника %s"
 
-#: plug-ins/common/file-heif.c:1537 plug-ins/common/file-heif.c:1922
+#: plug-ins/common/file-heif.c:1519 plug-ins/common/file-heif.c:1904
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2043
+#: plug-ins/common/file-heif.c:2025
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2132
+#: plug-ins/common/file-heif.c:2114
 msgid "primary"
 msgstr "основне"
 
-#: plug-ins/common/file-heif.c:2277
+#: plug-ins/common/file-heif.c:2259
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: plug-ins/common/file-heif.c:2291
+#: plug-ins/common/file-heif.c:2273
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: plug-ins/common/file-heif.c:2443
+#: plug-ins/common/file-heif.c:2425
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2444
+#: plug-ins/common/file-heif.c:2426
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2450 plug-ins/common/file-jpegxl.c:2035
+#: plug-ins/common/file-heif.c:2432 plug-ins/common/file-jpegxl.c:2035
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: plug-ins/common/file-heif.c:2451
+#: plug-ins/common/file-heif.c:2433
 msgid "10 bit/channel"
 msgstr "10 біт/канал"
 
-#: plug-ins/common/file-heif.c:2452
+#: plug-ins/common/file-heif.c:2434
 msgid "12 bit/channel"
 msgstr "12 біт/канал"
 
-#: plug-ins/common/file-heif.c:2458
+#: plug-ins/common/file-heif.c:2440
 msgid "Slow"
 msgstr "Повільно"
 
-#: plug-ins/common/file-heif.c:2459
+#: plug-ins/common/file-heif.c:2441
 msgid "Balanced"
 msgstr "Збалансовано"
 
-#: plug-ins/common/file-heif.c:2460
+#: plug-ins/common/file-heif.c:2442
 msgid "Fast"
 msgstr "Швидко"
 
@@ -4095,52 +4092,52 @@ msgstr "Записати фрагмент tIME (час створення)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:717 plug-ins/common/file-png.c:2320
+#: plug-ins/common/file-mng.c:713 plug-ins/common/file-png.c:2311
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
 
-#: plug-ins/common/file-mng.c:1587
+#: plug-ins/common/file-mng.c:1583
 msgid "MNG Options"
 msgstr "Параметри MNG"
 
-#: plug-ins/common/file-mng.c:1596 plug-ins/common/file-png.c:231
+#: plug-ins/common/file-mng.c:1592 plug-ins/common/file-png.c:231
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-mng.c:1597
+#: plug-ins/common/file-mng.c:1593
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/file-mng.c:1600
+#: plug-ins/common/file-mng.c:1596
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1601
+#: plug-ins/common/file-mng.c:1597
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1602
+#: plug-ins/common/file-mng.c:1598
 msgid "All PNG"
 msgstr "Усі PNG"
 
-#: plug-ins/common/file-mng.c:1603
+#: plug-ins/common/file-mng.c:1599
 msgid "All JNG"
 msgstr "Усі JNG"
 
-#: plug-ins/common/file-mng.c:1611
+#: plug-ins/common/file-mng.c:1607
 msgid "Combine"
 msgstr "Об'єднати"
 
-#: plug-ins/common/file-mng.c:1612
+#: plug-ins/common/file-mng.c:1608
 msgid "Replace"
 msgstr "Замістити"
 
-#: plug-ins/common/file-mng.c:1647
+#: plug-ins/common/file-mng.c:1643
 msgid "Animated MNG Options"
 msgstr "Параметри анімаційного MNG"
 
-#: plug-ins/common/file-mng.c:1657
+#: plug-ins/common/file-mng.c:1653
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -4186,7 +4183,6 @@ msgid "Loads files in Zsoft PCX file format"
 msgstr "Завантажує файли у форматі файлів PCX Zsoft"
 
 #: plug-ins/common/file-pcx.c:222 plug-ins/common/file-pcx.c:256
-#| msgid "Palette Options"
 msgid "_Palette Options"
 msgstr "Параметри п_алітри"
 
@@ -4195,8 +4191,8 @@ msgid ""
 "Whether to use the built-in palette or a black and white palette for 1 bit "
 "images."
 msgstr ""
-"Визначає, слід використовувати вбудовану палітру чи чорно-білу палітру для"
-" 1-бітових зображень."
+"Визначає, слід використовувати вбудовану палітру чи чорно-білу палітру для 1-"
+"бітових зображень."
 
 #: plug-ins/common/file-pcx.c:225 plug-ins/common/file-pcx.c:259
 msgid "Use PCX image's built-in palette"
@@ -4218,103 +4214,103 @@ msgstr "Завантажує файли у форматі DCX Zsoft"
 msgid "Exports files in ZSoft PCX file format"
 msgstr "Експортує файли у форматі файлів PCX ZSoft"
 
-#: plug-ins/common/file-pcx.c:508
+#: plug-ins/common/file-pcx.c:497
 msgid "Could not load PCX image: "
 msgstr "Не вдалося завантажити зображення PCX: "
 
-#: plug-ins/common/file-pcx.c:555
+#: plug-ins/common/file-pcx.c:544
 #, c-format
 msgid "DCX image offset exceeds the file size"
 msgstr "Відступ зображення DCX перевищує розмір файла"
 
-#: plug-ins/common/file-pcx.c:566
+#: plug-ins/common/file-pcx.c:555
 msgid "Could not load DCX image: "
 msgstr "Не вдалося завантажити зображення DCX: "
 
-#: plug-ins/common/file-pcx.c:589
+#: plug-ins/common/file-pcx.c:578
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr "%s: відступ зображення DCX перевищує розмір файла: %s\n"
 
-#: plug-ins/common/file-pcx.c:606
+#: plug-ins/common/file-pcx.c:595
 msgid "Mixed-mode DCX image not loaded"
 msgstr "Зображення DCX у змішаному режимі не завантажено"
 
-#: plug-ins/common/file-pcx.c:613
+#: plug-ins/common/file-pcx.c:602
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: не вдалося завантажити усі зображення DCX: %s\n"
 
-#: plug-ins/common/file-pcx.c:653
+#: plug-ins/common/file-pcx.c:642
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-pcx.c:663
+#: plug-ins/common/file-pcx.c:652
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:668 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: plug-ins/common/file-pcx.c:686 plug-ins/common/file-wbmp.c:269
+#: plug-ins/common/file-pcx.c:675 plug-ins/common/file-wbmp.c:269
 #: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
 
-#: plug-ins/common/file-pcx.c:694
+#: plug-ins/common/file-pcx.c:683
 #, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Некоректна кількість байтів на рядок у заголовку PCX"
 
-#: plug-ins/common/file-pcx.c:700
+#: plug-ins/common/file-pcx.c:689
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Роздільність виходить за межі заголовка XCX, використовуємо 72x72"
 
-#: plug-ins/common/file-pcx.c:709
+#: plug-ins/common/file-pcx.c:698
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Розміри зображення великі: ширина %d x висота %d"
 
-#: plug-ins/common/file-pcx.c:834
+#: plug-ins/common/file-pcx.c:823
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Незвичайний вигляд файлу PCX. Вихід"
 
-#: plug-ins/common/file-pcx.c:859
+#: plug-ins/common/file-pcx.c:848
 msgid "Import from PCX"
 msgstr "Імпорт з PCX"
 
-#: plug-ins/common/file-pcx.c:1143 plug-ins/common/file-pnm.c:1614
+#: plug-ins/common/file-pcx.c:1132 plug-ins/common/file-pnm.c:1605
 msgid "Cannot export images with alpha channel."
 msgstr "Неможливо експортувати зображення з альфа-каналом."
 
-#: plug-ins/common/file-pcx.c:1163
+#: plug-ins/common/file-pcx.c:1152
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некоректний зсув вздовж X: %d"
 
-#: plug-ins/common/file-pcx.c:1169
+#: plug-ins/common/file-pcx.c:1158
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некоректний зсув вздовж Y: %d"
 
-#: plug-ins/common/file-pcx.c:1175
+#: plug-ins/common/file-pcx.c:1164
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Права межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1182
+#: plug-ins/common/file-pcx.c:1171
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1258 plug-ins/common/file-qoi.c:377
+#: plug-ins/common/file-pcx.c:1247 plug-ins/common/file-qoi.c:366
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -4486,7 +4482,7 @@ msgstr "Додати це зображення"
 
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
-#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2225
+#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
 #: plug-ins/file-tiff/file-tiff-load.c:1532
 #, c-format
 msgid "Page %d"
@@ -4594,7 +4590,7 @@ msgstr "Помилка при отриманні числа сторінок з 
 msgid "Alias Pix image"
 msgstr "Зображення Alias Pix"
 
-#: plug-ins/common/file-pix.c:570
+#: plug-ins/common/file-pix.c:559
 #, c-format
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
@@ -4603,7 +4599,7 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла JPEG «%s» для завантаження PIX Esm "
 "Software: %s"
 
-#: plug-ins/common/file-pix.c:588
+#: plug-ins/common/file-pix.c:577
 msgid "Invalid Esm Software PIX file"
 msgstr "Некоректний файл PIX Esm Software"
 
@@ -4712,39 +4708,39 @@ msgstr "16 біт/кан RGBA"
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
-#: plug-ins/common/file-png.c:466
+#: plug-ins/common/file-png.c:457
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Помилка при завантаженні файла PNG: «%s»\n"
 
-#: plug-ins/common/file-png.c:600
+#: plug-ins/common/file-png.c:591
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Помилка створення PNG (читання struct) протягом завантаження «%s»."
 
-#: plug-ins/common/file-png.c:609
+#: plug-ins/common/file-png.c:600
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при читанні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: plug-ins/common/file-png.c:617
+#: plug-ins/common/file-png.c:608
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Помилка при читанні «%s». Файл пошкоджений?"
 
-#: plug-ins/common/file-png.c:877
+#: plug-ins/common/file-png.c:868
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:265
+#: plug-ins/common/file-png.c:881 plug-ins/file-exr/file-exr.c:265
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: plug-ins/common/file-png.c:958
+#: plug-ins/common/file-png.c:949
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4752,19 +4748,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: plug-ins/common/file-png.c:1209
+#: plug-ins/common/file-png.c:1200
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: plug-ins/common/file-png.c:1213
+#: plug-ins/common/file-png.c:1204
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: plug-ins/common/file-png.c:1214
+#: plug-ins/common/file-png.c:1205
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: plug-ins/common/file-png.c:1239
+#: plug-ins/common/file-png.c:1230
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -4773,13 +4769,13 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: plug-ins/common/file-png.c:1452
+#: plug-ins/common/file-png.c:1443
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: plug-ins/common/file-png.c:1461
+#: plug-ins/common/file-png.c:1452
 #, c-format
 msgid ""
 "Error while exporting '%s'. Could not create PNG header info structure."
@@ -4787,7 +4783,7 @@ msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: plug-ins/common/file-png.c:1469
+#: plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
@@ -4824,7 +4820,6 @@ msgstr "Експортування PNM відбувається в усіх ти
 
 #: plug-ins/common/file-pnm.c:371 plug-ins/common/file-pnm.c:410
 #: plug-ins/common/file-pnm.c:449 plug-ins/common/file-pnm.c:488
-#| msgid "Data formatting"
 msgid "_Data formatting"
 msgstr "Фо_рматування даних"
 
@@ -4836,13 +4831,11 @@ msgstr ""
 
 #: plug-ins/common/file-pnm.c:373 plug-ins/common/file-pnm.c:412
 #: plug-ins/common/file-pnm.c:451 plug-ins/common/file-pnm.c:490
-#| msgid "_ASCII"
 msgid "ASCII"
 msgstr "ASCII"
 
 #: plug-ins/common/file-pnm.c:374 plug-ins/common/file-pnm.c:413
 #: plug-ins/common/file-pnm.c:452 plug-ins/common/file-pnm.c:491
-#| msgid "_Raw"
 msgid "Raw"
 msgstr "Без обробки"
 
@@ -4925,75 +4918,75 @@ msgstr "Експортувати зображення у форматі PFM"
 msgid "PFM export handles all images without transparency."
 msgstr "Експортування PFM відбуватиметься без прозорості."
 
-#: plug-ins/common/file-pnm.c:731 plug-ins/common/file-pnm.c:763
-#: plug-ins/common/file-pnm.c:772 plug-ins/common/file-pnm.c:787
-#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1000
-#: plug-ins/common/file-pnm.c:1095 plug-ins/common/file-pnm.c:1180
-#: plug-ins/common/file-pnm.c:1241
+#: plug-ins/common/file-pnm.c:722 plug-ins/common/file-pnm.c:754
+#: plug-ins/common/file-pnm.c:763 plug-ins/common/file-pnm.c:778
+#: plug-ins/common/file-pnm.c:793 plug-ins/common/file-pnm.c:991
+#: plug-ins/common/file-pnm.c:1086 plug-ins/common/file-pnm.c:1171
+#: plug-ins/common/file-pnm.c:1232
 msgid "Premature end of file."
 msgstr "Передчасне закінчення файлу."
 
-#: plug-ins/common/file-pnm.c:733
+#: plug-ins/common/file-pnm.c:724
 msgid "Invalid file."
 msgstr "Неправильний файл."
 
-#: plug-ins/common/file-pnm.c:751
+#: plug-ins/common/file-pnm.c:742
 msgid "File not in a supported format."
 msgstr "Файл має непідтримуваний формат."
 
-#: plug-ins/common/file-pnm.c:766
+#: plug-ins/common/file-pnm.c:757
 msgid "Invalid X resolution."
 msgstr "Неправильна роздільна здатність по X"
 
-#: plug-ins/common/file-pnm.c:768 plug-ins/common/file-pnm.c:934
+#: plug-ins/common/file-pnm.c:759 plug-ins/common/file-pnm.c:925
 msgid "Image width is larger than GIMP can handle."
 msgstr "GIMP не впорається із зображенням такої ширини"
 
-#: plug-ins/common/file-pnm.c:775
+#: plug-ins/common/file-pnm.c:766
 msgid "Invalid Y resolution."
 msgstr "Неправильна роздільна здатність вздовж Y"
 
-#: plug-ins/common/file-pnm.c:777
+#: plug-ins/common/file-pnm.c:768
 msgid "Image height is larger than GIMP can handle."
 msgstr "GIMP не впорається із зображенням такої висоти"
 
-#: plug-ins/common/file-pnm.c:791
+#: plug-ins/common/file-pnm.c:782
 msgid "Bogus scale factor."
 msgstr "Хибний масштаб."
 
-#: plug-ins/common/file-pnm.c:793
+#: plug-ins/common/file-pnm.c:784
 msgid "Unsupported scale factor."
 msgstr "Непідтримуваний коефіцієнт масштабування."
 
-#: plug-ins/common/file-pnm.c:807
+#: plug-ins/common/file-pnm.c:798
 msgid "Unsupported maximum value."
 msgstr "Не підтримується максимальне значення."
 
-#: plug-ins/common/file-pnm.c:928
+#: plug-ins/common/file-pnm.c:919
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: непідтримуваний неофіційний варіант PNM."
 
-#: plug-ins/common/file-pnm.c:932
+#: plug-ins/common/file-pnm.c:923
 msgid "PAM: Premature end of file."
 msgstr "PAM: передчасне завершення файла."
 
-#: plug-ins/common/file-pnm.c:936
+#: plug-ins/common/file-pnm.c:927
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: неправильна роздільна здатність по X."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:929
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: неправильна роздільна здатність вздовж Y."
 
-#: plug-ins/common/file-pnm.c:940
+#: plug-ins/common/file-pnm.c:931
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: некоректне максимальне значення."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:933
 msgid "PAM: Invalid depth."
 msgstr "PAM: некоректна глибина."
 
-#: plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:935
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: непідтримуваний тип кортежу."
 
@@ -5053,7 +5046,7 @@ msgstr "Ч/Б"
 msgid "Gray"
 msgstr "Сірий"
 
-#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:492
+#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:483
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5218,38 +5211,38 @@ msgstr ""
 "Мінімальний розмір попереднього перегляду. Встановіть 0, щоб вимкнути "
 "попередній перегляд."
 
-#: plug-ins/common/file-ps.c:1176
+#: plug-ins/common/file-ps.c:1165
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Не вдається інтерпретувати файл PostScript «%s»"
 
-#: plug-ins/common/file-ps.c:1258
+#: plug-ins/common/file-ps.c:1247
 msgid "Rendered EPS"
 msgstr "Оброблений EPS"
 
-#: plug-ins/common/file-ps.c:1286
+#: plug-ins/common/file-ps.c:1275
 #, c-format
 msgid "%s-pages"
 msgstr "%s-сторінок"
 
-#: plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-ps.c:1347
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як PostScript"
 
-#: plug-ins/common/file-ps.c:3830
+#: plug-ins/common/file-ps.c:3819
 msgid "Pages:"
 msgstr "Сторінки:"
 
-#: plug-ins/common/file-ps.c:3834
+#: plug-ins/common/file-ps.c:3823
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Сторінок для завантаження(наприклад: 1-4 чи 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3840
+#: plug-ins/common/file-ps.c:3829
 msgid "Open as"
 msgstr "Відкрити як"
 
-#: plug-ins/common/file-ps.c:3931
+#: plug-ins/common/file-ps.c:3920
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5257,28 +5250,28 @@ msgstr ""
 "Якщо вибрано, вихідне зображення буде масштабуватись до заповнення вказаного "
 "розміру без зміни пропорцій."
 
-#: plug-ins/common/file-ps.c:3937
+#: plug-ins/common/file-ps.c:3926
 msgid "Image Size"
 msgstr "Розмір зображення"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3957
+#: plug-ins/common/file-ps.c:3946
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3958
+#: plug-ins/common/file-ps.c:3947
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3959
+#: plug-ins/common/file-ps.c:3948
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3960
+#: plug-ins/common/file-ps.c:3949
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3967
+#: plug-ins/common/file-ps.c:3956
 msgid "Output"
 msgstr "Вивід"
 
@@ -5300,12 +5293,10 @@ msgstr ""
 "реалізовано."
 
 #: plug-ins/common/file-psp.c:717
-#| msgid "Data Compression"
 msgid "_Data Compression"
 msgstr "С_тиснення даних"
 
 #: plug-ins/common/file-psp.c:718
-#| msgid "No compression"
 msgid "Type of compression"
 msgstr "Тип стиснення"
 
@@ -5314,7 +5305,6 @@ msgid "none"
 msgstr "немає"
 
 #: plug-ins/common/file-psp.c:720
-#| msgid "red"
 msgid "rle"
 msgstr "RLE"
 
@@ -5322,219 +5312,219 @@ msgstr "RLE"
 msgid "lz77"
 msgstr "lz77"
 
-#: plug-ins/common/file-psp.c:925
+#: plug-ins/common/file-psp.c:915
 #, c-format
 msgid "Error reading block header"
 msgstr "Помилка при читанні заголовка блока"
 
-#: plug-ins/common/file-psp.c:932
+#: plug-ins/common/file-psp.c:922
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Неправильний заголовок блока в %ld"
 
-#: plug-ins/common/file-psp.c:935
+#: plug-ins/common/file-psp.c:925
 #, c-format
 msgid "Invalid block header"
 msgstr "Неправильний заголовок блока"
 
-#: plug-ins/common/file-psp.c:967
+#: plug-ins/common/file-psp.c:957
 #, c-format
 msgid "Seek error: %s"
 msgstr "Помилка пошуку: %s"
 
-#: plug-ins/common/file-psp.c:990
+#: plug-ins/common/file-psp.c:980
 #, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "Некоректний розмір фрагмента загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:1012
+#: plug-ins/common/file-psp.c:1002
 #, c-format
 msgid "Error reading general image attribute block."
 msgstr "Помилка під час читання блоку загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:1027
+#: plug-ins/common/file-psp.c:1017
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "Невідомий тип стискання %d"
 
-#: plug-ins/common/file-psp.c:1063 plug-ins/common/file-psp.c:1070
+#: plug-ins/common/file-psp.c:1053 plug-ins/common/file-psp.c:1060
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
-#: plug-ins/common/file-psp.c:1117
+#: plug-ins/common/file-psp.c:1107
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Помилка зчитування сегменту ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1123
+#: plug-ins/common/file-psp.c:1113
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Хибний заголовок сегменту ключового слова"
 
-#: plug-ins/common/file-psp.c:1138 plug-ins/common/file-psp.c:1165
+#: plug-ins/common/file-psp.c:1128 plug-ins/common/file-psp.c:1155
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Помилка зчитування даних ключового слова розробника"
 
-#: plug-ins/common/file-psp.c:1249 plug-ins/common/file-psp.c:1258
-#: plug-ins/common/file-psp.c:1267
+#: plug-ins/common/file-psp.c:1239 plug-ins/common/file-psp.c:1248
+#: plug-ins/common/file-psp.c:1257
 #, c-format
 msgid "Error reading color block"
 msgstr "Помилка під час читання блоку кольорів"
 
-#: plug-ins/common/file-psp.c:1278
+#: plug-ins/common/file-psp.c:1268
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Помилка: непідтримуваний розмір палітри"
 
-#: plug-ins/common/file-psp.c:1289
+#: plug-ins/common/file-psp.c:1279
 #, c-format
 msgid "Error reading color palette"
 msgstr "Помилка під час читання палітри кольорів"
 
-#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
+#: plug-ins/common/file-psp.c:1705 plug-ins/common/file-psp.c:1719
 #, c-format
 msgid "zlib error"
 msgstr "Помилка zlib"
 
-#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
-#: plug-ins/common/file-psp.c:1836
+#: plug-ins/common/file-psp.c:1782 plug-ins/common/file-psp.c:1816
+#: plug-ins/common/file-psp.c:1826
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Помилка зчитування даних щодо розширення шару"
 
-#: plug-ins/common/file-psp.c:1813
+#: plug-ins/common/file-psp.c:1803
 #, c-format
 msgid "Error reading block information"
 msgstr "Помилка зчитування блокових даних"
 
-#: plug-ins/common/file-psp.c:1893
+#: plug-ins/common/file-psp.c:1883
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Хибний підблок шару %s, має бути LAYER"
 
-#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
+#: plug-ins/common/file-psp.c:1914 plug-ins/common/file-psp.c:1971
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Помилка зчитування інформаційного сегменту шару"
 
-#: plug-ins/common/file-psp.c:2023
+#: plug-ins/common/file-psp.c:2013
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Хибні розміри шару: %dx%d"
 
-#: plug-ins/common/file-psp.c:2084
+#: plug-ins/common/file-psp.c:2074
 #, c-format
 msgid "Error creating layer"
 msgstr "Помилка при створенні шару"
 
-#: plug-ins/common/file-psp.c:2129
+#: plug-ins/common/file-psp.c:2119
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Хибний підблок %s шару, має бути CHANNEL"
 
-#: plug-ins/common/file-psp.c:2145
+#: plug-ins/common/file-psp.c:2135
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Помилка читання фрагмента інформації каналу"
 
-#: plug-ins/common/file-psp.c:2168
+#: plug-ins/common/file-psp.c:2158
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Хибний тип каналу %d у фрагменті інформації каналу"
 
-#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
+#: plug-ins/common/file-psp.c:2262 plug-ins/common/file-psp.c:2279
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Помилка при читання фрагмента даних тюбика"
 
-#: plug-ins/common/file-psp.c:2376 plug-ins/common/file-psp.c:2392
+#: plug-ins/common/file-psp.c:2366 plug-ins/common/file-psp.c:2382
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Помилка зчитування фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2385
+#: plug-ins/common/file-psp.c:2375
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Некоректний розмір фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2409
+#: plug-ins/common/file-psp.c:2399
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Помилка зчитування кінця фрагмента позначеного"
 
-#: plug-ins/common/file-psp.c:2434
+#: plug-ins/common/file-psp.c:2424
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Помилка при читанні заголовка фрагмента розширеного блока"
 
-#: plug-ins/common/file-psp.c:2442
+#: plug-ins/common/file-psp.c:2432
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Некоректний заголовок фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2453
+#: plug-ins/common/file-psp.c:2443
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Некоректний розмір фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2474
+#: plug-ins/common/file-psp.c:2464
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Помилка зчитування даних ґратки розширеного фрагмента"
 
-#: plug-ins/common/file-psp.c:2502
+#: plug-ins/common/file-psp.c:2492
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Помилка при читанні розширеного фрагмента даних напрямної"
 
-#: plug-ins/common/file-psp.c:2520
+#: plug-ins/common/file-psp.c:2510
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Некоректна орієнтація напрямної"
 
-#: plug-ins/common/file-psp.c:2534
+#: plug-ins/common/file-psp.c:2524
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Помилка зчитування фрагмента розширеного блоку"
 
-#: plug-ins/common/file-psp.c:2560 plug-ins/common/file-psp.c:2572
-#: plug-ins/common/file-psp.c:2583
+#: plug-ins/common/file-psp.c:2550 plug-ins/common/file-psp.c:2562
+#: plug-ins/common/file-psp.c:2573
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Помилка під час читання фрагмента профілю кольорів"
 
-#: plug-ins/common/file-psp.c:2636
+#: plug-ins/common/file-psp.c:2626
 #, c-format
 msgid "Error reading file header."
 msgstr "Помилка при читанні заголовка файлу."
 
-#: plug-ins/common/file-psp.c:2643
+#: plug-ins/common/file-psp.c:2633
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Хибна сигнатура файлу."
 
-#: plug-ins/common/file-psp.c:2657
+#: plug-ins/common/file-psp.c:2647
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Непідтримувана версія формату файлу PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2677
+#: plug-ins/common/file-psp.c:2667
 msgid "invalid block size"
 msgstr "хибний розмір блока"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2676
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Повторний блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2714
+#: plug-ins/common/file-psp.c:2704
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Відсутній блок загальних атрибутів зображення."
 
-#: plug-ins/common/file-psp.c:2839
+#: plug-ins/common/file-psp.c:2829
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
@@ -5559,7 +5549,7 @@ msgstr "Експортувати зображення у форматі QOI"
 msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "Експортувати зображення у форматі QOI (Quite OK Image)"
 
-#: plug-ins/common/file-qoi.c:295
+#: plug-ins/common/file-qoi.c:284
 #, c-format
 msgid "Failed to read QOI file"
 msgstr "Не вдалося прочитати файл QOI"
@@ -5894,33 +5884,40 @@ msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #: plug-ins/common/file-sunras.c:323
-msgid "Data Formatting"
-msgstr "Форматування даних"
+#| msgid "Data Formatting"
+msgid "_Data Formatting"
+msgstr "Форматування д_аних"
 
 #: plug-ins/common/file-sunras.c:324
-msgid "Use standard (0) or Run-Length Encoded (1) output"
-msgstr "Стандартне виведення (0) чи виведення у RLE-кодуванні (1)"
+#| msgid "Use standard (0) or Run-Length Encoded (1) output"
+msgid "Use standard or Run-Length Encoded output"
+msgstr "Стандартне виведення чи виведення у RLE-кодуванні"
 
-#: plug-ins/common/file-sunras.c:447
+#: plug-ins/common/file-sunras.c:326
+#| msgid "_Run-Length Encoded"
+msgid "Run-Length Encoding"
+msgstr "RLE-кодування"
+
+#: plug-ins/common/file-sunras.c:441
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "Не вдається відкрити «%s» як файл SUN-raster"
 
-#: plug-ins/common/file-sunras.c:457
+#: plug-ins/common/file-sunras.c:451
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Такий тип файлів SUN-raster не підтримується"
 
-#: plug-ins/common/file-sunras.c:486
+#: plug-ins/common/file-sunras.c:480
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Не вдається зчитати записи кольорів з «%s»"
 
-#: plug-ins/common/file-sunras.c:495
+#: plug-ins/common/file-sunras.c:489
 msgid "Type of colormap not supported"
 msgstr "Не підтримується тип мапи кольорів"
 
-#: plug-ins/common/file-sunras.c:502 plug-ins/common/file-xbm.c:818
-#: plug-ins/common/file-xwd.c:577
+#: plug-ins/common/file-sunras.c:496 plug-ins/common/file-xbm.c:808
+#: plug-ins/common/file-xwd.c:564
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5929,8 +5926,8 @@ msgstr ""
 "«%s»:\n"
 "Не вказана ширина зображення"
 
-#: plug-ins/common/file-sunras.c:510 plug-ins/common/file-xbm.c:826
-#: plug-ins/common/file-xwd.c:586
+#: plug-ins/common/file-sunras.c:504 plug-ins/common/file-xbm.c:816
+#: plug-ins/common/file-xwd.c:573
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5939,8 +5936,8 @@ msgstr ""
 "«%s»:\n"
 "GIMP не впорається із зображенням такої ширини"
 
-#: plug-ins/common/file-sunras.c:518 plug-ins/common/file-xbm.c:834
-#: plug-ins/common/file-xwd.c:594
+#: plug-ins/common/file-sunras.c:512 plug-ins/common/file-xbm.c:824
+#: plug-ins/common/file-xwd.c:581
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5949,8 +5946,8 @@ msgstr ""
 "«%s»:\n"
 "Не вказана висота зображення"
 
-#: plug-ins/common/file-sunras.c:526 plug-ins/common/file-xbm.c:842
-#: plug-ins/common/file-xwd.c:602
+#: plug-ins/common/file-sunras.c:520 plug-ins/common/file-xbm.c:832
+#: plug-ins/common/file-xwd.c:589
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5959,39 +5956,31 @@ msgstr ""
 "«%s»:\n"
 "GIMP не впорається із зображенням такої висоти"
 
-#: plug-ins/common/file-sunras.c:562
+#: plug-ins/common/file-sunras.c:556
 msgid "This image depth is not supported"
 msgstr "Глибина цього зображення не підтримується"
 
-#: plug-ins/common/file-sunras.c:591
+#: plug-ins/common/file-sunras.c:584
 #, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як SUNRAS"
 
-#: plug-ins/common/file-sunras.c:602
+#: plug-ins/common/file-sunras.c:595
 msgid "Can't operate on unknown image types"
 msgstr "Не можна виконувати дії із зображеннями невідомого типу"
 
-#: plug-ins/common/file-sunras.c:1171 plug-ins/common/file-sunras.c:1266
-#: plug-ins/common/file-sunras.c:1350 plug-ins/common/file-sunras.c:1450
-#: plug-ins/common/file-xwd.c:1500 plug-ins/common/file-xwd.c:1614
-#: plug-ins/common/file-xwd.c:1785 plug-ins/common/file-xwd.c:2025
-#: plug-ins/common/file-xwd.c:2214 plug-ins/common/file-xwd.c:2490
+#: plug-ins/common/file-sunras.c:1164 plug-ins/common/file-sunras.c:1259
+#: plug-ins/common/file-sunras.c:1343 plug-ins/common/file-sunras.c:1443
+#: plug-ins/common/file-xwd.c:1487 plug-ins/common/file-xwd.c:1601
+#: plug-ins/common/file-xwd.c:1772 plug-ins/common/file-xwd.c:2012
+#: plug-ins/common/file-xwd.c:2201 plug-ins/common/file-xwd.c:2477
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "Неочікуваний кінець файлу на зчитуванні"
 
-#: plug-ins/common/file-sunras.c:1629 plug-ins/common/file-sunras.c:1750
+#: plug-ins/common/file-sunras.c:1622 plug-ins/common/file-sunras.c:1743
 msgid "Write error occurred"
 msgstr "Помилка при записі"
-
-#: plug-ins/common/file-sunras.c:1773
-msgid "S_tandard"
-msgstr "Ст_андарт"
-
-#: plug-ins/common/file-sunras.c:1774
-msgid "R_un-Length Encoded"
-msgstr "_RLE-кодування"
 
 #: plug-ins/common/file-svg.c:166
 msgid "SVG image"
@@ -6109,26 +6098,26 @@ msgstr "По_чаток координат"
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Початок координат зображення (0 = вгорі ліворуч, 1 = внизу ліворуч)"
 
-#: plug-ins/common/file-tga.c:438
+#: plug-ins/common/file-tga.c:429
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Не вдається прочитати нижній колонтитул з «%s»"
 
-#: plug-ins/common/file-tga.c:457
+#: plug-ins/common/file-tga.c:448
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Не вдається прочитати розширення з «%s»"
 
-#: plug-ins/common/file-tga.c:470
+#: plug-ins/common/file-tga.c:461
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-tga.c:1433
+#: plug-ins/common/file-tga.c:1424
 msgid "Bottom left"
 msgstr "Знизу ліворуч"
 
-#: plug-ins/common/file-tga.c:1434
+#: plug-ins/common/file-tga.c:1425
 msgid "Top left"
 msgstr "Згори ліворуч"
 
@@ -6281,7 +6270,7 @@ msgstr "Суфікси файла _маски"
 msgid "Suffix of the mask file"
 msgstr "Суфікс назви файла маски"
 
-#: plug-ins/common/file-xbm.c:810
+#: plug-ins/common/file-xbm.c:800
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6290,7 +6279,7 @@ msgstr ""
 "«%s»:\n"
 "Не вдається прочитати заголовок (ftell == %ld)"
 
-#: plug-ins/common/file-xbm.c:850
+#: plug-ins/common/file-xbm.c:840
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6300,7 +6289,7 @@ msgstr ""
 "Не вказано тип даних зображення"
 
 #. The image is not black-and-white.
-#: plug-ins/common/file-xbm.c:995
+#: plug-ins/common/file-xbm.c:985
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -6313,7 +6302,7 @@ msgstr ""
 "Перетворіть його у чорно-біле (1-бітове) індексоване зображення та спробуйте "
 "знову."
 
-#: plug-ins/common/file-xbm.c:1007
+#: plug-ins/common/file-xbm.c:997
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -6321,7 +6310,7 @@ msgstr ""
 "Не вдається зберегти маску курсора в\n"
 "зображенні, яке не має альфа-каналів."
 
-#: plug-ins/common/file-xbm.c:1239
+#: plug-ins/common/file-xbm.c:1229
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
@@ -6449,54 +6438,54 @@ msgstr ""
 "Не вдалось установити «гарячу точку»!\n"
 "Потрібно розставити шари так, щоб вони перетинались."
 
-#: plug-ins/common/file-xmc.c:668
+#: plug-ins/common/file-xmc.c:658
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "«%s» не є коректним курсором X"
 
-#: plug-ins/common/file-xmc.c:681
+#: plug-ins/common/file-xmc.c:671
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Кадр %d з «%s» занадто широкий для курсора X."
 
-#: plug-ins/common/file-xmc.c:689
+#: plug-ins/common/file-xmc.c:679
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Кадр %d з «%s» занадто високий для курсора X."
 
-#: plug-ins/common/file-xmc.c:960
+#: plug-ins/common/file-xmc.c:950
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "відсутній фрагмент зображення у «%s»."
 
-#: plug-ins/common/file-xmc.c:1001
+#: plug-ins/common/file-xmc.c:991
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "Ширина «%s» занадто велика для курсора X."
 
-#: plug-ins/common/file-xmc.c:1010
+#: plug-ins/common/file-xmc.c:1000
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "Висота «%s» занадто велика для курсора X."
 
-#: plug-ins/common/file-xmc.c:1074
+#: plug-ins/common/file-xmc.c:1064
 #, c-format
 msgid "A read error occurred."
 msgstr "Помилка при читанні."
 
-#: plug-ins/common/file-xmc.c:1113
+#: plug-ins/common/file-xmc.c:1103
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Введіть координату X «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: plug-ins/common/file-xmc.c:1124
+#: plug-ins/common/file-xmc.c:1114
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Введіть координату Y «гарячої точки». Початок координат у верхньому лівому "
 "куті."
 
-#: plug-ins/common/file-xmc.c:1136
+#: plug-ins/common/file-xmc.c:1126
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -6509,7 +6498,7 @@ msgstr ""
 "Заберіть позначку, якщо плануєте редагувати експортований курсор через інші "
 "програми."
 
-#: plug-ins/common/file-xmc.c:1148
+#: plug-ins/common/file-xmc.c:1138
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -6528,30 +6517,30 @@ msgstr ""
 "анімації та послідовності, яка базується на значенні «gtk-cursor-theme-size»."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1264 plug-ins/file-webp/file-webp-export.c:198
+#: plug-ins/common/file-xmc.c:1254 plug-ins/file-webp/file-webp-export.c:198
 #: plug-ins/file-webp/file-webp-export.c:597
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
 
-#: plug-ins/common/file-xmc.c:1339
+#: plug-ins/common/file-xmc.c:1329
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "Кадр «%s» занадто широкий. Треба зменшити, щоб ширина не перевищувала %dpx."
 
-#: plug-ins/common/file-xmc.c:1349
+#: plug-ins/common/file-xmc.c:1339
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "Кадр «%s» занадто високий. Треба зменшити, щоб висота не перевищувала %dpx."
 
-#: plug-ins/common/file-xmc.c:1359
+#: plug-ins/common/file-xmc.c:1349
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Ширина і/або висота кадру «%s» дорівнює нулю!"
 
-#: plug-ins/common/file-xmc.c:1401
+#: plug-ins/common/file-xmc.c:1391
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -6563,7 +6552,7 @@ msgstr ""
 "Спробуйте змінити позицію гарячої точки, геометрію шару або зберегти без "
 "автоматичного обрізування."
 
-#: plug-ins/common/file-xmc.c:1575
+#: plug-ins/common/file-xmc.c:1565
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6576,7 +6565,7 @@ msgstr ""
 "курсорів X bitmap.\n"
 "Це може не підтримуватись деякими середовищами."
 
-#: plug-ins/common/file-xmc.c:1583
+#: plug-ins/common/file-xmc.c:1573
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -6588,7 +6577,7 @@ msgstr ""
 "Це можна виправити увімкнувши у вікні експорту функцію «Замінити розмір всіх "
 "кадрів…», інакше курсор може не з'явитися в аплеті налаштовування GNOME."
 
-#: plug-ins/common/file-xmc.c:1866
+#: plug-ins/common/file-xmc.c:1856
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6600,7 +6589,7 @@ msgstr ""
 "Їх буде обрізано до %dpx. Перевірте експортований курсор."
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:1963
+#: plug-ins/common/file-xmc.c:1953
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6625,16 +6614,16 @@ msgstr "П_оріг"
 msgid "Alpha threshold"
 msgstr "Поріг альфа-каналу"
 
-#: plug-ins/common/file-xpm.c:377 plug-ins/common/file-xpm.c:836
+#: plug-ins/common/file-xpm.c:368 plug-ins/common/file-xpm.c:827
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Помилка відкривання файлу «%s»"
 
-#: plug-ins/common/file-xpm.c:383 plug-ins/common/file-xpm.c:842
+#: plug-ins/common/file-xpm.c:374 plug-ins/common/file-xpm.c:833
 msgid "XPM file invalid"
 msgstr "Неправильний файл XPM"
 
-#: plug-ins/common/file-xpm.c:676
+#: plug-ins/common/file-xpm.c:667
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Непідтримуваний тип малюнка"
@@ -6643,12 +6632,12 @@ msgstr "Непідтримуваний тип малюнка"
 msgid "X window dump"
 msgstr "Дамп X window"
 
-#: plug-ins/common/file-xwd.c:504
+#: plug-ins/common/file-xwd.c:491
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Не вдається прочитати XWD заголовок з «%s»"
 
-#: plug-ins/common/file-xwd.c:522
+#: plug-ins/common/file-xwd.c:509
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6657,7 +6646,7 @@ msgstr ""
 "«%s»:\n"
 "Помилка позиціювання"
 
-#: plug-ins/common/file-xwd.c:532
+#: plug-ins/common/file-xwd.c:519
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6666,7 +6655,7 @@ msgstr ""
 "«%s»:\n"
 "хибне число елементів мапи кольорів: %u"
 
-#: plug-ins/common/file-xwd.c:543
+#: plug-ins/common/file-xwd.c:530
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6675,12 +6664,12 @@ msgstr ""
 "«%s»:\n"
 "Число елементів мапи кольорів < числа кольорів"
 
-#: plug-ins/common/file-xwd.c:569
+#: plug-ins/common/file-xwd.c:556
 #, c-format
 msgid "Can't read color entries"
 msgstr "Не вдається зчитати записи кольорів"
 
-#: plug-ins/common/file-xwd.c:654
+#: plug-ins/common/file-xwd.c:641
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -6689,33 +6678,33 @@ msgstr ""
 "файл XWD %s має формат %d, глибину %d і %d бітів на точку. Наразі це не "
 "підтримується."
 
-#: plug-ins/common/file-xwd.c:685
+#: plug-ins/common/file-xwd.c:672
 msgid "Cannot export images with alpha channels."
 msgstr "Не вдається експортувати зображення з альфа-каналами."
 
-#: plug-ins/common/file-xwd.c:708
+#: plug-ins/common/file-xwd.c:695
 #, c-format
 msgid "Could not open '%s' for writing: "
 msgstr "Не вдається відкрити «%s» для запису: "
 
-#: plug-ins/common/file-xwd.c:735
+#: plug-ins/common/file-xwd.c:722
 #, c-format
 msgid "Error exporting '%s': "
 msgstr "Помилка при експортуванні «%s»: "
 
-#: plug-ins/common/file-xwd.c:942 plug-ins/common/file-xwd.c:976
-#: plug-ins/common/file-xwd.c:1013
+#: plug-ins/common/file-xwd.c:929 plug-ins/common/file-xwd.c:963
+#: plug-ins/common/file-xwd.c:1000
 #, c-format
 msgid "Seek error"
 msgstr "Помилка позиціювання"
 
-#: plug-ins/common/file-xwd.c:1865 plug-ins/common/file-xwd.c:2116
-#: plug-ins/common/file-xwd.c:2311
+#: plug-ins/common/file-xwd.c:1852 plug-ins/common/file-xwd.c:2103
+#: plug-ins/common/file-xwd.c:2298
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "Файл XWD %s пошкоджений."
 
-#: plug-ins/common/file-xwd.c:2064
+#: plug-ins/common/file-xwd.c:2051
 #, c-format
 msgid ""
 "'%s':\n"
@@ -7011,12 +7000,10 @@ msgid "Find and fix pixels that may be unsafely bright"
 msgstr "Знайти та змінити точки, які можуть бути надто яскравими"
 
 #: plug-ins/common/hot.c:270
-#| msgid "Mode"
 msgid "_Mode"
 msgstr "Ре_жим"
 
 #: plug-ins/common/hot.c:271
-#| msgid "Paint mode:"
 msgid "Signal mode"
 msgstr "Режим сигналу"
 
@@ -7025,12 +7012,10 @@ msgid "NTSC"
 msgstr "NTSC"
 
 #: plug-ins/common/hot.c:273
-#| msgid "_PAL"
 msgid "PAL"
 msgstr "PAL"
 
 #: plug-ins/common/hot.c:279
-#| msgid "Action"
 msgid "_Action"
 msgstr "Д_ія"
 
@@ -7039,17 +7024,14 @@ msgid "Action"
 msgstr "Дія"
 
 #: plug-ins/common/hot.c:281
-#| msgid "Reduce _Luminance"
 msgid "Reduce Luminance"
 msgstr "Зменшити яскравість"
 
 #: plug-ins/common/hot.c:282
-#| msgid "Reduce _Saturation"
 msgid "Reduce Saturation"
 msgstr "Зменшити насиченість"
 
 #: plug-ins/common/hot.c:283
-#| msgid "_Blacken"
 msgid "Blacken"
 msgstr "Чорний"
 
@@ -7061,7 +7043,7 @@ msgstr "Створити _новий шар"
 msgid "Create a new layer"
 msgstr "Створити новий шар"
 
-#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:662
+#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:661
 msgid "Hot"
 msgstr "Гарячі кольори"
 
@@ -7094,12 +7076,10 @@ msgid "Number of pieces going down"
 msgstr "Кількість частин вздовж вертикалі"
 
 #: plug-ins/common/jigsaw.c:425
-#| msgid "Jigsaw Style"
 msgid "_Jigsaw Style"
 msgstr "Стиль елементів головоломки"
 
 #: plug-ins/common/jigsaw.c:426
-#| msgid "The style/shape of the jigsaw puzzle { Square (0), Curved (1) }"
 msgid "The style/shape of the jigsaw puzzle"
 msgstr "Стиль-форма складанки"
 
@@ -7255,12 +7235,10 @@ msgid "The filter radius"
 msgstr "Радіус фільтра"
 
 #: plug-ins/common/nl-filter.c:186
-#| msgid "Filter"
 msgid "_Filter"
 msgstr "_Фільтр"
 
 #: plug-ins/common/nl-filter.c:187
-#| msgid "The filter radius"
 msgid "The Filter to Run"
 msgstr "Фільтрування, яке слід виконати"
 
@@ -7424,7 +7402,7 @@ msgid "G-Qbist"
 msgstr "G-Q-біст"
 
 #: plug-ins/common/qbist.c:989
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:714
 msgid "_Undo"
 msgstr "В_ернути"
 
@@ -7761,41 +7739,42 @@ msgid "Draw a border of spikes around the image"
 msgstr "Намалювати рамку з променів навколо зображення"
 
 #: plug-ins/common/sparkle.c:271
-msgid "Color type"
-msgstr "Тип кольору"
+#| msgid "Color type"
+msgid "_Color type"
+msgstr "Тип _кольору"
 
 #: plug-ins/common/sparkle.c:272
-msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
-msgstr "Колір променів: { ПРИРОДНИЙ (0), ПЕРЕДНІЙ ПЛАН (1), ТЛО (2) }"
+#| msgid "Color s_pace"
+msgid "Color of sparkles"
+msgstr "Колір цяток"
 
-#: plug-ins/common/sparkle.c:314
-msgid "Region selected for filter is empty"
-msgstr "Вибрана для фільтра область порожня"
-
-#: plug-ins/common/sparkle.c:329
-msgid "Sparkling"
-msgstr "Створення іскор"
-
-#: plug-ins/common/sparkle.c:362
-msgid "Sparkle"
-msgstr "Іскри"
-
-#: plug-ins/common/sparkle.c:412
-msgid "Additional Options"
-msgstr "Додаткові параметри"
-
-#. colortype
-#: plug-ins/common/sparkle.c:419
+#: plug-ins/common/sparkle.c:273
 msgid "Natural color"
 msgstr "Природний колір"
 
-#: plug-ins/common/sparkle.c:420
+#: plug-ins/common/sparkle.c:274
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: plug-ins/common/sparkle.c:421
+#: plug-ins/common/sparkle.c:275
 msgid "Background color"
 msgstr "Колір тла"
+
+#: plug-ins/common/sparkle.c:317
+msgid "Region selected for filter is empty"
+msgstr "Вибрана для фільтра область порожня"
+
+#: plug-ins/common/sparkle.c:332
+msgid "Sparkling"
+msgstr "Створення іскор"
+
+#: plug-ins/common/sparkle.c:364
+msgid "Sparkle"
+msgstr "Іскри"
+
+#: plug-ins/common/sparkle.c:408
+msgid "Additional Options"
+msgstr "Додаткові параметри"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:173
 msgid "Solid"
@@ -7887,8 +7866,8 @@ msgid "D_uplicate"
 msgstr "_Дублювати"
 
 #: plug-ins/common/sphere-designer.c:2774
-#: plug-ins/fractal-explorer/fractal-explorer.c:887
-#: plug-ins/fractal-explorer/fractal-explorer.c:1357
+#: plug-ins/fractal-explorer/fractal-explorer.c:889
+#: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
 #: plug-ins/gradient-flare/gradient-flare.c:3048
 #: plug-ins/gradient-flare/gradient-flare.c:3331
@@ -8082,7 +8061,7 @@ msgid "Col_umn:"
 msgstr "Ст_овпчик:"
 
 #: plug-ins/common/tile-small.c:629
-#: plug-ins/fractal-explorer/fractal-explorer.c:1346
+#: plug-ins/fractal-explorer/fractal-explorer.c:1348
 #: plug-ins/gimpressionist/orientmap.c:527
 #: plug-ins/gimpressionist/presets.c:1064 plug-ins/gimpressionist/sizemap.c:400
 #: plug-ins/imagemap/imap_default_dialog.c:103
@@ -8194,7 +8173,7 @@ msgstr "Редактор одиниць"
 #. destroy model automatically with view
 #. Put buttons in
 #: plug-ins/common/unit-editor.c:251
-#: plug-ins/fractal-explorer/fractal-explorer.c:1335
+#: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "_Оновити"
@@ -9397,7 +9376,6 @@ msgid "Load file of the FITS file format (Flexible Image Transport System)"
 msgstr "Завантажити файл у форматі FITS (Flexible Image Transport System)"
 
 #: plug-ins/file-fits/fits.c:199
-#| msgid "Replacement for undefined pixels"
 msgid "Re_placement for undefined pixels"
 msgstr "З_аміщення для невизначених точок"
 
@@ -9411,12 +9389,10 @@ msgid "White"
 msgstr "Білий"
 
 #: plug-ins/file-fits/fits.c:208
-#| msgid "Pixel value scaling"
 msgid "Pi_xel value scaling"
 msgstr "_Масштабування значень точок"
 
 #: plug-ins/file-fits/fits.c:209
-#| msgid "Use DATAMIN/DATAMAX-scaling if possible"
 msgid "Whether to use DATAMIN/DATAMAX-scaling if possible"
 msgstr ""
 "Визначає, чи слід користуватися DATAMIN/DATAMAX-масштабуванням, якщо можна"
@@ -9436,23 +9412,23 @@ msgstr ""
 "Засіб експортування FITS обробляє усі типи зображень, окрім зображень із "
 "каналами прозорості."
 
-#: plug-ins/file-fits/fits.c:398
+#: plug-ins/file-fits/fits.c:391
 msgid "Error during opening of FITS file"
 msgstr "Помилка при відкриванні файлу FITS"
 
-#: plug-ins/file-fits/fits.c:411 plug-ins/file-fits/fits.c:617
+#: plug-ins/file-fits/fits.c:404 plug-ins/file-fits/fits.c:610
 msgid "FITS file keeps no displayable images"
 msgstr "Файл FITS не містить зображень, які можна показати"
 
-#: plug-ins/file-fits/fits.c:509
+#: plug-ins/file-fits/fits.c:502
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:647
+#: plug-ins/file-fits/fits.c:640
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
 
-#: plug-ins/file-fits/fits.c:1012
+#: plug-ins/file-fits/fits.c:1005
 msgid "Open FITS File"
 msgstr "Відкриття файла FITS"
 
@@ -9620,17 +9596,17 @@ msgid "End exporting with this frame (or -1 for all frames)"
 msgstr ""
 "Завершити експортування на цьому кадрі (або -1 для експортування усіх кадрів)"
 
-#: plug-ins/file-fli/fli-gimp.c:569
+#: plug-ins/file-fli/fli-gimp.c:560
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Кадр %d (%uмс)"
 
-#: plug-ins/file-fli/fli-gimp.c:596
+#: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Не вдалося прочитати кадр %d. Ймовірно, анімацію пошкоджено.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:928
+#: plug-ins/file-fli/fli-gimp.c:919
 msgid "Open FLIC Animation"
 msgstr "Відкрити анімацію FLIC"
 
@@ -10314,11 +10290,11 @@ msgstr ""
 msgid "Import PSD"
 msgstr "Імпорт PSD"
 
-#: plug-ins/file-psd/psd.c:528
+#: plug-ins/file-psd/psd.c:519
 msgid "Import PSD metadata"
 msgstr "Імпорт метаданих PSD"
 
-#: plug-ins/file-psd/psd.c:532
+#: plug-ins/file-psd/psd.c:523
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
@@ -10485,40 +10461,40 @@ msgstr "_Тип стиснення"
 msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
 msgstr "Рівень стискання (0 = none, 1 = RLE, 2 = ARLE)"
 
-#: plug-ins/file-sgi/sgi.c:322
+#: plug-ins/file-sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Не вдається відкрити «%s» для читання."
 
-#: plug-ins/file-sgi/sgi.c:338
+#: plug-ins/file-sgi/sgi.c:329
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Некоректна ширина: %hu"
 
-#: plug-ins/file-sgi/sgi.c:346
+#: plug-ins/file-sgi/sgi.c:337
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Некоректна висота: %hu"
 
-#: plug-ins/file-sgi/sgi.c:354
+#: plug-ins/file-sgi/sgi.c:345
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Неправильна кількість каналів: %hu"
 
-#: plug-ins/file-sgi/sgi.c:635
+#: plug-ins/file-sgi/sgi.c:626
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Не вдається відкрити файл «%s» для запису"
 
-#: plug-ins/file-sgi/sgi.c:725
+#: plug-ins/file-sgi/sgi.c:716
 msgid "No compression"
 msgstr "Без стиснення"
 
-#: plug-ins/file-sgi/sgi.c:727
+#: plug-ins/file-sgi/sgi.c:718
 msgid "RLE compression"
 msgstr "RLE стиснення"
 
-#: plug-ins/file-sgi/sgi.c:729
+#: plug-ins/file-sgi/sgi.c:720
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "Агресивне RLE (не підтримується SGI)"
 
@@ -10635,7 +10611,7 @@ msgstr "Зберегти дані _GeoTIFF"
 msgid "Save GeoTIFF data"
 msgstr "Зберегти дані GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:452
+#: plug-ins/file-tiff/file-tiff.c:444
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -11313,9 +11289,9 @@ msgstr "Експонентне"
 msgid "Power"
 msgstr "Енергія"
 
-#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:343
-#: plug-ins/fractal-explorer/fractal-explorer.c:353
-#: plug-ins/fractal-explorer/fractal-explorer.c:363
+#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:345
+#: plug-ins/fractal-explorer/fractal-explorer.c:355
+#: plug-ins/fractal-explorer/fractal-explorer.c:365
 msgid "Cosine"
 msgstr "Косинус"
 
@@ -11385,7 +11361,7 @@ msgstr "_Візуалізація"
 msgid "C_amera"
 msgstr "_Камера"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:596
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:595
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
 #, c-format
@@ -11400,113 +11376,105 @@ msgstr ""
 "(%s «%s»)\n"
 "до файлу %s."
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:612
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:611
 msgid "Fractal Explorer"
 msgstr "Дослідник фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:661
 msgid "Re_altime preview"
 msgstr "_Автоматичне оновлення"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Якщо увімкнено, перегляд буде оновлюватися автоматично"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:673
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:672
 msgid "R_edraw preview"
 msgstr "_Оновити перегляд"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
 msgid "Zoom _In"
 msgstr "З_більшити"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:701
 msgid "Zoom _Out"
 msgstr "З_меншити"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:718
 msgid "Undo last zoom change"
 msgstr "Скасувати останню зміну масштабу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:725
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:724
 msgid "_Redo"
 msgstr "_Повернути"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:729
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:728
 msgid "Redo last zoom change"
 msgstr "Повернути останню зміну масштабу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:737
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:736
 msgid "_Parameters"
 msgstr "П_араметри"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:738
 msgid "_Colors"
 msgstr "_Кольори"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:741
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
 msgid "_Fractals"
 msgstr "_Фрактали"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:759
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:758
 msgid "Fractal Parameters"
 msgstr "Параметри фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:772
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:771
 msgid "Fractal Type"
 msgstr "Тип фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 msgid "Load a fractal from file"
 msgstr "Завантажити фрактал з файлу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:810
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
 msgid "Save active fractal to file"
 msgstr "Зберегти активний фрактал у файл"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:862
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:861
 msgid "Color Density"
 msgstr "Щільність кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:876
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:875
 msgid "Color Function"
 msgstr "Функція кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
-msgid "As specified above"
-msgstr "Як вказано вище"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:933
-msgid "Apply active gradient to final image"
-msgstr "Застосувати активний градієнт"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:951
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:947
 msgid "FractalExplorer Gradient"
 msgstr "Градієнт дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
 msgid "Presets"
 msgstr "Шаблони"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1438
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1434
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Не вдається записати у файл «%s»: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
 msgid "Load Fractal Parameters"
 msgstr "Завантаження параметрів фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
 msgid "Save Fractal Parameters"
 msgstr "Збереження параметрів фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1792
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1788
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "«%s» не є файлом дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1799
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1795
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Файл «%s» пошкоджений. Рядок %d розділу параметрів неправильний"
@@ -11623,129 +11591,136 @@ msgid "Color mode"
 msgstr "Режим кольорів"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
-msgid ""
-"0: Apply colormap as specified by the parameters above; 1: Apply active "
-"gradient to final image"
+#| msgid "Apply active gradient to final image"
+msgid "Apply specified color map or active gradient to final image"
 msgstr ""
-"0: застосувати мапу кольорів, як вказано параметрами вище; 1: застосувати "
-"активний градієнт до остаточного зображення"
+"Застосувати вказану карту кольорів або активний градієнт до остаточного"
+" зображення"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:322
+#: plug-ins/fractal-explorer/fractal-explorer.c:317
+msgid "As specified above"
+msgstr "Як вказано вище"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:318
+msgid "Apply active gradient to final image"
+msgstr "Застосувати активний градієнт"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:324
 msgid "Red stretch"
 msgstr "Розтяг червоного"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:323
+#: plug-ins/fractal-explorer/fractal-explorer.c:325
 msgid "Red stretching factor"
 msgstr "Коефіцієнт розтягу червоного"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:328
+#: plug-ins/fractal-explorer/fractal-explorer.c:330
 msgid "Green stretch"
 msgstr "Розтяг зеленого"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:329
+#: plug-ins/fractal-explorer/fractal-explorer.c:331
 msgid "Green stretching factor"
 msgstr "Коефіцієнт розтягу зеленого"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:334
+#: plug-ins/fractal-explorer/fractal-explorer.c:336
 msgid "Blue stretch"
 msgstr "Розтяг синього"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:335
+#: plug-ins/fractal-explorer/fractal-explorer.c:337
 msgid "Blue stretching factor"
 msgstr "Коефіцієнт розтягу синього"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:340
+#: plug-ins/fractal-explorer/fractal-explorer.c:342
 msgid "_Red"
 msgstr "_Червоний"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:341
+#: plug-ins/fractal-explorer/fractal-explorer.c:343
 msgid "Red application mode"
 msgstr "Режим накладання червоного"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:342
-#: plug-ins/fractal-explorer/fractal-explorer.c:352
-#: plug-ins/fractal-explorer/fractal-explorer.c:362
+#: plug-ins/fractal-explorer/fractal-explorer.c:344
+#: plug-ins/fractal-explorer/fractal-explorer.c:354
+#: plug-ins/fractal-explorer/fractal-explorer.c:364
 msgid "Sine"
 msgstr "Синус"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:350
+#: plug-ins/fractal-explorer/fractal-explorer.c:352
 msgid "_Green"
 msgstr "_Зелений"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:351
+#: plug-ins/fractal-explorer/fractal-explorer.c:353
 msgid "Green application mode"
 msgstr "Режим накладання зеленого"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:360
+#: plug-ins/fractal-explorer/fractal-explorer.c:362
 msgid "_Blue"
 msgstr "С_иній"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:361
+#: plug-ins/fractal-explorer/fractal-explorer.c:363
 msgid "Blue application mode"
 msgstr "Режим накладання синього"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:370
+#: plug-ins/fractal-explorer/fractal-explorer.c:372
 msgid "In_version"
 msgstr "І_нверсія"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:371
+#: plug-ins/fractal-explorer/fractal-explorer.c:373
 msgid "Red inversion mode"
 msgstr "Режим інверсії червоного"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:376
+#: plug-ins/fractal-explorer/fractal-explorer.c:378
 msgid "I_nversion"
 msgstr "_Інверсія"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:377
+#: plug-ins/fractal-explorer/fractal-explorer.c:379
 msgid "Green inversion mode"
 msgstr "Режим інверсії зеленого"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:382
+#: plug-ins/fractal-explorer/fractal-explorer.c:384
 msgid "_Inversion"
 msgstr "І_нверсія"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:383
+#: plug-ins/fractal-explorer/fractal-explorer.c:385
 msgid "Blue inversion mode"
 msgstr "Режим інверсії синього"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:388
+#: plug-ins/fractal-explorer/fractal-explorer.c:390
 msgid "_Number of colors"
 msgstr "_Кількість кольорів"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:389
+#: plug-ins/fractal-explorer/fractal-explorer.c:391
 msgid "Number of Colors for mapping"
 msgstr "Кількість кольорів відображення"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:393
+#: plug-ins/fractal-explorer/fractal-explorer.c:395
 msgid "_Use log log smoothing"
 msgstr "Ви_користовувати згладжування \"log log\""
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:394
+#: plug-ins/fractal-explorer/fractal-explorer.c:396
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Щоб уникнути розділення зображення на смуги, використовуйте параметр "
 "«Згладжування»"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:493
+#: plug-ins/fractal-explorer/fractal-explorer.c:495
 msgid "Rendering fractal"
 msgstr "Візуалізація фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:878
+#: plug-ins/fractal-explorer/fractal-explorer.c:880
 #: plug-ins/gradient-flare/gradient-flare.c:3322
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Ви впевнені, що хочете видалити «%s» зі списку та диску?"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:882
+#: plug-ins/fractal-explorer/fractal-explorer.c:884
 msgid "Delete Fractal"
 msgstr "Видалення фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1180
+#: plug-ins/fractal-explorer/fractal-explorer.c:1182
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Файл «%s» не є файлом дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1190
+#: plug-ins/fractal-explorer/fractal-explorer.c:1192
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -11754,27 +11729,27 @@ msgstr ""
 "Файл «%s» зіпсовано.\n"
 "Рядок %d розділу параметрів неправильний"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1276
+#: plug-ins/fractal-explorer/fractal-explorer.c:1278
 msgid "My first fractal"
 msgstr "Мій перший фрактал"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1340
+#: plug-ins/fractal-explorer/fractal-explorer.c:1342
 msgid "Select folder and rescan collection"
 msgstr "Вибрати каталог та перечитати вміст"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1351
+#: plug-ins/fractal-explorer/fractal-explorer.c:1353
 msgid "Apply currently selected fractal"
 msgstr "Застосувати вибраний фрактал"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1362
+#: plug-ins/fractal-explorer/fractal-explorer.c:1364
 msgid "Delete currently selected fractal"
 msgstr "Стерти вибраний фрактал"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1385
+#: plug-ins/fractal-explorer/fractal-explorer.c:1387
 msgid "Rescan for Fractals"
 msgstr "Перечитати фрактали"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1404
+#: plug-ins/fractal-explorer/fractal-explorer.c:1406
 msgid "Add FractalExplorer Path"
 msgstr "Додати контур дослідника фракталів"
 
@@ -16360,6 +16335,22 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
 
+#~ msgid "S_tandard"
+#~ msgstr "Ст_андарт"
+
+#~ msgid "R_un-Length Encoded"
+#~ msgstr "_RLE-кодування"
+
+#~ msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
+#~ msgstr "Колір променів: { ПРИРОДНИЙ (0), ПЕРЕДНІЙ ПЛАН (1), ТЛО (2) }"
+
+#~ msgid ""
+#~ "0: Apply colormap as specified by the parameters above; 1: Apply active "
+#~ "gradient to final image"
+#~ msgstr ""
+#~ "0: застосувати мапу кольорів, як вказано параметрами вище; 1: застосувати "
+#~ "активний градієнт до остаточного зображення"
+
 #~ msgid "Orientation"
 #~ msgstr "Орієнтація"
 
@@ -17336,9 +17327,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Export Image as BMP"
 #~ msgstr "Експортувати зображення як BMP"
-
-#~ msgid "_Run-Length Encoded"
-#~ msgstr "_RLE-кодування"
 
 #~ msgid "RGB Encoding"
 #~ msgstr "Кодування RGB"
