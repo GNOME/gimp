@@ -1639,7 +1639,14 @@ xcf_load_layer_props (XcfInfo    *info,
           return TRUE;
 
         case PROP_ACTIVE_LAYER:
-          info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+          {
+            if (g_list_index (info->selected_layers, *layer) < 0)
+              info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+            else
+              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+                                    GIMP_MESSAGE_WARNING,
+                                    "Invalid duplicate selected layer detected");
+          }
           break;
 
         case PROP_FLOATING_SELECTION:
