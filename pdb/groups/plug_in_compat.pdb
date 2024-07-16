@@ -16,6 +16,12 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+
+# The declared ranges generate min/max in GParamSpecs
+# and the min becomes the default in the GParamSpecs.
+# A declared range must correspond with range declared in GEGL
+# else args defaulted from min may generate out-of-range warnings.
+
 sub plug_in_alienmap2 {
     $blurb = 'Alter colors in various psychedelic ways';
 
@@ -2749,7 +2755,7 @@ sub plug_in_newsprint {
           desc => 'Blue/yellow screen angle (degrees)' },
         { name => 'blu_spotfn', type => '0 <= int32 <= 4',
           desc => 'Blue/yellow spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }' },
-        { name => 'oversample', type => '0 <= int32 <= 128',
+        { name => 'oversample', type => '1 <= int32 <= 128',
           desc => 'how many times to oversample spot fn' }
     );
 
@@ -3053,6 +3059,8 @@ CODE
     );
 }
 
+# We simplify the GEGL signature, reducing tile width and height to just size
+
 sub plug_in_papertile {
     $blurb = 'Cut image into paper tiles, and slide them';
 
@@ -3070,12 +3078,12 @@ HELP
           desc => 'Input image (unused)' },
         { name => 'drawable', type => 'drawable',
           desc => 'Input drawable' },
-        { name => 'tile_size', type => 'int32',
+        { name => 'tile_size', type => '1 <= int32',
           desc => 'Tile size (pixels)' },
-        { name => 'move_max', type => 'float',
+        { name => 'move_max', type => '1.0 <= float <= 100.0',
           desc => 'Max move rate (%)' },
-	{ name => 'fractional_type', type => '0 <= int32 <= 2',
-	  desc => 'Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }' },
+	      { name => 'fractional_type', type => '0 <= int32 <= 2',
+	        desc => 'Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }' },
         { name => 'wrap_around', type => 'boolean',
           desc => 'Wrap around' },
         { name => 'centering', type => 'boolean',
@@ -3998,7 +4006,7 @@ HELP
           desc => 'Input image (unused)' },
         { name => 'drawable', type => 'drawable',
           desc => 'Input drawable' },
-        { name => 'radius', type => '0.0 < float',
+        { name => 'radius', type => '1.0 <= float <= 1000.0',
           desc => 'Radius of gaussian blur (in pixels)' },
         { name => 'max_delta', type => '0 <= int32 <= 255',
           desc => 'Maximum delta' }
@@ -4146,9 +4154,9 @@ sub plug_in_sinus {
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-        { name => 'xscale', type => '0 <= float',
+        { name => 'xscale', type => '0.0001 <= float <= 100.0',
 	  desc => 'Scale value for x axis' },
-        { name => 'yscale', type => '0 <= float',
+        { name => 'yscale', type => '0.0001 <= float <= 100.0',
 	  desc => 'Scale value for y axis' },
         { name => 'complex', type => '0 <= float',
 	  desc => 'Complexity factor' },
@@ -4326,7 +4334,7 @@ HELP
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-	{ name => 'glow_radius', type => '0 <= float',
+	{ name => 'glow_radius', type => '1.0 <= float <= 50.0',
 	  desc => 'Glow radius in pixels' },
 	{ name => 'brightness', type => '0.0 <= float <= 1.0',
 	  desc => 'Glow brightness' },
@@ -4388,9 +4396,9 @@ HELP
           desc => 'Random seed' },
         { name => 'detail', type => '0 <= int32 <= 15',
           desc => 'Detail level' },
-        { name => 'xsize', type => 'float',
+        { name => 'xsize', type => '0.1 <= float <= 16.0',
           desc => 'Horizontal texture size' },
-        { name => 'ysize', type => 'float',
+        { name => 'ysize', type => '0.1 <= float <= 16.0',
           desc => 'Vertical texture size' }
     );
 

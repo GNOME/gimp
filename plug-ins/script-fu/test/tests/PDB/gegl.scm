@@ -210,18 +210,21 @@
 (testGeglWrapper "oilify-enhanced")
 
 ; Requires non-defaultable color
-;(testGeglWrapper "papertile")
-(test! "papertile omitted: crashes")
-; FIXME this crashes: the declared PDB formal args not match GEGL
-; Floating point exception, probably move-rate==0 is at fault
-;(define testImage (testing:load-test-image "gimp-logo.png"))
-;(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-;(assert `(plug-in-papertile
-;     RUN-NONINTERACTIVE ,testImage ,testLayer
-;     0 0 0 0 0 0 "red" ; other args defaulted
-;     ))
-;(gimp-display-new testImage)
-;(gimp-displays-flush)
+(test! "papertile")
+(define testImage (testing:load-test-image "gimp-logo.png"))
+(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
+(assert `(plug-in-papertile
+     RUN-NONINTERACTIVE ,testImage ,testLayer
+     1 ; tile size (width, height as one arg)
+     1.0 ; move rate
+     0 ; fractional type enum
+     0 0 ; wrap around, centering boolean
+     5  ; background type enum
+     "red" ; color when background type==5
+     ; other args defaulted
+     ))
+(gimp-display-new testImage)
+(gimp-displays-flush)
 
 (testGeglWrapper "photocopy")
 (testGeglWrapper "pixelize")
@@ -247,7 +250,9 @@
 (define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
 (assert `(plug-in-sinus
      RUN-NONINTERACTIVE ,testImage ,testLayer
-     0 0 0 0 0 0 0 "red" "green" ; other args defaulted
+     0.1 0.1 ; x, y scale
+     0 0 0 0 0 "red" "green"
+     ; other args defaulted
      ))
 (gimp-display-new testImage)
 (gimp-displays-flush)

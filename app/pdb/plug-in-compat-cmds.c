@@ -7579,7 +7579,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_int ("oversample",
                                                  "oversample",
                                                  "how many times to oversample spot fn",
-                                                 0, 128, 0,
+                                                 1, 128, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -7844,13 +7844,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_int ("tile-size",
                                                  "tile size",
                                                  "Tile size (pixels)",
-                                                 G_MININT32, G_MAXINT32, 0,
+                                                 1, G_MAXINT32, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("move-max",
                                                     "move max",
                                                     "Max move rate (%)",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    1.0, 100.0, 1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("fractional-type",
@@ -8680,7 +8680,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of gaussian blur (in pixels)",
-                                                    0.0, G_MAXDOUBLE, 0.0,
+                                                    1.0, 1000.0, 1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("max-delta",
@@ -8812,13 +8812,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("xscale",
                                                     "xscale",
                                                     "Scale value for x axis",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    0.0001, 100.0, 0.0001,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("yscale",
                                                     "yscale",
                                                     "Scale value for y axis",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    0.0001, 100.0, 0.0001,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("complex",
@@ -8982,7 +8982,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("glow-radius",
                                                     "glow radius",
                                                     "Glow radius in pixels",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    1.0, 50.0, 1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("brightness",
@@ -9060,13 +9060,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_double ("xsize",
                                                     "xsize",
                                                     "Horizontal texture size",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    0.1, 16.0, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("ysize",
                                                     "ysize",
                                                     "Vertical texture size",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    0.1, 16.0, 0.1,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
