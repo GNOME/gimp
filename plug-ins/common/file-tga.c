@@ -539,7 +539,7 @@ load_image (GFile   *file,
   switch (info.imageType)
     {
       case TGA_TYPE_MAPPED:
-        if (info.bpp != 8)
+        if (info.bpp != 8 || !info.colorMapLength)
           {
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
                        gimp_file_get_utf8_name (file),
@@ -862,32 +862,31 @@ apply_colormap (guchar       *dest,
                 guint         width,
                 const guchar *cmap,
                 gboolean      alpha,
-                guint16       index)
+                guint16       colorMapIndex,
+                guint16       colorMapLength)
 {
   guint x;
 
-  if (alpha)
+  for (x = 0; x < width; x++)
     {
-      for (x = 0; x < width; x++)
-        {
-          *(dest++) = cmap[(*src - index) * 4];
-          *(dest++) = cmap[(*src - index) * 4 + 1];
-          *(dest++) = cmap[(*src - index) * 4 + 2];
-          *(dest++) = cmap[(*src - index) * 4 + 3];
+      guchar entryIndex = src[x] - colorMapIndex;
 
-          src++;
-        }
-    }
-  else
-    {
-      for (x = 0; x < width; x++)
-        {
-          *(dest++) = cmap[(*src - index) * 3];
-          *(dest++) = cmap[(*src - index) * 3 + 1];
-          *(dest++) = cmap[(*src - index) * 3 + 2];
+      if (src[x] < colorMapIndex || entryIndex >= colorMapLength) {
+        g_message ("Unsupported colormap entry: %u",
+                   src[x]);
+        entryIndex = 0;
+      }
 
-          src++;
-        }
+      if (alpha) {
+          *(dest++) = cmap[entryIndex * 4];
+          *(dest++) = cmap[entryIndex * 4 + 1];
+          *(dest++) = cmap[entryIndex * 4 + 2];
+          *(dest++) = cmap[entryIndex * 4 + 3];
+      } else {
+          *(dest++) = cmap[entryIndex * 3];
+          *(dest++) = cmap[entryIndex * 3 + 1];
+          *(dest++) = cmap[entryIndex * 3 + 2];
+      }
     }
 }
 
@@ -943,7 +942,7 @@ read_line (FILE         *fp,
       gboolean has_alpha = (info->alphaBits > 0);
 
       apply_colormap (row, buf, info->width, convert_cmap, has_alpha,
-                      info->colorMapIndex);
+                      info->colorMapIndex, info->colorMapLength);
     }
   else if (info->imageType == TGA_TYPE_MAPPED)
     {
