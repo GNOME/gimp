@@ -97,22 +97,25 @@ gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
   iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_path;
   iv_class->new_item        = gimp_path_tree_view_item_new;
 
-  iv_class->action_group            = "vectors";
-  iv_class->activate_action         = "vectors-edit";
-  iv_class->new_action              = "vectors-new";
-  iv_class->new_default_action      = "vectors-new-last-values";
-  iv_class->raise_action            = "vectors-raise";
-  iv_class->raise_top_action        = "vectors-raise-to-top";
-  iv_class->lower_action            = "vectors-lower";
-  iv_class->lower_bottom_action     = "vectors-lower-to-bottom";
-  iv_class->duplicate_action        = "vectors-duplicate";
-  iv_class->delete_action           = "vectors-delete";
-  iv_class->lock_content_icon_name  = GIMP_ICON_TOOL_PATH;
-  iv_class->lock_content_tooltip    = _("Lock path");
-  iv_class->lock_content_help_id    = GIMP_HELP_PATH_LOCK_STROKES;
-  iv_class->lock_position_icon_name = GIMP_ICON_TOOL_MOVE;
-  iv_class->lock_position_tooltip   = _("Lock path position");
-  iv_class->lock_position_help_id   = GIMP_HELP_PATH_LOCK_POSITION;
+  iv_class->action_group              = "vectors";
+  iv_class->activate_action           = "vectors-edit";
+  iv_class->new_action                = "vectors-new";
+  iv_class->new_default_action        = "vectors-new-last-values";
+  iv_class->raise_action              = "vectors-raise";
+  iv_class->raise_top_action          = "vectors-raise-to-top";
+  iv_class->lower_action              = "vectors-lower";
+  iv_class->lower_bottom_action       = "vectors-lower-to-bottom";
+  iv_class->duplicate_action          = "vectors-duplicate";
+  iv_class->delete_action             = "vectors-delete";
+  iv_class->lock_content_icon_name    = GIMP_ICON_LOCK_PATH;
+  iv_class->lock_content_tooltip      = _("Lock path strokes");
+  iv_class->lock_content_help_id      = GIMP_HELP_PATH_LOCK_STROKES;
+  iv_class->lock_position_icon_name   = GIMP_ICON_LOCK_POSITION;
+  iv_class->lock_position_tooltip     = _("Lock path position");
+  iv_class->lock_position_help_id     = GIMP_HELP_PATH_LOCK_POSITION;
+  iv_class->lock_visibility_icon_name = GIMP_ICON_LOCK_VISIBILITY;
+  iv_class->lock_visibility_tooltip   = _("Lock path visibility");
+  iv_class->lock_position_help_id     = GIMP_HELP_LAYER_LOCK_VISIBILITY;
 }
 
 static void
