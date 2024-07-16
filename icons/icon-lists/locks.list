@@ -9,5 +9,6 @@ gimp-lock
 gimp-lock-multi
 gimp-lock-alpha
 gimp-lock-content
+gimp-lock-path
 gimp-lock-position
 gimp-lock-visibility
