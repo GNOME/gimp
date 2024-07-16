@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-14 04:13+0000\n"
-"PO-Revision-Date: 2024-07-14 11:25+0200\n"
+"POT-Creation-Date: 2024-07-15 18:12+0000\n"
+"PO-Revision-Date: 2024-07-16 22:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -42,11 +42,11 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
 #: plug-ins/common/qbist.c:256 plug-ins/common/sample-colorize.c:427
-#: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:300
+#: plug-ins/common/smooth-palette.c:195 plug-ins/common/sparkle.c:303
 #: plug-ins/common/sphere-designer.c:3205 plug-ins/common/tile.c:218
 #: plug-ins/common/tile-small.c:314 plug-ins/common/van-gogh-lic.c:244
 #: plug-ins/common/warp.c:346 plug-ins/common/wavelet-decompose.c:181
-#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:427
+#: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
 #: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
@@ -68,16 +68,16 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1803 plug-ins/common/curve-bend.c:1838
-#: plug-ins/common/file-gif-export.c:1199 plug-ins/common/file-heif.c:2281
+#: plug-ins/common/file-gif-export.c:1198 plug-ins/common/file-heif.c:2263
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1522
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1560
-#: plug-ins/fractal-explorer/fractal-explorer.c:887
-#: plug-ins/fractal-explorer/fractal-explorer.c:1390
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer.c:889
+#: plug-ins/fractal-explorer/fractal-explorer.c:1392
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:777
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
@@ -145,11 +145,11 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2282
+#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
-#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1391
+#: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3446
@@ -326,9 +326,9 @@ msgstr "Poravnaj vidne plasti"
 #: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
-#: plug-ins/fractal-explorer/fractal-explorer.c:344
-#: plug-ins/fractal-explorer/fractal-explorer.c:354
-#: plug-ins/fractal-explorer/fractal-explorer.c:364
+#: plug-ins/fractal-explorer/fractal-explorer.c:346
+#: plug-ins/fractal-explorer/fractal-explorer.c:356
+#: plug-ins/fractal-explorer/fractal-explorer.c:366
 #: plug-ins/lighting/lighting-main.c:214 plug-ins/lighting/lighting-main.c:337
 #: plug-ins/lighting/lighting-main.c:396 plug-ins/lighting/lighting-main.c:455
 #: plug-ins/lighting/lighting-main.c:514 plug-ins/lighting/lighting-main.c:573
@@ -511,7 +511,7 @@ msgstr "Odpni"
 
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:681
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
 #: plug-ins/imagemap/imap-menu.ui:276
 msgid "Zoom"
 msgstr "Povečava"
@@ -533,11 +533,11 @@ msgstr "Hitrost predvajanja"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1343
+#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1342
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1345
+#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1344
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
@@ -618,23 +618,23 @@ msgstr "Rolete"
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/common/blinds.c:262 plug-ins/common/compose.c:1183
-#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:476
-#: plug-ins/common/file-cel.c:481 plug-ins/common/file-dicom.c:732
-#: plug-ins/common/file-farbfeld.c:302 plug-ins/common/file-gegl.c:452
+#: plug-ins/common/decompose.c:644 plug-ins/common/file-cel.c:466
+#: plug-ins/common/file-cel.c:471 plug-ins/common/file-dicom.c:723
+#: plug-ins/common/file-farbfeld.c:291 plug-ins/common/file-gegl.c:441
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:717
-#: plug-ins/common/file-pcx.c:725 plug-ins/common/file-pcx.c:733
-#: plug-ins/common/file-pix.c:437 plug-ins/common/file-png.c:925
-#: plug-ins/common/file-pnm.c:853 plug-ins/common/file-qoi.c:304
-#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1061
-#: plug-ins/common/file-tga.c:1097 plug-ins/common/file-wbmp.c:274
-#: plug-ins/common/file-xbm.c:892 plug-ins/common/film.c:866
+#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:706
+#: plug-ins/common/file-pcx.c:714 plug-ins/common/file-pcx.c:722
+#: plug-ins/common/file-pix.c:426 plug-ins/common/file-png.c:916
+#: plug-ins/common/file-pnm.c:844 plug-ins/common/file-qoi.c:293
+#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1054
+#: plug-ins/common/file-tga.c:1088 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-xbm.c:882 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:690
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:683
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:455
+#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
@@ -688,7 +688,7 @@ msgid "Border Size"
 msgstr "Velikost roba"
 
 #: plug-ins/common/border-average.c:433
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "Število barv"
 
@@ -850,7 +850,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/cml-explorer.c:201
+#: plug-ins/common/cml-explorer.c:201 plug-ins/common/file-sunras.c:325
 msgid "Standard"
 msgstr "Navadno"
 
@@ -1006,12 +1006,12 @@ msgstr "Naključno zrno"
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1452 plug-ins/common/cml-explorer.c:2353
 #: plug-ins/common/curve-bend.c:1266 plug-ins/common/curve-bend.c:1804
-#: plug-ins/common/file-cel.c:990 plug-ins/common/qbist.c:842
+#: plug-ins/common/file-cel.c:980 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1242
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:796
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1523
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1519
 #: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1026,8 +1026,8 @@ msgstr "_Odpri"
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1250
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:804
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:803
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1557
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2604 plug-ins/imagemap/imap_file.c:129
@@ -1208,19 +1208,19 @@ msgid "Save CML Explorer Parameters"
 msgstr "Shrani parametre raziskovalca MZP"
 
 #: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:787
-#: plug-ins/common/file-dicom.c:1545 plug-ins/common/file-farbfeld.c:361
-#: plug-ins/common/file-mng.c:864 plug-ins/common/file-mng.c:1214
-#: plug-ins/common/file-pcx.c:1192 plug-ins/common/file-pdf-export.c:663
-#: plug-ins/common/file-png.c:1495 plug-ins/common/file-raw-data.c:1358
-#: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1218 plug-ins/common/file-xmc.c:1277
+#: plug-ins/common/file-dicom.c:1536 plug-ins/common/file-farbfeld.c:350
+#: plug-ins/common/file-mng.c:860 plug-ins/common/file-mng.c:1210
+#: plug-ins/common/file-pcx.c:1181 plug-ins/common/file-pdf-export.c:663
+#: plug-ins/common/file-png.c:1486 plug-ins/common/file-raw-data.c:1358
+#: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:609
+#: plug-ins/common/file-tga.c:1209 plug-ins/common/file-xmc.c:1267
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
-#: plug-ins/file-fli/fli-gimp.c:800 plug-ins/file-icns/file-icns-export.c:427
+#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:427
 #: plug-ins/file-ico/ico-export.c:1343 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
 #: plug-ins/file-tiff/file-tiff-export.c:1084
 #: plug-ins/file-tiff/file-tiff-export.c:1173 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1424
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2463
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -1460,7 +1460,7 @@ msgstr "_Pordelost cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2442
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2424
 msgid "RGB"
 msgstr "RGB"
 
@@ -1979,31 +1979,31 @@ msgstr "Ne deluje na plasteh z maskami."
 msgid "Cannot operate on empty selections."
 msgstr "Ne deluje na praznih izborih."
 
-#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:331
-#: plug-ins/common/file-cel.c:383 plug-ins/common/file-dicom.c:364
-#: plug-ins/common/file-farbfeld.c:279 plug-ins/common/file-gif-load.c:416
-#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1398
-#: plug-ins/common/file-pcx.c:496 plug-ins/common/file-pcx.c:539
-#: plug-ins/common/file-png.c:643 plug-ins/common/file-ps.c:1165
-#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-psp.c:2625
-#: plug-ins/common/file-psp.c:2675 plug-ins/common/file-qoi.c:283
+#: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:321
+#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:355
+#: plug-ins/common/file-farbfeld.c:268 plug-ins/common/file-gif-load.c:416
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1394
+#: plug-ins/common/file-pcx.c:485 plug-ins/common/file-pcx.c:528
+#: plug-ins/common/file-png.c:634 plug-ins/common/file-ps.c:1154
+#: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
+#: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:436 plug-ins/common/file-svg.c:540
-#: plug-ins/common/file-tga.c:428 plug-ins/common/file-wbmp.c:188
-#: plug-ins/common/file-xbm.c:730 plug-ins/common/file-xmc.c:661
-#: plug-ins/common/file-xmc.c:900 plug-ins/common/file-xwd.c:473
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
+#: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
+#: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
 #: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:385 plug-ins/file-fli/fli-gimp.c:441
-#: plug-ins/file-fli/fli-gimp.c:492 plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-fits/fits.c:378 plug-ins/file-fli/fli-gimp.c:432
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
 #: plug-ins/file-jpeg/jpeg-load.c:99 plug-ins/file-jpeg/jpeg-load.c:615
 #: plug-ins/file-psd/psd-export.c:2224 plug-ins/file-psd/psd-load.c:180
 #: plug-ins/file-psd/psd-load.c:185 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1784
-#: plug-ins/fractal-explorer/fractal-explorer.c:1159 plug-ins/gfig/gfig.c:527
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1780
+#: plug-ins/fractal-explorer/fractal-explorer.c:1161 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
 #, c-format
@@ -2193,17 +2193,17 @@ msgid "redness-cr709"
 msgstr "pordelost-cr709"
 
 #: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:880
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:879
 msgid "Red"
 msgstr "Rdeča"
 
 #: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:893
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:892
 msgid "Green"
 msgstr "Zelena"
 
 #: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:905
 msgid "Blue"
 msgstr "Modra"
 
@@ -2556,8 +2556,8 @@ msgstr "Naloži paleto KISS"
 msgid "This KISS CEL image requires a palette file."
 msgstr "Za to sliko KISS CEL je potrebna datoteka palete."
 
-#: plug-ins/common/file-cel.c:343 plug-ins/common/file-cel.c:395
-#: plug-ins/common/file-cel.c:416
+#: plug-ins/common/file-cel.c:333 plug-ins/common/file-cel.c:385
+#: plug-ins/common/file-cel.c:406
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF ali napaka pri branju zaglavja slike"
@@ -2581,39 +2581,39 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #. * Open the file for reading...
 #.
-#: plug-ins/common/file-cel.c:374 plug-ins/common/file-dicom.c:356
-#: plug-ins/common/file-gegl.c:339 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:852 plug-ins/common/file-jp2-load.c:1077
-#: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pcx.c:531
-#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:374
-#: plug-ins/common/file-png.c:635 plug-ins/common/file-pnm.c:698
-#: plug-ins/common/file-ps.c:1155 plug-ins/common/file-raw-data.c:1682
-#: plug-ins/common/file-sunras.c:428 plug-ins/common/file-tga.c:420
+#: plug-ins/common/file-cel.c:364 plug-ins/common/file-dicom.c:347
+#: plug-ins/common/file-gegl.c:328 plug-ins/common/file-gif-load.c:408
+#: plug-ins/common/file-heif.c:834 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-pcx.c:477 plug-ins/common/file-pcx.c:520
+#: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:363
+#: plug-ins/common/file-png.c:626 plug-ins/common/file-pnm.c:689
+#: plug-ins/common/file-ps.c:1144 plug-ins/common/file-raw-data.c:1682
+#: plug-ins/common/file-sunras.c:422 plug-ins/common/file-tga.c:411
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:722 plug-ins/common/file-xmc.c:651
-#: plug-ins/common/file-xpm.c:365 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/file-xbm.c:712 plug-ins/common/file-xmc.c:641
+#: plug-ins/common/file-xpm.c:356 plug-ins/common/file-xwd.c:452
 #: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:197
-#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:484
+#: plug-ins/file-faxg3/faxg3.c:244 plug-ins/file-fli/fli-gimp.c:475
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
-#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:314
+#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
 #: plug-ins/file-tiff/file-tiff-load.c:293
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s« ..."
 
-#: plug-ins/common/file-cel.c:425
+#: plug-ins/common/file-cel.c:415
 #, c-format
 msgid "is not a CEL image file"
 msgstr "ni datoteka slike CEL"
 
-#: plug-ins/common/file-cel.c:440
+#: plug-ins/common/file-cel.c:430
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "neveljavna vrednost bpp v sliki: %hhu"
 
-#: plug-ins/common/file-cel.c:455
+#: plug-ins/common/file-cel.c:445
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -2622,39 +2622,39 @@ msgstr ""
 "neveljavne mere slike: širina: %d, vodoravni odmik: %d, višina: %d, navpični "
 "odmik: %d"
 
-#: plug-ins/common/file-cel.c:469
+#: plug-ins/common/file-cel.c:459
 #, c-format
 msgid "Can't create a new image"
 msgstr "Nove slike ni mogoče ustvariti"
 
-#: plug-ins/common/file-cel.c:506 plug-ins/common/file-cel.c:543
-#: plug-ins/common/file-cel.c:569
+#: plug-ins/common/file-cel.c:496 plug-ins/common/file-cel.c:533
+#: plug-ins/common/file-cel.c:559
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "EOF ali napaka pri branju podatkov slike"
 
-#: plug-ins/common/file-cel.c:587
+#: plug-ins/common/file-cel.c:577
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Nepodprta bitna globina (%d)!"
 
-#: plug-ins/common/file-cel.c:674
+#: plug-ins/common/file-cel.c:664
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "»%s«: ni datoteka palete KCF"
 
-#: plug-ins/common/file-cel.c:684
+#: plug-ins/common/file-cel.c:674
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "»%s«: neveljavna vrednost bpp v paleti: %hhu"
 
-#: plug-ins/common/file-cel.c:694
+#: plug-ins/common/file-cel.c:684
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "»%s«: neveljavno število barv: %u"
 
-#: plug-ins/common/file-cel.c:710 plug-ins/common/file-cel.c:738
-#: plug-ins/common/file-cel.c:769
+#: plug-ins/common/file-cel.c:700 plug-ins/common/file-cel.c:728
+#: plug-ins/common/file-cel.c:759
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
@@ -2663,19 +2663,19 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #.
 #. * Open the file for writing...
 #.
-#: plug-ins/common/file-cel.c:826 plug-ins/common/file-farbfeld.c:353
-#: plug-ins/common/file-gif-export.c:952 plug-ins/common/file-html-table.c:347
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1076
-#: plug-ins/common/file-pix.c:642 plug-ins/common/file-png.c:1487
-#: plug-ins/common/file-pnm.c:1618 plug-ins/common/file-ps.c:1376
-#: plug-ins/common/file-qoi.c:358 plug-ins/common/file-sunras.c:607
-#: plug-ins/common/file-tga.c:1210 plug-ins/common/file-xbm.c:1031
-#: plug-ins/common/file-xpm.c:686 plug-ins/common/file-xwd.c:701
-#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:663
-#: plug-ins/file-fli/fli-gimp.c:767 plug-ins/file-icns/file-icns-export.c:610
+#: plug-ins/common/file-cel.c:816 plug-ins/common/file-farbfeld.c:342
+#: plug-ins/common/file-gif-export.c:951 plug-ins/common/file-html-table.c:347
+#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1065
+#: plug-ins/common/file-pix.c:631 plug-ins/common/file-png.c:1478
+#: plug-ins/common/file-pnm.c:1609 plug-ins/common/file-ps.c:1365
+#: plug-ins/common/file-qoi.c:347 plug-ins/common/file-sunras.c:600
+#: plug-ins/common/file-tga.c:1201 plug-ins/common/file-xbm.c:1021
+#: plug-ins/common/file-xpm.c:677 plug-ins/common/file-xwd.c:688
+#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:656
+#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:610
 #: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
-#: plug-ins/file-sgi/sgi.c:626 plug-ins/file-tiff/file-tiff-export.c:1074
+#: plug-ins/file-sgi/sgi.c:617 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvažanje »%s« ..."
@@ -2811,27 +2811,27 @@ msgstr "Slika DICOM"
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Slika Digital Imaging and Communications in Medicine"
 
-#: plug-ins/common/file-dicom.c:390
+#: plug-ins/common/file-dicom.c:381
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "»%s« ni datoteka DICOM."
 
-#: plug-ins/common/file-dicom.c:563
+#: plug-ins/common/file-dicom.c:554
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "GIMP ne podpira skladnje prenosa %s."
 
-#: plug-ins/common/file-dicom.c:618
+#: plug-ins/common/file-dicom.c:609
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "GIMP ne podpira %s v kombinaciji z vzorci na slikovno točko: %d"
 
-#: plug-ins/common/file-dicom.c:1510
+#: plug-ins/common/file-dicom.c:1501
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: plug-ins/common/file-dicom.c:1529 plug-ins/common/file-ps.c:1371
-#: plug-ins/common/file-xwd.c:696 plug-ins/file-fits/fits.c:658
+#: plug-ins/common/file-dicom.c:1520 plug-ins/common/file-ps.c:1360
+#: plug-ins/common/file-xwd.c:683 plug-ins/file-fits/fits.c:651
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "S slikami neznane vrste ni mogoče delovati."
@@ -2848,12 +2848,12 @@ msgstr "Naloži datoteko v zapisu Farbfeld"
 msgid "Export image in the Farbfeld file format"
 msgstr "Izvozi sliko v zapisu datoteke Farbfeld."
 
-#: plug-ins/common/file-farbfeld.c:290
+#: plug-ins/common/file-farbfeld.c:279
 #, c-format
 msgid "Failed to read Farbfeld header"
 msgstr "Branje datoteke Farbfeld ni uspelo"
 
-#: plug-ins/common/file-farbfeld.c:316
+#: plug-ins/common/file-farbfeld.c:305
 #, c-format
 msgid "Premature end of Farbfeld pixel data"
 msgstr "Predčasen konec podatkov slikovnih točk Farbfeld."
@@ -2899,7 +2899,7 @@ msgstr "Sevanje RGBE"
 msgid "OpenEXR image"
 msgstr "Slika OpenEXR"
 
-#: plug-ins/common/file-gegl.c:362
+#: plug-ins/common/file-gegl.c:351
 #, c-format
 msgid "Could not open '%s'"
 msgstr "»%s« ni mogoče odpreti"
@@ -3014,11 +3014,11 @@ msgstr "Komen_tar"
 msgid "Image comment"
 msgstr "Komentar slike"
 
-#: plug-ins/common/file-gif-export.c:560
+#: plug-ins/common/file-gif-export.c:559
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Nadaljnja redukcija barv enostavno ni možna. Shranjeno kot prekrivno."
 
-#: plug-ins/common/file-gif-export.c:679
+#: plug-ins/common/file-gif-export.c:678
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -3027,7 +3027,7 @@ msgstr ""
 "Shranjevanje ‘%s’ ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so "
 "daljše ali širše od %d slikovnih točk."
 
-#: plug-ins/common/file-gif-export.c:702
+#: plug-ins/common/file-gif-export.c:701
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -3036,7 +3036,7 @@ msgstr ""
 "Ni možno izvoziti »%s«.  Prosimo, pretvorite svojo sliko v natančnost 8-"
 "bitnih celih števil, saj zapis datoteke GIF ne podpira višjih natančnosti."
 
-#: plug-ins/common/file-gif-export.c:829
+#: plug-ins/common/file-gif-export.c:828
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3044,19 +3044,19 @@ msgstr ""
 "Zapis GIF podpira komentarje le v 7-bitni kodni tabeli ASCII. Komentar ne bo "
 "shranjen."
 
-#: plug-ins/common/file-gif-export.c:925
+#: plug-ins/common/file-gif-export.c:924
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Barvnih slik RGB ni mogoče izvoziti. Najprej pretvorite v indeksirano ali "
 "sivinsko sliko."
 
-#: plug-ins/common/file-gif-export.c:1145
+#: plug-ins/common/file-gif-export.c:1144
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Zaradi preprečitve preobremenitve CPE pri animaciji je vstavljena zakasnitev."
 
-#: plug-ins/common/file-gif-export.c:1194
+#: plug-ins/common/file-gif-export.c:1193
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3064,11 +3064,11 @@ msgstr ""
 "Slika, ki jo želite izvoziti kot GIF, vsebuje plasti, ki se raztezajo prek "
 "dejanskih meja slike."
 
-#: plug-ins/common/file-gif-export.c:1200
+#: plug-ins/common/file-gif-export.c:1199
 msgid "Cr_op"
 msgstr "_Obreži"
 
-#: plug-ins/common/file-gif-export.c:1211
+#: plug-ins/common/file-gif-export.c:1210
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3076,7 +3076,7 @@ msgstr ""
 "Datotečni zapis GIF tega ne podpira.  Izberite, ali želite vse plasti "
 "porezati na robove slike ali pa preklicati izvažanje."
 
-#: plug-ins/common/file-gif-export.c:1266
+#: plug-ins/common/file-gif-export.c:1265
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3085,19 +3085,19 @@ msgstr ""
 "Vaša slika bo ob izvozu pretvorjena, kar lahko spremeni vrednosti slikovnih "
 "točk."
 
-#: plug-ins/common/file-gif-export.c:1335 plug-ins/common/file-mng.c:1634
+#: plug-ins/common/file-gif-export.c:1334 plug-ins/common/file-mng.c:1630
 msgid "milliseconds"
 msgstr "milisekund"
 
-#: plug-ins/common/file-gif-export.c:1341
+#: plug-ins/common/file-gif-export.c:1340
 msgid "I don't care"
 msgstr "vseeno mi je"
 
-#: plug-ins/common/file-gif-export.c:1377
+#: plug-ins/common/file-gif-export.c:1376
 msgid "Animated GIF"
 msgstr "Animirani GIF"
 
-#: plug-ins/common/file-gif-export.c:1384
+#: plug-ins/common/file-gif-export.c:1383
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3492,77 +3492,77 @@ msgstr "Naloži slike HEJ2"
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Naloži sliko JPEG2000, ovito v HEIF (HEJ2)"
 
-#: plug-ins/common/file-heif.c:892 plug-ins/common/file-heif.c:925
-#: plug-ins/common/file-heif.c:966 plug-ins/common/file-heif.c:1028
+#: plug-ins/common/file-heif.c:874 plug-ins/common/file-heif.c:907
+#: plug-ins/common/file-heif.c:948 plug-ins/common/file-heif.c:1010
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Nalaganje slike HEIF slike ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:914
+#: plug-ins/common/file-heif.c:896
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Nalaganje slike HEIF ni uspelo: vhodna datoteka ne vsebuje berljivih slik."
 
-#: plug-ins/common/file-heif.c:1150
+#: plug-ins/common/file-heif.c:1132
 msgid "image content"
 msgstr "Vsebina slike"
 
-#: plug-ins/common/file-heif.c:1489
+#: plug-ins/common/file-heif.c:1471
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Izvažanje »%s« z uporabo kodirnika %s ..."
 
-#: plug-ins/common/file-heif.c:1537 plug-ins/common/file-heif.c:1922
+#: plug-ins/common/file-heif.c:1519 plug-ins/common/file-heif.c:1904
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodiranje slike HEIF je spodletelo: %s"
 
-#: plug-ins/common/file-heif.c:2043
+#: plug-ins/common/file-heif.c:2025
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Zapisovanje slike HEIF ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:2132
+#: plug-ins/common/file-heif.c:2114
 msgid "primary"
 msgstr "Primarno"
 
-#: plug-ins/common/file-heif.c:2277
+#: plug-ins/common/file-heif.c:2259
 msgid "Load HEIF Image"
 msgstr "Naloži sliko HEIF"
 
-#: plug-ins/common/file-heif.c:2291
+#: plug-ins/common/file-heif.c:2273
 msgid "Select Image"
 msgstr "Izberi sliko"
 
-#: plug-ins/common/file-heif.c:2443
+#: plug-ins/common/file-heif.c:2425
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2444
+#: plug-ins/common/file-heif.c:2426
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2450 plug-ins/common/file-jpegxl.c:2035
+#: plug-ins/common/file-heif.c:2432 plug-ins/common/file-jpegxl.c:2035
 msgid "8 bit/channel"
 msgstr "8 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2451
+#: plug-ins/common/file-heif.c:2433
 msgid "10 bit/channel"
 msgstr "10 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2452
+#: plug-ins/common/file-heif.c:2434
 msgid "12 bit/channel"
 msgstr "12 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2458
+#: plug-ins/common/file-heif.c:2440
 msgid "Slow"
 msgstr "Počasi"
 
-#: plug-ins/common/file-heif.c:2459
+#: plug-ins/common/file-heif.c:2441
 msgid "Balanced"
 msgstr "Uravnoteženo"
 
-#: plug-ins/common/file-heif.c:2460
+#: plug-ins/common/file-heif.c:2442
 msgid "Fast"
 msgstr "Hitro"
 
@@ -4072,52 +4072,52 @@ msgstr "Zapiši košček tIME (čas nastanka)"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:717 plug-ins/common/file-png.c:2320
+#: plug-ins/common/file-mng.c:713 plug-ins/common/file-png.c:2311
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
 
-#: plug-ins/common/file-mng.c:1587
+#: plug-ins/common/file-mng.c:1583
 msgid "MNG Options"
 msgstr "Možnosti MNG"
 
-#: plug-ins/common/file-mng.c:1596 plug-ins/common/file-png.c:231
+#: plug-ins/common/file-mng.c:1592 plug-ins/common/file-png.c:231
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/file-mng.c:1597
+#: plug-ins/common/file-mng.c:1593
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/file-mng.c:1600
+#: plug-ins/common/file-mng.c:1596
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1601
+#: plug-ins/common/file-mng.c:1597
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:1602
+#: plug-ins/common/file-mng.c:1598
 msgid "All PNG"
 msgstr "Vse PNG"
 
-#: plug-ins/common/file-mng.c:1603
+#: plug-ins/common/file-mng.c:1599
 msgid "All JNG"
 msgstr "Vse JNG"
 
-#: plug-ins/common/file-mng.c:1611
+#: plug-ins/common/file-mng.c:1607
 msgid "Combine"
 msgstr "Združi"
 
-#: plug-ins/common/file-mng.c:1612
+#: plug-ins/common/file-mng.c:1608
 msgid "Replace"
 msgstr "Zamenjaj"
 
-#: plug-ins/common/file-mng.c:1647
+#: plug-ins/common/file-mng.c:1643
 msgid "Animated MNG Options"
 msgstr "Možnosti za animirani MNG ..."
 
-#: plug-ins/common/file-mng.c:1657
+#: plug-ins/common/file-mng.c:1653
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -4193,103 +4193,103 @@ msgstr "Naloži datoteke v zapisu Zsoft DCX."
 msgid "Exports files in ZSoft PCX file format"
 msgstr "Izvozi datoteke v zapisu ZSoft PCX"
 
-#: plug-ins/common/file-pcx.c:508
+#: plug-ins/common/file-pcx.c:497
 msgid "Could not load PCX image: "
 msgstr "Slike PCX ni mogoče naložiti: "
 
-#: plug-ins/common/file-pcx.c:555
+#: plug-ins/common/file-pcx.c:544
 #, c-format
 msgid "DCX image offset exceeds the file size"
 msgstr "Zamik slike DCX presega velikost datoteke"
 
-#: plug-ins/common/file-pcx.c:566
+#: plug-ins/common/file-pcx.c:555
 msgid "Could not load DCX image: "
 msgstr "Slike DCX ni mogoče naložiti: "
 
-#: plug-ins/common/file-pcx.c:589
+#: plug-ins/common/file-pcx.c:578
 #, c-format
 msgid "%s: DCX image offset exceeds the file size: %s\n"
 msgstr "%s: zamik slike DCX presega velikost datoteke: %s\n"
 
-#: plug-ins/common/file-pcx.c:606
+#: plug-ins/common/file-pcx.c:595
 msgid "Mixed-mode DCX image not loaded"
 msgstr "Slika DCX v mešanem načinu ni naložena"
 
-#: plug-ins/common/file-pcx.c:613
+#: plug-ins/common/file-pcx.c:602
 #, c-format
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: ni mogoče naložiti vseh slik DCX: %s\n"
 
-#: plug-ins/common/file-pcx.c:653
+#: plug-ins/common/file-pcx.c:642
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-pcx.c:663
+#: plug-ins/common/file-pcx.c:652
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "»%s« ni datoteka PCX"
 
-#: plug-ins/common/file-pcx.c:679 plug-ins/common/file-wbmp.c:263
+#: plug-ins/common/file-pcx.c:668 plug-ins/common/file-wbmp.c:263
 #: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
-#: plug-ins/common/file-pcx.c:686 plug-ins/common/file-wbmp.c:269
+#: plug-ins/common/file-pcx.c:675 plug-ins/common/file-wbmp.c:269
 #: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
 
-#: plug-ins/common/file-pcx.c:694
+#: plug-ins/common/file-pcx.c:683
 #, c-format
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Neveljavno število bajtov na vrstico v glavi PCX"
 
-#: plug-ins/common/file-pcx.c:700
+#: plug-ins/common/file-pcx.c:689
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Ločljivost prek meja v glavi XCX, uporabljeno bo 72x72"
 
-#: plug-ins/common/file-pcx.c:709
+#: plug-ins/common/file-pcx.c:698
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
-#: plug-ins/common/file-pcx.c:834
+#: plug-ins/common/file-pcx.c:823
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Nenavadna vrsta PCX, sledi prekinitev"
 
-#: plug-ins/common/file-pcx.c:859
+#: plug-ins/common/file-pcx.c:848
 msgid "Import from PCX"
 msgstr "Uvozi iz PCX"
 
-#: plug-ins/common/file-pcx.c:1143 plug-ins/common/file-pnm.c:1614
+#: plug-ins/common/file-pcx.c:1132 plug-ins/common/file-pnm.c:1605
 msgid "Cannot export images with alpha channel."
 msgstr "Slik ni mogoče izvoziti s kanalom alfa."
 
-#: plug-ins/common/file-pcx.c:1163
+#: plug-ins/common/file-pcx.c:1152
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Neveljaven zamik X: %d"
 
-#: plug-ins/common/file-pcx.c:1169
+#: plug-ins/common/file-pcx.c:1158
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Neveljavna zamik Y: %d"
 
-#: plug-ins/common/file-pcx.c:1175
+#: plug-ins/common/file-pcx.c:1164
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Desni rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1182
+#: plug-ins/common/file-pcx.c:1171
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1258 plug-ins/common/file-qoi.c:377
+#: plug-ins/common/file-pcx.c:1247 plug-ins/common/file-qoi.c:366
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
@@ -4460,7 +4460,7 @@ msgstr "Dodaj to sliko"
 
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
-#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2225
+#: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
 #: plug-ins/file-tiff/file-tiff-load.c:1532
 #, c-format
 msgid "Page %d"
@@ -4565,7 +4565,7 @@ msgstr "Napaka pri pridobivanju števila strani iz dane datoteke PDF."
 msgid "Alias Pix image"
 msgstr "Slika Alias PIX"
 
-#: plug-ins/common/file-pix.c:570
+#: plug-ins/common/file-pix.c:559
 #, c-format
 msgid ""
 "Error trying to open temporary JPEG file '%s' for Esm Software pix loading: "
@@ -4574,7 +4574,7 @@ msgstr ""
 "Napaka pri odpiranju začasne datoteke JPEG »%s« pri nalaganju zapisa Esm "
 "Software PIX: %s"
 
-#: plug-ins/common/file-pix.c:588
+#: plug-ins/common/file-pix.c:577
 msgid "Invalid Esm Software PIX file"
 msgstr "Neveljavna datoteka Esm Software PIX"
 
@@ -4683,38 +4683,38 @@ msgstr "RGBA, 16 b/kanal"
 msgid "16 bpc GRAYA"
 msgstr "GRAYA, 16 b/kanal"
 
-#: plug-ins/common/file-png.c:466
+#: plug-ins/common/file-png.c:457
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Napaka pri nalaganju datoteke PNG: %s\n"
 
-#: plug-ins/common/file-png.c:600
+#: plug-ins/common/file-png.c:591
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Napaka pri ustvarjanju bralne strukture za PNG pri nalaganju »%s«."
 
-#: plug-ins/common/file-png.c:609
+#: plug-ins/common/file-png.c:600
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Napaka pri branju »%s«. Podatkovne strukture flave PNG ni mogoče ustvariti."
 
-#: plug-ins/common/file-png.c:617
+#: plug-ins/common/file-png.c:608
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Napaka pri branju »%s«. Je datoteka poškodovana?"
 
-#: plug-ins/common/file-png.c:877
+#: plug-ins/common/file-png.c:868
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznan barvni model v datoteki PNG »%s«."
 
-#: plug-ins/common/file-png.c:890 plug-ins/file-exr/file-exr.c:265
+#: plug-ins/common/file-png.c:881 plug-ins/file-exr/file-exr.c:265
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nove slike za »%s« ni mogoče ustvariti: %s"
 
-#: plug-ins/common/file-png.c:958
+#: plug-ins/common/file-png.c:949
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4722,19 +4722,19 @@ msgstr ""
 "Datoteka PNG navaja zamik, ki je povzročil, da je plast vzpostavljena zunaj "
 "slike."
 
-#: plug-ins/common/file-png.c:1209
+#: plug-ins/common/file-png.c:1200
 msgid "Apply PNG Offset"
 msgstr "Uveljavi odmik PNG"
 
-#: plug-ins/common/file-png.c:1213
+#: plug-ins/common/file-png.c:1204
 msgid "Ignore PNG offset"
 msgstr "Prezri odmik PNG"
 
-#: plug-ins/common/file-png.c:1214
+#: plug-ins/common/file-png.c:1205
 msgid "Apply PNG offset to layer"
 msgstr "Uveljavi odmik PNG na plasti"
 
-#: plug-ins/common/file-png.c:1239
+#: plug-ins/common/file-png.c:1230
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -4743,19 +4743,19 @@ msgstr ""
 "Slika PNG, ki jo uvažate, določa odmik %d, %d. Želite uveljaviti ta odmik na "
 "plasti?"
 
-#: plug-ins/common/file-png.c:1452
+#: plug-ins/common/file-png.c:1443
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Napaka pri ustvarjanju pisalne strukture za PNG pri izvažanju »%s«."
 
-#: plug-ins/common/file-png.c:1461
+#: plug-ins/common/file-png.c:1452
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Napaka pri izvažanju »%s«. Podatkovne strukture flave PNG ni mogoče "
 "ustvariti."
 
-#: plug-ins/common/file-png.c:1469
+#: plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Napaka pri izvažanju »%s«. Slike ni mogoče izvoziti."
@@ -4881,75 +4881,75 @@ msgstr "Izvozi datoteke v zapisu slikovnih datotek PFM."
 msgid "PFM export handles all images without transparency."
 msgstr "Izvoz PFM obravnava vse slike brez prosojnosti."
 
-#: plug-ins/common/file-pnm.c:731 plug-ins/common/file-pnm.c:763
-#: plug-ins/common/file-pnm.c:772 plug-ins/common/file-pnm.c:787
-#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1000
-#: plug-ins/common/file-pnm.c:1095 plug-ins/common/file-pnm.c:1180
-#: plug-ins/common/file-pnm.c:1241
+#: plug-ins/common/file-pnm.c:722 plug-ins/common/file-pnm.c:754
+#: plug-ins/common/file-pnm.c:763 plug-ins/common/file-pnm.c:778
+#: plug-ins/common/file-pnm.c:793 plug-ins/common/file-pnm.c:991
+#: plug-ins/common/file-pnm.c:1086 plug-ins/common/file-pnm.c:1171
+#: plug-ins/common/file-pnm.c:1232
 msgid "Premature end of file."
 msgstr "Predčasen konec datoteke."
 
-#: plug-ins/common/file-pnm.c:733
+#: plug-ins/common/file-pnm.c:724
 msgid "Invalid file."
 msgstr "Neveljavna datoteka."
 
-#: plug-ins/common/file-pnm.c:751
+#: plug-ins/common/file-pnm.c:742
 msgid "File not in a supported format."
 msgstr "Datoteka ni v podprtem zapisu."
 
-#: plug-ins/common/file-pnm.c:766
+#: plug-ins/common/file-pnm.c:757
 msgid "Invalid X resolution."
 msgstr "Neveljavna ločljivost po osi X."
 
-#: plug-ins/common/file-pnm.c:768 plug-ins/common/file-pnm.c:934
+#: plug-ins/common/file-pnm.c:759 plug-ins/common/file-pnm.c:925
 msgid "Image width is larger than GIMP can handle."
 msgstr "Širina slike presega zmožnosti GIMP-a."
 
-#: plug-ins/common/file-pnm.c:775
+#: plug-ins/common/file-pnm.c:766
 msgid "Invalid Y resolution."
 msgstr "Neveljavna ločljivost po osi Y."
 
-#: plug-ins/common/file-pnm.c:777
+#: plug-ins/common/file-pnm.c:768
 msgid "Image height is larger than GIMP can handle."
 msgstr "Višina slike presega zmožnosti GIMP-a."
 
-#: plug-ins/common/file-pnm.c:791
+#: plug-ins/common/file-pnm.c:782
 msgid "Bogus scale factor."
 msgstr "Nepodprt faktor spremembe merila."
 
-#: plug-ins/common/file-pnm.c:793
+#: plug-ins/common/file-pnm.c:784
 msgid "Unsupported scale factor."
 msgstr "Nepodprt faktor spremembe merila."
 
-#: plug-ins/common/file-pnm.c:807
+#: plug-ins/common/file-pnm.c:798
 msgid "Unsupported maximum value."
 msgstr "Nepodprta največja vrednost."
 
-#: plug-ins/common/file-pnm.c:928
+#: plug-ins/common/file-pnm.c:919
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: Nepodprta neuradna inačica PNM."
 
-#: plug-ins/common/file-pnm.c:932
+#: plug-ins/common/file-pnm.c:923
 msgid "PAM: Premature end of file."
 msgstr "PAM: Predčasen konec datoteke."
 
-#: plug-ins/common/file-pnm.c:936
+#: plug-ins/common/file-pnm.c:927
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: Neveljavna ločljivost po osi X."
 
-#: plug-ins/common/file-pnm.c:938
+#: plug-ins/common/file-pnm.c:929
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: Neveljavna ločljivost po osi Y."
 
-#: plug-ins/common/file-pnm.c:940
+#: plug-ins/common/file-pnm.c:931
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: Neveljavna največja vrednost."
 
-#: plug-ins/common/file-pnm.c:942
+#: plug-ins/common/file-pnm.c:933
 msgid "PAM: Invalid depth."
 msgstr "PAM: Neveljavna globina."
 
-#: plug-ins/common/file-pnm.c:944
+#: plug-ins/common/file-pnm.c:935
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: Nepodprta vrsta tupltype."
 
@@ -5009,7 +5009,7 @@ msgstr "črno belo"
 msgid "Gray"
 msgstr "sivinsko"
 
-#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:492
+#: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:483
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
 #: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:223
 #: plug-ins/lighting/lighting-main.c:346 plug-ins/lighting/lighting-main.c:405
@@ -5165,38 +5165,38 @@ msgstr "_Velikost predogleda"
 msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr "Največja velikost predogleda. Nastavite na 0 za brez predogleda."
 
-#: plug-ins/common/file-ps.c:1176
+#: plug-ins/common/file-ps.c:1165
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Datoteke PostScript »%s« ni mogoče interpretirati."
 
-#: plug-ins/common/file-ps.c:1258
+#: plug-ins/common/file-ps.c:1247
 msgid "Rendered EPS"
 msgstr "Upodobljeni EPS"
 
-#: plug-ins/common/file-ps.c:1286
+#: plug-ins/common/file-ps.c:1275
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strani"
 
-#: plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-ps.c:1347
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Izvoz v PostScript ne podpira slik s kanali alfa."
 
-#: plug-ins/common/file-ps.c:3830
+#: plug-ins/common/file-ps.c:3819
 msgid "Pages:"
 msgstr "Strani:"
 
-#: plug-ins/common/file-ps.c:3834
+#: plug-ins/common/file-ps.c:3823
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Strani za nalaganje (npr.: 1-4 ali 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3840
+#: plug-ins/common/file-ps.c:3829
 msgid "Open as"
 msgstr "Odpri kot"
 
-#: plug-ins/common/file-ps.c:3931
+#: plug-ins/common/file-ps.c:3920
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5204,28 +5204,28 @@ msgstr ""
 "Ko je vključeno, bo končna slika umerjena na podano velikost brez spremembe "
 "razmerja stranic."
 
-#: plug-ins/common/file-ps.c:3937
+#: plug-ins/common/file-ps.c:3926
 msgid "Image Size"
 msgstr "Velikost slike"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3957
+#: plug-ins/common/file-ps.c:3946
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3958
+#: plug-ins/common/file-ps.c:3947
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3959
+#: plug-ins/common/file-ps.c:3948
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3960
+#: plug-ins/common/file-ps.c:3949
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3967
+#: plug-ins/common/file-ps.c:3956
 msgid "Output"
 msgstr "Izhod"
 
@@ -5258,7 +5258,6 @@ msgid "none"
 msgstr "brez"
 
 #: plug-ins/common/file-psp.c:720
-#| msgid "red"
 msgid "rle"
 msgstr "rle"
 
@@ -5266,219 +5265,219 @@ msgstr "rle"
 msgid "lz77"
 msgstr "lz77"
 
-#: plug-ins/common/file-psp.c:925
+#: plug-ins/common/file-psp.c:915
 #, c-format
 msgid "Error reading block header"
 msgstr "Napaka pri branju glave bloka"
 
-#: plug-ins/common/file-psp.c:932
+#: plug-ins/common/file-psp.c:922
 #, c-format
 msgid "Invalid block header at %ld"
 msgstr "Neveljavna glava bloka pri %ld"
 
-#: plug-ins/common/file-psp.c:935
+#: plug-ins/common/file-psp.c:925
 #, c-format
 msgid "Invalid block header"
 msgstr "Neveljavna glava bloka"
 
-#: plug-ins/common/file-psp.c:967
+#: plug-ins/common/file-psp.c:957
 #, c-format
 msgid "Seek error: %s"
 msgstr "Napaka pri pozicioniranju: %s"
 
-#: plug-ins/common/file-psp.c:990
+#: plug-ins/common/file-psp.c:980
 #, c-format
 msgid "Invalid general image attribute chunk size."
 msgstr "Neveljavna velikost bloka splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:1012
+#: plug-ins/common/file-psp.c:1002
 #, c-format
 msgid "Error reading general image attribute block."
 msgstr "Napaka pri branju bloka splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:1027
+#: plug-ins/common/file-psp.c:1017
 #, c-format
 msgid "Unknown compression type %d"
 msgstr "Nepodprti način stiskanja %d"
 
-#: plug-ins/common/file-psp.c:1063 plug-ins/common/file-psp.c:1070
+#: plug-ins/common/file-psp.c:1053 plug-ins/common/file-psp.c:1060
 #, c-format
 msgid "Unsupported bit depth %d"
 msgstr "Nepodprta bitna globina %d"
 
-#: plug-ins/common/file-psp.c:1117
+#: plug-ins/common/file-psp.c:1107
 #, c-format
 msgid "Error reading creator keyword chunk"
 msgstr "Napaka pri branju kosa podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1123
+#: plug-ins/common/file-psp.c:1113
 #, c-format
 msgid "Invalid keyword chunk header"
 msgstr "Neveljaven kos podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1138 plug-ins/common/file-psp.c:1165
+#: plug-ins/common/file-psp.c:1128 plug-ins/common/file-psp.c:1155
 #, c-format
 msgid "Error reading creator keyword data"
 msgstr "Napaka pri branju podatkov ključnih besed ustvarjalca"
 
-#: plug-ins/common/file-psp.c:1249 plug-ins/common/file-psp.c:1258
-#: plug-ins/common/file-psp.c:1267
+#: plug-ins/common/file-psp.c:1239 plug-ins/common/file-psp.c:1248
+#: plug-ins/common/file-psp.c:1257
 #, c-format
 msgid "Error reading color block"
 msgstr "Napaka pri branju barvnega bloka"
 
-#: plug-ins/common/file-psp.c:1278
+#: plug-ins/common/file-psp.c:1268
 #, c-format
 msgid "Error: Unsupported palette size"
 msgstr "Napaka: nepodprta velikost palete"
 
-#: plug-ins/common/file-psp.c:1289
+#: plug-ins/common/file-psp.c:1279
 #, c-format
 msgid "Error reading color palette"
 msgstr "Napaka pri branju barvne palete"
 
-#: plug-ins/common/file-psp.c:1715 plug-ins/common/file-psp.c:1729
+#: plug-ins/common/file-psp.c:1705 plug-ins/common/file-psp.c:1719
 #, c-format
 msgid "zlib error"
 msgstr "Napaka zlib"
 
-#: plug-ins/common/file-psp.c:1792 plug-ins/common/file-psp.c:1826
-#: plug-ins/common/file-psp.c:1836
+#: plug-ins/common/file-psp.c:1782 plug-ins/common/file-psp.c:1816
+#: plug-ins/common/file-psp.c:1826
 #, c-format
 msgid "Error reading layer extension information"
 msgstr "Napaka pri branju podatkov o razšrijenosti plasti."
 
-#: plug-ins/common/file-psp.c:1813
+#: plug-ins/common/file-psp.c:1803
 #, c-format
 msgid "Error reading block information"
 msgstr "Napaka pri branju kosa podatkov."
 
-#: plug-ins/common/file-psp.c:1893
+#: plug-ins/common/file-psp.c:1883
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr "Neveljaven podblok plasti %s, mora biti LAYER"
 
-#: plug-ins/common/file-psp.c:1924 plug-ins/common/file-psp.c:1981
+#: plug-ins/common/file-psp.c:1914 plug-ins/common/file-psp.c:1971
 #, c-format
 msgid "Error reading layer information chunk"
 msgstr "Napaka pri branju kosa podatkov o plasti"
 
-#: plug-ins/common/file-psp.c:2023
+#: plug-ins/common/file-psp.c:2013
 #, c-format
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Neveljavne dimenzije plasti: %dx%d"
 
-#: plug-ins/common/file-psp.c:2084
+#: plug-ins/common/file-psp.c:2074
 #, c-format
 msgid "Error creating layer"
 msgstr "Napaka pri ustvarjanju plasti"
 
-#: plug-ins/common/file-psp.c:2129
+#: plug-ins/common/file-psp.c:2119
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
 msgstr "Neveljaven podblok plasti %s, mora biti CHANNEL"
 
-#: plug-ins/common/file-psp.c:2145
+#: plug-ins/common/file-psp.c:2135
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Napaka pri branju kosa podatkov o kanalu"
 
-#: plug-ins/common/file-psp.c:2168
+#: plug-ins/common/file-psp.c:2158
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
 msgstr "Neveljavna vrsta kanala %d v informacijskem koščku kanala"
 
-#: plug-ins/common/file-psp.c:2272 plug-ins/common/file-psp.c:2289
+#: plug-ins/common/file-psp.c:2262 plug-ins/common/file-psp.c:2279
 #, c-format
 msgid "Error reading tube data chunk"
 msgstr "Napaka pri branju kosa podatkov o cevi"
 
-#: plug-ins/common/file-psp.c:2376 plug-ins/common/file-psp.c:2392
+#: plug-ins/common/file-psp.c:2366 plug-ins/common/file-psp.c:2382
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "Napaka pri branju kosa izbora"
 
-#: plug-ins/common/file-psp.c:2385
+#: plug-ins/common/file-psp.c:2375
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "Neveljavna velikost kosa izbora"
 
-#: plug-ins/common/file-psp.c:2409
+#: plug-ins/common/file-psp.c:2399
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Napaka pri branju konca kosa izbora"
 
-#: plug-ins/common/file-psp.c:2434
+#: plug-ins/common/file-psp.c:2424
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Napaka pri branju glave kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2442
+#: plug-ins/common/file-psp.c:2432
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Neveljavna glava kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2453
+#: plug-ins/common/file-psp.c:2443
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Neveljavna velikost kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2474
+#: plug-ins/common/file-psp.c:2464
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Napaka pri branju podatkov mreže kosov razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2502
+#: plug-ins/common/file-psp.c:2492
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Napaka pri branju podatkov vodila razširjenega kosa"
 
-#: plug-ins/common/file-psp.c:2520
+#: plug-ins/common/file-psp.c:2510
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Neveljavna usmerjenost vodila"
 
-#: plug-ins/common/file-psp.c:2534
+#: plug-ins/common/file-psp.c:2524
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Napaka pri branju kosa razširjenega bloka"
 
-#: plug-ins/common/file-psp.c:2560 plug-ins/common/file-psp.c:2572
-#: plug-ins/common/file-psp.c:2583
+#: plug-ins/common/file-psp.c:2550 plug-ins/common/file-psp.c:2562
+#: plug-ins/common/file-psp.c:2573
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
 
-#: plug-ins/common/file-psp.c:2636
+#: plug-ins/common/file-psp.c:2626
 #, c-format
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
 
-#: plug-ins/common/file-psp.c:2643
+#: plug-ins/common/file-psp.c:2633
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Neveljaven podpis datoteke."
 
-#: plug-ins/common/file-psp.c:2657
+#: plug-ins/common/file-psp.c:2647
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Nepodprta različica datoteke vrste PSP %d.%d."
 
-#: plug-ins/common/file-psp.c:2677
+#: plug-ins/common/file-psp.c:2667
 msgid "invalid block size"
 msgstr "neveljavna velikost bloka"
 
-#: plug-ins/common/file-psp.c:2686
+#: plug-ins/common/file-psp.c:2676
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Podvojeni blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2714
+#: plug-ins/common/file-psp.c:2704
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Manjkajoči blok splošnih atributov slike."
 
-#: plug-ins/common/file-psp.c:2839
+#: plug-ins/common/file-psp.c:2829
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
@@ -5503,7 +5502,7 @@ msgstr "Izvozi sliko v zapisu datoteke QOI."
 msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "Izvozi sliko v zapisu datotek QOI (Quite OK Image)"
 
-#: plug-ins/common/file-qoi.c:295
+#: plug-ins/common/file-qoi.c:284
 #, c-format
 msgid "Failed to read QOI file"
 msgstr "Branje datoteke QOI ni uspelo"
@@ -5838,33 +5837,37 @@ msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #: plug-ins/common/file-sunras.c:323
-msgid "Data Formatting"
-msgstr "Oblikovanje podatkov"
+msgid "_Data Formatting"
+msgstr "Oblikovanje po_datkov"
 
 #: plug-ins/common/file-sunras.c:324
-msgid "Use standard (0) or Run-Length Encoded (1) output"
-msgstr "Uporabi navadni izhod (0) ali izhod, kodiran s tekočo dolžino (1)"
+msgid "Use standard or Run-Length Encoded output"
+msgstr "Uporabi  navadni izhod ali izhod, kodiran s tekočo dolžino"
 
-#: plug-ins/common/file-sunras.c:447
+#: plug-ins/common/file-sunras.c:326
+msgid "Run-Length Encoding"
+msgstr "Kodirano s tekočo dolžino (RLE)"
+
+#: plug-ins/common/file-sunras.c:441
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "Rastrske datoteke SUN »%s« ni mogoče odpreti"
 
-#: plug-ins/common/file-sunras.c:457
+#: plug-ins/common/file-sunras.c:451
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Ta vrsta rastrske datoteke SUN ni podprta"
 
-#: plug-ins/common/file-sunras.c:486
+#: plug-ins/common/file-sunras.c:480
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Barvnih vnosov iz »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-sunras.c:495
+#: plug-ins/common/file-sunras.c:489
 msgid "Type of colormap not supported"
 msgstr "Vrsta kataloga barv ni podprta"
 
-#: plug-ins/common/file-sunras.c:502 plug-ins/common/file-xbm.c:818
-#: plug-ins/common/file-xwd.c:577
+#: plug-ins/common/file-sunras.c:496 plug-ins/common/file-xbm.c:808
+#: plug-ins/common/file-xwd.c:564
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5873,8 +5876,8 @@ msgstr ""
 "»%s«:\n"
 "Širina slike ni določena"
 
-#: plug-ins/common/file-sunras.c:510 plug-ins/common/file-xbm.c:826
-#: plug-ins/common/file-xwd.c:586
+#: plug-ins/common/file-sunras.c:504 plug-ins/common/file-xbm.c:816
+#: plug-ins/common/file-xwd.c:573
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5883,8 +5886,8 @@ msgstr ""
 "»%s«:\n"
 "Širina slike presega zmožnosti GIMP-a"
 
-#: plug-ins/common/file-sunras.c:518 plug-ins/common/file-xbm.c:834
-#: plug-ins/common/file-xwd.c:594
+#: plug-ins/common/file-sunras.c:512 plug-ins/common/file-xbm.c:824
+#: plug-ins/common/file-xwd.c:581
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5893,8 +5896,8 @@ msgstr ""
 "»%s«:\n"
 "Višina slike ni določena"
 
-#: plug-ins/common/file-sunras.c:526 plug-ins/common/file-xbm.c:842
-#: plug-ins/common/file-xwd.c:602
+#: plug-ins/common/file-sunras.c:520 plug-ins/common/file-xbm.c:832
+#: plug-ins/common/file-xwd.c:589
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5903,39 +5906,31 @@ msgstr ""
 "»%s«:\n"
 "Višina slike presega zmožnosti GIMP-a"
 
-#: plug-ins/common/file-sunras.c:562
+#: plug-ins/common/file-sunras.c:556
 msgid "This image depth is not supported"
 msgstr "Ta globina slike ni podprta"
 
-#: plug-ins/common/file-sunras.c:591
+#: plug-ins/common/file-sunras.c:584
 #, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
 msgstr "Izvoz SUNRAS ne zmore obdelati slik s kanali alfa"
 
-#: plug-ins/common/file-sunras.c:602
+#: plug-ins/common/file-sunras.c:595
 msgid "Can't operate on unknown image types"
 msgstr "Operacije nad neznanimi vrstami datotek niso možne"
 
-#: plug-ins/common/file-sunras.c:1171 plug-ins/common/file-sunras.c:1266
-#: plug-ins/common/file-sunras.c:1350 plug-ins/common/file-sunras.c:1450
-#: plug-ins/common/file-xwd.c:1500 plug-ins/common/file-xwd.c:1614
-#: plug-ins/common/file-xwd.c:1785 plug-ins/common/file-xwd.c:2025
-#: plug-ins/common/file-xwd.c:2214 plug-ins/common/file-xwd.c:2490
+#: plug-ins/common/file-sunras.c:1164 plug-ins/common/file-sunras.c:1259
+#: plug-ins/common/file-sunras.c:1343 plug-ins/common/file-sunras.c:1443
+#: plug-ins/common/file-xwd.c:1487 plug-ins/common/file-xwd.c:1601
+#: plug-ins/common/file-xwd.c:1772 plug-ins/common/file-xwd.c:2012
+#: plug-ins/common/file-xwd.c:2201 plug-ins/common/file-xwd.c:2477
 #, c-format
 msgid "EOF encountered on reading"
 msgstr "Pri branju je prišlo do nepredvidenega konca datoteke"
 
-#: plug-ins/common/file-sunras.c:1629 plug-ins/common/file-sunras.c:1750
+#: plug-ins/common/file-sunras.c:1622 plug-ins/common/file-sunras.c:1743
 msgid "Write error occurred"
 msgstr "Prišlo je do napake pri pisanju"
-
-#: plug-ins/common/file-sunras.c:1773
-msgid "S_tandard"
-msgstr "_Navadno"
-
-#: plug-ins/common/file-sunras.c:1774
-msgid "R_un-Length Encoded"
-msgstr "_Kodirano s tekočo dolžino (RLE)"
 
 #: plug-ins/common/file-svg.c:166
 msgid "SVG image"
@@ -6050,26 +6045,26 @@ msgstr "I_zvor"
 msgid "Image origin (0 = top-left, 1 = bottom-left)"
 msgstr "Izvor slike (0 = levo zgoraj, 1 = desno spodaj)"
 
-#: plug-ins/common/file-tga.c:438
+#: plug-ins/common/file-tga.c:429
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Iz »%s« ni mogoče prebrati glave"
 
-#: plug-ins/common/file-tga.c:457
+#: plug-ins/common/file-tga.c:448
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Iz »%s« ni mogoče prebrati razširitve"
 
-#: plug-ins/common/file-tga.c:470
+#: plug-ins/common/file-tga.c:461
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-tga.c:1433
+#: plug-ins/common/file-tga.c:1424
 msgid "Bottom left"
 msgstr "Levo spodaj"
 
-#: plug-ins/common/file-tga.c:1434
+#: plug-ins/common/file-tga.c:1425
 msgid "Top left"
 msgstr "Levo zgoraj"
 
@@ -6218,7 +6213,7 @@ msgstr "_Končnice datotek maske"
 msgid "Suffix of the mask file"
 msgstr "Pripona oz. končnica datoteke maske"
 
-#: plug-ins/common/file-xbm.c:810
+#: plug-ins/common/file-xbm.c:800
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6227,7 +6222,7 @@ msgstr ""
 "»%s«:\n"
 "Branje glave ni mogoče (ftell == %ld)"
 
-#: plug-ins/common/file-xbm.c:850
+#: plug-ins/common/file-xbm.c:840
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6237,7 +6232,7 @@ msgstr ""
 "Vrsta datoteke ni določena"
 
 #. The image is not black-and-white.
-#: plug-ins/common/file-xbm.c:995
+#: plug-ins/common/file-xbm.c:985
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
@@ -6249,7 +6244,7 @@ msgstr ""
 "Prosimo, pretvorite jo v 1-bitno črno belo indeksirano sliko in potem "
 "poskusite znova."
 
-#: plug-ins/common/file-xbm.c:1007
+#: plug-ins/common/file-xbm.c:997
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -6257,7 +6252,7 @@ msgstr ""
 "Ni možno shraniti maske kazalca za sliko,\n"
 "ki nima kanala alfa."
 
-#: plug-ins/common/file-xbm.c:1239
+#: plug-ins/common/file-xbm.c:1229
 msgid ""
 "Writing a comment will make the XBM file unreadable by some applications.\n"
 "The comment will not affect embedding the XBM in C source code."
@@ -6379,50 +6374,50 @@ msgstr ""
 "Vroče točke ni mogoče nastaviti!\n"
 "Plasti morate razvrstiti tako, da bodo vse imele presek."
 
-#: plug-ins/common/file-xmc.c:668
+#: plug-ins/common/file-xmc.c:658
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "»%s« ni veljaven kazalec X."
 
-#: plug-ins/common/file-xmc.c:681
+#: plug-ins/common/file-xmc.c:671
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Sličica %d iz »%s« je preširoka za kazalec X."
 
-#: plug-ins/common/file-xmc.c:689
+#: plug-ins/common/file-xmc.c:679
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Sličica %d iz »%s« je previsoka za kazalec X."
 
-#: plug-ins/common/file-xmc.c:960
+#: plug-ins/common/file-xmc.c:950
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "V »%s« ni koščka slike."
 
-#: plug-ins/common/file-xmc.c:1001
+#: plug-ins/common/file-xmc.c:991
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "»%s« je preširoka za kazalec X."
 
-#: plug-ins/common/file-xmc.c:1010
+#: plug-ins/common/file-xmc.c:1000
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "»%s« je previsoka za kazalec X."
 
-#: plug-ins/common/file-xmc.c:1074
+#: plug-ins/common/file-xmc.c:1064
 #, c-format
 msgid "A read error occurred."
 msgstr "Prišlo je do napake pri branju."
 
-#: plug-ins/common/file-xmc.c:1113
+#: plug-ins/common/file-xmc.c:1103
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Vnesite koordinato X vroče točke. Izhodišče je levi zgornji kot."
 
-#: plug-ins/common/file-xmc.c:1124
+#: plug-ins/common/file-xmc.c:1114
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Vnesite koordinato Y vroče točke. Izhodišče je levi zgornji kot."
 
-#: plug-ins/common/file-xmc.c:1136
+#: plug-ins/common/file-xmc.c:1126
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -6434,7 +6429,7 @@ msgstr ""
 "kazalci razmečejo zaslon.\n"
 "Ne potrdite, če nameravate urediti izvoženi kazalec z drugimi programi."
 
-#: plug-ins/common/file-xmc.c:1148
+#: plug-ins/common/file-xmc.c:1138
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -6454,28 +6449,28 @@ msgstr ""
 "»gtk-cursor-theme-size«."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1264 plug-ins/file-webp/file-webp-export.c:198
+#: plug-ins/common/file-xmc.c:1254 plug-ins/file-webp/file-webp-export.c:198
 #: plug-ins/file-webp/file-webp-export.c:597
 #, c-format
 msgid "Saving '%s'"
 msgstr "Shranjevanje »%s«"
 
-#: plug-ins/common/file-xmc.c:1339
+#: plug-ins/common/file-xmc.c:1329
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "Sličica »%s« je preširoka. Zmanjšajte jo na nič več kot %d slik. točk."
 
-#: plug-ins/common/file-xmc.c:1349
+#: plug-ins/common/file-xmc.c:1339
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "Sličica »%s« je previsoka. Zmanjšajte jo na nič več kot %d slik. točk."
 
-#: plug-ins/common/file-xmc.c:1359
+#: plug-ins/common/file-xmc.c:1349
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Širina in/ali višina sličice »%s« je nič!"
 
-#: plug-ins/common/file-xmc.c:1401
+#: plug-ins/common/file-xmc.c:1391
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -6486,7 +6481,7 @@ msgstr ""
 "Poskusite spremeniti položaj vroče točke, geometrijo plasti ali pa shranite "
 "s samo-obrezavo."
 
-#: plug-ins/common/file-xmc.c:1575
+#: plug-ins/common/file-xmc.c:1565
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6499,7 +6494,7 @@ msgstr ""
 "vrednost za kazalce bitnih slik X.\n"
 "V nekaterih okoljih morda ne bo podprt."
 
-#: plug-ins/common/file-xmc.c:1583
+#: plug-ins/common/file-xmc.c:1573
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -6512,7 +6507,7 @@ msgstr ""
 "v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v nastavitvah za "
 "GNOME."
 
-#: plug-ins/common/file-xmc.c:1866
+#: plug-ins/common/file-xmc.c:1856
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -6524,7 +6519,7 @@ msgstr ""
 "Porezali smo jo na %d sl. tč. Preverite izvoženi kazalec."
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:1963
+#: plug-ins/common/file-xmc.c:1953
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6549,16 +6544,16 @@ msgstr "Pra_g"
 msgid "Alpha threshold"
 msgstr "Prag alfe"
 
-#: plug-ins/common/file-xpm.c:377 plug-ins/common/file-xpm.c:836
+#: plug-ins/common/file-xpm.c:368 plug-ins/common/file-xpm.c:827
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Napaka pri odpiranju datoteke »%s«"
 
-#: plug-ins/common/file-xpm.c:383 plug-ins/common/file-xpm.c:842
+#: plug-ins/common/file-xpm.c:374 plug-ins/common/file-xpm.c:833
 msgid "XPM file invalid"
 msgstr "Datoteka XPM ni veljavna"
 
-#: plug-ins/common/file-xpm.c:676
+#: plug-ins/common/file-xpm.c:667
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Nepodprta vrsta risanega predmeta"
@@ -6567,12 +6562,12 @@ msgstr "Nepodprta vrsta risanega predmeta"
 msgid "X window dump"
 msgstr "Izmet okna X"
 
-#: plug-ins/common/file-xwd.c:504
+#: plug-ins/common/file-xwd.c:491
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Glave XWD iz »%s« ni mogoče prebrati"
 
-#: plug-ins/common/file-xwd.c:522
+#: plug-ins/common/file-xwd.c:509
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6581,7 +6576,7 @@ msgstr ""
 "»%s«:\n"
 "Napaka pri pozicioniranju"
 
-#: plug-ins/common/file-xwd.c:532
+#: plug-ins/common/file-xwd.c:519
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6590,7 +6585,7 @@ msgstr ""
 "»%s«:\n"
 "Neveljavno število vnosov kataloga barv: %u"
 
-#: plug-ins/common/file-xwd.c:543
+#: plug-ins/common/file-xwd.c:530
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6599,12 +6594,12 @@ msgstr ""
 "»%s«:\n"
 "Število vnosov kataloga barv < število barv"
 
-#: plug-ins/common/file-xwd.c:569
+#: plug-ins/common/file-xwd.c:556
 #, c-format
 msgid "Can't read color entries"
 msgstr "Barvnih vnosov ni mogoče prebrati"
 
-#: plug-ins/common/file-xwd.c:654
+#: plug-ins/common/file-xwd.c:641
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -6613,33 +6608,33 @@ msgstr ""
 "Datoteka XWD %s ima zapis %d, globino %d in %d bitov na slikovno točko. "
 "Trenutna različica teh vrednosti ne podpira."
 
-#: plug-ins/common/file-xwd.c:685
+#: plug-ins/common/file-xwd.c:672
 msgid "Cannot export images with alpha channels."
 msgstr "Slik s kanali alfa ni mogoče izvoziti."
 
-#: plug-ins/common/file-xwd.c:708
+#: plug-ins/common/file-xwd.c:695
 #, c-format
 msgid "Could not open '%s' for writing: "
 msgstr "»%s« ni mogoče odpreti za pisanje: "
 
-#: plug-ins/common/file-xwd.c:735
+#: plug-ins/common/file-xwd.c:722
 #, c-format
 msgid "Error exporting '%s': "
 msgstr "Napaka pri izvažanju »%s«: "
 
-#: plug-ins/common/file-xwd.c:942 plug-ins/common/file-xwd.c:976
-#: plug-ins/common/file-xwd.c:1013
+#: plug-ins/common/file-xwd.c:929 plug-ins/common/file-xwd.c:963
+#: plug-ins/common/file-xwd.c:1000
 #, c-format
 msgid "Seek error"
 msgstr "Napaka pri pozicioniranju"
 
-#: plug-ins/common/file-xwd.c:1865 plug-ins/common/file-xwd.c:2116
-#: plug-ins/common/file-xwd.c:2311
+#: plug-ins/common/file-xwd.c:1852 plug-ins/common/file-xwd.c:2103
+#: plug-ins/common/file-xwd.c:2298
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "Datoteka XWD %s je okvarjena."
 
-#: plug-ins/common/file-xwd.c:2064
+#: plug-ins/common/file-xwd.c:2051
 #, c-format
 msgid ""
 "'%s':\n"
@@ -6947,7 +6942,6 @@ msgid "NTSC"
 msgstr "NTSC"
 
 #: plug-ins/common/hot.c:273
-#| msgid "_PAL"
 msgid "PAL"
 msgstr "PAL"
 
@@ -6979,7 +6973,7 @@ msgstr "Ustvari _novo plast"
 msgid "Create a new layer"
 msgstr "Ustvari novo plast"
 
-#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:662
+#: plug-ins/common/hot.c:455 plug-ins/common/hot.c:661
 msgid "Hot"
 msgstr "Vroče"
 
@@ -7336,7 +7330,7 @@ msgid "G-Qbist"
 msgstr "G-Qbist"
 
 #: plug-ins/common/qbist.c:989
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:715
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:714
 msgid "_Undo"
 msgstr "_Razveljavi"
 
@@ -7673,41 +7667,40 @@ msgid "Draw a border of spikes around the image"
 msgstr "Nariši rob iz žarkov okoli slike"
 
 #: plug-ins/common/sparkle.c:271
-msgid "Color type"
-msgstr "Vrsta barve"
+msgid "_Color type"
+msgstr "Vrsta _barve"
 
 #: plug-ins/common/sparkle.c:272
-msgid "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
-msgstr "Barva bleščic: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }"
+msgid "Color of sparkles"
+msgstr "Barva bleščic"
 
-#: plug-ins/common/sparkle.c:314
-msgid "Region selected for filter is empty"
-msgstr "Izbrano področje za filtriranje je prazno"
-
-#: plug-ins/common/sparkle.c:329
-msgid "Sparkling"
-msgstr "Svetlikanje ..."
-
-#: plug-ins/common/sparkle.c:362
-msgid "Sparkle"
-msgstr "Zablešči"
-
-#: plug-ins/common/sparkle.c:412
-msgid "Additional Options"
-msgstr "Dodatne možnosti"
-
-#. colortype
-#: plug-ins/common/sparkle.c:419
+#: plug-ins/common/sparkle.c:273
 msgid "Natural color"
 msgstr "Naravna barva"
 
-#: plug-ins/common/sparkle.c:420
+#: plug-ins/common/sparkle.c:274
 msgid "Foreground color"
 msgstr "Barva ospredja"
 
-#: plug-ins/common/sparkle.c:421
+#: plug-ins/common/sparkle.c:275
 msgid "Background color"
 msgstr "Barva ozadja"
+
+#: plug-ins/common/sparkle.c:317
+msgid "Region selected for filter is empty"
+msgstr "Izbrano področje za filtriranje je prazno"
+
+#: plug-ins/common/sparkle.c:332
+msgid "Sparkling"
+msgstr "Svetlikanje ..."
+
+#: plug-ins/common/sparkle.c:364
+msgid "Sparkle"
+msgstr "Zablešči"
+
+#: plug-ins/common/sparkle.c:408
+msgid "Additional Options"
+msgstr "Dodatne možnosti"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:173
 msgid "Solid"
@@ -7799,8 +7792,8 @@ msgid "D_uplicate"
 msgstr "Po_dvoji"
 
 #: plug-ins/common/sphere-designer.c:2774
-#: plug-ins/fractal-explorer/fractal-explorer.c:887
-#: plug-ins/fractal-explorer/fractal-explorer.c:1357
+#: plug-ins/fractal-explorer/fractal-explorer.c:889
+#: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
 #: plug-ins/gradient-flare/gradient-flare.c:3048
 #: plug-ins/gradient-flare/gradient-flare.c:3331
@@ -7994,7 +7987,7 @@ msgid "Col_umn:"
 msgstr "_Stolpec:"
 
 #: plug-ins/common/tile-small.c:629
-#: plug-ins/fractal-explorer/fractal-explorer.c:1346
+#: plug-ins/fractal-explorer/fractal-explorer.c:1348
 #: plug-ins/gimpressionist/orientmap.c:527
 #: plug-ins/gimpressionist/presets.c:1064 plug-ins/gimpressionist/sizemap.c:400
 #: plug-ins/imagemap/imap_default_dialog.c:103
@@ -8104,7 +8097,7 @@ msgstr "Urejevalnik enot"
 #. destroy model automatically with view
 #. Put buttons in
 #: plug-ins/common/unit-editor.c:251
-#: plug-ins/fractal-explorer/fractal-explorer.c:1335
+#: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "Osve_ži"
@@ -9342,23 +9335,23 @@ msgid ""
 msgstr ""
 "Izvažanje v FITS obravnava vse vrste slike, razen tistih s kanali alfa."
 
-#: plug-ins/file-fits/fits.c:398
+#: plug-ins/file-fits/fits.c:391
 msgid "Error during opening of FITS file"
 msgstr "Napaka pri odpiranju datoteke FITS"
 
-#: plug-ins/file-fits/fits.c:411 plug-ins/file-fits/fits.c:617
+#: plug-ins/file-fits/fits.c:404 plug-ins/file-fits/fits.c:610
 msgid "FITS file keeps no displayable images"
 msgstr "Datoteka FITS ne shrani slik za prikaz"
 
-#: plug-ins/file-fits/fits.c:509
+#: plug-ins/file-fits/fits.c:502
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:647
+#: plug-ins/file-fits/fits.c:640
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Izvažanje v FITS ne podpira slik s kanali alfa"
 
-#: plug-ins/file-fits/fits.c:1012
+#: plug-ins/file-fits/fits.c:1005
 msgid "Open FITS File"
 msgstr "Odpri datoteko FITS"
 
@@ -9523,17 +9516,17 @@ msgstr "Izvoz se prične s to sličico"
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr "Izvoz se konča s to sličico (ali -1 za vse sličice)"
 
-#: plug-ins/file-fli/fli-gimp.c:569
+#: plug-ins/file-fli/fli-gimp.c:560
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Sličica %d (%u ms)"
 
-#: plug-ins/file-fli/fli-gimp.c:596
+#: plug-ins/file-fli/fli-gimp.c:587
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Branja sličice %d je spodletelo. Morda okvarjena animacija.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:928
+#: plug-ins/file-fli/fli-gimp.c:919
 msgid "Open FLIC Animation"
 msgstr "Odpri animacijo FLIC"
 
@@ -10212,11 +10205,11 @@ msgstr ""
 msgid "Import PSD"
 msgstr "Uvozi PSD"
 
-#: plug-ins/file-psd/psd.c:528
+#: plug-ins/file-psd/psd.c:519
 msgid "Import PSD metadata"
 msgstr "Uvozi metapodatke PSD"
 
-#: plug-ins/file-psd/psd.c:532
+#: plug-ins/file-psd/psd.c:523
 msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr ""
@@ -10382,40 +10375,40 @@ msgstr "Vrsta s_tiskanja"
 msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
 msgstr "Stopnja stiskanja (0 = brez, 1 = RLE, 2 = ARLE)"
 
-#: plug-ins/file-sgi/sgi.c:322
+#: plug-ins/file-sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "»%s« ni mogoče odpreti za branje."
 
-#: plug-ins/file-sgi/sgi.c:338
+#: plug-ins/file-sgi/sgi.c:329
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Neveljavna širina: %hu"
 
-#: plug-ins/file-sgi/sgi.c:346
+#: plug-ins/file-sgi/sgi.c:337
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Neveljavna višina: %hu"
 
-#: plug-ins/file-sgi/sgi.c:354
+#: plug-ins/file-sgi/sgi.c:345
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Neveljavno število kanalov: %hu"
 
-#: plug-ins/file-sgi/sgi.c:635
+#: plug-ins/file-sgi/sgi.c:626
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Datoteke »%s« ni mogoče odpreti za pisanje."
 
-#: plug-ins/file-sgi/sgi.c:725
+#: plug-ins/file-sgi/sgi.c:716
 msgid "No compression"
 msgstr "brez stiskanja"
 
-#: plug-ins/file-sgi/sgi.c:727
+#: plug-ins/file-sgi/sgi.c:718
 msgid "RLE compression"
 msgstr "stiskanje RLE"
 
-#: plug-ins/file-sgi/sgi.c:729
+#: plug-ins/file-sgi/sgi.c:720
 msgid "Aggressive RLE (not supported by SGI)"
 msgstr "agresivni RLE (ni podprt s strani SGI)"
 
@@ -10532,7 +10525,7 @@ msgstr "Shrani podatke _GeoTIFF"
 msgid "Save GeoTIFF data"
 msgstr "Shrani podatke GeoTIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:452
+#: plug-ins/file-tiff/file-tiff.c:444
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -11198,9 +11191,9 @@ msgstr "Eksponentno"
 msgid "Power"
 msgstr "Moč"
 
-#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:343
-#: plug-ins/fractal-explorer/fractal-explorer.c:353
-#: plug-ins/fractal-explorer/fractal-explorer.c:363
+#: plug-ins/flame/flame.c:943 plug-ins/fractal-explorer/fractal-explorer.c:345
+#: plug-ins/fractal-explorer/fractal-explorer.c:355
+#: plug-ins/fractal-explorer/fractal-explorer.c:365
 msgid "Cosine"
 msgstr "Kosinus"
 
@@ -11270,7 +11263,7 @@ msgstr "_Izrisovanje"
 msgid "C_amera"
 msgstr "K_amera"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:596
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:595
 #: plug-ins/gfig/gfig-dialog.c:338 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:988
 #, c-format
@@ -11285,113 +11278,105 @@ msgstr ""
 "kot je:\n"
 "(%s \"%s\")"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:612
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:611
 msgid "Fractal Explorer"
 msgstr "Raziskovalec fraktalov"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:661
 msgid "Re_altime preview"
 msgstr "Predogled v re_alnem času"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Če omogočite to možnost, bo predogled samodejno ponovno izrisan"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:673
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:672
 msgid "R_edraw preview"
 msgstr "_Osveži predogled"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
 msgid "Zoom _In"
 msgstr "Pribl_ižaj"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:701
 msgid "Zoom _Out"
 msgstr "_Oddalji"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:718
 msgid "Undo last zoom change"
 msgstr "Razveljavi zadnjo spremembo povečave"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:725
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:724
 msgid "_Redo"
 msgstr "_Ponovno uveljavi"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:729
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:728
 msgid "Redo last zoom change"
 msgstr "Ponovi zadnjo spremembo povečave"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:737
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:736
 msgid "_Parameters"
 msgstr "_Parametri"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:738
 msgid "_Colors"
 msgstr "_Barve"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:741
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
 msgid "_Fractals"
 msgstr "_Fraktali"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:759
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:758
 msgid "Fractal Parameters"
 msgstr "Parametri fraktala"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:772
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:771
 msgid "Fractal Type"
 msgstr "Vrsta fraktala"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 msgid "Load a fractal from file"
 msgstr "Naloži fraktal iz datoteke"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:810
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
 msgid "Save active fractal to file"
 msgstr "Shrani aktivni fraktal v datoteko"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:862
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:861
 msgid "Color Density"
 msgstr "Barvna gostota"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:876
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:875
 msgid "Color Function"
 msgstr "Barvna funkcija"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
-msgid "As specified above"
-msgstr "Kot je navedeno zgoraj"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:933
-msgid "Apply active gradient to final image"
-msgstr "Uporabi aktivni preliv na končni sliki"
-
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:951
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:947
 msgid "FractalExplorer Gradient"
 msgstr "Preliv raziskovalca fraktalov "
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
 msgid "Presets"
 msgstr "Prednastavitve"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1438
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1434
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Pisanje v »%s« ni mogoče: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
 msgid "Load Fractal Parameters"
 msgstr "Naloži parametre fraktala"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
 msgid "Save Fractal Parameters"
 msgstr "Shrani parametre fraktala"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1792
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1788
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "»%s« ni datoteka raziskovalca fraktalov"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1799
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1795
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "»%s« je okvarjena. Vrstica %d v razdelku možnosti ni veljavna"
@@ -11508,128 +11493,132 @@ msgid "Color mode"
 msgstr "Barvni način"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
-msgid ""
-"0: Apply colormap as specified by the parameters above; 1: Apply active "
-"gradient to final image"
-msgstr ""
-"0: uveljavi katalog barv, kot je določeno z zgornjimi parametri; 1: uveljavi "
-"dejavni preliv na končni sliki"
+msgid "Apply specified color map or active gradient to final image"
+msgstr "Uveljavi določeno barvno preslikavo ali dejavni preliv na končni sliki"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:322
+#: plug-ins/fractal-explorer/fractal-explorer.c:317
+msgid "As specified above"
+msgstr "Kot je navedeno zgoraj"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:318
+msgid "Apply active gradient to final image"
+msgstr "Uporabi aktivni preliv na končni sliki"
+
+#: plug-ins/fractal-explorer/fractal-explorer.c:324
 msgid "Red stretch"
 msgstr "Razteg rdeče"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:323
+#: plug-ins/fractal-explorer/fractal-explorer.c:325
 msgid "Red stretching factor"
 msgstr "Faktor raztega rdeče"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:328
+#: plug-ins/fractal-explorer/fractal-explorer.c:330
 msgid "Green stretch"
 msgstr "Razteg zelene"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:329
+#: plug-ins/fractal-explorer/fractal-explorer.c:331
 msgid "Green stretching factor"
 msgstr "Faktor raztega zelene"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:334
+#: plug-ins/fractal-explorer/fractal-explorer.c:336
 msgid "Blue stretch"
 msgstr "Razteg modre"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:335
+#: plug-ins/fractal-explorer/fractal-explorer.c:337
 msgid "Blue stretching factor"
 msgstr "Faktor raztega modre"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:340
+#: plug-ins/fractal-explorer/fractal-explorer.c:342
 msgid "_Red"
 msgstr "_Rdeča"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:341
+#: plug-ins/fractal-explorer/fractal-explorer.c:343
 msgid "Red application mode"
 msgstr "Način uporabe rdeče"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:342
-#: plug-ins/fractal-explorer/fractal-explorer.c:352
-#: plug-ins/fractal-explorer/fractal-explorer.c:362
+#: plug-ins/fractal-explorer/fractal-explorer.c:344
+#: plug-ins/fractal-explorer/fractal-explorer.c:354
+#: plug-ins/fractal-explorer/fractal-explorer.c:364
 msgid "Sine"
 msgstr "Sinus"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:350
+#: plug-ins/fractal-explorer/fractal-explorer.c:352
 msgid "_Green"
 msgstr "_Zelena"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:351
+#: plug-ins/fractal-explorer/fractal-explorer.c:353
 msgid "Green application mode"
 msgstr "Način uporabe zelene"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:360
+#: plug-ins/fractal-explorer/fractal-explorer.c:362
 msgid "_Blue"
 msgstr "_Modra"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:361
+#: plug-ins/fractal-explorer/fractal-explorer.c:363
 msgid "Blue application mode"
 msgstr "Način uporabe modre"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:370
+#: plug-ins/fractal-explorer/fractal-explorer.c:372
 msgid "In_version"
 msgstr "In_verzija"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:371
+#: plug-ins/fractal-explorer/fractal-explorer.c:373
 msgid "Red inversion mode"
 msgstr "Način inverzije rdeče"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:376
+#: plug-ins/fractal-explorer/fractal-explorer.c:378
 msgid "I_nversion"
 msgstr "I_nverzija"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:377
+#: plug-ins/fractal-explorer/fractal-explorer.c:379
 msgid "Green inversion mode"
 msgstr "Način inverzije zelene"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:382
+#: plug-ins/fractal-explorer/fractal-explorer.c:384
 msgid "_Inversion"
 msgstr "_Inverzija"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:383
+#: plug-ins/fractal-explorer/fractal-explorer.c:385
 msgid "Blue inversion mode"
 msgstr "Način inverzije modre"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:388
+#: plug-ins/fractal-explorer/fractal-explorer.c:390
 msgid "_Number of colors"
 msgstr "_Število barv"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:389
+#: plug-ins/fractal-explorer/fractal-explorer.c:391
 msgid "Number of Colors for mapping"
 msgstr "Število barv za preslikavo"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:393
+#: plug-ins/fractal-explorer/fractal-explorer.c:395
 msgid "_Use log log smoothing"
 msgstr "_Uporabi prečno glajenje"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:394
+#: plug-ins/fractal-explorer/fractal-explorer.c:396
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Uporabi prečno glajenje za odstranjevanje »trakov« oz. pasov v rezultatu"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:493
+#: plug-ins/fractal-explorer/fractal-explorer.c:495
 msgid "Rendering fractal"
 msgstr "Upodabljanje fraktala ..."
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:878
+#: plug-ins/fractal-explorer/fractal-explorer.c:880
 #: plug-ins/gradient-flare/gradient-flare.c:3322
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Ste prepričani, da želite izbrisati »%s« s seznama in z diska?"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:882
+#: plug-ins/fractal-explorer/fractal-explorer.c:884
 msgid "Delete Fractal"
 msgstr "Izbriši fraktal"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1180
+#: plug-ins/fractal-explorer/fractal-explorer.c:1182
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Datoteka »%s« ni datoteka raziskovalca fraktalov"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1190
+#: plug-ins/fractal-explorer/fractal-explorer.c:1192
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -11638,27 +11627,27 @@ msgstr ""
 "Datoteka »%s« je poškodovana.\n"
 "V vrstici %d je izbira napačna"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1276
+#: plug-ins/fractal-explorer/fractal-explorer.c:1278
 msgid "My first fractal"
 msgstr "Moj prvi fraktal"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1340
+#: plug-ins/fractal-explorer/fractal-explorer.c:1342
 msgid "Select folder and rescan collection"
 msgstr "Izberete mapo in ponovno naložite zbirko"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1351
+#: plug-ins/fractal-explorer/fractal-explorer.c:1353
 msgid "Apply currently selected fractal"
 msgstr "Uporabi izbrani fraktal"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1362
+#: plug-ins/fractal-explorer/fractal-explorer.c:1364
 msgid "Delete currently selected fractal"
 msgstr "Izbriši izbrani fraktal"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1385
+#: plug-ins/fractal-explorer/fractal-explorer.c:1387
 msgid "Rescan for Fractals"
 msgstr "Ponovno preišči za fraktale"
 
-#: plug-ins/fractal-explorer/fractal-explorer.c:1404
+#: plug-ins/fractal-explorer/fractal-explorer.c:1406
 msgid "Add FractalExplorer Path"
 msgstr "Dodaj pot raziskovalca fraktalov"
 
