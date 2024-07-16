@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-14 10:48+0000\n"
-"PO-Revision-Date: 2024-07-15 13:53+0200\n"
+"POT-Creation-Date: 2024-07-16 17:50+0000\n"
+"PO-Revision-Date: 2024-07-16 21:38+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -995,7 +995,7 @@ msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "Seleccionar los canales por debajo de los canales seleccionados"
 
-#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:695
+#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:711
 msgid "Channel Attributes"
 msgstr "Atributos del canal"
 
@@ -1023,48 +1023,48 @@ msgstr "Crear un canal nuevo"
 msgid "New Channel Color"
 msgstr "Color del canal nuevo"
 
-#: app/actions/channels-commands.c:240
+#: app/actions/channels-commands.c:248
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "Elevar el canal"
 msgstr[1] "Elevar los canales"
 
-#: app/actions/channels-commands.c:275
+#: app/actions/channels-commands.c:283
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
 msgstr[0] "Elevar el canal hasta la cima"
 msgstr[1] "Elevar los canales hasta la cima"
 
-#: app/actions/channels-commands.c:312
+#: app/actions/channels-commands.c:328
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "Bajar el canal"
 msgstr[1] "Bajar los canales"
 
-#: app/actions/channels-commands.c:349
+#: app/actions/channels-commands.c:365
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Bajar el canal hasta el fondo"
 msgstr[1] "Bajar los canales hasta el fondo"
 
-#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:565
+#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:565
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:856
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia del canal %s"
 
-#: app/actions/channels-commands.c:405
+#: app/actions/channels-commands.c:421
 msgid "Duplicate channels"
 msgstr "Duplicar canales"
 
-#: app/actions/channels-commands.c:448
+#: app/actions/channels-commands.c:464
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "Eliminar %d canales"
 
-#: app/actions/channels-commands.c:492
+#: app/actions/channels-commands.c:508
 msgid "Channels to selection"
 msgstr "Canales a selección"
 
@@ -6029,7 +6029,7 @@ msgstr "Volteando"
 msgid "Rotating"
 msgstr "Rotando"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1281
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1299
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
@@ -6078,7 +6078,7 @@ msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2511
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2529
 #: app/dialogs/preferences-dialog.c:1738 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6174,7 +6174,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Editar el nombre de la capa"
 
-#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:964
+#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:972
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "Capa _nueva…"
@@ -6184,7 +6184,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Crear una capa nueva y la añade a la imagen"
 
-#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:965
+#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:973
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "Capa _nueva"
@@ -6906,12 +6906,12 @@ msgstr "Atajo del teclado: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Pulse sobre la miniatura del acoplable de capas"
 
-#: app/actions/layers-actions.c:959 app/actions/layers-actions.c:960
+#: app/actions/layers-actions.c:967 app/actions/layers-actions.c:968
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A una capa _nueva"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2353
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2371
 msgid "Layer Attributes"
 msgstr "Atributos de la capa"
 
@@ -6933,7 +6933,7 @@ msgid_plural "Create %d New Layers"
 msgstr[0] "Crear una capa nueva"
 msgstr[1] "Crear %d capas nuevas"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2238
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2256
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Capa nueva"
@@ -6949,74 +6949,74 @@ msgid_plural "New layer groups"
 msgstr[0] "Grupo de capas nuevo"
 msgstr[1] "Grupos de capas nuevos"
 
-#: app/actions/layers-commands.c:665
+#: app/actions/layers-commands.c:673
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Elevar capa"
 msgstr[1] "Elevar capas"
 
-#: app/actions/layers-commands.c:699
+#: app/actions/layers-commands.c:709
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Elevar capa hasta lo más alto"
 msgstr[1] "Elevar capas hasta lo más alto"
 
-#: app/actions/layers-commands.c:736
+#: app/actions/layers-commands.c:754
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Bajar capa"
 msgstr[1] "Bajar capas"
 
-#: app/actions/layers-commands.c:773
+#: app/actions/layers-commands.c:791
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Bajar capa hasta la parte más baja"
 msgstr[1] "Bajar capas hasta la parte más baja"
 
-#: app/actions/layers-commands.c:800
+#: app/actions/layers-commands.c:818
 msgid "Duplicate layers"
 msgstr "Duplicar capas"
 
-#: app/actions/layers-commands.c:942
+#: app/actions/layers-commands.c:960
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Combinar %d grupos de capas"
 
-#: app/actions/layers-commands.c:1002
+#: app/actions/layers-commands.c:1020
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Eliminar %d capas"
 
-#: app/actions/layers-commands.c:1029 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1047 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Eliminar la información de texto"
 
-#: app/actions/layers-commands.c:1048
+#: app/actions/layers-commands.c:1066
 msgid "Add Paths"
 msgstr "Añadir rutas"
 
-#: app/actions/layers-commands.c:1169
+#: app/actions/layers-commands.c:1187
 msgid "Set Layer Boundary Size"
 msgstr "Establecer el tamaño de borde de capa"
 
-#: app/actions/layers-commands.c:1199
+#: app/actions/layers-commands.c:1217
 msgid "Layers to Image Size"
 msgstr "Capas a tamaño de imagen"
 
-#: app/actions/layers-commands.c:1247
+#: app/actions/layers-commands.c:1265
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
-#: app/actions/layers-commands.c:1286
+#: app/actions/layers-commands.c:1304
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Recortar capa a la selección"
 msgstr[1] "Recortar %d capas a la selección"
 
-#: app/actions/layers-commands.c:1351
+#: app/actions/layers-commands.c:1369
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7024,108 +7024,108 @@ msgstr ""
 "No se puede recortar porque ninguna de las capas activas tiene contenido o ya "
 "están recortadas a su contenido."
 
-#: app/actions/layers-commands.c:1357
+#: app/actions/layers-commands.c:1375
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Recortar capa al contenido"
 msgstr[1] "Recortar %d capas al contenido"
 
-#: app/actions/layers-commands.c:1494 app/actions/layers-commands.c:2446
+#: app/actions/layers-commands.c:1512 app/actions/layers-commands.c:2464
 msgid "Add Layer Masks"
 msgstr "Añadir máscaras de capa"
 
-#: app/actions/layers-commands.c:1546
+#: app/actions/layers-commands.c:1564
 msgid "Apply Layer Masks"
 msgstr "Aplicar máscaras de capa"
 
-#: app/actions/layers-commands.c:1550
+#: app/actions/layers-commands.c:1568
 msgid "Delete Layer Masks"
 msgstr "Eliminar máscaras de capa"
 
-#: app/actions/layers-commands.c:1637
+#: app/actions/layers-commands.c:1655
 msgid "Show Layer Masks"
 msgstr "Mostrar máscaras de la capa"
 
-#: app/actions/layers-commands.c:1684
+#: app/actions/layers-commands.c:1702
 msgid "Disable Layer Masks"
 msgstr "Desactivar máscaras de capa"
 
-#: app/actions/layers-commands.c:1723
+#: app/actions/layers-commands.c:1741
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Máscaras a selección"
 
-#: app/actions/layers-commands.c:1727
+#: app/actions/layers-commands.c:1745
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Añadir máscaras a la selección"
 
-#: app/actions/layers-commands.c:1731
+#: app/actions/layers-commands.c:1749
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Sustraer máscaras de la selección"
 
-#: app/actions/layers-commands.c:1735
+#: app/actions/layers-commands.c:1753
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "_Intersecar máscaras con la selección"
 
-#: app/actions/layers-commands.c:1756
+#: app/actions/layers-commands.c:1774
 msgid "Add Alpha Channel"
 msgstr "Añadir canal alfa"
 
-#: app/actions/layers-commands.c:1777
+#: app/actions/layers-commands.c:1795
 msgid "Remove Alpha Channel"
 msgstr "Eliminar el canal alfa"
 
-#: app/actions/layers-commands.c:1805 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1823 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selección"
 
-#: app/actions/layers-commands.c:1809 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1827 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Añadir alfa a la selección"
 
-#: app/actions/layers-commands.c:1813 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1831 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Sustraer alfa de la selección"
 
-#: app/actions/layers-commands.c:1817 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1835 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Intersecar alfa con la selección"
 
-#: app/actions/layers-commands.c:1828
+#: app/actions/layers-commands.c:1846
 msgid "Empty Selection"
 msgstr "Vaciar selección"
 
-#: app/actions/layers-commands.c:1858 app/actions/layers-commands.c:1902
+#: app/actions/layers-commands.c:1876 app/actions/layers-commands.c:1920
 #: app/widgets/gimplayertreeview.c:1109
 msgid "Set layers opacity"
 msgstr "Definir la opacidad de las capas"
 
-#: app/actions/layers-commands.c:1972
+#: app/actions/layers-commands.c:1990
 msgid "Set layers' blend space"
 msgstr "Definir el espacio de mezcla de las capas"
 
-#: app/actions/layers-commands.c:2025
+#: app/actions/layers-commands.c:2043
 msgid "Set layers' composite space"
 msgstr "Definir el espacio compuesto de las capas"
 
-#: app/actions/layers-commands.c:2078
+#: app/actions/layers-commands.c:2096
 msgid "Set layers' composite mode"
 msgstr "Definir el modo de composición de las capas"
 
-#: app/actions/layers-commands.c:2162
+#: app/actions/layers-commands.c:2180
 msgid "Lock alpha channels"
 msgstr "Bloquear canales alfa"
 
-#: app/actions/layers-commands.c:2162
+#: app/actions/layers-commands.c:2180
 msgid "Unlock alpha channels"
 msgstr "Desbloquear canales alfa"
 
@@ -9044,7 +9044,7 @@ msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "Seleccionar el vector por debajo de la ruta actual"
 
-#: app/actions/vectors-commands.c:173 app/actions/vectors-commands.c:877
+#: app/actions/vectors-commands.c:173 app/actions/vectors-commands.c:894
 msgid "Path Attributes"
 msgstr "Atributos de la ruta"
 
@@ -9060,48 +9060,48 @@ msgstr "Ruta nueva"
 msgid "Create a New Path"
 msgstr "Crear una ruta nueva"
 
-#: app/actions/vectors-commands.c:277
+#: app/actions/vectors-commands.c:285
 msgid "Raise Path"
 msgid_plural "Raise Paths"
 msgstr[0] "Elevar la ruta"
 msgstr[1] "Elevar las rutas"
 
-#: app/actions/vectors-commands.c:313
+#: app/actions/vectors-commands.c:323
 msgid "Raise Path to Top"
 msgid_plural "Raise Paths to Top"
 msgstr[0] "Subir la ruta al lugar más alto"
 msgstr[1] "Subir las rutas al lugar más alto"
 
-#: app/actions/vectors-commands.c:353
+#: app/actions/vectors-commands.c:370
 msgid "Lower Path"
 msgid_plural "Lower Paths"
 msgstr[0] "Bajar la ruta"
 msgstr[1] "Bajar las rutas"
 
-#: app/actions/vectors-commands.c:393
+#: app/actions/vectors-commands.c:410
 msgid "Lower Path to Bottom"
 msgid_plural "Lower Paths to Bottom"
 msgstr[0] "Bajar la ruta al lugar más bajo"
 msgstr[1] "Bajar las rutas al lugar más bajo"
 
-#: app/actions/vectors-commands.c:423
+#: app/actions/vectors-commands.c:440
 msgid "Duplicate Paths"
 msgstr "D_uplicar rutas"
 
-#: app/actions/vectors-commands.c:461
+#: app/actions/vectors-commands.c:478
 msgid "Remove Paths"
 msgstr "Eliminar rutas"
 
-#: app/actions/vectors-commands.c:508
+#: app/actions/vectors-commands.c:525
 msgid "Paths to selection"
 msgstr "Rutas a selección"
 
-#: app/actions/vectors-commands.c:588 app/tools/gimpvectoroptions.c:201
+#: app/actions/vectors-commands.c:605 app/tools/gimpvectoroptions.c:201
 #: app/tools/gimpvectortool.c:764
 msgid "Fill Path"
 msgstr "Rellenar ruta"
 
-#: app/actions/vectors-commands.c:616 app/tools/gimpvectoroptions.c:209
+#: app/actions/vectors-commands.c:633 app/tools/gimpvectoroptions.c:209
 #: app/tools/gimpvectortool.c:853
 msgid "Stroke Path"
 msgstr "Trazar ruta"
@@ -10423,7 +10423,7 @@ msgid "Channel"
 msgstr "Canal"
 
 #: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
-#: app/widgets/gimppathtreeview.c:250
+#: app/widgets/gimppathtreeview.c:253
 msgid "Path"
 msgstr "Ruta"
 
@@ -18412,8 +18412,8 @@ msgid "Path _name:"
 msgstr "_Nombre de la ruta:"
 
 #: app/dialogs/path-options-dialog.c:108
-msgid "Lock path _strokes"
-msgstr "Bloquear los _trazos de ruta"
+msgid "Lock p_ath"
+msgstr "Bloquear rut_a"
 
 #: app/dialogs/path-options-dialog.c:109
 msgid "Lock path _position"
@@ -21041,11 +21041,11 @@ msgstr "Fijo"
 msgid "Combine Masks"
 msgstr "Combinar máscaras"
 
-#: app/pdb/drawable-cmds.c:651
+#: app/pdb/drawable-cmds.c:647
 msgid "Plug-in"
 msgstr "Complemento"
 
-#: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Selección del primer plano"
@@ -21523,7 +21523,7 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con una cadena UTF-8 no válida para el "
 "argumento «%s»."
 
-#: app/pdb/image-cmds.c:2459
+#: app/pdb/image-cmds.c:2462
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "La resolución de la Imagen se sale de los límites; usando la resolución "
@@ -28810,12 +28810,16 @@ msgid "[ Base Image ]"
 msgstr "[ Imagen Base ]"
 
 #: app/widgets/gimppathtreeview.c:111
-msgid "Lock path"
-msgstr "Bloquear ruta"
+msgid "Lock path strokes"
+msgstr "Bloquear los trazos de ruta"
 
 #: app/widgets/gimppathtreeview.c:114
 msgid "Lock path position"
 msgstr "Bloquear posición de la ruta"
+
+#: app/widgets/gimppathtreeview.c:117
+msgid "Lock path visibility"
+msgstr "Bloquear la visibilidad de la ruta"
 
 #: app/widgets/gimpviewablebox.c:94
 msgid "Open the brush selection dialog"
@@ -29697,6 +29701,9 @@ msgstr "Menú del histórico de deshacer"
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Menú de rutas"
+
+#~ msgid "Lock path _strokes"
+#~ msgstr "Bloquear los _trazos de ruta"
 
 #~ msgctxt "text-tool-action"
 #~ msgid "_Path from Text"
@@ -32032,9 +32039,6 @@ msgstr "Menú de rutas"
 #~ msgctxt "vector-toolpath-action"
 #~ msgid "Vector Toolpath Menu"
 #~ msgstr "Menú del vector de la ruta de herramienta"
-
-#~ msgid "Lock path strokes"
-#~ msgstr "Bloquear los trazos de ruta"
 
 #~ msgctxt "layers-action"
 #~ msgid "Crop the layers to the extents of the selection"
