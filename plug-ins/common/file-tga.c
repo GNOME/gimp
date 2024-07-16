@@ -982,9 +982,9 @@ ReadImage (FILE     *fp,
       cmap_bytes = (info->colorMapSize + 7 ) / 8;
       tga_cmap = g_new (guchar, info->colorMapLength * cmap_bytes);
 
-      if (info->colorMapSize > 24)
+      if (info->colorMapSize > 24 || info->alphaBits > 0)
         {
-          /* indexed + full alpha => promoted to RGBA */
+          /* indexed + full alpha, or alpha exists => promoted to RGBA */
           itype = GIMP_RGB;
           dtype = GIMP_RGBA_IMAGE;
           convert_cmap = g_new (guchar, info->colorMapLength * 4);
@@ -995,13 +995,6 @@ ReadImage (FILE     *fp,
           itype = GIMP_RGB;
           dtype = GIMP_RGB_IMAGE;
           convert_cmap = g_new (guchar, info->colorMapLength * 3);
-        }
-      else if (info->alphaBits > 0)
-        {
-          /* if alpha exists here, promote to RGB */
-          itype = GIMP_RGB;
-          dtype = GIMP_RGBA_IMAGE;
-          convert_cmap = g_new (guchar, info->colorMapLength * 4);
         }
       else
         {
