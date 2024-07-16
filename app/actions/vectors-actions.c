@@ -355,6 +355,8 @@ vectors_actions_update (GimpActionGroup *group,
 
   gboolean      have_prev     = FALSE; /* At least 1 selected path has a previous sibling. */
   gboolean      have_next     = FALSE; /* At least 1 selected path has a next sibling.     */
+  gboolean      first_selected      = FALSE; /* First channel is selected */
+  gboolean      last_selected       = FALSE; /* Last channel is selected */
 
   if (image)
     {
@@ -375,6 +377,11 @@ vectors_actions_update (GimpActionGroup *group,
           vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
           iter2 = g_list_find (vectors_list, iter->data);
 
+          if (gimp_item_get_index (iter2->data) == 0)
+            first_selected = TRUE;
+          if (gimp_item_get_index (iter2->data) == n_paths - 1)
+            last_selected = TRUE;
+
           if (iter2)
             {
               if (g_list_previous (iter2))
@@ -383,9 +390,6 @@ vectors_actions_update (GimpActionGroup *group,
               if (g_list_next (iter2))
                 have_next = TRUE;
             }
-
-          if (have_prev && have_next)
-            break;
         }
 
       drawables = gimp_image_get_selected_drawables (image);
@@ -415,9 +419,9 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-delete",          n_selected_paths > 0);
   SET_SENSITIVE ("vectors-merge-visible",   n_paths > 1);
 
-  SET_SENSITIVE ("vectors-raise",           n_selected_paths > 0 && have_prev);
+  SET_SENSITIVE ("vectors-raise",           n_selected_paths > 0 && have_prev && !first_selected);
   SET_SENSITIVE ("vectors-raise-to-top",    n_selected_paths > 0 && have_prev);
-  SET_SENSITIVE ("vectors-lower",           n_selected_paths > 0 && have_next);
+  SET_SENSITIVE ("vectors-lower",           n_selected_paths > 0 && have_next && !last_selected);
   SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_paths > 0 && have_next);
 
   SET_SENSITIVE ("vectors-copy",   n_selected_paths > 0);

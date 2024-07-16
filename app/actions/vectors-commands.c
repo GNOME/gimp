@@ -267,7 +267,15 @@ vectors_raise_cmd_callback (GimpAction *action,
 
       index = gimp_item_get_index (iter->data);
       if (index > 0)
-        moved_list = g_list_prepend (moved_list, iter->data);
+        {
+          moved_list = g_list_prepend (moved_list, iter->data);
+        }
+      else
+        {
+          gimp_image_flush (image);
+          g_list_free (moved_list);
+          return;
+        }
     }
 
   if (moved_list)
@@ -277,6 +285,8 @@ vectors_raise_cmd_callback (GimpAction *action,
                                    ngettext ("Raise Path",
                                              "Raise Paths",
                                              g_list_length (moved_list)));
+
+      moved_list = g_list_reverse (moved_list);
       for (iter = moved_list; iter; iter = iter->next)
         gimp_image_raise_item (image, GIMP_ITEM (iter->data), NULL);
 
@@ -342,12 +352,19 @@ vectors_lower_cmd_callback (GimpAction *action,
       vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
       index = gimp_item_get_index (iter->data);
       if (index < g_list_length (vectors_list) - 1)
-        moved_list = g_list_prepend (moved_list, iter->data);
+        {
+          moved_list = g_list_prepend (moved_list, iter->data);
+        }
+      else
+        {
+          gimp_image_flush (image);
+          g_list_free (moved_list);
+          return;
+        }
     }
 
   if (moved_list)
     {
-      moved_list = g_list_reverse (moved_list);
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    ngettext ("Lower Path",

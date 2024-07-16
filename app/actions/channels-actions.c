@@ -273,6 +273,8 @@ channels_actions_update (GimpActionGroup *group,
   gint         n_channels          = 0;
   gboolean     have_prev           = FALSE; /* At least 1 selected channel has a previous sibling. */
   gboolean     have_next           = FALSE; /* At least 1 selected channel has a next sibling.     */
+  gboolean     first_selected      = FALSE; /* First channel is selected */
+  gboolean     last_selected       = FALSE; /* Last channel is selected */
 
   if (image)
     {
@@ -300,6 +302,11 @@ channels_actions_update (GimpActionGroup *group,
 
               list = g_list_find (channel_list, iter->data);
 
+              if (gimp_item_get_index (list->data) == 0)
+                first_selected = TRUE;
+              if (gimp_item_get_index (list->data) == n_channels - 1)
+                last_selected = TRUE;
+
               if (list)
                 {
                   if (g_list_previous (list))
@@ -307,9 +314,6 @@ channels_actions_update (GimpActionGroup *group,
                   if (g_list_next (list))
                     have_next = TRUE;
                 }
-
-              if (have_prev && have_next)
-                break;
             }
         }
     }
@@ -324,9 +328,9 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-duplicate",       !fs && (n_selected_channels > 0 || component));
   SET_SENSITIVE ("channels-delete",          !fs && n_selected_channels > 0);
 
-  SET_SENSITIVE ("channels-raise",           !fs && n_selected_channels > 0 && have_prev);
+  SET_SENSITIVE ("channels-raise",           !fs && n_selected_channels > 0 && have_prev && !first_selected);
   SET_SENSITIVE ("channels-raise-to-top",    !fs && n_selected_channels > 0 && have_prev);
-  SET_SENSITIVE ("channels-lower",           !fs && n_selected_channels > 0 && have_next);
+  SET_SENSITIVE ("channels-lower",           !fs && n_selected_channels > 0 && have_next && !last_selected);
   SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_selected_channels > 0 && have_next);
 
   SET_SENSITIVE ("channels-selection-replace",   !fs && (n_selected_channels > 0 || component));

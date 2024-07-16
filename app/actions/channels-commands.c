@@ -232,7 +232,15 @@ channels_raise_cmd_callback (GimpAction *action,
 
       index = gimp_item_get_index (iter->data);
       if (index > 0)
-        raised_channels = g_list_prepend (raised_channels, iter->data);
+        {
+          raised_channels = g_list_prepend (raised_channels, iter->data);
+        }
+      else
+        {
+          gimp_image_flush (image);
+          g_list_free (raised_channels);
+          return;
+        }
     }
 
   gimp_image_undo_group_start (image,
@@ -240,7 +248,7 @@ channels_raise_cmd_callback (GimpAction *action,
                                ngettext ("Raise Channel",
                                          "Raise Channels",
                                          g_list_length (raised_channels)));
-
+  raised_channels = g_list_reverse (raised_channels);
   for (iter = raised_channels; iter; iter = iter->next)
     gimp_image_raise_item (image, iter->data, NULL);
 
@@ -304,7 +312,15 @@ channels_lower_cmd_callback (GimpAction *action,
       layer_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
       index = gimp_item_get_index (iter->data);
       if (index < g_list_length (layer_list) - 1)
-        lowered_channels = g_list_prepend (lowered_channels, iter->data);
+        {
+          lowered_channels = g_list_prepend (lowered_channels, iter->data);
+        }
+      else
+        {
+          gimp_image_flush (image);
+          g_list_free (lowered_channels);
+          return;
+        }
     }
 
   gimp_image_undo_group_start (image,
