@@ -183,6 +183,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_LOCK                      "gimp-lock"
 #define GIMP_ICON_LOCK_ALPHA                "gimp-lock-alpha"
 #define GIMP_ICON_LOCK_CONTENT              "gimp-lock-content"
+#define GIMP_ICON_LOCK_PATH                 "gimp-lock-path"
 #define GIMP_ICON_LOCK_POSITION             "gimp-lock-position"
 #define GIMP_ICON_LOCK_VISIBILITY           "gimp-lock-visibility"
 #define GIMP_ICON_LOCK_MULTI                "gimp-lock-multi"

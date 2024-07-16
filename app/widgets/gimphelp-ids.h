@@ -280,6 +280,7 @@
 #define GIMP_HELP_PATH_COLOR_TAG                  "gimp-path-color-tag"
 #define GIMP_HELP_PATH_LOCK_STROKES               "gimp-path-lock-strokes"
 #define GIMP_HELP_PATH_LOCK_POSITION              "gimp-path-lock-position"
+#define GIMP_HELP_PATH_LOCK_VISIBILITY            "gimp-path-lock-visibility"
 #define GIMP_HELP_PATH_SELECTION_REPLACE          "gimp-path-selection-replace"
 #define GIMP_HELP_PATH_SELECTION_ADD              "gimp-path-selection-add"
 #define GIMP_HELP_PATH_SELECTION_SUBTRACT         "gimp-path-selection-subtract"
