@@ -952,7 +952,7 @@ read_line (FILE         *fp,
     }
   else
     {
-      memcpy (row, buf, info->width * bpp);
+      memcpy (row, buf, info->width * info->bytes);
     }
 }
 
