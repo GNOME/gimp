@@ -115,7 +115,7 @@ gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
   iv_class->lock_position_help_id     = GIMP_HELP_PATH_LOCK_POSITION;
   iv_class->lock_visibility_icon_name = GIMP_ICON_LOCK_VISIBILITY;
   iv_class->lock_visibility_tooltip   = _("Lock path visibility");
-  iv_class->lock_position_help_id     = GIMP_HELP_LAYER_LOCK_VISIBILITY;
+  iv_class->lock_position_help_id     = GIMP_HELP_PATH_LOCK_VISIBILITY;
 }
 
 static void
