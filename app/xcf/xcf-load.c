@@ -131,7 +131,8 @@ static gboolean        xcf_check_layer_props  (XcfInfo       *info,
                                                gboolean      *is_text_layer);
 static gboolean        xcf_load_channel_props (XcfInfo       *info,
                                                GimpImage     *image,
-                                               GimpChannel  **channel);
+                                               GimpChannel  **channel,
+                                               gboolean       is_mask);
 static gboolean        xcf_load_effect_props  (XcfInfo       *info,
                                                FilterData    *filter);
 static gboolean        xcf_load_path_props    (XcfInfo       *info,
@@ -2135,7 +2136,8 @@ xcf_check_layer_props (XcfInfo    *info,
 static gboolean
 xcf_load_channel_props (XcfInfo      *info,
                         GimpImage    *image,
-                        GimpChannel **channel)
+                        GimpChannel **channel,
+                        gboolean      is_mask)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -2158,6 +2160,14 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             GimpChannel *mask;
             GList       *iter;
+
+            if (is_mask)
+              {
+                /* PROP_SELECTION is not valid for masks, and we have to avoid
+                 * overwriting the channel.
+                 */
+                continue;
+              }
 
             /* We're going to delete *channel, Don't leave its pointer
              * in @info. See bug #767873.
@@ -3274,7 +3284,7 @@ xcf_load_channel (XcfInfo   *info,
     return NULL;
 
   /* read in the channel properties */
-  if (! xcf_load_channel_props (info, image, &channel))
+  if (! xcf_load_channel_props (info, image, &channel, FALSE))
     goto error;
 
   xcf_progress_update (info);
@@ -3615,7 +3625,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 
   /* read in the layer_mask properties */
   channel = GIMP_CHANNEL (layer_mask);
-  if (! xcf_load_channel_props (info, image, &channel))
+  if (! xcf_load_channel_props (info, image, &channel, TRUE))
     goto error;
 
   xcf_progress_update (info);
