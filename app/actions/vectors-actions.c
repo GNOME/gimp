@@ -73,8 +73,8 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_DUPLICATE },
 
   { "vectors-delete", GIMP_ICON_EDIT_DELETE,
-    NC_("vectors-action", "_Delete Path"), NULL, { NULL },
-    NC_("vectors-action", "Delete this path"),
+    NC_("vectors-action", "_Delete Paths"), NULL, { NULL },
+    NC_("vectors-action", "Delete the selected paths"),
     vectors_delete_cmd_callback,
     GIMP_HELP_PATH_DELETE },
 
@@ -84,26 +84,26 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_MERGE_VISIBLE },
 
   { "vectors-raise", GIMP_ICON_GO_UP,
-    NC_("vectors-action", "_Raise Path"), NULL, { NULL },
-    NC_("vectors-action", "Raise this path"),
+    NC_("vectors-action", "_Raise Paths"), NULL, { NULL },
+    NC_("vectors-action", "Raise the selected paths"),
     vectors_raise_cmd_callback,
     GIMP_HELP_PATH_RAISE },
 
   { "vectors-raise-to-top", GIMP_ICON_GO_TOP,
-    NC_("vectors-action", "Raise Path to _Top"), NULL, { NULL },
-    NC_("vectors-action", "Raise this path to the top"),
+    NC_("vectors-action", "Raise Paths to _Top"), NULL, { NULL },
+    NC_("vectors-action", "Raise the selected paths to the top"),
     vectors_raise_to_top_cmd_callback,
     GIMP_HELP_PATH_RAISE_TO_TOP },
 
   { "vectors-lower", GIMP_ICON_GO_DOWN,
-    NC_("vectors-action", "_Lower Path"), NULL, { NULL },
-    NC_("vectors-action", "Lower this path"),
+    NC_("vectors-action", "_Lower Paths"), NULL, { NULL },
+    NC_("vectors-action", "Lower the selected paths"),
     vectors_lower_cmd_callback,
     GIMP_HELP_PATH_LOWER },
 
   { "vectors-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
-    NC_("vectors-action", "Lower Path to _Bottom"), NULL, { NULL },
-    NC_("vectors-action", "Lower this path to the bottom"),
+    NC_("vectors-action", "Lower Paths to _Bottom"), NULL, { NULL },
+    NC_("vectors-action", "Lower the selected paths to the bottom"),
     vectors_lower_to_bottom_cmd_callback,
     GIMP_HELP_PATH_LOWER_TO_BOTTOM },
 
