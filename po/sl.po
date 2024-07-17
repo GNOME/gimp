@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-16 17:50+0000\n"
-"PO-Revision-Date: 2024-07-16 22:57+0200\n"
+"POT-Creation-Date: 2024-07-16 21:22+0000\n"
+"PO-Revision-Date: 2024-07-17 09:04+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -8684,13 +8684,13 @@ msgstr "Podvoji te poti"
 
 #: app/actions/vectors-actions.c:76
 msgctxt "vectors-action"
-msgid "_Delete Path"
-msgstr "I_zbriši pot"
+msgid "_Delete Paths"
+msgstr "I_zbriši poti"
 
 #: app/actions/vectors-actions.c:77
 msgctxt "vectors-action"
-msgid "Delete this path"
-msgstr "Izbriši to pot"
+msgid "Delete the selected paths"
+msgstr "Izbriši izbrane poti"
 
 #: app/actions/vectors-actions.c:82
 msgctxt "vectors-action"
@@ -8699,43 +8699,43 @@ msgstr "Spoji _vidne poti"
 
 #: app/actions/vectors-actions.c:87
 msgctxt "vectors-action"
-msgid "_Raise Path"
-msgstr "_Dvigni pot"
+msgid "_Raise Paths"
+msgstr "_Dvigni poti"
 
 #: app/actions/vectors-actions.c:88
 msgctxt "vectors-action"
-msgid "Raise this path"
-msgstr "Dvigni to pot"
+msgid "Raise the selected paths"
+msgstr "Dvigni izbrane poti"
 
 #: app/actions/vectors-actions.c:93
 msgctxt "vectors-action"
-msgid "Raise Path to _Top"
-msgstr "Dvigni pot na _vrh"
+msgid "Raise Paths to _Top"
+msgstr "Dvigni poti na _vrh"
 
 #: app/actions/vectors-actions.c:94
 msgctxt "vectors-action"
-msgid "Raise this path to the top"
-msgstr "Dvigni to pot na vrh"
+msgid "Raise the selected paths to the top"
+msgstr "Dvigni izbrane poti na vrh"
 
 #: app/actions/vectors-actions.c:99
 msgctxt "vectors-action"
-msgid "_Lower Path"
-msgstr "_Spusti pot"
+msgid "_Lower Paths"
+msgstr "_Spusti poti"
 
 #: app/actions/vectors-actions.c:100
 msgctxt "vectors-action"
-msgid "Lower this path"
-msgstr "Spusti to pot"
+msgid "Lower the selected paths"
+msgstr "Spusti izbrane poti"
 
 #: app/actions/vectors-actions.c:105
 msgctxt "vectors-action"
-msgid "Lower Path to _Bottom"
-msgstr "Spusti pot na _dno"
+msgid "Lower Paths to _Bottom"
+msgstr "Spusti poti na _dno"
 
 #: app/actions/vectors-actions.c:106
 msgctxt "vectors-action"
-msgid "Lower this path to the bottom"
-msgstr "Spusti to pot na dno"
+msgid "Lower the selected paths to the bottom"
+msgstr "Spusti izbrane poti na dno"
 
 #: app/actions/vectors-actions.c:111
 msgctxt "vectors-action"
