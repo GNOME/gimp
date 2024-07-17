@@ -1097,7 +1097,7 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
   GimpLayer   *layer;
   GimpPath    *path;
   return_if_no_layers (image, layers, data);
-  return_if_no_vectors_list (image, paths, data);
+  return_if_no_paths (image, paths, data);
 
   if (g_list_length (layers) != 1 || g_list_length (paths) != 1)
     return;

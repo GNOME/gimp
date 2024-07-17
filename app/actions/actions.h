@@ -109,10 +109,10 @@ void               action_message          (GimpDisplay          *display,
   if (! channels) \
     return
 
-#define return_if_no_vectors_list(image,list,data) \
+#define return_if_no_paths(image,paths,data) \
   return_if_no_image (image,data); \
-  list = gimp_image_get_selected_paths (image); \
-  if (! list) \
+  paths = gimp_image_get_selected_paths (image); \
+  if (! paths) \
     return
 
 

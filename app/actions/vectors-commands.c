@@ -118,7 +118,7 @@ vectors_edit_cmd_callback (GimpAction *action,
   GimpImage *image;
   GList     *paths;
   GimpTool  *active_tool;
-  return_if_no_vectors_list (image, paths, data);
+  return_if_no_paths (image, paths, data);
 
   if (g_list_length (paths) != 1)
     return;
@@ -151,7 +151,7 @@ vectors_edit_attributes_cmd_callback (GimpAction *action,
   GimpPath    *vectors;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_vectors_list (image, paths, data);
+  return_if_no_paths (image, paths, data);
   return_if_no_widget (widget, data);
 
   if (g_list_length (paths) != 1)
@@ -259,7 +259,7 @@ vectors_raise_cmd_callback (GimpAction *action,
   GList     *list;
   GList     *iter;
   GList     *moved_list = NULL;
-  return_if_no_vectors_list (image, list, data);
+  return_if_no_paths (image, list, data);
 
   for (iter = list; iter; iter = iter->next)
     {
@@ -305,7 +305,7 @@ vectors_raise_to_top_cmd_callback (GimpAction *action,
   GList     *list;
   GList     *iter;
   GList     *moved_list = NULL;
-  return_if_no_vectors_list (image, list, data);
+  return_if_no_paths (image, list, data);
 
   for (iter = list; iter; iter = iter->next)
     {
@@ -342,7 +342,7 @@ vectors_lower_cmd_callback (GimpAction *action,
   GList     *list;
   GList     *iter;
   GList     *moved_list = NULL;
-  return_if_no_vectors_list (image, list, data);
+  return_if_no_paths (image, list, data);
 
   for (iter = list; iter; iter = iter->next)
     {
@@ -389,7 +389,7 @@ vectors_lower_to_bottom_cmd_callback (GimpAction *action,
   GList     *list;
   GList     *iter;
   GList     *moved_list = NULL;
-  return_if_no_vectors_list (image, list, data);
+  return_if_no_paths (image, list, data);
 
   for (iter = list; iter; iter = iter->next)
     {
@@ -429,7 +429,7 @@ vectors_duplicate_cmd_callback (GimpAction *action,
   GList     *paths;
   GList     *new_paths = NULL;
   GList     *iter;
-  return_if_no_vectors_list (image, paths, data);
+  return_if_no_paths (image, paths, data);
 
   paths = g_list_copy (paths);
   paths = g_list_reverse (paths);
@@ -469,7 +469,7 @@ vectors_delete_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *paths;
-  return_if_no_vectors_list (image, paths, data);
+  return_if_no_paths (image, paths, data);
 
   paths = g_list_copy (paths);
   /* TODO: proper undo group. */
@@ -494,7 +494,7 @@ vectors_merge_visible_cmd_callback (GimpAction *action,
   GList       *vectors;
   GtkWidget   *widget;
   GError      *error = NULL;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_image_merge_visible_paths (image, &error))
@@ -518,7 +518,7 @@ vectors_to_selection_cmd_callback (GimpAction *action,
   GList          *vectors;
   GList          *iter;
   GimpChannelOps  operation;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_DRAWABLE_MOD,
@@ -599,7 +599,7 @@ vectors_fill_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_fill_cmd_callback (action, image, vectors,
                            _("Fill Path"),
@@ -615,7 +615,7 @@ vectors_fill_last_vals_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_fill_last_vals_cmd_callback (action, image, vectors, data);
 }
@@ -627,7 +627,7 @@ vectors_stroke_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_stroke_cmd_callback (action, image, vectors,
                              _("Stroke Path"),
@@ -643,7 +643,7 @@ vectors_stroke_last_vals_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_stroke_last_vals_cmd_callback (action, image, vectors, data);
 }
@@ -656,7 +656,7 @@ vectors_copy_cmd_callback (GimpAction *action,
   GimpImage   *image;
   GList       *vectors;
   gchar       *svg;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   svg = gimp_path_export_string (image, vectors);
 
@@ -712,7 +712,7 @@ vectors_export_cmd_callback (GimpAction *action,
   GList       *vectors;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
   return_if_no_widget (widget, data);
 
 #define EXPORT_DIALOG_KEY "gimp-vectors-export-dialog"
@@ -787,7 +787,7 @@ vectors_visible_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_visible_cmd_callback (action, value, image, vectors);
 }
@@ -799,7 +799,7 @@ vectors_lock_content_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_lock_content_cmd_callback (action, value, image, vectors);
 }
@@ -811,7 +811,7 @@ vectors_lock_position_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *vectors;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   items_lock_position_cmd_callback (action, value, image, vectors);
 }
@@ -824,7 +824,7 @@ vectors_color_tag_cmd_callback (GimpAction *action,
   GimpImage    *image;
   GList        *vectors;
   GimpColorTag  color_tag;
-  return_if_no_vectors_list (image, vectors, data);
+  return_if_no_paths (image, vectors, data);
 
   color_tag = (GimpColorTag) g_variant_get_int32 (value);
 
