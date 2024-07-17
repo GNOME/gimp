@@ -135,14 +135,15 @@ Build:
   - Started a skeleton for unit testing framework for libgimp (only a few tests
     so far but we eventually target exhaustivity).
   - CI:
-    * Main CI jobs are now compiled with Clang, as well as Windows installer and
-      Nightly Flatpak builds. Some benchmarks run by Øyvind show we can gain a bit
+    * Main CI jobs are now compiled with Clang, as well as Windows installer,
+      MSIX and Flatpak. Some benchmarks run by Øyvind show we can gain a bit
       of performance in some situations in babl/GEGL/ctx codepaths, thanks to
       better auto-vectorization support.
     * x86 (32-bit) cross-build job for Windows removed.
     * "packaging" stage merged back with "build" stage.
     * "gimp-debian-x64" job now also generates an AppImage for every commit.
-    * LLD linker now used in Debian and flatpak jobs.
+    * LLD linker now used in all build jobs (except scheduled GCC and legacy
+      32-bit Windows jobs).
   - New gimp-data repository used as a git submodule:
     * Various data were moved to gimp-data: icons, cursors, patterns, brushes
       and application icon/logo.

@@ -327,7 +327,7 @@ running, such as:
 - Windows builds (cross compiled).
 
 Additionally, we test build with alternative tools or options (e.g. with
-`Clang` instead of `gcc` compiler) or jobs which may take much longer,
+`GCC` instead of `Clang` compiler) or jobs which may take much longer,
 such as package creation as scheduled pipelines (once every few days).
 
 The above listing is not necessarily exhaustive nor is it meant to be.
