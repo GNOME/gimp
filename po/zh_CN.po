@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-14 01:32+0000\n"
-"PO-Revision-Date: 2024-07-14 18:46+0800\n"
+"POT-Creation-Date: 2024-07-16 21:22+0000\n"
+"PO-Revision-Date: 2024-07-17 18:08+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -992,7 +992,7 @@ msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "选择当前选中通道下方的通道"
 
-#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:695
+#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:711
 msgid "Channel Attributes"
 msgstr "通道属性"
 
@@ -1020,44 +1020,44 @@ msgstr "创建一个新通道"
 msgid "New Channel Color"
 msgstr "新建通道颜色"
 
-#: app/actions/channels-commands.c:240
+#: app/actions/channels-commands.c:248
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "升高通道"
 
-#: app/actions/channels-commands.c:275
+#: app/actions/channels-commands.c:283
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
 msgstr[0] "通道移至顶端"
 
-#: app/actions/channels-commands.c:312
+#: app/actions/channels-commands.c:328
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "降低通道"
 
-#: app/actions/channels-commands.c:349
+#: app/actions/channels-commands.c:365
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
-#: app/actions/channels-commands.c:384 app/core/gimpimage-new.c:565
+#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:565
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:856
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s 通道副本"
 
-#: app/actions/channels-commands.c:405
+#: app/actions/channels-commands.c:421
 msgid "Duplicate channels"
 msgstr "复制通道"
 
-#: app/actions/channels-commands.c:448
+#: app/actions/channels-commands.c:464
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "删除 %d 个通道"
 
-#: app/actions/channels-commands.c:492
+#: app/actions/channels-commands.c:508
 msgid "Channels to selection"
 msgstr "通道到选区"
 
@@ -5968,7 +5968,7 @@ msgstr "翻转"
 msgid "Rotating"
 msgstr "旋转"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1281
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1299
 msgid "Cannot crop because the current selection is empty."
 msgstr "无法剪裁，因为当前选区为空。"
 
@@ -6017,7 +6017,7 @@ msgid "Scale Image"
 msgstr "缩放图像"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2511
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2529
 #: app/dialogs/preferences-dialog.c:1738 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6113,7 +6113,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "编辑图层的名字"
 
-#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:964
+#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:972
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "新建图层(_N)…"
@@ -6123,7 +6123,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "创建新图层并将其添加到图像"
 
-#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:965
+#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:973
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "新建图层(_N)"
@@ -6837,12 +6837,12 @@ msgstr "快捷键："
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-单击图层停靠中的缩略图"
 
-#: app/actions/layers-actions.c:959 app/actions/layers-actions.c:960
+#: app/actions/layers-actions.c:967 app/actions/layers-actions.c:968
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "到新图层(_N)"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2353
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2371
 msgid "Layer Attributes"
 msgstr "图层属性"
 
@@ -6862,7 +6862,7 @@ msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "创建 %d 个新图层"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2238
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2256
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "新建图层"
@@ -6876,175 +6876,175 @@ msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "新建图层组"
 
-#: app/actions/layers-commands.c:665
+#: app/actions/layers-commands.c:673
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "升高图层"
 
-#: app/actions/layers-commands.c:699
+#: app/actions/layers-commands.c:709
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "图层升至顶端"
 
-#: app/actions/layers-commands.c:736
+#: app/actions/layers-commands.c:754
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "降低图层"
 
-#: app/actions/layers-commands.c:773
+#: app/actions/layers-commands.c:791
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "图层降至底端"
 
-#: app/actions/layers-commands.c:800
+#: app/actions/layers-commands.c:818
 msgid "Duplicate layers"
 msgstr "复制图层"
 
-#: app/actions/layers-commands.c:942
+#: app/actions/layers-commands.c:960
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "合并 %d 图层组"
 
-#: app/actions/layers-commands.c:1002
+#: app/actions/layers-commands.c:1020
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "删除 %d 图层"
 
-#: app/actions/layers-commands.c:1029 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1047 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "放弃文字信息"
 
-#: app/actions/layers-commands.c:1048
+#: app/actions/layers-commands.c:1066
 msgid "Add Paths"
 msgstr "添加路径"
 
-#: app/actions/layers-commands.c:1169
+#: app/actions/layers-commands.c:1187
 msgid "Set Layer Boundary Size"
 msgstr "设置图层边界大小"
 
-#: app/actions/layers-commands.c:1199
+#: app/actions/layers-commands.c:1217
 msgid "Layers to Image Size"
 msgstr "图层到图像大小"
 
-#: app/actions/layers-commands.c:1247
+#: app/actions/layers-commands.c:1265
 msgid "Scale Layer"
 msgstr "缩放图层"
 
-#: app/actions/layers-commands.c:1286
+#: app/actions/layers-commands.c:1304
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "剪裁 %d 个图层到选区"
 
-#: app/actions/layers-commands.c:1351
+#: app/actions/layers-commands.c:1369
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 msgstr "无法剪裁，因为选中的图层都没有内容或它们已被剪裁到内容。"
 
-#: app/actions/layers-commands.c:1357
+#: app/actions/layers-commands.c:1375
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "剪裁 %d 个图层到内容"
 
-#: app/actions/layers-commands.c:1494 app/actions/layers-commands.c:2446
+#: app/actions/layers-commands.c:1512 app/actions/layers-commands.c:2464
 msgid "Add Layer Masks"
 msgstr "添加图层蒙版"
 
-#: app/actions/layers-commands.c:1546
+#: app/actions/layers-commands.c:1564
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙版"
 
-#: app/actions/layers-commands.c:1550
+#: app/actions/layers-commands.c:1568
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙版"
 
-#: app/actions/layers-commands.c:1637
+#: app/actions/layers-commands.c:1655
 msgid "Show Layer Masks"
 msgstr "显示图层蒙版"
 
-#: app/actions/layers-commands.c:1684
+#: app/actions/layers-commands.c:1702
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙版"
 
-#: app/actions/layers-commands.c:1723
+#: app/actions/layers-commands.c:1741
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "蒙版到选区"
 
-#: app/actions/layers-commands.c:1727
+#: app/actions/layers-commands.c:1745
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "添加蒙版到选区"
 
-#: app/actions/layers-commands.c:1731
+#: app/actions/layers-commands.c:1749
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "从选区减去蒙版"
 
-#: app/actions/layers-commands.c:1735
+#: app/actions/layers-commands.c:1753
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "蒙版与选区相交"
 
-#: app/actions/layers-commands.c:1756
+#: app/actions/layers-commands.c:1774
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/actions/layers-commands.c:1777
+#: app/actions/layers-commands.c:1795
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/actions/layers-commands.c:1805 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1823 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "透明到选区"
 
-#: app/actions/layers-commands.c:1809 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1827 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "添加透明到选区"
 
-#: app/actions/layers-commands.c:1813 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1831 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "从选区减去透明"
 
-#: app/actions/layers-commands.c:1817 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1835 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "透明与选区相交"
 
-#: app/actions/layers-commands.c:1828
+#: app/actions/layers-commands.c:1846
 msgid "Empty Selection"
 msgstr "空选区"
 
-#: app/actions/layers-commands.c:1858 app/actions/layers-commands.c:1902
+#: app/actions/layers-commands.c:1876 app/actions/layers-commands.c:1920
 #: app/widgets/gimplayertreeview.c:1109
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
-#: app/actions/layers-commands.c:1972
+#: app/actions/layers-commands.c:1990
 msgid "Set layers' blend space"
 msgstr "设置图层混合空间"
 
-#: app/actions/layers-commands.c:2025
+#: app/actions/layers-commands.c:2043
 msgid "Set layers' composite space"
 msgstr "设置图层合成空间"
 
-#: app/actions/layers-commands.c:2078
+#: app/actions/layers-commands.c:2096
 msgid "Set layers' composite mode"
 msgstr "设置图层合成模式"
 
-#: app/actions/layers-commands.c:2162
+#: app/actions/layers-commands.c:2180
 msgid "Lock alpha channels"
 msgstr "锁定透明通道"
 
-#: app/actions/layers-commands.c:2162
+#: app/actions/layers-commands.c:2180
 msgid "Unlock alpha channels"
 msgstr "解锁透明通道"
 
@@ -8613,13 +8613,13 @@ msgstr "复制这些路径"
 
 #: app/actions/vectors-actions.c:76
 msgctxt "vectors-action"
-msgid "_Delete Path"
+msgid "_Delete Paths"
 msgstr "删除路径(_D)"
 
 #: app/actions/vectors-actions.c:77
 msgctxt "vectors-action"
-msgid "Delete this path"
-msgstr "删除此路径"
+msgid "Delete the selected paths"
+msgstr "删除选中的路径"
 
 #: app/actions/vectors-actions.c:82
 msgctxt "vectors-action"
@@ -8628,43 +8628,43 @@ msgstr "合并可见路径(_V)"
 
 #: app/actions/vectors-actions.c:87
 msgctxt "vectors-action"
-msgid "_Raise Path"
+msgid "_Raise Paths"
 msgstr "上移路径(_R)"
 
 #: app/actions/vectors-actions.c:88
 msgctxt "vectors-action"
-msgid "Raise this path"
-msgstr "上移此路径"
+msgid "Raise the selected paths"
+msgstr "上移选中的路径"
 
 #: app/actions/vectors-actions.c:93
 msgctxt "vectors-action"
-msgid "Raise Path to _Top"
+msgid "Raise Paths to _Top"
 msgstr "上移路径到顶端(_T)"
 
 #: app/actions/vectors-actions.c:94
 msgctxt "vectors-action"
-msgid "Raise this path to the top"
-msgstr "上移此路径至顶端"
+msgid "Raise the selected paths to the top"
+msgstr "上移选中的路径至顶端"
 
 #: app/actions/vectors-actions.c:99
 msgctxt "vectors-action"
-msgid "_Lower Path"
+msgid "_Lower Paths"
 msgstr "下移路径(_L)"
 
 #: app/actions/vectors-actions.c:100
 msgctxt "vectors-action"
-msgid "Lower this path"
-msgstr "下移此路径"
+msgid "Lower the selected paths"
+msgstr "下移选中的路径"
 
 #: app/actions/vectors-actions.c:105
 msgctxt "vectors-action"
-msgid "Lower Path to _Bottom"
+msgid "Lower Paths to _Bottom"
 msgstr "下移路径至底端(_B)"
 
 #: app/actions/vectors-actions.c:106
 msgctxt "vectors-action"
-msgid "Lower this path to the bottom"
-msgstr "下移此路径至底端"
+msgid "Lower the selected paths to the bottom"
+msgstr "下移选中的路径至底端"
 
 #: app/actions/vectors-actions.c:111
 msgctxt "vectors-action"
@@ -8946,7 +8946,7 @@ msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "选择当前路径下方的路径"
 
-#: app/actions/vectors-commands.c:173 app/actions/vectors-commands.c:877
+#: app/actions/vectors-commands.c:173 app/actions/vectors-commands.c:894
 msgid "Path Attributes"
 msgstr "路径属性"
 
@@ -8962,44 +8962,44 @@ msgstr "新建路径"
 msgid "Create a New Path"
 msgstr "创建一个新的路径"
 
-#: app/actions/vectors-commands.c:277
+#: app/actions/vectors-commands.c:285
 msgid "Raise Path"
 msgid_plural "Raise Paths"
 msgstr[0] "升高路径"
 
-#: app/actions/vectors-commands.c:313
+#: app/actions/vectors-commands.c:323
 msgid "Raise Path to Top"
 msgid_plural "Raise Paths to Top"
 msgstr[0] "路径移至顶端"
 
-#: app/actions/vectors-commands.c:353
+#: app/actions/vectors-commands.c:370
 msgid "Lower Path"
 msgid_plural "Lower Paths"
 msgstr[0] "降低路径"
 
-#: app/actions/vectors-commands.c:393
+#: app/actions/vectors-commands.c:410
 msgid "Lower Path to Bottom"
 msgid_plural "Lower Paths to Bottom"
 msgstr[0] "路径移至底端"
 
-#: app/actions/vectors-commands.c:423
+#: app/actions/vectors-commands.c:440
 msgid "Duplicate Paths"
 msgstr "复制路径"
 
-#: app/actions/vectors-commands.c:461
+#: app/actions/vectors-commands.c:478
 msgid "Remove Paths"
 msgstr "移除路径"
 
-#: app/actions/vectors-commands.c:508
+#: app/actions/vectors-commands.c:525
 msgid "Paths to selection"
 msgstr "路径到选区"
 
-#: app/actions/vectors-commands.c:588 app/tools/gimpvectoroptions.c:201
+#: app/actions/vectors-commands.c:605 app/tools/gimpvectoroptions.c:201
 #: app/tools/gimpvectortool.c:764
 msgid "Fill Path"
 msgstr "填充路径"
 
-#: app/actions/vectors-commands.c:616 app/tools/gimpvectoroptions.c:209
+#: app/actions/vectors-commands.c:633 app/tools/gimpvectoroptions.c:209
 #: app/tools/gimpvectortool.c:853
 msgid "Stroke Path"
 msgstr "勾画路径"
@@ -10306,7 +10306,7 @@ msgid "Channel"
 msgstr "通道"
 
 #: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
-#: app/widgets/gimppathtreeview.c:250
+#: app/widgets/gimppathtreeview.c:253
 msgid "Path"
 msgstr "路径"
 
@@ -17920,8 +17920,8 @@ msgid "Path _name:"
 msgstr "路径名字(_N)："
 
 #: app/dialogs/path-options-dialog.c:108
-msgid "Lock path _strokes"
-msgstr "锁定路径笔触(_S)"
+msgid "Lock p_ath"
+msgstr "锁定路径(_A)"
 
 #: app/dialogs/path-options-dialog.c:109
 msgid "Lock path _position"
@@ -20513,11 +20513,11 @@ msgstr "已固定"
 msgid "Combine Masks"
 msgstr "组合蒙版"
 
-#: app/pdb/drawable-cmds.c:651
+#: app/pdb/drawable-cmds.c:647
 msgid "Plug-in"
 msgstr "插件"
 
-#: app/pdb/drawable-cmds.c:978 app/tools/gimpforegroundselecttool.c:1039
+#: app/pdb/drawable-cmds.c:974 app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景选择"
@@ -20963,7 +20963,7 @@ msgid ""
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: app/pdb/image-cmds.c:2459
+#: app/pdb/image-cmds.c:2462
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
@@ -28095,12 +28095,16 @@ msgid "[ Base Image ]"
 msgstr "[ 原始图像 ]"
 
 #: app/widgets/gimppathtreeview.c:111
-msgid "Lock path"
-msgstr "锁定路径"
+msgid "Lock path strokes"
+msgstr "锁定路径笔触"
 
 #: app/widgets/gimppathtreeview.c:114
 msgid "Lock path position"
 msgstr "锁定路径位置"
+
+#: app/widgets/gimppathtreeview.c:117
+msgid "Lock path visibility"
+msgstr "锁定路径可见性"
 
 #: app/widgets/gimpviewablebox.c:94
 msgid "Open the brush selection dialog"
@@ -28976,6 +28980,21 @@ msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "路径菜单"
 
+#~ msgctxt "vectors-action"
+#~ msgid "Delete this path"
+#~ msgstr "删除此路径"
+
+#~ msgctxt "vectors-action"
+#~ msgid "Raise this path"
+#~ msgstr "上移此路径"
+
+#~ msgctxt "vectors-action"
+#~ msgid "Lower this path"
+#~ msgstr "下移此路径"
+
+#~ msgid "Lock path _strokes"
+#~ msgstr "锁定路径笔触(_S)"
+
 #~ msgctxt "text-tool-action"
 #~ msgid "_Path from Text"
 #~ msgstr "从文字创建路径(_P)"
@@ -29287,9 +29306,6 @@ msgstr "路径菜单"
 #, c-format
 #~ msgid "There was an error parsing the menu definition from %s: %s"
 #~ msgstr "从 %s 解析菜单定义时出错：%s"
-
-#~ msgid "Lock path strokes"
-#~ msgstr "锁定路径笔触"
 
 #~ msgctxt "edit-action"
 #~ msgid "_New Image"
