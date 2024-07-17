@@ -661,7 +661,9 @@ gimp_gp_param_to_value (gpointer        gimp,
 {
   g_return_if_fail (param != NULL);
   g_return_if_fail (value != NULL);
+  /* pspec is nullable. */
 
+  /* See also changing of types by caller. */
   if (type == G_TYPE_NONE || type == G_TYPE_INVALID)
     {
       type = g_type_from_name (param->type_name);
@@ -835,19 +837,34 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
-      GType     object_type;
+      GType     object_type = G_TYPE_INVALID;
       GObject **objects;
       gint      i;
 
-      if (param->data.d_id_array.type_name == NULL)
+      /* Get type of the array elements. */
+      if (param->data.d_id_array.type_name != NULL)
         {
-          g_return_if_fail (param->data.d_id_array.size == 0 && pspec != NULL);
-          object_type = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type;
-        }
-      else
-        {
+          /* An empty array from a NULL has an arbitrary type_name set earlier. */
           object_type = g_type_from_name (param->data.d_id_array.type_name);
         }
+      else if (pspec != NULL)
+        {
+          object_type = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type;
+        }
+      /* Else object-type is G_TYPE_INVALID*/
+
+      /* GimpObjectArray requires declared element type derived from GObject.
+       * Even when empty.
+       * When not, return without setting the gvalue.
+       * Not necessarily an error, when the plugin does not use the gvalue.
+       */
+      if (!g_type_is_a (object_type, G_TYPE_OBJECT))
+        {
+          g_warning ("%s returning NULL for GimpObjectArray", G_STRFUNC);
+          return;
+        }
+
+      /* size might be zero. */
 
       objects = g_new (GObject *, param->data.d_id_array.size);
 
@@ -876,6 +893,9 @@ gimp_gp_param_to_value (gpointer        gimp,
             g_object_ref (objects[i]);
         }
 
+      /* Even when size is zero, set gvalue to an empty GimpObjectArray object,
+       * having a valid but possibly arbitrary type of its elements.
+       */
       gimp_value_take_object_array (value, object_type, objects,
                                     param->data.d_id_array.size);
     }
@@ -1277,8 +1297,18 @@ gimp_value_to_gp_param (const GValue *value,
         }
       else
         {
+          /* GValue intended to hold GimpObjectArray is NULL.
+           * For convenience, we allow this, meaning empty.
+           */
           param->data.d_id_array.size = 0;
           param->data.d_id_array.data = NULL;
+          /* Arbitrarily say elements are type Drawable.
+           * We must have a type to create an empty GimpObjectArray.
+           */
+          if (full_copy)
+            param->data.d_id_array.type_name = g_strdup ("GimpDrawable");
+          else
+            param->data.d_id_array.type_name = "GimpDrawable";
         }
     }
   else if (GIMP_VALUE_HOLDS_IMAGE (value))
