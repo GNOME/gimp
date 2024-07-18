@@ -302,13 +302,13 @@ channels_actions_update (GimpActionGroup *group,
 
               list = g_list_find (channel_list, iter->data);
 
-              if (gimp_item_get_index (list->data) == 0)
-                first_selected = TRUE;
-              if (gimp_item_get_index (list->data) == n_channels - 1)
-                last_selected = TRUE;
-
               if (list)
                 {
+                  if (gimp_item_get_index (list->data) == 0)
+                    first_selected = TRUE;
+                  if (gimp_item_get_index (list->data) == n_channels - 1)
+                    last_selected = TRUE;
+
                   if (g_list_previous (list))
                     have_prev = TRUE;
                   if (g_list_next (list))

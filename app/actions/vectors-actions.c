@@ -377,13 +377,13 @@ vectors_actions_update (GimpActionGroup *group,
           vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
           iter2 = g_list_find (vectors_list, iter->data);
 
-          if (gimp_item_get_index (iter2->data) == 0)
-            first_selected = TRUE;
-          if (gimp_item_get_index (iter2->data) == n_paths - 1)
-            last_selected = TRUE;
-
           if (iter2)
             {
+              if (gimp_item_get_index (iter2->data) == 0)
+                first_selected = TRUE;
+              if (gimp_item_get_index (iter2->data) == n_paths - 1)
+                last_selected = TRUE;
+
               if (g_list_previous (iter2))
                 have_prev = TRUE;
 
