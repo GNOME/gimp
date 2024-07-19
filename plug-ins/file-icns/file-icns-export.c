@@ -35,35 +35,40 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-GtkWidget *        icns_dialog_new       (IcnsSaveInfo *info);
+GtkWidget *        icns_dialog_new       (IcnsSaveInfo         *info,
+                                          GimpImage            *image,
+                                          GimpProcedure        *procedure,
+                                          GimpProcedureConfig  *config);
 
-static gboolean    icns_save_dialog      (IcnsSaveInfo *info,
-                                          GimpImage    *image);
+static gboolean    icns_save_dialog      (IcnsSaveInfo         *info,
+                                          GimpImage            *image,
+                                          GimpProcedure        *procedure,
+                                          GimpProcedureConfig  *config);
 
-void               icns_dialog_add_icon  (GtkWidget    *dialog,
-                                          GimpDrawable *layer,
-                                          gint          layer_num,
-                                          gint          duplicates[]);
+void               icns_dialog_add_icon  (GtkWidget            *dialog,
+                                          GimpDrawable         *layer,
+                                          gint                  layer_num,
+                                          gint                  duplicates[]);
 
-static GtkWidget * icns_preview_new      (GimpDrawable *layer);
+static GtkWidget * icns_preview_new      (GimpDrawable         *layer);
 
-static GtkWidget * icns_create_icon_item (GtkWidget    *icon_preview,
-                                          GimpDrawable *layer,
-                                          gint          layer_num,
-                                          IcnsSaveInfo *info,
-                                          gint          duplicates[]);
+static GtkWidget * icns_create_icon_item (GtkWidget            *icon_preview,
+                                          GimpDrawable         *layer,
+                                          gint                  layer_num,
+                                          IcnsSaveInfo         *info,
+                                          gint                  duplicates[]);
 
-static gint        icns_find_type        (gint          width,
-                                          gint          height);
-static gboolean    icns_check_dimensions (gint          width,
-                                          gint          height);
-static gboolean    icns_check_compat     (GtkWidget    *dialog,
-                                          IcnsSaveInfo *info);
+static gint        icns_find_type        (gint                  width,
+                                          gint                  height);
+static gboolean    icns_check_dimensions (gint                  width,
+                                          gint                  height);
+static gboolean    icns_check_compat     (GtkWidget            *dialog,
+                                          IcnsSaveInfo         *info);
 
-GimpPDBStatusType  icns_export_image     (GFile        *file,
-                                          IcnsSaveInfo *info,
-                                          GimpImage    *image,
-                                          GError      **error);
+GimpPDBStatusType  icns_export_image     (GFile                *file,
+                                          IcnsSaveInfo         *info,
+                                          GimpImage            *image,
+                                          GError              **error);
 
 static void        icns_save_info_free   (IcnsSaveInfo *info);
 
@@ -279,7 +284,10 @@ icns_check_compat (GtkWidget    *dialog,
 }
 
 GtkWidget *
-icns_dialog_new (IcnsSaveInfo *info)
+icns_dialog_new (IcnsSaveInfo        *info,
+                 GimpImage           *image,
+                 GimpProcedure       *procedure,
+                 GimpProcedureConfig *config)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -289,15 +297,14 @@ icns_dialog_new (IcnsSaveInfo *info)
   GtkWidget     *flowbox;
   GtkWidget     *warning;
 
-  dialog = gimp_export_dialog_new (_("Apple Icon Image"),
-                                   PLUG_IN_BINARY,
-                                   "plug-in-icns-export");
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             config, image);
 
   g_object_set_data (G_OBJECT (dialog), "save_info", info);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
@@ -340,14 +347,16 @@ icns_dialog_new (IcnsSaveInfo *info)
 }
 
 static gboolean
-icns_save_dialog (IcnsSaveInfo *info,
-                  GimpImage    *image)
+icns_save_dialog (IcnsSaveInfo        *info,
+                  GimpImage           *image,
+                  GimpProcedure       *procedure,
+                  GimpProcedureConfig *config)
 {
   GtkWidget *dialog;
   GList     *iter;
   gint       i;
   gint       j;
-  gint       response;
+  gboolean   response;
   gint       duplicates[ICNS_TYPE_NUM];
   gint       ordered[12] =
     {12, 16, 18, 24, 32, 36, 48, 64, 128, 256, 512, 1024};
@@ -357,7 +366,7 @@ icns_save_dialog (IcnsSaveInfo *info,
   for (i = 0; i < ICNS_TYPE_NUM; i++)
     duplicates[i] = 0;
 
-  dialog = icns_dialog_new (info);
+  dialog = icns_dialog_new (info, image, procedure, config);
 
   /* Add icons in order, smallest to largest */
   for (i = 0; i < 12; i++)
@@ -394,13 +403,13 @@ icns_save_dialog (IcnsSaveInfo *info,
                                200 + (info->num_icons > 4 ?
                                       250 : info->num_icons * 60));
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
-  response = gimp_dialog_run (GIMP_DIALOG (dialog));
+  response = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
-  return (response == GTK_RESPONSE_OK);
+  return response;
 }
 
 GimpPDBStatusType
@@ -553,10 +562,12 @@ icns_save_info_free (IcnsSaveInfo *info)
 }
 
 GimpPDBStatusType
-icns_save_image (GFile      *file,
-                 GimpImage  *image,
-                 gint32      run_mode,
-                 GError    **error)
+icns_save_image (GFile                *file,
+                 GimpImage            *image,
+                 GimpProcedure        *procedure,
+                 GimpProcedureConfig  *config,
+                 gint32                run_mode,
+                 GError              **error)
 {
   IcnsSaveInfo  info;
   GList        *iter;
@@ -591,7 +602,7 @@ icns_save_image (GFile      *file,
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       /* Allow user to override default values */
-      if (! icns_save_dialog (&info, image))
+      if (! icns_save_dialog (&info, image, procedure, config))
         return GIMP_PDB_CANCEL;
     }
   else if (run_mode == GIMP_RUN_NONINTERACTIVE)

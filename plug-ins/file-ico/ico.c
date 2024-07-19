@@ -301,6 +301,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "2002");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "Microsoft Windows icon");
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-ico");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -328,6 +330,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "Nikc M.",
                                       "2002-2022");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "Microsoft Windows cursor");
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/vnd.microsoft.icon");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -375,6 +379,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "James Huang, Alex S.",
                                       "2007-2022");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "Microsoft Windows animated cursor");
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "application/x-navi-animation");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -578,7 +584,7 @@ ico_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  status = ico_export_image (file, image, run_mode, &error);
+  status = ico_export_image (file, image, procedure, config, run_mode, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -608,7 +614,7 @@ cur_export (GimpProcedure        *procedure,
                 "hot-spot-y",   &hot_spot_y,
                 NULL);
 
-  status = cur_export_image (file, image, run_mode,
+  status = cur_export_image (file, image, procedure, config, run_mode,
                              &n_hot_spot_x, &hot_spot_x,
                              &n_hot_spot_y, &hot_spot_y,
                              &error);
@@ -670,7 +676,7 @@ ani_export (GimpProcedure        *procedure,
   ani_info.inam = inam;
   ani_info.iart = iart;
 
-  status = ani_export_image (file, image, run_mode,
+  status = ani_export_image (file, image, procedure, config, run_mode,
                              &n_hot_spot_x, &hot_spot_x,
                              &n_hot_spot_y, &hot_spot_y,
                              &header, &ani_info, &error);

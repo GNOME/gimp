@@ -22,9 +22,11 @@
 #define __ICNS_EXPORT_H__
 
 
-GimpPDBStatusType icns_save_image (GFile     *file,
-                                   GimpImage *image,
-                                   gint32     run_mode,
-                                   GError   **error);
+GimpPDBStatusType icns_save_image (GFile                *file,
+                                   GimpImage            *image,
+                                   GimpProcedure        *procedure,
+                                   GimpProcedureConfig  *config,
+                                   gint32                run_mode,
+                                   GError              **error);
 
 #endif /* __ICNS_EXPORT_H__ */

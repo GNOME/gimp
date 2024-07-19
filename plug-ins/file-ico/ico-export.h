@@ -22,33 +22,39 @@
 #define __ICO_EXPORT_H__
 
 
-GimpPDBStatusType ico_export_image        (GFile         *file,
-                                           GimpImage     *image,
-                                           gint32         run_mode,
-                                           GError       **error);
+GimpPDBStatusType ico_export_image        (GFile                *file,
+                                           GimpImage            *image,
+                                           GimpProcedure        *procedure,
+                                           GimpProcedureConfig  *config,
+                                           gint32                run_mode,
+                                           GError              **error);
 
-GimpPDBStatusType cur_export_image        (GFile         *file,
-                                           GimpImage     *image,
-                                           gint32         run_mode,
-                                           gint          *n_hot_spot_x,
-                                           gint32       **hot_spot_x,
-                                           gint          *n_hot_spot_y,
-                                           gint32       **hot_spot_y,
-                                           GError       **error);
+GimpPDBStatusType cur_export_image        (GFile                *file,
+                                           GimpImage            *image,
+                                           GimpProcedure        *procedure,
+                                           GimpProcedureConfig  *config,
+                                           gint32                run_mode,
+                                           gint                 *n_hot_spot_x,
+                                           gint32              **hot_spot_x,
+                                           gint                 *n_hot_spot_y,
+                                           gint32              **hot_spot_y,
+                                           GError              **error);
 
-GimpPDBStatusType ani_export_image        (GFile         *file,
-                                           GimpImage     *image,
-                                           gint32         run_mode,
-                                           gint          *n_hot_spot_x,
-                                           gint32       **hot_spot_x,
-                                           gint          *n_hot_spot_y,
-                                           gint32       **hot_spot_y,
-                                           AniFileHeader *header,
-                                           AniSaveInfo   *ani_info,
-                                           GError       **error);
+GimpPDBStatusType ani_export_image        (GFile                *file,
+                                           GimpImage            *image,
+                                           GimpProcedure        *procedure,
+                                           GimpProcedureConfig  *config,
+                                           gint32                run_mode,
+                                           gint                 *n_hot_spot_x,
+                                           gint32              **hot_spot_x,
+                                           gint                 *n_hot_spot_y,
+                                           gint32              **hot_spot_y,
+                                           AniFileHeader        *header,
+                                           AniSaveInfo          *ani_info,
+                                           GError              **error);
 
-gboolean          ico_cmap_contains_black (const guchar  *cmap,
-                                           gint           num_colors);
+gboolean          ico_cmap_contains_black (const guchar         *cmap,
+                                           gint                  num_colors);
 
 
 #endif /* __ICO_EXPORT_H__ */

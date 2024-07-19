@@ -45,9 +45,12 @@ static void   ico_dialog_ani_update_iart (GtkEntry    *entry,
 
 
 GtkWidget *
-ico_dialog_new (IcoSaveInfo   *info,
-                AniFileHeader *ani_header,
-                AniSaveInfo   *ani_info)
+ico_dialog_new (GimpImage           *image,
+                GimpProcedure       *procedure,
+                GimpProcedureConfig *config,
+                IcoSaveInfo         *info,
+                AniFileHeader       *ani_header,
+                AniSaveInfo         *ani_info)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -57,11 +60,8 @@ ico_dialog_new (IcoSaveInfo   *info,
   GtkWidget     *viewport;
   GtkWidget     *warning;
 
-  dialog = gimp_export_dialog_new (ani_header ?
-                                   _("Windows Animated Cursor") : info->is_cursor ?
-                                   _("Windows Cursor") : _("Windows Icon"),
-                                   PLUG_IN_BINARY,
-                                   "plug-in-winicon");
+  dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
+                                             config, image);
 
   /* We store an array that holds each icon's requested bit depth
      with the dialog. It's queried when the dialog is closed so the
@@ -80,7 +80,7 @@ ico_dialog_new (IcoSaveInfo   *info,
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 

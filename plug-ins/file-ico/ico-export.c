@@ -40,12 +40,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static gint     ico_write_int8         (FILE   *fp,
-                                        guint8 *data,
-                                        gint    count);
-static gint     ico_write_int16        (FILE *fp,
+static gint     ico_write_int8         (FILE    *fp,
+                                        guint8  *data,
+                                        gint     count);
+static gint     ico_write_int16        (FILE    *fp,
                                         guint16 *data,
-                                        gint count);
+                                        gint     count);
 static gint     ico_write_int32        (FILE    *fp,
                                         guint32 *data,
                                         gint     count);
@@ -64,35 +64,37 @@ static void     ico_set_byte_in_data   (guint8 *data,
                                         gint    byte_num,
                                         gint    byte_val);
 
-static gint     ico_get_layer_num_colors  (GimpLayer    *layer,
-                                           gboolean     *uses_alpha_levels);
-static void     ico_image_get_reduced_buf (GimpDrawable *layer,
-                                           gint          bpp,
-                                           gint         *num_colors,
-                                           guchar      **cmap_out,
-                                           guchar      **buf_out);
+static gint     ico_get_layer_num_colors  (GimpLayer            *layer,
+                                           gboolean             *uses_alpha_levels);
+static void     ico_image_get_reduced_buf (GimpDrawable         *layer,
+                                           gint                  bpp,
+                                           gint                 *num_colors,
+                                           guchar              **cmap_out,
+                                           guchar              **buf_out);
 
-static gboolean ico_save_init             (GimpImage    *image,
-                                           gint32        run_mode,
-                                           IcoSaveInfo  *info,
-                                           gint          n_hot_spot_x,
-                                           gint32       *hot_spot_x,
-                                           gint          n_hot_spot_y,
-                                           gint32       *hot_spot_y,
-                                           GError      **error);
+static gboolean ico_save_init             (GimpImage            *image,
+                                           gint32                run_mode,
+                                           IcoSaveInfo          *info,
+                                           gint                  n_hot_spot_x,
+                                           gint32               *hot_spot_x,
+                                           gint                  n_hot_spot_y,
+                                           gint32               *hot_spot_y,
+                                           GError              **error);
 static GimpPDBStatusType
-                shared_save_image         (GFile         *file,
-                                           FILE          *fp_ani,
-                                           GimpImage     *image,
-                                           gint32         run_mode,
-                                           gint          *n_hot_spot_x,
-                                           gint32       **hot_spot_x,
-                                           gint          *n_hot_spot_y,
-                                           gint32       **hot_spot_y,
-                                           gint32         file_offset,
-                                           gint           icon_index,
-                                           GError       **error,
-                                           IcoSaveInfo   *info);
+                shared_save_image         (GFile                *file,
+                                           FILE                 *fp_ani,
+                                           GimpImage            *image,
+                                           GimpProcedure        *procedure,
+                                           GimpProcedureConfig  *config,
+                                           gint32                run_mode,
+                                           gint                 *n_hot_spot_x,
+                                           gint32              **hot_spot_x,
+                                           gint                 *n_hot_spot_y,
+                                           gint32              **hot_spot_y,
+                                           gint32                file_offset,
+                                           gint                  icon_index,
+                                           GError              **error,
+                                           IcoSaveInfo          *info);
 
 
 static gint
@@ -306,19 +308,22 @@ ico_save_init (GimpImage   *image,
 
 
 static gboolean
-ico_save_dialog (GimpImage     *image,
-                 IcoSaveInfo   *info,
-                 AniFileHeader *ani_header,
-                 AniSaveInfo   *ani_info)
+ico_save_dialog (GimpImage            *image,
+                 GimpProcedure        *procedure,
+                 GimpProcedureConfig  *config,
+                 IcoSaveInfo          *info,
+                 AniFileHeader        *ani_header,
+                 AniSaveInfo          *ani_info)
 {
   GtkWidget     *dialog;
   GList         *iter;
   gint           i;
-  gint           response;
+  gboolean       response;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = ico_dialog_new (info, ani_header, ani_info);
+  dialog = ico_dialog_new (image, procedure, config, info, ani_header,
+                           ani_info);
   for (iter = info->layers, i = 0;
        iter;
        iter = g_list_next (iter), i++)
@@ -360,13 +365,13 @@ ico_save_dialog (GimpImage     *image,
                                200 + (info->num_icons > 4 ?
                                       500 : info->num_icons * 120));
 
-  gtk_widget_show (dialog);
+  gtk_widget_set_visible (dialog, TRUE);
 
-  response = gimp_dialog_run (GIMP_DIALOG (dialog));
+  response = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
-  return (response == GTK_RESPONSE_OK);
+  return response;
 }
 
 static void
@@ -1178,10 +1183,12 @@ ico_save_info_free (IcoSaveInfo  *info)
 }
 
 GimpPDBStatusType
-ico_export_image (GFile      *file,
-                  GimpImage  *image,
-                  gint32      run_mode,
-                  GError    **error)
+ico_export_image (GFile                *file,
+                  GimpImage            *image,
+                  GimpProcedure        *procedure,
+                  GimpProcedureConfig  *config,
+                  gint32                run_mode,
+                  GError              **error)
 {
   IcoSaveInfo info;
 
@@ -1190,20 +1197,23 @@ ico_export_image (GFile      *file,
 
   info.is_cursor = FALSE;
 
-  return shared_save_image (file, NULL, image, run_mode,
+  return shared_save_image (file, NULL, image, procedure,
+                            config, run_mode,
                             0, NULL, 0, NULL,
                             0, 0, error, &info);
 }
 
 GimpPDBStatusType
-cur_export_image (GFile      *file,
-                  GimpImage  *image,
-                  gint32      run_mode,
-                  gint       *n_hot_spot_x,
-                  gint32    **hot_spot_x,
-                  gint       *n_hot_spot_y,
-                  gint32    **hot_spot_y,
-                  GError    **error)
+cur_export_image (GFile                *file,
+                  GimpImage            *image,
+                  GimpProcedure        *procedure,
+                  GimpProcedureConfig  *config,
+                  gint32                run_mode,
+                  gint                 *n_hot_spot_x,
+                  gint32              **hot_spot_x,
+                  gint                 *n_hot_spot_y,
+                  gint32              **hot_spot_y,
+                  GError              **error)
 {
   IcoSaveInfo info;
 
@@ -1212,7 +1222,8 @@ cur_export_image (GFile      *file,
 
   info.is_cursor = TRUE;
 
-  return shared_save_image (file, NULL, image, run_mode,
+  return shared_save_image (file, NULL, image, procedure,
+                            config, run_mode,
                             n_hot_spot_x, hot_spot_x,
                             n_hot_spot_y, hot_spot_y,
                             0, 0, error, &info);
@@ -1220,16 +1231,18 @@ cur_export_image (GFile      *file,
 
 /* Ported from James Huang's ani.c code, under the GPL v3 license */
 GimpPDBStatusType
-ani_export_image (GFile         *file,
-                  GimpImage     *image,
-                  gint32         run_mode,
-                  gint          *n_hot_spot_x,
-                  gint32       **hot_spot_x,
-                  gint          *n_hot_spot_y,
-                  gint32       **hot_spot_y,
-                  AniFileHeader *header,
-                  AniSaveInfo   *ani_info,
-                  GError       **error)
+ani_export_image (GFile                *file,
+                  GimpImage            *image,
+                  GimpProcedure        *procedure,
+                  GimpProcedureConfig  *config,
+                  gint32                run_mode,
+                  gint                 *n_hot_spot_x,
+                  gint32              **hot_spot_x,
+                  gint                 *n_hot_spot_y,
+                  gint32              **hot_spot_y,
+                  AniFileHeader        *header,
+                  AniSaveInfo          *ani_info,
+                  GError              **error)
 {
   FILE         *fp;
   gint32        i;
@@ -1320,7 +1333,7 @@ ani_export_image (GFile         *file,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! ico_save_dialog (image, &info,
+      if (! ico_save_dialog (image, procedure, config, &info,
                              header, ani_info))
         return GIMP_PDB_CANCEL;
 
@@ -1423,7 +1436,8 @@ ani_export_image (GFile         *file,
       ofs_size_icon = ftell (fp);
       fwrite (&size, sizeof (size), 1, fp);
       offset = ftell (fp);
-      status = shared_save_image (file, fp, image, run_mode,
+      status = shared_save_image (file, fp, image, procedure,
+                                  config, run_mode,
                                   n_hot_spot_x, hot_spot_x,
                                   n_hot_spot_y, hot_spot_y,
                                   offset, i, error, &info);
@@ -1494,18 +1508,20 @@ ani_export_image (GFile         *file,
 }
 
 GimpPDBStatusType
-shared_save_image (GFile        *file,
-                   FILE         *fp_ani,
-                   GimpImage    *image,
-                   gint32        run_mode,
-                   gint         *n_hot_spot_x,
-                   gint32      **hot_spot_x,
-                   gint         *n_hot_spot_y,
-                   gint32      **hot_spot_y,
-                   gint32        file_offset,
-                   gint          icon_index,
-                   GError      **error,
-                   IcoSaveInfo  *info)
+shared_save_image (GFile                *file,
+                   FILE                 *fp_ani,
+                   GimpImage            *image,
+                   GimpProcedure        *procedure,
+                   GimpProcedureConfig  *config,
+                   gint32                run_mode,
+                   gint                 *n_hot_spot_x,
+                   gint32              **hot_spot_x,
+                   gint                 *n_hot_spot_y,
+                   gint32              **hot_spot_y,
+                   gint32                file_offset,
+                   gint                  icon_index,
+                   GError              **error,
+                   IcoSaveInfo          *info)
 {
   FILE          *fp;
   GList         *iter;
@@ -1533,7 +1549,7 @@ shared_save_image (GFile        *file,
   if (run_mode == GIMP_RUN_INTERACTIVE && ! fp_ani)
     {
       /* Allow user to override default values */
-      if ( !ico_save_dialog (image, info,
+      if (! ico_save_dialog (image, procedure, config, info,
                              NULL, NULL))
         return GIMP_PDB_CANCEL;
     }

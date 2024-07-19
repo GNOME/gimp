@@ -185,6 +185,8 @@ icns_create_procedure (GimpPlugIn  *plug_in,
                                       "Brion Vibber <brion@pobox.com>",
                                       "2004");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           "Apple Icon Image");
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-icns");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -278,7 +280,7 @@ icns_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  status = icns_save_image (file, image, run_mode, &error);
+  status = icns_save_image (file, image, procedure, config, run_mode, &error);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
