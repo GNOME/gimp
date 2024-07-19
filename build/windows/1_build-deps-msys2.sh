@@ -19,14 +19,18 @@ if [ -z "$GITLAB_CI" ]; then
     exit 1
   fi
   export GIT_DEPTH=1
-  pacman --noconfirm -Suy
   GIMP_DIR=$(echo "${PWD##*/}/")
   cd $(dirname $PWD) && echo "Using parent folder as work dir"
 fi
 
 
-# Install the required (pre-built) packages for babl and GEGL
-DEPS_LIST=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt      |
+# Install the required (pre-built) packages for babl, GEGL and GIMP
+if [ "$MSYSTEM_CARCH" != "aarch64" ]; then
+  # https://gitlab.gnome.org/GNOME/gimp/-/issues/10782
+  pacman --noconfirm -Suy
+fi
+# Beginning of install code block
+DEPS_LIST=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt                |
             sed "s/\${MINGW_PACKAGE_PREFIX}-/${MINGW_PACKAGE_PREFIX}-/g" |
             sed 's/\\//g')
 
@@ -53,7 +57,7 @@ else
                                  ${MINGW_PACKAGE_PREFIX}-toolchain  \
                                  $DEPS_LIST
 fi
-# End of install
+# End of install code block
 
 
 # Clone babl and GEGL (follow master branch)

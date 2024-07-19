@@ -19,15 +19,16 @@ if [ -z "$GITLAB_CI" ]; then
     exit 1
   fi
   git submodule update --init --force
-  pacman --noconfirm -Suy
   export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
 
 
-# Install the required (pre-built) packages for GIMP
-# We take code from deps script to better maintenance
-echo "$(cat build/windows/1_build-deps-msys2.sh |
-        sed -n '/# Install the/,/# End of install/p')"    | bash
+if [ "$GITLAB_CI" ]; then
+  # Install the required (pre-built) packages for GIMP again
+  # We take code from deps script to better maintenance
+  echo "$(cat build/windows/1_build-deps-msys2.sh                 |
+          sed -n '/# Beginning of install/,/# End of install/p')" | bash
+fi
 
 
 # Build GIMP
