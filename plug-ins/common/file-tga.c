@@ -893,14 +893,29 @@ apply_colormap (guchar       *dest,
                 guint16       colorMapLength)
 {
   guint x;
+  gint  errcnt = 0;
 
   for (x = 0; x < width; x++)
     {
       guchar entryIndex = src[x] - colorMapIndex;
 
       if (src[x] < colorMapIndex || entryIndex >= colorMapLength) {
-        g_message ("Unsupported colormap entry: %u",
-                   src[x]);
+        /* On Windows the error console can run out of resources when
+         * producing a huge amount of messages. This can happen when using
+         * fuzzed test images. This causes unresponsiveness at first and
+         * finally crashes GIMP. Eventually this needs to be fixed at the
+         * source, but for now let's limit the error messages to 10
+         * per line (this function is called once per read_line). */
+        if (errcnt < 10)
+          {
+            g_message ("Unsupported colormap entry: %u",
+                       src[x]);
+          }
+        else if (errcnt == 10)
+          {
+            g_message ("Too many colormap errors. Image may be corrupt.");
+          }
+        errcnt++;
         entryIndex = 0;
       }
 
