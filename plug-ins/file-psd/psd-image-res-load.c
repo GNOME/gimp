@@ -1704,7 +1704,7 @@ load_resource_2000 (const PSDimageres  *res_a,
             }
           /* Add sub-path */
           gimp_path_stroke_new_from_points (path,
-                                            GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                            GIMP_PATH_STROKE_TYPE_BEZIER,
                                             cntr, controlpoints, closed);
           g_free (controlpoints);
         }

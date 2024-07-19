@@ -183,17 +183,17 @@ save_paths (TIFF      *tif,
 
       for (s = 0; s < num_strokes; s++)
         {
-          GimpVectorsStrokeType type;
-          gdouble  *points;
-          gint      num_points;
-          gboolean  closed;
-          gint      p = 0;
+          GimpPathStrokeType  type;
+          gdouble            *points;
+          gint                num_points;
+          gboolean            closed;
+          gint                p = 0;
 
           type = gimp_path_stroke_get_points (iter->data, strokes[s],
                                               &num_points, &points, &closed);
 
-          if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
-              num_points > 65535 ||
+          if (type != GIMP_PATH_STROKE_TYPE_BEZIER ||
+              num_points > 65535                   ||
               num_points % 6)
             {
               g_printerr ("tiff-export: unsupported stroke type: "

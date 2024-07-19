@@ -29,14 +29,14 @@
 
 
 GimpStroke *
-gimp_stroke_new_from_coords (GimpVectorsStrokeType  type,
-                             const GimpCoords      *coords,
-                             gint                   n_coords,
-                             gboolean               closed)
+gimp_stroke_new_from_coords (GimpPathStrokeType  type,
+                             const GimpCoords   *coords,
+                             gint                n_coords,
+                             gboolean            closed)
 {
   switch (type)
     {
-    case GIMP_VECTORS_STROKE_TYPE_BEZIER:
+    case GIMP_PATH_STROKE_TYPE_BEZIER:
       return gimp_bezier_stroke_new_from_coords (coords, n_coords, closed);
       break;
     default:

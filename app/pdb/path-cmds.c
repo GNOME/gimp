@@ -685,7 +685,7 @@ path_stroke_get_points_invoker (GimpProcedure         *procedure,
               num_points = points_array->len;
               controlpoints = g_new (gdouble, num_points * 2);
 
-              type = GIMP_VECTORS_STROKE_TYPE_BEZIER;
+              type = GIMP_PATH_STROKE_TYPE_BEZIER;
               for (i = 0; i < num_points; i++)
                 {
                   controlpoints[2*i]   = g_array_index (points_array,
@@ -749,7 +749,7 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
 
       success = FALSE;
 
-      if (type == GIMP_VECTORS_STROKE_TYPE_BEZIER &&
+      if (type == GIMP_PATH_STROKE_TYPE_BEZIER &&
           num_points % 6 == 0)
         {
           coords = g_new (GimpCoords, num_points/2);
@@ -1933,9 +1933,9 @@ register_path_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
-                                                      "type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).",
-                                                      GIMP_TYPE_VECTORS_STROKE_TYPE,
-                                                      GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                      "type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).",
+                                                      GIMP_TYPE_PATH_STROKE_TYPE,
+                                                      GIMP_PATH_STROKE_TYPE_BEZIER,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-points",
@@ -1965,7 +1965,7 @@ register_path_procs (GimpPDB *pdb)
                                "gimp-path-stroke-new-from-points");
   gimp_procedure_set_static_help (procedure,
                                   "Adds a stroke of a given type to the path object.",
-                                  "Adds a stroke of a given type to the path object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
+                                  "Adds a stroke of a given type to the path object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_PATH_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -1980,9 +1980,9 @@ register_path_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
-                                                  "type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).",
-                                                  GIMP_TYPE_VECTORS_STROKE_TYPE,
-                                                  GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                                  "type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).",
+                                                  GIMP_TYPE_PATH_STROKE_TYPE,
+                                                  GIMP_PATH_STROKE_TYPE_BEZIER,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-points",

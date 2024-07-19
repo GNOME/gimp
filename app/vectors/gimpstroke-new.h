@@ -18,14 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_NEW_H__
-#define __GIMP_VECTORS_NEW_H__
+#ifndef __GIMP_STROKE_NEW_H__
+#define __GIMP_STROKE_NEW_H__
 
 
-GimpStroke * gimp_stroke_new_from_coords (GimpVectorsStrokeType  type,
-                                          const GimpCoords      *coords,
-                                          gint                   n_coords,
-                                          gboolean               closed);
+GimpStroke * gimp_stroke_new_from_coords (GimpPathStrokeType  type,
+                                          const GimpCoords   *coords,
+                                          gint                n_coords,
+                                          gboolean            closed);
 
 
-#endif /* __GIMP_VECTORS_NEW_H__ */
+#endif /* __GIMP_STROKE_NEW_H__ */

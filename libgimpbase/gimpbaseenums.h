@@ -1306,19 +1306,19 @@ typedef enum /*< skip >*/
 
 
 /**
- * GimpVectorsStrokeType:
- * @GIMP_VECTORS_STROKE_TYPE_BEZIER: A bezier stroke
+ * GimpPathStrokeType:
+ * @GIMP_PATH_STROKE_TYPE_BEZIER: A bezier stroke
  *
- * Possible type of strokes in vectors objects.
+ * Possible type of strokes in path objects.
  **/
-#define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())
+#define GIMP_TYPE_PATH_STROKE_TYPE (gimp_path_stroke_type_get_type ())
 
-GType gimp_vectors_stroke_type_get_type (void) G_GNUC_CONST;
+GType gimp_path_stroke_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_VECTORS_STROKE_TYPE_BEZIER
-} GimpVectorsStrokeType;
+  GIMP_PATH_STROKE_TYPE_BEZIER
+} GimpPathStrokeType;
 
 G_END_DECLS
 

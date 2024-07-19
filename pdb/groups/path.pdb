@@ -633,8 +633,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'type', type => 'enum GimpVectorsStrokeType',
-          desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
+        { name => 'type', type => 'enum GimpPathStrokeType',
+          desc => 'type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).' },
         { name => 'controlpoints', type => 'floatarray',
           desc => 'List of the control points for the stroke (x0, y0, x1, y1, ...).',
           array => { name => 'num_points',
@@ -660,7 +660,7 @@ HELP
           num_points = points_array->len;
           controlpoints = g_new (gdouble, num_points * 2);
 
-          type = GIMP_VECTORS_STROKE_TYPE_BEZIER;
+          type = GIMP_PATH_STROKE_TYPE_BEZIER;
           for (i = 0; i < num_points; i++)
             {
               controlpoints[2*i]   = g_array_index (points_array,
@@ -751,7 +751,7 @@ sub path_stroke_new_from_points {
     $help = <<'HELP';
 Adds a stroke of a given type to the path object. The coordinates of the
 control points can be specified.
-For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported.
+For now only strokes of the type GIMP_PATH_STROKE_TYPE_BEZIER are supported.
 The control points are specified as a pair of float values for the x- and
 y-coordinate.
 The Bezier stroke type needs a multiple of three control points. Each Bezier
@@ -764,8 +764,8 @@ HELP
     @inargs = (
 	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
-	{ name => 'type', type => 'enum GimpVectorsStrokeType',
-	  desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
+	{ name => 'type', type => 'enum GimpPathStrokeType',
+	  desc => 'type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).' },
 	{ name => 'controlpoints', type => 'floatarray',
 	  desc => 'List of the x- and y-coordinates of the control points.',
           array => { name => 'num_points',
@@ -791,7 +791,7 @@ HELP
 
   success = FALSE;
 
-  if (type == GIMP_VECTORS_STROKE_TYPE_BEZIER &&
+  if (type == GIMP_PATH_STROKE_TYPE_BEZIER &&
       num_points % 6 == 0)
     {
       coords = g_new (GimpCoords, num_points/2);

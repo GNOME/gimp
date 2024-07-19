@@ -672,11 +672,11 @@ gimp_path_stroke_flip_free (GimpPath *path,
  * this is always a bezier stroke, where the coordinates are the
  * control points.
  *
- * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ * Returns: type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).
  *
  * Since: 2.4
  **/
-GimpVectorsStrokeType
+GimpPathStrokeType
 gimp_path_stroke_get_points (GimpPath  *path,
                              gint       stroke_id,
                              gint      *num_points,
@@ -685,7 +685,7 @@ gimp_path_stroke_get_points (GimpPath  *path,
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpVectorsStrokeType type = 0;
+  GimpPathStrokeType type = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PATH, path,
@@ -715,7 +715,7 @@ gimp_path_stroke_get_points (GimpPath  *path,
 /**
  * gimp_path_stroke_new_from_points:
  * @path: The path object.
- * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
+ * @type: type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).
  * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
  * @controlpoints: (array length=num_points) (element-type gdouble): List of the x- and y-coordinates of the control points.
  * @closed: Whether the stroke is to be closed or not.
@@ -724,23 +724,22 @@ gimp_path_stroke_get_points (GimpPath  *path,
  *
  * Adds a stroke of a given type to the path object. The coordinates of
  * the control points can be specified. For now only strokes of the
- * type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control
- * points are specified as a pair of float values for the x- and
- * y-coordinate. The Bezier stroke type needs a multiple of three
- * control points. Each Bezier segment endpoint (anchor, A) has two
- * additional control points (C) associated. They are specified in the
- * order CACCACCAC...
+ * type GIMP_PATH_STROKE_TYPE_BEZIER are supported. The control points
+ * are specified as a pair of float values for the x- and y-coordinate.
+ * The Bezier stroke type needs a multiple of three control points.
+ * Each Bezier segment endpoint (anchor, A) has two additional control
+ * points (C) associated. They are specified in the order CACCACCAC...
  *
  * Returns: The stroke ID of the newly created stroke.
  *
  * Since: 2.4
  **/
 gint
-gimp_path_stroke_new_from_points (GimpPath              *path,
-                                  GimpVectorsStrokeType  type,
-                                  gint                   num_points,
-                                  const gdouble         *controlpoints,
-                                  gboolean               closed)
+gimp_path_stroke_new_from_points (GimpPath           *path,
+                                  GimpPathStrokeType  type,
+                                  gint                num_points,
+                                  const gdouble      *controlpoints,
+                                  gboolean            closed)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -748,7 +747,7 @@ gimp_path_stroke_new_from_points (GimpPath              *path,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PATH, path,
-                                          GIMP_TYPE_VECTORS_STROKE_TYPE, type,
+                                          GIMP_TYPE_PATH_STROKE_TYPE, type,
                                           G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, closed,

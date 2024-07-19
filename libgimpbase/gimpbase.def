@@ -154,6 +154,7 @@ EXPORTS
 	gimp_path_free
 	gimp_path_get_user_writable_dir
 	gimp_path_parse
+	gimp_path_stroke_type_get_type
 	gimp_path_to_str
 	gimp_pdb_error_handler_get_type
 	gimp_pdb_proc_type_get_type
@@ -246,7 +247,6 @@ EXPORTS
 	gimp_value_take_float_array
 	gimp_value_take_int32_array
 	gimp_value_take_object_array
-	gimp_vectors_stroke_type_get_type
 	gimp_wire_clear_error
 	gimp_wire_destroy
 	gimp_wire_error

@@ -630,11 +630,11 @@ package Gimp::CodeGen::enums;
 		       GIMP_UNIT_PICA => '4',
 		       GIMP_UNIT_END => '5' }
 	},
-    GimpVectorsStrokeType =>
+    GimpPathStrokeType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
-	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
+	  symbols => [ qw(GIMP_PATH_STROKE_TYPE_BEZIER) ],
+	  mapping => { GIMP_PATH_STROKE_TYPE_BEZIER => '0' }
 	},
     GimpColorManagementMode =>
 	{ contig => 1,

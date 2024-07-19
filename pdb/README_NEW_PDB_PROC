@@ -434,14 +434,14 @@ In some cases you will want a function which returns an array or a
 function which receives an array. Array arguments are specified in a
 special way which is a bit different than the other arguments. To see
 how array arguments are specified, let's take a look at the +@outargs+
-of +vectors_stroke_get_points+ from
-https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/vectors.pdb[pdb/groups/vectors.pdb]:
+of +path_stroke_get_points+ from
+https://gitlab.gnome.org/GNOME/gimp/tree/master/pdb/groups/path.pdb[pdb/groups/path.pdb]:
 
 [source,perl]
 ----
     @outargs = (
-        { name => 'type', type => 'enum GimpVectorsStrokeType',
-          desc => 'type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).' },
+        { name => 'type', type => 'enum GimpPathStrokeType',
+          desc => 'type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).' },
         { name => 'controlpoints', type => 'floatarray',
           desc => 'List of the control points for the stroke (x0, y0, x1, y1, ...).',
           array => { name => 'num_points',
