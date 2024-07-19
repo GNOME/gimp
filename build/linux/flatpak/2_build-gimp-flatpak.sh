@@ -11,7 +11,6 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
     exit 1
   fi
   git submodule update --init
-  flatpak update -y
   if [ -z "$GIMP_PREFIX" ]; then
     export GIMP_PREFIX="$PWD/../_install-$ARCH"
   fi

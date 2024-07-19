@@ -6,6 +6,7 @@ ARCH=$(uname -m)
 
 # Install part of the deps
 if [ -z "$GITLAB_CI" ]; then
+  flatpak update -y
   flatpak remote-add --if-not-exists --user --from gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
   flatpak install --user gnome-nightly org.gnome.Platform/$ARCH/master org.gnome.Sdk/$ARCH/master -y
 fi
@@ -20,7 +21,6 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
     echo 'To run this script locally, please do it from to the gimp git folder'
     exit 1
   fi
-  flatpak update -y
   if [ -z "$GIMP_PREFIX" ]; then
     export GIMP_PREFIX="$PWD/../_install-$ARCH"
   fi
