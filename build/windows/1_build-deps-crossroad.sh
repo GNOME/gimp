@@ -55,7 +55,7 @@ export PATH="$PWD/.local/bin:$PATH"
 export XDG_DATA_HOME="$PWD/.local/share"
 crossroad w64 gimp --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
 else
-export ARTIFACTS_SUFFIX="-x64-cross"
+export ARTIFACTS_SUFFIX="-cross"
 
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2

@@ -100,8 +100,7 @@ variables:
   GIT_DEPTH: "1"
   GIT_SUBMODULE_STRATEGY: recursive
   # CI-wide Debian variables
-  ARTIFACTS_SUFFIX: "-x64"
-  GIMP_PREFIX: "${CI_PROJECT_DIR}/_install${ARTIFACTS_SUFFIX}"
+  GIMP_PREFIX: "${CI_PROJECT_DIR}/_install"
   # Enable colorful output when supported (e.g. ninja, cppcheck)
   CLICOLOR_FORCE: "1"
 
@@ -261,21 +260,21 @@ deps-debian-x64:
     - git clone $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
     # Build babl and GEGL
-    - mkdir _babl/_build${ARTIFACTS_SUFFIX} && cd _babl/_build${ARTIFACTS_SUFFIX}
+    - mkdir _babl/_build && cd _babl/_build
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja
     - ninja install
     - ccache --show-stats
-    - mkdir ../../_gegl/_build${ARTIFACTS_SUFFIX} && cd ../../_gegl/_build${ARTIFACTS_SUFFIX}
+    - mkdir ../../_gegl/_build && cd ../../_gegl/_build
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
     - ninja
     - ninja install
     - ccache --show-stats
   artifacts:
     paths:
-      - _install${ARTIFACTS_SUFFIX}/
-      - _babl/_build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
-      - _gegl/_build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
+      - _install/
+      - _babl/_build/meson-logs/meson-log.txt
+      - _gegl/_build/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-debian-x64:
@@ -287,7 +286,7 @@ gimp-debian-x64:
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   script:
     # Check building
-    - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
+    - mkdir -p _build && cd _build
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
                      -Dgi-docgen=enabled
                      -Dg-ir-doc=true
@@ -312,8 +311,8 @@ gimp-debian-x64:
     - cd gimp-data
     - git apply -v ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch
     - cd ..
-    - meson configure _build${ARTIFACTS_SUFFIX} -Drelocatable-bundle=yes -Dvector-icons=true
-    - cd _build${ARTIFACTS_SUFFIX}
+    - meson configure _build -Drelocatable-bundle=yes -Dvector-icons=true
+    - cd _build
     - ninja
     - ninja install
     - ccache --show-stats
@@ -323,13 +322,13 @@ gimp-debian-x64:
     expose_as: 'Linux appimage'
     paths:
       - build/linux/appimage/_Output/
-      - _install${ARTIFACTS_SUFFIX}/
-      - _build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
-      - _build${ARTIFACTS_SUFFIX}/meson-dist/
-      - _build${ARTIFACTS_SUFFIX}/config.h
-      - _build${ARTIFACTS_SUFFIX}/devel-docs/
+      - _install/
+      - _build/meson-logs/meson-log.txt
+      - _build/meson-dist/
+      - _build/config.h
+      - _build/devel-docs/
     reports:
-      junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
+      junit: "_build/meson-logs/testlog.junit.xml"
     expire_in: 2 days
 
 .flatpak-x64:
@@ -418,8 +417,8 @@ deps-win-x64-cross:
   artifacts:
     paths:
       - .local/
-      - _babl/_build-x64-cross/meson-logs/meson-log.txt
-      - _gegl/_build-x64-cross/meson-logs/meson-log.txt
+      - _babl/_build-cross/meson-logs/meson-log.txt
+      - _gegl/_build-cross/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win-x64-cross:
@@ -436,7 +435,7 @@ gimp-win-x64-cross:
     expose_as: 'Windows zip'
     paths:
       - gimp-x64/
-      - _build-x64-cross/meson-logs/meson-log.txt
+      - _build-cross/meson-logs/meson-log.txt
       - done-dll.list
     expire_in: 2 days
 
@@ -485,9 +484,9 @@ deps-win-a64:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
   artifacts:
     paths:
-      - _install-a64/
-      - _babl/_build-a64/meson-logs/meson-log.txt
-      - _gegl/_build-a64/meson-logs/meson-log.txt
+      - _install/
+      - _babl/_build/meson-logs/meson-log.txt
+      - _gegl/_build/meson-logs/meson-log.txt
     expire_in: 2 hours
 
 gimp-win-a64:
@@ -502,12 +501,12 @@ gimp-win-a64:
   artifacts:
     paths:
       - gimp-a64/
-      - _build-a64/meson-logs/meson-log.txt
+      - _build/meson-logs/meson-log.txt
       - done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
-      - _build-a64/config.h
-      - _build-a64/build/windows/installer/
-      - _build-a64/build/windows/store/
+      - _build/config.h
+      - _build/build/windows/installer/
+      - _build/build/windows/store/
     expire_in: 2 days
 
 ## WINDOWS x86_64 CI (native MSYS2) ##
@@ -535,7 +534,7 @@ deps-win-x64:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
   artifacts:
     paths:
-      - _install-x64/
+      - _install/
     expire_in: 2 hours
 
 gimp-win-x64:
@@ -579,7 +578,7 @@ deps-win-x86:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
   artifacts:
     paths:
-      - _install-x86/
+      - _install/
     expire_in: 2 hours
 
 gimp-win-x86:
@@ -621,8 +620,8 @@ file-plug-in-tests:
       paths:
         - _data
   script:
-    - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-    - APP_VER=$(grep GIMP_APP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+    - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+    - APP_VER=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - pkg-config --variable=gimplibdir gimp-${API_VER} 2>/dev/null | grep . && PLUG_IN_DIR=$(echo $(pkg-config --variable=gimplibdir gimp-${API_VER})'/plug-ins/')
     - export PYTHONPATH="${PLUG_IN_DIR}test-file-plug-ins"
     - export GIMP_TESTS_CONFIG_FILE="${PLUG_IN_DIR}test-file-plug-ins/tests/batch-config.ini"
@@ -675,7 +674,7 @@ cppcheck:
     - apt-get update
     - apt-get install -y cppcheck
     - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build${ARTIFACTS_SUFFIX} -i _build-x64-cross -i _babl -i _gegl -i _install${ARTIFACTS_SUFFIX} -i .local -i .cache -i _ccache -i gimp-x64 .
+        -i _build -i _build-cross -i _babl -i _gegl -i _install -i .local -i .cache -i _ccache -i gimp-x64 .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
@@ -696,7 +695,7 @@ sources-debian:
   stage: distribution
   cache: []
   script:
-    - mv _build${ARTIFACTS_SUFFIX}/meson-dist/gimp-*.tar.xz .
+    - mv _build/meson-dist/gimp-*.tar.xz .
     - FILENAME=`ls gimp-*.tar.xz`                      &&
       sha256sum gimp-*.tar.xz > ${FILENAME}.SHA256SUMS &&
       sha512sum gimp-*.tar.xz > ${FILENAME}.SHA512SUMS
@@ -719,36 +718,36 @@ dev-docs:
   script:
     - apt-get update
     - apt-get install -y xz-utils
-    - BABL_VER=$(grep BABL_VERSION _babl/_build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')         &&
-      BABL_API_VER=$(grep BABL_API_VERSION _babl/_build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
-      DIR_NAME=babl-api-docs-$BABL_VER                                                                                       &&
-      mkdir $DIR_NAME                                                                                                        &&
-      mv "${GIMP_PREFIX}/share/doc/babl-$BABL_API_VER" $DIR_NAME/                                                            &&
-      TAR_NAME="$DIR_NAME.tar.xz"                                                                                            &&
-      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                                           &&
-      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                                           &&
+    - BABL_VER=$(grep BABL_VERSION _babl/_build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')         &&
+      BABL_API_VER=$(grep BABL_API_VERSION _babl/_build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
+      DIR_NAME=babl-api-docs-$BABL_VER                                                                    &&
+      mkdir $DIR_NAME                                                                                     &&
+      mv "${GIMP_PREFIX}/share/doc/babl-$BABL_API_VER" $DIR_NAME/                                         &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                                         &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                        &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
-    - GEGL_MAJ_VER=$(grep GEGL_MAJOR_VERSION _gegl/_build${ARTIFACTS_SUFFIX}/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
-      GEGL_MIN_VER=$(grep GEGL_MINOR_VERSION _gegl/_build${ARTIFACTS_SUFFIX}/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
-      GEGL_MIC_VER=$(grep GEGL_MICRO_VERSION _gegl/_build${ARTIFACTS_SUFFIX}/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
-      GEGL_VER="$GEGL_MAJ_VER.$GEGL_MIN_VER.$GEGL_MIC_VER"                                                                         &&
-      GEGL_API_VER="$GEGL_MAJ_VER.$GEGL_MIN_VER"                                                                                   &&
-      DIR_NAME=gegl-api-docs-$GEGL_VER                                                                                             &&
-      mkdir $DIR_NAME                                                                                                              &&
-      mv "${GIMP_PREFIX}/share/doc/gegl-$GEGL_API_VER" $DIR_NAME/                                                                  &&
-      TAR_NAME="$DIR_NAME.tar.xz"                                                                                                  &&
-      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                                                 &&
-      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                                                 &&
+    - GEGL_MAJ_VER=$(grep GEGL_MAJOR_VERSION _gegl/_build/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
+      GEGL_MIN_VER=$(grep GEGL_MINOR_VERSION _gegl/_build/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
+      GEGL_MIC_VER=$(grep GEGL_MICRO_VERSION _gegl/_build/config.h |head -1 |sed 's/^[^0-9]*\([0-9]*\).*$/\1/') &&
+      GEGL_VER="$GEGL_MAJ_VER.$GEGL_MIN_VER.$GEGL_MIC_VER"                                                      &&
+      GEGL_API_VER="$GEGL_MAJ_VER.$GEGL_MIN_VER"                                                                &&
+      DIR_NAME=gegl-api-docs-$GEGL_VER                                                                          &&
+      mkdir $DIR_NAME                                                                                           &&
+      mv "${GIMP_PREFIX}/share/doc/gegl-$GEGL_API_VER" $DIR_NAME/                                               &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                                               &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                              &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                              &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
-    - GIMP_VER=$(grep GIMP_VERSION _build${ARTIFACTS_SUFFIX}/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
-      APP_VER=$(echo $GIMP_VER | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')                                         &&
-      DIR_NAME=gimp-api-docs-$GIMP_VER                                                                         &&
-      mkdir $DIR_NAME                                                                                          &&
-      mv "${GIMP_PREFIX}/share/doc/gimp-$APP_VER" $DIR_NAME/reference                                          &&
-      mv _build${ARTIFACTS_SUFFIX}/devel-docs/g-ir-docs $DIR_NAME/                                             &&
-      TAR_NAME="$DIR_NAME.tar.xz"                                                                              &&
-      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                                             &&
-      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                                             &&
+    - GIMP_VER=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
+      APP_VER=$(echo $GIMP_VER | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')                      &&
+      DIR_NAME=gimp-api-docs-$GIMP_VER                                                      &&
+      mkdir $DIR_NAME                                                                       &&
+      mv "${GIMP_PREFIX}/share/doc/gimp-$APP_VER" $DIR_NAME/reference                       &&
+      mv _build/devel-docs/g-ir-docs $DIR_NAME/                                             &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
+      tar --dereference -cJf ${TAR_NAME} $DIR_NAME                                          &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
   artifacts:
     paths:

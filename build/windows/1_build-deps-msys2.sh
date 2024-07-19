@@ -2,16 +2,6 @@
 
 set -e
 
-# $MSYSTEM_CARCH and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
-# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
-if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
-  export ARTIFACTS_SUFFIX="-a64"
-elif [ "$MSYSTEM_CARCH" = "x86_64" ]; then
-  export ARTIFACTS_SUFFIX="-x64"
-else # [ "$MSYSTEM_CARCH" = "i686" ];
-  export ARTIFACTS_SUFFIX="-x86"
-fi
-
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
   if [ "$0" != "build/windows/1_build-deps-msys2.sh" ]; then
@@ -87,9 +77,9 @@ clone_or_pull gegl
 # Build babl and GEGL
 # We need to create the condition this ugly way to not break CI
 if [ "$GITLAB_CI" ]; then
-  export GIMP_PREFIX="$PWD/_install${ARTIFACTS_SUFFIX}"
+  export GIMP_PREFIX="$PWD/_install"
 elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
-  export GIMP_PREFIX="$PWD/_install${ARTIFACTS_SUFFIX}"
+  export GIMP_PREFIX="$PWD/_install"
 fi
 ## Universal variables from .gitlab-ci.yml
 IFS=$'\n' VAR_ARRAY=($(cat ${GIMP_DIR}.gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
@@ -101,10 +91,10 @@ done
 configure_or_build ()
 {
   if [ ! -f "_${1}/_build/build.ninja" ]; then
-    mkdir -p _${1}/_build${ARTIFACTS_SUFFIX} && cd _${1}/_build${ARTIFACTS_SUFFIX}
+    mkdir -p _${1}/_build && cd _${1}/_build
     meson setup .. -Dprefix="${GIMP_PREFIX}" $2
   else
-    cd _${1}/_build${ARTIFACTS_SUFFIX}
+    cd _${1}/_build
   fi
   ninja
   ninja install

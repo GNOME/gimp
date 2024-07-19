@@ -14,7 +14,7 @@ Set-Alias -Name 'signtool' -Value 'C:\Program Files (x86)\Windows Kits\10\bin\10
 
 
 # Global variables
-$config_path = Resolve-Path -Path "_build-*\config.h" | Select-Object -ExpandProperty Path
+$config_path = '_build\config.h'
 
 ## Identity Name (internal) and Display Name (in the Store)
 $gimp_unstable = Get-Content -Path "$config_path"                         | Select-String 'GIMP_UNSTABLE' |
@@ -102,7 +102,7 @@ Configure-Arch "$arch_x64" 'x64'
 # 2. CREATE ASSETS
 
 ## Copy pre-generated icons to each arch
-$icons_path = Resolve-Path -Path "..\..\..\_build-*\build\windows\store\Assets"
+$icons_path = '..\..\..\_build\build\windows\store\Assets'
 if (Test-Path -Path "$icons_path")
   {
     foreach ($arch in $archsArray)

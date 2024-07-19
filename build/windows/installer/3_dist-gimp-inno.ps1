@@ -12,7 +12,7 @@ param ($GIMP_VERSION,
 
 if ((-Not $GIMP_VERSION) -or (-Not $GIMP_APP_VERSION) -or (-Not $GIMP_API_VERSION))
   {
-    $CONFIG_PATH = Resolve-Path -Path "_build-*\config.h" | Select-Object -ExpandProperty Path
+    $CONFIG_PATH = '_build\config.h'
   }
 
 if (-Not $GIMP_VERSION)
@@ -133,7 +133,7 @@ fix_msg $INNOPATH\Languages
 fix_msg $INNOPATH\Languages\Unofficial
 
 
-$gen_path = Resolve-Path -Path "_build-*\build\windows\installer" | Select-Object -ExpandProperty Path
+$gen_path = '_build\build\windows\installer'
 if (Test-Path -Path $gen_path)
   {
     # Copy generated language files into the source directory

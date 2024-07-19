@@ -2,16 +2,6 @@
 
 set -e
 
-# $MSYSTEM_CARCH, $MSYSTEM_PREFIX and $MINGW_PACKAGE_PREFIX are defined by MSYS2.
-# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
-if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
-  export ARTIFACTS_SUFFIX="-a64"
-elif [ "$MSYSTEM_CARCH" = "x86_64" ]; then
-  export ARTIFACTS_SUFFIX="-x64"
-else # [ "$MSYSTEM_CARCH" = "i686" ];
-  export ARTIFACTS_SUFFIX="-x86"
-fi
-
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
   if [ "$0" != "build/windows/2_build-gimp-msys2.sh" ]; then
@@ -34,9 +24,9 @@ fi
 # Build GIMP
 # We need to create the condition this ugly way to not break CI
 if [ "$GITLAB_CI" ]; then
-  export GIMP_PREFIX="$PWD/_install${ARTIFACTS_SUFFIX}"
+  export GIMP_PREFIX="$PWD/_install"
 elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
-  export GIMP_PREFIX="$PWD/../_install${ARTIFACTS_SUFFIX}"
+  export GIMP_PREFIX="$PWD/../_install"
 fi
 ## Universal variables from .gitlab-ci.yml
 IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
@@ -45,8 +35,8 @@ for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
 
-if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
-  mkdir -p "_build${ARTIFACTS_SUFFIX}" && cd "_build${ARTIFACTS_SUFFIX}"
+if [ ! -f "_build/build.ninja" ]; then
+  mkdir -p "_build" && cd "_build"
   # We disable javascript as we are not able for the time being to add a
   # javascript interpreter with GObject Introspection (GJS/spidermonkey
   # and Seed/Webkit are the 2 contenders so far, but they are not
@@ -61,7 +51,7 @@ if [ ! -f "_build${ARTIFACTS_SUFFIX}/build.ninja" ]; then
                  -Denable-default-bin=enabled          \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
 else
-  cd "_build${ARTIFACTS_SUFFIX}"
+  cd "_build"
 fi
 ninja
 ninja install

@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# Flatpak design mandates to build natively
-ARCH=$(uname -m)
-
-
 if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   # Make the script work locally
   if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpak.sh' ]; then
@@ -12,25 +8,25 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   fi
   git submodule update --init
   if [ -z "$GIMP_PREFIX" ]; then
-    export GIMP_PREFIX="$PWD/../_install-$ARCH"
+    export GIMP_PREFIX="$PWD/../_install"
   fi
 
   # Build GIMP only
-  if [ ! -f "_build-$ARCH/build.ninja" ]; then
-    mkdir -p _build-$ARCH && cd _build-$ARCH
+  if [ ! -f "_build/build.ninja" ]; then
+    mkdir -p _build && cd _build
     flatpak-builder --run --ccache "$GIMP_PREFIX" ../build/linux/flatpak/org.gimp.GIMP-nightly.json meson setup .. -Dprefix=/app/ -Dlibdir=/app/lib/
     if [ ! -f '.gitignore' ]; then
       echo '*' > .gitignore
     fi
   else
-    cd _build-$ARCH
+    cd _build
   fi
   flatpak-builder --run --ccache "$GIMP_PREFIX" ../build/linux/flatpak/org.gimp.GIMP-nightly.json ninja
   flatpak-builder --run "$GIMP_PREFIX" ../build/linux/flatpak/org.gimp.GIMP-nightly.json ninja install
 
 
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
-  export GIMP_PREFIX="$PWD/_install-$ARCH"
+  export GIMP_PREFIX="$PWD/_install"
 
   if [ "$1" != '--ci' ]; then
     # Extract deps from previous job

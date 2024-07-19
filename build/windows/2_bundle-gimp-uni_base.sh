@@ -2,8 +2,10 @@
 
 set -e
 
-# $MSYSTEM_CARCH and $MSYSTEM_PREFIX are defined by MSYS2.
-# https://github.com/msys2/MSYS2-packages/blob/master/filesystem/msystem
+# NOTE: The bundling scripts, different from building scripts, need to set
+# the ARTIFACTS_SUFFIX, even locally: 1) to avoid confusion (bundle dirs are
+# relocatable so can be copied to a machine with other arch); and 2) to our
+# dist scripts fallback code be able to identify what they are distributing
 if [ "$MSYSTEM_CARCH" = "aarch64" ]; then
   export ARTIFACTS_SUFFIX="-a64"
 elif [ "$CI_JOB_NAME" = "gimp-win-x64-cross" ] || [ "$MSYSTEM_CARCH" = "x86_64" ]; then
@@ -26,13 +28,13 @@ fi
 
 # Bundle deps and GIMP files
 if [[ "$CI_JOB_NAME" =~ "cross" ]]; then
-  export GIMP_PREFIX="`realpath ./_install`${ARTIFACTS_SUFFIX}-cross"
+  export GIMP_PREFIX="`realpath ./_install-cross`"
   export MSYS_PREFIX="$GIMP_PREFIX"
 else
   if [ "$GITLAB_CI" ]; then
-    export GIMP_PREFIX="$PWD/_install${ARTIFACTS_SUFFIX}"
+    export GIMP_PREFIX="$PWD/_install"
   elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
-    export GIMP_PREFIX="$PWD/../_install${ARTIFACTS_SUFFIX}"
+    export GIMP_PREFIX="$PWD/../_install"
   fi
   export MSYS_PREFIX="$MSYSTEM_PREFIX"
 fi

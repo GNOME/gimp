@@ -9,24 +9,15 @@ set -e
 
 # AGNOSTIC VARIABLES (only touch them to make even more portable, without casuistry)
 
-## This script is arch-agnostic. The packager can specify it when calling the script
-if [ -z "$1" ]; then
-  export ARCH=$(uname -m)
-else
-  export ARCH=$1
-fi
-INSTALL_ARTIF=$(echo _install*)
-BUILD_ARTIF=$(echo _build*)
-
 ## This script is "filesystem-agnostic". The packager can quickly choose either
 ## putting everything in /usr or in AppDir(root) just specifying the 2nd parameter.
 GIMP_DISTRIB="$CI_PROJECT_DIR/build/linux/appimage/AppDir"
 if [ "$GITLAB_CI" ] || [ -z "$GIMP_PREFIX" ]; then
   GIMP_PREFIX="$GIMP_DISTRIB/usr"
 fi
-if [ -z "$2" ] || [ "$2" = "usr" ]; then
+if [ -z "$1" ] || [ "$1" = "usr" ]; then
   OPT_PREFIX="${GIMP_PREFIX}"
-elif [ "$2" = "AppDir" ]; then
+elif [ "$1" = "AppDir" ]; then
   OPT_PREFIX="${GIMP_DISTRIB}"
 fi
 
@@ -114,7 +105,7 @@ conf_app GTK_PATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
 conf_app GTK_IM_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
 
 ## Core features
-cp -r $INSTALL_ARTIF/* $OPT_PREFIX
+cp -r _install/* $OPT_PREFIX
 conf_app BABL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}babl-*"
 conf_app GEGL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 conf_app GIMP3_SYSCONFDIR "$OPT_PREFIX" "etc/gimp/*"
@@ -182,7 +173,7 @@ elif [ "$2" = "AppDir" ]; then
   sed -i "s|OPT_PREFIX_WILD||g" $GIMP_DISTRIB/AppRun
 fi
 
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_ARTIF/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 sed -i "s|GIMP_APP_VERSION|${GIMP_APP_VERSION}|" $GIMP_DISTRIB/AppRun
 
 
@@ -203,7 +194,7 @@ fi
 
 
 # MAKE APPIMAGE
-"./$legacy_appimagetool" --appimage-extract-and-run $GIMP_DISTRIB # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-${ARCH}.AppImage.zsync"
+"./$legacy_appimagetool" --appimage-extract-and-run $GIMP_DISTRIB # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-$(uname -m).AppImage.zsync"
 mkdir build/linux/appimage/_Output
-GIMP_VERSION=$(grep GIMP_VERSION $BUILD_ARTIF/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-mv GNU*.AppImage build/linux/appimage/_Output/GIMP-${GIMP_VERSION}-${ARCH}.AppImage
+GIMP_VERSION=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+mv GNU*.AppImage build/linux/appimage/_Output/GIMP-${GIMP_VERSION}-$(uname -m).AppImage

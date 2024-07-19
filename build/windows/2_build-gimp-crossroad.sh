@@ -18,25 +18,25 @@ fi
 
 
 # FIXME: We need native/Linux gimp-console.
-if [ ! -d '_build-x64' ]; then
-  echo -e '\033[31m(ERROR)\033[0m: Before running this script, first build GIMP natively in _build-x64'
+if [ ! -d '_build' ]; then
+  echo -e '\033[31m(ERROR)\033[0m: Before running this script, first build GIMP natively in _build'
 fi
-if [ ! -d "${PARENT_DIR}_install-x64" ]; then
-  echo -e "\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in ${PARENT_DIR}_install-x64"
+if [ ! -d "${PARENT_DIR}_install" ]; then
+  echo -e "\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in ${PARENT_DIR}_install"
 fi
-if [ ! -d '_build-x64' ] || [ ! -d "${PARENT_DIR}_install-x64" ]; then
+if [ ! -d '_build' ] || [ ! -d "${PARENT_DIR}_install" ]; then
   echo 'Patches are very welcome: https://gitlab.gnome.org/GNOME/gimp/-/issues/11544'
   exit 1
 fi
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build-x64/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 mkdir -p $PWD/${PARENT_DIR}.local/bin
 GIMP_CONSOLE_PATH=$PWD/${PARENT_DIR}.local/bin/gimp-console-$GIMP_APP_VERSION
 gcc -print-multi-os-directory 2>/dev/null | grep ./ && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
 gcc -print-multiarch 2>/dev/null | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
 echo "#!/bin/sh" > $GIMP_CONSOLE_PATH
-echo export LD_LIBRARY_PATH="$PWD/${PARENT_DIR}_install-x64/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> $GIMP_CONSOLE_PATH
-echo export GI_TYPELIB_PATH="$PWD/${PARENT_DIR}_install-x64/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> $GIMP_CONSOLE_PATH
-echo "$PWD/${PARENT_DIR}_install-x64/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> $GIMP_CONSOLE_PATH
+echo export LD_LIBRARY_PATH="$PWD/${PARENT_DIR}_install/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> $GIMP_CONSOLE_PATH
+echo export GI_TYPELIB_PATH="$PWD/${PARENT_DIR}_install/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> $GIMP_CONSOLE_PATH
+echo "$PWD/${PARENT_DIR}_install/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> $GIMP_CONSOLE_PATH
 chmod u+x $GIMP_CONSOLE_PATH
 
 
@@ -45,7 +45,7 @@ export PATH="$PWD/${PARENT_DIR}.local/bin:$PWD/bin:$PATH"
 export XDG_DATA_HOME="$PWD/${PARENT_DIR}.local/share"
 crossroad w64 gimp --run="build/windows/2_build-gimp-crossroad.sh"
 else
-export ARTIFACTS_SUFFIX="-x64-cross"
+export ARTIFACTS_SUFFIX="-cross"
 
 ## The required packages for GIMP are taken from the previous job
 

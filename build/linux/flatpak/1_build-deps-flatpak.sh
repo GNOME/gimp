@@ -1,14 +1,10 @@
 #!/bin/sh
 
-# Flatpak design mandates to build natively
-ARCH=$(uname -m)
-
-
 # Install part of the deps
 if [ -z "$GITLAB_CI" ]; then
   flatpak update -y
   flatpak remote-add --if-not-exists --user --from gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-  flatpak install --user gnome-nightly org.gnome.Platform/$ARCH/master org.gnome.Sdk/$ARCH/master -y
+  flatpak install --user gnome-nightly org.gnome.Platform/$(uname -m)/master org.gnome.Sdk/$(uname -m)/master -y
 fi
 flatpak remote-add --if-not-exists --user --from flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm18 -y
@@ -22,7 +18,7 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
     exit 1
   fi
   if [ -z "$GIMP_PREFIX" ]; then
-    export GIMP_PREFIX="$PWD/../_install-$ARCH"
+    export GIMP_PREFIX="$PWD/../_install"
   fi
   if [ ! -d "$GIMP_PREFIX" ]; then
     mkdir -p "$GIMP_PREFIX"
@@ -33,7 +29,7 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
 
 
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
-  export GIMP_PREFIX="$PWD/_install-$ARCH"
+  export GIMP_PREFIX="$PWD/_install"
 
   # (The deps building is too long and no complete output would be collected,
   # even from GitLab runner messages. So, let's silent and save logs as a file.)
