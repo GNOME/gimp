@@ -22,20 +22,19 @@
   (let ((ranks (cons-array 1 'byte)))
     (aset ranks 0 12)
     (file-gih-export 1
-                   img
-                   drawable
-                   "foo.gih"
-                   "foo.gih"
-                   100
-                   "test brush"
-                   125
-                   125
-                   3
-                   4
-                   1
-                   ranks
-                   1
-                   '("random")))
+                     img
+                     "foo.gih"
+                     "foo.gih"
+                     100
+                     "test brush"
+                     125
+                     125
+                     3
+                     4
+                     1
+                     ranks
+                     1
+                     '("random")))
   */
 
 

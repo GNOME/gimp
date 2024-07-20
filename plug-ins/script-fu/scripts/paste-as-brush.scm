@@ -45,10 +45,9 @@
         )
 
         (file-gbr-export RUN-NONINTERACTIVE
-                       brush-image
-                       1 (vector brush-draw)
-                       path
-                       spacing name)
+                         brush-image
+                         path
+                         spacing name)
 
         (gimp-image-delete brush-image)
 
