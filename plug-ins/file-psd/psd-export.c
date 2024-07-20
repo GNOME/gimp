@@ -2665,6 +2665,35 @@ save_dialog (GimpImage     *image,
                                 "cmyk-frame",
                                 NULL);
 
+/* Multi-layer Indexed Image Warning */
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+    {
+      gint32 n_layers = 0;
+
+      g_free (gimp_image_get_layers (image, &n_layers));
+
+      if (n_layers > 1)
+        {
+            text = g_strdup_printf ("\n<b>%s</b>: %s",
+                          _("Indexed Image Warning"),
+                          _("Photoshop does not support indexed images "
+                            "that have more than one layer. Layers will "
+                            "be merged on export."));
+
+            label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "indexed-notice", "Indexed Image Warning",
+                                                     FALSE, FALSE);
+            gtk_label_set_markup (GTK_LABEL (label), text);
+            gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+            gtk_label_set_max_width_chars (GTK_LABEL (label), 50);
+            gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+
+            gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "indexed-notice", NULL);
+            g_free (text);
+        }
+    }
+
   /* Compatibility Notice */
   text = g_strdup_printf ("\n<b>%s</b>: %s",
                           _("Compatibility Notice"),
