@@ -342,7 +342,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   GimpFgBgEditor  *editor    = GIMP_FG_BG_EDITOR (widget);
   GtkStyleContext *style     = gtk_widget_get_style_context (widget);
   GtkIconSize      tool_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
-  gint             max_pixel_size;
+  gint             pixel_size;
   GtkBorder        border;
   GtkBorder        padding;
   GdkRectangle     rect;
@@ -369,20 +369,20 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   switch (tool_size)
     {
     case GTK_ICON_SIZE_LARGE_TOOLBAR:
-      max_pixel_size = 9;
+      pixel_size = 9;
       break;
 
     case GTK_ICON_SIZE_DND:
-      max_pixel_size = 15;
+      pixel_size = 15;
       break;
 
     case GTK_ICON_SIZE_DIALOG:
-      max_pixel_size = 20;
+      pixel_size = 20;
       break;
 
     case GTK_ICON_SIZE_SMALL_TOOLBAR:
     default:
-      max_pixel_size = 6;
+      pixel_size = 6;
     }
 
   border.left   += padding.left;
@@ -396,8 +396,9 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (! editor->default_icon)
     editor->default_icon = gimp_widget_load_icon (widget,
                                                   GIMP_ICON_COLORS_DEFAULT,
-                                                  MAX (MIN (width * 0.3, 12),
-                                                       max_pixel_size));
+                                                  MAX (MIN (width * 0.3,
+                                                            2 * pixel_size),
+                                                    pixel_size));
 
   default_w = gdk_pixbuf_get_width  (editor->default_icon) / scale_factor;
   default_h = gdk_pixbuf_get_height (editor->default_icon) / scale_factor;
@@ -424,8 +425,9 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (! editor->swap_icon)
     editor->swap_icon = gimp_widget_load_icon (widget,
                                                GIMP_ICON_COLORS_SWAP,
-                                               MAX (MIN (width * 0.3, 12),
-                                                    max_pixel_size));
+                                               MAX (MIN (width * 0.3,
+                                                         2 * pixel_size),
+                                                    pixel_size));
 
   swap_w = gdk_pixbuf_get_width  (editor->swap_icon) / scale_factor;
   swap_h = gdk_pixbuf_get_height (editor->swap_icon) / scale_factor;
