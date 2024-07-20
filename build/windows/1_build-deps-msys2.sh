@@ -50,7 +50,7 @@ fi
 # End of install code block
 
 
-# Clone babl and GEGL (follow master branch)
+# Clone babl and GEGL
 clone_or_pull ()
 {
   repo="https://gitlab.gnome.org/GNOME/${1}.git"
@@ -74,8 +74,8 @@ clone_or_pull babl
 clone_or_pull gegl
 
 
-# Build babl and GEGL
-# We need to create the condition this ugly way to not break CI
+# Prepare env
+## We need to create the condition this ugly way to not break CI
 if [ "$GITLAB_CI" ]; then
   export GIMP_PREFIX="$PWD/_install"
 elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
@@ -88,6 +88,8 @@ for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
 
+
+# Build babl and GEGL
 configure_or_build ()
 {
   if [ ! -f "_${1}/_build/build.ninja" ]; then

@@ -21,8 +21,8 @@ if [ "$GITLAB_CI" ]; then
 fi
 
 
-# Build GIMP
-# We need to create the condition this ugly way to not break CI
+# Prepare env
+## We need to create the condition this ugly way to not break CI
 if [ "$GITLAB_CI" ]; then
   export GIMP_PREFIX="$PWD/_install"
 elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
@@ -35,6 +35,8 @@ for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
 
+
+# Build GIMP
 if [ ! -f "_build/build.ninja" ]; then
   mkdir -p "_build" && cd "_build"
   # We disable javascript as we are not able for the time being to add a
