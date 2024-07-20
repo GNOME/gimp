@@ -1670,9 +1670,14 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
             }
           else if (! gimp_layer_get_edit_mask (layer))
             {
-              /* Simple click selects the mask for edition. */
+              gboolean editable = TRUE;
+
+              editable = (! gimp_item_get_lock_content (GIMP_ITEM (layer)) &&
+                          ! gimp_item_get_lock_position (GIMP_ITEM (layer)));
+              /* Simple click selects the mask for editing if
+               * the layer is not locked. */
               gimp_action_group_set_action_active (group, "layers-mask-edit",
-                                                   TRUE);
+                                                   editable);
             }
 
           g_object_unref (renderer);
