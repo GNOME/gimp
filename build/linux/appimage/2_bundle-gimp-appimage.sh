@@ -11,13 +11,13 @@ set -e
 
 ## This script is "filesystem-agnostic". The packager can quickly choose either
 ## putting everything in /usr or in AppDir(root) just specifying the 2nd parameter.
-GIMP_DISTRIB="$CI_PROJECT_DIR/build/linux/appimage/AppDir"
+GIMP_DISTRIB="$PWD/build/linux/appimage/AppDir"
 if [ "$GITLAB_CI" ] || [ -z "$GIMP_PREFIX" ]; then
   GIMP_PREFIX="$GIMP_DISTRIB/usr"
 fi
-if [ -z "$1" ] || [ "$1" = "usr" ]; then
+if [ -z "$2" ] || [ "$2" = "usr" ]; then
   OPT_PREFIX="${GIMP_PREFIX}"
-elif [ "$1" = "AppDir" ]; then
+elif [ "$2" = "AppDir" ]; then
   OPT_PREFIX="${GIMP_DISTRIB}"
 fi
 
@@ -28,43 +28,88 @@ for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
 
+if [ "$GITLAB_CI" ]; then
+  export GIMP_PREFIX="$PWD/_install"
+elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
+  export GIMP_PREFIX="$PWD/../_install"
+fi
+export SYSTEM_PREFIX="/usr"
+
 
 #(MOSTLY) AGNOSTIC FUNCTIONS
-prep_pkg ()
+prepare ()
 {
-  apt-get install -y --no-install-recommends $1
+  if [ "$GITLAB_CI" ]; then
+    apt-get install -y --no-install-recommends $1
+  fi
 }
 
-find_bin ()
+bundle ()
 {
-  find /usr/bin -name ${1} -execdir cp -r '{}' $OPT_PREFIX/bin \;
-  find /bin -name ${1} -execdir cp -r '{}' $OPT_PREFIX/bin \;
+  path_origin_full=$(echo $1/$2)
+  if [ -z "$3" ]; then
+    # '*utils' mode (tends to be slow)
+    check_recurse=${2##*/}
+    if [[ "$check_recurse" =~ '*' ]] && [[ ! "$check_recurse" =~ '/' ]]; then
+      ## Copy files with wildcards
+      path_dest_parent=$(echo $1/${2%/*} | sed "s|${1}/||")
+      mkdir -p "$OPT_PREFIX/$path_dest_parent"
+      bundledArray=($(find $1/${2%/*} -maxdepth 1 -name ${2##*/}))
+      for path_origin_full2 in "${bundledArray[@]}"; do
+        echo "(INFO): copying $path_origin_full2 to $OPT_PREFIX/$path_dest_parent"
+        cp $path_origin_full2 "$OPT_PREFIX/$path_dest_parent"
+      done
+    else
+      ## Copy specific file or specific folder
+      if [[ "$2" =~ '/' ]]; then
+        path_dest_parent=$(dirname $path_origin_full | sed "s|${1}/||")
+      fi
+      if [ -d "$path_origin_full" ] || [ -f "$path_origin_full" ]; then
+        mkdir -p "$OPT_PREFIX/$path_dest_parent"
+        echo "(INFO): copying $path_origin_full to $OPT_PREFIX/$path_dest_parent"
+        cp -r "$path_origin_full" "$OPT_PREFIX/$path_dest_parent"
+      else
+        echo -e "\033[33m(WARNING)\033[0m: $path_origin_full does not exist!"
+      fi
+    fi
+  else
+    # 'go-appimage' mode (tends to be fast)
+    echo "(INFO): postponing $path_origin_full (will be bundled by 'go-appimage')"
+  fi
 }
 
-find_lib ()
+configure ()
 {
-  find /usr/${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-  find /usr/${LIB_DIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-  find /${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
-  find /${LIB_DIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
+  if [ -z "$3" ]; then
+    if [[ "$1" =~ 'GIMP' ]]; then
+      prefix="$GIMP_PREFIX"
+    elif [[ ! "$1" =~ 'GIMP' ]] || [ "$3" ]; then
+      prefix="$SYSTEM_PREFIX"
+    fi
+    echo "(INFO): configuring $1"
+    VAR_PATH=$(echo $prefix/$2 | sed "s|$prefix/||g")
+    sed -i "s|${1}_WILD|OPT_PREFIX_WILD${VAR_PATH}|" build/linux/appimage/AppRun
+  else
+    echo "(INFO): postponing $1 configuration (will be configured by 'go-appimage')"
+  fi
 }
 
-find_dat ()
+clean ()
 {
-  DAT_PATH=$(echo $1 | sed 's|/usr/||g')
-  mkdir -p $OPT_PREFIX/$DAT_PATH
-  cp -r $1/$2 $OPT_PREFIX/$DAT_PATH/$3
-}
-
-conf_app ()
-{
-  VAR_PATH=$(echo $2/$3 | sed "s|${2}/||g")
-  sed -i "s|${1}_WILD|OPT_PREFIX_WILD${VAR_PATH}|" build/linux/appimage/AppRun
+  if [[ "$2" =~ '/' ]]; then
+    cleanedArray=($(find $OPT_PREFIX/${1%/*} -iname ${1##*/}))
+  else
+    cleanedArray=($(find $OPT_PREFIX/ -iname ${1##*/}))
+  fi
+  for path_dest_full in "${cleanedArray[@]}"; do
+    echo "(INFO): cleaning $path_dest_full"
+    rm $path_dest_full
+  done
 }
 
 
 # PREPARE ENVIRONMENT
-apt-get install -y --no-install-recommends wget
+prepare wget
 
 ## For now, we always use the latest version of go-appimagetool
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
@@ -80,63 +125,121 @@ chmod +x "$legacy_appimagetool"
 
 # BUNDLE FILES
 
-## System base (needed to use GIMP or to avoid polluting the terminal output)
-conf_app LD_LINUX "/usr" "lib64/ld-*.so.*"
-### Glib needed files
-find_dat "/usr/share/glib-*/schemas" "*"
-### Glib commonly required modules
-prep_pkg "gvfs"
-find_lib "gvfs*"
-find_lib "gio*"
-conf_app GIO_MODULE_DIR "/usr" "${LIB_DIR}/${LIB_SUBDIR}gio"
-### GTK needed files
-prep_pkg "gnome-icon-theme"
-find_dat "/usr/share/icons/gnome" "*"
-find_dat "/usr/share/mime" "*"
-conf_app GDK_PIXBUF_MODULEDIR "/usr" "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
-conf_app GDK_PIXBUF_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*.*.*"
-### GTK commonly required modules
-prep_pkg "libibus-1.0-5"
-find_lib "libibus*"
-prep_pkg "ibus-gtk3"
-prep_pkg "libcanberra-gtk3-module"
-prep_pkg "libxapp-gtk3-module"
-conf_app GTK_PATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
-conf_app GTK_IM_MODULE_FILE "/usr" "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
+## Settings.
+bundle $GIMP_PREFIX etc/gimp/
+configure GIMP3_SYSCONFDIR etc/gimp/*/
+### Needed for fontconfig
+bundle $SYSTEM_PREFIX etc/fonts/ --go
 
-## Core features
-cp -r _install/* $OPT_PREFIX
-conf_app BABL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}babl-*"
-conf_app GEGL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
-conf_app GIMP3_SYSCONFDIR "$OPT_PREFIX" "etc/gimp/*"
-conf_app GIMP3_DATADIR "$OPT_PREFIX" "share/gimp/*"
-### Copy localized language list support
-find_dat "/usr/share/xml/iso-codes" "iso_639-2.xml" "iso_639.xml"
-### Copy system theme support
-find_bin "gsettings*"
-find_bin "sed*"
-### Copy GTK inspector support
-find_lib "libEGL*"
-find_lib "libGL*"
-find_lib "dri*"
-conf_app LIBGL_DRIVERS_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}dri"
+## Library data.
+configure LD_LINUX lib64/ld-*.so* --go
+bundle $GIMP_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gimp/
+configure GIMP3_PLUGINDIR ${LIB_DIR}/${LIB_SUBDIR}gimp/*/
+bundle $GIMP_PREFIX ${LIB_DIR}/${LIB_SUBDIR}babl-*/
+configure BABL_PATH ${LIB_DIR}/${LIB_SUBDIR}babl-*/
+bundle $GIMP_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gegl-*/
+configure GEGL_PATH ${LIB_DIR}/${LIB_SUBDIR}gegl-*/
+### Glib needed files (and its commonly required modules)
+#prepare gvfs
+#bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gvfs*
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gio/
+configure GIO_MODULE_DIR ${LIB_DIR}/${LIB_SUBDIR}gio/ --go
+### GTK needed files for the UI work
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*/loaders/libpixbufloader-png.so --go
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*/loaders/libpixbufloader-svg.so --go
+configure GDK_PIXBUF_MODULEDIR ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*/ --go
+bundle SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*/loaders.cache --go
+configure GDK_PIXBUF_MODULE_FILE ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/*/ --go
+### GTK needed files for printing (and its commonly required modules)
+prepare libibus-1.0-5
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}libibus*
+prepare ibus-gtk3
+prepare libcanberra-gtk3-module
+prepare libxapp-gtk3-module
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/ --go
+configure GTK_PATH ${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/ --go
+configure GTK_IM_MODULE_FILE ${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*/ --go
+### GTK inspector support
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}libEGL*
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}libGL*
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}dri/
+configure LIBGL_DRIVERS_PATH ${LIB_DIR}/${LIB_SUBDIR}dri/
+clean ${LIB_DIR}/${LIB_SUBDIR}*.a
 
-## Plug-ins
-find_bin "uname*"
-conf_app GIMP3_PLUGINDIR "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gimp/*"
-conf_app GI_TYPELIB_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
+
+## Resources.
+bundle $GIMP_PREFIX share/gimp/
+configure GIMP3_DATADIR share/gimp/*/
+### Glib needed files for file dialogs work
+bundle $SYSTEM_PREFIX share/glib-*/schemas/gschemas.compiled
+### https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
+prepare adwaita-icon-theme
+bundle $SYSTEM_PREFIX share/icons/Adwaita/
+### https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
+bundle $GIMP_PREFIX share/icons/hicolor/
+### Needed for file-wmf work (not needed to be bundled)
+#bundle $SYSTEM_PREFIX share/fonts/type1
+### Only copy from langs supported in GIMP.
+lang_array=($(echo $(ls po/*.po |
+              sed -e 's|po/||g' -e 's|.po||g' | sort) |
+              tr '\n\r' ' '))
+for lang in "${lang_array[@]}"; do
+  bundle $GIMP_PREFIX share/locale/$lang/LC_MESSAGES/*.mo
+  if [ -d "$SYSTEM_PREFIX/share/locale/$lang/LC_MESSAGES/" ]; then
+    bundle $SYSTEM_PREFIX share/locale/$lang/LC_MESSAGES/gtk*.mo
+    bundle $SYSTEM_PREFIX share/locale/$lang/LC_MESSAGES/iso_639.mo
+  fi
+done
+### Needed for welcome page
+bundle "$GIMP_PREFIX" share/metainfo/org.gimp*.xml
+### Needed needed files for the UI work
+bundle $SYSTEM_PREFIX share/mime/
+### mypaint brushes
+bundle $SYSTEM_PREFIX share/mypaint-data/
+### Needed for lang selection in Preferences
+bundle $SYSTEM_PREFIX share/xml/iso-codes/iso_639-2.xml
+mv $OPT_PREFIX/share/xml/iso-codes/iso_639-2.xml $OPT_PREFIX/share/xml/iso-codes/iso_639.xml
+
+
+### Minimal (and some additional) executables for the 'bin' folder
+bundle "$GIMP_PREFIX" bin/gimp*
+### https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
+bundle "$GIMP_PREFIX" bin/gegl*
+### https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
+bundle $SYSTEM_PREFIX bin/dot
+
+
+## GObject Introspection support
+bundle $SYSTEM_PREFIX bin/uname*
+bundle $GIMP_PREFIX ${LIB_DIR}/${LIB_SUBDIR}girepository-*/
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}girepository-*/
+configure GI_TYPELIB_PATH ${LIB_DIR}/${LIB_SUBDIR}girepository-*/
 ### Copy JavaScript plug-ins support
-find_bin "gjs*"
+bundle $SYSTEM_PREFIX bin/gjs*
 ### Copy Lua plug-ins support (NOT WORKING)
-#find_bin "lua*"
-#find_lib "liblua*"
+bundle $SYSTEM_PREFIX bin/lua*
+#ln -s $OPT_PREFIX/bin/luajit-2.1.0-beta3 $OPT_PREFIX/bin/luajit
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}liblua*
+prepare lua-lgi
+bundle $SYSTEM_PREFIX ${LIB_DIR}/${LIB_SUBDIR}lua/
+bundle $SYSTEM_PREFIX share/lua/
 ### Copy Python plug-ins support
-find_bin "python*"
-find_lib "python*.*"
-conf_app PYTHONPATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}python3.11"
+bundle $SYSTEM_PREFIX bin/python*
+bundle $SYSTEM_PREFIX ${LIB_DIR}/python*.*/
+configure PYTHONPATH ${LIB_DIR}/python*.*/
+clean ${LIB_DIR}/python*/*.pyc
+
+### Copy system theme support
+bundle $SYSTEM_PREFIX "bin/gsettings*"
+bundle $SYSTEM_PREFIX "bin/sed*"
+
+
+
+
 
 ## Final adjustments
-### Auto detect and copy deps of binaries copied above
+### Deps (DLLs) of the binaries in 'lib' and 'bin' dirs
+bundle $GIMP_PREFIX share/applications
 "./$go_appimagetool" --appimage-extract-and-run -s deploy $OPT_PREFIX/share/applications/org.gimp.GIMP.desktop
 ### Rearranje babl, GEGL and GIMP (only the needed files)
 if [ -z "$2" ] || [ "$2" = "usr" ]; then
@@ -151,10 +254,10 @@ elif [ "$2" = "AppDir" ]; then
   rm -r $GIMP_PREFIX
 fi
 ### Remove unnecessary files
-rm -r $OPT_PREFIX/include
-rm -r $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR}pkgconfig
-rm -r $OPT_PREFIX/share/doc
-rm -r $OPT_PREFIX/share/man
+#clean include/
+#clean ${LIB_DIR}/${LIB_SUBDIR}pkgconfig/
+#clean share/doc/
+#clean share/man/
 
 ## Sad adjustments (appimagetool don't handle this gracefully when done before deploy)
 ### https://github.com/probonopd/go-appimage/issues/284

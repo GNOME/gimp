@@ -322,6 +322,7 @@ gimp-debian-x64:
     expose_as: 'Linux appimage'
     paths:
       - build/linux/appimage/_Output/
+      - appimage.tar
       - _install/
       - _build/meson-logs/meson-log.txt
       - _build/meson-dist/
