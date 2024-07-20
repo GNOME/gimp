@@ -20,12 +20,10 @@
 
 (define (script-fu-paste-as-pattern name filename)
   (let* ((pattern-image (car (gimp-edit-paste-as-new-image)))
-         (pattern-draw 0)
          (path 0))
 
-    (if (= TRUE (car (gimp-image-is-valid pattern-image)))
+    (if (= TRUE (car (gimp-image-id-is-valid pattern-image)))
       (begin
-        (set! pattern-draw (aref (cadr (gimp-image-get-selected-drawables pattern-image)) 0))
         (set! path (string-append gimp-directory
                              "/patterns/"
                              filename
@@ -34,7 +32,6 @@
 
         (file-pat-export RUN-NONINTERACTIVE
                        pattern-image
-                       1 (vector pattern-draw)
                        path
                        name)
 
