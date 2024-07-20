@@ -197,9 +197,9 @@ file_save_dialog_response (GtkWidget *dialog,
         gimp_file_dialog_set_sensitive (file_dialog, FALSE);
 
         if (GIMP_IS_SAVE_DIALOG (dialog))
-          {
-            xcf_compression = GIMP_SAVE_DIALOG (dialog)->compression;
-          }
+          xcf_compression = GIMP_SAVE_DIALOG (dialog)->compression;
+        else
+          xcf_compression = gimp_image_get_xcf_compression (image);
 
         /* Hide the file dialog while exporting, avoid dialogs piling
          * up, even more as some formats have preview features, so the
