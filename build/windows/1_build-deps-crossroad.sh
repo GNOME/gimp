@@ -9,7 +9,7 @@ if [ -z "$CROSSROAD_PLATFORM" ]; then
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
   if [ "$0" != "build/windows/1_build-deps-crossroad.sh" ]; then
-    echo "To run this script locally, please do it from to the gimp git folder"
+    echo -e '\033[31m(ERROR)\033[0m: To run this script locally, please do it from gimp git folder.'
     exit 1
   fi
   export GIT_DEPTH=1

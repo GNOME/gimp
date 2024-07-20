@@ -9,7 +9,7 @@ if [ -z "$CROSSROAD_PLATFORM" ]; then
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
   if [ "$0" != "build/windows/2_build-gimp-crossroad.sh" ]; then
-    echo "To run this script locally, please do it from to the gimp git folder"
+    echo -e '\033[31m(ERROR)\033[0m: To run this script locally, please do it from gimp git folder.'
     exit 1
   fi
   git submodule update --init
@@ -25,7 +25,7 @@ if [ ! -d "${PARENT_DIR}_install" ]; then
   echo -e "\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in ${PARENT_DIR}_install"
 fi
 if [ ! -d '_build' ] || [ ! -d "${PARENT_DIR}_install" ]; then
-  echo 'Patches are very welcome: https://gitlab.gnome.org/GNOME/gimp/-/issues/11544'
+  echo 'Patches are very welcome: https://gitlab.gnome.org/GNOME/gimp/-/issues/6393'
   exit 1
 fi
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')

@@ -3,7 +3,7 @@
 if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   ## Make the script work locally
   if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpak.sh' ]; then
-    echo 'To run this script locally, please do it from to the gimp git folder'
+    echo -e '\033[31m(ERROR)\033[0m: To run this script locally, please do it from gimp git folder.'
     exit 1
   fi
   git submodule update --init
@@ -30,7 +30,7 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   if [ "$1" != '--ci' ]; then
     ## Extract deps from previous job
-    echo 'Extracting previously built dependencies'
+    echo '(INFO): extracting previously built dependencies'
     tar xf .flatpak-builder.tar
   fi
 

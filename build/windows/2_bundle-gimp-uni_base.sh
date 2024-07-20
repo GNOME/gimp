@@ -63,7 +63,7 @@ bundle ()
       echo "(INFO): copying $path_origin_full to $GIMP_DISTRIB/$path_dest_parent"
       cp -r "$path_origin_full" "$GIMP_DISTRIB/$path_dest_parent"
     else
-      echo "(WARNING): $path_origin_full does not exist!"
+      echo -e "\033[33m(WARNING)\033[0m: $path_origin_full does not exist!"
     fi
   fi
 }
@@ -76,8 +76,8 @@ clean ()
     cleanedArray=($(find $1/ -iname ${2##*/}))
   fi
   for path_dest_full in "${cleanedArray[@]}"; do
-    rm $path_dest_full
     echo "(INFO): cleaning $path_dest_full"
+    rm $path_dest_full
   done
 }
 

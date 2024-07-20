@@ -3,7 +3,7 @@
 if [ -z "$GITLAB_CI" ]; then
   ## Make the script work locally
   if [ "$0" != 'build/linux/flatpak/1_build-deps-flatpak.sh' ]; then
-    echo 'To run this script locally, please do it from to the gimp git folder'
+    echo -e '\033[31m(ERROR)\033[0m: To run this script locally, please do it from gimp git folder.'
     exit 1
   fi
 fi
@@ -41,7 +41,7 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   ## Clone and build deps
   ## (The deps building is too long and no complete output would be collected,
   ## even from GitLab runner messages. So, let's silent and save logs as a file.)
-  echo 'Building dependencies not present in GNOME runtime'
+  echo '(INFO): building dependencies not present in GNOME runtime'
   flatpak-builder --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
                   "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
 
