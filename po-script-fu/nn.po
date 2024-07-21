@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-13 17:13+0000\n"
-"PO-Revision-Date: 2024-07-14 12:26+0200\n"
+"POT-Creation-Date: 2024-07-21 16:49+0000\n"
+"PO-Revision-Date: 2024-07-21 19:42+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -274,7 +274,7 @@ msgstr "Legg ein fasettert kant rundt biletet"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:197
 msgid "Thickness"
-msgstr "Breidde"
+msgstr "Breidd"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
@@ -303,11 +303,11 @@ msgstr "Lag ei ramme rundt biletet"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
-msgstr "Breidde høgre og venstre kant"
+msgstr "Breidd høgre og venstre kant"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:171
 msgid "Border Y size"
-msgstr "Breidde øvre og nedre kant"
+msgstr "Breidd øvre og nedre kant"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:172
 msgid "Border color"
@@ -380,11 +380,11 @@ msgstr "Ton ut"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
-msgstr "Uttoningsbreidde"
+msgstr "Uttoningsbreidd"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
-msgstr "Koronabreidde"
+msgstr "Koronabreidd"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
@@ -769,7 +769,7 @@ msgstr "Tekststorleik (pikslar)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "_Kantbreidde (pikslar)"
+msgstr "_Kantbreidd (pikslar)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -794,7 +794,7 @@ msgstr "Legg ein ullen kant rundt biletet"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: ../plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
-msgstr "Kantbreidde"
+msgstr "Kantbreidd"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
@@ -920,7 +920,7 @@ msgstr "Lager eit bilete med eit eksempel på den aktive fargeovergangen"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:196
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:265
 msgid "Width"
-msgstr "Breidde"
+msgstr "Breidd"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:76
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:71
@@ -928,7 +928,7 @@ msgstr "Breidde"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:197
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:266
 msgid "Height"
-msgstr "Høgde"
+msgstr "Høgd"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
@@ -1313,7 +1313,7 @@ msgstr "Talet på rammer"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
-msgstr "Kanthandtering"
+msgstr "Kanthandsaming"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
@@ -1660,7 +1660,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
-msgstr "Stripebreidde"
+msgstr "Stripebreidd"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:406
 msgid "Ribbon spacing"
