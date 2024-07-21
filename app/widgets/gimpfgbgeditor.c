@@ -210,6 +210,13 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
                                                       GIMP_ACTIVE_COLOR_FOREGROUND,
                                                       GIMP_PARAM_READWRITE));
 
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("tool-icon-size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              GTK_ICON_SIZE_SMALL_TOOLBAR,
+                                                              GIMP_PARAM_READABLE));
+
   gtk_widget_class_set_css_name (widget_class, "GimpFgBgEditor");
 }
 
@@ -332,8 +339,10 @@ static gboolean
 gimp_fg_bg_editor_draw (GtkWidget *widget,
                         cairo_t   *cr)
 {
-  GimpFgBgEditor  *editor = GIMP_FG_BG_EDITOR (widget);
-  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GimpFgBgEditor  *editor    = GIMP_FG_BG_EDITOR (widget);
+  GtkStyleContext *style     = gtk_widget_get_style_context (widget);
+  GtkIconSize      tool_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+  gint             pixel_size;
   GtkBorder        border;
   GtkBorder        padding;
   GdkRectangle     rect;
@@ -352,6 +361,30 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   gtk_style_context_get_padding (style, gtk_style_context_get_state (style),
                                  &padding);
 
+  gtk_widget_style_get (GTK_WIDGET (widget),
+                        "tool-icon-size", &tool_size,
+                        NULL);
+  /* Setting the upper bounds of the swap and default colors icons
+   * based on the user's current icon scale */
+  switch (tool_size)
+    {
+    case GTK_ICON_SIZE_LARGE_TOOLBAR:
+      pixel_size = 9;
+      break;
+
+    case GTK_ICON_SIZE_DND:
+      pixel_size = 15;
+      break;
+
+    case GTK_ICON_SIZE_DIALOG:
+      pixel_size = 20;
+      break;
+
+    case GTK_ICON_SIZE_SMALL_TOOLBAR:
+    default:
+      pixel_size = 6;
+    }
+
   border.left   += padding.left;
   border.right  += padding.right;
   border.top    += padding.top;
@@ -363,7 +396,9 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (! editor->default_icon)
     editor->default_icon = gimp_widget_load_icon (widget,
                                                   GIMP_ICON_COLORS_DEFAULT,
-                                                  MAX (MIN (width * 0.3, 12), 6));
+                                                  MAX (MIN (width * 0.3,
+                                                            2 * pixel_size),
+                                                    pixel_size));
 
   default_w = gdk_pixbuf_get_width  (editor->default_icon) / scale_factor;
   default_h = gdk_pixbuf_get_height (editor->default_icon) / scale_factor;
@@ -390,7 +425,9 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (! editor->swap_icon)
     editor->swap_icon = gimp_widget_load_icon (widget,
                                                GIMP_ICON_COLORS_SWAP,
-                                               MAX (MIN (width * 0.3, 12), 6));
+                                               MAX (MIN (width * 0.3,
+                                                         2 * pixel_size),
+                                                    pixel_size));
 
   swap_w = gdk_pixbuf_get_width  (editor->swap_icon) / scale_factor;
   swap_h = gdk_pixbuf_get_height (editor->swap_icon) / scale_factor;
