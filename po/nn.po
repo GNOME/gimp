@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-13 05:02+0000\n"
-"PO-Revision-Date: 2024-07-13 19:09+0200\n"
+"POT-Creation-Date: 2024-07-19 18:58+0000\n"
+"PO-Revision-Date: 2024-07-21 18:43+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1741,7 +1741,7 @@ msgstr "_Ny kanal"
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "Opprett ein ny kanal med sist brukte verdiar"
+msgstr "Opprett ein ny kanal med tidlegare brukte verdiar"
 
 #: ../app/actions/channels-actions.c:71
 msgctxt "channels-action"
@@ -3857,7 +3857,7 @@ msgstr "B_ufferar"
 #: ../app/actions/dialogs-actions.c:210
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Opna dialogvindauget for namngitte bufferar"
+msgstr "Opna dialogvindauget for namngjevne bufferar"
 
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
@@ -4494,7 +4494,7 @@ msgstr "_Buffer"
 #: ../app/actions/edit-actions.c:70
 msgctxt "edit-action"
 msgid "Undo History Menu"
-msgstr "Angre angreloggen"
+msgstr "Angra angreloggen"
 
 #: ../app/actions/edit-actions.c:74
 msgctxt "edit-action"
@@ -4519,12 +4519,12 @@ msgstr "Gjenta den siste operasjonen du angra"
 #: ../app/actions/edit-actions.c:86
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr "Sterk angre"
+msgstr "Sterk angra"
 
 #: ../app/actions/edit-actions.c:87
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
-msgstr "Angre den siste operasjonen, men hopp over endringar i visinga"
+msgstr "Angra den siste operasjonen, men hopp over endringar i visinga"
 
 #: ../app/actions/edit-actions.c:92
 msgctxt "edit-action"
@@ -4601,23 +4601,23 @@ msgstr "Klipp _ut namngjevne…"
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Flytt dei valde pikslane til ein namngitt buffer"
+msgstr "Flytt dei valde pikslane til ein namngjeve buffer"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "_Kopier namngitt…"
+msgstr "_Kopier namngjeve…"
 
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Kopier dei valde pikslane til ein namngitt buffer"
+msgstr "Kopier dei valde pikslane til ein namngjeve buffer"
 
 #. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:147
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Kopier _synlege namngitt …"
+msgstr "Kopier _synlege namngjevne …"
 
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
@@ -4627,12 +4627,12 @@ msgstr "Kopier det som er synleg i det valde området"
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "_Lim inn namngitt …"
+msgstr "_Lim inn namngjeve …"
 
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Lim inn innhaldet frå ein namngitt buffer"
+msgstr "Lim inn innhaldet frå ein namngjeven buffer"
 
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
@@ -4745,7 +4745,7 @@ msgstr "Fyll utvalet med det aktive mønsterelementet"
 #: ../app/actions/edit-actions.c:336 ../app/actions/edit-actions.c:338
 #, c-format
 msgid "_Undo %s"
-msgstr "_Angre %s"
+msgstr "_Angra %s"
 
 #: ../app/actions/edit-actions.c:342 ../app/actions/edit-actions.c:344
 #, c-format
@@ -4754,7 +4754,7 @@ msgstr "_Gjenta %s"
 
 #: ../app/actions/edit-actions.c:355
 msgid "_Undo"
-msgstr "_Angre"
+msgstr "_Angra"
 
 #: ../app/actions/edit-actions.c:356
 msgid "_Redo"
@@ -4796,7 +4796,7 @@ msgstr "Det er ingen bilete i utklippstavla å lime inn."
 
 #: ../app/actions/edit-commands.c:402
 msgid "Cut Named"
-msgstr "Klipp ut namngitt"
+msgstr "Klipp ut namngjeve"
 
 #: ../app/actions/edit-commands.c:405 ../app/actions/edit-commands.c:426
 #: ../app/actions/edit-commands.c:447
@@ -4805,7 +4805,7 @@ msgstr "Skriv inn eit namn for denne bufferen"
 
 #: ../app/actions/edit-commands.c:423
 msgid "Copy Named"
-msgstr "Kopier namngitt"
+msgstr "Kopier namngjeve"
 
 #: ../app/actions/edit-commands.c:444
 msgid "Copy Visible Named"
@@ -8377,7 +8377,7 @@ msgstr "Inge_n"
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "Fjern utvalet"
+msgstr "Vel ingen"
 
 #: ../app/actions/select-actions.c:62
 msgctxt "select-action"
@@ -8452,7 +8452,7 @@ msgstr "Erstatt utvalet med utvalsramma"
 #: ../app/actions/select-actions.c:105
 msgctxt "select-action"
 msgid "Re_move Holes"
-msgstr "_Fjern hola"
+msgstr "_Fjern hol"
 
 #: ../app/actions/select-actions.c:106
 msgctxt "select-action"
@@ -8556,7 +8556,7 @@ msgstr "Lag ramme av utvalet"
 
 #: ../app/actions/select-commands.c:356
 msgid "Border selection by"
-msgstr "Rammebreidde"
+msgstr "Rammebreidd"
 
 #: ../app/actions/select-commands.c:368
 msgid "Border style"
@@ -9569,7 +9569,7 @@ msgstr "Ny bane med dei sist brukte verdiane"
 #: ../app/actions/vectors-actions.c:73
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "Opprett ein ny banel meddei  sist brukte verdiane"
+msgstr "Opprett ein ny bane med dei sist brukte verdiane"
 
 #: ../app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
@@ -10887,7 +10887,7 @@ msgstr "Byt til det førre biletet"
 #: ../app/actions/windows-actions.c:121
 msgctxt "windows-action"
 msgid "_Tabs Position"
-msgstr "_Tabulatorposisjon"
+msgstr "_Faneposisjon"
 
 #: ../app/actions/windows-actions.c:127
 msgctxt "windows-action"
@@ -10903,12 +10903,12 @@ msgstr "Når denne er slått på, vil berre biletvindauget vera synleg."
 #: ../app/actions/windows-actions.c:134
 msgctxt "windows-action"
 msgid "_Show Tabs"
-msgstr "_Tabulatorane"
+msgstr "_Vis faner"
 
 #: ../app/actions/windows-actions.c:135
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
-msgstr "Når slått på er fanelinja for biletet synleg."
+msgstr "Når denne er slått på, er fanelinja for biletet synleg."
 
 #: ../app/actions/windows-actions.c:141
 msgctxt "windows-action"
@@ -11505,8 +11505,8 @@ msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
-"Farten til dei marsjerande maura i utvalsomrisset. Verdien vert oppgitt i "
-"millisekund (lågare verdi gir raskare marsjering)."
+"Farten til dei marsjerande maura i utvalsomrisset. Verdien vert oppgjeve i "
+"millisekund (lågare verdi gjev raskare marsjering)."
 
 #: ../app/config/gimprc-blurbs.h:284
 msgid ""
@@ -12179,8 +12179,8 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"Set øvre grensa for kor mykje minne som vert brukt til angreloggen for kvart "
-"bilete. Du vil alltid, uavhengig av denne innstillinga, kunne angre så mange "
+"Set øvre grense for kor mykje minne som vert brukt til angreloggen for kvart "
+"bilete. Du vil alltid, uavhengig av denne innstillinga, kunna angra så mange "
 "gonger som er sett i innstillinga for dette."
 
 #: ../app/config/gimprc-blurbs.h:720
@@ -13372,7 +13372,7 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:519
 #, c-format
 msgid "Unable to decode abr format version %d."
-msgstr "Kunne ikkje dekode abr formatversjon %d."
+msgstr "Kunne ikkje dekoda abr formatversjon %d."
 
 #: ../app/core/gimpbrush-load.c:637 ../app/core/gimpbrush-load.c:856
 #, c-format
@@ -15043,7 +15043,7 @@ msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
 msgstr ""
-"Ugyldige overskriftsdata i «%s»: breidde=%lu (maksimum %lu), høgd=%lu "
+"Ugyldige overskriftsdata i «%s»: breidd=%lu (maksimum %lu), høgd=%lu "
 "(maksimum %lu), bytes=%lu"
 
 #: ../app/core/gimppattern-load.c:116
@@ -15174,7 +15174,7 @@ msgstr "Metode"
 
 #: ../app/core/gimpstrokeoptions.c:163
 msgid "Line width"
-msgstr "Strekbreidde"
+msgstr "Strekbreidd"
 
 #: ../app/core/gimpstrokeoptions.c:170 ../app/core/gimptemplate.c:150
 #: ../app/tools/gimptextoptions.c:123
@@ -15199,7 +15199,7 @@ msgid ""
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
 "Omform ei gjæring til spissvinkelkopling dersom hjørnet vert utvida til meir "
-"enn hjørnegrense × linjebreidde frå det aktuelle koplingspunktet."
+"enn hjørnegrense × linjebreidd frå det aktuelle koplingspunktet."
 
 #: ../app/core/gimpstrokeoptions.c:201
 msgid "Dash offset"
@@ -15352,11 +15352,11 @@ msgstr "Feil ved lukking av «%s»: %s\n"
 
 #: ../app/core/gimptemplate.c:134
 msgid "Width"
-msgstr "Breidde"
+msgstr "Breidd"
 
 #: ../app/core/gimptemplate.c:142
 msgid "Height"
-msgstr "Høgde"
+msgstr "Høgd"
 
 #: ../app/core/gimptemplate.c:151
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -15899,7 +15899,7 @@ msgstr "Symmetriteikning"
 
 #: ../app/dialogs/dialogs.c:400
 msgid "Undo"
-msgstr "Angre"
+msgstr "Angra"
 
 #: ../app/dialogs/dialogs.c:400
 msgid "Undo History"
@@ -15944,7 +15944,7 @@ msgid ""
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
-"Når du lagrar over eit nettverk, må systemet kunne bestemma filtypen ut frå "
+"Når du lagrar over eit nettverk, må systemet kunna bestemma filtypen ut frå "
 "filendinga. Skriv inn ei filending som passar med det valde filformatet, "
 "eller ikkje noko filending i det heile."
 
@@ -16245,11 +16245,11 @@ msgstr "_Dekkevne:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:823
 msgid "Width:"
-msgstr "Breidde:"
+msgstr "Breidd:"
 
 #: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:851
 msgid "Height:"
-msgstr "Høgde:"
+msgstr "Høgd:"
 
 #. The offset labels
 #: ../app/dialogs/layer-options-dialog.c:316
@@ -18038,12 +18038,12 @@ msgstr "Utskriftstorleik"
 #: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:190
 #: ../app/widgets/gimptemplateeditor.c:199
 msgid "_Width:"
-msgstr "_Breidde:"
+msgstr "_Breidd:"
 
 #: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:194
 #: ../app/widgets/gimptemplateeditor.c:206
 msgid "H_eight:"
-msgstr "H_øgde:"
+msgstr "H_øgd:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:257
@@ -18427,12 +18427,12 @@ msgstr "Sideforhold"
 #: ../app/display/display-enums.c:380
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
-msgstr "Breidde"
+msgstr "Breidd"
 
 #: ../app/display/display-enums.c:381
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
-msgstr "Høgde"
+msgstr "Høgd"
 
 #: ../app/display/display-enums.c:382
 msgctxt "rectangle-fixed-rule"
@@ -20866,7 +20866,7 @@ msgstr "Ugyldig, tomt buffernamn"
 #: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "Fann ikkje den namngitte buffaren «%s»"
+msgstr "Fann ikkje den namngjevne bufferen «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:411
 msgid "Invalid empty paint method name"
@@ -23096,7 +23096,7 @@ msgstr "Kor mange nivå som skal vera med for å finna løysinga"
 
 #: ../app/tools/gimpforegroundselectoptions.c:141
 msgid "Iterations"
-msgstr "Iterasjonar"
+msgstr "Gjentakingar"
 
 #: ../app/tools/gimpforegroundselectoptions.c:142
 msgid "Number of iterations to perform"
@@ -24082,7 +24082,7 @@ msgstr "Eining for utvalsstorleiken"
 
 #: ../app/tools/gimprectangleoptions.c:167
 msgid "Enable lock of aspect ratio, width, height or size"
-msgstr "Gjer at du låser sideforholdet, breidde, høgda eller storleiken"
+msgstr "Gjer at du låser sideforholdet, breidda, høgda eller storleiken"
 
 #: ../app/tools/gimprectangleoptions.c:176
 msgid "Choose what has to be locked"
@@ -24090,15 +24090,15 @@ msgstr "Vel kva som skal låsast"
 
 #: ../app/tools/gimprectangleoptions.c:185
 msgid "Custom fixed width"
-msgstr "Tilpassa fast breidde"
+msgstr "Tilpassa fast breidd"
 
 #: ../app/tools/gimprectangleoptions.c:194
 msgid "Custom fixed height"
-msgstr "Tilpassa fast høgde"
+msgstr "Tilpassa fast høgd"
 
 #: ../app/tools/gimprectangleoptions.c:288
 msgid "Unit of fixed width, height or size"
-msgstr "Eining for fast breidde, høgde eller storleik"
+msgstr "Eining for fast breidd, høgd eller storleik"
 
 #: ../app/tools/gimprectangleoptions.c:296
 msgid "Expand from center"
@@ -27441,7 +27441,7 @@ msgstr "%d ppi"
 
 #: ../app/widgets/gimpstrokeeditor.c:129
 msgid "Line width:"
-msgstr "Strekbreidde:"
+msgstr "Strekbreidd:"
 
 #: ../app/widgets/gimpstrokeeditor.c:141
 msgid "_Line Style"
@@ -27986,16 +27986,16 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
-"Øydelagde 'exif-data' parasitt oppdaga\n"
-"Kunne ikkje overføre exif-data: %s"
+"Øydelagd «exif-data»-parasitt oppdaga\n"
+"Kunne ikkje overføra exif-data: %s"
 
 #: ../app/xcf/xcf-load.c:412
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr ""
-"Øydelagde 'gimp-metadata' parasitt oppdaga\n"
-"Kunne ikkje overføre XMP-data."
+"Øydelagd «gimp-metadata»-parasitt oppdaga\n"
+"Kunne ikkje overføra XMP-data."
 
 #: ../app/xcf/xcf-load.c:436
 #, c-format
@@ -28005,8 +28005,8 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 msgstr ""
-"Korrupte XMP metadata vart lagra av ein eldre versjon av GIMP kunne ikkje "
-"konverterast og vert ignorerte.\n"
+"Korrupte XMP metadata som vart lagra av ein eldre versjon av GIMP kunne "
+"ikkje konverterast og vert ignorerte.\n"
 "Viss du ikkje veit kva XNP er, har du truleg ikkje bruk for det. Rapportert "
 "feil: %s."
 
