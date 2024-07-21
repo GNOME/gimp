@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-12-13 07:39+0000\n"
-"PO-Revision-Date: 2023-12-20 14:18+0100\n"
+"POT-Creation-Date: 2024-07-21 16:48+0000\n"
+"PO-Revision-Date: 2024-07-21 18:58+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -50,7 +50,7 @@ msgstr "_Bla gjennom …"
 #: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Programtillegget %s  kan ikkje handtera lag"
+msgstr "Programtillegget %s  kan ikkje handsama lag"
 
 #: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
 #: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
@@ -61,12 +61,12 @@ msgstr "Flett saman synlege lag"
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"Programtillegget %s kan ikkje handtera lagforskyving, storleik og dekkevne"
+"Programtillegget %s kan ikkje handsama lagforskyving, storleik og dekkevne"
 
 #: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Programtillegget %s kan berre handtera lag som animasjonsrammer"
+msgstr "Programtillegget %s kan berre handsama lag som animasjonsrammer"
 
 #: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
@@ -80,7 +80,7 @@ msgstr "Flat ut biletet"
 #: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "Programtillegget %s kan ikkje handtera gjennomsikt"
+msgstr "Programtillegget %s kan ikkje handsama gjennomsikt"
 
 #: ../libgimp/gimpexport.c:349
 #, c-format
@@ -90,7 +90,7 @@ msgstr "Programtillegget %s kan ikkje handsama gjennomsiktige lag"
 #: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Programtillegget %s kan ikkje handtera lagmasker"
+msgstr "Programtillegget %s kan ikkje handsama lagmasker"
 
 #: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
@@ -99,7 +99,7 @@ msgstr "Legg til lagmasker"
 #: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Programtillegget %s kan berre handtera RGB-bilete"
+msgstr "Programtillegget %s kan berre handsama RGB-bilete"
 
 #: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
 #: ../libgimp/gimpexport.c:415
@@ -109,7 +109,7 @@ msgstr "Konverter til RGB"
 #: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Programtillegget %s kan berre handtera gråtonebilete"
+msgstr "Programtillegget %s kan berre handsama gråtonebilete"
 
 #: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
 #: ../libgimp/gimpexport.c:427
@@ -119,7 +119,7 @@ msgstr "Konverter til gråtoner"
 #: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Programtillegget %s kan berre handtera indekserte bilete"
+msgstr "Programtillegget %s kan berre handsama indekserte bilete"
 
 #: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
 #: ../libgimp/gimpexport.c:425
@@ -134,7 +134,7 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"Programtillegget %s kan berre handtera indekserte punktbilet (to fargar)"
+"Programtillegget %s kan berre handsama indekserte punktbilet med to fargar"
 
 #: ../libgimp/gimpexport.c:396
 msgid ""
@@ -147,7 +147,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Programtillegget %s kan berre handtera RGB- og gråskalabilete"
+msgstr "Programtillegget %s kan berre handsama RGB- og gråtonebilete"
 
 #: ../libgimp/gimpexport.c:414
 #, c-format
@@ -157,7 +157,8 @@ msgstr "Programtillegget %s kan berre handsama RGB og indekserte bilete"
 #: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Programtillegget %s kan berre handtera gråskala og indekserte bilete"
+msgstr ""
+"Programtillegget %s kan berre handsama gråtonebilete og indekserte bilete"
 
 #: ../libgimp/gimpexport.c:435
 #, c-format
@@ -1018,7 +1019,7 @@ msgstr "RGB-farge"
 #: ../libgimpbase/gimpbaseenums.c:927
 msgctxt "image-base-type"
 msgid "Grayscale"
-msgstr "Gråskala"
+msgstr "Gråtone"
 
 #: ../libgimpbase/gimpbaseenums.c:928
 msgctxt "image-base-type"
@@ -1038,7 +1039,7 @@ msgstr "RGB-alfa"
 #: ../libgimpbase/gimpbaseenums.c:963
 msgctxt "image-type"
 msgid "Grayscale"
-msgstr "Gråskala"
+msgstr "Gråtone"
 
 #: ../libgimpbase/gimpbaseenums.c:964
 msgctxt "image-type"
@@ -1624,9 +1625,8 @@ msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"Den føretrekte gråskala-profilen for arbeidsplassen. Han vil bli lagt inn "
-"som alternativ til den innebygde gråskala-profilen når du kan velja "
-"fargeprofil."
+"Den føretrekte gråtone-profilen for arbeidsplassen. Han vert lagt inn som "
+"alternativ til den innebygde gråstone-profilen når du kan velja fargeprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1723,7 +1723,7 @@ msgstr "Føretrekt RGB-profil"
 
 #: ../libgimpconfig/gimpcolorconfig.c:225
 msgid "Preferred grayscale profile"
-msgstr "Føretrekt gråskala-profil"
+msgstr "Føretrekt gråtone-profil"
 
 #: ../libgimpconfig/gimpcolorconfig.c:232
 msgid "CMYK profile"
@@ -1791,7 +1791,7 @@ msgstr "Fargeprofilen «%s» er ikkje for RGB-fargerommet."
 #: ../libgimpconfig/gimpcolorconfig.c:929
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr "Fargeprofilen «%s» er ikkje for gråskala fargeprofil."
+msgstr "Fargeprofilen «%s» er ikkje for gråtone fargeprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:779
 #: ../libgimpconfig/gimpcolorconfig.c:979
@@ -1910,7 +1910,7 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Fann ikkje ei gyldig mappe for miniatyrar.\n"
-"Miniatyrane blir lagra i mappa for temporære filer (%s) i staden."
+"Miniatyrane vert lagra i mappa for temporære filer (%s) i staden."
 
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
@@ -1955,7 +1955,6 @@ msgstr "_Tilbakestill"
 #: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
-#| msgid "_K"
 msgid "_OK"
 msgstr "_OK"
 
@@ -2147,17 +2146,14 @@ msgid "_Shear"
 msgstr "_Forskyv"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:256
-#| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "Kibibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:257
-#| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "Mebibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:258
-#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
