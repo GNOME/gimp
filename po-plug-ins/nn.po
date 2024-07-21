@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-13 17:13+0000\n"
-"PO-Revision-Date: 2024-07-13 19:47+0200\n"
+"POT-Creation-Date: 2024-07-21 16:48+0000\n"
+"PO-Revision-Date: 2024-07-21 19:25+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -443,7 +443,7 @@ msgstr "_Loddrett"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1123
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:693
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -498,7 +498,7 @@ msgstr "Kantgjennomsnitt"
 
 #: ../plug-ins/common/border-average.c:380
 msgid "Border Size"
-msgstr "Kantbreidde"
+msgstr "Kantbreidd"
 
 #: ../plug-ins/common/border-average.c:388
 msgid "_Thickness:"
@@ -1043,7 +1043,7 @@ msgstr "Lagra parameterane for CML-utforskaren"
 #: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -1995,7 +1995,7 @@ msgstr "Fjerner striper"
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:284
 msgid "_Width:"
-msgstr "_Breidde:"
+msgstr "_Breidd:"
 
 #: ../plug-ins/common/destripe.c:511
 msgid "Create _histogram"
@@ -2171,8 +2171,8 @@ msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
-"ugyldig biletformat: breidde: %d, vassrett forskyving: %d, høgde: %d, "
-"loddrett forskyving: %d"
+"ugyldig biletformat: breidd: %d, vassrett forskyving: %d, høgd: %d, loddrett "
+"forskyving: %d"
 
 #: ../plug-ins/common/file-cel.c:437
 #, c-format
@@ -2229,7 +2229,7 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #: ../plug-ins/common/file-jpegxl.c:794 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1228
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -2423,8 +2423,8 @@ msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
-"GIF: Den udokumentert samansetjingstypen %d kan ikkje handterast. Det kan "
-"hende animasjonen ikkje spelar skikkeleg eller ikkje kan lagrast på nytt."
+"GIF: Den udokumentert samansetjingstypen %d kan ikkje handsamast. Det kan "
+"henda animasjonen ikkje spelar skikkeleg eller ikkje kan lagrast på nytt."
 
 #: ../plug-ins/common/file-gif-save.c:556
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
@@ -2780,7 +2780,7 @@ msgstr "Breidda for kvar tabellcelle. Kan vere eit fast tal eller i prosent."
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:286
 msgid "_Height:"
-msgstr "_Høgde:"
+msgstr "_Høgd:"
 
 #: ../plug-ins/common/file-html-table.c:667
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -3043,13 +3043,13 @@ msgstr "«%s» er ikkje ei PCX-fil"
 #: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "Ugyldig biletbreidde: %d"
+msgstr "Ugyldig biletbreidd: %d"
 
 #: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:732
 #: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "Ugyldig bilethøgde: %d"
+msgstr "Ugyldig bilethøgd: %d"
 
 #: ../plug-ins/common/file-pcx.c:425
 msgid "Invalid number of bytes per line in PCX header"
@@ -3062,7 +3062,7 @@ msgstr "Oppløysninga utføre grensene i XCX-toppteksten, ved bruk av 72 × 72"
 #: ../plug-ins/common/file-pcx.c:440
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
-msgstr "Biletet er for stort: breidde %d x høgde %d"
+msgstr "Biletet er for stort: breidd %d × høgd %d"
 
 #: ../plug-ins/common/file-pcx.c:545
 msgid "Unusual PCX flavour, giving up"
@@ -3164,11 +3164,11 @@ msgstr "Last inn i omvendt rekkjefølgje"
 
 #: ../plug-ins/common/file-pdf-load.c:1453
 msgid "_Width (pixels):"
-msgstr "_Breidde (pikslar):"
+msgstr "_Breidd (pikslar):"
 
 #: ../plug-ins/common/file-pdf-load.c:1454
 msgid "_Height (pixels):"
-msgstr "Høgde (pikslar):"
+msgstr "Høgd (pikslar):"
 
 #: ../plug-ins/common/file-pdf-load.c:1456
 msgid "_Resolution:"
@@ -3297,7 +3297,7 @@ msgstr "FEIL. For å kunna lagra denne fila må ho innehalda minst eitt bilete!"
 #: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
-msgstr "Kan ikkje handsama storleiken (anten breidde eller høgde) i biletet."
+msgstr "Kan ikkje handsama storleiken (anten breidd eller høgd) i biletet."
 
 #: ../plug-ins/common/file-pix.c:143 ../plug-ins/common/file-pix.c:159
 msgid "Alias Pix image"
@@ -3322,7 +3322,8 @@ msgstr "Feil ved oppretting av PNG-lesestruktur under innlasting av «%s»."
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
-"Feil ved lesing av «%s». Kunne ikkje laga infostrukturen i PNG-toppteksten."
+"Feil ved lesing av «%s». Kunne ikkje utvikla infostrukturen i PNG-"
+"toppteksten."
 
 #: ../plug-ins/common/file-png.c:916
 #, c-format
@@ -3382,7 +3383,7 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1594
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Feil ved eksporten av «%s». Kunne ikkje eksportera bietet."
+msgstr "Feil ved eksporten av «%s». Kunne ikkje eksportera biletet."
 
 #: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2112
 #: ../plug-ins/file-tiff/file-tiff-save.c:1167
@@ -3441,7 +3442,7 @@ msgstr "Ugyldig X-oppløysing."
 
 #: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
-msgstr "Biletet er breiare enn det GIMP kan handtera."
+msgstr "Biletet er breiare enn det GIMP kan handsama."
 
 #: ../plug-ins/common/file-pnm.c:634
 msgid "Invalid Y resolution."
@@ -3449,7 +3450,7 @@ msgstr "Ugyldig X-oppløysing."
 
 #: ../plug-ins/common/file-pnm.c:636
 msgid "Image height is larger than GIMP can handle."
-msgstr "Biletet er høgare enn det GIMP kan handtera."
+msgstr "Biletet er høgare enn det GIMP kan handsama."
 
 #: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
@@ -4048,7 +4049,7 @@ msgid ""
 "No image width specified"
 msgstr ""
 "«%s»:\n"
-"Biletbreidda ikkje oppgitt"
+"Biletbreidda ikkje oppgjeve"
 
 #: ../plug-ins/common/file-sunras.c:510 ../plug-ins/common/file-xbm.c:843
 #: ../plug-ins/common/file-xwd.c:533
@@ -4058,7 +4059,7 @@ msgid ""
 "Image width is larger than GIMP can handle"
 msgstr ""
 "'%s':\n"
-"Biletbreidda er større enn det GIMP kan handtera"
+"Biletbreidda er større enn det GIMP kan handsama"
 
 #: ../plug-ins/common/file-sunras.c:518 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:540
@@ -4068,7 +4069,7 @@ msgid ""
 "No image height specified"
 msgstr ""
 "«%s»:\n"
-"Bilethøga er ikkje oppgitt"
+"Bilethøga er ikkje oppgjeve"
 
 #: ../plug-ins/common/file-sunras.c:526 ../plug-ins/common/file-xbm.c:859
 #: ../plug-ins/common/file-xwd.c:547
@@ -4078,7 +4079,7 @@ msgid ""
 "Image height is larger than GIMP can handle"
 msgstr ""
 "'%s':\n"
-"Bilethøgda er større enn det GIMP kan handtera"
+"Bilethøgda er større enn det GIMP kan handsama"
 
 #: ../plug-ins/common/file-sunras.c:562
 msgid "This image depth is not supported"
@@ -4162,11 +4163,11 @@ msgstr "Lager skalerbar vektorgrafikk (SVG)"
 #: ../plug-ins/common/file-svg.c:723 ../plug-ins/common/file-wmf.c:581
 #: ../plug-ins/common/grid.c:762
 msgid "Width:"
-msgstr "Breidde:"
+msgstr "Breidd:"
 
 #: ../plug-ins/common/file-svg.c:729 ../plug-ins/common/file-wmf.c:587
 msgid "Height:"
-msgstr "Høgde:"
+msgstr "Høgd:"
 
 #: ../plug-ins/common/file-svg.c:805 ../plug-ins/common/file-wmf.c:663
 msgid "_X ratio:"
@@ -4189,8 +4190,8 @@ msgstr "_Importer stigar"
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
-"Importer SVG stigelement slik at desse kan verta handterte med stigverktøyet "
-"i GIMP"
+"Importer SVG stielement slik at desse kan verta handsama med stiverktøyet i "
+"GIMP"
 
 #: ../plug-ins/common/file-svg.c:887
 msgid "Merge imported paths"
@@ -4215,24 +4216,24 @@ msgstr "Kan ikkje leseutviding frå «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "Kan ikkje lese header frå «%s»"
 
-#: ../plug-ins/common/file-tga.c:1439
+#: ../plug-ins/common/file-tga.c:1446
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1455 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "_RLE-komprimering"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1469
 msgid "Or_igin:"
 msgstr "_Opphav:"
 
-#: ../plug-ins/common/file-tga.c:1466
+#: ../plug-ins/common/file-tga.c:1473
 msgid "Bottom left"
 msgstr "Nede, venstre"
 
-#: ../plug-ins/common/file-tga.c:1467
+#: ../plug-ins/common/file-tga.c:1474
 msgid "Top left"
 msgstr "Oppe, venstre"
 
@@ -4445,8 +4446,8 @@ msgstr ""
 "Vel den nominelle storleiken på rammene.\n"
 "Dersom du ikkje har planar om å laga ein markør med fleire storleikar, eller "
 "om du er usikker, bruk «32px».\n"
-"Nominell storleik har ingen samanheng med aktuell storleik, breidde eller "
-"høgde.\n"
+"Nominell storleik har ingen samanheng med aktuell storleik, breidd eller "
+"høgd.\n"
 "Den vert brukt berre for å bestemma kva for ramme som skal brukast i "
 "bestemte animasjonssekvensar og kva for sekvensar som brukar verdien frå "
 "«gtk-cursor-theme-size»."
@@ -4607,7 +4608,7 @@ msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
-"Dette programtillegget kan ikkje handtera markørar som inneheld meir enn %i "
+"Dette programtillegget kan ikkje handsama markørar som inneheld meir enn %i "
 "ulike nominelle storleikar."
 
 #: ../plug-ins/common/file-xpm.c:176 ../plug-ins/common/file-xpm.c:201
@@ -4798,7 +4799,7 @@ msgstr "_Avansert"
 
 #: ../plug-ins/common/film.c:1108
 msgid "Image _height:"
-msgstr "Bilet_høgde:"
+msgstr "Bilet_høgd:"
 
 #: ../plug-ins/common/film.c:1119
 msgid "Image spac_ing:"
@@ -4810,11 +4811,11 @@ msgstr "Hol_forskyving:"
 
 #: ../plug-ins/common/film.c:1141
 msgid "Ho_le width:"
-msgstr "Hol_breidde:"
+msgstr "Hol_breidd:"
 
 #: ../plug-ins/common/film.c:1152
 msgid "Hol_e height:"
-msgstr "Holh_øgde:"
+msgstr "Holh_øgd:"
 
 #: ../plug-ins/common/film.c:1163
 msgid "Hole sp_acing:"
@@ -4822,7 +4823,7 @@ msgstr "Hola_vstand:"
 
 #: ../plug-ins/common/film.c:1174
 msgid "_Number height:"
-msgstr "_Talhøgde:"
+msgstr "_Talhøgd:"
 
 #: ../plug-ins/common/film.c:1187
 msgid "Re_set"
@@ -5019,7 +5020,7 @@ msgstr "Fraktal"
 #. Settings
 #: ../plug-ins/common/fractal-trace.c:748
 msgid "Outside Type"
-msgstr "Rammehandtering"
+msgstr "Rammehandsaming"
 
 #: ../plug-ins/common/fractal-trace.c:753
 msgid "_Wrap"
@@ -5236,7 +5237,7 @@ msgstr "Avrunda kantar"
 
 #: ../plug-ins/common/jigsaw.c:2497
 msgid "_Bevel width:"
-msgstr "Breidde på av_rundinga:"
+msgstr "Breidd på av_rundinga:"
 
 #: ../plug-ins/common/jigsaw.c:2501
 msgid "Degree of slope of each piece's edge"
@@ -6219,7 +6220,7 @@ msgstr "Fyll inn alle tekstfelta."
 
 #: ../plug-ins/common/unit-editor.c:412
 msgid "Unit Editor"
-msgstr "Einingshandterar"
+msgstr "Einingshandsamar"
 
 #. destroy model automatically with view
 #. Put buttons in
@@ -6332,7 +6333,7 @@ msgstr "Forskyvingskart:"
 #. Displacement Type
 #: ../plug-ins/common/warp.c:451
 msgid "On edges:"
-msgstr "Kanthandtering:"
+msgstr "På kantane:"
 
 #: ../plug-ins/common/warp.c:462
 msgid "Wrap"
@@ -6544,7 +6545,7 @@ msgstr "Skriv inn nettadressa (URI):"
 
 #: ../plug-ins/common/web-page.c:287
 msgid "Width (pixels):"
-msgstr "Breidde (pikslar):"
+msgstr "Breidd (pikslar):"
 
 #: ../plug-ins/common/web-page.c:308
 msgid "Font size:"
@@ -6944,7 +6945,7 @@ msgstr "Komprimert (PNG)"
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
 msgid "Could not read '%lu' bytes"
-msgstr "Kunne ikkje lesa '%lu' byte"
+msgstr "Kunne ikkje lesa «%lu» byte"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
@@ -7180,12 +7181,12 @@ msgstr "For mange kanalar i laget %d"
 #: ../plug-ins/file-psd/psd-load.c:569
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
-msgstr "Ustøtta eller ugyldig laghøgde: %d"
+msgstr "Ustøtta eller ugyldig laghøgd: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:577
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
-msgstr "Ustøtta eller ugyldig lagbreidde: %d"
+msgstr "Ustøtta eller ugyldig lagbreidd: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:586
 #, c-format
@@ -7200,12 +7201,12 @@ msgstr "Ugyldig eller ikkje støtta maskestorleik: %d"
 #: ../plug-ins/file-psd/psd-load.c:840
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
-msgstr "Ustøtta eller ugyldig lagmaskehøgde:  %d"
+msgstr "Ustøtta eller ugyldig lagmaskehøgd:  %d"
 
 #: ../plug-ins/file-psd/psd-load.c:848
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
-msgstr "Ustøtta eller ugyldig lagmaskebreidde:  %d"
+msgstr "Ustøtta eller ugyldig lagmaskebreidd:  %d"
 
 #: ../plug-ins/file-psd/psd-load.c:857
 #, c-format
@@ -7396,12 +7397,12 @@ msgstr "Klarte ikkje opna for lesing frå «%s»."
 #: ../plug-ins/file-sgi/sgi.c:348
 #, c-format
 msgid "Invalid width: %hu"
-msgstr "Ugyldig breidde: %hu"
+msgstr "Ugyldig breidd: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:356
 #, c-format
 msgid "Invalid height: %hu"
-msgstr "Ugyldig høgde: %hu"
+msgstr "Ugyldig høgd: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:364
 #, c-format
@@ -8195,7 +8196,7 @@ msgstr "_Forminsk"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Undo last zoom change"
-msgstr "Angre siste zoomendringa"
+msgstr "Angra siste zoomendringa"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
 #: ../plug-ins/ifs-compose/ifs-compose.c:1039
@@ -8421,7 +8422,7 @@ msgstr "Legg aktiv fargeovergang til det ferdige biletet"
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 "Opprett eit fargekart ved å bruka ein fargeovergang frå "
-"fargeovergangshandteraren"
+"fargeovergangshandsamaren"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
@@ -8752,7 +8753,7 @@ msgstr "Utjamning"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1311
 msgid "Max undo:"
-msgstr "Maks angre.:"
+msgstr "Maks angra.:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
@@ -9201,11 +9202,11 @@ msgstr "Bestem retninga på penselstrøka manuelt"
 
 #: ../plug-ins/gimpressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
-msgstr "Opnar handteraren for retningsoversikten"
+msgstr "Opnar handsamaren for retningsoversikten"
 
 #: ../plug-ins/gimpressionist/orientmap.c:523
 msgid "Orientation Map Editor"
-msgstr "Retningskarthandteraren"
+msgstr "Retningskarthandsamaren"
 
 #: ../plug-ins/gimpressionist/orientmap.c:552
 msgid "Vectors"
@@ -9500,11 +9501,11 @@ msgstr "Spesifiser penselstorleiken manuelt"
 
 #: ../plug-ins/gimpressionist/size.c:207
 msgid "Opens up the Size Map Editor"
-msgstr "Opnar storleikshandteraren"
+msgstr "Opnar storleikshandsamaren"
 
 #: ../plug-ins/gimpressionist/sizemap.c:396
 msgid "Size Map Editor"
-msgstr "Storleikshandterararen"
+msgstr "Storleikshandsamararen"
 
 #: ../plug-ins/gimpressionist/sizemap.c:425
 msgid "Smvectors"
@@ -10347,7 +10348,7 @@ msgstr "fann ikkje %s i lista over G-refleksar"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3396
 msgid "Gradient Flare Editor"
-msgstr "Gradientreflekshandteraren"
+msgstr "Gradientreflekshandsamaren"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3400
 msgid "_Rescan Gradients"
@@ -10433,7 +10434,7 @@ msgstr "Tal på strålar:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3827
 msgid "Spike thickness:"
-msgstr "Strålebreidde:"
+msgstr "Strålebreidd:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3841
 msgid "_Rays"
@@ -10900,8 +10901,8 @@ msgid ""
 "suitable for navigation bars."
 msgstr ""
 "Hjelperutene er ein tabell med rektangel som vert lagt over biletet for å "
-"definera klikkområda. Du definerer tabellen ved å bestemma breidde, høgde og "
-"avstanden mellom linjene. Dette gjer at du t.d. raskt og enkelt kan lage eit "
+"definera klikkområda. Du definerer tabellen ved å bestemma breidd, høgd og "
+"avstanden mellom linjene. Dette gjer at du t.d. raskt og enkelt kan laga eit "
 "biletkart av «miniatyrar» som kan brukast til for eksempel menylinjer."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:168
@@ -11129,11 +11130,11 @@ msgstr "Rutestorleik"
 
 #: ../plug-ins/imagemap/imap_grid.c:245
 msgid "_Width"
-msgstr "_Breidde"
+msgstr "_Breidd"
 
 #: ../plug-ins/imagemap/imap_grid.c:251
 msgid "_Height"
-msgstr "_Høgde"
+msgstr "_Høgd"
 
 #: ../plug-ins/imagemap/imap_grid.c:265
 msgid "Grid Offset"
@@ -11179,7 +11180,7 @@ msgstr "Fila «%s» er lagra."
 
 #: ../plug-ins/imagemap/imap_main.c:841
 msgid "Couldn't save file:"
-msgstr "Kunne ikjke lagra fila:"
+msgstr "Kunne ikkje lagra fila:"
 
 #: ../plug-ins/imagemap/imap_main.c:854
 msgid "Image size has changed."
@@ -11230,7 +11231,7 @@ msgstr "_Avslutt"
 
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
-msgstr "Angre"
+msgstr "Angra"
 
 #: ../plug-ins/imagemap/imap_menu.c:164
 msgid "Redo"
@@ -11782,11 +11783,11 @@ msgstr "Ku_rve:"
 
 #: ../plug-ins/lighting/lighting-ui.c:873
 msgid "Ma_ximum height:"
-msgstr "Ma_ksimal høgde:"
+msgstr "Ma_ksimal høgd:"
 
 #: ../plug-ins/lighting/lighting-ui.c:883
 msgid "Maximum height for bumps"
-msgstr "Maksimal høgde for humpane"
+msgstr "Maksimal høgd for humpane"
 
 #: ../plug-ins/lighting/lighting-ui.c:907
 msgid "E_nable environment mapping"
@@ -12179,7 +12180,7 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 "Skriv inn eller rediger GPS-høgdeverdien her.\n"
-"Ein gyldig verdi iiieheld eitt tal:\n"
+"Ein gyldig verdi inneheld eitt tal:\n"
 "f. eks. 100 eller 12.24\n"
 "Avhengig av måleeining, skriv verdien i meter (m) eller fot (ft)\n"
 "Slett all tekst for å fjerna gjeldande verdi."
@@ -12730,7 +12731,7 @@ msgstr "Musepeikar"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:628
 msgid "Specified window not found"
-msgstr "Fann ikkje det oppgitte vindauget"
+msgstr "Fann ikkje det oppgjeve vindauget"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/selection-to-path/pxl-outline.c:81
@@ -12826,7 +12827,7 @@ msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:216
 msgid "Filter Iteration Count:"
-msgstr "Kor mange filteriterasjonar:"
+msgstr "Kor mange filtergjentakingar:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:220
 msgid ""
