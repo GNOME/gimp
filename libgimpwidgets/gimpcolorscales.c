@@ -356,12 +356,21 @@ create_group (GimpColorScales           *scales,
 
   if (add_label)
     {
+      GtkWidget *scrolled_window;
+
+      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                      GTK_POLICY_EXTERNAL, GTK_POLICY_NEVER);
+      gtk_grid_attach (GTK_GRID (grid), scrolled_window, 1, row, 3, 1);
+      gtk_widget_set_visible (scrolled_window, TRUE);
+
       label = gtk_label_new (NULL);
       gtk_widget_set_halign (label, GTK_ALIGN_START);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+      gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
       gtk_label_set_text (GTK_LABEL (label), _("Profile: sRGB"));
-      gtk_grid_attach (GTK_GRID (grid), label, 1, row, 3, 1);
-      gtk_widget_show (label);
+      gtk_container_add (GTK_CONTAINER (scrolled_window), label);
+      gtk_widget_set_visible (label, TRUE);
 
       scales->profile_labels = g_list_prepend (scales->profile_labels, label);
     }

@@ -793,6 +793,7 @@ welcome_dialog_create_creation_page (Gimp       *gimp,
         gtk_grid_attach (GTK_GRID (grid), thumbnail, 1, 0, 1, 1);
 
       name_label = gtk_label_new (basename);
+      gtk_label_set_ellipsize (GTK_LABEL (name_label), PANGO_ELLIPSIZE_MIDDLE);
       g_free (basename);
       g_object_set (name_label, "xalign", 0.0, NULL);
       gtk_grid_attach (GTK_GRID (grid), name_label, 2, 0, 1, 1);
