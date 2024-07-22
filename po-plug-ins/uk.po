@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-15 18:12+0000\n"
-"PO-Revision-Date: 2024-07-16 08:48+0300\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian\n"
+"POT-Creation-Date: 2024-07-21 19:23+0000\n"
+"PO-Revision-Date: 2024-07-22 08:56+0300\n"
+"Last-Translator: Fracture dept <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -625,7 +625,7 @@ msgstr "Жалюзі"
 #: plug-ins/common/file-pix.c:426 plug-ins/common/file-png.c:916
 #: plug-ins/common/file-pnm.c:844 plug-ins/common/file-qoi.c:293
 #: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1054
-#: plug-ins/common/file-tga.c:1088 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-tga.c:1095 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:882 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
@@ -1213,10 +1213,10 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-pcx.c:1181 plug-ins/common/file-pdf-export.c:663
 #: plug-ins/common/file-png.c:1486 plug-ins/common/file-raw-data.c:1358
 #: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:609
-#: plug-ins/common/file-tga.c:1209 plug-ins/common/file-xmc.c:1267
+#: plug-ins/common/file-tga.c:1216 plug-ins/common/file-xmc.c:1267
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
-#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:427
-#: plug-ins/file-ico/ico-export.c:1343 plug-ins/file-ico/ico-export.c:1560
+#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:436
+#: plug-ins/file-ico/ico-export.c:1356 plug-ins/file-ico/ico-export.c:1576
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
 #: plug-ins/file-tiff/file-tiff-export.c:1084
 #: plug-ins/file-tiff/file-tiff-export.c:1173 plug-ins/flame/flame.c:590
@@ -2677,11 +2677,11 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-pix.c:631 plug-ins/common/file-png.c:1478
 #: plug-ins/common/file-pnm.c:1609 plug-ins/common/file-ps.c:1365
 #: plug-ins/common/file-qoi.c:347 plug-ins/common/file-sunras.c:600
-#: plug-ins/common/file-tga.c:1201 plug-ins/common/file-xbm.c:1021
+#: plug-ins/common/file-tga.c:1208 plug-ins/common/file-xbm.c:1021
 #: plug-ins/common/file-xpm.c:677 plug-ins/common/file-xwd.c:688
 #: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:656
-#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:610
-#: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
+#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:621
+#: plug-ins/file-ico/ico-export.c:1348 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
 #: plug-ins/file-sgi/sgi.c:617 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
@@ -2884,11 +2884,11 @@ msgstr "Експортує файли у формат пензлів GIMP"
 msgid "Sp_acing"
 msgstr "І_нтервал"
 
-#: plug-ins/common/file-gbr.c:151 plug-ins/common/file-gih.c:186
+#: plug-ins/common/file-gbr.c:151 plug-ins/common/file-gih.c:185
 msgid "Spacing of the brush"
 msgstr "Інтервал пензля"
 
-#: plug-ins/common/file-gbr.c:156 plug-ins/common/file-gih.c:191
+#: plug-ins/common/file-gbr.c:156 plug-ins/common/file-gih.c:190
 #: plug-ins/common/file-pat.c:135
 msgid "_Description"
 msgstr "_Опис"
@@ -3275,15 +3275,15 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Забагато стиснених даних, ігноруємо зайві..."
 
-#: plug-ins/common/file-gih.c:155
+#: plug-ins/common/file-gih.c:154
 msgid "GIMP brush (animated)"
 msgstr "Пензель GIMP(анімаційний)"
 
-#: plug-ins/common/file-gih.c:159
+#: plug-ins/common/file-gih.c:158
 msgid "Exports images in GIMP Brush Pipe format"
 msgstr "Експортує зображення у форматі каналу пензлів GIMP"
 
-#: plug-ins/common/file-gih.c:161
+#: plug-ins/common/file-gih.c:160
 msgid ""
 "This plug-in exports an image in the GIMP brush pipe format. For a colored "
 "brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
@@ -3295,84 +3295,84 @@ msgstr ""
 "бути масками у відтінках сірого. Зображення може бути багатошаровим, крім "
 "того, шари може бути поділено на прямокутний масив пензлів."
 
-#: plug-ins/common/file-gih.c:178
+#: plug-ins/common/file-gih.c:177
 msgid "Brush Pipe"
 msgstr "Анімаційний пензель"
 
-#: plug-ins/common/file-gih.c:185
+#: plug-ins/common/file-gih.c:184
 msgid "Spacing (_percent)"
 msgstr "_Інтервал (відсотки)"
 
-#: plug-ins/common/file-gih.c:192
+#: plug-ins/common/file-gih.c:191
 msgid "Short description of the GIH brush pipe"
 msgstr "Короткий опис анімаційного пензля GIH"
 
-#: plug-ins/common/file-gih.c:197
+#: plug-ins/common/file-gih.c:196
 msgid "Cell _width"
 msgstr "_Ширина комірки"
 
-#: plug-ins/common/file-gih.c:198
+#: plug-ins/common/file-gih.c:197
 msgid "Width of the brush cells in pixels"
 msgstr "Ширина комірок пензлів у пікселях"
 
-#: plug-ins/common/file-gih.c:203
+#: plug-ins/common/file-gih.c:202
 msgid "Cell _height"
 msgstr "_Висота комірки"
 
-#: plug-ins/common/file-gih.c:204
+#: plug-ins/common/file-gih.c:203
 msgid "Height of the brush cells in pixels"
 msgstr "Висота комірок пензлів у пікселях"
 
-#: plug-ins/common/file-gih.c:209
+#: plug-ins/common/file-gih.c:208
 msgid "_Number of cells"
 msgstr "_Кількість комірок"
 
-#: plug-ins/common/file-gih.c:210
+#: plug-ins/common/file-gih.c:209
 msgid "Number of cells to cut up"
 msgstr "Кількість комірок для вирізання"
 
-#: plug-ins/common/file-gih.c:215
+#: plug-ins/common/file-gih.c:214
 msgid "_Rank"
 msgstr "_Ранг"
 
-#: plug-ins/common/file-gih.c:216
+#: plug-ins/common/file-gih.c:215
 msgid "Ranks of the dimensions"
 msgstr "Ранги розмірностей"
 
-#: plug-ins/common/file-gih.c:220 plug-ins/common/file-gih.c:221
+#: plug-ins/common/file-gih.c:219 plug-ins/common/file-gih.c:220
 msgid "Selection modes"
 msgstr "Режими позначення"
 
-#: plug-ins/common/file-gih.c:227
+#: plug-ins/common/file-gih.c:226
 msgid "Display as"
 msgstr "Відобразити як"
 
-#: plug-ins/common/file-gih.c:228
+#: plug-ins/common/file-gih.c:227
 msgid "Describe how the layers will be split"
 msgstr "Опис того, як буде поділено шари"
 
-#: plug-ins/common/file-gih.c:232
+#: plug-ins/common/file-gih.c:231
 msgid "D_imension"
 msgstr "Розмір_ність"
 
-#: plug-ins/common/file-gih.c:233
+#: plug-ins/common/file-gih.c:232
 msgid "How many dimensions the animated brush has"
 msgstr "Кількість розмірностей анімаційного пензля"
 
-#: plug-ins/common/file-gih.c:515
+#: plug-ins/common/file-gih.c:514
 msgid "Width Mismatch!"
 msgstr "Невідповідність ширини!"
 
-#: plug-ins/common/file-gih.c:516
+#: plug-ins/common/file-gih.c:515
 msgid "Height Mismatch!"
 msgstr "Невідповідність висоти!"
 
-#: plug-ins/common/file-gih.c:563
+#: plug-ins/common/file-gih.c:562
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "Показує як ґратку %d × %d на кожному шарі"
 
-#: plug-ins/common/file-gih.c:749
+#: plug-ins/common/file-gih.c:748
 msgid "Ranks:"
 msgstr "Кількість кадрів:"
 
@@ -5884,17 +5884,14 @@ msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #: plug-ins/common/file-sunras.c:323
-#| msgid "Data Formatting"
 msgid "_Data Formatting"
 msgstr "Форматування д_аних"
 
 #: plug-ins/common/file-sunras.c:324
-#| msgid "Use standard (0) or Run-Length Encoded (1) output"
 msgid "Use standard or Run-Length Encoded output"
 msgstr "Стандартне виведення чи виведення у RLE-кодуванні"
 
 #: plug-ins/common/file-sunras.c:326
-#| msgid "_Run-Length Encoded"
 msgid "Run-Length Encoding"
 msgstr "RLE-кодування"
 
@@ -6113,11 +6110,11 @@ msgstr "Не вдається прочитати розширення з «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "Не вдається зчитати заголовок з «%s»"
 
-#: plug-ins/common/file-tga.c:1424
+#: plug-ins/common/file-tga.c:1431
 msgid "Bottom left"
 msgstr "Знизу ліворуч"
 
-#: plug-ins/common/file-tga.c:1425
+#: plug-ins/common/file-tga.c:1432
 msgid "Top left"
 msgstr "Згори ліворуч"
 
@@ -7739,12 +7736,10 @@ msgid "Draw a border of spikes around the image"
 msgstr "Намалювати рамку з променів навколо зображення"
 
 #: plug-ins/common/sparkle.c:271
-#| msgid "Color type"
 msgid "_Color type"
 msgstr "Тип _кольору"
 
 #: plug-ins/common/sparkle.c:272
-#| msgid "Color s_pace"
 msgid "Color of sparkles"
 msgstr "Колір цяток"
 
@@ -9610,7 +9605,7 @@ msgstr "Не вдалося прочитати кадр %d. Ймовірно, а
 msgid "Open FLIC Animation"
 msgstr "Відкрити анімацію FLIC"
 
-#: plug-ins/file-icns/file-icns-export.c:228
+#: plug-ins/file-icns/file-icns-export.c:233
 #, c-format
 msgid ""
 "Invalid icon size. \n"
@@ -9619,7 +9614,7 @@ msgstr ""
 "Некоректний розмір піктограми. \n"
 "Дані не буде експортовано"
 
-#: plug-ins/file-icns/file-icns-export.c:231
+#: plug-ins/file-icns/file-icns-export.c:236
 #, c-format
 msgid ""
 "Duplicate layer size. \n"
@@ -9628,11 +9623,7 @@ msgstr ""
 "Дублювання розміру шару. \n"
 "Дані не буде експортовано"
 
-#: plug-ins/file-icns/file-icns-export.c:292 plug-ins/file-icns/file-icns.c:176
-msgid "Apple Icon Image"
-msgstr "Зображення піктограми Apple"
-
-#: plug-ins/file-icns/file-icns-export.c:307
+#: plug-ins/file-icns/file-icns-export.c:314
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -9645,16 +9636,16 @@ msgstr ""
 "При експортуванні буде проігноровано шари усіх інших розмірів."
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:315
+#: plug-ins/file-icns/file-icns-export.c:322
 msgid "Export Icons"
 msgstr "Експорт піктограм"
 
-#: plug-ins/file-icns/file-icns-export.c:522
+#: plug-ins/file-icns/file-icns-export.c:531
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "Помилка під час запису даних icns: %s"
 
-#: plug-ins/file-icns/file-icns-export.c:584
+#: plug-ins/file-icns/file-icns-export.c:595
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -9664,7 +9655,7 @@ msgstr ""
 "розмірів: 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, "
 "256x256, 512x512 і 1024x1024."
 
-#: plug-ins/file-icns/file-icns-export.c:602
+#: plug-ins/file-icns/file-icns-export.c:613
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -9693,17 +9684,9 @@ msgstr "Відкривається перегляд для «%s»"
 msgid "Icns"
 msgstr "Icns"
 
-#: plug-ins/file-ico/ico-dialog.c:61
-msgid "Windows Animated Cursor"
-msgstr "Анімований вказівник Windows"
-
-#: plug-ins/file-ico/ico-dialog.c:62
-msgid "Windows Cursor"
-msgstr "Курсор Windows"
-
-#: plug-ins/file-ico/ico-dialog.c:62
-msgid "Windows Icon"
-msgstr "Значок Windows"
+#: plug-ins/file-icns/file-icns.c:176
+msgid "Apple Icon Image"
+msgstr "Зображення піктограми Apple"
 
 #: plug-ins/file-ico/ico-dialog.c:97
 msgid "Animated Cursor Settings"
@@ -9770,7 +9753,7 @@ msgstr "_X «гарячої точки»:"
 msgid "Hot spot _Y:"
 msgstr "_Y «гарячої точки»:"
 
-#: plug-ins/file-ico/ico-export.c:214
+#: plug-ins/file-ico/ico-export.c:216
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
@@ -9798,11 +9781,11 @@ msgstr "Некоректні метадані ANI"
 msgid "Microsoft Windows icon"
 msgstr "Значок Microsoft Windows"
 
-#: plug-ins/file-ico/ico.c:197 plug-ins/file-ico/ico.c:317
+#: plug-ins/file-ico/ico.c:197 plug-ins/file-ico/ico.c:319
 msgid "Microsoft Windows cursor"
 msgstr "Курсор Microsoft Windows"
 
-#: plug-ins/file-ico/ico.c:227 plug-ins/file-ico/ico.c:364
+#: plug-ins/file-ico/ico.c:227 plug-ins/file-ico/ico.c:368
 msgid "Microsoft Windows animated cursor"
 msgstr "Анімований вказівник Microsoft Windows"
 
@@ -9814,15 +9797,15 @@ msgstr "Завантажує файли у форматі ANI Windows"
 msgid "Loads a preview from a Windows ANI files"
 msgstr "Завантажує попередній перегляд з файлів ANI Windows"
 
-#: plug-ins/file-ico/ico.c:368 plug-ins/file-ico/ico.c:369
+#: plug-ins/file-ico/ico.c:372 plug-ins/file-ico/ico.c:373
 msgid "Saves files in Windows ANI file format"
 msgstr "Зберігає файли у форматі ANI Windows"
 
-#: plug-ins/file-ico/ico.c:385
+#: plug-ins/file-ico/ico.c:391
 msgid "Cursor Name (Optional)"
 msgstr "Назва вказівника (необов'язкова)"
 
-#: plug-ins/file-ico/ico.c:391
+#: plug-ins/file-ico/ico.c:397
 msgid "Cursor Author (Optional)"
 msgstr "Автор вказівника (необов'язковий)"
 
@@ -10069,11 +10052,23 @@ msgstr ""
 "У файлах PSD можна зберігати до 998 контурів. \n"
 "Решту контурів буде відкинуто."
 
-#: plug-ins/file-psd/psd-export.c:2670 plug-ins/file-psd/psd-load.c:3782
+#: plug-ins/file-psd/psd-export.c:2678
+msgid "Indexed Image Warning"
+msgstr "Попередження щодо індексованого зображення"
+
+#: plug-ins/file-psd/psd-export.c:2679
+msgid ""
+"Photoshop does not support indexed images that have more than one layer. "
+"Layers will be merged on export."
+msgstr ""
+"У Photoshop не передбачено підтримки індексованих зображень, у яких понад"
+" один шар. При експортуванні шари буде об'єднано."
+
+#: plug-ins/file-psd/psd-export.c:2699 plug-ins/file-psd/psd-load.c:3782
 msgid "Compatibility Notice"
 msgstr "Зауваження щодо сумісності"
 
-#: plug-ins/file-psd/psd-export.c:2671
+#: plug-ins/file-psd/psd-export.c:2700
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -11591,11 +11586,10 @@ msgid "Color mode"
 msgstr "Режим кольорів"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:316
-#| msgid "Apply active gradient to final image"
 msgid "Apply specified color map or active gradient to final image"
 msgstr ""
-"Застосувати вказану карту кольорів або активний градієнт до остаточного"
-" зображення"
+"Застосувати вказану карту кольорів або активний градієнт до остаточного "
+"зображення"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:317
 msgid "As specified above"
@@ -16334,6 +16328,15 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Windows Animated Cursor"
+#~ msgstr "Анімований вказівник Windows"
+
+#~ msgid "Windows Cursor"
+#~ msgstr "Курсор Windows"
+
+#~ msgid "Windows Icon"
+#~ msgstr "Значок Windows"
 
 #~ msgid "S_tandard"
 #~ msgstr "Ст_андарт"
