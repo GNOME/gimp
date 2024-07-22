@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-15 18:12+0000\n"
-"PO-Revision-Date: 2024-07-16 19:02+0800\n"
+"POT-Creation-Date: 2024-07-21 19:23+0000\n"
+"PO-Revision-Date: 2024-07-22 19:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -620,7 +620,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-pix.c:426 plug-ins/common/file-png.c:916
 #: plug-ins/common/file-pnm.c:844 plug-ins/common/file-qoi.c:293
 #: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:1054
-#: plug-ins/common/file-tga.c:1088 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-tga.c:1095 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:882 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
@@ -1202,10 +1202,10 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-pcx.c:1181 plug-ins/common/file-pdf-export.c:663
 #: plug-ins/common/file-png.c:1486 plug-ins/common/file-raw-data.c:1358
 #: plug-ins/common/file-raw-data.c:1387 plug-ins/common/file-sunras.c:609
-#: plug-ins/common/file-tga.c:1209 plug-ins/common/file-xmc.c:1267
+#: plug-ins/common/file-tga.c:1216 plug-ins/common/file-xmc.c:1267
 #: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
-#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:427
-#: plug-ins/file-ico/ico-export.c:1343 plug-ins/file-ico/ico-export.c:1560
+#: plug-ins/file-fli/fli-gimp.c:791 plug-ins/file-icns/file-icns-export.c:436
+#: plug-ins/file-ico/ico-export.c:1356 plug-ins/file-ico/ico-export.c:1576
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
 #: plug-ins/file-tiff/file-tiff-export.c:1084
 #: plug-ins/file-tiff/file-tiff-export.c:1173 plug-ins/flame/flame.c:590
@@ -2629,11 +2629,11 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-pix.c:631 plug-ins/common/file-png.c:1478
 #: plug-ins/common/file-pnm.c:1609 plug-ins/common/file-ps.c:1365
 #: plug-ins/common/file-qoi.c:347 plug-ins/common/file-sunras.c:600
-#: plug-ins/common/file-tga.c:1201 plug-ins/common/file-xbm.c:1021
+#: plug-ins/common/file-tga.c:1208 plug-ins/common/file-xbm.c:1021
 #: plug-ins/common/file-xpm.c:677 plug-ins/common/file-xwd.c:688
 #: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:656
-#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:610
-#: plug-ins/file-ico/ico-export.c:1335 plug-ins/file-ico/ico-export.c:1544
+#: plug-ins/file-fli/fli-gimp.c:758 plug-ins/file-icns/file-icns-export.c:621
+#: plug-ins/file-ico/ico-export.c:1348 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
 #: plug-ins/file-sgi/sgi.c:617 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
@@ -2833,11 +2833,11 @@ msgstr "以 GIMP 笔刷文件格式导出文件"
 msgid "Sp_acing"
 msgstr "间距(_A)"
 
-#: plug-ins/common/file-gbr.c:151 plug-ins/common/file-gih.c:186
+#: plug-ins/common/file-gbr.c:151 plug-ins/common/file-gih.c:185
 msgid "Spacing of the brush"
 msgstr "笔刷的间距"
 
-#: plug-ins/common/file-gbr.c:156 plug-ins/common/file-gih.c:191
+#: plug-ins/common/file-gbr.c:156 plug-ins/common/file-gih.c:190
 #: plug-ins/common/file-pat.c:135
 msgid "_Description"
 msgstr "描述(_D)"
@@ -3201,15 +3201,15 @@ msgstr ""
 msgid "Too much compressed data, ignoring extra..."
 msgstr "太多压缩的数据，正在忽略额外数据…"
 
-#: plug-ins/common/file-gih.c:155
+#: plug-ins/common/file-gih.c:154
 msgid "GIMP brush (animated)"
 msgstr "GIMP 笔刷（动画化）"
 
-#: plug-ins/common/file-gih.c:159
+#: plug-ins/common/file-gih.c:158
 msgid "Exports images in GIMP Brush Pipe format"
 msgstr "以 GIMP 笔刷管道格式导出图像"
 
-#: plug-ins/common/file-gih.c:161
+#: plug-ins/common/file-gih.c:160
 msgid ""
 "This plug-in exports an image in the GIMP brush pipe format. For a colored "
 "brush pipe, RGBA layers are used, otherwise the layers should be grayscale "
@@ -3219,84 +3219,84 @@ msgstr ""
 "该插件将图像导出为 GIMP 笔刷管道格式。对于彩色笔刷管道，使用 RGBA 图层，否则"
 "图层应为灰度蒙板。图像可以为多图层的，且图层可以分离为笔刷的矩形阵列。"
 
-#: plug-ins/common/file-gih.c:178
+#: plug-ins/common/file-gih.c:177
 msgid "Brush Pipe"
 msgstr "笔刷管道"
 
-#: plug-ins/common/file-gih.c:185
+#: plug-ins/common/file-gih.c:184
 msgid "Spacing (_percent)"
 msgstr "间距（百分比）(_P)"
 
-#: plug-ins/common/file-gih.c:192
+#: plug-ins/common/file-gih.c:191
 msgid "Short description of the GIH brush pipe"
 msgstr "GIH 笔刷管道的简短描述"
 
-#: plug-ins/common/file-gih.c:197
+#: plug-ins/common/file-gih.c:196
 msgid "Cell _width"
 msgstr "单元宽度(_W)"
 
-#: plug-ins/common/file-gih.c:198
+#: plug-ins/common/file-gih.c:197
 msgid "Width of the brush cells in pixels"
 msgstr "笔刷单元的宽度（像素）"
 
-#: plug-ins/common/file-gih.c:203
+#: plug-ins/common/file-gih.c:202
 msgid "Cell _height"
 msgstr "单元高度(_H)"
 
-#: plug-ins/common/file-gih.c:204
+#: plug-ins/common/file-gih.c:203
 msgid "Height of the brush cells in pixels"
 msgstr "笔刷单元的高度（像素）"
 
-#: plug-ins/common/file-gih.c:209
+#: plug-ins/common/file-gih.c:208
 msgid "_Number of cells"
 msgstr "单元数量(_N)"
 
-#: plug-ins/common/file-gih.c:210
+#: plug-ins/common/file-gih.c:209
 msgid "Number of cells to cut up"
 msgstr "割裂的单元数量"
 
-#: plug-ins/common/file-gih.c:215
+#: plug-ins/common/file-gih.c:214
 msgid "_Rank"
 msgstr "等级(_R)"
 
-#: plug-ins/common/file-gih.c:216
+#: plug-ins/common/file-gih.c:215
 msgid "Ranks of the dimensions"
 msgstr "尺寸等级"
 
-#: plug-ins/common/file-gih.c:220 plug-ins/common/file-gih.c:221
+#: plug-ins/common/file-gih.c:219 plug-ins/common/file-gih.c:220
 msgid "Selection modes"
 msgstr "选择模式"
 
-#: plug-ins/common/file-gih.c:227
+#: plug-ins/common/file-gih.c:226
 msgid "Display as"
 msgstr "显示为"
 
-#: plug-ins/common/file-gih.c:228
+#: plug-ins/common/file-gih.c:227
 msgid "Describe how the layers will be split"
 msgstr "描述图层分割的方式"
 
-#: plug-ins/common/file-gih.c:232
+#: plug-ins/common/file-gih.c:231
 msgid "D_imension"
 msgstr "尺寸(_I)"
 
-#: plug-ins/common/file-gih.c:233
+#: plug-ins/common/file-gih.c:232
 msgid "How many dimensions the animated brush has"
 msgstr "动画笔刷具有的尺寸数量"
 
-#: plug-ins/common/file-gih.c:515
+#: plug-ins/common/file-gih.c:514
 msgid "Width Mismatch!"
 msgstr "宽度不匹配！"
 
-#: plug-ins/common/file-gih.c:516
+#: plug-ins/common/file-gih.c:515
 msgid "Height Mismatch!"
 msgstr "高度不匹配！"
 
-#: plug-ins/common/file-gih.c:563
+#: plug-ins/common/file-gih.c:562
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "在每个图层上显示为 %d × %d 网格"
 
-#: plug-ins/common/file-gih.c:749
+#: plug-ins/common/file-gih.c:748
 msgid "Ranks:"
 msgstr "等级："
 
@@ -5943,11 +5943,11 @@ msgstr "无法从“%s”读取扩展"
 msgid "Cannot read header from '%s'"
 msgstr "无法从“%s”读取文件头"
 
-#: plug-ins/common/file-tga.c:1424
+#: plug-ins/common/file-tga.c:1431
 msgid "Bottom left"
 msgstr "左下"
 
-#: plug-ins/common/file-tga.c:1425
+#: plug-ins/common/file-tga.c:1432
 msgid "Top left"
 msgstr "左上"
 
@@ -9360,7 +9360,7 @@ msgstr "读取第 %d 帧失败。动画可能已损坏。\n"
 msgid "Open FLIC Animation"
 msgstr "打开 FLIC 动画"
 
-#: plug-ins/file-icns/file-icns-export.c:228
+#: plug-ins/file-icns/file-icns-export.c:233
 #, c-format
 msgid ""
 "Invalid icon size. \n"
@@ -9369,7 +9369,7 @@ msgstr ""
 "无效的图标大小。\n"
 "它不会被导出"
 
-#: plug-ins/file-icns/file-icns-export.c:231
+#: plug-ins/file-icns/file-icns-export.c:236
 #, c-format
 msgid ""
 "Duplicate layer size. \n"
@@ -9378,11 +9378,7 @@ msgstr ""
 "重复的图层大小。\n"
 "它不会被导出"
 
-#: plug-ins/file-icns/file-icns-export.c:292 plug-ins/file-icns/file-icns.c:176
-msgid "Apple Icon Image"
-msgstr "苹果图标图像"
-
-#: plug-ins/file-icns/file-icns-export.c:307
+#: plug-ins/file-icns/file-icns-export.c:314
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -9395,16 +9391,16 @@ msgstr ""
 "将在导出时忽略任何其它尺寸的图层。"
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:315
+#: plug-ins/file-icns/file-icns-export.c:322
 msgid "Export Icons"
 msgstr "导出图标"
 
-#: plug-ins/file-icns/file-icns-export.c:522
+#: plug-ins/file-icns/file-icns-export.c:531
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "写入 icns 时出错：%s"
 
-#: plug-ins/file-icns/file-icns-export.c:584
+#: plug-ins/file-icns/file-icns-export.c:595
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -9413,7 +9409,7 @@ msgstr ""
 "无有效尺寸的图层。有效的图层大小为 16x12、16x16、18x18、24x24、32x32、36x36、"
 "48x48、64x64、128x128、256x256、512x512 或 1024x1024。"
 
-#: plug-ins/file-icns/file-icns-export.c:602
+#: plug-ins/file-icns/file-icns-export.c:613
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -9440,17 +9436,9 @@ msgstr "打开“%s”的缩略图"
 msgid "Icns"
 msgstr "Icns"
 
-#: plug-ins/file-ico/ico-dialog.c:61
-msgid "Windows Animated Cursor"
-msgstr "Windows 动画指针"
-
-#: plug-ins/file-ico/ico-dialog.c:62
-msgid "Windows Cursor"
-msgstr "Windows 指针"
-
-#: plug-ins/file-ico/ico-dialog.c:62
-msgid "Windows Icon"
-msgstr "Windows 图标"
+#: plug-ins/file-icns/file-icns.c:176
+msgid "Apple Icon Image"
+msgstr "苹果图标图像"
 
 #: plug-ins/file-ico/ico-dialog.c:97
 msgid "Animated Cursor Settings"
@@ -9515,7 +9503,7 @@ msgstr "热点 _X："
 msgid "Hot spot _Y:"
 msgstr "热点 _Y："
 
-#: plug-ins/file-ico/ico-export.c:214
+#: plug-ins/file-ico/ico-export.c:216
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
@@ -9541,11 +9529,11 @@ msgstr "无效的 ANI 元数据"
 msgid "Microsoft Windows icon"
 msgstr "微软 Windows 图标"
 
-#: plug-ins/file-ico/ico.c:197 plug-ins/file-ico/ico.c:317
+#: plug-ins/file-ico/ico.c:197 plug-ins/file-ico/ico.c:319
 msgid "Microsoft Windows cursor"
 msgstr "微软 Windows 指针"
 
-#: plug-ins/file-ico/ico.c:227 plug-ins/file-ico/ico.c:364
+#: plug-ins/file-ico/ico.c:227 plug-ins/file-ico/ico.c:368
 msgid "Microsoft Windows animated cursor"
 msgstr "微软 Windows 动画指针"
 
@@ -9557,15 +9545,15 @@ msgstr "加载 Windows ANI 格式的文件"
 msgid "Loads a preview from a Windows ANI files"
 msgstr "从 Windows ANI 文件中加载预览"
 
-#: plug-ins/file-ico/ico.c:368 plug-ins/file-ico/ico.c:369
+#: plug-ins/file-ico/ico.c:372 plug-ins/file-ico/ico.c:373
 msgid "Saves files in Windows ANI file format"
 msgstr "以 Windows ANI 格式保存文件"
 
-#: plug-ins/file-ico/ico.c:385
+#: plug-ins/file-ico/ico.c:391
 msgid "Cursor Name (Optional)"
 msgstr "指针名称（可选）"
 
-#: plug-ins/file-ico/ico.c:391
+#: plug-ins/file-ico/ico.c:397
 msgid "Cursor Author (Optional)"
 msgstr "指针作者（可选）"
 
@@ -9799,11 +9787,21 @@ msgstr ""
 "PSD 文件可以存储至多 998 个路径。\n"
 "其余路径将被丢弃。"
 
-#: plug-ins/file-psd/psd-export.c:2670 plug-ins/file-psd/psd-load.c:3782
+#: plug-ins/file-psd/psd-export.c:2678
+msgid "Indexed Image Warning"
+msgstr "索引图像警告"
+
+#: plug-ins/file-psd/psd-export.c:2679
+msgid ""
+"Photoshop does not support indexed images that have more than one layer. "
+"Layers will be merged on export."
+msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
+
+#: plug-ins/file-psd/psd-export.c:2699 plug-ins/file-psd/psd-load.c:3782
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
-#: plug-ins/file-psd/psd-export.c:2671
+#: plug-ins/file-psd/psd-export.c:2700
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -15950,6 +15948,15 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Windows Animated Cursor"
+#~ msgstr "Windows 动画指针"
+
+#~ msgid "Windows Cursor"
+#~ msgstr "Windows 指针"
+
+#~ msgid "Windows Icon"
+#~ msgstr "Windows 图标"
 
 #~ msgid "S_tandard"
 #~ msgstr "标准(_T)"
