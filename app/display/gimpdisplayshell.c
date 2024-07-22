@@ -148,6 +148,7 @@ static void      gimp_display_shell_get_property   (GObject          *object,
                                                     GValue           *value,
                                                     GParamSpec       *pspec);
 
+static void      gimp_display_shell_style_updated  (GtkWidget        *widget);
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
 static void      gimp_display_shell_unmap          (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
@@ -248,6 +249,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->unmap              = gimp_display_shell_unmap;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
+  widget_class->style_updated      = gimp_display_shell_style_updated;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
   klass->scaled                    = gimp_display_shell_real_scaled;
@@ -303,6 +305,14 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("button-icon-size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              GTK_ICON_SIZE_MENU,
+                                                              GIMP_PARAM_READABLE));
+
 
   gtk_widget_class_set_css_name (widget_class, "GimpDisplayShell");
 }
@@ -431,6 +441,7 @@ gimp_display_shell_constructed (GObject *object)
   GimpImage         *image;
   GtkWidget         *grid;
   GtkWidget         *gtk_image;
+  GtkIconSize        button_icon_size;
   GimpAction        *action;
   gint               image_width;
   gint               image_height;
@@ -446,6 +457,10 @@ gimp_display_shell_constructed (GObject *object)
   image  = gimp_display_get_image (shell->display);
 
   gimp_display_shell_profile_init (shell);
+
+  gtk_widget_style_get (GTK_WIDGET (shell),
+                        "button-icon-size", &button_icon_size,
+                        NULL);
 
   if (image)
     {
@@ -509,7 +524,7 @@ gimp_display_shell_constructed (GObject *object)
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_RIGHT,
-                                            GTK_ICON_SIZE_MENU);
+                                            button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->origin), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -595,6 +610,19 @@ gimp_display_shell_constructed (GObject *object)
                     G_CALLBACK (gimp_display_shell_canvas_draw),
                     shell);
 
+  g_signal_connect_object (shell->display->gimp->config,
+                           "notify::theme",
+                           G_CALLBACK (gimp_display_shell_style_updated),
+                           shell, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (shell->display->gimp->config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_display_shell_style_updated),
+                           shell, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (shell->display->gimp->config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_display_shell_style_updated),
+                           shell, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+
   g_signal_connect (shell->canvas, "enter-notify-event",
                     G_CALLBACK (gimp_display_shell_canvas_tool_events),
                     shell);
@@ -659,7 +687,7 @@ gimp_display_shell_constructed (GObject *object)
                                      NULL);
   gtk_widget_set_can_focus (shell->zoom_button, FALSE);
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_ZOOM_FOLLOW_WINDOW,
-                                            GTK_ICON_SIZE_MENU);
+                                            button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->zoom_button), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -680,7 +708,7 @@ gimp_display_shell_constructed (GObject *object)
                                            NULL);
   gtk_widget_set_can_focus (shell->quick_mask_button, FALSE);
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_QUICK_MASK_OFF,
-                                            GTK_ICON_SIZE_MENU);
+                                            button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -703,7 +731,7 @@ gimp_display_shell_constructed (GObject *object)
   /*  the navigation window button  */
   shell->nav_ebox = gtk_event_box_new ();
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
-                                            GTK_ICON_SIZE_MENU);
+                                            button_icon_size);
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -950,6 +978,50 @@ gimp_display_shell_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_display_shell_style_updated (GtkWidget *widget)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+  GtkIconSize       icon_size;
+  gint              pixel_size;
+  GList            *children;
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
+  gtk_widget_style_get (GTK_WIDGET (shell),
+                        "button-icon-size", &icon_size,
+                        NULL);
+  gtk_icon_size_lookup (icon_size, &pixel_size, NULL);
+
+  if (shell->origin)
+    {
+      children = gtk_container_get_children (GTK_CONTAINER (shell->origin));
+      gtk_image_set_pixel_size (GTK_IMAGE (children->data), pixel_size);
+      g_list_free (children);
+    }
+
+  if (shell->zoom_button)
+    {
+      children = gtk_container_get_children (GTK_CONTAINER (shell->zoom_button));
+      gtk_image_set_pixel_size (GTK_IMAGE (children->data), pixel_size);
+      g_list_free (children);
+    }
+
+  if (shell->quick_mask_button)
+    {
+      children = gtk_container_get_children (GTK_CONTAINER (shell->quick_mask_button));
+      gtk_image_set_pixel_size (GTK_IMAGE (children->data), pixel_size);
+      g_list_free (children);
+    }
+
+  if (shell->nav_ebox)
+    {
+      children = gtk_container_get_children (GTK_CONTAINER (shell->nav_ebox));
+      gtk_image_set_pixel_size (GTK_IMAGE (children->data), pixel_size);
+      g_list_free (children);
     }
 }
 
