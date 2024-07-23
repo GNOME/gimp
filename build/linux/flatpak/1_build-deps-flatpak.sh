@@ -1,10 +1,12 @@
 #!/bin/sh
 
 if [ -z "$GITLAB_CI" ]; then
-  ## Make the script work locally
-  if [ "$0" != 'build/linux/flatpak/1_build-deps-flatpak.sh' ]; then
-    echo -e '\033[31m(ERROR)\033[0m: To run this script locally, please do it from gimp git folder.'
+  # Make the script work locally
+  if [ "$0" != 'build/linux/flatpak/1_build-deps-flatpak.sh' ] && [ ${PWD/*\//} != 'flatpak' ]; then
+    echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/linux/'
     exit 1
+  elif [ ${PWD/*\//} = 'flatpak' ]; then
+    cd ../../..
   fi
 fi
 
