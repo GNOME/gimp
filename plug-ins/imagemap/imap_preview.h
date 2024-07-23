@@ -31,26 +31,27 @@ typedef struct {
   GtkWidget    *preview;
   GtkWidget    *hruler;
   GtkWidget    *vruler;
-  gint         width;
-  gint         height;
-  gint         widget_width;
-  gint         widget_height;
+  gint          width;
+  gint          height;
+  gint          widget_width;
+  gint          widget_height;
 
-   GdkCursorType cursor;
+  GdkCursorType cursor;
 } Preview_t;
 
-Preview_t *make_preview (GimpDrawable *drawable,
-                         gpointer      imap);
-void preview_redraw     (void);
+Preview_t   * make_preview          (GimpDrawable  *drawable,
+                                     gpointer       imap);
+void          preview_redraw        (void);
 
-void preview_unset_tmp_obj (Object_t *obj);
-void preview_set_tmp_obj (Object_t *obj);
+void          preview_unset_tmp_obj (Object_t      *obj);
+void          preview_set_tmp_obj   (Object_t      *obj);
 
-gint preview_get_width(GtkWidget *preview);
-gint preview_get_height(GtkWidget *preview);
+gint          preview_get_width     (GtkWidget     *preview);
+gint          preview_get_height    (GtkWidget     *preview);
 
-void preview_zoom(Preview_t *preview, gint zoom_factor);
-GdkCursorType preview_set_cursor(Preview_t *preview,
-                                 GdkCursorType cursor_type);
+void          preview_zoom          (Preview_t     *preview,
+                                     gfloat         zoom_factor);
+GdkCursorType preview_set_cursor    (Preview_t     *preview,
+                                     GdkCursorType  cursor_type);
 
 #endif /* _IMAP_PREVIEW_H */

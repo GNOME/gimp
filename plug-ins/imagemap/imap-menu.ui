@@ -116,6 +116,21 @@
           <attribute name="label" translatable="yes">Zoom To</attribute>
           <section>
             <item>
+              <attribute name="label" translatable="yes">8:1</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">8</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">4:1</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">4</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">2:1</attribute>
+              <attribute name="action">app.zoom</attribute>
+              <attribute name="target">2</attribute>
+            </item>
+            <item>
               <attribute name="label" translatable="yes">1:1</attribute>
               <attribute name="action">app.zoom</attribute>
               <attribute name="target">1</attribute>
@@ -123,37 +138,17 @@
             <item>
               <attribute name="label" translatable="yes">1:2</attribute>
               <attribute name="action">app.zoom</attribute>
-              <attribute name="target">2</attribute>
-            </item>
-            <item>
-              <attribute name="label" translatable="yes">1:3</attribute>
-              <attribute name="action">app.zoom</attribute>
-              <attribute name="target">3</attribute>
+              <attribute name="target">0</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">1:4</attribute>
               <attribute name="action">app.zoom</attribute>
-              <attribute name="target">4</attribute>
-            </item>
-            <item>
-              <attribute name="label" translatable="yes">1:5</attribute>
-              <attribute name="action">app.zoom</attribute>
-              <attribute name="target">5</attribute>
-            </item>
-            <item>
-              <attribute name="label" translatable="yes">1:6</attribute>
-              <attribute name="action">app.zoom</attribute>
-              <attribute name="target">6</attribute>
-            </item>
-            <item>
-              <attribute name="label" translatable="yes">1:7</attribute>
-              <attribute name="action">app.zoom</attribute>
-              <attribute name="target">7</attribute>
+              <attribute name="target">-2</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">1:8</attribute>
               <attribute name="action">app.zoom</attribute>
-              <attribute name="target">8</attribute>
+              <attribute name="target">-6</attribute>
             </item>
           </section>
         </submenu>

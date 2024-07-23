@@ -52,7 +52,7 @@ menu_set_zoom_sensitivity (gpointer data,
   g_simple_action_set_enabled (G_SIMPLE_ACTION (action), factor < 8);
 
   action = g_action_map_lookup_action (G_ACTION_MAP (imap->app), "zoom-out");
-  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), factor > 1);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), factor > -6);
 }
 
 void

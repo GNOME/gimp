@@ -143,11 +143,16 @@ statusbar_clear_dimension(StatusBar_t *statusbar)
 }
 
 void
-statusbar_set_zoom(StatusBar_t *statusbar, gint factor)
+statusbar_set_zoom (StatusBar_t *statusbar,
+                    gint         factor)
 {
-   char scratch[16];
+  char scratch[16];
 
-   sprintf(scratch, "1:%d", factor);
-   gtk_statusbar_push(GTK_STATUSBAR(statusbar->zoom), statusbar->zoom_id,
+  if (factor > 0)
+    sprintf (scratch, "%d:1", factor);
+  else
+    sprintf (scratch, "1:%d", ((factor - 2) * -1));
+
+  gtk_statusbar_push (GTK_STATUSBAR (statusbar->zoom), statusbar->zoom_id,
                       scratch);
 }

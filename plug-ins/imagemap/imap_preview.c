@@ -176,15 +176,17 @@ preview_unset_tmp_obj (Object_t *obj)
 }
 
 void
-preview_zoom(Preview_t *preview, gint zoom_factor)
+preview_zoom (Preview_t *preview,
+              gfloat     zoom_factor)
 {
-   preview->widget_width = preview->width * zoom_factor;
-   preview->widget_height = preview->height * zoom_factor;
-   gtk_widget_set_size_request (preview->preview, preview->widget_width,
-                                preview->widget_height);
-   gtk_widget_queue_resize(preview->window);
-   render_preview(preview, preview->drawable);
-   preview_redraw();
+  preview->widget_width  = ceil (preview->width * zoom_factor);
+  preview->widget_height = ceil (preview->height * zoom_factor);
+
+  gtk_widget_set_size_request (preview->preview, preview->widget_width,
+                               preview->widget_height);
+  gtk_widget_queue_resize (preview->window);
+  render_preview (preview, preview->drawable);
+  preview_redraw ();
 }
 
 GdkCursorType
