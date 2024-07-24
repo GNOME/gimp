@@ -26,7 +26,6 @@
 #include <string.h>
 
 #include <gio/gio.h>
-#include <gexiv2/gexiv2.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -37,35 +36,6 @@
 #include "gimpunit.h"
 
 #include "libgimp/libgimp-intl.h"
-
-typedef struct _GimpMetadataPrivate GimpMetadataPrivate;
-typedef struct _GimpMetadataClass   GimpMetadataClass;
-
-struct _GimpMetadata
-{
-  GExiv2Metadata parent_instance;
-};
-
-struct _GimpMetadataPrivate
-{
-  /* dummy entry to avoid a critical warning due to size 0 */
-  gpointer _gimp_reserved1;
-};
-
-struct _GimpMetadataClass
-{
-  GExiv2MetadataClass parent_class;
-
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-};
 
 /**
  * SECTION: gimpmetadata
@@ -79,6 +49,10 @@ struct _GimpMetadataClass
  * Basic functions for handling #GimpMetadata objects.
  **/
 
+struct _GimpMetadata
+{
+  GExiv2Metadata parent_instance;
+};
 
 #define GIMP_METADATA_ERROR gimp_metadata_error_quark ()
 
@@ -206,7 +180,7 @@ static const guint8 wilber_jpg[] =
 
 static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMetadata, gimp_metadata, GEXIV2_TYPE_METADATA)
+G_DEFINE_TYPE (GimpMetadata, gimp_metadata, GEXIV2_TYPE_METADATA)
 
 
 static void
