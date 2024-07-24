@@ -56,9 +56,14 @@ Graphical User Interface:
 Plug-ins:
 
   - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
-    file-pdf-save-multi, qbist, file-xmc, file-tiff-load.
-  - PSD: unsupported layers are not dropped anymore (they will usually show
-    empty instead).
+    file-pdf-save-multi, qbist, file-xmc, file-tiff-load, file-icns,
+    file-ico.
+  - PSD:
+    * unsupported layers are not dropped anymore (they will usually show
+      empty instead).
+    * add warning when exporting multi-layer indexed image (layers will
+      be merged because PSD does not support multi-layer indexed images,
+      unlike XCF).
   - Script-Fu:
     * "Refresh Scripts" (Filters > Development > Script-Fu) is now hidden. It
       was broken and anyway not an ideal design choice.
@@ -69,7 +74,8 @@ Plug-ins:
   - Ported to GimpVectorLoadProcedure: file-pdf-load, file-ps, file-svg
     and file-wmf-load.
   - Arguments ported to GimpChoice in the following plug-ins:
-    file-raw-data, file-jpeg, file-ps, decompose.
+    file-raw-data, file-jpeg, file-ps, decompose, blinds, curve-bend,
+    file-pcx, file-pnm, file-psp, hot, jigsaw, nl-filter, fits.
   - New file-plug-in testing framework. It comes with Gitlab junit reports.
   - JPEG XL: half-float import support.
   - file-darktable: use the new API which darktable developed from us
@@ -114,6 +120,18 @@ API:
     * gimp_procedure_add_*_from_property() functions were removed.
     * gimp_procedure_add_argument(), gimp_procedure_add_aux_argument()
       and gimp_procedure_add_return_value() were removed from public API.
+    * The skipping of _get_ functions by bindings in GIMP
+      2.99.12, in favor of their _list_ variant, was reverted. Now the
+      _list_ variants are skipped instead. The original reason was a
+      limitation of pygobject which is now fixed, and since _get_
+      functions are historically more common and consistent in our API,
+      this is what should take precedence.
+    * New GimpGroupLayer class (subclass of GimpLayer).
+    * GimpVectors was renamed to GimpPath and all gimp_vectors_ function
+      renamed gimp_path_ accordingly.
+    * Various classes are marked as derivable or final through GObject
+      macros G_DECLARE_(DERIVABLE|FINAL)_TYPE. It will make it easier to
+      update them in the future without API/ABI breakage.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -157,6 +175,7 @@ Build:
   - Windows installer: new option to launch GIMP after install.
   - Nightly flatpak: HEIC support is now an extension as in our beta
     flatpak.
+  - macOS minimal support was bumped to version 11.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
