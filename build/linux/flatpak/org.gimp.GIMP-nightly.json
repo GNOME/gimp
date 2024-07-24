@@ -455,70 +455,6 @@
             ]
         },
         {
-            "//": "Originally taken from org.octave.Octave manifest",
-            "name": "SuiteSparse",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "config-opts": [
-                "-DBLA_VENDOR=OpenBLAS",
-                "-DGRAPHBLAS_COMPACT=ON",
-                "-DSUITESPARSE_USE_OPENMP=OFF",
-                "-DSUITESPARSE_DEMOS=OFF",
-                "-DBUILD_TESTING=OFF",
-                "-DCMAKE_INSTALL_LIBDIR=/app/lib",
-                "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/pkgconfig"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.6.0.tar.gz",
-                    "sha256": "19cbeb9964ebe439413dd66d82ace1f904adc5f25d8a823c1b48c34bd0d29ea5",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 4908,
-                        "stable-only": true,
-                        "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
-                    }
-                }
-            ],
-            "modules": [
-                {
-                    "name": "openblas",
-                    "no-autogen": true,
-                    "make-args": [
-                        "DYNAMIC_ARCH=0",
-                        "USE_OPENMP=0",
-                        "NO_LAPACKE=1"
-                    ],
-                    "make-install-args": [
-                        "PREFIX=/app"
-                    ],
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.27.tar.gz",
-                            "sha256": "aa2d68b1564fe2b13bc292672608e9cdeeeb6dc34995512e65c3b10f4599e897",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 2540,
-                                "stable-only": true,
-                                "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "libheif",
             "buildsystem": "cmake-ninja",
             "builddir": true,
@@ -834,6 +770,70 @@
                 }
             ],
             "modules": [
+                {
+                    "//": "Originally taken from org.octave.Octave manifest",
+                    "name": "SuiteSparse",
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
+                    "config-opts": [
+                        "-DBLA_VENDOR=OpenBLAS",
+                        "-DGRAPHBLAS_COMPACT=ON",
+                        "-DSUITESPARSE_USE_OPENMP=OFF",
+                        "-DSUITESPARSE_DEMOS=OFF",
+                        "-DBUILD_TESTING=OFF",
+                        "-DCMAKE_INSTALL_LIBDIR=/app/lib",
+                        "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
+                    ],
+                    "cleanup": [
+                        "/bin",
+                        "/include",
+                        "/lib/pkgconfig"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.6.0.tar.gz",
+                            "sha256": "19cbeb9964ebe439413dd66d82ace1f904adc5f25d8a823c1b48c34bd0d29ea5",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 4908,
+                                "stable-only": true,
+                                "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
+                            }
+                        }
+                    ],
+                    "modules": [
+                        {
+                            "name": "openblas",
+                            "no-autogen": true,
+                            "make-args": [
+                                "DYNAMIC_ARCH=0",
+                                "USE_OPENMP=0",
+                                "NO_LAPACKE=1"
+                            ],
+                            "make-install-args": [
+                                "PREFIX=/app"
+                            ],
+                            "cleanup": [
+                                "/include",
+                                "/lib/pkgconfig"
+                            ],
+                            "sources": [
+                                {
+                                    "type": "archive",
+                                    "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.27.tar.gz",
+                                    "sha256": "aa2d68b1564fe2b13bc292672608e9cdeeeb6dc34995512e65c3b10f4599e897",
+                                    "x-checker-data": {
+                                        "type": "anitya",
+                                        "project-id": 2540,
+                                        "stable-only": true,
+                                        "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
                     "name": "maxflow",
                     "buildsystem": "cmake-ninja",

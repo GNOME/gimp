@@ -40,16 +40,12 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
   ## Prepare env
   export GIMP_PREFIX="$PWD/_install"
 
-  ## Clone and build deps
+  ## Clone and build deps (including babl and GEGL)
   ## (The deps building is too long and no complete output would be collected,
   ## even from GitLab runner messages. So, let's silent and save logs as a file.)
-  echo '(INFO): building dependencies not present in GNOME runtime'
-  flatpak-builder --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=babl \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
-
-  ## Let's output at least babl and GEGL building
+  echo '(INFO): building dependencies not present in GNOME runtime (including babl and GEGL)'
   flatpak-builder --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --stop-at=gimp \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> flatpak-builder.log
   if [ "$1" != '--ci' ]; then
     tar cf babl-meson-log.tar .flatpak-builder/build/babl-1/_flatpak_build/meson-logs/meson-log.txt
     tar cf gegl-meson-log.tar .flatpak-builder/build/gegl-1/_flatpak_build/meson-logs/meson-log.txt
