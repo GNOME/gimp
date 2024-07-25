@@ -22,7 +22,7 @@
 GtkWidget * image_scale_dialog_new (GimpImage             *image,
                                     GimpContext           *context,
                                     GtkWidget             *parent,
-                                    GimpUnit               unit,
+                                    GimpUnit              *unit,
                                     GimpInterpolationType  interpolation,
                                     GimpScaleCallback      callback,
                                     gpointer               user_data);

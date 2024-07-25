@@ -42,10 +42,10 @@ struct _GimpSizeBox
 
   gint          width;
   gint          height;
-  GimpUnit      unit;
+  GimpUnit     *unit;
   gdouble       xresolution;
   gdouble       yresolution;
-  GimpUnit      resolution_unit;
+  GimpUnit     *resolution_unit;
 
   gboolean      edit_resolution;
 };

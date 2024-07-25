@@ -74,6 +74,7 @@ static GList          * svg_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * svg_create_procedure (GimpPlugIn            *plug_in,
                                               const gchar           *name);
 
+static GimpUnit      * svg_rsvg_to_gimp_unit (RsvgUnit               unit);
 static gboolean        svg_extract           (GimpProcedure         *procedure,
                                               GimpRunMode            run_mode,
                                               GFile                 *file,
@@ -197,29 +198,29 @@ svg_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpUnit
-svg_rsvg_unit_to_gimp_unit (RsvgUnit unit)
+static GimpUnit *
+svg_rsvg_to_gimp_unit (RsvgUnit unit)
 {
   switch (unit)
     {
     case RSVG_UNIT_PERCENT:
-      return GIMP_UNIT_PERCENT;
+      return gimp_unit_percent ();
     case RSVG_UNIT_PX:
-      return GIMP_UNIT_PIXEL;
+      return gimp_unit_pixel ();
     case RSVG_UNIT_IN:
-      return GIMP_UNIT_INCH;
+      return gimp_unit_inch ();
     case RSVG_UNIT_MM:
-      return GIMP_UNIT_MM;
+      return gimp_unit_mm ();
     case RSVG_UNIT_PT:
-      return GIMP_UNIT_POINT;
+      return gimp_unit_point ();
     case RSVG_UNIT_PC:
-      return GIMP_UNIT_PICA;
+      return gimp_unit_pica ();
     case RSVG_UNIT_CM:
     case RSVG_UNIT_EM:
     case RSVG_UNIT_EX:
       /*case RSVG_UNIT_CH:*/
     default:
-      return -1;
+      return NULL;
     }
 }
 
@@ -355,14 +356,14 @@ svg_extract (GimpProcedure        *procedure,
       /* "width" and "height" present: the viewbox has no importance (it's only
        * a coordinate remapping.
        */
-      if (svg_rsvg_unit_to_gimp_unit (out_width.unit) != -1 &&
-          svg_rsvg_unit_to_gimp_unit (out_height.unit) != -1)
+      if (svg_rsvg_to_gimp_unit (out_width.unit)  != NULL &&
+          svg_rsvg_to_gimp_unit (out_height.unit) != NULL)
         {
           /* Best case scenario: we know all these units. */
           extracted_dimensions->width        = out_width.length;
-          extracted_dimensions->width_unit   = svg_rsvg_unit_to_gimp_unit (out_width.unit);
+          extracted_dimensions->width_unit   = svg_rsvg_to_gimp_unit (out_width.unit);
           extracted_dimensions->height       = out_height.length;
-          extracted_dimensions->height_unit  = svg_rsvg_unit_to_gimp_unit (out_height.unit);
+          extracted_dimensions->height_unit  = svg_rsvg_to_gimp_unit (out_height.unit);
 
           extracted_dimensions->exact_width  = TRUE;
           extracted_dimensions->exact_height = TRUE;
@@ -377,8 +378,8 @@ svg_extract (GimpProcedure        *procedure,
                                                         &extracted_dimensions->width,
                                                         &extracted_dimensions->height))
             {
-              extracted_dimensions->width_unit   = GIMP_UNIT_PIXEL;
-              extracted_dimensions->height_unit  = GIMP_UNIT_PIXEL;
+              extracted_dimensions->width_unit   = gimp_unit_pixel ();
+              extracted_dimensions->height_unit  = gimp_unit_pixel ();
               extracted_dimensions->exact_width  = FALSE;
               extracted_dimensions->exact_height = FALSE;
             }
@@ -390,8 +391,8 @@ svg_extract (GimpProcedure        *procedure,
                                                             &extracted_dimensions->width,
                                                             &extracted_dimensions->height))
                 {
-                  extracted_dimensions->width_unit  = GIMP_UNIT_PERCENT;
-                  extracted_dimensions->height_unit = GIMP_UNIT_PERCENT;
+                  extracted_dimensions->width_unit  = gimp_unit_percent ();
+                  extracted_dimensions->height_unit = gimp_unit_percent ();
                 }
               else if (out_width.unit == out_height.unit)
                 {
@@ -400,8 +401,8 @@ svg_extract (GimpProcedure        *procedure,
                    */
                   extracted_dimensions->width       = out_width.length;
                   extracted_dimensions->height      = out_height.length;
-                  extracted_dimensions->width_unit  = GIMP_UNIT_PERCENT;
-                  extracted_dimensions->height_unit = GIMP_UNIT_PERCENT;
+                  extracted_dimensions->width_unit  = gimp_unit_percent ();
+                  extracted_dimensions->height_unit = gimp_unit_percent ();
                 }
               else
                 {
@@ -423,10 +424,10 @@ svg_extract (GimpProcedure        *procedure,
     {
       /* Only a viewbox, so dimensions have a ratio, but no units. */
       extracted_dimensions->width         = out_width.length;
-      extracted_dimensions->width_unit    = GIMP_UNIT_PERCENT;
+      extracted_dimensions->width_unit    = gimp_unit_percent ();
       extracted_dimensions->exact_width   = FALSE;
       extracted_dimensions->height        = out_height.length;
-      extracted_dimensions->height_unit   = GIMP_UNIT_PERCENT;
+      extracted_dimensions->height_unit   = gimp_unit_percent ();
       extracted_dimensions->exact_height  = FALSE;
       extracted_dimensions->correct_ratio = TRUE;
     }

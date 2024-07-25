@@ -1063,7 +1063,7 @@ parse_svg_length (const gchar *value,
                   gdouble      resolution,
                   gdouble     *length)
 {
-  GimpUnit  unit = GIMP_UNIT_PIXEL;
+  GimpUnit *unit = gimp_unit_pixel ();
   gdouble   len;
   gchar    *ptr;
 
@@ -1081,8 +1081,8 @@ parse_svg_length (const gchar *value,
       switch (ptr[1])
         {
         case 'x':                         break;
-        case 't': unit = GIMP_UNIT_POINT; break;
-        case 'c': unit = GIMP_UNIT_PICA;  break;
+        case 't': unit = gimp_unit_point (); break;
+        case 'c': unit = gimp_unit_pica ();  break;
         default:
           return FALSE;
         }
@@ -1091,7 +1091,7 @@ parse_svg_length (const gchar *value,
 
     case 'c':
       if (ptr[1] == 'm')
-        len *= 10.0, unit = GIMP_UNIT_MM;
+        len *= 10.0, unit = gimp_unit_mm ();
       else
         return FALSE;
       ptr += 2;
@@ -1099,7 +1099,7 @@ parse_svg_length (const gchar *value,
 
     case 'm':
       if (ptr[1] == 'm')
-        unit = GIMP_UNIT_MM;
+        unit = gimp_unit_mm ();
       else
         return FALSE;
       ptr += 2;
@@ -1107,14 +1107,14 @@ parse_svg_length (const gchar *value,
 
     case 'i':
       if (ptr[1] == 'n')
-        unit = GIMP_UNIT_INCH;
+        unit = gimp_unit_inch ();
       else
         return FALSE;
       ptr += 2;
       break;
 
     case '%':
-      unit = GIMP_UNIT_PERCENT;
+      unit = gimp_unit_percent ();
       ptr += 1;
       break;
 
@@ -1128,7 +1128,7 @@ parse_svg_length (const gchar *value,
   if (*ptr)
     return FALSE;
 
-  switch (unit)
+  switch (gimp_unit_get_id (unit))
     {
     case GIMP_UNIT_PERCENT:
       *length = len * reference / 100.0;

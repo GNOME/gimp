@@ -618,7 +618,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_TRANSFORM_RESIZE_CROP => '2',
 		       GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT => '3' }
 	},
-    GimpUnit =>
+    GimpUnitID =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_UNIT_PIXEL GIMP_UNIT_INCH GIMP_UNIT_MM

@@ -246,41 +246,11 @@ output_unknown_token (const gchar *key,
 }
 
 
-/* minimal dummy units implementation  */
-
-static const gchar *
-unit_get_identifier (GimpUnit unit)
-{
-  switch (unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      return "pixels";
-    case GIMP_UNIT_INCH:
-      return "inches";
-    case GIMP_UNIT_MM:
-      return "millimeters";
-    case GIMP_UNIT_POINT:
-      return "points";
-    case GIMP_UNIT_PICA:
-      return "picas";
-    default:
-      return NULL;
-    }
-}
-
-static gint
-unit_get_number_of_units (void)
-{
-  return GIMP_UNIT_END;
-}
-
 static void
 units_init (void)
 {
-  GimpUnitVtable vtable;
-
-  vtable.unit_get_number_of_units = unit_get_number_of_units;
-  vtable.unit_get_identifier      = unit_get_identifier;
+  /* Empty dummy units implementation  */
+  GimpUnitVtable vtable = { 0 };
 
   gimp_base_init (&vtable);
 }

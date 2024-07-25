@@ -40,7 +40,7 @@
 gint         gimp_get_pid                          (void);
 guint64      gimp_get_physical_memory_size         (void);
 gchar      * gimp_get_default_language             (const gchar     *category);
-GimpUnit     gimp_get_default_unit                 (void);
+GimpUnit   * gimp_get_default_unit                 (void);
 
 gchar     ** gimp_properties_append                (GType            object_type,
                                                     gint            *n_properties,

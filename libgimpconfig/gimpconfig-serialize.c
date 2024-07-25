@@ -370,6 +370,20 @@ gimp_config_serialize_property (GimpConfig       *config,
           if (free_color)
             g_object_unref (color);
         }
+      else if (GIMP_VALUE_HOLDS_UNIT (&value))
+        {
+          GimpUnit *unit = g_value_get_object (&value);
+
+          gimp_config_writer_open (writer, param_spec->name);
+
+          if (unit)
+            gimp_config_writer_printf (writer, "%s", gimp_unit_get_identifier (unit));
+          else
+            gimp_config_writer_printf (writer, "%s", "NULL");
+
+          success = TRUE;
+          gimp_config_writer_close (writer);
+        }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                G_VALUE_TYPE (&value) != G_TYPE_FILE)
         {

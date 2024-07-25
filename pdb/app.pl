@@ -553,15 +553,14 @@ CODE
         }
     }
     elsif ($pdbtype eq 'unit') {
-	$typeinfo[0] = 'GIMP_UNIT_PIXEL' unless defined $typeinfo[0];
-	$allow_pixels = $typeinfo[0] eq 'GIMP_UNIT_PIXEL' ? TRUE : FALSE;
+	$allow_pixel = exists $arg->{allow_pixel} ? TRUE : FALSE;
 	$allow_percent = exists $arg->{allow_percent} ? TRUE : FALSE;
-	$default = exists $arg->{default} ? $arg->{default} : $typeinfo[0];
+	$default = exists $arg->{default} ? $arg->{default} : 'gimp_unit_inch ()';
 	$pspec = <<CODE;
 gimp_param_spec_unit ("$name",
                       "$nick",
                       "$blurb",
-                      $allow_pixels,
+                      $allow_pixel,
                       $allow_percent,
                       $default,
                       $flags)

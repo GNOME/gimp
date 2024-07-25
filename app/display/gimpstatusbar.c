@@ -1477,7 +1477,7 @@ gimp_statusbar_push_coords (GimpStatusbar       *statusbar,
       break;
     }
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     {
       if (precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
         {
@@ -1540,7 +1540,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
 
   shell = statusbar->shell;
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     {
       gimp_statusbar_push (statusbar, context,
                            icon_name,
@@ -1768,7 +1768,7 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
     }
   statusbar->cursor_precision = precision;
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     {
       if (precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
         {
@@ -1911,7 +1911,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   g_signal_handlers_unblock_by_func (statusbar->unit_combo,
                                      gimp_statusbar_unit_changed, statusbar);
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -2468,7 +2468,7 @@ gimp_statusbar_queue_pos_redraw (gpointer data)
        * Of course, it could still happen for people going way
        * off-canvas but that's acceptable edge-case.
        */
-      if (shell->unit == GIMP_UNIT_PIXEL)
+      if (shell->unit == gimp_unit_pixel ())
         {
           label_width_chars = floor (log10 (2 * image_width)) + floor (log10 (2 * image_height)) + 6;
 

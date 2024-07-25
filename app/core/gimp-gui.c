@@ -339,7 +339,7 @@ gimp_get_display_window_id (Gimp        *gimp,
 GimpDisplay *
 gimp_create_display (Gimp      *gimp,
                      GimpImage *image,
-                     GimpUnit   unit,
+                     GimpUnit  *unit,
                      gdouble    scale,
                      GObject   *monitor)
 {

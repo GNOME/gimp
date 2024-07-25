@@ -112,6 +112,7 @@ pdb_wrappers_sources = [
   'gimpselection_pdb.c',
   'gimptextlayer_pdb.c',
   'gimptexttool_pdb.c',
+  'gimpunit_pdb.c',
 ]
 
 pdb_wrappers_headers = [
@@ -168,6 +169,7 @@ pdb_wrappers_headers = [
   'gimpselection_pdb.h',
   'gimptextlayer_pdb.h',
   'gimptexttool_pdb.h',
+  'gimpunit_pdb.h',
 ]
 
 libgimp_sources_introspectable = [
@@ -222,8 +224,6 @@ libgimp_sources = [
   'gimppdbprocedure.c',
   'gimppixbuf.c',
   'gimpplugin_pdb.c',
-  'gimpunit_pdb.c',
-  'gimpunitcache.c',
   'gimptilebackendplugin.c',
 ]
 

@@ -60,7 +60,7 @@ struct _GimpDisplayShell
   GimpDisplayOptions *fullscreen_options;
   GimpDisplayOptions *no_image_options;
 
-  GimpUnit           unit;
+  GimpUnit           *unit;
 
   gint               offset_x;         /*  offset of display image            */
   gint               offset_y;
@@ -269,7 +269,7 @@ struct _GimpDisplayShellClass
 GType             gimp_display_shell_get_type      (void) G_GNUC_CONST;
 
 GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
-                                                    GimpUnit            unit,
+                                                    GimpUnit           *unit,
                                                     gdouble             scale,
                                                     GimpUIManager      *popup_manager,
                                                     GdkMonitor         *monitor);
@@ -302,7 +302,7 @@ void              gimp_display_shell_reconnect     (GimpDisplayShell   *shell);
 void              gimp_display_shell_empty         (GimpDisplayShell   *shell);
 void              gimp_display_shell_fill          (GimpDisplayShell   *shell,
                                                     GimpImage          *image,
-                                                    GimpUnit            unit,
+                                                    GimpUnit           *unit,
                                                     gdouble             scale);
 
 void              gimp_display_shell_scaled        (GimpDisplayShell   *shell);
@@ -310,8 +310,8 @@ void              gimp_display_shell_scrolled      (GimpDisplayShell   *shell);
 void              gimp_display_shell_rotated       (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_set_unit      (GimpDisplayShell   *shell,
-                                                    GimpUnit            unit);
-GimpUnit          gimp_display_shell_get_unit      (GimpDisplayShell   *shell);
+                                                    GimpUnit           *unit);
+GimpUnit        * gimp_display_shell_get_unit      (GimpDisplayShell   *shell);
 
 gboolean          gimp_display_shell_snap_coords   (GimpDisplayShell   *shell,
                                                     GimpCoords         *coords,

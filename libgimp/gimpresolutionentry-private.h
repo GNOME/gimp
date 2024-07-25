@@ -56,7 +56,7 @@ GtkWidget * gimp_resolution_entry_new               (const gchar              *w
                                                      gint                      height,
                                                      const gchar              *res_label,
                                                      gdouble                   pixel_density,
-                                                     GimpUnit                  display_unit);
+                                                     GimpUnit                 *display_unit);
 
 void        gimp_resolution_entry_set_width         (GimpResolutionEntry      *entry,
                                                      gint                      width);
@@ -65,14 +65,14 @@ void        gimp_resolution_entry_set_height        (GimpResolutionEntry      *e
 void        gimp_resolution_entry_set_pixel_density (GimpResolutionEntry      *entry,
                                                      gdouble                   ppi);
 void        gimp_resolution_entry_set_unit          (GimpResolutionEntry      *entry,
-                                                     GimpUnit                  unit);
+                                                     GimpUnit                 *unit);
 void        gimp_resolution_entry_set_keep_ratio    (GimpResolutionEntry      *entry,
                                                      gboolean                  keep_ratio);
 
 gint        gimp_resolution_entry_get_width         (GimpResolutionEntry      *entry);
 gint        gimp_resolution_entry_get_height        (GimpResolutionEntry      *entry);
 gdouble     gimp_resolution_entry_get_density       (GimpResolutionEntry      *entry);
-GimpUnit    gimp_resolution_entry_get_unit          (GimpResolutionEntry      *entry);
+GimpUnit  * gimp_resolution_entry_get_unit          (GimpResolutionEntry      *entry);
 gboolean    gimp_resolution_entry_get_keep_ratio    (GimpResolutionEntry      *entry);
 
 G_END_DECLS

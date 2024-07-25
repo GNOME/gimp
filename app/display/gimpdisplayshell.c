@@ -280,7 +280,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   g_object_class_install_property (object_class, PROP_UNIT,
                                    gimp_param_spec_unit ("unit", NULL, NULL,
                                                          TRUE, FALSE,
-                                                         GIMP_UNIT_PIXEL,
+                                                         gimp_unit_pixel (),
                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_TITLE,
@@ -919,7 +919,7 @@ gimp_display_shell_set_property (GObject      *object,
       shell->display = g_value_get_object (value);
       break;
     case PROP_UNIT:
-      gimp_display_shell_set_unit (shell, g_value_get_int (value));
+      gimp_display_shell_set_unit (shell, g_value_get_object (value));
       break;
     case PROP_TITLE:
       g_free (shell->title);
@@ -959,7 +959,7 @@ gimp_display_shell_get_property (GObject    *object,
       g_value_set_object (value, shell->display);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, shell->unit);
+      g_value_set_object (value, shell->unit);
       break;
     case PROP_TITLE:
       g_value_set_string (value, shell->title);
@@ -1335,7 +1335,7 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 
 GtkWidget *
 gimp_display_shell_new (GimpDisplay   *display,
-                        GimpUnit       unit,
+                        GimpUnit      *unit,
                         gdouble        scale,
                         GimpUIManager *popup_manager,
                         GdkMonitor    *monitor)
@@ -1590,7 +1590,7 @@ gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 void
 gimp_display_shell_fill (GimpDisplayShell *shell,
                          GimpImage        *image,
-                         GimpUnit          unit,
+                         GimpUnit         *unit,
                          gdouble           scale)
 {
   GimpDisplayConfig *config;
@@ -1702,7 +1702,7 @@ gimp_display_shell_rotated (GimpDisplayShell *shell)
 
 void
 gimp_display_shell_set_unit (GimpDisplayShell *shell,
-                             GimpUnit          unit)
+                             GimpUnit         *unit)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1718,10 +1718,10 @@ gimp_display_shell_set_unit (GimpDisplayShell *shell,
     }
 }
 
-GimpUnit
+GimpUnit *
 gimp_display_shell_get_unit (GimpDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), GIMP_UNIT_PIXEL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), gimp_unit_pixel ());
 
   return shell->unit;
 }

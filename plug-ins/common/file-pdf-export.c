@@ -1522,7 +1522,7 @@ drawText (GimpLayer *layer,
   gint                  y;
   GeglColor            *color;
   gdouble               rgb[3];
-  GimpUnit              unit;
+  GimpUnit             *unit;
   gdouble               size;
   GimpTextHintStyle     hinting;
   GimpTextJustification j;

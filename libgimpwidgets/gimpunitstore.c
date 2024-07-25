@@ -51,17 +51,17 @@ enum
 
 struct _GimpUnitStorePrivate
 {
-  gint      num_values;
-  gboolean  has_pixels;
-  gboolean  has_percent;
+  gint        num_values;
+  gboolean    has_pixels;
+  gboolean    has_percent;
 
-  gchar    *short_format;
-  gchar    *long_format;
+  gchar      *short_format;
+  gchar      *long_format;
 
-  gdouble  *values;
-  gdouble  *resolutions;
+  gdouble    *values;
+  gdouble    *resolutions;
 
-  GimpUnit  synced_unit;
+  GimpUnitID  synced_ID;
 };
 
 #define GET_PRIVATE(obj) (((GimpUnitStore *) (obj))->priv)
@@ -194,7 +194,7 @@ gimp_unit_store_init (GimpUnitStore *store)
   private->has_percent  = FALSE;
   private->short_format = g_strdup ("%a");
   private->long_format  = g_strdup ("%p");
-  private->synced_unit  = gimp_unit_get_number_of_units () - 1;
+  private->synced_ID    = 0;
 }
 
 static void
@@ -340,43 +340,41 @@ gimp_unit_store_get_iter (GtkTreeModel *tree_model,
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
   gint                  index;
-  GimpUnit              unit;
+  GimpUnit             *unit    = NULL;
 
   g_return_val_if_fail (gtk_tree_path_get_depth (path) > 0, FALSE);
 
   index = gtk_tree_path_get_indices (path)[0];
 
-  unit = index;
-
   if (! private->has_pixels)
-    unit++;
+    index++;
+  else if (index == 0)
+    unit = gimp_unit_pixel ();
 
-  if (private->has_percent)
+  if (unit == NULL && private->has_percent)
     {
-      unit--;
-
       if (private->has_pixels)
         {
-          if (index == 0)
-            unit = GIMP_UNIT_PIXEL;
-          else if (index == 1)
-            unit = GIMP_UNIT_PERCENT;
+          if (index == 1)
+            unit = gimp_unit_percent ();
         }
-      else
+      else if (index == 0)
         {
-          if (index == 0)
-            unit = GIMP_UNIT_PERCENT;
+          unit = gimp_unit_percent ();
         }
+      index--;
     }
 
-  if ((unit >= 0 && unit < gimp_unit_get_number_of_units ()) ||
-      ((unit == GIMP_UNIT_PERCENT && private->has_percent)))
+  if (unit == NULL)
+    unit = gimp_unit_get_by_id (index);
+
+  if (unit != NULL)
     {
-      iter->user_data = GINT_TO_POINTER (unit);
-      return TRUE;
+      iter->user_data = unit;
+      private->synced_ID = MAX (private->synced_ID, gimp_unit_get_id (unit));
     }
 
-  return FALSE;
+  return (unit != NULL);
 }
 
 static GtkTreePath *
@@ -385,10 +383,10 @@ gimp_unit_store_get_path (GtkTreeModel *tree_model,
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
   GtkTreePath          *path    = gtk_tree_path_new ();
-  GimpUnit              unit    = GPOINTER_TO_INT (iter->user_data);
+  GimpUnit             *unit    = iter->user_data;
   gint                  index;
 
-  index = unit;
+  index = gimp_unit_get_id (unit);
 
   if (! private->has_pixels)
     index--;
@@ -399,14 +397,14 @@ gimp_unit_store_get_path (GtkTreeModel *tree_model,
 
       if (private->has_pixels)
         {
-          if (unit == GIMP_UNIT_PIXEL)
+          if (unit == gimp_unit_pixel ())
             index = 0;
-          else if (unit == GIMP_UNIT_PERCENT)
+          else if (unit == gimp_unit_percent ())
             index = 1;
         }
       else
         {
-          if (unit == GIMP_UNIT_PERCENT)
+          if (unit == gimp_unit_percent ())
             index = 0;
         }
     }
@@ -423,7 +421,7 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
                                       GValue       *value)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
-  GimpUnit              unit;
+  GimpUnit             *unit;
 
   g_return_if_fail (column >= 0 &&
                     column < GIMP_UNIT_STORE_UNIT_COLUMNS + private->num_values);
@@ -433,63 +431,59 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
                 column_types[column] :
                 G_TYPE_DOUBLE);
 
-  unit = GPOINTER_TO_INT (iter->user_data);
+  unit = iter->user_data;
 
-  if ((unit >= 0 && unit < gimp_unit_get_number_of_units ()) ||
-      ((unit == GIMP_UNIT_PERCENT && private->has_percent)))
+  switch (column)
     {
-      switch (column)
-        {
-        case GIMP_UNIT_STORE_UNIT:
-          g_value_set_int (value, unit);
-          break;
-        case GIMP_UNIT_STORE_UNIT_FACTOR:
-          g_value_set_double (value, gimp_unit_get_factor (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_DIGITS:
-          g_value_set_int (value, gimp_unit_get_digits (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_IDENTIFIER:
-          g_value_set_static_string (value, gimp_unit_get_identifier (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_SYMBOL:
-          g_value_set_static_string (value, gimp_unit_get_symbol (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_ABBREVIATION:
-          g_value_set_static_string (value, gimp_unit_get_abbreviation (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_SINGULAR:
-          g_value_set_static_string (value, gimp_unit_get_singular (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_PLURAL:
-          g_value_set_static_string (value, gimp_unit_get_plural (unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_SHORT_FORMAT:
-          g_value_take_string (value,
-                               gimp_unit_format_string (private->short_format,
-                                                        unit));
-          break;
-        case GIMP_UNIT_STORE_UNIT_LONG_FORMAT:
-          g_value_take_string (value,
-                               gimp_unit_format_string (private->long_format,
-                                                        unit));
-          break;
+    case GIMP_UNIT_STORE_UNIT:
+      g_value_set_object (value, unit);
+      break;
+    case GIMP_UNIT_STORE_UNIT_FACTOR:
+      g_value_set_double (value, gimp_unit_get_factor (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_DIGITS:
+      g_value_set_int (value, gimp_unit_get_digits (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_IDENTIFIER:
+      g_value_set_static_string (value, gimp_unit_get_identifier (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_SYMBOL:
+      g_value_set_static_string (value, gimp_unit_get_symbol (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_ABBREVIATION:
+      g_value_set_static_string (value, gimp_unit_get_abbreviation (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_SINGULAR:
+      g_value_set_static_string (value, gimp_unit_get_singular (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_PLURAL:
+      g_value_set_static_string (value, gimp_unit_get_plural (unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_SHORT_FORMAT:
+      g_value_take_string (value,
+                           gimp_unit_format_string (private->short_format,
+                                                    unit));
+      break;
+    case GIMP_UNIT_STORE_UNIT_LONG_FORMAT:
+      g_value_take_string (value,
+                           gimp_unit_format_string (private->long_format,
+                                                    unit));
+      break;
 
-        default:
-          column -= GIMP_UNIT_STORE_UNIT_COLUMNS;
-          if (unit == GIMP_UNIT_PIXEL)
-            {
-              g_value_set_double (value, private->values[column]);
-            }
-          else if (private->resolutions[column])
-            {
-              g_value_set_double (value,
-                                  private->values[column] *
-                                  gimp_unit_get_factor (unit) /
-                                  private->resolutions[column]);
-            }
-          break;
+    default:
+      column -= GIMP_UNIT_STORE_UNIT_COLUMNS;
+      if (unit == gimp_unit_pixel ())
+        {
+          g_value_set_double (value, private->values[column]);
         }
+      else if (private->resolutions[column])
+        {
+          g_value_set_double (value,
+                              private->values[column] *
+                              gimp_unit_get_factor (unit) /
+                              private->resolutions[column]);
+        }
+      break;
     }
 }
 
@@ -498,28 +492,18 @@ gimp_unit_store_iter_next (GtkTreeModel *tree_model,
                            GtkTreeIter  *iter)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
-  GimpUnit              unit    = GPOINTER_TO_INT (iter->user_data);
+  GimpUnit             *unit    = iter->user_data;
 
-  if (unit == GIMP_UNIT_PIXEL && private->has_percent)
-    {
-      unit = GIMP_UNIT_PERCENT;
-    }
-  else if (unit == GIMP_UNIT_PERCENT)
-    {
-      unit = GIMP_UNIT_INCH;
-    }
-  else if (unit >= 0 && unit < gimp_unit_get_number_of_units () - 1)
-    {
-      unit++;
-    }
+  if (unit == gimp_unit_pixel () && private->has_percent)
+    unit = gimp_unit_percent ();
+  else if (unit == gimp_unit_percent () || unit == gimp_unit_pixel ())
+    unit = gimp_unit_inch ();
   else
-    {
-      return FALSE;
-    }
+    unit = gimp_unit_get_by_id (gimp_unit_get_id (unit) + 1);
 
-  iter->user_data = GINT_TO_POINTER (unit);
+  iter->user_data = unit;
 
-  return TRUE;
+  return (unit != NULL);
 }
 
 static gboolean
@@ -528,26 +512,20 @@ gimp_unit_store_iter_children (GtkTreeModel *tree_model,
                                GtkTreeIter  *parent)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
-  GimpUnit              unit;
+  GimpUnit             *unit;
 
   /* this is a list, nodes have no children */
   if (parent)
     return FALSE;
 
   if (private->has_pixels)
-    {
-      unit = GIMP_UNIT_PIXEL;
-    }
+    unit = gimp_unit_pixel ();
   else if (private->has_percent)
-    {
-      unit = GIMP_UNIT_PERCENT;
-    }
+    unit = gimp_unit_percent ();
   else
-    {
-      unit = GIMP_UNIT_INCH;
-    }
+    unit = gimp_unit_inch ();
 
-  iter->user_data = GINT_TO_POINTER (unit);
+  iter->user_data = unit;
 
   return TRUE;
 }
@@ -563,13 +541,18 @@ static gint
 gimp_unit_store_iter_n_children (GtkTreeModel *tree_model,
                                  GtkTreeIter  *iter)
 {
-  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
-  gint                  n_children;
+  GimpUnitStorePrivate *private    = GET_PRIVATE (tree_model);
+  GimpUnit             *unit;
+  gint                  n_children = GIMP_UNIT_END;
 
   if (iter)
     return 0;
 
-  n_children = gimp_unit_get_number_of_units ();
+  do
+    unit = gimp_unit_get_by_id (n_children++);
+  while (unit != NULL);
+
+  n_children--;
 
   if (! private->has_pixels)
     n_children--;
@@ -596,30 +579,30 @@ gimp_unit_store_iter_nth_child (GtkTreeModel *tree_model,
 
   if (n >= 0 && n < n_children)
     {
-      GimpUnit unit = n;
+      gint index = n;
 
       if (! private->has_pixels)
-        unit++;
+        index++;
 
       if (private->has_percent)
         {
-          unit--;
+          index--;
 
           if (private->has_pixels)
             {
               if (n == 0)
-                unit = GIMP_UNIT_PIXEL;
+                index = GIMP_UNIT_PIXEL;
               else if (n == 1)
-                unit = GIMP_UNIT_PERCENT;
+                index = GIMP_UNIT_PERCENT;
             }
           else
             {
               if (n == 0)
-                unit = GIMP_UNIT_PERCENT;
+                index = GIMP_UNIT_PERCENT;
             }
         }
 
-      iter->user_data = GINT_TO_POINTER (unit);
+      iter->user_data = gimp_unit_get_by_id (index);
 
       return TRUE;
     }
@@ -852,7 +835,7 @@ gimp_unit_store_set_resolutions  (GimpUnitStore *store,
 
 gdouble
 gimp_unit_store_get_nth_value (GimpUnitStore *store,
-                               GimpUnit       unit,
+                               GimpUnit      *unit,
                                gint           index)
 {
   GimpUnitStorePrivate *private;
@@ -865,7 +848,7 @@ gimp_unit_store_get_nth_value (GimpUnitStore *store,
 
   g_return_val_if_fail (index >= 0 && index < private->num_values, 0.0);
 
-  iter.user_data = GINT_TO_POINTER (unit);
+  iter.user_data = unit;
 
   gimp_unit_store_tree_model_get_value (GTK_TREE_MODEL (store),
                                         &iter,
@@ -877,7 +860,7 @@ gimp_unit_store_get_nth_value (GimpUnitStore *store,
 
 void
 gimp_unit_store_get_values (GimpUnitStore *store,
-                            GimpUnit       unit,
+                            GimpUnit      *unit,
                             gdouble       *first_value,
                             ...)
 {
@@ -920,14 +903,14 @@ _gimp_unit_store_sync_units (GimpUnitStore *store)
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      gint unit;
+      GimpUnit *unit;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_UNIT_STORE_UNIT, &unit,
                           -1);
 
-      if (unit != GIMP_UNIT_PERCENT &&
-          unit > private->synced_unit)
+      if (unit != gimp_unit_percent () &&
+          gimp_unit_get_id (unit) > private->synced_ID)
         {
           GtkTreePath *path;
 
@@ -935,7 +918,7 @@ _gimp_unit_store_sync_units (GimpUnitStore *store)
           gtk_tree_model_row_inserted (model, path, &iter);
           gtk_tree_path_free (path);
         }
-    }
 
-  private->synced_unit = gimp_unit_get_number_of_units () - 1;
+      g_object_unref (unit);
+    }
 }

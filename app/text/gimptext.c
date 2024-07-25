@@ -192,7 +192,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
                          "font-size-unit",
                          NULL, NULL,
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         TRUE, FALSE, gimp_unit_pixel (),
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -299,7 +299,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_PROP_UNIT (object_class, PROP_BOX_UNIT,
                          "box-unit",
                          NULL, NULL,
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         TRUE, FALSE, gimp_unit_pixel (),
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
@@ -448,7 +448,7 @@ gimp_text_get_property (GObject      *object,
       g_value_set_double (value, text->font_size);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, text->unit);
+      g_value_set_object (value, text->unit);
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, text->antialias);
@@ -493,7 +493,7 @@ gimp_text_get_property (GObject      *object,
       g_value_set_double (value, text->box_height);
       break;
     case PROP_BOX_UNIT:
-      g_value_set_int (value, text->box_unit);
+      g_value_set_object (value, text->box_unit);
       break;
     case PROP_TRANSFORMATION:
       g_value_set_boxed (value, &text->transformation);
@@ -593,7 +593,7 @@ gimp_text_set_property (GObject      *object,
       text->font_size = g_value_get_double (value);
       break;
     case PROP_UNIT:
-      text->unit = g_value_get_int (value);
+      text->unit = g_value_get_object (value);
       break;
     case PROP_ANTIALIAS:
       text->antialias = g_value_get_boolean (value);
@@ -639,7 +639,7 @@ gimp_text_set_property (GObject      *object,
       text->box_height = g_value_get_double (value);
       break;
     case PROP_BOX_UNIT:
-      text->box_unit = g_value_get_int (value);
+      text->box_unit = g_value_get_object (value);
       break;
     case PROP_TRANSFORMATION:
       matrix = g_value_get_boxed (value);

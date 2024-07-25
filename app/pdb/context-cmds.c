@@ -27,6 +27,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -497,7 +498,7 @@ context_get_line_width_unit_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   GimpValueArray *return_vals;
-  GimpUnit line_width_unit = GIMP_UNIT_PIXEL;
+  GimpUnit *line_width_unit = NULL;
 
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
@@ -507,7 +508,7 @@ context_get_line_width_unit_invoker (GimpProcedure         *procedure,
                 NULL);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), line_width_unit);
+  g_value_set_object (gimp_value_array_index (return_vals, 1), line_width_unit);
 
   return return_vals;
 }
@@ -521,9 +522,9 @@ context_set_line_width_unit_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpUnit line_width_unit;
+  GimpUnit *line_width_unit;
 
-  line_width_unit = g_value_get_int (gimp_value_array_index (args, 0));
+  line_width_unit = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -3533,9 +3534,9 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_unit ("line-width-unit",
                                                          "line width unit",
                                                          "The line width unit setting",
-                                                         TRUE,
                                                          FALSE,
-                                                         GIMP_UNIT_PIXEL,
+                                                         FALSE,
+                                                         gimp_unit_inch (),
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3560,9 +3561,9 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_unit ("line-width-unit",
                                                      "line width unit",
                                                      "The line width setting unit",
-                                                     TRUE,
                                                      FALSE,
-                                                     GIMP_UNIT_PIXEL,
+                                                     FALSE,
+                                                     gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

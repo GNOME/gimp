@@ -145,7 +145,7 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_unit_aux_argument (procedure, "thickness-unit",
                                             _("Thickness unit of measure"),
                                             _("Border size unit of measure"),
-                                            TRUE, TRUE, GIMP_UNIT_PIXEL,
+                                            TRUE, TRUE, gimp_unit_pixel (),
                                             GIMP_PARAM_READWRITE);
       gimp_procedure_add_choice_argument (procedure, "bucket-exponent",
                                           _("Bucket Si_ze"),

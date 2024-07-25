@@ -44,10 +44,10 @@ struct _GimpGrid
   GeglColor     *bgcolor;
   gdouble        xspacing;
   gdouble        yspacing;
-  GimpUnit       spacing_unit;
+  GimpUnit      *spacing_unit;
   gdouble        xoffset;
   gdouble        yoffset;
-  GimpUnit       offset_unit;
+  GimpUnit      *offset_unit;
 };
 
 

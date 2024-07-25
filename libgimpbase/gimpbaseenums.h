@@ -1279,7 +1279,7 @@ typedef enum
 
 
 /**
- * GimpUnit:
+ * GimpUnitID:
  * @GIMP_UNIT_PIXEL:   Pixels
  * @GIMP_UNIT_INCH:    Inches
  * @GIMP_UNIT_MM:      Millimeters
@@ -1288,7 +1288,9 @@ typedef enum
  * @GIMP_UNIT_END:     Marker for end-of-builtin-units
  * @GIMP_UNIT_PERCENT: Pseudo-unit percent
  *
- * Units used for dimensions in images.
+ * Integer IDs of built-in units used for dimensions in images. These
+ * IDs are meant to stay stable but user-created units IDs may change
+ * from one session to another.
  **/
 typedef enum /*< skip >*/
 {
@@ -1302,7 +1304,7 @@ typedef enum /*< skip >*/
   GIMP_UNIT_END     = 5,
 
   GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
-} GimpUnit;
+} GimpUnitID;
 
 
 /**

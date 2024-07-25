@@ -119,8 +119,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                                    GimpScanConvert   *scan_convert,
                                    gboolean           push_undo)
 {
-  gdouble  width;
-  GimpUnit unit;
+  gdouble   width;
+  GimpUnit *unit;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -136,7 +136,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   width = gimp_stroke_options_get_width (options);
   unit  = gimp_stroke_options_get_unit (options);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != gimp_unit_pixel ())
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       gdouble    xres;

@@ -87,10 +87,10 @@ struct _GimpCursorViewPrivate
   GimpDisplayShell *shell;
   GimpImage        *image;
 
-  GimpUnit          unit;
+  GimpUnit         *unit;
   guint             cursor_idle_id;
   GimpImage        *cursor_image;
-  GimpUnit          cursor_unit;
+  GimpUnit         *cursor_unit;
   gdouble           cursor_x;
   gdouble           cursor_y;
 };
@@ -128,7 +128,7 @@ static void       gimp_cursor_view_diplay_changed        (GimpCursorView      *v
 static void       gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
                                                           GParamSpec          *pspec,
                                                           GimpDisplayShell    *shell);
-static void       gimp_cursor_view_format_as_unit        (GimpUnit             unit,
+static void       gimp_cursor_view_format_as_unit        (GimpUnit            *unit,
                                                           gchar               *output_buf,
                                                           gint                 output_buf_size,
                                                           gdouble              pixel_value,
@@ -137,7 +137,7 @@ static void       gimp_cursor_view_set_label_italic      (GtkWidget           *l
                                                           gboolean             italic);
 static void       gimp_cursor_view_update_selection_info (GimpCursorView      *view,
                                                           GimpImage           *image,
-                                                          GimpUnit             unit);
+                                                          GimpUnit            *unit);
 static gboolean   gimp_cursor_view_cursor_idle           (GimpCursorView      *view);
 
 
@@ -193,7 +193,7 @@ gimp_cursor_view_init (GimpCursorView *view)
   view->priv->context        = NULL;
   view->priv->shell          = NULL;
   view->priv->image          = NULL;
-  view->priv->unit           = GIMP_UNIT_PIXEL;
+  view->priv->unit           = gimp_unit_pixel ();
   view->priv->cursor_idle_id = 0;
 
   gtk_widget_style_get (GTK_WIDGET (view),
@@ -510,7 +510,7 @@ gimp_cursor_view_get_aux_info (GimpDocked *docked)
 }
 
 static void
-gimp_cursor_view_format_as_unit (GimpUnit  unit,
+gimp_cursor_view_format_as_unit (GimpUnit *unit,
                                  gchar    *output_buf,
                                  gint      output_buf_size,
                                  gdouble   pixel_value,
@@ -523,7 +523,7 @@ gimp_cursor_view_format_as_unit (GimpUnit  unit,
 
   value = gimp_pixels_to_units (pixel_value, unit, image_res);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != gimp_unit_pixel ())
     {
       unit_digits = gimp_unit_get_scaled_digits (unit, image_res);
       unit_str    = gimp_unit_get_abbreviation (unit);
@@ -689,7 +689,7 @@ gimp_cursor_view_shell_unit_changed (GimpCursorView   *view,
                                      GParamSpec       *pspec,
                                      GimpDisplayShell *shell)
 {
-  GimpUnit new_unit = GIMP_UNIT_PIXEL;
+  GimpUnit *new_unit = gimp_unit_pixel ();
 
   if (shell)
     {
@@ -706,7 +706,7 @@ gimp_cursor_view_shell_unit_changed (GimpCursorView   *view,
 static void
 gimp_cursor_view_update_selection_info (GimpCursorView *view,
                                         GimpImage      *image,
-                                        GimpUnit        unit)
+                                        GimpUnit       *unit)
 {
   gint x, y, width, height;
 
@@ -751,7 +751,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
   if (view->priv->cursor_image)
     {
       GimpImage  *image = view->priv->cursor_image;
-      GimpUnit    unit  = view->priv->cursor_unit;
+      GimpUnit   *unit  = view->priv->cursor_unit;
       gdouble     x     = view->priv->cursor_x;
       gdouble     y     = view->priv->cursor_y;
       gboolean    in_image;
@@ -764,7 +764,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
       gint        int_x;
       gint        int_y;
 
-      if (unit == GIMP_UNIT_PIXEL)
+      if (unit == gimp_unit_pixel ())
         unit = gimp_image_get_unit (image);
 
       gimp_image_get_resolution (image, &xres, &yres);
@@ -883,7 +883,7 @@ gimp_cursor_view_get_sample_merged (GimpCursorView *view)
 void
 gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 GimpImage        *image,
-                                GimpUnit          shell_unit,
+                                GimpUnit         *shell_unit,
                                 gdouble           x,
                                 gdouble           y)
 {

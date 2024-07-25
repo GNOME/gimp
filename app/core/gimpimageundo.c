@@ -423,7 +423,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
       if (image_undo->resolution_unit != gimp_image_get_unit (image))
         {
-          GimpUnit unit;
+          GimpUnit *unit;
 
           unit = gimp_image_get_unit (image);
           private->resolution_unit = image_undo->resolution_unit;

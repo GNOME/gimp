@@ -78,7 +78,7 @@ typedef void (* GimpQueryDoubleCallback)  (GtkWidget   *query_box,
  **/
 typedef void (* GimpQuerySizeCallback)    (GtkWidget   *query_box,
                                            gdouble      size,
-                                           GimpUnit     unit,
+                                           GimpUnit    *unit,
                                            gpointer     data);
 
 /**
@@ -156,7 +156,7 @@ GtkWidget * gimp_query_size_box    (const gchar              *title,
                                     gdouble                   lower,
                                     gdouble                   upper,
                                     gint                      digits,
-                                    GimpUnit                  unit,
+                                    GimpUnit                 *unit,
                                     gdouble                   resolution,
                                     gboolean                  dot_for_dot,
                                     GObject                  *object,

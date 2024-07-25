@@ -420,7 +420,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'W': /* width in real-world units */
-              if (shell->unit != GIMP_UNIT_PIXEL)
+              if (shell->unit != gimp_unit_pixel ())
                 {
                   gdouble xres;
                   gdouble yres;
@@ -443,7 +443,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'H': /* height in real-world units */
-              if (shell->unit != GIMP_UNIT_PIXEL)
+              if (shell->unit != gimp_unit_pixel ())
                 {
                   gdouble xres;
                   gdouble yres;
@@ -476,7 +476,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'X': /* drawable width in real world units */
-              if (drawable && shell->unit != GIMP_UNIT_PIXEL)
+              if (drawable && shell->unit != gimp_unit_pixel ())
                 {
                   gdouble xres;
                   gdouble yres;
@@ -501,7 +501,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'Y': /* drawable height in real world units */
-              if (drawable && shell->unit != GIMP_UNIT_PIXEL)
+              if (drawable && shell->unit != gimp_unit_pixel ())
                 {
                   gdouble xres;
                   gdouble yres;

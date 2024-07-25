@@ -142,12 +142,12 @@ get_default_unit_invoker (GimpProcedure         *procedure,
                           GError               **error)
 {
   GimpValueArray *return_vals;
-  GimpUnit unit_id = GIMP_UNIT_PIXEL;
+  GimpUnit *unit = NULL;
 
-  unit_id = gimp_get_default_unit ();
+  unit = gimp_get_default_unit ();
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), unit_id);
+  g_value_set_object (gimp_value_array_index (return_vals, 1), unit);
 
   return return_vals;
 }
@@ -312,19 +312,19 @@ register_gimprc_procs (GimpPDB *pdb)
                                "gimp-get-default-unit");
   gimp_procedure_set_static_help (procedure,
                                   "Get the default unit (taken from the user's locale).",
-                                  "Returns the default unit's integer ID.",
+                                  "Returns the default unit.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_unit ("unit-id",
-                                                         "unit id",
+                                   gimp_param_spec_unit ("unit",
+                                                         "unit",
                                                          "Default unit",
-                                                         TRUE,
                                                          FALSE,
-                                                         GIMP_UNIT_PIXEL,
+                                                         FALSE,
+                                                         gimp_unit_inch (),
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

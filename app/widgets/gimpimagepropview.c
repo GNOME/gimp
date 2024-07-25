@@ -424,7 +424,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   GimpColorProfile  *profile;
   GimpImageBaseType  type;
   GimpPrecision      precision;
-  GimpUnit           unit;
+  GimpUnit          *unit;
   gdouble            unit_factor;
   const gchar       *desc;
   gchar              format_buf[32];
@@ -463,7 +463,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   g_snprintf (buf, sizeof (buf), _("%g × %g %s"),
               xres / unit_factor,
               yres / unit_factor,
-              unit == GIMP_UNIT_INCH ? _("ppi") : format_buf);
+              unit == gimp_unit_inch () ? _("ppi") : format_buf);
   gtk_label_set_text (GTK_LABEL (view->resolution_label), buf);
 
   /*  color space  */

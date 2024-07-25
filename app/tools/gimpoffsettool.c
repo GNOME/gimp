@@ -22,6 +22,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -484,7 +485,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
-  offset_tool->offset_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+  offset_tool->offset_se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a",
                                                 TRUE, TRUE, FALSE, 10,
                                                 GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
@@ -502,7 +503,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_show (offset_tool->offset_se);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset_tool->offset_se),
-                            GIMP_UNIT_PIXEL);
+                            gimp_unit_pixel ());
 
   g_signal_connect (offset_tool->offset_se, "refval-changed",
                     G_CALLBACK (gimp_offset_tool_offset_changed),

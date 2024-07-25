@@ -478,7 +478,7 @@ xcf_save_image_props (XcfInfo    *info,
   GimpParasite     *meta_parasite = NULL;
   GList            *symmetry_parasites = NULL;
   GList            *iter;
-  GimpUnit          unit          = gimp_image_get_unit (image);
+  GimpUnit         *unit          = gimp_image_get_unit (image);
   gdouble           xres;
   gdouble           yres;
 
@@ -519,7 +519,7 @@ xcf_save_image_props (XcfInfo    *info,
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_image_get_tattoo_state (image)), ;);
 
-  if (unit < gimp_unit_get_number_of_built_in_units ())
+  if (gimp_unit_is_built_in (unit))
     xcf_check_error (xcf_save_prop (info, image, PROP_UNIT, error, unit), ;);
 
   if (gimp_container_get_n_children (gimp_image_get_paths (image)) > 0 &&
@@ -531,7 +531,7 @@ xcf_save_image_props (XcfInfo    *info,
         xcf_check_error (xcf_save_prop (info, image, PROP_VECTORS, error), ;);
     }
 
-  if (unit >= gimp_unit_get_number_of_built_in_units ())
+  if (! gimp_unit_is_built_in (unit))
     xcf_check_error (xcf_save_prop (info, image, PROP_USER_UNIT, error, unit), ;);
 
   if (gimp_image_get_grid (image))
@@ -1539,14 +1539,15 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_UNIT:
       {
-        guint32 unit = va_arg (args, guint32);
+        GimpUnit *unit       = va_arg (args, GimpUnit *);
+        guint32   unit_index = gimp_unit_get_id (unit);
 
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type, va_end (args));
         xcf_write_int32_check_error (info, &size, 1, va_end (args));
 
-        xcf_write_int32_check_error (info, &unit, 1, va_end (args));
+        xcf_write_int32_check_error (info, &unit_index, 1, va_end (args));
       }
       break;
 
@@ -1581,7 +1582,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_USER_UNIT:
       {
-        GimpUnit     unit = va_arg (args, guint32);
+        GimpUnit    *unit = va_arg (args, GimpUnit *);
         const gchar *unit_strings[5];
         gfloat       factor;
         guint32      digits;

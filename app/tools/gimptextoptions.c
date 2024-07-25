@@ -163,7 +163,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                          "font-size-unit",
                          _("Unit"),
                          _("Font size unit"),
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         TRUE, FALSE, gimp_unit_pixel (),
                          GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                            "font-size",
@@ -306,7 +306,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                           "outline-unit",
                           _("Unit"),
                           _("Outline width unit"),
-                          TRUE, FALSE, GIMP_UNIT_PIXEL,
+                          TRUE, FALSE, gimp_unit_pixel (),
                           GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_CAP_STYLE,
                           "outline-cap-style",
@@ -397,7 +397,7 @@ gimp_text_options_get_property (GObject    *object,
       g_value_set_double (value, options->font_size);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, options->unit);
+      g_value_set_object (value, options->unit);
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
@@ -443,7 +443,7 @@ gimp_text_options_get_property (GObject    *object,
       g_value_set_double (value, options->outline_width);
       break;
     case PROP_OUTLINE_UNIT:
-      g_value_set_int (value, options->outline_unit);
+      g_value_set_object (value, options->outline_unit);
       break;
     case PROP_OUTLINE_CAP_STYLE:
       g_value_set_enum (value, options->outline_cap_style);
@@ -503,7 +503,7 @@ gimp_text_options_set_property (GObject      *object,
       options->font_size = g_value_get_double (value);
       break;
     case PROP_UNIT:
-      options->unit = g_value_get_int (value);
+      options->unit = g_value_get_object (value);
       break;
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
@@ -560,7 +560,7 @@ gimp_text_options_set_property (GObject      *object,
       options->outline_width = g_value_get_double (value);
       break;
     case PROP_OUTLINE_UNIT:
-      options->outline_unit = g_value_get_int (value);
+      options->outline_unit = g_value_get_object (value);
       break;
     case PROP_OUTLINE_CAP_STYLE:
       options->outline_cap_style = g_value_get_enum (value);

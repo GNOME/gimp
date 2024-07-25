@@ -241,10 +241,10 @@ wmf_extract (GimpProcedure        *procedure,
     }
 
   extracted_dimensions->width         = width;
-  extracted_dimensions->width_unit    = GIMP_UNIT_PERCENT;
+  extracted_dimensions->width_unit    = gimp_unit_percent ();
   extracted_dimensions->exact_width   = guessed ? FALSE : TRUE;
   extracted_dimensions->height        = height;
-  extracted_dimensions->height_unit   = GIMP_UNIT_PERCENT;
+  extracted_dimensions->height_unit   = gimp_unit_percent ();
   extracted_dimensions->exact_height  = guessed ? FALSE : TRUE;
   extracted_dimensions->correct_ratio = guessed ? FALSE : TRUE;
 

@@ -109,7 +109,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_unit (name, nick, blurb,
                                      param_def->meta.m_unit.allow_pixels,
                                      param_def->meta.m_unit.allow_percent,
-                                     param_def->meta.m_unit.default_val,
+                                     gimp_unit_get_by_id (param_def->meta.m_unit.default_val),
                                      flags);
       break;
 
@@ -349,14 +349,13 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (pspec_type == GIMP_TYPE_PARAM_UNIT)
     {
-      GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
       GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_UNIT;
 
-      param_def->meta.m_unit.allow_pixels  = (ispec->minimum < GIMP_UNIT_INCH);
+      param_def->meta.m_unit.allow_pixels  = uspec->allow_pixel;
       param_def->meta.m_unit.allow_percent = uspec->allow_percent;
-      param_def->meta.m_unit.default_val   = ispec->default_value;
+      param_def->meta.m_unit.default_val   = gimp_unit_get_id (uspec->default_value);
     }
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
@@ -643,6 +642,13 @@ get_resource_id (GObject *resource)
 #endif
 }
 
+static GimpUnit *
+get_unit_by_id (gpointer gimp,
+                gint     id)
+{
+  return gimp_unit_get_by_id (id);
+}
+
 
 /* Deserialize a gp_param (from the wire) to an instance of object or
  * primitive type.
@@ -682,8 +688,7 @@ gimp_gp_param_to_value (gpointer        gimp,
 
   g_value_init (value, type);
 
-  if (type == G_TYPE_INT ||
-      type == GIMP_TYPE_UNIT)
+  if (type == G_TYPE_INT)
     {
       g_value_set_int (value, param->data.d_int);
     }
@@ -915,6 +920,10 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       g_value_set_object (value, get_resource_by_id (param->data.d_int));
     }
+  else if (GIMP_VALUE_HOLDS_UNIT (value))
+    {
+      g_value_set_object (value, get_unit_by_id (gimp, param->data.d_int));
+    }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
       GParamSpec *pspec =
@@ -1032,8 +1041,7 @@ gimp_value_to_gp_param (const GValue *value,
   else
     param->type_name = (gchar *) g_type_name (type);
 
-  if (type == G_TYPE_INT ||
-      type == GIMP_TYPE_UNIT)
+  if (type == G_TYPE_INT)
     {
       param->param_type = GP_PARAM_TYPE_INT;
 
@@ -1342,6 +1350,14 @@ gimp_value_to_gp_param (const GValue *value,
       param->param_type = GP_PARAM_TYPE_INT;
 
       param->data.d_int = resource ? get_resource_id (resource) : -1;
+    }
+  else if (GIMP_VALUE_HOLDS_UNIT (value))
+    {
+      GimpUnit *unit = g_value_get_object (value);
+
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = unit ? gimp_unit_get_id (unit) : -1;
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {

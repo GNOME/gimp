@@ -333,8 +333,8 @@ pdf_extract (GimpProcedure        *procedure,
 
   extracted_dimensions->width         = width;
   extracted_dimensions->height        = height;
-  extracted_dimensions->width_unit    = GIMP_UNIT_POINT;
-  extracted_dimensions->height_unit   = GIMP_UNIT_POINT;
+  extracted_dimensions->width_unit    = gimp_unit_point ();
+  extracted_dimensions->height_unit   = gimp_unit_point ();
   extracted_dimensions->exact_width   = TRUE;
   extracted_dimensions->exact_height  = TRUE;
   extracted_dimensions->correct_ratio = TRUE;
@@ -535,7 +535,7 @@ pdf_load_thumb (GimpProcedure       *procedure,
     }
 
   /* Thumbnail resolution: 100.0. */
-  scale = 100.0 / gimp_unit_get_factor (GIMP_UNIT_POINT);
+  scale = 100.0 / gimp_unit_get_factor (gimp_unit_point ());
 
   width  *= scale;
   height *= scale;

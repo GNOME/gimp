@@ -459,7 +459,7 @@ gimp_query_size_box (const gchar           *title,
                      gdouble                lower,
                      gdouble                upper,
                      gint                   digits,
-                     GimpUnit               unit,
+                     GimpUnit              *unit,
                      gdouble                resolution,
                      gboolean               dot_for_dot,
                      GObject               *object,
@@ -487,7 +487,7 @@ gimp_query_size_box (const gchar           *title,
   sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 12,
                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
   if (dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
+    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), gimp_unit_pixel ());
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
                                   resolution, FALSE);
   gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 0, digits);
@@ -669,8 +669,8 @@ size_query_box_response (GtkWidget *widget,
                          gint       response_id,
                          QueryBox  *query_box)
 {
-  gdouble  size;
-  GimpUnit unit;
+  gdouble   size;
+  GimpUnit *unit;
 
   query_box_disconnect (query_box);
 

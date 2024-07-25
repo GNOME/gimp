@@ -57,7 +57,7 @@ struct _GimpGui
   GBytes       * (* display_get_window_id)  (GimpDisplay         *display);
   GimpDisplay  * (* display_create)         (Gimp                *gimp,
                                              GimpImage           *image,
-                                             GimpUnit             unit,
+                                             GimpUnit            *unit,
                                              gdouble              scale,
                                              GObject             *monitor);
   void           (* display_delete)         (GimpDisplay         *display);
@@ -127,7 +127,7 @@ GBytes       * gimp_get_display_window_id  (Gimp                *gimp,
                                             GimpDisplay         *display);
 GimpDisplay  * gimp_create_display         (Gimp                *gimp,
                                             GimpImage           *image,
-                                            GimpUnit             unit,
+                                            GimpUnit            *unit,
                                             gdouble              scale,
                                             GObject             *monitor);
 void           gimp_delete_display         (Gimp                *gimp,

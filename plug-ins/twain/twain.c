@@ -633,7 +633,7 @@ beginTransferCallback (pTW_IMAGEINFO  imageInfo,
   gimp_image_set_resolution (theClientData->image,
                              FIX32ToFloat (imageInfo->XResolution),
                              FIX32ToFloat (imageInfo->YResolution));
-  gimp_image_set_unit (theClientData->image, GIMP_UNIT_INCH);
+  gimp_image_set_unit (theClientData->image, gimp_unit_inch ());
 
   /* Create a layer */
   theClientData->layer = gimp_layer_new (theClientData->image,

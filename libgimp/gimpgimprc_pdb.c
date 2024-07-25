@@ -157,18 +157,18 @@ gimp_get_default_comment (void)
  *
  * Get the default unit (taken from the user's locale).
  *
- * Returns the default unit's integer ID.
+ * Returns the default unit.
  *
  * Returns: (transfer none): Default unit.
  *
  * Since: 2.4
  **/
-GimpUnit
+GimpUnit *
 gimp_get_default_unit (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit unit_id = GIMP_UNIT_PIXEL;
+  GimpUnit *unit = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -179,11 +179,11 @@ gimp_get_default_unit (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit_id = GIMP_VALUES_GET_INT (return_vals, 1);
+    unit = GIMP_VALUES_GET_UNIT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return unit_id;
+  return unit;
 }
 
 /**

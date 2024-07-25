@@ -618,8 +618,8 @@ ps_extract (GimpProcedure        *procedure,
     {
       extracted_dimensions->width         = (gdouble) bbox_x1 - bbox_x0;
       extracted_dimensions->height        = (gdouble) bbox_y1 - bbox_y0;
-      extracted_dimensions->width_unit    = GIMP_UNIT_POINT;
-      extracted_dimensions->height_unit   = GIMP_UNIT_POINT;
+      extracted_dimensions->width_unit    = gimp_unit_point ();
+      extracted_dimensions->height_unit   = gimp_unit_point ();
       extracted_dimensions->exact_width   = TRUE;
       extracted_dimensions->exact_height  = TRUE;
       extracted_dimensions->correct_ratio = TRUE;
@@ -1564,10 +1564,10 @@ static void
 ps_set_save_size (GObject   *config,
                   GimpImage *image)
 {
-  gdouble  xres, yres, factor, iw, ih;
-  guint    width, height;
-  GimpUnit unit;
-  gboolean unit_mm = FALSE;
+  gdouble    xres, yres, factor, iw, ih;
+  guint      width, height;
+  GimpUnit  *unit;
+  gboolean   unit_mm = FALSE;
 
   gimp_image_get_resolution (image, &xres, &yres);
 

@@ -659,7 +659,7 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *image,
 
   if (shell->dot_for_dot)
     {
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != gimp_unit_pixel ())
         {
           gimp_display_shell_rulers_update (shell);
         }

@@ -47,7 +47,7 @@ struct _GimpImageUndo
   gint               previous_height;
   gdouble            xresolution;
   gdouble            yresolution;
-  GimpUnit           resolution_unit;
+  GimpUnit          *resolution_unit;
   GimpGrid          *grid;
   gint               num_colors;
   guchar            *colormap;

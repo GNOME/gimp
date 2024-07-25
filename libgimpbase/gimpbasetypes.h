@@ -48,6 +48,7 @@ typedef struct _GimpChoice       GimpChoice;
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpEnumDesc     GimpEnumDesc;
 typedef struct _GimpFlagsDesc    GimpFlagsDesc;
+typedef struct _GimpUnit         GimpUnit;
 typedef struct _GimpValueArray   GimpValueArray;
 
 typedef struct _GimpMetadata     GimpMetadata;

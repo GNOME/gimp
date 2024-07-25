@@ -67,7 +67,7 @@
 #define DEFAULT_FADE_LENGTH             100.0
 #define DEFAULT_FADE_REVERSE            FALSE
 #define DEFAULT_FADE_REPEAT             GIMP_REPEAT_NONE
-#define DEFAULT_FADE_UNIT               GIMP_UNIT_PIXEL
+#define DEFAULT_FADE_UNIT               gimp_unit_pixel ()
 
 #define DEFAULT_GRADIENT_REVERSE        FALSE
 #define DEFAULT_GRADIENT_BLEND_SPACE    GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL
@@ -627,7 +627,7 @@ gimp_paint_options_set_property (GObject      *object,
       fade_options->fade_repeat = g_value_get_enum (value);
       break;
     case PROP_FADE_UNIT:
-      fade_options->fade_unit = g_value_get_int (value);
+      fade_options->fade_unit = g_value_get_object (value);
       break;
 
     case PROP_GRADIENT_REVERSE:
@@ -786,7 +786,7 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_enum (value, fade_options->fade_repeat);
       break;
     case PROP_FADE_UNIT:
-      g_value_set_int (value, fade_options->fade_unit);
+      g_value_set_object (value, fade_options->fade_unit);
       break;
 
     case PROP_GRADIENT_REVERSE:
@@ -983,30 +983,26 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 
   fade_options = paint_options->fade_options;
 
-  switch (fade_options->fade_unit)
+  if (fade_options->fade_unit == gimp_unit_pixel ())
     {
-    case GIMP_UNIT_PIXEL:
       fade_out = fade_options->fade_length;
-      break;
-
-    case GIMP_UNIT_PERCENT:
+    }
+  else if (fade_options->fade_unit == gimp_unit_percent ())
+    {
       fade_out = (MAX (gimp_image_get_width  (image),
                        gimp_image_get_height (image)) *
                   fade_options->fade_length / 100);
-      break;
+    }
+  else
+    {
+      gdouble xres;
+      gdouble yres;
 
-    default:
-      {
-        gdouble xres;
-        gdouble yres;
+      gimp_image_get_resolution (image, &xres, &yres);
 
-        gimp_image_get_resolution (image, &xres, &yres);
-
-        unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
-        fade_out    = (fade_options->fade_length *
-                       MAX (xres, yres) / unit_factor);
-      }
-      break;
+      unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
+      fade_out    = (fade_options->fade_length *
+                     MAX (xres, yres) / unit_factor);
     }
 
   /*  factor in the fade out value  */

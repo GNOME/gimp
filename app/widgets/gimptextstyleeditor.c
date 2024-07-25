@@ -569,7 +569,7 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
         gdouble     points;
 
         points = gimp_units_to_points (pixels,
-                                       GIMP_UNIT_PIXEL,
+                                       gimp_unit_pixel (),
                                        editor->resolution_y);
         tag = gimp_text_buffer_get_size_tag (editor->buffer,
                                              PANGO_SCALE * points);
@@ -857,7 +857,7 @@ gimp_text_style_editor_size_changed (GimpSizeEntry       *entry,
   gdouble        points;
 
   points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
-                                 GIMP_UNIT_PIXEL, editor->resolution_y);
+                                 gimp_unit_pixel (), editor->resolution_y);
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
@@ -891,7 +891,7 @@ gimp_text_style_editor_set_size (GimpTextStyleEditor *editor,
                                    editor);
 
   pixels = gimp_units_to_pixels ((gdouble) size / PANGO_SCALE,
-                                 GIMP_UNIT_POINT,
+                                 gimp_unit_point (),
                                  editor->resolution_y);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (editor->size_entry), 0, pixels);
 

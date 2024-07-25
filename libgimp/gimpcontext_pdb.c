@@ -767,12 +767,12 @@ gimp_context_set_line_width (gdouble line_width)
  *
  * Since: 2.10
  **/
-GimpUnit
+GimpUnit *
 gimp_context_get_line_width_unit (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit line_width_unit = GIMP_UNIT_PIXEL;
+  GimpUnit *line_width_unit = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -783,7 +783,7 @@ gimp_context_get_line_width_unit (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    line_width_unit = GIMP_VALUES_GET_INT (return_vals, 1);
+    line_width_unit = GIMP_VALUES_GET_UNIT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -807,7 +807,7 @@ gimp_context_get_line_width_unit (void)
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_width_unit (GimpUnit line_width_unit)
+gimp_context_set_line_width_unit (GimpUnit *line_width_unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

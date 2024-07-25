@@ -58,7 +58,7 @@ GimpStrokeOptions * gimp_stroke_options_new                  (Gimp              
 GimpStrokeMethod    gimp_stroke_options_get_method           (GimpStrokeOptions *options);
 
 gdouble             gimp_stroke_options_get_width            (GimpStrokeOptions *options);
-GimpUnit            gimp_stroke_options_get_unit             (GimpStrokeOptions *options);
+GimpUnit          * gimp_stroke_options_get_unit             (GimpStrokeOptions *options);
 GimpCapStyle        gimp_stroke_options_get_cap_style        (GimpStrokeOptions *options);
 GimpJoinStyle       gimp_stroke_options_get_join_style       (GimpStrokeOptions *options);
 gdouble             gimp_stroke_options_get_miter_limit      (GimpStrokeOptions *options);

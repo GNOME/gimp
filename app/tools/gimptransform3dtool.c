@@ -250,7 +250,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_widget_show (vbox2);
 
   /* vanishing-point size entry */
-  se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a", TRUE, TRUE, FALSE, 6,
+  se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, TRUE, FALSE, 6,
                             GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_grid_set_row_spacing (GTK_GRID (se), 2);
   gtk_grid_set_column_spacing (GTK_GRID (se), 2);
@@ -298,7 +298,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_widget_show (vbox2);
 
   /* focal-length size entry */
-  se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a", TRUE, FALSE, FALSE, 6,
+  se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, FALSE, FALSE, 6,
                             GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_grid_set_row_spacing (GTK_GRID (se), 2);
   gtk_box_pack_start (GTK_BOX (vbox2), se, FALSE, FALSE, 0);
@@ -348,7 +348,7 @@ gimp_transform_3d_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_widget_show (vbox2);
 
   /* offset size entry */
-  se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a", TRUE, TRUE, FALSE, 6,
+  se = gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, TRUE, FALSE, 6,
                             GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_grid_set_row_spacing (GTK_GRID (se), 2);
   gtk_grid_set_column_spacing (GTK_GRID (se), 2);

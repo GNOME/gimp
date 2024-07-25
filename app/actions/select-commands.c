@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -53,19 +54,19 @@
 
 static void   select_feather_callback (GtkWidget *widget,
                                        gdouble    size,
-                                       GimpUnit   unit,
+                                       GimpUnit  *unit,
                                        gpointer   data);
 static void   select_border_callback  (GtkWidget *widget,
                                        gdouble    size,
-                                       GimpUnit   unit,
+                                       GimpUnit  *unit,
                                        gpointer   data);
 static void   select_grow_callback    (GtkWidget *widget,
                                        gdouble    size,
-                                       GimpUnit   unit,
+                                       GimpUnit  *unit,
                                        gpointer   data);
 static void   select_shrink_callback  (GtkWidget *widget,
                                        gdouble    size,
-                                       GimpUnit   unit,
+                                       GimpUnit  *unit,
                                        gpointer   data);
 static void   select_float            (GimpAction *action,
                                        GVariant   *value,
@@ -502,7 +503,7 @@ select_stroke_last_vals_cmd_callback (GimpAction *action,
 static void
 select_feather_callback (GtkWidget *widget,
                          gdouble    size,
-                         GimpUnit   unit,
+                         GimpUnit  *unit,
                          gpointer   data)
 {
   GimpImage        *image  = GIMP_IMAGE (data);
@@ -522,7 +523,7 @@ select_feather_callback (GtkWidget *widget,
   radius_x = config->selection_feather_radius;
   radius_y = config->selection_feather_radius;
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != gimp_unit_pixel ())
     {
       gdouble xres;
       gdouble yres;
@@ -548,7 +549,7 @@ select_feather_callback (GtkWidget *widget,
 static void
 select_border_callback (GtkWidget *widget,
                         gdouble    size,
-                        GimpUnit   unit,
+                        GimpUnit  *unit,
                         gpointer   data)
 {
   GimpImage        *image  = GIMP_IMAGE (data);
@@ -574,7 +575,7 @@ select_border_callback (GtkWidget *widget,
   radius_x = ROUND (config->selection_border_radius);
   radius_y = ROUND (config->selection_border_radius);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != gimp_unit_pixel ())
     {
       gdouble xres;
       gdouble yres;
@@ -601,7 +602,7 @@ select_border_callback (GtkWidget *widget,
 static void
 select_grow_callback (GtkWidget *widget,
                       gdouble    size,
-                      GimpUnit   unit,
+                      GimpUnit  *unit,
                       gpointer   data)
 {
   GimpImage        *image  = GIMP_IMAGE (data);
@@ -616,7 +617,7 @@ select_grow_callback (GtkWidget *widget,
   radius_x = ROUND (config->selection_grow_radius);
   radius_y = ROUND (config->selection_grow_radius);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != gimp_unit_pixel ())
     {
       gdouble xres;
       gdouble yres;
@@ -640,7 +641,7 @@ select_grow_callback (GtkWidget *widget,
 static void
 select_shrink_callback (GtkWidget *widget,
                         gdouble    size,
-                        GimpUnit   unit,
+                        GimpUnit  *unit,
                         gpointer   data)
 {
   GimpImage        *image  = GIMP_IMAGE (data);
@@ -660,7 +661,7 @@ select_shrink_callback (GtkWidget *widget,
   radius_x = ROUND (config->selection_shrink_radius);
   radius_y = ROUND (config->selection_shrink_radius);
 
-  if (unit != GIMP_UNIT_PIXEL)
+  if (unit != gimp_unit_pixel ())
     {
       gdouble xres;
       gdouble yres;

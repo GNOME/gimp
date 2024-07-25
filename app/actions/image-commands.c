@@ -136,12 +136,12 @@ static void   image_resize_callback            (GtkWidget              *dialog,
                                                 GimpContext            *context,
                                                 gint                    width,
                                                 gint                    height,
-                                                GimpUnit                unit,
+                                                GimpUnit               *unit,
                                                 gint                    offset_x,
                                                 gint                    offset_y,
                                                 gdouble                 xres,
                                                 gdouble                 yres,
-                                                GimpUnit                res_unit,
+                                                GimpUnit               *res_unit,
                                                 GimpFillType            fill_type,
                                                 GimpItemSet             layer_set,
                                                 gboolean                resize_text_layers,
@@ -151,18 +151,18 @@ static void   image_print_size_callback        (GtkWidget              *dialog,
                                                 GimpImage              *image,
                                                 gdouble                 xresolution,
                                                 gdouble                 yresolution,
-                                                GimpUnit                resolution_unit,
+                                                GimpUnit               *resolution_unit,
                                                 gpointer                user_data);
 
 static void   image_scale_callback             (GtkWidget              *dialog,
                                                 GimpViewable           *viewable,
                                                 gint                    width,
                                                 gint                    height,
-                                                GimpUnit                unit,
+                                                GimpUnit               *unit,
                                                 GimpInterpolationType   interpolation,
                                                 gdouble                 xresolution,
                                                 gdouble                 yresolution,
-                                                GimpUnit                resolution_unit,
+                                                GimpUnit               *resolution_unit,
                                                 gpointer                user_data);
 
 static void   image_merge_layers_callback      (GtkWidget              *dialog,
@@ -185,8 +185,8 @@ static void   image_softproof_profile_callback  (GtkWidget                *dialo
 
 /*  private variables  */
 
-static GimpUnit               image_resize_unit  = GIMP_UNIT_PIXEL;
-static GimpUnit               image_scale_unit   = GIMP_UNIT_PIXEL;
+static GimpUnit              *image_resize_unit  = NULL;
+static GimpUnit              *image_scale_unit   = NULL;
 static GimpInterpolationType  image_scale_interp = -1;
 static GimpPalette           *image_convert_indexed_custom_palette = NULL;
 
@@ -657,7 +657,7 @@ image_resize_cmd_callback (GimpAction *action,
     {
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-      if (image_resize_unit != GIMP_UNIT_PERCENT)
+      if (image_resize_unit != gimp_unit_percent ())
         image_resize_unit = gimp_display_get_shell (display)->unit;
 
       dialog = resize_dialog_new (GIMP_VIEWABLE (image),
@@ -786,7 +786,7 @@ image_scale_cmd_callback (GimpAction *action,
 
   if (! dialog)
     {
-      if (image_scale_unit != GIMP_UNIT_PERCENT)
+      if (image_scale_unit != gimp_unit_percent ())
         image_scale_unit = gimp_display_get_shell (display)->unit;
 
       if (image_scale_interp == -1)
@@ -1364,12 +1364,12 @@ image_resize_callback (GtkWidget    *dialog,
                        GimpContext  *context,
                        gint          width,
                        gint          height,
-                       GimpUnit      unit,
+                       GimpUnit     *unit,
                        gint          offset_x,
                        gint          offset_y,
                        gdouble       xres,
                        gdouble       yres,
-                       GimpUnit      res_unit,
+                       GimpUnit     *res_unit,
                        GimpFillType  fill_type,
                        GimpItemSet   layer_set,
                        gboolean      resize_text_layers,
@@ -1386,7 +1386,7 @@ image_resize_callback (GtkWidget    *dialog,
       GimpProgress     *progress;
       gdouble           old_xres;
       gdouble           old_yres;
-      GimpUnit          old_res_unit;
+      GimpUnit         *old_res_unit;
       gboolean          update_resolution;
 
       g_object_set (config,
@@ -1448,7 +1448,7 @@ image_print_size_callback (GtkWidget *dialog,
                            GimpImage *image,
                            gdouble    xresolution,
                            gdouble    yresolution,
-                           GimpUnit   resolution_unit,
+                           GimpUnit  *resolution_unit,
                            gpointer   data)
 {
   gdouble xres;
@@ -1479,11 +1479,11 @@ image_scale_callback (GtkWidget              *dialog,
                       GimpViewable           *viewable,
                       gint                    width,
                       gint                    height,
-                      GimpUnit                unit,
+                      GimpUnit               *unit,
                       GimpInterpolationType   interpolation,
                       gdouble                 xresolution,
                       gdouble                 yresolution,
-                      GimpUnit                resolution_unit,
+                      GimpUnit               *resolution_unit,
                       gpointer                user_data)
 {
   GimpProgress *progress = user_data;

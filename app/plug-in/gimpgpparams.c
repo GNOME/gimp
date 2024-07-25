@@ -41,6 +41,7 @@
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimpselection.h"
+#include "core/gimpunit.h"
 
 #include "text/gimpfont.h"
 #include "text/gimptextlayer.h"

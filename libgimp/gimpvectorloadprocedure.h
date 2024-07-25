@@ -31,19 +31,19 @@ G_BEGIN_DECLS
 
 typedef struct _GimpVectorLoadData
 {
-  gdouble  width;
-  GimpUnit width_unit;
-  gboolean exact_width;
+  gdouble   width;
+  GimpUnit *width_unit;
+  gboolean  exact_width;
 
-  gdouble  height;
-  GimpUnit height_unit;
-  gboolean exact_height;
+  gdouble   height;
+  GimpUnit *height_unit;
+  gboolean  exact_height;
 
-  gboolean correct_ratio;
+  gboolean  correct_ratio;
 
-  gdouble  pixel_density;
-  GimpUnit density_unit;
-  gboolean exact_density;
+  gdouble   pixel_density;
+  GimpUnit *density_unit;
+  gboolean  exact_density;
 } GimpVectorLoadData;
 
 /**

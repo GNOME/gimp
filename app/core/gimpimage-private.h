@@ -44,7 +44,7 @@ struct _GimpImagePrivate
   gint               height;                /*  height in pixels             */
   gdouble            xresolution;           /*  image x-res, in dpi          */
   gdouble            yresolution;           /*  image y-res, in dpi          */
-  GimpUnit           resolution_unit;       /*  resolution unit              */
+  GimpUnit          *resolution_unit;       /*  resolution unit              */
   gboolean           resolution_set;        /*  resolution explicitly set    */
   GimpImageBaseType  base_type;             /*  base gimp_image type         */
   GimpPrecision      precision;             /*  image's precision            */

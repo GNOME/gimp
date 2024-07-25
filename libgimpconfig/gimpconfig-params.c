@@ -193,17 +193,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                          gspec->ui_step_small,
                                          gspec->ui_step_big);
         }
-      else if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
-        {
-          GimpParamSpecUnit *spec  = GIMP_PARAM_SPEC_UNIT (pspec);
-          GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
-
-          copy = gimp_param_spec_unit (name, nick, blurb,
-                                       ispec->minimum == GIMP_UNIT_PIXEL,
-                                       spec->allow_percent,
-                                       ispec->default_value,
-                                       flags);
-        }
       else
         {
           copy = g_param_spec_int (name, nick, blurb,
@@ -239,6 +228,16 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                     spec->default_value,
                                     flags);
         }
+    }
+  else if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
+    {
+      GimpParamSpecUnit *spec = GIMP_PARAM_SPEC_UNIT (pspec);
+
+      copy = gimp_param_spec_unit (name, nick, blurb,
+                                   spec->allow_pixel,
+                                   spec->allow_percent,
+                                   spec->default_value,
+                                   flags);
     }
   else if (GIMP_IS_PARAM_SPEC_CHOICE (pspec))
     {

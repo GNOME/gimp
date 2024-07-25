@@ -173,13 +173,13 @@ gimp_unit_combo_box_new_with_model (GimpUnitStore *model)
  *
  * Returns: (transfer none): The selected #GimpUnit.
  **/
-GimpUnit
+GimpUnit *
 gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
 {
-  GtkTreeIter iter;
-  gint        unit;
+  GtkTreeIter  iter;
+  GimpUnit    *unit;
 
-  g_return_val_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo), -1);
+  g_return_val_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo), NULL);
 
   gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter);
 
@@ -187,7 +187,7 @@ gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
                       GIMP_UNIT_STORE_UNIT, &unit,
                       -1);
 
-  return (GimpUnit) unit;
+  return unit;
 }
 
 /**
@@ -199,7 +199,7 @@ gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
  **/
 void
 gimp_unit_combo_box_set_active (GimpUnitComboBox *combo,
-                                GimpUnit          unit)
+                                GimpUnit         *unit)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -215,13 +215,13 @@ gimp_unit_combo_box_set_active (GimpUnitComboBox *combo,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      gint iter_unit;
+      GimpUnit *iter_unit;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_UNIT_STORE_UNIT, &iter_unit,
                           -1);
 
-      if (unit == (GimpUnit) iter_unit)
+      if (unit == iter_unit)
         {
           gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
           break;

@@ -89,6 +89,7 @@ static GTokenType  gimp_config_deserialize_value_array    (GValue     *value,
                                                            GimpConfig *config,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
+static GimpUnit  * gimp_config_get_unit_from_identifier   (const gchar *identifier);
 static GTokenType  gimp_config_deserialize_unit           (GValue     *value,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
@@ -305,9 +306,10 @@ gimp_config_deserialize_property (GimpConfig *config,
     }
   else
     {
-      if (G_VALUE_HOLDS_OBJECT (&value)        &&
-          G_VALUE_TYPE (&value) != G_TYPE_FILE &&
-          G_VALUE_TYPE (&value) != GEGL_TYPE_COLOR)
+      if (G_VALUE_HOLDS_OBJECT (&value)            &&
+          G_VALUE_TYPE (&value) != G_TYPE_FILE     &&
+          G_VALUE_TYPE (&value) != GEGL_TYPE_COLOR &&
+          G_VALUE_TYPE (&value) != GIMP_TYPE_UNIT)
         {
           token = gimp_config_deserialize_object (&value,
                                                   config, prop_spec,
@@ -877,6 +879,31 @@ gimp_config_deserialize_value_array (GValue     *value,
   return G_TOKEN_RIGHT_PAREN;
 }
 
+static GimpUnit *
+gimp_config_get_unit_from_identifier (const gchar *identifier)
+{
+  GimpUnit *unit;
+
+  unit = gimp_unit_get_by_id (GIMP_UNIT_PIXEL);
+  for (gint i = GIMP_UNIT_PIXEL; unit; i++)
+    {
+      if (g_strcmp0 (identifier, gimp_unit_get_identifier (unit)) == 0)
+        break;
+
+      unit = gimp_unit_get_by_id (i);
+    }
+
+  if (unit == NULL && g_strcmp0 (identifier, "percent") == 0)
+    unit = gimp_unit_percent ();
+
+  /* XXX This may return NULL, especially for user-defined units which
+   * may have disappeared from one session to another. Should we return
+   * some default unit then?
+   */
+
+  return unit;
+}
+
 /* This function is entirely sick, so is our method of serializing
  * units, which we write out as (unit foo bar) instead of
  * (unit "foo bar"). The assumption that caused this shit was that a
@@ -896,7 +923,7 @@ gimp_config_deserialize_unit (GValue     *value,
   gchar      *old_cset_identifier_first;
   gchar      *old_cset_identifier_nth;
   GString    *buffer;
-  GValue      src = G_VALUE_INIT;
+  GimpUnit   *unit;
   GTokenType  token;
 
   /* parse the next token *before* reconfiguring the scanner, so it
@@ -905,7 +932,13 @@ gimp_config_deserialize_unit (GValue     *value,
   token = g_scanner_peek_next_token (scanner);
 
   if (token == G_TOKEN_STRING)
-    return gimp_config_deserialize_any (value, prop_spec, scanner);
+    {
+      g_scanner_get_next_token (scanner);
+      unit = gimp_config_get_unit_from_identifier (scanner->value.v_string);
+      g_value_set_object (value, unit);
+
+      return G_TOKEN_RIGHT_PAREN;
+    }
 
   old_cset_skip_characters  = scanner->config->cset_skip_characters;
   old_cset_identifier_first = scanner->config->cset_identifier_first;
@@ -944,10 +977,8 @@ gimp_config_deserialize_unit (GValue     *value,
         }
     }
 
-  g_value_init (&src, G_TYPE_STRING);
-  g_value_set_static_string (&src, buffer->str);
-  g_value_transform (&src, value);
-  g_value_unset (&src);
+  unit = gimp_config_get_unit_from_identifier (buffer->str);
+  g_value_set_object (value, unit);
 
   token = G_TOKEN_RIGHT_PAREN;
 

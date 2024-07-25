@@ -87,7 +87,7 @@ print_settings_save (PrintData *data)
       gimp_image_get_resolution (data->image, &xres, &yres);
 
       g_key_file_set_integer (key_file, "image-setup",
-                              "unit", data->unit);
+                              "unit", gimp_unit_get_id (data->unit));
       /* Do not save the print resolution when it is the expected image
        * resolution so that changing it (i.e. in "print size" dialog)
        * is not overridden by any previous prints.
@@ -250,8 +250,8 @@ print_settings_load_from_key_file (PrintData *data,
 
   if (g_key_file_has_key (key_file, "image-setup", "unit", NULL))
     {
-      data->unit = g_key_file_get_integer (key_file, "image-setup",
-                                           "unit", NULL);
+      data->unit = gimp_unit_get_by_id (g_key_file_get_integer (key_file, "image-setup",
+                                                               "unit", NULL));
     }
 
   if (g_key_file_has_key (key_file, "image-setup", "x-resolution", NULL) &&

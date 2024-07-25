@@ -26,11 +26,11 @@ typedef void (* GimpScaleCallback) (GtkWidget             *dialog,
                                     GimpViewable          *viewable,
                                     gint                   width,
                                     gint                   height,
-                                    GimpUnit               unit,
+                                    GimpUnit              *unit,
                                     GimpInterpolationType  interpolation,
                                     gdouble                xresolution,
                                     gdouble                yresolution,
-                                    GimpUnit               resolution_unit,
+                                    GimpUnit              *resolution_unit,
                                     gpointer               user_data);
 
 

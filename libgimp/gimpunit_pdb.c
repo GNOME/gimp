@@ -25,74 +25,20 @@
 #include "stamp-pdbgen.h"
 
 #include "gimp.h"
-#include "gimpunit_pdb.h"
+
 
 /**
- * _gimp_unit_get_number_of_units:
+ * SECTION: gimpunit
+ * @title: gimpunit
+ * @short_description: Operations on units.
  *
- * Returns the number of units.
- *
- * This procedure returns the number of defined units.
- *
- * Returns: The number of units.
+ * Provides operations on units, a collection of predefined units and
+ * functions to create new units.
  **/
-gint
-_gimp_unit_get_number_of_units (void)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint num_units = GIMP_UNIT_END;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-number-of-units",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_units = GIMP_VALUES_GET_INT (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return num_units;
-}
 
 /**
- * _gimp_unit_get_number_of_built_in_units:
- *
- * Returns the number of built-in units.
- *
- * This procedure returns the number of defined units built-in to GIMP.
- *
- * Returns: The number of built-in units.
- **/
-gint
-_gimp_unit_get_number_of_built_in_units (void)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint num_units = GIMP_UNIT_END;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-number-of-built-in-units",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    num_units = GIMP_VALUES_GET_INT (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return num_units;
-}
-
-/**
- * _gimp_unit_new:
+ * gimp_unit_new:
  * @identifier: The new unit's identifier.
  * @factor: The new unit's factor.
  * @digits: The new unit's digits.
@@ -101,27 +47,27 @@ _gimp_unit_get_number_of_built_in_units (void)
  * @singular: The new unit's singular form.
  * @plural: The new unit's plural form.
  *
- * Creates a new unit and returns it's integer ID.
+ * Creates a new unit.
  *
- * This procedure creates a new unit and returns it's integer ID. Note
- * that the new unit will have it's deletion flag set to TRUE, so you
- * will have to set it to FALSE with gimp_unit_set_deletion_flag() to
- * make it persistent.
+ * This procedure creates a new unit and returns it. Note that the new
+ * unit will have it's deletion flag set to TRUE, so you will have to
+ * set it to FALSE with gimp_unit_set_deletion_flag() to make it
+ * persistent.
  *
- * Returns: (transfer none): The new unit's ID.
+ * Returns: (transfer none): The new unit.
  **/
-GimpUnit
-_gimp_unit_new (const gchar *identifier,
-                gdouble      factor,
-                gint         digits,
-                const gchar *symbol,
-                const gchar *abbreviation,
-                const gchar *singular,
-                const gchar *plural)
+GimpUnit *
+gimp_unit_new (const gchar *identifier,
+               gdouble      factor,
+               gint         digits,
+               const gchar *symbol,
+               const gchar *abbreviation,
+               const gchar *singular,
+               const gchar *plural)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit unit_id = GIMP_UNIT_INCH;
+  GimpUnit *unit = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, identifier,
@@ -139,16 +85,74 @@ _gimp_unit_new (const gchar *identifier,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit_id = GIMP_VALUES_GET_INT (return_vals, 1);
+    unit = GIMP_VALUES_GET_UNIT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return unit_id;
+  return unit;
+}
+
+/**
+ * _gimp_unit_get_data:
+ * @unit_id: The unit's integer ID.
+ * @factor: (out): The unit's factor.
+ * @digits: (out): The unit's number of digits.
+ * @symbol: (out) (transfer full): The unit's symbol.
+ * @abbreviation: (out) (transfer full): The unit's abbreviation.
+ * @singular: (out) (transfer full): The unit's singular form.
+ * @plural: (out) (transfer full): The unit's plural form.
+ *
+ * Returns the various data pertaining to a given unit ID.
+ *
+ * This procedure returns all properties making up an unit. It is only
+ * meant for internal usage to query non built-in units and it is a
+ * programming error to use it directly, in particular for any of the
+ * built-in units.
+ *
+ * Returns: (transfer full): The unit's textual identifier.
+ *          The returned value must be freed with g_free().
+ **/
+gchar *
+_gimp_unit_get_data (gint      unit_id,
+                     gdouble  *factor,
+                     gint     *digits,
+                     gchar   **symbol,
+                     gchar   **abbreviation,
+                     gchar   **singular,
+                     gchar   **plural)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *identifier = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_INT, unit_id,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-unit-get-data",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      identifier = GIMP_VALUES_DUP_STRING (return_vals, 1);
+      *factor = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *digits = GIMP_VALUES_GET_INT (return_vals, 3);
+      *symbol = GIMP_VALUES_DUP_STRING (return_vals, 4);
+      *abbreviation = GIMP_VALUES_DUP_STRING (return_vals, 5);
+      *singular = GIMP_VALUES_DUP_STRING (return_vals, 6);
+      *plural = GIMP_VALUES_DUP_STRING (return_vals, 7);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return identifier;
 }
 
 /**
  * _gimp_unit_get_deletion_flag:
- * @unit_id: The unit's integer ID.
+ * @unit: The unit.
  *
  * Returns the deletion flag of the unit.
  *
@@ -159,14 +163,14 @@ _gimp_unit_new (const gchar *identifier,
  * Returns: The unit's deletion flag.
  **/
 gboolean
-_gimp_unit_get_deletion_flag (GimpUnit unit_id)
+_gimp_unit_get_deletion_flag (GimpUnit *unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean deletion_flag = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+                                          GIMP_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -184,7 +188,7 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
 
 /**
  * _gimp_unit_set_deletion_flag:
- * @unit_id: The unit's integer ID.
+ * @unit: The unit.
  * @deletion_flag: The new deletion flag of the unit.
  *
  * Sets the deletion flag of a unit.
@@ -196,15 +200,15 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_unit_set_deletion_flag (GimpUnit unit_id,
-                              gboolean deletion_flag)
+_gimp_unit_set_deletion_flag (GimpUnit *unit,
+                              gboolean  deletion_flag)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
+                                          GIMP_TYPE_UNIT, unit,
                                           G_TYPE_BOOLEAN, deletion_flag,
                                           G_TYPE_NONE);
 
@@ -218,255 +222,4 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
   gimp_value_array_unref (return_vals);
 
   return success;
-}
-
-/**
- * _gimp_unit_get_identifier:
- * @unit_id: The unit's integer ID.
- *
- * Returns the textual identifier of the unit.
- *
- * This procedure returns the textual identifier of the unit. For
- * built-in units it will be the english singular form of the unit's
- * name. For user-defined units this should equal to the singular form.
- *
- * Returns: (transfer full): The unit's textual identifier.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-_gimp_unit_get_identifier (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *identifier = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-identifier",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    identifier = GIMP_VALUES_DUP_STRING (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return identifier;
-}
-
-/**
- * _gimp_unit_get_factor:
- * @unit_id: The unit's integer ID.
- *
- * Returns the factor of the unit.
- *
- * This procedure returns the unit's factor which indicates how many
- * units make up an inch. Note that asking for the factor of \"pixels\"
- * will produce an error.
- *
- * Returns: The unit's factor.
- **/
-gdouble
-_gimp_unit_get_factor (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gdouble factor = 0.0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-factor",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    factor = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return factor;
-}
-
-/**
- * _gimp_unit_get_digits:
- * @unit_id: The unit's integer ID.
- *
- * Returns the number of digits of the unit.
- *
- * This procedure returns the number of digits you should provide in
- * input or output functions to get approximately the same accuracy as
- * with two digits and inches. Note that asking for the digits of
- * \"pixels\" will produce an error.
- *
- * Returns: The unit's number of digits.
- **/
-gint
-_gimp_unit_get_digits (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint digits = 0;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-digits",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    digits = GIMP_VALUES_GET_INT (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return digits;
-}
-
-/**
- * _gimp_unit_get_symbol:
- * @unit_id: The unit's integer ID.
- *
- * Returns the symbol of the unit.
- *
- * This procedure returns the symbol of the unit (\"''\" for inches).
- *
- * Returns: (transfer full): The unit's symbol.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-_gimp_unit_get_symbol (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *symbol = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-symbol",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    symbol = GIMP_VALUES_DUP_STRING (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return symbol;
-}
-
-/**
- * _gimp_unit_get_abbreviation:
- * @unit_id: The unit's integer ID.
- *
- * Returns the abbreviation of the unit.
- *
- * This procedure returns the abbreviation of the unit (\"in\" for
- * inches).
- *
- * Returns: (transfer full): The unit's abbreviation.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-_gimp_unit_get_abbreviation (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *abbreviation = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-abbreviation",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    abbreviation = GIMP_VALUES_DUP_STRING (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return abbreviation;
-}
-
-/**
- * _gimp_unit_get_singular:
- * @unit_id: The unit's integer ID.
- *
- * Returns the singular form of the unit.
- *
- * This procedure returns the singular form of the unit.
- *
- * Returns: (transfer full): The unit's singular form.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-_gimp_unit_get_singular (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *singular = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-singular",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    singular = GIMP_VALUES_DUP_STRING (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return singular;
-}
-
-/**
- * _gimp_unit_get_plural:
- * @unit_id: The unit's integer ID.
- *
- * Returns the plural form of the unit.
- *
- * This procedure returns the plural form of the unit.
- *
- * Returns: (transfer full): The unit's plural form.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-_gimp_unit_get_plural (GimpUnit unit_id)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *plural = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_UNIT, unit_id,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-unit-get-plural",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    plural = GIMP_VALUES_DUP_STRING (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return plural;
 }

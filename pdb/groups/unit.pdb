@@ -16,66 +16,74 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub unit_get_number_of_units {
-    $blurb = 'Returns the number of units.';
-
-    $help = 'This procedure returns the number of defined units.';
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @outargs = (
-	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
-	  desc => 'The number of units' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  num_units = _gimp_unit_get_number_of_units (gimp);
-}
-CODE
-    );
-}
-
-sub unit_get_number_of_built_in_units {
-    $blurb = 'Returns the number of built-in units.';
+sub unit_get_data {
+    $blurb = "Returns the various data pertaining to a given unit ID.";
 
     $help = <<'HELP';
-This procedure returns the number of defined units built-in to GIMP.
+This procedure returns all properties making up an unit.
+It is only meant for internal usage to query non built-in units and it
+is a programming error to use it directly, in particular for any of the built-in units.
 HELP
 
-    &mitch_pdb_misc('1999');
+    &jehan_pdb_misc('2023');
 
     $lib_private = 1;
 
+    @inargs = (
+	{ name => 'unit_id', type => 'int32',
+	  desc => "The unit's integer ID" }
+    );
+
     @outargs = (
-	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
-	  desc => 'The number of built-in units' }
+	{ name => 'identifier', type => 'string',
+	  desc => "The unit's textual identifier" },
+	{ name => 'factor', type => 'float',
+	  desc => "The unit's factor" },
+	{ name => 'digits', type => 'int32',
+	  desc => "The unit's number of digits" },
+	{ name => 'symbol', type => 'string',
+	  desc => "The unit's symbol" },
+	{ name => 'abbreviation', type => 'string',
+	  desc => "The unit's abbreviation" },
+	{ name => 'singular', type => 'string',
+	  desc => "The unit's singular form" },
+	{ name => 'plural', type => 'string',
+	  desc => "The unit's plural form" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  num_units = _gimp_unit_get_number_of_built_in_units (gimp);
+  if (unit_id >= 0)
+    {
+      GimpUnit *unit = gimp_unit_get_by_id (unit_id);
+
+      if (unit != NULL)
+        {
+          identifier   = g_strdup (gimp_unit_get_identifier (unit));
+          factor       = gimp_unit_get_factor (unit);
+          digits       = gimp_unit_get_digits (unit);
+          symbol       = g_strdup (gimp_unit_get_symbol (unit));
+          abbreviation = g_strdup (gimp_unit_get_abbreviation (unit));
+          singular     = g_strdup (gimp_unit_get_singular (unit));
+          plural       = g_strdup (gimp_unit_get_plural (unit));
+        }
+    }
 }
 CODE
     );
 }
 
 sub unit_new {
-    $blurb = "Creates a new unit and returns it's integer ID.";
+    $blurb = "Creates a new unit.";
 
     $help = <<'HELP';
-This procedure creates a new unit and returns it's integer ID. Note that the
-new unit will have it's deletion flag set to TRUE, so you will have to set it
+This procedure creates a new unit and returns it. Note that the new unit
+will have it's deletion flag set to TRUE, so you will have to set it
 to FALSE with gimp_unit_set_deletion_flag() to make it persistent.
 HELP
 
     &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
 
     @inargs = (
 	{ name => 'identifier', type => 'string', non_empty => 1,
@@ -95,16 +103,15 @@ HELP
     );
 
     @outargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The new unit's ID",
-	  libdef => 'GIMP_UNIT_INCH' }
+	{ name => 'unit', type => 'unit',
+	  desc => "The new unit" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  unit_id = _gimp_unit_new (gimp, identifier, factor, digits,
-                            symbol, abbreviation, singular, plural);
+  unit = _gimp_unit_new (gimp, identifier, factor, digits,
+                         symbol, abbreviation, singular, plural);
 }
 CODE
     );
@@ -123,8 +130,8 @@ HELP
     $lib_private = 1;
 
     @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
+	{ name => 'unit', type => 'unit',
+	  desc => "The unit" }
     );
 
     @outargs = (
@@ -135,7 +142,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
+  deletion_flag = gimp_unit_get_deletion_flag (unit);
 }
 CODE
     );
@@ -155,8 +162,8 @@ HELP
     $lib_private = 1;
 
     @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" },
+	{ name => 'unit', type => 'unit',
+	  desc => "The unit" },
 	{ name => 'deletion_flag', type => 'boolean',
 	  desc => 'The new deletion flag of the unit' }
     );
@@ -164,242 +171,26 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
+  gimp_unit_set_deletion_flag (unit, deletion_flag);
 }
 CODE
     );
 }
-
-sub unit_get_identifier {
-    $blurb = "Returns the textual identifier of the unit.";
-
-    $help = <<'HELP';
-This procedure returns the textual identifier of the unit. For built-in units
-it will be the english singular form of the unit's name. For user-defined units
-this should equal to the singular form.
-HELP
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'identifier', type => 'string',
-	  desc => "The unit's textual identifier" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
-}
-CODE
-    );
-}
-
-sub unit_get_factor {
-    $blurb = "Returns the factor of the unit.";
-
-    $help = <<'HELP';
-This procedure returns the unit's factor which indicates how many units make up
-an inch. Note that asking for the factor of "pixels" will produce an error.
-HELP
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'factor', type => 'float',
-	  desc => "The unit's factor" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  factor = _gimp_unit_get_factor (gimp, unit_id);
-}
-CODE
-    );
-}
-
-sub unit_get_digits {
-    $blurb = "Returns the number of digits of the unit.";
-
-    $help = <<'HELP';
-This procedure returns the number of digits you should provide in input or
-output functions to get approximately the same accuracy as with two digits and
-inches. Note that asking for the digits of "pixels" will produce an error.
-HELP
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'digits', type => 'int32',
-	  desc => "The unit's number of digits" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  digits = _gimp_unit_get_digits (gimp, unit_id);
-}
-CODE
-    );
-}
-
-sub unit_get_symbol {
-    $blurb = "Returns the symbol of the unit.";
-
-    $help = <<'HELP';
-This procedure returns the symbol of the unit ("''" for inches).
-HELP
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'symbol', type => 'string',
-	  desc => "The unit's symbol" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
-}
-CODE
-    );
-}
-
-sub unit_get_abbreviation {
-    $blurb = "Returns the abbreviation of the unit.";
-
-    $help = <<'HELP';
-This procedure returns the abbreviation of the unit ("in" for inches).
-HELP
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'abbreviation', type => 'string',
-	  desc => "The unit's abbreviation" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
-}
-CODE
-    );
-}
-
-sub unit_get_singular {
-    $blurb = "Returns the singular form of the unit.";
-    $help  = 'This procedure returns the singular form of the unit.';
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'singular', type => 'string',
-	  desc => "The unit's singular form" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
-}
-CODE
-    );
-}
-
-sub unit_get_plural {
-    $blurb = "Returns the plural form of the unit.";
-    $help  = 'This procedure returns the plural form of the unit.';
-
-    &mitch_pdb_misc('1999');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID" }
-    );
-
-    @outargs = (
-	{ name => 'plural', type => 'string',
-	  desc => "The unit's plural form" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
-}
-CODE
-    );
-}
-
 
 @headers = qw("libgimpbase/gimpbase.h"
+              "core/gimp.h"
               "core/gimpunit.h");
 
-@procs = qw(unit_get_number_of_units
-            unit_get_number_of_built_in_units
-	    unit_new
+@procs = qw(unit_new
+            unit_get_data
             unit_get_deletion_flag
-            unit_set_deletion_flag
-            unit_get_identifier
-            unit_get_factor
-            unit_get_digits
-            unit_get_symbol
-            unit_get_abbreviation
-            unit_get_singular
-            unit_get_plural);
+            unit_set_deletion_flag);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Units';
-
-$lib_private = 1;
+$doc_title = 'gimpunit';
+$doc_short_desc = 'Operations on units.';
+$doc_long_desc = 'Provides operations on units, a collection of predefined units and functions to create new units.';
 
 1;

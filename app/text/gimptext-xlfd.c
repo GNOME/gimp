@@ -144,9 +144,9 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
  * Returns: %TRUE on success, %FALSE otherwise.
  **/
 gboolean
-gimp_text_font_size_from_xlfd (const gchar *xlfd,
-                               gdouble     *size,
-                               GimpUnit    *size_unit)
+gimp_text_font_size_from_xlfd (const gchar  *xlfd,
+                               gdouble      *size,
+                               GimpUnit    **size_unit)
 {
   gchar  buffer[XLFD_MAX_FIELD_LEN];
   gchar *field;
@@ -158,7 +158,7 @@ gimp_text_font_size_from_xlfd (const gchar *xlfd,
   if (field)
     {
       *size      = atoi (field);
-      *size_unit = GIMP_UNIT_PIXEL;
+      *size_unit = gimp_unit_pixel ();
       return TRUE;
     }
 
@@ -166,7 +166,7 @@ gimp_text_font_size_from_xlfd (const gchar *xlfd,
   if (field)
     {
       *size      = atoi (field) / 10.0;
-      *size_unit = GIMP_UNIT_POINT;
+      *size_unit = gimp_unit_point ();
       return TRUE;
     }
 
@@ -185,10 +185,10 @@ void
 gimp_text_set_font_from_xlfd (GimpText    *text,
                               const gchar *xlfd)
 {
-  gchar    *font_name;
-  GimpFont *font = NULL;
-  gdouble   size;
-  GimpUnit  size_unit;
+  gchar     *font_name;
+  GimpFont  *font = NULL;
+  gdouble    size;
+  GimpUnit  *size_unit;
 
   g_return_if_fail (GIMP_IS_TEXT (text));
 

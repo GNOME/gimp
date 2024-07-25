@@ -42,7 +42,7 @@ struct _GimpText
   gchar                 *text;
   gchar                 *markup;
   GimpFont              *font;
-  GimpUnit               unit;
+  GimpUnit              *unit;
   gdouble                font_size;
   gboolean               antialias;
   GimpTextHintStyle      hint_style;
@@ -68,7 +68,7 @@ struct _GimpText
   GimpTextBoxMode        box_mode;
   gdouble                box_width;
   gdouble                box_height;
-  GimpUnit               box_unit;
+  GimpUnit              *box_unit;
   GimpMatrix2            transformation;
   gdouble                offset_x;
   gdouble                offset_y;

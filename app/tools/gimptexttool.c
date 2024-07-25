@@ -1163,7 +1163,7 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
       if ((x2 - x1) != gimp_item_get_width  (item) ||
           (y2 - y1) != gimp_item_get_height (item))
         {
-          GimpUnit  box_unit = text_tool->proxy->box_unit;
+          GimpUnit *box_unit = text_tool->proxy->box_unit;
           gdouble   xres, yres;
           gboolean  push_undo = TRUE;
           GimpUndo *undo;
@@ -1681,8 +1681,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
 
   if (text_tool->text_box_fixed)
     {
-      GimpUnit box_unit = text_tool->proxy->box_unit;
-      gdouble  xres, yres;
+      GimpUnit *box_unit = text_tool->proxy->box_unit;
+      gdouble   xres, yres;
 
       gimp_image_get_resolution (image, &xres, &yres);
 

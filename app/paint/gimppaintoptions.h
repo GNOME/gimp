@@ -46,7 +46,7 @@ struct _GimpFadeOptions
 {
   gboolean        fade_reverse;
   gdouble         fade_length;
-  GimpUnit        fade_unit;
+  GimpUnit       *fade_unit;
   GimpRepeatMode  fade_repeat;
 };
 

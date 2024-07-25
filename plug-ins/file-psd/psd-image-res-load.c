@@ -573,8 +573,8 @@ load_resource_1005 (const PSDimageres  *res_a,
 
   /* FIXME  width unit and height unit unused at present */
 
-  ResolutionInfo        res_info;
-  GimpUnit              image_unit;
+  ResolutionInfo  res_info;
+  GimpUnit       *image_unit;
 
   IFDBG(2) g_debug ("Process image resource block 1005: Resolution Info");
 
@@ -613,13 +613,13 @@ load_resource_1005 (const PSDimageres  *res_a,
   switch (res_info.hResUnit)
     {
     case PSD_RES_INCH:
-      image_unit = GIMP_UNIT_INCH;
+      image_unit = gimp_unit_inch ();
       break;
     case PSD_RES_CM:
-      image_unit = GIMP_UNIT_MM;
+      image_unit = gimp_unit_mm ();
       break;
     default:
-      image_unit = GIMP_UNIT_INCH;
+      image_unit = gimp_unit_inch ();
     }
 
   gimp_image_set_unit (image, image_unit);

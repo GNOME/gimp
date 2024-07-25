@@ -58,7 +58,7 @@ struct _GimpSizeEntryClass
 /* For information look into the C source or the html documentation */
 
 GtkWidget * gimp_size_entry_new (gint                       number_of_fields,
-                                 GimpUnit                   unit,
+                                 GimpUnit                  *unit,
                                  const gchar               *unit_format,
                                  gboolean                   menu_show_pixels,
                                  gboolean                   menu_show_percent,
@@ -116,9 +116,9 @@ void        gimp_size_entry_set_refval            (GimpSizeEntry *gse,
                                                    gint           field,
                                                    gdouble        refval);
 
-GimpUnit    gimp_size_entry_get_unit              (GimpSizeEntry *gse);
+GimpUnit  * gimp_size_entry_get_unit              (GimpSizeEntry *gse);
 void        gimp_size_entry_set_unit              (GimpSizeEntry *gse,
-                                                   GimpUnit       unit);
+                                                   GimpUnit      *unit);
 void        gimp_size_entry_show_unit_menu        (GimpSizeEntry *gse,
                                                    gboolean       show);
 

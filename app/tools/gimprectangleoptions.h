@@ -89,8 +89,8 @@ struct _GimpRectangleOptionsPrivate
   gdouble                 width;
   gdouble                 height;
 
-  GimpUnit                position_unit;
-  GimpUnit                size_unit;
+  GimpUnit               *position_unit;
+  GimpUnit               *size_unit;
 
   gboolean                fixed_rule_active;
   GimpRectangleFixedRule  fixed_rule;
@@ -119,7 +119,7 @@ struct _GimpRectangleOptionsPrivate
    */
   gboolean                use_string_current;
 
-  GimpUnit                fixed_unit;
+  GimpUnit               *fixed_unit;
 
   /* options gui */
 

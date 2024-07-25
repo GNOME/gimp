@@ -200,8 +200,8 @@ void            gimp_image_get_resolution        (GimpImage          *image,
 void            gimp_image_resolution_changed    (GimpImage          *image);
 
 void            gimp_image_set_unit              (GimpImage          *image,
-                                                  GimpUnit            unit);
-GimpUnit        gimp_image_get_unit              (GimpImage          *image);
+                                                  GimpUnit           *unit);
+GimpUnit      * gimp_image_get_unit              (GimpImage          *image);
 void            gimp_image_unit_changed          (GimpImage          *image);
 
 gint            gimp_image_get_width             (GimpImage          *image);

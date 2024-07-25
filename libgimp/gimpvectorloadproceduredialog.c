@@ -147,19 +147,19 @@ gimp_vector_load_procedure_dialog_fill_start (GimpProcedureDialog *dialog,
             {
               ratio_width  = vector_dialog->extracted_data->width;
               ratio_height = vector_dialog->extracted_data->height;
-              if (vector_dialog->extracted_data->width_unit == GIMP_UNIT_PIXEL ||
-                  vector_dialog->extracted_data->width_unit == GIMP_UNIT_PERCENT)
+              if (vector_dialog->extracted_data->width_unit == gimp_unit_pixel () ||
+                  vector_dialog->extracted_data->width_unit == gimp_unit_percent ())
                 ratio_width_digits = ratio_height_digits = 0;
               else
                 ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (vector_dialog->extracted_data->width_unit);
             }
-          else if (vector_dialog->extracted_data->width_unit != GIMP_UNIT_PIXEL && vector_dialog->extracted_data->height_unit != GIMP_UNIT_PIXEL &&
-                   vector_dialog->extracted_data->width_unit != GIMP_UNIT_PERCENT && vector_dialog->extracted_data->height_unit != GIMP_UNIT_PERCENT)
+          else if (vector_dialog->extracted_data->width_unit != gimp_unit_pixel () && vector_dialog->extracted_data->height_unit != gimp_unit_pixel () &&
+                   vector_dialog->extracted_data->width_unit != gimp_unit_percent () && vector_dialog->extracted_data->height_unit != gimp_unit_percent ())
             {
               ratio_width = vector_dialog->extracted_data->width / gimp_unit_get_factor (vector_dialog->extracted_data->width_unit);
               ratio_height = vector_dialog->extracted_data->height / gimp_unit_get_factor (vector_dialog->extracted_data->height_unit);
 
-              ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (GIMP_UNIT_INCH);
+              ratio_width_digits = ratio_height_digits = gimp_unit_get_digits (gimp_unit_inch ());
             }
 
           if (ratio_width != 0.0 && ratio_height != 0.0)

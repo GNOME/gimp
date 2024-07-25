@@ -62,7 +62,7 @@ _gimp_text_layer_new (GimpImage   *image,
                       const gchar *text,
                       GimpFont    *font,
                       gdouble      size,
-                      GimpUnit     unit)
+                      GimpUnit    *unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -339,8 +339,8 @@ gimp_text_layer_set_font (GimpTextLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_font_size (GimpTextLayer *layer,
-                               GimpUnit      *unit)
+gimp_text_layer_get_font_size (GimpTextLayer  *layer,
+                               GimpUnit      **unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -358,7 +358,7 @@ gimp_text_layer_get_font_size (GimpTextLayer *layer,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       font_size = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *unit = GIMP_VALUES_GET_INT (return_vals, 2);
+      *unit = GIMP_VALUES_GET_UNIT (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);
@@ -384,7 +384,7 @@ gimp_text_layer_get_font_size (GimpTextLayer *layer,
 gboolean
 gimp_text_layer_set_font_size (GimpTextLayer *layer,
                                gdouble        font_size,
-                               GimpUnit       unit)
+                               GimpUnit      *unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

@@ -148,23 +148,23 @@ static void   layers_scale_callback           (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
                                                gint                   width,
                                                gint                   height,
-                                               GimpUnit               unit,
+                                               GimpUnit              *unit,
                                                GimpInterpolationType  interpolation,
                                                gdouble                xresolution,
                                                gdouble                yresolution,
-                                               GimpUnit               resolution_unit,
+                                               GimpUnit              *resolution_unit,
                                                gpointer               user_data);
 static void   layers_resize_callback          (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
                                                GimpContext           *context,
                                                gint                   width,
                                                gint                   height,
-                                               GimpUnit               unit,
+                                               GimpUnit              *unit,
                                                gint                   offset_x,
                                                gint                   offset_y,
                                                gdouble                unused0,
                                                gdouble                unused1,
-                                               GimpUnit               unused2,
+                                               GimpUnit              *unused2,
                                                GimpFillType           fill_type,
                                                GimpItemSet            unused3,
                                                gboolean               unused4,
@@ -177,8 +177,8 @@ static gint   layers_mode_index               (GimpLayerMode          layer_mode
 
 /*  private variables  */
 
-static GimpUnit               layer_resize_unit   = GIMP_UNIT_PIXEL;
-static GimpUnit               layer_scale_unit    = GIMP_UNIT_PIXEL;
+static GimpUnit              *layer_resize_unit   = NULL;
+static GimpUnit              *layer_scale_unit    = NULL;
 static GimpInterpolationType  layer_scale_interp  = -1;
 
 
@@ -1179,7 +1179,10 @@ layers_resize_cmd_callback (GimpAction *action,
       if (GIMP_IS_IMAGE_WINDOW (data))
         display = action_data_get_display (data);
 
-      if (layer_resize_unit != GIMP_UNIT_PERCENT && display)
+      if (layer_resize_unit == NULL)
+        layer_resize_unit = gimp_unit_pixel ();
+
+      if (layer_resize_unit != gimp_unit_percent () && display)
         layer_resize_unit = gimp_display_get_shell (display)->unit;
 
       dialog = resize_dialog_new (GIMP_VIEWABLE (layer),
@@ -1254,7 +1257,10 @@ layers_scale_cmd_callback (GimpAction *action,
       if (GIMP_IS_IMAGE_WINDOW (data))
         display = action_data_get_display (data);
 
-      if (layer_scale_unit != GIMP_UNIT_PERCENT && display)
+      if (layer_scale_unit == NULL)
+        layer_scale_unit = gimp_unit_pixel ();;
+
+      if (layer_scale_unit != gimp_unit_percent () && display)
         layer_scale_unit = gimp_display_get_shell (display)->unit;
 
       if (layer_scale_interp == -1)
@@ -2492,11 +2498,11 @@ layers_scale_callback (GtkWidget             *dialog,
                        GimpViewable          *viewable,
                        gint                   width,
                        gint                   height,
-                       GimpUnit               unit,
+                       GimpUnit              *unit,
                        GimpInterpolationType  interpolation,
                        gdouble                xresolution,    /* unused */
                        gdouble                yresolution,    /* unused */
-                       GimpUnit               resolution_unit,/* unused */
+                       GimpUnit              *resolution_unit,/* unused */
                        gpointer               user_data)
 {
   GimpDisplay *display = GIMP_DISPLAY (user_data);
@@ -2553,12 +2559,12 @@ layers_resize_callback (GtkWidget    *dialog,
                         GimpContext  *context,
                         gint          width,
                         gint          height,
-                        GimpUnit      unit,
+                        GimpUnit     *unit,
                         gint          offset_x,
                         gint          offset_y,
                         gdouble       unused0,
                         gdouble       unused1,
-                        GimpUnit      unused2,
+                        GimpUnit     *unused2,
                         GimpFillType  fill_type,
                         GimpItemSet   unused3,
                         gboolean      unused4,

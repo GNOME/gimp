@@ -26,7 +26,7 @@ GtkWidget * scale_dialog_new (GimpViewable          *viewable,
                               GtkWidget             *parent,
                               GimpHelpFunc           help_func,
                               const gchar           *help_id,
-                              GimpUnit               unit,
+                              GimpUnit              *unit,
                               GimpInterpolationType  interpolation,
                               GimpScaleCallback      callback,
                               gpointer               user_data);

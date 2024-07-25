@@ -65,14 +65,14 @@ text_layer_new_invoker (GimpProcedure         *procedure,
   const gchar *text;
   GimpFont *font;
   gdouble size;
-  GimpUnit unit;
+  GimpUnit *unit;
   GimpTextLayer *layer = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   text = g_value_get_string (gimp_value_array_index (args, 1));
   font = g_value_get_object (gimp_value_array_index (args, 2));
   size = g_value_get_double (gimp_value_array_index (args, 3));
-  unit = g_value_get_int (gimp_value_array_index (args, 4));
+  unit = g_value_get_object (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -318,7 +318,7 @@ text_layer_get_font_size_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpTextLayer *layer;
   gdouble font_size = 0.0;
-  GimpUnit unit = GIMP_UNIT_PIXEL;
+  GimpUnit *unit = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -336,7 +336,7 @@ text_layer_get_font_size_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_double (gimp_value_array_index (return_vals, 1), font_size);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), unit);
+      g_value_set_object (gimp_value_array_index (return_vals, 2), unit);
     }
 
   return return_vals;
@@ -353,11 +353,11 @@ text_layer_set_font_size_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpTextLayer *layer;
   gdouble font_size;
-  GimpUnit unit;
+  GimpUnit *unit;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
   font_size = g_value_get_double (gimp_value_array_index (args, 1));
-  unit = g_value_get_int (gimp_value_array_index (args, 2));
+  unit = g_value_get_object (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1039,9 +1039,9 @@ register_text_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_unit ("unit",
                                                      "unit",
                                                      "The units of specified size",
-                                                     TRUE,
                                                      FALSE,
-                                                     GIMP_UNIT_PIXEL,
+                                                     FALSE,
+                                                     gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_text_layer ("layer",
@@ -1261,9 +1261,9 @@ register_text_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_unit ("unit",
                                                          "unit",
                                                          "The unit used for the font size",
-                                                         TRUE,
                                                          FALSE,
-                                                         GIMP_UNIT_PIXEL,
+                                                         FALSE,
+                                                         gimp_unit_inch (),
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1298,9 +1298,9 @@ register_text_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_unit ("unit",
                                                      "unit",
                                                      "The unit to use for the font size",
-                                                     TRUE,
                                                      FALSE,
-                                                     GIMP_UNIT_PIXEL,
+                                                     FALSE,
+                                                     gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

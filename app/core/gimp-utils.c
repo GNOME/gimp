@@ -193,7 +193,7 @@ gimp_get_default_language (const gchar *category)
   return lang;
 }
 
-GimpUnit
+GimpUnit *
 gimp_get_default_unit (void)
 {
 #if defined (HAVE__NL_MEASUREMENT_MEASUREMENT)
@@ -202,10 +202,10 @@ gimp_get_default_unit (void)
   switch (*((guchar *) measurement))
     {
     case 1: /* metric   */
-      return GIMP_UNIT_MM;
+      return gimp_unit_mm ();
 
     case 2: /* imperial */
-      return GIMP_UNIT_INCH;
+      return gimp_unit_inch ();
     }
 
 #elif defined (G_OS_WIN32)
@@ -222,15 +222,15 @@ gimp_get_default_unit (void)
     switch ((guint) measurement)
       {
       case 0: /* metric */
-        return GIMP_UNIT_MM;
+        return gimp_unit_mm ();
 
       case 1: /* imperial */
-        return GIMP_UNIT_INCH;
+        return gimp_unit_inch ();
       }
     }
 #endif
 
-  return GIMP_UNIT_MM;
+  return gimp_unit_mm ();
 }
 
 gchar **
@@ -1281,7 +1281,7 @@ gimp_create_image_from_buffer (Gimp        *gimp,
                                            NULL /* same image */);
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 
-  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL);
+  gimp_create_display (gimp, image, gimp_unit_pixel (), 1.0, NULL);
 
   /* unref the image unconditionally, even when no display was created */
   g_object_add_weak_pointer (G_OBJECT (image), (gpointer) &image);

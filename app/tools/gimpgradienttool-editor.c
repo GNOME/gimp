@@ -1304,7 +1304,7 @@ gimp_gradient_tool_editor_init_endpoint_gui (GimpGradientTool *gradient_tool)
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 
   gradient_tool->endpoint_se =
-  se                         = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+  se                         = gimp_size_entry_new (1, gimp_unit_pixel (), "%a",
                                                     TRUE, TRUE, FALSE, 6,
                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_grid_set_row_spacing (GTK_GRID (se), 4);
@@ -1391,7 +1391,7 @@ gimp_gradient_tool_editor_init_stop_gui (GimpGradientTool *gradient_tool)
 
   /* the position size entry */
   gradient_tool->stop_se =
-  se                     = gimp_size_entry_new (1, GIMP_UNIT_PERCENT, "%a",
+  se                     = gimp_size_entry_new (1, gimp_unit_percent (), "%a",
                                                 FALSE, TRUE, FALSE, 6,
                                                 GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (se), FALSE);
@@ -1490,7 +1490,7 @@ gimp_gradient_tool_editor_init_midpoint_gui (GimpGradientTool *gradient_tool)
 
   /* the position size entry */
   gradient_tool->midpoint_se =
-  se                         = gimp_size_entry_new (1, GIMP_UNIT_PERCENT, "%a",
+  se                         = gimp_size_entry_new (1, gimp_unit_percent (), "%a",
                                                     FALSE, TRUE, FALSE, 6,
                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (se), FALSE);

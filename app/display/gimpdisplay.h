@@ -53,7 +53,7 @@ GType              gimp_display_impl_get_type   (void) G_GNUC_CONST;
 
 GimpDisplay      * gimp_display_new             (Gimp              *gimp,
                                                  GimpImage         *image,
-                                                 GimpUnit           unit,
+                                                 GimpUnit          *unit,
                                                  gdouble            scale,
                                                  GimpUIManager     *popup_manager,
                                                  GimpDialogFactory *dialog_factory,
@@ -74,7 +74,7 @@ GimpDisplayShell * gimp_display_get_shell       (GimpDisplay       *display);
 void               gimp_display_empty           (GimpDisplay       *display);
 void               gimp_display_fill            (GimpDisplay       *display,
                                                  GimpImage         *image,
-                                                 GimpUnit           unit,
+                                                 GimpUnit          *unit,
                                                  gdouble            scale);
 
 void               gimp_display_update_bounding_box

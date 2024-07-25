@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -88,7 +89,7 @@ images_new_view_cmd_callback (GimpAction *action,
 
   if (image && gimp_container_have (container, GIMP_OBJECT (image)))
     {
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+      gimp_create_display (image->gimp, image, gimp_unit_pixel (), 1.0,
                            G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (editor))));
     }
 }

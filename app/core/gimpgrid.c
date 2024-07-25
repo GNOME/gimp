@@ -123,7 +123,7 @@ gimp_grid_class_init (GimpGridClass *klass)
                          "spacing-unit",
                          _("Spacing unit"),
                          NULL,
-                         FALSE, FALSE, GIMP_UNIT_INCH,
+                         FALSE, FALSE, gimp_unit_inch (),
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_XOFFSET,
@@ -148,7 +148,7 @@ gimp_grid_class_init (GimpGridClass *klass)
                          "offset-unit",
                          _("Offset unit"),
                          NULL,
-                         FALSE, FALSE, GIMP_UNIT_INCH,
+                         FALSE, FALSE, gimp_unit_inch (),
                          GIMP_PARAM_STATIC_STRINGS);
 
   g_object_unref (black);
@@ -199,7 +199,7 @@ gimp_grid_get_property (GObject      *object,
       g_value_set_double (value, grid->yspacing);
       break;
     case PROP_SPACING_UNIT:
-      g_value_set_int (value, grid->spacing_unit);
+      g_value_set_object (value, grid->spacing_unit);
       break;
     case PROP_XOFFSET:
       g_value_set_double (value, grid->xoffset);
@@ -208,7 +208,7 @@ gimp_grid_get_property (GObject      *object,
       g_value_set_double (value, grid->yoffset);
       break;
     case PROP_OFFSET_UNIT:
-      g_value_set_int (value, grid->offset_unit);
+      g_value_set_object (value, grid->offset_unit);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -244,7 +244,7 @@ gimp_grid_set_property (GObject      *object,
       grid->yspacing = g_value_get_double (value);
       break;
     case PROP_SPACING_UNIT:
-      grid->spacing_unit = g_value_get_int (value);
+      grid->spacing_unit = g_value_get_object (value);
       break;
     case PROP_XOFFSET:
       grid->xoffset = g_value_get_double (value);
@@ -253,7 +253,7 @@ gimp_grid_set_property (GObject      *object,
       grid->yoffset = g_value_get_double (value);
       break;
     case PROP_OFFSET_UNIT:
-      grid->offset_unit = g_value_get_int (value);
+      grid->offset_unit = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

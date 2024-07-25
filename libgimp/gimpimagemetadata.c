@@ -221,7 +221,7 @@ gimp_image_metadata_load_finish (GimpImage             *image,
     {
       gdouble   xres;
       gdouble   yres;
-      GimpUnit  unit;
+      GimpUnit *unit;
 
       if (gimp_metadata_get_resolution (metadata, &xres, &yres, &unit))
         {

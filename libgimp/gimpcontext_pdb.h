@@ -52,8 +52,8 @@ GimpLayerMode                 gimp_context_get_paint_mode                 (void)
 gboolean                      gimp_context_set_paint_mode                 (GimpLayerMode                  paint_mode);
 gdouble                       gimp_context_get_line_width                 (void);
 gboolean                      gimp_context_set_line_width                 (gdouble                        line_width);
-GimpUnit                      gimp_context_get_line_width_unit            (void);
-gboolean                      gimp_context_set_line_width_unit            (GimpUnit                       line_width_unit);
+GimpUnit*                     gimp_context_get_line_width_unit            (void);
+gboolean                      gimp_context_set_line_width_unit            (GimpUnit                      *line_width_unit);
 GimpCapStyle                  gimp_context_get_line_cap_style             (void);
 gboolean                      gimp_context_set_line_cap_style             (GimpCapStyle                   cap_style);
 GimpJoinStyle                 gimp_context_get_line_join_style            (void);

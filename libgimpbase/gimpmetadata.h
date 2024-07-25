@@ -137,11 +137,11 @@ void           gimp_metadata_set_bits_per_sample (GimpMetadata           *metada
 gboolean       gimp_metadata_get_resolution      (GimpMetadata           *metadata,
                                                   gdouble                *xres,
                                                   gdouble                *yres,
-                                                  GimpUnit               *unit);
+                                                  GimpUnit              **unit);
 void           gimp_metadata_set_resolution      (GimpMetadata           *metadata,
                                                   gdouble                 xres,
                                                   gdouble                 yres,
-                                                  GimpUnit                unit);
+                                                  GimpUnit               *unit);
 
 GimpMetadataColorspace
                gimp_metadata_get_colorspace      (GimpMetadata           *metadata);

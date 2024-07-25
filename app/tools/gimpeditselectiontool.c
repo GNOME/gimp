@@ -638,7 +638,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GimpDisplay           *display      = GIMP_TOOL (draw_tool)->display;
   GimpImage             *image        = gimp_display_get_image (display);
   GimpDisplayShell      *shell        = gimp_display_get_shell (display);
-  GimpUnit               unit         = gimp_display_shell_get_unit (shell);
+  GimpUnit              *unit         = gimp_display_shell_get_unit (shell);
   const gchar           *abbreviation = gimp_unit_get_abbreviation (unit);
   GList                 *selected_items;
   GList                 *iter;

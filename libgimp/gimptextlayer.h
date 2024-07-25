@@ -44,7 +44,7 @@ GimpTextLayer * gimp_text_layer_new       (GimpImage   *image,
                                            const gchar *text,
                                            GimpFont    *font,
                                            gdouble      size,
-                                           GimpUnit     unit) G_GNUC_WARN_UNUSED_RESULT;
+                                           GimpUnit    *unit) G_GNUC_WARN_UNUSED_RESULT;
 
 
 G_END_DECLS

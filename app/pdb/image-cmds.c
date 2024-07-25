@@ -2484,7 +2484,7 @@ image_get_unit_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpUnit unit = GIMP_UNIT_PIXEL;
+  GimpUnit *unit = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
@@ -2497,7 +2497,7 @@ image_get_unit_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), unit);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), unit);
 
   return return_vals;
 }
@@ -2512,10 +2512,10 @@ image_set_unit_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpUnit unit;
+  GimpUnit *unit;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  unit = g_value_get_int (gimp_value_array_index (args, 1));
+  unit = g_value_get_object (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -5195,9 +5195,9 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_unit ("unit",
                                                          "unit",
                                                          "The unit",
-                                                         TRUE,
                                                          FALSE,
-                                                         GIMP_UNIT_PIXEL,
+                                                         FALSE,
+                                                         gimp_unit_inch (),
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -5228,7 +5228,7 @@ register_image_procs (GimpPDB *pdb)
                                                      "The new image unit",
                                                      FALSE,
                                                      FALSE,
-                                                     GIMP_UNIT_INCH,
+                                                     gimp_unit_inch (),
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

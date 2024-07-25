@@ -149,13 +149,13 @@ CODE
 
 sub get_default_unit {
     $blurb = 'Get the default unit (taken from the user\'s locale).';
-    $help  = 'Returns the default unit\'s integer ID.';
+    $help  = 'Returns the default unit.';
 
     &std_pdb_misc;
     $since = '2.4';
 
     @outargs = (
-	{  name => 'unit_id', type => 'unit',
+	{  name => 'unit', type => 'unit',
 	   desc => 'Default unit' }
     );
 
@@ -164,7 +164,7 @@ sub get_default_unit {
                         "core/gimp-utils.h") ],
 	code => <<'CODE'
 {
-  unit_id = gimp_get_default_unit ();
+  unit = gimp_get_default_unit ();
 }
 CODE
     );

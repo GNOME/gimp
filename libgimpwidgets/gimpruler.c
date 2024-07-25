@@ -64,7 +64,7 @@ struct _GimpRuler
   GtkWidget        parent_instance;
 
   GtkOrientation   orientation;
-  GimpUnit         unit;
+  GimpUnit        *unit;
   gdouble          lower;
   gdouble          upper;
   gdouble          position;
@@ -162,7 +162,7 @@ static void          gimp_ruler_make_pixmap           (GimpRuler      *ruler);
 static PangoLayout * gimp_ruler_get_layout            (GtkWidget      *widget,
                                                        const gchar    *text);
 static const RulerMetric *
-                     gimp_ruler_get_metric            (GimpUnit        unit);
+                     gimp_ruler_get_metric            (GimpUnit       *unit);
 
 
 G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
@@ -201,8 +201,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   object_props[PROP_UNIT] = gimp_param_spec_unit ("unit",
                                                   "Unit",
                                                   "Unit of ruler",
-                                                  TRUE, TRUE,
-                                                  GIMP_UNIT_PIXEL,
+                                                  TRUE, TRUE, gimp_unit_pixel (),
                                                   GIMP_PARAM_READWRITE);
 
   object_props[PROP_LOWER] = g_param_spec_double ("lower",
@@ -248,7 +247,7 @@ gimp_ruler_init (GimpRuler *ruler)
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   ruler->orientation = GTK_ORIENTATION_HORIZONTAL;
-  ruler->unit        = GIMP_UNIT_PIXEL;
+  ruler->unit        = gimp_unit_pixel ();
 }
 
 static void
@@ -284,7 +283,7 @@ gimp_ruler_set_property (GObject      *object,
       break;
 
     case PROP_UNIT:
-      gimp_ruler_set_unit (ruler, g_value_get_int (value));
+      gimp_ruler_set_unit (ruler, g_value_get_object (value));
       break;
 
     case PROP_LOWER:
@@ -332,7 +331,7 @@ gimp_ruler_get_property (GObject    *object,
       break;
 
     case PROP_UNIT:
-      g_value_set_int (value, ruler->unit);
+      g_value_set_object (value, ruler->unit);
       break;
 
     case PROP_LOWER:
@@ -567,9 +566,10 @@ gimp_ruler_remove_track_widget (GimpRuler *ruler,
  */
 void
 gimp_ruler_set_unit (GimpRuler *ruler,
-                     GimpUnit   unit)
+                     GimpUnit  *unit)
 {
   g_return_if_fail (GIMP_IS_RULER (ruler));
+  g_return_if_fail (GIMP_IS_UNIT (unit));
 
   if (ruler->unit != unit)
     {
@@ -589,7 +589,7 @@ gimp_ruler_set_unit (GimpRuler *ruler,
  *
  * Since: 2.8
  **/
-GimpUnit
+GimpUnit *
 gimp_ruler_get_unit (GimpRuler *ruler)
 {
   g_return_val_if_fail (GIMP_IS_RULER (ruler), 0);
@@ -976,7 +976,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   gint               text_size;
   gint               pos;
   gdouble            max_size;
-  GimpUnit           unit;
+  GimpUnit          *unit;
   PangoLayout       *layout;
   PangoRectangle     logical_rect, ink_rect;
   const RulerMetric *ruler_metric;
@@ -1070,7 +1070,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
       gdouble subd_incr;
 
       /* hack to get proper subdivisions at full pixels */
-      if (unit == GIMP_UNIT_PIXEL && scale == 1 && i == 1)
+      if (unit == gimp_unit_pixel () && scale == 1 && i == 1)
         subd_incr = 1.0;
       else
         subd_incr = ((gdouble) ruler_metric->ruler_scale[scale] /
@@ -1080,7 +1080,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
         continue;
 
       /* don't subdivide pixels */
-      if (unit == GIMP_UNIT_PIXEL && subd_incr < 1.0)
+      if (unit == gimp_unit_pixel () && subd_incr < 1.0)
         continue;
 
       /* Calculate the length of the tickmarks. Make sure that
@@ -1362,9 +1362,9 @@ gimp_ruler_get_layout (GtkWidget   *widget,
 #define FACTOR_EQUAL(u, f) (ABS (f - gimp_unit_get_factor (u)) < FACTOR_EPSILON)
 
 static const RulerMetric *
-gimp_ruler_get_metric (GimpUnit unit)
+gimp_ruler_get_metric (GimpUnit *unit)
 {
-  if (unit == GIMP_UNIT_INCH)
+  if (unit == gimp_unit_inch ())
     {
       return  &ruler_metric_inches;
     }

@@ -60,7 +60,7 @@ gboolean    gimp_cursor_view_get_sample_merged (GimpCursorView  *view);
 
 void        gimp_cursor_view_update_cursor     (GimpCursorView  *view,
                                                 GimpImage       *image,
-                                                GimpUnit         shell_unit,
+                                                GimpUnit        *shell_unit,
                                                 gdouble          x,
                                                 gdouble          y);
 void        gimp_cursor_view_clear_cursor      (GimpCursorView  *view);

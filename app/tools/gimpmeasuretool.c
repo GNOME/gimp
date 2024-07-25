@@ -591,7 +591,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   pixel_distance = sqrt (SQR (ax - bx) + SQR (ay - by));
   inch_distance = sqrt (SQR ((gdouble) (ax - bx) / xres) +
                         SQR ((gdouble) (ay - by) / yres));
-  unit_distance  = gimp_unit_get_factor (shell->unit) * inch_distance;
+  unit_distance = gimp_unit_get_factor (shell->unit) * inch_distance;
 
   g_object_get (measure->widget,
                 "pixel-angle", &pixel_angle,
@@ -611,7 +611,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   unit_width_digits  = gimp_unit_get_scaled_digits (shell->unit, xres);
   unit_height_digits = gimp_unit_get_scaled_digits (shell->unit, yres);
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     {
       gimp_tool_replace_status (GIMP_TOOL (measure), display,
                                 "%.1f %s, %.2f\302\260 (%d × %d)",
@@ -640,7 +640,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       g_snprintf (buf, sizeof (buf), "%.1f", pixel_distance);
       gtk_label_set_text (GTK_LABEL (measure->distance_label[0]), buf);
 
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != gimp_unit_pixel ())
         {
           g_snprintf (format, sizeof (format), "%%.%df",
                       unit_distance_digits);
@@ -677,7 +677,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       g_snprintf (buf, sizeof (buf), "%d", pixel_width);
       gtk_label_set_text (GTK_LABEL (measure->width_label[0]), buf);
 
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != gimp_unit_pixel ())
         {
           g_snprintf (format, sizeof (format), "%%.%df",
                       unit_width_digits);
@@ -697,7 +697,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       gtk_label_set_text (GTK_LABEL (measure->height_label[0]), buf);
 
       /* Height */
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != gimp_unit_pixel ())
         {
           g_snprintf (format, sizeof (format), "%%.%df",
                       unit_height_digits);

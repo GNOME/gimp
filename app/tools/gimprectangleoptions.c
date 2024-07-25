@@ -148,7 +148,7 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              NULL,
                                                              _("Unit of top left corner coordinate"),
                                                              TRUE, TRUE,
-                                                             GIMP_UNIT_PIXEL,
+                                                             gimp_unit_pixel (),
                                                              GIMP_PARAM_READWRITE |
                                                              G_PARAM_CONSTRUCT));
 
@@ -157,7 +157,7 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              NULL,
                                                              _("Unit of selection size"),
                                                              TRUE, TRUE,
-                                                             GIMP_UNIT_PIXEL,
+                                                             gimp_unit_pixel (),
                                                              GIMP_PARAM_READWRITE |
                                                              G_PARAM_CONSTRUCT));
 
@@ -287,7 +287,7 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              NULL,
                                                              _("Unit of fixed width, height or size"),
                                                              TRUE, TRUE,
-                                                             GIMP_UNIT_PIXEL,
+                                                             gimp_unit_pixel (),
                                                              GIMP_PARAM_READWRITE |
                                                              G_PARAM_CONSTRUCT));
 
@@ -483,10 +483,10 @@ gimp_rectangle_options_set_property (GObject      *object,
       private->height = g_value_get_double (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
-      private->position_unit = g_value_get_int (value);
+      private->position_unit = g_value_get_object (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
-      private->size_unit = g_value_get_int (value);
+      private->size_unit = g_value_get_object (value);
       break;
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
@@ -535,7 +535,7 @@ gimp_rectangle_options_set_property (GObject      *object,
       private->use_string_current = g_value_get_boolean (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT:
-      private->fixed_unit = g_value_get_int (value);
+      private->fixed_unit = g_value_get_object (value);
       break;
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
@@ -590,10 +590,10 @@ gimp_rectangle_options_get_property (GObject      *object,
       g_value_set_double (value, private->height);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
-      g_value_set_int (value, private->position_unit);
+      g_value_set_object (value, private->position_unit);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
-      g_value_set_int (value, private->size_unit);
+      g_value_set_object (value, private->size_unit);
       break;
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
@@ -642,7 +642,7 @@ gimp_rectangle_options_get_property (GObject      *object,
       g_value_set_boolean (value, private->use_string_current);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT:
-      g_value_set_int (value, private->fixed_unit);
+      g_value_set_object (value, private->fixed_unit);
       break;
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
@@ -763,7 +763,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
                                                  GtkSizeGroup *label_group,
                                                  GtkWidget   **entry)
 {
-  GimpUnit       unit_value;
+  GimpUnit      *unit_value;
   GtkWidget     *frame;
   GtkWidget     *hbox;
   GtkWidget     *label;

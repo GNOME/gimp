@@ -173,7 +173,7 @@ static void
 gimp_path_export_image_size (GimpImage *image,
                              GString   *str)
 {
-  GimpUnit     unit;
+  GimpUnit    *unit;
   const gchar *abbrev;
   gchar        wbuf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar        hbuf[G_ASCII_DTOSTR_BUF_SIZE];
@@ -188,14 +188,14 @@ gimp_path_export_image_size (GimpImage *image,
 
   /*  FIXME: should probably use the display unit here  */
   unit = gimp_image_get_unit (image);
-  switch (unit)
+  switch (gimp_unit_get_id (unit))
     {
     case GIMP_UNIT_INCH:  abbrev = "in";  break;
     case GIMP_UNIT_MM:    abbrev = "mm";  break;
     case GIMP_UNIT_POINT: abbrev = "pt";  break;
     case GIMP_UNIT_PICA:  abbrev = "pc";  break;
     default:              abbrev = "cm";
-      unit = GIMP_UNIT_MM;
+      unit = gimp_unit_mm ();
       w /= 10.0;
       h /= 10.0;
       break;

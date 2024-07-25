@@ -19,10 +19,7 @@
 #define __APP_GIMP_UNIT_H__
 
 
-gint          _gimp_unit_get_number_of_units          (Gimp        *gimp);
-gint          _gimp_unit_get_number_of_built_in_units (Gimp        *gimp) G_GNUC_CONST;
-
-GimpUnit      _gimp_unit_new                          (Gimp        *gimp,
+GimpUnit    * _gimp_unit_new                          (Gimp        *gimp,
                                                        const gchar *identifier,
                                                        gdouble      factor,
                                                        gint         digits,
@@ -30,32 +27,6 @@ GimpUnit      _gimp_unit_new                          (Gimp        *gimp,
                                                        const gchar *abbreviation,
                                                        const gchar *singular,
                                                        const gchar *plural);
-
-gboolean      _gimp_unit_get_deletion_flag            (Gimp        *gimp,
-                                                       GimpUnit     unit);
-void          _gimp_unit_set_deletion_flag            (Gimp        *gimp,
-                                                       GimpUnit     unit,
-                                                       gboolean     deletion_flag);
-
-gdouble       _gimp_unit_get_factor                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
-
-gint          _gimp_unit_get_digits                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
-
-const gchar * _gimp_unit_get_identifier               (Gimp        *gimp,
-                                                       GimpUnit     unit);
-
-const gchar * _gimp_unit_get_symbol                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
-const gchar * _gimp_unit_get_abbreviation             (Gimp        *gimp,
-                                                       GimpUnit     unit);
-const gchar * _gimp_unit_get_singular                 (Gimp        *gimp,
-                                                       GimpUnit     unit);
-const gchar * _gimp_unit_get_plural                   (Gimp        *gimp,
-                                                       GimpUnit     unit);
-
-void           gimp_user_units_free                   (Gimp        *gimp);
 
 
 #endif  /*  __APP_GIMP_UNIT_H__  */

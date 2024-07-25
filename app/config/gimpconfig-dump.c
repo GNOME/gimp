@@ -506,9 +506,20 @@ dump_describe_param (GParamSpec *param_spec)
     }
   else if (GIMP_IS_PARAM_SPEC_UNIT (param_spec))
     {
-      values =
-        "The unit can be one inches, millimeters, points or picas plus "
-        "those in your user units database.";
+      GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (param_spec);
+
+      if (uspec->allow_pixel && uspec->allow_percent)
+        values = "The unit can be one inches, millimeters, points or picas plus "
+                 "those in your user units database. Pixel And Percent units are allowed too.";
+      else if (uspec->allow_pixel)
+        values = "The unit can be one inches, millimeters, points or picas plus "
+                 "those in your user units database. Pixel unit is allowed too.";
+      else if (uspec->allow_percent)
+        values = "The unit can be one inches, millimeters, points or picas plus "
+                 "those in your user units database. Percent unit is allowed too.";
+      else
+        values = "The unit can be one inches, millimeters, points or picas plus "
+                 "those in your user units database.";
     }
   else if (g_type_is_a (param_spec->value_type, GIMP_TYPE_CONFIG))
     {

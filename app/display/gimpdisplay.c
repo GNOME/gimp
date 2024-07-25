@@ -359,7 +359,7 @@ gimp_display_progress_canceled (GimpProgress *progress,
 GimpDisplay *
 gimp_display_new (Gimp              *gimp,
                   GimpImage         *image,
-                  GimpUnit           unit,
+                  GimpUnit          *unit,
                   gdouble            scale,
                   GimpUIManager     *popup_manager,
                   GimpDialogFactory *dialog_factory,
@@ -682,7 +682,7 @@ gimp_display_empty (GimpDisplay *display)
 void
 gimp_display_fill (GimpDisplay *display,
                    GimpImage   *image,
-                   GimpUnit     unit,
+                   GimpUnit    *unit,
                    gdouble      scale)
 {
   GimpDisplayImplPrivate *private;

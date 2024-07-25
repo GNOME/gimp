@@ -985,7 +985,7 @@ load_image (GFile        *file,
               gimp_image_set_resolution ((GimpImage *) image,
                                          (gdouble) xres * 0.0254,
                                          (gdouble) yres * 0.0254);
-              gimp_image_set_unit ((GimpImage *) image, GIMP_UNIT_MM);
+              gimp_image_set_unit ((GimpImage *) image, gimp_unit_mm ());
 
               *resolution_loaded = TRUE;
               break;

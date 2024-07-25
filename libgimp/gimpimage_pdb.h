@@ -170,9 +170,9 @@ gboolean                 gimp_image_get_resolution             (GimpImage       
 gboolean                 gimp_image_set_resolution             (GimpImage           *image,
                                                                 gdouble              xresolution,
                                                                 gdouble              yresolution);
-GimpUnit                 gimp_image_get_unit                   (GimpImage           *image);
+GimpUnit*                gimp_image_get_unit                   (GimpImage           *image);
 gboolean                 gimp_image_set_unit                   (GimpImage           *image,
-                                                                GimpUnit             unit);
+                                                                GimpUnit            *unit);
 guint                    gimp_image_get_tattoo_state           (GimpImage           *image);
 gboolean                 gimp_image_set_tattoo_state           (GimpImage           *image,
                                                                 guint                tattoo_state);

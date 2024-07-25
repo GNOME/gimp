@@ -126,7 +126,7 @@
                                         "manually and may thus look weird if "\
                                         "opened and inspected in GIMP."
 
-#define GIMP_MAINIMAGE_UNIT             GIMP_UNIT_PICA
+#define GIMP_MAINIMAGE_UNIT             gimp_unit_pica ()
 
 #define GIMP_MAINIMAGE_GRIDXSPACING     25.0
 #define GIMP_MAINIMAGE_GRIDYSPACING     27.0
@@ -903,9 +903,7 @@ gimp_assert_mainimage (GimpImage *image,
   g_free (parasite_data);
 
   /* Unit */
-  g_assert_cmpint (gimp_image_get_unit (image),
-                   ==,
-                   GIMP_MAINIMAGE_UNIT);
+  g_assert_true (gimp_image_get_unit (image) == GIMP_MAINIMAGE_UNIT);
 
   /* Grid */
   grid = gimp_image_get_grid (image);

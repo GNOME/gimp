@@ -468,7 +468,7 @@ dialog (GimpProcedure       *procedure,
   GtkWidget     *dlg;
   GtkWidget     *sizeentry;
   GimpImage     *image;
-  GimpUnit       unit;
+  GimpUnit      *unit;
   gdouble        xres, yres;
   gint           width;
   gint           height;

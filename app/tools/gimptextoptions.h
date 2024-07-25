@@ -37,7 +37,7 @@ struct _GimpTextOptions
 {
   GimpToolOptions        tool_options;
 
-  GimpUnit               unit;
+  GimpUnit              *unit;
   gdouble                font_size;
   gboolean               antialias;
   GimpTextHintStyle      hint_style;
@@ -54,7 +54,7 @@ struct _GimpTextOptions
   GeglColor             *outline_foreground;
   GimpPattern           *outline_pattern;
   gdouble                outline_width;
-  GimpUnit               outline_unit;
+  GimpUnit              *outline_unit;
   GimpCapStyle           outline_cap_style;
   GimpJoinStyle          outline_join_style;
   gdouble                outline_miter_limit;

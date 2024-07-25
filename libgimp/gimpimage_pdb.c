@@ -2886,12 +2886,12 @@ gimp_image_set_resolution (GimpImage *image,
  *
  * Returns: (transfer none): The unit.
  **/
-GimpUnit
+GimpUnit *
 gimp_image_get_unit (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit unit = GIMP_UNIT_PIXEL;
+  GimpUnit *unit = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -2903,7 +2903,7 @@ gimp_image_get_unit (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit = GIMP_VALUES_GET_INT (return_vals, 1);
+    unit = GIMP_VALUES_GET_UNIT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -2927,7 +2927,7 @@ gimp_image_get_unit (GimpImage *image)
  **/
 gboolean
 gimp_image_set_unit (GimpImage *image,
-                     GimpUnit   unit)
+                     GimpUnit  *unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

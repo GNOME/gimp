@@ -63,6 +63,7 @@
 #include "core/gimpselection.h"
 #include "core/gimpsymmetry.h"
 #include "core/gimptemplate.h"
+#include "core/gimpunit.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
@@ -1418,23 +1419,22 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_UNIT:
           {
-            guint32 unit;
+            guint32 unit_index;
 
-            xcf_read_int32 (info, &unit, 1);
+            xcf_read_int32 (info, &unit_index, 1);
 
-            GIMP_LOG (XCF, "prop unit=%d", unit);
+            GIMP_LOG (XCF, "prop unit=%d", unit_index);
 
-            if ((unit <= GIMP_UNIT_PIXEL) ||
-                (unit >= gimp_unit_get_number_of_built_in_units ()))
+            if (unit_index <= GIMP_UNIT_PIXEL || unit_index >= GIMP_UNIT_END)
               {
                 gimp_message_literal (info->gimp, G_OBJECT (info->progress),
                                       GIMP_MESSAGE_WARNING,
                                       "Warning, unit out of range in XCF file, "
                                       "falling back to inches");
-                unit = GIMP_UNIT_INCH;
+                unit_index = GIMP_UNIT_INCH;
               }
 
-            gimp_image_set_unit (image, unit);
+            gimp_image_set_unit (image, gimp_unit_get_by_id (unit_index));
           }
           break;
 
@@ -1455,12 +1455,12 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_USER_UNIT:
           {
-            gchar    *unit_strings[5];
-            float     factor;
-            guint32   digits;
-            GimpUnit  unit;
-            gint      num_units;
-            gint      i;
+            gchar     *unit_strings[5];
+            float      factor;
+            guint32    digits;
+            GimpUnit  *unit;
+            GList     *iter;
+            gint       i;
 
             xcf_read_float  (info, &factor,      1);
             xcf_read_int32  (info, &digits,      1);
@@ -1470,11 +1470,9 @@ xcf_load_image_props (XcfInfo   *info,
               if (unit_strings[i] == NULL)
                 unit_strings[i] = g_strdup ("");
 
-            num_units = gimp_unit_get_number_of_units ();
-
-            for (unit = gimp_unit_get_number_of_built_in_units ();
-                 unit < num_units; unit++)
+            for (iter = info->gimp->user_units; iter; iter = iter->next)
               {
+                unit = iter->data;
                 /* if the factor and the identifier match some unit
                  * in unitrc, use the unitrc unit
                  */
@@ -1486,15 +1484,18 @@ xcf_load_image_props (XcfInfo   *info,
                   }
               }
 
-            /* no match */
-            if (unit == num_units)
-              unit = gimp_unit_new (unit_strings[0],
-                                    factor,
-                                    digits,
-                                    unit_strings[1],
-                                    unit_strings[2],
-                                    unit_strings[3],
-                                    unit_strings[4]);
+            if (iter == NULL)
+              /* No match. Create a temporary unit set with deletion
+               * flag.
+               */
+              unit = _gimp_unit_new (info->gimp,
+                                     unit_strings[0],
+                                     (gdouble) factor,
+                                     digits,
+                                     unit_strings[1],
+                                     unit_strings[2],
+                                     unit_strings[3],
+                                     unit_strings[4]);
 
             gimp_image_set_unit (image, unit);
 

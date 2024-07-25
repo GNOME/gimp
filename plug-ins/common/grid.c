@@ -770,7 +770,7 @@ dialog (GimpImage           *image,
   GtkWidget       *space;
   GtkWidget       *offset;
   GtkWidget       *chain_button;
-  GimpUnit         unit;
+  GimpUnit        *unit;
   gint             d_width;
   gint             d_height;
   gdouble          xres;
@@ -867,7 +867,7 @@ dialog (GimpImage           *image,
   gtk_widget_show (width);
 
   /*  set the unit back to pixels, since most times we will want pixels */
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), gimp_unit_pixel ());
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 0, xres, TRUE);
@@ -938,7 +938,7 @@ dialog (GimpImage           *image,
   gtk_box_pack_start (GTK_BOX (vbox), space, FALSE, FALSE, 0);
   gtk_widget_show (space);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), gimp_unit_pixel ());
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 0, xres, TRUE);
@@ -1003,7 +1003,7 @@ dialog (GimpImage           *image,
   gtk_box_pack_start (GTK_BOX (vbox), offset, FALSE, FALSE, 0);
   gtk_widget_show (offset);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), gimp_unit_pixel ());
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 0, xres, TRUE);

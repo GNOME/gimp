@@ -50,7 +50,7 @@ struct _GimpResolutionEntry
   gint                      width;
   gint                      height;
   gdouble                   ppi;
-  GimpUnit                  unit;
+  GimpUnit                 *unit;
   gdouble                   ratio;
   gboolean                  keep_ratio;
 
@@ -136,7 +136,7 @@ gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
                                            _("This unit is used to select the pixel density "
                                            "and show dimensions in physical unit"),
                                            FALSE, FALSE,
-                                           GIMP_UNIT_INCH,
+                                           gimp_unit_inch (),
                                            GIMP_PARAM_READWRITE |
                                            G_PARAM_EXPLICIT_NOTIFY |
                                            G_PARAM_CONSTRUCT);
@@ -157,7 +157,7 @@ gimp_resolution_entry_init (GimpResolutionEntry *entry)
   entry->width      = 0;
   entry->height     = 0;
   entry->ppi        = 300.0;
-  entry->unit       = GIMP_UNIT_INCH;
+  entry->unit       = gimp_unit_inch ();
   entry->keep_ratio = TRUE;
 
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
@@ -267,7 +267,7 @@ gimp_resolution_entry_set_property (GObject      *object,
       gimp_resolution_entry_set_pixel_density (entry, g_value_get_double (value));
       break;
     case PROP_UNIT:
-      gimp_resolution_entry_set_unit (entry, g_value_get_int (value));
+      gimp_resolution_entry_set_unit (entry, g_value_get_object (value));
       break;
     case PROP_KEEP_RATIO:
       gimp_resolution_entry_set_keep_ratio (entry, g_value_get_boolean (value));
@@ -299,7 +299,7 @@ gimp_resolution_entry_get_property (GObject    *object,
       g_value_set_double (value, entry->ppi);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, entry->unit);
+      g_value_set_object (value, entry->unit);
       break;
     case PROP_KEEP_RATIO:
       g_value_set_boolean (value, entry->keep_ratio);
@@ -326,7 +326,7 @@ gimp_prop_resolution_entry_new (GObject     *config,
   gint        width  = 0;
   gint        height = 0;
   gdouble     ppi    = 300.0;
-  GimpUnit    unit   = GIMP_UNIT_INCH;
+  GimpUnit   *unit   = gimp_unit_inch ();
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (width_prop != NULL, NULL);
@@ -399,7 +399,7 @@ gimp_resolution_entry_new (const gchar *width_label,
                            gint         height,
                            const gchar *res_label,
                            gdouble      pixel_density,
-                           GimpUnit     display_unit)
+                           GimpUnit    *display_unit)
 {
   GimpResolutionEntry *entry;
 
@@ -516,10 +516,10 @@ gimp_resolution_entry_set_pixel_density (GimpResolutionEntry *entry,
 
 void
 gimp_resolution_entry_set_unit (GimpResolutionEntry *entry,
-                                GimpUnit             unit)
+                                GimpUnit            *unit)
 {
-  g_return_if_fail (unit != GIMP_UNIT_PIXEL);
-  g_return_if_fail (unit != GIMP_UNIT_PERCENT);
+  g_return_if_fail (unit != gimp_unit_pixel ());
+  g_return_if_fail (unit != gimp_unit_percent ());
 
   if (entry->unit != unit)
     {
@@ -575,7 +575,7 @@ gimp_resolution_entry_get_density (GimpResolutionEntry *entry)
   return entry->ppi;
 }
 
-GimpUnit
+GimpUnit *
 gimp_resolution_entry_get_unit (GimpResolutionEntry *entry)
 {
   return entry->unit;

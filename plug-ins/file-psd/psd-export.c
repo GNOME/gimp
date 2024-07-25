@@ -898,15 +898,15 @@ save_resources (GOutputStream        *output,
 
   /* --------------- Write resolution data ------------------- */
   {
-    gdouble  xres = 0, yres = 0;
-    guint32  xres_fix, yres_fix;
-    GimpUnit g_unit;
-    gint16   psd_unit;
+    gdouble   xres = 0, yres = 0;
+    guint32   xres_fix, yres_fix;
+    GimpUnit *g_unit;
+    gint16    psd_unit;
 
     g_unit = gimp_image_get_unit (image);
     gimp_image_get_resolution (image, &xres, &yres);
 
-    if (g_unit == GIMP_UNIT_MM)
+    if (g_unit == gimp_unit_mm ())
       {
         psd_unit = PSD_UNIT_CM;
       }

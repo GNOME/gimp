@@ -115,7 +115,7 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
   g_object_class_install_property (object_class, PROP_UNIT,
                                    gimp_param_spec_unit ("unit", NULL, NULL,
                                                          TRUE, TRUE,
-                                                         GIMP_UNIT_PIXEL,
+                                                         gimp_unit_pixel (),
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_XRESOLUTION,
@@ -138,7 +138,7 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
                                    gimp_param_spec_unit ("resolution-unit",
                                                          NULL, NULL,
                                                          FALSE, FALSE,
-                                                         GIMP_UNIT_INCH,
+                                                         gimp_unit_inch (),
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_KEEP_ASPECT,
@@ -330,7 +330,7 @@ gimp_size_box_set_property (GObject      *object,
       break;
 
     case PROP_UNIT:
-      box->unit = g_value_get_int (value);
+      box->unit = g_value_get_object (value);
       break;
 
     case PROP_XRESOLUTION:
@@ -350,7 +350,7 @@ gimp_size_box_set_property (GObject      *object,
       break;
 
     case PROP_RESOLUTION_UNIT:
-      box->resolution_unit = g_value_get_int (value);
+      box->resolution_unit = g_value_get_object (value);
       break;
 
     case PROP_KEEP_ASPECT:
@@ -389,7 +389,7 @@ gimp_size_box_get_property (GObject    *object,
       break;
 
     case PROP_UNIT:
-      g_value_set_int (value, box->unit);
+      g_value_set_object (value, box->unit);
       break;
 
     case PROP_XRESOLUTION:
@@ -401,7 +401,7 @@ gimp_size_box_get_property (GObject    *object,
       break;
 
     case PROP_RESOLUTION_UNIT:
-      g_value_set_int (value, box->resolution_unit);
+      g_value_set_object (value, box->resolution_unit);
       break;
 
     case PROP_KEEP_ASPECT:

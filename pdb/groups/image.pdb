@@ -2607,7 +2607,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'unit', type => 'unit (min GIMP_UNIT_INCH)',
+        { name => 'unit', type => 'unit',
           desc => 'The new image unit' }
     );
 

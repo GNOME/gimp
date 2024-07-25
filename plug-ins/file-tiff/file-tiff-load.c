@@ -1295,8 +1295,8 @@ load_image (GimpProcedure        *procedure,
       {
         gdouble   xres = 72.0;
         gdouble   yres = 72.0;
-        gushort  read_unit;
-        GimpUnit unit = GIMP_UNIT_PIXEL; /* invalid unit */
+        gushort   read_unit;
+        GimpUnit *unit = gimp_unit_pixel (); /* invalid unit */
 
         if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres))
           {
@@ -1312,13 +1312,13 @@ load_image (GimpProcedure        *procedure,
                         break;
 
                       case RESUNIT_INCH:
-                        unit = GIMP_UNIT_INCH;
+                        unit = gimp_unit_inch ();
                         break;
 
                       case RESUNIT_CENTIMETER:
                         xres *= 2.54;
                         yres *= 2.54;
-                        unit = GIMP_UNIT_MM; /* this is our default metric unit */
+                        unit = gimp_unit_mm (); /* this is our default metric unit */
                         break;
 
                       default:
@@ -1366,7 +1366,7 @@ load_image (GimpProcedure        *procedure,
                 else
                   {
                     gimp_image_set_resolution (*image, xres, yres);
-                    if (unit != GIMP_UNIT_PIXEL)
+                    if (unit != gimp_unit_pixel ())
                       gimp_image_set_unit (*image, unit);
 
                     *resolution_loaded = TRUE;

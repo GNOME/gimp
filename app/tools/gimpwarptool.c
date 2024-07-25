@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -1529,7 +1530,7 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
   gimp_warp_tool_update_stroke (wt, NULL);
 
   widget = GTK_WIDGET (gimp_display_get_shell (tool->display));
-  gimp_create_display (orig_image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+  gimp_create_display (orig_image->gimp, image, gimp_unit_pixel (), 1.0,
                        G_OBJECT (gimp_widget_get_monitor (widget)));
   g_object_unref (image);
 }

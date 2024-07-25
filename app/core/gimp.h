@@ -69,7 +69,6 @@ struct _Gimp
   guint                   busy_idle_id;
 
   GList                  *user_units;
-  gint                    n_user_units;
 
   GimpParasiteList       *parasites;
 

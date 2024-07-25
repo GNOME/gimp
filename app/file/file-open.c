@@ -561,7 +561,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
           g_free (basename);
         }
 
-      if (gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+      if (gimp_create_display (image->gimp, image, gimp_unit_pixel (), 1.0,
                                monitor))
         {
           /*  the display owns the image now  */

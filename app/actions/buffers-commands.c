@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -125,7 +126,7 @@ buffers_paste_as_new_image_cmd_callback (GimpAction *action,
                                                 GIMP_OBJECT (buffer),
                                                 context);
       gimp_create_display (context->gimp, new_image,
-                           GIMP_UNIT_PIXEL, 1.0,
+                           gimp_unit_pixel (), 1.0,
                            G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (new_image);
     }

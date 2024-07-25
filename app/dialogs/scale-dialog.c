@@ -45,7 +45,7 @@ typedef struct _ScaleDialog ScaleDialog;
 struct _ScaleDialog
 {
   GimpViewable          *viewable;
-  GimpUnit               unit;
+  GimpUnit              *unit;
   GimpInterpolationType  interpolation;
   GtkWidget             *box;
   GtkWidget             *combo;
@@ -73,7 +73,7 @@ scale_dialog_new (GimpViewable          *viewable,
                   GtkWidget             *parent,
                   GimpHelpFunc           help_func,
                   const gchar           *help_id,
-                  GimpUnit               unit,
+                  GimpUnit              *unit,
                   GimpInterpolationType  interpolation,
                   GimpScaleCallback      callback,
                   gpointer               user_data)
@@ -221,9 +221,9 @@ scale_dialog_response (GtkWidget   *dialog,
                        gint         response_id,
                        ScaleDialog *private)
 {
-  GimpUnit  unit          = private->unit;
+  GimpUnit *unit          = private->unit;
   gint      interpolation = private->interpolation;
-  GimpUnit  resolution_unit;
+  GimpUnit *resolution_unit;
   gint      width, height;
   gdouble   xres, yres;
 

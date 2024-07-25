@@ -511,18 +511,18 @@ gimp_buffer_get_resolution (GimpBuffer *buffer,
 
 void
 gimp_buffer_set_unit (GimpBuffer *buffer,
-                      GimpUnit    unit)
+                      GimpUnit   *unit)
 {
   g_return_if_fail (GIMP_IS_BUFFER (buffer));
-  g_return_if_fail (unit > GIMP_UNIT_PIXEL);
+  g_return_if_fail (GIMP_IS_UNIT (unit));
 
   buffer->unit = unit;
 }
 
-GimpUnit
+GimpUnit *
 gimp_buffer_get_unit (GimpBuffer *buffer)
 {
-  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), GIMP_UNIT_PIXEL);
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), gimp_unit_pixel ());
 
   return buffer->unit;
 }

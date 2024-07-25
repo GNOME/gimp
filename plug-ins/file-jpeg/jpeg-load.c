@@ -543,7 +543,7 @@ jpeg_load_resolution (GimpImage                     *image,
         case 2: /* dots per cm */
           xresolution *= 2.54;
           yresolution *= 2.54;
-          gimp_image_set_unit (image, GIMP_UNIT_MM);
+          gimp_image_set_unit (image, gimp_unit_mm ());
           break;
 
         default:

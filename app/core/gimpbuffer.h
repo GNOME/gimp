@@ -42,7 +42,7 @@ struct _GimpBuffer
 
   gdouble           resolution_x;
   gdouble           resolution_y;
-  GimpUnit          unit;
+  GimpUnit         *unit;
 
   GimpColorProfile *color_profile;
   GimpColorProfile *format_profile;
@@ -80,8 +80,8 @@ gboolean           gimp_buffer_get_resolution    (GimpBuffer       *buffer,
                                                   gdouble          *resolution_y);
 
 void               gimp_buffer_set_unit          (GimpBuffer       *buffer,
-                                                  GimpUnit          unit);
-GimpUnit           gimp_buffer_get_unit          (GimpBuffer       *buffer);
+                                                  GimpUnit         *unit);
+GimpUnit         * gimp_buffer_get_unit          (GimpBuffer       *buffer);
 
 void               gimp_buffer_set_color_profile (GimpBuffer       *buffer,
                                                   GimpColorProfile *profile);

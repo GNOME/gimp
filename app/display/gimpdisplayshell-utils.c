@@ -155,7 +155,7 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
       return g_strdup (status);
     }
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     xres = yres = 1.0;
   else
     gimp_image_get_resolution (image, &xres, &yres);
@@ -188,7 +188,7 @@ gimp_display_shell_get_line_status (GimpDisplayShell *shell,
       angle = 0.0;
     }
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == gimp_unit_pixel ())
     {
       enhanced_status = g_strdup_printf ("%.1f %s, %.2f\302\260%s%s",
                                          pixel_dist, _("pixels"), angle,

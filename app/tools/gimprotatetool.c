@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -302,7 +303,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2, _("Center _X:"),
                             0.0, 0.5, button, 1);
 
-  rotate->sizeentry = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+  rotate->sizeentry = gimp_size_entry_new (1, gimp_unit_pixel (), "%a",
                                            TRUE, TRUE, FALSE, SB_WIDTH,
                                            GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (rotate->sizeentry),

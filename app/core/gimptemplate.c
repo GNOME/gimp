@@ -77,11 +77,11 @@ struct _GimpTemplatePrivate
 {
   gint                     width;
   gint                     height;
-  GimpUnit                 unit;
+  GimpUnit                *unit;
 
   gdouble                  xresolution;
   gdouble                  yresolution;
-  GimpUnit                 resolution_unit;
+  GimpUnit                *resolution_unit;
 
   GimpImageBaseType        base_type;
   GimpPrecision            precision;
@@ -158,7 +158,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
                          _("Unit"),
                          _("The unit used for coordinate display "
                            "when not in dot-for-dot mode."),
-                         TRUE, FALSE, GIMP_UNIT_PIXEL,
+                         TRUE, FALSE, gimp_unit_pixel (),
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
@@ -181,7 +181,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
                          "resolution-unit",
                          _("Resolution unit"),
                          NULL,
-                         FALSE, FALSE, GIMP_UNIT_INCH,
+                         FALSE, FALSE, gimp_unit_inch (),
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_BASE_TYPE,
@@ -310,7 +310,7 @@ gimp_template_set_property (GObject      *object,
       private->height = g_value_get_int (value);
       break;
     case PROP_UNIT:
-      private->unit = g_value_get_int (value);
+      private->unit = g_value_get_object (value);
       break;
     case PROP_XRESOLUTION:
       private->xresolution = g_value_get_double (value);
@@ -319,7 +319,7 @@ gimp_template_set_property (GObject      *object,
       private->yresolution = g_value_get_double (value);
       break;
     case PROP_RESOLUTION_UNIT:
-      private->resolution_unit = g_value_get_int (value);
+      private->resolution_unit = g_value_get_object (value);
       break;
     case PROP_BASE_TYPE:
       private->base_type = g_value_get_enum (value);
@@ -398,7 +398,7 @@ gimp_template_get_property (GObject    *object,
       g_value_set_int (value, private->height);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, private->unit);
+      g_value_set_object (value, private->unit);
       break;
     case PROP_XRESOLUTION:
       g_value_set_double (value, private->xresolution);
@@ -407,7 +407,7 @@ gimp_template_get_property (GObject    *object,
       g_value_set_double (value, private->yresolution);
       break;
     case PROP_RESOLUTION_UNIT:
-      g_value_set_int (value, private->resolution_unit);
+      g_value_set_object (value, private->resolution_unit);
       break;
     case PROP_BASE_TYPE:
       g_value_set_enum (value, private->base_type);
@@ -558,10 +558,10 @@ gimp_template_get_height (GimpTemplate *template)
   return GET_PRIVATE (template)->height;
 }
 
-GimpUnit
+GimpUnit *
 gimp_template_get_unit (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_UNIT_INCH);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), gimp_unit_inch ());
 
   return GET_PRIVATE (template)->unit;
 }
@@ -582,10 +582,10 @@ gimp_template_get_resolution_y (GimpTemplate *template)
   return GET_PRIVATE (template)->yresolution;
 }
 
-GimpUnit
+GimpUnit *
 gimp_template_get_resolution_unit (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_UNIT_INCH);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), gimp_unit_inch ());
 
   return GET_PRIVATE (template)->resolution_unit;
 }

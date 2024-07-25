@@ -1557,10 +1557,10 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
  * Since: 2.10
  */
 gboolean
-gimp_metadata_get_resolution (GimpMetadata *metadata,
-                              gdouble      *xres,
-                              gdouble      *yres,
-                              GimpUnit     *unit)
+gimp_metadata_get_resolution (GimpMetadata  *metadata,
+                              gdouble       *xres,
+                              gdouble       *yres,
+                              GimpUnit     **unit)
 {
   gint xnom, xdenom;
   gint ynom, ydenom;
@@ -1611,9 +1611,9 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
              if (unit)
                {
                  if (exif_unit == 3)
-                   *unit = GIMP_UNIT_MM;
+                   *unit = gimp_unit_mm ();
                  else
-                   *unit = GIMP_UNIT_INCH;
+                   *unit = gimp_unit_inch ();
                }
 
              return TRUE;
@@ -1640,7 +1640,7 @@ void
 gimp_metadata_set_resolution (GimpMetadata *metadata,
                               gdouble       xres,
                               gdouble       yres,
-                              GimpUnit      unit)
+                              GimpUnit     *unit)
 {
   gchar buffer[32];
   gint  exif_unit;

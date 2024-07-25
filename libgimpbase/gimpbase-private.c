@@ -29,7 +29,8 @@
 #include "gimpcompatenums.h"
 
 
-GimpUnitVtable _gimp_unit_vtable = { NULL, };
+GHashTable     *_gimp_units       = NULL;
+GimpUnitVtable  _gimp_unit_vtable = { NULL, };
 
 
 void
@@ -47,6 +48,12 @@ gimp_base_init (GimpUnitVtable *vtable)
   gimp_base_compat_enums_init ();
 
   gimp_base_initialized = TRUE;
+}
+
+void
+gimp_base_exit (void)
+{
+  g_clear_pointer (&_gimp_units, g_hash_table_unref);
 }
 
 void

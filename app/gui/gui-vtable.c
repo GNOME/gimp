@@ -138,7 +138,7 @@ static GimpDisplay  * gui_get_empty_display      (Gimp                *gimp);
 static GBytes       * gui_display_get_window_id  (GimpDisplay         *display);
 static GimpDisplay  * gui_display_create         (Gimp                *gimp,
                                                   GimpImage           *image,
-                                                  GimpUnit             unit,
+                                                  GimpUnit            *unit,
                                                   gdouble              scale,
                                                   GObject             *monitor);
 static void           gui_display_delete         (GimpDisplay         *display);
@@ -396,7 +396,7 @@ gui_display_get_window_id (GimpDisplay *display)
 static GimpDisplay *
 gui_display_create (Gimp      *gimp,
                     GimpImage *image,
-                    GimpUnit   unit,
+                    GimpUnit  *unit,
                     gdouble    scale,
                     GObject   *monitor)
 {

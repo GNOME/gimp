@@ -109,7 +109,7 @@ gimp_text_layer_new (GimpImage   *image,
                      const gchar *text,
                      GimpFont    *font,
                      gdouble      size,
-                     GimpUnit     unit)
+                     GimpUnit    *unit)
 {
   return _gimp_text_layer_new (image, text, font, size, unit);
 }
@@ -124,7 +124,7 @@ gimp_text_layer_copy (GimpLayer *layer)
   gchar         *text;
   GimpFont      *font;
   gdouble        size;
-  GimpUnit       unit;
+  GimpUnit      *unit;
 
   g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
 

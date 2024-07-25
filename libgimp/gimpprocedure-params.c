@@ -316,7 +316,7 @@ gimp_procedure_add_unit_argument (GimpProcedure *procedure,
                                   const gchar   *blurb,
                                   gboolean       show_pixels,
                                   gboolean       show_percent,
-                                  GimpUnit       value,
+                                  GimpUnit      *value,
                                   GParamFlags    flags)
 {
   _gimp_procedure_add_argument (procedure,
@@ -347,7 +347,7 @@ gimp_procedure_add_unit_aux_argument (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       gboolean       show_pixels,
                                       gboolean       show_percent,
-                                      GimpUnit       value,
+                                      GimpUnit      *value,
                                       GParamFlags    flags)
 {
   _gimp_procedure_add_aux_argument (procedure,
@@ -378,7 +378,7 @@ gimp_procedure_add_unit_return_value (GimpProcedure *procedure,
                                       const gchar   *blurb,
                                       gboolean       show_pixels,
                                       gboolean       show_percent,
-                                      GimpUnit       value,
+                                      GimpUnit      *value,
                                       GParamFlags    flags)
 {
   _gimp_procedure_add_return_value (procedure,

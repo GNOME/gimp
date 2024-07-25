@@ -449,7 +449,7 @@ gimp_coordinates_chainbutton_toggled (GimpChainButton *button,
  * Returns: (transfer full): The new #GimpSizeEntry.
  **/
 GtkWidget *
-gimp_coordinates_new (GimpUnit         unit,
+gimp_coordinates_new (GimpUnit        *unit,
                       const gchar     *unit_format,
                       gboolean         menu_show_pixels,
                       gboolean         menu_show_percent,
@@ -507,7 +507,7 @@ gimp_coordinates_new (GimpUnit         unit,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
                             (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
                             (menu_show_pixels == FALSE) ?
-                            GIMP_UNIT_INCH : GIMP_UNIT_PIXEL);
+                            gimp_unit_inch () : gimp_unit_pixel ());
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0, xres, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1, yres, TRUE);

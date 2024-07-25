@@ -20,6 +20,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "display/display-types.h"
 
 #include "display/gimpdisplay.h"
@@ -196,7 +198,7 @@ gimp_test_utils_create_image (Gimp *gimp,
 
   gimp_create_display (gimp,
                        image,
-                       GIMP_UNIT_PIXEL,
+                       gimp_unit_pixel (),
                        1.0 /*scale*/,
                        NULL);
 }

@@ -436,7 +436,7 @@ edit_paste_as_new_image_cmd_callback (GimpAction *action,
 
   if (image)
     {
-      gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0,
+      gimp_create_display (gimp, image, gimp_unit_pixel (), 1.0,
                            G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (image);
     }

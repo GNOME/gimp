@@ -33,18 +33,60 @@ G_BEGIN_DECLS
 /**
  * GIMP_TYPE_UNIT:
  *
- * #GIMP_TYPE_UNIT is a #GType derived from #G_TYPE_INT.
+ * #GIMP_TYPE_UNIT is a class representing units used for measuring
+ * dimensions in GIMP.
  **/
 
-#define GIMP_TYPE_UNIT               (gimp_unit_get_type ())
-#define GIMP_VALUE_HOLDS_UNIT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
+#define GIMP_TYPE_UNIT (gimp_unit_get_type ())
+G_DECLARE_FINAL_TYPE (GimpUnit, gimp_unit, GIMP, UNIT, GObject)
 
-GType        gimp_unit_get_type      (void) G_GNUC_CONST;
 
+gint32        gimp_unit_get_id                       (GimpUnit    *unit);
+
+const gchar * gimp_unit_get_identifier               (GimpUnit    *unit);
+gdouble       gimp_unit_get_factor                   (GimpUnit    *unit);
+gint          gimp_unit_get_digits                   (GimpUnit    *unit);
+gint          gimp_unit_get_scaled_digits            (GimpUnit    *unit,
+                                                      gdouble      resolution);
+const gchar * gimp_unit_get_symbol                   (GimpUnit    *unit);
+const gchar * gimp_unit_get_abbreviation             (GimpUnit    *unit);
+const gchar * gimp_unit_get_singular                 (GimpUnit    *unit);
+const gchar * gimp_unit_get_plural                   (GimpUnit    *unit);
+
+gboolean      gimp_unit_get_deletion_flag            (GimpUnit    *unit);
+void          gimp_unit_set_deletion_flag            (GimpUnit    *unit,
+                                                      gboolean     deletion_flag);
+
+GimpUnit    * gimp_unit_get_by_id                    (gint         unit_id);
+GimpUnit    * gimp_unit_pixel                        (void);
+GimpUnit    * gimp_unit_mm                           (void);
+GimpUnit    * gimp_unit_inch                         (void);
+GimpUnit    * gimp_unit_point                        (void);
+GimpUnit    * gimp_unit_pica                         (void);
+GimpUnit    * gimp_unit_percent                      (void);
+
+gboolean      gimp_unit_is_built_in                  (GimpUnit    *unit);
+gboolean      gimp_unit_is_metric                    (GimpUnit    *unit);
+
+
+gchar       * gimp_unit_format_string                (const gchar *format,
+                                                      GimpUnit    *unit);
+
+gdouble       gimp_pixels_to_units                   (gdouble      pixels,
+                                                      GimpUnit    *unit,
+                                                      gdouble      resolution);
+gdouble       gimp_units_to_pixels                   (gdouble      value,
+                                                      GimpUnit    *unit,
+                                                      gdouble      resolution);
+gdouble       gimp_units_to_points                   (gdouble      value,
+                                                      GimpUnit    *unit,
+                                                      gdouble       resolution);
 
 /*
  * GIMP_TYPE_PARAM_UNIT
  */
+
+#define GIMP_VALUE_HOLDS_UNIT(value)   (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
 
 #define GIMP_TYPE_PARAM_UNIT           (gimp_param_unit_get_type ())
 #define GIMP_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UNIT, GimpParamSpecUnit))
@@ -54,65 +96,22 @@ typedef struct _GimpParamSpecUnit GimpParamSpecUnit;
 
 struct _GimpParamSpecUnit
 {
-  GParamSpecInt parent_instance;
+  GParamSpecObject  parent_instance;
 
-  gboolean      allow_percent;
+  gboolean          allow_pixel;
+  gboolean          allow_percent;
+  GimpUnit         *default_value;
 };
 
-GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
+GType        gimp_param_unit_get_type (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_unit         (const gchar  *name,
-                                           const gchar  *nick,
-                                           const gchar  *blurb,
-                                           gboolean      allow_pixels,
-                                           gboolean      allow_percent,
-                                           GimpUnit      default_value,
-                                           GParamFlags   flags);
-
-
-
-gint          gimp_unit_get_number_of_units          (void);
-gint          gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
-
-GimpUnit      gimp_unit_new                 (gchar       *identifier,
-                                             gdouble      factor,
-                                             gint         digits,
-                                             gchar       *symbol,
-                                             gchar       *abbreviation,
-                                             gchar       *singular,
-                                             gchar       *plural);
-
-gboolean      gimp_unit_get_deletion_flag   (GimpUnit     unit);
-void          gimp_unit_set_deletion_flag   (GimpUnit     unit,
-                                             gboolean     deletion_flag);
-
-gdouble       gimp_unit_get_factor          (GimpUnit     unit);
-
-gint          gimp_unit_get_digits          (GimpUnit     unit);
-gint          gimp_unit_get_scaled_digits   (GimpUnit     unit,
-                                             gdouble      resolution);
-
-const gchar * gimp_unit_get_identifier      (GimpUnit     unit);
-
-const gchar * gimp_unit_get_symbol          (GimpUnit     unit);
-const gchar * gimp_unit_get_abbreviation    (GimpUnit     unit);
-const gchar * gimp_unit_get_singular        (GimpUnit     unit);
-const gchar * gimp_unit_get_plural          (GimpUnit     unit);
-
-gchar       * gimp_unit_format_string       (const gchar *format,
-                                             GimpUnit     unit);
-
-gdouble       gimp_pixels_to_units          (gdouble      pixels,
-                                             GimpUnit     unit,
-                                             gdouble      resolution);
-gdouble       gimp_units_to_pixels          (gdouble      value,
-                                             GimpUnit     unit,
-                                             gdouble      resolution);
-gdouble       gimp_units_to_points          (gdouble      value,
-                                             GimpUnit     unit,
-                                             gdouble      resolution);
-
-gboolean      gimp_unit_is_metric           (GimpUnit     unit);
+GParamSpec * gimp_param_spec_unit     (const gchar *name,
+                                       const gchar *nick,
+                                       const gchar *blurb,
+                                       gboolean     allow_pixel,
+                                       gboolean     allow_percent,
+                                       GimpUnit    *default_value,
+                                       GParamFlags  flags);
 
 
 G_END_DECLS

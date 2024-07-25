@@ -3461,7 +3461,7 @@ gimp_prop_size_entry_new (GObject                   *config,
   gdouble     value;
   gdouble     lower;
   gdouble     upper;
-  GimpUnit    unit_value;
+  GimpUnit   *unit_value;
   gint        scaled_resolution;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
@@ -3483,11 +3483,11 @@ gimp_prop_size_entry_new (GObject                   *config,
 
       g_value_init (&value, unit_param_spec->value_type);
 
-      g_value_set_int (&value, GIMP_UNIT_PIXEL);
+      g_value_set_object (&value, gimp_unit_pixel ());
       show_pixels = (g_param_value_validate (unit_param_spec,
                                              &value) == FALSE);
 
-      g_value_set_int (&value, GIMP_UNIT_PERCENT);
+      g_value_set_object (&value, gimp_unit_percent ());
       show_percent = (g_param_value_validate (unit_param_spec,
                                               &value) == FALSE);
 
@@ -3500,12 +3500,12 @@ gimp_prop_size_entry_new (GObject                   *config,
   else
     {
       unit_param_spec = NULL;
-      unit_value      = GIMP_UNIT_INCH;
+      unit_value      = gimp_unit_inch ();
       show_pixels     = FALSE;
       show_percent    = FALSE;
     }
 
-  if (unit_value != GIMP_UNIT_PIXEL)
+  if (unit_value != gimp_unit_pixel ())
     scaled_resolution = gimp_unit_get_scaled_digits (unit_value, resolution);
   else
     scaled_resolution = (gint) resolution;
@@ -3584,7 +3584,7 @@ gimp_prop_size_entry_callback (GimpSizeEntry *entry,
   GParamSpec *unit_param_spec;
   gdouble     value;
   gboolean    value_is_pixel;
-  GimpUnit    unit_value;
+  GimpUnit   *unit_value;
 
   param_spec = g_object_get_data (G_OBJECT (entry), "gimp-config-param-spec");
   if (! param_spec)
@@ -3605,7 +3605,7 @@ gimp_prop_size_entry_callback (GimpSizeEntry *entry,
 
   if (unit_param_spec)
     {
-      GimpUnit  old_unit;
+      GimpUnit *old_unit;
 
       g_object_get (config,
                     unit_param_spec->name, &old_unit,
@@ -3693,7 +3693,7 @@ gimp_prop_size_entry_notify_unit (GObject       *config,
                                   GParamSpec    *param_spec,
                                   GimpSizeEntry *entry)
 {
-  GimpUnit value;
+  GimpUnit *value;
 
   g_object_get (config,
                 param_spec->name, &value,
@@ -3783,7 +3783,7 @@ gimp_prop_coordinates_new (GObject                   *config,
   GtkWidget *entry;
   GtkWidget *chainbutton = NULL;
 
-  entry = gimp_size_entry_new (2, GIMP_UNIT_INCH, unit_format,
+  entry = gimp_size_entry_new (2, gimp_unit_inch (), unit_format,
                                FALSE, FALSE, TRUE, 10,
                                update_policy);
 
@@ -3829,7 +3829,7 @@ gimp_prop_coordinates_connect (GObject     *config,
   GParamSpec *unit_param_spec;
   gdouble     x_value, x_lower, x_upper;
   gdouble     y_value, y_lower, y_upper;
-  GimpUnit    unit_value;
+  GimpUnit   *unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
   GimpUnit   *old_unit_value;
@@ -3869,7 +3869,7 @@ gimp_prop_coordinates_connect (GObject     *config,
   else
     {
       unit_param_spec = NULL;
-      unit_value      = GIMP_UNIT_INCH;
+      unit_value      = gimp_unit_inch ();
     }
 
   set_param_spec (NULL,
@@ -3957,11 +3957,10 @@ gimp_prop_coordinates_connect (GObject     *config,
       g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-unit",
                          unit_param_spec);
 
-      old_unit_value  = g_new0 (GimpUnit, 1);
-      *old_unit_value = unit_value;
+      old_unit_value = unit_value;
       g_object_set_data_full (G_OBJECT (entry), "old-unit-value",
                               old_unit_value,
-                              (GDestroyNotify) g_free);
+                              (GDestroyNotify) NULL);
 
       g_signal_connect (entry, "unit-changed",
                         G_CALLBACK (gimp_prop_coordinates_callback),
@@ -3984,7 +3983,7 @@ gimp_prop_coordinates_callback (GimpSizeEntry *entry,
   GParamSpec *unit_param_spec;
   gdouble     x_value;
   gdouble     y_value;
-  GimpUnit    unit_value;
+  GimpUnit   *unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
   GimpUnit   *old_unit_value;
@@ -4038,14 +4037,14 @@ gimp_prop_coordinates_callback (GimpSizeEntry *entry,
 
   if (*old_x_value == x_value &&
       *old_y_value == y_value &&
-      (old_unit_value == NULL || *old_unit_value == unit_value))
+      (old_unit_value == NULL || old_unit_value == unit_value))
     return;
 
   *old_x_value = x_value;
   *old_y_value = y_value;
 
   if (old_unit_value)
-    *old_unit_value = unit_value;
+    old_unit_value = unit_value;
 
   if (unit_param_spec)
     g_object_set (config,
@@ -4182,7 +4181,7 @@ gimp_prop_coordinates_notify_unit (GObject       *config,
                                    GParamSpec    *param_spec,
                                    GimpSizeEntry *entry)
 {
-  GimpUnit value;
+  GimpUnit *value;
 
   g_object_get (config,
                 param_spec->name, &value,
@@ -4449,7 +4448,7 @@ gimp_prop_unit_combo_box_new (GObject     *config,
   GParamSpec   *param_spec;
   GtkWidget    *combo;
   GtkTreeModel *model;
-  GimpUnit      unit;
+  GimpUnit     *unit;
   GValue        value = G_VALUE_INIT;
   gboolean      show_pixels;
   gboolean      show_percent;
@@ -4461,10 +4460,10 @@ gimp_prop_unit_combo_box_new (GObject     *config,
 
   g_value_init (&value, param_spec->value_type);
 
-  g_value_set_int (&value, GIMP_UNIT_PIXEL);
+  g_value_set_object (&value, gimp_unit_pixel ());
   show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
 
-  g_value_set_int (&value, GIMP_UNIT_PERCENT);
+  g_value_set_object (&value, gimp_unit_percent ());
   show_percent = (g_param_value_validate (param_spec, &value) == FALSE);
 
   g_value_unset (&value);
@@ -4502,8 +4501,8 @@ gimp_prop_unit_combo_box_callback (GtkWidget *combo,
                                    GObject   *config)
 {
   GParamSpec *param_spec;
-  GimpUnit    value;
-  GimpUnit    v;
+  GimpUnit   *value;
+  GimpUnit   *v;
 
   param_spec = get_param_spec (G_OBJECT (combo));
   if (! param_spec)
@@ -4534,7 +4533,7 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
                                  GParamSpec *param_spec,
                                  GtkWidget  *combo)
 {
-  GimpUnit  unit;
+  GimpUnit *unit;
 
   g_object_get (config,
                 param_spec->name, &unit,

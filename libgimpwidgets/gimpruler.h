@@ -37,8 +37,8 @@ void        gimp_ruler_remove_track_widget (GimpRuler      *ruler,
                                             GtkWidget      *widget);
 
 void        gimp_ruler_set_unit            (GimpRuler      *ruler,
-                                            GimpUnit        unit);
-GimpUnit    gimp_ruler_get_unit            (GimpRuler      *ruler);
+                                            GimpUnit       *unit);
+GimpUnit  * gimp_ruler_get_unit            (GimpRuler      *ruler);
 void        gimp_ruler_set_position        (GimpRuler      *ruler,
                                             gdouble         position);
 gdouble     gimp_ruler_get_position        (GimpRuler      *ruler);

@@ -41,12 +41,12 @@ typedef struct
 {
   GimpImage          *image;
   GimpDrawable       *drawable;
-  GimpUnit            unit;
+  GimpUnit           *unit;
   gdouble             xres;
   gdouble             yres;
   gdouble             min_xres;
   gdouble             min_yres;
-  GimpUnit            image_unit;
+  GimpUnit           *image_unit;
   gdouble             offset_x;
   gdouble             offset_y;
   PrintCenterMode     center;

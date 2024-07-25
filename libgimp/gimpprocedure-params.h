@@ -422,6 +422,15 @@ G_BEGIN_DECLS
 #define GIMP_VALUES_SET_PATTERN(args, n, value) \
   g_value_set_object (gimp_value_array_index (args, n), value)
 
+
+/*  Unit  */
+
+#define GIMP_VALUES_GET_UNIT(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_UNIT(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+
 void gimp_procedure_add_boolean_argument               (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
@@ -497,7 +506,7 @@ void gimp_procedure_add_unit_argument                  (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       show_pixels,
                                                         gboolean       show_percent,
-                                                        GimpUnit       value,
+                                                        GimpUnit      *value,
                                                         GParamFlags    flags);
 void gimp_procedure_add_unit_aux_argument              (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -505,7 +514,7 @@ void gimp_procedure_add_unit_aux_argument              (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       show_pixels,
                                                         gboolean       show_percent,
-                                                        GimpUnit       value,
+                                                        GimpUnit      *value,
                                                         GParamFlags    flags);
 void gimp_procedure_add_unit_return_value              (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -513,7 +522,7 @@ void gimp_procedure_add_unit_return_value              (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       show_pixels,
                                                         gboolean       show_percent,
-                                                        GimpUnit       value,
+                                                        GimpUnit      *value,
                                                         GParamFlags    flags);
 
 void gimp_procedure_add_double_argument                (GimpProcedure *procedure,

@@ -53,11 +53,11 @@ typedef struct
 
   gint                   width;
   gint                   height;
-  GimpUnit               unit;
+  GimpUnit              *unit;
   GimpInterpolationType  interpolation;
   gdouble                xresolution;
   gdouble                yresolution;
-  GimpUnit               resolution_unit;
+  GimpUnit              *resolution_unit;
 
   GimpScaleCallback      callback;
   gpointer               user_data;
@@ -71,11 +71,11 @@ static void        image_scale_callback         (GtkWidget             *widget,
                                                  GimpViewable          *viewable,
                                                  gint                   width,
                                                  gint                   height,
-                                                 GimpUnit               unit,
+                                                 GimpUnit              *unit,
                                                  GimpInterpolationType  interpolation,
                                                  gdouble                xresolution,
                                                  gdouble                yresolution,
-                                                 GimpUnit               resolution_unit,
+                                                 GimpUnit              *resolution_unit,
                                                  gpointer               data);
 
 static GtkWidget * image_scale_confirm_dialog   (ImageScaleDialog      *private);
@@ -94,7 +94,7 @@ GtkWidget *
 image_scale_dialog_new (GimpImage             *image,
                         GimpContext           *context,
                         GtkWidget             *parent,
-                        GimpUnit               unit,
+                        GimpUnit              *unit,
                         GimpInterpolationType  interpolation,
                         GimpScaleCallback      callback,
                         gpointer               user_data)
@@ -142,11 +142,11 @@ image_scale_callback (GtkWidget             *widget,
                       GimpViewable          *viewable,
                       gint                   width,
                       gint                   height,
-                      GimpUnit               unit,
+                      GimpUnit              *unit,
                       GimpInterpolationType  interpolation,
                       gdouble                xresolution,
                       gdouble                yresolution,
-                      GimpUnit               resolution_unit,
+                      GimpUnit              *resolution_unit,
                       gpointer               data)
 {
   ImageScaleDialog        *private = data;

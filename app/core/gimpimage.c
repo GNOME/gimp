@@ -750,7 +750,7 @@ gimp_image_init (GimpImage *image)
   private->xresolution         = 1.0;
   private->yresolution         = 1.0;
   private->resolution_set      = FALSE;
-  private->resolution_unit     = GIMP_UNIT_INCH;
+  private->resolution_unit     = gimp_unit_inch ();
   private->base_type           = GIMP_RGB;
   private->precision           = GIMP_PRECISION_U8_NON_LINEAR;
   private->new_layer_mode      = -1;
@@ -2539,7 +2539,7 @@ gimp_image_set_imported_file (GimpImage *image,
        */
       private->xresolution     = 72.0;
       private->yresolution     = 72.0;
-      private->resolution_unit = GIMP_UNIT_INCH;
+      private->resolution_unit = gimp_unit_inch ();
     }
 }
 
@@ -3213,12 +3213,12 @@ gimp_image_resolution_changed (GimpImage *image)
 
 void
 gimp_image_set_unit (GimpImage *image,
-                     GimpUnit   unit)
+                     GimpUnit  *unit)
 {
   GimpImagePrivate *private;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (unit > GIMP_UNIT_PIXEL);
+  g_return_if_fail (GIMP_IS_UNIT (unit));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
@@ -3232,10 +3232,10 @@ gimp_image_set_unit (GimpImage *image,
     }
 }
 
-GimpUnit
+GimpUnit *
 gimp_image_get_unit (GimpImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_UNIT_INCH);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->resolution_unit;
 }
