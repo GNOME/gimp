@@ -25,41 +25,9 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_RULER            (gimp_ruler_get_type ())
-#define GIMP_RULER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RULER, GimpRuler))
-#define GIMP_RULER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RULER, GimpRulerClass))
-#define GIMP_IS_RULER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RULER))
-#define GIMP_IS_RULER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RULER))
-#define GIMP_RULER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RULER, GimpRulerClass))
+#define GIMP_TYPE_RULER (gimp_ruler_get_type ())
+G_DECLARE_FINAL_TYPE (GimpRuler, gimp_ruler, GIMP, RULER, GtkWidget)
 
-
-typedef struct _GimpRulerPrivate GimpRulerPrivate;
-typedef struct _GimpRulerClass   GimpRulerClass;
-
-struct _GimpRuler
-{
-  GtkWidget         parent_instance;
-
-  GimpRulerPrivate *priv;
-};
-
-struct _GimpRulerClass
-{
-  GtkWidgetClass  parent_class;
-
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-};
-
-
-GType       gimp_ruler_get_type            (void) G_GNUC_CONST;
 
 GtkWidget * gimp_ruler_new                 (GtkOrientation  orientation);
 
