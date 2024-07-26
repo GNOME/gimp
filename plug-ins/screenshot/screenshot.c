@@ -127,20 +127,20 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation
         (procedure,
          _("Create an image from an area of the screen"),
-         "The plug-in takes screenshots of an "
-         "interactively selected window or of the desktop, "
-         "either the whole desktop or an interactively "
-         "selected region. When called non-interactively, it "
-         "may grab the root window or use the window-id "
-         "passed as a parameter.  The last four parameters "
-         "are optional and can be used to specify the corners "
-         "of the region to be grabbed."
-         "On Mac OS X, "
-         "when called non-interactively, the plug-in"
-         "only can take screenshots of the entire root window."
-         "Grabbing a window or a region is not supported"
-         "non-interactively. To grab a region or a particular"
-         "window, you need to use the interactive mode.",
+           "The plug-in takes screenshots of an "
+           "interactively selected window or of the desktop, "
+           "either the whole desktop or an interactively "
+           "selected region. When called non-interactively, it "
+           "may grab the root window or use the window-id "
+           "passed as a parameter.  The last four parameters "
+           "are optional and can be used to specify the corners "
+           "of the region to be grabbed."
+           "On Mac OS X, "
+           "when called non-interactively, the plug-in"
+           "only can take screenshots of the entire root window."
+           "Grabbing a window or a region is not supported"
+           "non-interactively. To grab a region or a particular"
+           "window, you need to use the interactive mode.",
          name);
 
       gimp_procedure_set_attribution (procedure,
@@ -160,12 +160,19 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_RUN_NONINTERACTIVE,
                                         G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "shoot-type",
-                                       _("Shoot _area"),
-                                       _("The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
-                                       "SHOOT-REGION (2) }"),
-                                       0, 2, SHOOT_WINDOW,
-                                       G_PARAM_READWRITE);
+      /* TODO: Windows does not currently implement selecting by region to grab,
+       * so we'll hide this option for now */
+      gimp_procedure_add_choice_argument (procedure, "shoot-type",
+                                          _("Shoot _area"),
+                                          _("The shoot type"),
+                                          gimp_choice_new_with_values ("window",  SHOOT_WINDOW, _("Take a screenshot of a single window"),   NULL,
+                                                                       "screen",  SHOOT_ROOT,   _("Take a screenshot of the entire screen"), NULL,
+#ifndef G_OS_WIN32
+                                                                       "region",  SHOOT_REGION, _("Select a region to grab"),                NULL,
+#endif
+                                                                       NULL),
+                                          "window",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "x1",
                                        "X1",
@@ -220,12 +227,14 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                                _("Delay before snapping the screenshot"),
                                                0, 20, 0,
                                                G_PARAM_READWRITE);
-      gimp_procedure_add_int_aux_argument     (procedure, "color-profile",
-                                               _("Color _Profile"),
-                                               "{ SCREENSHOT_PROFILE_POLICY_MONITOR, (0), "
-                                               "SCREENSHOT_PROFILE_POLICY_MONITOR, (1) } ",
-                                               0, 1, SCREENSHOT_PROFILE_POLICY_MONITOR,
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "color-profile",
+                                          _("Color _Profile"),
+                                          "",
+                                          gimp_choice_new_with_values ("monitor", SCREENSHOT_PROFILE_POLICY_MONITOR, _("Tag image with monitor profile"), NULL,
+                                                                       "srgb",    SCREENSHOT_PROFILE_POLICY_SRGB,    _("Convert image with sRGB"),        NULL,
+                                                                       NULL),
+                                          "monitor",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_image_return_value (procedure, "image",
                                              "Image",
@@ -254,10 +263,9 @@ screenshot_run (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  g_object_get (config,
-                "run-mode",   &run_mode,
-                "shoot-type", &shoot_type,
-                NULL);
+  g_object_get (config, "run-mode", &run_mode, NULL);
+  shoot_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                    "shoot-type");
 
   if (! gdk_init_check (NULL, NULL))
     {
@@ -325,7 +333,7 @@ screenshot_run (GimpProcedure        *procedure,
            * shared by all screenshot backends (basically just snap the
            * whole display setup).
            */
-          g_object_set (config, "shoot-type", SHOOT_ROOT, NULL);
+          g_object_set (config, "shoot-type", "screen", NULL);
         }
 
       /* Get information from the dialog. Freedesktop portal comes with
@@ -376,9 +384,8 @@ screenshot_run (GimpProcedure        *procedure,
 
       gimp_image_undo_disable (image);
 
-      g_object_get (config,
-                    "color-profile", &profile_policy,
-                    NULL);
+      profile_policy = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                            "color-profile");
 
       if (run_mode == GIMP_RUN_NONINTERACTIVE)
         profile_policy = SCREENSHOT_PROFILE_POLICY_MONITOR;
@@ -453,12 +460,13 @@ shoot (GdkMonitor           *monitor,
   gboolean  show_cursor;
 
   g_object_get (config,
-                "shoot-type",         &shoot_type,
                 "screenshot-delay",   &screenshot_delay,
                 "selection-delay",    &select_delay,
                 "include-decoration", &decorate,
                 "include-pointer",    &show_cursor,
                 NULL);
+  shoot_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                    "shoot-type");
 
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
@@ -494,7 +502,6 @@ shoot_dialog (GimpProcedure        *procedure,
               GdkMonitor          **monitor)
 {
   GtkWidget      *dialog;
-  GtkListStore   *store;
   GimpValueArray *values;
   GValue          value = G_VALUE_INIT;
   gboolean        run;
@@ -503,13 +510,6 @@ shoot_dialog (GimpProcedure        *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Screenshot"));
   gimp_procedure_dialog_set_ok_label (GIMP_PROCEDURE_DIALOG (dialog), _("S_nap"));
-
-  store = gimp_int_store_new (_("Take a screenshot of a single window"),   SHOOT_WINDOW,
-                              _("Take a screenshot of the entire screen"), SHOOT_ROOT,
-                              _("Select a region to grab"),                SHOOT_REGION,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "shoot-type", GIMP_INT_STORE (store));
 
   if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER ||
       capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS)
@@ -541,8 +541,8 @@ shoot_dialog (GimpProcedure        *procedure,
       if (capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS)
         {
           values = gimp_value_array_new (1);
-          g_value_init (&value, G_TYPE_INT);
-          g_value_set_int (&value, SHOOT_WINDOW);
+          g_value_init (&value, G_TYPE_STRING);
+          g_value_set_string (&value, "window");
           gimp_value_array_append (values, &value);
           g_value_unset (&value);
           gimp_procedure_dialog_set_sensitive_if_in (GIMP_PROCEDURE_DIALOG (dialog),
@@ -553,8 +553,8 @@ shoot_dialog (GimpProcedure        *procedure,
       if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER)
         {
           values = gimp_value_array_new (1);
-          g_value_init (&value, G_TYPE_INT);
-          g_value_set_int (&value, SHOOT_REGION);
+          g_value_init (&value, G_TYPE_STRING);
+          g_value_set_string (&value, "region");
           gimp_value_array_append (values, &value);
           g_value_unset (&value);
           gimp_procedure_dialog_set_sensitive_if_in (GIMP_PROCEDURE_DIALOG (dialog),
@@ -575,8 +575,8 @@ shoot_dialog (GimpProcedure        *procedure,
                                           NULL);
 
           values = gimp_value_array_new (1);
-          g_value_init (&value, G_TYPE_INT);
-          g_value_set_int (&value, SHOOT_ROOT);
+          g_value_init (&value, G_TYPE_STRING);
+          g_value_set_string (&value, "screen");
           gimp_value_array_append (values, &value);
           g_value_unset (&value);
           gimp_procedure_dialog_set_sensitive_if_in (GIMP_PROCEDURE_DIALOG (dialog),
@@ -599,12 +599,6 @@ shoot_dialog (GimpProcedure        *procedure,
     }
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), "shoot-type", NULL);
-
-  store = gimp_int_store_new (_("Tag image with monitor profile"), SCREENSHOT_PROFILE_POLICY_MONITOR,
-                              _("Convert image with sRGB"),        SCREENSHOT_PROFILE_POLICY_SRGB,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "color-profile", GIMP_INT_STORE (store));
 
   if ((capabilities & SCREENSHOT_CAN_SHOOT_POINTER) ||
       (capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS))

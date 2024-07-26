@@ -147,11 +147,21 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
                                             _("Border size unit of measure"),
                                             TRUE, TRUE, GIMP_UNIT_PIXEL,
                                             GIMP_PARAM_READWRITE);
-      gimp_procedure_add_int_argument (procedure, "bucket-exponent",
-                                       _("Bucket Si_ze"),
-                                       _("Bits for bucket size (default=4: 16 Levels)"),
-                                       0, G_MAXINT, 4,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "bucket-exponent",
+                                          _("Bucket Si_ze"),
+                                          _("Bits for bucket size"),
+                                          gimp_choice_new_with_values ("levels-1",   0, _("1"),   NULL,
+                                                                       "levels-2",   1, _("2"),   NULL,
+                                                                       "levels-4",   2, _("4"),   NULL,
+                                                                       "levels-8",   3, _("8)"),  NULL,
+                                                                       "levels-16",  4, _("16"),  NULL,
+                                                                       "levels-32",  5, _("32"),  NULL,
+                                                                       "levels-64",  6, _("64"),  NULL,
+                                                                       "levels-128", 7, _("128"), NULL,
+                                                                       "levels-256", 8, _("256"), NULL,
+                                                                       NULL),
+                                          "levels-16",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_color_return_value (procedure, "borderaverage",
                                              _("The average color of the specified border."),
@@ -255,8 +265,10 @@ borderaverage (GObject      *config,
 
   g_object_get (config,
                 "thickness", &borderaverage_thickness,
-                "bucket-exponent", &borderaverage_bucket_exponent,
                 NULL);
+  borderaverage_bucket_exponent =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "bucket-exponent");
 
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
@@ -381,25 +393,17 @@ borderaverage_dialog (GimpProcedure *procedure,
                       GimpImage     *image,
                       GimpDrawable  *drawable)
 {
-  GtkWidget    *dialog;
-  GtkListStore *store;
-  GtkWidget    *size_entry;
-  gboolean      run;
-  gdouble       xres, yres;
-  GeglBuffer   *buffer = NULL;
+  GtkWidget  *dialog;
+  GtkWidget  *size_entry;
+  gboolean    run;
+  gdouble     xres, yres;
+  GeglBuffer *buffer = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Border Average"));
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "border-size-label",
@@ -432,13 +436,6 @@ borderaverage_dialog (GimpProcedure *procedure,
                                    "bucket-size-label",
                                    _("Number of Colors"),
                                    FALSE, FALSE);
-
-  store = gimp_int_store_new ("1",   0, "2",   1, "4",   2, "8",   3,
-                              "16",  4, "32",  5, "64",  6, "128", 7,
-                              "256", 8, NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "bucket-exponent",
-                                       GIMP_INT_STORE (store));
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "bucket-size-frame", "bucket-size-label",

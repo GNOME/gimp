@@ -181,42 +181,56 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Align all visible layers of the image"),
-                                        "Align visible layers",
+                                        _("Align visible layers"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Shuji Narazaki <narazaki@InetQ.or.jp>",
                                       "Shuji Narazaki",
                                       "1997");
 
-      gimp_procedure_add_int_argument (procedure, "horizontal-style",
-                                       _("_Horizontal style"),
-                                       _("(None = 0, Collect = 1, "
-                                         "Fill left to right = 2, Fill right to left = 3, "
-                                         "Snap to grid = 4)"),
-                                       H_NONE, SNAP2HGRID, H_NONE,
-                                       GIMP_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "horizontal-style",
+                                          _("_Horizontal style"),
+                                          "",
+                                          gimp_choice_new_with_values ("none",               H_NONE,     _("None"),                 NULL,
+                                                                       "collect",            H_COLLECT,  _("Collect"),              NULL,
+                                                                       "fill-left-to-right", LEFT2RIGHT, _("Fill (left to right)"), NULL,
+                                                                       "fill-right-to-left", RIGHT2LEFT, _("Fill (right to left)"), NULL,
+                                                                       "snap-to-grid",       SNAP2HGRID, _("Snap to grid"),         NULL,
+                                                                       NULL),
+                                          "none",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "horizontal-base",
-                                       _("Hori_zontal base"),
-                                       _("(Left edge = 0, Center = 1, "
-                                         "Right edge = 2)"),
-                                       H_BASE_LEFT, H_BASE_RIGHT, H_BASE_LEFT,
-                                       GIMP_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "horizontal-base",
+                                          _("Hori_zontal base"),
+                                          "",
+                                          gimp_choice_new_with_values ("left-edge",  H_BASE_LEFT,   _("Left edge"),  NULL,
+                                                                       "center",     H_BASE_CENTER, _("Center"),     NULL,
+                                                                       "right-edge", H_BASE_RIGHT,  _("Right edge"), NULL,
+                                                                       NULL),
+                                          "left-edge",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "vertical-style",
-                                       _("_Vertical style"),
-                                       _("(None = 0, Collect = 1, "
-                                         "Fill left to right = 2, Fill right to left = 3, "
-                                         "Snap to grid = 4)"),
-                                       V_NONE, SNAP2VGRID, V_NONE,
-                                       GIMP_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "vertical-style",
+                                          _("_Vertical style"),
+                                          "",
+                                          gimp_choice_new_with_values ("none",               V_NONE,     _("None"),                 NULL,
+                                                                       "collect",            V_COLLECT,  _("Collect"),              NULL,
+                                                                       "fill-left-to-right", TOP2BOTTOM, _("Fill (top to bottom)"), NULL,
+                                                                       "fill-right-to-left", BOTTOM2TOP, _("Fill (bottom to top)"), NULL,
+                                                                       "snap-to-grid",       SNAP2VGRID, _("Snap to grid"),         NULL,
+                                                                       NULL),
+                                          "none",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "vertical-base",
-                                       _("Ver_tical base"),
-                                       _("(Left edge = 0, Center = 1, "
-                                         "Right edge = 2)"),
-                                       V_BASE_TOP, V_BASE_BOTTOM, V_BASE_TOP,
-                                       GIMP_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "vertical-base",
+                                          _("Ver_tical base"),
+                                          "",
+                                          gimp_choice_new_with_values ("top-edge",    V_BASE_TOP,     _("Top edge"),    NULL,
+                                                                       "center",      V_BASE_CENTER,  _("Center"),      NULL,
+                                                                       "bottom-edge", V_BASE_BOTTOM,  _("Bottom edge"), NULL,
+                                                                       NULL),
+                                          "top-edge",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "grid-size",
                                        _("_Grid"),
@@ -528,10 +542,13 @@ align_layers_gather_data (GimpLayer **layers,
   gboolean  use_bottom_layer;
 
   g_object_get (config,
-                "horizontal-style", &horizontal_style,
-                "vertical-style",   &vertical_style,
                 "use-bottom-layer", &use_bottom_layer,
                 NULL);
+  horizontal_style = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                          "horizontal-style");
+  vertical_style = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                        "vertical-style");
+
 
   data.step_x = 0;
   data.step_y = 0;
@@ -601,10 +618,12 @@ align_layers_perform_alignment (GimpLayer **layers,
   gint grid_size;
 
   g_object_get (config,
-                "horizontal-style", &horizontal_style,
-                "vertical-style",   &vertical_style,
-                "grid-size",        &grid_size,
+                "grid-size", &grid_size,
                 NULL);
+  horizontal_style = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                          "horizontal-style");
+  vertical_style = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                        "vertical-style");
 
   for (index = 0; index < layer_num; index++)
     {
@@ -678,10 +697,10 @@ align_layers_get_align_offsets (GimpDrawable *drawable,
   gint horizontal_base;
   gint vertical_base;
 
-  g_object_get (config,
-                "horizontal-base", &horizontal_base,
-                "vertical-base",   &vertical_base,
-                NULL);
+  horizontal_base = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                         "horizontal-base");
+  vertical_base = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                       "vertical-base");
 
   switch (horizontal_base)
     {
@@ -720,58 +739,14 @@ static int
 align_layers_dialog (GimpProcedure *procedure,
                      GObject       *config)
 {
-  GtkWidget    *dialog;
-  GtkListStore *store;
-  gboolean      run;
+  GtkWidget *dialog;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Align Visible Layers"));
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  store = gimp_int_store_new (_("None"),                 H_NONE,
-                              _("Collect"),              H_COLLECT,
-                              _("Fill (left to right)"), LEFT2RIGHT,
-                              _("Fill (right to left)"), RIGHT2LEFT,
-                              _("Snap to grid"),         SNAP2HGRID,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "horizontal-style",
-                                       GIMP_INT_STORE (store));
-
-  store = gimp_int_store_new (_("Left edge"),  H_BASE_LEFT,
-                              _("Center"),     H_BASE_CENTER,
-                              _("Right edge"), H_BASE_RIGHT,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "horizontal-base",
-                                       GIMP_INT_STORE (store));
-
-  store = gimp_int_store_new (_("None"),                 V_NONE,
-                              _("Collect"),              V_COLLECT,
-                              _("Fill (top to bottom)"), TOP2BOTTOM,
-                              _("Fill (bottom to top)"), BOTTOM2TOP,
-                              _("Snap to grid"),         SNAP2VGRID,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "vertical-style",
-                                       GIMP_INT_STORE (store));
-
-  store = gimp_int_store_new (_("Top edge"),    V_BASE_TOP,
-                              _("Center"),      V_BASE_CENTER,
-                              _("Bottom edge"), V_BASE_BOTTOM,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "vertical-base",
-                                       GIMP_INT_STORE (store));
 
   gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
                                          "grid-size", 1.0);

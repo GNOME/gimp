@@ -187,12 +187,16 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
                                        1, MAX_RADIUS, 3,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "type",
-                                       _("_Filter Type"),
-                                       _("Filter type { MEDIAN (0), ADAPTIVE (1), "
-                                         "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }"),
-                                       0, 3, FILTER_ADAPTIVE,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "type",
+                                          _("_Filter Type"),
+                                          _("Filter type"),
+                                          gimp_choice_new_with_values ("median",             0,                 _("Median"),             NULL,
+                                                                       "adaptive",           FILTER_ADAPTIVE,   _("Adaptive"),           NULL,
+                                                                       "recursive-median",   FILTER_RECURSIVE, _("Recursive-Median"),   NULL,
+                                                                       "recursive-adaptive", 3,                 _("Recursive-Adaptive"), NULL,
+                                                                       NULL),
+                                          "adaptive",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "black",
                                        _("_Black level"),
@@ -371,13 +375,12 @@ despeckle_dialog (GimpProcedure *procedure,
                   GObject       *config,
                   GimpDrawable  *drawable)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *preview;
-  GtkWidget    *vbox;
-  GtkWidget    *scale;
-  GtkWidget    *combo;
-  GtkListStore *store;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *preview;
+  GtkWidget *vbox;
+  GtkWidget *scale;
+  GtkWidget *combo;
+  gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -385,16 +388,8 @@ despeckle_dialog (GimpProcedure *procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Despeckle"));
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  store = gimp_int_store_new (_("Median"),             0,
-                              _("Adaptive"),           FILTER_ADAPTIVE,
-                              _("Recursive-Median"),   FILTER_RECURSIVE,
-                              _("Recursive-Adaptive"), 3,
-                              NULL);
-  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "type",
-                                               GIMP_INT_STORE (store));
+  combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "type", G_TYPE_NONE);
   gtk_widget_set_margin_bottom (combo, 12);
 
   /*
@@ -747,10 +742,11 @@ despeckle_median (GObject  *config,
 
   g_object_get (config,
                 "radius", &radius,
-                "type",   &filter_type,
                 "black",  &black_level,
                 "white",  &white_level,
                 NULL);
+  filter_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                     "type");
 
   memset (&histogram, 0, sizeof(histogram));
   progress     = 0;

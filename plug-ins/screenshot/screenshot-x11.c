@@ -85,10 +85,11 @@ select_window (GimpProcedureConfig *config,
   gint          y2 = 0;
 
   g_object_get (config,
-                "shoot-type",         &shoot_type,
                 "screenshot-delay",   &screenshot_delay,
                 "include-decoration", &decorate,
                 NULL);
+  shoot_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                    "shoot-type");
 
   if (shoot_type == SHOOT_REGION)
     mask |= PointerMotionMask;
@@ -596,11 +597,12 @@ screenshot_x11_shoot (GimpProcedureConfig  *config,
   guint             window_id = 0;
 
   g_object_get (config,
-                "shoot-type",       &shoot_type,
                 "screenshot-delay", &screenshot_delay,
                 "selection-delay",  &select_delay,
                 "include-pointer",  &show_cursor,
                 NULL);
+  shoot_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                    "shoot-type");
 
   /* use default screen if we are running non-interactively */
   if (monitor == NULL)
