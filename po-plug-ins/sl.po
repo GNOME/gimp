@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-21 19:23+0000\n"
-"PO-Revision-Date: 2024-07-21 22:01+0200\n"
+"POT-Creation-Date: 2024-07-26 14:02+0000\n"
+"PO-Revision-Date: 2024-07-26 18:26+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -49,7 +49,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:266
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:538 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -293,8 +293,8 @@ msgstr "_Mreža"
 
 #: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:815
 #: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:197
-#: plug-ins/imagemap/imap-menu.ui:289
+#: plug-ins/imagemap/imap_main.c:1563 plug-ins/imagemap/imap-menu.ui:192
+#: plug-ins/imagemap/imap-menu.ui:284
 msgid "Grid"
 msgstr "Mreža"
 
@@ -512,7 +512,7 @@ msgstr "Odpni"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
-#: plug-ins/imagemap/imap-menu.ui:276
+#: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "Povečava"
 
@@ -11681,8 +11681,8 @@ msgid "Create line"
 msgstr "Ustvari črto"
 
 #: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1436
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1572
-#: plug-ins/imagemap/imap-menu.ui:171 plug-ins/imagemap/imap-menu.ui:259
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1580
+#: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
 msgid "Rectangle"
 msgstr "Pravokotnik"
 
@@ -11692,8 +11692,8 @@ msgstr "Ustvari pravokotnik"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:3987
-#: plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui:176
-#: plug-ins/imagemap/imap-menu.ui:264
+#: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
+#: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
 msgstr "Krog"
 
@@ -11719,8 +11719,8 @@ msgstr "Ustvari lok"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4004
-#: plug-ins/imagemap/imap_main.c:1576 plug-ins/imagemap/imap-menu.ui:181
-#: plug-ins/imagemap/imap-menu.ui:269
+#: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
 msgstr "Mnogokotnik"
 
@@ -11767,8 +11767,8 @@ msgstr "Premakni posamezno točko"
 #: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1289
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1537 plug-ins/imagemap/imap-menu.ui:47
-#: plug-ins/imagemap/imap-menu.ui:330 plug-ins/imagemap/imap-menu.ui:367
+#: plug-ins/imagemap/imap_main.c:1545 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
 msgid "Copy"
 msgstr "Kopiraj"
 
@@ -12081,12 +12081,12 @@ msgstr "Napaka pri odpiranju začasne datoteke »%s« pri stranskem nalaganju: %
 msgid "File"
 msgstr "Ime datoteke"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:8
 msgid "Open"
 msgstr "Odpri"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1524
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1532
 #: plug-ins/imagemap/imap-menu.ui:12
 msgid "Save"
 msgstr "Shrani"
@@ -12101,7 +12101,7 @@ msgid "Edit"
 msgstr "Uredi"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1538
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "Razveljavi"
@@ -12111,7 +12111,7 @@ msgstr "Razveljavi"
 msgid "Clear"
 msgstr "Počisti"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1527
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1535
 #: plug-ins/imagemap/imap-menu.ui:77
 msgid "Preferences"
 msgstr "Nastavitve"
@@ -13317,7 +13317,7 @@ msgid "New"
 msgstr "Novo"
 
 #: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1540 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Ponovi"
 
@@ -13443,13 +13443,13 @@ msgstr "Ustvari"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1535 plug-ins/imagemap/imap-menu.ui:43
-#: plug-ins/imagemap/imap-menu.ui:326 plug-ins/imagemap/imap-menu.ui:363
+#: plug-ins/imagemap/imap_main.c:1543 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
 msgid "Cut"
 msgstr "Izreži"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap-menu.ui:343
+#: plug-ins/imagemap/imap-menu.ui:338
 msgid "Delete Point"
 msgstr "Izbriši točko"
 
@@ -13560,14 +13560,14 @@ msgid "Guides"
 msgstr "Vodila"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: plug-ins/imagemap/imap-menu.ui:339
+#: plug-ins/imagemap/imap-menu.ui:334
 msgid "Insert Point"
 msgstr "Vstavi točko"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:238
-#: plug-ins/imagemap/imap-menu.ui:322 plug-ins/imagemap/imap-menu.ui:359
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:233
+#: plug-ins/imagemap/imap-menu.ui:317 plug-ins/imagemap/imap-menu.ui:354
 msgid "Move Down"
 msgstr "Premakni navzdol"
 
@@ -13585,13 +13585,13 @@ msgstr "Premakni v ospredje"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
-#: plug-ins/imagemap/imap-menu.ui:234 plug-ins/imagemap/imap-menu.ui:318
-#: plug-ins/imagemap/imap-menu.ui:355
+#: plug-ins/imagemap/imap-menu.ui:229 plug-ins/imagemap/imap-menu.ui:313
+#: plug-ins/imagemap/imap-menu.ui:350
 msgid "Move Up"
 msgstr "Premakni navzgor"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1539
-#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:301
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
 msgid "Paste"
 msgstr "Prilepi"
 
@@ -13761,101 +13761,101 @@ msgstr "slikovnih točk z l_eve"
 msgid "pixels from _top"
 msgstr "slikovnih točk od _vrha"
 
-#: plug-ins/imagemap/imap_main.c:220
+#: plug-ins/imagemap/imap_main.c:222
 msgid "_Image Map..."
 msgstr "_Aktivna slika ..."
 
-#: plug-ins/imagemap/imap_main.c:224
+#: plug-ins/imagemap/imap_main.c:226
 msgid "Create a clickable imagemap"
 msgstr "Ustvari aktivno sliko, ki se odziva na klike na različnih svojih delih"
 
-#: plug-ins/imagemap/imap_main.c:652 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:660 plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Neimenovano>"
 
-#: plug-ins/imagemap/imap_main.c:800
+#: plug-ins/imagemap/imap_main.c:808
 msgid "Some data has been changed!"
 msgstr "Nekateri podatki so bili spremenjeni!"
 
-#: plug-ins/imagemap/imap_main.c:803
+#: plug-ins/imagemap/imap_main.c:811
 msgid "Do you really want to discard your changes?"
 msgstr "Resnično želite opustiti spremembe?"
 
-#: plug-ins/imagemap/imap_main.c:1040
+#: plug-ins/imagemap/imap_main.c:1048
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Datoteka »%s« je shranjena."
 
-#: plug-ins/imagemap/imap_main.c:1044
+#: plug-ins/imagemap/imap_main.c:1052
 msgid "Couldn't save file:"
 msgstr "Datoteke ni mogoče shraniti:"
 
-#: plug-ins/imagemap/imap_main.c:1057
+#: plug-ins/imagemap/imap_main.c:1065
 msgid "Image size has changed."
 msgstr "Velikost slike je spremenjena."
 
-#: plug-ins/imagemap/imap_main.c:1058
+#: plug-ins/imagemap/imap_main.c:1066
 msgid "Resize area's?"
 msgstr "Želite spremeniti velikost področja?"
 
-#: plug-ins/imagemap/imap_main.c:1100
+#: plug-ins/imagemap/imap_main.c:1108
 msgid "Couldn't read file:"
 msgstr "Datoteke ni mogoče brati:"
 
-#: plug-ins/imagemap/imap_main.c:1153
+#: plug-ins/imagemap/imap_main.c:1161
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1542 plug-ins/imagemap/imap-menu.ui:108
-#: plug-ins/imagemap/imap-menu.ui:279
+#: plug-ins/imagemap/imap_main.c:1550 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap-menu.ui:274
 msgid "Zoom In"
 msgstr "Približaj"
 
-#: plug-ins/imagemap/imap_main.c:1544 plug-ins/imagemap/imap-menu.ui:112
-#: plug-ins/imagemap/imap-menu.ui:283
+#: plug-ins/imagemap/imap_main.c:1552 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap-menu.ui:278
 msgid "Zoom Out"
 msgstr "Oddalji"
 
-#: plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap_main.c:1555
 msgid "Edit Map Info"
 msgstr "Uredi podatke o zemljevidu"
 
-#: plug-ins/imagemap/imap_main.c:1550
+#: plug-ins/imagemap/imap_main.c:1558
 msgid "Move Area to Front"
 msgstr "Pomakni območje v ospredje"
 
-#: plug-ins/imagemap/imap_main.c:1552
+#: plug-ins/imagemap/imap_main.c:1560
 msgid "Move Area to Bottom"
 msgstr "Pomakni območje v ozadje"
 
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:166
-#: plug-ins/imagemap/imap-menu.ui:254
+#: plug-ins/imagemap/imap_main.c:1578 plug-ins/imagemap/imap-menu.ui:161
+#: plug-ins/imagemap/imap-menu.ui:249
 msgid "Arrow"
 msgstr "Puščica"
 
-#: plug-ins/imagemap/imap_main.c:1570
+#: plug-ins/imagemap/imap_main.c:1578
 msgid "Select Existing Area"
 msgstr "Izberi obstoječe področje"
 
-#: plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/imagemap/imap_main.c:1580
 msgid "Define Rectangle area"
 msgstr "Določi pravokotno področje"
 
-#: plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap_main.c:1582
 msgid "Define Circle/Oval area"
 msgstr "Določi okroglo/ovalno področje"
 
-#: plug-ins/imagemap/imap_main.c:1576
+#: plug-ins/imagemap/imap_main.c:1584
 msgid "Define Polygon area"
 msgstr "Določi mnogokotno področje"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
-#: plug-ins/imagemap/imap-menu.ui:310 plug-ins/imagemap/imap-menu.ui:347
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
 msgid "Edit Area Info..."
 msgstr "Uredi podatke o področju ..."
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Uredi podatke o izbranem področju"
 
@@ -14076,74 +14076,70 @@ msgid "Zoom To"
 msgstr "Približaj pogled na"
 
 #: plug-ins/imagemap/imap-menu.ui:119
+msgid "8:1"
+msgstr "8:1"
+
+#: plug-ins/imagemap/imap-menu.ui:124
+msgid "4:1"
+msgstr "4:1"
+
+#: plug-ins/imagemap/imap-menu.ui:129
+msgid "2:1"
+msgstr "2:1"
+
+#: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:1"
 msgstr "1:1"
 
-#: plug-ins/imagemap/imap-menu.ui:124
+#: plug-ins/imagemap/imap-menu.ui:139
 msgid "1:2"
 msgstr "1:2"
 
-#: plug-ins/imagemap/imap-menu.ui:129
-msgid "1:3"
-msgstr "1:3"
-
-#: plug-ins/imagemap/imap-menu.ui:134
+#: plug-ins/imagemap/imap-menu.ui:144
 msgid "1:4"
 msgstr "1:4"
 
-#: plug-ins/imagemap/imap-menu.ui:139
-msgid "1:5"
-msgstr "1:5"
-
-#: plug-ins/imagemap/imap-menu.ui:144
-msgid "1:6"
-msgstr "1:6"
-
 #: plug-ins/imagemap/imap-menu.ui:149
-msgid "1:7"
-msgstr "1:7"
-
-#: plug-ins/imagemap/imap-menu.ui:154
 msgid "1:8"
 msgstr "1:8"
 
-#: plug-ins/imagemap/imap-menu.ui:163
+#: plug-ins/imagemap/imap-menu.ui:158
 msgid "Mappings"
 msgstr "Kartiranje"
 
-#: plug-ins/imagemap/imap-menu.ui:188 plug-ins/imagemap/imap-menu.ui:247
+#: plug-ins/imagemap/imap-menu.ui:183 plug-ins/imagemap/imap-menu.ui:242
 msgid "Edit Map Info..."
 msgstr "Uredi podatke o zemljevidu …"
 
-#: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
+#: plug-ins/imagemap/imap-menu.ui:189 plug-ins/imagemap/imap-menu.ui:246
 msgid "Tools"
 msgstr "Orodja"
 
-#: plug-ins/imagemap/imap-menu.ui:201 plug-ins/imagemap/imap-menu.ui:293
+#: plug-ins/imagemap/imap-menu.ui:196 plug-ins/imagemap/imap-menu.ui:288
 msgid "Grid Settings..."
 msgstr "Nastavitve mreže …"
 
-#: plug-ins/imagemap/imap-menu.ui:207
+#: plug-ins/imagemap/imap-menu.ui:202
 msgid "Use GIMP Guides..."
 msgstr "Uporabi vodila Gimpa …"
 
-#: plug-ins/imagemap/imap-menu.ui:211 plug-ins/imagemap/imap-menu.ui:297
+#: plug-ins/imagemap/imap-menu.ui:206 plug-ins/imagemap/imap-menu.ui:292
 msgid "Create Guides..."
 msgstr "Ustvari vodila …"
 
-#: plug-ins/imagemap/imap-menu.ui:217
+#: plug-ins/imagemap/imap-menu.ui:212
 msgid "Help"
 msgstr "Pomoč"
 
-#: plug-ins/imagemap/imap-menu.ui:220 plug-ins/screenshot/screenshot.c:536
+#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:536
 msgid "Contents"
 msgstr "Vsebina"
 
-#: plug-ins/imagemap/imap-menu.ui:224
+#: plug-ins/imagemap/imap-menu.ui:219
 msgid "About"
 msgstr "O programu"
 
-#: plug-ins/imagemap/imap-menu.ui:314 plug-ins/imagemap/imap-menu.ui:351
+#: plug-ins/imagemap/imap-menu.ui:309 plug-ins/imagemap/imap-menu.ui:346
 msgid "Delete Area"
 msgstr "Izbriši področje"
 
