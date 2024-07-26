@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-21 19:23+0000\n"
-"PO-Revision-Date: 2024-07-22 20:27+0800\n"
+"PO-Revision-Date: 2024-07-25 19:22+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -218,11 +218,11 @@ msgstr "保存 XMP（可扩展元数据平台）元数据"
 
 #: libgimp/gimpexportprocedure.c:479
 msgid "Save color _profile"
-msgstr "保存色彩配置文件(_P)"
+msgstr "保存特性文件(_P)"
 
 #: libgimp/gimpexportprocedure.c:480
 msgid "Save the ICC color profile as metadata"
-msgstr "保存 ICC 色彩配置文件为元数据"
+msgstr "保存 ICC 特性文件为元数据"
 
 #: libgimp/gimpexportprocedure.c:485
 msgid "Save _thumbnail"
@@ -1747,19 +1747,19 @@ msgstr "调用 ShowItems 失败："
 #: libgimpcolor/gimpcolorprofile.c:258
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr "“%s”不是 ICC 色彩配置文件"
+msgstr "“%s”不是 ICC 特性文件"
 
 #: libgimpcolor/gimpcolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
-msgstr "数据不是 ICC 色彩配置文件"
+msgstr "数据不是 ICC 特性文件"
 
 #: libgimpcolor/gimpcolorprofile.c:361
 msgid "Could not save color profile to memory"
-msgstr "无法将色彩配置文件存入内存中"
+msgstr "无法将特性文件存入内存中"
 
 #: libgimpcolor/gimpcolorprofile.c:578
 msgid "(unnamed profile)"
-msgstr "（未命名配置文件）"
+msgstr "（未命名特性文件）"
 
 #: libgimpcolor/gimpcolorprofile.c:620
 #, c-format
@@ -1824,7 +1824,7 @@ msgstr "图像在屏幕上显示的方式。"
 
 #: libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
-msgstr "您的（主）显示器的色彩配置文件。"
+msgstr "您的（主）显示器的特性文件。"
 
 #: libgimpconfig/gimpcolorconfig.c:58
 msgid ""
@@ -1832,28 +1832,27 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"当启用时，GIMP 将试图使用窗口系统显示色彩配置文件。这样已设置好的配置文件将只"
-"用来作为备选。"
+"当启用时，GIMP 将试图使用窗口系统显示特性文件。这样已设置好的特性文件将只用来"
+"作为备选。"
 
 #: libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"首选的 RGB 工作空间色彩配置文件。它将在可选择色彩配置文件时在内置 RGB 配置文"
-"件旁提供。"
+"首选的 RGB 工作空间特性文件。它将在可选择特性文件时在内置 RGB 特性文件旁提"
+"供。"
 
 #: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"首选的灰度工作空间色彩配置文件。它将在可选择色彩配置文件时在内置灰度配置文件"
-"旁提供。"
+"首选的灰度工作空间特性文件。它将在可选择特性文件时在内置灰度特性文件旁提供。"
 
 #: libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "CMYK 色彩配置文件用来在 RGB 和 CMYK 之间转换。"
+msgstr "用来在 RGB 和 CMYK 两个颜色空间之间转换的 CMYK 特性文件。"
 
 #: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
@@ -1861,8 +1860,8 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile."
 msgstr ""
-"用于从图像的颜色空间到其他颜色空间进行软打样的色彩配置文件，包括到打印机或其"
-"他输出设备配置文件的软打样。"
+"用于从图像的颜色空间到其他颜色空间进行软打样的特性文件，包括到打印机或其他输"
+"出设备特性文件的软打样。"
 
 #: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1872,7 +1871,7 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 "颜色如何从您图像的颜色空间转换为显示设备的。相对色度往往是最好的选择。除非您"
-"使用 LUT 显示器配置文件（大部分显示器配置文件都是矩阵的），选择感知实际上提供"
+"使用 LUT 显示器特性文件（大部分显示器特性文件都是矩阵的），选择感知实际上提供"
 "的是相对色度。"
 
 #: libgimpconfig/gimpcolorconfig.c:86
@@ -1930,27 +1929,27 @@ msgstr "操作模式"
 
 #: libgimpconfig/gimpcolorconfig.c:234
 msgid "Preferred RGB profile"
-msgstr "首选 RGB 配置文件"
+msgstr "首选 RGB 特性文件"
 
 #: libgimpconfig/gimpcolorconfig.c:241
 msgid "Preferred grayscale profile"
-msgstr "首选灰度配置文件"
+msgstr "首选灰度特性文件"
 
 #: libgimpconfig/gimpcolorconfig.c:248
 msgid "CMYK profile"
-msgstr "CMYK 配置文件"
+msgstr "CMYK 特性文件"
 
 #: libgimpconfig/gimpcolorconfig.c:255
 msgid "Monitor profile"
-msgstr "显示器配置文件"
+msgstr "显示器特性文件"
 
 #: libgimpconfig/gimpcolorconfig.c:262
 msgid "Use the system monitor profile"
-msgstr "使用系统显示器配置文件"
+msgstr "使用系统显示器特性文件"
 
 #: libgimpconfig/gimpcolorconfig.c:269
 msgid "Simulation profile for soft-proofing"
-msgstr "软打样使用的模拟配置文件"
+msgstr "软打样使用的模拟特性文件"
 
 #: libgimpconfig/gimpcolorconfig.c:276
 msgid "Display rendering intent"
@@ -1995,17 +1994,17 @@ msgstr "显示 HSV 代替 LCH"
 #: libgimpconfig/gimpcolorconfig.c:711 libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "色彩配置文件“%s”并非用于 RGB 颜色空间。"
+msgstr "特性文件“%s”并非用于 RGB 颜色空间。"
 
 #: libgimpconfig/gimpcolorconfig.c:755 libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr "色彩配置文件“%s”并非用于灰度颜色空间。"
+msgstr "特性文件“%s”并非用于灰度颜色空间。"
 
 #: libgimpconfig/gimpcolorconfig.c:799 libgimpconfig/gimpcolorconfig.c:1004
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr "色彩配置文件“%s”并非用于 CMYK 颜色空间。"
+msgstr "特性文件“%s”并非用于 CMYK 颜色空间。"
 
 #: libgimpconfig/gimpconfig-deserialize.c:123
 #, c-format
@@ -2162,7 +2161,7 @@ msgstr "所有文件(*.*)"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:113
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC 色彩配置文件(*.icc, *.icm)"
+msgstr "ICC 特性文件(*.icc, *.icm)"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:174
 msgid "_Save"
@@ -2179,7 +2178,7 @@ msgstr "不是常规文件。"
 
 #: libgimpwidgets/gimpcolorprofilestore.c:160
 msgid "Select color profile from disk..."
-msgstr "从磁盘选择色彩配置文件…"
+msgstr "从磁盘选择特性文件…"
 
 #: libgimpwidgets/gimpcolorprofilestore.c:289
 msgctxt "profile"
@@ -2203,7 +2202,7 @@ msgstr "缩放"
 #: modules/color-selector-water.c:206 modules/color-selector-water.c:242
 #: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
 msgid "Profile: sRGB"
-msgstr "配置文件：sRGB"
+msgstr "特性文件：sRGB"
 
 #: libgimpwidgets/gimpcolorscales.c:459
 msgid "0..100"
@@ -2226,26 +2225,26 @@ msgstr "HSV"
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
-msgstr "配置文件：%s"
+msgstr "特性文件：%s"
 
 #: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
 msgid "Profile: <i>unknown</i>"
-msgstr "配置文件：<i>未知</i>"
+msgstr "特性文件：<i>未知</i>"
 
 #: libgimpwidgets/gimpcolorselect.c:526 libgimpwidgets/gimpcolorselect.c:829
 #: libgimpwidgets/gimpcolorselect.c:846
 msgid "Soft-Proof Profile: <i>unknown</i>"
-msgstr "软打样配置文件：<i>未知</i>"
+msgstr "软打样特性文件：<i>未知</i>"
 
 #: libgimpwidgets/gimpcolorselect.c:813
 msgid "Soft-Proof Profile: sRGB"
-msgstr "软打样配置文件：sRGB"
+msgstr "软打样特性文件：sRGB"
 
 #: libgimpwidgets/gimpcolorselect.c:820
 #, c-format
 msgid "Soft-Proof Profile: %s"
-msgstr "软打样配置文件：%s"
+msgstr "软打样特性文件：%s"
 
 #: libgimpwidgets/gimpcolorselection.c:241
 msgid "Current:"
@@ -2616,7 +2615,7 @@ msgstr "缩小"
 
 #: modules/color-selector-cmyk.c:85
 msgid "CMYK color selector (using color profile)"
-msgstr "CMYK 颜色选择器（使用色彩配置文件）"
+msgstr "CMYK 颜色选择器（使用特性文件）"
 
 #: modules/color-selector-cmyk.c:119
 msgid "CMYK"
@@ -2660,7 +2659,7 @@ msgstr "黑色"
 
 #: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
 msgid "Profile: (none)"
-msgstr "配置文件：（无）"
+msgstr "特性文件：（无）"
 
 #: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
@@ -3018,7 +3017,7 @@ msgid ""
 "profile)"
 msgstr ""
 "ACES RRT（自动检测和估算系统参考渲染变换）。一个 HDR 至 SDR 软打样显示滤镜，"
-"使用仅亮度的 ACES RRT 近似值，在 ODT（显示或输出空间 ICC 配置文件）前使用的预"
+"使用仅亮度的 ACES RRT 近似值，在 ODT（显示或输出空间 ICC 特性文件）前使用的预"
 "设电影式外观"
 
 #: modules/display-filter-aces-rrt.c:121
