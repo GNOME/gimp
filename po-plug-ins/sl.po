@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-26 14:02+0000\n"
-"PO-Revision-Date: 2024-07-26 18:26+0200\n"
+"POT-Creation-Date: 2024-07-26 18:57+0000\n"
+"PO-Revision-Date: 2024-07-27 11:02+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -33,11 +33,11 @@ msgid "Exercise a goat in the C language"
 msgstr "Povadi kozo v jeziku C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:190 plug-ins/common/checkerboard.c:176
+#: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
-#: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:249 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:648 plug-ins/common/decompose.c:387
-#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
+#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
@@ -259,71 +259,15 @@ msgstr "Poravnaj vi_dne plasti ..."
 msgid "Align all visible layers of the image"
 msgstr "Poravnaj vse vidne plasti slike"
 
+#: plug-ins/common/align-layers.c:184
+msgid "Align visible layers"
+msgstr "Poravnaj vidne plasti"
+
 #: plug-ins/common/align-layers.c:192
 msgid "_Horizontal style"
 msgstr "_Vodoravni slog"
 
-#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
-msgid ""
-"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
-"to grid = 4)"
-msgstr ""
-"(brez = 0, zbiraj = 1, zapolni od leve proti desni = 2, zapolni od desne "
-"proti levi = 3, pripni na mrežo = 4)"
-
-#: plug-ins/common/align-layers.c:200
-msgid "Hori_zontal base"
-msgstr "Vodo_ravna osnova"
-
-#: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
-msgid "(Left edge = 0, Center = 1, Right edge = 2)"
-msgstr "(levi rob = 0, sredina = 1, desni rob = 2)"
-
-#: plug-ins/common/align-layers.c:207
-msgid "_Vertical style"
-msgstr "_Navpični slog"
-
-#: plug-ins/common/align-layers.c:215
-msgid "Ver_tical base"
-msgstr "Navpična _osnova"
-
-#: plug-ins/common/align-layers.c:222
-msgid "_Grid"
-msgstr "_Mreža"
-
-#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:815
-#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1563 plug-ins/imagemap/imap-menu.ui:192
-#: plug-ins/imagemap/imap-menu.ui:284
-msgid "Grid"
-msgstr "Mreža"
-
-#: plug-ins/common/align-layers.c:229
-msgid "Ignore the _bottom layer even if visible"
-msgstr "Prezri _spodnjo plast, četudi je vidna"
-
-#: plug-ins/common/align-layers.c:230
-msgid "Ignore the bottom layer even if visible"
-msgstr "Prezri spodnjo plast, četudi je vidna"
-
-#: plug-ins/common/align-layers.c:236
-msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_Uporabi (nevidno) spodnjo plast kot osnovo"
-
-#: plug-ins/common/align-layers.c:237
-msgid "Use the (invisible) bottom layer as the base"
-msgstr "Uporabi (nevidno) spodnjo plast kot osnovo"
-
-#: plug-ins/common/align-layers.c:287
-#, c-format
-msgid "There are not enough layers to align."
-msgstr "Ni dovolj plasti, da bi jih bilo mogoče poravnati."
-
-#: plug-ins/common/align-layers.c:731
-msgid "Align Visible Layers"
-msgstr "Poravnaj vidne plasti"
-
-#: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
+#: plug-ins/common/align-layers.c:194 plug-ins/common/align-layers.c:216
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:346
@@ -337,50 +281,98 @@ msgstr "Poravnaj vidne plasti"
 msgid "None"
 msgstr "Brez"
 
-#: plug-ins/common/align-layers.c:741 plug-ins/common/align-layers.c:759
+#: plug-ins/common/align-layers.c:195 plug-ins/common/align-layers.c:217
 msgid "Collect"
 msgstr "Zberi"
 
-#: plug-ins/common/align-layers.c:742
+#: plug-ins/common/align-layers.c:196
 msgid "Fill (left to right)"
 msgstr "Napolni (od leve proti desni)"
 
-#: plug-ins/common/align-layers.c:743
+#: plug-ins/common/align-layers.c:197
 msgid "Fill (right to left)"
 msgstr "Napolni (od desne proti levi)"
 
-#: plug-ins/common/align-layers.c:744 plug-ins/common/align-layers.c:762
+#: plug-ins/common/align-layers.c:198 plug-ins/common/align-layers.c:220
 msgid "Snap to grid"
 msgstr "Pripni na mrežo"
 
-#: plug-ins/common/align-layers.c:750
+#: plug-ins/common/align-layers.c:204
+msgid "Hori_zontal base"
+msgstr "Vodo_ravna osnova"
+
+#: plug-ins/common/align-layers.c:206
 msgid "Left edge"
 msgstr "levi rob"
 
-#: plug-ins/common/align-layers.c:751 plug-ins/common/align-layers.c:769
+#: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
 #: plug-ins/gradient-flare/gradient-flare.c:2919
 msgid "Center"
 msgstr "sredinsko"
 
-#: plug-ins/common/align-layers.c:752
+#: plug-ins/common/align-layers.c:208
 msgid "Right edge"
 msgstr "desni rob"
 
-#: plug-ins/common/align-layers.c:760
+#: plug-ins/common/align-layers.c:214
+msgid "_Vertical style"
+msgstr "_Navpični slog"
+
+#: plug-ins/common/align-layers.c:218
 msgid "Fill (top to bottom)"
 msgstr "zapolni (od zgoraj navzdol)"
 
-#: plug-ins/common/align-layers.c:761
+#: plug-ins/common/align-layers.c:219
 msgid "Fill (bottom to top)"
 msgstr "zapolni (od spodaj navzgor)"
 
-#: plug-ins/common/align-layers.c:768
+#: plug-ins/common/align-layers.c:226
+msgid "Ver_tical base"
+msgstr "Navpična _osnova"
+
+#: plug-ins/common/align-layers.c:228
 msgid "Top edge"
 msgstr "zgornji rob"
 
-#: plug-ins/common/align-layers.c:770
+#: plug-ins/common/align-layers.c:230
 msgid "Bottom edge"
 msgstr "spodnji rob"
+
+#: plug-ins/common/align-layers.c:236
+msgid "_Grid"
+msgstr "_Mreža"
+
+#: plug-ins/common/align-layers.c:237 plug-ins/common/grid.c:815
+#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
+#: plug-ins/imagemap/imap_main.c:1563 plug-ins/imagemap/imap-menu.ui:192
+#: plug-ins/imagemap/imap-menu.ui:284
+msgid "Grid"
+msgstr "Mreža"
+
+#: plug-ins/common/align-layers.c:243
+msgid "Ignore the _bottom layer even if visible"
+msgstr "Prezri _spodnjo plast, četudi je vidna"
+
+#: plug-ins/common/align-layers.c:244
+msgid "Ignore the bottom layer even if visible"
+msgstr "Prezri spodnjo plast, četudi je vidna"
+
+#: plug-ins/common/align-layers.c:250
+msgid "_Use the (invisible) bottom layer as the base"
+msgstr "_Uporabi (nevidno) spodnjo plast kot osnovo"
+
+#: plug-ins/common/align-layers.c:251
+msgid "Use the (invisible) bottom layer as the base"
+msgstr "Uporabi (nevidno) spodnjo plast kot osnovo"
+
+#: plug-ins/common/align-layers.c:301
+#, c-format
+msgid "There are not enough layers to align."
+msgstr "Ni dovolj plasti, da bi jih bilo mogoče poravnati."
+
+#: plug-ins/common/align-layers.c:749
+msgid "Align Visible Layers"
+msgstr "Poravnaj vidne plasti"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
@@ -672,22 +664,58 @@ msgid "Bucket Si_ze"
 msgstr "Velikost _vedra"
 
 #: plug-ins/common/border-average.c:152
-msgid "Bits for bucket size (default=4: 16 Levels)"
-msgstr "Biti za velikost vedra (privzeto = 4: 16 nivojev)"
+msgid "Bits for bucket size"
+msgstr "Biti za velikost vedra"
 
-#: plug-ins/common/border-average.c:157 plug-ins/common/border-average.c:158
+#: plug-ins/common/border-average.c:153
+msgid "1"
+msgstr "1"
+
+#: plug-ins/common/border-average.c:154 plug-ins/metadata/metadata-tags.c:254
+msgid "2"
+msgstr "2"
+
+#: plug-ins/common/border-average.c:155 plug-ins/metadata/metadata-tags.c:254
+msgid "4"
+msgstr "4"
+
+#: plug-ins/common/border-average.c:156
+msgid "8)"
+msgstr "8)"
+
+#: plug-ins/common/border-average.c:157
+msgid "16"
+msgstr "16"
+
+#: plug-ins/common/border-average.c:158
+msgid "32"
+msgstr "32"
+
+#: plug-ins/common/border-average.c:159
+msgid "64"
+msgstr "64"
+
+#: plug-ins/common/border-average.c:160
+msgid "128"
+msgstr "128"
+
+#: plug-ins/common/border-average.c:161
+msgid "256"
+msgstr "256"
+
+#: plug-ins/common/border-average.c:167 plug-ins/common/border-average.c:168
 msgid "The average color of the specified border."
 msgstr "Povprečna barva navedene obrobe."
 
-#: plug-ins/common/border-average.c:217 plug-ins/common/border-average.c:395
+#: plug-ins/common/border-average.c:227 plug-ins/common/border-average.c:406
 msgid "Border Average"
 msgstr "Povprečje robu"
 
-#: plug-ins/common/border-average.c:406
+#: plug-ins/common/border-average.c:410
 msgid "Border Size"
 msgstr "Velikost roba"
 
-#: plug-ins/common/border-average.c:433
+#: plug-ins/common/border-average.c:437
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "Število barv"
@@ -1751,39 +1779,38 @@ msgid "Le_vel"
 msgstr "Ra_ven"
 
 #: plug-ins/common/contrast-retinex.c:212
-msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr ""
-"Porazdelitev Retinex po utežeh {enakomerno (0), nizko (1), visoko (2) }"
+msgid "Retinex distribution through scales"
+msgstr "Porazdelitev Retinex po utežeh"
 
-#: plug-ins/common/contrast-retinex.c:218
-msgid "Dy_namic"
-msgstr "Di_namično"
-
-#: plug-ins/common/contrast-retinex.c:219
-msgid "Variance value"
-msgstr "Vrednost variance"
-
-#: plug-ins/common/contrast-retinex.c:272
-msgid "Retinex"
-msgstr "Retinex"
-
-#: plug-ins/common/contrast-retinex.c:306
-msgid "Retinex Image Enhancement"
-msgstr "Izboljšava slik Retinex"
-
-#: plug-ins/common/contrast-retinex.c:321
+#: plug-ins/common/contrast-retinex.c:213
 msgid "Uniform"
 msgstr "konstantno"
 
-#: plug-ins/common/contrast-retinex.c:322 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "nizko"
 
-#: plug-ins/common/contrast-retinex.c:323 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:215 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "visoko"
 
-#: plug-ins/common/contrast-retinex.c:658
+#: plug-ins/common/contrast-retinex.c:221
+msgid "Dy_namic"
+msgstr "Di_namično"
+
+#: plug-ins/common/contrast-retinex.c:222
+msgid "Variance value"
+msgstr "Vrednost variance"
+
+#: plug-ins/common/contrast-retinex.c:275
+msgid "Retinex"
+msgstr "Retinex"
+
+#: plug-ins/common/contrast-retinex.c:308
+msgid "Retinex Image Enhancement"
+msgstr "Izboljšava slik Retinex"
+
+#: plug-ins/common/contrast-retinex.c:649
 msgid "Retinex: filtering"
 msgstr "Retinex: Filtriranje ..."
 
@@ -2424,49 +2451,45 @@ msgid "_Filter Type"
 msgstr "Vrsta _filtra"
 
 #: plug-ins/common/despeckle.c:192
-msgid ""
-"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
-"ADAPTIVE (3) }"
-msgstr ""
-"Vrsta filtra { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
-"ADAPTIVE (3) }"
+msgid "Filter type"
+msgstr "Vrsta filtra"
 
-#: plug-ins/common/despeckle.c:198
-msgid "_Black level"
-msgstr "Raven _črnine"
-
-#: plug-ins/common/despeckle.c:199
-msgid "Black level"
-msgstr "Raven črnine"
-
-#: plug-ins/common/despeckle.c:204
-msgid "_White level"
-msgstr "Raven _beline"
-
-#: plug-ins/common/despeckle.c:205
-msgid "White level"
-msgstr "Raven beline"
-
-#: plug-ins/common/despeckle.c:386 plug-ins/common/despeckle.c:760
-msgid "Despeckle"
-msgstr "Odstrani pege"
-
-#: plug-ins/common/despeckle.c:390
+#: plug-ins/common/despeckle.c:193
 msgid "Median"
 msgstr "Sredninsko"
 
-#: plug-ins/common/despeckle.c:391 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:194 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "Prilagodljivo"
 
-#: plug-ins/common/despeckle.c:392
+#: plug-ins/common/despeckle.c:195
 msgid "Recursive-Median"
 msgstr "Rekurzivno: srednja vrednost"
 
-#: plug-ins/common/despeckle.c:393
+#: plug-ins/common/despeckle.c:196
 msgid "Recursive-Adaptive"
 msgstr "Rekurzivno: adaptivno"
+
+#: plug-ins/common/despeckle.c:202
+msgid "_Black level"
+msgstr "Raven _črnine"
+
+#: plug-ins/common/despeckle.c:203
+msgid "Black level"
+msgstr "Raven črnine"
+
+#: plug-ins/common/despeckle.c:208
+msgid "_White level"
+msgstr "Raven _beline"
+
+#: plug-ins/common/despeckle.c:209
+msgid "White level"
+msgstr "Raven beline"
+
+#: plug-ins/common/despeckle.c:389 plug-ins/common/despeckle.c:756
+msgid "Despeckle"
+msgstr "Odstrani pege"
 
 #: plug-ins/common/destripe.c:126
 msgid "Des_tripe..."
@@ -15536,16 +15559,8 @@ msgid "Age 14 or Under"
 msgstr "Starost 14 let ali manj"
 
 #: plug-ins/metadata/metadata-tags.c:254
-msgid "2"
-msgstr "2"
-
-#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
-
-#: plug-ins/metadata/metadata-tags.c:254
-msgid "4"
-msgstr "4"
 
 #: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
@@ -15848,108 +15863,108 @@ msgstr "_Posnetek namizja ..."
 msgid "Create an image from an area of the screen"
 msgstr "Ustvari sliko iz področja zaslona"
 
-#: plug-ins/screenshot/screenshot.c:164
+#: plug-ins/screenshot/screenshot.c:166
 msgid "Shoot _area"
 msgstr "_Območje snemanja"
 
-#: plug-ins/screenshot/screenshot.c:165
-msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
-msgstr "Vrsta posneka { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-AREA (2) }"
+#: plug-ins/screenshot/screenshot.c:167
+msgid "The shoot type"
+msgstr "Vrsta posnetka"
 
-#: plug-ins/screenshot/screenshot.c:195
-msgid "Include _mouse pointer"
-msgstr "Vključi kazalec _miške"
-
-#: plug-ins/screenshot/screenshot.c:196
-msgid "Your pointing device's cursor will be part of the image"
-msgstr "Kazalec vaše usmerjevalne naprave bo del slike"
-
-#: plug-ins/screenshot/screenshot.c:204
-msgid "Include window _decoration"
-msgstr "Vključi _okrasitev okna"
-
-#: plug-ins/screenshot/screenshot.c:205
-msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "Naslovna vrstica, obrobe in senca okna bo del slike "
-
-#: plug-ins/screenshot/screenshot.c:214
-msgid "Selection d_elay"
-msgstr "Zakasnitev iz_bora"
-
-#: plug-ins/screenshot/screenshot.c:215
-msgid "Delay before selection of the window or the region"
-msgstr "Zakasnitev pred izbiro okna ali področja"
-
-#: plug-ins/screenshot/screenshot.c:219
-msgid "Screenshot dela_y"
-msgstr "Zakasnitev posne_tka zaslona"
-
-#: plug-ins/screenshot/screenshot.c:220
-msgid "Delay before snapping the screenshot"
-msgstr "Zakasnitev pred izdelavo posnetka zaslona"
-
-#: plug-ins/screenshot/screenshot.c:224
-msgid "Color _Profile"
-msgstr "Barvni _profil"
-
-#: plug-ins/screenshot/screenshot.c:264
-msgid "GDK initialization failed."
-msgstr "Inicializacija GDK je spodletela."
-
-#: plug-ins/screenshot/screenshot.c:302
-msgid "No screenshot backends available."
-msgstr "Zaledje za posnetke zaslona ni na voljo."
-
-#: plug-ins/screenshot/screenshot.c:504
-#: plug-ins/screenshot/screenshot-x11.c:443
-msgid "Screenshot"
-msgstr "Posnetek namizja"
-
-#: plug-ins/screenshot/screenshot.c:505
-msgid "S_nap"
-msgstr "_Pripni"
-
-#: plug-ins/screenshot/screenshot.c:507
+#: plug-ins/screenshot/screenshot.c:168
 msgid "Take a screenshot of a single window"
 msgstr "Naredi posnetek posameznega okna"
 
-#: plug-ins/screenshot/screenshot.c:508
+#: plug-ins/screenshot/screenshot.c:169
 msgid "Take a screenshot of the entire screen"
 msgstr "Naredi posnetek celega zaslona"
 
-#: plug-ins/screenshot/screenshot.c:509
+#: plug-ins/screenshot/screenshot.c:171
 msgid "Select a region to grab"
 msgstr "Izberite področje za zajem"
+
+#: plug-ins/screenshot/screenshot.c:202
+msgid "Include _mouse pointer"
+msgstr "Vključi kazalec _miške"
+
+#: plug-ins/screenshot/screenshot.c:203
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "Kazalec vaše usmerjevalne naprave bo del slike"
+
+#: plug-ins/screenshot/screenshot.c:211
+msgid "Include window _decoration"
+msgstr "Vključi _okrasitev okna"
+
+#: plug-ins/screenshot/screenshot.c:212
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "Naslovna vrstica, obrobe in senca okna bo del slike "
+
+#: plug-ins/screenshot/screenshot.c:221
+msgid "Selection d_elay"
+msgstr "Zakasnitev iz_bora"
+
+#: plug-ins/screenshot/screenshot.c:222
+msgid "Delay before selection of the window or the region"
+msgstr "Zakasnitev pred izbiro okna ali področja"
+
+#: plug-ins/screenshot/screenshot.c:226
+msgid "Screenshot dela_y"
+msgstr "Zakasnitev posne_tka zaslona"
+
+#: plug-ins/screenshot/screenshot.c:227
+msgid "Delay before snapping the screenshot"
+msgstr "Zakasnitev pred izdelavo posnetka zaslona"
+
+#: plug-ins/screenshot/screenshot.c:231
+msgid "Color _Profile"
+msgstr "Barvni _profil"
+
+#: plug-ins/screenshot/screenshot.c:233
+msgid "Tag image with monitor profile"
+msgstr "Označi sliko s profilom zaslona"
+
+#: plug-ins/screenshot/screenshot.c:234
+msgid "Convert image with sRGB"
+msgstr "Pretvori sliko s sRGB"
+
+#: plug-ins/screenshot/screenshot.c:272
+msgid "GDK initialization failed."
+msgstr "Inicializacija GDK je spodletela."
+
+#: plug-ins/screenshot/screenshot.c:310
+msgid "No screenshot backends available."
+msgstr "Zaledje za posnetke zaslona ni na voljo."
+
+#: plug-ins/screenshot/screenshot.c:511
+#: plug-ins/screenshot/screenshot-x11.c:444
+msgid "Screenshot"
+msgstr "Posnetek namizja"
+
+#: plug-ins/screenshot/screenshot.c:512
+msgid "S_nap"
+msgstr "_Pripni"
 
 #: plug-ins/screenshot/screenshot.c:595
 msgid "Delay"
 msgstr "Zakasni"
 
-#: plug-ins/screenshot/screenshot.c:603
-msgid "Tag image with monitor profile"
-msgstr "Označi sliko s profilom zaslona"
-
-#: plug-ins/screenshot/screenshot.c:604
-msgid "Convert image with sRGB"
-msgstr "Pretvori sliko s sRGB"
-
 #: plug-ins/screenshot/screenshot-win32.c:297
 msgid "No data captured"
 msgstr "Zajetih ni bilo nič podatkov"
 
-#: plug-ins/screenshot/screenshot-x11.c:109
+#: plug-ins/screenshot/screenshot-x11.c:110
 msgid "Error selecting the window"
 msgstr "Napaka pri izbiranju okna"
 
-#: plug-ins/screenshot/screenshot-x11.c:431
+#: plug-ins/screenshot/screenshot-x11.c:432
 msgid "Importing screenshot"
 msgstr "Uvoz zaslonske slike ..."
 
-#: plug-ins/screenshot/screenshot-x11.c:484
+#: plug-ins/screenshot/screenshot-x11.c:485
 msgid "Mouse Pointer"
 msgstr "Miškin kazalec"
 
-#: plug-ins/screenshot/screenshot-x11.c:662
+#: plug-ins/screenshot/screenshot-x11.c:664
 msgid "Specified window not found"
 msgstr "Navedenega okna ni mogoče najti"
 
