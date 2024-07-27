@@ -793,6 +793,7 @@ register_brush_procs (GimpPDB *pdb)
                                                           "brush",
                                                           "The brush",
                                                           FALSE,
+                                                          NULL,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -823,6 +824,7 @@ register_brush_procs (GimpPDB *pdb)
                                                           "brush",
                                                           "The brush",
                                                           TRUE,
+                                                          NULL,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -846,6 +848,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("generated",
@@ -875,6 +878,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
@@ -922,6 +926,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
@@ -981,6 +986,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("spacing",
@@ -1010,6 +1016,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("spacing",
@@ -1039,6 +1046,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("shape",
@@ -1069,6 +1077,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("shape-in",
@@ -1106,6 +1115,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("radius",
@@ -1135,6 +1145,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("radius-in",
@@ -1170,6 +1181,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("spikes",
@@ -1199,6 +1211,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("spikes-in",
@@ -1234,6 +1247,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness",
@@ -1263,6 +1277,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hardness-in",
@@ -1298,6 +1313,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect-ratio",
@@ -1327,6 +1343,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect-ratio-in",
@@ -1362,6 +1379,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
@@ -1391,6 +1409,7 @@ register_brush_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle-in",

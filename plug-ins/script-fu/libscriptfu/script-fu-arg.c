@@ -109,13 +109,14 @@ script_fu_arg_free (SFArg *arg)
     case SF_DISPLAY:
     case SF_COLOR:
     case SF_TOGGLE:
+      break;
 
     case SF_BRUSH:
     case SF_FONT:
     case SF_GRADIENT:
     case SF_PALETTE:
     case SF_PATTERN:
-
+      /* FUTURE: call method to free resource */
       break;
 
     case SF_VALUE:
@@ -171,12 +172,6 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
     case SF_VECTORS:
     case SF_DISPLAY:
 
-    case SF_BRUSH:
-    case SF_FONT:
-    case SF_GRADIENT:
-    case SF_PALETTE:
-    case SF_PATTERN:
-
       if (should_reset_ids)
         {
           /* !!! Use field name "sfa_image"; all these cases have same type in union.
@@ -186,6 +181,14 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
           value->sfa_image = default_value->sfa_image;
         }
 
+      break;
+
+    case SF_BRUSH:
+    case SF_FONT:
+    case SF_GRADIENT:
+    case SF_PALETTE:
+    case SF_PATTERN:
+      /* FUTURE call method to reset arg from default. */
       break;
 
     case SF_COLOR:
@@ -325,17 +328,20 @@ script_fu_arg_add_argument (SFArg         *arg,
      *
      * FIXME: after the param_spec takes a default
      * each should pass arg sf_resource_get_name_of_default (arg).
+     * For now, a default defined here e.g. "Default"
      */
     case SF_FONT:
       gimp_procedure_add_font_argument (procedure, name,
                                         nick, arg->label,
                                         FALSE,  /* none OK */
+                                        gimp_font_get_by_name ("Serif"),
                                         G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
     case SF_PALETTE:
       gimp_procedure_add_palette_argument (procedure, name,
                                            nick, arg->label,
                                            FALSE,  /* none OK */
+                                           gimp_palette_get_by_name ("Default"),
                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -343,6 +349,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_pattern_argument (procedure, name,
                                            nick, arg->label,
                                            FALSE,  /* none OK */
+                                           gimp_pattern_get_by_name ("Paper"),
                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -350,6 +357,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_gradient_argument (procedure, name,
                                             nick, arg->label,
                                             FALSE,  /* none OK */
+                                            gimp_gradient_get_by_name ("Incandescent"),
                                             G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -357,6 +365,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_brush_argument (procedure, name,
                                          nick, arg->label,
                                          FALSE,  /* none OK */
+                                         gimp_brush_get_by_name ("2. Hardness 025"),
                                          G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -606,6 +615,8 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
     case SF_CHANNEL:
     case SF_VECTORS:
     case SF_DISPLAY:
+      g_string_append_printf (result_string, "%d", arg_value->sfa_image);
+      break;
 
     case SF_BRUSH:
     case SF_FONT:
@@ -613,6 +624,13 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
     case SF_PALETTE:
     case SF_PATTERN:
       g_string_append_printf (result_string, "%d", arg_value->sfa_image);
+    /* FUTURE
+      {
+        gchar *repr = sf_resource_get_repr (&arg_value->sfa_resource);
+        g_string_append (result_string, repr);
+        g_free (repr);
+      }
+    */
       break;
 
     case SF_COLOR:
@@ -820,7 +838,7 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
   *returned_nick = arg->label;
 }
 
-
+/* FUTURE this goes away or moves to script_fu_resource.c */
 /* Init the value of an SFArg that is a resource.
  * In case user does not touch a widget.
  * Cannot be called at registration time.

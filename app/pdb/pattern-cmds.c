@@ -199,6 +199,7 @@ register_pattern_procs (GimpPDB *pdb)
                                                             "pattern",
                                                             "The pattern",
                                                             TRUE,
+                                                            NULL,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -222,6 +223,7 @@ register_pattern_procs (GimpPDB *pdb)
                                                         "pattern",
                                                         "The pattern",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
@@ -263,6 +265,7 @@ register_pattern_procs (GimpPDB *pdb)
                                                         "pattern",
                                                         "The pattern",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",

@@ -115,7 +115,9 @@ create_callback_PDB_procedure_params (GimpProcedure *procedure,
 {
   gimp_procedure_add_resource_argument (procedure, "resource",
                                         "Resource", "The resource",
-                                        TRUE, G_PARAM_READWRITE);
+                                        TRUE,
+                                        NULL, /* no default*/
+                                        G_PARAM_READWRITE);
 
   /* Create args for the extra, superfluous args that core is passing.*/
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))

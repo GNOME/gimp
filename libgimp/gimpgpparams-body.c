@@ -263,29 +263,33 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                      param_def->meta.m_id.none_ok,
                                      flags);
 
+      /* When send GimpParamResource or subclass over wire, pass NULL name_of_default.
+       * Neither core nor libgimp seems to use it.
+       * Args to PDB procedures are not sent as GimpParamResource crossing wire.
+       */
       if (! strcmp (param_def->type_name, "GimpParamResource"))
         return gimp_param_spec_resource (name, nick, blurb,
-                                         param_def->meta.m_id.none_ok, flags);
+                                         param_def->meta.m_id.none_ok, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamBrush"))
         return gimp_param_spec_brush (name, nick, blurb,
-                                      param_def->meta.m_id.none_ok, flags);
+                                      param_def->meta.m_id.none_ok, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamFont"))
         return gimp_param_spec_font (name, nick, blurb,
-                                     param_def->meta.m_id.none_ok, flags);
+                                     param_def->meta.m_id.none_ok, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamGradient"))
         return gimp_param_spec_gradient (name, nick, blurb,
-                                         param_def->meta.m_id.none_ok, flags);
+                                         param_def->meta.m_id.none_ok, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamPalette"))
         return gimp_param_spec_palette (name, nick, blurb,
-                                        param_def->meta.m_id.none_ok, flags);
+                                        param_def->meta.m_id.none_ok, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamPattern"))
         return gimp_param_spec_pattern (name, nick, blurb,
-                                        param_def->meta.m_id.none_ok, flags);
+                                        param_def->meta.m_id.none_ok, NULL, flags);
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:

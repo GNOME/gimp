@@ -105,7 +105,6 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, config, data
         dialog.fill(None)
         if not dialog.run():
             dialog.destroy()
-            config.end_run(Gimp.PDBStatusType.CANCEL)
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
         else:
             dialog.destroy()
@@ -153,17 +152,22 @@ class TestDialogPlugin (Gimp.PlugIn):
         procedure.add_menu_path ("<Image>/Filters/Development/Demos")
 
         procedure.add_brush_argument ("brush", "_Brush", "Brush", True,
+                                      Gimp.Font.get_by_name ("2. Hardness 025"),
                                       GObject.ParamFlags.READWRITE)
         procedure.add_font_argument ("font", "_Font", "Font", True,
+                                     Gimp.Font.get_by_name ("Serif"),
                                      GObject.ParamFlags.READWRITE)
         procedure.add_gradient_argument ("gradient", "_Gradient",
                                          "Gradient", True,
+                                         Gimp.Gradient.get_by_name ("Incandescent"),
                                          GObject.ParamFlags.READWRITE)
         procedure.add_palette_argument ("palette", "_Palette",
                                         "Palette", True,
+                                        Gimp.Palette.get_by_name ("Default"),
                                         GObject.ParamFlags.READWRITE)
         procedure.add_pattern_argument ("pattern", "Pa_ttern",
                                         "Pattern", True,
+                                        Gimp.Pattern.get_by_name ("Paper"),
                                         GObject.ParamFlags.READWRITE)
 
         return procedure

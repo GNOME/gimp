@@ -174,6 +174,7 @@ register_font_procs (GimpPDB *pdb)
                                                      "font",
                                                      "GimpFont object",
                                                      FALSE,
+                                                     NULL,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("lookup-name",
@@ -213,6 +214,7 @@ register_font_procs (GimpPDB *pdb)
                                                          "font",
                                                          "The font",
                                                          TRUE,
+                                                         NULL,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

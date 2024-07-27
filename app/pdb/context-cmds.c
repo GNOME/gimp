@@ -3843,6 +3843,7 @@ register_context_procs (GimpPDB *pdb)
                                                           "brush",
                                                           "The active brush",
                                                           FALSE,
+                                                          NULL,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3866,6 +3867,7 @@ register_context_procs (GimpPDB *pdb)
                                                       "brush",
                                                       "The brush",
                                                       FALSE,
+                                                      NULL,
                                                       GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4359,6 +4361,7 @@ register_context_procs (GimpPDB *pdb)
                                                             "pattern",
                                                             "The active pattern",
                                                             FALSE,
+                                                            NULL,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4382,6 +4385,7 @@ register_context_procs (GimpPDB *pdb)
                                                         "pattern",
                                                         "The pattern",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4405,6 +4409,7 @@ register_context_procs (GimpPDB *pdb)
                                                              "gradient",
                                                              "The active gradient",
                                                              FALSE,
+                                                             NULL,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4428,6 +4433,7 @@ register_context_procs (GimpPDB *pdb)
                                                          "gradient",
                                                          "The gradient",
                                                          FALSE,
+                                                         NULL,
                                                          GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4661,6 +4667,7 @@ register_context_procs (GimpPDB *pdb)
                                                             "palette",
                                                             "The active palette",
                                                             FALSE,
+                                                            NULL,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4684,6 +4691,7 @@ register_context_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4707,6 +4715,7 @@ register_context_procs (GimpPDB *pdb)
                                                          "font",
                                                          "The active font",
                                                          FALSE,
+                                                         NULL,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -4730,6 +4739,7 @@ register_context_procs (GimpPDB *pdb)
                                                      "font",
                                                      "The font",
                                                      FALSE,
+                                                     NULL,
                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -5774,6 +5784,7 @@ register_context_procs (GimpPDB *pdb)
                                                              "resource",
                                                              "The active resource",
                                                              FALSE,
+                                                             NULL,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

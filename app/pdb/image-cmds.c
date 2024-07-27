@@ -4331,6 +4331,7 @@ register_image_procs (GimpPDB *pdb)
                                                             "colormap",
                                                             "The image's colormap.",
                                                             FALSE,
+                                                            NULL,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

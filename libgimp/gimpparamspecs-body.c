@@ -984,6 +984,36 @@ gimp_param_spec_display (const gchar *name,
   return G_PARAM_SPEC (dspec);
 }
 
+/* Notes about GimpParamResource
+ *
+ * Similar to GimpParamColor.
+ * Except this does not define convenience method: get_default returning GimpResource.
+ * There is only value_get_default, which returns a GValue.
+ *
+ * GParamSpec and derived classes are used not only to describe args to
+ * long-lived GimpProcedure (which are often properties of a config)
+ * but to describe other properties
+ * and to describe args of short-lived temporary procedures (e.g. callbacks.)
+ * In the other uses, the default field is often not used,
+ * Thus the default field can be NULL.
+ * See gimpgpparamspecs-body.c where the default is always NULL.
+ *
+ * g_param_spec_get_default_value: this is unusual and subtle
+ * and not documented without reading GObject code!!!
+ * g_param_spec_get_default_value is a method of the superclass GParamSpec.
+ * It is virtual, but not pure virtual i.e. need not be reimplemented,
+ * and has a base implementation.
+ * Its implementation calls g_param_value_set_default, a virtual method
+ * of the superclass that subclasses should override.
+ * Note that it is named value_set_default, not just set_default.
+ * The method g_param_value_set_default does NOT set any field in a GParamSpec,
+ * but sets an OUT GValue.
+ * In pattern/idiom terms, GParamSpec.get_default_value is a "template" method.
+ * It calls the "abstract primitive operation" value_set_default.
+ * If a subclass of GParamSpec does NOT override value_set_default,
+ * then method GParamSpec.get_default_value calls the base implementation
+ * of value_set_default which returns a zero'd GValue.
+ */
 
  /*
   * GIMP_TYPE_PARAM_RESOURCE
@@ -991,9 +1021,12 @@ gimp_param_spec_display (const gchar *name,
 
  static void       gimp_param_resource_class_init (GParamSpecClass *klass);
  static void       gimp_param_resource_init       (GParamSpec      *pspec);
+ static void       gimp_param_resource_finalize   (GParamSpec      *pspec);
  static gboolean   gimp_param_resource_validate   (GParamSpec      *pspec,
                                                    GValue          *value);
-
+ static void       gimp_param_resource_value_set_default
+                                                  (GParamSpec      *pspec,
+                                                   GValue          *value);
  GType
  gimp_param_resource_get_type (void)
  {
@@ -1022,8 +1055,10 @@ gimp_param_spec_display (const gchar *name,
  static void
  gimp_param_resource_class_init (GParamSpecClass *klass)
  {
-   klass->value_type     = GIMP_TYPE_RESOURCE;
-   klass->value_validate = gimp_param_resource_validate;
+   klass->value_type        = GIMP_TYPE_RESOURCE;
+   klass->finalize          = gimp_param_resource_finalize;
+   klass->value_validate    = gimp_param_resource_validate;
+   klass->value_set_default = gimp_param_resource_value_set_default;
  }
 
 static void
@@ -1032,6 +1067,19 @@ gimp_param_resource_init (GParamSpec *pspec)
   GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
 
   rspec->none_ok = FALSE;
+  rspec->default_value = NULL;
+}
+
+static void
+gimp_param_resource_finalize (GParamSpec *pspec)
+{
+  GimpParamSpecResource *rspec        = GIMP_PARAM_SPEC_RESOURCE (pspec);
+  GParamSpecClass       *parent_class = g_type_class_peek (
+                                          g_type_parent (GIMP_TYPE_PARAM_RESOURCE));
+
+  g_clear_object (&rspec->default_value);
+
+  parent_class->finalize (pspec);
 }
 
 static gboolean
@@ -1055,12 +1103,47 @@ gimp_param_resource_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/* Set gvalue from pspec's default value.
+ *
+ * Implements virtual method GParamSpec.value_get_default,
+ * which is called by superclass method GParamSpec.get_default_value,
+ * which yields a GValue that will
+ * "remain valid for the life of p-spec and must not be modified."
+ * Without this, the base implementation of GParamSpec.get_default_value
+ * returns a zero'ed GValue value.
+ *
+ * This does nothing on the core side.
+ * Core does not use the defaulting mechanism of GParamSpec for objects.
+ *
+ * When the pspec is not valid, or the pspec has a NULL default_value,
+ * may return with gvalue's value==NULL.
+ *
+ * Inherited by subclasses of GimpParamSpecResource.
+ */
+static void
+gimp_param_resource_value_set_default (GParamSpec *pspec,
+                                       GValue     *value)
+{
+  #ifdef LIBGIMP_COMPILATION
+
+  g_return_if_fail ( GIMP_IS_PARAM_SPEC_RESOURCE (pspec));
+
+  /* not transfer ownership */
+  g_value_set_object (value, GIMP_PARAM_SPEC_RESOURCE (pspec)->default_value);
+
+  #endif
+
+  /* Whether on core or libgimp, the OUT GValue might hold a NULL object pointer. */
+}
+
+
 /**
  * gimp_param_spec_resource:
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
+ * @default_value: (nullable): default resource
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecResource specifying a
@@ -1068,16 +1151,29 @@ gimp_param_resource_validate (GParamSpec *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
+ * The default_value is mainly used when declaring interactive plugin args.
+ * When such a param spec has a NULL default_value,
+ * a GimpResource chooser widget in the plugin's dialog
+ * will initially show a value from the context,
+ * and not have a choice such as "None", and will return a non-NULL value.
+ * Also plugins that are in the context menu of a resource browser (dockable)
+ * should declare a NULL default_value.
+ * Then the value will be the user selected item in the browser.
+ *
+ * For declaring args for non-interactive use, none_ok TRUE means
+ * the procedure receiving the argument will handle NULL gracefully.
+ *
  * Returns: (transfer full): The newly created #GimpParamSpecResource.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_resource (const gchar *name,
-                          const gchar *nick,
-                          const gchar *blurb,
-                          gboolean     none_ok,
-                          GParamFlags  flags)
+gimp_param_spec_resource (const gchar  *name,
+                          const gchar  *nick,
+                          const gchar  *blurb,
+                          gboolean      none_ok,
+                          GimpResource *default_value,
+                          GParamFlags   flags)
 {
   GimpParamSpecResource *rspec;
 
@@ -1087,6 +1183,10 @@ gimp_param_spec_resource (const gchar *name,
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
+
+  rspec->default_value = default_value;
+  if (default_value)
+    g_object_ref (default_value);
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1141,12 +1241,15 @@ gimp_param_brush_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
+ * @default_value: (nullable): default brush
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecBrush specifying a
  * [type@Brush] property.
  *
  * See g_param_spec_internal() for details on property names.
+ * See gimp_param_spec_resource() for details on none-ok
+ * and NULL default_value.
  *
  * Returns: (transfer full): The newly created #GimpParamSpecBrush.
  *
@@ -1157,6 +1260,7 @@ gimp_param_spec_brush (const gchar *name,
                        const gchar *nick,
                        const gchar *blurb,
                        gboolean     none_ok,
+                       GimpBrush   *default_value,
                        GParamFlags  flags)
 {
   GimpParamSpecResource *rspec;
@@ -1167,6 +1271,10 @@ gimp_param_spec_brush (const gchar *name,
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
+
+  rspec->default_value = GIMP_RESOURCE (default_value);
+  if (default_value)
+    g_object_ref (default_value);
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1221,12 +1329,15 @@ gimp_param_pattern_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
+ * @default_value: (nullable): default pattern
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPattern specifying a
  * [type@Pattern] property.
  *
  * See g_param_spec_internal() for details on property names.
+ * See gimp_param_spec_resource() for details on none-ok
+ * and NULL default_value.
  *
  * Returns: (transfer full): The newly created #GimpParamSpecPattern.
  *
@@ -1237,6 +1348,7 @@ gimp_param_spec_pattern (const gchar *name,
                          const gchar *nick,
                          const gchar *blurb,
                          gboolean     none_ok,
+                         GimpPattern *default_value,
                          GParamFlags  flags)
 {
   GimpParamSpecResource *rspec;
@@ -1247,6 +1359,10 @@ gimp_param_spec_pattern (const gchar *name,
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
+
+  rspec->default_value = GIMP_RESOURCE (default_value);
+  if (default_value)
+    g_object_ref (default_value);
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1301,23 +1417,27 @@ gimp_param_gradient_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
+ * @default_value: (nullable): default gradient
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecGradient specifying a
  * [type@Gradient] property.
  *
  * See g_param_spec_internal() for details on property names.
+ * See gimp_param_spec_resource() for details on none-ok
+ * and NULL default_value.
  *
  * Returns: (transfer full): The newly created #GimpParamSpecGradient.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_gradient (const gchar *name,
-                          const gchar *nick,
-                          const gchar *blurb,
-                          gboolean     none_ok,
-                          GParamFlags  flags)
+gimp_param_spec_gradient (const gchar  *name,
+                          const gchar  *nick,
+                          const gchar  *blurb,
+                          gboolean      none_ok,
+                          GimpGradient *default_value,
+                          GParamFlags   flags)
 {
   GimpParamSpecResource *rspec;
 
@@ -1327,6 +1447,8 @@ gimp_param_spec_gradient (const gchar *name,
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
+
+  rspec->default_value = GIMP_RESOURCE (default_value);
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1381,12 +1503,15 @@ gimp_param_palette_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
+ * @default_value: (nullable): default palette
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPalette specifying a
  * [type@Palette] property.
  *
  * See g_param_spec_internal() for details on property names.
+ * See gimp_param_spec_resource() for details on none-ok
+ * and NULL default_value.
  *
  * Returns: (transfer full): The newly created #GimpParamSpecPalette.
  *
@@ -1397,6 +1522,7 @@ gimp_param_spec_palette (const gchar *name,
                          const gchar *nick,
                          const gchar *blurb,
                          gboolean     none_ok,
+                         GimpPalette *default_value,
                          GParamFlags  flags)
 {
   GimpParamSpecResource *rspec;
@@ -1407,6 +1533,10 @@ gimp_param_spec_palette (const gchar *name,
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
+
+  rspec->default_value = GIMP_RESOURCE (default_value);
+  if (default_value)
+    g_object_ref (default_value);
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1461,12 +1591,15 @@ gimp_param_font_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
+ * @default_value: (nullable): default font
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecFont specifying a
  * [type@Font] property.
  *
  * See g_param_spec_internal() for details on property names.
+ * See gimp_param_spec_resource() for details on none-ok
+ * and NULL default_value.
  *
  * Returns: (transfer full): The newly created #GimpParamSpecFont.
  *
@@ -1477,6 +1610,7 @@ gimp_param_spec_font (const gchar *name,
                       const gchar *nick,
                       const gchar *blurb,
                       gboolean     none_ok,
+                      GimpFont    *default_value,
                       GParamFlags  flags)
 {
   GimpParamSpecResource *rspec;
@@ -1487,6 +1621,10 @@ gimp_param_spec_font (const gchar *name,
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
+
+  rspec->default_value = GIMP_RESOURCE (default_value);
+  if (default_value)
+    g_object_ref (default_value);
 
   return G_PARAM_SPEC (rspec);
 }

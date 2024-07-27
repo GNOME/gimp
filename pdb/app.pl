@@ -241,61 +241,73 @@ CODE
     }
     elsif ($pdbtype eq 'resource') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
 gimp_param_spec_resource ("$name",
                           "$nick",
                           "$blurb",
                           $none_ok,
+                          $default,
                           $flags)
 CODE
     }
     elsif ($pdbtype eq 'brush') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
 gimp_param_spec_brush ("$name",
                        "$nick",
                        "$blurb",
                        $none_ok,
+                       $default,
                        $flags)
 CODE
     }
     elsif ($pdbtype eq 'font') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $default = exists $arg->{default} ? $arg->{default} : NULL;
   $pspec = <<CODE;
 gimp_param_spec_font ("$name",
                       "$nick",
                       "$blurb",
                       $none_ok,
+                      $default,
                       $flags)
 CODE
     }
     elsif ($pdbtype eq 'gradient') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $default = exists $arg->{default} ? $arg->{default} : NULL;
   $pspec = <<CODE;
 gimp_param_spec_gradient ("$name",
                           "$nick",
                           "$blurb",
                           $none_ok,
+                          $default,
                           $flags)
 CODE
     }
     elsif ($pdbtype eq 'palette') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $default = exists $arg->{default} ? $arg->{default} : NULL;
   $pspec = <<CODE;
 gimp_param_spec_palette ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
+                         $default,
                          $flags)
 CODE
     }
     elsif ($pdbtype eq 'pattern') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $default = exists $arg->{default} ? $arg->{default} : NULL;
   $pspec = <<CODE;
 gimp_param_spec_pattern ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
+                         $default,
                          $flags)
 CODE
     }

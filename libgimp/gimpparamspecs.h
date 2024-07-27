@@ -351,6 +351,7 @@ struct _GimpParamSpecResource
   GParamSpecObject  parent_instance;
 
   gboolean          none_ok;
+  GimpResource     *default_value;
 };
 
 GType        gimp_param_resource_get_type (void) G_GNUC_CONST;
@@ -359,6 +360,7 @@ GParamSpec * gimp_param_spec_resource     (const gchar  *name,
                                            const gchar  *nick,
                                            const gchar  *blurb,
                                            gboolean      none_ok,
+                                           GimpResource *default_value,
                                            GParamFlags   flags);
 
 
@@ -386,6 +388,7 @@ GParamSpec * gimp_param_spec_brush (const gchar  *name,
                                     const gchar  *nick,
                                     const gchar  *blurb,
                                     gboolean      none_ok,
+                                    GimpBrush    *default_value,
                                     GParamFlags   flags);
 
 
@@ -413,6 +416,7 @@ GParamSpec * gimp_param_spec_pattern (const gchar  *name,
                                       const gchar  *nick,
                                       const gchar  *blurb,
                                       gboolean      none_ok,
+                                      GimpPattern  *default_value,
                                       GParamFlags   flags);
 
 
@@ -440,6 +444,7 @@ GParamSpec * gimp_param_spec_gradient (const gchar  *name,
                                        const gchar  *nick,
                                        const gchar  *blurb,
                                        gboolean      none_ok,
+                                       GimpGradient *default_value,
                                        GParamFlags   flags);
 
 
@@ -467,6 +472,7 @@ GParamSpec * gimp_param_spec_palette (const gchar  *name,
                                       const gchar  *nick,
                                       const gchar  *blurb,
                                       gboolean      none_ok,
+                                      GimpPalette  *default_value,
                                       GParamFlags   flags);
 
 
@@ -494,6 +500,7 @@ GParamSpec * gimp_param_spec_font (const gchar  *name,
                                    const gchar  *nick,
                                    const gchar  *blurb,
                                    gboolean      none_ok,
+                                   GimpFont     *default_value,
                                    GParamFlags   flags);
 
 

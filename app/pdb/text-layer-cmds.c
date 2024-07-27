@@ -1028,6 +1028,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                                      "font",
                                                      "The font to write the text with",
                                                      FALSE,
+                                                     NULL,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
@@ -1198,6 +1199,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                                          "font",
                                                          "The font which is used in the specified text layer.",
                                                          FALSE,
+                                                         NULL,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1227,6 +1229,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                                      "font",
                                                      "The new font to use",
                                                      FALSE,
+                                                     NULL,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

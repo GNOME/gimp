@@ -484,6 +484,7 @@ register_palette_procs (GimpPDB *pdb)
                                                             "palette",
                                                             "The palette",
                                                             FALSE,
+                                                            NULL,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -514,6 +515,7 @@ register_palette_procs (GimpPDB *pdb)
                                                             "palette",
                                                             "The palette",
                                                             TRUE,
+                                                            NULL,
                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -537,6 +539,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-colors",
@@ -566,6 +569,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("colors",
@@ -595,6 +599,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-columns",
@@ -624,6 +629,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("columns",
@@ -653,6 +659,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("entry-name",
@@ -697,6 +704,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("entry-num",
@@ -726,6 +734,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("entry-num",
@@ -762,6 +771,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("entry-num",
@@ -798,6 +808,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("entry-num",
@@ -834,6 +845,7 @@ register_palette_procs (GimpPDB *pdb)
                                                         "palette",
                                                         "The palette",
                                                         FALSE,
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("entry-num",

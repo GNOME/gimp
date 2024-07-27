@@ -189,6 +189,7 @@ gimp_resource_chooser_class_init (GimpResourceChooserClass *klass)
                               "Resource",
                               "The currently selected resource",
                               TRUE,  /* none_ok */
+                              NULL,  /* no default for this property. */
                               GIMP_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class,

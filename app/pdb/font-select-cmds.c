@@ -176,6 +176,7 @@ register_font_select_procs (GimpPDB *pdb)
                                                      "initial font",
                                                      "The name of the initial font choice.",
                                                      FALSE,
+                                                     NULL,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
@@ -236,6 +237,7 @@ register_font_select_procs (GimpPDB *pdb)
                                                      "font",
                                                      "The font to set as selected",
                                                      FALSE,
+                                                     NULL,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

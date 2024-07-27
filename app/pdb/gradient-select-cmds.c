@@ -180,6 +180,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                                          "initial gradient",
                                                          "The initial gradient choice",
                                                          FALSE,
+                                                         NULL,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boxed ("parent-window",
@@ -240,6 +241,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                                          "gradient",
                                                          "The gradient to set as selected",
                                                          FALSE,
+                                                         NULL,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
