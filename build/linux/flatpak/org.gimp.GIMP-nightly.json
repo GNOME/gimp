@@ -71,6 +71,19 @@
     "modules": [
         {
             "name": "appstream-glib",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-0.8.3.tar.xz",
+                    "sha256": "84754064c560fca6e1ab151dc64354fc235a5798f016b91b38c9617253a8cf11",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 14018,
+                        "stable-only": true,
+                        "url-template": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$version.tar.xz"
+                    }
+                }
+            ],
             "buildsystem": "meson",
             "config-opts": [
                 "-Drpm=false",
@@ -85,50 +98,21 @@
               "/include",
               "/lib/pkgconfig",
               "/share"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-0.8.3.tar.xz",
-                    "sha256": "84754064c560fca6e1ab151dc64354fc235a5798f016b91b38c9617253a8cf11",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 14018,
-                        "stable-only": true,
-                        "url-template": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$version.tar.xz"
-                    }
-                }
             ]
         },
         {
             "name": "gexiv2",
-            "modules": [
+            "sources": [
                 {
-                    "name": "exiv2",
-                    "buildsystem": "cmake-ninja",
-                    "config-opts": [
-                        "-DEXIV2_BUILD_EXIV2_COMMAND=OFF",
-                        "-DEXIV2_ENABLE_INIH=OFF",
-                        "-DEXIV2_ENABLE_VIDEO=OFF"
-                    ],
-                    "builddir": true,
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.2.tar.gz",
-                            "sha256": "543bead934135f20f438e0b6d8858c55c5fcb7ff80f5d1d55489965f1aad58b9",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 769,
-                                "stable-only": true,
-                                "url-template": "https://github.com/Exiv2/exiv2/archive/refs/tags/v$version.tar.gz"
-                            }
-                        }
-                    ]
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.2.tar.xz",
+                    "sha256": "2a0c9cf48fbe8b3435008866ffd40b8eddb0667d2212b42396fdf688e93ce0be",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1626,
+                        "stable-only": true,
+                        "url-template": "https://download.gnome.org/sources/gexiv2/$major.$minor/gexiv2-$version.tar.xz"
+                    }
                 }
             ],
             "buildsystem": "meson",
@@ -142,22 +126,53 @@
                 "/include",
                 "/lib/pkgconfig"
             ],
-            "sources": [
+            "modules": [
                 {
-                    "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.2.tar.xz",
-                    "sha256": "2a0c9cf48fbe8b3435008866ffd40b8eddb0667d2212b42396fdf688e93ce0be",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 1626,
-                        "stable-only": true,
-                        "url-template": "https://download.gnome.org/sources/gexiv2/$major.$minor/gexiv2-$version.tar.xz"
-                    }
+                    "name": "exiv2",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.2.tar.gz",
+                            "sha256": "543bead934135f20f438e0b6d8858c55c5fcb7ff80f5d1d55489965f1aad58b9",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 769,
+                                "stable-only": true,
+                                "url-template": "https://github.com/Exiv2/exiv2/archive/refs/tags/v$version.tar.gz"
+                            }
+                        }
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
+                    "config-opts": [
+                        "-DEXIV2_BUILD_EXIV2_COMMAND=OFF",
+                        "-DEXIV2_ENABLE_INIH=OFF",
+                        "-DEXIV2_ENABLE_VIDEO=OFF"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ]
                 }
             ]
         },
         {
             "name": "openexr",
+            "sources" : [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.10.tar.gz",
+                    "sha256": "6e0fd3f0eb1cb907bd3593830ea2b3431b85f22a6f18f99f8cfa099fec70067d",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 13289,
+                        "stable-only": true,
+                        "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
+                    }
+                }
+            ],
+            "buildsystem" : "cmake-ninja",
+            "builddir" : true,
             "config-opts": [
                 "-DOPENEXR_BUILD_TOOLS=OFF",
                 "-DOPENEXR_BUILD_EXAMPLES=OFF",
@@ -167,71 +182,51 @@
                 "/include",
                 "/lib/pkgconfig"
             ],
-            "builddir" : true,
-            "buildsystem" : "cmake-ninja",
-            "sources" : [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.10.tar.gz",
-                    "sha256": "6e0fd3f0eb1cb907bd3593830ea2b3431b85f22a6f18f99f8cfa099fec70067d",
-                    "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 13289,
-                                "stable-only": true,
-                                "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
-                            }
-                }
-            ],
             "modules": [
                 {
                     "name" : "imath",
-                    "config-opts": [
-                        "-DBUILD_TESTING=OFF"
-                    ],
-                    "builddir" : true,
-                    "buildsystem" : "cmake-ninja",
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
                     "sources" : [
                         {
                             "type": "archive",
                             "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.9.tar.gz",
                             "sha256": "f1d8aacd46afed958babfced3190d2d3c8209b66da451f556abd6da94c165cf3",
                             "x-checker-data": {
-                                        "type": "anitya",
-                                        "project-id": 223366,
-                                        "stable-only": true,
-                                        "url-template": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v$version.tar.gz"
-                                    }
+                                "type": "anitya",
+                                "project-id": 223366,
+                                "stable-only": true,
+                                "url-template": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v$version.tar.gz"
+                            }
                         }
+                    ],
+                    "buildsystem" : "cmake-ninja",
+                    "builddir" : true,
+                    "config-opts": [
+                        "-DBUILD_TESTING=OFF"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
                     ]
                 }
             ]
         },
         {
             "name": "poppler",
-            "modules": [
+            "sources": [
                 {
-                    "name": "popplerdata",
-                    "buildsystem": "cmake-ninja",
-                    "builddir": true,
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz",
-                            "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 3687,
-                                "stable-only": true,
-                                "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
-                            }
-                        }
-                    ]
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-24.06.1.tar.xz",
+                    "sha256": "1e629e8732286c745fbc0b15a3ee591443fb37a2210856e7f3ec38a0fb93ab13",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 3686,
+                        "stable-only": true,
+                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
+                    }
                 }
             ],
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
             "config-opts": [
                 "-DBUILD_GTK_TEST=OFF",
                 "-DBUILD_QT5_TESTS=OFF",
@@ -251,51 +246,46 @@
                 "/include",
                 "/lib/pkgconfig"
             ],
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "sources": [
+            "modules": [
                 {
-                    "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.06.1.tar.xz",
-                    "sha256": "1e629e8732286c745fbc0b15a3ee591443fb37a2210856e7f3ec38a0fb93ab13",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 3686,
-                        "stable-only": true,
-                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
-                    }
+                    "name": "popplerdata",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz",
+                            "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 3687,
+                                "stable-only": true,
+                                "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
+                            }
+                        }
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true
                 }
             ]
         },
         {
             "name": "libmng",
-            "config-opts": [
-                "--disable-static"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ],
             "sources": [
                 {
                     "type": "archive",
                     "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libmng/libmng-2.0.3.tar.gz/7e9a12ba2a99dff7e736902ea07383d4/libmng-2.0.3.tar.gz",
                     "sha256": "cf112a1fb02f5b1c0fce5cab11ea8243852c139e669c44014125874b14b7dfaa"
                 }
+            ],
+            "config-opts": [
+                "--disable-static"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
             ]
         },
         {
             "name": "libwmf",
-            "config-opts": [
-                "--disable-static",
-                "--disable-dependency-tracking"
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/gdk-pixbuf-*",
-                "/lib/pkgconfig"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -315,29 +305,20 @@
                         "autoreconf -vfi"
                     ]
                 }
-            ]
-        },
-        {
-            "name": "ghostscript",
+            ],
             "config-opts": [
-                "--disable-cups",
-                "--disable-gtk",
-                "--without-tesseract",
-                "--without-libpaper",
-                "--without-pdftoraster"
-            ],
-            "make-args": [
-                "so"
-            ],
-            "make-install-args": [
-                "soinstall"
+                "--disable-static",
+                "--disable-dependency-tracking"
             ],
             "cleanup": [
                 "/bin",
                 "/include",
-                "/lib/pkgconfig",
-                "/share"
-            ],
+                "/lib/gdk-pixbuf-*",
+                "/lib/pkgconfig"
+            ]
+        },
+        {
+            "name": "ghostscript",
             "sources": [
                 {
                     "type": "archive",
@@ -363,18 +344,29 @@
                         "rm -rf libpng/pngread.c"
                     ]
                 }
+            ],
+            "config-opts": [
+                "--disable-cups",
+                "--disable-gtk",
+                "--without-tesseract",
+                "--without-libpaper",
+                "--without-pdftoraster"
+            ],
+            "make-args": [
+                "so"
+            ],
+            "make-install-args": [
+                "soinstall"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig",
+                "/share"
             ]
         },
         {
             "name": "libmypaint",
-            "config-opts": [
-                "--disable-gegl",
-                "--disable-introspection"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -388,18 +380,17 @@
                     }
                 }
             ],
+            "config-opts": [
+                "--disable-gegl",
+                "--disable-introspection"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ],
             "modules": [
                 {
                     "name": "json-c",
-                    "buildsystem": "cmake-ninja",
-                    "config-opts": [
-                        "-DDISABLE_WERROR=ON",
-                        "-DBUILD_TESTING=OFF"
-                    ],
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
                     "sources": [
                         {
                             "type": "git",
@@ -411,26 +402,35 @@
                                 "tag-pattern": "^json-c-([\\d.]+)-[\\d]+$"
                             }
                         }
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "config-opts": [
+                        "-DDISABLE_WERROR=ON",
+                        "-DBUILD_TESTING=OFF"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
                     ]
                 },
                 {
                     "//": "Copy from shared-modules to avoid submodules on dev repo.",
                     "name": "intltool",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
+                            "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 1385,
+                                "stable-only": true,
+                                "url-template": "https://launchpad.net/intltool/trunk/$version/+download/intltool-$version.tar.gz"
+                            }
+                        }
+                    ],
                     "cleanup": [
                         "*"
-                    ],
-                    "sources": [
-                    {
-                        "type": "archive",
-                        "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
-                        "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd",
-                        "x-checker-data": {
-                            "type": "anitya",
-                            "project-id": 1385,
-                            "stable-only": true,
-                            "url-template": "https://launchpad.net/intltool/trunk/$version/+download/intltool-$version.tar.gz"
-                        }
-                    }
                     ]
                 }
             ]
@@ -456,6 +456,19 @@
         },
         {
             "name": "libheif",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.17.6/libheif-1.17.6.tar.gz",
+                    "sha256": "8390baf4913eda0a183e132cec62b875fb2ef507ced5ddddc98dfd2f17780aee",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 64439,
+                        "stable-only": true,
+                        "url-template": "https://github.com/strukturag/libheif/releases/download/v$version/libheif-$version.tar.gz"
+                    }
+                }
+            ],
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
@@ -484,17 +497,6 @@
             "modules": [
                 {
                     "name": "libde265",
-                    "buildsystem": "cmake-ninja",
-                    "config-opts": [
-                        "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
-                        "-DENABLE_SDL=OFF",
-                        "-DENABLE_DECODER=OFF",
-                        "-DENABLE_ENCODER=OFF"
-                    ],
-                    "cleanup": [
-                        "/lib/libheif/bin",
-                        "/lib/libheif/include"
-                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -507,28 +509,21 @@
                                 "url-template": "https://github.com/strukturag/libde265/releases/download/v$version/libde265-$version.tar.gz"
                             }
                         }
-                    ]
-                },
-                {
-                    "name": "libx265",
+                    ],
                     "buildsystem": "cmake-ninja",
-                    "subdir": "source",
                     "config-opts": [
-                        "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
-                        "-DCMAKE_CXX_COMPILER=clang++",
-                        "-DCMAKE_CXX_FLAGS=-fuse-ld=lld",
                         "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
-                        "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
-                        "-DEXTRA_LINK_FLAGS=-L/app/lib/libheif/lib",
-                        "-DLINKED_10BIT=ON",
-                        "-DLINKED_12BIT=ON",
-                        "-DENABLE_CLI=OFF",
-                        "-DENABLE_ASSEMBLY=OFF"
+                        "-DENABLE_SDL=OFF",
+                        "-DENABLE_DECODER=OFF",
+                        "-DENABLE_ENCODER=OFF"
                     ],
                     "cleanup": [
                         "/lib/libheif/bin",
                         "/lib/libheif/include"
-                    ],
+                    ]
+                },
+                {
+                    "name": "libx265",
                     "sources": [
                         {
                             "type": "archive",
@@ -550,19 +545,27 @@
                             ]
                         }
                     ],
+                    "subdir": "source",
+                    "buildsystem": "cmake-ninja",
+                    "config-opts": [
+                        "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+                        "-DCMAKE_CXX_COMPILER=clang++",
+                        "-DCMAKE_CXX_FLAGS=-fuse-ld=lld",
+                        "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
+                        "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
+                        "-DEXTRA_LINK_FLAGS=-L/app/lib/libheif/lib",
+                        "-DLINKED_10BIT=ON",
+                        "-DLINKED_12BIT=ON",
+                        "-DENABLE_CLI=OFF",
+                        "-DENABLE_ASSEMBLY=OFF"
+                    ],
+                    "cleanup": [
+                        "/lib/libheif/bin",
+                        "/lib/libheif/include"
+                    ],
                     "modules": [
                         {
                             "name": "libx265-10bpc",
-                            "buildsystem": "cmake-ninja",
-                            "subdir": "source",
-                            "config-opts": [
-                                "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
-                                "-DHIGH_BIT_DEPTH=ON",
-                                "-DEXPORT_C_API=OFF",
-                                "-DENABLE_SHARED=OFF",
-                                "-DENABLE_CLI=OFF",
-                                "-DENABLE_ASSEMBLY=OFF"
-                            ],
                             "sources": [
                                 {
                                     "type": "archive",
@@ -576,14 +579,37 @@
                                     }
                                 }
                             ],
+                            "subdir": "source",
+                            "buildsystem": "cmake-ninja",
+                            "config-opts": [
+                                "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
+                                "-DHIGH_BIT_DEPTH=ON",
+                                "-DEXPORT_C_API=OFF",
+                                "-DENABLE_SHARED=OFF",
+                                "-DENABLE_CLI=OFF",
+                                "-DENABLE_ASSEMBLY=OFF"
+                            ],
                             "post-install": [
                                 "mv ${FLATPAK_DEST}/lib/libheif/lib/libx265.a ${FLATPAK_DEST}/lib/libheif/lib/libx265-10.a"
                             ]
                         },
                         {
                             "name": "libx265-12bpc",
-                            "buildsystem": "cmake-ninja",
+                            "sources": [
+                                {
+                                    "type": "archive",
+                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
+                                    "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
+                                    "x-checker-data": {
+                                        "type": "anitya",
+                                        "project-id": 7275,
+                                        "stable-only": true,
+                                        "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
+                                    }
+                                }
+                            ],
                             "subdir": "source",
+                            "buildsystem": "cmake-ninja",
                             "config-opts": [
                                 "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                                 "-DHIGH_BIT_DEPTH=ON",
@@ -593,51 +619,16 @@
                                 "-DENABLE_ASSEMBLY=OFF",
                                 "-DMAIN12=ON"
                             ],
-                            "sources": [
-                                {
-                                    "type": "archive",
-                                    "url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.5.tar.gz",
-                                    "sha256": "e70a3335cacacbba0b3a20ec6fecd6783932288ebc8163ad74bcc9606477cae8",
-                                    "x-checker-data": {
-                                        "type": "anitya",
-                                        "project-id": 7275,
-                                        "stable-only": true,
-                                        "url-template": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_$version.tar.gz"
-                                    }
-                                }
-                            ],
                             "post-install": [
                                 "mv ${FLATPAK_DEST}/lib/libheif/lib/libx265.a ${FLATPAK_DEST}/lib/libheif/lib/libx265-12.a"
                             ]
                         }
                     ]
                 }
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.17.6/libheif-1.17.6.tar.gz",
-                    "sha256": "8390baf4913eda0a183e132cec62b875fb2ef507ced5ddddc98dfd2f17780aee",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 64439,
-                        "stable-only": true,
-                        "url-template": "https://github.com/strukturag/libheif/releases/download/v$version/libheif-$version.tar.gz"
-                    }
-                }
             ]
         },
         {
             "name": "luajit",
-            "no-autogen": true,
-            "make-args": [
-                "DEFAULT_CC=ccache clang"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig",
-                "/share"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -657,30 +648,35 @@
                     ]
                 }
             ],
+            "no-autogen": true,
+            "make-args": [
+                "DEFAULT_CC=ccache clang"
+            ],
             "post-install": [
                 "ln -s /app/bin/luajit-2.1.0-beta3 /app/bin/luajit"
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig",
+                "/share"
             ]
         },
         {
             "name": "lua-lgi",
-            "buildsystem": "meson",
-            "config-opts": [
-                "-Dtests=false"
-            ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/pavouk/lgi.git",
                     "commit": "c21f35fccae87fd4e3625d4c878f584b7255d6f6"
                 }
+            ],
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dtests=false"
             ]
         },
         {
             "name": "xmu",
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -693,10 +689,21 @@
                         "url-template": "https://xorg.freedesktop.org/releases/individual/lib/libXmu-$version.tar.xz"
                     }
                 }
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
             ]
         },
         {
             "name": "qoi",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/phoboslab/qoi.git",
+                    "commit": "30d15d79b7726b977cd889151cc5cd6b17742f8f"
+                }
+            ],
             "buildsystem": "simple",
             "build-commands": [
                 "install -D qoi.h /app/include/qoi.h"
@@ -704,17 +711,17 @@
             "cleanup": [
                 "/include",
                 "/lib/pkgconfig"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/phoboslab/qoi.git",
-                    "commit": "30d15d79b7726b977cd889151cc5cd6b17742f8f"
-                }
             ]
         },
         {
             "name": "cfitsio",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://src.fedoraproject.org/repo/pkgs/cfitsio/cfitsio-4.4.0.tar.gz/sha512/9358b1ed94fdc456cf8c0ddcb346c08f6bc97ee862c31366f3fae2d1be8d5278ffc79da01e41ceebf67ebc831f58bce3551e087c883bbf6b396133110d74b076/cfitsio-4.4.0.tar.gz",
+                    "sha256": "95900cf95ae760839e7cb9678a7b2fad0858d6ac12234f934bd1cb6bfc246ba9"
+                }
+            ],
             "config-opts": [
                 "--enable-reentrant"
             ],
@@ -724,17 +731,17 @@
             "cleanup": [
                 "/include",
                 "/lib/pkgconfig"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://src.fedoraproject.org/repo/pkgs/cfitsio/cfitsio-4.4.0.tar.gz/sha512/9358b1ed94fdc456cf8c0ddcb346c08f6bc97ee862c31366f3fae2d1be8d5278ffc79da01e41ceebf67ebc831f58bce3551e087c883bbf6b396133110d74b076/cfitsio-4.4.0.tar.gz",
-                    "sha256": "95900cf95ae760839e7cb9678a7b2fad0858d6ac12234f934bd1cb6bfc246ba9"
-                }
             ]
         },
         {
             "name": "babl",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/babl.git",
+                    "branch": "master"
+                }
+            ],
             "buildsystem": "meson",
             "config-opts": [
                 "-Dwith-docs=false",
@@ -742,17 +749,17 @@
             ],
             "cleanup": [
                 "/bin"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/babl.git",
-                    "branch": "master"
-                }
             ]
         },
         {
             "name": "gegl",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/gegl.git",
+                    "branch": "master"
+                }
+            ],
             "buildsystem": "meson",
             "config-opts": [
                 "-Ddocs=false",
@@ -762,17 +769,23 @@
             "cleanup": [
                 "/share/gegl*"
             ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/GNOME/gegl.git",
-                    "branch": "master"
-                }
-            ],
             "modules": [
                 {
                     "//": "Originally taken from org.octave.Octave manifest",
                     "name": "SuiteSparse",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.6.0.tar.gz",
+                            "sha256": "19cbeb9964ebe439413dd66d82ace1f904adc5f25d8a823c1b48c34bd0d29ea5",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 4908,
+                                "stable-only": true,
+                                "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
+                            }
+                        }
+                    ],
                     "buildsystem": "cmake-ninja",
                     "builddir": true,
                     "config-opts": [
@@ -789,35 +802,9 @@
                         "/include",
                         "/lib/pkgconfig"
                     ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.6.0.tar.gz",
-                            "sha256": "19cbeb9964ebe439413dd66d82ace1f904adc5f25d8a823c1b48c34bd0d29ea5",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 4908,
-                                "stable-only": true,
-                                "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
-                            }
-                        }
-                    ],
                     "modules": [
                         {
                             "name": "openblas",
-                            "no-autogen": true,
-                            "make-args": [
-                                "DYNAMIC_ARCH=0",
-                                "USE_OPENMP=0",
-                                "NO_LAPACKE=1"
-                            ],
-                            "make-install-args": [
-                                "PREFIX=/app"
-                            ],
-                            "cleanup": [
-                                "/include",
-                                "/lib/pkgconfig"
-                            ],
                             "sources": [
                                 {
                                     "type": "archive",
@@ -830,37 +817,40 @@
                                         "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
                                     }
                                 }
+                            ],
+                            "no-autogen": true,
+                            "make-args": [
+                                "DYNAMIC_ARCH=0",
+                                "USE_OPENMP=0",
+                                "NO_LAPACKE=1"
+                            ],
+                            "make-install-args": [
+                                "PREFIX=/app"
+                            ],
+                            "cleanup": [
+                                "/include",
+                                "/lib/pkgconfig"
                             ]
                         }
                     ]
                 },
                 {
                     "name": "maxflow",
-                    "buildsystem": "cmake-ninja",
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
                     "sources": [
                         {
                             "type": "git",
                             "url": "https://github.com/gerddie/maxflow.git",
                             "commit": "6ac148f164b9567ac81fbb4ebb36112f850c902b"
                         }
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
                     ]
                 },
                 {
                     "name": "graphviz",
-                    "buildsystem": "autotools",
-                    "config-opts": [
-                        "--with-gdk=no",
-                        "--with-gtk=no",
-                        "--with-poppler=no",
-                        "--with-rsvg=no",
-                        "--with-webp=no",
-                        "--with-x=no",
-                        "--with-xlib=no"
-                    ],
                     "sources": [
                         {
                             "type": "archive",
@@ -873,6 +863,16 @@
                                 "url-template": "https://gitlab.com/graphviz/graphviz/-/archive/$version/graphviz-$version.tar.gz"
                             }
                         }
+                    ],
+                    "buildsystem": "autotools",
+                    "config-opts": [
+                        "--with-gdk=no",
+                        "--with-gtk=no",
+                        "--with-poppler=no",
+                        "--with-rsvg=no",
+                        "--with-webp=no",
+                        "--with-x=no",
+                        "--with-xlib=no"
                     ],
                     "cleanup": [
                         "/bin/??",
@@ -894,6 +894,18 @@
         },
         {
             "name": "gimp",
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "../../.."
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "xsltproc -o desktop/org.gimp.GIMP.appdata.xml.in.in build/linux/flatpak/remove-future-appdata-release.xslt desktop/org.gimp.GIMP.appdata.xml.in.in"
+                    ]
+                }
+            ],
             "buildsystem": "meson",
             "config-opts": [
                 "-Dg-ir-doc=false",
@@ -906,18 +918,6 @@
             "cleanup": [
                 "/bin/gimptool-*",
                 "/bin/gimp-console-*"
-            ],
-            "sources": [
-                {
-                    "type": "dir",
-                    "path": "../../.."
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "xsltproc -o desktop/org.gimp.GIMP.appdata.xml.in.in build/linux/flatpak/remove-future-appdata-release.xslt desktop/org.gimp.GIMP.appdata.xml.in.in"
-                    ]
-                }
             ]
         }
     ]
