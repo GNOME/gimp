@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-21 19:23+0000\n"
-"PO-Revision-Date: 2024-07-22 08:56+0300\n"
-"Last-Translator: Fracture dept <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"POT-Creation-Date: 2024-07-26 18:57+0000\n"
+"PO-Revision-Date: 2024-07-27 16:11+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -30,11 +30,11 @@ msgid "Exercise a goat in the C language"
 msgstr "Потренувати козу у мові Сі"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:190 plug-ins/common/checkerboard.c:176
+#: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
-#: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:249 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:648 plug-ins/common/decompose.c:387
-#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
+#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
@@ -46,7 +46,7 @@ msgstr "Потренувати козу у мові Сі"
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:266
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:538 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -256,71 +256,16 @@ msgstr "Вирівняти _видимі шари..."
 msgid "Align all visible layers of the image"
 msgstr "Вирівнювання видимих шарів зображення"
 
+#: plug-ins/common/align-layers.c:184
+#| msgid "Align Visible Layers"
+msgid "Align visible layers"
+msgstr "Вирівнювання видимих шарів"
+
 #: plug-ins/common/align-layers.c:192
 msgid "_Horizontal style"
 msgstr "_Горизонтальний стиль"
 
-#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
-msgid ""
-"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
-"to grid = 4)"
-msgstr ""
-"(Немає = 0, Зібрати = 1, Заповнити зліва праворуч = 2, Заповнити справа "
-"ліворуч = 3, Прилипання до ґратки = 4)"
-
-#: plug-ins/common/align-layers.c:200
-msgid "Hori_zontal base"
-msgstr "Г_оризонтальна основа"
-
-#: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
-msgid "(Left edge = 0, Center = 1, Right edge = 2)"
-msgstr "(Лівий край = 0, Центр = 1, Правий край = 2)"
-
-#: plug-ins/common/align-layers.c:207
-msgid "_Vertical style"
-msgstr "_Вертикальний стиль"
-
-#: plug-ins/common/align-layers.c:215
-msgid "Ver_tical base"
-msgstr "В_ертикальна основа"
-
-#: plug-ins/common/align-layers.c:222
-msgid "_Grid"
-msgstr "С_ітка"
-
-#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:815
-#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:197
-#: plug-ins/imagemap/imap-menu.ui:289
-msgid "Grid"
-msgstr "Сітка"
-
-#: plug-ins/common/align-layers.c:229
-msgid "Ignore the _bottom layer even if visible"
-msgstr "_Ігнорувати нижній шар, навіть якщо він видимий"
-
-#: plug-ins/common/align-layers.c:230
-msgid "Ignore the bottom layer even if visible"
-msgstr "Ігнорувати нижній шар, навіть якщо він видимий"
-
-#: plug-ins/common/align-layers.c:236
-msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_Використовувати (невидимий) нижній шар як основу"
-
-#: plug-ins/common/align-layers.c:237
-msgid "Use the (invisible) bottom layer as the base"
-msgstr "Використовувати (невидимий) нижній шар як основу"
-
-#: plug-ins/common/align-layers.c:287
-#, c-format
-msgid "There are not enough layers to align."
-msgstr "Недостатньо шарів для вирівнювання."
-
-#: plug-ins/common/align-layers.c:731
-msgid "Align Visible Layers"
-msgstr "Вирівнювання видимих шарів"
-
-#: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
+#: plug-ins/common/align-layers.c:194 plug-ins/common/align-layers.c:216
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:346
@@ -334,50 +279,98 @@ msgstr "Вирівнювання видимих шарів"
 msgid "None"
 msgstr "Немає"
 
-#: plug-ins/common/align-layers.c:741 plug-ins/common/align-layers.c:759
+#: plug-ins/common/align-layers.c:195 plug-ins/common/align-layers.c:217
 msgid "Collect"
 msgstr "Зібрати"
 
-#: plug-ins/common/align-layers.c:742
+#: plug-ins/common/align-layers.c:196
 msgid "Fill (left to right)"
 msgstr "Заповнити (зліва направо)"
 
-#: plug-ins/common/align-layers.c:743
+#: plug-ins/common/align-layers.c:197
 msgid "Fill (right to left)"
 msgstr "Заповнити (справа наліво)"
 
-#: plug-ins/common/align-layers.c:744 plug-ins/common/align-layers.c:762
+#: plug-ins/common/align-layers.c:198 plug-ins/common/align-layers.c:220
 msgid "Snap to grid"
 msgstr "Прилипати до сітки"
 
-#: plug-ins/common/align-layers.c:750
+#: plug-ins/common/align-layers.c:204
+msgid "Hori_zontal base"
+msgstr "Г_оризонтальна основа"
+
+#: plug-ins/common/align-layers.c:206
 msgid "Left edge"
 msgstr "Ліва межа"
 
-#: plug-ins/common/align-layers.c:751 plug-ins/common/align-layers.c:769
+#: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
 #: plug-ins/gradient-flare/gradient-flare.c:2919
 msgid "Center"
 msgstr "Центр"
 
-#: plug-ins/common/align-layers.c:752
+#: plug-ins/common/align-layers.c:208
 msgid "Right edge"
 msgstr "Права межа"
 
-#: plug-ins/common/align-layers.c:760
+#: plug-ins/common/align-layers.c:214
+msgid "_Vertical style"
+msgstr "_Вертикальний стиль"
+
+#: plug-ins/common/align-layers.c:218
 msgid "Fill (top to bottom)"
 msgstr "Заповнити (згори донизу)"
 
-#: plug-ins/common/align-layers.c:761
+#: plug-ins/common/align-layers.c:219
 msgid "Fill (bottom to top)"
 msgstr "Заповнити (знизу догори)"
 
-#: plug-ins/common/align-layers.c:768
+#: plug-ins/common/align-layers.c:226
+msgid "Ver_tical base"
+msgstr "В_ертикальна основа"
+
+#: plug-ins/common/align-layers.c:228
 msgid "Top edge"
 msgstr "Верхній край"
 
-#: plug-ins/common/align-layers.c:770
+#: plug-ins/common/align-layers.c:230
 msgid "Bottom edge"
 msgstr "Нижній край"
+
+#: plug-ins/common/align-layers.c:236
+msgid "_Grid"
+msgstr "С_ітка"
+
+#: plug-ins/common/align-layers.c:237 plug-ins/common/grid.c:815
+#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
+#: plug-ins/imagemap/imap_main.c:1563 plug-ins/imagemap/imap-menu.ui:192
+#: plug-ins/imagemap/imap-menu.ui:284
+msgid "Grid"
+msgstr "Сітка"
+
+#: plug-ins/common/align-layers.c:243
+msgid "Ignore the _bottom layer even if visible"
+msgstr "_Ігнорувати нижній шар, навіть якщо він видимий"
+
+#: plug-ins/common/align-layers.c:244
+msgid "Ignore the bottom layer even if visible"
+msgstr "Ігнорувати нижній шар, навіть якщо він видимий"
+
+#: plug-ins/common/align-layers.c:250
+msgid "_Use the (invisible) bottom layer as the base"
+msgstr "_Використовувати (невидимий) нижній шар як основу"
+
+#: plug-ins/common/align-layers.c:251
+msgid "Use the (invisible) bottom layer as the base"
+msgstr "Використовувати (невидимий) нижній шар як основу"
+
+#: plug-ins/common/align-layers.c:301
+#, c-format
+msgid "There are not enough layers to align."
+msgstr "Недостатньо шарів для вирівнювання."
+
+#: plug-ins/common/align-layers.c:749
+msgid "Align Visible Layers"
+msgstr "Вирівнювання видимих шарів"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
@@ -510,7 +503,7 @@ msgstr "Від’єднати"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
-#: plug-ins/imagemap/imap-menu.ui:276
+#: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "Масштаб"
 
@@ -672,22 +665,63 @@ msgid "Bucket Si_ze"
 msgstr "_Розмір відра"
 
 #: plug-ins/common/border-average.c:152
-msgid "Bits for bucket size (default=4: 16 Levels)"
-msgstr "Біти для розміру відра (типове значення=4: 16 рівнів)"
+#| msgid "Bits for bucket size (default=4: 16 Levels)"
+msgid "Bits for bucket size"
+msgstr "Біти для розміру відра"
 
-#: plug-ins/common/border-average.c:157 plug-ins/common/border-average.c:158
+#: plug-ins/common/border-average.c:153
+msgid "1"
+msgstr "1"
+
+#: plug-ins/common/border-average.c:154 plug-ins/metadata/metadata-tags.c:254
+msgid "2"
+msgstr "2"
+
+#: plug-ins/common/border-average.c:155 plug-ins/metadata/metadata-tags.c:254
+msgid "4"
+msgstr "4"
+
+#: plug-ins/common/border-average.c:156
+msgid "8)"
+msgstr "8)"
+
+#: plug-ins/common/border-average.c:157
+#| msgid "1:6"
+msgid "16"
+msgstr "16"
+
+#: plug-ins/common/border-average.c:158
+#| msgid "2"
+msgid "32"
+msgstr "32"
+
+#: plug-ins/common/border-average.c:159
+#| msgid "4"
+msgid "64"
+msgstr "64"
+
+#: plug-ins/common/border-average.c:160
+#| msgid "1:2"
+msgid "128"
+msgstr "128"
+
+#: plug-ins/common/border-average.c:161
+msgid "256"
+msgstr "256"
+
+#: plug-ins/common/border-average.c:167 plug-ins/common/border-average.c:168
 msgid "The average color of the specified border."
 msgstr "Середній колір вказаної рамки."
 
-#: plug-ins/common/border-average.c:217 plug-ins/common/border-average.c:395
+#: plug-ins/common/border-average.c:227 plug-ins/common/border-average.c:406
 msgid "Border Average"
 msgstr "Пошук середнього значення кольору"
 
-#: plug-ins/common/border-average.c:406
+#: plug-ins/common/border-average.c:410
 msgid "Border Size"
 msgstr "Розмір рамки"
 
-#: plug-ins/common/border-average.c:433
+#: plug-ins/common/border-average.c:437
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
@@ -1755,39 +1789,40 @@ msgid "Le_vel"
 msgstr "_Рівень"
 
 #: plug-ins/common/contrast-retinex.c:212
-msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr ""
-"Ретінекс-розподіл шкалами { Однорідний (0), Низький (1), Високий (2) }"
+#| msgid ""
+#| "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
+msgid "Retinex distribution through scales"
+msgstr "Ретінекс-розподіл шкалами"
 
-#: plug-ins/common/contrast-retinex.c:218
-msgid "Dy_namic"
-msgstr "_Динамічно"
-
-#: plug-ins/common/contrast-retinex.c:219
-msgid "Variance value"
-msgstr "Значення дисперсії"
-
-#: plug-ins/common/contrast-retinex.c:272
-msgid "Retinex"
-msgstr "Ретінекс"
-
-#: plug-ins/common/contrast-retinex.c:306
-msgid "Retinex Image Enhancement"
-msgstr "Покращення зображення за допомогою ретінексу"
-
-#: plug-ins/common/contrast-retinex.c:321
+#: plug-ins/common/contrast-retinex.c:213
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: plug-ins/common/contrast-retinex.c:322 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "Низький"
 
-#: plug-ins/common/contrast-retinex.c:323 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:215 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "Високий"
 
-#: plug-ins/common/contrast-retinex.c:658
+#: plug-ins/common/contrast-retinex.c:221
+msgid "Dy_namic"
+msgstr "_Динамічно"
+
+#: plug-ins/common/contrast-retinex.c:222
+msgid "Variance value"
+msgstr "Значення дисперсії"
+
+#: plug-ins/common/contrast-retinex.c:275
+msgid "Retinex"
+msgstr "Ретінекс"
+
+#: plug-ins/common/contrast-retinex.c:308
+msgid "Retinex Image Enhancement"
+msgstr "Покращення зображення за допомогою ретінексу"
+
+#: plug-ins/common/contrast-retinex.c:649
 msgid "Retinex: filtering"
 msgstr "Retinex: фільтрування"
 
@@ -1976,8 +2011,7 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:667
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:681
 msgid "Cannot operate on layers with masks."
@@ -2432,49 +2466,46 @@ msgid "_Filter Type"
 msgstr "Т_ип фільтра"
 
 #: plug-ins/common/despeckle.c:192
-msgid ""
-"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
-"ADAPTIVE (3) }"
-msgstr ""
-"Тип фільтра { МЕДІАННИЙ (0), АДАПТИВНИЙ (1), РЕКУРСИВНО-МЕДІАННИЙ (2), "
-"РЕКУРСИВНО-АДАПТИВНИЙ (3) }"
+#| msgid "_Filter Type"
+msgid "Filter type"
+msgstr "Тип фільтра"
 
-#: plug-ins/common/despeckle.c:198
-msgid "_Black level"
-msgstr "Рівень _чорного"
-
-#: plug-ins/common/despeckle.c:199
-msgid "Black level"
-msgstr "Рівень чорного"
-
-#: plug-ins/common/despeckle.c:204
-msgid "_White level"
-msgstr "Рівень _білого"
-
-#: plug-ins/common/despeckle.c:205
-msgid "White level"
-msgstr "Рівень білого"
-
-#: plug-ins/common/despeckle.c:386 plug-ins/common/despeckle.c:760
-msgid "Despeckle"
-msgstr "Прибирання плям"
-
-#: plug-ins/common/despeckle.c:390
+#: plug-ins/common/despeckle.c:193
 msgid "Median"
 msgstr "Середнє"
 
-#: plug-ins/common/despeckle.c:391 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:194 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "Адаптивний"
 
-#: plug-ins/common/despeckle.c:392
+#: plug-ins/common/despeckle.c:195
 msgid "Recursive-Median"
 msgstr "Рекурсивно-медіанний"
 
-#: plug-ins/common/despeckle.c:393
+#: plug-ins/common/despeckle.c:196
 msgid "Recursive-Adaptive"
 msgstr "Рекурсивно-адаптивний"
+
+#: plug-ins/common/despeckle.c:202
+msgid "_Black level"
+msgstr "Рівень _чорного"
+
+#: plug-ins/common/despeckle.c:203
+msgid "Black level"
+msgstr "Рівень чорного"
+
+#: plug-ins/common/despeckle.c:208
+msgid "_White level"
+msgstr "Рівень _білого"
+
+#: plug-ins/common/despeckle.c:209
+msgid "White level"
+msgstr "Рівень білого"
+
+#: plug-ins/common/despeckle.c:389 plug-ins/common/despeckle.c:756
+msgid "Despeckle"
+msgstr "Прибирання плям"
 
 #: plug-ins/common/destripe.c:126
 msgid "Des_tripe..."
@@ -2694,8 +2725,7 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:124
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
-"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "CSource cannot be run non-interactively."
@@ -4772,13 +4802,11 @@ msgstr ""
 #: plug-ins/common/file-png.c:1443
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
-"Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1452
 #, c-format
-msgid ""
-"Error while exporting '%s'. Could not create PNG header info structure."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -6050,8 +6078,7 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:315
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr ""
-"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:322
 msgid "Retry without limits preventing to parse huge data?"
@@ -10061,8 +10088,8 @@ msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr ""
-"У Photoshop не передбачено підтримки індексованих зображень, у яких понад"
-" один шар. При експортуванні шари буде об'єднано."
+"У Photoshop не передбачено підтримки індексованих зображень, у яких понад "
+"один шар. При експортуванні шари буде об'єднано."
 
 #: plug-ins/file-psd/psd-export.c:2699 plug-ins/file-psd/psd-load.c:3782
 msgid "Compatibility Notice"
@@ -11777,8 +11804,8 @@ msgid "Create line"
 msgstr "Створити лінію"
 
 #: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1436
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1572
-#: plug-ins/imagemap/imap-menu.ui:171 plug-ins/imagemap/imap-menu.ui:259
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1580
+#: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
 msgid "Rectangle"
 msgstr "Прямокутник"
 
@@ -11788,8 +11815,8 @@ msgstr "Створити прямокутник"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:3987
-#: plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui:176
-#: plug-ins/imagemap/imap-menu.ui:264
+#: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
+#: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
 msgstr "Коло"
 
@@ -11815,8 +11842,8 @@ msgstr "Створити дугу"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4004
-#: plug-ins/imagemap/imap_main.c:1576 plug-ins/imagemap/imap-menu.ui:181
-#: plug-ins/imagemap/imap-menu.ui:269
+#: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
 msgstr "Багатокутник"
 
@@ -11863,8 +11890,8 @@ msgstr "Перемістити одну точку"
 #: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1289
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1537 plug-ins/imagemap/imap-menu.ui:47
-#: plug-ins/imagemap/imap-menu.ui:330 plug-ins/imagemap/imap-menu.ui:367
+#: plug-ins/imagemap/imap_main.c:1545 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -12177,12 +12204,12 @@ msgstr ""
 msgid "File"
 msgstr "Файл"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:8
 msgid "Open"
 msgstr "Відкрити"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1524
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1532
 #: plug-ins/imagemap/imap-menu.ui:12
 msgid "Save"
 msgstr "Зберегти"
@@ -12197,7 +12224,7 @@ msgid "Edit"
 msgstr "Зміни"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1538
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "Скасувати"
@@ -12207,7 +12234,7 @@ msgstr "Скасувати"
 msgid "Clear"
 msgstr "Очистити"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1527
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1535
 #: plug-ins/imagemap/imap-menu.ui:77
 msgid "Preferences"
 msgstr "Параметри"
@@ -12468,8 +12495,7 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -12579,8 +12605,7 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -13050,8 +13075,7 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3316
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3326
 msgid "Delete Gradient Flare"
@@ -13412,7 +13436,7 @@ msgid "New"
 msgstr "Створити"
 
 #: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1540 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Повернути"
 
@@ -13538,13 +13562,13 @@ msgstr "Створити"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1535 plug-ins/imagemap/imap-menu.ui:43
-#: plug-ins/imagemap/imap-menu.ui:326 plug-ins/imagemap/imap-menu.ui:363
+#: plug-ins/imagemap/imap_main.c:1543 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
 msgid "Cut"
 msgstr "Вирізати"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap-menu.ui:343
+#: plug-ins/imagemap/imap-menu.ui:338
 msgid "Delete Point"
 msgstr "Видалити точку"
 
@@ -13655,14 +13679,14 @@ msgid "Guides"
 msgstr "Напрямні"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: plug-ins/imagemap/imap-menu.ui:339
+#: plug-ins/imagemap/imap-menu.ui:334
 msgid "Insert Point"
 msgstr "Вставити точку"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:238
-#: plug-ins/imagemap/imap-menu.ui:322 plug-ins/imagemap/imap-menu.ui:359
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:233
+#: plug-ins/imagemap/imap-menu.ui:317 plug-ins/imagemap/imap-menu.ui:354
 msgid "Move Down"
 msgstr "Перемістити вниз"
 
@@ -13680,13 +13704,13 @@ msgstr "Перемістити вперед"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
-#: plug-ins/imagemap/imap-menu.ui:234 plug-ins/imagemap/imap-menu.ui:318
-#: plug-ins/imagemap/imap-menu.ui:355
+#: plug-ins/imagemap/imap-menu.ui:229 plug-ins/imagemap/imap-menu.ui:313
+#: plug-ins/imagemap/imap-menu.ui:350
 msgid "Move Up"
 msgstr "Перемістити вгору"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1539
-#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:301
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
 msgid "Paste"
 msgstr "Вставити"
 
@@ -13855,101 +13879,101 @@ msgstr "точок з_ліва"
 msgid "pixels from _top"
 msgstr "точок з_верху"
 
-#: plug-ins/imagemap/imap_main.c:220
+#: plug-ins/imagemap/imap_main.c:222
 msgid "_Image Map..."
 msgstr "_Мапа зображення..."
 
-#: plug-ins/imagemap/imap_main.c:224
+#: plug-ins/imagemap/imap_main.c:226
 msgid "Create a clickable imagemap"
 msgstr "Створити мапу зображення (imagemap)"
 
-#: plug-ins/imagemap/imap_main.c:652 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:660 plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Без назви>"
 
-#: plug-ins/imagemap/imap_main.c:800
+#: plug-ins/imagemap/imap_main.c:808
 msgid "Some data has been changed!"
 msgstr "Деякі дані змінились!"
 
-#: plug-ins/imagemap/imap_main.c:803
+#: plug-ins/imagemap/imap_main.c:811
 msgid "Do you really want to discard your changes?"
 msgstr "Ви справді хочете відмовитись від змін?"
 
-#: plug-ins/imagemap/imap_main.c:1040
+#: plug-ins/imagemap/imap_main.c:1048
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Файл «%s» збережено."
 
-#: plug-ins/imagemap/imap_main.c:1044
+#: plug-ins/imagemap/imap_main.c:1052
 msgid "Couldn't save file:"
 msgstr "Не вдається зберегти файл:"
 
-#: plug-ins/imagemap/imap_main.c:1057
+#: plug-ins/imagemap/imap_main.c:1065
 msgid "Image size has changed."
 msgstr "Розмір зображення змінено."
 
-#: plug-ins/imagemap/imap_main.c:1058
+#: plug-ins/imagemap/imap_main.c:1066
 msgid "Resize area's?"
 msgstr "Змінити розмір сектора?"
 
-#: plug-ins/imagemap/imap_main.c:1100
+#: plug-ins/imagemap/imap_main.c:1108
 msgid "Couldn't read file:"
 msgstr "Не вдалось зчитати файл:"
 
-#: plug-ins/imagemap/imap_main.c:1153
+#: plug-ins/imagemap/imap_main.c:1161
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1542 plug-ins/imagemap/imap-menu.ui:108
-#: plug-ins/imagemap/imap-menu.ui:279
+#: plug-ins/imagemap/imap_main.c:1550 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap-menu.ui:274
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: plug-ins/imagemap/imap_main.c:1544 plug-ins/imagemap/imap-menu.ui:112
-#: plug-ins/imagemap/imap-menu.ui:283
+#: plug-ins/imagemap/imap_main.c:1552 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap-menu.ui:278
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap_main.c:1555
 msgid "Edit Map Info"
 msgstr "Змінити інформацію про мапу"
 
-#: plug-ins/imagemap/imap_main.c:1550
+#: plug-ins/imagemap/imap_main.c:1558
 msgid "Move Area to Front"
 msgstr "Перенести ділянку на передній план"
 
-#: plug-ins/imagemap/imap_main.c:1552
+#: plug-ins/imagemap/imap_main.c:1560
 msgid "Move Area to Bottom"
 msgstr "Перенести ділянку додолу"
 
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:166
-#: plug-ins/imagemap/imap-menu.ui:254
+#: plug-ins/imagemap/imap_main.c:1578 plug-ins/imagemap/imap-menu.ui:161
+#: plug-ins/imagemap/imap-menu.ui:249
 msgid "Arrow"
 msgstr "Стрілка"
 
-#: plug-ins/imagemap/imap_main.c:1570
+#: plug-ins/imagemap/imap_main.c:1578
 msgid "Select Existing Area"
 msgstr "Вибрати наявну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/imagemap/imap_main.c:1580
 msgid "Define Rectangle area"
 msgstr "Визначити прямокутну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap_main.c:1582
 msgid "Define Circle/Oval area"
 msgstr "Визначити круглу/овальну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1576
+#: plug-ins/imagemap/imap_main.c:1584
 msgid "Define Polygon area"
 msgstr "Визначити багатокутну ділянку"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
-#: plug-ins/imagemap/imap-menu.ui:310 plug-ins/imagemap/imap-menu.ui:347
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
 msgid "Edit Area Info..."
 msgstr "Змінити інформацію про ділянку…"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Змінити інформацію про вибрану ділянку"
 
@@ -14170,74 +14194,73 @@ msgid "Zoom To"
 msgstr "Масштаб"
 
 #: plug-ins/imagemap/imap-menu.ui:119
+#| msgid "1:1"
+msgid "8:1"
+msgstr "8:1"
+
+#: plug-ins/imagemap/imap-menu.ui:124
+#| msgid "1:1"
+msgid "4:1"
+msgstr "4:1"
+
+#: plug-ins/imagemap/imap-menu.ui:129
+#| msgid "1:1"
+msgid "2:1"
+msgstr "2:1"
+
+#: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:1"
 msgstr "1:1"
 
-#: plug-ins/imagemap/imap-menu.ui:124
+#: plug-ins/imagemap/imap-menu.ui:139
 msgid "1:2"
 msgstr "1:2"
 
-#: plug-ins/imagemap/imap-menu.ui:129
-msgid "1:3"
-msgstr "1:3"
-
-#: plug-ins/imagemap/imap-menu.ui:134
+#: plug-ins/imagemap/imap-menu.ui:144
 msgid "1:4"
 msgstr "1:4"
 
-#: plug-ins/imagemap/imap-menu.ui:139
-msgid "1:5"
-msgstr "1:5"
-
-#: plug-ins/imagemap/imap-menu.ui:144
-msgid "1:6"
-msgstr "1:6"
-
 #: plug-ins/imagemap/imap-menu.ui:149
-msgid "1:7"
-msgstr "1:7"
-
-#: plug-ins/imagemap/imap-menu.ui:154
 msgid "1:8"
 msgstr "1:8"
 
-#: plug-ins/imagemap/imap-menu.ui:163
+#: plug-ins/imagemap/imap-menu.ui:158
 msgid "Mappings"
 msgstr "Прив'язки"
 
-#: plug-ins/imagemap/imap-menu.ui:188 plug-ins/imagemap/imap-menu.ui:247
+#: plug-ins/imagemap/imap-menu.ui:183 plug-ins/imagemap/imap-menu.ui:242
 msgid "Edit Map Info..."
 msgstr "Змінити інформацію про карту…"
 
-#: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
+#: plug-ins/imagemap/imap-menu.ui:189 plug-ins/imagemap/imap-menu.ui:246
 msgid "Tools"
 msgstr "Засоби"
 
-#: plug-ins/imagemap/imap-menu.ui:201 plug-ins/imagemap/imap-menu.ui:293
+#: plug-ins/imagemap/imap-menu.ui:196 plug-ins/imagemap/imap-menu.ui:288
 msgid "Grid Settings..."
 msgstr "Параметри сітки…"
 
-#: plug-ins/imagemap/imap-menu.ui:207
+#: plug-ins/imagemap/imap-menu.ui:202
 msgid "Use GIMP Guides..."
 msgstr "Використовувати напрямні GIMP…"
 
-#: plug-ins/imagemap/imap-menu.ui:211 plug-ins/imagemap/imap-menu.ui:297
+#: plug-ins/imagemap/imap-menu.ui:206 plug-ins/imagemap/imap-menu.ui:292
 msgid "Create Guides..."
 msgstr "Створити напрямні…"
 
-#: plug-ins/imagemap/imap-menu.ui:217
+#: plug-ins/imagemap/imap-menu.ui:212
 msgid "Help"
 msgstr "Довідка"
 
-#: plug-ins/imagemap/imap-menu.ui:220 plug-ins/screenshot/screenshot.c:536
+#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:536
 msgid "Contents"
 msgstr "Зміст"
 
-#: plug-ins/imagemap/imap-menu.ui:224
+#: plug-ins/imagemap/imap-menu.ui:219
 msgid "About"
 msgstr "Про програму"
 
-#: plug-ins/imagemap/imap-menu.ui:314 plug-ins/imagemap/imap-menu.ui:351
+#: plug-ins/imagemap/imap-menu.ui:309 plug-ins/imagemap/imap-menu.ui:346
 msgid "Delete Area"
 msgstr "Вилучити ділянку"
 
@@ -15630,16 +15653,8 @@ msgid "Age 14 or Under"
 msgstr "14 років або менше"
 
 #: plug-ins/metadata/metadata-tags.c:254
-msgid "2"
-msgstr "2"
-
-#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
-
-#: plug-ins/metadata/metadata-tags.c:254
-msgid "4"
-msgstr "4"
 
 #: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
@@ -15942,110 +15957,108 @@ msgstr "_Знімок екрана..."
 msgid "Create an image from an area of the screen"
 msgstr "Створити зображення з вказаної частини робочого столу"
 
-#: plug-ins/screenshot/screenshot.c:164
+#: plug-ins/screenshot/screenshot.c:166
 msgid "Shoot _area"
 msgstr "_Область знімка"
 
-#: plug-ins/screenshot/screenshot.c:165
-msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
-msgstr ""
-"Тип знімка { ВІКНО-ЗНІМКА (0), КОРІНЬ-ЗНІМКА (1), ДІЛЯНКА-ЗНІМКА (2) }"
+#: plug-ins/screenshot/screenshot.c:167
+msgid "The shoot type"
+msgstr "Тип знімка"
 
-#: plug-ins/screenshot/screenshot.c:195
-msgid "Include _mouse pointer"
-msgstr "Включити вказівник _миші"
-
-#: plug-ins/screenshot/screenshot.c:196
-msgid "Your pointing device's cursor will be part of the image"
-msgstr "Курсор вашого координатного пристрою буде частиною зображення"
-
-#: plug-ins/screenshot/screenshot.c:204
-msgid "Include window _decoration"
-msgstr "Включаючи _рамку вікна"
-
-#: plug-ins/screenshot/screenshot.c:205
-msgid "Title bar, window borders and shadow will be part of the image"
-msgstr ""
-"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
-
-#: plug-ins/screenshot/screenshot.c:214
-msgid "Selection d_elay"
-msgstr "За_тримка вибору"
-
-#: plug-ins/screenshot/screenshot.c:215
-msgid "Delay before selection of the window or the region"
-msgstr "Затримка до вибору вікна або ділянки"
-
-#: plug-ins/screenshot/screenshot.c:219
-msgid "Screenshot dela_y"
-msgstr "Затримка з_німка"
-
-#: plug-ins/screenshot/screenshot.c:220
-msgid "Delay before snapping the screenshot"
-msgstr "Затримка до прилипання знімка"
-
-#: plug-ins/screenshot/screenshot.c:224
-msgid "Color _Profile"
-msgstr "Колірний про_філь"
-
-#: plug-ins/screenshot/screenshot.c:264
-msgid "GDK initialization failed."
-msgstr "Не вдалося ініціалізувати GDK."
-
-#: plug-ins/screenshot/screenshot.c:302
-msgid "No screenshot backends available."
-msgstr "Немає модуля створення знімків вікон."
-
-#: plug-ins/screenshot/screenshot.c:504
-#: plug-ins/screenshot/screenshot-x11.c:443
-msgid "Screenshot"
-msgstr "Знімок екрану"
-
-#: plug-ins/screenshot/screenshot.c:505
-msgid "S_nap"
-msgstr "За_хопити"
-
-#: plug-ins/screenshot/screenshot.c:507
+#: plug-ins/screenshot/screenshot.c:168
 msgid "Take a screenshot of a single window"
 msgstr "Створити знімок одного вікна"
 
-#: plug-ins/screenshot/screenshot.c:508
+#: plug-ins/screenshot/screenshot.c:169
 msgid "Take a screenshot of the entire screen"
 msgstr "Створити знімок усього екрана"
 
-#: plug-ins/screenshot/screenshot.c:509
+#: plug-ins/screenshot/screenshot.c:171
 msgid "Select a region to grab"
 msgstr "Виберіть ділянку для захоплення"
+
+#: plug-ins/screenshot/screenshot.c:202
+msgid "Include _mouse pointer"
+msgstr "Включити вказівник _миші"
+
+#: plug-ins/screenshot/screenshot.c:203
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "Курсор вашого координатного пристрою буде частиною зображення"
+
+#: plug-ins/screenshot/screenshot.c:211
+msgid "Include window _decoration"
+msgstr "Включаючи _рамку вікна"
+
+#: plug-ins/screenshot/screenshot.c:212
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+
+#: plug-ins/screenshot/screenshot.c:221
+msgid "Selection d_elay"
+msgstr "За_тримка вибору"
+
+#: plug-ins/screenshot/screenshot.c:222
+msgid "Delay before selection of the window or the region"
+msgstr "Затримка до вибору вікна або ділянки"
+
+#: plug-ins/screenshot/screenshot.c:226
+msgid "Screenshot dela_y"
+msgstr "Затримка з_німка"
+
+#: plug-ins/screenshot/screenshot.c:227
+msgid "Delay before snapping the screenshot"
+msgstr "Затримка до прилипання знімка"
+
+#: plug-ins/screenshot/screenshot.c:231
+msgid "Color _Profile"
+msgstr "Колірний про_філь"
+
+#: plug-ins/screenshot/screenshot.c:233
+msgid "Tag image with monitor profile"
+msgstr "Позначити зображення міткою профілю монітора"
+
+#: plug-ins/screenshot/screenshot.c:234
+msgid "Convert image with sRGB"
+msgstr "Перетворити зображення до sRGB"
+
+#: plug-ins/screenshot/screenshot.c:272
+msgid "GDK initialization failed."
+msgstr "Не вдалося ініціалізувати GDK."
+
+#: plug-ins/screenshot/screenshot.c:310
+msgid "No screenshot backends available."
+msgstr "Немає модуля створення знімків вікон."
+
+#: plug-ins/screenshot/screenshot.c:511
+#: plug-ins/screenshot/screenshot-x11.c:444
+msgid "Screenshot"
+msgstr "Знімок екрану"
+
+#: plug-ins/screenshot/screenshot.c:512
+msgid "S_nap"
+msgstr "За_хопити"
 
 #: plug-ins/screenshot/screenshot.c:595
 msgid "Delay"
 msgstr "Затримка"
 
-#: plug-ins/screenshot/screenshot.c:603
-msgid "Tag image with monitor profile"
-msgstr "Позначити зображення міткою профілю монітора"
-
-#: plug-ins/screenshot/screenshot.c:604
-msgid "Convert image with sRGB"
-msgstr "Перетворити зображення до sRGB"
-
 #: plug-ins/screenshot/screenshot-win32.c:297
 msgid "No data captured"
 msgstr "Даних не захоплено"
 
-#: plug-ins/screenshot/screenshot-x11.c:109
+#: plug-ins/screenshot/screenshot-x11.c:110
 msgid "Error selecting the window"
 msgstr "Помилка при виборі вікна"
 
-#: plug-ins/screenshot/screenshot-x11.c:431
+#: plug-ins/screenshot/screenshot-x11.c:432
 msgid "Importing screenshot"
 msgstr "Імпорт знімку екрану"
 
-#: plug-ins/screenshot/screenshot-x11.c:484
+#: plug-ins/screenshot/screenshot-x11.c:485
 msgid "Mouse Pointer"
 msgstr "Вказівник миші"
 
-#: plug-ins/screenshot/screenshot-x11.c:662
+#: plug-ins/screenshot/screenshot-x11.c:664
 msgid "Specified window not found"
 msgstr "Вказане вікно не знайдене"
 
@@ -16123,8 +16136,7 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
-"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:197
 msgid "Filter E_psilon"
@@ -16328,6 +16340,37 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid ""
+#~ "(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, "
+#~ "Snap to grid = 4)"
+#~ msgstr ""
+#~ "(Немає = 0, Зібрати = 1, Заповнити зліва праворуч = 2, Заповнити справа "
+#~ "ліворуч = 3, Прилипання до ґратки = 4)"
+
+#~ msgid "(Left edge = 0, Center = 1, Right edge = 2)"
+#~ msgstr "(Лівий край = 0, Центр = 1, Правий край = 2)"
+
+#~ msgid ""
+#~ "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+#~ "ADAPTIVE (3) }"
+#~ msgstr ""
+#~ "Тип фільтра { МЕДІАННИЙ (0), АДАПТИВНИЙ (1), РЕКУРСИВНО-МЕДІАННИЙ (2), "
+#~ "РЕКУРСИВНО-АДАПТИВНИЙ (3) }"
+
+#~ msgid "1:3"
+#~ msgstr "1:3"
+
+#~ msgid "1:5"
+#~ msgstr "1:5"
+
+#~ msgid "1:7"
+#~ msgstr "1:7"
+
+#~ msgid ""
+#~ "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+#~ msgstr ""
+#~ "Тип знімка { ВІКНО-ЗНІМКА (0), КОРІНЬ-ЗНІМКА (1), ДІЛЯНКА-ЗНІМКА (2) }"
 
 #~ msgid "Windows Animated Cursor"
 #~ msgstr "Анімований вказівник Windows"
