@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-21 19:23+0000\n"
-"PO-Revision-Date: 2024-07-22 19:01+0800\n"
+"POT-Creation-Date: 2024-07-26 18:57+0000\n"
+"PO-Revision-Date: 2024-07-27 08:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -31,11 +31,11 @@ msgid "Exercise a goat in the C language"
 msgstr "在 C 语言中锻炼一只山羊"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:190 plug-ins/common/checkerboard.c:176
+#: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
-#: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:249 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:648 plug-ins/common/decompose.c:387
-#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
+#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
@@ -47,7 +47,7 @@ msgstr "在 C 语言中锻炼一只山羊"
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:266
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:538 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -255,69 +255,15 @@ msgstr "对齐可见图层(_B)..."
 msgid "Align all visible layers of the image"
 msgstr "对齐图像的所有可见图层"
 
+#: plug-ins/common/align-layers.c:184
+msgid "Align visible layers"
+msgstr "对齐可见图层"
+
 #: plug-ins/common/align-layers.c:192
 msgid "_Horizontal style"
 msgstr "水平样式(_H)"
 
-#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
-msgid ""
-"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
-"to grid = 4)"
-msgstr "（无=0，收集=1，左至右填充=2，右至左填充=3，吸附至网格=4）"
-
-#: plug-ins/common/align-layers.c:200
-msgid "Hori_zontal base"
-msgstr "水平基准(_Z)"
-
-#: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
-msgid "(Left edge = 0, Center = 1, Right edge = 2)"
-msgstr "（左边=0，中心=1，右边=2）"
-
-#: plug-ins/common/align-layers.c:207
-msgid "_Vertical style"
-msgstr "竖直样式(_V)"
-
-#: plug-ins/common/align-layers.c:215
-msgid "Ver_tical base"
-msgstr "竖直基准(_T)"
-
-#: plug-ins/common/align-layers.c:222
-msgid "_Grid"
-msgstr "网格(_G)"
-
-#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:815
-#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:197
-#: plug-ins/imagemap/imap-menu.ui:289
-msgid "Grid"
-msgstr "网格"
-
-#: plug-ins/common/align-layers.c:229
-msgid "Ignore the _bottom layer even if visible"
-msgstr "即使可见也忽略底部图层(_B)"
-
-#: plug-ins/common/align-layers.c:230
-msgid "Ignore the bottom layer even if visible"
-msgstr "即使可见也忽略底部图层"
-
-#: plug-ins/common/align-layers.c:236
-msgid "_Use the (invisible) bottom layer as the base"
-msgstr "使用（不可见）底部图层作为基准(_U)"
-
-#: plug-ins/common/align-layers.c:237
-msgid "Use the (invisible) bottom layer as the base"
-msgstr "使用（不可见）底部图层作为基准"
-
-#: plug-ins/common/align-layers.c:287
-#, c-format
-msgid "There are not enough layers to align."
-msgstr "没有足够多的图层可以对齐。"
-
-#: plug-ins/common/align-layers.c:731
-msgid "Align Visible Layers"
-msgstr "对齐可见图层"
-
-#: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
+#: plug-ins/common/align-layers.c:194 plug-ins/common/align-layers.c:216
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:346
@@ -331,50 +277,98 @@ msgstr "对齐可见图层"
 msgid "None"
 msgstr "无"
 
-#: plug-ins/common/align-layers.c:741 plug-ins/common/align-layers.c:759
+#: plug-ins/common/align-layers.c:195 plug-ins/common/align-layers.c:217
 msgid "Collect"
 msgstr "聚集"
 
-#: plug-ins/common/align-layers.c:742
+#: plug-ins/common/align-layers.c:196
 msgid "Fill (left to right)"
 msgstr "填充（左至右）"
 
-#: plug-ins/common/align-layers.c:743
+#: plug-ins/common/align-layers.c:197
 msgid "Fill (right to left)"
 msgstr "填充（右至左）"
 
-#: plug-ins/common/align-layers.c:744 plug-ins/common/align-layers.c:762
+#: plug-ins/common/align-layers.c:198 plug-ins/common/align-layers.c:220
 msgid "Snap to grid"
 msgstr "吸附到网格"
 
-#: plug-ins/common/align-layers.c:750
+#: plug-ins/common/align-layers.c:204
+msgid "Hori_zontal base"
+msgstr "水平基准(_Z)"
+
+#: plug-ins/common/align-layers.c:206
 msgid "Left edge"
 msgstr "左边界"
 
-#: plug-ins/common/align-layers.c:751 plug-ins/common/align-layers.c:769
+#: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
 #: plug-ins/gradient-flare/gradient-flare.c:2919
 msgid "Center"
 msgstr "中心"
 
-#: plug-ins/common/align-layers.c:752
+#: plug-ins/common/align-layers.c:208
 msgid "Right edge"
 msgstr "右边界"
 
-#: plug-ins/common/align-layers.c:760
+#: plug-ins/common/align-layers.c:214
+msgid "_Vertical style"
+msgstr "竖直样式(_V)"
+
+#: plug-ins/common/align-layers.c:218
 msgid "Fill (top to bottom)"
 msgstr "填充（上至下）"
 
-#: plug-ins/common/align-layers.c:761
+#: plug-ins/common/align-layers.c:219
 msgid "Fill (bottom to top)"
 msgstr "填充（下至上）"
 
-#: plug-ins/common/align-layers.c:768
+#: plug-ins/common/align-layers.c:226
+msgid "Ver_tical base"
+msgstr "竖直基准(_T)"
+
+#: plug-ins/common/align-layers.c:228
 msgid "Top edge"
 msgstr "顶边界"
 
-#: plug-ins/common/align-layers.c:770
+#: plug-ins/common/align-layers.c:230
 msgid "Bottom edge"
 msgstr "底边界"
+
+#: plug-ins/common/align-layers.c:236
+msgid "_Grid"
+msgstr "网格(_G)"
+
+#: plug-ins/common/align-layers.c:237 plug-ins/common/grid.c:815
+#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
+#: plug-ins/imagemap/imap_main.c:1563 plug-ins/imagemap/imap-menu.ui:192
+#: plug-ins/imagemap/imap-menu.ui:284
+msgid "Grid"
+msgstr "网格"
+
+#: plug-ins/common/align-layers.c:243
+msgid "Ignore the _bottom layer even if visible"
+msgstr "即使可见也忽略底部图层(_B)"
+
+#: plug-ins/common/align-layers.c:244
+msgid "Ignore the bottom layer even if visible"
+msgstr "即使可见也忽略底部图层"
+
+#: plug-ins/common/align-layers.c:250
+msgid "_Use the (invisible) bottom layer as the base"
+msgstr "使用（不可见）底部图层作为基准(_U)"
+
+#: plug-ins/common/align-layers.c:251
+msgid "Use the (invisible) bottom layer as the base"
+msgstr "使用（不可见）底部图层作为基准"
+
+#: plug-ins/common/align-layers.c:301
+#, c-format
+msgid "There are not enough layers to align."
+msgstr "没有足够多的图层可以对齐。"
+
+#: plug-ins/common/align-layers.c:749
+msgid "Align Visible Layers"
+msgstr "对齐可见图层"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
@@ -505,7 +499,7 @@ msgstr "分离"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
-#: plug-ins/imagemap/imap-menu.ui:276
+#: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "缩放"
 
@@ -665,22 +659,58 @@ msgid "Bucket Si_ze"
 msgstr "油漆桶大小(_Z)"
 
 #: plug-ins/common/border-average.c:152
-msgid "Bits for bucket size (default=4: 16 Levels)"
-msgstr "油漆桶的位大小（默认=4：16 个级别）"
+msgid "Bits for bucket size"
+msgstr "油漆桶的位大小"
 
-#: plug-ins/common/border-average.c:157 plug-ins/common/border-average.c:158
+#: plug-ins/common/border-average.c:153
+msgid "1"
+msgstr "1"
+
+#: plug-ins/common/border-average.c:154 plug-ins/metadata/metadata-tags.c:254
+msgid "2"
+msgstr "2"
+
+#: plug-ins/common/border-average.c:155 plug-ins/metadata/metadata-tags.c:254
+msgid "4"
+msgstr "4"
+
+#: plug-ins/common/border-average.c:156
+msgid "8)"
+msgstr "8)"
+
+#: plug-ins/common/border-average.c:157
+msgid "16"
+msgstr "16"
+
+#: plug-ins/common/border-average.c:158
+msgid "32"
+msgstr "32"
+
+#: plug-ins/common/border-average.c:159
+msgid "64"
+msgstr "64"
+
+#: plug-ins/common/border-average.c:160
+msgid "128"
+msgstr "128"
+
+#: plug-ins/common/border-average.c:161
+msgid "256"
+msgstr "256"
+
+#: plug-ins/common/border-average.c:167 plug-ins/common/border-average.c:168
 msgid "The average color of the specified border."
 msgstr "指定边界的平均颜色。"
 
-#: plug-ins/common/border-average.c:217 plug-ins/common/border-average.c:395
+#: plug-ins/common/border-average.c:227 plug-ins/common/border-average.c:406
 msgid "Border Average"
 msgstr "边界均值"
 
-#: plug-ins/common/border-average.c:406
+#: plug-ins/common/border-average.c:410
 msgid "Border Size"
 msgstr "边界大小"
 
-#: plug-ins/common/border-average.c:433
+#: plug-ins/common/border-average.c:437
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "颜色数量"
@@ -1730,38 +1760,38 @@ msgid "Le_vel"
 msgstr "级别(_V)"
 
 #: plug-ins/common/contrast-retinex.c:212
-msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr "贯穿尺度的 Retinex 分布 {统一（0）、低（1）、高（2）}"
+msgid "Retinex distribution through scales"
+msgstr "贯穿尺度的 Retinex 分布"
 
-#: plug-ins/common/contrast-retinex.c:218
-msgid "Dy_namic"
-msgstr "动态(_N)"
-
-#: plug-ins/common/contrast-retinex.c:219
-msgid "Variance value"
-msgstr "变化数值"
-
-#: plug-ins/common/contrast-retinex.c:272
-msgid "Retinex"
-msgstr "视网膜皮层"
-
-#: plug-ins/common/contrast-retinex.c:306
-msgid "Retinex Image Enhancement"
-msgstr "Retinex 图像增强"
-
-#: plug-ins/common/contrast-retinex.c:321
+#: plug-ins/common/contrast-retinex.c:213
 msgid "Uniform"
 msgstr "统一"
 
-#: plug-ins/common/contrast-retinex.c:322 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "低"
 
-#: plug-ins/common/contrast-retinex.c:323 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:215 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "高"
 
-#: plug-ins/common/contrast-retinex.c:658
+#: plug-ins/common/contrast-retinex.c:221
+msgid "Dy_namic"
+msgstr "动态(_N)"
+
+#: plug-ins/common/contrast-retinex.c:222
+msgid "Variance value"
+msgstr "变化数值"
+
+#: plug-ins/common/contrast-retinex.c:275
+msgid "Retinex"
+msgstr "视网膜皮层"
+
+#: plug-ins/common/contrast-retinex.c:308
+msgid "Retinex Image Enhancement"
+msgstr "Retinex 图像增强"
+
+#: plug-ins/common/contrast-retinex.c:649
 msgid "Retinex: filtering"
 msgstr "Retinex：过滤"
 
@@ -2390,47 +2420,45 @@ msgid "_Filter Type"
 msgstr "过滤器类型(_F)"
 
 #: plug-ins/common/despeckle.c:192
-msgid ""
-"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
-"ADAPTIVE (3) }"
-msgstr "过滤器类型 {中值（0）、自适应（1）、递归中值（2）、递归自适应（3）}"
+msgid "Filter type"
+msgstr "过滤器类型"
 
-#: plug-ins/common/despeckle.c:198
-msgid "_Black level"
-msgstr "黑色级别(_B)"
-
-#: plug-ins/common/despeckle.c:199
-msgid "Black level"
-msgstr "黑色级别"
-
-#: plug-ins/common/despeckle.c:204
-msgid "_White level"
-msgstr "白色级别(_W)"
-
-#: plug-ins/common/despeckle.c:205
-msgid "White level"
-msgstr "白色级别"
-
-#: plug-ins/common/despeckle.c:386 plug-ins/common/despeckle.c:760
-msgid "Despeckle"
-msgstr "去除斑点"
-
-#: plug-ins/common/despeckle.c:390
+#: plug-ins/common/despeckle.c:193
 msgid "Median"
 msgstr "中值"
 
-#: plug-ins/common/despeckle.c:391 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:194 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "自适应"
 
-#: plug-ins/common/despeckle.c:392
+#: plug-ins/common/despeckle.c:195
 msgid "Recursive-Median"
 msgstr "递归中值"
 
-#: plug-ins/common/despeckle.c:393
+#: plug-ins/common/despeckle.c:196
 msgid "Recursive-Adaptive"
 msgstr "递归自适应"
+
+#: plug-ins/common/despeckle.c:202
+msgid "_Black level"
+msgstr "黑色级别(_B)"
+
+#: plug-ins/common/despeckle.c:203
+msgid "Black level"
+msgstr "黑色级别"
+
+#: plug-ins/common/despeckle.c:208
+msgid "_White level"
+msgstr "白色级别(_W)"
+
+#: plug-ins/common/despeckle.c:209
+msgid "White level"
+msgstr "白色级别"
+
+#: plug-ins/common/despeckle.c:389 plug-ins/common/despeckle.c:756
+msgid "Despeckle"
+msgstr "去除斑点"
 
 #: plug-ins/common/destripe.c:126
 msgid "Des_tripe..."
@@ -11443,8 +11471,8 @@ msgid "Create line"
 msgstr "创建线段"
 
 #: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1436
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1572
-#: plug-ins/imagemap/imap-menu.ui:171 plug-ins/imagemap/imap-menu.ui:259
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1580
+#: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
 msgid "Rectangle"
 msgstr "矩形"
 
@@ -11454,8 +11482,8 @@ msgstr "创建矩形"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:3987
-#: plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui:176
-#: plug-ins/imagemap/imap-menu.ui:264
+#: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
+#: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
 msgstr "圆"
 
@@ -11481,8 +11509,8 @@ msgstr "创建弧线"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4004
-#: plug-ins/imagemap/imap_main.c:1576 plug-ins/imagemap/imap-menu.ui:181
-#: plug-ins/imagemap/imap-menu.ui:269
+#: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
 msgstr "多边形"
 
@@ -11529,8 +11557,8 @@ msgstr "移动一个点"
 #: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1289
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1537 plug-ins/imagemap/imap-menu.ui:47
-#: plug-ins/imagemap/imap-menu.ui:330 plug-ins/imagemap/imap-menu.ui:367
+#: plug-ins/imagemap/imap_main.c:1545 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
 msgid "Copy"
 msgstr "复制"
 
@@ -11838,12 +11866,12 @@ msgstr "试图打开临时文件“%s”用于加载寄生物时出错：%s"
 msgid "File"
 msgstr "文件"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:8
 msgid "Open"
 msgstr "打开"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1524
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1532
 #: plug-ins/imagemap/imap-menu.ui:12
 msgid "Save"
 msgstr "保存"
@@ -11858,7 +11886,7 @@ msgid "Edit"
 msgstr "编辑"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1538
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "撤消"
@@ -11868,7 +11896,7 @@ msgstr "撤消"
 msgid "Clear"
 msgstr "清除"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1527
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1535
 #: plug-ins/imagemap/imap-menu.ui:77
 msgid "Preferences"
 msgstr "首选项"
@@ -13065,7 +13093,7 @@ msgid "New"
 msgstr "新建"
 
 #: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1540 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "重做"
 
@@ -13191,13 +13219,13 @@ msgstr "创建"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1535 plug-ins/imagemap/imap-menu.ui:43
-#: plug-ins/imagemap/imap-menu.ui:326 plug-ins/imagemap/imap-menu.ui:363
+#: plug-ins/imagemap/imap_main.c:1543 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
 msgid "Cut"
 msgstr "剪切"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap-menu.ui:343
+#: plug-ins/imagemap/imap-menu.ui:338
 msgid "Delete Point"
 msgstr "删除点"
 
@@ -13306,14 +13334,14 @@ msgid "Guides"
 msgstr "参考线"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: plug-ins/imagemap/imap-menu.ui:339
+#: plug-ins/imagemap/imap-menu.ui:334
 msgid "Insert Point"
 msgstr "插入点"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:238
-#: plug-ins/imagemap/imap-menu.ui:322 plug-ins/imagemap/imap-menu.ui:359
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:233
+#: plug-ins/imagemap/imap-menu.ui:317 plug-ins/imagemap/imap-menu.ui:354
 msgid "Move Down"
 msgstr "下移"
 
@@ -13331,13 +13359,13 @@ msgstr "提到最前"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
-#: plug-ins/imagemap/imap-menu.ui:234 plug-ins/imagemap/imap-menu.ui:318
-#: plug-ins/imagemap/imap-menu.ui:355
+#: plug-ins/imagemap/imap-menu.ui:229 plug-ins/imagemap/imap-menu.ui:313
+#: plug-ins/imagemap/imap-menu.ui:350
 msgid "Move Up"
 msgstr "上移"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1539
-#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:301
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
 msgid "Paste"
 msgstr "粘贴"
 
@@ -13506,101 +13534,101 @@ msgstr "左端像素(_E)"
 msgid "pixels from _top"
 msgstr "顶端像素(_T)"
 
-#: plug-ins/imagemap/imap_main.c:220
+#: plug-ins/imagemap/imap_main.c:222
 msgid "_Image Map..."
 msgstr "图像映像(_I)…"
 
-#: plug-ins/imagemap/imap_main.c:224
+#: plug-ins/imagemap/imap_main.c:226
 msgid "Create a clickable imagemap"
 msgstr "创建可点击的图像映像"
 
-#: plug-ins/imagemap/imap_main.c:652 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:660 plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<未命名>"
 
-#: plug-ins/imagemap/imap_main.c:800
+#: plug-ins/imagemap/imap_main.c:808
 msgid "Some data has been changed!"
 msgstr "一些数据已改变！"
 
-#: plug-ins/imagemap/imap_main.c:803
+#: plug-ins/imagemap/imap_main.c:811
 msgid "Do you really want to discard your changes?"
 msgstr "您真的要放弃您的修改吗？"
 
-#: plug-ins/imagemap/imap_main.c:1040
+#: plug-ins/imagemap/imap_main.c:1048
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "文件“%s”已保存。"
 
-#: plug-ins/imagemap/imap_main.c:1044
+#: plug-ins/imagemap/imap_main.c:1052
 msgid "Couldn't save file:"
 msgstr "无法保存文件："
 
-#: plug-ins/imagemap/imap_main.c:1057
+#: plug-ins/imagemap/imap_main.c:1065
 msgid "Image size has changed."
 msgstr "图像大小已改变。"
 
-#: plug-ins/imagemap/imap_main.c:1058
+#: plug-ins/imagemap/imap_main.c:1066
 msgid "Resize area's?"
 msgstr "重置区域大小吗？"
 
-#: plug-ins/imagemap/imap_main.c:1100
+#: plug-ins/imagemap/imap_main.c:1108
 msgid "Couldn't read file:"
 msgstr "无法读取文件："
 
-#: plug-ins/imagemap/imap_main.c:1153
+#: plug-ins/imagemap/imap_main.c:1161
 #, c-format
 msgid "URL: %s"
 msgstr "URL：%s"
 
-#: plug-ins/imagemap/imap_main.c:1542 plug-ins/imagemap/imap-menu.ui:108
-#: plug-ins/imagemap/imap-menu.ui:279
+#: plug-ins/imagemap/imap_main.c:1550 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap-menu.ui:274
 msgid "Zoom In"
 msgstr "放大"
 
-#: plug-ins/imagemap/imap_main.c:1544 plug-ins/imagemap/imap-menu.ui:112
-#: plug-ins/imagemap/imap-menu.ui:283
+#: plug-ins/imagemap/imap_main.c:1552 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap-menu.ui:278
 msgid "Zoom Out"
 msgstr "缩小"
 
-#: plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap_main.c:1555
 msgid "Edit Map Info"
 msgstr "编辑映像信息"
 
-#: plug-ins/imagemap/imap_main.c:1550
+#: plug-ins/imagemap/imap_main.c:1558
 msgid "Move Area to Front"
 msgstr "移动区域至最前"
 
-#: plug-ins/imagemap/imap_main.c:1552
+#: plug-ins/imagemap/imap_main.c:1560
 msgid "Move Area to Bottom"
 msgstr "移动区域至底部"
 
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:166
-#: plug-ins/imagemap/imap-menu.ui:254
+#: plug-ins/imagemap/imap_main.c:1578 plug-ins/imagemap/imap-menu.ui:161
+#: plug-ins/imagemap/imap-menu.ui:249
 msgid "Arrow"
 msgstr "箭头"
 
-#: plug-ins/imagemap/imap_main.c:1570
+#: plug-ins/imagemap/imap_main.c:1578
 msgid "Select Existing Area"
 msgstr "选择现有区域"
 
-#: plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/imagemap/imap_main.c:1580
 msgid "Define Rectangle area"
 msgstr "定义矩形区域"
 
-#: plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap_main.c:1582
 msgid "Define Circle/Oval area"
 msgstr "定义圆/椭圆区域"
 
-#: plug-ins/imagemap/imap_main.c:1576
+#: plug-ins/imagemap/imap_main.c:1584
 msgid "Define Polygon area"
 msgstr "定义多边形区域"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
-#: plug-ins/imagemap/imap-menu.ui:310 plug-ins/imagemap/imap-menu.ui:347
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
 msgid "Edit Area Info..."
 msgstr "编辑区域信息…"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "编辑选中区域的信息"
 
@@ -13821,74 +13849,70 @@ msgid "Zoom To"
 msgstr "缩放至"
 
 #: plug-ins/imagemap/imap-menu.ui:119
+msgid "8:1"
+msgstr "8:1"
+
+#: plug-ins/imagemap/imap-menu.ui:124
+msgid "4:1"
+msgstr "4:1"
+
+#: plug-ins/imagemap/imap-menu.ui:129
+msgid "2:1"
+msgstr "2:1"
+
+#: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:1"
 msgstr "1:1"
 
-#: plug-ins/imagemap/imap-menu.ui:124
+#: plug-ins/imagemap/imap-menu.ui:139
 msgid "1:2"
 msgstr "1:2"
 
-#: plug-ins/imagemap/imap-menu.ui:129
-msgid "1:3"
-msgstr "1:3"
-
-#: plug-ins/imagemap/imap-menu.ui:134
+#: plug-ins/imagemap/imap-menu.ui:144
 msgid "1:4"
 msgstr "1:4"
 
-#: plug-ins/imagemap/imap-menu.ui:139
-msgid "1:5"
-msgstr "1:5"
-
-#: plug-ins/imagemap/imap-menu.ui:144
-msgid "1:6"
-msgstr "1:6"
-
 #: plug-ins/imagemap/imap-menu.ui:149
-msgid "1:7"
-msgstr "1:7"
-
-#: plug-ins/imagemap/imap-menu.ui:154
 msgid "1:8"
 msgstr "1:8"
 
-#: plug-ins/imagemap/imap-menu.ui:163
+#: plug-ins/imagemap/imap-menu.ui:158
 msgid "Mappings"
 msgstr "映射"
 
-#: plug-ins/imagemap/imap-menu.ui:188 plug-ins/imagemap/imap-menu.ui:247
+#: plug-ins/imagemap/imap-menu.ui:183 plug-ins/imagemap/imap-menu.ui:242
 msgid "Edit Map Info..."
 msgstr "编辑映射信息…"
 
-#: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
+#: plug-ins/imagemap/imap-menu.ui:189 plug-ins/imagemap/imap-menu.ui:246
 msgid "Tools"
 msgstr "工具"
 
-#: plug-ins/imagemap/imap-menu.ui:201 plug-ins/imagemap/imap-menu.ui:293
+#: plug-ins/imagemap/imap-menu.ui:196 plug-ins/imagemap/imap-menu.ui:288
 msgid "Grid Settings..."
 msgstr "网格设置…"
 
-#: plug-ins/imagemap/imap-menu.ui:207
+#: plug-ins/imagemap/imap-menu.ui:202
 msgid "Use GIMP Guides..."
 msgstr "使用 GIMP 参考线…"
 
-#: plug-ins/imagemap/imap-menu.ui:211 plug-ins/imagemap/imap-menu.ui:297
+#: plug-ins/imagemap/imap-menu.ui:206 plug-ins/imagemap/imap-menu.ui:292
 msgid "Create Guides..."
 msgstr "创建参考线…"
 
-#: plug-ins/imagemap/imap-menu.ui:217
+#: plug-ins/imagemap/imap-menu.ui:212
 msgid "Help"
 msgstr "帮助"
 
-#: plug-ins/imagemap/imap-menu.ui:220 plug-ins/screenshot/screenshot.c:536
+#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:536
 msgid "Contents"
 msgstr "内容"
 
-#: plug-ins/imagemap/imap-menu.ui:224
+#: plug-ins/imagemap/imap-menu.ui:219
 msgid "About"
 msgstr "关于"
 
-#: plug-ins/imagemap/imap-menu.ui:314 plug-ins/imagemap/imap-menu.ui:351
+#: plug-ins/imagemap/imap-menu.ui:309 plug-ins/imagemap/imap-menu.ui:346
 msgid "Delete Area"
 msgstr "删除区域"
 
@@ -15278,16 +15302,8 @@ msgid "Age 14 or Under"
 msgstr "14 岁或更小"
 
 #: plug-ins/metadata/metadata-tags.c:254
-msgid "2"
-msgstr "2"
-
-#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
-
-#: plug-ins/metadata/metadata-tags.c:254
-msgid "4"
-msgstr "4"
 
 #: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
@@ -15590,108 +15606,108 @@ msgstr "屏幕截图(_S)…"
 msgid "Create an image from an area of the screen"
 msgstr "从一个屏幕区域创建图像"
 
-#: plug-ins/screenshot/screenshot.c:164
+#: plug-ins/screenshot/screenshot.c:166
 msgid "Shoot _area"
 msgstr "截图区域(_A)"
 
-#: plug-ins/screenshot/screenshot.c:165
-msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
-msgstr "截图类型 { 窗口截图 (0)，全屏截图 (1)，区域截图 (2) }"
+#: plug-ins/screenshot/screenshot.c:167
+msgid "The shoot type"
+msgstr "截图类型"
 
-#: plug-ins/screenshot/screenshot.c:195
-msgid "Include _mouse pointer"
-msgstr "包括鼠标指针(_M)"
-
-#: plug-ins/screenshot/screenshot.c:196
-msgid "Your pointing device's cursor will be part of the image"
-msgstr "您指针设备的光标将会是图像的一部分"
-
-#: plug-ins/screenshot/screenshot.c:204
-msgid "Include window _decoration"
-msgstr "包含窗口装饰(_D)"
-
-#: plug-ins/screenshot/screenshot.c:205
-msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "标题栏、窗口边框和阴影将会是图像的一部分"
-
-#: plug-ins/screenshot/screenshot.c:214
-msgid "Selection d_elay"
-msgstr "选择延迟(_E)"
-
-#: plug-ins/screenshot/screenshot.c:215
-msgid "Delay before selection of the window or the region"
-msgstr "在选取窗口或区域前的延迟"
-
-#: plug-ins/screenshot/screenshot.c:219
-msgid "Screenshot dela_y"
-msgstr "截屏延迟(_Y)"
-
-#: plug-ins/screenshot/screenshot.c:220
-msgid "Delay before snapping the screenshot"
-msgstr "捕获屏幕截图前的延迟"
-
-#: plug-ins/screenshot/screenshot.c:224
-msgid "Color _Profile"
-msgstr "色彩配置文件(_P)"
-
-#: plug-ins/screenshot/screenshot.c:264
-msgid "GDK initialization failed."
-msgstr "GDK 初始化失败。"
-
-#: plug-ins/screenshot/screenshot.c:302
-msgid "No screenshot backends available."
-msgstr "无可用截图后端。"
-
-#: plug-ins/screenshot/screenshot.c:504
-#: plug-ins/screenshot/screenshot-x11.c:443
-msgid "Screenshot"
-msgstr "屏幕截图"
-
-#: plug-ins/screenshot/screenshot.c:505
-msgid "S_nap"
-msgstr "截图(_N)"
-
-#: plug-ins/screenshot/screenshot.c:507
+#: plug-ins/screenshot/screenshot.c:168
 msgid "Take a screenshot of a single window"
 msgstr "对单个窗口进行截图"
 
-#: plug-ins/screenshot/screenshot.c:508
+#: plug-ins/screenshot/screenshot.c:169
 msgid "Take a screenshot of the entire screen"
 msgstr "对整个屏幕进行截图"
 
-#: plug-ins/screenshot/screenshot.c:509
+#: plug-ins/screenshot/screenshot.c:171
 msgid "Select a region to grab"
 msgstr "选择要截取的区域"
+
+#: plug-ins/screenshot/screenshot.c:202
+msgid "Include _mouse pointer"
+msgstr "包括鼠标指针(_M)"
+
+#: plug-ins/screenshot/screenshot.c:203
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "您指针设备的光标将会是图像的一部分"
+
+#: plug-ins/screenshot/screenshot.c:211
+msgid "Include window _decoration"
+msgstr "包含窗口装饰(_D)"
+
+#: plug-ins/screenshot/screenshot.c:212
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "标题栏、窗口边框和阴影将会是图像的一部分"
+
+#: plug-ins/screenshot/screenshot.c:221
+msgid "Selection d_elay"
+msgstr "选择延迟(_E)"
+
+#: plug-ins/screenshot/screenshot.c:222
+msgid "Delay before selection of the window or the region"
+msgstr "在选取窗口或区域前的延迟"
+
+#: plug-ins/screenshot/screenshot.c:226
+msgid "Screenshot dela_y"
+msgstr "截屏延迟(_Y)"
+
+#: plug-ins/screenshot/screenshot.c:227
+msgid "Delay before snapping the screenshot"
+msgstr "捕获屏幕截图前的延迟"
+
+#: plug-ins/screenshot/screenshot.c:231
+msgid "Color _Profile"
+msgstr "色彩配置文件(_P)"
+
+#: plug-ins/screenshot/screenshot.c:233
+msgid "Tag image with monitor profile"
+msgstr "使用显示器配置文件标记图像"
+
+#: plug-ins/screenshot/screenshot.c:234
+msgid "Convert image with sRGB"
+msgstr "转换图像为 sRGB"
+
+#: plug-ins/screenshot/screenshot.c:272
+msgid "GDK initialization failed."
+msgstr "GDK 初始化失败。"
+
+#: plug-ins/screenshot/screenshot.c:310
+msgid "No screenshot backends available."
+msgstr "无可用截图后端。"
+
+#: plug-ins/screenshot/screenshot.c:511
+#: plug-ins/screenshot/screenshot-x11.c:444
+msgid "Screenshot"
+msgstr "屏幕截图"
+
+#: plug-ins/screenshot/screenshot.c:512
+msgid "S_nap"
+msgstr "截图(_N)"
 
 #: plug-ins/screenshot/screenshot.c:595
 msgid "Delay"
 msgstr "延迟"
 
-#: plug-ins/screenshot/screenshot.c:603
-msgid "Tag image with monitor profile"
-msgstr "使用显示器配置文件标记图像"
-
-#: plug-ins/screenshot/screenshot.c:604
-msgid "Convert image with sRGB"
-msgstr "转换图像为 sRGB"
-
 #: plug-ins/screenshot/screenshot-win32.c:297
 msgid "No data captured"
 msgstr "没有取得数据"
 
-#: plug-ins/screenshot/screenshot-x11.c:109
+#: plug-ins/screenshot/screenshot-x11.c:110
 msgid "Error selecting the window"
 msgstr "选择窗口出错"
 
-#: plug-ins/screenshot/screenshot-x11.c:431
+#: plug-ins/screenshot/screenshot-x11.c:432
 msgid "Importing screenshot"
 msgstr "导入屏幕截图"
 
-#: plug-ins/screenshot/screenshot-x11.c:484
+#: plug-ins/screenshot/screenshot-x11.c:485
 msgid "Mouse Pointer"
 msgstr "鼠标指针"
 
-#: plug-ins/screenshot/screenshot-x11.c:662
+#: plug-ins/screenshot/screenshot-x11.c:664
 msgid "Specified window not found"
 msgstr "没有找到指定的窗口"
 
@@ -15948,6 +15964,32 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid ""
+#~ "(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, "
+#~ "Snap to grid = 4)"
+#~ msgstr "（无=0，收集=1，左至右填充=2，右至左填充=3，吸附至网格=4）"
+
+#~ msgid "(Left edge = 0, Center = 1, Right edge = 2)"
+#~ msgstr "（左边=0，中心=1，右边=2）"
+
+#~ msgid ""
+#~ "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+#~ "ADAPTIVE (3) }"
+#~ msgstr "过滤器类型 {中值（0）、自适应（1）、递归中值（2）、递归自适应（3）}"
+
+#~ msgid "1:3"
+#~ msgstr "1:3"
+
+#~ msgid "1:5"
+#~ msgstr "1:5"
+
+#~ msgid "1:7"
+#~ msgstr "1:7"
+
+#~ msgid ""
+#~ "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+#~ msgstr "截图类型 { 窗口截图 (0)，全屏截图 (1)，区域截图 (2) }"
 
 #~ msgid "Windows Animated Cursor"
 #~ msgstr "Windows 动画指针"
@@ -17741,9 +17783,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "GIF supports hundredths of a second precision."
 #~ msgstr "GIF 支持百分之一秒精度。"
-
-#~ msgid "10"
-#~ msgstr "10"
 
 #~ msgid "S_ave Defaults"
 #~ msgstr "保存默认值(_A)"
