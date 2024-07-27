@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gimp/imagemap/icons">
+    <file>imagemap-circle.svg</file>
+    <file>imagemap-coord.svg</file>
+    <file>imagemap-dimension.svg</file>
+    <file>imagemap-java.svg</file>
+    <file>imagemap-polygon.svg</file>
+    <file>imagemap-rectangle.svg</file>
+    <file>imagemap-to-back.svg</file>
+    <file>imagemap-to-front.svg</file>
+  </gresource>
+</gresources>
