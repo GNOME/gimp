@@ -7,6 +7,7 @@
     -GimpDockWindow-menu-preview-size: button;
     -GimpToolPalette-tool-icon-size:   large-toolbar;
     -GimpToolPalette-button-relief:    none;
+    -GimpDock-tool-icon-size:          large-toolbar;
     -GimpDockbook-tab-icon-size:       button;
     -GimpColorNotebook-tab-icon-size:  button;
     -GimpDockable-content-border:      2;

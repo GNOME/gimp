@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -137,6 +138,13 @@ gimp_dock_class_init (GimpDockClass *klass)
   klass->book_removed            = gimp_dock_real_book_removed;
   klass->description_invalidated = NULL;
   klass->geometry_invalidated    = NULL;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("tool-icon-size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              GTK_ICON_SIZE_SMALL_TOOLBAR,
+                                                              GIMP_PARAM_READABLE));
 
   gtk_widget_class_set_css_name (widget_class, "GimpDock");
 }

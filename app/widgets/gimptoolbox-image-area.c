@@ -113,7 +113,7 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
   gimp_view_set_viewable (GIMP_VIEW (image_view),
                           GIMP_VIEWABLE (gimp_context_get_image (context)));
 
-  gtk_widget_show (image_view);
+  gtk_widget_set_visible (image_view, TRUE);
 
 #ifdef GDK_WINDOWING_X11
   tooltip = g_strdup_printf ("%s\n%s",

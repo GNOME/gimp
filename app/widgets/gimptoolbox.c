@@ -41,6 +41,7 @@
 #include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimppanedbox.h"
+#include "gimpviewrenderer.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
 #include "gimptoolbox-dnd.h"
@@ -48,6 +49,7 @@
 #include "gimptoolbox-indicator-area.h"
 #include "gimptoolpalette.h"
 #include "gimpuimanager.h"
+#include "gimpview.h"
 #include "gimpwidgets-utils.h"
 
 #include "about.h"
@@ -95,6 +97,7 @@ static void        gimp_toolbox_get_property            (GObject        *object,
                                                          GValue         *value,
                                                          GParamSpec     *pspec);
 
+static void        gimp_toolbox_style_updated           (GtkWidget      *widget);
 static gboolean    gimp_toolbox_button_press_event      (GtkWidget      *widget,
                                                          GdkEventButton *event);
 static void        gimp_toolbox_drag_leave              (GtkWidget      *widget,
@@ -162,6 +165,7 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   object_class->get_property          = gimp_toolbox_get_property;
 
   widget_class->button_press_event    = gimp_toolbox_button_press_event;
+  widget_class->style_updated         = gimp_toolbox_style_updated;
 
   dock_class->get_description         = gimp_toolbox_get_description;
   dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
@@ -225,6 +229,19 @@ gimp_toolbox_constructed (GObject *object)
   g_signal_connect (toolbox->p->vbox, "drag-drop",
                     G_CALLBACK (gimp_toolbox_drag_drop),
                     toolbox);
+
+  g_signal_connect_object (config,
+                           "notify::theme",
+                           G_CALLBACK (gimp_toolbox_style_updated),
+                           toolbox, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_toolbox_style_updated),
+                           toolbox, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_toolbox_style_updated),
+                           toolbox, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   event_box = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), event_box, FALSE, FALSE, 0);
@@ -349,6 +366,45 @@ gimp_toolbox_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_toolbox_style_updated (GtkWidget *widget)
+{
+  GimpToolbox  *toolbox = GIMP_TOOLBOX (widget);
+  GtkWidget    *area;
+  GtkIconSize   tool_icon_size;
+  gint          pixel_size;
+  gint          width;
+  gint          height;
+
+  gtk_widget_style_get (widget,
+                        "tool-icon-size", &tool_icon_size,
+                        NULL);
+  gtk_icon_size_lookup (tool_icon_size, &pixel_size, NULL);
+
+  width  = pixel_size * (13/6.0f);
+  height = pixel_size * 1.75f;
+
+  /* Image Area */
+  area = gtk_grid_get_child_at (GTK_GRID (toolbox->p->image_area), 0, 0);
+  gimp_view_renderer_set_size_full (GIMP_VIEW (area)->renderer,
+                                    width, height, 0);
+
+  /* Brush Area */
+  area = gtk_grid_get_child_at (GTK_GRID (toolbox->p->foo_area), 0, 0);
+  gimp_view_renderer_set_size_full (GIMP_VIEW (area)->renderer,
+                                    pixel_size, pixel_size, 0);
+
+  /* Pattern Area */
+  area = gtk_grid_get_child_at (GTK_GRID (toolbox->p->foo_area), 1, 0);
+  gimp_view_renderer_set_size_full (GIMP_VIEW (area)->renderer,
+                                    pixel_size, pixel_size, 0);
+
+  /* Gradient Area */
+  area = gtk_grid_get_child_at (GTK_GRID (toolbox->p->foo_area), 0, 1);
+  gimp_view_renderer_set_size_full (GIMP_VIEW (area)->renderer,
+                                    width, (pixel_size / 2), 0);
 }
 
 static gboolean
@@ -692,10 +748,28 @@ static GtkWidget *
 toolbox_create_image_area (GimpToolbox *toolbox,
                            GimpContext *context)
 {
-  GtkWidget *image_area;
+  GtkWidget   *image_area;
+  GtkWidget   *grid;
+  GtkIconSize  tool_icon_size;
+  gint         width = 52;
+  gint         height = 42;
 
-  image_area = gimp_toolbox_image_area_create (toolbox, 52, 42);
-  g_object_set (image_area,
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
+
+  gtk_widget_style_get (GTK_WIDGET (toolbox),
+                        "tool-icon-size", &tool_icon_size,
+                        NULL);
+  gtk_icon_size_lookup (tool_icon_size, &width, &height);
+  width  *= (13/6.0f);
+  height *= 1.75f;
+
+  image_area = gimp_toolbox_image_area_create (toolbox, width, height);
+  gtk_grid_attach (GTK_GRID (grid), image_area, 0, 0, 1, 1);
+  gtk_widget_set_visible (grid, TRUE);
+
+  g_object_set (grid,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,
                 "margin-start",  2,
@@ -704,7 +778,7 @@ toolbox_create_image_area (GimpToolbox *toolbox,
                 "margin-bottom", 2,
                 NULL);
 
-  return image_area;
+  return grid;
 }
 
 static void
