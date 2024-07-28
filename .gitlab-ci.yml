@@ -152,21 +152,16 @@ image-debian-x64:
     - echo "FROM debian:bookworm" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    # libjxl uses C++ features that require posix threads so we install
-    # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
-    # Note that we can't install both the -posix and -win32 versions since
-    # update gcc-mingw-w64 (25). This is for crossroad builds only
-    - echo "appstream
+    # 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
+    - echo "ca-certificates
+            appstream
             at-spi2-core
             build-essential
             ccache
             clang
             lld
-            cpio
             desktop-file-utils
             ffmpeg
-            g++-mingw-w64-x86-64-posix
-            gcc-mingw-w64-x86-64-posix
             gettext
             ghostscript
             gi-docgen
@@ -219,12 +214,7 @@ image-debian-x64:
             mypaint-brushes
             poppler-data
             python3
-            python3-distutils
-            python3-docutils
             python3-gi
-            python3-pip
-            python3-zstandard
-            rpm
             valac
             xauth
             xsltproc

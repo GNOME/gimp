@@ -21,8 +21,24 @@ fi
 
 ## Install crossroad and its deps
 if [ "$GITLAB_CI" ]; then
-  apt-get install -y --no-install-recommends \
-                     wine                    \
+  apt-get update -y
+  # libjxl uses C++ features that require posix threads so we install
+  # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
+  # Note that we can't install both the -posix and -win32 versions since
+  # update gcc-mingw-w64 (25).
+  apt-get install -y --no-install-recommends    \
+                     git                        \
+                     ccache                     \
+                     cpio                       \
+                     g++-mingw-w64-x86-64-posix \
+                     gcc-mingw-w64-x86-64-posix \
+                     meson                      \
+                     pkg-config                 \
+	                   python3-distutils          \
+                     python3-docutils           \
+                     python3-zstandard          \
+                     rpm                        \
+                     wine                       \
                      wine64
 fi
 git clone --depth $GIT_DEPTH https://gitlab.freedesktop.org/crossroad/crossroad
