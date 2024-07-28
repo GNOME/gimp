@@ -47,9 +47,11 @@ export PATH="$PWD/${PARENT_DIR}.local/bin:$PWD/bin:$PATH"
 export XDG_DATA_HOME="$PWD/${PARENT_DIR}.local/share"
 crossroad w64 gimp --run="build/windows/2_build-gimp-crossroad.sh"
 else
-export ARTIFACTS_SUFFIX="-cross"
 
-## The required packages for GIMP are taken from the previous job
+## The required packages for GIMP are taken from the result of previous script
+
+## Prepare env (no env var is needed, all are auto set to CROSSROAD_PREFIX)
+export ARTIFACTS_SUFFIX="-cross"
 
 ## Build GIMP
 if [ ! -f "_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
@@ -77,7 +79,7 @@ echo "@echo off
       echo.
       bin\gimp-$GIMP_APP_VERSION.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
 
-## Copy built GIMP, babl and GEGL and pre-built packages to GIMP_PREFIX
+## Copy GIMP and all its deps to improvised GIMP_PREFIX
 if [ "$GITLAB_CI" ]; then
   cp -fr $CROSSROAD_PREFIX/ _install$ARTIFACTS_SUFFIX
 fi

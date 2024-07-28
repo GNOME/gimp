@@ -52,30 +52,6 @@ fi
 # End of install code block
 
 
-# Clone babl and GEGL
-clone_or_pull ()
-{
-  repo="https://gitlab.gnome.org/GNOME/${1}.git"
-
-  if [ "$CI_COMMIT_TAG" != "" ]; then
-    # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
-    # last tag. Otherwise use the default branch's HEAD.
-    tag=$(git ls-remote --tags --exit-code --refs "$repo" | grep -oi "$1_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
-    git_options="--branch=$tag"
-    echo "Using tagged release of $1: $tag"
-  fi
-
-  if [ ! -d "_${1}" ]; then
-    git clone $git_options --depth $GIT_DEPTH $repo _${1} || exit 1
-  else
-    cd _${1} && git pull && cd ..
-  fi
-}
-
-clone_or_pull babl
-clone_or_pull gegl
-
-
 # Prepare env
 ## We need to create the condition this ugly way to not break CI
 if [ "$GITLAB_CI" ]; then
@@ -92,13 +68,31 @@ done
 
 
 # Build babl and GEGL
-configure_or_build ()
+self_build ()
 {
-  if [ ! -f "_${1}/_build/build.ninja" ]; then
-    mkdir -p _${1}/_build && cd _${1}/_build
-    meson setup .. -Dprefix="${GIMP_PREFIX}" $2
+  # Clone source only if not already cloned or downloaded
+  repo="https://gitlab.gnome.org/GNOME/$1.git"
+
+  if [ "$CI_COMMIT_TAG" != "" ]; then
+    # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
+    # last tag. Otherwise use the default branch's HEAD.
+    tag=$(git ls-remote --tags --exit-code --refs "$repo" | grep -oi "${1}_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
+    git_options="--branch=$tag"
+    echo "Using tagged release of $1: $tag"
+  fi
+
+  if [ ! -d "$1" ]; then
+    git clone $git_options --depth $GIT_DEPTH $repo || exit 1
   else
-    cd _${1}/_build
+    cd $1 && git pull && cd ..
+  fi
+
+  # Build
+  if [ ! -f "$1/_build/build.ninja" ]; then
+    mkdir -p $1/_build && cd $1/_build
+    meson setup .. -Dprefix="$GIMP_PREFIX" $2
+  else
+    cd $1/_build
   fi
   ninja
   ninja install
@@ -106,5 +100,5 @@ configure_or_build ()
   cd ../..
 }
 
-configure_or_build babl '-Dwith-docs=false'
-configure_or_build gegl '-Dworkshop=true'
+self_build babl '-Dwith-docs=false'
+self_build gegl '-Dworkshop=true'
