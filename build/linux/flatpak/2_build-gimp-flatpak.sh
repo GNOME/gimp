@@ -49,7 +49,8 @@ elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
     tar cf gimp-meson-log.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
   fi
 
-  ## Cleanup GIMP_PREFIX and export it to OSTree repo
+  ## Cleanup GIMP_PREFIX (not working) and export it to OSTree repo
+  ## https://github.com/flatpak/flatpak-builder/issues/14
   flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo \
                   "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$1" != '--ci' ]; then
