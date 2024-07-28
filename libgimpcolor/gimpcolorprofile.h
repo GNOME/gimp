@@ -32,41 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_COLOR_PROFILE            (gimp_color_profile_get_type ())
-#define GIMP_COLOR_PROFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE, GimpColorProfile))
-#define GIMP_COLOR_PROFILE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE, GimpColorProfileClass))
-#define GIMP_IS_COLOR_PROFILE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE))
-#define GIMP_IS_COLOR_PROFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE))
-#define GIMP_COLOR_PROFILE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE, GimpColorProfileClass))
+#define GIMP_TYPE_COLOR_PROFILE (gimp_color_profile_get_type ())
+G_DECLARE_FINAL_TYPE (GimpColorProfile, gimp_color_profile, GIMP, COLOR_PROFILE, GObject)
 
-
-typedef struct _GimpColorProfilePrivate GimpColorProfilePrivate;
-typedef struct _GimpColorProfileClass   GimpColorProfileClass;
-
-struct _GimpColorProfile
-{
-  GObject                  parent_instance;
-
-  GimpColorProfilePrivate *priv;
-};
-
-struct _GimpColorProfileClass
-{
-  GObjectClass  parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
-
-
-GType              gimp_color_profile_get_type              (void) G_GNUC_CONST;
 
 GimpColorProfile * gimp_color_profile_new_rgb_srgb          (void);
 GimpColorProfile * gimp_color_profile_new_rgb_srgb_linear   (void);

@@ -89,8 +89,10 @@
  **/
 
 
-struct _GimpColorProfilePrivate
+struct _GimpColorProfile
 {
+  GObject      parent_instance;
+
   cmsHPROFILE  lcms_profile;
   guint8      *data;
   gsize        length;
@@ -107,7 +109,7 @@ struct _GimpColorProfilePrivate
 static void   gimp_color_profile_finalize (GObject *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfile, gimp_color_profile, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GimpColorProfile, gimp_color_profile, G_TYPE_OBJECT)
 
 #define parent_class gimp_color_profile_parent_class
 
@@ -136,7 +138,6 @@ gimp_color_profile_class_init (GimpColorProfileClass *klass)
 static void
 gimp_color_profile_init (GimpColorProfile *profile)
 {
-  profile->priv = gimp_color_profile_get_instance_private (profile);
 }
 
 static void
@@ -144,17 +145,17 @@ gimp_color_profile_finalize (GObject *object)
 {
   GimpColorProfile *profile = GIMP_COLOR_PROFILE (object);
 
-  g_clear_pointer (&profile->priv->lcms_profile, cmsCloseProfile);
+  g_clear_pointer (&profile->lcms_profile, cmsCloseProfile);
 
-  g_clear_pointer (&profile->priv->data, g_free);
-  profile->priv->length = 0;
+  g_clear_pointer (&profile->data, g_free);
+  profile->length = 0;
 
-  g_clear_pointer (&profile->priv->description,  g_free);
-  g_clear_pointer (&profile->priv->manufacturer, g_free);
-  g_clear_pointer (&profile->priv->model,        g_free);
-  g_clear_pointer (&profile->priv->copyright,    g_free);
-  g_clear_pointer (&profile->priv->label,        g_free);
-  g_clear_pointer (&profile->priv->summary,      g_free);
+  g_clear_pointer (&profile->description,  g_free);
+  g_clear_pointer (&profile->manufacturer, g_free);
+  g_clear_pointer (&profile->model,        g_free);
+  g_clear_pointer (&profile->copyright,    g_free);
+  g_clear_pointer (&profile->label,        g_free);
+  g_clear_pointer (&profile->summary,      g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -243,9 +244,9 @@ gimp_color_profile_new_from_file (GFile   *file,
     {
       profile = g_object_new (GIMP_TYPE_COLOR_PROFILE, NULL);
 
-      profile->priv->lcms_profile = lcms_profile;
-      profile->priv->data         = data;
-      profile->priv->length       = length;
+      profile->lcms_profile = lcms_profile;
+      profile->data         = data;
+      profile->length       = length;
     }
   else
     {
@@ -294,9 +295,9 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
     {
       profile = g_object_new (GIMP_TYPE_COLOR_PROFILE, NULL);
 
-      profile->priv->lcms_profile = lcms_profile;
-      profile->priv->data         = g_memdup2 (data, length);
-      profile->priv->length       = length;
+      profile->lcms_profile = lcms_profile;
+      profile->data         = g_memdup2 (data, length);
+      profile->length       = length;
    }
   else
     {
@@ -346,9 +347,9 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
 
               profile = g_object_new (GIMP_TYPE_COLOR_PROFILE, NULL);
 
-              profile->priv->lcms_profile = lcms_profile;
-              profile->priv->data         = data;
-              profile->priv->length       = length;
+              profile->lcms_profile = lcms_profile;
+              profile->data         = data;
+              profile->length       = length;
 
               return profile;
             }
@@ -385,8 +386,8 @@ gimp_color_profile_save_to_file (GimpColorProfile  *profile,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return g_file_replace_contents (file,
-                                  (const gchar *) profile->priv->data,
-                                  profile->priv->length,
+                                  (const gchar *) profile->data,
+                                  profile->length,
                                   NULL, FALSE,
                                   G_FILE_CREATE_NONE,
                                   NULL,
@@ -413,9 +414,9 @@ gimp_color_profile_get_icc_profile (GimpColorProfile  *profile,
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
   g_return_val_if_fail (length != NULL, NULL);
 
-  *length = profile->priv->length;
+  *length = profile->length;
 
-  return profile->priv->data;
+  return profile->data;
 }
 
 /**
@@ -434,7 +435,7 @@ gimp_color_profile_get_lcms_profile (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  return profile->priv->lcms_profile;
+  return profile->lcms_profile;
 }
 
 static gchar *
@@ -444,13 +445,13 @@ gimp_color_profile_get_info (GimpColorProfile *profile,
   cmsUInt32Number  size;
   gchar           *text = NULL;
 
-  size = cmsGetProfileInfoASCII (profile->priv->lcms_profile, info,
+  size = cmsGetProfileInfoASCII (profile->lcms_profile, info,
                                  "en", "US", NULL, 0);
   if (size > 0)
     {
       gchar *data = g_new (gchar, size + 1);
 
-      size = cmsGetProfileInfoASCII (profile->priv->lcms_profile, info,
+      size = cmsGetProfileInfoASCII (profile->lcms_profile, info,
                                      "en", "US", data, size);
       if (size > 0)
         text = gimp_any_to_utf8 (data, -1, NULL);
@@ -476,11 +477,11 @@ gimp_color_profile_get_description (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  if (! profile->priv->description)
-    profile->priv->description =
+  if (! profile->description)
+    profile->description =
       gimp_color_profile_get_info (profile, cmsInfoDescription);
 
-  return profile->priv->description;
+  return profile->description;
 }
 
 /**
@@ -498,11 +499,11 @@ gimp_color_profile_get_manufacturer (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  if (! profile->priv->manufacturer)
-    profile->priv->manufacturer =
+  if (! profile->manufacturer)
+    profile->manufacturer =
       gimp_color_profile_get_info (profile, cmsInfoManufacturer);
 
-  return profile->priv->manufacturer;
+  return profile->manufacturer;
 }
 
 /**
@@ -520,11 +521,11 @@ gimp_color_profile_get_model (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  if (! profile->priv->model)
-    profile->priv->model =
+  if (! profile->model)
+    profile->model =
       gimp_color_profile_get_info (profile, cmsInfoModel);
 
-  return profile->priv->model;
+  return profile->model;
 }
 
 /**
@@ -542,11 +543,11 @@ gimp_color_profile_get_copyright (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  if (! profile->priv->copyright)
-    profile->priv->copyright =
+  if (! profile->copyright)
+    profile->copyright =
       gimp_color_profile_get_info (profile, cmsInfoCopyright);
 
-  return profile->priv->copyright;
+  return profile->copyright;
 }
 
 /**
@@ -570,17 +571,17 @@ gimp_color_profile_get_label (GimpColorProfile *profile)
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  if (! profile->priv->label)
+  if (! profile->label)
     {
       const gchar *label = gimp_color_profile_get_description (profile);
 
       if (! label || ! strlen (label))
         label = _("(unnamed profile)");
 
-      profile->priv->label = g_strdup (label);
+      profile->label = g_strdup (label);
     }
 
-  return profile->priv->label;
+  return profile->label;
 }
 
 /**
@@ -602,7 +603,7 @@ gimp_color_profile_get_summary (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  if (! profile->priv->summary)
+  if (! profile->summary)
     {
       GString     *string = g_string_new (NULL);
       const gchar *text;
@@ -638,10 +639,10 @@ gimp_color_profile_get_summary (GimpColorProfile *profile)
           g_string_append_printf (string, _("Copyright: %s"), text);
         }
 
-      profile->priv->summary = g_string_free (string, FALSE);
+      profile->summary = g_string_free (string, FALSE);
     }
 
-  return profile->priv->summary;
+  return profile->summary;
 }
 
 /**
@@ -665,10 +666,10 @@ gimp_color_profile_is_equal (GimpColorProfile *profile1,
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile2), FALSE);
 
   return profile1 == profile2                              ||
-         (profile1->priv->length == profile2->priv->length &&
-          memcmp (profile1->priv->data + header_len,
-                  profile2->priv->data + header_len,
-                  profile1->priv->length - header_len) == 0);
+         (profile1->length == profile2->length &&
+          memcmp (profile1->data + header_len,
+                  profile2->data + header_len,
+                  profile1->length - header_len) == 0);
 }
 
 /**
@@ -685,7 +686,7 @@ gimp_color_profile_is_rgb (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
-  return (cmsGetColorSpace (profile->priv->lcms_profile) == cmsSigRgbData);
+  return (cmsGetColorSpace (profile->lcms_profile) == cmsSigRgbData);
 }
 
 /**
@@ -702,7 +703,7 @@ gimp_color_profile_is_gray (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
-  return (cmsGetColorSpace (profile->priv->lcms_profile) == cmsSigGrayData);
+  return (cmsGetColorSpace (profile->lcms_profile) == cmsSigGrayData);
 }
 
 /**
@@ -719,7 +720,7 @@ gimp_color_profile_is_cmyk (GimpColorProfile *profile)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
-  return (cmsGetColorSpace (profile->priv->lcms_profile) == cmsSigCmykData);
+  return (cmsGetColorSpace (profile->lcms_profile) == cmsSigCmykData);
 }
 
 
@@ -744,7 +745,7 @@ gimp_color_profile_is_linear (GimpColorProfile *profile)
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
-  prof = profile->priv->lcms_profile;
+  prof = profile->lcms_profile;
 
   if (! cmsIsMatrixShaper (prof))
     return FALSE;
@@ -807,7 +808,7 @@ gimp_color_profile_get_rgb_matrix_colorants (GimpColorProfile *profile,
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
 
-  lcms_profile = profile->priv->lcms_profile;
+  lcms_profile = profile->lcms_profile;
 
   red   = cmsReadTag (lcms_profile, cmsSigRedColorantTag);
   green = cmsReadTag (lcms_profile, cmsSigGreenColorantTag);
@@ -909,7 +910,7 @@ gimp_color_profile_new_from_color_profile (GimpColorProfile *profile,
       return NULL;
     }
 
-  whitepoint = cmsReadTag (profile->priv->lcms_profile,
+  whitepoint = cmsReadTag (profile->lcms_profile,
                            cmsSigMediaWhitePointTag);
 
   target_profile = cmsCreateProfilePlaceholder (0);
@@ -1517,8 +1518,8 @@ gimp_color_profile_get_space (GimpColorProfile          *profile,
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  space = babl_space_from_icc ((const gchar *) profile->priv->data,
-                               profile->priv->length,
+  space = babl_space_from_icc ((const gchar *) profile->data,
+                               profile->length,
                                (BablIccIntent) intent,
                                &babl_error);
 
