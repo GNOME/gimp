@@ -31,13 +31,13 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
     mkdir -p "$GIMP_PREFIX"
   fi
 
-  ## Clone and build deps
+  ## Clone and build deps (including babl and GEGL)
   flatpak-builder --force-clean --ccache --state-dir=../.flatpak-builder --keep-build-dirs --stop-at=gimp \
                   "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json 2>&1 | tee flatpak-builder.log
 
 
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
-  ## Prepare env
+  ## Prepare env (only GIMP_PREFIX is needed for flatpak)
   export GIMP_PREFIX="$PWD/_install"
 
   ## Clone and build deps (including babl and GEGL)
