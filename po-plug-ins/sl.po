@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-26 18:57+0000\n"
-"PO-Revision-Date: 2024-07-27 11:02+0200\n"
+"POT-Creation-Date: 2024-07-28 12:34+0000\n"
+"PO-Revision-Date: 2024-07-28 15:10+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -680,8 +680,8 @@ msgid "4"
 msgstr "4"
 
 #: plug-ins/common/border-average.c:156
-msgid "8)"
-msgstr "8)"
+msgid "8"
+msgstr "8"
 
 #: plug-ins/common/border-average.c:157
 msgid "16"
