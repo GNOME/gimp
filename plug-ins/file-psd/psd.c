@@ -538,5 +538,7 @@ psd_load_metadata (GimpProcedure         *procedure,
 
   GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
+  g_object_unref (image);
+
   return return_vals;
 }
