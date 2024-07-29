@@ -47,12 +47,12 @@ enum
 };
 
 
-struct _GimpEnumLabelPrivate
+struct _GimpEnumLabel
 {
+  GtkLabel    parent_instance;
+
   GEnumClass *enum_class;
 };
-
-#define GET_PRIVATE(obj) (((GimpEnumLabel *) (obj))->priv)
 
 
 static void   gimp_enum_label_finalize     (GObject      *object);
@@ -66,7 +66,7 @@ static void   gimp_enum_label_set_property (GObject      *object,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
 
 #define parent_class gimp_enum_label_parent_class
 
@@ -114,15 +114,14 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
 static void
 gimp_enum_label_init (GimpEnumLabel *enum_label)
 {
-  enum_label->priv = gimp_enum_label_get_instance_private (enum_label);
 }
 
 static void
 gimp_enum_label_finalize (GObject *object)
 {
-  GimpEnumLabelPrivate *private = GET_PRIVATE (object);
+  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
 
-  g_clear_pointer (&private->enum_class, g_type_class_unref);
+  g_clear_pointer (&label->enum_class, g_type_class_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -133,13 +132,13 @@ gimp_enum_label_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpEnumLabelPrivate *private = GET_PRIVATE (object);
+  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
 
   switch (property_id)
     {
     case PROP_ENUM_TYPE:
-      if (private->enum_class)
-        g_value_set_gtype (value, G_TYPE_FROM_CLASS (private->enum_class));
+      if (label->enum_class)
+        g_value_set_gtype (value, G_TYPE_FROM_CLASS (label->enum_class));
       else
         g_value_set_gtype (value, G_TYPE_NONE);
       break;
@@ -156,13 +155,12 @@ gimp_enum_label_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpEnumLabel        *label   = GIMP_ENUM_LABEL (object);
-  GimpEnumLabelPrivate *private = GET_PRIVATE (label);
+  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
 
   switch (property_id)
     {
     case PROP_ENUM_TYPE:
-      private->enum_class = g_type_class_ref (g_value_get_gtype (value));
+      label->enum_class = g_type_class_ref (g_value_get_gtype (value));
       break;
 
     case PROP_ENUM_VALUE:
@@ -207,20 +205,17 @@ void
 gimp_enum_label_set_value (GimpEnumLabel *label,
                            gint           value)
 {
-  GimpEnumLabelPrivate *private;
-  const gchar          *nick;
-  const gchar          *desc;
+  const gchar *nick;
+  const gchar *desc;
 
   g_return_if_fail (GIMP_IS_ENUM_LABEL (label));
 
-  private = GET_PRIVATE (label);
-
-  if (! gimp_enum_get_value (G_TYPE_FROM_CLASS (private->enum_class), value,
+  if (! gimp_enum_get_value (G_TYPE_FROM_CLASS (label->enum_class), value,
                              NULL, &nick, &desc, NULL))
     {
       g_warning ("%s: %d is not valid for enum of type '%s'",
                  G_STRLOC, value,
-                 g_type_name (G_TYPE_FROM_CLASS (private->enum_class)));
+                 g_type_name (G_TYPE_FROM_CLASS (label->enum_class)));
       return;
     }
 

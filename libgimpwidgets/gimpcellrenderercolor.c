@@ -54,15 +54,15 @@ enum
 };
 
 
-struct _GimpCellRendererColorPrivate
+struct _GimpCellRendererColor
 {
-  GeglColor  *color;
-  gboolean    opaque;
-  GtkIconSize size;
-  gint        border;
-};
+  GtkCellRenderer  parent_instance;
 
-#define GET_PRIVATE(obj) (((GimpCellRendererColor *) (obj))->priv)
+  GeglColor       *color;
+  gboolean         opaque;
+  GtkIconSize      size;
+  gint             border;
+};
 
 
 static void gimp_cell_renderer_color_finalize     (GObject            *object);
@@ -90,8 +90,7 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer    *cell,
 
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCellRendererColor, gimp_cell_renderer_color,
-                            GTK_TYPE_CELL_RENDERER)
+G_DEFINE_TYPE (GimpCellRendererColor, gimp_cell_renderer_color, GTK_TYPE_CELL_RENDERER)
 
 #define parent_class gimp_cell_renderer_color_parent_class
 
@@ -138,17 +137,15 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
 static void
 gimp_cell_renderer_color_init (GimpCellRendererColor *cell)
 {
-  cell->priv = gimp_cell_renderer_color_get_instance_private (cell);
-
-  cell->priv->color = gegl_color_new ("black");
+  cell->color = gegl_color_new ("black");
 }
 
 static void
 gimp_cell_renderer_color_finalize (GObject *object)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (object);
+  GimpCellRendererColor *renderer = GIMP_CELL_RENDERER_COLOR (object);
 
-  g_clear_object (&private->color);
+  g_clear_object (&renderer->color);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -159,19 +156,19 @@ gimp_cell_renderer_color_get_property (GObject    *object,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (object);
+  GimpCellRendererColor *renderer = GIMP_CELL_RENDERER_COLOR (object);
 
   switch (param_id)
     {
     case PROP_COLOR:
-      g_clear_object (&private->color);
-      private->color = gegl_color_duplicate (g_value_get_object (value));
+      g_clear_object (&renderer->color);
+      renderer->color = gegl_color_duplicate (g_value_get_object (value));
       break;
     case PROP_OPAQUE:
-      g_value_set_boolean (value, private->opaque);
+      g_value_set_boolean (value, renderer->opaque);
       break;
     case PROP_SIZE:
-      g_value_set_int (value, private->size);
+      g_value_set_int (value, renderer->size);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
@@ -185,18 +182,18 @@ gimp_cell_renderer_color_set_property (GObject      *object,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (object);
+  GimpCellRendererColor *renderer = GIMP_CELL_RENDERER_COLOR (object);
 
   switch (param_id)
     {
     case PROP_COLOR:
-      g_set_object (&private->color, g_value_get_object (value));
+      g_set_object (&renderer->color, g_value_get_object (value));
       break;
     case PROP_OPAQUE:
-      private->opaque = g_value_get_boolean (value);
+      renderer->opaque = g_value_get_boolean (value);
       break;
     case PROP_SIZE:
-      private->size = g_value_get_int (value);
+      renderer->size = g_value_get_int (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
@@ -213,15 +210,15 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer    *cell,
                                    gint               *width,
                                    gint               *height)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (cell);
-  gint                          calc_width;
-  gint                          calc_height;
-  gfloat                        xalign;
-  gfloat                        yalign;
-  gint                          xpad;
-  gint                          ypad;
+  GimpCellRendererColor *renderer = GIMP_CELL_RENDERER_COLOR (cell);
+  gint                   calc_width;
+  gint                   calc_height;
+  gfloat                 xalign;
+  gfloat                 yalign;
+  gint                   xpad;
+  gint                   ypad;
 
-  gtk_icon_size_lookup (private->size, &calc_width, &calc_height);
+  gtk_icon_size_lookup (renderer->size, &calc_width, &calc_height);
   gtk_cell_renderer_get_alignment (cell, &xalign, &yalign);
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
@@ -262,10 +259,10 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                                  const GdkRectangle   *cell_area,
                                  GtkCellRendererState  flags)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (cell);
-  GdkRectangle                  rect;
-  gint                          xpad;
-  gint                          ypad;
+  GimpCellRendererColor *renderer = GIMP_CELL_RENDERER_COLOR (cell);
+  GdkRectangle           rect;
+  gint                   xpad;
+  gint                   ypad;
 
   gimp_cell_renderer_color_get_size (cell, widget, cell_area,
                                      &rect.x,
@@ -291,12 +288,12 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                        rect.x + 1, rect.y + 1,
                        rect.width - 2, rect.height - 2);
 
-      gimp_cairo_set_source_color (cr, private->color, NULL, FALSE,
+      gimp_cairo_set_source_color (cr, renderer->color, NULL, FALSE,
                                    widget);
       cairo_fill (cr);
 
-      gegl_color_get_pixel (private->color, babl_format ("R'G'B'A double"), rgba);
-      if (! private->opaque && rgba[3] < 1.0)
+      gegl_color_get_pixel (renderer->color, babl_format ("R'G'B'A double"), rgba);
+      if (! renderer->opaque && rgba[3] < 1.0)
         {
           cairo_pattern_t *pattern;
 
@@ -313,7 +310,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
           cairo_fill_preserve (cr);
 
-          gimp_cairo_set_source_color (cr, private->color, NULL, FALSE,
+          gimp_cairo_set_source_color (cr, renderer->color, NULL, FALSE,
                                        widget);
           cairo_fill (cr);
         }

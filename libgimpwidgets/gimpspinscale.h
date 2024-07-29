@@ -30,29 +30,9 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_SPIN_SCALE            (gimp_spin_scale_get_type ())
-#define GIMP_SPIN_SCALE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SPIN_SCALE, GimpSpinScale))
-#define GIMP_SPIN_SCALE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SPIN_SCALE, GimpSpinScaleClass))
-#define GIMP_IS_SPIN_SCALE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SPIN_SCALE))
-#define GIMP_IS_SPIN_SCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SPIN_SCALE))
-#define GIMP_SPIN_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SPIN_SCALE, GimpSpinScaleClass))
+#define GIMP_TYPE_SPIN_SCALE (gimp_spin_scale_get_type ())
+G_DECLARE_FINAL_TYPE (GimpSpinScale, gimp_spin_scale, GIMP, SPIN_SCALE, GimpSpinButton)
 
-
-typedef struct _GimpSpinScale      GimpSpinScale;
-typedef struct _GimpSpinScaleClass GimpSpinScaleClass;
-
-struct _GimpSpinScale
-{
-  GimpSpinButton  parent_instance;
-};
-
-struct _GimpSpinScaleClass
-{
-  GimpSpinButtonClass  parent_class;
-};
-
-
-GType         gimp_spin_scale_get_type            (void) G_GNUC_CONST;
 
 GtkWidget   * gimp_spin_scale_new                 (GtkAdjustment *adjustment,
                                                    const gchar   *label,

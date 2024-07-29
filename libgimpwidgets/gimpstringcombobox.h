@@ -38,23 +38,8 @@ typedef  gboolean (* GimpStringSensitivityFunc) (const gchar *id,
                                                  gpointer     data);
 
 
-#define GIMP_TYPE_STRING_COMBO_BOX            (gimp_string_combo_box_get_type ())
-#define GIMP_STRING_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STRING_COMBO_BOX, GimpStringComboBox))
-#define GIMP_STRING_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STRING_COMBO_BOX, GimpStringComboBoxClass))
-#define GIMP_IS_STRING_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_STRING_COMBO_BOX))
-#define GIMP_IS_STRING_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_STRING_COMBO_BOX))
-#define GIMP_STRING_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STRING_COMBO_BOX, GimpStringComboBoxClass))
-
-
-typedef struct _GimpStringComboBoxPrivate GimpStringComboBoxPrivate;
-typedef struct _GimpStringComboBoxClass   GimpStringComboBoxClass;
-
-struct _GimpStringComboBox
-{
-  GtkComboBox                parent_instance;
-
-  GimpStringComboBoxPrivate *priv;
-};
+#define GIMP_TYPE_STRING_COMBO_BOX (gimp_string_combo_box_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpStringComboBox, gimp_string_combo_box, GIMP, STRING_COMBO_BOX, GtkComboBox)
 
 struct _GimpStringComboBoxClass
 {
@@ -71,8 +56,6 @@ struct _GimpStringComboBoxClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_string_combo_box_get_type        (void) G_GNUC_CONST;
 
 GtkWidget * gimp_string_combo_box_new             (GtkTreeModel              *model,
                                                    gint                       id_column,

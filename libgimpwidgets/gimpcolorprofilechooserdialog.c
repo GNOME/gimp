@@ -50,8 +50,10 @@
  **/
 
 
-struct _GimpColorProfileChooserDialogPrivate
+struct _GimpColorProfileChooserDialog
 {
+  GtkFileChooserDialog  parent_instance;
+
   GimpColorProfileView *profile_view;
 };
 
@@ -65,9 +67,8 @@ static void     gimp_color_profile_chooser_dialog_add_shortcut   (GimpColorProfi
 static void     gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileChooserDialog,
-                            gimp_color_profile_chooser_dialog,
-                            GTK_TYPE_FILE_CHOOSER_DIALOG)
+G_DEFINE_TYPE (GimpColorProfileChooserDialog, gimp_color_profile_chooser_dialog,
+               GTK_TYPE_FILE_CHOOSER_DIALOG)
 
 #define parent_class gimp_color_profile_chooser_dialog_parent_class
 
@@ -86,8 +87,6 @@ gimp_color_profile_chooser_dialog_class_init (GimpColorProfileChooserDialogClass
 static void
 gimp_color_profile_chooser_dialog_init (GimpColorProfileChooserDialog *dialog)
 {
-  dialog->priv =
-    gimp_color_profile_chooser_dialog_get_instance_private (dialog);
 }
 
 static void
@@ -131,7 +130,7 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
   gtk_widget_show (profile_view);
 
-  dialog->priv->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
+  dialog->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
 
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
                                        scrolled_window);
@@ -186,9 +185,9 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
     }
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_ACCEPT,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_ACCEPT,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 
@@ -210,8 +209,10 @@ add_shortcut (GimpColorProfileChooserDialog *dialog,
 static void
 gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *dialog)
 {
+#ifndef G_OS_WIN32
   gboolean save = (gtk_file_chooser_get_action (GTK_FILE_CHOOSER (dialog)) ==
                    GTK_FILE_CHOOSER_ACTION_SAVE);
+#endif
 
 #ifdef G_OS_WIN32
   {
@@ -318,7 +319,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 
   if (! file)
     {
-      gimp_color_profile_view_set_profile (dialog->priv->profile_view, NULL);
+      gimp_color_profile_view_set_profile (dialog->profile_view, NULL);
       return;
     }
 
@@ -329,25 +330,25 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 
       if (! profile)
         {
-          gimp_color_profile_view_set_error (dialog->priv->profile_view,
+          gimp_color_profile_view_set_error (dialog->profile_view,
                                              error->message);
           g_clear_error (&error);
         }
       else
         {
-          gimp_color_profile_view_set_profile (dialog->priv->profile_view,
+          gimp_color_profile_view_set_profile (dialog->profile_view,
                                                profile);
           g_object_unref (profile);
         }
       break;
 
     case G_FILE_TYPE_DIRECTORY:
-      gimp_color_profile_view_set_error (dialog->priv->profile_view,
+      gimp_color_profile_view_set_error (dialog->profile_view,
                                          _("Folder"));
       break;
 
     default:
-      gimp_color_profile_view_set_error (dialog->priv->profile_view,
+      gimp_color_profile_view_set_error (dialog->profile_view,
                                          _("Not a regular file."));
       break;
     }

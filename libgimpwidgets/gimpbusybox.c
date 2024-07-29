@@ -49,8 +49,10 @@ enum
 };
 
 
-struct _GimpBusyBoxPrivate
+struct _GimpBusyBox
 {
+  GtkBox    parent_instance;
+
   GtkLabel *label;
 };
 
@@ -67,7 +69,7 @@ static void   gimp_busy_box_get_property (GObject      *object,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBusyBox, gimp_busy_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GimpBusyBox, gimp_busy_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_busy_box_parent_class
 
@@ -105,8 +107,6 @@ gimp_busy_box_init (GimpBusyBox *box)
   GtkWidget *spinner;
   GtkWidget *label;
 
-  box->priv = gimp_busy_box_get_instance_private (box);
-
   gtk_widget_set_halign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
   gtk_widget_set_valign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
   gtk_box_set_spacing (GTK_BOX (box), 8);
@@ -119,7 +119,7 @@ gimp_busy_box_init (GimpBusyBox *box)
 
   /* the label */
   label = gtk_label_new (NULL);
-  box->priv->label = GTK_LABEL (label);
+  box->label = GTK_LABEL (label);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
@@ -138,7 +138,7 @@ gimp_busy_box_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_MESSAGE:
-      gtk_label_set_text (box->priv->label, g_value_get_string (value));
+      gtk_label_set_text (box->label, g_value_get_string (value));
       break;
 
     default:
@@ -158,7 +158,7 @@ gimp_busy_box_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_MESSAGE:
-      g_value_set_string (value, gtk_label_get_text (box->priv->label));
+      g_value_set_string (value, gtk_label_get_text (box->label));
       break;
 
     default:
@@ -228,5 +228,5 @@ gimp_busy_box_get_message (GimpBusyBox *box)
 {
   g_return_val_if_fail (GIMP_IS_BUSY_BOX (box), NULL);
 
-  return gtk_label_get_text (box->priv->label);
+  return gtk_label_get_text (box->label);
 }

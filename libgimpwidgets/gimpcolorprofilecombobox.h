@@ -28,41 +28,9 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_COLOR_PROFILE_COMBO_BOX            (gimp_color_profile_combo_box_get_type ())
-#define GIMP_COLOR_PROFILE_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, GimpColorProfileComboBox))
-#define GIMP_COLOR_PROFILE_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, GimpColorProfileComboBoxClass))
-#define GIMP_IS_COLOR_PROFILE_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE_COMBO_BOX))
-#define GIMP_IS_COLOR_PROFILE_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE_COMBO_BOX))
-#define GIMP_COLOR_PROFILE_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, GimpColorProfileComboBoxClass))
+#define GIMP_TYPE_COLOR_PROFILE_COMBO_BOX (gimp_color_profile_combo_box_get_type ())
+G_DECLARE_FINAL_TYPE (GimpColorProfileComboBox, gimp_color_profile_combo_box, GIMP, COLOR_PROFILE_COMBO_BOX, GtkComboBox)
 
-
-typedef struct _GimpColorProfileComboBoxPrivate GimpColorProfileComboBoxPrivate;
-typedef struct _GimpColorProfileComboBoxClass   GimpColorProfileComboBoxClass;
-
-struct _GimpColorProfileComboBox
-{
-  GtkComboBox                     parent_instance;
-
-  GimpColorProfileComboBoxPrivate *priv;
-};
-
-struct _GimpColorProfileComboBoxClass
-{
-  GtkComboBoxClass  parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
-
-
-GType       gimp_color_profile_combo_box_get_type           (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_profile_combo_box_new                (GtkWidget    *dialog,
                                                              GFile        *history);

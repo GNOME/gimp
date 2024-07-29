@@ -24,41 +24,9 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_PROFILE_VIEW            (gimp_color_profile_view_get_type ())
-#define GIMP_COLOR_PROFILE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PROFILE_VIEW, GimpColorProfileView))
-#define GIMP_COLOR_PROFILE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PROFILE_VIEW, GimpColorProfileViewClass))
-#define GIMP_IS_COLOR_PROFILE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PROFILE_VIEW))
-#define GIMP_IS_COLOR_PROFILE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PROFILE_VIEW))
-#define GIMP_COLOR_PROFILE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE_VIEW, GimpColorProfileViewClass))
+#define GIMP_TYPE_COLOR_PROFILE_VIEW (gimp_color_profile_view_get_type ())
+G_DECLARE_FINAL_TYPE (GimpColorProfileView, gimp_color_profile_view, GIMP, COLOR_PROFILE_VIEW, GtkTextView)
 
-
-typedef struct _GimpColorProfileViewClass   GimpColorProfileViewClass;
-typedef struct _GimpColorProfileViewPrivate GimpColorProfileViewPrivate;
-
-struct _GimpColorProfileView
-{
-  GtkTextView                  parent_instance;
-
-  GimpColorProfileViewPrivate *priv;
-};
-
-struct _GimpColorProfileViewClass
-{
-  GtkTextViewClass  parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
-
-
-GType       gimp_color_profile_view_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_profile_view_new         (void);
 

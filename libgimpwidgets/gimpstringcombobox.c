@@ -51,7 +51,7 @@ enum
 };
 
 
-struct _GimpStringComboBoxPrivate
+typedef struct _GimpStringComboBoxPrivate
 {
   gint                       id_column;
   gint                       label_column;
@@ -60,9 +60,7 @@ struct _GimpStringComboBoxPrivate
   GimpStringSensitivityFunc  sensitivity_func;
   gpointer                   sensitivity_data;
   GDestroyNotify             sensitivity_destroy;
-};
-
-#define GET_PRIVATE(obj) (((GimpStringComboBox *) (obj))->priv)
+} GimpStringComboBoxPrivate;
 
 
 static void   gimp_string_combo_box_constructed   (GObject                   *object);
@@ -170,13 +168,13 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
 static void
 gimp_string_combo_box_init (GimpStringComboBox *combo_box)
 {
-  combo_box->priv = gimp_string_combo_box_get_instance_private (combo_box);
 }
 
 static void
 gimp_string_combo_box_constructed (GObject *object)
 {
-  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
+  GimpStringComboBox        *combo = GIMP_STRING_COMBO_BOX (object);
+  GimpStringComboBoxPrivate *priv = gimp_string_combo_box_get_instance_private (combo);
   GtkCellRenderer           *cell;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -205,7 +203,8 @@ gimp_string_combo_box_set_property (GObject      *object,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
+  GimpStringComboBox        *combo = GIMP_STRING_COMBO_BOX (object);
+  GimpStringComboBoxPrivate *priv = gimp_string_combo_box_get_instance_private (combo);
 
   switch (property_id)
     {
@@ -238,7 +237,8 @@ gimp_string_combo_box_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
+  GimpStringComboBox        *combo = GIMP_STRING_COMBO_BOX (object);
+  GimpStringComboBoxPrivate *priv = gimp_string_combo_box_get_instance_private (combo);
 
   switch (property_id)
     {
@@ -351,7 +351,11 @@ gboolean
 gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
                                   const gchar        *id)
 {
+  GimpStringComboBoxPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_STRING_COMBO_BOX (combo_box), FALSE);
+
+  priv = gimp_string_combo_box_get_instance_private (combo_box);
 
   if (id)
     {
@@ -361,7 +365,7 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
 
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-      column = GET_PRIVATE (combo_box)->id_column;
+      column = priv->id_column;
 
       if (gimp_string_model_lookup (model, column, id, &iter))
         {
@@ -394,9 +398,12 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
 gchar *
 gimp_string_combo_box_get_active (GimpStringComboBox *combo_box)
 {
-  GtkTreeIter  iter;
+  GtkTreeIter                iter;
+  GimpStringComboBoxPrivate *priv;
 
   g_return_val_if_fail (GIMP_IS_STRING_COMBO_BOX (combo_box), NULL);
+
+  priv = gimp_string_combo_box_get_instance_private (combo_box);
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {
@@ -404,7 +411,7 @@ gimp_string_combo_box_get_active (GimpStringComboBox *combo_box)
       gchar        *value;
       gint          column;
 
-      column = GET_PRIVATE (combo_box)->id_column;
+      column = priv->id_column;
 
       gtk_tree_model_get (model, &iter,
                           column, &value,
@@ -442,7 +449,7 @@ gimp_string_combo_box_set_sensitivity (GimpStringComboBox        *combo_box,
 
   g_return_if_fail (GIMP_IS_STRING_COMBO_BOX (combo_box));
 
-  priv = GET_PRIVATE (combo_box);
+  priv = gimp_string_combo_box_get_instance_private (combo_box);
 
   if (priv->sensitivity_destroy)
     {

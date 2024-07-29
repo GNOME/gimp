@@ -31,23 +31,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_SPIN_BUTTON            (gimp_spin_button_get_type ())
-#define GIMP_SPIN_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SPIN_BUTTON, GimpSpinButton))
-#define GIMP_SPIN_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SPIN_BUTTON, GimpSpinButtonClass))
-#define GIMP_IS_SPIN_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SPIN_BUTTON))
-#define GIMP_IS_SPIN_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SPIN_BUTTON))
-#define GIMP_SPIN_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SPIN_BUTTON, GimpSpinButtonClass))
+#define GIMP_TYPE_SPIN_BUTTON (gimp_spin_button_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpSpinButton, gimp_spin_button, GIMP, SPIN_BUTTON, GtkSpinButton)
 
-
-typedef struct _GimpSpinButtonPrivate  GimpSpinButtonPrivate;
-typedef struct _GimpSpinButtonClass    GimpSpinButtonClass;
-
-struct _GimpSpinButton
-{
-  GtkSpinButton          parent_instance;
-
-  GimpSpinButtonPrivate *priv;
-};
 
 struct _GimpSpinButtonClass
 {
@@ -60,8 +46,6 @@ struct _GimpSpinButtonClass
   void (* _gimp_reserved4) (void);
 };
 
-
-GType       gimp_spin_button_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_spin_button_new            (GtkAdjustment *adjustment,
                                              gdouble        climb_rate,

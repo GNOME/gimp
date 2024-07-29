@@ -56,12 +56,12 @@ enum
 };
 
 
-struct _GimpColorProfileStorePrivate
+struct _GimpColorProfileStore
 {
-  GFile *history;
-};
+  GtkListStore  parent_instance;
 
-#define GET_PRIVATE(obj) (((GimpColorProfileStore *) (obj))->priv)
+  GFile        *history;
+};
 
 
 static void      gimp_color_profile_store_constructed    (GObject               *object);
@@ -92,8 +92,7 @@ static gboolean  gimp_color_profile_store_load           (GimpColorProfileStore 
                                                           GError                **error);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileStore, gimp_color_profile_store,
-                            GTK_TYPE_LIST_STORE)
+G_DEFINE_TYPE (GimpColorProfileStore, gimp_color_profile_store, GTK_TYPE_LIST_STORE)
 
 #define parent_class gimp_color_profile_store_parent_class
 
@@ -137,8 +136,6 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
       G_TYPE_INT     /*  GIMP_COLOR_PROFILE_STORE_INDEX      */
     };
 
-  store->priv = gimp_color_profile_store_get_instance_private (store);
-
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (types), types);
 }
@@ -146,9 +143,8 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
 static void
 gimp_color_profile_store_constructed (GObject *object)
 {
-  GimpColorProfileStore        *store   = GIMP_COLOR_PROFILE_STORE (object);
-  GimpColorProfileStorePrivate *private = GET_PRIVATE (store);
-  GtkTreeIter                   iter;
+  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
+  GtkTreeIter            iter;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -160,18 +156,17 @@ gimp_color_profile_store_constructed (GObject *object)
                       _("Select color profile from disk..."),
                       -1);
 
-  if (private->history)
-    gimp_color_profile_store_load (store, private->history, NULL);
+  if (store->history)
+    gimp_color_profile_store_load (store, store->history, NULL);
 }
 
 static void
 gimp_color_profile_store_dispose (GObject *object)
 {
-  GimpColorProfileStore        *store   = GIMP_COLOR_PROFILE_STORE (object);
-  GimpColorProfileStorePrivate *private = GET_PRIVATE (store);
+  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
 
-  if (private->history)
-    gimp_color_profile_store_save (store, private->history, NULL);
+  if (store->history)
+    gimp_color_profile_store_save (store, store->history, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -179,9 +174,9 @@ gimp_color_profile_store_dispose (GObject *object)
 static void
 gimp_color_profile_store_finalize (GObject *object)
 {
-  GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
+  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
 
-  g_clear_object (&private->history);
+  g_clear_object (&store->history);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -192,13 +187,13 @@ gimp_color_profile_store_set_property (GObject      *object,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
+  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
 
   switch (property_id)
     {
     case PROP_HISTORY:
-      g_return_if_fail (private->history == NULL);
-      private->history = g_value_dup_object (value);
+      g_return_if_fail (store->history == NULL);
+      store->history = g_value_dup_object (value);
       break;
 
     default:
@@ -213,12 +208,12 @@ gimp_color_profile_store_get_property (GObject    *object,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
+  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
 
   switch (property_id)
     {
     case PROP_HISTORY:
-      g_value_set_object (value, private->history);
+      g_value_set_object (value, store->history);
       break;
 
     default:

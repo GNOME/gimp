@@ -43,8 +43,10 @@
  **/
 
 
-struct _GimpColorProfileViewPrivate
+struct _GimpColorProfileView
 {
+  GtkTextView       parent_instance;
+
   GimpColorProfile *profile;
 };
 
@@ -53,8 +55,7 @@ static void   gimp_color_profile_view_constructed  (GObject *object);
 static void   gimp_color_profile_view_finalize     (GObject *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileView, gimp_color_profile_view,
-                            GTK_TYPE_TEXT_VIEW)
+G_DEFINE_TYPE (GimpColorProfileView, gimp_color_profile_view, GTK_TYPE_TEXT_VIEW)
 
 #define parent_class gimp_color_profile_view_parent_class
 
@@ -71,7 +72,6 @@ gimp_color_profile_view_class_init (GimpColorProfileViewClass *klass)
 static void
 gimp_color_profile_view_init (GimpColorProfileView *view)
 {
-  view->priv = gimp_color_profile_view_get_instance_private (view);
 }
 
 static void
@@ -109,7 +109,7 @@ gimp_color_profile_view_finalize (GObject *object)
 {
   GimpColorProfileView *view = GIMP_COLOR_PROFILE_VIEW (object);
 
-  g_clear_object (&view->priv->profile);
+  g_clear_object (&view->profile);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -129,14 +129,14 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_VIEW (view));
   g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
 
-  if (profile == view->priv->profile)
+  if (profile == view->profile)
     return;
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 
   gtk_text_buffer_set_text (buffer, "", 0);
 
-  if (g_set_object (&view->priv->profile, profile) && profile)
+  if (g_set_object (&view->profile, profile) && profile)
     {
       GtkTextIter  iter;
       const gchar *text;

@@ -55,10 +55,10 @@
 #define MAX_DIGITS 20
 
 
-struct _GimpSpinButtonPrivate
+typedef struct _GimpSpinButtonPrivate
 {
   gboolean changed;
-};
+} GimpSpinButtonPrivate;
 
 
 /*  local function prototypes  */
@@ -105,8 +105,6 @@ gimp_spin_button_class_init (GimpSpinButtonClass *klass)
 static void
 gimp_spin_button_init (GimpSpinButton *spin_button)
 {
-  spin_button->priv = gimp_spin_button_get_instance_private (spin_button);
-
   g_signal_connect (spin_button, "changed",
                     G_CALLBACK (gimp_spin_button_changed),
                     NULL);
@@ -208,9 +206,12 @@ static gboolean
 gimp_spin_button_focus_in (GtkWidget     *widget,
                            GdkEventFocus *event)
 {
-  GimpSpinButton *spin_button = GIMP_SPIN_BUTTON (widget);
+  GimpSpinButton        *spin_button = GIMP_SPIN_BUTTON (widget);
+  GimpSpinButtonPrivate *priv;
 
-  spin_button->priv->changed = FALSE;
+  priv = gimp_spin_button_get_instance_private (spin_button);
+
+  priv->changed = FALSE;
 
   return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);
 }
@@ -219,18 +220,21 @@ static gboolean
 gimp_spin_button_focus_out (GtkWidget     *widget,
                             GdkEventFocus *event)
 {
-  GimpSpinButton *spin_button = GIMP_SPIN_BUTTON (widget);
-  gboolean        editable;
-  gboolean        result;
+  GimpSpinButton        *spin_button = GIMP_SPIN_BUTTON (widget);
+  GimpSpinButtonPrivate *priv;
+  gboolean               editable;
+  gboolean               result;
+
+  priv = gimp_spin_button_get_instance_private (spin_button);
 
   editable = gtk_editable_get_editable (GTK_EDITABLE (widget));
 
-  if (! spin_button->priv->changed)
+  if (! priv->changed)
     gtk_editable_set_editable (GTK_EDITABLE (widget), FALSE);
 
   result = GTK_WIDGET_CLASS (parent_class)->focus_out_event (widget, event);
 
-  if (! spin_button->priv->changed)
+  if (! priv->changed)
     gtk_editable_set_editable (GTK_EDITABLE (widget), editable);
 
   return result;
@@ -285,9 +289,12 @@ static void
 gimp_spin_button_changed (GtkEditable *editable,
                           gpointer     data)
 {
-  GimpSpinButton *spin_button = GIMP_SPIN_BUTTON (editable);
+  GimpSpinButton        *spin_button = GIMP_SPIN_BUTTON (editable);
+  GimpSpinButtonPrivate *priv;
 
-  spin_button->priv->changed = TRUE;
+  priv = gimp_spin_button_get_instance_private (spin_button);
+
+  priv->changed = TRUE;
 }
 
 
