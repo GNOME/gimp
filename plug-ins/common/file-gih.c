@@ -116,6 +116,13 @@ static const gchar * const selection_modes[] = { "incremental",
                                                  "xtilt",
                                                  "ytilt" };
 
+static const gchar * const mode_labels[] = { N_("Incremental"),
+                                             N_("Angular"),
+                                             N_("Random"),
+                                             N_("Velocity"),
+                                             N_("Pressure"),
+                                             N_("X tilt"),
+                                             N_("Y tilt") };
 
 static void
 gih_class_init (GihClass *klass)
@@ -776,7 +783,7 @@ gih_save_dialog (GimpImage           *image,
 
       for (j = 0; j < G_N_ELEMENTS (selection_modes); j++)
         gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (cb),
-                                        selection_modes[j]);
+                                        _(mode_labels[j]));
       gtk_combo_box_set_active (GTK_COMBO_BOX (cb), 2);  /* random */
 
       for (j = 0; j < G_N_ELEMENTS (selection_modes); j++)
