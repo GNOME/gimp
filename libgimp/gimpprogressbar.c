@@ -43,10 +43,13 @@
  **/
 
 
-typedef struct _GimpProgressBarPrivate
+struct _GimpProgressBar
 {
-  GBytes *window_handle;
-} GimpProgressBarPrivate;
+  GtkProgressBar  parent_instance;
+
+  const gchar    *progress_callback;
+  GBytes         *window_handle;
+};
 
 
 static void     gimp_progress_bar_dispose           (GObject     *object);
@@ -63,7 +66,7 @@ static void     gimp_progress_bar_pulse             (gpointer     user_data);
 static GBytes * gimp_progress_bar_get_window_handle (gpointer     user_data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR)
+G_DEFINE_TYPE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR)
 
 #define parent_class gimp_progress_bar_parent_class
 
@@ -79,8 +82,7 @@ gimp_progress_bar_class_init (GimpProgressBarClass *klass)
 static void
 gimp_progress_bar_init (GimpProgressBar *bar)
 {
-  GimpProgressVtable      vtable = { 0, };
-  GimpProgressBarPrivate *priv   = gimp_progress_bar_get_instance_private (bar);
+  GimpProgressVtable vtable = { 0, };
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), " ");
   gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR (bar), PANGO_ELLIPSIZE_END);
@@ -94,14 +96,13 @@ gimp_progress_bar_init (GimpProgressBar *bar)
 
   bar->progress_callback = gimp_progress_install_vtable (&vtable, bar, NULL);
 
-  gimp_widget_set_native_handle (GTK_WIDGET (bar), &priv->window_handle);
+  gimp_widget_set_native_handle (GTK_WIDGET (bar), &bar->window_handle);
 }
 
 static void
 gimp_progress_bar_dispose (GObject *object)
 {
-  GimpProgressBar        *bar  = GIMP_PROGRESS_BAR (object);
-  GimpProgressBarPrivate *priv = gimp_progress_bar_get_instance_private (bar);
+  GimpProgressBar *bar = GIMP_PROGRESS_BAR (object);
 
   if (bar->progress_callback)
     {
@@ -109,7 +110,7 @@ gimp_progress_bar_dispose (GObject *object)
       bar->progress_callback = NULL;
     }
 
-  gimp_widget_free_native_handle (GTK_WIDGET (bar), &priv->window_handle);
+  gimp_widget_free_native_handle (GTK_WIDGET (bar), &bar->window_handle);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -186,10 +187,9 @@ gimp_progress_bar_pulse (gpointer user_data)
 static GBytes *
 gimp_progress_bar_get_window_handle (gpointer user_data)
 {
-  GimpProgressBar        *bar  = GIMP_PROGRESS_BAR (user_data);
-  GimpProgressBarPrivate *priv = gimp_progress_bar_get_instance_private (bar);
+  GimpProgressBar *bar = GIMP_PROGRESS_BAR (user_data);
 
-  return g_bytes_ref (priv->window_handle);
+  return g_bytes_ref (bar->window_handle);
 }
 
 /**
