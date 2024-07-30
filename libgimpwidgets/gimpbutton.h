@@ -31,23 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_BUTTON            (gimp_button_get_type ())
-#define GIMP_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUTTON, GimpButton))
-#define GIMP_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
-#define GIMP_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUTTON))
-#define GIMP_IS_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
-#define GIMP_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUTTON, GimpButtonClass))
-
-
-typedef struct _GimpButtonPrivate GimpButtonPrivate;
-typedef struct _GimpButtonClass   GimpButtonClass;
-
-struct _GimpButton
-{
-  GtkButton         parent_instance;
-
-  GimpButtonPrivate *priv;
-};
+#define GIMP_TYPE_BUTTON (gimp_button_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpButton, gimp_button, GIMP, BUTTON, GtkButton)
 
 struct _GimpButtonClass
 {
@@ -67,8 +52,6 @@ struct _GimpButtonClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_button_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_button_new              (void);
 
