@@ -1,7 +1,8 @@
 #!/usr/bin/env pwsh
 
 # Parameters
-param ($build_dir = '_build',
+param ($revision = '0',
+       $build_dir = '_build',
        $a64_bundle = 'gimp-a64',
        $x64_bundle = 'gimp-x64')
 
@@ -28,7 +29,7 @@ Set-Alias 'signtool' "$win_sdk_path\signtool.exe"
 $config_path = "$build_dir\config.h"
 
 ## Get Identity Name (the dir shown in Explorer)
-$GIMP_UNSTABLE = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_UNSTABLE' |
+$GIMP_UNSTABLE = Get-Content "$config_path"                               | Select-String 'GIMP_UNSTABLE' |
                  Foreach-Object {$_ -replace '#define GIMP_UNSTABLE ',''}
 if ($GIMP_UNSTABLE -eq '1')
   {
@@ -39,11 +40,34 @@ else
     $IDENTITY_NAME="GIMP.GIMP"
   }
 
-## Get GIMP version (major.minor.micro)
-$GIMP_VERSION = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
-                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+## Get GIMP app version (major.minor)
+$GIMP_APP_VERSION = Get-Content "$config_path"                                   | Select-String 'GIMP_APP_VERSION "'  |
+                    Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
 
-Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $GIMP_VERSION.0"
+## Get GIMP micro version
+$gimp_version = Get-Content "$config_path"                               | Select-String 'GIMP_VERSION'        |
+                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+$micro = $gimp_version -replace "$GIMP_APP_VERSION.",""
+if (($micro).tostring().length -eq 1)
+  {
+    $micro_digit = '0'
+  }
+
+## Get GIMP revision
+if ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD_*')
+  {
+    $revision = $GIMP_CI_MS_STORE -replace 'MSIXUPLOAD_',''
+  }
+if (($revision).tostring().length -eq 1)
+  {
+    $revision_digit = '0'
+  }
+
+## Get custom GIMP version (major.minor.micro+revision.0), a compliant way to publish to Partner Center:
+## https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements)
+$CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${micro}${revision_digit}${revision}.0"
+
+Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION"
 
 
 # Autodetects what arch bundles will be packaged
@@ -104,14 +128,12 @@ foreach ($bundle in $supported_archs)
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@DISPLAY_NAME@","$display_name"} |
         Set-Content $msix_arch\AppxManifest.xml
 
-        ## Set GIMP version
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_VERSION@","$GIMP_VERSION"} |
+        ## Set custom GIMP version (major.minor.micro+revision.0)
+        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
         Set-Content $msix_arch\AppxManifest.xml
 
         ## Set GIMP app version (major.minor)
-        $gimp_app_version = Get-Content "$CONFIG_PATH"                                   | Select-String 'GIMP_APP_VERSION "'  |
-                            Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_APP_VERSION@","$gimp_app_version"} |
+        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_APP_VERSION@","$GIMP_APP_VERSION"} |
         Set-Content $msix_arch\AppxManifest.xml
 
         ## Set msix_arch
@@ -159,8 +181,12 @@ foreach ($bundle in $supported_archs)
         ## Remove uneeded files (to match the Inno Windows Installer artifact)
         Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
 
+        ## Set revision (on GIMP about dialog)
+        (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
+        Set-Content "$vfs\share\gimp\*\gimp-release"
+
         ## Disable Update check (ONLY FOR RELEASES)
-        if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
+        if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
           {
             Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
           }
@@ -170,14 +196,14 @@ foreach ($bundle in $supported_archs)
 
 
         # 4. MAKE .MSIX AND CORRESPONDING .APPXSYM
-        $MSIX_ARTIFACT = "${IDENTITY_NAME}_${GIMP_VERSION}.0_$msix_arch.msix"
+        $MSIX_ARTIFACT = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.msix"
         $APPXSYM = $MSIX_ARTIFACT -replace '.msix','.appxsym'
 
         ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
-        #if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
+        #if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
         #  {
         #    Get-ChildItem $msix_arch -Filter *.pdb -Recurse |
-        #    Compress-Archive -DestinationPath "${IDENTITY_NAME}_${GIMP_VERSION}.0_$msix_arch.zip"
+        #    Compress-Archive -DestinationPath "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.zip"
         #    Get-ChildItem *.zip | Rename-Item -NewName $APPXSYM
         #    Get-ChildItem $msix_arch -Include *.pdb -Recurse -Force | Remove-Item -Recurse -Force
         #  }
@@ -203,17 +229,17 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     ## Make .msixbundle with all archs
     ## (This is needed not only for easier multi-arch testing but
     ##  also to make sure against Partner Center getting confused)
-    $MSIX_ARTIFACT = "${IDENTITY_NAME}_${GIMP_VERSION}.0_neutral.msixbundle"
+    $MSIX_ARTIFACT = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_neutral.msixbundle"
     Write-Output "(INFO): packaging $MSIX_ARTIFACT (for testing purposes)"
     New-Item _TempOutput -ItemType Directory | Out-Null
     Move-Item *.msix _TempOutput/
-    makeappx bundle /bv "${GIMP_VERSION}.0" /d _TempOutput /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
+    makeappx bundle /bv "${CUSTOM_GIMP_VERSION}" /d _TempOutput /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
     Remove-Item _TempOutput/ -Recurse
 
     ## Make .msixupload (ONLY FOR RELEASES)
-    if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
+    if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
       {
-        $MSIX_ARTIFACT = "${IDENTITY_NAME}_${GIMP_VERSION}.0_x64_arm64_bundle.msixupload"
+        $MSIX_ARTIFACT = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_x64_arm64_bundle.msixupload"
         Write-Output "(INFO): making $MSIX_ARTIFACT"
         Get-ChildItem *.msixbundle | ForEach-Object { Compress-Archive -Path "$($_.Basename).msixbundle" -DestinationPath "$($_.Basename).zip" }
         Get-ChildItem *.zip | Rename-Item -NewName $MSIX_ARTIFACT
@@ -224,7 +250,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
 
 
 # 5. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY) AND DO OTHER STUFF
-if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -ne 'MSIXUPLOAD') -and ($MSIX_ARTIFACT -notlike "*msixupload"))
+if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*') -and ($MSIX_ARTIFACT -notlike "*msixupload"))
  {
   Write-Output "(INFO): signing $MSIX_ARTIFACT (for testing purposes)"
   signtool sign /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT | Out-File winsdk.log -Append
