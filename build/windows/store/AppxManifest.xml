@@ -10,7 +10,7 @@
   xmlns:uap8="http://schemas.microsoft.com/appx/manifest/uap/windows10/8"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
-  <Identity Name="@IDENTITY_NAME@" Publisher="CN=8705A20E-F3A1-463E-86D3-B71D4DE2E37D" Version="@GIMP_VERSION@.0" ProcessorArchitecture="neutral" />
+  <Identity Name="@IDENTITY_NAME@" Publisher="CN=8705A20E-F3A1-463E-86D3-B71D4DE2E37D" Version="@GIMP_VERSION@.@REVISION@" ProcessorArchitecture="neutral" />
   <Properties>
     <DisplayName>@DISPLAY_NAME@</DisplayName>
     <PublisherDisplayName>GIMP</PublisherDisplayName>
