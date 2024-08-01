@@ -105,8 +105,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.2.tar.xz",
-                    "sha256": "2a0c9cf48fbe8b3435008866ffd40b8eddb0667d2212b42396fdf688e93ce0be",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.3.tar.xz",
+                    "sha256": "21e64d2c56e9b333d44fef3f2a4b25653d922c419acd972fa96fab695217e2c8",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1626,
@@ -132,8 +132,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.2.tar.gz",
-                            "sha256": "543bead934135f20f438e0b6d8858c55c5fcb7ff80f5d1d55489965f1aad58b9",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.3.tar.gz",
+                            "sha256": "1315e17d454bf4da3cc0edb857b1d2c143670f3485b537d0f946d9ed31d87b70",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
