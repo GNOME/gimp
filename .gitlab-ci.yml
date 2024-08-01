@@ -154,12 +154,12 @@ image-debian-x64:
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
     # 'ca-certificates' is NOT a gimp dep, it is installed only to our Docker image work
     - echo "ca-certificates
-            appstream
-            at-spi2-core
-            build-essential
             ccache
             clang
             lld
+            libomp-dev
+            appstream
+            at-spi2-core
             desktop-file-utils
             ffmpeg
             gettext
@@ -192,7 +192,6 @@ image-debian-x64:
             liblzma-dev
             libmng-dev
             libmypaint-dev
-            libomp-dev
             libopenexr-dev
             libopenjp2-7-dev
             libpoppler-glib-dev
