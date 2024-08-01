@@ -22,9 +22,9 @@
      inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="45.254834"
-     inkscape:cx="4.0437669"
-     inkscape:cy="7.3693785"
+     inkscape:zoom="32"
+     inkscape:cx="-0.5"
+     inkscape:cy="5.921875"
      inkscape:window-width="1920"
      inkscape:window-height="1002"
      inkscape:window-x="-8"
@@ -38,19 +38,19 @@
      style="fill:none;stroke:#000000;stroke-opacity:1">
     <path
        id="path9"
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:1.6;stroke-linecap:square;stroke-linejoin:bevel;stroke-dasharray:1.6, 0.8;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 3.5203953,9.4746596 v 4.9654954 m -0.01458,0.748967 H 13.28225 M 14.507,5.654 l 0,8.476735 M 8.5183301,4.5092707 h 5.9951029"
+       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:2.7;stroke-linecap:square;stroke-linejoin:bevel;stroke-dasharray:2.7, 1.35;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 3.5203953,9.3439096 v 4.4967454 m -0.01458,0.748967 H 13.28225 M 14.507,5.0545 v 8.476735 M 8.8933301,3.9097707 h 5.6201029"
        inkscape:label="dotted outline"
        sodipodi:nodetypes="cccccccc" />
     <path
        id="path4"
-       style="fill:#000000;stroke:#000000;stroke-width:1.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:1.3, 0.65;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
-       d="M 3.5203953,8.9222324 V 14.440155 M 2.865,15.189122 H 14.276619 M 14.507,5.654 v 9.493201 M 7.988,4.5092707 h 7.475607"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:1.3, 0.65;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 3.5203953,8.3227324 V 13.840655 M 2.865,14.589622 H 14.276619 M 14.507,5.0545 v 9.493201 M 7.988,3.9097707 h 7.475607"
        inkscape:label="dotted" />
     <path
        id="path8"
        style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="m 3.522,3.9125 v -3 m 0,7.321875 V 5.125 M 4.159,4.515625 h 2.9381505 m -7.0694005,0 H 2.8715"
+       d="m 3.522,3.313 v -3 m 0,7.321875 V 4.5255 M 4.159,3.916125 h 2.9381505 m -7.0694005,0 H 2.8715"
        inkscape:label="plus" />
   </g>
 </svg>
