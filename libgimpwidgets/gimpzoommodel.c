@@ -63,14 +63,12 @@ enum
 };
 
 
-struct _GimpZoomModelPrivate
+typedef struct _GimpZoomModelPrivate
 {
   gdouble  value;
   gdouble  minimum;
   gdouble  maximum;
-};
-
-#define GET_PRIVATE(obj) (((GimpZoomModel *) (obj))->priv)
+} GimpZoomModelPrivate;
 
 
 static void  gimp_zoom_model_set_property (GObject      *object,
@@ -181,9 +179,7 @@ gimp_zoom_model_init (GimpZoomModel *model)
 {
   GimpZoomModelPrivate *priv;
 
-  model->priv = gimp_zoom_model_get_instance_private (model);
-
-  priv = GET_PRIVATE (model);
+  priv = gimp_zoom_model_get_instance_private (model);
 
   priv->value   = 1.0;
   priv->minimum = ZOOM_MIN;
@@ -196,7 +192,8 @@ gimp_zoom_model_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpZoomModelPrivate *priv  = GET_PRIVATE (object);
+  GimpZoomModel        *model = GIMP_ZOOM_MODEL (object);
+  GimpZoomModelPrivate *priv  = gimp_zoom_model_get_instance_private (model);
   gdouble               previous_value;
 
   previous_value = priv->value;
@@ -249,7 +246,8 @@ gimp_zoom_model_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpZoomModelPrivate *priv = GET_PRIVATE (object);
+  GimpZoomModel        *model = GIMP_ZOOM_MODEL (object);
+  GimpZoomModelPrivate *priv  = gimp_zoom_model_get_instance_private (model);
   gchar                *tmp;
 
   switch (property_id)
@@ -296,7 +294,7 @@ gimp_zoom_model_get_property (GObject    *object,
 static void
 gimp_zoom_model_zoom_in (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GET_PRIVATE (model);
+  GimpZoomModelPrivate *priv = gimp_zoom_model_get_instance_private (model);
 
   if (priv->value < priv->maximum)
     gimp_zoom_model_zoom (model, GIMP_ZOOM_IN, 0.0);
@@ -305,7 +303,7 @@ gimp_zoom_model_zoom_in (GimpZoomModel *model)
 static void
 gimp_zoom_model_zoom_out (GimpZoomModel *model)
 {
-  GimpZoomModelPrivate *priv = GET_PRIVATE (model);
+  GimpZoomModelPrivate *priv = gimp_zoom_model_get_instance_private (model);
 
   if (priv->value > priv->minimum)
     gimp_zoom_model_zoom (model, GIMP_ZOOM_OUT, 0.0);
@@ -394,9 +392,13 @@ gimp_zoom_model_zoom (GimpZoomModel *model,
 gdouble
 gimp_zoom_model_get_factor (GimpZoomModel *model)
 {
+  GimpZoomModelPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), 1.0);
 
-  return GET_PRIVATE (model)->value;
+  priv = gimp_zoom_model_get_instance_private (model);
+
+  return priv->value;
 }
 
 
@@ -517,7 +519,7 @@ zoom_in_button_callback (GimpZoomModel *model,
                          gdouble        new,
                          GtkWidget     *button)
 {
-  GimpZoomModelPrivate *priv = GET_PRIVATE (model);
+  GimpZoomModelPrivate *priv = gimp_zoom_model_get_instance_private (model);
 
   gtk_widget_set_sensitive (button, priv->value != priv->maximum);
 }
@@ -528,7 +530,7 @@ zoom_out_button_callback (GimpZoomModel *model,
                           gdouble        new,
                           GtkWidget     *button)
 {
-  GimpZoomModelPrivate *priv = GET_PRIVATE (model);
+  GimpZoomModelPrivate *priv = gimp_zoom_model_get_instance_private (model);
 
   gtk_widget_set_sensitive (button, priv->value != priv->minimum);
 }

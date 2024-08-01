@@ -29,23 +29,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_ZOOM_MODEL            (gimp_zoom_model_get_type ())
-#define GIMP_ZOOM_MODEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ZOOM_MODEL, GimpZoomModel))
-#define GIMP_ZOOM_MODEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ZOOM_MODEL, GimpZoomModelClass))
-#define GIMP_IS_ZOOM_MODEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ZOOM_MODEL))
-#define GIMP_IS_ZOOM_MODEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ZOOM_MODEL))
-#define GIMP_ZOOM_MODEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ZOOM_MODEL, GimpZoomModel))
-
-
-typedef struct _GimpZoomModelPrivate GimpZoomModelPrivate;
-typedef struct _GimpZoomModelClass   GimpZoomModelClass;
-
-struct _GimpZoomModel
-{
-  GObject               parent_instance;
-
-  GimpZoomModelPrivate *priv;
-};
+#define GIMP_TYPE_ZOOM_MODEL (gimp_zoom_model_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpZoomModel, gimp_zoom_model, GIMP, ZOOM_MODEL, GtkGrid)
 
 struct _GimpZoomModelClass
 {
@@ -66,8 +51,6 @@ struct _GimpZoomModelClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType           gimp_zoom_model_get_type     (void) G_GNUC_CONST;
 
 GimpZoomModel * gimp_zoom_model_new          (void);
 void            gimp_zoom_model_set_range    (GimpZoomModel      *model,

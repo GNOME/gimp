@@ -31,23 +31,8 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-#define GIMP_TYPE_OFFSET_AREA            (gimp_offset_area_get_type ())
-#define GIMP_OFFSET_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetArea))
-#define GIMP_OFFSET_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
-#define GIMP_IS_OFFSET_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OFFSET_AREA))
-#define GIMP_IS_OFFSET_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_AREA))
-#define GIMP_OFFSET_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
-
-
-typedef struct _GimpOffsetAreaPrivate GimpOffsetAreaPrivate;
-typedef struct _GimpOffsetAreaClass   GimpOffsetAreaClass;
-
-struct _GimpOffsetArea
-{
-  GtkDrawingArea         parent_instance;
-
-  GimpOffsetAreaPrivate *priv;
-};
+#define GIMP_TYPE_OFFSET_AREA (gimp_offset_area_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpOffsetArea, gimp_offset_area, GIMP, OFFSET_AREA, GtkDrawingArea)
 
 struct _GimpOffsetAreaClass
 {
@@ -68,8 +53,6 @@ struct _GimpOffsetAreaClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_offset_area_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_offset_area_new         (gint            orig_width,
                                           gint            orig_height);

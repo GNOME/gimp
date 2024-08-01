@@ -80,7 +80,7 @@ enum
 };
 
 
-struct _GimpColorSelectionPrivate
+typedef struct _GimpColorSelectionPrivate
 {
   gboolean                  show_alpha;
 
@@ -95,9 +95,7 @@ struct _GimpColorSelectionPrivate
 
   GtkWidget                *new_color;
   GtkWidget                *old_color;
-};
-
-#define GET_PRIVATE(obj) (((GimpColorSelection *) (obj))->priv)
+} GimpColorSelectionPrivate;
 
 
 static void   gimp_color_selection_finalize          (GObject            *object);
@@ -181,9 +179,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkSizeGroup              *new_group;
   GtkSizeGroup              *old_group;
 
-  selection->priv = gimp_color_selection_get_instance_private (selection);
-
-  priv = selection->priv;
+  priv = gimp_color_selection_get_instance_private (selection);
 
   priv->show_alpha = TRUE;
 
@@ -347,7 +343,10 @@ gimp_color_selection_init (GimpColorSelection *selection)
 static void
 gimp_color_selection_finalize (GObject *object)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (object);
+  GimpColorSelection        *selection = GIMP_COLOR_SELECTION (object);
+  GimpColorSelectionPrivate *priv;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   g_object_unref (priv->color);
 
@@ -403,7 +402,7 @@ gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
-  priv = GET_PRIVATE (selection);
+  priv = gimp_color_selection_get_instance_private (selection);
 
   if (show_alpha != priv->show_alpha)
     {
@@ -436,9 +435,13 @@ gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
 gboolean
 gimp_color_selection_get_show_alpha (GimpColorSelection *selection)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), FALSE);
 
-  return GET_PRIVATE (selection)->show_alpha;
+  priv = gimp_color_selection_get_instance_private (selection);
+
+  return priv->show_alpha;
 }
 
 /**
@@ -458,7 +461,7 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  priv = GET_PRIVATE (selection);
+  priv = gimp_color_selection_get_instance_private (selection);
 
   old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
@@ -483,9 +486,13 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
 GeglColor *
 gimp_color_selection_get_color (GimpColorSelection *selection)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
 
-  return gegl_color_duplicate (GET_PRIVATE (selection)->color);
+  priv = gimp_color_selection_get_instance_private (selection);
+
+  return gegl_color_duplicate (priv->color);
 }
 
 /**
@@ -504,7 +511,7 @@ gimp_color_selection_set_old_color (GimpColorSelection *selection,
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  priv = GET_PRIVATE (selection);
+  priv = gimp_color_selection_get_instance_private (selection);
 
   gimp_color_area_set_color (GIMP_COLOR_AREA (priv->old_color), color);
 }
@@ -522,7 +529,7 @@ gimp_color_selection_get_old_color (GimpColorSelection *selection)
 
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
 
-  priv = GET_PRIVATE (selection);
+  priv = gimp_color_selection_get_instance_private (selection);
 
   return gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color));
 }
@@ -541,7 +548,7 @@ gimp_color_selection_reset (GimpColorSelection *selection)
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
-  priv = GET_PRIVATE (selection);
+  priv = gimp_color_selection_get_instance_private (selection);
 
   color = gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color));
   gimp_color_selection_set_color (selection, color);
@@ -574,13 +581,17 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
  */
 void
 gimp_color_selection_set_format (GimpColorSelection *selection,
-                                const Babl          *format)
+                                 const Babl         *format)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
-  gimp_color_notebook_set_format (GIMP_COLOR_NOTEBOOK (selection->priv->notebook),
+  priv = gimp_color_selection_get_instance_private (selection);
+
+  gimp_color_notebook_set_format (GIMP_COLOR_NOTEBOOK (priv->notebook),
                                   format);
-  gimp_color_selector_set_format (GIMP_COLOR_SELECTOR (selection->priv->scales),
+  gimp_color_selector_set_format (GIMP_COLOR_SELECTOR (priv->scales),
                                   format);
 
   g_signal_emit (selection, selection_signals[COLOR_CHANGED], 0);
@@ -603,9 +614,13 @@ gimp_color_selection_set_simulation (GimpColorSelection *selection,
                                      GimpColorRenderingIntent intent,
                                      gboolean            bpc)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
-  gimp_color_notebook_set_simulation (GIMP_COLOR_NOTEBOOK (selection->priv->notebook),
+  priv = gimp_color_selection_get_instance_private (selection);
+
+  gimp_color_notebook_set_simulation (GIMP_COLOR_NOTEBOOK (priv->notebook),
                                       profile,
                                       intent,
                                       bpc);
@@ -631,7 +646,7 @@ gimp_color_selection_set_config (GimpColorSelection *selection,
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
 
-  priv = GET_PRIVATE (selection);
+  priv = gimp_color_selection_get_instance_private (selection);
 
   gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (priv->notebook),
                                   config);
@@ -654,9 +669,13 @@ gimp_color_selection_set_config (GimpColorSelection *selection,
 GtkWidget *
 gimp_color_selection_get_notebook (GimpColorSelection *selection)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
 
-  return GET_PRIVATE (selection)->notebook;
+  priv = gimp_color_selection_get_instance_private (selection);
+
+  return priv->notebook;
 }
 
 /**
@@ -671,9 +690,13 @@ gimp_color_selection_get_notebook (GimpColorSelection *selection)
 GtkWidget *
 gimp_color_selection_get_right_vbox (GimpColorSelection *selection)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
 
-  return GET_PRIVATE (selection)->right_vbox;
+  priv = gimp_color_selection_get_instance_private (selection);
+
+  return priv->right_vbox;
 }
 
 
@@ -685,10 +708,13 @@ gimp_color_selection_switch_page (GtkWidget          *widget,
                                   guint               page_num,
                                   GimpColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv     = GET_PRIVATE (selection);
-  GimpColorNotebook         *notebook = GIMP_COLOR_NOTEBOOK (priv->notebook);
+  GimpColorSelectionPrivate *priv;
+  GimpColorNotebook         *notebook;
   GimpColorSelector         *current;
   gboolean                   sensitive;
+
+  priv = gimp_color_selection_get_instance_private (selection);
+  notebook = GIMP_COLOR_NOTEBOOK (priv->notebook);
 
   current = gimp_color_notebook_get_current_selector (notebook);
 
@@ -703,8 +729,10 @@ gimp_color_selection_notebook_changed (GimpColorSelector  *selector,
                                        GeglColor          *color,
                                        GimpColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
   GeglColor                 *old_color;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
@@ -724,8 +752,10 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
                                      GeglColor          *color,
                                      GimpColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
   GeglColor                 *old_color;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
@@ -753,7 +783,9 @@ static void
 gimp_color_selection_entry_changed (GimpColorHexEntry  *entry,
                                     GimpColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   g_object_unref (priv->color);
   priv->color = gimp_color_hex_entry_get_color (entry);
@@ -768,7 +800,9 @@ gimp_color_selection_channel_changed (GimpColorSelector        *selector,
                                       GimpColorSelectorChannel  channel,
                                       GimpColorSelection       *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   priv->channel = channel;
 
@@ -780,7 +814,9 @@ static void
 gimp_color_selection_new_color_changed (GtkWidget          *widget,
                                         GimpColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   g_object_unref (priv->color);
   priv->color = gimp_color_area_get_color (GIMP_COLOR_AREA (widget));
@@ -794,7 +830,9 @@ static void
 gimp_color_selection_update (GimpColorSelection *selection,
                              UpdateType          update)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
+
+  priv = gimp_color_selection_get_instance_private (selection);
 
   if (update & UPDATE_NOTEBOOK)
     {

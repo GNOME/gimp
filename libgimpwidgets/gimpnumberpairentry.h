@@ -31,24 +31,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_NUMBER_PAIR_ENTRY            (gimp_number_pair_entry_get_type ())
-#define GIMP_NUMBER_PAIR_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NUMBER_PAIR_ENTRY, GimpNumberPairEntry))
-#define GIMP_NUMBER_PAIR_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NUMBER_PAIR_ENTRY, GimpNumberPairEntryClass))
-#define GIMP_IS_NUMBER_PAIR_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NUMBER_PAIR_ENTRY))
-#define GIMP_IS_NUMBER_PAIR_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NUMBER_PAIR_ENTRY))
-#define GIMP_NUMBER_PAIR_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NUMBER_PAIR_AREA, GimpNumberPairEntryClass))
-
-
-typedef struct _GimpNumberPairEntryPrivate GimpNumberPairEntryPrivate;
-typedef struct _GimpNumberPairEntryClass   GimpNumberPairEntryClass;
-
-
-struct _GimpNumberPairEntry
-{
-  GtkEntry                    parent_instance;
-
-  GimpNumberPairEntryPrivate *priv;
-};
+#define GIMP_TYPE_NUMBER_PAIR_ENTRY (gimp_number_pair_entry_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GIMP, NUMBER_PAIR_ENTRY, GtkEntry)
 
 struct _GimpNumberPairEntryClass
 {
@@ -69,7 +53,6 @@ struct _GimpNumberPairEntryClass
 };
 
 
-GType          gimp_number_pair_entry_get_type           (void) G_GNUC_CONST;
 GtkWidget *    gimp_number_pair_entry_new                (const gchar         *separators,
                                                           gboolean             allow_simplification,
                                                           gdouble              min_valid_value,

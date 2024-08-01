@@ -51,7 +51,7 @@ enum
 };
 
 
-struct _GimpMemsizeEntryPrivate
+typedef struct _GimpMemsizeEntryPrivate
 {
   guint64        value;
   guint64        lower;
@@ -63,9 +63,7 @@ struct _GimpMemsizeEntryPrivate
   GtkAdjustment *adjustment;
   GtkWidget     *spinbutton;
   GtkWidget     *menu;
-};
-
-#define GET_PRIVATE(obj) (((GimpMemsizeEntry *) (obj))->priv)
+} GimpMemsizeEntryPrivate;
 
 
 static void  gimp_memsize_entry_adj_callback  (GtkAdjustment    *adj,
@@ -100,8 +98,6 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 static void
 gimp_memsize_entry_init (GimpMemsizeEntry *entry)
 {
-  entry->priv = gimp_memsize_entry_get_instance_private (entry);
-
   gtk_orientable_set_orientation (GTK_ORIENTABLE (entry),
                                   GTK_ORIENTATION_HORIZONTAL);
 
@@ -112,8 +108,10 @@ static void
 gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
                                  GimpMemsizeEntry *entry)
 {
-  GimpMemsizeEntryPrivate *private = GET_PRIVATE (entry);
+  GimpMemsizeEntryPrivate *private;
   guint64                  size    = gtk_adjustment_get_value (adj);
+
+  private = gimp_memsize_entry_get_instance_private (entry);
 
   if (gimp_memsize_entry_get_rounded_value (entry, private->value) != size)
     /* Do not allow losing accuracy if the converted/displayed value
@@ -128,8 +126,10 @@ static void
 gimp_memsize_entry_unit_callback (GtkWidget        *widget,
                                   GimpMemsizeEntry *entry)
 {
-  GimpMemsizeEntryPrivate *private = GET_PRIVATE (entry);
+  GimpMemsizeEntryPrivate *private;
   guint                    shift;
+
+  private = gimp_memsize_entry_get_instance_private (entry);
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) &shift);
 
@@ -168,8 +168,10 @@ static guint64
 gimp_memsize_entry_get_rounded_value (GimpMemsizeEntry *entry,
                                       guint64           value)
 {
-  GimpMemsizeEntryPrivate *private = GET_PRIVATE (entry);
+  GimpMemsizeEntryPrivate *private;
   guint64                  converted;
+
+  private = gimp_memsize_entry_get_instance_private (entry);
 
 #if _MSC_VER < 1300
 #  define CAST (gint64)
@@ -216,7 +218,7 @@ gimp_memsize_entry_new (guint64  value,
 
   entry = g_object_new (GIMP_TYPE_MEMSIZE_ENTRY, NULL);
 
-  private = GET_PRIVATE (entry);
+  private = gimp_memsize_entry_get_instance_private (entry);
 
   for (shift = 30; shift > 10; shift -= 10)
     {
@@ -283,7 +285,7 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
 
   g_return_if_fail (GIMP_IS_MEMSIZE_ENTRY (entry));
 
-  private = GET_PRIVATE (entry);
+  private = gimp_memsize_entry_get_instance_private (entry);
 
   g_return_if_fail (value >= private->lower && value <= private->upper);
 
@@ -314,9 +316,13 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
 guint64
 gimp_memsize_entry_get_value (GimpMemsizeEntry *entry)
 {
+  GimpMemsizeEntryPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_MEMSIZE_ENTRY (entry), 0);
 
-  return GET_PRIVATE (entry)->value;
+  private = gimp_memsize_entry_get_instance_private (entry);
+
+  return private->value;
 }
 
 /**
@@ -330,7 +336,11 @@ gimp_memsize_entry_get_value (GimpMemsizeEntry *entry)
 GtkWidget *
 gimp_memsize_entry_get_spinbutton (GimpMemsizeEntry *entry)
 {
+  GimpMemsizeEntryPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_MEMSIZE_ENTRY (entry), 0);
 
-  return GET_PRIVATE (entry)->spinbutton;
+  private = gimp_memsize_entry_get_instance_private (entry);
+
+  return private->spinbutton;
 }

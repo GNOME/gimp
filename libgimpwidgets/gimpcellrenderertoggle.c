@@ -59,16 +59,14 @@ enum
 };
 
 
-struct _GimpCellRendererTogglePrivate
+typedef struct _GimpCellRendererTogglePrivate
 {
   gchar       *icon_name;
   gint         icon_size;
   gboolean     override_background;
 
   GdkPixbuf   *pixbuf;
-};
-
-#define GET_PRIVATE(obj) (((GimpCellRendererToggle *) (obj))->priv)
+} GimpCellRendererTogglePrivate;
 
 
 static void gimp_cell_renderer_toggle_finalize     (GObject              *object);
@@ -166,13 +164,13 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 static void
 gimp_cell_renderer_toggle_init (GimpCellRendererToggle *toggle)
 {
-  toggle->priv = gimp_cell_renderer_toggle_get_instance_private (toggle);
 }
 
 static void
 gimp_cell_renderer_toggle_finalize (GObject *object)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
+  GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
+  GimpCellRendererTogglePrivate *priv   = gimp_cell_renderer_toggle_get_instance_private (toggle);
 
   g_clear_pointer (&priv->icon_name, g_free);
   g_clear_object (&priv->pixbuf);
@@ -186,7 +184,8 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
+  GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
+  GimpCellRendererTogglePrivate *priv   = gimp_cell_renderer_toggle_get_instance_private (toggle);
 
   switch (param_id)
     {
@@ -214,7 +213,8 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
+  GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
+  GimpCellRendererTogglePrivate *priv   = gimp_cell_renderer_toggle_get_instance_private (toggle);
 
   switch (param_id)
     {
@@ -250,7 +250,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
                                     gint               *height)
 {
   GimpCellRendererToggle        *toggle  = GIMP_CELL_RENDERER_TOGGLE (cell);
-  GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
+  GimpCellRendererTogglePrivate *priv    = gimp_cell_renderer_toggle_get_instance_private (toggle);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GtkBorder                      border;
   gint                           scale_factor;
@@ -330,7 +330,8 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                   const GdkRectangle   *cell_area,
                                   GtkCellRendererState  flags)
 {
-  GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
+  GimpCellRendererToggle        *toggle  = GIMP_CELL_RENDERER_TOGGLE (cell);
+  GimpCellRendererTogglePrivate *priv    = gimp_cell_renderer_toggle_get_instance_private (toggle);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GdkRectangle                   toggle_rect;
   GtkStateFlags                  state;
@@ -468,7 +469,7 @@ gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
                                     const GdkRectangle   *cell_area,
                                     GtkCellRendererState  flags)
 {
-  GtkCellRendererToggle *toggle = GTK_CELL_RENDERER_TOGGLE (cell);
+  GtkCellRendererToggle  *toggle = GTK_CELL_RENDERER_TOGGLE (cell);
 
   if (gtk_cell_renderer_toggle_get_activatable (toggle))
     {
@@ -490,7 +491,7 @@ static void
 gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
                                          GtkWidget              *widget)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (toggle);
+  GimpCellRendererTogglePrivate *priv = gimp_cell_renderer_toggle_get_instance_private (toggle);
 
   g_clear_object (&priv->pixbuf);
 

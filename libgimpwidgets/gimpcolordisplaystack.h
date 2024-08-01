@@ -31,23 +31,8 @@ G_BEGIN_DECLS
 /* For information look at the html documentation */
 
 
-#define GIMP_TYPE_COLOR_DISPLAY_STACK            (gimp_color_display_stack_get_type ())
-#define GIMP_COLOR_DISPLAY_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStack))
-#define GIMP_COLOR_DISPLAY_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStackClass))
-#define GIMP_IS_COLOR_DISPLAY_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK))
-#define GIMP_IS_COLOR_DISPLAY_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_DISPLAY_STACK))
-#define GIMP_COLOR_DISPLAY_STACK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStackClass))
-
-
-typedef struct _GimpColorDisplayStackPrivate GimpColorDisplayStackPrivate;
-typedef struct _GimpColorDisplayStackClass   GimpColorDisplayStackClass;
-
-struct _GimpColorDisplayStack
-{
-  GObject                       parent_instance;
-
-  GimpColorDisplayStackPrivate *priv;
-};
+#define GIMP_TYPE_COLOR_DISPLAY_STACK (gimp_color_display_stack_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, GIMP, COLOR_DISPLAY_STACK, GObject)
 
 struct _GimpColorDisplayStackClass
 {
@@ -76,7 +61,6 @@ struct _GimpColorDisplayStackClass
 };
 
 
-GType                   gimp_color_display_stack_get_type (void) G_GNUC_CONST;
 GimpColorDisplayStack * gimp_color_display_stack_new      (void);
 GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack *stack);
 

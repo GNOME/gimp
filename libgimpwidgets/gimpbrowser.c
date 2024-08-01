@@ -50,7 +50,7 @@ enum
 };
 
 
-struct _GimpBrowserPrivate
+typedef struct _GimpBrowserPrivate
 {
   GtkWidget *left_vbox;
 
@@ -64,9 +64,7 @@ struct _GimpBrowserPrivate
 
   GtkWidget *right_vbox;
   GtkWidget *right_widget;
-};
-
-#define GET_PRIVATE(obj) (((GimpBrowser *) (obj))->priv)
+} GimpBrowserPrivate;
 
 
 static void      gimp_browser_dispose          (GObject               *object);
@@ -119,9 +117,7 @@ gimp_browser_init (GimpBrowser *browser)
   GtkWidget          *scrolled_window;
   GtkWidget          *viewport;
 
-  browser->priv = gimp_browser_get_instance_private (browser);
-
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (browser),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -198,7 +194,8 @@ gimp_browser_init (GimpBrowser *browser)
 static void
 gimp_browser_dispose (GObject *object)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (object);
+  GimpBrowser        *browser = GIMP_BROWSER (object);
+  GimpBrowserPrivate *priv    = gimp_browser_get_instance_private (browser);
 
   if (priv->search_timeout_id)
     {
@@ -250,7 +247,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
   g_return_if_fail (GIMP_IS_BROWSER (browser));
   g_return_if_fail (first_type_label != NULL);
 
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   if (! priv->search_type_combo)
     {
@@ -304,7 +301,7 @@ gimp_browser_get_left_vbox (GimpBrowser *browser)
 
   g_return_val_if_fail (GIMP_IS_BROWSER (browser), NULL);
 
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   return priv->left_vbox;
 }
@@ -324,7 +321,7 @@ gimp_browser_get_right_vbox (GimpBrowser *browser)
 
   g_return_val_if_fail (GIMP_IS_BROWSER (browser), NULL);
 
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   return priv->right_vbox;
 }
@@ -347,7 +344,7 @@ gimp_browser_set_search_summary (GimpBrowser *browser,
   g_return_if_fail (GIMP_IS_BROWSER (browser));
   g_return_if_fail (summary != NULL);
 
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   gtk_label_set_text (GTK_LABEL (priv->count_label), summary);
 }
@@ -370,7 +367,7 @@ gimp_browser_set_widget (GimpBrowser *browser,
   g_return_if_fail (GIMP_IS_BROWSER (browser));
   g_return_if_fail (widget == NULL || GTK_IS_WIDGET (widget));
 
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   if (widget == priv->right_widget)
     return;
@@ -409,7 +406,7 @@ gimp_browser_show_message (GimpBrowser *browser,
   g_return_if_fail (GIMP_IS_BROWSER (browser));
   g_return_if_fail (message != NULL);
 
-  priv = GET_PRIVATE (browser);
+  priv = gimp_browser_get_instance_private (browser);
 
   if (GTK_IS_LABEL (priv->right_widget))
     {
@@ -435,7 +432,7 @@ gimp_browser_show_message (GimpBrowser *browser,
 static void
 gimp_browser_queue_search (GimpBrowser *browser)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (browser);
+  GimpBrowserPrivate *priv = gimp_browser_get_instance_private (browser);
 
   if (priv->search_timeout_id)
     g_source_remove (priv->search_timeout_id);
@@ -479,7 +476,8 @@ gimp_browser_entry_icon_press (GtkEntry              *entry,
 static gboolean
 gimp_browser_search_timeout (gpointer data)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (data);
+  GimpBrowser        *browser = GIMP_BROWSER (data);
+  GimpBrowserPrivate *priv    = gimp_browser_get_instance_private (browser);
   const gchar        *search_string;
 
   search_string = gtk_entry_get_text (GTK_ENTRY (priv->search_entry));

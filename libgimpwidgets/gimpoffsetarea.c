@@ -48,7 +48,7 @@ enum
 };
 
 
-struct _GimpOffsetAreaPrivate
+typedef struct _GimpOffsetAreaPrivate
 {
   gint    orig_width;
   gint    orig_height;
@@ -58,9 +58,7 @@ struct _GimpOffsetAreaPrivate
   gint    offset_y;
   gdouble display_ratio_x;
   gdouble display_ratio_y;
-};
-
-#define GET_PRIVATE(obj) (((GimpOffsetArea *) (obj))->priv)
+} GimpOffsetAreaPrivate;
 
 
 static void      gimp_offset_area_resize        (GimpOffsetArea *area);
@@ -109,9 +107,7 @@ gimp_offset_area_init (GimpOffsetArea *area)
 {
   GimpOffsetAreaPrivate *private;
 
-  area->priv = gimp_offset_area_get_instance_private (area);
-
-  private = GET_PRIVATE (area);
+  private = gimp_offset_area_get_instance_private (area);
 
   private->display_ratio_x = 1.0;
   private->display_ratio_y = 1.0;
@@ -145,7 +141,7 @@ gimp_offset_area_new (gint orig_width,
 
   area = g_object_new (GIMP_TYPE_OFFSET_AREA, NULL);
 
-  private = GET_PRIVATE (area);
+  private = gimp_offset_area_get_instance_private (area);
 
   private->orig_width  = private->width  = orig_width;
   private->orig_height = private->height = orig_height;
@@ -199,7 +195,7 @@ gimp_offset_area_set_size (GimpOffsetArea *area,
   g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
   g_return_if_fail (width > 0 && height > 0);
 
-  private = GET_PRIVATE (area);
+  private = gimp_offset_area_get_instance_private (area);
 
   if (private->width != width || private->height != height)
     {
@@ -255,7 +251,7 @@ gimp_offset_area_set_offsets (GimpOffsetArea *area,
 
   g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
 
-  private = GET_PRIVATE (area);
+  private = gimp_offset_area_get_instance_private (area);
 
   if (private->offset_x != offset_x || private->offset_y != offset_y)
     {
@@ -280,10 +276,12 @@ gimp_offset_area_set_offsets (GimpOffsetArea *area,
 static void
 gimp_offset_area_resize (GimpOffsetArea *area)
 {
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  GimpOffsetAreaPrivate *private;
   gint                   width;
   gint                   height;
   gdouble                ratio;
+
+  private = gimp_offset_area_get_instance_private (area);
 
   if (private->orig_width == 0 || private->orig_height == 0)
     return;
@@ -312,10 +310,12 @@ gimp_offset_area_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
   GimpOffsetArea        *area    = GIMP_OFFSET_AREA (widget);
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  GimpOffsetAreaPrivate *private;
   GdkPixbuf             *pixbuf;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  private = gimp_offset_area_get_instance_private (area);
 
   private->display_ratio_x = ((gdouble) allocation->width /
                               ((private->orig_width <= private->width) ?
@@ -384,9 +384,11 @@ gimp_offset_area_event (GtkWidget *widget,
   static gint start_y       = 0;
 
   GimpOffsetArea        *area    = GIMP_OFFSET_AREA (widget);
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  GimpOffsetAreaPrivate *private;
   gint                   offset_x;
   gint                   offset_y;
+
+  private = gimp_offset_area_get_instance_private (area);
 
   if (private->orig_width == 0 || private->orig_height == 0)
     return FALSE;
@@ -442,12 +444,14 @@ gimp_offset_area_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
   GimpOffsetArea        *area    = GIMP_OFFSET_AREA (widget);
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  GimpOffsetAreaPrivate *private;
   GtkStyleContext       *context = gtk_widget_get_style_context (widget);
   GtkAllocation          allocation;
   GdkPixbuf             *pixbuf;
   gint                   w, h;
   gint                   x, y;
+
+  private = gimp_offset_area_get_instance_private (area);
 
   gtk_widget_get_allocation (widget, &allocation);
 

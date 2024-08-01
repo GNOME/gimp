@@ -53,12 +53,10 @@ enum
 };
 
 
-struct _GimpColorDisplayStackPrivate
+typedef struct _GimpColorDisplayStackPrivate
 {
   GList *filters;
-};
-
-#define GET_PRIVATE(obj) (((GimpColorDisplayStack *) (obj))->priv)
+} GimpColorDisplayStackPrivate;
 
 
 static void   gimp_color_display_stack_dispose         (GObject               *object);
@@ -135,14 +133,13 @@ gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
 static void
 gimp_color_display_stack_init (GimpColorDisplayStack *stack)
 {
-  stack->priv = gimp_color_display_stack_get_instance_private (stack);
 }
 
 static void
 gimp_color_display_stack_dispose (GObject *object)
 {
   GimpColorDisplayStack        *stack   = GIMP_COLOR_DISPLAY_STACK (object);
-  GimpColorDisplayStackPrivate *private = GET_PRIVATE (object);
+  GimpColorDisplayStackPrivate *private = gimp_color_display_stack_get_instance_private (stack);
 
   if (private->filters)
     {
@@ -201,7 +198,7 @@ gimp_color_display_stack_clone (GimpColorDisplayStack *stack)
 
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack), NULL);
 
-  private = GET_PRIVATE (stack);
+  private = gimp_color_display_stack_get_instance_private (stack);
 
   clone = g_object_new (GIMP_TYPE_COLOR_DISPLAY_STACK, NULL);
 
@@ -248,9 +245,13 @@ gimp_color_display_stack_changed (GimpColorDisplayStack *stack)
 GList *
 gimp_color_display_stack_get_filters (GimpColorDisplayStack *stack)
 {
+  GimpColorDisplayStackPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack), NULL);
 
-  return GET_PRIVATE (stack)->filters;
+  private = gimp_color_display_stack_get_instance_private (stack);
+
+  return private->filters;
 }
 
 /**
@@ -271,7 +272,7 @@ gimp_color_display_stack_add (GimpColorDisplayStack *stack,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  private = GET_PRIVATE (stack);
+  private = gimp_color_display_stack_get_instance_private (stack);
 
   g_return_if_fail (g_list_find (private->filters, display) == NULL);
 
@@ -308,7 +309,7 @@ gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  private = GET_PRIVATE (stack);
+  private = gimp_color_display_stack_get_instance_private (stack);
 
   g_return_if_fail (g_list_find (private->filters, display) != NULL);
 
@@ -342,7 +343,7 @@ gimp_color_display_stack_reorder_up (GimpColorDisplayStack *stack,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  private = GET_PRIVATE (stack);
+  private = gimp_color_display_stack_get_instance_private (stack);
 
   list = g_list_find (private->filters, display);
 
@@ -379,7 +380,7 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  private = GET_PRIVATE (stack);
+  private = gimp_color_display_stack_get_instance_private (stack);
 
   list = g_list_find (private->filters, display);
 
@@ -418,7 +419,7 @@ gimp_color_display_stack_convert_buffer (GimpColorDisplayStack *stack,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  private = GET_PRIVATE (stack);
+  private = gimp_color_display_stack_get_instance_private (stack);
 
   for (list = private->filters; list; list = g_list_next (list))
     {

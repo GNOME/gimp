@@ -66,7 +66,7 @@ enum
 };
 
 
-struct _GimpColorAreaPrivate
+typedef struct _GimpColorAreaPrivate
 {
   GimpColorConfig    *config;
   GimpColorTransform *transform;
@@ -82,9 +82,7 @@ struct _GimpColorAreaPrivate
   guint               needs_render : 1;
 
   gboolean            out_of_gamut;
-};
-
-#define GET_PRIVATE(obj) (((GimpColorArea *) (obj))->priv)
+} GimpColorAreaPrivate;
 
 
 static void      gimp_color_area_dispose             (GObject           *object);
@@ -236,9 +234,7 @@ gimp_color_area_init (GimpColorArea *area)
 {
   GimpColorAreaPrivate *priv;
 
-  area->priv = gimp_color_area_get_instance_private (area);
-
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   priv->buf         = NULL;
   priv->width       = 0;
@@ -272,7 +268,8 @@ gimp_color_area_dispose (GObject *object)
 static void
 gimp_color_area_finalize (GObject *object)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (object);
+  GimpColorArea        *area = GIMP_COLOR_AREA (object);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
 
   g_clear_pointer (&priv->buf, g_free);
   g_clear_object (&priv->color);
@@ -286,7 +283,8 @@ gimp_color_area_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (object);
+  GimpColorArea        *area = GIMP_COLOR_AREA (object);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
 
   switch (property_id)
     {
@@ -354,7 +352,8 @@ static void
 gimp_color_area_size_allocate (GtkWidget     *widget,
                                GtkAllocation *allocation)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+  GimpColorArea        *area = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
@@ -378,7 +377,7 @@ gimp_color_area_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
   GimpColorArea        *area    = GIMP_COLOR_AREA (widget);
-  GimpColorAreaPrivate *priv    = GET_PRIVATE (area);
+  GimpColorAreaPrivate *priv    = gimp_color_area_get_instance_private (area);
   GtkStyleContext      *context = gtk_widget_get_style_context (widget);
   cairo_surface_t      *buffer;
   gboolean              oog     = priv->out_of_gamut;
@@ -540,7 +539,7 @@ gimp_color_area_set_color (GimpColorArea *area,
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   if (gimp_color_is_perceptually_identical (priv->color, color))
     return;
@@ -573,7 +572,7 @@ gimp_color_area_get_color (GimpColorArea *area)
 
   g_return_val_if_fail (GIMP_IS_COLOR_AREA (area), NULL);
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   return gegl_color_duplicate (priv->color);
 }
@@ -594,7 +593,7 @@ gimp_color_area_has_alpha (GimpColorArea *area)
 
   g_return_val_if_fail (GIMP_IS_COLOR_AREA (area), FALSE);
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   return priv->type != GIMP_COLOR_AREA_FLAT;
 }
@@ -616,7 +615,7 @@ gimp_color_area_set_type (GimpColorArea     *area,
 
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   if (priv->type != type)
     {
@@ -667,7 +666,7 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
 
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   draw_border = draw_border ? TRUE : FALSE;
 
@@ -705,7 +704,7 @@ gimp_color_area_set_out_of_gamut (GimpColorArea *area,
 
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
   if (priv->out_of_gamut != out_of_gamut)
     {
       priv->out_of_gamut = out_of_gamut;
@@ -731,7 +730,7 @@ gimp_color_area_set_color_config (GimpColorArea   *area,
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
 
-  priv = GET_PRIVATE (area);
+  priv = gimp_color_area_get_instance_private (area);
 
   if (config != priv->config)
     {
@@ -767,7 +766,8 @@ gimp_color_area_render_buf (GtkWidget         *widget,
                             guint              rowstride,
                             GeglColor         *color)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+  GimpColorArea        *area = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
   const Babl           *render_space;
   guint                 x, y;
   guint                 check_size = 0;
@@ -902,7 +902,7 @@ gimp_color_area_render_buf (GtkWidget         *widget,
 static void
 gimp_color_area_render (GimpColorArea *area)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
 
   if (! priv->buf)
     return;
@@ -920,7 +920,8 @@ static void
 gimp_color_area_drag_begin (GtkWidget      *widget,
                             GdkDragContext *context)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+  GimpColorArea        *area = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
   GeglColor            *color;
   GtkWidget            *window;
   GtkWidget            *frame;
@@ -1064,7 +1065,8 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
                                guint             info,
                                guint             time)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+  GimpColorArea        *area = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
   const Babl           *format;
   const gchar          *encoding;
   gint                  encoding_length;
@@ -1103,7 +1105,7 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
 static void
 gimp_color_area_create_transform (GimpColorArea *area)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
 
   if (priv->config)
     {
@@ -1128,7 +1130,7 @@ gimp_color_area_create_transform (GimpColorArea *area)
 static void
 gimp_color_area_destroy_transform (GimpColorArea *area)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+  GimpColorAreaPrivate *priv = gimp_color_area_get_instance_private (area);
 
   g_clear_object (&priv->transform);
 

@@ -59,7 +59,7 @@ enum
 };
 
 
-struct _GimpColorSelectorPrivate
+typedef struct _GimpColorSelectorPrivate
 {
   gboolean                  toggles_visible;
   gboolean                  toggles_sensitive;
@@ -74,9 +74,7 @@ struct _GimpColorSelectorPrivate
   GimpColorProfile         *simulation_profile;
   GimpColorRenderingIntent  simulation_intent;
   gboolean                  simulation_bpc;
-};
-
-#define GET_PRIVATE(obj) (((GimpColorSelector *) (obj))->priv)
+} GimpColorSelectorPrivate;
 
 
 static void   gimp_color_selector_dispose                    (GObject           *object);
@@ -161,9 +159,7 @@ gimp_color_selector_init (GimpColorSelector *selector)
 {
   GimpColorSelectorPrivate *priv;
 
-  selector->priv = gimp_color_selector_get_instance_private (selector);
-
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   priv->toggles_visible   = TRUE;
   priv->toggles_sensitive = TRUE;
@@ -188,11 +184,14 @@ gimp_color_selector_init (GimpColorSelector *selector)
 static void
 gimp_color_selector_dispose (GObject *object)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (object);
+  GimpColorSelector        *selector = GIMP_COLOR_SELECTOR (object);
+  GimpColorSelectorPrivate *priv;
+
+  priv = gimp_color_selector_get_instance_private (selector);
 
   gimp_color_selector_set_config (selector, NULL);
-  g_clear_object (&selector->priv->color);
-  g_clear_object (&selector->priv->simulation_profile);
+  g_clear_object (&priv->color);
+  g_clear_object (&priv->simulation_profile);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -247,13 +246,17 @@ void
 gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
                                          gboolean           visible)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (selector->priv->toggles_visible != visible)
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  if (priv->toggles_visible != visible)
     {
       GimpColorSelectorClass *selector_class;
 
-      selector->priv->toggles_visible = visible ? TRUE : FALSE;
+      priv->toggles_visible = visible ? TRUE : FALSE;
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
@@ -275,9 +278,13 @@ gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
 gboolean
 gimp_color_selector_get_toggles_visible (GimpColorSelector *selector)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  return selector->priv->toggles_visible;
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  return priv->toggles_visible;
 }
 
 /**
@@ -294,13 +301,17 @@ void
 gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
                                            gboolean           sensitive)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (selector->priv->toggles_sensitive != sensitive)
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  if (priv->toggles_sensitive != sensitive)
     {
       GimpColorSelectorClass *selector_class;
 
-      selector->priv->toggles_sensitive = sensitive ? TRUE : FALSE;
+      priv->toggles_sensitive = sensitive ? TRUE : FALSE;
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
@@ -322,9 +333,13 @@ gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
 gboolean
 gimp_color_selector_get_toggles_sensitive (GimpColorSelector *selector)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  return selector->priv->toggles_sensitive;
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  return priv->toggles_sensitive;
 }
 
 /**
@@ -338,13 +353,17 @@ void
 gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
                                     gboolean           show_alpha)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (show_alpha != selector->priv->show_alpha)
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  if (show_alpha != priv->show_alpha)
     {
       GimpColorSelectorClass *selector_class;
 
-      selector->priv->show_alpha = show_alpha ? TRUE : FALSE;
+      priv->show_alpha = show_alpha ? TRUE : FALSE;
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
@@ -366,9 +385,13 @@ gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
 gboolean
 gimp_color_selector_get_show_alpha (GimpColorSelector *selector)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  return selector->priv->show_alpha;
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  return priv->show_alpha;
 }
 
 /**
@@ -394,7 +417,7 @@ gimp_color_selector_set_color (GimpColorSelector *selector,
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   if (! gimp_color_is_perceptually_identical (priv->color, color))
     {
@@ -433,7 +456,7 @@ gimp_color_selector_get_color (GimpColorSelector *selector)
 
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), NULL);
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   return gegl_color_duplicate (priv->color);
 }
@@ -453,14 +476,18 @@ void
 gimp_color_selector_set_channel (GimpColorSelector        *selector,
                                  GimpColorSelectorChannel  channel)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  if (channel != selector->priv->channel)
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  if (channel != priv->channel)
     {
       GimpColorSelectorClass *selector_class;
       GimpColorSelectorModel  model = -1;
 
-      selector->priv->channel = channel;
+      priv->channel = channel;
 
       switch (channel)
         {
@@ -534,10 +561,14 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
 GimpColorSelectorChannel
 gimp_color_selector_get_channel (GimpColorSelector *selector)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector),
                         GIMP_COLOR_SELECTOR_RED);
 
-  return selector->priv->channel;
+  priv = gimp_color_selector_get_instance_private (selector);
+
+  return priv->channel;
 }
 
 /**
@@ -562,7 +593,7 @@ gimp_color_selector_set_model_visible (GimpColorSelector      *selector,
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   visible = visible ? TRUE : FALSE;
 
@@ -598,7 +629,7 @@ gimp_color_selector_get_model_visible (GimpColorSelector      *selector,
 
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   return priv->model_visible[model];
 }
@@ -676,7 +707,7 @@ gimp_color_selector_set_simulation (GimpColorSelector        *selector,
   g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
 
   selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
-  priv           = GET_PRIVATE (selector);
+  priv           = gimp_color_selector_get_instance_private (selector);
 
   if ((profile && ! priv->simulation_profile)                                        ||
       (! profile && priv->simulation_profile)                                        ||
@@ -703,7 +734,7 @@ gimp_color_selector_get_simulation (GimpColorSelector         *selector,
 
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   if (profile)
     *profile = priv->simulation_profile;
@@ -723,7 +754,7 @@ gimp_color_selector_enable_simulation (GimpColorSelector *selector,
 
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
   if (priv->simulation != enabled)
     {
       if (! enabled || priv->simulation_profile)
@@ -752,7 +783,7 @@ gimp_color_selector_emit_color_changed (GimpColorSelector *selector)
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   g_signal_emit (selector, selector_signals[COLOR_CHANGED], 0, priv->color);
 }
@@ -766,10 +797,14 @@ gimp_color_selector_emit_color_changed (GimpColorSelector *selector)
 static void
 gimp_color_selector_emit_channel_changed (GimpColorSelector *selector)
 {
+  GimpColorSelectorPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
+  priv = gimp_color_selector_get_instance_private (selector);
+
   g_signal_emit (selector, selector_signals[CHANNEL_CHANGED], 0,
-                 selector->priv->channel);
+                 priv->channel);
 }
 
 /**
@@ -789,7 +824,7 @@ gimp_color_selector_emit_model_visible_changed (GimpColorSelector      *selector
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
 
-  priv = GET_PRIVATE (selector);
+  priv = gimp_color_selector_get_instance_private (selector);
 
   g_signal_emit (selector, selector_signals[MODEL_VISIBLE_CHANGED], 0,
                  model, priv->model_visible[model]);

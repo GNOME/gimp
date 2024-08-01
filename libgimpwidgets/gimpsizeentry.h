@@ -32,25 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_SIZE_ENTRY            (gimp_size_entry_get_type ())
-#define GIMP_SIZE_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
-#define GIMP_SIZE_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
-#define GIMP_IS_SIZE_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
-#define GIMP_IS_SIZE_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SIZE_ENTRY))
-#define GIMP_SIZE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
-
-
-typedef struct _GimpSizeEntryPrivate GimpSizeEntryPrivate;
-typedef struct _GimpSizeEntryClass   GimpSizeEntryClass;
-
-typedef struct _GimpSizeEntryField  GimpSizeEntryField;
-
-struct _GimpSizeEntry
-{
-  GtkGrid               parent_instance;
-
-  GimpSizeEntryPrivate *priv;
-};
+#define GIMP_TYPE_SIZE_ENTRY (gimp_size_entry_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpSizeEntry, gimp_size_entry, GIMP, SIZE_ENTRY, GtkGrid)
 
 struct _GimpSizeEntryClass
 {
@@ -73,8 +56,6 @@ struct _GimpSizeEntryClass
 
 
 /* For information look into the C source or the html documentation */
-
-GType       gimp_size_entry_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_size_entry_new (gint                       number_of_fields,
                                  GimpUnit                   unit,

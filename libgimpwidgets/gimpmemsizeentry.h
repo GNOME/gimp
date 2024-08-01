@@ -29,23 +29,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_MEMSIZE_ENTRY            (gimp_memsize_entry_get_type ())
-#define GIMP_MEMSIZE_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MEMSIZE_ENTRY, GimpMemsizeEntry))
-#define GIMP_MEMSIZE_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MEMSIZE_ENTRY, GimpMemsizeEntryClass))
-#define GIMP_IS_MEMSIZE_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MEMSIZE_ENTRY))
-#define GIMP_IS_MEMSIZE_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MEMSIZE_ENTRY))
-#define GIMP_MEMSIZE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MEMSIZE_ENTRY, GimpMemsizeEntryClass))
-
-
-typedef struct _GimpMemsizeEntryPrivate GimpMemsizeEntryPrivate;
-typedef struct _GimpMemsizeEntryClass   GimpMemsizeEntryClass;
-
-struct _GimpMemsizeEntry
-{
-  GtkBox  parent_instance;
-
-  GimpMemsizeEntryPrivate *priv;
-};
+#define GIMP_TYPE_MEMSIZE_ENTRY (gimp_memsize_entry_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GIMP, MEMSIZE_ENTRY, GtkBox)
 
 struct _GimpMemsizeEntryClass
 {
@@ -64,8 +49,6 @@ struct _GimpMemsizeEntryClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_memsize_entry_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_memsize_entry_new            (guint64           value,
                                                guint64           lower,

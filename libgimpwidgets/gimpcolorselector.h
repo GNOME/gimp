@@ -52,22 +52,8 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_SELECTOR_BAR_SIZE 15
 
 
-#define GIMP_TYPE_COLOR_SELECTOR            (gimp_color_selector_get_type ())
-#define GIMP_COLOR_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelector))
-#define GIMP_COLOR_SELECTOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelectorClass))
-#define GIMP_IS_COLOR_SELECTOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SELECTOR))
-#define GIMP_IS_COLOR_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SELECTOR))
-#define GIMP_COLOR_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelectorClass))
-
-typedef struct _GimpColorSelectorPrivate GimpColorSelectorPrivate;
-typedef struct _GimpColorSelectorClass   GimpColorSelectorClass;
-
-struct _GimpColorSelector
-{
-  GtkBox                    parent_instance;
-
-  GimpColorSelectorPrivate *priv;
-};
+#define GIMP_TYPE_COLOR_SELECTOR (gimp_color_selector_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpColorSelector, gimp_color_selector, GIMP, COLOR_SELECTOR, GtkBox)
 
 struct _GimpColorSelectorClass
 {
@@ -124,7 +110,6 @@ struct _GimpColorSelectorClass
 };
 
 
-GType       gimp_color_selector_get_type              (void) G_GNUC_CONST;
 GtkWidget * gimp_color_selector_new                   (GType              selector_type,
                                                        GeglColor         *color,
                                                        GimpColorSelectorChannel  channel);

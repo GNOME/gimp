@@ -62,12 +62,10 @@ enum
 };
 
 
-struct _GimpColorHexEntryPrivate
+typedef struct _GimpColorHexEntryPrivate
 {
   GeglColor *color;
-};
-
-#define GET_PRIVATE(obj) (((GimpColorHexEntry *) (obj))->priv)
+} GimpColorHexEntryPrivate;
 
 
 static void      gimp_color_hex_entry_constructed (GObject            *object);
@@ -120,9 +118,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   const gchar             **names;
   gint                      i;
 
-  entry->priv = gimp_color_hex_entry_get_instance_private (entry);
-
-  private = GET_PRIVATE (entry);
+  private = gimp_color_hex_entry_get_instance_private (entry);
 
   /* GtkEntry's minimum size is way too large, set a reasonable one
    * for our use case
@@ -194,7 +190,8 @@ gimp_color_hex_entry_constructed (GObject *object)
 static void
 gimp_color_hex_entry_finalize (GObject *object)
 {
-  GimpColorHexEntryPrivate *private = GET_PRIVATE (object);
+  GimpColorHexEntry        *entry   = GIMP_COLOR_HEX_ENTRY (object);
+  GimpColorHexEntryPrivate *private = gimp_color_hex_entry_get_instance_private (entry);
 
   g_object_unref (private->color);
 
@@ -234,7 +231,7 @@ gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
   g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
-  private = GET_PRIVATE (entry);
+  private = gimp_color_hex_entry_get_instance_private (entry);
 
   if (! gimp_color_is_perceptually_identical (private->color, color))
     {
@@ -273,7 +270,7 @@ gimp_color_hex_entry_get_color (GimpColorHexEntry *entry)
 
   g_return_val_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry), NULL);
 
-  private = GET_PRIVATE (entry);
+  private = gimp_color_hex_entry_get_instance_private (entry);
 
   return gegl_color_duplicate (private->color);
 }
@@ -283,7 +280,7 @@ gimp_color_hex_entry_events (GtkWidget *widget,
                              GdkEvent  *event)
 {
   GimpColorHexEntry        *entry   = GIMP_COLOR_HEX_ENTRY (widget);
-  GimpColorHexEntryPrivate *private = GET_PRIVATE (entry);
+  GimpColorHexEntryPrivate *private = gimp_color_hex_entry_get_instance_private (entry);
 
   switch (event->type)
     {

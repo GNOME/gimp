@@ -28,23 +28,8 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_PAGE_SELECTOR            (gimp_page_selector_get_type ())
-#define GIMP_PAGE_SELECTOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAGE_SELECTOR, GimpPageSelector))
-#define GIMP_PAGE_SELECTOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAGE_SELECTOR, GimpPageSelectorClass))
-#define GIMP_IS_PAGE_SELECTOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAGE_SELECTOR))
-#define GIMP_IS_PAGE_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAGE_SELECTOR))
-#define GIMP_PAGE_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAGE_SELECTOR, GimpPageSelectorClass))
-
-
-typedef struct _GimpPageSelectorPrivate GimpPageSelectorPrivate;
-typedef struct _GimpPageSelectorClass   GimpPageSelectorClass;
-
-struct _GimpPageSelector
-{
-  GtkBox                   parent_instance;
-
-  GimpPageSelectorPrivate *priv;
-};
+#define GIMP_TYPE_PAGE_SELECTOR (gimp_page_selector_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPageSelector, gimp_page_selector, GIMP, PAGE_SELECTOR, GtkBox)
 
 struct _GimpPageSelectorClass
 {
@@ -64,8 +49,6 @@ struct _GimpPageSelectorClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_page_selector_get_type           (void) G_GNUC_CONST;
 
 GtkWidget * gimp_page_selector_new                (void);
 

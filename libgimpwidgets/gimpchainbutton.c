@@ -68,7 +68,7 @@ enum
 };
 
 
-struct _GimpChainButtonPrivate
+typedef struct _GimpChainButtonPrivate
 {
   GimpChainPosition  position;
   gboolean           active;
@@ -77,9 +77,7 @@ struct _GimpChainButtonPrivate
   GtkWidget         *line1;
   GtkWidget         *line2;
   GtkWidget         *image;
-};
-
-#define GET_PRIVATE(obj) (((GimpChainButton *) (obj))->priv)
+} GimpChainButtonPrivate;
 
 
 static void      gimp_chain_button_constructed      (GObject         *object);
@@ -193,10 +191,8 @@ static void
 gimp_chain_button_init (GimpChainButton *button)
 {
   GimpChainButtonPrivate *private;
+  private           = gimp_chain_button_get_instance_private (button);
 
-  button->priv = gimp_chain_button_get_instance_private (button);
-
-  private           = GET_PRIVATE (button);
   private->position = GIMP_CHAIN_TOP;
   private->active   = FALSE;
   private->image    = gtk_image_new ();
@@ -215,7 +211,7 @@ static void
 gimp_chain_button_constructed (GObject *object)
 {
   GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  GimpChainButtonPrivate *private = gimp_chain_button_get_instance_private (button);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -255,7 +251,7 @@ gimp_chain_button_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  GimpChainButtonPrivate *private = gimp_chain_button_get_instance_private (button);
 
   switch (property_id)
     {
@@ -284,7 +280,7 @@ gimp_chain_button_get_property (GObject    *object,
                                 GParamSpec *pspec)
 {
   GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  GimpChainButtonPrivate *private = gimp_chain_button_get_instance_private (button);
 
   switch (property_id)
     {
@@ -402,7 +398,7 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
 
-  private = GET_PRIVATE (button);
+  private = gimp_chain_button_get_instance_private (button);
 
   if (private->active != active)
     {
@@ -431,7 +427,7 @@ gimp_chain_button_get_active (GimpChainButton *button)
 
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
 
-  private = GET_PRIVATE (button);
+  private = gimp_chain_button_get_instance_private (button);
 
   return private->active;
 }
@@ -451,7 +447,7 @@ gimp_chain_button_get_button (GimpChainButton *button)
 
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
 
-  private = GET_PRIVATE (button);
+  private = gimp_chain_button_get_instance_private (button);
 
   return private->button;
 }
@@ -463,7 +459,7 @@ static void
 gimp_chain_button_clicked_callback (GtkWidget       *widget,
                                     GimpChainButton *button)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  GimpChainButtonPrivate *private = gimp_chain_button_get_instance_private (button);
 
   gimp_chain_button_set_active (button, ! private->active);
 }
@@ -471,7 +467,7 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
 static void
 gimp_chain_button_update_image (GimpChainButton *button)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  GimpChainButtonPrivate *private = gimp_chain_button_get_instance_private (button);
   guint                   i;
 
   i = ((private->position & GIMP_CHAIN_LEFT) << 1) + (private->active ? 0 : 1);
