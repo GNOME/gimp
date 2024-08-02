@@ -334,7 +334,7 @@ gimp_resource_get_by_id (gint32 resource_id)
  * Returns the resource with the given @resource_type and
  * @resource_name.
  *
- * Returns: (transfer full): The resource.
+ * Returns: (nullable) (transfer none): The resource.
  *
  * Since: 3.0
  **/
