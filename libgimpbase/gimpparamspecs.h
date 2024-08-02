@@ -251,7 +251,7 @@ void            gimp_value_take_float_array       (GValue        *value,
  */
 
 /**
- * GimpColorArray: (array zero-terminated=1) (element-type GeglColor)
+ * GimpColorArray:
  *
  * A boxed type which is nothing more than an alias to a %NULL-terminated array
  * of [class@Gegl.Color].
