@@ -363,8 +363,6 @@ gimp_choice_get_documentation (GimpChoice   *choice,
  * return %FALSE; nevertheless [method@Gimp.Choice.list_nicks] and other
  * functions to get information about a choice will still function).
  *
- * Returns: %TRUE if @nick is found, %FALSE otherwise.
- *
  * Since: 3.0
  **/
 void
