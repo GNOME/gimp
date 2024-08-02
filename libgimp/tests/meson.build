@@ -9,7 +9,8 @@ endif
 tests = [
   'color-parser',
   'palette',
-  'selection-float'
+  'selection-float',
+  'unit',
 ]
 
 # Unit testing environment is based on gimp_run_env with additional environment
