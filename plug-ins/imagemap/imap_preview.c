@@ -31,6 +31,8 @@
 #include "imap_menu.h"
 #include "imap_preview.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 #define PREVIEW_MASK  (GDK_EXPOSURE_MASK       | \
                        GDK_POINTER_MOTION_MASK | \
                        GDK_BUTTON_PRESS_MASK   | \
@@ -308,6 +310,7 @@ make_preview (GimpDrawable *drawable,
    /* Create button with arrow */
    button = gtk_button_new ();
    gtk_widget_set_can_focus (button, FALSE);
+   gtk_widget_set_tooltip_text (button, _("Shortcut Menu"));
    gtk_grid_attach (GTK_GRID (grid), button, 0, 0, 1, 1);
                      // GTK_FILL, GTK_FILL, 0, 0);
    gtk_widget_set_events (button,

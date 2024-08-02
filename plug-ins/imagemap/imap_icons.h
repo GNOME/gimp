@@ -23,7 +23,6 @@
 #ifndef _IMAP_ICONS_H
 #define _IMAP_ICONS_H
 
-#define IMAP_ARROW        "imagemap-arrow"
 #define IMAP_CIRCLE       "imagemap-circle"
 #define IMAP_COORD        "imagemap-coord"
 #define IMAP_DIMENSION    "imagemap-dimension"
