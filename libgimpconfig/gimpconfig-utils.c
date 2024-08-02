@@ -21,9 +21,12 @@
 
 #include "config.h"
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimpconfigtypes.h"
 
@@ -299,7 +302,10 @@ gimp_config_reset_properties (GObject *object)
       if ((prop_spec->flags & G_PARAM_WRITABLE) &&
           ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
         {
-          if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
+          if (G_IS_PARAM_SPEC_OBJECT (prop_spec)     &&
+              ! GIMP_IS_PARAM_SPEC_COLOR (prop_spec) &&
+              ! GEGL_IS_PARAM_SPEC_COLOR (prop_spec) &&
+              ! GIMP_IS_PARAM_SPEC_UNIT (prop_spec))
             {
               if ((prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE) &&
                   (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
