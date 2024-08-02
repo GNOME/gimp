@@ -233,7 +233,7 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
 
   g_object_class_install_property (object_class,
                                    PROP_IMAGE_NOT_FOUND_ERRNO,
-                                   g_param_spec_int ("image-not-found_errno", NULL,
+                                   g_param_spec_int ("image-not-found-errno", NULL,
                                                      "Error number if image not found",
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE));
@@ -330,6 +330,9 @@ gimp_thumbnail_set_property (GObject      *object,
       break;
     case PROP_IMAGE_NUM_LAYERS:
       priv->image_num_layers = g_value_get_int (value);
+      break;
+    case PROP_IMAGE_NOT_FOUND_ERRNO:
+      priv->image_not_found_errno = g_value_get_int (value);
       break;
     case PROP_THUMB_STATE:
       priv->thumb_state = g_value_get_enum (value);
