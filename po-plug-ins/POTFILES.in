@@ -207,10 +207,12 @@ plug-ins/imagemap/imap_menu.c
 plug-ins/imagemap/imap_object_popup.c
 plug-ins/imagemap/imap_polygon.c
 plug-ins/imagemap/imap_preferences.c
+plug-ins/imagemap/imap_preview.c
 plug-ins/imagemap/imap_rectangle.c
 plug-ins/imagemap/imap_selection.c
 plug-ins/imagemap/imap_settings.c
 plug-ins/imagemap/imap_source.c
+plug-ins/imagemap/imap_statusbar.c
 plug-ins/imagemap/imap-menu.ui
 plug-ins/lighting/lighting-apply.c
 plug-ins/lighting/lighting-main.c
