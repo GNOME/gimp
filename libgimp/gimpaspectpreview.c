@@ -50,17 +50,17 @@ enum
   PROP_DRAWABLE
 };
 
-struct _GimpAspectPreviewPrivate
+typedef struct _GimpAspectPreviewPrivate
 {
   GimpDrawable *drawable;
-};
+} GimpAspectPreviewPrivate;
 
 typedef struct
 {
   gboolean  update;
 } PreviewSettings;
 
-#define GET_PRIVATE(obj) (((GimpAspectPreview *) (obj))->priv)
+#define GET_PRIVATE(obj) (gimp_aspect_preview_get_instance_private ((GimpAspectPreview *) (obj)))
 
 
 static void  gimp_aspect_preview_constructed   (GObject         *object);
@@ -140,8 +140,6 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
 static void
 gimp_aspect_preview_init (GimpAspectPreview *preview)
 {
-  preview->priv = gimp_aspect_preview_get_instance_private (preview);
-
   g_object_set (gimp_preview_get_area (GIMP_PREVIEW (preview)),
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),

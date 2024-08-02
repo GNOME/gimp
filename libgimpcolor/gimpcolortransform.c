@@ -65,7 +65,7 @@ enum
 };
 
 
-struct _GimpColorTransformPrivate
+typedef struct _GimpColorTransformPrivate
 {
   GimpColorProfile *src_profile;
   const Babl       *src_format;
@@ -75,8 +75,9 @@ struct _GimpColorTransformPrivate
 
   cmsHTRANSFORM     transform;
   const Babl       *fish;
-};
+} GimpColorTransformPrivate;
 
+#define GET_PRIVATE(obj) (gimp_color_transform_get_instance_private ((GimpColorTransform *) (obj)))
 
 static void   gimp_color_transform_finalize (GObject *object);
 
@@ -134,18 +135,17 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
 static void
 gimp_color_transform_init (GimpColorTransform *transform)
 {
-  transform->priv = gimp_color_transform_get_instance_private (transform);
 }
 
 static void
 gimp_color_transform_finalize (GObject *object)
 {
-  GimpColorTransform *transform = GIMP_COLOR_TRANSFORM (object);
+  GimpColorTransformPrivate *priv = GET_PRIVATE (object);
 
-  g_clear_object (&transform->priv->src_profile);
-  g_clear_object (&transform->priv->dest_profile);
+  g_clear_object (&priv->src_profile);
+  g_clear_object (&priv->dest_profile);
 
-  g_clear_pointer (&transform->priv->transform, cmsDeleteTransform);
+  g_clear_pointer (&priv->transform, cmsDeleteTransform);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -202,7 +202,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
   transform = g_object_new (GIMP_TYPE_COLOR_TRANSFORM, NULL);
 
-  priv = transform->priv;
+  priv = GET_PRIVATE (transform);
 
   /* only src_profile and dest_profile must determine the transform's
    * color spaces, create formats with src_format's and dest_format's
@@ -335,7 +335,7 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
 
   transform = g_object_new (GIMP_TYPE_COLOR_TRANSFORM, NULL);
 
-  priv = transform->priv;
+  priv = GET_PRIVATE (transform);
 
   src_lcms   = gimp_color_profile_get_lcms_profile (src_profile);
   dest_lcms  = gimp_color_profile_get_lcms_profile (dest_profile);
@@ -419,7 +419,7 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
   g_return_if_fail (dest_format != NULL);
   g_return_if_fail (dest_pixels != NULL);
 
-  priv = transform->priv;
+  priv = GET_PRIVATE (transform);
 
   /* we must not do any babl color transforms when reading from
    * src_pixels or writing to dest_pixels, so construct formats with
@@ -514,7 +514,7 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
-  priv = transform->priv;
+  priv = GET_PRIVATE (transform);
 
   if (src_rect)
     {

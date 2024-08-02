@@ -141,7 +141,7 @@ enum
 };
 
 
-struct _GimpColorConfigPrivate
+typedef struct _GimpColorConfigPrivate
 {
   GimpColorManagementMode   mode;
 
@@ -164,9 +164,9 @@ struct _GimpColorConfigPrivate
 
   gboolean                  show_rgb_u8;
   gboolean                  show_hsv;
-};
+} GimpColorConfigPrivate;
 
-#define GET_PRIVATE(obj) (((GimpColorConfig *) (obj))->priv)
+#define GET_PRIVATE(obj) ((GimpColorConfigPrivate *) gimp_color_config_get_instance_private ((GimpColorConfig *) (obj)))
 
 
 static void  gimp_color_config_finalize               (GObject          *object);
@@ -351,11 +351,9 @@ gimp_color_config_init (GimpColorConfig *config)
 {
   GeglColor *magenta = gegl_color_new (NULL);
 
-  config->priv = gimp_color_config_get_instance_private (config);
-
   /* Magenta (sRGB space). */
   gegl_color_set_rgba (magenta, 1.0, 0.0, 1.0, 1.0);
-  config->priv->out_of_gamut_color = magenta;
+  GET_PRIVATE (config)->out_of_gamut_color = magenta;
 }
 
 static void

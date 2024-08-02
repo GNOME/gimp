@@ -31,23 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_DRAWABLE_PREVIEW            (gimp_drawable_preview_get_type ())
-#define GIMP_DRAWABLE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreview))
-#define GIMP_DRAWABLE_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
-#define GIMP_IS_DRAWABLE_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_PREVIEW))
-#define GIMP_IS_DRAWABLE_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_PREVIEW))
-#define GIMP_DRAWABLE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
-
-
-typedef struct _GimpDrawablePreviewPrivate GimpDrawablePreviewPrivate;
-typedef struct _GimpDrawablePreviewClass   GimpDrawablePreviewClass;
-
-struct _GimpDrawablePreview
-{
-  GimpScrolledPreview         parent_instance;
-
-  GimpDrawablePreviewPrivate *priv;
-};
+#define GIMP_TYPE_DRAWABLE_PREVIEW (gimp_drawable_preview_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDrawablePreview, gimp_drawable_preview, GIMP, DRAWABLE_PREVIEW, GimpScrolledPreview)
 
 struct _GimpDrawablePreviewClass
 {
@@ -64,8 +49,6 @@ struct _GimpDrawablePreviewClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType          gimp_drawable_preview_get_type             (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_drawable_preview_new_from_drawable (GimpDrawable        *drawable);
 GimpDrawable * gimp_drawable_preview_get_drawable      (GimpDrawablePreview *preview);

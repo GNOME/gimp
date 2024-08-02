@@ -58,12 +58,12 @@ typedef struct
 } PreviewSettings;
 
 
-struct _GimpDrawablePreviewPrivate
+typedef struct _GimpDrawablePreviewPrivate
 {
   GimpDrawable *drawable;
-};
+} GimpDrawablePreviewPrivate;
 
-#define GET_PRIVATE(obj) (((GimpDrawablePreview *) (obj))->priv)
+#define GET_PRIVATE(obj) (gimp_drawable_preview_get_instance_private ((GimpDrawablePreview *) (obj)))
 
 
 static void  gimp_drawable_preview_constructed   (GObject         *object);
@@ -138,8 +138,6 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 static void
 gimp_drawable_preview_init (GimpDrawablePreview *preview)
 {
-  preview->priv = gimp_drawable_preview_get_instance_private (preview);
-
   g_object_set (gimp_preview_get_area (GIMP_PREVIEW (preview)),
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
@@ -637,7 +635,11 @@ gimp_drawable_preview_new_from_drawable (GimpDrawable *drawable)
 GimpDrawable *
 gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview)
 {
+  GimpDrawablePreviewPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), NULL);
 
-  return GET_PRIVATE (preview)->drawable;
+  priv = GET_PRIVATE (preview);
+
+  return priv->drawable;
 }

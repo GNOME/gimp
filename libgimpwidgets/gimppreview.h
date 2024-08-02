@@ -31,23 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
-#define GIMP_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW, GimpPreview))
-#define GIMP_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW, GimpPreviewClass))
-#define GIMP_IS_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PREVIEW))
-#define GIMP_IS_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREVIEW))
-#define GIMP_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW, GimpPreviewClass))
-
-
-typedef struct _GimpPreviewPrivate GimpPreviewPrivate;
-typedef struct _GimpPreviewClass   GimpPreviewClass;
-
-struct _GimpPreview
-{
-  GtkBox              parent_instance;
-
-  GimpPreviewPrivate *priv;
-};
+#define GIMP_TYPE_PREVIEW (gimp_preview_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPreview, gimp_preview, GIMP, PREVIEW, GtkBox)
 
 struct _GimpPreviewClass
 {
@@ -89,8 +74,6 @@ struct _GimpPreviewClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_preview_get_type           (void) G_GNUC_CONST;
 
 void        gimp_preview_set_update         (GimpPreview  *preview,
                                              gboolean      update);

@@ -32,23 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_ZOOM_PREVIEW            (gimp_zoom_preview_get_type ())
-#define GIMP_ZOOM_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreview))
-#define GIMP_ZOOM_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewClass))
-#define GIMP_IS_ZOOM_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ZOOM_PREVIEW))
-#define GIMP_IS_ZOOM_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ZOOM_PREVIEW))
-#define GIMP_ZOOM_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ZOOM_PREVIEW, GimpZoomPreviewClass))
-
-
-typedef struct _GimpZoomPreviewPrivate GimpZoomPreviewPrivate;
-typedef struct _GimpZoomPreviewClass   GimpZoomPreviewClass;
-
-struct _GimpZoomPreview
-{
-  GimpScrolledPreview     parent_instance;
-
-  GimpZoomPreviewPrivate *priv;
-};
+#define GIMP_TYPE_ZOOM_PREVIEW (gimp_zoom_preview_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP, ZOOM_PREVIEW, GimpScrolledPreview)
 
 struct _GimpZoomPreviewClass
 {
@@ -65,8 +50,6 @@ struct _GimpZoomPreviewClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType           gimp_zoom_preview_get_type       (void) G_GNUC_CONST;
 
 GtkWidget     * gimp_zoom_preview_new_from_drawable (GimpDrawable *drawable);
 GtkWidget     * gimp_zoom_preview_new_with_model_from_drawable

@@ -47,7 +47,7 @@
 #define POPUP_SIZE  100
 
 
-struct _GimpScrolledPreviewPrivate
+typedef struct _GimpScrolledPreviewPrivate
 {
   GtkWidget     *hscr;
   GtkWidget     *vscr;
@@ -60,7 +60,7 @@ struct _GimpScrolledPreviewPrivate
   gint           drag_yoff;
   gboolean       in_drag;
   gint           frozen;
-};
+} GimpScrolledPreviewPrivate;
 
 #define GET_PRIVATE(obj) (gimp_scrolled_preview_get_instance_private ((GimpScrolledPreview *) (obj)))
 

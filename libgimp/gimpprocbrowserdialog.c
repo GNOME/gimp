@@ -76,15 +76,13 @@ enum
 };
 
 
-struct _GimpProcBrowserDialogPrivate
+typedef struct _GimpProcBrowserDialogPrivate
 {
   GtkWidget    *browser;
 
   GtkListStore *store;
   GtkWidget    *tree_view;
-};
-
-#define GET_PRIVATE(obj) (((GimpProcBrowserDialog *) (obj))->priv)
+} GimpProcBrowserDialogPrivate;
 
 
 static void       browser_selection_changed (GtkTreeSelection      *sel,
@@ -153,11 +151,10 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   GtkTreeSelection             *selection;
   GtkWidget                    *parent;
 
-  dialog->priv = gimp_proc_browser_dialog_get_instance_private (dialog);
   gtk_window_set_default_size (GTK_WINDOW (dialog), DBL_WIDTH,
                                DBL_WIDTH - DBL_LIST_WIDTH);
 
-  priv = GET_PRIVATE (dialog);
+  priv = gimp_proc_browser_dialog_get_instance_private (dialog);
 
   priv->browser = gimp_browser_new ();
   gimp_browser_add_search_types (GIMP_BROWSER (priv->browser),
@@ -223,7 +220,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
 
   /* first search (all procedures) */
-  browser_search (GIMP_BROWSER (dialog->priv->browser),
+  browser_search (GIMP_BROWSER (priv->browser),
                   "", SEARCH_TYPE_ALL, dialog);
 }
 
@@ -291,18 +288,21 @@ gimp_proc_browser_dialog_new (const gchar  *title,
 gchar *
 gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog)
 {
-  GtkTreeSelection *sel;
-  GtkTreeIter       iter;
+  GimpProcBrowserDialogPrivate *priv;
+  GtkTreeSelection             *sel;
+  GtkTreeIter                   iter;
 
   g_return_val_if_fail (GIMP_IS_PROC_BROWSER_DIALOG (dialog), NULL);
 
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->priv->tree_view));
+  priv = gimp_proc_browser_dialog_get_instance_private (dialog);
+
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->tree_view));
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
       gchar *proc_name;
 
-      gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->store), &iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &iter,
                           COLUMN_PROC_NAME, &proc_name,
                           -1);
 
@@ -319,17 +319,20 @@ static void
 browser_selection_changed (GtkTreeSelection      *sel,
                            GimpProcBrowserDialog *dialog)
 {
-  GtkTreeIter iter;
+  GimpProcBrowserDialogPrivate *priv;
+  GtkTreeIter                   iter;
+
+  priv = gimp_proc_browser_dialog_get_instance_private (dialog);
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
       gchar *proc_name;
 
-      gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->store), &iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &iter,
                           COLUMN_PROC_NAME, &proc_name,
                           -1);
 
-      gimp_browser_set_widget (GIMP_BROWSER (dialog->priv->browser),
+      gimp_browser_set_widget (GIMP_BROWSER (priv->browser),
                                gimp_proc_view_new (proc_name));
 
       g_free (proc_name);
@@ -353,12 +356,14 @@ browser_search (GimpBrowser           *browser,
                 gint                   search_type,
                 GimpProcBrowserDialog *dialog)
 {
-  GimpProcBrowserDialogPrivate  *priv      = GET_PRIVATE (dialog);
+  GimpProcBrowserDialogPrivate  *priv;
   GimpPDB                       *pdb       = gimp_get_pdb ();
   gchar                        **proc_list = NULL;
   gint                           num_procs;
   gchar                         *str;
   GRegex                        *regex;
+
+  priv = gimp_proc_browser_dialog_get_instance_private (dialog);
 
   /*  first check if the query is a valid regex  */
   regex = g_regex_new (query_text, 0, 0, NULL);
