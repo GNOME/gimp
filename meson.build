@@ -1868,6 +1868,8 @@ if meson.can_run_host_binaries() and have_gobject_introspection
   menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
   gimp_run_env.set('GIMP_TESTING_MENUS_PATH', menu_paths)
 
+  gimp_run_env.set('GIMP3_SYSCONFDIR', meson.global_source_root() / 'etc')
+
   gimp_run_env.set('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins')
   gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/python')
   gimp_run_env.append('GIMP_TESTING_PLUGINDIRS', meson.global_build_root() / 'plug-ins/common/test-plug-ins/')
