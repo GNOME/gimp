@@ -211,7 +211,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                            _("Change font of selected text"), NULL);
 
   editor->size_entry =
-    gimp_size_entry_new (1, 0, "%a", TRUE, FALSE, FALSE, 10,
+    gimp_size_entry_new (1, gimp_unit_pixel (), "%a", TRUE, FALSE, FALSE, 10,
                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_entry,
                       FALSE, FALSE, 0);
