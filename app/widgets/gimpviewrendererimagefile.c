@@ -155,13 +155,20 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
                                        GtkWidget     *widget,
                                        gint           size)
 {
-  GdkScreen     *screen     = gtk_widget_get_screen (widget);
-  GtkIconTheme  *icon_theme = gtk_icon_theme_get_for_screen (screen);
-  GimpThumbnail *thumbnail  = gimp_imagefile_get_thumbnail (imagefile);
-  GdkPixbuf     *pixbuf     = NULL;
+  GdkScreen      *screen     = gtk_widget_get_screen (widget);
+  GtkIconTheme   *icon_theme = gtk_icon_theme_get_for_screen (screen);
+  GimpThumbnail  *thumbnail  = gimp_imagefile_get_thumbnail (imagefile);
+  GimpThumbState  image_state;
+  gchar          *image_mimetype;
+  GdkPixbuf      *pixbuf     = NULL;
 
   if (! gimp_object_get_name (imagefile))
     return NULL;
+
+  g_object_get (thumbnail,
+                "image-state",    &image_state,
+                "image-mimetype", &image_mimetype,
+                NULL);
 
   if (! pixbuf)
     {
@@ -184,11 +191,11 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
   if (! pixbuf)
     {
-      if (thumbnail->image_mimetype)
+      if (image_mimetype)
         {
-          pixbuf = get_icon_for_mime_type (thumbnail->image_mimetype, size);
+          pixbuf = get_icon_for_mime_type (image_mimetype, size);
         }
-      else if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
+      else if (image_state == GIMP_THUMB_STATE_FOLDER)
         {
           pixbuf = get_icon_for_mime_type ("inode/directory", size);
         }
@@ -198,7 +205,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
     {
       const gchar *icon_name = "text-x-generic";
 
-      if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
+      if (image_state == GIMP_THUMB_STATE_FOLDER)
         icon_name = "folder";
 
       pixbuf = gtk_icon_theme_load_icon (icon_theme,

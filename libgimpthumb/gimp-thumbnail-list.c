@@ -181,6 +181,7 @@ process_thumbnail (const gchar *filename)
 {
   GimpThumbnail *thumbnail;
   GError        *error = NULL;
+  gchar         *image_uri;
 
   thumbnail = gimp_thumbnail_new ();
 
@@ -200,15 +201,17 @@ process_thumbnail (const gchar *filename)
     {
       GimpThumbState state = gimp_thumbnail_peek_image (thumbnail);
 
+      g_object_get (thumbnail, "image-uri", &image_uri, NULL);
+
       if ((option_state == STATE_NONE || state == option_state)
 
           &&
 
           (option_path == NULL ||
-           strstr (thumbnail->image_uri, option_path)))
+           strstr (image_uri, option_path)))
         {
           if (option_verbose)
-            g_print ("%s '%s'\n", filename, thumbnail->image_uri);
+            g_print ("%s '%s'\n", filename, image_uri);
           else
             g_print ("%s\n", filename);
         }
@@ -217,31 +220,31 @@ process_thumbnail (const gchar *filename)
       switch (foo)
         {
         case GIMP_THUMB_STATE_REMOTE:
-          g_print ("%s Remote image '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s Remote image '%s'\n", filename, image_uri);
           break;
 
         case GIMP_THUMB_STATE_FOLDER:
-          g_print ("%s Folder '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s Folder '%s'\n", filename, image_uri);
           break;
 
         case GIMP_THUMB_STATE_SPECIAL:
-          g_print ("%s Special file '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s Special file '%s'\n", filename, image_uri);
           break;
 
         case GIMP_THUMB_STATE_NOT_FOUND:
-          g_print ("%s Image not found '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s Image not found '%s'\n", filename, image_uri);
           break;
 
         case GIMP_THUMB_STATE_OLD:
-          g_print ("%s Thumbnail old '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s Thumbnail old '%s'\n", filename, image_uri);
           break;
 
         case GIMP_THUMB_STATE_FAILED:
-          g_print ("%s EEEEEEEEK '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s EEEEEEEEK '%s'\n", filename, image_uri);
           break;
 
         default:
-          g_print ("%s '%s'\n", filename, thumbnail->image_uri);
+          g_print ("%s '%s'\n", filename, image_uri);
           break;
         }
 #endif

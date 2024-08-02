@@ -511,13 +511,21 @@ gimp_thumb_box_thumb_state_notify (GimpThumbnail *thumb,
                                    GParamSpec    *pspec,
                                    GimpThumbBox  *box)
 {
+  GimpThumbState image_state;
+  GimpThumbState thumb_state;
+
   if (box->idle_id)
     return;
 
-  if (thumb->image_state == GIMP_THUMB_STATE_REMOTE)
+  g_object_get (thumb,
+                "image-state", &image_state,
+                "thumb-state", &thumb_state,
+                NULL);
+
+  if (image_state == GIMP_THUMB_STATE_REMOTE)
     return;
 
-  switch (thumb->thumb_state)
+  switch (thumb_state)
     {
     case GIMP_THUMB_STATE_NOT_FOUND:
     case GIMP_THUMB_STATE_OLD:
@@ -687,28 +695,37 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
   Gimp          *gimp  = box->context->gimp;
   GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
   GFile         *file  = gimp_imagefile_get_file (box->imagefile);
+  GimpThumbState image_state;
+  GimpThumbState thumb_state;
+  gint64         image_filesize;
+
+  g_object_get (thumb,
+                "image-state",    &image_state,
+                "thumb-state",    &thumb_state,
+                "image-filesize", &image_filesize,
+                NULL);
 
   box->idle_id = 0;
 
-  if (thumb->image_state == GIMP_THUMB_STATE_NOT_FOUND)
+  if (image_state == GIMP_THUMB_STATE_NOT_FOUND)
     return FALSE;
 
-  switch (thumb->thumb_state)
+  switch (thumb_state)
     {
     case GIMP_THUMB_STATE_NOT_FOUND:
     case GIMP_THUMB_STATE_OLD:
-      if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
+      if (image_filesize < gimp->config->thumbnail_filesize_limit &&
           ! gimp_thumbnail_has_failed (thumb)                            &&
           gimp_plug_in_manager_file_procedure_find_by_extension (gimp->plug_in_manager,
                                                                  GIMP_FILE_PROCEDURE_GROUP_OPEN,
                                                                  file))
         {
-          if (thumb->image_filesize > 0)
+          if (image_filesize > 0)
             {
               gchar *size;
               gchar *text;
 
-              size = g_format_size (thumb->image_filesize);
+              size = g_format_size (image_filesize);
               text = g_strdup_printf ("%s\n%s",
                                       size, _("Creating preview..."));
 

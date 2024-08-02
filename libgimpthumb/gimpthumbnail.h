@@ -32,50 +32,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_THUMBNAIL            (gimp_thumbnail_get_type ())
-#define GIMP_THUMBNAIL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_THUMBNAIL, GimpThumbnail))
-#define GIMP_THUMBNAIL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_THUMBNAIL, GimpThumbnailClass))
-#define GIMP_IS_THUMBNAIL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_THUMBNAIL))
-#define GIMP_IS_THUMBNAIL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_THUMBNAIL))
-#define GIMP_THUMBNAIL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_THUMBNAIL, GimpThumbnailClass))
-
-
-typedef struct _GimpThumbnailPrivate GimpThumbnailPrivate;
-typedef struct _GimpThumbnailClass   GimpThumbnailClass;
-
-/**
- * GimpThumbnail:
- *
- * All members of #GimpThumbnail are private and should only be accessed
- * using object properties.
- **/
-struct _GimpThumbnail
-{
-  GObject               parent_instance;
-
-  GimpThumbnailPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  /*< private >*/
-  GimpThumbState  image_state;
-  gchar          *image_uri;
-  gchar          *image_filename;
-  gint64          image_filesize;
-  gint64          image_mtime;
-  gint            image_not_found_errno;
-  gint            image_width;
-  gint            image_height;
-  gchar          *image_type;
-  gint            image_num_layers;
-
-  GimpThumbState  thumb_state;
-  GimpThumbSize   thumb_size;
-  gchar          *thumb_filename;
-  gint64          thumb_filesize;
-  gint64          thumb_mtime;
-
-  gchar          *image_mimetype;
-};
+#define GIMP_TYPE_THUMBNAIL (gimp_thumbnail_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpThumbnail, gimp_thumbnail, GIMP, THUMBNAIL, GObject)
 
 struct _GimpThumbnailClass
 {
@@ -92,8 +50,6 @@ struct _GimpThumbnailClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType            gimp_thumbnail_get_type         (void) G_GNUC_CONST;
 
 GimpThumbnail  * gimp_thumbnail_new              (void);
 
