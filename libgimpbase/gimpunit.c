@@ -51,7 +51,6 @@ enum
 
 typedef struct
 {
-  gboolean  delete_on_exit;
   gdouble   factor;
   gint      digits;
   gchar    *identifier;
@@ -68,8 +67,6 @@ struct _GimpUnit
   gint      id;
   gchar    *name;
 
-  gboolean  built_in;
-
   gboolean  delete_on_exit;
   gdouble   factor;
   gint      digits;
@@ -85,21 +82,21 @@ struct _GimpUnit
 static const GimpUnitDef _gimp_unit_defs[GIMP_UNIT_END] =
 {
   /* pseudo unit */
-  { FALSE,  0.0, 0, "pixels",      "px", "px",
+  { 0.0,  0, "pixels",      "px", "px",
     NC_("unit-singular", "pixel"),      NC_("unit-plural", "pixels")      },
 
   /* standard units */
-  { FALSE,  1.0, 2, "inches",      "''", "in",
+  { 1.0,  2, "inches",      "''", "in",
     NC_("unit-singular", "inch"),       NC_("unit-plural", "inches")      },
 
-  { FALSE, 25.4, 1, "millimeters", "mm", "mm",
+  { 25.4, 1, "millimeters", "mm", "mm",
     NC_("unit-singular", "millimeter"), NC_("unit-plural", "millimeters") },
 
   /* professional units */
-  { FALSE, 72.0, 0, "points",      "pt", "pt",
+  { 72.0, 0, "points",      "pt", "pt",
     NC_("unit-singular", "point"),      NC_("unit-plural", "points")      },
 
-  { FALSE,  6.0, 1, "picas",       "pc", "pc",
+  { 6.0,  1, "picas",       "pc", "pc",
     NC_("unit-singular", "pica"),       NC_("unit-plural", "picas")       }
 };
 
@@ -107,7 +104,7 @@ static const GimpUnitDef _gimp_unit_defs[GIMP_UNIT_END] =
  */
 static const GimpUnitDef _gimp_unit_percent_def =
 {
-    FALSE,  0.0, 0, "percent",     "%",  "%",
+    0.0,  0, "percent",     "%",  "%",
     NC_("singular", "percent"),    NC_("plural", "percent")
 };
 
