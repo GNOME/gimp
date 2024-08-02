@@ -24,6 +24,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "operations-types.h"
@@ -150,7 +151,20 @@ gimp_operation_config_get_type (Gimp        *gimp,
               strcmp (pspec->name, "input")     &&
               strcmp (pspec->name, "output"))
             {
-              pspecs[j] = pspec;
+              if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
+                /* As special exception, let's transform GeglParamColor
+                 * into GimpParamColor in all core code. This way, we
+                 * have one less param type to handle.
+                 */
+                pspecs[j] = gimp_param_spec_color (pspec->name,
+                                                   g_param_spec_get_nick (pspec),
+                                                   g_param_spec_get_blurb (pspec),
+                                                   TRUE,
+                                                   gegl_param_spec_color_get_default (pspec),
+                                                   pspec->flags);
+              else
+                pspecs[j] = pspec;
+
               j++;
             }
         }
