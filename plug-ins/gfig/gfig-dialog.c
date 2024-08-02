@@ -408,7 +408,7 @@ gfig_dialog (GimpGfig *gfig)
                      _("Copy"), _("Copy an object"));
   add_toggle_button (toolbar, "app.shape::delete", GFIG_ICON_DELETE_OBJECT,
                      _("Delete"), _("Delete an object"));
-  add_toggle_button (toolbar, "app.shape::select", GFIG_ICON_SELECT_OBJECT,
+  add_toggle_button (toolbar, "app.shape::select", GIMP_ICON_CURSOR,
                      _("Select"), _("Select an object"));
   add_tool_separator (toolbar, FALSE);
   add_tool_button (toolbar, "app.raise", GIMP_ICON_GO_UP,

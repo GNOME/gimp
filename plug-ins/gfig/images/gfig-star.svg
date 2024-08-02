@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   sodipodi:docname="gfig-star.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="17.876544"
+     inkscape:cx="5.0345303"
+     inkscape:cy="14.739986"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="gfig-star"
+     id="g1">
+    <path
+       id="path4"
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:1.75065893;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       inkscape:label="star-outline"
+       inkscape:transform-center-x="0.0049860422"
+       inkscape:transform-center-y="-0.94468262"
+       d="M 13.556378,3.8393195 11.755642,3.8392454 10.05581,0.02685273 8.4012925,3.8392454 H 4.790155 L 7.8877174,6.2820579 6.4869666,10.066668 10.05581,7.8759571 13.715284,10.066668 12.241021,6.2820579 13.607936,5.1232305"
+       transform="matrix(1.9395291,0,0,1.8981067,-3.4429887,5.4685619)"
+       sodipodi:nodetypes="ccccccccccc" />
+    <path
+       id="path3"
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.812527;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:markers fill stroke"
+       inkscape:label="star"
+       inkscape:transform-center-x="0.0049860422"
+       inkscape:transform-center-y="-0.94468262"
+       d="M 13.814172,3.8390273 11.755642,3.8392454 10.05581,0.02685273 8.4012925,3.8392454 H 4.790155 L 7.8877174,6.2820579 6.4869666,10.066668 10.05581,7.8759571 13.715284,10.066668 12.241021,6.2820579 13.814172,4.9651782"
+       transform="matrix(1.9395291,0,0,1.8981067,-3.4429887,5.4685619)"
+       sodipodi:nodetypes="ccccccccccc" />
+    <path
+       id="rect1-4-6-9"
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:2.524;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 13.653955,13.694955 h 4.650272 c 0,0 0,0.269891 0,0.605135 v 3.440004 c 0,0.335245 0,0.605135 0,0.605135 h -4.650272 c 0,0 0,-0.26989 0,-0.605135 V 14.30009 c 0,-0.335244 0,-0.605135 0,-0.605135 z"
+       inkscape:label="middle-point-outline" />
+    <path
+       id="rect1-4-1"
+       style="display:inline;fill:none;stroke:#df421e;stroke-width:0.793051;stroke-linecap:round;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 13.554067,13.694528 h 4.650272 c 0,0 0,0.269891 0,0.605135 v 3.440004 c 0,0.335245 0,0.605135 0,0.605135 h -4.650272 c 0,0 0,-0.26989 0,-0.605135 v -3.440004 c 0,-0.335244 0,-0.605135 0,-0.605135 z"
+       inkscape:label="middle-point" />
+    <path
+       id="rect1-4-6-9-3"
+       style="display:inline;fill:none;stroke:#ffffff;stroke-width:2.524;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 23.348955,10.946009 h 4.650272 c 0,0 0,0.269891 0,0.605135 v 3.440004 c 0,0.335245 0,0.605135 0,0.605135 h -4.650272 c 0,0 0,-0.26989 0,-0.605135 v -3.440004 c 0,-0.335244 0,-0.605135 0,-0.605135 z"
+       inkscape:label="tangent-point-outline" />
+    <path
+       id="rect1-4-1-0"
+       style="display:inline;fill:none;stroke:#df421e;stroke-width:0.793051;stroke-linecap:round;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 23.34884,10.945582 h 4.650272 c 0,0 0,0.269891 0,0.605135 v 3.440004 c 0,0.335245 0,0.605135 0,0.605135 H 23.34884 c 0,0 0,-0.26989 0,-0.605135 v -3.440004 c 0,-0.335244 0,-0.605135 0,-0.605135 z"
+       inkscape:label="tangent-point" />
+  </g>
+</svg>

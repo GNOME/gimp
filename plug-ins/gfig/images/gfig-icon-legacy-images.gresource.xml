@@ -12,7 +12,6 @@
     <file preprocess="to-pixdata">gfig-move-point.png</file>
     <file preprocess="to-pixdata">gfig-polygon.png</file>
     <file preprocess="to-pixdata">gfig-rectangle.png</file>
-    <file preprocess="to-pixdata">gfig-select-object.png</file>
     <file preprocess="to-pixdata">gfig-show-all.png</file>
     <file preprocess="to-pixdata">gfig-spiral.png</file>
     <file preprocess="to-pixdata">gfig-star.png</file>

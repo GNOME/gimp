@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gimp/gfig/icons">
+    <file>gfig-bezier.svg</file>
+    <file>gfig-circle.svg</file>
+    <file>gfig-copy-object.svg</file>
+    <file>gfig-curve.svg</file>
+    <file>gfig-delete-object.svg</file>
+    <file>gfig-ellipse.svg</file>
+    <file>gfig-line.svg</file>
+    <file>gfig-move-object.svg</file>
+    <file>gfig-move-point.svg</file>
+    <file>gfig-polygon.svg</file>
+    <file>gfig-rectangle.svg</file>
+    <file>gfig-show-all.svg</file>
+    <file>gfig-spiral.svg</file>
+    <file>gfig-star.svg</file>
+    <file preprocess="to-pixdata">gfig-logo.png</file>
+  </gresource>
+</gresources>

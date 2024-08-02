@@ -36,7 +36,6 @@
 #define GFIG_ICON_MOVE_POINT     "gfig-move-point"
 #define GFIG_ICON_POLYGON        "gfig-polygon"
 #define GFIG_ICON_RECTANGLE      "gfig-rectangle"
-#define GFIG_ICON_SELECT_OBJECT  "gfig-select-object"
 #define GFIG_ICON_SHOW_ALL       "gfig-show-all"
 #define GFIG_ICON_SPIRAL         "gfig-spiral"
 #define GFIG_ICON_STAR           "gfig-star"
