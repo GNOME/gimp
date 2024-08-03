@@ -175,7 +175,9 @@ gimp_pick_button_clicked (GtkButton *button)
   else if (_gimp_pick_button_kwin_available ())
     _gimp_pick_button_kwin_pick (GIMP_PICK_BUTTON (button));
   else
-    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button),
+                                    GET_PRIVATE (button)->cursor,
+                                    GET_PRIVATE (button)->grab_widget);
 #endif
 }
 

@@ -42,9 +42,6 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define GET_PRIVATE(obj) ((GimpPickButtonPrivate *) gimp_pick_button_get_instance_private ((GimpPickButton *) (obj)))
-
-
 static gboolean   gimp_pick_button_mouse_press   (GtkWidget      *invisible,
                                                   GdkEventButton *event,
                                                   GimpPickButton *button);
@@ -57,7 +54,8 @@ static gboolean   gimp_pick_button_mouse_motion  (GtkWidget      *invisible,
 static gboolean   gimp_pick_button_mouse_release (GtkWidget      *invisible,
                                                   GdkEventButton *event,
                                                   GimpPickButton *button);
-static void       gimp_pick_button_shutdown      (GimpPickButton *button);
+static void       gimp_pick_button_shutdown      (GimpPickButton *button,
+                                                  GtkWidget      *grab_widget);
 static void       gimp_pick_button_pick          (GimpPickButton *button,
                                                   GdkEvent       *event);
 
@@ -124,7 +122,7 @@ gimp_pick_button_key_press (GtkWidget      *invisible,
 {
   if (event->keyval == GDK_KEY_Escape)
     {
-      gimp_pick_button_shutdown (button);
+      gimp_pick_button_shutdown (button, invisible);
 
       g_signal_handlers_disconnect_by_func (invisible,
                                             gimp_pick_button_mouse_press,
@@ -159,7 +157,7 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 
   gimp_pick_button_pick (button, (GdkEvent *) event);
 
-  gimp_pick_button_shutdown (button);
+  gimp_pick_button_shutdown (button, invisible);
 
   g_signal_handlers_disconnect_by_func (invisible,
                                         gimp_pick_button_mouse_motion,
@@ -172,12 +170,12 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 }
 
 static void
-gimp_pick_button_shutdown (GimpPickButton *button)
+gimp_pick_button_shutdown (GimpPickButton *button,
+                           GtkWidget      *grab_widget)
 {
-  GimpPickButtonPrivate *priv    = GET_PRIVATE (button);
-  GdkDisplay            *display = gtk_widget_get_display (priv->grab_widget);
+  GdkDisplay *display = gtk_widget_get_display (grab_widget);
 
-  gtk_grab_remove (priv->grab_widget);
+  gtk_grab_remove (grab_widget);
 
   gdk_seat_ungrab (gdk_display_get_default_seat (display));
 }
@@ -290,29 +288,29 @@ gimp_pick_button_pick (GimpPickButton *button,
 
 /* entry point to this file, called from gimppickbutton.c */
 void
-_gimp_pick_button_default_pick (GimpPickButton *button)
+_gimp_pick_button_default_pick (GimpPickButton *button,
+                                GdkCursor      *cursor,
+                                GtkWidget      *grab_widget)
 {
-  GimpPickButtonPrivate *priv = GET_PRIVATE (button);
-  GdkDisplay            *display;
-  GtkWidget             *widget;
+  GdkDisplay *display;
+  GtkWidget  *widget;
 
-  if (! priv->cursor)
-    priv->cursor =
-      make_cursor (gtk_widget_get_display (GTK_WIDGET (button)));
+  if (! cursor)
+    cursor = make_cursor (gtk_widget_get_display (GTK_WIDGET (button)));
 
-  if (! priv->grab_widget)
+  if (! grab_widget)
     {
-      priv->grab_widget = gtk_invisible_new ();
+      grab_widget = gtk_invisible_new ();
 
-      gtk_widget_add_events (priv->grab_widget,
+      gtk_widget_add_events (grab_widget,
                              GDK_BUTTON_PRESS_MASK   |
                              GDK_BUTTON_RELEASE_MASK |
                              GDK_BUTTON1_MOTION_MASK);
 
-      gtk_widget_show (priv->grab_widget);
+      gtk_widget_show (grab_widget);
     }
 
-  widget = priv->grab_widget;
+  widget = grab_widget;
 
   display = gtk_widget_get_display (widget);
 
@@ -320,7 +318,7 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
                      gtk_widget_get_window (widget),
                      GDK_SEAT_CAPABILITY_ALL,
                      FALSE,
-                     priv->cursor,
+                     cursor,
                      NULL,
                      NULL, NULL) != GDK_GRAB_SUCCESS)
     {
