@@ -18,27 +18,30 @@ if [ -z "$GITLAB_CI" ]; then
   PARENT_DIR='../'
 fi
 
-
 # FIXME: We need native/Linux gimp-console.
+# https://gitlab.gnome.org/GNOME/gimp/-/issues/6393
+if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
+  export GIMP_PREFIX="$PWD/../_install"
+fi
 if [ ! -d '_build' ]; then
   echo -e '\033[31m(ERROR)\033[0m: Before running this script, first build GIMP natively in _build'
 fi
-if [ ! -d "${PARENT_DIR}_install" ]; then
-  echo -e "\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in ${PARENT_DIR}_install"
+if [ ! -d "$GIMP_PREFIX" ]; then
+  echo -e "\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in $GIMP_PREFIX"
 fi
-if [ ! -d '_build' ] || [ ! -d "${PARENT_DIR}_install" ]; then
+if [ ! -d '_build' ] || [ ! -d "$GIMP_PREFIX" ]; then
   echo 'Patches are very welcome: https://gitlab.gnome.org/GNOME/gimp/-/issues/6393'
   exit 1
 fi
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-mkdir -p $PWD/${PARENT_DIR}.local/bin
 GIMP_CONSOLE_PATH=$PWD/${PARENT_DIR}.local/bin/gimp-console-$GIMP_APP_VERSION
-gcc -print-multi-os-directory 2>/dev/null | grep ./ && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
-gcc -print-multiarch 2>/dev/null | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
 echo "#!/bin/sh" > $GIMP_CONSOLE_PATH
-echo export LD_LIBRARY_PATH="$PWD/${PARENT_DIR}_install/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> $GIMP_CONSOLE_PATH
-echo export GI_TYPELIB_PATH="$PWD/${PARENT_DIR}_install/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}" >> $GIMP_CONSOLE_PATH
-echo "$PWD/${PARENT_DIR}_install/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> $GIMP_CONSOLE_PATH
+IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+IFS=$' \t\n'
+for VAR in "${VAR_ARRAY[@]}"; do
+  echo $VAR >> $GIMP_CONSOLE_PATH
+done
+echo "$GIMP_PREFIX/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> $GIMP_CONSOLE_PATH
 chmod u+x $GIMP_CONSOLE_PATH
 
 
