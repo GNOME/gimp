@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-28 12:34+0000\n"
-"PO-Revision-Date: 2024-07-30 14:57+0300\n"
+"POT-Creation-Date: 2024-08-02 23:17+0000\n"
+"PO-Revision-Date: 2024-08-03 21:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -680,7 +680,6 @@ msgid "4"
 msgstr "4"
 
 #: plug-ins/common/border-average.c:156
-#| msgid "8)"
 msgid "8"
 msgstr "8"
 
@@ -2024,7 +2023,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
 #: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:541
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
 #: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
 #: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
@@ -6003,34 +6002,34 @@ msgstr "Неочікуваний кінець файлу на зчитуванн
 msgid "Write error occurred"
 msgstr "Помилка при записі"
 
-#: plug-ins/common/file-svg.c:166
+#: plug-ins/common/file-svg.c:167
 msgid "SVG image"
 msgstr "Зображення SVG"
 
-#: plug-ins/common/file-svg.c:179
+#: plug-ins/common/file-svg.c:180
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:188
+#: plug-ins/common/file-svg.c:189
 msgid "_Paths"
 msgstr "К_онтури"
 
-#: plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-svg.c:190
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 "Чи слід імпортувати контури так, щоб ними можна було скористатися у "
 "інструменті контурів, і як це робити"
 
-#: plug-ins/common/file-svg.c:190
+#: plug-ins/common/file-svg.c:191
 msgid "Don't import paths"
 msgstr "Не імпортувати контури"
 
-#: plug-ins/common/file-svg.c:191
+#: plug-ins/common/file-svg.c:192
 msgid "Import paths individually"
 msgstr "Імпортувати контури окремо"
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:193
 msgid "Merge imported paths"
 msgstr "Об'єднати імпортовані контури"
 
@@ -6039,15 +6038,15 @@ msgstr "Об'єднати імпортовані контури"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:273
+#: plug-ins/common/file-svg.c:274
 msgid "Disable safety size limits?"
 msgstr "Вимкнути безпекові обмеження на розмір?"
 
-#: plug-ins/common/file-svg.c:278
+#: plug-ins/common/file-svg.c:279
 msgid "_No"
 msgstr "_Ні"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:280
 msgid "_Yes"
 msgstr "_Так"
 
@@ -6061,7 +6060,7 @@ msgstr "_Так"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:304
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6072,26 +6071,26 @@ msgstr ""
 "зловмисниками файли SVG можуть скористатися зняттям обмежень для споживання "
 "надто великого об'єму пам'яті."
 
-#: plug-ins/common/file-svg.c:315
+#: plug-ins/common/file-svg.c:316
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:323
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 "Повторити без обмежень, які накладаються на обробку великих масивів даних?"
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/common/file-svg.c:543 plug-ins/file-exr/file-exr.c:358
 #: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
-#: plug-ins/common/file-svg.c:548
+#: plug-ins/common/file-svg.c:549
 msgid "Rendering SVG"
 msgstr "Візуалізація SVG"
 
-#: plug-ins/common/file-svg.c:558
+#: plug-ins/common/file-svg.c:559
 msgid "Rendered SVG"
 msgstr "Створений SVG"
 
@@ -14091,6 +14090,10 @@ msgstr "_Автоматичне перетворювати"
 msgid "General Preferences"
 msgstr "Загальні параметри"
 
+#: plug-ins/imagemap/imap_preview.c:313
+msgid "Shortcut Menu"
+msgstr "Меню скорочень"
+
 #: plug-ins/imagemap/imap_rectangle.c:68
 msgid "_Rectangle"
 msgstr "_Прямокутник"
@@ -14164,6 +14167,14 @@ msgstr "Формат файлу мапи"
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
 msgstr "Перегляд джерела"
+
+#: plug-ins/imagemap/imap_statusbar.c:55
+msgid "Coordinates:"
+msgstr "Координати:"
+
+#: plug-ins/imagemap/imap_statusbar.c:70
+msgid "Active Area Size:"
+msgstr "Розмір активної області:"
 
 #: plug-ins/imagemap/imap-menu.ui:16
 msgid "Save As"
