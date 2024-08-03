@@ -171,9 +171,10 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 static void
 gimp_pick_button_shutdown (GimpPickButton *button)
 {
-  GdkDisplay *display = gtk_widget_get_display (button->priv->grab_widget);
+  GimpPickButtonPrivate *priv    = GET_PRIVATE (button);
+  GdkDisplay            *display = gtk_widget_get_display (priv->grab_widget);
 
-  gtk_grab_remove (button->priv->grab_widget);
+  gtk_grab_remove (priv->grab_widget);
 
   gdk_seat_ungrab (gdk_display_get_default_seat (display));
 }
@@ -288,26 +289,27 @@ gimp_pick_button_pick (GimpPickButton *button,
 void
 _gimp_pick_button_default_pick (GimpPickButton *button)
 {
-  GdkDisplay *display;
-  GtkWidget  *widget;
+  GimpPickButtonPrivate *priv = GET_PRIVATE (button);
+  GdkDisplay            *display;
+  GtkWidget             *widget;
 
-  if (! button->priv->cursor)
-    button->priv->cursor =
+  if (! priv->cursor)
+    priv->cursor =
       make_cursor (gtk_widget_get_display (GTK_WIDGET (button)));
 
-  if (! button->priv->grab_widget)
+  if (! priv->grab_widget)
     {
-      button->priv->grab_widget = gtk_invisible_new ();
+      priv->grab_widget = gtk_invisible_new ();
 
-      gtk_widget_add_events (button->priv->grab_widget,
+      gtk_widget_add_events (priv->grab_widget,
                              GDK_BUTTON_PRESS_MASK   |
                              GDK_BUTTON_RELEASE_MASK |
                              GDK_BUTTON1_MOTION_MASK);
 
-      gtk_widget_show (button->priv->grab_widget);
+      gtk_widget_show (priv->grab_widget);
     }
 
-  widget = button->priv->grab_widget;
+  widget = priv->grab_widget;
 
   display = gtk_widget_get_display (widget);
 
@@ -315,7 +317,7 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
                      gtk_widget_get_window (widget),
                      GDK_SEAT_CAPABILITY_ALL,
                      FALSE,
-                     button->priv->cursor,
+                     priv->cursor,
                      NULL,
                      NULL, NULL) != GDK_GRAB_SUCCESS)
     {
