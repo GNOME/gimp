@@ -56,7 +56,7 @@ enum
 };
 static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
-struct _GimpModulePrivate
+typedef struct _GimpModulePrivate
 {
   GFile           *file;       /* path to the module                       */
   gboolean         auto_load;  /* auto-load the module on creation         */
@@ -72,7 +72,9 @@ struct _GimpModulePrivate
 
   GimpModuleQueryFunc     query_module;
   GimpModuleRegisterFunc  register_module;
-};
+} GimpModulePrivate;
+
+#define GET_PRIVATE(obj) ((GimpModulePrivate *) gimp_module_get_instance_private ((GimpModule *) (obj)))
 
 
 static void       gimp_module_get_property   (GObject      *object,
@@ -131,9 +133,7 @@ gimp_module_class_init (GimpModuleClass *klass)
 static void
 gimp_module_init (GimpModule *module)
 {
-  module->priv = gimp_module_get_instance_private (module);
-
-  module->priv->state = GIMP_MODULE_STATE_ERROR;
+  GET_PRIVATE (module)->state = GIMP_MODULE_STATE_ERROR;
 }
 
 static void
@@ -183,11 +183,12 @@ gimp_module_get_property (GObject    *object,
 static void
 gimp_module_finalize (GObject *object)
 {
-  GimpModule *module = GIMP_MODULE (object);
+  GimpModule        *module = GIMP_MODULE (object);
+  GimpModulePrivate *priv   = GET_PRIVATE (module);
 
-  g_clear_object  (&module->priv->file);
-  g_clear_pointer (&module->priv->info, gimp_module_info_free);
-  g_clear_pointer (&module->priv->last_error, g_free);
+  g_clear_object  (&priv->file);
+  g_clear_pointer (&priv->info, gimp_module_info_free);
+  g_clear_pointer (&priv->last_error, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -195,15 +196,16 @@ gimp_module_finalize (GObject *object)
 static gboolean
 gimp_module_load (GTypeModule *module)
 {
-  GimpModule *gimp_module = GIMP_MODULE (module);
+  GimpModule        *gimp_module = GIMP_MODULE (module);
+  GimpModulePrivate *priv        = GET_PRIVATE (gimp_module);
   gpointer    func;
 
-  g_return_val_if_fail (gimp_module->priv->file != NULL, FALSE);
-  g_return_val_if_fail (gimp_module->priv->module == NULL, FALSE);
+  g_return_val_if_fail (priv->file != NULL, FALSE);
+  g_return_val_if_fail (priv->module == NULL, FALSE);
 
-  if (gimp_module->priv->verbose)
+  if (priv->verbose)
     g_print ("Loading module '%s'\n",
-             gimp_file_get_utf8_name (gimp_module->priv->file));
+             gimp_file_get_utf8_name (priv->file));
 
   if (! gimp_module_open (gimp_module))
     return FALSE;
@@ -212,42 +214,42 @@ gimp_module_load (GTypeModule *module)
     return FALSE;
 
   /* find the gimp_module_register symbol */
-  if (! g_module_symbol (gimp_module->priv->module, "gimp_module_register",
+  if (! g_module_symbol (priv->module, "gimp_module_register",
                          &func))
     {
       gimp_module_set_last_error (gimp_module,
                                   "Missing gimp_module_register() symbol");
 
       g_message (_("Module '%s' load error: %s"),
-                 gimp_file_get_utf8_name (gimp_module->priv->file),
-                 gimp_module->priv->last_error);
+                 gimp_file_get_utf8_name (priv->file),
+                 priv->last_error);
 
       gimp_module_close (gimp_module);
 
-      gimp_module->priv->state = GIMP_MODULE_STATE_ERROR;
+      priv->state = GIMP_MODULE_STATE_ERROR;
 
       return FALSE;
     }
 
-  gimp_module->priv->register_module = func;
+  priv->register_module = func;
 
-  if (! gimp_module->priv->register_module (module))
+  if (! priv->register_module (module))
     {
       gimp_module_set_last_error (gimp_module,
                                   "gimp_module_register() returned FALSE");
 
       g_message (_("Module '%s' load error: %s"),
-                 gimp_file_get_utf8_name (gimp_module->priv->file),
-                 gimp_module->priv->last_error);
+                 gimp_file_get_utf8_name (priv->file),
+                 priv->last_error);
 
       gimp_module_close (gimp_module);
 
-      gimp_module->priv->state = GIMP_MODULE_STATE_LOAD_FAILED;
+      priv->state = GIMP_MODULE_STATE_LOAD_FAILED;
 
       return FALSE;
     }
 
-  gimp_module->priv->state = GIMP_MODULE_STATE_LOADED;
+  priv->state = GIMP_MODULE_STATE_LOADED;
 
   return TRUE;
 }
@@ -255,13 +257,14 @@ gimp_module_load (GTypeModule *module)
 static void
 gimp_module_unload (GTypeModule *module)
 {
-  GimpModule *gimp_module = GIMP_MODULE (module);
+  GimpModule        *gimp_module = GIMP_MODULE (module);
+  GimpModulePrivate *priv        = GET_PRIVATE (gimp_module);
 
-  g_return_if_fail (gimp_module->priv->module != NULL);
+  g_return_if_fail (priv->module != NULL);
 
-  if (gimp_module->priv->verbose)
+  if (priv->verbose)
     g_print ("Unloading module '%s'\n",
-             gimp_file_get_utf8_name (gimp_module->priv->file));
+             gimp_file_get_utf8_name (priv->file));
 
   gimp_module_close (gimp_module);
 }
@@ -284,18 +287,20 @@ gimp_module_new (GFile    *file,
                  gboolean  auto_load,
                  gboolean  verbose)
 {
-  GimpModule *module;
+  GimpModule        *module;
+  GimpModulePrivate *priv;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (g_file_is_native (file), NULL);
 
   module = g_object_new (GIMP_TYPE_MODULE, NULL);
+  priv   = GET_PRIVATE (module);
 
-  module->priv->file      = g_object_ref (file);
-  module->priv->auto_load = auto_load ? TRUE : FALSE;
-  module->priv->verbose   = verbose ? TRUE : FALSE;
+  priv->file      = g_object_ref (file);
+  priv->auto_load = auto_load ? TRUE : FALSE;
+  priv->verbose   = verbose ? TRUE : FALSE;
 
-  if (module->priv->auto_load)
+  if (priv->auto_load)
     {
       if (gimp_module_load (G_TYPE_MODULE (module)))
         gimp_module_unload (G_TYPE_MODULE (module));
@@ -306,7 +311,7 @@ gimp_module_new (GFile    *file,
         g_print ("Skipping module '%s'\n",
                  gimp_file_get_utf8_name (file));
 
-      module->priv->state = GIMP_MODULE_STATE_NOT_LOADED;
+      priv->state = GIMP_MODULE_STATE_NOT_LOADED;
     }
 
   return module;
@@ -327,7 +332,7 @@ gimp_module_get_file (GimpModule *module)
 {
   g_return_val_if_fail (GIMP_IS_MODULE (module), NULL);
 
-  return module->priv->file;
+  return GET_PRIVATE (module)->file;
 }
 
 /**
@@ -343,11 +348,15 @@ void
 gimp_module_set_auto_load (GimpModule *module,
                            gboolean    auto_load)
 {
+  GimpModulePrivate *priv;
+
   g_return_if_fail (GIMP_IS_MODULE (module));
 
-  if (auto_load != module->priv->auto_load)
+  priv = GET_PRIVATE (module);
+
+  if (auto_load != priv->auto_load)
     {
-      module->priv->auto_load = auto_load;
+      priv->auto_load = auto_load;
 
       g_object_notify_by_pspec (G_OBJECT (module), obj_props[PROP_AUTO_LOAD]);
     }
@@ -368,7 +377,7 @@ gimp_module_get_auto_load (GimpModule *module)
 {
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
-  return module->priv->auto_load;
+  return GET_PRIVATE (module)->auto_load;
 }
 
 /**
@@ -382,21 +391,24 @@ gimp_module_get_auto_load (GimpModule *module)
 gboolean
 gimp_module_is_on_disk (GimpModule *module)
 {
-  gboolean old_on_disk;
+  GimpModulePrivate *priv;
+  gboolean           old_on_disk;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
-  old_on_disk = module->priv->on_disk;
+  priv = GET_PRIVATE (module);
 
-  module->priv->on_disk =
-    (g_file_query_file_type (module->priv->file,
+  old_on_disk = priv->on_disk;
+
+  priv->on_disk =
+    (g_file_query_file_type (priv->file,
                              G_FILE_QUERY_INFO_NONE, NULL) ==
      G_FILE_TYPE_REGULAR);
 
-  if (module->priv->on_disk != old_on_disk)
+  if (priv->on_disk != old_on_disk)
     g_object_notify_by_pspec (G_OBJECT (module), obj_props[PROP_ON_DISK]);
 
-  return module->priv->on_disk;
+  return priv->on_disk;
 }
 
 /**
@@ -412,7 +424,7 @@ gimp_module_is_loaded (GimpModule *module)
 {
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
-  return module->priv->module != NULL;
+  return GET_PRIVATE (module)->module != NULL;
 }
 
 /**
@@ -429,7 +441,7 @@ gimp_module_get_info (GimpModule *module)
 {
   g_return_val_if_fail (GIMP_IS_MODULE (module), NULL);
 
-  return module->priv->info;
+  return GET_PRIVATE (module)->info;
 }
 
 /**
@@ -445,7 +457,7 @@ gimp_module_get_state (GimpModule *module)
 {
   g_return_val_if_fail (GIMP_IS_MODULE (module), GIMP_MODULE_STATE_ERROR);
 
-  return module->priv->state;
+  return GET_PRIVATE (module)->state;
 }
 
 /**
@@ -461,7 +473,7 @@ gimp_module_get_last_error (GimpModule *module)
 {
   g_return_val_if_fail (GIMP_IS_MODULE (module), NULL);
 
-  return module->priv->last_error;
+  return GET_PRIVATE (module)->last_error;
 }
 
 /**
@@ -478,12 +490,15 @@ gboolean
 gimp_module_query_module (GimpModule *module)
 {
   const GimpModuleInfo *info;
+  GimpModulePrivate    *priv;
   gboolean              close_module = FALSE;
   gpointer              func;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
-  if (! module->priv->module)
+  priv = GET_PRIVATE (module);
+
+  if (! priv->module)
     {
       if (! gimp_module_open (module))
         return FALSE;
@@ -492,26 +507,26 @@ gimp_module_query_module (GimpModule *module)
     }
 
   /* find the gimp_module_query symbol */
-  if (! g_module_symbol (module->priv->module, "gimp_module_query", &func))
+  if (! g_module_symbol (priv->module, "gimp_module_query", &func))
     {
       gimp_module_set_last_error (module,
                                   "Missing gimp_module_query() symbol");
 
       g_message (_("Module '%s' load error: %s"),
-                 gimp_file_get_utf8_name (module->priv->file),
-                 module->priv->last_error);
+                 gimp_file_get_utf8_name (priv->file),
+                 priv->last_error);
 
       gimp_module_close (module);
 
-      module->priv->state = GIMP_MODULE_STATE_ERROR;
+      priv->state = GIMP_MODULE_STATE_ERROR;
       return FALSE;
     }
 
-  module->priv->query_module = func;
+  priv->query_module = func;
 
-  g_clear_pointer (&module->priv->info, gimp_module_info_free);
+  g_clear_pointer (&priv->info, gimp_module_info_free);
 
-  info = module->priv->query_module (G_TYPE_MODULE (module));
+  info = priv->query_module (G_TYPE_MODULE (module));
 
   if (! info || info->abi_version != GIMP_MODULE_ABI_VERSION)
     {
@@ -521,16 +536,16 @@ gimp_module_query_module (GimpModule *module)
                                   "gimp_module_query() returned NULL");
 
       g_message (_("Module '%s' load error: %s"),
-                 gimp_file_get_utf8_name (module->priv->file),
-                 module->priv->last_error);
+                 gimp_file_get_utf8_name (priv->file),
+                 priv->last_error);
 
       gimp_module_close (module);
 
-      module->priv->state = GIMP_MODULE_STATE_ERROR;
+      priv->state = GIMP_MODULE_STATE_ERROR;
       return FALSE;
     }
 
-  module->priv->info = gimp_module_info_copy (info);
+  priv->info = gimp_module_info_copy (info);
 
   if (close_module)
     return gimp_module_close (module);
@@ -559,20 +574,21 @@ gimp_module_error_quark (void)
 static gboolean
 gimp_module_open (GimpModule *module)
 {
-  gchar *path = g_file_get_path (module->priv->file);
+  GimpModulePrivate *priv = GET_PRIVATE (module);
+  gchar             *path = g_file_get_path (priv->file);
 
-  module->priv->module = g_module_open (path, 0);
+  priv->module = g_module_open (path, 0);
 
   g_free (path);
 
-  if (! module->priv->module)
+  if (! priv->module)
     {
-      module->priv->state = GIMP_MODULE_STATE_ERROR;
+      priv->state = GIMP_MODULE_STATE_ERROR;
       gimp_module_set_last_error (module, g_module_error ());
 
       g_message (_("Module '%s' load error: %s"),
-                 gimp_file_get_utf8_name (module->priv->file),
-                 module->priv->last_error);
+                 gimp_file_get_utf8_name (priv->file),
+                 priv->last_error);
 
       return FALSE;
     }
@@ -583,12 +599,14 @@ gimp_module_open (GimpModule *module)
 static gboolean
 gimp_module_close (GimpModule *module)
 {
-  g_module_close (module->priv->module); /* FIXME: error handling */
-  module->priv->module          = NULL;
-  module->priv->query_module    = NULL;
-  module->priv->register_module = NULL;
+  GimpModulePrivate *priv = GET_PRIVATE (module);
 
-  module->priv->state = GIMP_MODULE_STATE_NOT_LOADED;
+  g_module_close (priv->module); /* FIXME: error handling */
+  priv->module          = NULL;
+  priv->query_module    = NULL;
+  priv->register_module = NULL;
+
+  priv->state = GIMP_MODULE_STATE_NOT_LOADED;
 
   return TRUE;
 }
@@ -597,10 +615,12 @@ static void
 gimp_module_set_last_error (GimpModule  *module,
                             const gchar *error_str)
 {
-  if (module->priv->last_error)
-    g_free (module->priv->last_error);
+  GimpModulePrivate *priv = GET_PRIVATE (module);
 
-  module->priv->last_error = g_strdup (error_str);
+  if (priv->last_error)
+    g_free (priv->last_error);
+
+  priv->last_error = g_strdup (error_str);
 }
 
 

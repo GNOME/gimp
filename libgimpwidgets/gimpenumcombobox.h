@@ -30,23 +30,8 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_ENUM_COMBO_BOX            (gimp_enum_combo_box_get_type ())
-#define GIMP_ENUM_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBox))
-#define GIMP_ENUM_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBoxClass))
-#define GIMP_IS_ENUM_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ENUM_COMBO_BOX))
-#define GIMP_IS_ENUM_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ENUM_COMBO_BOX))
-#define GIMP_ENUM_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBoxClass))
-
-
-typedef struct _GimpEnumComboBoxPrivate GimpEnumComboBoxPrivate;
-typedef struct _GimpEnumComboBoxClass   GimpEnumComboBoxClass;
-
-struct _GimpEnumComboBox
-{
-  GimpIntComboBox          parent_instance;
-
-  GimpEnumComboBoxPrivate *priv;
-};
+#define GIMP_TYPE_ENUM_COMBO_BOX (gimp_enum_combo_box_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpEnumComboBox, gimp_enum_combo_box, GIMP, ENUM_COMBO_BOX, GimpIntComboBox)
 
 struct _GimpEnumComboBoxClass
 {
@@ -63,8 +48,6 @@ struct _GimpEnumComboBoxClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType       gimp_enum_combo_box_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
 GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);

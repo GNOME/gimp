@@ -31,23 +31,8 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_ENUM_STORE            (gimp_enum_store_get_type ())
-#define GIMP_ENUM_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_STORE, GimpEnumStore))
-#define GIMP_ENUM_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ENUM_STORE, GimpEnumStoreClass))
-#define GIMP_IS_ENUM_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ENUM_STORE))
-#define GIMP_IS_ENUM_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ENUM_STORE))
-#define GIMP_ENUM_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ENUM_STORE, GimpEnumStoreClass))
-
-
-typedef struct _GimpEnumStorePrivate GimpEnumStorePrivate;
-typedef struct _GimpEnumStoreClass   GimpEnumStoreClass;
-
-struct _GimpEnumStore
-{
-  GimpIntStore          parent_instance;
-
-  GimpEnumStorePrivate *priv;
-};
+#define GIMP_TYPE_ENUM_STORE (gimp_enum_store_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpEnumStore, gimp_enum_store, GIMP, ENUM_STORE, GimpIntStore)
 
 struct _GimpEnumStoreClass
 {
@@ -63,8 +48,6 @@ struct _GimpEnumStoreClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType          gimp_enum_store_get_type               (void) G_GNUC_CONST;
 
 GtkListStore * gimp_enum_store_new                    (GType    enum_type);
 GtkListStore * gimp_enum_store_new_with_range         (GType    enum_type,

@@ -46,23 +46,8 @@ enum
 };
 
 
-#define GIMP_TYPE_UNIT_STORE            (gimp_unit_store_get_type ())
-#define GIMP_UNIT_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNIT_STORE, GimpUnitStore))
-#define GIMP_UNIT_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_STORE, GimpUnitStoreClass))
-#define GIMP_IS_UNIT_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNIT_STORE))
-#define GIMP_IS_UNIT_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_STORE))
-#define GIMP_UNIT_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNIT_STORE, GimpUnitStoreClass))
-
-
-typedef struct _GimpUnitStorePrivate GimpUnitStorePrivate;
-typedef struct _GimpUnitStoreClass   GimpUnitStoreClass;
-
-struct _GimpUnitStore
-{
-  GObject               parent_instance;
-
-  GimpUnitStorePrivate *priv;
-};
+#define GIMP_TYPE_UNIT_STORE (gimp_unit_store_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpUnitStore, gimp_unit_store, GIMP, UNIT_STORE, GObject)
 
 struct _GimpUnitStoreClass
 {
@@ -79,8 +64,6 @@ struct _GimpUnitStoreClass
   void (*_gimp_reserved8) (void);
 };
 
-
-GType           gimp_unit_store_get_type         (void) G_GNUC_CONST;
 
 GimpUnitStore * gimp_unit_store_new              (gint           num_values);
 

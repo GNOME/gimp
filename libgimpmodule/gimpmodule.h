@@ -151,23 +151,8 @@ G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module
 G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module);
 
 
-#define GIMP_TYPE_MODULE            (gimp_module_get_type ())
-#define GIMP_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE, GimpModule))
-#define GIMP_MODULE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE, GimpModuleClass))
-#define GIMP_IS_MODULE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE))
-#define GIMP_IS_MODULE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE))
-#define GIMP_MODULE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE, GimpModuleClass))
-
-
-typedef struct _GimpModulePrivate GimpModulePrivate;
-typedef struct _GimpModuleClass   GimpModuleClass;
-
-struct _GimpModule
-{
-  GTypeModule        parent_instance;
-
-  GimpModulePrivate *priv;
-};
+#define GIMP_TYPE_MODULE (gimp_module_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpModule, gimp_module, GIMP, MODULE, GTypeModule)
 
 struct _GimpModuleClass
 {
@@ -186,8 +171,6 @@ struct _GimpModuleClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType                  gimp_module_get_type       (void) G_GNUC_CONST;
 
 GimpModule           * gimp_module_new            (GFile           *file,
                                                    gboolean         auto_load,

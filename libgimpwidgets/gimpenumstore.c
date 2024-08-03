@@ -46,12 +46,14 @@ enum
 };
 
 
-struct _GimpEnumStorePrivate
+typedef struct _GimpEnumStorePrivate
 {
-  GEnumClass *enum_class;
-};
+  GimpIntStore parent_instance;
 
-#define GET_PRIVATE(obj) (((GimpEnumStore *) (obj))->priv)
+  GEnumClass  *enum_class;
+} GimpEnumStorePrivate;
+
+#define GET_PRIVATE(obj) ((GimpEnumStorePrivate *) gimp_enum_store_get_instance_private ((GimpEnumStore *) (obj)))
 
 
 static void   gimp_enum_store_finalize     (GObject      *object);
@@ -102,7 +104,6 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
 static void
 gimp_enum_store_init (GimpEnumStore *store)
 {
-  store->priv = gimp_enum_store_get_instance_private (store);
 }
 
 static void

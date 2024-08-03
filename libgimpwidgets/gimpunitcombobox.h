@@ -29,24 +29,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_UNIT_COMBO_BOX            (gimp_unit_combo_box_get_type ())
-#define GIMP_UNIT_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNIT_COMBO_BOX, GimpUnitComboBox))
-#define GIMP_UNIT_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_COMBO_BOX, GimpUnitComboBoxClass))
-#define GIMP_IS_UNIT_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNIT_COMBO_BOX))
-#define GIMP_IS_UNIT_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_COMBO_BOX))
-#define GIMP_UNIT_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNIT_COMBO_BOX, GimpUnitComboBoxClass))
-
-
-typedef struct _GimpUnitComboBoxPrivate GimpUnitComboBoxPrivate;
-typedef struct _GimpUnitComboBoxClass   GimpUnitComboBoxClass;
-
-struct _GimpUnitComboBox
-{
-  GtkComboBox              parent_instance;
-
-  GimpUnitComboBoxPrivate *priv;
-};
-
+#define GIMP_TYPE_UNIT_COMBO_BOX (gimp_unit_combo_box_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GIMP, UNIT_COMBO_BOX, GtkComboBox)
 struct _GimpUnitComboBoxClass
 {
   GtkComboBoxClass  parent_class;
@@ -62,8 +46,6 @@ struct _GimpUnitComboBoxClass
   void (*_gimp_reserved8) (void);
 };
 
-
-GType       gimp_unit_combo_box_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_unit_combo_box_new            (void);
 GtkWidget * gimp_unit_combo_box_new_with_model (GimpUnitStore    *model);

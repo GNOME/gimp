@@ -51,13 +51,15 @@ enum
 };
 
 
-struct _GimpIntStorePrivate
+typedef struct _GimpIntStorePrivate
 {
+  GtkListStore parent_instance;
+
   GtkTreeIter *empty_iter;
   GType        user_data_type;
-};
+} GimpIntStorePrivate;
 
-#define GET_PRIVATE(obj) (((GimpIntStore *) (obj))->priv)
+#define GET_PRIVATE(obj) ((GimpIntStorePrivate *) gimp_int_store_get_instance_private ((GimpIntStore *) (obj)))
 
 
 static void  gimp_int_store_tree_model_init (GtkTreeModelIface *iface);
@@ -134,7 +136,6 @@ gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
 static void
 gimp_int_store_init (GimpIntStore *store)
 {
-  store->priv = gimp_int_store_get_instance_private (store);
 }
 
 static void

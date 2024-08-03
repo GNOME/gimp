@@ -31,23 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_FRAME            (gimp_frame_get_type ())
-#define GIMP_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FRAME, GimpFrame))
-#define GIMP_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FRAME, GimpFrameClass))
-#define GIMP_IS_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FRAME))
-#define GIMP_IS_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FRAME))
-#define GIMP_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FRAME, GimpFrameClass))
-
-
-typedef struct _GimpFramePrivate GimpFramePrivate;
-typedef struct _GimpFrameClass   GimpFrameClass;
-
-struct _GimpFrame
-{
-  GtkFrame          parent_instance;
-
-  GimpFramePrivate *priv;
-};
+#define GIMP_TYPE_FRAME (gimp_frame_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpFrame, gimp_frame, GIMP, FRAME, GtkFrame)
 
 struct _GimpFrameClass
 {
@@ -65,7 +50,6 @@ struct _GimpFrameClass
 };
 
 
-GType       gimp_frame_get_type  (void) G_GNUC_CONST;
 GtkWidget * gimp_frame_new       (const gchar *label);
 
 

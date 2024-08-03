@@ -31,23 +31,9 @@ G_BEGIN_DECLS
 /* For information look at the html documentation */
 
 
-#define GIMP_TYPE_COLOR_DISPLAY            (gimp_color_display_get_type ())
-#define GIMP_COLOR_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplay))
-#define GIMP_COLOR_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplayClass))
-#define GIMP_IS_COLOR_DISPLAY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_DISPLAY))
-#define GIMP_IS_COLOR_DISPLAY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_DISPLAY))
-#define GIMP_COLOR_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplayClass))
+#define GIMP_TYPE_COLOR_DISPLAY (gimp_color_display_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpColorDisplay, gimp_color_display, GIMP, COLOR_DISPLAY, GObject)
 
-
-typedef struct _GimpColorDisplayPrivate GimpColorDisplayPrivate;
-typedef struct _GimpColorDisplayClass   GimpColorDisplayClass;
-
-struct _GimpColorDisplay
-{
-  GObject                 parent_instance;
-
-  GimpColorDisplayPrivate *priv;
-};
 
 struct _GimpColorDisplayClass
 {
@@ -77,8 +63,6 @@ struct _GimpColorDisplayClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType              gimp_color_display_get_type        (void) G_GNUC_CONST;
 
 GimpColorDisplay * gimp_color_display_clone           (GimpColorDisplay *display);
 

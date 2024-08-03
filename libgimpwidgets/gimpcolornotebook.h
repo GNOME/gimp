@@ -34,23 +34,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_NOTEBOOK            (gimp_color_notebook_get_type ())
-#define GIMP_COLOR_NOTEBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebook))
-#define GIMP_COLOR_NOTEBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebookClass))
-#define GIMP_IS_COLOR_NOTEBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_NOTEBOOK))
-#define GIMP_IS_COLOR_NOTEBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_NOTEBOOK))
-#define GIMP_COLOR_NOTEBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebookClass))
-
-
-typedef struct _GimpColorNotebookPrivate GimpColorNotebookPrivate;
-typedef struct _GimpColorNotebookClass   GimpColorNotebookClass;
-
-struct _GimpColorNotebook
-{
-  GimpColorSelector         parent_instance;
-
-  GimpColorNotebookPrivate *priv;
-};
+#define GIMP_TYPE_COLOR_NOTEBOOK (gimp_color_notebook_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpColorNotebook, gimp_color_notebook, GIMP, COLOR_NOTEBOOK, GimpColorSelector)
 
 struct _GimpColorNotebookClass
 {
@@ -67,8 +52,6 @@ struct _GimpColorNotebookClass
   void (* _gimp_reserved8) (void);
 };
 
-
-GType               gimp_color_notebook_get_type             (void) G_GNUC_CONST;
 
 GtkWidget         * gimp_color_notebook_set_has_page         (GimpColorNotebook *notebook,
                                                               GType              page_type,
