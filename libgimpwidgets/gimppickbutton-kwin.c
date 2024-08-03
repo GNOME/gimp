@@ -23,7 +23,6 @@
 
 #include "gimpwidgetstypes.h"
 #include "gimppickbutton.h"
-#include "gimppickbutton-default.h"
 #include "gimppickbutton-kwin.h"
 
 #include "libgimp/libgimp-intl.h"
