@@ -254,6 +254,12 @@ toolbutton button.flat:checked:active:hover {
   border-color: @hover-color;
 }
 
+/* Style for GtkToolBar, primarily used in plug-ins
+ * with toolbars like Image Map and Animation Play */
+toolbar {
+  background-color: @widget-bg-color;
+}
+
 /* Prevent overly thick border around image buttons */
 .image-button image, button image {
   -gtk-icon-shadow: 0 0 transparent;
