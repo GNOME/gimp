@@ -44,6 +44,13 @@ done
 echo "$GIMP_PREFIX/bin/gimp-console-$GIMP_APP_VERSION \"\$@\"" >> $GIMP_CONSOLE_PATH
 chmod u+x $GIMP_CONSOLE_PATH
 
+if [ "$GITLAB_CI" ]; then
+  # Install crossroad deps again
+  # We take code from deps script to better maintenance
+  echo "$(cat build/windows/1_build-deps-crossroad.sh             |
+          sed -n '/# Beginning of install/,/# End of install/p')" | bash
+fi
+
 
 # CROSSROAD ENV
 export PATH="$PWD/${PARENT_DIR}.local/bin:$PWD/bin:$PATH"

@@ -20,6 +20,7 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 ## Install crossroad and its deps
+# Beginning of install code block
 if [ "$GITLAB_CI" ]; then
   apt-get update -y
   # libjxl uses C++ features that require posix threads so we install
@@ -41,9 +42,13 @@ if [ "$GITLAB_CI" ]; then
                      wine                       \
                      wine64
 fi
+# End of install code block
+if [ -d 'crossroad' ]; then
+  rm -r -f crossroad
+fi
 git clone --depth $GIT_DEPTH https://gitlab.freedesktop.org/crossroad/crossroad
 cd crossroad
-git apply ../${GIMP_DIR}build/windows/patches/0001-platforms-Enable-ccache.patch | continue
+git apply ../${GIMP_DIR}build/windows/patches/0001-platforms-Enable-ccache.patch
 # Needed because Debian adds by default a local/ folder to the install
 # prefix of setup.py. This environment variable overrides this behavior.
 export DEB_PYTHON_INSTALL_LAYOUT="deb"
