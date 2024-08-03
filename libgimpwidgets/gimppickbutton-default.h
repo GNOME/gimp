@@ -18,8 +18,8 @@
 #ifndef __GIMP_PICK_BUTTON_DEFAULT_H__
 #define __GIMP_PICK_BUTTON_DEFAULT_H__
 
-void     _gimp_pick_button_default_pick (GimpPickButton *button,
-                                         GdkCursor      *cursor,
-                                         GtkWidget      *grab_widget);
+void     _gimp_pick_button_default_pick (GimpPickButton *button);
 
 #endif /* __GIMP_PICK_BUTTON_DEFAULT_H__ */
+
+

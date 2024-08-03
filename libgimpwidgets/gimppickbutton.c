@@ -65,8 +65,6 @@ enum
   LAST_SIGNAL
 };
 
-#define GET_PRIVATE(obj) ((GimpPickButtonPrivate *) gimp_pick_button_get_instance_private ((GimpPickButton *) (obj)))
-
 
 static void       gimp_pick_button_dispose         (GObject        *object);
 
@@ -114,6 +112,8 @@ gimp_pick_button_init (GimpPickButton *button)
 {
   GtkWidget *image;
 
+  button->priv = gimp_pick_button_get_instance_private (button);
+
   image = gtk_image_new_from_icon_name (GIMP_ICON_COLOR_PICK_FROM_SCREEN,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
@@ -128,20 +128,18 @@ gimp_pick_button_init (GimpPickButton *button)
 static void
 gimp_pick_button_dispose (GObject *object)
 {
-  GimpPickButton        *button = GIMP_PICK_BUTTON (object);
-  GimpPickButtonPrivate *priv   = GET_PRIVATE (button);
+  GimpPickButton *button = GIMP_PICK_BUTTON (object);
 
-
-  if (priv->cursor)
+  if (button->priv->cursor)
     {
-      g_object_unref (priv->cursor);
-      priv->cursor = NULL;
+      g_object_unref (button->priv->cursor);
+      button->priv->cursor = NULL;
     }
 
-  if (priv->grab_widget)
+  if (button->priv->grab_widget)
     {
-      gtk_widget_destroy (priv->grab_widget);
-      priv->grab_widget = NULL;
+      gtk_widget_destroy (button->priv->grab_widget);
+      button->priv->grab_widget = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -167,9 +165,7 @@ gimp_pick_button_clicked (GtkButton *button)
    * See: https://github.com/flatpak/xdg-desktop-portal/issues/862
    */
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button),
-                                    GET_PRIVATE (button)->cursor,
-                                    GET_PRIVATE (button)->grab_widget);
+    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
   else
 #endif
   if (_gimp_pick_button_xdg_available ())
@@ -177,9 +173,7 @@ gimp_pick_button_clicked (GtkButton *button)
   else if (_gimp_pick_button_kwin_available ())
     _gimp_pick_button_kwin_pick (GIMP_PICK_BUTTON (button));
   else
-    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button),
-                                    GET_PRIVATE (button)->cursor,
-                                    GET_PRIVATE (button)->grab_widget);
+    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
 #endif
 }
 
