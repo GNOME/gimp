@@ -65,6 +65,8 @@ enum
   LAST_SIGNAL
 };
 
+#define GET_PRIVATE(obj) ((GimpPickButtonPrivate *) gimp_pick_button_get_instance_private ((GimpPickButton *) (obj)))
+
 
 static void       gimp_pick_button_dispose         (GObject        *object);
 
@@ -112,8 +114,6 @@ gimp_pick_button_init (GimpPickButton *button)
 {
   GtkWidget *image;
 
-  button->priv = gimp_pick_button_get_instance_private (button);
-
   image = gtk_image_new_from_icon_name (GIMP_ICON_COLOR_PICK_FROM_SCREEN,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
@@ -128,18 +128,20 @@ gimp_pick_button_init (GimpPickButton *button)
 static void
 gimp_pick_button_dispose (GObject *object)
 {
-  GimpPickButton *button = GIMP_PICK_BUTTON (object);
+  GimpPickButton        *button = GIMP_PICK_BUTTON (object);
+  GimpPickButtonPrivate *priv   = GET_PRIVATE (button);
 
-  if (button->priv->cursor)
+
+  if (priv->cursor)
     {
-      g_object_unref (button->priv->cursor);
-      button->priv->cursor = NULL;
+      g_object_unref (priv->cursor);
+      priv->cursor = NULL;
     }
 
-  if (button->priv->grab_widget)
+  if (priv->grab_widget)
     {
-      gtk_widget_destroy (button->priv->grab_widget);
-      button->priv->grab_widget = NULL;
+      gtk_widget_destroy (priv->grab_widget);
+      priv->grab_widget = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);

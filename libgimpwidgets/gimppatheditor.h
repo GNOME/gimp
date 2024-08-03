@@ -31,42 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PATH_EDITOR            (gimp_path_editor_get_type ())
-#define GIMP_PATH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditor))
-#define GIMP_PATH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
-#define GIMP_IS_PATH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
-#define GIMP_IS_PATH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_EDITOR))
-#define GIMP_PATH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
-
-
-typedef struct _GimpPathEditorPrivate GimpPathEditorPrivate;
-typedef struct _GimpPathEditorClass   GimpPathEditorClass;
-
-struct _GimpPathEditor
-{
-  GtkBox                 parent_instance;
-
-  GimpPathEditorPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GtkWidget         *upper_hbox;
-
-  GtkWidget         *new_button;
-  GtkWidget         *up_button;
-  GtkWidget         *down_button;
-  GtkWidget         *delete_button;
-
-  GtkWidget         *file_entry;
-
-  GtkListStore      *dir_list;
-
-  GtkTreeSelection  *sel;
-  GtkTreePath       *sel_path;
-
-  GtkTreeViewColumn *writable_column;
-
-  gint               num_items;
-};
+#define GIMP_TYPE_PATH_EDITOR (gimp_path_editor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPathEditor, gimp_path_editor, GIMP, PATH_EDITOR, GtkBox)
 
 struct _GimpPathEditorClass
 {
@@ -88,8 +54,6 @@ struct _GimpPathEditorClass
 
 
 /* For information look into the C source or the html documentation */
-
-GType       gimp_path_editor_get_type          (void) G_GNUC_CONST;
 
 GtkWidget * gimp_path_editor_new               (const gchar    *title,
                                                 const gchar    *path);

@@ -116,27 +116,8 @@ union _GimpControllerEvent
 };
 
 
-#define GIMP_TYPE_CONTROLLER            (gimp_controller_get_type ())
-#define GIMP_CONTROLLER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTROLLER, GimpController))
-#define GIMP_CONTROLLER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTROLLER, GimpControllerClass))
-#define GIMP_IS_CONTROLLER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTROLLER))
-#define GIMP_IS_CONTROLLER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTROLLER))
-#define GIMP_CONTROLLER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTROLLER, GimpControllerClass))
-
-
-typedef struct _GimpControllerPrivate GimpControllerPrivate;
-typedef struct _GimpControllerClass   GimpControllerClass;
-
-struct _GimpController
-{
-  GObject                parent_instance;
-
-  GimpControllerPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  gchar    *name;
-  gchar    *state;
-};
+#define GIMP_TYPE_CONTROLLER (gimp_controller_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpController, gimp_controller, GIMP, CONTROLLER, GObject)
 
 struct _GimpControllerClass
 {
@@ -170,7 +151,6 @@ struct _GimpControllerClass
 };
 
 
-GType            gimp_controller_get_type        (void) G_GNUC_CONST;
 GimpController * gimp_controller_new             (GType           controller_type);
 
 gint             gimp_controller_get_n_events    (GimpController *controller);

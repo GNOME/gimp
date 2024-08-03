@@ -459,10 +459,17 @@ gimp_controller_info_event (GimpController            *controller,
 
   if (info->debug_events)
     {
+      gchar *controller_name;
+
+      g_object_get (controller, "name", &controller_name, NULL);
+
       g_print ("Received '%s' (class '%s')\n"
                "    controller event '%s (%s)'\n",
-               controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
+               controller_name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
                event_name, event_blurb);
+
+      if (controller_name)
+        g_free (controller_name);
 
       switch (event->any.type)
         {

@@ -61,6 +61,14 @@ enum
   LAST_SIGNAL
 };
 
+typedef struct _GimpControllerPrivate
+{
+  gchar    *name;
+  gchar    *state;
+} GimpControllerPrivate;
+
+#define GET_PRIVATE(obj) ((GimpControllerPrivate *) gimp_controller_get_instance_private ((GimpController *) (obj)))
+
 
 static void   gimp_controller_finalize     (GObject      *object);
 static void   gimp_controller_set_property (GObject      *object,
@@ -74,6 +82,7 @@ static void   gimp_controller_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpController, gimp_controller, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpController)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_controller_parent_class
@@ -134,10 +143,11 @@ gimp_controller_init (GimpController *controller)
 static void
 gimp_controller_finalize (GObject *object)
 {
-  GimpController *controller = GIMP_CONTROLLER (object);
+  GimpController        *controller = GIMP_CONTROLLER (object);
+  GimpControllerPrivate *priv       = GET_PRIVATE (controller);
 
-  g_clear_pointer (&controller->name,  g_free);
-  g_clear_pointer (&controller->state, g_free);
+  g_clear_pointer (&priv->name,  g_free);
+  g_clear_pointer (&priv->state, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -148,19 +158,20 @@ gimp_controller_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpController *controller = GIMP_CONTROLLER (object);
+  GimpController        *controller = GIMP_CONTROLLER (object);
+  GimpControllerPrivate *priv       = GET_PRIVATE (controller);
 
   switch (property_id)
     {
     case PROP_NAME:
-      if (controller->name)
-        g_free (controller->name);
-      controller->name = g_value_dup_string (value);
+      if (priv->name)
+        g_free (priv->name);
+      priv->name = g_value_dup_string (value);
       break;
     case PROP_STATE:
-      if (controller->state)
-        g_free (controller->state);
-      controller->state = g_value_dup_string (value);
+      if (priv->state)
+        g_free (priv->state);
+      priv->state = g_value_dup_string (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -174,15 +185,16 @@ gimp_controller_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpController *controller = GIMP_CONTROLLER (object);
+  GimpController        *controller = GIMP_CONTROLLER (object);
+  GimpControllerPrivate *priv       = GET_PRIVATE (controller);
 
   switch (property_id)
     {
     case PROP_NAME:
-      g_value_set_string (value, controller->name);
+      g_value_set_string (value, priv->name);
       break;
     case PROP_STATE:
-      g_value_set_string (value, controller->state);
+      g_value_set_string (value, priv->state);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

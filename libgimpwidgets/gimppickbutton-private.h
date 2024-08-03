@@ -17,11 +17,11 @@
 #define __GIMP_PICK_BUTTON_PRIVATE_H__
 
 
-struct _GimpPickButtonPrivate
+typedef struct _GimpPickButtonPrivate
 {
   GdkCursor *cursor;
   GtkWidget *grab_widget;
-};
+} GimpPickButtonPrivate;
 
 
 #endif /* ! __GIMP_PICK_BUTTON_PRIVATE_H__ */
