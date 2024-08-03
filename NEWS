@@ -43,6 +43,9 @@ Tools:
     (truncate)" and reordered to be second in the list, just after "None
     (extend)".
   - Measure tool: guides can now be created off-canvas.
+  - Scissors Select: consistently name the tool "Scissors Select" by
+    dropping the alternate name "Intelligent Scissors" which was only
+    used in menus.
 
 Graphical User Interface:
 
@@ -75,16 +78,23 @@ Plug-ins:
     and file-wmf-load.
   - Arguments ported to GimpChoice in the following plug-ins:
     file-raw-data, file-jpeg, file-ps, decompose, blinds, curve-bend,
-    file-pcx, file-pnm, file-psp, hot, jigsaw, nl-filter, fits.
+    file-pcx, file-pnm, file-psp, hot, jigsaw, nl-filter, fits,
+    align-layer, border-average, contrast-retinex, despeckle,
+    screenshot.
   - New file-plug-in testing framework. It comes with Gitlab junit reports.
   - JPEG XL: half-float import support.
   - file-darktable: use the new API which darktable developed from us
     since version 4.6 (a new `--gimp` flag on command line). Fallback to
     old usage for older versions.
   - guides-new: guides can now be created off-canvas.
+  - ImageMap: zoom factor is now floating point allowing zooming out
+    past the 1:1 ratio.
 
 API:
 
+  - Various classes are marked as derivable or final through GObject
+    macros G_DECLARE_(DERIVABLE|FINAL)_TYPE. It will make it easier to
+    update them in the future without API/ABI breakage.
   - Changes in libgimp:
     * gimp_procedure_run_config() can run with no config objects (equivalent to
       run the prodcedure with default arguments).
@@ -129,9 +139,6 @@ API:
     * New GimpGroupLayer class (subclass of GimpLayer).
     * GimpVectors was renamed to GimpPath and all gimp_vectors_ function
       renamed gimp_path_ accordingly.
-    * Various classes are marked as derivable or final through GObject
-      macros G_DECLARE_(DERIVABLE|FINAL)_TYPE. It will make it easier to
-      update them in the future without API/ABI breakage.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -141,6 +148,9 @@ API:
   - Changes in libgimpbase:
     * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
       Protocol (only GeglColor and GimpColorArray).
+    * GimpUnit is now a proper class instead of a weird int type
+      extending an enum type of the same name. This also makes unit
+      parameters actually introspectable.
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
