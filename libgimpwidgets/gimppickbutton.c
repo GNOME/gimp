@@ -167,7 +167,9 @@ gimp_pick_button_clicked (GtkButton *button)
    * See: https://github.com/flatpak/xdg-desktop-portal/issues/862
    */
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button),
+                                    GET_PRIVATE (button)->cursor,
+                                    GET_PRIVATE (button)->grab_widget);
   else
 #endif
   if (_gimp_pick_button_xdg_available ())
