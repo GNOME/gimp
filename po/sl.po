@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-03 00:03+0000\n"
-"PO-Revision-Date: 2024-08-03 12:14+0200\n"
+"POT-Creation-Date: 2024-08-03 10:46+0000\n"
+"PO-Revision-Date: 2024-08-03 12:48+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -14207,40 +14207,40 @@ msgstr "Spremeni merilo slike"
 msgid "Can't undo %s"
 msgstr "Ni mogoče razveljaviti %s"
 
-#: app/core/gimpimagefile.c:771
+#: app/core/gimpimagefile.c:799
 msgid "Folder"
 msgstr "Mapa"
 
-#: app/core/gimpimagefile.c:776
+#: app/core/gimpimagefile.c:804
 msgid "Special File"
 msgstr "Posebna datoteka"
 
-#: app/core/gimpimagefile.c:792
+#: app/core/gimpimagefile.c:820
 msgid "Remote File"
 msgstr "Oddaljena datoteka"
 
-#: app/core/gimpimagefile.c:811
+#: app/core/gimpimagefile.c:839
 msgid "Click to create preview"
 msgstr "Kliknite za tvorbo predogleda"
 
-#: app/core/gimpimagefile.c:817
+#: app/core/gimpimagefile.c:845
 msgid "Loading preview..."
 msgstr "Nalaganje predogleda ..."
 
-#: app/core/gimpimagefile.c:823
+#: app/core/gimpimagefile.c:851
 msgid "Preview is out of date"
 msgstr "Predogled je zastarel"
 
-#: app/core/gimpimagefile.c:829
+#: app/core/gimpimagefile.c:857
 msgid "Cannot create preview"
 msgstr "Predogleda ni mogoče ustvariti"
 
-#: app/core/gimpimagefile.c:839
+#: app/core/gimpimagefile.c:867
 msgid "(Preview may be out of date)"
 msgstr "(predogled je morda zastarel)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:848 app/widgets/gimpimagepropview.c:438
+#: app/core/gimpimagefile.c:876 app/widgets/gimpimagepropview.c:438
 #: app/widgets/gimpsizebox.c:429 app/widgets/gimptemplateeditor.c:734
 #, c-format
 msgid "%d × %d pixel"
@@ -14250,7 +14250,7 @@ msgstr[1] "%d × %d slik. točka"
 msgstr[2] "%d × %d slik. točki"
 msgstr[3] "%d × %d slik. točke"
 
-#: app/core/gimpimagefile.c:871 app/display/gimpdisplayshell-title.c:394
+#: app/core/gimpimagefile.c:899 app/display/gimpdisplayshell-title.c:394
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -14259,7 +14259,7 @@ msgstr[1] "%d plast"
 msgstr[2] "%d plasti"
 msgstr[3] "%d plasti"
 
-#: app/core/gimpimagefile.c:919
+#: app/core/gimpimagefile.c:963
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Sličice za predogled »%s« ni mogoče odpreti: %s"
@@ -28403,12 +28403,12 @@ msgstr "Pr_edogled"
 msgid "No selection"
 msgstr "Nič ni izbrano"
 
-#: app/widgets/gimpthumbbox.c:584 app/widgets/gimpthumbbox.c:605
+#: app/widgets/gimpthumbbox.c:592 app/widgets/gimpthumbbox.c:613
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Sličica za predogled %d od %d"
 
-#: app/widgets/gimpthumbbox.c:713 app/widgets/gimpthumbbox.c:723
+#: app/widgets/gimpthumbbox.c:730 app/widgets/gimpthumbbox.c:740
 msgid "Creating preview..."
 msgstr "Ustvarjanje predogleda ..."
 
@@ -28527,8 +28527,8 @@ msgid "[ Base Image ]"
 msgstr "[ Osnovna slika ]"
 
 #: app/widgets/gimppathtreeview.c:111
-msgid "Lock path strokes"
-msgstr "Zakleni poteze poti"
+msgid "Lock path"
+msgstr "Zakleni pot"
 
 #: app/widgets/gimppathtreeview.c:114
 msgid "Lock path position"
