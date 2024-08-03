@@ -26,23 +26,8 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_PICK_BUTTON            (gimp_pick_button_get_type ())
-#define GIMP_PICK_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PICK_BUTTON, GimpPickButton))
-#define GIMP_PICK_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PICK_BUTTON, GimpPickButtonClass))
-#define GIMP_IS_PICK_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PICK_BUTTON))
-#define GIMP_IS_PICK_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PICK_BUTTON))
-#define GIMP_PICK_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PICK_BUTTON, GimpPickButtonClass))
-
-
-typedef struct _GimpPickButtonPrivate GimpPickButtonPrivate;
-typedef struct _GimpPickButtonClass   GimpPickButtonClass;
-
-struct _GimpPickButton
-{
-  GtkButton              parent_instance;
-
-  GimpPickButtonPrivate *priv;
-};
+#define GIMP_TYPE_PICK_BUTTON (gimp_pick_button_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpPickButton, gimp_pick_button, GIMP, PICK_BUTTON, GtkButton)
 
 struct _GimpPickButtonClass
 {
@@ -63,8 +48,10 @@ struct _GimpPickButtonClass
 };
 
 
-GType       gimp_pick_button_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_pick_button_new      (void);
+
+/*  for internal use only  */
+G_GNUC_INTERNAL void _gimp_pick_button_default_pick (GimpPickButton *button);
 
 
 G_END_DECLS

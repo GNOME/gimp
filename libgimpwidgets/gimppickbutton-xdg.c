@@ -27,7 +27,6 @@
 
 #include "gimpwidgetstypes.h"
 #include "gimppickbutton.h"
-#include "gimppickbutton-default.h"
 #include "gimppickbutton-xdg.h"
 
 #include "libgimp/libgimp-intl.h"
