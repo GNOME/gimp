@@ -236,6 +236,11 @@ welcome_dialog_new (Gimp       *gimp,
   gtk_widget_set_margin_start (main_vbox, 0);
   gtk_widget_set_margin_end (main_vbox, 0);
 
+  /* Make the first page scrollable to prevent height issues on
+   * smaller screens */
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box),
+                                      main_vbox, TRUE);
+
   welcome_dialog_create_welcome_page (gimp, dialog, main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
 
