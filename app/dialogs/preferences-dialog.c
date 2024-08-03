@@ -90,6 +90,8 @@ static GtkWidget * prefs_dialog_new                (Gimp       *gimp,
 static void        prefs_response                  (GtkWidget  *widget,
                                                     gint        response_id,
                                                     GtkWidget  *dialog);
+static void        prefs_box_style_updated         (GtkWidget  *widget);
+
 
 static void   prefs_color_management_reset         (GtkWidget    *widget,
                                                     GObject      *config);
@@ -389,6 +391,14 @@ prefs_response (GtkWidget *widget,
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
   gtk_widget_destroy (dialog);
+}
+
+static void
+prefs_box_style_updated (GtkWidget *widget)
+{
+  GimpPrefsBox *box = GIMP_PREFS_BOX (widget);
+
+  GTK_WIDGET_GET_CLASS (box)->style_updated (GTK_WIDGET (box));
 }
 
 static void
@@ -1193,6 +1203,16 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_set_data (G_OBJECT (dialog), "prefs-box", prefs_box);
 
+  /* Notify the prefs box to update its tree icon sizes
+   * based on user preferences */
+  g_signal_connect_object (config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (prefs_box_style_updated),
+                           prefs_box, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (prefs_box_style_updated),
+                           prefs_box, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   /**********************/
   /*  System Resources  */

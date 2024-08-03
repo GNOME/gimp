@@ -484,6 +484,8 @@ themes_apply_theme (Gimp          *gimp,
             "\n"
             "* { -GimpColorNotebook-tab-icon-size: %s; }"
             "\n"
+            "* { -GimpPrefsBox-tab-icon-size: %s; }"
+            "\n"
             "* { -GimpEditor-button-icon-size: %s; }"
             "\n"
             "* { -GimpDisplayShell-button-icon-size: %s; }"
@@ -496,8 +498,8 @@ themes_apply_theme (Gimp          *gimp,
             "\n"
             "paned separator { padding: %dpx; }",
             tool_icon_size, tool_icon_size, tab_icon_size, tab_icon_size,
-            button_icon_size, button_icon_size, tool_icon_size, pal_padding,
-            tab_padding, sep_padding);
+            tab_icon_size, button_icon_size, button_icon_size, tool_icon_size,
+            pal_padding, tab_padding, sep_padding);
         }
 
       if (! error && config->font_relative_size != 1.0)
