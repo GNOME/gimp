@@ -2,14 +2,14 @@
 # Copyright (C) 2022 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 # NorwayFun <temuri.doghonadze@gmail.com>, 2022.
-# Ekaterine Papava <papava.e@gtu.ge>, 20232-2024
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-24 23:18+0000\n"
-"PO-Revision-Date: 2024-04-25 16:44+0200\n"
+"POT-Creation-Date: 2024-08-02 23:17+0000\n"
+"PO-Revision-Date: 2024-08-03 06:36+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -163,79 +163,79 @@ msgstr "გამოსახულების ზომის ფენებ�
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:949 libgimp/gimpexportproceduredialog.c:416
+#: libgimp/gimpexport.c:923 libgimp/gimpexportproceduredialog.c:416
 #, c-format
 msgid "Export Image as %s"
 msgstr "გამოსახულების გატანა, როგორც %s"
 
-#: libgimp/gimpexport.c:955 libgimp/gimpproceduredialog.c:336
+#: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:344
 #: libgimpwidgets/gimpcolorbutton.c:554
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
-#: libgimp/gimpexport.c:956 libgimp/gimpproceduredialog.c:308
-#: libgimp/gimpproceduredialog.c:595
+#: libgimp/gimpexport.c:930 libgimp/gimpproceduredialog.c:316
+#: libgimp/gimpproceduredialog.c:615
 msgid "_Export"
 msgstr "_გატანა"
 
-#: libgimp/gimpexportprocedure.c:479
+#: libgimp/gimpexportprocedure.c:461
 msgid "Save _Exif"
 msgstr "_Exif-ის შენახვა"
 
-#: libgimp/gimpexportprocedure.c:480
+#: libgimp/gimpexportprocedure.c:462
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr ""
 
-#: libgimp/gimpexportprocedure.c:485
+#: libgimp/gimpexportprocedure.c:467
 msgid "Save _IPTC"
 msgstr "_IPTC-ის შენახვა"
 
-#: libgimp/gimpexportprocedure.c:486
+#: libgimp/gimpexportprocedure.c:468
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 
-#: libgimp/gimpexportprocedure.c:491
+#: libgimp/gimpexportprocedure.c:473
 msgid "Save _XMP"
 msgstr "_XMP-ის შენახვა"
 
-#: libgimp/gimpexportprocedure.c:492
+#: libgimp/gimpexportprocedure.c:474
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr ""
 
-#: libgimp/gimpexportprocedure.c:497
+#: libgimp/gimpexportprocedure.c:479
 msgid "Save color _profile"
 msgstr "ფერის პროფილის _შენახვა"
 
-#: libgimp/gimpexportprocedure.c:498
+#: libgimp/gimpexportprocedure.c:480
 msgid "Save the ICC color profile as metadata"
 msgstr ""
 
-#: libgimp/gimpexportprocedure.c:503
+#: libgimp/gimpexportprocedure.c:485
 msgid "Save _thumbnail"
 msgstr "მინიატურის _შენახვა"
 
-#: libgimp/gimpexportprocedure.c:504
+#: libgimp/gimpexportprocedure.c:486
 msgid "Save a smaller representation of the image as metadata"
 msgstr ""
 
-#: libgimp/gimpexportprocedure.c:510
+#: libgimp/gimpexportprocedure.c:492
 msgid "Save c_omment"
 msgstr "_კომენტარის შენახვა"
 
-#: libgimp/gimpexportprocedure.c:511
+#: libgimp/gimpexportprocedure.c:493
 msgid "Save a comment as metadata"
 msgstr ""
 
-#: libgimp/gimpexportprocedure.c:515
+#: libgimp/gimpexportprocedure.c:497
 msgid "Comment"
 msgstr "კომენტარი"
 
-#: libgimp/gimpexportprocedure.c:516
+#: libgimp/gimpexportprocedure.c:498
 msgid "Image comment"
 msgstr "გამოსახულების კომენტარი"
 
@@ -251,7 +251,7 @@ msgstr "მეტამონაცემების ჩასწორებ�
 msgid "(edit)"
 msgstr "(ჩასწორება)"
 
-#: libgimp/gimpimagemetadata.c:283
+#: libgimp/gimpimagemetadata.c:329
 msgid "Background"
 msgstr "ფონი"
 
@@ -259,14 +259,14 @@ msgstr "ფონი"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:267 libgimp/gimpvectorloadprocedure.c:255
+#: libgimp/gimploadprocedure.c:271 libgimp/gimpvectorloadprocedure.c:445
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
 "This is a bug in the plug-in code. Contact the plug-in developer."
 msgstr ""
 
-#: libgimp/gimpparamspecs-desc.c:54
+#: libgimp/gimpparamspecs-desc.c:65
 msgid "Allowed values:"
 msgstr "ნებადართული მნიშვნელობები:"
 
@@ -290,194 +290,194 @@ msgstr "გამოძახების შეცდომა"
 msgid "cancelled"
 msgstr "შეწყვეტილია"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:161
 msgid "by name"
 msgstr "სახელით"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:162
 msgid "by description"
 msgstr "აღწერით"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:163
 msgid "by help"
 msgstr "დახმარებით"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:164
 msgid "by authors"
 msgstr "ავტორებით"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:165
 msgid "by copyright"
 msgstr "უფლებებით"
 
-#: libgimp/gimpprocbrowserdialog.c:169
+#: libgimp/gimpprocbrowserdialog.c:166
 msgid "by date"
 msgstr "თარიღით"
 
-#: libgimp/gimpprocbrowserdialog.c:170
+#: libgimp/gimpprocbrowserdialog.c:167
 msgid "by type"
 msgstr "ტიპით"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:371 libgimp/gimpprocbrowserdialog.c:529
-#: libgimpwidgets/gimpbrowser.c:168
+#: libgimp/gimpprocbrowserdialog.c:376 libgimp/gimpprocbrowserdialog.c:534
+#: libgimpwidgets/gimpbrowser.c:164
 msgid "No matches"
 msgstr "დათხვევა არ არსებობს"
 
-#: libgimp/gimpprocbrowserdialog.c:374
+#: libgimp/gimpprocbrowserdialog.c:379
 msgid "Search term invalid or incomplete"
 msgstr "ძებნის პირობა არასწორი ან დაუსრულებელია"
 
-#: libgimp/gimpprocbrowserdialog.c:383
+#: libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching"
 msgstr "ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:395
+#: libgimp/gimpprocbrowserdialog.c:400
 msgid "Searching by name"
 msgstr "სახელით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:416
+#: libgimp/gimpprocbrowserdialog.c:421
 msgid "Searching by description"
 msgstr "აღწერით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:424
+#: libgimp/gimpprocbrowserdialog.c:429
 msgid "Searching by help"
 msgstr "დახმარებით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:432
+#: libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by authors"
 msgstr "ავტორებით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:440
+#: libgimp/gimpprocbrowserdialog.c:445
 msgid "Searching by copyright"
 msgstr "უფლებებით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:448
+#: libgimp/gimpprocbrowserdialog.c:453
 msgid "Searching by date"
 msgstr "თარიღით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:461
 msgid "Searching by type"
 msgstr "ტიპით ძებნა"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:474
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d პროცედურა"
 
-#: libgimp/gimpprocbrowserdialog.c:478
+#: libgimp/gimpprocbrowserdialog.c:483
 msgid "No matches for your query"
 msgstr "დათხვევა არ არსებობს"
 
-#: libgimp/gimpprocbrowserdialog.c:482
+#: libgimp/gimpprocbrowserdialog.c:487
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d დამთხვევა"
 
-#: libgimp/gimpprocedure.c:2080
+#: libgimp/gimpprocedure.c:2169
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "პროცედურამ %s გასაბრუნებელი მნიშვნელობები არ დააბრუნა"
 
-#: libgimp/gimpprocedure.c:2207
+#: libgimp/gimpprocedure.c:2309
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2219
+#: libgimp/gimpprocedure.c:2321
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
 "'%s' (#%d). Expected %s, got %s."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2254
+#: libgimp/gimpprocedure.c:2356
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2268
+#: libgimp/gimpprocedure.c:2370
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2312
+#: libgimp/gimpprocedure.c:2414
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 
-#: libgimp/gimpprocedure.c:2322
+#: libgimp/gimpprocedure.c:2424
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:306 libgimp/gimpproceduredialog.c:593
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_გახსნა"
 
-#: libgimp/gimpproceduredialog.c:310 libgimp/gimpproceduredialog.c:597
-#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
+#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:493
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_დიახ"
 
-#: libgimp/gimpproceduredialog.c:318 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "_საწყისი მნიშვნელობებზე დაბრუნება"
 
-#: libgimp/gimpproceduredialog.c:371
+#: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
 msgstr "შენახული პარამეტრების წაკითხვა"
 
-#: libgimp/gimpproceduredialog.c:372
+#: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:384
+#: libgimp/gimpproceduredialog.c:392
 msgid "_Save Settings"
 msgstr "პარამეტრების შენახვა"
 
-#: libgimp/gimpproceduredialog.c:385
+#: libgimp/gimpproceduredialog.c:393
 msgid "Store current settings for later reuse"
 msgstr ""
 
-#: libgimp/gimpproceduredialog.c:811
+#: libgimp/gimpproceduredialog.c:847
 msgid "Brush Chooser"
 msgstr "ფუნჯის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:815
+#: libgimp/gimpproceduredialog.c:851
 msgid "Font Chooser"
 msgstr "ფონტის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:819
+#: libgimp/gimpproceduredialog.c:855
 msgid "Gradient Chooser"
 msgstr "გრადიენტის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:823
+#: libgimp/gimpproceduredialog.c:859
 msgid "Palette Chooser"
 msgstr "პალიტრის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:827
+#: libgimp/gimpproceduredialog.c:863
 msgid "Pattern Chooser"
 msgstr "შაბლონის ამრჩევი"
 
-#: libgimp/gimpproceduredialog.c:2586
+#: libgimp/gimpproceduredialog.c:2665
 msgid "Reset to _Initial Values"
 msgstr "საწყის მნიშვნელობებზე დაბრუნება"
 
-#: libgimp/gimpproceduredialog.c:2595
+#: libgimp/gimpproceduredialog.c:2674
 msgid "Reset to _Factory Defaults"
 msgstr "ქარხნულ _პარამეტრებზე დაბრუნება"
 
@@ -532,52 +532,103 @@ msgstr "აირჩიეთ არხი: %s"
 msgid "Choose drawable: %s"
 msgstr "აირჩიეთ ხატვადი: %s"
 
-#: libgimp/gimpresolutionentry-private.c:143
-#: libgimp/gimpvectorloadprocedure.c:117
+#: libgimp/gimpresolutionentry-private.c:136
+msgid ""
+"This unit is used to select the pixel density and show dimensions in "
+"physical unit"
+msgstr ""
+
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:125
 msgid "_Keep aspect ratio"
 msgstr "_საწყისი თანაფარდობის შენარჩუნება"
 
-#: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpresolutionentry-private.c:145
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
 msgstr ""
 
-#: libgimp/gimpresolutionentry-private.c:193
-#: libgimp/gimpresolutionentry-private.c:194
+#: libgimp/gimpresolutionentry-private.c:199
+#: libgimp/gimpresolutionentry-private.c:200
 #, c-format
 msgid "pixels/%a"
 msgstr "პიქსელი/%a"
 
-#: libgimp/gimpunitcache.c:54
-msgid "percent"
-msgstr "პროცენტი"
+#: libgimp/gimpvectorloadprocedure.c:111
+msgid "_Width (pixels)"
+msgstr "_სიგანე (პიქსელებში)"
 
-#: libgimp/gimpvectorloadprocedure.c:122
+#: libgimp/gimpvectorloadprocedure.c:118
+msgid "_Height (pixels)"
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:130
 msgid "_Prefer native dimensions"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:123
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "Load and use dimensions from source file"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:139
 msgid "Resolu_tion"
 msgstr "_გაფართოება"
 
-#: libgimp/gimpvectorloadprocedure.c:132
+#: libgimp/gimpvectorloadprocedure.c:140
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:136
+#: libgimp/gimpvectorloadprocedure.c:145
 msgid "Unit"
 msgstr ""
 
-#: libgimp/gimpvectorloadprocedure.c:137
+#: libgimp/gimpvectorloadprocedure.c:146
 msgid "Physical unit"
 msgstr ""
 
+#: libgimp/gimpvectorloadprocedure.c:368
+msgid ""
+"dimensions could neither be extracted nor computed from the vector image's "
+"data."
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:373
+msgid "Vector image loading plug-in failed: "
+msgstr ""
+
+#: libgimp/gimpvectorloadprocedure.c:397
+msgid ""
+"Dimensions cannot be 0 and no native dimensions could be extracted from the "
+"vector image."
+msgstr ""
+
+#. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+#. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+#.
+#: libgimp/gimpvectorloadproceduredialog.c:131
+#, c-format
+msgid "Source %s file size: %%.%df %s × %%.%df %s"
+msgstr ""
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:168
+#, c-format
+msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+msgstr ""
+
+#: libgimp/gimpvectorloadproceduredialog.c:176
+#, c-format
+msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+msgstr ""
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:189
+#, c-format
+msgid "The source %s file does not specify a size!"
+msgstr ""
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpvectorloadproceduredialog.c:156
+#: libgimp/gimpvectorloadproceduredialog.c:330
 #, c-format
 msgid "Load %s Image"
 msgstr ""
@@ -1491,7 +1542,7 @@ msgstr "პიქსელი"
 #: libgimpbase/gimpbaseenums.c:1619
 msgctxt "size-type"
 msgid "Points"
-msgstr "წერტილები"
+msgstr "წერტილი"
 
 #: libgimpbase/gimpbaseenums.c:1680
 msgctxt "stroke-method"
@@ -1618,35 +1669,95 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "ასპექტით ამოჭრა"
 
-#: libgimpbase/gimpmetadata.c:1243
+#: libgimpbase/gimpmetadata.c:1217
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "მეტამონაცემების წაკითხვა მხოლოდ ლოკალური ფაილებიდანაა შესაძლებელი"
 
-#: libgimpbase/gimpmetadata.c:1299
+#: libgimpbase/gimpmetadata.c:1273
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "მეტამონაცემების ჩაწერა მხოლოდ ლოკალურ ფაილებშია შესაძლებელი"
 
-#: libgimpbase/gimpmetadata.c:1348
+#: libgimpbase/gimpmetadata.c:1322
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "EXIF მონაცემების არასწორი ზომა."
 
-#: libgimpbase/gimpmetadata.c:1393
+#: libgimpbase/gimpmetadata.c:1367
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "EXIF მონაცემების ანალიზის შეცდომა."
 
-#: libgimpbase/gimpmetadata.c:1445
+#: libgimpbase/gimpmetadata.c:1419
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "IPTC მონაცემების ანალიზის შეცდომა."
 
-#: libgimpbase/gimpmetadata.c:1493
+#: libgimpbase/gimpmetadata.c:1467
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "XMP მონაცემების ანალიზის შეცდომა."
+
+#: libgimpbase/gimpunit.c:86
+msgctxt "unit-singular"
+msgid "pixel"
+msgstr "პიქსელი"
+
+#: libgimpbase/gimpunit.c:86
+msgctxt "unit-plural"
+msgid "pixels"
+msgstr "პიქსელი"
+
+#: libgimpbase/gimpunit.c:90
+msgctxt "unit-singular"
+msgid "inch"
+msgstr "დუიმი"
+
+#: libgimpbase/gimpunit.c:90
+msgctxt "unit-plural"
+msgid "inches"
+msgstr "დუიმი"
+
+#: libgimpbase/gimpunit.c:93
+msgctxt "unit-singular"
+msgid "millimeter"
+msgstr "მილიმეტრი"
+
+#: libgimpbase/gimpunit.c:93
+msgctxt "unit-plural"
+msgid "millimeters"
+msgstr "მილიმეტრი"
+
+#: libgimpbase/gimpunit.c:97
+msgctxt "unit-singular"
+msgid "point"
+msgstr "წერტილი"
+
+#: libgimpbase/gimpunit.c:97
+msgctxt "unit-plural"
+msgid "points"
+msgstr "წერტილი"
+
+#: libgimpbase/gimpunit.c:100
+msgctxt "unit-singular"
+msgid "pica"
+msgstr "პიკა"
+
+#: libgimpbase/gimpunit.c:100
+msgctxt "unit-plural"
+msgid "picas"
+msgstr "პიკა"
+
+#: libgimpbase/gimpunit.c:108
+msgctxt "singular"
+msgid "percent"
+msgstr "პროცენტი"
+
+#: libgimpbase/gimpunit.c:108
+msgctxt "plural"
+msgid "percent"
+msgstr "პროცენტი"
 
 #: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
@@ -1677,34 +1788,34 @@ msgstr ""
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: libgimpcolor/gimpcolorprofile.c:258
+#: libgimpcolor/gimpcolorprofile.c:259
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr ""
 
-#: libgimpcolor/gimpcolorprofile.c:304
+#: libgimpcolor/gimpcolorprofile.c:305
 msgid "Data does not appear to be an ICC color profile"
 msgstr ""
 
-#: libgimpcolor/gimpcolorprofile.c:361
+#: libgimpcolor/gimpcolorprofile.c:362
 msgid "Could not save color profile to memory"
 msgstr ""
 
-#: libgimpcolor/gimpcolorprofile.c:578
+#: libgimpcolor/gimpcolorprofile.c:579
 msgid "(unnamed profile)"
 msgstr "(უსახელო პროფილი)"
 
-#: libgimpcolor/gimpcolorprofile.c:620
+#: libgimpcolor/gimpcolorprofile.c:621
 #, c-format
 msgid "Model: %s"
 msgstr "მოდელი: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:629
+#: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "მწარმოებელი: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:638
+#: libgimpcolor/gimpcolorprofile.c:639
 #, c-format
 msgid "Copyright: %s"
 msgstr "საავტ. უფლებები: %s"
@@ -1912,50 +2023,50 @@ msgstr ""
 msgid "Show HSV instead of LCH"
 msgstr "LCH-ის მაგიერ HSV-ის გამოყენება"
 
-#: libgimpconfig/gimpcolorconfig.c:711 libgimpconfig/gimpcolorconfig.c:904
+#: libgimpconfig/gimpcolorconfig.c:709 libgimpconfig/gimpcolorconfig.c:902
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr ""
 
-#: libgimpconfig/gimpcolorconfig.c:755 libgimpconfig/gimpcolorconfig.c:954
+#: libgimpconfig/gimpcolorconfig.c:753 libgimpconfig/gimpcolorconfig.c:952
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr ""
 
-#: libgimpconfig/gimpcolorconfig.c:799 libgimpconfig/gimpcolorconfig.c:1004
+#: libgimpconfig/gimpcolorconfig.c:797 libgimpconfig/gimpcolorconfig.c:1002
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:123
+#: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "ტოკენის (%s) მნიშვნელობა სწორ UTF-8 ტიპის სტრიქონს არ წარმოადგენს"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:501
+#: libgimpconfig/gimpconfig-deserialize.c:503
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:616
+#: libgimpconfig/gimpconfig-deserialize.c:618
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:631
+#: libgimpconfig/gimpconfig-deserialize.c:633
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr ""
 
-#: libgimpconfig/gimpconfig-deserialize.c:700
+#: libgimpconfig/gimpconfig-deserialize.c:702
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr ""
 
 #: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
-#: libgimpwidgets/gimpcolorprofilestore.c:761
+#: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
 msgstr "ფატალური შეცდომა დამუშავებისას"
 
@@ -1968,7 +2079,7 @@ msgstr ""
 msgid "Cannot expand ${%s}"
 msgstr ""
 
-#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:725
+#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "`%s'-ში ჩაწერის შეცდომა: %s"
@@ -1983,7 +2094,7 @@ msgstr ""
 msgid "Could not create temporary file for '%s': "
 msgstr "'%s'-სთვის დროებითი ფაილის შექმნა შეუძლებელია: "
 
-#: libgimpconfig/gimpconfigwriter.c:835
+#: libgimpconfig/gimpconfigwriter.c:837
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "შეცდომა '%s'-ის ჩაწერისას: %s"
@@ -2048,7 +2159,7 @@ msgstr ""
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""
 
-#: libgimpwidgets/gimpbrowser.c:141
+#: libgimpwidgets/gimpbrowser.c:137
 msgid "_Search:"
 msgstr "_ძებნა:"
 
@@ -2068,38 +2179,38 @@ msgstr "შა_ვი"
 msgid "_White"
 msgstr "_თეთრი"
 
-#: libgimpwidgets/gimpcolorhexentry.c:133
+#: libgimpwidgets/gimpcolorhexentry.c:129
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "ყველა ფაილი (*.*)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC პროფილები (*.icc, *.icm)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "შენახვა"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:346
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
 #: libgimpwidgets/gimppatheditor.c:267
 msgid "Folder"
 msgstr "საქაღალდე"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:352
 msgid "Not a regular file."
 msgstr "ფაილი ჩვეულებრივი არაა."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:160
+#: libgimpwidgets/gimpcolorprofilestore.c:156
 msgid "Select color profile from disk..."
 msgstr "ფერის პროფილის დისკიდან არჩევა..."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:289
+#: libgimpwidgets/gimpcolorprofilestore.c:284
 msgctxt "profile"
 msgid "None"
 msgstr "არა_ფერი"
@@ -2116,37 +2227,37 @@ msgstr "უფლებები: "
 msgid "Scales"
 msgstr "გადიდება"
 
-#: libgimpwidgets/gimpcolorscales.c:362 libgimpwidgets/gimpcolorscales.c:694
+#: libgimpwidgets/gimpcolorscales.c:371 libgimpwidgets/gimpcolorscales.c:703
 #: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
 #: modules/color-selector-water.c:206 modules/color-selector-water.c:242
 #: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
 msgid "Profile: sRGB"
 msgstr "პროფილი: sRGB"
 
-#: libgimpwidgets/gimpcolorscales.c:459
+#: libgimpwidgets/gimpcolorscales.c:468
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:461
+#: libgimpwidgets/gimpcolorscales.c:470
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:482
+#: libgimpwidgets/gimpcolorscales.c:491
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:484
+#: libgimpwidgets/gimpcolorscales.c:493
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorscales.c:711 libgimpwidgets/gimpcolorselect.c:707
-#: modules/color-selector-cmyk.c:302 modules/color-selector-cmyk.c:386
+#: libgimpwidgets/gimpcolorscales.c:720 libgimpwidgets/gimpcolorselect.c:707
+#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
 msgstr "პროფილი: %s"
 
-#: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
+#: libgimpwidgets/gimpcolorscales.c:734 libgimpwidgets/gimpcolorselect.c:716
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
 msgid "Profile: <i>unknown</i>"
 msgstr "პროფილი: <i>უცნობი</i>"
@@ -2165,15 +2276,15 @@ msgstr ""
 msgid "Soft-Proof Profile: %s"
 msgstr "პროგრამულად დამოწმებული პროფილი: %s"
 
-#: libgimpwidgets/gimpcolorselection.c:241
+#: libgimpwidgets/gimpcolorselection.c:237
 msgid "Current:"
 msgstr "მიმდინარე:"
 
-#: libgimpwidgets/gimpcolorselection.c:250
+#: libgimpwidgets/gimpcolorselection.c:246
 msgid "Old:"
 msgstr "ძველი:"
 
-#: libgimpwidgets/gimpcolorselection.c:335
+#: libgimpwidgets/gimpcolorselection.c:331
 msgid "HTML _notation:"
 msgstr "HTML ნოტაცია:"
 
@@ -2185,40 +2296,40 @@ msgstr ""
 msgid "The controller's state, as human-readable string"
 msgstr ""
 
-#: libgimpwidgets/gimpdialog.c:198
+#: libgimpwidgets/gimpdialog.c:196
 msgid "_Help"
 msgstr "_დახმარება"
 
-#: libgimpwidgets/gimpfileentry.c:167
+#: libgimpwidgets/gimpfileentry.c:168
 msgid "Show file location in the file manager"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:238
+#: libgimpwidgets/gimpfileentry.c:245
 msgid "Open a file selector to browse your folders"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:239
+#: libgimpwidgets/gimpfileentry.c:246
 msgid "Open a file selector to browse your files"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:251
+#: libgimpwidgets/gimpfileentry.c:258
 msgid "Indicates whether or not the folder exists"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:252
+#: libgimpwidgets/gimpfileentry.c:259
 msgid "Indicates whether or not the file exists"
 msgstr ""
 
-#: libgimpwidgets/gimpfileentry.c:428
+#: libgimpwidgets/gimpfileentry.c:451
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "ფაილმენეჯერში ჩვენების შეცდომა:%s"
 
-#: libgimpwidgets/gimpfileentry.c:455
+#: libgimpwidgets/gimpfileentry.c:481
 msgid "Select Folder"
 msgstr "აირჩიეთ საქაღალდე"
 
-#: libgimpwidgets/gimpfileentry.c:457
+#: libgimpwidgets/gimpfileentry.c:483
 msgid "Select File"
 msgstr "აირჩიეთ ფაილი"
 
@@ -2233,62 +2344,62 @@ msgstr ""
 msgid "(Empty)"
 msgstr "(ცარიელი)"
 
-#: libgimpwidgets/gimpmemsizeentry.c:252
+#: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Kibibyte"
 msgstr "კიბიბაიტი"
 
-#: libgimpwidgets/gimpmemsizeentry.c:253
+#: libgimpwidgets/gimpmemsizeentry.c:255
 msgid "Mebibyte"
 msgstr "მებიბაიტი"
 
-#: libgimpwidgets/gimpmemsizeentry.c:254
+#: libgimpwidgets/gimpmemsizeentry.c:256
 msgid "Gibibyte"
 msgstr "გიბიბაიტი"
 
-#: libgimpwidgets/gimppageselector.c:185
+#: libgimpwidgets/gimppageselector.c:183
 msgid "N Pages"
 msgstr "N გვერდი"
 
-#: libgimpwidgets/gimppageselector.c:186
+#: libgimpwidgets/gimppageselector.c:184
 msgid "The number of pages to open"
 msgstr ""
 
-#: libgimpwidgets/gimppageselector.c:199
+#: libgimpwidgets/gimppageselector.c:197
 msgid "Target"
 msgstr "სამიზნე"
 
-#: libgimpwidgets/gimppageselector.c:200
+#: libgimpwidgets/gimppageselector.c:198
 msgid "the target to open to"
 msgstr ""
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
+#: libgimpwidgets/gimppageselector.c:279 libgimpwidgets/gimppageselector.c:1085
 msgid "Nothing selected"
 msgstr "არაფერია მონიშნული"
 
-#: libgimpwidgets/gimppageselector.c:301
+#: libgimpwidgets/gimppageselector.c:297
 msgid "Select _All"
 msgstr "ყველაფრის მონიშვნა"
 
-#: libgimpwidgets/gimppageselector.c:321
+#: libgimpwidgets/gimppageselector.c:317
 msgid "Select _range:"
 msgstr "აირჩიეთ _დიაპაზონი:"
 
-#: libgimpwidgets/gimppageselector.c:333
+#: libgimpwidgets/gimppageselector.c:329
 msgid "Open _pages as"
 msgstr "გვერდების _გახსნა, როგორც"
 
-#: libgimpwidgets/gimppageselector.c:461 libgimpwidgets/gimppageselector.c:659
+#: libgimpwidgets/gimppageselector.c:465 libgimpwidgets/gimppageselector.c:663
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
 
-#: libgimpwidgets/gimppageselector.c:1084
+#: libgimpwidgets/gimppageselector.c:1090
 msgid "One page selected"
 msgstr "მონიშნულია ერთი გვერდი"
 
-#: libgimpwidgets/gimppageselector.c:1091
-#: libgimpwidgets/gimppageselector.c:1095
+#: libgimpwidgets/gimppageselector.c:1097
+#: libgimpwidgets/gimppageselector.c:1101
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2323,27 +2434,27 @@ msgstr ""
 "ის ფერი აირჩიოთ."
 
 #. toggle button to (de)activate the instant preview
-#: libgimpwidgets/gimppreview.c:288
+#: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
 msgstr "_მინიატურა"
 
-#: libgimpwidgets/gimppreviewarea.c:155
+#: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
 msgstr "ზომის _შემოწმება"
 
-#: libgimpwidgets/gimppreviewarea.c:163
+#: libgimpwidgets/gimppreviewarea.c:162
 msgid "Check Style"
 msgstr "სტილის შემოწმება"
 
-#: libgimpwidgets/gimppreviewarea.c:171
+#: libgimpwidgets/gimppreviewarea.c:170
 msgid "Custom Checks Color 1"
 msgstr ""
 
-#: libgimpwidgets/gimppreviewarea.c:178
+#: libgimpwidgets/gimppreviewarea.c:177
 msgid "Custom Checks Color 2"
 msgstr ""
 
-#: libgimpwidgets/gimppropwidgets.c:2454
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2534,51 +2645,51 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "და_პატარავება"
 
-#: modules/color-selector-cmyk.c:86
+#: modules/color-selector-cmyk.c:85
 msgid "CMYK color selector (using color profile)"
 msgstr ""
 
-#: modules/color-selector-cmyk.c:120
+#: modules/color-selector-cmyk.c:119
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:144
+#: modules/color-selector-cmyk.c:143
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:146
+#: modules/color-selector-cmyk.c:145
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:148
+#: modules/color-selector-cmyk.c:147
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:150
+#: modules/color-selector-cmyk.c:149
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:153
 msgid "Cyan"
 msgstr "ცისფერი"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:154
 msgid "Magenta"
 msgstr "ალისფერი"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:155
 msgid "Yellow"
 msgstr "ყვითელი"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:156
 msgid "Black"
 msgstr "შავი"
 
-#: modules/color-selector-cmyk.c:289 modules/color-selector-cmyk.c:368
+#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
 msgid "Profile: (none)"
 msgstr "პროფილი: (არა)"
 
@@ -2963,7 +3074,7 @@ msgstr ""
 
 #: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
-msgstr ""
+msgstr "ჩრდილის ფერი"
 
 #: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
