@@ -42,6 +42,9 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#define GET_PRIVATE(obj) ((GimpPickButtonPrivate *) gimp_pick_button_get_instance_private ((GimpPickButton *) (obj)))
+
+
 static gboolean   gimp_pick_button_mouse_press   (GtkWidget      *invisible,
                                                   GdkEventButton *event,
                                                   GimpPickButton *button);
