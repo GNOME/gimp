@@ -1846,10 +1846,10 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       private->layer_stack = g_slist_prepend (private->layer_stack, g_list_copy (layers));
     }
 
-  g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
-
   if (layers && gimp_image_get_selected_channels (image))
     gimp_image_set_selected_channels (image, NULL);
+
+  g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
 }
 
 static void
