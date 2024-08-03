@@ -48,7 +48,6 @@
 #elif defined (GDK_WINDOWING_WIN32)
 #include "gimppickbutton-win32.h"
 #else
-#include "gimppickbutton-default.h"
 #include "gimppickbutton-kwin.h"
 #include "gimppickbutton-xdg.h"
 #endif
