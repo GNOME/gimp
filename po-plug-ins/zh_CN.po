@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-28 12:34+0000\n"
-"PO-Revision-Date: 2024-07-29 20:15+0800\n"
+"POT-Creation-Date: 2024-08-02 23:17+0000\n"
+"PO-Revision-Date: 2024-08-04 19:16+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1987,7 +1987,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
 #: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:541
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
 #: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
 #: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
@@ -5846,32 +5846,32 @@ msgstr "读入时遇到文件结束符"
 msgid "Write error occurred"
 msgstr "出现写错误"
 
-#: plug-ins/common/file-svg.c:166
+#: plug-ins/common/file-svg.c:167
 msgid "SVG image"
 msgstr "SVG 图像"
 
-#: plug-ins/common/file-svg.c:179
+#: plug-ins/common/file-svg.c:180
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:188
+#: plug-ins/common/file-svg.c:189
 msgid "_Paths"
 msgstr "路径(_P)"
 
-#: plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-svg.c:190
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "是否以及如何导入路径使其可用于路径工具"
 
-#: plug-ins/common/file-svg.c:190
+#: plug-ins/common/file-svg.c:191
 msgid "Don't import paths"
 msgstr "不要导入路径"
 
-#: plug-ins/common/file-svg.c:191
+#: plug-ins/common/file-svg.c:192
 msgid "Import paths individually"
 msgstr "分别导入路径"
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:193
 msgid "Merge imported paths"
 msgstr "合并导入的路径"
 
@@ -5880,15 +5880,15 @@ msgstr "合并导入的路径"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:273
+#: plug-ins/common/file-svg.c:274
 msgid "Disable safety size limits?"
 msgstr "禁用安全大小限制吗？"
 
-#: plug-ins/common/file-svg.c:278
+#: plug-ins/common/file-svg.c:279
 msgid "_No"
 msgstr "否(_N)"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:280
 msgid "_Yes"
 msgstr "是(_Y)"
 
@@ -5902,7 +5902,7 @@ msgstr "是(_Y)"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:304
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -5911,24 +5911,24 @@ msgstr ""
 "发生了解析错误。\n"
 "禁用安全限制可能会有帮助。恶意 SVG 文件可能会用此消耗过多内存。"
 
-#: plug-ins/common/file-svg.c:315
+#: plug-ins/common/file-svg.c:316
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "为了安全原因，该选项应仅用于信任的输入！"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:323
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/common/file-svg.c:543 plug-ins/file-exr/file-exr.c:358
 #: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "未知原因"
 
-#: plug-ins/common/file-svg.c:548
+#: plug-ins/common/file-svg.c:549
 msgid "Rendering SVG"
 msgstr "渲染 SVG"
 
-#: plug-ins/common/file-svg.c:558
+#: plug-ins/common/file-svg.c:559
 msgid "Rendered SVG"
 msgstr "已渲染的 SVG"
 
@@ -13746,6 +13746,10 @@ msgstr "自动转换(_A)"
 msgid "General Preferences"
 msgstr "常规首选项"
 
+#: plug-ins/imagemap/imap_preview.c:313
+msgid "Shortcut Menu"
+msgstr "快捷键菜单"
+
 #: plug-ins/imagemap/imap_rectangle.c:68
 msgid "_Rectangle"
 msgstr "矩形(_R)"
@@ -13819,6 +13823,14 @@ msgstr "映像文件格式"
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
 msgstr "查看源文件"
+
+#: plug-ins/imagemap/imap_statusbar.c:55
+msgid "Coordinates:"
+msgstr "坐标："
+
+#: plug-ins/imagemap/imap_statusbar.c:70
+msgid "Active Area Size:"
+msgstr "活动区域大小："
 
 #: plug-ins/imagemap/imap-menu.ui:16
 msgid "Save As"
@@ -19104,9 +19116,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "P_olar Coordinates..."
 #~ msgstr "极坐标(_O)..."
-
-#~ msgid "Polar Coordinates"
-#~ msgstr "极坐标"
 
 #~ msgid "Circle _depth in percent:"
 #~ msgstr "圆形深度(百分率)(_D)："
