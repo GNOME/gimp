@@ -64,7 +64,13 @@ struct _GimpPrefsBoxPrivate
 #define GET_PRIVATE(obj) (((GimpPrefsBox *) (obj))->priv)
 
 
-static void   gimp_prefs_box_finalize             (GObject          *object);
+static void      gimp_prefs_box_finalize              (GObject      *object);
+
+static void      gimp_prefs_box_style_updated         (GtkWidget    *widget);
+static gboolean  gimp_prefs_box_style_updated_foreach (GtkTreeModel *model,
+                                                       GtkTreePath  *path,
+                                                       GtkTreeIter  *iter,
+                                                       gpointer      data);
 
 static void   gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
                                                    GimpPrefsBox     *box);
@@ -78,9 +84,21 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
 static void
 gimp_prefs_box_class_init (GimpPrefsBoxClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize = gimp_prefs_box_finalize;
+
+  widget_class->style_updated = gimp_prefs_box_style_updated;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("tab-icon-size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              GTK_ICON_SIZE_BUTTON,
+                                                              G_PARAM_READABLE));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpPrefsBox");
 }
 
 static void
@@ -90,6 +108,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkTreeViewColumn   *column;
   GtkCellRenderer     *cell;
   GtkTreeSelection    *sel;
+  GtkIconSize          tab_icon_size;
   GtkWidget           *frame;
   GtkWidget           *hbox;
   GtkWidget           *vbox;
@@ -98,7 +117,11 @@ gimp_prefs_box_init (GimpPrefsBox *box)
 
   private = box->priv;
 
-  private->tree_icon_size = GTK_ICON_SIZE_BUTTON;
+  gtk_widget_style_get (GTK_WIDGET (box),
+                        "tab-icon-size", &tab_icon_size,
+                        NULL);
+
+  private->tree_icon_size = tab_icon_size;
   private->page_icon_size = GTK_ICON_SIZE_DIALOG;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
@@ -206,6 +229,37 @@ gimp_prefs_box_finalize (GObject *object)
   g_clear_pointer (&private->page_help_id,   g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_prefs_box_style_updated (GtkWidget *widget)
+{
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
+  if (GET_PRIVATE (widget)->store)
+    gtk_tree_model_foreach (GTK_TREE_MODEL (GET_PRIVATE (widget)->store),
+                            gimp_prefs_box_style_updated_foreach,
+                            widget);
+}
+
+static gboolean
+gimp_prefs_box_style_updated_foreach (GtkTreeModel *model,
+                                      GtkTreePath  *path,
+                                      GtkTreeIter  *iter,
+                                      gpointer      data)
+{
+  GimpPrefsBox *box = GIMP_PREFS_BOX (data);
+  GtkIconSize   tab_icon_size;
+
+  gtk_widget_style_get (GTK_WIDGET (box),
+                        "tab-icon-size", &tab_icon_size,
+                        NULL);
+
+  gtk_tree_store_set (GTK_TREE_STORE (model), iter,
+                      COLUMN_TREE_ICON_SIZE, tab_icon_size,
+                      -1);
+
+  return FALSE;
 }
 
 static void
