@@ -89,9 +89,12 @@ echo "@echo off
       echo.
       bin\gimp-$GIMP_APP_VERSION.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
 
-## Copy GIMP and all its deps to improvised GIMP_PREFIX
 if [ "$GITLAB_CI" ]; then
+  # Copy GIMP and all its deps to improvised GIMP_PREFIX
   cp -fr $CROSSROAD_PREFIX/ _install$ARTIFACTS_SUFFIX
+
+  # Bundle GIMP
+  bash build/windows/2_bundle-gimp-uni_base.sh --authorized
 fi
 
 fi # END OF CROSSROAD ENV

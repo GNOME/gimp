@@ -11,7 +11,6 @@ if [ -z "$GITLAB_CI" ]; then
     cd ../..
   fi
   git submodule update --init --force
-  export MESON_OPTIONS="-Drelocatable-bundle=no"
 fi
 
 
@@ -39,8 +38,17 @@ done
 
 
 # Build GIMP
+if [ -z "$GITLAB_CI" ] && [ "$1" != "--relocatable" ]; then
+  echo "(INFO): GIMP will be built in MSYS2 friendly mode"
+  export MESON_OPTIONS='-Drelocatable-bundle=no -Dwindows-installer=false -Dms-store=false'
+elif [ "$GITLAB_CI" ] || [ "$1" = '--relocatable' ]; then
+  echo "(INFO): GIMP will be built as a relocatable bundle"
+  export MESON_OPTIONS='-Drelocatable-bundle=yes -Dwindows-installer=true -Dms-store=true'
+fi
+
 if [ ! -f "_build/build.ninja" ]; then
   mkdir -p "_build" && cd "_build"
+  echo "$1" > last_mode
   # We disable javascript as we are not able for the time being to add a
   # javascript interpreter with GObject Introspection (GJS/spidermonkey
   # and Seed/Webkit are the 2 contenders so far, but they are not
@@ -50,23 +58,22 @@ if [ ! -f "_build/build.ninja" ]; then
                  -Dgi-docgen=disabled                  \
                  -Djavascript=disabled                 \
                  -Ddirectx-sdk-dir="${MSYSTEM_PREFIX}" \
-                 -Dwindows-installer=true              \
-                 -Dms-store=true                       \
                  -Denable-default-bin=enabled          \
                  -Dbuild-id=org.gimp.GIMP_official $MESON_OPTIONS
 else
   cd "_build"
+  if [[ $(head -1 last_mode) != "$1" ]]; then
+    echo "$1" > last_mode
+    meson setup .. --reconfigure $MESON_OPTIONS
+  fi
 fi
 ninja
 ninja install
 ccache --show-stats
+cd ..
 
 
 # Wrapper just for easier GIMP running
-MSYS2_PREFIX="c:/msys64${MSYSTEM_PREFIX}"
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-GIMP_API_VERSION=$(grep GIMP_PKGCONFIG_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-
 make_cmd ()
 {
   if [ "$4" == "do_wizardry" ]; then
@@ -90,13 +97,13 @@ make_cmd ()
                 echo /usr/bin/gimp-script-fu-interpreter=%cd%\bin\gimp-script-fu-interpreter-GIMP_API_VERSION.exe
                 echo :ScriptFu:E::scm::gimp-script-fu-interpreter-GIMP_API_VERSION.exe:
                 ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\gimp-script-fu-interpreter.interp"
-    cp_typelib="@if not exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (copy lib\girepository-1.0\babl*.typelib $2\lib\girepository-1.0) > nul
-                @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
-                @if not exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul"
+    cp_typelib="@if not exist MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (copy lib\girepository-1.0\babl*.typelib $2\lib\girepository-1.0) > nul
+                @if not exist MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (copy lib\girepository-1.0\gegl*.typelib $2\lib\girepository-1.0) > nul
+                @if not exist MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (copy lib\girepository-1.0\gimp*.typelib $2\lib\girepository-1.0) > nul"
       set_path="set PATH=%PATH%;$2\bin"
-    dl_typelib="@if exist $MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (if exist lib\girepository-1.0\babl*.typelib (del $2\lib\girepository-1.0\babl*.typelib)) > nul
-                @if exist $MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (if exist lib\girepository-1.0\gegl*.typelib (del $2\lib\girepository-1.0\gegl*.typelib)) > nul
-                @if exist $MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (if exist lib\girepository-1.0\gimp*.typelib (del $2\lib\girepository-1.0\gimp*.typelib)) > nul"
+    dl_typelib="@if exist MSYS2_PREFIX\lib\girepository-1.0\babl*.typelib (if exist lib\girepository-1.0\babl*.typelib (del $2\lib\girepository-1.0\babl*.typelib)) > nul
+                @if exist MSYS2_PREFIX\lib\girepository-1.0\gegl*.typelib (if exist lib\girepository-1.0\gegl*.typelib (del $2\lib\girepository-1.0\gegl*.typelib)) > nul
+                @if exist MSYS2_PREFIX\lib\girepository-1.0\gimp*.typelib (if exist lib\girepository-1.0\gimp*.typelib (del $2\lib\girepository-1.0\gimp*.typelib)) > nul"
   fi
   echo "@echo off
         echo This is a $1 native build of GIMP$3.
@@ -111,14 +118,21 @@ make_cmd ()
         echo.
         $cp_typelib
         $set_path
-        bin\gimp-$GIMP_APP_VERSION.exe
+        bin\gimp-GIMP_APP_VERSION.exe
         $dl_typelib" > ${GIMP_PREFIX}/gimp.cmd
-  sed -i "s/GIMP_API_VERSION/${GIMP_API_VERSION}/g" ${GIMP_PREFIX}/gimp.cmd
-  sed -i 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
+  sed -i "s/GIMP_API_VERSION/$(grep GIMP_PKGCONFIG_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')/g" ${GIMP_PREFIX}/gimp.cmd
+  sed -i "s/GIMP_APP_VERSION/$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')/g" ${GIMP_PREFIX}/gimp.cmd
+  sed -i -e "s|MSYS2_PREFIX|c:\/msys64${MSYSTEM_PREFIX}|g" -e 's|c:/|c:\\|g;s|msys64/|msys64\\|g' ${GIMP_PREFIX}/gimp.cmd
 }
 
-if [ "$GITLAB_CI" ]; then
+if [ -z "$GITLAB_CI" ] && [ "$1" != "--relocatable" ]; then
+  make_cmd local MSYS2_PREFIX " (please run bin/gimp-GIMP_APP_VERSION.exe under $MSYSTEM shell)" do_wizardry
+elif [ "$GITLAB_CI" ] || [ "$1" = "--relocatable" ]; then
   make_cmd CI %cd% ""
-else
-  make_cmd local $MSYS2_PREFIX " (please run bin/gimp-${GIMP_APP_VERSION}.exe under $MSYSTEM shell)" do_wizardry
+fi
+
+
+if [ "$GITLAB_CI" ] || [ "$1" = "--relocatable" ]; then
+  # Bundle GIMP
+  bash build/windows/2_bundle-gimp-uni_base.sh --authorized
 fi

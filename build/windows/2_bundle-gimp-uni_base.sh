@@ -2,6 +2,14 @@
 
 set -e
 
+if [ "$1" != '--authorized' ] && [ "$1" != '--force' ]; then
+  # We can't easily figure out if GIMP was built relocatable so
+  # let's prevent contributors from creating broken bundles
+  echo -e "\033[31m(ERROR)\033[0m: Script called standalone. Please, run GIMP build script with '--relocatable' or this bundling script with '--force'"
+  exit 1
+fi
+
+
 # NOTE: The bundling scripts, different from building scripts, need to set
 # the ARTIFACTS_SUFFIX, even locally: 1) to avoid confusion (bundle dirs are
 # relocatable so can be copied to a machine with other arch); and 2) to our
@@ -81,6 +89,10 @@ clean ()
   done
 }
 
+
+## Prevent Git going crazy
+mkdir -p $GIMP_DISTRIB
+echo "*" > $GIMP_DISTRIB/.gitignore
 
 ## Copy a previously built wrapper at tree root, less messy than
 ## having to look inside bin/, in the middle of all the DLLs.
@@ -194,3 +206,8 @@ done
 #if [ "$CI_JOB_NAME" != "gimp-win-x64-cross" ]; then
 #  cp -fr ${GIMP_PREFIX}/bin/*.pdb ${GIMP_DISTRIB}/bin/
 #fi
+
+
+# Delete wrapper to prevent contributors from running a
+# relocatable build expecting it to work non-relocatable
+rm -r $GIMP_PREFIX/gimp.cmd

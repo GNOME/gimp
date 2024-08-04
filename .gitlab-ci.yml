@@ -415,7 +415,6 @@ gimp-win-x64-cross:
   stage: gimp
   script:
     - bash build/windows/2_build-gimp-crossroad.sh
-    - bash build/windows/2_bundle-gimp-uni_base.sh
   allow_failure: true
   artifacts:
     expose_as: 'Windows zip'
@@ -483,7 +482,6 @@ gimp-win-a64:
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_base.sh"
   artifacts:
     paths:
       - gimp-a64/
@@ -531,7 +529,6 @@ gimp-win-x64:
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_base.sh"
   artifacts:
     paths:
       - gimp-x64/
@@ -575,7 +572,6 @@ gimp-win-x86:
   stage: gimp
   script:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_base.sh"
     - C:\msys64\usr\bin\bash -lc "bash build/windows/2_bundle-gimp-uni_sym.sh"
   artifacts:
     paths:

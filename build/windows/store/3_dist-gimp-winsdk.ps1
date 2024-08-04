@@ -143,7 +143,7 @@ foreach ($bundle in $supported_archs)
         Copy-Item "$bundle" "$vfs" -Recurse -Force
 
         ## Remove uneeded files (to match the Inno Windows Installer artifact)
-        Remove-Item "$vfs\gimp.cmd"
+        Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
 
         ## Disable Update check (ONLY FOR RELEASES)
         if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
