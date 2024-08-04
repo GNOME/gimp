@@ -92,7 +92,6 @@ static void        prefs_response                  (GtkWidget  *widget,
                                                     GtkWidget  *dialog);
 static void        prefs_box_style_updated         (GtkWidget  *widget);
 
-
 static void   prefs_color_management_reset         (GtkWidget    *widget,
                                                     GObject      *config);
 static void   prefs_dialog_defaults_reset          (GtkWidget    *widget,
