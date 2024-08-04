@@ -96,7 +96,7 @@ path_export_dialog_new (GimpImage              *image,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-export");
+  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-paths-export");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
   gtk_window_set_screen (GTK_WINDOW (dialog),
                          gtk_widget_get_screen (parent));

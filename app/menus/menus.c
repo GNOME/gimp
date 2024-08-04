@@ -81,7 +81,7 @@ menus_init (Gimp *gimp)
                                       "drawable",
                                       "layers",
                                       "channels",
-                                      "vectors",
+                                      "paths",
                                       "tools",
                                       "dialogs",
                                       "windows",
@@ -119,7 +119,7 @@ menus_init (Gimp *gimp)
                                       "drawable",
                                       "layers",
                                       "channels",
-                                      "vectors",
+                                      "paths",
                                       "tools",
                                       "windows",
                                       "dialogs",
@@ -139,7 +139,7 @@ menus_init (Gimp *gimp)
                                       "drawable",
                                       "layers",
                                       "channels",
-                                      "vectors",
+                                      "paths",
                                       "tools",
                                       "windows",
                                       "dialogs",
@@ -168,10 +168,10 @@ menus_init (Gimp *gimp)
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Vectors>",
-                                      "vectors",
+                                      "paths",
                                       "plug-in",
                                       NULL,
-                                      "/vectors-popup",
+                                      "/paths-popup",
                                       "vectors-menu", plug_in_menus_setup,
                                       NULL);
 

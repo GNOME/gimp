@@ -457,14 +457,14 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_MERGE,
                             "path-import-merge",
-                            "Default merge imported vectors",
+                            "Default merge imported path",
                             VECTORS_IMPORT_MERGE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_SCALE,
                             "path-import-scale",
-                            "Default scale imported vectors",
+                            "Default scale imported path",
                             VECTORS_IMPORT_SCALE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -592,9 +592,9 @@ gimp_dialog_config_finalize (GObject *object)
   g_clear_pointer (&config->color_profile_path,  g_free);
   g_clear_pointer (&config->layer_new_name,      g_free);
   g_clear_pointer (&config->channel_new_name,    g_free);
-  g_clear_pointer (&config->vectors_new_name,    g_free);
-  g_clear_pointer (&config->vectors_export_path, g_free);
-  g_clear_pointer (&config->vectors_import_path, g_free);
+  g_clear_pointer (&config->path_new_name,    g_free);
+  g_clear_pointer (&config->path_export_path, g_free);
+  g_clear_pointer (&config->path_import_path, g_free);
 
   g_clear_object (&config->fill_options);
   g_clear_object (&config->stroke_options);
@@ -736,30 +736,30 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
 
     case PROP_VECTORS_NEW_NAME:
-      if (config->vectors_new_name)
-        g_free (config->vectors_new_name);
-      config->vectors_new_name = g_value_dup_string (value);
+      if (config->path_new_name)
+        g_free (config->path_new_name);
+      config->path_new_name = g_value_dup_string (value);
       break;
 
     case PROP_VECTORS_EXPORT_PATH:
-      if (config->vectors_export_path)
-        g_free (config->vectors_export_path);
-      config->vectors_export_path = g_value_dup_string (value);
+      if (config->path_export_path)
+        g_free (config->path_export_path);
+      config->path_export_path = g_value_dup_string (value);
       break;
     case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
-      config->vectors_export_active_only = g_value_get_boolean (value);
+      config->path_export_active_only = g_value_get_boolean (value);
       break;
 
     case PROP_VECTORS_IMPORT_PATH:
-      if (config->vectors_import_path)
-        g_free (config->vectors_import_path);
-      config->vectors_import_path = g_value_dup_string (value);
+      if (config->path_import_path)
+        g_free (config->path_import_path);
+      config->path_import_path = g_value_dup_string (value);
       break;
     case PROP_VECTORS_IMPORT_MERGE:
-      config->vectors_import_merge = g_value_get_boolean (value);
+      config->path_import_merge = g_value_get_boolean (value);
       break;
     case PROP_VECTORS_IMPORT_SCALE:
-      config->vectors_import_scale = g_value_get_boolean (value);
+      config->path_import_scale = g_value_get_boolean (value);
       break;
 
     case PROP_SELECTION_FEATHER_RADIUS:
@@ -933,24 +933,24 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
 
     case PROP_VECTORS_NEW_NAME:
-      g_value_set_string (value, config->vectors_new_name);
+      g_value_set_string (value, config->path_new_name);
       break;
 
     case PROP_VECTORS_EXPORT_PATH:
-      g_value_set_string (value, config->vectors_export_path);
+      g_value_set_string (value, config->path_export_path);
       break;
     case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
-      g_value_set_boolean (value, config->vectors_export_active_only);
+      g_value_set_boolean (value, config->path_export_active_only);
       break;
 
     case PROP_VECTORS_IMPORT_PATH:
-      g_value_set_string (value, config->vectors_import_path);
+      g_value_set_string (value, config->path_import_path);
       break;
     case PROP_VECTORS_IMPORT_MERGE:
-      g_value_set_boolean (value, config->vectors_import_merge);
+      g_value_set_boolean (value, config->path_import_merge);
       break;
     case PROP_VECTORS_IMPORT_SCALE:
-      g_value_set_boolean (value, config->vectors_import_scale);
+      g_value_set_boolean (value, config->path_import_scale);
       break;
 
     case PROP_SELECTION_FEATHER_RADIUS:

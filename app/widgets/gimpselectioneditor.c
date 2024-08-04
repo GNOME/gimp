@@ -164,9 +164,9 @@ gimp_selection_editor_constructed (GObject *object)
                                    "select-save", NULL);
 
   editor->path_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "vectors",
-                                   "vectors-selection-to-vectors",
-                                   "vectors-selection-to-vectors-advanced",
+    gimp_editor_add_action_button (GIMP_EDITOR (editor), "paths",
+                                   "paths-selection-to-path",
+                                   "paths-selection-to-path-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
 

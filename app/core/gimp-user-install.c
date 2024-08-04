@@ -537,17 +537,29 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
        * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
        */
       else if (g_str_has_prefix (action_match, "tools-value-1-"))
-        new_action_name = g_strdup ("tools-opacity-");
+        new_action_name = g_strdup_printf ("tools-opacity-%s", action_match + 14);
       else if (g_str_has_prefix (action_match, "tools-value-2-"))
         new_action_name = g_strdup_printf ("tools-size-%s", action_match + 14);
       else if (g_str_has_prefix (action_match, "tools-value-3-"))
         new_action_name = g_strdup_printf ("tools-aspect-%s", action_match + 14);
       else if (g_str_has_prefix (action_match, "tools-value-4-"))
         new_action_name = g_strdup_printf ("tools-angle-%s", action_match + 14);
-      else if (g_strcmp0 (action_match, "vectors-path-tool") == 0)
-        new_action_name = g_strdup ("vectors-edit");
       else if (g_strcmp0 (action_match, "tools-blend") == 0)
         new_action_name = g_strdup ("tools-gradient");
+      else if (g_strcmp0 (action_match, "vectors-path-tool") == 0)
+        new_action_name = g_strdup ("paths-edit");
+      /* Following the s/GimpVectors/GimpPath/ renaming to be more
+       * consistent with the GUI, we also rename all the action names.
+       * Since GIMP 3.0, commit XXXX.
+       */
+      else if (g_strcmp0 (action_match, "vectors-selection-from-vectors") == 0)
+        new_action_name = g_strdup ("paths-selection-from-paths");
+      else if (g_str_has_prefix (action_match, "vectors-selection-to-vectors"))
+        new_action_name = g_strdup_printf ("paths-selection-to-path%s",
+                                           action_match + strlen ("vectors-selection-to-vectors"));
+      else if (g_str_has_prefix (action_match, "vectors-"))
+        new_action_name = g_strdup_printf ("paths-%s", action_match + 8);
+
       /* view-rotate-reset became view-reset and new view-rotate-reset and
        * view-flip-reset actions were created.  See commit 15fb4a7be0.
        */

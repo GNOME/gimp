@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <interface>
-  <menu id="/vectors-popup">
+  <menu id="/paths-popup">
     <submenu>
-      <attribute name="label" translatable="yes" context="vectors-action">Paths Menu</attribute>
+      <attribute name="label" translatable="yes" context="paths-action">Paths Menu</attribute>
       <attribute name="icon">gimp-paths</attribute>
 
-      <item><attribute name="action">app.vectors-edit</attribute></item>
-      <item><attribute name="action">app.vectors-edit-attributes</attribute></item>
+      <item><attribute name="action">app.paths-edit</attribute></item>
+      <item><attribute name="action">app.paths-edit-attributes</attribute></item>
       <submenu>
         <attribute name="label" translatable="yes">Color Tags</attribute>
-        <item><attribute name="action">app.vectors-color-tag-none</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-blue</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-green</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-yellow</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-orange</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-brown</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-red</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-violet</attribute></item>
-        <item><attribute name="action">app.vectors-color-tag-gray</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-none</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-blue</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-green</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-yellow</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-orange</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-brown</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-red</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-violet</attribute></item>
+        <item><attribute name="action">app.paths-color-tag-gray</attribute></item>
       </submenu>
       <section>
-        <item><attribute name="action">app.vectors-new</attribute></item>
-        <item><attribute name="action">app.vectors-raise</attribute></item>
-        <item><attribute name="action">app.vectors-lower</attribute></item>
-        <item><attribute name="action">app.vectors-duplicate</attribute></item>
-        <item><attribute name="action">app.vectors-delete</attribute></item>
-        <item><attribute name="action">app.vectors-merge-visible</attribute></item>
+        <item><attribute name="action">app.paths-new</attribute></item>
+        <item><attribute name="action">app.paths-raise</attribute></item>
+        <item><attribute name="action">app.paths-lower</attribute></item>
+        <item><attribute name="action">app.paths-duplicate</attribute></item>
+        <item><attribute name="action">app.paths-delete</attribute></item>
+        <item><attribute name="action">app.paths-merge-visible</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.vectors-selection-replace</attribute></item>
-        <item><attribute name="action">app.vectors-selection-add</attribute></item>
-        <item><attribute name="action">app.vectors-selection-subtract</attribute></item>
-        <item><attribute name="action">app.vectors-selection-intersect</attribute></item>
-        <item><attribute name="action">app.vectors-selection-to-vectors</attribute><attribute name="label-variant">long</attribute></item>
+        <item><attribute name="action">app.paths-selection-replace</attribute></item>
+        <item><attribute name="action">app.paths-selection-add</attribute></item>
+        <item><attribute name="action">app.paths-selection-subtract</attribute></item>
+        <item><attribute name="action">app.paths-selection-intersect</attribute></item>
+        <item><attribute name="action">app.paths-selection-to-path</attribute><attribute name="label-variant">long</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.vectors-fill</attribute></item>
-        <item><attribute name="action">app.vectors-stroke</attribute></item>
+        <item><attribute name="action">app.paths-fill</attribute></item>
+        <item><attribute name="action">app.paths-stroke</attribute></item>
       </section>
       <section>
-        <item><attribute name="action">app.vectors-copy</attribute></item>
-        <item><attribute name="action">app.vectors-paste</attribute></item>
-        <item><attribute name="action">app.vectors-export</attribute></item>
-        <item><attribute name="action">app.vectors-import</attribute></item>
+        <item><attribute name="action">app.paths-copy</attribute></item>
+        <item><attribute name="action">app.paths-paste</attribute></item>
+        <item><attribute name="action">app.paths-export</attribute></item>
+        <item><attribute name="action">app.paths-import</attribute></item>
       </section>
     </submenu>
   </menu>

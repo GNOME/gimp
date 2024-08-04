@@ -97,16 +97,16 @@ gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
   iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_path;
   iv_class->new_item        = gimp_path_tree_view_item_new;
 
-  iv_class->action_group              = "vectors";
-  iv_class->activate_action           = "vectors-edit";
-  iv_class->new_action                = "vectors-new";
-  iv_class->new_default_action        = "vectors-new-last-values";
-  iv_class->raise_action              = "vectors-raise";
-  iv_class->raise_top_action          = "vectors-raise-to-top";
-  iv_class->lower_action              = "vectors-lower";
-  iv_class->lower_bottom_action       = "vectors-lower-to-bottom";
-  iv_class->duplicate_action          = "vectors-duplicate";
-  iv_class->delete_action             = "vectors-delete";
+  iv_class->action_group              = "paths";
+  iv_class->activate_action           = "paths-edit";
+  iv_class->new_action                = "paths-new";
+  iv_class->new_default_action        = "paths-new-last-values";
+  iv_class->raise_action              = "paths-raise";
+  iv_class->raise_top_action          = "paths-raise-to-top";
+  iv_class->lower_action              = "paths-lower";
+  iv_class->lower_bottom_action       = "paths-lower-to-bottom";
+  iv_class->duplicate_action          = "paths-duplicate";
+  iv_class->delete_action             = "paths-delete";
   iv_class->lock_content_icon_name    = GIMP_ICON_LOCK_PATH;
   iv_class->lock_content_tooltip      = _("Lock path");
   iv_class->lock_content_help_id      = GIMP_HELP_PATH_LOCK_STROKES;
@@ -148,13 +148,13 @@ gimp_path_tree_view_constructed (GObject *object)
                                               GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 
   view->toselection_button =
-    gimp_editor_add_action_button (editor, "vectors",
-                                   "vectors-selection-replace",
-                                   "vectors-selection-add",
+    gimp_editor_add_action_button (editor, "paths",
+                                   "paths-selection-replace",
+                                   "paths-selection-add",
                                    extend_mask,
-                                   "vectors-selection-subtract",
+                                   "paths-selection-subtract",
                                    modify_mask,
-                                   "vectors-selection-intersect",
+                                   "paths-selection-intersect",
                                    extend_mask | modify_mask,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
@@ -164,18 +164,18 @@ gimp_path_tree_view_constructed (GObject *object)
                          view->toselection_button, 4);
 
   view->tovectors_button =
-    gimp_editor_add_action_button (editor, "vectors",
-                                   "vectors-selection-to-vectors",
-                                   "vectors-selection-to-vectors-advanced",
+    gimp_editor_add_action_button (editor, "paths",
+                                   "paths-selection-to-path",
+                                   "paths-selection-to-path-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
   gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          view->tovectors_button, 5);
 
   view->stroke_button =
-    gimp_editor_add_action_button (editor, "vectors",
-                                   "vectors-stroke",
-                                   "vectors-stroke-last-values",
+    gimp_editor_add_action_button (editor, "paths",
+                                   "paths-stroke",
+                                   "paths-stroke-last-values",
                                    GDK_SHIFT_MASK,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),

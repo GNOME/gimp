@@ -71,49 +71,49 @@
 
 /*  local function prototypes  */
 
-static void   vectors_new_callback             (GtkWidget    *dialog,
-                                                GimpImage    *image,
-                                                GimpPath     *path,
-                                                GimpContext  *context,
-                                                const gchar  *path_name,
-                                                gboolean      path_visible,
-                                                GimpColorTag  path_color_tag,
-                                                gboolean      path_lock_content,
-                                                gboolean      path_lock_position,
-                                                gboolean      path_lock_visibility,
-                                                gpointer      user_data);
-static void   vectors_edit_attributes_callback (GtkWidget    *dialog,
-                                                GimpImage    *image,
-                                                GimpPath     *path,
-                                                GimpContext  *context,
-                                                const gchar  *path_name,
-                                                gboolean      path_visible,
-                                                GimpColorTag  path_color_tag,
-                                                gboolean      path_lock_content,
-                                                gboolean      path_lock_position,
-                                                gboolean      path_lock_visibility,
-                                                gpointer      user_data);
-static void   vectors_import_callback          (GtkWidget    *dialog,
-                                                GimpImage    *image,
-                                                GFile        *file,
-                                                GFile        *import_folder,
-                                                gboolean      merge_paths,
-                                                gboolean      scale_paths,
-                                                gpointer      user_data);
-static void   vectors_export_callback          (GtkWidget    *dialog,
-                                                GimpImage    *image,
-                                                GFile        *file,
-                                                GFile        *export_folder,
-                                                gboolean      active_only,
-                                                gpointer      user_data);
+static void   paths_new_callback             (GtkWidget    *dialog,
+                                              GimpImage    *image,
+                                              GimpPath     *path,
+                                              GimpContext  *context,
+                                              const gchar  *path_name,
+                                              gboolean      path_visible,
+                                              GimpColorTag  path_color_tag,
+                                              gboolean      path_lock_content,
+                                              gboolean      path_lock_position,
+                                              gboolean      path_lock_visibility,
+                                              gpointer      user_data);
+static void   paths_edit_attributes_callback (GtkWidget    *dialog,
+                                              GimpImage    *image,
+                                              GimpPath     *path,
+                                              GimpContext  *context,
+                                              const gchar  *path_name,
+                                              gboolean      path_visible,
+                                              GimpColorTag  path_color_tag,
+                                              gboolean      path_lock_content,
+                                              gboolean      path_lock_position,
+                                              gboolean      path_lock_visibility,
+                                              gpointer      user_data);
+static void   paths_import_callback          (GtkWidget    *dialog,
+                                              GimpImage    *image,
+                                              GFile        *file,
+                                              GFile        *import_folder,
+                                              gboolean      merge_paths,
+                                              gboolean      scale_paths,
+                                              gpointer      user_data);
+static void   paths_export_callback          (GtkWidget    *dialog,
+                                              GimpImage    *image,
+                                              GFile        *file,
+                                              GFile        *export_folder,
+                                              gboolean      active_only,
+                                              gpointer      user_data);
 
 
 /*  public functions  */
 
 void
-vectors_edit_cmd_callback (GimpAction *action,
-                           GVariant   *value,
-                           gpointer    data)
+paths_edit_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
 {
   GimpImage *image;
   GList     *paths;
@@ -142,13 +142,13 @@ vectors_edit_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_edit_attributes_cmd_callback (GimpAction *action,
-                                      GVariant   *value,
-                                      gpointer    data)
+paths_edit_attributes_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpImage   *image;
   GList       *paths;
-  GimpPath    *vectors;
+  GimpPath    *path;
   GtkWidget   *widget;
   GtkWidget   *dialog;
   return_if_no_paths (image, paths, data);
@@ -157,43 +157,43 @@ vectors_edit_attributes_cmd_callback (GimpAction *action,
   if (g_list_length (paths) != 1)
     return;
 
-  vectors = paths->data;
+  path = paths->data;
 
-#define EDIT_DIALOG_KEY "gimp-vectors-edit-attributes-dialog"
+#define EDIT_DIALOG_KEY "gimp-path-edit-attributes-dialog"
 
-  dialog = dialogs_get_dialog (G_OBJECT (vectors), EDIT_DIALOG_KEY);
+  dialog = dialogs_get_dialog (G_OBJECT (path), EDIT_DIALOG_KEY);
 
   if (! dialog)
     {
-      GimpItem *item = GIMP_ITEM (vectors);
+      GimpItem *item = GIMP_ITEM (path);
 
-      dialog = path_options_dialog_new (image, vectors,
+      dialog = path_options_dialog_new (image, path,
                                         action_data_get_context (data),
                                         widget,
                                         _("Path Attributes"),
-                                        "gimp-vectors-edit",
+                                        "gimp-path-edit",
                                         GIMP_ICON_EDIT,
                                         _("Edit Path Attributes"),
                                         GIMP_HELP_PATH_EDIT,
-                                        gimp_object_get_name (vectors),
+                                        gimp_object_get_name (path),
                                         gimp_item_get_visible (item),
                                         gimp_item_get_color_tag (item),
                                         gimp_item_get_lock_content (item),
                                         gimp_item_get_lock_position (item),
                                         gimp_item_get_lock_visibility (item),
-                                        vectors_edit_attributes_callback,
+                                        paths_edit_attributes_callback,
                                         NULL);
 
-      dialogs_attach_dialog (G_OBJECT (vectors), EDIT_DIALOG_KEY, dialog);
+      dialogs_attach_dialog (G_OBJECT (path), EDIT_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-vectors_new_cmd_callback (GimpAction *action,
-                          GVariant   *value,
-                          gpointer    data)
+paths_new_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -201,7 +201,7 @@ vectors_new_cmd_callback (GimpAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-#define NEW_DIALOG_KEY "gimp-vectors-new-dialog"
+#define NEW_DIALOG_KEY "gimp-path-new-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), NEW_DIALOG_KEY);
 
@@ -213,17 +213,17 @@ vectors_new_cmd_callback (GimpAction *action,
                                         action_data_get_context (data),
                                         widget,
                                         _("New Path"),
-                                        "gimp-vectors-new",
+                                        "gimp-path-new",
                                         GIMP_ICON_PATH,
                                         _("Create a New Path"),
                                         GIMP_HELP_PATH_NEW,
-                                        config->vectors_new_name,
+                                        config->path_new_name,
                                         FALSE,
                                         GIMP_COLOR_TAG_NONE,
                                         FALSE,
                                         FALSE,
                                         FALSE,
-                                        vectors_new_callback,
+                                        paths_new_callback,
                                         NULL);
 
       dialogs_attach_dialog (G_OBJECT (image), NEW_DIALOG_KEY, dialog);
@@ -233,27 +233,27 @@ vectors_new_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_new_last_vals_cmd_callback (GimpAction *action,
-                                    GVariant   *value,
-                                    gpointer    data)
+paths_new_last_vals_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage        *image;
-  GimpPath         *vectors;
+  GimpPath         *path;
   GimpDialogConfig *config;
   return_if_no_image (image, data);
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  vectors = gimp_path_new (image, config->vectors_new_name);
-  gimp_image_add_path (image, vectors,
+  path = gimp_path_new (image, config->path_new_name);
+  gimp_image_add_path (image, path,
                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 
 void
-vectors_raise_cmd_callback (GimpAction *action,
-                            GVariant   *value,
-                            gpointer    data)
+paths_raise_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   GimpImage *image;
   GList     *list;
@@ -297,9 +297,9 @@ vectors_raise_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_raise_to_top_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
+paths_raise_to_top_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpImage *image;
   GList     *list;
@@ -334,9 +334,9 @@ vectors_raise_to_top_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_lower_cmd_callback (GimpAction *action,
-                            GVariant   *value,
-                            gpointer    data)
+paths_lower_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   GimpImage *image;
   GList     *list;
@@ -346,12 +346,12 @@ vectors_lower_cmd_callback (GimpAction *action,
 
   for (iter = list; iter; iter = iter->next)
     {
-      GList *vectors_list;
+      GList *paths_list;
       gint   index;
 
-      vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      paths_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
       index = gimp_item_get_index (iter->data);
-      if (index < g_list_length (vectors_list) - 1)
+      if (index < g_list_length (paths_list) - 1)
         {
           moved_list = g_list_prepend (moved_list, iter->data);
         }
@@ -381,9 +381,9 @@ vectors_lower_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_lower_to_bottom_cmd_callback (GimpAction *action,
-                                      GVariant   *value,
-                                      gpointer    data)
+paths_lower_to_bottom_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpImage *image;
   GList     *list;
@@ -393,12 +393,12 @@ vectors_lower_to_bottom_cmd_callback (GimpAction *action,
 
   for (iter = list; iter; iter = iter->next)
     {
-      GList *vectors_list;
+      GList *paths_list;
       gint   index;
 
-      vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+      paths_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
       index = gimp_item_get_index (iter->data);
-      if (index < g_list_length (vectors_list) - 1)
+      if (index < g_list_length (paths_list) - 1)
         moved_list = g_list_prepend (moved_list, iter->data);
     }
 
@@ -421,9 +421,9 @@ vectors_lower_to_bottom_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_duplicate_cmd_callback (GimpAction *action,
-                                GVariant   *value,
-                                gpointer    data)
+paths_duplicate_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage *image;
   GList     *paths;
@@ -463,9 +463,9 @@ vectors_duplicate_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_delete_cmd_callback (GimpAction *action,
-                             GVariant   *value,
-                             gpointer    data)
+paths_delete_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
   GList     *paths;
@@ -486,15 +486,15 @@ vectors_delete_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_merge_visible_cmd_callback (GimpAction *action,
-                                    GVariant   *value,
-                                    gpointer    data)
+paths_merge_visible_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage   *image;
-  GList       *vectors;
+  GList       *paths;
   GtkWidget   *widget;
   GError      *error = NULL;
-  return_if_no_paths (image, vectors, data);
+  return_if_no_paths (image, paths, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_image_merge_visible_paths (image, &error))
@@ -510,15 +510,15 @@ vectors_merge_visible_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_to_selection_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
+paths_to_selection_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpImage      *image;
-  GList          *vectors;
+  GList          *paths;
   GList          *iter;
   GimpChannelOps  operation;
-  return_if_no_paths (image, vectors, data);
+  return_if_no_paths (image, paths, data);
 
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_DRAWABLE_MOD,
@@ -526,11 +526,11 @@ vectors_to_selection_cmd_callback (GimpAction *action,
 
   operation = (GimpChannelOps) g_variant_get_int32 (value);
 
-  for (iter = vectors; iter; iter = iter->next)
+  for (iter = paths; iter; iter = iter->next)
     {
       gimp_item_to_selection (iter->data, operation, TRUE, FALSE, 0, 0);
 
-      if (operation == GIMP_CHANNEL_OP_REPLACE && iter == vectors)
+      if (operation == GIMP_CHANNEL_OP_REPLACE && iter == paths)
         operation = GIMP_CHANNEL_OP_ADD;
     }
 
@@ -539,9 +539,9 @@ vectors_to_selection_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_selection_to_vectors_cmd_callback (GimpAction *action,
-                                           GVariant   *value,
-                                           gpointer    data)
+paths_selection_to_paths_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpImage      *image;
   GtkWidget      *widget;
@@ -593,15 +593,15 @@ vectors_selection_to_vectors_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_fill_cmd_callback (GimpAction *action,
-                           GVariant   *value,
-                           gpointer    data)
+paths_fill_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
 {
   GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
 
-  items_fill_cmd_callback (action, image, vectors,
+  items_fill_cmd_callback (action, image, paths,
                            _("Fill Path"),
                            GIMP_ICON_TOOL_BUCKET_FILL,
                            GIMP_HELP_PATH_FILL,
@@ -609,27 +609,27 @@ vectors_fill_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_fill_last_vals_cmd_callback (GimpAction *action,
-                                     GVariant   *value,
-                                     gpointer    data)
+paths_fill_last_vals_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
 
-  items_fill_last_vals_cmd_callback (action, image, vectors, data);
+  items_fill_last_vals_cmd_callback (action, image, paths, data);
 }
 
 void
-vectors_stroke_cmd_callback (GimpAction *action,
-                             GVariant   *value,
-                             gpointer    data)
+paths_stroke_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
 
-  items_stroke_cmd_callback (action, image, vectors,
+  items_stroke_cmd_callback (action, image, paths,
                              _("Stroke Path"),
                              GIMP_ICON_PATH_STROKE,
                              GIMP_HELP_PATH_STROKE,
@@ -637,28 +637,28 @@ vectors_stroke_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_stroke_last_vals_cmd_callback (GimpAction *action,
-                                       GVariant   *value,
-                                       gpointer    data)
+paths_stroke_last_vals_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
 
-  items_stroke_last_vals_cmd_callback (action, image, vectors, data);
+  items_stroke_last_vals_cmd_callback (action, image, paths, data);
 }
 
 void
-vectors_copy_cmd_callback (GimpAction *action,
-                           GVariant   *value,
-                           gpointer    data)
+paths_copy_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
 {
   GimpImage   *image;
-  GList       *vectors;
+  GList       *paths;
   gchar       *svg;
-  return_if_no_paths (image, vectors, data);
+  return_if_no_paths (image, paths, data);
 
-  svg = gimp_path_export_string (image, vectors);
+  svg = gimp_path_export_string (image, paths);
 
   if (svg)
     {
@@ -668,9 +668,9 @@ vectors_copy_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_paste_cmd_callback (GimpAction *action,
-                            GVariant   *value,
-                            gpointer    data)
+paths_paste_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -704,18 +704,18 @@ vectors_paste_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_export_cmd_callback (GimpAction *action,
-                             GVariant   *value,
-                             gpointer    data)
+paths_export_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage   *image;
-  GList       *vectors;
+  GList       *paths;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_paths (image, vectors, data);
+  return_if_no_paths (image, paths, data);
   return_if_no_widget (widget, data);
 
-#define EXPORT_DIALOG_KEY "gimp-vectors-export-dialog"
+#define EXPORT_DIALOG_KEY "gimp-paths-export-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), EXPORT_DIALOG_KEY);
 
@@ -724,14 +724,14 @@ vectors_export_cmd_callback (GimpAction *action,
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
       GFile            *folder = NULL;
 
-      if (config->vectors_export_path)
-        folder = gimp_file_new_for_config_path (config->vectors_export_path,
+      if (config->path_export_path)
+        folder = gimp_file_new_for_config_path (config->path_export_path,
                                                 NULL);
 
       dialog = path_export_dialog_new (image, widget,
                                        folder,
-                                       config->vectors_export_active_only,
-                                       vectors_export_callback,
+                                       config->path_export_active_only,
+                                       paths_export_callback,
                                        NULL);
 
       if (folder)
@@ -744,9 +744,9 @@ vectors_export_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_import_cmd_callback (GimpAction *action,
-                             GVariant   *value,
-                             gpointer    data)
+paths_import_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -754,7 +754,7 @@ vectors_import_cmd_callback (GimpAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-#define IMPORT_DIALOG_KEY "gimp-vectors-import-dialog"
+#define IMPORT_DIALOG_KEY "gimp-paths-import-dialog"
 
   dialog = dialogs_get_dialog (G_OBJECT (image), IMPORT_DIALOG_KEY);
 
@@ -763,15 +763,15 @@ vectors_import_cmd_callback (GimpAction *action,
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
       GFile            *folder = NULL;
 
-      if (config->vectors_import_path)
-        folder = gimp_file_new_for_config_path (config->vectors_import_path,
+      if (config->path_import_path)
+        folder = gimp_file_new_for_config_path (config->path_import_path,
                                                 NULL);
 
       dialog = path_import_dialog_new (image, widget,
                                        folder,
-                                       config->vectors_import_merge,
-                                       config->vectors_import_scale,
-                                       vectors_import_callback,
+                                       config->path_import_merge,
+                                       config->path_import_scale,
+                                       paths_import_callback,
                                        NULL);
 
       dialogs_attach_dialog (G_OBJECT (image), IMPORT_DIALOG_KEY, dialog);
@@ -781,86 +781,86 @@ vectors_import_cmd_callback (GimpAction *action,
 }
 
 void
-vectors_visible_cmd_callback (GimpAction *action,
+paths_visible_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
+{
+  GimpImage *image;
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
+
+  items_visible_cmd_callback (action, value, image, paths);
+}
+
+void
+paths_lock_content_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
+{
+  GimpImage *image;
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
+
+  items_lock_content_cmd_callback (action, value, image, paths);
+}
+
+void
+paths_lock_position_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
+{
+  GimpImage *image;
+  GList     *paths;
+  return_if_no_paths (image, paths, data);
+
+  items_lock_position_cmd_callback (action, value, image, paths);
+}
+
+void
+paths_color_tag_cmd_callback (GimpAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
-
-  items_visible_cmd_callback (action, value, image, vectors);
-}
-
-void
-vectors_lock_content_cmd_callback (GimpAction *action,
-                                   GVariant   *value,
-                                   gpointer    data)
-{
-  GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
-
-  items_lock_content_cmd_callback (action, value, image, vectors);
-}
-
-void
-vectors_lock_position_cmd_callback (GimpAction *action,
-                                    GVariant   *value,
-                                    gpointer    data)
-{
-  GimpImage *image;
-  GList     *vectors;
-  return_if_no_paths (image, vectors, data);
-
-  items_lock_position_cmd_callback (action, value, image, vectors);
-}
-
-void
-vectors_color_tag_cmd_callback (GimpAction *action,
-                                GVariant   *value,
-                                gpointer    data)
-{
   GimpImage    *image;
-  GList        *vectors;
+  GList        *paths;
   GimpColorTag  color_tag;
-  return_if_no_paths (image, vectors, data);
+  return_if_no_paths (image, paths, data);
 
   color_tag = (GimpColorTag) g_variant_get_int32 (value);
 
-  items_color_tag_cmd_callback (action, image, vectors, color_tag);
+  items_color_tag_cmd_callback (action, image, paths, color_tag);
 }
 
 
 /*  private functions  */
 
 static void
-vectors_new_callback (GtkWidget    *dialog,
-                      GimpImage    *image,
-                      GimpPath     *vectors,
-                      GimpContext  *context,
-                      const gchar  *vectors_name,
-                      gboolean      vectors_visible,
-                      GimpColorTag  vectors_color_tag,
-                      gboolean      vectors_lock_content,
-                      gboolean      vectors_lock_position,
-                      gboolean      vectors_lock_visibility,
-                      gpointer      user_data)
+paths_new_callback (GtkWidget    *dialog,
+                    GimpImage    *image,
+                    GimpPath     *path,
+                    GimpContext  *context,
+                    const gchar  *paths_name,
+                    gboolean      paths_visible,
+                    GimpColorTag  paths_color_tag,
+                    gboolean      paths_lock_content,
+                    gboolean      paths_lock_position,
+                    gboolean      paths_lock_visibility,
+                    gpointer      user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   g_object_set (config,
-                "path-new-name", vectors_name,
+                "path-new-name", paths_name,
                 NULL);
 
-  vectors = gimp_path_new (image, config->vectors_new_name);
-  gimp_item_set_visible (GIMP_ITEM (vectors), vectors_visible, FALSE);
-  gimp_item_set_color_tag (GIMP_ITEM (vectors), vectors_color_tag, FALSE);
-  gimp_item_set_lock_content (GIMP_ITEM (vectors), vectors_lock_content, FALSE);
-  gimp_item_set_lock_position (GIMP_ITEM (vectors), vectors_lock_position, FALSE);
-  gimp_item_set_lock_visibility (GIMP_ITEM (vectors), vectors_lock_visibility, FALSE);
+  path = gimp_path_new (image, config->path_new_name);
+  gimp_item_set_visible (GIMP_ITEM (path), paths_visible, FALSE);
+  gimp_item_set_color_tag (GIMP_ITEM (path), paths_color_tag, FALSE);
+  gimp_item_set_lock_content (GIMP_ITEM (path), paths_lock_content, FALSE);
+  gimp_item_set_lock_position (GIMP_ITEM (path), paths_lock_position, FALSE);
+  gimp_item_set_lock_visibility (GIMP_ITEM (path), paths_lock_visibility, FALSE);
 
-  gimp_image_add_path (image, vectors,
+  gimp_image_add_path (image, path,
                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 
@@ -868,48 +868,48 @@ vectors_new_callback (GtkWidget    *dialog,
 }
 
 static void
-vectors_edit_attributes_callback (GtkWidget    *dialog,
-                                  GimpImage    *image,
-                                  GimpPath     *vectors,
-                                  GimpContext  *context,
-                                  const gchar  *vectors_name,
-                                  gboolean      vectors_visible,
-                                  GimpColorTag  vectors_color_tag,
-                                  gboolean      vectors_lock_content,
-                                  gboolean      vectors_lock_position,
-                                  gboolean      vectors_lock_visibility,
-                                  gpointer      user_data)
+paths_edit_attributes_callback (GtkWidget    *dialog,
+                                GimpImage    *image,
+                                GimpPath     *path,
+                                GimpContext  *context,
+                                const gchar  *paths_name,
+                                gboolean      paths_visible,
+                                GimpColorTag  paths_color_tag,
+                                gboolean      paths_lock_content,
+                                gboolean      paths_lock_position,
+                                gboolean      paths_lock_visibility,
+                                gpointer      user_data)
 {
-  GimpItem *item = GIMP_ITEM (vectors);
+  GimpItem *item = GIMP_ITEM (path);
 
-  if (strcmp (vectors_name, gimp_object_get_name (vectors))         ||
-      vectors_visible         != gimp_item_get_visible (item)       ||
-      vectors_color_tag       != gimp_item_get_color_tag (item)     ||
-      vectors_lock_content    != gimp_item_get_lock_content (item)  ||
-      vectors_lock_position   != gimp_item_get_lock_position (item) ||
-      vectors_lock_visibility != gimp_item_get_lock_visibility (item))
+  if (strcmp (paths_name, gimp_object_get_name (path))            ||
+      paths_visible         != gimp_item_get_visible (item)       ||
+      paths_color_tag       != gimp_item_get_color_tag (item)     ||
+      paths_lock_content    != gimp_item_get_lock_content (item)  ||
+      paths_lock_position   != gimp_item_get_lock_position (item) ||
+      paths_lock_visibility != gimp_item_get_lock_visibility (item))
     {
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_ITEM_PROPERTIES,
                                    _("Path Attributes"));
 
-      if (strcmp (vectors_name, gimp_object_get_name (vectors)))
-        gimp_item_rename (GIMP_ITEM (vectors), vectors_name, NULL);
+      if (strcmp (paths_name, gimp_object_get_name (path)))
+        gimp_item_rename (GIMP_ITEM (path), paths_name, NULL);
 
-      if (vectors_visible != gimp_item_get_visible (item))
-        gimp_item_set_visible (item, vectors_visible, TRUE);
+      if (paths_visible != gimp_item_get_visible (item))
+        gimp_item_set_visible (item, paths_visible, TRUE);
 
-      if (vectors_color_tag != gimp_item_get_color_tag (item))
-        gimp_item_set_color_tag (item, vectors_color_tag, TRUE);
+      if (paths_color_tag != gimp_item_get_color_tag (item))
+        gimp_item_set_color_tag (item, paths_color_tag, TRUE);
 
-      if (vectors_lock_content != gimp_item_get_lock_content (item))
-        gimp_item_set_lock_content (item, vectors_lock_content, TRUE);
+      if (paths_lock_content != gimp_item_get_lock_content (item))
+        gimp_item_set_lock_content (item, paths_lock_content, TRUE);
 
-      if (vectors_lock_position != gimp_item_get_lock_position (item))
-        gimp_item_set_lock_position (item, vectors_lock_position, TRUE);
+      if (paths_lock_position != gimp_item_get_lock_position (item))
+        gimp_item_set_lock_position (item, paths_lock_position, TRUE);
 
-      if (vectors_lock_visibility != gimp_item_get_lock_visibility (item))
-        gimp_item_set_lock_visibility (item, vectors_lock_visibility, TRUE);
+      if (paths_lock_visibility != gimp_item_get_lock_visibility (item))
+        gimp_item_set_lock_visibility (item, paths_lock_visibility, TRUE);
 
       gimp_image_undo_group_end (image);
 
@@ -920,13 +920,13 @@ vectors_edit_attributes_callback (GtkWidget    *dialog,
 }
 
 static void
-vectors_import_callback (GtkWidget *dialog,
-                         GimpImage *image,
-                         GFile     *file,
-                         GFile     *import_folder,
-                         gboolean   merge_vectors,
-                         gboolean   scale_vectors,
-                         gpointer   user_data)
+paths_import_callback (GtkWidget *dialog,
+                       GimpImage *image,
+                       GFile     *file,
+                       GFile     *import_folder,
+                       gboolean   merge_vectors,
+                       gboolean   scale_vectors,
+                       gpointer   user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
   gchar            *path   = NULL;
@@ -945,8 +945,8 @@ vectors_import_callback (GtkWidget *dialog,
     g_free (path);
 
   if (gimp_path_import_file (image, file,
-                             config->vectors_import_merge,
-                             config->vectors_import_scale,
+                             config->path_import_merge,
+                             config->path_import_scale,
                              GIMP_IMAGE_ACTIVE_PARENT, -1,
                              NULL, &error))
     {
@@ -965,15 +965,15 @@ vectors_import_callback (GtkWidget *dialog,
 }
 
 static void
-vectors_export_callback (GtkWidget *dialog,
-                         GimpImage *image,
-                         GFile     *file,
-                         GFile     *export_folder,
-                         gboolean   active_only,
-                         gpointer   user_data)
+paths_export_callback (GtkWidget *dialog,
+                       GimpImage *image,
+                       GFile     *file,
+                       GFile     *export_folder,
+                       gboolean   active_only,
+                       gpointer   user_data)
 {
   GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
-  GList            *vectors = NULL;
+  GList            *paths   = NULL;
   gchar            *path    = NULL;
   GError           *error   = NULL;
 
@@ -988,10 +988,10 @@ vectors_export_callback (GtkWidget *dialog,
   if (path)
     g_free (path);
 
-  if (config->vectors_export_active_only)
-    vectors = gimp_image_get_selected_paths (image);
+  if (config->path_export_active_only)
+    paths = gimp_image_get_selected_paths (image);
 
-  if (! gimp_path_export_file (image, vectors, file, &error))
+  if (! gimp_path_export_file (image, paths, file, &error))
     {
       gimp_message (image->gimp, G_OBJECT (dialog),
                     GIMP_MESSAGE_ERROR,
@@ -1004,13 +1004,13 @@ vectors_export_callback (GtkWidget *dialog,
 }
 
 void
-vectors_select_cmd_callback (GimpAction *action,
-                             GVariant   *value,
-                             gpointer    data)
+paths_select_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage            *image;
-  GList                *new_vectors = NULL;
-  GList                *vectors;
+  GList                *new_paths = NULL;
+  GList                *paths;
   GList                *iter;
   GimpActionSelectType  select_type;
   gboolean              run_once;
@@ -1018,10 +1018,10 @@ vectors_select_cmd_callback (GimpAction *action,
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  vectors = gimp_image_get_selected_paths (image);
-  run_once = (g_list_length (vectors) == 0);
+  paths = gimp_image_get_selected_paths (image);
+  run_once = (g_list_length (paths) == 0);
 
-  for (iter = vectors; iter || run_once; iter = iter ? iter->next : NULL)
+  for (iter = paths; iter || run_once; iter = iter ? iter->next : NULL)
     {
       GimpPath      *new_vec;
       GimpContainer *container;
@@ -1039,14 +1039,14 @@ vectors_select_cmd_callback (GimpAction *action,
                                                    container,
                                                    iter ? iter->data : NULL);
       if (new_vec)
-        new_vectors = g_list_prepend (new_vectors, new_vec);
+        new_paths = g_list_prepend (new_paths, new_vec);
     }
 
-  if (new_vectors)
+  if (new_paths)
     {
-      gimp_image_set_selected_paths (image, new_vectors);
+      gimp_image_set_selected_paths (image, new_paths);
       gimp_image_flush (image);
     }
 
-  g_list_free (new_vectors);
+  g_list_free (new_paths);
 }

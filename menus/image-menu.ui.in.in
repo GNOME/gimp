@@ -118,9 +118,9 @@
         <item><attribute name="action">app.edit-fill-bg</attribute></item>
         <item><attribute name="action">app.edit-fill-pattern</attribute></item>
         <item><attribute name="action">app.select-fill</attribute></item>
-        <item><attribute name="action">app.vectors-fill</attribute></item>
+        <item><attribute name="action">app.paths-fill</attribute></item>
         <item><attribute name="action">app.select-stroke</attribute></item>
-        <item><attribute name="action">app.vectors-stroke</attribute></item>
+        <item><attribute name="action">app.paths-stroke</attribute></item>
       </section>
       <section>
         <attribute name="section-name" translatable="no">Preferences</attribute>
@@ -157,7 +157,7 @@
           <item><attribute name="action">app.select-copy-float</attribute></item>
         </submenu>
         <item><attribute name="action">app.tools-by-color-select-short</attribute></item>
-        <item><attribute name="action">app.vectors-selection-from-vectors</attribute></item>
+        <item><attribute name="action">app.paths-selection-from-paths</attribute></item>
         <item><attribute name="action">app.dialogs-selection-editor</attribute></item>
       </section>
       <section>
@@ -172,7 +172,7 @@
       <section>
         <item><attribute name="action">app.quick-mask-toggle</attribute></item>
         <item><attribute name="action">app.select-save</attribute></item>
-        <item><attribute name="action">app.vectors-selection-to-vectors</attribute></item>
+        <item><attribute name="action">app.paths-selection-to-path</attribute></item>
       </section>
     </submenu>
 

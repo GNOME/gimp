@@ -87,14 +87,14 @@ struct _GimpDialogConfig
   gchar                    *channel_new_name;
   GeglColor                *channel_new_color;
 
-  gchar                    *vectors_new_name;
+  gchar                    *path_new_name;
 
-  gchar                    *vectors_export_path;
-  gboolean                  vectors_export_active_only;
+  gchar                    *path_export_path;
+  gboolean                  path_export_active_only;
 
-  gchar                    *vectors_import_path;
-  gboolean                  vectors_import_merge;
-  gboolean                  vectors_import_scale;
+  gchar                    *path_import_path;
+  gboolean                  path_import_merge;
+  gboolean                  path_import_scale;
 
   gdouble                   selection_feather_radius;
   gboolean                  selection_feather_edge_lock;
