@@ -44,12 +44,12 @@ if (-Not $GIMP_API_VERSION)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Tls13
 
 # Install or Update Inno Setup
-Invoke-WebRequest -URI "https://jrsoftware.org/download.php/is.exe" -OutFile "is.exe"
-.\is.exe /SILENT /SUPPRESSMSGBOXES /CURRENTUSER /SP- /LOG="innosetup.log"
+Invoke-WebRequest -URI "https://jrsoftware.org/download.php/is.exe" -OutFile "..\is.exe"
+..\is.exe /VERYSILENT /SUPPRESSMSGBOXES /CURRENTUSER /SP- /LOG="..\innosetup.log"
 Wait-Process is
 
 # Get Inno install path
-$log = Get-Content -Path 'innosetup.log' | Select-String 'ISCC.exe'
+$log = Get-Content -Path '..\innosetup.log' | Select-String 'ISCC.exe'
 $pattern = '(?<=filename: ).+?(?=\\ISCC.exe)'
 $INNOPATH = [regex]::Matches($log, $pattern).Value
 
