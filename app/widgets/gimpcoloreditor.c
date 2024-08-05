@@ -485,12 +485,12 @@ gimp_color_editor_set_context (GimpDocked  *docked,
 
       g_object_ref (editor->context);
 
-      g_signal_connect (editor->context, "foreground-changed",
-                        G_CALLBACK (gimp_color_editor_fg_changed),
-                        editor);
-      g_signal_connect (editor->context, "background-changed",
-                        G_CALLBACK (gimp_color_editor_bg_changed),
-                        editor);
+      g_signal_connect_object (editor->context, "foreground-changed",
+                               G_CALLBACK (gimp_color_editor_fg_changed),
+                               editor, 0);
+      g_signal_connect_object (editor->context, "background-changed",
+                               G_CALLBACK (gimp_color_editor_bg_changed),
+                               editor, 0);
 
       g_signal_connect_object (editor->context->gimp->config,
                                "notify::theme",
@@ -775,12 +775,12 @@ gimp_color_editor_display_changed (GimpContext     *context,
 
       if (display)
         {
-          g_signal_connect (display, "notify::image",
-                            G_CALLBACK (gimp_color_editor_image_changed),
-                            editor);
-          g_signal_connect (display, "notify::shell",
-                            G_CALLBACK (gimp_color_editor_shell_changed),
-                            editor);
+          g_signal_connect_object (display, "notify::image",
+                                   G_CALLBACK (gimp_color_editor_image_changed),
+                                   editor, 0);
+          g_signal_connect_object (display, "notify::shell",
+                                   G_CALLBACK (gimp_color_editor_shell_changed),
+                                   editor, 0);
         }
 
       gimp_color_editor_image_changed (display, NULL, editor);
@@ -811,25 +811,25 @@ gimp_color_editor_image_changed (GimpDisplay     *display,
 
       if (image)
         {
-          g_signal_connect (image, "simulation-profile-changed",
-                            G_CALLBACK (gimp_color_editor_update_simulation),
-                            editor);
-          g_signal_connect (image, "simulation-intent-changed",
-                            G_CALLBACK (gimp_color_editor_update_simulation),
-                            editor);
-          g_signal_connect (image, "simulation-bpc-changed",
-                            G_CALLBACK (gimp_color_editor_update_simulation),
-                            editor);
+          g_signal_connect_object (image, "simulation-profile-changed",
+                                   G_CALLBACK (gimp_color_editor_update_simulation),
+                                   editor, 0);
+          g_signal_connect_object (image, "simulation-intent-changed",
+                                   G_CALLBACK (gimp_color_editor_update_simulation),
+                                   editor, 0);
+          g_signal_connect_object (image, "simulation-bpc-changed",
+                                   G_CALLBACK (gimp_color_editor_update_simulation),
+                                   editor, 0);
 
-          g_signal_connect_swapped (image, "profile-changed",
-                                    G_CALLBACK (gimp_color_editor_update_format),
-                                    editor);
-          g_signal_connect_swapped (image, "precision-changed",
-                                    G_CALLBACK (gimp_color_editor_update_format),
-                                    editor);
-          g_signal_connect_swapped (image, "notify::base-type",
-                                    G_CALLBACK (gimp_color_editor_update_format),
-                                    editor);
+          g_signal_connect_object (image, "profile-changed",
+                                   G_CALLBACK (gimp_color_editor_update_format),
+                                   editor, G_CONNECT_SWAPPED);
+          g_signal_connect_object (image, "precision-changed",
+                                   G_CALLBACK (gimp_color_editor_update_format),
+                                   editor, G_CONNECT_SWAPPED);
+          g_signal_connect_object (image, "notify::base-type",
+                                   G_CALLBACK (gimp_color_editor_update_format),
+                                   editor, G_CONNECT_SWAPPED);
         }
 
       gimp_color_editor_update_simulation (image, editor);
@@ -863,9 +863,9 @@ gimp_color_editor_shell_changed (GimpDisplay     *display,
         {
           config = gimp_display_shell_get_color_config (shell);
 
-          g_signal_connect_swapped (config, "notify::mode",
-                                    G_CALLBACK (gimp_color_editor_enable_simulation),
-                                    editor);
+          g_signal_connect_object (config, "notify::mode",
+                                   G_CALLBACK (gimp_color_editor_enable_simulation),
+                                   editor, G_CONNECT_SWAPPED);
         }
 
       gimp_color_editor_enable_simulation (editor);
