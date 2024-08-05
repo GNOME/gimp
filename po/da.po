@@ -8679,387 +8679,387 @@ msgid "_Reverse Stroke"
 msgstr "_Vend optegning om"
 
 #: app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Redigér _kurve"
 
 #: app/actions/vectors-actions.c:47
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Redigér den aktive kurve"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "Redigér kurveegenska_ber …"
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Redigér kurveegenskaber"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Ny kurve …"
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Opret en ny kurve …"
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Ny kurve med de seneste værdier"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Opret en ny kurve med de senest anvendte værdier"
 
 #: app/actions/vectors-actions.c:70
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "_Duplikér kurver"
 
 #: app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "Duplikér disse kurver"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Slet kurve"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Slet denne kurve"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "_Forén synlige kurver"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Hæv kurve"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Hæv denne kurve"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Hæv kurve til _top"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Hæv denne kurve til toppen"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "S_ænk kurve"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Sænk denne kurve"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Sænk kurve til _bunden"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Sænk denne kurve til bunden"
 
 #: app/actions/vectors-actions.c:111
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "_Udfyld kurver …"
 
 #: app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "Udfyld kurverne"
 
 #: app/actions/vectors-actions.c:117
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "Udfyld kurver"
 
 #: app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "Udfyld kurverne med de seneste værdier"
 
 #: app/actions/vectors-actions.c:123
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "O_ptegn kurver …"
 
 #: app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "Mal langs kurverne"
 
 #: app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "O_ptegn kurver"
 
 #: app/actions/vectors-actions.c:130
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "Mal langs kurverne med seneste værdier"
 
 #: app/actions/vectors-actions.c:135
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "K_opiér kurver"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "_Indsæt kurve"
 
 #: app/actions/vectors-actions.c:145
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "_Eksportér kurver …"
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "Impo_rtér kurve …"
 
 #: app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Gør kurven _synlig/usynlig"
 
 #: app/actions/vectors-actions.c:164
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "L_ås kurvens optegninger"
 
 #: app/actions/vectors-actions.c:170
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "L_ås kurvens placering"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Ingen"
 
 #: app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Kurvens farvemærkat: Ryd"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Blå"
 
 #: app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Kurvens farvemærkat: Sæt til blå"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Grøn"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Kurvens farvemærkat: Sæt til grøn"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Gul"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Kurvens farvemærkat: Sæt til gul"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Orange"
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Kurvens farvemærkat: Sæt til orange"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Brun"
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Kurvens farvemærkat: Sæt til brun"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Rød"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Kurvens farvemærkat: Sæt til rød"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Violet"
 
 #: app/actions/vectors-actions.c:222
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Kurvens farvemærkat: Sæt til violet"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Grå"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Kurvens farvemærkat: Sæt til grå"
 
 #: app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Kurver til _markering"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Kurve til markering"
 
 #: app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Markering f_ra kurver"
 
 #: app/actions/vectors-actions.c:243
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Erstat markeringen med kurver"
 
 #: app/actions/vectors-actions.c:248
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "Tilføj _kurver til markering"
 
 #: app/actions/vectors-actions.c:249
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Tilføj kurver til markeringen"
 
 #: app/actions/vectors-actions.c:254
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "_Træk kurver fra markering"
 
 #: app/actions/vectors-actions.c:255
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "Træk kurver fra markeringen"
 
 #: app/actions/vectors-actions.c:260
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "_Gennemskær kurver med markering"
 
 #: app/actions/vectors-actions.c:261
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "Gennemskær kurver med markeringen"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Markering ti_l kurve"
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Ti_l kurve"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Markering til kurve"
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Markering til kurve (_avanceret)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Avancerede indstillinger"
 
 #: app/actions/vectors-actions.c:285
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Vælg _øverste kurve"
 
 #: app/actions/vectors-actions.c:286
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Vælg den øverste kurve"
 
 #: app/actions/vectors-actions.c:291
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Vælg n_ederste kurve"
 
 #: app/actions/vectors-actions.c:292
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Vælg den nederste kurve"
 
 #: app/actions/vectors-actions.c:297
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Vælg _forrige kurve"
 
 #: app/actions/vectors-actions.c:298
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Vælg kurven over den aktuelle kurve"
 
 #: app/actions/vectors-actions.c:303
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Vælg _næste kurve"
 
 #: app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Vælg vektoren under den aktuelle kurve"
 
@@ -29143,7 +29143,7 @@ msgid "Undo History Menu"
 msgstr "Fortrydelseshistorik"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Kurvermenu"
 
@@ -29324,23 +29324,23 @@ msgstr "Kurvermenu"
 #~ msgid "Vector Toolpath Menu"
 #~ msgstr "Menu for vektorværktøjsbane"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "Farvemærkat"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "Fra kur_ve"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "Læg til m_arkering"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "_Træk fra markering"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "_Gennemskær med markering"
 

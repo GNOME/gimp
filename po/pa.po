@@ -6290,291 +6290,291 @@ msgid "Rotate by an arbitrary angle"
 msgstr "ਆਪਹੁਦਰੇ ਕੋਣ ਨਾਲ ਘੁੰਮਾਓ"
 
 #: ../app/actions/vectors-actions.c:44
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "ਮਾਰਗ ਮੇਨੂ"
 
 #: ../app/actions/vectors-actions.c:48
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "ਮਾਰਗ ਟੂਲ(_T)"
 
 #: ../app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "...ਮਾਰਗ ਗੁਣ ਸੋਧ(_E)"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "ਮਾਰਗ ਗੁਣ ਸੋਧ"
 
 #: ../app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "ਨਵਾਂ ਮਾਰਗ(_N)..."
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "ਇੱਕ ਨਵਾਂ ਮਾਰਗ ਬਣਾਓ..."
 
 #: ../app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "ਆਖਰੀ ਮੁੱਲਾਂ ਨਾਲ ਨਵਾਂ ਮਾਰਗ(_N)"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "ਆਖਰੀ ਸੰਭਾਲੇ ਮੁੱਲਾਂ ਨਾਲ ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਬਣਾਓ"
 
 #: ../app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "ਡੁਪਲੀਕੇਟ ਮਾਰਗ(_u)"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "ਇਹ ਮਾਰਗ ਡੁਪਲੀਕੇਟ"
 
 #: ../app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "ਮਾਰਗ ਹਟਾਓ(_D)"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "ਇਹ ਮਾਰਗ ਹਟਾਓ"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "ਦਿੱਖ ਮਾਰਗ ਵਿਲੀਨ(_V)"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "ਉਭਾਰਿਆ ਮਾਰਗ(_R)"
 
 #: ../app/actions/vectors-actions.c:89
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "ਉਭਾਰਿਆ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "ਮਾਰਗ ਨੂੰ ਉੱਤੇ ਲਈ ਉਭਾਰੋ(_T)"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "ਉੱਤੇ ਵੱਲ ਨੂੰ ਮਾਰਗ ਉਘਾੜੋ"
 
 #: ../app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "ਹੇਠਲਾ ਮਾਰਗ(_L)"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "ਇਹ ਮਾਰਗ ਹੇਠਾਂ"
 
 #: ../app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "ਤਲੇ ਲਈ ਹੇਠਲਾ ਮਾਰਗ(_B)"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "ਤਲੇ ਲਈ ਹੇਠਾਂ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:112
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "_New Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path..."
 msgstr "ਨਵਾਂ ਮਾਰਗ(_N)..."
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "ਮਾਰਗ ਨਾਲ ਪੇਂਟ"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
 #| msgid "Flip Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "ਮਾਰਗ ਝਟਕੋ"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path with last values"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "ਆਖਰੀ ਮੁੱਲਾਂ ਨਾਲ ਮਾਰਗ ਪੇਂਟ ਕਰੋ"
 
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "ਸਟਰੋਕ ਮਾਰਗ(_k)..."
 
 #: ../app/actions/vectors-actions.c:125
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "ਮਾਰਗ ਨਾਲ ਪੇਂਟ"
 
 #: ../app/actions/vectors-actions.c:130
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "ਮਾਰਗ ਸਟਰੋਕ(_k)"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "ਆਖਰੀ ਮੁੱਲਾਂ ਨਾਲ ਮਾਰਗ ਪੇਂਟ ਕਰੋ"
 
 #: ../app/actions/vectors-actions.c:136
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "ਮਾਰਗ ਕਾਪੀ ਕਰੋ(_p)"
 
 #: ../app/actions/vectors-actions.c:141
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "ਮਾਰਗ ਚੇਪੋ(_h)"
 
 #: ../app/actions/vectors-actions.c:146
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "ਮਾਰਗ ਐਕਸਪੋਰਟ ਕਰੋ(_x)..."
 
 #: ../app/actions/vectors-actions.c:151
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "ਮਾਰਗ ਇੰਪੋਰਟ ਕਰੋ(_m)..."
 
 #: ../app/actions/vectors-actions.c:159
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "ਦਿੱਖ(_V)"
 
 #: ../app/actions/vectors-actions.c:165
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "ਲਿੰਕ ਕੀਤਾ(_L)"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:171
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "ਸਟਰੋਕ ਲਾਕ ਕਰੋ(_o)"
 
 #: ../app/actions/vectors-actions.c:177
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock position"
 msgstr "ਸਟਰੋਕ ਲਾਕ ਕਰੋ(_o)"
 
 #: ../app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "ਚੋਣ ਲਈ ਮਾਰਗ(_c)"
 
 #: ../app/actions/vectors-actions.c:187
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "ਚੋਣ ਲਈ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "ਇਸ ਤੋਂ ਮਾਰਗ(_o)"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "ਇਹ ਚੈਨਲ ਨਲ ਚੋਣ ਬਦਲੋ"
 
 #: ../app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "ਚੋਣ ਵਿੱਚ ਸ਼ਾਮਲ(_A)"
 
 #: ../app/actions/vectors-actions.c:199
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "ਚੋਣ ਲਈ ਮਾਰਗ ਜੋੜੋ"
 
 #: ../app/actions/vectors-actions.c:204
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "ਚੋਣ ਵਿੱਚੋਂ ਹਟਾਓ(_S)"
 
 #: ../app/actions/vectors-actions.c:205
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "ਚੋਣ ਵਿੱਚੋਂ ਹਟਾਓ(_S)"
 
 #: ../app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "ਚੋਣ ਨਾਲ ਕਾਂਟ (ਇੰਟਰਸੈਕਟ)(_I)"
 
 #: ../app/actions/vectors-actions.c:211
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "ਚੋਣ ਨਾਲ ਕਾਂਟ (ਇੰਟਰਸੈਕਟ)(_I)"
 
 #: ../app/actions/vectors-actions.c:219
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "ਮਾਰਗ ਲਈ ਚੋਣ(_o)"
 
 #: ../app/actions/vectors-actions.c:220 ../app/actions/vectors-actions.c:226
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "ਮਾਰਗ ਲਈ ਚੋਣ"
 
 #: ../app/actions/vectors-actions.c:225
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "ਵੱਲ ਮਾਰਗ(_P)"
 
 #: ../app/actions/vectors-actions.c:231
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "ਮਾਰਗ ਲਈ ਚੋਣ (ਤਕਨੀਕੀ)(_A)"
 
 #: ../app/actions/vectors-actions.c:232
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "ਤਕਨੀਕੀ ਚੋਣ"
 
@@ -11210,7 +11210,7 @@ msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:130
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes X"
 msgstr "ਸਟਰੋਕ ਲਾਕ ਕਰੋ(_o)"
@@ -11223,7 +11223,7 @@ msgstr "ਰੰਗਾਂ ਦੀ ਵੱਧੋ ਵੱਧ ਗਿਣਤੀ(_M):"
 
 #: ../app/core/gimpsymmetry-tiling.c:138
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes Y"
 msgstr "ਸਟਰੋਕ ਲਾਕ ਕਰੋ(_o)"

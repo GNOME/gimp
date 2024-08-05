@@ -6505,7 +6505,7 @@ msgstr "Tambah Masker Lapisan"
 
 #: ../app/actions/layers-actions.c:266
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
@@ -8647,7 +8647,7 @@ msgid "Tool's Force: Increase Relative"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Menu Jalur"
 
@@ -8656,7 +8656,7 @@ msgstr "Menu Jalur"
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "Warna"
 
@@ -8664,389 +8664,389 @@ msgstr "Warna"
 #, fuzzy
 #| msgctxt "palettes-action"
 #| msgid "Edit palette"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Sunting palet"
 
 #: ../app/actions/vectors-actions.c:55
 #, fuzzy
 #| msgid "Export the active path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Ekspor path aktif"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Sunting Atribut Path..."
 
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Sunting atribut path"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "Jalur _Baru…"
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Buat suatu jalur baru…"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "Jalur baru dengan _nilai-nilai terakhir"
 
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Membuat suatu jalur baru dengan nilai-nilai yang terakhir dipakai"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "D_uplikatkan Path"
 
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Gandakan path ini"
 
 #: ../app/actions/vectors-actions.c:84
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "Path Pertama:"
 
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Hapus path ini"
 
 #: ../app/actions/vectors-actions.c:90
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Path Sumber/Tujuan:"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "Path Pertama:"
 
 #: ../app/actions/vectors-actions.c:96
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Naikkan path ke atas"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Naikkan path ke atas"
 
 #: ../app/actions/vectors-actions.c:102
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Path ke gambar kecil di puncak daftar pengguna"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Path Pertama:"
 
 #: ../app/actions/vectors-actions.c:108
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Pertahankan path target:"
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Turunkan Channel ke paling bawah"
 
 #: ../app/actions/vectors-actions.c:114
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Kiri ke kanan, puncak ke dasar"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "_New Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path..."
 msgstr "Jalur _Baru…"
 
 #: ../app/actions/vectors-actions.c:120
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "Ofset sepanjang path, antara -1.0 dan 2.0"
 
 #: ../app/actions/vectors-actions.c:125
 #, fuzzy
 #| msgid "Flip Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "Balik Path"
 
 #: ../app/actions/vectors-actions.c:126
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "Kotak Pemilih Font GIMP"
 
 #: ../app/actions/vectors-actions.c:131
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "Pertahankan path target:"
 
 #: ../app/actions/vectors-actions.c:132
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Ofset sepanjang path, antara -1.0 dan 2.0"
 
 #: ../app/actions/vectors-actions.c:137
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "Pertahankan path target:"
 
 #: ../app/actions/vectors-actions.c:138
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Kotak Pemilih Font GIMP"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "Sa_lin Jalur"
 
 #: ../app/actions/vectors-actions.c:148
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Paste file"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "E_kspor Path..."
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "I_mpor Jalur…"
 
 #: ../app/actions/vectors-actions.c:166
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "_Tampak"
 
 #: ../app/actions/vectors-actions.c:172
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "_Tertaut"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "CJK Strokes"
 
 #: ../app/actions/vectors-actions.c:184
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock position"
 msgstr "CJK Strokes"
 
 #. abused
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Tak Ada"
 
 #: ../app/actions/vectors-actions.c:194
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Clear"
 msgstr "Keseimbangan Warna"
 
 #: ../app/actions/vectors-actions.c:199
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Biru"
 
 #: ../app/actions/vectors-actions.c:200
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Blue"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:205
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Hijau"
 
 #: ../app/actions/vectors-actions.c:206
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Green"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:211
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Kuning"
 
 #: ../app/actions/vectors-actions.c:212
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Yellow"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:217
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Oranye"
 
 #: ../app/actions/vectors-actions.c:218
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Orange"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:223
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:224
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Brown"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:229
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Merah"
 
 #: ../app/actions/vectors-actions.c:230
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Red"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Violet"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:241
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to gray"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:250
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Path ke perintah \"cvs\""
 
 #: ../app/actions/vectors-actions.c:251
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "_Tambahkan ke Pilihan"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "Dari _Jalur"
 
 #: ../app/actions/vectors-actions.c:257
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Ganti judul dengan pilihan."
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "T_ambahkan ke Pilihan"
 
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Tambahkan jalur ke pilihan"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "_Kurangkan dari Pilihan"
 
 #: ../app/actions/vectors-actions.c:269
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "Hapus Tag Dari Pilihan"
 
 #: ../app/actions/vectors-actions.c:274
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "_Berpotongan dengan pilihan."
 
 #: ../app/actions/vectors-actions.c:275
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "Perpotongkan jalur dengan pilihan"
 
 #: ../app/actions/vectors-actions.c:283
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Lokasi objek tempat menjalankan metoda"
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "PATH KE PERANGKAT"
 
 #: ../app/actions/vectors-actions.c:289
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "PATH KE PERANGKAT"
 
 #: ../app/actions/vectors-actions.c:295
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Untuk Melakukan Pencarian Tingkat Lanjut"
 
 #: ../app/actions/vectors-actions.c:296
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Opsi tingkat lanjut"
 
@@ -9054,7 +9054,7 @@ msgstr "Opsi tingkat lanjut"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Pilih Lapisan A_tas"
 
@@ -9062,7 +9062,7 @@ msgstr "Pilih Lapisan A_tas"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Pilih lapisan paling atas"
 
@@ -9070,7 +9070,7 @@ msgstr "Pilih lapisan paling atas"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Pilih Lapisan _Bawah"
 
@@ -9078,7 +9078,7 @@ msgstr "Pilih Lapisan _Bawah"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Pilih lapisan paling bawah"
 
@@ -9086,7 +9086,7 @@ msgstr "Pilih lapisan paling bawah"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "_Pilih Lapisan Sebelumnya"
 
@@ -9094,7 +9094,7 @@ msgstr "_Pilih Lapisan Sebelumnya"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Pilih lapisan di atas lapisan yang saat ini"
 
@@ -9102,7 +9102,7 @@ msgstr "Pilih lapisan di atas lapisan yang saat ini"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Pilih Lapisan Selanjut_nya"
 
@@ -9110,7 +9110,7 @@ msgstr "Pilih Lapisan Selanjut_nya"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Pilih lapisan di bawah lapisan yang saat ini"
 
@@ -9130,7 +9130,7 @@ msgstr "Path Pertama:"
 
 #: ../app/actions/vectors-commands.c:206
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path..."
 msgid "Create a New Path"
 msgstr "Buat suatu jalur baru…"
@@ -15652,7 +15652,7 @@ msgstr "_Dialog Buka Berkas"
 
 #: ../app/dialogs/preferences-dialog.c:1311
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show advanced color options"
 msgstr "Opsi tingkat lanjut"
@@ -21349,7 +21349,7 @@ msgstr "Manajemen Warna"
 #. The Color Options expander
 #: ../app/tools/gimpfiltertool.c:371
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Advanced Color Options"
 msgstr "Opsi tingkat lanjut"

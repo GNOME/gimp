@@ -2873,7 +2873,7 @@ msgstr "工具圖示配合十字記號"
 
 #: ../app/actions/context-actions.c:733
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
@@ -2901,7 +2901,7 @@ msgstr ""
 
 #: ../app/actions/context-actions.c:757
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
@@ -2963,7 +2963,7 @@ msgstr "用圖層遮罩取代選取範圍"
 
 #: ../app/actions/context-actions.c:805
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Replace selection with path"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
@@ -7718,7 +7718,7 @@ msgstr "加入圖層遮罩"
 
 #: ../app/actions/layers-actions.c:281
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
@@ -9920,12 +9920,12 @@ msgid "Tool's Force: Increase Relative"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "「路徑」選單"
 
 #: ../app/actions/vectors-actions.c:50
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "顏色標籤"
 
@@ -9933,357 +9933,357 @@ msgstr "顏色標籤"
 #, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Edit this brush"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "編輯這個筆刷"
 
 #: ../app/actions/vectors-actions.c:55
 #, fuzzy
 #| msgid "Export the active path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "匯出目前的路徑"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "編輯路徑屬性(_E)..."
 
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "編輯路徑屬性"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "新增路徑(_N)..."
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "建立新的路徑..."
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "用上次的設定新增路徑(_N)"
 
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "用上次的設定值建立新的路徑"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "重製路徑(_U)"
 
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "重製這個路徑"
 
 #: ../app/actions/vectors-actions.c:84
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "刪除路徑(_D)"
 
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "刪除這個路徑"
 
 #: ../app/actions/vectors-actions.c:90
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "合併看得見的路徑(_V)"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "提升路徑(_R)"
 
 #: ../app/actions/vectors-actions.c:96
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "提升這個路徑"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "提升路徑到最上層(_T)"
 
 #: ../app/actions/vectors-actions.c:102
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "提升這個路徑到最上層"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "降低路徑(_L)"
 
 #: ../app/actions/vectors-actions.c:108
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "降低這個路徑"
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "降低路徑到最層(_B)"
 
 #: ../app/actions/vectors-actions.c:114
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "將低這個路徑到最下層"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_h..."
 msgstr "填充路徑(_H)..."
 
 #: ../app/actions/vectors-actions.c:120
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "填充此路徑"
 
 #: ../app/actions/vectors-actions.c:125
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "填充路徑"
 
 #: ../app/actions/vectors-actions.c:126
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "用上次的設定填充路徑"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "沿著路徑描邊(_K)..."
 
 #: ../app/actions/vectors-actions.c:132
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "沿路徑描繪"
 
 #: ../app/actions/vectors-actions.c:137
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "沿著路徑描邊(_K)"
 
 #: ../app/actions/vectors-actions.c:138
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "用上次的設定依路徑描邊"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "複製路徑(_P)"
 
 #: ../app/actions/vectors-actions.c:148
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "貼上路徑(_H)"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "匯出路徑(_X)..."
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "匯入路徑(_M)..."
 
 #: ../app/actions/vectors-actions.c:166
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "切換路徑的可見性(_V)"
 
 #: ../app/actions/vectors-actions.c:172
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Linked State"
 msgstr "切換路徑的已連結狀態(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "鎖定路徑的描邊(_O)"
 
 #: ../app/actions/vectors-actions.c:184
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "鎖定路徑位置(_O)"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "無"
 
 #: ../app/actions/vectors-actions.c:194
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "路徑顏色標籤：清除"
 
 #: ../app/actions/vectors-actions.c:199
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "藍"
 
 #: ../app/actions/vectors-actions.c:200
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "將路徑顏色標籤設為藍色"
 
 #: ../app/actions/vectors-actions.c:205
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "綠"
 
 #: ../app/actions/vectors-actions.c:206
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "將路徑顏色標籤設為綠色"
 
 #: ../app/actions/vectors-actions.c:211
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "黃"
 
 #: ../app/actions/vectors-actions.c:212
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "將路徑顏色標籤設為黃色"
 
 #: ../app/actions/vectors-actions.c:217
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "橘"
 
 #: ../app/actions/vectors-actions.c:218
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "將路徑顏色標籤設為橘色"
 
 #: ../app/actions/vectors-actions.c:223
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "棕"
 
 #: ../app/actions/vectors-actions.c:224
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "將路徑顏色標籤設為棕色"
 
 #: ../app/actions/vectors-actions.c:229
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "紅"
 
 #: ../app/actions/vectors-actions.c:230
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "將路徑顏色標籤設為紅色"
 
 #: ../app/actions/vectors-actions.c:235
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "紫"
 
 #: ../app/actions/vectors-actions.c:236
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "將路徑顏色標籤設為紫色"
 
 #: ../app/actions/vectors-actions.c:241
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "灰"
 
 #: ../app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "將路徑顏色標籤設為灰色"
 
 #: ../app/actions/vectors-actions.c:250
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "路徑轉為選取範圍(_C)"
 
 #: ../app/actions/vectors-actions.c:251
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "路徑轉為選取範圍"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "由路徑轉換(_O)"
 
 #: ../app/actions/vectors-actions.c:257
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "用路徑轉換成一個選取範圍"
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "加入至選取範圍(_A)"
 
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "加入路徑到選取範圍"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "從選取範圍移除(_S)"
 
 #: ../app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "從選取範圍移除路徑"
 
 #: ../app/actions/vectors-actions.c:274
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "和選取範圍的交集(_I)"
 
 #: ../app/actions/vectors-actions.c:275
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "路徑和選取範圍的交集"
 
 #: ../app/actions/vectors-actions.c:283
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "選取轉為路徑(_O)"
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "選取轉為路徑"
 
 #: ../app/actions/vectors-actions.c:289
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "轉為路徑(_P)"
 
 #: ../app/actions/vectors-actions.c:295
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "選取轉路徑的進階模式(_A)"
 
 #: ../app/actions/vectors-actions.c:296
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "進階選項"
 
@@ -10291,7 +10291,7 @@ msgstr "進階選項"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "選取最上層的圖層(_T)"
 
@@ -10299,7 +10299,7 @@ msgstr "選取最上層的圖層(_T)"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "選取最上面的圖層"
 
@@ -10307,7 +10307,7 @@ msgstr "選取最上面的圖層"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "選取最下層的圖層(_B)"
 
@@ -10315,7 +10315,7 @@ msgstr "選取最下層的圖層(_B)"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "選取最底的圖層"
 
@@ -10323,7 +10323,7 @@ msgstr "選取最底的圖層"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "選取上一個圖層(_P)"
 
@@ -10331,7 +10331,7 @@ msgstr "選取上一個圖層(_P)"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "選取在目前圖層之上的圖層"
 
@@ -10339,7 +10339,7 @@ msgstr "選取在目前圖層之上的圖層"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "選取下一個圖層(_N)"
 
@@ -10347,7 +10347,7 @@ msgstr "選取下一個圖層(_N)"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "選取在目前圖層之下的圖層"
 
@@ -18087,7 +18087,7 @@ msgstr ""
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2519
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selecti_on to Path"
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "選取轉為路徑(_O)"
@@ -29659,26 +29659,26 @@ msgstr "模糊"
 #~ msgid "Clear color tag"
 #~ msgstr "清除所有文字"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Path _Tool"
 #~ msgstr "路徑工具(_T)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "看得見的(_V)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "已連結(_L)"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "中日韓筆畫部件"
 
 #~| msgctxt "text-editor-action"
 #~| msgid "Clear all text"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Clear color tag"
 #~ msgstr "清除所有文字"
 

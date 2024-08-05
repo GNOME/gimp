@@ -8646,387 +8646,387 @@ msgid "_Reverse Stroke"
 msgstr "_Розвернути штрих"
 
 #: app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Змінити _контур"
 
 #: app/actions/vectors-actions.c:47
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Змінити активний контур"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Змінити атрибути контуру…"
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Змінити атрибути контуру"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Створити контур…"
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Створити новий контур…"
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Новий контур зі попередніми значеннями"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Створити новий контур з попередніми параметрами"
 
 #: app/actions/vectors-actions.c:70
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "Д_ублювати контури"
 
 #: app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "Дублювати ці контури"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Paths"
 msgstr "В_илучити контури"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete the selected paths"
 msgstr "Вилучити позначені контури"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Об'єднати _видимі контури"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Paths"
 msgstr "Пі_дняти контури"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise the selected paths"
 msgstr "Підняти позначені контури"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Paths to _Top"
 msgstr "Зробити контури _верхніми"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise the selected paths to the top"
 msgstr "Піднімання контурів догори"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Paths"
 msgstr "_Опустити контури"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower the selected paths"
 msgstr "Опустити позначені контури"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Paths to _Bottom"
 msgstr "Зробити контури _нижніми"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower the selected paths to the bottom"
 msgstr "Опускання позначених контурів додолу"
 
 #: app/actions/vectors-actions.c:111
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "Заповнити ко_нтури…"
 
 #: app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "Заповнити контури"
 
 #: app/actions/vectors-actions.c:117
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "Заповнити контури"
 
 #: app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "Заповнити контури з попередніми значеннями"
 
 #: app/actions/vectors-actions.c:123
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "Обвести за конту_рами…"
 
 #: app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "Обвести контури вказаним чином"
 
 #: app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "Обвести за конту_рами"
 
 #: app/actions/vectors-actions.c:130
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "Обвести контури з параметрами як минулого разу"
 
 #: app/actions/vectors-actions.c:135
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "_Копіювати контури"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Вст_авити контур"
 
 #: app/actions/vectors-actions.c:145
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "_Експортувати контури…"
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "_Імпорт контуру…"
 
 #: app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Перемикнути в_идимість контура"
 
 #: app/actions/vectors-actions.c:164
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "За_мкнути штрихи контура"
 
 #: app/actions/vectors-actions.c:170
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "За_мкнути позицію контура"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Немає"
 
 #: app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Кольорова мітка контура: зняти"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Синій"
 
 #: app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Кольорова мітка контура: встановити синю"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Зелений"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Кольорова мітка контура: встановити зелений"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Жовтий"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Кольорова мітка контура: встановити жовту"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Помаранчевий"
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Кольорова мітка контура: встановити помаранчеву"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Коричневий"
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Кольорова мітка контура: встановити коричневу"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Червоний"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Кольорова мітка контура: встановити червону"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Фіолетовий"
 
 #: app/actions/vectors-actions.c:222
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Кольорова мітка контура: встановити фіолетову"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Сірий"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Кольорова мітка контура: встановити сірий"
 
 #: app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Контури → Виді_лена область"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Контур → Позначене"
 
 #: app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Ви_бір з контурів"
 
 #: app/actions/vectors-actions.c:243
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Замінити позначене контурами"
 
 #: app/actions/vectors-actions.c:248
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "_Додати контури до позначеного"
 
 #: app/actions/vectors-actions.c:249
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Додати контури до позначеного"
 
 #: app/actions/vectors-actions.c:254
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "_Відняти контури від позначеного"
 
 #: app/actions/vectors-actions.c:255
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "Відняти контури від позначеного"
 
 #: app/actions/vectors-actions.c:260
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "_Перетнути контури з позначеним"
 
 #: app/actions/vectors-actions.c:261
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "Перетнути контури з позначеним"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Позначене → Кон_тур"
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "У _контур"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Перетворити позначену ділянку на контур"
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Позначене до контуру (_розширені параметри)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Розширені параметри"
 
 #: app/actions/vectors-actions.c:285
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Вибрати _верхній контур"
 
 #: app/actions/vectors-actions.c:286
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Вибрати найвищий контур"
 
 #: app/actions/vectors-actions.c:291
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Вибрати _нижній контур"
 
 #: app/actions/vectors-actions.c:292
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Вибрати найнижчий контур"
 
 #: app/actions/vectors-actions.c:297
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Вибрати _попередній контур"
 
 #: app/actions/vectors-actions.c:298
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Вибрати контур над поточним контуром"
 
 #: app/actions/vectors-actions.c:303
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Вибрати _наступний контур"
 
 #: app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Вибрати векторний контур під поточним контуром"
 
@@ -29520,7 +29520,7 @@ msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Меню контурів"
 
@@ -29578,15 +29578,15 @@ msgstr "Меню контурів"
 #~ msgid "Lock path strokes"
 #~ msgstr "Замкнути контур від змін"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Delete this path"
 #~ msgstr "Вилучити контур"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Raise this path"
 #~ msgstr "Піднімання контуру"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Lower this path"
 #~ msgstr "Опускання контуру"
 
@@ -29841,7 +29841,7 @@ msgstr "Меню контурів"
 #~ msgid "Vector Toolpath Menu"
 #~ msgstr "Меню інструменту «Векторний контур»"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "Кольорова мітка"
 
@@ -29897,19 +29897,19 @@ msgstr "Меню контурів"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "_Перетнути з позначеним"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "З конт_уру"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "_Додати до позначеного"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "_Відняти від позначеного"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "_Перетнути з позначеним"
 
@@ -31270,7 +31270,7 @@ msgstr "Меню контурів"
 #~ msgid "Toggle Layer _Linked State"
 #~ msgstr "Перемкнути стан пов'_язаності шару"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Toggle Path _Linked State"
 #~ msgstr "Перемкнути стан пов'_язаності контура"
 

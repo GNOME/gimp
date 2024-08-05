@@ -9503,329 +9503,329 @@ msgstr "افزودن قلم‌ضربه"
 
 #: app/actions/vectors-actions.c:46
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "پنج‌شنبه"
 
 #: app/actions/vectors-actions.c:47
 #, fuzzy
 #| msgid "Export the active path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "ویرایش مسیر"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_ویرایش ویژگی‌های مسیر…"
 
 #: app/actions/vectors-actions.c:53
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "ویرایش ویژگی‌های مسیر"
 
 #: app/actions/vectors-actions.c:58
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "مسیر جدید"
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "ایجاد مسیری جدید…"
 
 #: app/actions/vectors-actions.c:64
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "ایجاد مسیری جدید با آخرین مقدارهای استفاده‌شده"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "ایجاد مسیری جدید با آخرین مقدارهای استفاده‌شده"
 
 #: app/actions/vectors-actions.c:70
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "تک_ثیر قلم‌مو"
 
 #: app/actions/vectors-actions.c:71
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "_تکثیر"
 
 #: app/actions/vectors-actions.c:76
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "[PATH]"
 
 #: app/actions/vectors-actions.c:77
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "  PATH      یک مسیر منبع\n"
 
 #: app/actions/vectors-actions.c:82
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "اد_غام مسیرهای وارد شده"
 
 #: app/actions/vectors-actions.c:87
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_بالا بردن کانال‌ها"
 
 #: app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "_بالا بردن کانال‌ها"
 
 #: app/actions/vectors-actions.c:93
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "بردن کانال به بالاترین"
 
 #: app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "بردن کانال‌ها به بالاترین"
 
 #: app/actions/vectors-actions.c:99
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "کمتر"
 
 #: app/actions/vectors-actions.c:100
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "مسیر"
 
 #: app/actions/vectors-actions.c:105
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "بردن کانال به پایین‌ترین"
 
 #: app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "بردن کانال‌ها به پایین‌_ترین"
 
 #: app/actions/vectors-actions.c:111
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "مس_یر"
 
 #: app/actions/vectors-actions.c:112
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "مسیرها"
 
 #: app/actions/vectors-actions.c:117
 #, fuzzy
 #| msgid "Flip Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "مسیرها"
 
 #: app/actions/vectors-actions.c:118
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "ایجاد لایه‌ای جدید با آخرین مقدارهای استفاده‌شده"
 
 #: app/actions/vectors-actions.c:123
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "مسیرها"
 
 #: app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "مسیرها"
 
 #: app/actions/vectors-actions.c:129
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "مسیرها"
 
 #: app/actions/vectors-actions.c:130
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "قلم‌ضربه کاری مسیر با آخرین مقادیر استفاده شده"
 
 #: app/actions/vectors-actions.c:135
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "_رونوشت از تمامی آشنایان به…"
 
 #: app/actions/vectors-actions.c:140
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "مس_یر"
 
 #: app/actions/vectors-actions.c:145
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "E_xport Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "برون‌ریزی به _شکل…"
 
 #: app/actions/vectors-actions.c:150
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "_درون‌ریزی و برون‌ریزی"
 
 #: app/actions/vectors-actions.c:158
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "تغییر حالت _نمایان بودن کانال"
 
 #: app/actions/vectors-actions.c:164
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "_قفل کردن پیکسل‌های کانال"
 
 #: app/actions/vectors-actions.c:170
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "_قفل کردن موقعیت کانال"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "هیچ‌کدام"
 
 #: app/actions/vectors-actions.c:180
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "برچسب رنگ کانال: تمیز"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "آبی"
 
 #: app/actions/vectors-actions.c:186
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "برچسب رنگ کانال: تنظیم به آبی"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "سبز"
 
 #: app/actions/vectors-actions.c:192
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "برچسب رنگ کانال: تنظیم به سبز"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "زرد"
 
 #: app/actions/vectors-actions.c:198
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "برچسب رنگ کانال: تنظیم به زرد"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "نارنجی"
 
 #: app/actions/vectors-actions.c:204
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "برچسب رنگ کانال: تنظیم به نارنجی"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "قهوه‌ای"
 
 #: app/actions/vectors-actions.c:210
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "برچسب رنگ کانال: تنظیم به قهوه‌ای"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "قرمز"
 
 #: app/actions/vectors-actions.c:216
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "برچسب رنگ کانال: تنظیم به قرمز"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "بنفش"
 
 #: app/actions/vectors-actions.c:222
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "برچسب رنگ کانال: تنظیم به بنفش"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "خاکستری"
 
 #: app/actions/vectors-actions.c:228
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "برچسب رنگ کانال: تنظیم به خاکستری"
 
 #: app/actions/vectors-actions.c:236
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "کانال به _گزینش"
 
 #: app/actions/vectors-actions.c:237
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr ""
 "مسیر به گزینش\n"
@@ -9835,127 +9835,127 @@ msgstr ""
 
 #: app/actions/vectors-actions.c:242
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "فرستنده:"
 
 #: app/actions/vectors-actions.c:243
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "جایگزینی گزینش با این کانال"
 
 #: app/actions/vectors-actions.c:248
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "ا_فزودن به گزینش"
 
 #: app/actions/vectors-actions.c:249
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "ا_فزودن به گزینش"
 
 #: app/actions/vectors-actions.c:254
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "تفریق این کانال از گزینش کنونی"
 
 #: app/actions/vectors-actions.c:255
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "ت_فریق از گزینش"
 
 #: app/actions/vectors-actions.c:260
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "ا_شتراک با گزینش"
 
 #: app/actions/vectors-actions.c:261
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "ا_شتراک با گزینش"
 
 #: app/actions/vectors-actions.c:269
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "  PATH      یک مسیر منبع\n"
 
 #: app/actions/vectors-actions.c:270
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "[PATH]"
 
 #: app/actions/vectors-actions.c:271
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "ابزار وارون: وارونه کردن لایه، گزینش یا مسیر حول محور افقی یا عمودی"
 
 #: app/actions/vectors-actions.c:276
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "پیشرفته"
 
 #: app/actions/vectors-actions.c:277
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "گزینه‌های پبش‌رفته"
 
 #: app/actions/vectors-actions.c:285
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "گزینش _بالاترین کانال"
 
 #: app/actions/vectors-actions.c:286
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "گزینش _پایین‌ترین کانال"
 
 #: app/actions/vectors-actions.c:291
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "گزینش _پایین‌ترین کانال"
 
 #: app/actions/vectors-actions.c:292
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "گزینش _پایین‌ترین کانال"
 
 #: app/actions/vectors-actions.c:297
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "گزینش دسته‌کلید پیشین"
 
 #: app/actions/vectors-actions.c:298
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "ایجاد مسیری از دور متن کنونی"
 
 #: app/actions/vectors-actions.c:303
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "گزینش دسته‌کلید بعدی"
 
 #: app/actions/vectors-actions.c:304
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "اشتراک نقاب لایه با گزینش کنونی"
 
@@ -31611,7 +31611,7 @@ msgid "Undo History Menu"
 msgstr "فهرست تاریخچهٔ برگردان"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "فهرست مسیرها"
 
@@ -31906,27 +31906,27 @@ msgstr "فهرست مسیرها"
 #~ msgstr "ابزار _متن"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "رنگ"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "ا_ز مسیر"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "ا_ضافه کردن به گزینش"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "ت_فریق از گزینش"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "ا_شتراک با گزینش"
 
@@ -32139,7 +32139,7 @@ msgstr "فهرست مسیرها"
 #~ msgstr "تعویض کردن حالت پیونددار"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Toggle Path _Linked State"
 #~ msgstr "تعویض کردن حالت پیونددار"
 
@@ -32315,12 +32315,12 @@ msgstr "فهرست مسیرها"
 #~ msgstr "سطوح ورودی"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "_مرئی"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "_پیونددار"
 

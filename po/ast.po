@@ -8988,403 +8988,403 @@ msgid "_Reverse Stroke"
 msgstr "Trazu _inversu"
 
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Menú de Caminos"
 
 #: ../app/actions/vectors-actions.c:50
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "Etiqueta de color"
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Editar _camín"
 
 #: ../app/actions/vectors-actions.c:55
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Editar el camín activu"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Editar Carauterístiques del Camín…"
 
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Editar carauterístiques del camín"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Camín Nuevu…"
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Crear una plantía nueva..."
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "Nuevu camín colos últimos valores"
 
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Crea una capa nueva colos últimos valores usaos"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "D_uplicar Camín"
 
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Duplicar camín"
 
 #: ../app/actions/vectors-actions.c:84
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Desaniciar Camín"
 
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Desaniciar camín"
 
 #: ../app/actions/vectors-actions.c:90
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Combinar Caminos _Visible"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Xubir Camín"
 
 #: ../app/actions/vectors-actions.c:96
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Xubir camín"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Xubir el Camín a lo _Cimero"
 
 #: ../app/actions/vectors-actions.c:102
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Xubir camín a lo cimero"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Baxar _Camín"
 
 #: ../app/actions/vectors-actions.c:108
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Baxar camín"
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Baxar el Camín hasta lo _Fondero"
 
 #: ../app/actions/vectors-actions.c:114
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Baxar el camín a lo fondero"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_h..."
 msgstr "Rellenar _camín..."
 
 #: ../app/actions/vectors-actions.c:120
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "Rellenar el camín"
 
 #: ../app/actions/vectors-actions.c:125
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "Rellenar camín"
 
 #: ../app/actions/vectors-actions.c:126
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "Rellenar el camín colos últimos valores"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "Tra_zar Camín…"
 
 #: ../app/actions/vectors-actions.c:132
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Pintar a lo llargo'l camín"
 
 #: ../app/actions/vectors-actions.c:137
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "_Trazar Camín"
 
 #: ../app/actions/vectors-actions.c:138
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Pintar a lo llargo'l camín colos últimos valores"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "Co_piar Camín"
 
 #: ../app/actions/vectors-actions.c:148
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Pegar Camín"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "E_sportar Camín…"
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "I_mportar Camín…"
 
 #: ../app/actions/vectors-actions.c:166
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Alternar la _visibilidá del camín"
 
 #: ../app/actions/vectors-actions.c:172
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Linked State"
 msgstr "Alternar l'estáu d'enl_lazáu del camín"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "_Torgar los trazos del camín"
 
 #: ../app/actions/vectors-actions.c:184
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "_Torgar l'allugamientu de la ruta"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Dengún"
 
 #: ../app/actions/vectors-actions.c:194
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Etiqueta de camín de color: llimpiar"
 
 #: ../app/actions/vectors-actions.c:199
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Azul"
 
 #: ../app/actions/vectors-actions.c:200
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Etiqueta de camín de color: afitar n'azul"
 
 #: ../app/actions/vectors-actions.c:205
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Verde"
 
 #: ../app/actions/vectors-actions.c:206
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Etiqueta de camín de color: afitar en verde"
 
 #: ../app/actions/vectors-actions.c:211
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Mariellu"
 
 #: ../app/actions/vectors-actions.c:212
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Etiqueta de camín de color: afitar en mariellu"
 
 #: ../app/actions/vectors-actions.c:217
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Naranxa"
 
 #: ../app/actions/vectors-actions.c:218
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Etiqueta de camín de color: afitar en naranxa"
 
 #: ../app/actions/vectors-actions.c:223
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Marrón"
 
 #: ../app/actions/vectors-actions.c:224
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Etiqueta de camín de color: afitar en marrón"
 
 #: ../app/actions/vectors-actions.c:229
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Coloráu"
 
 #: ../app/actions/vectors-actions.c:230
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Etiqueta de camín de color: afitar en coloráu"
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Violeta"
 
 #: ../app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Etiqueta de camín de color: afitar en violeta"
 
 #: ../app/actions/vectors-actions.c:241
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Gris"
 
 #: ../app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Etiqueta de camín de color: afitar en gris"
 
 #: ../app/actions/vectors-actions.c:250
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Camín a Es_billar"
 
 #: ../app/actions/vectors-actions.c:251
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Camín a esbillar"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "D_ende'l Camín"
 
 #: ../app/actions/vectors-actions.c:257
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Camudar la escoyeta con esta canal"
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "_Amestar a escoyeta"
 
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Camín a esbillar"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "_Quitar de la escoyeta"
 
 #: ../app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "_Quitar de la escoyeta"
 
 #: ../app/actions/vectors-actions.c:274
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "_Intersectar cola escoyeta"
 
 #: ../app/actions/vectors-actions.c:275
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "_Intersectar cola escoyeta"
 
 #: ../app/actions/vectors-actions.c:283
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Esbi_llar a Camín"
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Esbillar a Camín"
 
 #: ../app/actions/vectors-actions.c:289
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Al _Camín"
 
 #: ../app/actions/vectors-actions.c:295
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Esbilla al Camín (_Avanzáu)"
 
 #: ../app/actions/vectors-actions.c:296
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Opciones avanzaes"
 
 #: ../app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Escoyer el camín _cimeru"
 
 #: ../app/actions/vectors-actions.c:305
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Escoyer el camín más altu"
 
 #: ../app/actions/vectors-actions.c:310
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Escoyer el camín _baxeru"
 
 #: ../app/actions/vectors-actions.c:311
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Escoyer el camín más baxu"
 
 #: ../app/actions/vectors-actions.c:316
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Escoyer el camín _anterior"
 
 #: ../app/actions/vectors-actions.c:317
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Escoyer el camín penriba de l'actual"
 
 #: ../app/actions/vectors-actions.c:322
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Escoyer el camín _siguiente"
 
 #: ../app/actions/vectors-actions.c:323
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Escoyer el vector pembaxo del camín actual"
 

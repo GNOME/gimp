@@ -5754,284 +5754,284 @@ msgstr "Ротирај за произволен агол"
 
 #: ../app/actions/vectors-actions.c:44
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Мени за патеки"
 
 #: ../app/actions/vectors-actions.c:48
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "_Алатка за пaтеки"
 
 #: ../app/actions/vectors-actions.c:53
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Измени ги својствата на пaтеката..."
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Измени ги својствата на патеката"
 
 #: ../app/actions/vectors-actions.c:59
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Нова патека..."
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Направи нова мостра"
 
 #: ../app/actions/vectors-actions.c:65
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "Нова патека со последните вредности"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Направи нов слој со последните вредности"
 
 #: ../app/actions/vectors-actions.c:71
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "_Дуплирај патека"
 
 #: ../app/actions/vectors-actions.c:72
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Дуплирај патека"
 
 #: ../app/actions/vectors-actions.c:77
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "И_збриши патека"
 
 #: ../app/actions/vectors-actions.c:78
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Избриши патека"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Спој ги _видливите патеки"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Подигни патека"
 
 #: ../app/actions/vectors-actions.c:89
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Подигни патека"
 
 #: ../app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Подигни патека на _врв"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Подигни патека на врв"
 
 #: ../app/actions/vectors-actions.c:100
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "_Спушти патека"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Спушти патека"
 
 #: ../app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Спушти патека на _дно"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Спушти патека на дно"
 
 #: ../app/actions/vectors-actions.c:112
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "_Исцртај патека..."
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Цртај вдолж патеката"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "Ис_цртај патека"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Цртај вдолж патеката со последните вредности"
 
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "_Копирај патека"
 
 #: ../app/actions/vectors-actions.c:129
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "В_метни патека"
 
 #: ../app/actions/vectors-actions.c:134
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "И_звези патека..."
 
 #: ../app/actions/vectors-actions.c:139
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "_Увези патека..."
 
 #: ../app/actions/vectors-actions.c:147
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "_Видливо"
 
 #: ../app/actions/vectors-actions.c:153
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "_Поврзано"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "Поврзи потези"
 
 #: ../app/actions/vectors-actions.c:168
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Патека во се_лекција"
 
 #: ../app/actions/vectors-actions.c:169
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Патека во селекција"
 
 #: ../app/actions/vectors-actions.c:174
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "_Од патека"
 
 #: ../app/actions/vectors-actions.c:175
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Замени ја селекцијата со овој канал"
 
 #: ../app/actions/vectors-actions.c:180
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "_Додај во селекција"
 
 #: ../app/actions/vectors-actions.c:181
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Патека во селекција"
 
 #: ../app/actions/vectors-actions.c:186
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "_Одземи од селекција"
 
 #: ../app/actions/vectors-actions.c:187
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "_Одземи од селекција"
 
 #: ../app/actions/vectors-actions.c:192
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "_Пресек со селекцијата"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "_Пресек со селекцијата"
 
 #: ../app/actions/vectors-actions.c:201
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Селек_ција во патека"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Селекција во патека"
 
 #: ../app/actions/vectors-actions.c:207
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Во _патека"
 
 #: ../app/actions/vectors-actions.c:213
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Селекција во патека (_Напредни опции)"
 
 #: ../app/actions/vectors-actions.c:214
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Напредни опции"
 

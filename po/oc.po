@@ -4930,238 +4930,238 @@ msgid "Rotate by an arbitrary angle"
 msgstr "Rotacion d'un angle arbitrari"
 
 #: ../app/actions/vectors-actions.c:44
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Menú dels camins"
 
 #: ../app/actions/vectors-actions.c:48
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "Aisina Ca_min"
 
 #: ../app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "Mo_dificar los atributs del camin..."
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Modifica los atributs del camin"
 
 #: ../app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Novèl camin..."
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Crèa un novèl camin"
 
 #: ../app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Novèl camin amb las darrièras valors"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Crèa un novèl camin amb las darrièras valors utilizadas"
 
 #: ../app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "D_uplicar lo camin"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Duplica lo camin"
 
 #: ../app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "Su_primir lo camin"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Suprimís lo camin"
 
 #: ../app/actions/vectors-actions.c:83
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Fusionar los camins _visibles"
 
 #: ../app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Remontar lo camin"
 
 #: ../app/actions/vectors-actions.c:89
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Remonta lo camin"
 
 #: ../app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Plaçar lo camin tot en _naut"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Plaça lo camin amont de tot"
 
 #: ../app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "_Davalar lo camin"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Davala lo camin"
 
 #: ../app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Plaçar lo camin a_val de tot"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Plaça lo camin aval de tot"
 
 #: ../app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "_Traçar lo camin..."
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Pintra lo long del camin"
 
 #: ../app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "_Traçar lo camin"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Pintra lo long del camin amb las darrièras valors"
 
 #: ../app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "_Copiar lo camin"
 
 #: ../app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "_Pegar lo camin"
 
 #: ../app/actions/vectors-actions.c:134
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "E_xportar lo camin..."
 
 #: ../app/actions/vectors-actions.c:139
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "Impor_tar un camin..."
 
 #: ../app/actions/vectors-actions.c:147
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "_Visible"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "_Ligat"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "Verr_olhar los traçats"
 
 #: ../app/actions/vectors-actions.c:168
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Ch_emin cap a seleccion"
 
 #: ../app/actions/vectors-actions.c:169
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Camin cap a seleccion"
 
 #: ../app/actions/vectors-actions.c:174
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "_Dempuèi lo camin"
 
 #: ../app/actions/vectors-actions.c:175
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Remplaça la seleccion pel camin"
 
 #: ../app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "A_pondre a la seleccion"
 
 #: ../app/actions/vectors-actions.c:181
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Apond lo camin a la seleccion"
 
 #: ../app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "S_ostraire de la seleccion"
 
 #: ../app/actions/vectors-actions.c:187
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "Sostrai lo camin de la seleccion"
 
 #: ../app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "_Interseccion amb la seleccion"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "Interseccion del camin e de la seleccion"
 
 #: ../app/actions/vectors-actions.c:201
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Seleccion cap a c_amin"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Seleccion cap a camin"
 
 #: ../app/actions/vectors-actions.c:207
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "_Cap a camin"
 
 #: ../app/actions/vectors-actions.c:213
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Seleccion cap a camin (_avançada)"
 
 #: ../app/actions/vectors-actions.c:214
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Opcions avançadas"
 
@@ -17052,9 +17052,9 @@ msgstr "Crear d'imatges e modificar de fotografias"
 #~ msgid "Restore this tool preset"
 #~ msgstr "Suprimir aqueste prereglatge d'aisina"
 
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "L_ock strokes"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "Verr_olhar los traçats"
 
@@ -17158,7 +17158,7 @@ msgstr "Crear d'imatges e modificar de fotografias"
 #~ msgid "_Top"
 #~ msgstr "A_mont"
 
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "Raise this path to the top"
 #~ msgctxt "windows-tabs-position-action"
 #~ msgid "Position the tabs on the top"
@@ -17170,7 +17170,7 @@ msgstr "Crear d'imatges e modificar de fotografias"
 #~ msgid "_Bottom"
 #~ msgstr "A_val"
 
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "Lower this path to the bottom"
 #~ msgctxt "windows-tabs-position-action"
 #~ msgid "Position the tabs on the bottom"
@@ -17509,7 +17509,7 @@ msgstr "Crear d'imatges e modificar de fotografias"
 #~ msgid "Interval Y"
 #~ msgstr "I_nterval :"
 
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "L_ock strokes"
 #~ msgid "Max strokes X"
 #~ msgstr "Verr_olhar los traçats"
@@ -17518,7 +17518,7 @@ msgstr "Crear d'imatges e modificar de fotografias"
 #~ msgid "Maximum number of strokes on the X axis"
 #~ msgstr "Nombre _maximal de colors :"
 
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "L_ock strokes"
 #~ msgid "Max strokes Y"
 #~ msgstr "Verr_olhar los traçats"

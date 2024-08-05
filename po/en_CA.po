@@ -5717,284 +5717,284 @@ msgstr "Rotate by an arbitrary angle"
 
 #: ../app/actions/vectors-actions.c:44
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Paths Menu"
 
 #: ../app/actions/vectors-actions.c:48
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "Path _Tool"
 
 #: ../app/actions/vectors-actions.c:53
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Edit Path Attributes..."
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Edit path attributes"
 
 #: ../app/actions/vectors-actions.c:59
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_New Path..."
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Create a new template"
 
 #: ../app/actions/vectors-actions.c:65
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "New path with last values"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Create a new layer with last used values"
 
 #: ../app/actions/vectors-actions.c:71
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "D_uplicate Path"
 
 #: ../app/actions/vectors-actions.c:72
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Duplicate path"
 
 #: ../app/actions/vectors-actions.c:77
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Delete Path"
 
 #: ../app/actions/vectors-actions.c:78
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Delete path"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Merge _Visible Paths"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Raise Path"
 
 #: ../app/actions/vectors-actions.c:89
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Raise path"
 
 #: ../app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Raise Path to _Top"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Raise path to top"
 
 #: ../app/actions/vectors-actions.c:100
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "_Lower Path"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Lower path"
 
 #: ../app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Lower Path to _Bottom"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Lower path to bottom"
 
 #: ../app/actions/vectors-actions.c:112
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "Stro_ke Path..."
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Paint along the path"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "Stro_ke Path"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Paint along the path with last values"
 
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "Co_py Path"
 
 #: ../app/actions/vectors-actions.c:129
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Paste Pat_h"
 
 #: ../app/actions/vectors-actions.c:134
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "E_xport Path..."
 
 #: ../app/actions/vectors-actions.c:139
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "I_mport Path..."
 
 #: ../app/actions/vectors-actions.c:147
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "_Visible"
 
 #: ../app/actions/vectors-actions.c:153
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "_Linked"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "Connect Strokes"
 
 #: ../app/actions/vectors-actions.c:168
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
 #: ../app/actions/vectors-actions.c:169
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Path to selection"
 
 #: ../app/actions/vectors-actions.c:174
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "Fr_om Path"
 
 #: ../app/actions/vectors-actions.c:175
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Replace the selection with this channel"
 
 #: ../app/actions/vectors-actions.c:180
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "_Add to Selection"
 
 #: ../app/actions/vectors-actions.c:181
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Path to selection"
 
 #: ../app/actions/vectors-actions.c:186
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "_Subtract from Selection"
 
 #: ../app/actions/vectors-actions.c:187
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "_Subtract from Selection"
 
 #: ../app/actions/vectors-actions.c:192
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "_Intersect with Selection"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "_Intersect with Selection"
 
 #: ../app/actions/vectors-actions.c:201
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Selecti_on to Path"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Selection to path"
 
 #: ../app/actions/vectors-actions.c:207
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "To _Path"
 
 #: ../app/actions/vectors-actions.c:213
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selection to Path (_Advanced)"
 
 #: ../app/actions/vectors-actions.c:214
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Advanced options"
 

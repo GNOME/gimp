@@ -8439,426 +8439,426 @@ msgid "Tool's Force: Increase Relative"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "قائمة المسارات"
 
 #: ../app/actions/vectors-actions.c:50
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "وسم اللون"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "حرّر فرشاة ماي پينت"
 
 #: ../app/actions/vectors-actions.c:55
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "صدّر المسار النشط"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_حرّر صفات المسار..."
 
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "حرّر صفات المسار"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "مسار ج_ديد..."
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "أنشئ قالبا جديدا"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_مسار جديد بالقيم الأخيرة"
 
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "أنشئ طبقة جديدة بآخر القيم المستخدمة"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "_كرّر المسار"
 
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "كرّر هذا المسار"
 
 #: ../app/actions/vectors-actions.c:84
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "اح_ذف المسار"
 
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "احذف هذا المسار"
 
 #: ../app/actions/vectors-actions.c:90
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "ادمج المسارات المر_ئية"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "ار_فع المسار"
 
 #: ../app/actions/vectors-actions.c:96
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "ارفع هذا المسار"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "ارفع المسار إلى ال_سطح"
 
 #: ../app/actions/vectors-actions.c:102
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "ارفع هذا المسار إلى السطح"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "ا_خفض المسار"
 
 #: ../app/actions/vectors-actions.c:108
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "اخفض هذا المسار"
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "اخفض المسار إلى ال_قاع"
 
 #: ../app/actions/vectors-actions.c:114
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "اخفض هذا المسار إلى القاع"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path..."
 msgstr "املأ المسار..."
 
 #: ../app/actions/vectors-actions.c:120
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "املأ المسار"
 
 #: ../app/actions/vectors-actions.c:125
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "املأ المسار"
 
 #: ../app/actions/vectors-actions.c:126
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "املأ المسار مستخدما القيم الأخيرة"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "ارسم المسا_ر..."
 
 #: ../app/actions/vectors-actions.c:132
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "ارسم مارا بالمسار"
 
 #: ../app/actions/vectors-actions.c:137
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "ارسم المسا_ر"
 
 #: ../app/actions/vectors-actions.c:138
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "ارسم مارا بالمسار مستخدما القيم الأخيرة"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "ان_سخ المسار"
 
 #: ../app/actions/vectors-actions.c:148
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "أل_صق المسار"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "_صدّر المسار..."
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "ا_ستورد مسارا..."
 
 #: ../app/actions/vectors-actions.c:166
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "بدّل حالة الظهور"
 
 #: ../app/actions/vectors-actions.c:172
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Linked State"
 msgstr "بدّل حالة الربط"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "أو_صِد الحدود"
 
 #: ../app/actions/vectors-actions.c:184
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "أو_صِد موضع القناة"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "بدون"
 
 #: ../app/actions/vectors-actions.c:194
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "وسم اللون"
 
 #: ../app/actions/vectors-actions.c:199
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "أزرق"
 
 #: ../app/actions/vectors-actions.c:200
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "ضع وسم لون أزرق"
 
 #: ../app/actions/vectors-actions.c:205
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "أخضر"
 
 #: ../app/actions/vectors-actions.c:206
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "ضع وسم لون أخضر"
 
 #: ../app/actions/vectors-actions.c:211
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "أصفر"
 
 #: ../app/actions/vectors-actions.c:212
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "ضع وسم لون أصفر"
 
 #: ../app/actions/vectors-actions.c:217
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "برتقالي"
 
 #: ../app/actions/vectors-actions.c:218
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "ضع وسم لون برتقالي"
 
 #: ../app/actions/vectors-actions.c:223
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "بني"
 
 #: ../app/actions/vectors-actions.c:224
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "ضع وسم لون بني"
 
 #: ../app/actions/vectors-actions.c:229
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "أحمر"
 
 #: ../app/actions/vectors-actions.c:230
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "ضع وسم لون أحمر"
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "بنفسجي"
 
 #: ../app/actions/vectors-actions.c:236
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "ضع وسم لون بنفسجي"
 
 #: ../app/actions/vectors-actions.c:241
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "رمادي"
 
 #: ../app/actions/vectors-actions.c:242
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "ضع وسم لون رمادي"
 
 #: ../app/actions/vectors-actions.c:250
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "المسار إلى الت_حديد"
 
 #: ../app/actions/vectors-actions.c:251
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "المسار إلى التحديد"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "_من المسار"
 
 #: ../app/actions/vectors-actions.c:257
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "استبدل التحديد بهذه القناة"
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "أ_ضف إلى التحديد"
 
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "أضف المسار إلى التحديد"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "ا_طرح من التحديد"
 
 #: ../app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "اطرح المسار من التحديد"
 
 #: ../app/actions/vectors-actions.c:274
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "_قاطع مع التحديد"
 
 #: ../app/actions/vectors-actions.c:275
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "قاطع المسار مع التحديد"
 
 #: ../app/actions/vectors-actions.c:283
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "التحديد إلى الم_سار"
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "التحديد إلى المسار"
 
 #: ../app/actions/vectors-actions.c:289
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "إلى ال_مسار"
 
 #: ../app/actions/vectors-actions.c:295
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "التحديد إلى المسار (_متقدم)"
 
 #: ../app/actions/vectors-actions.c:296
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "الخيارات المتقدمة"
 
 #: ../app/actions/vectors-actions.c:304
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "ا_ختر طبقة السطح"
 
 #: ../app/actions/vectors-actions.c:305
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "اختر الطبقة الأعلى"
 
 #: ../app/actions/vectors-actions.c:310
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "اختر طبقة ال_قاع"
 
 #: ../app/actions/vectors-actions.c:311
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "اختر الطبقة الأدنى"
 
 #: ../app/actions/vectors-actions.c:316
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "اختر الطبقة ال_سابقة"
 
 #: ../app/actions/vectors-actions.c:317
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "اختر الطبقة فوق هذه الطبقة"
 
 #: ../app/actions/vectors-actions.c:322
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "اختر الطبقة ال_تالية"
 
 #: ../app/actions/vectors-actions.c:323
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "اختر الطبقة تحت هذه الطبقة"
 
@@ -25426,23 +25426,23 @@ msgstr "ضبابي"
 #~ msgid "Clear color tag"
 #~ msgstr "امسح وسم اللون"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Path _Tool"
 #~ msgstr "أداة ال_مسار"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "مر_ئي"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "_مربوط"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "أو_صِد الموضع"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Clear color tag"
 #~ msgstr "امسح وسم اللون"
 

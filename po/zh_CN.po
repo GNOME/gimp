@@ -8562,387 +8562,387 @@ msgid "_Reverse Stroke"
 msgstr "反转笔触(_R)"
 
 #: app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "编辑路径(_T)"
 
 #: app/actions/vectors-actions.c:47
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "编辑激活路径"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "编辑路径属性(_E)…"
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "编辑路径属性"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "新建路径(_N)…"
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "创建新的路径…"
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "按上次的值新建路径(_N)"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "按上次使用的值新建路径"
 
 #: app/actions/vectors-actions.c:70
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "复制路径(_U)"
 
 #: app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "复制这些路径"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Paths"
 msgstr "删除路径(_D)"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete the selected paths"
 msgstr "删除选中的路径"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "合并可见路径(_V)"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Paths"
 msgstr "上移路径(_R)"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise the selected paths"
 msgstr "上移选中的路径"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Paths to _Top"
 msgstr "上移路径到顶端(_T)"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise the selected paths to the top"
 msgstr "上移选中的路径至顶端"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Paths"
 msgstr "下移路径(_L)"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower the selected paths"
 msgstr "下移选中的路径"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Paths to _Bottom"
 msgstr "下移路径至底端(_B)"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower the selected paths to the bottom"
 msgstr "下移选中的路径至底端"
 
 #: app/actions/vectors-actions.c:111
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "填充路径(_H)…"
 
 #: app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "填充这些路径"
 
 #: app/actions/vectors-actions.c:117
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "填充路径"
 
 #: app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "按上次的值填充路径"
 
 #: app/actions/vectors-actions.c:123
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "勾画路径(_K)…"
 
 #: app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "沿路径勾画"
 
 #: app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "勾画路径(_K)"
 
 #: app/actions/vectors-actions.c:130
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "按上次的值沿路径勾画"
 
 #: app/actions/vectors-actions.c:135
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "复制路径(_P)"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "粘贴路径(_H)"
 
 #: app/actions/vectors-actions.c:145
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "导出路径(_X)…"
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "导入路径(_M)…"
 
 #: app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "切换路径可见性(_V)"
 
 #: app/actions/vectors-actions.c:164
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "锁定路径笔触(_O)"
 
 #: app/actions/vectors-actions.c:170
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "锁定路径位置(_O)"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "无"
 
 #: app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "路径颜色标签：清空"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "蓝色"
 
 #: app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "路径颜色标签：设为蓝色"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "绿色"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "路径颜色标签：设为绿色"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "黄色"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "路径颜色标签：设为黄色"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "橙色"
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "路径颜色标签：设为橙色"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "棕色"
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "路径颜色标签：设为棕色"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "红色"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "路径颜色标签：设为红色"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "紫色"
 
 #: app/actions/vectors-actions.c:222
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "路径颜色标签：设为紫色"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "灰色"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "路径颜色标签：设为灰色"
 
 #: app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "路径到选区(_C)"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "将路径转换为选区"
 
 #: app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "从路径创建选区(_O)"
 
 #: app/actions/vectors-actions.c:243
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "用路径替换选区"
 
 #: app/actions/vectors-actions.c:248
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "添加路径到选区(_A)"
 
 #: app/actions/vectors-actions.c:249
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "将路径添加到选区"
 
 #: app/actions/vectors-actions.c:254
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "从选区减去路径(_S)"
 
 #: app/actions/vectors-actions.c:255
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "从选区中减去路径"
 
 #: app/actions/vectors-actions.c:260
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "路径与选区相交(_I)"
 
 #: app/actions/vectors-actions.c:261
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "将路径与选区相交"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "选区到路径(_O)"
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "到路径(_P)"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "将选区转换为路径"
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "选区到路径(高级)(_A)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "高级选项"
 
 #: app/actions/vectors-actions.c:285
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "选择顶端路径(_T)"
 
 #: app/actions/vectors-actions.c:286
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "选择最顶端路径"
 
 #: app/actions/vectors-actions.c:291
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "选择底端路径(_B)"
 
 #: app/actions/vectors-actions.c:292
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "选择最底端路径"
 
 #: app/actions/vectors-actions.c:297
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "选择前一路径(_P)"
 
 #: app/actions/vectors-actions.c:298
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "选择当前路径上方的路径"
 
 #: app/actions/vectors-actions.c:303
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "选择后一路径(_N)"
 
 #: app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "选择当前路径下方的路径"
 
@@ -28916,7 +28916,7 @@ msgid "Undo History Menu"
 msgstr "撤消历史菜单"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "路径菜单"
 
@@ -28974,15 +28974,15 @@ msgstr "路径菜单"
 #~ msgid "Lock path strokes"
 #~ msgstr "锁定路径笔触"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Delete this path"
 #~ msgstr "删除此路径"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Raise this path"
 #~ msgstr "上移此路径"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Lower this path"
 #~ msgstr "下移此路径"
 
@@ -29244,23 +29244,23 @@ msgstr "路径菜单"
 #~ msgid "Vector Toolpath Menu"
 #~ msgstr "矢量工具路径菜单"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "颜色标签"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "从路径(_O)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "添加到选区(_A)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "从选区中减去(_S)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "与选区相交(_I)"
 
@@ -30402,7 +30402,7 @@ msgstr "路径菜单"
 #~ msgid "Toggle Layer _Linked State"
 #~ msgstr "切换图层链接状态(_L)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Toggle Path _Linked State"
 #~ msgstr "切换路径链接状态(_L)"
 
@@ -31048,19 +31048,19 @@ msgstr "路径菜单"
 #~ msgid "Color Tag: Set to gray"
 #~ msgstr "颜色标签：设为灰色"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "可见(_V)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "链接(_L)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "锁定位置(_O)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag: Set to gray"
 #~ msgstr "颜色标签：设为灰色"
 
@@ -31122,7 +31122,7 @@ msgstr "路径菜单"
 #~ msgid "Clear color tag"
 #~ msgstr "清空颜色标签"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Clear color tag"
 #~ msgstr "清空颜色标签"
 

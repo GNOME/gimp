@@ -8710,387 +8710,387 @@ msgstr "Αντιστρο_φή πινελιάς"
 
 #
 #: app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Επεξεργασία _μονοπατιού"
 
 #: app/actions/vectors-actions.c:47
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Επεξεργασία του ενεργού μονοπατιού"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Επεξεργασία γνωρισμάτων μονοπατιού..."
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Επεξεργασία γνωρισμάτων μονοπατιού"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Νέο μονοπάτι..."
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Δημιουργία νέου μονοπατιού..."
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Νέο μονοπάτι με τελευταίες ρυθμίσεις"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Δημιουργία νέου μονοπατιού με τις τελευταίες χρησιμοποιημένες τιμές"
 
 #: app/actions/vectors-actions.c:70
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "_Διπλασιασμός μονοπατιών"
 
 #: app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "Διπλασιασμός αυτών των μονοπατιών"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Διαγραφή μονοπατιού"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Διαγραφή αυτού του μονοπατιού"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Συγχώνευση _ορατών μονοπατιών"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Ανύψωση μονοπατιού"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Ανύψωση αυτού του μονοπατιού"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Ανύψωση μονοπατιού στην _κορυφή"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Ανύψωση αυτού του μονοπατιού στην κορυφή"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "_Βύθιση μονοπατιού"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Βύθιση αυτού του μονοπατιού"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Βύθιση μονοπατιού στoν _πάτο"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Βύθιση αυτού του μονοπατιού στον πάτο"
 
 #: app/actions/vectors-actions.c:111
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "Γέμισμα _μονοπατιών..."
 
 #: app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "Γέμισμα των μονοπατιών"
 
 #: app/actions/vectors-actions.c:117
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "Γέμισμα μονοπατιών"
 
 #: app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "Γέμισμα των μονοπατιών με τις τελευταίες τιμές"
 
 #: app/actions/vectors-actions.c:123
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "_Χρωματισμός μονοπατιών..."
 
 #: app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "Βάψιμο κατά μήκος των μονοπατιών"
 
 #: app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "_Χρωματισμός μονοπατιών"
 
 #: app/actions/vectors-actions.c:130
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "Βάψιμο κατά μήκος των μονοπατιών με τις τελευταίες τιμές"
 
 #: app/actions/vectors-actions.c:135
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "Α_ντιγραφή μονοπατιών"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "_Επικόλληση μονοπατιού"
 
 #: app/actions/vectors-actions.c:145
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "Ε_ξαγωγή μονοπατιών..."
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "_Εισαγωγή μονοπατιού..."
 
 #: app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Εναλλαγή ο_ρατότητας μονοπατιού"
 
 #: app/actions/vectors-actions.c:164
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "_Κλείδωμα πινελιών μονοπατιού"
 
 #: app/actions/vectors-actions.c:170
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "Κ_λείδωμα θέσης μονοπατιού"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Κανένα"
 
 #: app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Ετικέτα χρώματος μονοπατιού: Διαυγές"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Γαλάζιο"
 
 #: app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε γαλάζιο"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Πράσινο"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε πράσινο"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Κίτρινο"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε κίτρινο"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Πορτοκαλί"
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε πορτοκαλί"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Καφέ"
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε καφετί"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Κόκκινο"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε κόκκινο"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Βιολετί"
 
 #: app/actions/vectors-actions.c:222
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε ιώδες"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Γκρίζο"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Ετικέτα χρώματος μονοπατιού: Ορισμός σε γκρίζο"
 
 #: app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Μονοπάτια σε επ_ιλογή"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Μετατροπή μονοπατιού σε επιλογή"
 
 #: app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Επιλογή α_πό μονοπάτια"
 
 #: app/actions/vectors-actions.c:243
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Αντικατάσταση επιλογής με μονοπάτια"
 
 #: app/actions/vectors-actions.c:248
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "Προσ_θήκη μονοπατιών στην επιλογή"
 
 #: app/actions/vectors-actions.c:249
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Προσθήκη μονοπατιών στην επιλογή"
 
 #: app/actions/vectors-actions.c:254
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "Α_φαίρεση μονοπατιών από επιλογή"
 
 #: app/actions/vectors-actions.c:255
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "Αφαίρεση μονοπατιών από επιλογή"
 
 #: app/actions/vectors-actions.c:260
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "Το_μή μονοπατιών με την επιλογή"
 
 #: app/actions/vectors-actions.c:261
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "Τομή μονοπατιών με επιλογή"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Μετατροπή επ_ιλογής σε μονοπάτι"
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Σε _μονοπάτι"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Δημιουργία μονοπατιού από την επιλογή"
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Μετατροπή επιλογής σε μονοπάτι (για προ_χωρημένους)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Προχωρημένες επιλογές"
 
 #: app/actions/vectors-actions.c:285
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Επιλογή _επάνω μονοπατιού"
 
 #: app/actions/vectors-actions.c:286
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Επιλογή του ανώτατου μονοπατιού"
 
 #: app/actions/vectors-actions.c:291
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Επιλογή _κάτω μονοπατιού"
 
 #: app/actions/vectors-actions.c:292
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Επιλογή κατώτατου μονοπατιού"
 
 #: app/actions/vectors-actions.c:297
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Επιλογή _προηγούμενου μονοπατιού"
 
 #: app/actions/vectors-actions.c:298
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Επιλογή του μονοπατιού πάνω από το τρέχον μονοπάτι"
 
 #: app/actions/vectors-actions.c:303
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Επιλογή _επόμενου μονοπατιού"
 
 #: app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Επιλογή της διανύσματος κάτω από το τρέχον μονοπάτι"
 
@@ -29928,7 +29928,7 @@ msgid "Undo History Menu"
 msgstr "Μενού ιστορικού αναιρέσεων"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Μενού μονοπατιών"
 
@@ -30082,7 +30082,7 @@ msgstr "Μενού μονοπατιών"
 #~ msgid "Vector Toolpath Menu"
 #~ msgstr "Μενού διαδρομής εργαλείου διανύσματος"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "Ετικέτα χρώματος"
 
@@ -31340,19 +31340,19 @@ msgstr "Μενού μονοπατιών"
 #~ msgid "Crop to C_ontent"
 #~ msgstr "Περικοπή στο περιε_χόμενο"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "Από μ_ονοπάτι"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "_Προσθήκη στην επιλογή"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "_Αφαίρεση από την επιλογή"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "Το_μή με την επιλογή"
 
@@ -31539,7 +31539,7 @@ msgstr "Μενού μονοπατιών"
 #~ msgid "Toggle Layer _Linked State"
 #~ msgstr "Εναλλαγή της κατάστασης _σύνδεσης στρώσης"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Toggle Path _Linked State"
 #~ msgstr "Εναλλαγή της κατάστασης _σύνδεσης μονοπατιού"
 
@@ -32207,19 +32207,19 @@ msgstr "Μενού μονοπατιών"
 #~ msgid "Color Tag: Set to gray"
 #~ msgstr "Ετικέτα χρώματος: Ορισμός σε γκρίζο"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "_Ορατή"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "_Συνδεδεμένη"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "_Κλείδωμα θέσης"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag: Set to gray"
 #~ msgstr "Ετικέτα χρώματος: Ορισμός σε γκρίζο"
 
@@ -32308,7 +32308,7 @@ msgstr "Μενού μονοπατιών"
 #~ msgid "Clear color tag"
 #~ msgstr "Καθαρισμός ετικέτας χρώματος"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Clear color tag"
 #~ msgstr "Καθαρισμός ετικέτας χρώματος"
 

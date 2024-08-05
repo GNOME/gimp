@@ -8659,387 +8659,387 @@ msgid "_Reverse Stroke"
 msgstr "Inve_rti tratto"
 
 #: app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Modifica _tracciato"
 
 #: app/actions/vectors-actions.c:47
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Modifica il tracciato corrente"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Modifica attributi tracciato..."
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Modifica attributi tracciato"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Nuovo tracciato..."
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Crea un nuovo tracciato..."
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Nuovo tracciato con gli ultimi valori"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Nuovo tracciato con gli ultimi valori utilizzati"
 
 #: app/actions/vectors-actions.c:70
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "D_uplica tracciati"
 
 #: app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "Duplica questi tracciati"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Cancella tracciato"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Cancella questo tracciato"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Fondi tracciati _visibili"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Alza il tracciato"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Alza questo tracciato"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Alza il tracciato fino in _cima"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Alza questo tracciato fino in cima"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Ab_bassa il tracciato"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Abbassa questo tracciato"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Abbassa il tracciato fino in _fondo"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Abbassa questo tracciato fino in fondo"
 
 #: app/actions/vectors-actions.c:111
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "Rie_mpi tracciati..."
 
 #: app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "Riempi i tracciati"
 
 #: app/actions/vectors-actions.c:117
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "Riempi tracciati"
 
 #: app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "Riempi i tracciati con gli ultimi valori"
 
 #: app/actions/vectors-actions.c:123
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "De_linea tracciati..."
 
 #: app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "Disegna lungo i tracciati"
 
 #: app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "De_linea tracciati"
 
 #: app/actions/vectors-actions.c:130
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "Disegna lungo i tracciati con gli ultimi valori"
 
 #: app/actions/vectors-actions.c:135
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "Co_pia tracciati"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Incol_la tracciato"
 
 #: app/actions/vectors-actions.c:145
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "_Esporta tracciati..."
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "I_mporta tracciato..."
 
 #: app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Commuta la _visibilità tracciato"
 
 #: app/actions/vectors-actions.c:164
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "Bl_occa le delineature del tracciato"
 
 #: app/actions/vectors-actions.c:170
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "Bl_occa la posizione del tracciato"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Nessuna"
 
 #: app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Etichetta colore tracciato: cancella"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Blu"
 
 #: app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Etichetta colore tracciato: imposta a blu"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Verde"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Etichetta colore tracciato: imposta a verde"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Giallo"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Etichetta colore tracciato: imposta a giallo"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Arancio"
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Etichetta colore tracciato: imposta a arancio"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Marrone"
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Etichetta colore tracciato: imposta a marrone"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Rosso"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Etichetta colore tracciato: imposta a rosso"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Viola"
 
 #: app/actions/vectors-actions.c:222
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Etichetta colore tracciato: imposta a viola"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Grigio"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Etichetta colore tracciato: imposta a grigio"
 
 #: app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Tracciati a sele_zione"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Tracciato a selezione"
 
 #: app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Selezi_one dai tracciati"
 
 #: app/actions/vectors-actions.c:243
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Rimpiazza selezione con tracciati"
 
 #: app/actions/vectors-actions.c:248
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "_Aggiungi tracciati alla selezione"
 
 #: app/actions/vectors-actions.c:249
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Aggiungi i tracciati alla selezione"
 
 #: app/actions/vectors-actions.c:254
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "_Sottrai tracciati dalla selezione"
 
 #: app/actions/vectors-actions.c:255
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "Sottrai i tracciati dalla selezione"
 
 #: app/actions/vectors-actions.c:260
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "_Interseca tracciati con selezione"
 
 #: app/actions/vectors-actions.c:261
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "Interseca i tracciati con la selezione"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Selezi_one a tracciato "
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "A _tracciato"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Selezione a tracciato "
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selezione a tracciato (_avanzata)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Opzioni avanzate"
 
 #: app/actions/vectors-actions.c:285
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Seleziona il _tracciato in cima"
 
 #: app/actions/vectors-actions.c:286
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Seleziona il tracciato più in alto"
 
 #: app/actions/vectors-actions.c:291
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Seleziona il t_racciato in fondo"
 
 #: app/actions/vectors-actions.c:292
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Seleziona il tracciato più in basso"
 
 #: app/actions/vectors-actions.c:297
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Seleziona il tracciato _precedente"
 
 #: app/actions/vectors-actions.c:298
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Seleziona il tracciato sopra il tracciato corrente"
 
 #: app/actions/vectors-actions.c:303
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Selezio_na il tracciato successivo"
 
 #: app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Seleziona il vettore sotto il tracciato corrente"
 
@@ -29667,6 +29667,6 @@ msgid "Undo History Menu"
 msgstr "Menu cronologia annullamenti"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Menu tracciati"

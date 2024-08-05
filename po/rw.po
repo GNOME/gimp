@@ -6018,7 +6018,7 @@ msgstr ""
 # offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_GENERAL_OPTIONS.8.text
 #: ../app/actions/vectors-actions.c:44
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Inzira"
 
@@ -6028,281 +6028,281 @@ msgstr "Inzira"
 # basctl/source\basicide\basidesh.src:RID_BASICPLUGINMENU.MN_PLEXTRA.text
 #: ../app/actions/vectors-actions.c:48
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "Ibikoresho"
 
 #: ../app/actions/vectors-actions.c:53
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "Inzira Ibiranga"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Inzira Ibiranga"
 
 #: ../app/actions/vectors-actions.c:59
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "Inzira nshya:"
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "a Gishya Inyandikorugero"
 
 #: ../app/actions/vectors-actions.c:65
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "Inzira Na: Iheruka Uduciro"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Inzira Na: Iheruka Uduciro"
 
 #: ../app/actions/vectors-actions.c:71
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:72
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:77
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:78
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "cyavuye ahandi/ cyatumijwe Inzira"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:89
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Inzira Kuri Hejuru:"
 
 #: ../app/actions/vectors-actions.c:100
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Inzira Kuri Hasi:"
 
 #: ../app/actions/vectors-actions.c:112
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Inzira Na: Iheruka Uduciro"
 
 # svx/source\options\optinet2.src:RID_SVXPAGE_INET_SCRIPTING.FT_NEW_PATH.text
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "Inzira nshya"
 
 #: ../app/actions/vectors-actions.c:129
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Nka"
 
 #: ../app/actions/vectors-actions.c:134
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:139
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:147
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "Kigaragara"
 
 # sc/source\ui\src\miscdlgs.src:RID_SCDLG_FILLSERIES.BTN_ARITHMETIC.text
 #: ../app/actions/vectors-actions.c:153
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "By'umurongo"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:168
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:169
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Kuri Ihitamo"
 
 # svx/source\options\optinet2.src:RID_SVXPAGE_INET_SCRIPTING.FT_NEW_PATH.text
 #: ../app/actions/vectors-actions.c:174
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "Inzira nshya"
 
 #: ../app/actions/vectors-actions.c:175
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Ihitamo Bivuye Inzira"
 
 #: ../app/actions/vectors-actions.c:180
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:181
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Kuri Ihitamo"
 
 #: ../app/actions/vectors-actions.c:186
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "Bivuye"
 
 #: ../app/actions/vectors-actions.c:187
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "Bivuye"
 
 #: ../app/actions/vectors-actions.c:192
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "Na:"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "Na:"
 
 #: ../app/actions/vectors-actions.c:201
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Kuri Inzira"
 
 # offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_GENERAL_OPTIONS.8.text
 #: ../app/actions/vectors-actions.c:207
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Inzira"
 
 #: ../app/actions/vectors-actions.c:213
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Kuri"
 
 #: ../app/actions/vectors-actions.c:214
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Amahitamo yo mu rwego rwo hejuru"
 

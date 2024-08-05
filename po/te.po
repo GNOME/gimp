@@ -5059,239 +5059,239 @@ msgid "Rotate by an arbitrary angle"
 msgstr "ఒక యాదృచ్ఛిక కోణం తిప్పు"
 
 #: ../app/actions/vectors-actions.c:44
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "బాటల మెనూ"
 
 #: ../app/actions/vectors-actions.c:48
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "బాట పనిముట్టు (_T)"
 
 #: ../app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "బాట లక్షణాలను సవరించు(_E)..."
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "బాట లక్షణాలను సవరించు"
 
 #: ../app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "కొత్త బాట...(_N)"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "కొత్త బాటను సృష్టించు..."
 
 #: ../app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "చివర వాడిన విలువలతో కొత్త బాట(_N)"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "చివర ఉపయోగించిన విలువలతో కొత్త బాటను సృష్టించు"
 
 #: ../app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "బాటను నకలించు (_u)"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "ఈ బాటను నకలు చేయి"
 
 #: ../app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "బాటను తొలగించు (_D)"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "ఈ బాటను తొలగించు"
 
 #: ../app/actions/vectors-actions.c:83
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "కనిపించే బాటలను మేళవించు (_V)"
 
 #: ../app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "బాటను పైకెత్తు(_R)"
 
 #: ../app/actions/vectors-actions.c:89
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "ఈ బాటను పైకెత్తు"
 
 #: ../app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "బాటను  పైకి ఎత్తు(_T)"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "ఈ బాటను పైకి ఎత్తు"
 
 #: ../app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "బాటను దింపు (_L)"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "ఈ బాటను దింపు"
 
 #: ../app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "బాటను అట్టడుగుకు దింపు(_B)"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "ఈ బాటను అట్టడుగుకు దింపు"
 
 #: ../app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "బాటకు రంగు వేయి(_k)..."
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "బాట వంట రంగు వేయి."
 
 #: ../app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "బాటకు రంగు వేయి(_k)"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "చివరి విలువలతో బాట గుండా రంగువేయి"
 
 #: ../app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "బాటను నకలించు (_p)"
 
 #: ../app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "బాటను అతికించు (_h)"
 
 #: ../app/actions/vectors-actions.c:134
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "బాటను ఎగుమతించు..(_x)"
 
 #: ../app/actions/vectors-actions.c:139
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "బాటను దిగుమతించు...(_m)..."
 
 #: ../app/actions/vectors-actions.c:147
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "కనిపించే (_V)"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "బందించిన (_L)"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "రంగువేతకు తాళించు (_o)"
 
 #: ../app/actions/vectors-actions.c:168
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "ఎంపికకు బాట(_C)"
 
 #: ../app/actions/vectors-actions.c:169
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "ఎంపికకు బాట"
 
 #: ../app/actions/vectors-actions.c:174
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "బాట నుండి (_P)"
 
 #: ../app/actions/vectors-actions.c:175
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "ఎంపికను బాటతో ప్రతిక్షేపించు"
 
 #: ../app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "ఎంపికకు చేర్చు (_A)"
 
 #: ../app/actions/vectors-actions.c:181
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "బాటను ఎంపికకు చేర్చు"
 
 #: ../app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "ఎంపిక నుండి తీసివేయి(_S)"
 
 #: ../app/actions/vectors-actions.c:187
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "ఎంపిక నుండి బాటను తీసివేయి"
 
 #: ../app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "ఎంపికతో ఖండించు(_I)"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "బాటను ఎంపికతో ఖండించు"
 
 #: ../app/actions/vectors-actions.c:201
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "ఎంపిక నుండి బాట(_o)"
 
 #: ../app/actions/vectors-actions.c:202
 #: ../app/actions/vectors-actions.c:208
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "బాటకు ఎంపిక"
 
 #: ../app/actions/vectors-actions.c:207
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "బాటకు(_P)"
 
 #: ../app/actions/vectors-actions.c:213
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "ఎంపిక నుండి బాట (ఉన్నతం) (_A)"
 
 #: ../app/actions/vectors-actions.c:214
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "పురోగత ఐచ్ఛికాలు"
 

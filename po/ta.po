@@ -5021,238 +5021,238 @@ msgid "Rotate by an arbitrary angle"
 msgstr "தன்னிச்சையான கோணத்துக்கு சுழற்றவும்"
 
 #: ../app/actions/vectors-actions.c:44
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "பாதைகள் பட்டி"
 
 #: ../app/actions/vectors-actions.c:48
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "பாதை கருவி (_T)"
 
 #: ../app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "பாதை பண்புகளை திருத்து(_E)..."
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "பாதை பண்புகளை திருத்து"
 
 #: ../app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "புதிய பாதை (_N)..."
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "ஒரு புதிய பாதையை உருவாக்கு ..."
 
 #: ../app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "(_N) கடைசி மதிப்புகளுடன் புதிய பாதை"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "கடைசியாக பயன்படுத்திய மதிப்புகளுடன் புதிய பாதை ஒன்றை உருவாக்கு  "
 
 #: ../app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "போலி பாதை (_u)"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "போலி பாதை"
 
 #: ../app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "பாதையை அழி (_D)"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "இந்த  பாதையை அழி"
 
 #: ../app/actions/vectors-actions.c:83
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "தெரியும் பாதைகளை ஒருங்கிணை (_V)"
 
 #: ../app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "பாதையை ஏற்று (_R)"
 
 #: ../app/actions/vectors-actions.c:89
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "பாதையை ஏற்று"
 
 #: ../app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "மேலே பாதையை ஏற்று (_T)"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "மேலே பாதையை ஏற்று"
 
 #: ../app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "கீழ் பாதை (_L)"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "பாதையை கீழிறக்கு"
 
 #: ../app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "(_B) கீழ் பாதையை கீழே இறக்கு"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "இந்த பாதையை கீழே இறக்கு"
 
 #: ../app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "பாதை தீட்டு (_k)..."
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "பாதையை ஒட்டி தீட்டு"
 
 #: ../app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "பாதை தீட்டு (_k)"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "பாதையை ஒட்டி கடைசி மதிப்புகளுடன் தீட்டு"
 
 #: ../app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "பாதையை நகலெடு (_p)"
 
 #: ../app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "பாதையை ஒட்டு (_h)"
 
 #: ../app/actions/vectors-actions.c:134
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "பாதையை ஏற்றுமதி செய் (_x)..."
 
 #: ../app/actions/vectors-actions.c:139
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "பாதையை இறக்குமதி செய் (_m)..."
 
 #: ../app/actions/vectors-actions.c:147
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "(_V) பார்வையில் உள்ள"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "(_L) இணைக்கப்பட்டது"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "_o தீட்டுதல்களை பூட்டு"
 
 #: ../app/actions/vectors-actions.c:168
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "தேர்வுக்கு பாதை (_c)"
 
 #: ../app/actions/vectors-actions.c:169
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "தேர்வுக்கு பாதை"
 
 #: ../app/actions/vectors-actions.c:174
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "பாதையிலிருந்து (_o)"
 
 #: ../app/actions/vectors-actions.c:175
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "இந்த வாய்க்காலால் தேர்வை இடமாற்று"
 
 #: ../app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "(_A) தேர்வுக்கு கூட்டு "
 
 #: ../app/actions/vectors-actions.c:181
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "தேர்வுக்கு பாதையை சேர் "
 
 #: ../app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "(_S) தேர்விலிருந்து நீக்கு"
 
 #: ../app/actions/vectors-actions.c:187
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "(_S) தேர்விலிருந்து நீக்கு"
 
 #: ../app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "(_I) தேர்வுடன் இடைவெட்டு"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "பாதையை தேர்வுடன் இடைவெட்டு"
 
 #: ../app/actions/vectors-actions.c:201
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "பாதைக்குத் தேர்வு (_o)"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "பாதைக்குத் தேர்வு"
 
 #: ../app/actions/vectors-actions.c:207
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "பாதைக்கு (_P)"
 
 #: ../app/actions/vectors-actions.c:213
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "பாதைக்குத் தேர்வு (மேம்பட்ட) (_A)"
 
 #: ../app/actions/vectors-actions.c:214
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "மேம்பட்ட விருப்பங்கள்"
 

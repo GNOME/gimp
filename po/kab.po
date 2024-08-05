@@ -9636,403 +9636,403 @@ msgid "_Reverse Stroke"
 msgstr "Tti asuneɣ"
 
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Umuɣ n yiberdan"
 
 #: ../app/actions/vectors-actions.c:50
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "Ticreḍt n yini"
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Ẓreg abrid"
 
 #: ../app/actions/vectors-actions.c:55
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Ẓreg abrid amiran"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Ẓreg iraten n ubrid..."
 
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Ẓreg iraten n ubrid"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "Abrid a_maynut..."
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Snulfu-d abrid amaynut..."
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "Abrid a_maynut s wazalen ineggura"
 
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Snulfu-d abrid amaynut s wazalen ineggura yettwasqedcen"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "_Sisleg abrid"
 
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Sisleg abrid-agi"
 
 #: ../app/actions/vectors-actions.c:84
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Kkes abrid"
 
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Kkes abrid-agi"
 
 #: ../app/actions/vectors-actions.c:90
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Smezdi iberdan yett_banen"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Sali abrid"
 
 #: ../app/actions/vectors-actions.c:96
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Sider abrid"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Sali abrid s afella"
 
 #: ../app/actions/vectors-actions.c:102
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Sali abrid-agi s afella"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "_Sider abrid"
 
 #: ../app/actions/vectors-actions.c:108
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Sader abrid"
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Sader abrid s a_dda"
 
 #: ../app/actions/vectors-actions.c:114
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Sader abrid-agi s adda"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_h..."
 msgstr "Aččar a_brid..."
 
 #: ../app/actions/vectors-actions.c:120
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "Aččar abrid"
 
 #: ../app/actions/vectors-actions.c:125
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "Aččar abrid"
 
 #: ../app/actions/vectors-actions.c:126
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "Aččar abrid s wazalen ineggura"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "Suneɣ abrid..."
 
 #: ../app/actions/vectors-actions.c:132
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Klu ɣef teɣzi n ubrid"
 
 #: ../app/actions/vectors-actions.c:137
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "Suneɣ abrid"
 
 #: ../app/actions/vectors-actions.c:138
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Klu ɣef teɣzi n ubrid s wazalen ineggura"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "_Nɣel abrid"
 
 #: ../app/actions/vectors-actions.c:148
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Senṭeḍ a_brid"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "Si_feḍ abrid..."
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "_Kter abrid..."
 
 #: ../app/actions/vectors-actions.c:166
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Senfel ta_walit n ubrid"
 
 #: ../app/actions/vectors-actions.c:172
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Linked State"
 msgstr "Sermed/sens addad n useɣwen yurzen"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "Sekkeṛ unuɣen n ubrid"
 
 #: ../app/actions/vectors-actions.c:184
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "Se_kkeṛ ideg n ubrid"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Ula yiwen"
 
 #: ../app/actions/vectors-actions.c:194
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Ticreḍt n yini n ubrid: Afaw"
 
 #: ../app/actions/vectors-actions.c:199
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Anili"
 
 #: ../app/actions/vectors-actions.c:200
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s anili"
 
 #: ../app/actions/vectors-actions.c:205
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Azegzaw"
 
 #: ../app/actions/vectors-actions.c:206
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s azegzaw"
 
 #: ../app/actions/vectors-actions.c:211
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Awraɣ"
 
 #: ../app/actions/vectors-actions.c:212
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s awraɣ"
 
 #: ../app/actions/vectors-actions.c:217
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Ačinawi"
 
 #: ../app/actions/vectors-actions.c:218
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s aččinawi"
 
 #: ../app/actions/vectors-actions.c:223
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Aqahwi"
 
 #: ../app/actions/vectors-actions.c:224
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s aqahwi"
 
 #: ../app/actions/vectors-actions.c:229
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Azeggaɣ"
 
 #: ../app/actions/vectors-actions.c:230
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s azeggaɣ"
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Akeẓẓal"
 
 #: ../app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s amidadi"
 
 #: ../app/actions/vectors-actions.c:241
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Amelliɣdi"
 
 #: ../app/actions/vectors-actions.c:242
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Ticreḍt n yini n ubrid: seɣwer s amelliɣdi"
 
 #: ../app/actions/vectors-actions.c:250
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Abrid ɣer te_frayt"
 
 #: ../app/actions/vectors-actions.c:251
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Abrid ɣer tefrayt"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "_Seg ubrid"
 
 #: ../app/actions/vectors-actions.c:257
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Semselsi tafrayt s ubrid"
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "_Rnu ɣer tefrayt"
 
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Rnu abrid ɣer tefrayt"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "_Sukkes-d si tefrayt"
 
 #: ../app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "Sukkes-d abrid si tefrayt"
 
 #: ../app/actions/vectors-actions.c:274
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "Ta_nmidegt akked tefrayt"
 
 #: ../app/actions/vectors-actions.c:275
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "Senmideg abrid akked tefrayt"
 
 #: ../app/actions/vectors-actions.c:283
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Tafra_yt s abrid"
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Tafrayt s abrid"
 
 #: ../app/actions/vectors-actions.c:289
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "S _abrid"
 
 #: ../app/actions/vectors-actions.c:295
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Tafrayt s abrid (a_naẓi)"
 
 #: ../app/actions/vectors-actions.c:296
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Tinefrunin tinaẓiyin"
 
 #: ../app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Fren abrid n u_fella"
 
 #: ../app/actions/vectors-actions.c:305
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Fren abrid n ufella maḍi"
 
 #: ../app/actions/vectors-actions.c:310
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Fren abrid n _wadda"
 
 #: ../app/actions/vectors-actions.c:311
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Fren abrid n wadda maḍi"
 
 #: ../app/actions/vectors-actions.c:316
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Fren abrid u_zwir"
 
 #: ../app/actions/vectors-actions.c:317
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Fren abrid nnig n ubrid amiran"
 
 #: ../app/actions/vectors-actions.c:322
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Fren abrid u_ḍfir"
 
 #: ../app/actions/vectors-actions.c:323
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Fren abrid ddaw n ubrid amiran"
 

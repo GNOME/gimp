@@ -5062,239 +5062,239 @@ msgid "Rotate by an arbitrary angle"
 msgstr "တဖက်သတ် ထောင့်တခု အလိုက် လှည့်ပါ"
 
 #: ../app/actions/vectors-actions.c:44
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "လမ်းကြောင်းများ စာရင်းမှတ်"
 
 #: ../app/actions/vectors-actions.c:48
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "လမ်းကြောင်း ကိရိယာ"
 
 #: ../app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "လမ်းကြောင်း အရည်အသွေးများကို တည်းဖြတ်ပါ..."
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "လမ်းကြောင်း အရည်​အသွေးများကို တည်းဖြတ်ပါ"
 
 #: ../app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "လမ်းကြောင်း အသစ်..."
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "လမ်းကြောင်း အသစ်တခုကို ဖန်တီးပါ..."
 
 #: ../app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်း အသစ်ကို ဖန်တီးပါ"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်း အသစ်တခုကို ဖန်တီးပါ"
 
 #: ../app/actions/vectors-actions.c:71
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "လမ်းကြောင်းကို ပုံတူပွားပါ"
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "ဒီလမ်းကြောင်းကို ပုံတူပွားပါ"
 
 #: ../app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "လမ်းကြောင်းကို ပယ်ဖျက်ပါ"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "ဒီလမ်းကြောင်းကို ပယ်ဖျက်ပါ"
 
 #: ../app/actions/vectors-actions.c:83
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "မြင်နိုင်တဲ့ လမ်းကြောင်းများကို ပေါင်းစပ်ပါ"
 
 #: ../app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "လမ်းကြောင်းကို မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:89
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "ဒီလမ်းကြောင်းကို မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "လမ်းကြောင်းကို ထိပ်ပိုင်း မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "ဒီလမ်းကြောင်းကို ထိပ်ပိုင်း မြှင့်တင်ပါ"
 
 #: ../app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "လမ်းကြောင်းကို လျှော့ချပါ"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "ဒီလမ်းကြောင်းကို လျှော့ချပါ"
 
 #: ../app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "လမ်းကြောင်းကို အောက်ခြေဖက် လျှော့ချပါ"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "ဒီလမ်းကြောင်းကို အောက်ခြေဖက် လျှော့ချပါ"
 
 #: ../app/actions/vectors-actions.c:112
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "လမ်းကြောင်းကို မှတ်သားပါ..."
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "လမ်းကြောင်း တလျှောက် ရေးဆွဲပါ"
 
 #: ../app/actions/vectors-actions.c:118
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "လမ်းကြောင်းကို မှတ်သားပါ"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "နောက်ဆုံး တန်ဖိုးများနဲ့ လမ်းကြောင်း တလျှောက် ရေးဆွဲပါ"
 
 #: ../app/actions/vectors-actions.c:124
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "လမ်းကြောင်းကို မိတ္တူကူးပါ"
 
 #: ../app/actions/vectors-actions.c:129
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "လမ်းကြောင်းကို ပွားယူပါ"
 
 #: ../app/actions/vectors-actions.c:134
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "လမ်းကြောင်းကို တင်ပို့ပါ..."
 
 #: ../app/actions/vectors-actions.c:139
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "လမ်းကြောင်းကို တင်သွင်းပါ..."
 
 #: ../app/actions/vectors-actions.c:147
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "မြင်နိုင်တယ်"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "ချိတ်ဆက်ထားတယ်"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "စုတ်ချက်များကို ချိတ်ဆက်ပါ"
 
 #: ../app/actions/vectors-actions.c:168
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "ရွေးထားချက် လမ်းကြောင်း"
 
 #: ../app/actions/vectors-actions.c:169
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "ရွေးချယ်ချက် လမ်းကြောင်း"
 
 #: ../app/actions/vectors-actions.c:174
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "လမ်းကြောင်းမှ"
 
 #: ../app/actions/vectors-actions.c:175
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "ရွေးချယ်ချက်ကို လမ်းကြောင်းနဲ့ အစားထိုးပါ"
 
 #: ../app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "ရွေးချယ်ချက်ဆီ ပေါင်းထည့်ပါ"
 
 #: ../app/actions/vectors-actions.c:181
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "ရွေးချယ်ချက်ဆီ လမ်းကြောင်းကို ပေါင်းထည့်ပါ"
 
 #: ../app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "ရွေးချယ်ချက်မှ နှုတ်ယူပါ"
 
 #: ../app/actions/vectors-actions.c:187
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "ရွေးချယ်ချက်မှ လမ်းကြောင်းကို နှုတ်ယူပါ"
 
 #: ../app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
 
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "လမ်းကြောင်းကို ရွေးချယ်ချက်နဲ့ ပိုင်းဖြတ်ပါ"
 
 #: ../app/actions/vectors-actions.c:201
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "လမ်းကြောင်း ရွေးထားချက်"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "လမ်းကြောင်း ရွေးချယ်ချက်"
 
 #: ../app/actions/vectors-actions.c:207
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "လမ်းကြောင်းဆီ"
 
 #: ../app/actions/vectors-actions.c:213
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "လမ်းကြောင်း ရွေးချယ်ချက် (အဆင့်မြင့်)"
 
 #: ../app/actions/vectors-actions.c:214
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "အဆင့်မြင့် ရွေးစရာများ"
 

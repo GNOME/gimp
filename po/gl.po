@@ -6946,7 +6946,7 @@ msgstr "Engadir máscara de capa"
 
 #: app/actions/layers-actions.c:244
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
@@ -9332,203 +9332,203 @@ msgid "_Reverse Stroke"
 msgstr "Trazo _inverso"
 
 #: app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Editar _camiño"
 
 #: app/actions/vectors-actions.c:47
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Edita o camiño actual"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Editar atributos do camiño…"
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Editar atributos do camiño"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Novo camiño…"
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Crear un modelo novo"
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "Novo camiño cos últimos valores"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Crear unha capa cos últimos valores utilizados"
 
 #: app/actions/vectors-actions.c:70
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "D_uplicate Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "D_uplicar camiño"
 
 #: app/actions/vectors-actions.c:71
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Duplicate this path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "Duplicar camiño"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Eliminar camiño"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Eliminar camiño"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Combinar camiños visibles"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Subir camiño"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Subir camiño"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Subir camiño á parte _superior"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Subir camiño á parte superior"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Bai_xar camiño"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Baixar camiño"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Baixar camiño á parte _inferior"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Baixar camiño á parte inferior"
 
 #: app/actions/vectors-actions.c:111
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Fill Pat_h..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "Rechear _camiño…"
 
 #: app/actions/vectors-actions.c:112
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Fill the path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "Rechear o camiño"
 
 #: app/actions/vectors-actions.c:117
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Fill Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "Rechear ruta"
 
 #: app/actions/vectors-actions.c:118
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Fill the path with last values"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "Rechea a ruta cos últimos valores"
 
 #: app/actions/vectors-actions.c:123
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Stro_ke Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "Tra_zar camiño…"
 
 #: app/actions/vectors-actions.c:124
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "Pintar ao longo do camiño"
 
 #: app/actions/vectors-actions.c:129
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Stro_ke Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "Tra_zar camiño"
 
 #: app/actions/vectors-actions.c:130
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path with last values"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "Pintar ao longo do camiño cos últimos valores"
 
 #: app/actions/vectors-actions.c:135
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Co_py Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "Co_piar camiño"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "Pegar ca_miño"
 
 #: app/actions/vectors-actions.c:145
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "E_xport Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "E_xportar camiño…"
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "I_mportar camiño…"
 
@@ -9536,139 +9536,139 @@ msgstr "I_mportar camiño…"
 #, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Activar ou desactivar a visibilidade"
 
 #: app/actions/vectors-actions.c:164
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "Conectar os trazos"
 
 #: app/actions/vectors-actions.c:170
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "Bloquear a canle alfa"
 
 #: app/actions/vectors-actions.c:179
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Ningún"
 
 #: app/actions/vectors-actions.c:180
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Etiqueta de cor de ruta: limpar"
 
 #: app/actions/vectors-actions.c:185
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Azul"
 
 #: app/actions/vectors-actions.c:186
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Etiqueta de cor da ruta: Estabelecer a azul"
 
 #: app/actions/vectors-actions.c:191
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Verde"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Etiqueta de cor da ruta: Estabelecer a verde"
 
 #: app/actions/vectors-actions.c:197
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Amarelo"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Etiqueta de cor da ruta: Estabelecer a amarelo"
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Laranxa"
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Etiqueta de cor da ruta: Estabelecer a laranxa"
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "Marrón"
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Etiqueta de cor da ruta: Estabelecer a marrón"
 
 #: app/actions/vectors-actions.c:215
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Vermello"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Etiqueta de cor da ruta: Estabelecer a vermello"
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "Violeta"
 
 #: app/actions/vectors-actions.c:222
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Etiqueta de cor da ruta: Estabelecer a violeta"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Gris"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Etiqueta de cor da ruta: Estabelecer a gris"
 
 #: app/actions/vectors-actions.c:236
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Path to Sele_ction"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Camiño a selec_ción"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Camiño a selección"
 
 #: app/actions/vectors-actions.c:242
 #, fuzzy
 #| msgid "Selection from Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Selección desde camiño"
 
 #: app/actions/vectors-actions.c:243
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Replace selection with path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Substituír a selección con esta canle"
 
@@ -9676,15 +9676,15 @@ msgstr "Substituír a selección con esta canle"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Mask to Selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "_Máscara a selección"
 
 #: app/actions/vectors-actions.c:249
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Add path to selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Camiño a selección"
 
@@ -9692,15 +9692,15 @@ msgstr "Camiño a selección"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Subtract from Selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "_Subtraer da selección"
 
 #: app/actions/vectors-actions.c:255
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Subtract path from selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "_Subtraer da selección"
 
@@ -9708,80 +9708,80 @@ msgstr "_Subtraer da selección"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "_Intersect with Selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "_Intersección coa selección"
 
 #: app/actions/vectors-actions.c:261
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Intersect path with selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "_Intersección coa selección"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Selecció_n a camiño"
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "A _camiño"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Selección a camiño"
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selección a camiño (_Avanzado)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Opcións avanzadas"
 
 #: app/actions/vectors-actions.c:285
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Seleccionar o camiño s_uperior"
 
 #: app/actions/vectors-actions.c:286
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Selecciona o camiño máis arriba"
 
 #: app/actions/vectors-actions.c:291
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Seleccionar o camiño i_nferior"
 
 #: app/actions/vectors-actions.c:292
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Selecciona o camiño de máis abaixo"
 
 #: app/actions/vectors-actions.c:297
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Seleccionar camiño an_terior"
 
 #: app/actions/vectors-actions.c:298
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Selecciona o camiño sobre o camiño actual"
 
 #: app/actions/vectors-actions.c:303
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Seleccionar se_guinte camiño"
 
 #: app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Selecciona o vector debaixo do camiño actual"
 
@@ -9839,7 +9839,7 @@ msgstr[1] "Baixar a ruta á parte inferior"
 
 #: app/actions/vectors-commands.c:423
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "D_uplicate Path"
 msgid "Duplicate Paths"
 msgstr "D_uplicar camiño"
@@ -9853,7 +9853,7 @@ msgstr "Eliminar camiño"
 
 #: app/actions/vectors-commands.c:508
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Path to selection"
 msgid "Paths to selection"
 msgstr "Camiño a selección"
@@ -16240,7 +16240,7 @@ msgstr ""
 
 #: app/core/gimpsymmetry-tiling.c:140
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes X"
 msgstr "Conectar os trazos"
@@ -16253,7 +16253,7 @@ msgstr "Número _máximo de cores:"
 
 #: app/core/gimpsymmetry-tiling.c:148
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes Y"
 msgstr "Conectar os trazos"
@@ -18011,7 +18011,7 @@ msgstr "_Diálogo de apertura de ficheiros"
 
 #: app/dialogs/preferences-dialog.c:1495
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show _advanced color options"
 msgstr "Opcións avanzadas"
@@ -18607,7 +18607,7 @@ msgstr "Executar de novo a última extensión utilizada coa mesma configuración
 
 #: app/dialogs/preferences-dialog.c:2416
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show advanced color options"
 msgstr "Opcións avanzadas"
@@ -18865,7 +18865,7 @@ msgstr ""
 #. Stroke Options Dialog
 #: app/dialogs/preferences-dialog.c:2605
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selecti_on to Path"
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Selecció_n a camiño"
@@ -31995,7 +31995,7 @@ msgid "Undo History Menu"
 msgstr "Menú do historial de desfacer"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Menú Camiños"
 
@@ -32186,23 +32186,23 @@ msgstr "Menú Camiños"
 #~ msgid "Vector Toolpath Menu"
 #~ msgstr "Menu da ruta de ferramenta vector"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "Etiqueta de cor"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "D_esde camiño"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "_Engadir á selección"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "_Subtraer da selección"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "_Intersección coa selección"
 
@@ -32787,19 +32787,19 @@ msgstr "Menú Camiños"
 #~ msgid "Input _Methods"
 #~ msgstr "Niveis de entrada"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "_Visible"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "_Ligado"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "B_loquear posición"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag: Set to gray"
 #~ msgstr "Etiqueta de cor: Estabelecer a gris"
 

@@ -5718,284 +5718,284 @@ msgstr ""
 
 #: ../app/actions/vectors-actions.c:44
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "འགྲུལ་ལམ་དཀར་ཆག"
 
 #: ../app/actions/vectors-actions.c:48
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "འགྲུལ་ལམ་ལག་ཆས།(_T)"
 
 #: ../app/actions/vectors-actions.c:53
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "འགྲ྄ལ་ལམ་གྱི་ཁྱད་ཆོས ཞུན་དག་འབད།(_E)"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "འགྲ྄ལ་ལམ་གྱི་ཁྱད་ཆོས ཞུན་དག་འབད།"
 
 #: ../app/actions/vectors-actions.c:59
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "འགྲུལ་ལམ་གསརཔ།(_N)"
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "ཊེམ་པེལེཊི་གསརཔ གསར་བསྐྲུན་འབད།"
 
 #: ../app/actions/vectors-actions.c:65
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "བཇུག་མ་གྱི་གནས་གོང་གྱི ཐོག་ལུ འགྲུལམ་གསརཔ།"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "མཇུག་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་གནས་གོང་དང་ཅིག་ཁར་  བང་རིམ་གསརཔ་ཅིག་གསར་བསྐྲུན་འབད།"
 
 #: ../app/actions/vectors-actions.c:71
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "འགྲུལ་ལམ་གསརཔ།(_u)"
 
 #: ../app/actions/vectors-actions.c:72
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "འགྲུལ་ལམ་གསརཔ།"
 
 #: ../app/actions/vectors-actions.c:77
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "འགྲུལ་ལམ་བཏོན་གཏང་།(_D)"
 
 #: ../app/actions/vectors-actions.c:78
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "འགྲུལ་ལམ་བཏོན་གཏང་།"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "མཐོང་ཚུགས་པའི འགྲུལ་ལམ་ མཉམ་བསྡོམས་འབད།(_V)"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "ལམ་འགྲུལ་ཆེར་བསྐྱེད་འབད།(_R)"
 
 #: ../app/actions/vectors-actions.c:89
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "ལམ་འགྲུལ་ཆེར་བསྐྱེད་འབད།"
 
 #: ../app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "ལམ་འགྲུལ་ སྤྱི་ཏོག་ལུ་ ཆེར་བསྐྱེད་འབད།(_T)"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "ལམ་འགྲུལ་ སྤྱི་ཏོག་ལུ་ ཆེར་བསྐྱེད་འབད།"
 
 #: ../app/actions/vectors-actions.c:100
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "འོག་གི་འགྲུལ་ལམ།(_L)"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "འོག་གི་འགྲུལ་ལམ།"
 
 #: ../app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "འགྲུལ་ལམ་ཤགམ་ལུ མར་ཕཔ་འབད།(_B)"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "འགྲུལ་ལམ གཤམ་ལུ་མར་ ཕབ་འབད།"
 
 #: ../app/actions/vectors-actions.c:112
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "འགྲུལ་ལམ སི་ཊོ་རོག་འབད།(_k)"
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "སེལ་འཐུའི་མཐའ་ཐིག་བདའ་སྟེ་ཚོན་གཏང་།"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "འགྲུལ་ལམ སི་ཊོ་རོག་འབད།(_k)"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "མཇུག་མམ གནས་གོང་གི་ཐོག་ལས འགྲུལ་ལམ་ སི་ཊོརོག་འབད།"
 
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "འགརུལ་ལམ འདྲ་བཤུས་རྐྱབས།(_p)"
 
 #: ../app/actions/vectors-actions.c:129
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "འགྲུལ་ལམ་སྦྱར།(_h)"
 
 #: ../app/actions/vectors-actions.c:134
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "འགྲུལ་ལམ་ཕྱིར་འདྲེན་འབད།(_x)"
 
 #: ../app/actions/vectors-actions.c:139
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "འགྲུལ་ལམ་ནང་འདྲེན་འབད།(_m)"
 
 #: ../app/actions/vectors-actions.c:147
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "མཐོང་ཚུགས་པའི།(_v)"
 
 #: ../app/actions/vectors-actions.c:153
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "འབྲེལ་མཐུད།(_l)"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "སི་ཊོག་ མཐུད།"
 
 #: ../app/actions/vectors-actions.c:168
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "སེལ་འཐུ་ལུ འགྲུལ་ལམ་།(_c)"
 
 #: ../app/actions/vectors-actions.c:169
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "སེལ་འཐུ་ལུ འགྲུལ་ལམ་།"
 
 #: ../app/actions/vectors-actions.c:174
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "འགྲུལ་ལམ་ནང་ལས།(_o)"
 
 #: ../app/actions/vectors-actions.c:175
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr " རྒྱུ་ལམ་འདི་དང་ཅིག་ཁར་  སེལ་འཐུ་འདི་ཚབ་བཙུགས་འབད།"
 
 #: ../app/actions/vectors-actions.c:180
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "སེལ་འཐུ་ལུ་ ཁ་སྐོང་རྐྱབས།(_A)"
 
 #: ../app/actions/vectors-actions.c:181
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "སེལ་འཐུ་ལུ འགྲུལ་ལམ་།"
 
 #: ../app/actions/vectors-actions.c:186
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "སེལ་འཐུ་ནང་ལས་ཕབ།(_S)"
 
 #: ../app/actions/vectors-actions.c:187
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "སེལ་འཐུ་ནང་ལས་ཕབ།(_S)"
 
 #: ../app/actions/vectors-actions.c:192
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "སེལ་འཐུའི་ཐོག་ལས་ དུམ་བུར་བཅོད།"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "སེལ་འཐུའི་ཐོག་ལས་ དུམ་བུར་བཅོད།"
 
 #: ../app/actions/vectors-actions.c:201
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "འགྲུལ་ལམ་ལུ སེལ་འཐུ།(_o)"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "འགྲུལ་ལམ་ལུ སེལ་འཐུ།"
 
 #: ../app/actions/vectors-actions.c:207
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "འགྲུལ་ལམ་ ལུ་(_p)"
 
 #: ../app/actions/vectors-actions.c:213
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "འགྲུལ་ལམ་ལུ སེལ་ཐུ།(མཐོ་རིམ)(_A)"
 
 #: ../app/actions/vectors-actions.c:214
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "མཐོ་རིམ་ཅན་གྱི་འདམ་ཁ།"
 

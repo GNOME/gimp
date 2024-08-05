@@ -5649,284 +5649,284 @@ msgstr ""
 
 #: ../app/actions/vectors-actions.c:44
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "પાથો મેનુ"
 
 #: ../app/actions/vectors-actions.c:48
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path _Tool"
 msgstr "પાથ સાધન (_T)"
 
 #: ../app/actions/vectors-actions.c:53
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "પાથ લક્ષણોમાં ફેરફાર કરો (_E)..."
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "પાથ લક્ષણોમાં ફેરફાર કરો"
 
 #: ../app/actions/vectors-actions.c:59
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "નવો પાથ (_N)..."
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "નવી ટેમ્પલેટ બનાવો"
 
 #: ../app/actions/vectors-actions.c:65
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "છેલ્લી કિંમતો સાથેનો નવો પાથ"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "છેલ્લી કિંમતો સાથેનો નવો પાથ"
 
 #: ../app/actions/vectors-actions.c:71
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "નકલી પાથ (_u)"
 
 #: ../app/actions/vectors-actions.c:72
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "નકલી પાથ"
 
 #: ../app/actions/vectors-actions.c:77
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "પાથ કાઢી નાંખો (_D)"
 
 #: ../app/actions/vectors-actions.c:78
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "પાથ કાઢી નાંખો"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "દૃશ્ય પાથો ભેગા કરો (_V)"
 
 #: ../app/actions/vectors-actions.c:88
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "પાથ વધારો (_R)"
 
 #: ../app/actions/vectors-actions.c:89
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "પાથ વધારો"
 
 #: ../app/actions/vectors-actions.c:94
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "પાથને ટોચ સુધી વધારો (_T)"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "પાથને ટોચ સુધી વધારો"
 
 #: ../app/actions/vectors-actions.c:100
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "પાથ નીચો કરો (_L)"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "પાથ નીચો કરો"
 
 #: ../app/actions/vectors-actions.c:106
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "પાથને તળિયે સુધી નીચો કરો (_B)"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "પાથને તળિયે સુધી નીચો કરો"
 
 #: ../app/actions/vectors-actions.c:112
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "સ્ટ્રોક પાથ (_k)..."
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "પાથ સાથે લખાણ"
 
 #: ../app/actions/vectors-actions.c:118
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "સ્ટ્રોક પાથ (_k)"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "પાથને છેલ્લી કિંમતો સાથે સ્ટ્રોક કરો"
 
 #: ../app/actions/vectors-actions.c:124
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "પાથની નકલ કરો (_p)"
 
 #: ../app/actions/vectors-actions.c:129
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "પાથ ચોંટાડો (_h)"
 
 #: ../app/actions/vectors-actions.c:134
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "પાથની નિકાસ કરો (_x)..."
 
 #: ../app/actions/vectors-actions.c:139
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "પાથ આયાત કરો (_m)..."
 
 #: ../app/actions/vectors-actions.c:147
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "દૃશ્યમાન (_V)"
 
 #: ../app/actions/vectors-actions.c:153
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "કડી થયેલ (_L)"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "સ્ટ્રોક જોડો"
 
 #: ../app/actions/vectors-actions.c:168
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "પસંદગી માટેનો પાથ (_c)"
 
 #: ../app/actions/vectors-actions.c:169
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "પસંદગી માટેનો પાથ"
 
 #: ../app/actions/vectors-actions.c:174
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "પાથમાંથી (_o)"
 
 #: ../app/actions/vectors-actions.c:175
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "પાથની પસંદગી"
 
 #: ../app/actions/vectors-actions.c:180
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "પસંદગીમાં ઉમેરો (_A)"
 
 #: ../app/actions/vectors-actions.c:181
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "પસંદગી માટેનો પાથ"
 
 #: ../app/actions/vectors-actions.c:186
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "પસંદગીમાંથી બાદ કરો (_S)"
 
 #: ../app/actions/vectors-actions.c:187
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "પસંદગીમાંથી બાદ કરો (_S)"
 
 #: ../app/actions/vectors-actions.c:192
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "પસંદગી સાથેનો છેદગણ (_I)"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "પસંદગી સાથેનો છેદગણ (_I)"
 
 #: ../app/actions/vectors-actions.c:201
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "પાથની પસંદગી (_o)"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "પાથની પસંદગી"
 
 #: ../app/actions/vectors-actions.c:207
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "પાથ પ્રતિ (_P)"
 
 #: ../app/actions/vectors-actions.c:213
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "પાથ પ્રતિ પસંદગી (અદ્યતન) (_A)"
 
 #: ../app/actions/vectors-actions.c:214
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "અદ્યતન વિકલ્પો"
 

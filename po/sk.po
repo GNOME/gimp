@@ -2860,7 +2860,7 @@ msgstr "Ikona nástroja s nitkovým krížom"
 # tooltip
 #: ../app/actions/context-actions.c:733
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
@@ -2889,7 +2889,7 @@ msgstr ""
 # tooltip
 #: ../app/actions/context-actions.c:757
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
@@ -2955,7 +2955,7 @@ msgstr "Nahradí výber maskou vrstvy"
 # tooltip
 #: ../app/actions/context-actions.c:805
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Replace selection with path"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
@@ -7998,7 +7998,7 @@ msgstr "Pridať masku vrstvy"
 # tooltip
 #: ../app/actions/layers-actions.c:281
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
@@ -10291,222 +10291,222 @@ msgstr ""
 
 # názov ponuky
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Ponuka Cesty"
 
 # netbook page
 #: ../app/actions/vectors-actions.c:50
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "Farebná značka"
 
 #: ../app/actions/vectors-actions.c:54
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Upraviť _cestu"
 
 #: ../app/actions/vectors-actions.c:55
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Upraví aktívnu cestu"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Upraviť atribúty cesty..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Upraví atribúty cesty"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Nová cesta..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Vytvorí novú cestu..."
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Nová cesta s poslednými hodnotami"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Vytvorí novú vrstvu s naposledy použitými hodnotami"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "D_uplikovať cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "Duplikuje túto cestu"
 
 #: ../app/actions/vectors-actions.c:84
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "O_dstrániť cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Odstráni túto cestu"
 
 #: ../app/actions/vectors-actions.c:90
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Zlúčiť _viditeľné ciesty"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "Presunúť cestu _vyššie"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:96
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Presunie túto cestu pred cestu nad ňou"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Presunúť cestu na_vrch"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:102
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Presunie túto cestu nad všetky ostatné cesty"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Presunúť cestu _nižšie"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:108
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Presunie túto cestu za cestu pod ňou"
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Presunúť cestu na_spodok"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:114
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Presunie túto cestu pod všetky ostatné cesty"
 
 #: ../app/actions/vectors-actions.c:119
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_h..."
 msgstr "vyp_lniť cestu..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:120
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "Vyplní cestu"
 
 #: ../app/actions/vectors-actions.c:125
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "Vyplniť cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:126
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "Vyplní cestu s poslednými hodnotami"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "_Obkresliť cestu..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:132
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "Kreslí pozdĺž cesty"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:137
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "_Obkresliť cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:138
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "Kreslí pozdĺž cesty s poslednými hodnotami"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "_Kopírovať cestu"
 
 #: ../app/actions/vectors-actions.c:148
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "_Vložiť cestu"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "E_xportovať cestu..."
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "I_mportovať cestu..."
 
 # tooltip
 #: ../app/actions/vectors-actions.c:166
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Prepnúť _viditeľnosť cesty"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:172
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Linked State"
 msgstr "Prepnúť stav _previazanosti cesty"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "Uzamknúť _obtiahnutia cesty"
 
 #: ../app/actions/vectors-actions.c:184
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "Uza_mknúť pozíciu cesty"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
 #| msgid "None"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Žiadne"
 
@@ -10514,56 +10514,56 @@ msgstr "Žiadne"
 #: ../app/actions/vectors-actions.c:194
 #, fuzzy
 #| msgid "Color Management"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Správa farieb"
 
 #: ../app/actions/vectors-actions.c:199
 #, fuzzy
 #| msgid "Blue"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Modrá"
 
 #: ../app/actions/vectors-actions.c:200
 #, fuzzy
 #| msgid "Color Profile"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Profil farieb"
 
 #: ../app/actions/vectors-actions.c:205
 #, fuzzy
 #| msgid "Green"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Zelená"
 
 #: ../app/actions/vectors-actions.c:206
 #, fuzzy
 #| msgid "Color Profile"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Profil farieb"
 
 #: ../app/actions/vectors-actions.c:211
 #, fuzzy
 #| msgid "Yellow"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Žltá"
 
 #: ../app/actions/vectors-actions.c:212
 #, fuzzy
 #| msgid "Color Profile"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Profil farieb"
 
 #: ../app/actions/vectors-actions.c:217
 #, fuzzy
 #| msgid "Range"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "Miera"
 
@@ -10571,184 +10571,184 @@ msgstr "Miera"
 #, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Nastaví vlastnú mierku"
 
 #: ../app/actions/vectors-actions.c:223
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:224
 #, fuzzy
 #| msgid "Color Profile"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Profil farieb"
 
 #: ../app/actions/vectors-actions.c:229
 #, fuzzy
 #| msgid "Red"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Červená"
 
 #: ../app/actions/vectors-actions.c:230
 #, fuzzy
 #| msgid "Color Profile"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Profil farieb"
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr ""
 
 #: ../app/actions/vectors-actions.c:236
 #, fuzzy
 #| msgid "Color Profile"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Profil farieb"
 
 #: ../app/actions/vectors-actions.c:241
 #, fuzzy
 #| msgid "Grayscale"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Odtiene šedej"
 
 #: ../app/actions/vectors-actions.c:242
 #, fuzzy
 #| msgid "Desaturate Tool: Turn colors into shades of gray"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Nástroj odfarbiť: Prevedie farby do odtieňov sivej"
 
 #: ../app/actions/vectors-actions.c:250
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "Previesť _cestu na výber"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:251
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Prevedie cestu na výber"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "Nahradiť cest_ou"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:257
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "Nahradí výber touto cestou"
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "Pri_dať do výberu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "Pridá cestu do výberu"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "Odo_brať z výberu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "Odoberie cestu z výberu"
 
 #: ../app/actions/vectors-actions.c:274
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "Pr_ienik s výberom"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:275
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "Urobí prienik cesty s výberom"
 
 #: ../app/actions/vectors-actions.c:283
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Previesť _výber na cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Prevedie výber na cestu"
 
 #: ../app/actions/vectors-actions.c:289
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "_Previesť na cestu"
 
 #: ../app/actions/vectors-actions.c:295
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Previesť výber na cestu (_pokročilé)"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:296
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Pokročilé voľby prevodu"
 
 #: ../app/actions/vectors-actions.c:304
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Vybrať naj_vyššiu cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:305
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Vyberie najvyššiu cestu"
 
 #: ../app/actions/vectors-actions.c:310
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Vybrať naj_nižšiu cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:311
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Vyberie najnižšiu cestu"
 
 #: ../app/actions/vectors-actions.c:316
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Vybrať _predchádzajúcu cestu"
 
 # tooltip
 #: ../app/actions/vectors-actions.c:317
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Vyberie cestu nad aktuálnou cestou"
 
 #: ../app/actions/vectors-actions.c:322
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Vybrať _nasledujúcu cestu"
 
 #: ../app/actions/vectors-actions.c:323
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Vyberie cestu pod aktuálnou cestou"
 
@@ -16749,7 +16749,7 @@ msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:139
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes X"
 msgstr "Uzamknúť _obtiahnutia"
@@ -16763,7 +16763,7 @@ msgstr "_Maximálny počet farieb:"
 
 #: ../app/core/gimpsymmetry-tiling.c:147
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes Y"
 msgstr "Uzamknúť _obtiahnutia"
@@ -18356,7 +18356,7 @@ msgstr "Dialógové okná filtrov"
 # tooltip
 #: ../app/dialogs/preferences-dialog.c:1483
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show _advanced color options"
 msgstr "Pokročilé voľby prevodu"
@@ -18913,7 +18913,7 @@ msgstr "Odstrániť vybrané nastavenia"
 # tooltip
 #: ../app/dialogs/preferences-dialog.c:2326
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show advanced color options"
 msgstr "Pokročilé voľby prevodu"
@@ -19193,7 +19193,7 @@ msgstr "Plávajúci výber"
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2515
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selecti_on to Path"
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Previesť _výber na cestu"
@@ -25492,7 +25492,7 @@ msgstr "Voľby zmiešania"
 #. The Color Options expander
 #: ../app/tools/gimpfiltertool.c:1134
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Advanced Color Options"
 msgstr "Pokročilé voľby prevodu"
@@ -31231,7 +31231,7 @@ msgstr "rozstrapkaný"
 #~ msgstr "_Previazané"
 
 #, fuzzy
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "L_ock position"
 #~ msgctxt "layers-action"
 #~ msgid "L_ock position"
@@ -31245,19 +31245,19 @@ msgstr "rozstrapkaný"
 #~ msgid "Clear color tag"
 #~ msgstr "Vymaže celý text"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Path _Tool"
 #~ msgstr "Nástroj _cesta"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "_Viditeľná"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "_Zreťazená"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "Uzamknúť _pozíciu"
 
@@ -31265,7 +31265,7 @@ msgstr "rozstrapkaný"
 #, fuzzy
 #~| msgctxt "text-editor-action"
 #~| msgid "Clear all text"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Clear color tag"
 #~ msgstr "Vymaže celý text"
 

@@ -8941,360 +8941,360 @@ msgstr ""
 
 #: ../app/actions/vectors-actions.c:46
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "बाटोहरू"
 
 #. abused
 #: ../app/actions/vectors-actions.c:50
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "ट्याग"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Th"
 
 #: ../app/actions/vectors-actions.c:55
 #, fuzzy
 #| msgid "Export the active path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "सक्रिय बाटो सार्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:60
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "बाटो गुण सम्पादन गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:61
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "बाटो गुण सम्पादन गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "नयाँ बाटो"
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "नयाँ बाटो सिर्जना गर्न क्लिक गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:72
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "नयाँ बाटो"
 
 #: ../app/actions/vectors-actions.c:73
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "अन्तिममा प्रयोग गरिएको मानहरूसँग नयाँ तह सिर्जना गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:78
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "पाथ"
 
 #: ../app/actions/vectors-actions.c:79
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "नक्कल"
 
 #: ../app/actions/vectors-actions.c:84
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "हटाउनुहोस"
 
 #: ../app/actions/vectors-actions.c:85
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "हटाउनुहोस"
 
 #: ../app/actions/vectors-actions.c:90
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "आयात गरिएका बाटोहरू गाभ्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:95
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "तह उठाउनुहोस्"
 
 #: ../app/actions/vectors-actions.c:96
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "उपकरणबाकस बढाउनुहोस्"
 
 #: ../app/actions/vectors-actions.c:101
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "चयन गरिको वस्तु माथि उठाउनुहोस्"
 
 #: ../app/actions/vectors-actions.c:102
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "चयन गरिको वस्तु माथि उठाउनुहोस्"
 
 #: ../app/actions/vectors-actions.c:107
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "निम्न"
 
 #: ../app/actions/vectors-actions.c:108
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "निम्न"
 
 #: ../app/actions/vectors-actions.c:113
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "चयन गरिको वस्तु तल झार्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:114
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "चयन गरिको वस्तु तल झार्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path..."
 msgstr "यससँग भर्नुहोस्:"
 
 #: ../app/actions/vectors-actions.c:120
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "यससँग भर्नुहोस्:"
 
 #: ../app/actions/vectors-actions.c:125
 #, fuzzy
 #| msgid "Flip Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "यसले भर्नुहोस्:"
 
 #: ../app/actions/vectors-actions.c:126
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "अन्तिम दृश्य पुनर्स्थापना मार्ग"
 
 #: ../app/actions/vectors-actions.c:131
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "स्पाईक कोण (-१: अनियमित):"
 
 #: ../app/actions/vectors-actions.c:132
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "रङ लगाउनुहोस्"
 
 #: ../app/actions/vectors-actions.c:137
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "पाथ"
 
 #: ../app/actions/vectors-actions.c:138
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "अन्तिम मानहरू सहित मार्ग माथि रङ गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:143
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "मा सबै सम्पर्कहरू प्रतिलिपि बनाउनुहोस्..."
 
 #: ../app/actions/vectors-actions.c:148
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "_टाँस्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:153
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "पुस्तकचिनो निर्यात गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:158
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "आयात गर्नुहोस्..."
 
 #: ../app/actions/vectors-actions.c:166
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Visible"
 msgstr "दृश्यात्मक"
 
 #: ../app/actions/vectors-actions.c:172
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Linked"
 msgstr "लिङ्क गरिएको"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock strokes"
 msgstr "स्ट्रोकहरू जडान गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:184
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock position"
 msgstr "अवस्था (% मा)"
 
 #. abused
 #: ../app/actions/vectors-actions.c:193
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "None"
 
 #: ../app/actions/vectors-actions.c:194
 #, fuzzy
 #| msgid "Color Balance"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Clear"
 msgstr "सफा गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:199
 #, fuzzy
 #| msgid "Blue"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "नीलो"
 
 #: ../app/actions/vectors-actions.c:200
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Blue"
 msgstr "रङ सेट"
 
 #: ../app/actions/vectors-actions.c:205
 #, fuzzy
 #| msgid "Green"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "हरियो"
 
 #: ../app/actions/vectors-actions.c:206
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Green"
 msgstr "रङ सेट"
 
 #: ../app/actions/vectors-actions.c:211
 #, fuzzy
 #| msgid "Yellow"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "पहेंलो"
 
 #: ../app/actions/vectors-actions.c:212
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "जहाँ यो ट्यागले पृष्ठभूमिको रङ्गलाई असर गर्छ"
 
 #: ../app/actions/vectors-actions.c:217
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "सुन्तला"
 
 #: ../app/actions/vectors-actions.c:218
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Orange"
 msgstr "जहाँ यो ट्यागले पृष्ठभूमिको रङ्गलाई असर गर्छ"
 
 #: ../app/actions/vectors-actions.c:223
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "खैरो"
 
 #: ../app/actions/vectors-actions.c:224
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Brown"
 msgstr "जहाँ यो ट्यागले पृष्ठभूमिको रङ्गलाई असर गर्छ"
 
 #: ../app/actions/vectors-actions.c:229
 #, fuzzy
 #| msgid "Red"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "रातो"
 
 #: ../app/actions/vectors-actions.c:230
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Red"
 msgstr "हटाउन रातो आखा रङका लागि थ्रेसहोल्ड"
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "बैजनी"
 
 #: ../app/actions/vectors-actions.c:236
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to Violet"
 msgstr "जहाँ यो ट्यागले पृष्ठभूमिको रङ्गलाई असर गर्छ"
 
 #: ../app/actions/vectors-actions.c:241
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "ग्रे"
 
 #: ../app/actions/vectors-actions.c:242
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag: Set to gray"
 msgstr "जहाँ यो ट्यागले पृष्ठभूमिको रङ्गलाई असर गर्छ"
 
 #: ../app/actions/vectors-actions.c:250
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "बाटो "
 
 #: ../app/actions/vectors-actions.c:251
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr ""
 "चयनमा बाटो\n"
@@ -9304,127 +9304,127 @@ msgstr ""
 
 #: ../app/actions/vectors-actions.c:256
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "पङ्क्ति बाट:"
 
 #: ../app/actions/vectors-actions.c:257
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "हालको चयन प्रतिस्थापन गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:262
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "चयन थप गर्नुहोस् (स्रोत सक्रिय फ्रेम हो)"
 
 #: ../app/actions/vectors-actions.c:263
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "बाटोमा चयन"
 
 #: ../app/actions/vectors-actions.c:268
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "फ्रेम घटाउनुहोस् (स्रोत सक्रिय फ्रेम हो)"
 
 #: ../app/actions/vectors-actions.c:269
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "तालको चयनबाट घटाउन तान्नुहो्स क्लिक गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:274
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "चयन काट्नुहोस् (स्रोत सक्रिय फ्रेम हो)"
 
 #: ../app/actions/vectors-actions.c:275
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "हालको चयनमा प्रतिच्छेदन गर्न तान्नुहोस् क्लिक गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:283
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "बाटो "
 
 #: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "बाटोमा चयन"
 
 #: ../app/actions/vectors-actions.c:289
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "बाटो "
 
 #: ../app/actions/vectors-actions.c:295
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "उन्नत सेटिङ बाटोमा चयन गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:296
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "उन्नत विकल्पहरू"
 
 #: ../app/actions/vectors-actions.c:304
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "माथितिर"
 
 #: ../app/actions/vectors-actions.c:305
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "पाथ"
 
 #: ../app/actions/vectors-actions.c:310
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "तलतिर"
 
 #: ../app/actions/vectors-actions.c:311
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "पाथ"
 
 #: ../app/actions/vectors-actions.c:316
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "अघिल्लो चयन गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:317
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "हालको मार्ग प्रतिलिपि गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:322
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "पछिल्लो चयन गर्नुहोस्"
 
 #: ../app/actions/vectors-actions.c:323
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "हालको तह मुनि तह चयन गर्नुहोस्"
 
@@ -25482,7 +25482,7 @@ msgstr "अस्पष्ट चयन"
 #~ msgstr "छवि किनाराहरूमा छनौट ताल्चा गर्नुहोस्"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Path _Tool"
 #~ msgstr "बाटो उपकरण"
 

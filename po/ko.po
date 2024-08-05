@@ -1459,7 +1459,7 @@ msgstr "도구"
 
 #: ../app/actions/actions.c:238
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Path _Tool"
 msgid "Path Toolpath"
 msgstr "경로 도구(_T)"
@@ -8433,7 +8433,7 @@ msgstr "알파를 선택으로"
 
 #: ../app/actions/layers-commands.c:1739 ../app/core/gimpchannel-select.c:430
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Subtract path from selection"
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
@@ -8441,7 +8441,7 @@ msgstr "선택에서 경로를 뺍니다"
 
 #: ../app/actions/layers-commands.c:1743 ../app/core/gimpchannel-select.c:436
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Intersect path with selection"
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
@@ -10189,421 +10189,421 @@ msgid "_Reverse Stroke"
 msgstr "스트로크 렌더"
 
 #: ../app/actions/vectors-actions.c:46
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "경로 메뉴"
 
 #: ../app/actions/vectors-actions.c:50
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Color Tag"
 msgstr "색"
 
 #: ../app/actions/vectors-actions.c:54
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "팔레트를 편집합니다"
 
 #: ../app/actions/vectors-actions.c:55
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "현재 경로 내보내기"
 
 #: ../app/actions/vectors-actions.c:60
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "경로 속성 편집(_E)..."
 
 #: ../app/actions/vectors-actions.c:61
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "경로 속성을 편집합니다"
 
 #: ../app/actions/vectors-actions.c:66
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "새 경로(_N)..."
 
 #: ../app/actions/vectors-actions.c:67
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "새 경로 만들기..."
 
 #: ../app/actions/vectors-actions.c:72
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "마지막 사용값으로 새 경로 만들기(_N)"
 
 #: ../app/actions/vectors-actions.c:73
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "최근 사용 값으로 새 경로를 만듭니다"
 
 #: ../app/actions/vectors-actions.c:78
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Path"
 msgstr "경로 복제(_U)"
 
 #: ../app/actions/vectors-actions.c:79
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate this path"
 msgstr "이 경로를 복제합니다"
 
 #: ../app/actions/vectors-actions.c:84
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "경로 삭제(_D)"
 
 #: ../app/actions/vectors-actions.c:85
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "이 경로를 삭제합니다"
 
 #: ../app/actions/vectors-actions.c:90
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "보이는 경로 합치기(_V)"
 
 #: ../app/actions/vectors-actions.c:95
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "경로 올리기(_R)"
 
 #: ../app/actions/vectors-actions.c:96
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "경로를 올립니다"
 
 #: ../app/actions/vectors-actions.c:101
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "경로를 맨 위로 올리기(_T)"
 
 #: ../app/actions/vectors-actions.c:102
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "경로를 맨 위로 올립니다"
 
 #: ../app/actions/vectors-actions.c:107
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "경로 내리기(_L)"
 
 #: ../app/actions/vectors-actions.c:108
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "경로를 내립니다"
 
 #: ../app/actions/vectors-actions.c:113
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "경로를 맨 아래로 내리기(_B)"
 
 #: ../app/actions/vectors-actions.c:114
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "경로를 맨 아래로 내립니다"
 
 #: ../app/actions/vectors-actions.c:119
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_h..."
 msgstr "새 경로(_N)..."
 
 #: ../app/actions/vectors-actions.c:120
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path"
 msgstr "경로를 따라 그립니다"
 
 #: ../app/actions/vectors-actions.c:125
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Path"
 msgstr "경로 뒤집기"
 
 #: ../app/actions/vectors-actions.c:126
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the path with last values"
 msgstr "마지막 사용 값으로 경로를 따라 그립니다"
 
 #: ../app/actions/vectors-actions.c:131
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path..."
 msgstr "경로 따라 그리기(_K)..."
 
 #: ../app/actions/vectors-actions.c:132
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path"
 msgstr "경로를 따라 그립니다"
 
 #: ../app/actions/vectors-actions.c:137
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Path"
 msgstr "경로 따라 그리기(_K)"
 
 #: ../app/actions/vectors-actions.c:138
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the path with last values"
 msgstr "마지막 사용 값으로 경로를 따라 그립니다"
 
 #: ../app/actions/vectors-actions.c:143
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Path"
 msgstr "경로 복사하기(_P)"
 
 #: ../app/actions/vectors-actions.c:148
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "경로 붙여넣기(_H)"
 
 #: ../app/actions/vectors-actions.c:153
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Path..."
 msgstr "경로 내보내기(_X)..."
 
 #: ../app/actions/vectors-actions.c:158
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "경로 가져오기(_M)..."
 
 #: ../app/actions/vectors-actions.c:166
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "보임 여부를 전환합니다"
 
 #: ../app/actions/vectors-actions.c:172
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "스트로크 잠그기(_O)"
 
 #: ../app/actions/vectors-actions.c:178
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "선택 영역을 경로로(_O)"
 
 #: ../app/actions/vectors-actions.c:187
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "없음"
 
 #: ../app/actions/vectors-actions.c:188
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "경로 색상 태그: 모두 제거"
 
 #: ../app/actions/vectors-actions.c:193
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "파랑"
 
 #: ../app/actions/vectors-actions.c:194
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "경로 색상 태그: 청색으로 설정"
 
 #: ../app/actions/vectors-actions.c:199
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "초록"
 
 #: ../app/actions/vectors-actions.c:200
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "경로 색상 태그: 녹색으로 설정"
 
 #: ../app/actions/vectors-actions.c:205
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "노란색"
 
 #: ../app/actions/vectors-actions.c:206
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "경로 색상 태그: 황색으로 설정"
 
 #: ../app/actions/vectors-actions.c:211
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr "범위"
 
 #: ../app/actions/vectors-actions.c:212
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "경로 색상 태그: 주황으로 설정"
 
 #: ../app/actions/vectors-actions.c:217
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr "갈색"
 
 #: ../app/actions/vectors-actions.c:218
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "경로 색상 태그: 갈색으로 설정"
 
 #: ../app/actions/vectors-actions.c:223
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "빨강"
 
 #: ../app/actions/vectors-actions.c:224
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "경로 색상 테그: 적색으로 설정"
 
 #: ../app/actions/vectors-actions.c:229
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr "자홍"
 
 #: ../app/actions/vectors-actions.c:230
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "경로 색상 태그: 자홍색으로 설정"
 
 #: ../app/actions/vectors-actions.c:235
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "회색"
 
 #: ../app/actions/vectors-actions.c:236
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "경로 색상 태그: 회색으로 설정"
 
 #: ../app/actions/vectors-actions.c:244
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to Sele_ction"
 msgstr "경로를 선택으로(_C)"
 
 #: ../app/actions/vectors-actions.c:245
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "경로를 선택으로"
 
 #: ../app/actions/vectors-actions.c:250
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fr_om Path"
 msgstr "경로에서(_O)"
 
 #: ../app/actions/vectors-actions.c:251
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with path"
 msgstr "선택을 경로로 교체"
 
 #: ../app/actions/vectors-actions.c:256
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add to Selection"
 msgstr "선택에 추가(_A)"
 
 #: ../app/actions/vectors-actions.c:257
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add path to selection"
 msgstr "선택에 경로를 추가합니다"
 
 #: ../app/actions/vectors-actions.c:262
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract from Selection"
 msgstr "선택에서 빼기(_S)"
 
 #: ../app/actions/vectors-actions.c:263
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract path from selection"
 msgstr "선택에서 경로를 뺍니다"
 
 #: ../app/actions/vectors-actions.c:268
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect with Selection"
 msgstr "선택 영역 겹치기(_I)"
 
 #: ../app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect path with selection"
 msgstr "선택 영역과 경로 겹치기(_I)"
 
 #: ../app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "선택 영역을 경로로(_O)"
 
 #: ../app/actions/vectors-actions.c:278 ../app/actions/vectors-actions.c:284
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "선택 영역을 경로로 변환합니다"
 
 #: ../app/actions/vectors-actions.c:283
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "경로로(_P)"
 
 #: ../app/actions/vectors-actions.c:289
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "선택 영역을 경로로(고급)(_A)"
 
 #: ../app/actions/vectors-actions.c:290
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "고급 옵션"
 
 #: ../app/actions/vectors-actions.c:298
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "맨 위 레이어 선택(_T)"
 
 #: ../app/actions/vectors-actions.c:299
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "맨 위 레이어를 선택합니다"
 
 #: ../app/actions/vectors-actions.c:304
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "바닥 레이어 선택(_B)"
 
 #: ../app/actions/vectors-actions.c:305
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "최하위 레이어를 선택합니다"
 
 #: ../app/actions/vectors-actions.c:310
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "이전 레이어 선택(_P)"
 
 #: ../app/actions/vectors-actions.c:311
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "현재 레이어 위 레이어를 선택합니다"
 
 #: ../app/actions/vectors-actions.c:316
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "다음 레이어 선택(_N)"
 
 #: ../app/actions/vectors-actions.c:317
 #, fuzzy
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "현재 레이어 아래 레이어를 선택합니다"
 
@@ -14000,7 +14000,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:1469
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
@@ -30194,7 +30194,7 @@ msgstr "퍼지"
 #~ msgstr "입력기(_M)"
 
 #, fuzzy
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Toggle Path _Linked State"
 #~ msgstr "연결 상태을 전환합니다"
 
@@ -30600,11 +30600,11 @@ msgstr "퍼지"
 #~ msgid "_Lock selection to image edges"
 #~ msgstr "선택을 이미지 경계로 잠그기(_L)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "보이기(_V)"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "연계(_L)"
 

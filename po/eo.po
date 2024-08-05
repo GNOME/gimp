@@ -526,7 +526,7 @@ msgstr "Iloj"
 
 #: app/actions/actions.c:238
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Path _Tool"
 msgid "Path Toolpath"
 msgstr "_Vojoilo"
@@ -2112,7 +2112,7 @@ msgstr "Ila piktogramo kun kruceto"
 
 #: app/actions/context-actions.c:699
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
@@ -2140,7 +2140,7 @@ msgstr ""
 
 #: app/actions/context-actions.c:723
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
@@ -2202,7 +2202,7 @@ msgstr "Anstataŭigi la elekton per la tavolmasko"
 
 #: app/actions/context-actions.c:771
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Replace selection with path"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
@@ -6866,7 +6866,7 @@ msgstr "Ŝlosi/malŝlosi alfa-kanalon"
 
 #: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:549
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Lock position"
 msgstr "Ŝ_losi liniojn"
@@ -7256,7 +7256,7 @@ msgstr "Aldoni maskon kiu taŭgigas ne-detruan redakton de la travidebleco"
 
 #: app/actions/layers-actions.c:242
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add La_yer Masks with Last Values"
@@ -7264,7 +7264,7 @@ msgstr "Krei novan tavolon kun lastuzataj valoroj"
 
 #: app/actions/layers-actions.c:244
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
@@ -8093,7 +8093,7 @@ msgstr "Alfa laŭ elekto"
 
 #: app/actions/layers-commands.c:1779 app/core/gimpchannel-select.c:430
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Subtract path from selection"
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
@@ -8101,7 +8101,7 @@ msgstr "Depreni vojon de la elekton"
 
 #: app/actions/layers-commands.c:1783 app/core/gimpchannel-select.c:436
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Intersect path with selection"
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
@@ -9801,204 +9801,204 @@ msgstr "Inversigi"
 #, fuzzy
 #| msgctxt "palettes-action"
 #| msgid "Edit palette"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit Pa_th"
 msgstr "Redakti pa_don"
 
 #: app/actions/vectors-actions.c:47
 #, fuzzy
 #| msgid "Export the active path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit the active path"
 msgstr "Elporti la aktivan vojon"
 
 #: app/actions/vectors-actions.c:52
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Redakti vojoecojn..."
 
 #: app/actions/vectors-actions.c:53
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Edit path attributes"
 msgstr "Redakti vojoecojn"
 
 #: app/actions/vectors-actions.c:58
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path..."
 msgstr "_Nova vojo..."
 
 #: app/actions/vectors-actions.c:59
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path..."
 msgstr "Krei novan vojon..."
 
 #: app/actions/vectors-actions.c:64
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_New Path with last values"
 msgstr "_Nova vojo per lastaj valoroj"
 
 #: app/actions/vectors-actions.c:65
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Create a new path with last used values"
 msgstr "Krei novan tavolon kun lastuzataj valoroj"
 
 #: app/actions/vectors-actions.c:70
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "D_uplicate Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "D_uplicate Paths"
 msgstr "_Duplikati vojon"
 
 #: app/actions/vectors-actions.c:71
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Duplicate this path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Duplicate these paths"
 msgstr "Duplikati tiun vojon"
 
 #: app/actions/vectors-actions.c:76
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Delete Path"
 msgstr "_Forigi vojon"
 
 #: app/actions/vectors-actions.c:77
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Delete this path"
 msgstr "Forigi tiun vojon"
 
 #: app/actions/vectors-actions.c:82
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Merge _Visible Paths"
 msgstr "Kunfandi _videblajn vojojn"
 
 #: app/actions/vectors-actions.c:87
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Raise Path"
 msgstr "_Suprentiri vojon"
 
 #: app/actions/vectors-actions.c:88
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path"
 msgstr "Suprentiri tiun vojon"
 
 #: app/actions/vectors-actions.c:93
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise Path to _Top"
 msgstr "Suprentiri vojon ĝis la _pinto"
 
 #: app/actions/vectors-actions.c:94
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Raise this path to the top"
 msgstr "Suprentiri tiun vojon ĝis la pinto"
 
 #: app/actions/vectors-actions.c:99
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Lower Path"
 msgstr "Su_bentiri vojon"
 
 #: app/actions/vectors-actions.c:100
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path"
 msgstr "Subentiri tiun vojon"
 
 #: app/actions/vectors-actions.c:105
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower Path to _Bottom"
 msgstr "Subentiri vojon ĝis la _fundo"
 
 #: app/actions/vectors-actions.c:106
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Lower this path to the bottom"
 msgstr "Subentiri tiun vojon ĝis la fundo"
 
 #: app/actions/vectors-actions.c:111
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Fill Pat_h..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Pat_hs..."
 msgstr "Plenumi _vojon..."
 
 #: app/actions/vectors-actions.c:112
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths"
 msgstr "Pentri laŭ la vojo"
 
 #: app/actions/vectors-actions.c:117
 #, fuzzy
 #| msgid "Flip Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill Paths"
 msgstr "Renversi vojon"
 
 #: app/actions/vectors-actions.c:118
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path with last values"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Fill the paths with last values"
 msgstr "Pentri laŭ la vojo per lastaj valoroj"
 
 #: app/actions/vectors-actions.c:123
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Stro_ke Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths..."
 msgstr "Kon_turi vojon..."
 
 #: app/actions/vectors-actions.c:124
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths"
 msgstr "Pentri laŭ la vojo"
 
 #: app/actions/vectors-actions.c:129
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Stro_ke Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Stro_ke Paths"
 msgstr "Kon_turi vojon"
 
 #: app/actions/vectors-actions.c:130
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Paint along the path with last values"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paint along the paths with last values"
 msgstr "Pentri laŭ la vojo per lastaj valoroj"
 
 #: app/actions/vectors-actions.c:135
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Co_py Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Co_py Paths"
 msgstr "Ko_pii vojon"
 
 #: app/actions/vectors-actions.c:140
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paste Pat_h"
 msgstr "En_meti vojon"
 
 #: app/actions/vectors-actions.c:145
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "E_xport Path..."
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "E_xport Paths..."
 msgstr "E_lsporti vojon..."
 
 #: app/actions/vectors-actions.c:150
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "E_nporti vojon..."
 
@@ -10006,29 +10006,29 @@ msgstr "E_nporti vojon..."
 #, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "Baskuligi padan _videblecon"
 
 #: app/actions/vectors-actions.c:164
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "Ŝ_losi liniojn"
 
 #: app/actions/vectors-actions.c:170
 #, fuzzy
 #| msgid "Reposition channel"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "L_oki pozicion de kanalon"
 
 #: app/actions/vectors-actions.c:179
 #, fuzzy
 #| msgid "None"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "None"
 msgstr "Nenio"
 
@@ -10036,201 +10036,201 @@ msgstr "Nenio"
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Koloro"
 
 #: app/actions/vectors-actions.c:185
 #, fuzzy
 #| msgid "Blue"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Blue"
 msgstr "Bluo"
 
 #: app/actions/vectors-actions.c:186
 #, fuzzy
 #| msgid "Save Error Log to File"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Konservi ĵurnalon de la eraroj en dosiero"
 
 #: app/actions/vectors-actions.c:191
 #, fuzzy
 #| msgid "Green"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Green"
 msgstr "Verdo"
 
 #: app/actions/vectors-actions.c:192
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr ""
 
 #: app/actions/vectors-actions.c:197
 #, fuzzy
 #| msgid "Yellow"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Flavo"
 
 #: app/actions/vectors-actions.c:198
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr ""
 
 #: app/actions/vectors-actions.c:203
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Orange"
 msgstr ""
 
 #: app/actions/vectors-actions.c:204
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr ""
 
 #: app/actions/vectors-actions.c:209
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Brown"
 msgstr ""
 
 #: app/actions/vectors-actions.c:210
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr ""
 
 #: app/actions/vectors-actions.c:215
 #, fuzzy
 #| msgid "Red"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Red"
 msgstr "Ruĝo"
 
 #: app/actions/vectors-actions.c:216
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr ""
 
 #: app/actions/vectors-actions.c:221
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Violet"
 msgstr ""
 
 #: app/actions/vectors-actions.c:222
 #, fuzzy
 #| msgid "Save Error Log to File"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Konservi ĵurnalon de la eraroj en dosiero"
 
 #: app/actions/vectors-actions.c:227
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Gray"
 msgstr "Grizo"
 
 #: app/actions/vectors-actions.c:228
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr ""
 
 #: app/actions/vectors-actions.c:236
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Path to Sele_ction"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Vojo al ele_kto"
 
 #: app/actions/vectors-actions.c:237
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Vojo al elekto"
 
 #: app/actions/vectors-actions.c:242
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selecti_on to Path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Elekt_o laŭ vojo"
 
 #: app/actions/vectors-actions.c:243
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Replace selection with path"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Anstataŭigi la elekton per tiu vojo"
 
 #: app/actions/vectors-actions.c:248
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Add path to selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "Aldoni vojon al elekto"
 
 #: app/actions/vectors-actions.c:249
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Add path to selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Aldoni vojon al elekto"
 
 #: app/actions/vectors-actions.c:254
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Subtract path from selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "Depreni vojon de la elekton"
 
 #: app/actions/vectors-actions.c:255
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Subtract path from selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "Depreni vojon de la elekton"
 
 #: app/actions/vectors-actions.c:260
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Intersect path with selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "Sekci vojon kun la elekto"
 
 #: app/actions/vectors-actions.c:261
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Intersect path with selection"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "Sekci vojon kun la elekto"
 
 #: app/actions/vectors-actions.c:269
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "Elekt_o laŭ vojo"
 
 #: app/actions/vectors-actions.c:270
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Al _vojo"
 
 #: app/actions/vectors-actions.c:271
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Elekto laŭ vojo"
 
 #: app/actions/vectors-actions.c:276
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Elekto laŭ vojo (_speciale)"
 
 #: app/actions/vectors-actions.c:277
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Specialaj agordoj"
 
@@ -10238,7 +10238,7 @@ msgstr "Specialaj agordoj"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Elekti _pintan tavolon"
 
@@ -10246,7 +10246,7 @@ msgstr "Elekti _pintan tavolon"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Elekti la pintan tavolon"
 
@@ -10254,7 +10254,7 @@ msgstr "Elekti la pintan tavolon"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "Elekti la _fundan tavolon"
 
@@ -10262,7 +10262,7 @@ msgstr "Elekti la _fundan tavolon"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Elekti la fundan tavolon"
 
@@ -10270,7 +10270,7 @@ msgstr "Elekti la fundan tavolon"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "Elekti la _antaŭan tavolon"
 
@@ -10278,7 +10278,7 @@ msgstr "Elekti la _antaŭan tavolon"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Elekti la tavalon super la nuna tavalo"
 
@@ -10286,7 +10286,7 @@ msgstr "Elekti la tavalon super la nuna tavalo"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Elekti la _sekvan tavolon"
 
@@ -10294,7 +10294,7 @@ msgstr "Elekti la _sekvan tavolon"
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Select the vector below the current path"
 msgstr "Elekti la tavalon sub la nuna tavalo"
 
@@ -10352,7 +10352,7 @@ msgstr[1] "Subentiri vojon ĝis la fundo"
 
 #: app/actions/vectors-commands.c:423
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "D_uplicate Path"
 msgid "Duplicate Paths"
 msgstr "_Duplikati vojon"
@@ -10366,7 +10366,7 @@ msgstr "Forigi vojon"
 
 #: app/actions/vectors-commands.c:508
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Path to selection"
 msgid "Paths to selection"
 msgstr "Vojo al elekto"
@@ -11415,7 +11415,7 @@ msgstr ""
 
 #: app/actions/windows-actions.c:145
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Raise this path to the top"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
@@ -11430,7 +11430,7 @@ msgstr "Subentiri ĝis la _fundo"
 
 #: app/actions/windows-actions.c:150
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Lower this path to the bottom"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
@@ -14005,7 +14005,7 @@ msgstr ""
 
 #: app/core/core-enums.c:1497
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Selection to path"
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
@@ -16399,7 +16399,7 @@ msgstr ""
 
 #: app/core/gimpsymmetry-tiling.c:140
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes X"
 msgstr "Ŝlosi liniojn X"
@@ -16412,7 +16412,7 @@ msgstr "Maksimuma nombro da koloroj"
 
 #: app/core/gimpsymmetry-tiling.c:148
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Max strokes Y"
 msgstr "Ŝlosi liniojn Y"
@@ -18083,7 +18083,7 @@ msgstr "Filtrilaj dialogoj"
 
 #: app/dialogs/preferences-dialog.c:1542
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show _advanced color options"
 msgstr "_Specialaj agordoj"
@@ -18640,7 +18640,7 @@ msgstr "Relanĉi la lastuzatan kromprogramon per la samaj agordoj"
 
 #: app/dialogs/preferences-dialog.c:2420
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Show advanced color options"
 msgstr "Specialaj agordoj"
@@ -19914,7 +19914,7 @@ msgstr "Voj_nomo:"
 
 #: app/dialogs/vectors-options-dialog.c:108
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Lock path _strokes"
 msgstr "Ŝ_losi liniojn"
@@ -23816,7 +23816,7 @@ msgstr ""
 
 #: app/pdb/vectors-cmds.c:406
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Reverse path stroke"
 msgstr "Ŝ_losi liniojn"
@@ -24284,7 +24284,7 @@ msgstr "Nigro"
 
 #: app/propgui/gimppropgui-newsprint.c:236
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "_Lock patterns"
 msgstr "Ŝlosi liniojn"
@@ -25697,7 +25697,7 @@ msgstr "Altnivelaj agordoj"
 #. The Color Options expander
 #: app/tools/gimpfiltertool.c:1152
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Advanced options"
 msgid "Advanced Color Options"
 msgstr "Specialaj agordoj"
@@ -30503,7 +30503,7 @@ msgstr ""
 
 #: app/widgets/gimplayertreeview.c:1373
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "L_ock strokes"
 msgid "Glob pattern search"
 msgstr "Ŝlosi liniojn"
@@ -31201,7 +31201,7 @@ msgstr "Ŝlosi _alfa-kanalon"
 
 #: app/widgets/gimpvectorstreeview.c:114
 #, fuzzy
-#| msgctxt "vectors-action"
+#| msgctxt "paths-action"
 #| msgid "Add path to selection"
 msgid "Lock path position"
 msgstr "Aldoni vojon al elekto"
@@ -32073,7 +32073,7 @@ msgid "Undo History Menu"
 msgstr "Menuo de malfarhistorio"
 
 #: menus/vectors-menu.ui:6
-msgctxt "vectors-action"
+msgctxt "paths-action"
 msgid "Paths Menu"
 msgstr "Menuo de vojoj"
 
@@ -32373,30 +32373,30 @@ msgstr "Menuo de vojoj"
 #, fuzzy
 #~| msgctxt "layer-mode-effects"
 #~| msgid "Color"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Color Tag"
 #~ msgstr "Koloro"
 
 #, fuzzy
 #~| msgctxt "drawable-action"
 #~| msgid "Toggle the linked state"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Toggle Path _Linked State"
 #~ msgstr "Baskuligi la _ligitan staton"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Fr_om Path"
 #~ msgstr "El voj_o"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Add to Selection"
 #~ msgstr "_Aldoni al la elekto"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Subtract from Selection"
 #~ msgstr "_Depreni de la elekton"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Intersect with Selection"
 #~ msgstr "_Sekci kun la elekto"
 
@@ -32956,7 +32956,7 @@ msgstr "Menuo de vojoj"
 #~ msgstr "_Ligite"
 
 #, fuzzy
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "L_ock strokes"
 #~ msgctxt "layers-action"
 #~ msgid "L_ock position"
@@ -32969,25 +32969,25 @@ msgstr "Menuo de vojoj"
 #~ msgid "Clear color tag"
 #~ msgstr "Vakigi la tutan tekston"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Visible"
 #~ msgstr "_Videble"
 
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "_Linked"
 #~ msgstr "_Ligite"
 
 #, fuzzy
-#~| msgctxt "vectors-action"
+#~| msgctxt "paths-action"
 #~| msgid "L_ock strokes"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "L_ock position"
 #~ msgstr "Ŝ_losi liniojn"
 
 #, fuzzy
 #~| msgctxt "text-editor-action"
 #~| msgid "Clear all text"
-#~ msgctxt "vectors-action"
+#~ msgctxt "paths-action"
 #~ msgid "Clear color tag"
 #~ msgstr "Vakigi la tutan tekston"
 
