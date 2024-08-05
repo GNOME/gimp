@@ -448,7 +448,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df × %%.%df %s",
               gimp_unit_get_scaled_digits (unit, xres),
               gimp_unit_get_scaled_digits (unit, yres),
-              gimp_unit_get_plural (unit));
+              gimp_unit_get_name (unit));
   g_snprintf (buf, sizeof (buf), format_buf,
               gimp_pixels_to_units (gimp_image_get_width  (image), unit, xres),
               gimp_pixels_to_units (gimp_image_get_height (image), unit, yres));

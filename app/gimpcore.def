@@ -6,7 +6,7 @@ EXPORTS
 	_gimp_unit_get_deletion_flag
 	_gimp_unit_get_digits
 	_gimp_unit_get_factor
-	_gimp_unit_get_identifier
+	_gimp_unit_get_name
 	_gimp_unit_get_number_of_units
 	_gimp_unit_get_plural
 	_gimp_unit_get_singular

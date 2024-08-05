@@ -40,13 +40,11 @@
 
 GimpUnit *
 _gimp_unit_new (Gimp        *gimp,
-                const gchar *identifier,
+                const gchar *name,
                 gdouble      factor,
                 gint         digits,
                 const gchar *symbol,
-                const gchar *abbreviation,
-                const gchar *singular,
-                const gchar *plural)
+                const gchar *abbreviation)
 {
   GimpUnit *unit;
   gint      unit_id;
@@ -54,13 +52,11 @@ _gimp_unit_new (Gimp        *gimp,
   unit_id = GIMP_UNIT_END + g_list_length (gimp->user_units);
   unit = g_object_new (GIMP_TYPE_UNIT,
                        "id",           unit_id,
-                       "name",         identifier,
+                       "name",         name,
                        "factor",       factor,
                        "digits",       digits,
                        "symbol",       symbol,
                        "abbreviation", abbreviation,
-                       "singular",     singular,
-                       "plural",       plural,
                        NULL);
 
   gimp->user_units = g_list_append (gimp->user_units, unit);

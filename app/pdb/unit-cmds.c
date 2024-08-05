@@ -50,27 +50,23 @@ unit_new_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  const gchar *identifier;
+  const gchar *name;
   gdouble factor;
   gint digits;
   const gchar *symbol;
   const gchar *abbreviation;
-  const gchar *singular;
-  const gchar *plural;
   GimpUnit *unit = NULL;
 
-  identifier = g_value_get_string (gimp_value_array_index (args, 0));
+  name = g_value_get_string (gimp_value_array_index (args, 0));
   factor = g_value_get_double (gimp_value_array_index (args, 1));
   digits = g_value_get_int (gimp_value_array_index (args, 2));
   symbol = g_value_get_string (gimp_value_array_index (args, 3));
   abbreviation = g_value_get_string (gimp_value_array_index (args, 4));
-  singular = g_value_get_string (gimp_value_array_index (args, 5));
-  plural = g_value_get_string (gimp_value_array_index (args, 6));
 
   if (success)
     {
-      unit = _gimp_unit_new (gimp, identifier, factor, digits,
-                             symbol, abbreviation, singular, plural);
+      unit = _gimp_unit_new (gimp, name, factor, digits,
+                             symbol, abbreviation);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -93,13 +89,11 @@ unit_get_data_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   gint unit_id;
-  gchar *identifier = NULL;
+  gchar *name = NULL;
   gdouble factor = 0.0;
   gint digits = 0;
   gchar *symbol = NULL;
   gchar *abbreviation = NULL;
-  gchar *singular = NULL;
-  gchar *plural = NULL;
 
   unit_id = g_value_get_int (gimp_value_array_index (args, 0));
 
@@ -111,13 +105,11 @@ unit_get_data_invoker (GimpProcedure         *procedure,
 
           if (unit != NULL)
             {
-              identifier   = g_strdup (gimp_unit_get_identifier (unit));
+              name         = g_strdup (gimp_unit_get_name (unit));
               factor       = gimp_unit_get_factor (unit);
               digits       = gimp_unit_get_digits (unit);
               symbol       = g_strdup (gimp_unit_get_symbol (unit));
               abbreviation = g_strdup (gimp_unit_get_abbreviation (unit));
-              singular     = g_strdup (gimp_unit_get_singular (unit));
-              plural       = g_strdup (gimp_unit_get_plural (unit));
             }
         }
     }
@@ -127,13 +119,11 @@ unit_get_data_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      g_value_take_string (gimp_value_array_index (return_vals, 1), identifier);
+      g_value_take_string (gimp_value_array_index (return_vals, 1), name);
       g_value_set_double (gimp_value_array_index (return_vals, 2), factor);
       g_value_set_int (gimp_value_array_index (return_vals, 3), digits);
       g_value_take_string (gimp_value_array_index (return_vals, 4), symbol);
       g_value_take_string (gimp_value_array_index (return_vals, 5), abbreviation);
-      g_value_take_string (gimp_value_array_index (return_vals, 6), singular);
-      g_value_take_string (gimp_value_array_index (return_vals, 7), plural);
     }
 
   return return_vals;
@@ -212,9 +202,9 @@ register_unit_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "1999");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("identifier",
-                                                       "identifier",
-                                                       "The new unit's identifier",
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The new unit's name",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -241,20 +231,6 @@ register_unit_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("abbreviation",
                                                        "abbreviation",
                                                        "The new unit's abbreviation",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("singular",
-                                                       "singular",
-                                                       "The new unit's singular form",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("plural",
-                                                       "plural",
-                                                       "The new unit's plural form",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -290,9 +266,9 @@ register_unit_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("identifier",
-                                                           "identifier",
-                                                           "The unit's textual identifier",
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The unit's name",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -319,20 +295,6 @@ register_unit_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("abbreviation",
                                                            "abbreviation",
                                                            "The unit's abbreviation",
-                                                           FALSE, FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("singular",
-                                                           "singular",
-                                                           "The unit's singular form",
-                                                           FALSE, FALSE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("plural",
-                                                           "plural",
-                                                           "The unit's plural form",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

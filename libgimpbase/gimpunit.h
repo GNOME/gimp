@@ -43,15 +43,13 @@ G_DECLARE_FINAL_TYPE (GimpUnit, gimp_unit, GIMP, UNIT, GObject)
 
 gint32        gimp_unit_get_id                       (GimpUnit    *unit);
 
-const gchar * gimp_unit_get_identifier               (GimpUnit    *unit);
+const gchar * gimp_unit_get_name                     (GimpUnit    *unit);
 gdouble       gimp_unit_get_factor                   (GimpUnit    *unit);
 gint          gimp_unit_get_digits                   (GimpUnit    *unit);
 gint          gimp_unit_get_scaled_digits            (GimpUnit    *unit,
                                                       gdouble      resolution);
 const gchar * gimp_unit_get_symbol                   (GimpUnit    *unit);
 const gchar * gimp_unit_get_abbreviation             (GimpUnit    *unit);
-const gchar * gimp_unit_get_singular                 (GimpUnit    *unit);
-const gchar * gimp_unit_get_plural                   (GimpUnit    *unit);
 
 gboolean      gimp_unit_get_deletion_flag            (GimpUnit    *unit);
 void          gimp_unit_set_deletion_flag            (GimpUnit    *unit,

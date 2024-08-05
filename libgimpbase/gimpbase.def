@@ -205,10 +205,8 @@ EXPORTS
 	gimp_unit_get_digits
 	gimp_unit_get_factor
 	gimp_unit_get_id
-	gimp_unit_get_identifier
-	gimp_unit_get_plural
+	gimp_unit_get_name
 	gimp_unit_get_scaled_digits
-	gimp_unit_get_singular
 	gimp_unit_get_symbol
 	gimp_unit_get_type
 	gimp_unit_inch

@@ -887,7 +887,7 @@ gimp_config_get_unit_from_identifier (const gchar *identifier)
   unit = gimp_unit_get_by_id (GIMP_UNIT_PIXEL);
   for (gint i = GIMP_UNIT_PIXEL; unit; i++)
     {
-      if (g_strcmp0 (identifier, gimp_unit_get_identifier (unit)) == 0)
+      if (g_strcmp0 (identifier, gimp_unit_get_name (unit)) == 0)
         break;
 
       unit = gimp_unit_get_by_id (i);

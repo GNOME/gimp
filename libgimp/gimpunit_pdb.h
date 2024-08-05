@@ -32,20 +32,16 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpUnit*                gimp_unit_new                (const gchar  *identifier,
+GimpUnit*                gimp_unit_new                (const gchar  *name,
                                                        gdouble       factor,
                                                        gint          digits,
                                                        const gchar  *symbol,
-                                                       const gchar  *abbreviation,
-                                                       const gchar  *singular,
-                                                       const gchar  *plural);
+                                                       const gchar  *abbreviation);
 G_GNUC_INTERNAL gchar*   _gimp_unit_get_data          (gint          unit_id,
                                                        gdouble      *factor,
                                                        gint         *digits,
                                                        gchar       **symbol,
-                                                       gchar       **abbreviation,
-                                                       gchar       **singular,
-                                                       gchar       **plural);
+                                                       gchar       **abbreviation);
 G_GNUC_INTERNAL gboolean _gimp_unit_get_deletion_flag (GimpUnit     *unit);
 G_GNUC_INTERNAL gboolean _gimp_unit_set_deletion_flag (GimpUnit     *unit,
                                                        gboolean      deletion_flag);

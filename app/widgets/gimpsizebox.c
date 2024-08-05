@@ -183,7 +183,7 @@ gimp_size_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_coordinates_new (box->unit, "%p",
+  entry = gimp_coordinates_new (box->unit, "%n",
                                 TRUE, TRUE, SB_WIDTH,
                                 GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                 TRUE, TRUE,

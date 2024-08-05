@@ -163,7 +163,7 @@ print_size_dialog_new (GimpImage              *image,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
-  entry = gimp_size_entry_new (0, gimp_get_default_unit (), "%p",
+  entry = gimp_size_entry_new (0, gimp_get_default_unit (), "%n",
                                FALSE, FALSE, FALSE, SB_WIDTH,
                                GIMP_SIZE_ENTRY_UPDATE_SIZE);
   private->size_entry = GIMP_SIZE_ENTRY (entry);

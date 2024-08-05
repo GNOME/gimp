@@ -45,20 +45,7 @@ enum
   PROP_DIGITS,
   PROP_SYMBOL,
   PROP_ABBREVIATION,
-  PROP_SINGULAR,
-  PROP_PLURAL,
 };
-
-typedef struct
-{
-  gdouble   factor;
-  gint      digits;
-  gchar    *identifier;
-  gchar    *symbol;
-  gchar    *abbreviation;
-  gchar    *singular;
-  gchar    *plural;
-} GimpUnitDef;
 
 struct _GimpUnit
 {
@@ -72,40 +59,63 @@ struct _GimpUnit
   gint      digits;
   gchar    *symbol;
   gchar    *abbreviation;
-  gchar    *singular;
-  gchar    *plural;
 };
 
+
+typedef struct
+{
+  gdouble   factor;
+  gint      digits;
+  gchar    *identifier;
+  gchar    *symbol;
+  gchar    *abbreviation;
+} GimpUnitDef;
 
 /*  these are the built-in units
  */
 static const GimpUnitDef _gimp_unit_defs[GIMP_UNIT_END] =
 {
   /* pseudo unit */
-  { 0.0,  0, "pixels",      "px", "px",
-    NC_("unit-singular", "pixel"),      NC_("unit-plural", "pixels")      },
+  {
+    0.0,  0,
+    NC_("unit-plural", "pixels"),
+    "px", "px",
+  },
 
   /* standard units */
-  { 1.0,  2, "inches",      "''", "in",
-    NC_("unit-singular", "inch"),       NC_("unit-plural", "inches")      },
+  {
+    1.0,  2,
+    NC_("unit-plural", "inches"),
+    "''", "in",
+  },
 
-  { 25.4, 1, "millimeters", "mm", "mm",
-    NC_("unit-singular", "millimeter"), NC_("unit-plural", "millimeters") },
+  {
+    25.4, 1,
+    NC_("unit-plural", "millimeters"),
+    "mm", "mm",
+  },
 
   /* professional units */
-  { 72.0, 0, "points",      "pt", "pt",
-    NC_("unit-singular", "point"),      NC_("unit-plural", "points")      },
+  {
+    72.0, 0,
+    NC_("unit-plural", "points"),
+    "pt", "pt",
+  },
 
-  { 6.0,  1, "picas",       "pc", "pc",
-    NC_("unit-singular", "pica"),       NC_("unit-plural", "picas")       }
+  {
+    6.0,  1,
+    NC_("unit-plural", "picas"),
+    "pc", "pc",
+  }
 };
 
 /*  not a unit at all but kept here to have the strings in one place
  */
 static const GimpUnitDef _gimp_unit_percent_def =
 {
-    0.0,  0, "percent",     "%",  "%",
-    NC_("singular", "percent"),    NC_("plural", "percent")
+  0.0,  0,
+  NC_("unit-plural", "percent"),
+  "%",  "%",
 };
 
 
@@ -174,16 +184,6 @@ gimp_unit_class_init (GimpUnitClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_SINGULAR,
-                                   g_param_spec_string ("singular", NULL, NULL,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_PLURAL,
-                                   g_param_spec_string ("plural", NULL, NULL,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
 
   /*klass->id_table = gimp_id_table_new ();*/
 }
@@ -194,8 +194,6 @@ gimp_unit_init (GimpUnit *unit)
   unit->name         = NULL;
   unit->symbol       = NULL;
   unit->abbreviation = NULL;
-  unit->singular     = NULL;
-  unit->plural       = NULL;
 }
 
 static void
@@ -212,8 +210,6 @@ gimp_unit_finalize (GObject *object)
   g_free (unit->name);
   g_free (unit->symbol);
   g_free (unit->abbreviation);
-  g_free (unit->singular);
-  g_free (unit->plural);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -245,12 +241,6 @@ gimp_unit_set_property (GObject      *object,
       break;
     case PROP_ABBREVIATION:
       unit->abbreviation = g_value_dup_string (value);
-      break;
-    case PROP_SINGULAR:
-      unit->singular = g_value_dup_string (value);
-      break;
-    case PROP_PLURAL:
-      unit->plural = g_value_dup_string (value);
       break;
 
     default:
@@ -287,12 +277,6 @@ gimp_unit_get_property (GObject    *object,
     case PROP_ABBREVIATION:
       g_value_set_string (value, unit->abbreviation);
       break;
-    case PROP_SINGULAR:
-      g_value_set_string (value, unit->singular);
-      break;
-    case PROP_PLURAL:
-      g_value_set_string (value, unit->plural);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -323,15 +307,19 @@ gimp_unit_get_id (GimpUnit *unit)
 }
 
 /**
- * gimp_unit_get_identifier:
- * @unit: The unit you want to know the identifier of.
+ * gimp_unit_get_name:
+ * @unit: The unit you want to know the name of.
  *
- * This is an untranslated string which must not be changed or freed.
+ * This function returns the usual name of the unit (e.g. "inches").
+ * It can be used as the long label for the unit in the interface.
+ * For short labels, use [method@Unit.get_abbreviation].
  *
- * Returns: The unit's identifier.
+ * NOTE: This string must not be changed or freed.
+ *
+ * Returns: The unit's name.
  **/
 const gchar *
-gimp_unit_get_identifier (GimpUnit *unit)
+gimp_unit_get_name (GimpUnit *unit)
 {
   g_return_val_if_fail (GIMP_IS_UNIT (unit), NULL);
 
@@ -435,8 +423,10 @@ gimp_unit_get_symbol (GimpUnit *unit)
  * gimp_unit_get_abbreviation:
  * @unit: The unit you want to know the abbreviation of.
  *
- * For built-in units, this function returns the abbreviation
- * of the unit (e.g. "in" for inches).
+ * This function returns the abbreviation of the unit (e.g. "in" for
+ * inches).
+ * It can be used as a short label for the unit in the interface.
+ * For long labels, use [method@Unit.get_name].
  *
  * NOTE: This string must not be changed or freed.
  *
@@ -448,44 +438,6 @@ gimp_unit_get_abbreviation (GimpUnit *unit)
   g_return_val_if_fail (GIMP_IS_UNIT (unit), NULL);
 
   return unit->abbreviation;
-}
-
-/**
- * gimp_unit_get_singular:
- * @unit: The unit you want to know the singular form of.
- *
- * For built-in units, this function returns the singular form of the
- * unit's name.
- *
- * NOTE: This string must not be changed or freed.
- *
- * Returns: The unit's singular form.
- **/
-const gchar *
-gimp_unit_get_singular (GimpUnit *unit)
-{
-  g_return_val_if_fail (GIMP_IS_UNIT (unit), NULL);
-
-  return unit->singular;
-}
-
-/**
- * gimp_unit_get_plural:
- * @unit: The unit you want to know the plural form of.
- *
- * For built-in units, this function returns the plural form of the
- * unit's name.
- *
- * NOTE: This string must not be changed or freed.
- *
- * Returns: The unit's plural form.
- **/
-const gchar *
-gimp_unit_get_plural (GimpUnit *unit)
-{
-  g_return_val_if_fail (GIMP_IS_UNIT (unit), NULL);
-
-  return unit->plural;
 }
 
 /**
@@ -579,8 +531,6 @@ gimp_unit_get_by_id (gint unit_id)
                                "digits",       def.digits,
                                "symbol",       def.symbol,
                                "abbreviation", def.abbreviation,
-                               "singular",     def.singular,
-                               "plural",       def.plural,
                                NULL);
           unit->delete_on_exit = FALSE;
         }
@@ -593,8 +543,6 @@ gimp_unit_get_by_id (gint unit_id)
                                "digits",       _gimp_unit_percent_def.digits,
                                "symbol",       _gimp_unit_percent_def.symbol,
                                "abbreviation", _gimp_unit_percent_def.abbreviation,
-                               "singular",     _gimp_unit_percent_def.singular,
-                               "plural",       _gimp_unit_percent_def.plural,
                                NULL);
           unit->delete_on_exit = FALSE;
         }
@@ -609,16 +557,12 @@ gimp_unit_get_by_id (gint unit_id)
           gint     digits;
           gchar   *symbol       = NULL;
           gchar   *abbreviation = NULL;
-          gchar   *singular     = NULL;
-          gchar   *plural       = NULL;
 
           identifier = _gimp_unit_vtable.get_data (unit_id,
                                                    &factor,
                                                    &digits,
                                                    &symbol,
-                                                   &abbreviation,
-                                                   &singular,
-                                                   &plural);
+                                                   &abbreviation);
 
           if (identifier != NULL)
             unit = g_object_new (GIMP_TYPE_UNIT,
@@ -628,15 +572,11 @@ gimp_unit_get_by_id (gint unit_id)
                                  "digits",       digits,
                                  "symbol",       symbol,
                                  "abbreviation", abbreviation,
-                                 "singular",     singular,
-                                 "plural",       plural,
                                  NULL);
 
           g_free (identifier);
           g_free (symbol);
           g_free (abbreviation);
-          g_free (singular);
-          g_free (plural);
         }
       else if (_gimp_unit_vtable.get_user_unit != NULL)
         {
@@ -826,39 +766,14 @@ gimp_unit_is_metric (GimpUnit *unit)
  *
  * The @format string supports the following percent expansions:
  *
- * <informaltable pgwide="1" frame="none" role="enum">
- *   <tgroup cols="2"><colspec colwidth="1*"/><colspec colwidth="8*"/>
- *     <tbody>
- *       <row>
- *         <entry>% f</entry>
- *         <entry>Factor (how many units make up an inch)</entry>
- *        </row>
- *       <row>
- *         <entry>% y</entry>
- *         <entry>Symbol (e.g. "''" for GIMP_UNIT_INCH)</entry>
- *       </row>
- *       <row>
- *         <entry>% a</entry>
- *         <entry>Abbreviation</entry>
- *       </row>
- *       <row>
- *         <entry>% s</entry>
- *         <entry>Singular</entry>
- *       </row>
- *       <row>
- *         <entry>% p</entry>
- *         <entry>Plural</entry>
- *       </row>
- *       <row>
- *         <entry>%%</entry>
- *         <entry>Literal percent</entry>
- *       </row>
- *     </tbody>
- *   </tgroup>
- * </informaltable>
+ * * `%n`: Name (long label)
+ * * `%a`: Abbreviation (short label)
+ * * `%%`: Literal percent
+ * * `%f`: Factor (how many units make up an inch)
+ * * `%y`: Symbol (e.g. `''` for `GIMP_UNIT_INCH`)
  *
- * Returns: A newly allocated string with above percent expressions
- *          replaced with the resp. strings for @unit.
+ * Returns: (transfer full): A newly allocated string with above percent
+ *          expressions replaced with the resp. strings for @unit.
  *
  * Since: 2.8
  **/
@@ -904,14 +819,9 @@ gimp_unit_format_string (const gchar *format,
                           gimp_unit_get_abbreviation (unit));
               break;
 
-            case 's': /* singular */
+            case 'n': /* full name */
               i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_singular (unit));
-              break;
-
-            case 'p': /* plural */
-              i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_plural (unit));
+                          gimp_unit_get_name (unit));
               break;
 
             default:

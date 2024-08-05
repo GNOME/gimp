@@ -623,7 +623,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       g_snprintf (format, sizeof (format),
                   "%%.%df %s, %%.2f\302\260 (%%.%df × %%.%df)",
                   unit_distance_digits,
-                  gimp_unit_get_plural (shell->unit),
+                  gimp_unit_get_name (shell->unit),
                   unit_width_digits,
                   unit_height_digits);
 
@@ -648,7 +648,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->distance_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[0]),
-                              gimp_unit_get_plural (shell->unit));
+                              gimp_unit_get_name (shell->unit));
         }
       else
         {
@@ -685,7 +685,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->width_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[2]),
-                              gimp_unit_get_plural (shell->unit));
+                              gimp_unit_get_name (shell->unit));
         }
       else
         {
@@ -705,7 +705,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->height_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[3]),
-                              gimp_unit_get_plural (shell->unit));
+                              gimp_unit_get_name (shell->unit));
         }
       else
         {

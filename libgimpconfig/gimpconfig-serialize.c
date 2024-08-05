@@ -377,7 +377,7 @@ gimp_config_serialize_property (GimpConfig       *config,
           gimp_config_writer_open (writer, param_spec->name);
 
           if (unit)
-            gimp_config_writer_printf (writer, "%s", gimp_unit_get_identifier (unit));
+            gimp_config_writer_printf (writer, "%s", gimp_unit_get_name (unit));
           else
             gimp_config_writer_printf (writer, "%s", "NULL");
 

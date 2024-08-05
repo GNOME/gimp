@@ -3071,6 +3071,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
       version = MAX (16, version);
     }
 
+  /* Note: user unit storage was changed in XCF 21, but we can still
+   * easily save older XCF (we use the unit name for both singular and
+   * plural forms). Therefore we don't bump the XCF version unecessarily
+   * and don't add any test.
+   */
 
 #undef ADD_REASON
 

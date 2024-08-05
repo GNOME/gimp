@@ -35,8 +35,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'identifier', type => 'string',
-	  desc => "The unit's textual identifier" },
+	{ name => 'name', type => 'string',
+	  desc => "The unit's name" },
 	{ name => 'factor', type => 'float',
 	  desc => "The unit's factor" },
 	{ name => 'digits', type => 'int32',
@@ -45,10 +45,6 @@ HELP
 	  desc => "The unit's symbol" },
 	{ name => 'abbreviation', type => 'string',
 	  desc => "The unit's abbreviation" },
-	{ name => 'singular', type => 'string',
-	  desc => "The unit's singular form" },
-	{ name => 'plural', type => 'string',
-	  desc => "The unit's plural form" }
     );
 
     %invoke = (
@@ -60,13 +56,11 @@ HELP
 
       if (unit != NULL)
         {
-          identifier   = g_strdup (gimp_unit_get_identifier (unit));
+          name         = g_strdup (gimp_unit_get_name (unit));
           factor       = gimp_unit_get_factor (unit);
           digits       = gimp_unit_get_digits (unit);
           symbol       = g_strdup (gimp_unit_get_symbol (unit));
           abbreviation = g_strdup (gimp_unit_get_abbreviation (unit));
-          singular     = g_strdup (gimp_unit_get_singular (unit));
-          plural       = g_strdup (gimp_unit_get_plural (unit));
         }
     }
 }
@@ -86,8 +80,8 @@ HELP
     &mitch_pdb_misc('1999');
 
     @inargs = (
-	{ name => 'identifier', type => 'string', non_empty => 1,
-	  desc => "The new unit's identifier" },
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => "The new unit's name" },
 	{ name => 'factor', type => 'float',
 	  desc => "The new unit's factor" },
 	{ name => 'digits', type => 'int32',
@@ -96,10 +90,6 @@ HELP
 	  desc => "The new unit's symbol" },
 	{ name => 'abbreviation', type => 'string', non_empty => 1,
 	  desc => "The new unit's abbreviation" },
-	{ name => 'singular', type => 'string', non_empty => 1,
-	  desc => "The new unit's singular form" },
-	{ name => 'plural', type => 'string', non_empty => 1,
-	  desc => "The new unit's plural form" }
     );
 
     @outargs = (
@@ -110,8 +100,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  unit = _gimp_unit_new (gimp, identifier, factor, digits,
-                         symbol, abbreviation, singular, plural);
+  unit = _gimp_unit_new (gimp, name, factor, digits,
+                         symbol, abbreviation);
 }
 CODE
     );

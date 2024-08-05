@@ -661,7 +661,7 @@ gimp_resolution_entry_format_label (GimpResolutionEntry *entry,
                                    gimp_unit_get_digits (entry->unit));
   gchar *text = g_strdup_printf (format,
                                  size_inch * gimp_unit_get_factor (entry->unit),
-                                 gimp_unit_get_plural (entry->unit));
+                                 gimp_unit_get_name (entry->unit));
   g_free (format);
 
   gtk_label_set_text (GTK_LABEL (label), text);

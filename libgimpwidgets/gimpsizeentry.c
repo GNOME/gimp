@@ -407,12 +407,7 @@ gimp_size_entry_new (gint                       number_of_fields,
       gchar *short_format = g_strdup (unit_format);
       gchar *p;
 
-      p = strstr (short_format, "%s");
-      if (p)
-        strcpy (p, "%a");
-
-      p = strstr (short_format, "%p");
-      if (p)
+      while ((p = strstr (short_format, "%n")))
         strcpy (p, "%a");
 
       g_object_set (store,

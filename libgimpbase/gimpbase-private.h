@@ -35,9 +35,7 @@ struct _GimpUnitVtable
                                                        gdouble   *factor,
                                                        gint      *digits,
                                                        gchar    **symbol,
-                                                       gchar    **abbreviation,
-                                                       gchar    **singular,
-                                                       gchar    **plural);
+                                                       gchar    **abbreviation);
 
   /* These methods MUST only be set on app, not in libgimp. */
   GimpUnit    * (* get_user_unit)                     (gint       unit_id);

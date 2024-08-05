@@ -93,8 +93,8 @@ enum
   UNIT_DIGITS,
   UNIT_SYMBOL,
   UNIT_ABBREV,
-  UNIT_SINGULAR,
-  UNIT_PLURAL
+  UNIT_SINGULAR, /* Obsoleted in GIMP 3.0. */
+  UNIT_PLURAL    /* Obsoleted in GIMP 3.0. */
 };
 
 void
@@ -236,7 +236,7 @@ gimp_unitrc_save (Gimp *gimp)
 
           gimp_config_writer_open (writer, "unit-info");
           gimp_config_writer_string (writer,
-                                     gimp_unit_get_identifier (unit));
+                                     gimp_unit_get_name (unit));
 
           gimp_config_writer_open (writer, "factor");
           gimp_config_writer_print (writer,
@@ -260,16 +260,6 @@ gimp_unitrc_save (Gimp *gimp)
                                      gimp_unit_get_abbreviation (unit));
           gimp_config_writer_close (writer);
 
-          gimp_config_writer_open (writer, "singular");
-          gimp_config_writer_string (writer,
-                                     gimp_unit_get_singular (unit));
-          gimp_config_writer_close (writer);
-
-          gimp_config_writer_open (writer, "plural");
-          gimp_config_writer_string (writer,
-                                     gimp_unit_get_plural (unit));
-          gimp_config_writer_close (writer);
-
           gimp_config_writer_close (writer);
         }
     }
@@ -288,7 +278,7 @@ static GTokenType
 gimp_unitrc_unit_info_deserialize (GScanner *scanner,
                                    Gimp     *gimp)
 {
-  gchar      *identifier   = NULL;
+  gchar      *name         = NULL;
   gdouble     factor       = 1.0;
   gint        digits       = 2.0;
   gchar      *symbol       = NULL;
@@ -297,7 +287,7 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
   gchar      *plural       = NULL;
   GTokenType  token;
 
-  if (! gimp_scanner_parse_string (scanner, &identifier))
+  if (! gimp_scanner_parse_string (scanner, &name))
     return G_TOKEN_STRING;
 
   token = G_TOKEN_LEFT_PAREN;
@@ -340,6 +330,11 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
               break;
 
             case UNIT_SINGULAR:
+              /* UNIT_SINGULAR and UNIT_PLURAL are deprecated. We still
+               * support reading them if they exist to stay backward
+               * compatible with older unitrc, in which case, we use
+               * UNIT_PLURAL on behalf of the name.
+               */
               token = G_TOKEN_STRING;
               if (! gimp_scanner_parse_string (scanner, &singular))
                 goto cleanup;
@@ -373,9 +368,8 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
       if (g_scanner_peek_next_token (scanner) == token)
         {
           GimpUnit *unit = _gimp_unit_new (gimp,
-                                           identifier, factor, digits,
-                                           symbol, abbreviation,
-                                           singular, plural);
+                                           plural && strlen (plural) > 0 ? plural : name,
+                                           factor, digits, symbol, abbreviation);
 
           /*  make the unit definition persistent  */
           gimp_unit_set_deletion_flag (unit, FALSE);
@@ -384,7 +378,7 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
 
  cleanup:
 
-  g_free (identifier);
+  g_free (name);
   g_free (symbol);
   g_free (abbreviation);
   g_free (singular);

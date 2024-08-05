@@ -20,13 +20,11 @@
 
 
 GimpUnit    * _gimp_unit_new                          (Gimp        *gimp,
-                                                       const gchar *identifier,
+                                                       const gchar *name,
                                                        gdouble      factor,
                                                        gint         digits,
                                                        const gchar *symbol,
-                                                       const gchar *abbreviation,
-                                                       const gchar *singular,
-                                                       const gchar *plural);
+                                                       const gchar *abbreviation);
 
 
 #endif  /*  __APP_GIMP_UNIT_H__  */

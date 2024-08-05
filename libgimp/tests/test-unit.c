@@ -4,7 +4,7 @@ typedef struct
 {
   gdouble   factor;
   gint      digits;
-  gchar    *identifier;
+  gchar    *name;
   gchar    *symbol;
   gchar    *abbreviation;
 } GimpUnitDef;
@@ -57,7 +57,7 @@ gimp_c_test_run (GimpProcedure        *procedure,
       unit = gimp_unit_get_by_id (i);
 
       GIMP_TEST_END(GIMP_IS_UNIT (unit) &&
-                    g_strcmp0 (gimp_unit_get_identifier (unit), _gimp_unit_defs[i].identifier) == 0     &&
+                    g_strcmp0 (gimp_unit_get_name (unit), _gimp_unit_defs[i].name) == 0                 &&
                     g_strcmp0 (gimp_unit_get_symbol (unit), _gimp_unit_defs[i].symbol) == 0             &&
                     g_strcmp0 (gimp_unit_get_abbreviation (unit), _gimp_unit_defs[i].abbreviation) == 0 &&
                     gimp_unit_get_factor (unit) == _gimp_unit_defs[i].factor                            &&
@@ -78,9 +78,7 @@ gimp_c_test_run (GimpProcedure        *procedure,
   GIMP_TEST_END(n_user_units == N_DEFAULT_USER_UNITS);
 
   GIMP_TEST_START("gimp_unit_new()");
-  unit2 = gimp_unit_new ("identifier", 2.0, 1,
-                         "symbol", "abbreviation",
-                         "singular", "plural");
+  unit2 = gimp_unit_new ("name", 2.0, 1, "symbol", "abbreviation");
   GIMP_TEST_END(GIMP_IS_UNIT (unit2));
 
   GIMP_TEST_START("Verifying the new user unit's ID");

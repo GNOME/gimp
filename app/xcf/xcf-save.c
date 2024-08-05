@@ -1588,28 +1588,37 @@ xcf_save_prop (XcfInfo    *info,
         guint32      digits;
 
         /* write the entire unit definition */
-        unit_strings[0] = gimp_unit_get_identifier (unit);
+        unit_strings[0] = gimp_unit_get_name (unit);
         factor          = gimp_unit_get_factor (unit);
         digits          = gimp_unit_get_digits (unit);
         unit_strings[1] = gimp_unit_get_symbol (unit);
         unit_strings[2] = gimp_unit_get_abbreviation (unit);
-        unit_strings[3] = gimp_unit_get_singular (unit);
-        unit_strings[4] = gimp_unit_get_plural (unit);
+        /* Singular and plural forms were deprecated in XCF 21. Just use
+         * the unit name as bogus (yet reasonable) replacements.
+         */
+        unit_strings[3] = gimp_unit_get_name (unit);
+        unit_strings[4] = gimp_unit_get_name (unit);
 
         size =
           2 * 4 +
           strlen (unit_strings[0]) ? strlen (unit_strings[0]) + 5 : 4 +
           strlen (unit_strings[1]) ? strlen (unit_strings[1]) + 5 : 4 +
-          strlen (unit_strings[2]) ? strlen (unit_strings[2]) + 5 : 4 +
-          strlen (unit_strings[3]) ? strlen (unit_strings[3]) + 5 : 4 +
-          strlen (unit_strings[4]) ? strlen (unit_strings[4]) + 5 : 4;
+          strlen (unit_strings[2]) ? strlen (unit_strings[2]) + 5 : 4;
+
+        if (info->file_version < 21)
+          size +=
+            strlen (unit_strings[3]) ? strlen (unit_strings[3]) + 5 : 4 +
+            strlen (unit_strings[4]) ? strlen (unit_strings[4]) + 5 : 4;
 
         xcf_write_prop_type_check_error (info, prop_type, va_end (args));
         xcf_write_int32_check_error (info, &size, 1, va_end (args));
 
         xcf_write_float_check_error  (info, &factor,                 1, va_end (args));
         xcf_write_int32_check_error  (info, &digits,                 1, va_end (args));
-        xcf_write_string_check_error (info, (gchar **) unit_strings, 5, va_end (args));
+        if (info->file_version < 21)
+          xcf_write_string_check_error (info, (gchar **) unit_strings, 5, va_end (args));
+        else
+          xcf_write_string_check_error (info, (gchar **) unit_strings, 3, va_end (args));
       }
       break;
 

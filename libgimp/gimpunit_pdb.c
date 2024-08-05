@@ -39,13 +39,11 @@
 
 /**
  * gimp_unit_new:
- * @identifier: The new unit's identifier.
+ * @name: The new unit's name.
  * @factor: The new unit's factor.
  * @digits: The new unit's digits.
  * @symbol: The new unit's symbol.
  * @abbreviation: The new unit's abbreviation.
- * @singular: The new unit's singular form.
- * @plural: The new unit's plural form.
  *
  * Creates a new unit.
  *
@@ -57,26 +55,22 @@
  * Returns: (transfer none): The new unit.
  **/
 GimpUnit *
-gimp_unit_new (const gchar *identifier,
+gimp_unit_new (const gchar *name,
                gdouble      factor,
                gint         digits,
                const gchar *symbol,
-               const gchar *abbreviation,
-               const gchar *singular,
-               const gchar *plural)
+               const gchar *abbreviation)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpUnit *unit = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, identifier,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, factor,
                                           G_TYPE_INT, digits,
                                           G_TYPE_STRING, symbol,
                                           G_TYPE_STRING, abbreviation,
-                                          G_TYPE_STRING, singular,
-                                          G_TYPE_STRING, plural,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -99,8 +93,6 @@ gimp_unit_new (const gchar *identifier,
  * @digits: (out): The unit's number of digits.
  * @symbol: (out) (transfer full): The unit's symbol.
  * @abbreviation: (out) (transfer full): The unit's abbreviation.
- * @singular: (out) (transfer full): The unit's singular form.
- * @plural: (out) (transfer full): The unit's plural form.
  *
  * Returns the various data pertaining to a given unit ID.
  *
@@ -109,7 +101,7 @@ gimp_unit_new (const gchar *identifier,
  * programming error to use it directly, in particular for any of the
  * built-in units.
  *
- * Returns: (transfer full): The unit's textual identifier.
+ * Returns: (transfer full): The unit's name.
  *          The returned value must be freed with g_free().
  **/
 gchar *
@@ -117,13 +109,11 @@ _gimp_unit_get_data (gint      unit_id,
                      gdouble  *factor,
                      gint     *digits,
                      gchar   **symbol,
-                     gchar   **abbreviation,
-                     gchar   **singular,
-                     gchar   **plural)
+                     gchar   **abbreviation)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *identifier = NULL;
+  gchar *name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_INT, unit_id,
@@ -136,18 +126,16 @@ _gimp_unit_get_data (gint      unit_id,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      identifier = GIMP_VALUES_DUP_STRING (return_vals, 1);
+      name = GIMP_VALUES_DUP_STRING (return_vals, 1);
       *factor = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
       *digits = GIMP_VALUES_GET_INT (return_vals, 3);
       *symbol = GIMP_VALUES_DUP_STRING (return_vals, 4);
       *abbreviation = GIMP_VALUES_DUP_STRING (return_vals, 5);
-      *singular = GIMP_VALUES_DUP_STRING (return_vals, 6);
-      *plural = GIMP_VALUES_DUP_STRING (return_vals, 7);
     }
 
   gimp_value_array_unref (return_vals);
 
-  return identifier;
+  return name;
 }
 
 /**

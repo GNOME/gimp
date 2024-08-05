@@ -388,7 +388,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-  private->offset = entry = gimp_size_entry_new (1, unit, "%p",
+  private->offset = entry = gimp_size_entry_new (1, unit, "%n",
                                                  TRUE, FALSE, FALSE, SB_WIDTH,
                                                  GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),

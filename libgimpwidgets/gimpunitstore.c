@@ -128,8 +128,6 @@ static GType column_types[GIMP_UNIT_STORE_UNIT_COLUMNS] =
   G_TYPE_STRING,
   G_TYPE_STRING,
   G_TYPE_STRING,
-  G_TYPE_STRING,
-  G_TYPE_STRING
 };
 
 
@@ -191,7 +189,7 @@ gimp_unit_store_init (GimpUnitStore *store)
   private->has_pixels   = TRUE;
   private->has_percent  = FALSE;
   private->short_format = g_strdup ("%a");
-  private->long_format  = g_strdup ("%p");
+  private->long_format  = g_strdup ("%n");
   private->synced_ID    = 0;
 }
 
@@ -442,20 +440,14 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
     case GIMP_UNIT_STORE_UNIT_DIGITS:
       g_value_set_int (value, gimp_unit_get_digits (unit));
       break;
-    case GIMP_UNIT_STORE_UNIT_IDENTIFIER:
-      g_value_set_static_string (value, gimp_unit_get_identifier (unit));
+    case GIMP_UNIT_STORE_UNIT_NAME:
+      g_value_set_static_string (value, gimp_unit_get_name (unit));
       break;
     case GIMP_UNIT_STORE_UNIT_SYMBOL:
       g_value_set_static_string (value, gimp_unit_get_symbol (unit));
       break;
     case GIMP_UNIT_STORE_UNIT_ABBREVIATION:
       g_value_set_static_string (value, gimp_unit_get_abbreviation (unit));
-      break;
-    case GIMP_UNIT_STORE_UNIT_SINGULAR:
-      g_value_set_static_string (value, gimp_unit_get_singular (unit));
-      break;
-    case GIMP_UNIT_STORE_UNIT_PLURAL:
-      g_value_set_static_string (value, gimp_unit_get_plural (unit));
       break;
     case GIMP_UNIT_STORE_UNIT_SHORT_FORMAT:
       g_value_take_string (value,

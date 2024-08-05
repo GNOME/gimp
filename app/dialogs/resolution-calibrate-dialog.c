@@ -137,7 +137,7 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
 
   calibrate_entry =
-    gimp_coordinates_new  (gimp_unit_inch (), "%p",
+    gimp_coordinates_new  (gimp_unit_inch (), "%n",
                            FALSE, FALSE, 10,
                            GIMP_SIZE_ENTRY_UPDATE_SIZE,
                            FALSE,

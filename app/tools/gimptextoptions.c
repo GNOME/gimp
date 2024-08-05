@@ -804,7 +804,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (grid);
 
   entry = gimp_prop_size_entry_new (config,
-                                    "font-size", FALSE, "font-size-unit", "%p",
+                                    "font-size", FALSE, "font-size-unit", "%n",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 72.0);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Size:"), 0.0, 0.5,

@@ -224,7 +224,7 @@ gimp_template_editor_constructed (GObject *object)
 
   private->size_se = gimp_size_entry_new (0,
                                           gimp_template_get_unit (template),
-                                          _("%p"),
+                                          _("%n"),
                                           TRUE, FALSE, FALSE, SB_WIDTH,
                                           GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
@@ -359,7 +359,7 @@ gimp_template_editor_constructed (GObject *object)
   private->resolution_se =
     gimp_size_entry_new (0,
                          gimp_template_get_resolution_unit (template),
-                         _("pixels/%s"),
+                         _("pixels/%a"),
                          FALSE, FALSE, FALSE, SB_WIDTH,
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 

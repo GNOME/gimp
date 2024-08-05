@@ -262,7 +262,7 @@ print_size_frame (PrintData    *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (1, data->unit, "%p",
+  entry = gimp_size_entry_new (1, data->unit, "%n",
                                FALSE, FALSE, FALSE, SB_WIDTH,
                                GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
@@ -874,7 +874,7 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
       format = g_strdup_printf ("%%.%df x %%.%df %s",
                                 gimp_unit_get_digits (data->unit),
                                 gimp_unit_get_digits (data->unit),
-                                gimp_unit_get_plural (data->unit));
+                                gimp_unit_get_name (data->unit));
       text = g_strdup_printf (format, page_width, page_height);
       g_free (format);
 
