@@ -5,6 +5,7 @@ param ($GIMP_VERSION,
        $REVISION,
        $GIMP_APP_VERSION,
        $GIMP_API_VERSION,
+       $BUILD_DIR = '..\..\..\_build',
        $GIMP_BASE = '..\..\..\',
        $GIMP32 = 'gimp-x86',
        $GIMP64 = 'gimp-x64',
@@ -133,23 +134,10 @@ fix_msg $INNOPATH\Languages
 fix_msg $INNOPATH\Languages\Unofficial
 
 
-$gen_path = '_build\build\windows\installer'
-if (Test-Path -Path $gen_path)
-  {
-    # Copy generated language files into the source directory
-    Copy-Item $gen_path\lang\*isl build\windows\installer\lang\
-    Copy-Item $gen_path\*list build\windows\installer\
-
-    # Copy generated images into the source directory
-    Copy-Item $gen_path\*ico build\windows\installer\
-    Copy-Item $gen_path\*bmp build\windows\installer\
-  }
-
-
 # Construct now the installer
 Set-Location build/windows/installer
 Set-Alias -Name 'iscc' -Value "${INNOPATH}\iscc.exe"
-iscc -DGIMP_VERSION="$GIMP_VERSION" -DREVISION="$REVISION" -DGIMP_APP_VERSION="$GIMP_APP_VERSION" -DGIMP_API_VERSION="$GIMP_API_VERSION" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DLUA -DPYTHON base_gimp3264.iss
+iscc -DGIMP_VERSION="$GIMP_VERSION" -DREVISION="$REVISION" -DGIMP_APP_VERSION="$GIMP_APP_VERSION" -DGIMP_API_VERSION="$GIMP_API_VERSION" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DLUA -DPYTHON base_gimp3264.iss
 
 # Test if the installer was created and return success/failure.
 if (Test-Path -Path "_Output/gimp-${GIMP_VERSION}-setup.exe" -PathType Leaf)

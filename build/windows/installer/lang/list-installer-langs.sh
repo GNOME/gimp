@@ -55,7 +55,7 @@ if [ "$1" = 'msg' ]; then
   ## Create list of lang [Languages]
   if [ "$1" = 'msg' ]; then
     for PO in "${PO_INNO_ARRAY[@]}"; do
-      MSG_LINE='Name: "PO"; MessagesFile: "compiler:INNO_CODE,lang\PO.setup.isl"'
+      MSG_LINE='Name: "PO"; MessagesFile: "compiler:INNO_CODE,{#ASSETS_DIR}\lang\PO.setup.isl"'
       # Change po
       MSG_LINE=$(sed "s/PO/$PO/g" <<< $MSG_LINE)
       # Change isl

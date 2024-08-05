@@ -110,6 +110,7 @@
 [Setup]
 MissingMessagesWarning=no
 NotRecognizedMessagesWarning=no
+#define ASSETS_DIR BUILD_DIR + "\build\windows\installer"
 
 ;INSTALLER AND APP INFO
 AppName=GIMP
@@ -168,13 +169,13 @@ AlwaysShowDirOnReadyPage=yes
 WizardStyle=modern
 WizardSizePercent=100
 WizardResizable=no
-WizardSmallImageFile=gimp.scale-100.bmp,gimp.scale-125.bmp,gimp.scale-150.bmp,gimp.scale-175.bmp,gimp.scale-200.bmp,gimp.scale-225.bmp,gimp.scale-250.bmp
-WizardImageFile=install-end.scale-100.bmp,install-end.scale-125.bmp,install-end.scale-150.bmp,install-end.scale-175.bmp,install-end.scale-200.bmp,install-end.scale-225.bmp,install-end.scale-250.bmp
+WizardSmallImageFile={#ASSETS_DIR}\gimp.scale-100.bmp,{#ASSETS_DIR}\gimp.scale-125.bmp,{#ASSETS_DIR}\gimp.scale-150.bmp,{#ASSETS_DIR}\gimp.scale-175.bmp,{#ASSETS_DIR}\gimp.scale-200.bmp,{#ASSETS_DIR}\gimp.scale-225.bmp,{#ASSETS_DIR}\gimp.scale-250.bmp
+WizardImageFile={#ASSETS_DIR}\install-end.scale-100.bmp,{#ASSETS_DIR}\install-end.scale-125.bmp,{#ASSETS_DIR}\install-end.scale-150.bmp,{#ASSETS_DIR}\install-end.scale-175.bmp,{#ASSETS_DIR}\install-end.scale-200.bmp,{#ASSETS_DIR}\install-end.scale-225.bmp,{#ASSETS_DIR}\install-end.scale-250.bmp
 WizardImageStretch=yes
 
 
 ;INSTALLER .EXE FILE
-SetupIconFile=setup.ico
+SetupIconFile={#ASSETS_DIR}\setup.ico
 ArchitecturesInstallIn64BitMode=x64 arm64
 MinVersion=10.0
 
@@ -229,8 +230,8 @@ WelcomeFontName=Segoe UI
 WelcomeFontSize=12
 
 [Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
-#include "base_po-msg.list"
+Name: "en"; MessagesFile: "compiler:Default.isl,{#ASSETS_DIR}\lang\en.setup.isl"
+#include ASSETS_DIR + "\base_po-msg.list"
 
 
 [Types]
@@ -275,7 +276,7 @@ Name: pyARM64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: 
 
 ;Locales
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
-#include "base_po-cmp.list"
+#include ASSETS_DIR + "\base_po-cmp.list"
 
 ;MyPaint Brushes
 Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
@@ -297,9 +298,9 @@ Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; Description: "{cm:LaunchGimp
 
 [Files]
 ;setup files
-Source: "install-end.scale-100.bmp"; Flags: dontcopy
-Source: "installsplash.bmp"; Flags: dontcopy
-Source: "installsplash_small.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\install-end.scale-100.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash.bmp"; Flags: dontcopy
+Source: "{#ASSETS_DIR}\installsplash_small.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
@@ -331,7 +332,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\pygimp.interp";
 Source: "{#GIMP_DIR32}\*.py"; DestDir: "{app}"; Components: (py32 or py64 or pyARM64); Flags: {#COMMON_FLAGS}
 #endif
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
-#include "base_po-files.list"
+#include ASSETS_DIR + "\base_po-files.list"
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 
 ;files arch specific

@@ -174,7 +174,7 @@ standard, and is used to generate lists to our .iss script
 		name="ქართული ენა" />
 	<iso_639_entry
 		dl_code="kab"
-		inno_code="Default.isl,lang\\kab.isl"
+		inno_code="Default.isl,{#ASSETS_DIR}\\lang\\kab.isl"
 		name="Taqbaylit" />
 	<iso_639_entry
 		dl_code="kk"
