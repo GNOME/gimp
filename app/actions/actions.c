@@ -80,6 +80,7 @@
 #include "mypaint-brushes-actions.h"
 #include "palette-editor-actions.h"
 #include "palettes-actions.h"
+#include "paths-actions.h"
 #include "patterns-actions.h"
 #include "plug-in-actions.h"
 #include "quick-mask-actions.h"
@@ -93,7 +94,6 @@
 #include "tool-preset-editor-actions.h"
 #include "tools-actions.h"
 #include "vector-toolpath-actions.h"
-#include "vectors-actions.h"
 #include "view-actions.h"
 #include "windows-actions.h"
 

@@ -59,6 +59,8 @@ app/actions/mypaint-brushes-actions.c
 app/actions/palette-editor-actions.c
 app/actions/palettes-actions.c
 app/actions/palettes-commands.c
+app/actions/paths-actions.c
+app/actions/paths-commands.c
 app/actions/patterns-actions.c
 app/actions/plug-in-actions.c
 app/actions/plug-in-commands.c
@@ -81,8 +83,6 @@ app/actions/tool-presets-actions.c
 app/actions/tool-presets-commands.c
 app/actions/tools-actions.c
 app/actions/vector-toolpath-actions.c
-app/actions/vectors-actions.c
-app/actions/vectors-commands.c
 app/actions/view-actions.c
 app/actions/view-commands.c
 app/actions/window-actions.c
@@ -679,6 +679,7 @@ menus/layers-menu.ui
 menus/mypaint-brushes-menu.ui
 menus/palette-editor-menu.ui
 menus/palettes-menu.ui
+menus/paths-menu.ui
 menus/patterns-menu.ui
 menus/sample-points-menu.ui
 menus/selection-menu.ui
@@ -688,4 +689,3 @@ menus/tool-options-menu.ui
 menus/tool-preset-editor-menu.ui
 menus/tool-presets-menu.ui
 menus/undo-menu.ui
-menus/vectors-menu.ui

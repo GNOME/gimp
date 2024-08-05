@@ -21,6 +21,7 @@ ui_menus_files = files(
   'mypaint-brushes-menu.ui',
   'palette-editor-menu.ui',
   'palettes-menu.ui',
+  'paths-menu.ui',
   'patterns-menu.ui',
   'quick-mask-menu.ui',
   'sample-points-menu.ui',
@@ -33,7 +34,6 @@ ui_menus_files = files(
   'tool-presets-menu.ui',
   'undo-menu.ui',
   'vector-toolpath-menu.ui',
-  'vectors-menu.ui',
 )
 
 install_data(ui_menus_files,

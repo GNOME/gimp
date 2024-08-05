@@ -64,7 +64,7 @@
 
 #include "actions.h"
 #include "items-commands.h"
-#include "vectors-commands.h"
+#include "paths-commands.h"
 
 #include "gimp-intl.h"
 

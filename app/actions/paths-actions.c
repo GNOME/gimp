@@ -34,8 +34,8 @@
 
 #include "actions.h"
 #include "items-actions.h"
-#include "vectors-actions.h"
-#include "vectors-commands.h"
+#include "paths-actions.h"
+#include "paths-commands.h"
 
 #include "gimp-intl.h"
 

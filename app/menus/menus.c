@@ -172,7 +172,7 @@ menus_init (Gimp *gimp)
                                       "plug-in",
                                       NULL,
                                       "/paths-popup",
-                                      "vectors-menu", plug_in_menus_setup,
+                                      "paths-menu", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<VectorToolPath>",
