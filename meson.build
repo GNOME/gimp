@@ -406,7 +406,7 @@ gmodule           = dependency('gmodule-no-export-2.0')
 
 gtk3_minver       = '3.24.0'
 gtk3              = dependency('gtk+-3.0',           version: '>='+gtk3_minver)
-harfbuzz_minver   = '1.0.5'
+harfbuzz_minver   = '2.8.2'
 harfbuzz          = dependency('harfbuzz',           version: '>='+harfbuzz_minver)
 json_glib         = dependency('json-glib-1.0',      version: '>=1.2.6')
 lcms_minver       = '2.8'
