@@ -187,6 +187,8 @@ gimp_color_history_finalize (GObject *object)
     g_signal_handlers_disconnect_by_func (history->context,
                                           gimp_color_history_image_changed,
                                           history);
+  g_clear_object (&history->context);
+
   if (history->active_image)
     g_signal_handlers_disconnect_by_func (history->active_image,
                                           G_CALLBACK (gimp_color_history_palette_dirty),
@@ -222,7 +224,7 @@ gimp_color_history_set_property (GObject      *object,
           history->active_image = NULL;
         }
 
-      history->context = g_value_get_object (value);
+      history->context = g_value_dup_object (value);
 
       if (history->context)
         {
