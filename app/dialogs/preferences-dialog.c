@@ -2849,7 +2849,7 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   {
-    gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
+    gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%a", NULL);
 
     entry = gimp_prop_coordinates_new (object,
                                        "monitor-xresolution",

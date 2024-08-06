@@ -175,7 +175,7 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                    g_param_spec_string ("long-format",
                                                         "Long Format",
                                                         "Format string for a long label",
-                                                        "%p",
+                                                        "%n",
                                                         GIMP_PARAM_READWRITE));
 }
 
