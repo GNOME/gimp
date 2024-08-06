@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-02 23:17+0000\n"
-"PO-Revision-Date: 2024-08-03 12:19+0200\n"
+"POT-Creation-Date: 2024-08-06 09:43+0000\n"
+"PO-Revision-Date: 2024-08-06 13:24+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -178,7 +178,7 @@ msgid "Export Image as %s"
 msgstr "Izvozi sliko kot %s"
 
 #: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:344
-#: libgimpwidgets/gimpcolorbutton.c:554
+#: libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
@@ -454,13 +454,13 @@ msgid "_Open"
 msgstr "_Odpri"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:493
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:493
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "V _redu"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_Ponastavi"
 
@@ -1731,63 +1731,33 @@ msgstr "Razčlenjevanje podatkov IPTC je spodletelo."
 msgid "Parsing XMP data failed."
 msgstr "Razčlenjevanje podatkov XMP je spodletelo."
 
-#: libgimpbase/gimpunit.c:86
-msgctxt "unit-singular"
-msgid "pixel"
-msgstr "slik. točka"
-
-#: libgimpbase/gimpunit.c:86
+#: libgimpbase/gimpunit.c:81
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "slik. točk"
 
-#: libgimpbase/gimpunit.c:90
-msgctxt "unit-singular"
-msgid "inch"
-msgstr "palec"
-
-#: libgimpbase/gimpunit.c:90
+#: libgimpbase/gimpunit.c:88
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "palcev"
 
-#: libgimpbase/gimpunit.c:93
-msgctxt "unit-singular"
-msgid "millimeter"
-msgstr "milimeter"
-
-#: libgimpbase/gimpunit.c:93
+#: libgimpbase/gimpunit.c:94
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "milimetrov"
 
-#: libgimpbase/gimpunit.c:97
-msgctxt "unit-singular"
-msgid "point"
-msgstr "točka"
-
-#: libgimpbase/gimpunit.c:97
+#: libgimpbase/gimpunit.c:101
 msgctxt "unit-plural"
 msgid "points"
 msgstr "točk"
 
-#: libgimpbase/gimpunit.c:100
-msgctxt "unit-singular"
-msgid "pica"
-msgstr "pica"
-
-#: libgimpbase/gimpunit.c:100
+#: libgimpbase/gimpunit.c:107
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "pic"
 
-#: libgimpbase/gimpunit.c:108
-msgctxt "singular"
-msgid "percent"
-msgstr "odstotek"
-
-#: libgimpbase/gimpunit.c:108
-msgctxt "plural"
+#: libgimpbase/gimpunit.c:117
+msgctxt "unit-plural"
 msgid "percent"
 msgstr "odstotkov"
 
@@ -2179,9 +2149,9 @@ msgstr ""
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Napaka pri razčlenjevanju »%s« v vrstici %d: %s"
 
-#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
-#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
-#: libgimpmodule/gimpmodule.c:573
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Napaka nalaganja gradnika »%s«: %s"
@@ -2216,12 +2186,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Mapa sličic za predogled »%s« ni bila ustvarjena."
 
-#: libgimpthumb/gimpthumbnail.c:481
+#: libgimpthumb/gimpthumbnail.c:530
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Sličica za predogled ne vsebuje oznake Thumb::URI"
 
-#: libgimpthumb/gimpthumbnail.c:878
+#: libgimpthumb/gimpthumbnail.c:931
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
@@ -2230,19 +2200,19 @@ msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
 msgid "_Search:"
 msgstr "Na_jdi:"
 
-#: libgimpwidgets/gimpcolorbutton.c:377
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "Barva o_spredja"
 
-#: libgimpwidgets/gimpcolorbutton.c:378
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "Barva o_zadja"
 
-#: libgimpwidgets/gimpcolorbutton.c:383
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "_Črna"
 
-#: libgimpwidgets/gimpcolorbutton.c:384
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_Bela"
 
@@ -2267,7 +2237,7 @@ msgid "_Save"
 msgstr "_Shrani"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
-#: libgimpwidgets/gimppatheditor.c:267
+#: libgimpwidgets/gimppatheditor.c:292
 msgid "Folder"
 msgstr "Mapa"
 
@@ -2357,11 +2327,11 @@ msgstr "Staro:"
 msgid "HTML _notation:"
 msgstr "Zapis _HTML:"
 
-#: libgimpwidgets/gimpcontroller.c:105
+#: libgimpwidgets/gimpcontroller.c:114
 msgid "The controller's name"
 msgstr "Ime krmilnika"
 
-#: libgimpwidgets/gimpcontroller.c:113
+#: libgimpwidgets/gimpcontroller.c:122
 msgid "The controller's state, as human-readable string"
 msgstr "Stanje krmilnika kot niz v človeku berljivi obliki"
 
@@ -2409,7 +2379,7 @@ msgstr "Pritisnite F1 za dodatno pomoč"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: libgimpwidgets/gimpintstore.c:255
+#: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
 msgstr "(prazno)"
 
@@ -2477,27 +2447,27 @@ msgstr[1] "Izbrana je %d stran"
 msgstr[2] "Izbrani sta %d strani"
 msgstr[3] "Izbrane so %d strani"
 
-#: libgimpwidgets/gimppatheditor.c:178
+#: libgimpwidgets/gimppatheditor.c:203
 msgid "Add a new folder"
 msgstr "Dodaj novo mapo"
 
-#: libgimpwidgets/gimppatheditor.c:196
+#: libgimpwidgets/gimppatheditor.c:221
 msgid "Move the selected folder up"
 msgstr "Premakni izbrano mapo navzgor"
 
-#: libgimpwidgets/gimppatheditor.c:214
+#: libgimpwidgets/gimppatheditor.c:239
 msgid "Move the selected folder down"
 msgstr "Premakni izbrano mapo navzdol"
 
-#: libgimpwidgets/gimppatheditor.c:232
+#: libgimpwidgets/gimppatheditor.c:257
 msgid "Remove the selected folder from the list"
 msgstr "Odstrani izbrano mapo s seznama"
 
-#: libgimpwidgets/gimppatheditor.c:258
+#: libgimpwidgets/gimppatheditor.c:283
 msgid "Writable"
 msgstr "zapisljiva"
 
-#: libgimpwidgets/gimppickbutton.c:123
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
