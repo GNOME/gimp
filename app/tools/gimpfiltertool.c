@@ -1949,11 +1949,18 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
       mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
       if (filters)
         {
+          gint existing_index;
+
           index = gimp_container_get_child_index (filters,
                                                   GIMP_OBJECT (filter_tool->existing_filter));
 
-          gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
-                                  index);
+          existing_index =
+            gimp_container_get_child_index (filters,
+                                            GIMP_OBJECT (filter_tool->filter));
+
+          if (existing_index > -1)
+            gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                                    index);
         }
 
       g_object_set (filter_tool->filter,

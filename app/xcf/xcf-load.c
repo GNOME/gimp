@@ -1079,12 +1079,12 @@ xcf_load_add_effects (XcfInfo   *info,
             {
               FilterData *data = iter->data;
 
-              if (! data->icon_name)
-                data->icon_name = g_strdup ("gimp-gegl");
-
               if (! data->unsupported_operation)
                 {
                   GimpDrawableFilter *filter = NULL;
+
+                  if (! data->icon_name)
+                    data->icon_name = g_strdup ("gimp-gegl");
 
                   filter = gimp_drawable_filter_new (GIMP_DRAWABLE (layer),
                                                      data->name, data->operation,
@@ -3365,15 +3365,23 @@ xcf_load_effect (XcfInfo      *info,
   xcf_read_string (info, &string, 1);
   filter->operation_name = string;
 
-  if (! gegl_has_operation (filter->operation_name))
+  if (! gegl_has_operation (filter->operation_name) ||
+      ! g_strcmp0 (filter->operation_name, "gegl:nop"))
     {
       filter->unsupported_operation = TRUE;
 
-      gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_WARNING,
-                    "XCF Warning: the \"%s\" (%s) filter is "
-                    "not installed. It was discarded.",
-                    filter->name, filter->operation_name);
+      if (! g_strcmp0 (filter->operation_name, "gegl:nop"))
+        gimp_message (info->gimp, G_OBJECT (info->progress),
+                      GIMP_MESSAGE_WARNING,
+                      "XCF Warning: A filter was saved as a "
+                      "gegl:nop. This should not happen. Please "
+                      "report this to the developers.");
+      else
+        gimp_message (info->gimp, G_OBJECT (info->progress),
+                      GIMP_MESSAGE_WARNING,
+                      "XCF Warning: the \"%s\" (%s) filter is "
+                      "not installed. It was discarded.",
+                      filter->name, filter->operation_name);
 
       return filter;
     }
