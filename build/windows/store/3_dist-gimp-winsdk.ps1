@@ -16,6 +16,7 @@ else
     $cpu_arch = 'x64'
   }
 $win_sdk_path = Resolve-Path "C:\Program Files (x86)\Windows Kits\10\bin\*\$cpu_arch" | Select-Object -Last 1
+Write-Output "(INFO): Installed WinSDK: $win_sdk_path"
 
 # Needed tools from Windows SDK
 Set-Alias 'makepri' "$win_sdk_path\makepri.exe"
@@ -42,9 +43,14 @@ else
 $GIMP_VERSION = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
                 Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
 
+Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $GIMP_VERSION.0"
+
 
 # Autodetects what arch bundles will be packaged
-Copy-Item .gitignore .gitignore.bak
+if (-not (Test-Path .gitignore.bak -Type Leaf))
+  {
+    Copy-Item .gitignore .gitignore.bak
+  }
 $supported_archs = "$a64_bundle","$x64_bundle"
 foreach ($bundle in $supported_archs)
   {
@@ -59,7 +65,7 @@ foreach ($bundle in $supported_archs)
             $msix_arch = 'x64'
           }
 
-        $ig_content = "`n$bundle`n$msix_arch`n*.appxsym`n*.zip"
+        $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
         if (Test-Path .gitignore -Type Leaf)
           {
             Add-Content .gitignore "$ig_content"
@@ -70,10 +76,16 @@ foreach ($bundle in $supported_archs)
             Set-Content .gitignore "$ig_content"
           }
 
-        New-Item $msix_arch -ItemType Directory
+        Write-Output "(INFO): Arch: $msix_arch"
+        if (Test-Path $msix_arch)
+          {
+            Remove-Item $msix_arch/ -Recurse
+          }
+        New-Item $msix_arch -ItemType Directory | Out-Null
 
 
         # 1. CONFIGURE MANIFEST
+        Write-Output '(INFO): configuring AppxManifest.xml'
         Copy-Item build\windows\store\AppxManifest.xml $msix_arch
 
         ## Set Identity Name
@@ -114,12 +126,13 @@ foreach ($bundle in $supported_archs)
 
 
         # 2. CREATE ASSETS
+        Write-Output '(INFO): generating resources.pri'
 
         ## Copy pre-generated icons to each msix_arch
         $icons_path = "$build_dir\build\windows\store\Assets"
         if (Test-Path "$icons_path")
           {
-            New-Item $msix_arch\Assets -ItemType Directory
+            New-Item $msix_arch\Assets -ItemType Directory | Out-Null
             Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
           }
         else
@@ -130,13 +143,14 @@ foreach ($bundle in $supported_archs)
 
         ## Generate resources.pri
         Set-Location $msix_arch
-        makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0
+        makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File winsdk.log
         Set-Location ..\
-        makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch
+        makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append
         Remove-Item $msix_arch\priconfig.xml
 
 
         # 3. COPY GIMP FILES
+        Write-Output '(INFO): copying GIMP files'
         $vfs = "$msix_arch\VFS\ProgramFilesX64\GIMP"
 
         ## Copy files into VFS folder (to support external 3P plug-ins)
@@ -169,28 +183,38 @@ foreach ($bundle in $supported_archs)
         #  }
 
         ## Make .msix from each msix_arch
-        makeappx pack /d $msix_arch /p $MSIX_ARTIFACT
+        if (-not ((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)))
+          {
+            Write-Output "(INFO): packaging $MSIX_ARTIFACT (for testing purposes)"
+          }
+        else
+          {
+            Write-Output "(INFO): packaging temporary $MSIX_ARTIFACT"
+          }
+        makeappx pack /d $msix_arch /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
         Remove-Item $msix_arch/ -Recurse
       } #END of 'if (Test-Path...'
   } #END of 'foreach ($msix_arch...'
 
 
 # 5. MAKE .MSIXBUNDLE AND SUBSEQUENT .MSIXUPLOAD
-if ((Get-ChildItem *.msix -Recurse).Count -gt 1)
+if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *.msix -Recurse).Count -gt 1)
   {
     ## Make .msixbundle with all archs
     ## (This is needed not only for easier multi-arch testing but
     ##  also to make sure against Partner Center getting confused)
     $MSIX_ARTIFACT = "${IDENTITY_NAME}_${GIMP_VERSION}.0_neutral.msixbundle"
-    New-Item _TempOutput -ItemType Directory
+    Write-Output "(INFO): packaging $MSIX_ARTIFACT (for testing purposes)"
+    New-Item _TempOutput -ItemType Directory | Out-Null
     Move-Item *.msix _TempOutput/
-    makeappx bundle /bv "${GIMP_VERSION}.0" /d _TempOutput /p $MSIX_ARTIFACT
+    makeappx bundle /bv "${GIMP_VERSION}.0" /d _TempOutput /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
     Remove-Item _TempOutput/ -Recurse
 
     ## Make .msixupload (ONLY FOR RELEASES)
     if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -eq 'MSIXUPLOAD'))
       {
         $MSIX_ARTIFACT = "${IDENTITY_NAME}_${GIMP_VERSION}.0_x64_arm64_bundle.msixupload"
+        Write-Output "(INFO): making $MSIX_ARTIFACT"
         Get-ChildItem *.msixbundle | ForEach-Object { Compress-Archive -Path "$($_.Basename).msixbundle" -DestinationPath "$($_.Basename).zip" }
         Get-ChildItem *.zip | Rename-Item -NewName $MSIX_ARTIFACT
         #Get-ChildItem *.appxsym | Remove-Item -Recurse -Force
@@ -202,14 +226,15 @@ if ((Get-ChildItem *.msix -Recurse).Count -gt 1)
 # 5. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY) AND DO OTHER STUFF
 if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -ne 'MSIXUPLOAD') -and ($MSIX_ARTIFACT -notlike "*msixupload"))
  {
-  signtool sign /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT
+  Write-Output "(INFO): signing $MSIX_ARTIFACT (for testing purposes)"
+  signtool sign /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT | Out-File winsdk.log -Append
   Copy-Item build\windows\store\pseudo-gimp.pfx .\ -Recurse
  }
 
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
-    New-Item build\windows\store\_Output -ItemType Directory
+    New-Item build\windows\store\_Output -ItemType Directory | Out-Null
     Move-Item $MSIX_ARTIFACT build\windows\store\_Output
     Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination build\windows\store\_Output
   }
