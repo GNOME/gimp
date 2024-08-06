@@ -1117,12 +1117,12 @@ endif
 ## Lua
 
 have_lua = false
-# At time of writing, lua-lgi works with Lua 5.1, 5.2, 5.3, 5.4 and LuaJIT2. On
-# most platforms, we use luajit.
+# At time of writing, lua-lgi works with Lua 5.1, 5.2, 5.3 and LuaJIT2, but we
+# support only Lua 5.1 API. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11876
 if get_option('lua').allowed()
   have_lua_lgi = false
 
-  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua5.2', 'lua5.3', 'lua5.4', 'lua' ]
+  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua' ]
     lua = find_program(lua_bin, required: false)
 
     if lua.found() and meson.can_run_host_binaries()

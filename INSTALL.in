@@ -291,7 +291,7 @@ help in that regard:
      "gegl:matting-levin" GEGL operation for alternative matting engine
      Python @PYTHON3_REQUIRED_VERSION@ and PyGObject for Python 3 plug-ins
      GJS for Javascript plug-ins
-     LuaJIT and LGI for Lua plug-ins
+     Lua 5.1 (or LuaJIT) and LGI for Lua plug-ins
      dot for "Show Image Graph" (unstable branches)
      xdg-desktop-portal implemented for your desktop for various D-Bus API (screenshot, color-picking…)
 
