@@ -7,7 +7,7 @@ gimp_unit_defs = [
   {
     'factor':       0.0,
     'digits':       0,
-    'identifier':   "pixels",
+    'name':         "pixels",
     'symbol':       "px",
     'abbreviation': "px"
   },
@@ -15,14 +15,14 @@ gimp_unit_defs = [
   {
     'factor':       1.0,
     'digits':       2,
-    'identifier':   "inches",
+    'name':         "inches",
     'symbol':       "''",
     'abbreviation': "in"
   },
   {
     'factor':       25.4,
     'digits':       1,
-    'identifier':   "millimeters",
+    'name':         "millimeters",
     'symbol':       "mm",
     'abbreviation': "mm"
   },
@@ -30,14 +30,14 @@ gimp_unit_defs = [
   {
     'factor':       72.0,
     'digits':       0,
-    'identifier':   "points",
+    'name':         "points",
     'symbol':       "pt",
     'abbreviation': "pt"
   },
   {
     'factor':       6.0,
     'digits':       1,
-    'identifier':   "picas",
+    'name':         "picas",
     'symbol':       "pc",
     'abbreviation': "pc"
   }
@@ -54,7 +54,7 @@ for i in range(len(gimp_unit_defs)):
   unitdef = gimp_unit_defs[i]
   gimp_assert('Testing built-in unit {}'.format(i),
               type(unit) == Gimp.Unit                            and \
-              unit.get_identifier() == unitdef['identifier']     and \
+              unit.get_name() == unitdef['name']                 and \
               unit.get_symbol() == unitdef['symbol']             and \
               unit.get_abbreviation() == unitdef['abbreviation'] and \
               unit.get_factor() == unitdef['factor']             and \
@@ -71,7 +71,7 @@ while unit is not None:
   unit = Gimp.Unit.get_by_id(Gimp.UnitID.END + n_user_units)
 gimp_assert('Counting default user units', n_user_units == N_DEFAULT_USER_UNITS)
 
-unit2 = Gimp.Unit.new ("identifier", 2.0, 1, "symbol", "abbreviation", "singular", "plural");
+unit2 = Gimp.Unit.new ("name", 2.0, 1, "symbol", "abbreviation");
 gimp_assert('Gimp.Unit.new()', type(unit2) == Gimp.Unit)
 
 gimp_assert("Verifying the new user unit's ID", unit2.get_id() == Gimp.UnitID.END + n_user_units)
