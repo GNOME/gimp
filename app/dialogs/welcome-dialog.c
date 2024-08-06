@@ -114,6 +114,9 @@ static void   welcome_open_activated_callback        (GtkListBox     *listbox,
 static void   welcome_open_images_callback           (GtkWidget      *button,
                                                       GtkListBox     *listbox);
 
+static gboolean welcome_scrollable_resize            (gpointer        data);
+
+
 static GtkWidget *welcome_dialog;
 
 GtkWidget *
@@ -235,11 +238,6 @@ welcome_dialog_new (Gimp       *gimp,
   gtk_widget_set_margin_bottom (main_vbox, 0);
   gtk_widget_set_margin_start (main_vbox, 0);
   gtk_widget_set_margin_end (main_vbox, 0);
-
-  /* Make the first page scrollable to prevent height issues on
-   * smaller screens */
-  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box),
-                                      main_vbox, TRUE);
 
   welcome_dialog_create_welcome_page (gimp, dialog, main_vbox);
   gtk_widget_set_visible (main_vbox, TRUE);
@@ -402,6 +400,7 @@ welcome_dialog_create_welcome_page (Gimp      *gimp,
   gtk_box_pack_start (GTK_BOX (main_vbox), image, TRUE, TRUE, 0);
   gtk_widget_set_visible (image, TRUE);
 
+  g_object_set_data (G_OBJECT (welcome_dialog), "welcome-vbox", main_vbox);
   g_signal_connect (welcome_dialog,
                     "size-allocate",
                     G_CALLBACK (welcome_size_allocate),
@@ -1414,16 +1413,32 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
   GFile         *splash_file;
   GdkPixbuf     *pixbuf;
   GdkMonitor    *monitor;
+  GdkWindow     *gdk_window;
   GdkRectangle   workarea;
   gint           image_width;
 
-  if (gtk_image_get_storage_type (GTK_IMAGE (image)) == GTK_IMAGE_PIXBUF)
-    return;
-
-  monitor = gimp_get_monitor_at_pointer ();
+  gdk_window = gtk_widget_get_window (welcome_dialog);
+  if (gdk_window)
+    monitor = gdk_display_get_monitor_at_window (gdk_display_get_default (), gdk_window);
+  else
+    monitor = gimp_get_monitor_at_pointer ();
   gdk_monitor_get_workarea (monitor, &workarea);
 
+  if (gtk_image_get_storage_type (GTK_IMAGE (image)) == GTK_IMAGE_PIXBUF)
+    {
+      if (allocation->height > workarea.height - 10 &&
+          ! g_object_get_data (G_OBJECT (welcome_dialog), "resized-once"))
+        {
+          g_object_set_data (G_OBJECT (welcome_dialog), "resized-once", GINT_TO_POINTER (TRUE));
+          g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                           welcome_scrollable_resize, NULL,
+                           NULL);
+        }
+    return;
+    }
+
   image_width = MAX (allocation->width - 2, workarea.width / 4);
+  image_width = MIN (image_width, workarea.width / 3);
   /* Splash screens are fullHD. We should not load it bigger.
    * See: https://gitlab.gnome.org/GNOME/gimp-data/-/blob/main/images/README.md#requirements
    */
@@ -1448,4 +1463,22 @@ welcome_size_allocate (GtkWidget     *welcome_dialog,
   gtk_widget_set_visible (image, TRUE);
 
   gtk_window_set_resizable (GTK_WINDOW (welcome_dialog), FALSE);
+}
+
+static gboolean
+welcome_scrollable_resize (gpointer data)
+{
+  if (welcome_dialog)
+    {
+      GtkWidget *prefs_box = g_object_get_data (G_OBJECT (welcome_dialog), "prefs-box");
+      GtkWidget *main_vbox = g_object_get_data (G_OBJECT (welcome_dialog), "welcome-vbox");
+
+      /* Make the first page scrollable to prevent height issues on
+       * smaller screens */
+      gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), main_vbox, TRUE);
+
+      gtk_widget_queue_resize (GTK_WIDGET (welcome_dialog));
+    }
+
+  return G_SOURCE_REMOVE;
 }
