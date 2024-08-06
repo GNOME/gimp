@@ -112,6 +112,9 @@ static void               load_separate    (TIFF                *tif,
                                             gboolean             is_signed,
                                             gint                 extra);
 
+static void       load_sketchbook_layers   (TIFF                *tif,
+                                            GimpImage           *image);
+
 static gboolean   is_non_conformant_tiff   (gushort              photomet,
                                             gushort              spp);
 static gushort    get_extra_channels_count (gushort              photomet,
@@ -288,6 +291,9 @@ load_image (GimpProcedure        *procedure,
   gchar             *photoshop_data;
   gint32             photoshop_len;
   gboolean           is_cmyk            = FALSE;
+  gchar             *sketchbook_info;
+  gint               sketchbook_len;
+  gboolean           sketchbook_layers  = FALSE;
 
   *image = NULL;
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -479,6 +485,10 @@ load_image (GimpProcedure        *procedure,
         }
     }
   TIFFSetDirectory (tif, 0);
+
+  /* Check if there exist layers saved from Alias/AutoDesk Sketchbook */
+  sketchbook_layers = TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA,
+                                    &sketchbook_info, &sketchbook_len);
 
   pages.show_reduced = FALSE;
   if (pages.n_reducedimage_pages - pages.n_filtered_pages > 1)
@@ -1508,6 +1518,11 @@ load_image (GimpProcedure        *procedure,
           extra = 99;
         }
 
+      /* Stop here if we have Alias/AutoDesk Sketchbook layers, as this
+       * would just be the composite image */
+      if (sketchbook_layers)
+        break;
+
       /* Allocate ChannelData for all channels, even the background layer */
       channel = g_new0 (ChannelData, extra + 1);
 
@@ -1691,6 +1706,11 @@ load_image (GimpProcedure        *procedure,
 
       gimp_progress_update (1.0);
     }
+
+  /* If this TIF was created in Alias/AutoDesk Sketchbook, it may have layers. */
+  if (sketchbook_layers)
+    load_sketchbook_layers (tif, *image);
+
   g_clear_object (&first_profile);
 
   if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
@@ -1732,9 +1752,10 @@ load_image (GimpProcedure        *procedure,
         }
 
       /* resize image to bounding box of all layers */
-      gimp_image_resize (*image,
-                         max_col - min_col, max_row - min_row,
-                         -min_col, -min_row);
+      if (! sketchbook_layers)
+        gimp_image_resize (*image,
+                           max_col - min_col, max_row - min_row,
+                           -min_col, -min_row);
 
       gimp_image_undo_enable (*image);
     }
@@ -2271,6 +2292,208 @@ load_separate (TIFF         *tif,
 
   g_free (buffer);
   g_free (bw_buffer);
+}
+
+/* Loads layers stored by the Alias/AutoDesk Sketchbook program */
+static void
+load_sketchbook_layers (TIFF      *tif,
+                        GimpImage *image)
+{
+  gchar          *alias_layer_info;
+  gint            alias_data_len;
+  guint32         image_height = gimp_image_get_height (image);
+  guint32         image_width  = gimp_image_get_width (image);
+  GeglColor      *fill_color;
+  GeglColor      *foreground_color;
+  GimpLayer      *background_layer;
+  GimpLayerMode   default_mode;
+  const Babl     *format = NULL;
+  gchar         **image_settings;
+  gchar          *hex_color;
+  gint            layer_count = 0;
+  gint            sub_len;
+  void           *ptr;
+  gchar          *endptr = NULL;
+
+  default_mode = gimp_image_get_default_new_layer_mode (image);
+
+  TIFFSetDirectory (tif, 0);
+
+  TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA, &alias_data_len,
+                &alias_layer_info);
+  if (! g_utf8_validate (alias_layer_info, -1, NULL))
+    return;
+
+  /* Create background layer. Fill it with the hex color from
+   * the image-level ALIAS_LAYER_METADATA tag. The hex color
+   * is in AGBR format so we need to reverse it */
+  image_settings = g_strsplit (alias_layer_info, ", ", 15);
+
+  if (image_settings[0] != NULL)
+    layer_count = g_ascii_strtoll (image_settings[0], &endptr, 10);
+
+  if (image_settings[2] != NULL && strlen (image_settings[2]) >= 8)
+    hex_color =
+      g_strdup_printf ("#%s%s%s%s", g_utf8_substring (image_settings[2], 6, 8),
+                                    g_utf8_substring (image_settings[2], 4, 6),
+                                    g_utf8_substring (image_settings[2], 2, 4),
+                                    g_utf8_substring (image_settings[2], 0, 2));
+  else
+    hex_color = g_strdup ("transparent");
+
+  fill_color = gegl_color_new (hex_color);
+  g_free (hex_color);
+
+  foreground_color = gegl_color_duplicate (gimp_context_get_foreground ());
+  gimp_context_set_foreground (fill_color);
+
+  background_layer = gimp_layer_new (image, _("Background"),
+                                     image_width, image_height,
+                                     GIMP_RGBA_IMAGE, 100, default_mode);
+
+  gimp_image_insert_layer (image, background_layer, NULL, -1);
+  gimp_drawable_fill (GIMP_DRAWABLE (background_layer), GIMP_FILL_FOREGROUND);
+
+  g_object_unref (fill_color);
+  gimp_context_set_foreground (foreground_color);
+  g_object_unref (foreground_color);
+
+  /* The layers are stored in BGRA format */
+  format = babl_format_new (babl_model ("R~G~B~A"),
+                                        babl_type ("u8"),
+                                        babl_component ("B~"),
+                                        babl_component ("G~"),
+                                        babl_component ("R~"),
+                                        babl_component ("A"),
+                                        NULL);
+
+  /* Layers are stored in SubIFDs of the first directory */
+  if (TIFFGetField (tif, TIFFTAG_SUBIFD, &sub_len, &ptr))
+    {
+      toff_t offsets[sub_len];
+      gint   count = 0;
+
+      memcpy (offsets, ptr, sub_len * sizeof (offsets[0]));
+
+      for (gint i = 0; i < sub_len; i++)
+        {
+          gchar  *alias_sublayer_info = NULL;
+          gint32  alias_sublayer_len  = 0;
+
+          if (! TIFFSetSubDirectory (tif, offsets[i]))
+            break;
+
+          if (TIFFGetField (tif, TIFFTAG_ALIAS_LAYER_METADATA, &alias_sublayer_len, &alias_sublayer_info) &&
+              g_utf8_validate (alias_sublayer_info, -1, NULL))
+            {
+              gchar         **layer_settings;
+              GimpProcedure  *procedure;
+              GimpLayer      *layer;
+              GeglBuffer     *buffer;
+              const gchar    *layer_name;
+              guint32         layer_width = 0;
+              guint32         layer_height = 0;
+              gfloat          x_pos   = 0;
+              gfloat          y_pos   = 0;
+              gfloat          opacity = 100;
+              gboolean        visible = TRUE;
+              gboolean        locked  = FALSE;
+              guint32        *pixels;
+              guint32         row;
+
+              layer_settings = g_strsplit (alias_sublayer_info, ", ", 10);
+
+              if (layer_settings[0] != NULL)
+                {
+                  opacity = (gfloat) g_ascii_strtod (layer_settings[0], &endptr);
+                  opacity *= 100.0f;
+                }
+              if (layer_settings[2] != NULL)
+                visible = g_ascii_strtoll (layer_settings[2], &endptr, 10);
+
+              if (layer_settings[3] != NULL)
+                locked  = g_ascii_strtoll (layer_settings[3], &endptr, 10);
+
+              /* Additional tags in SubIFD */
+              layer_name = tiff_get_page_name (tif);
+
+              TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &layer_width);
+              TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &layer_height);
+
+              if (! TIFFGetField (tif, TIFFTAG_XPOSITION, &x_pos))
+                x_pos = 0.0f;
+
+              if (! TIFFGetField (tif, TIFFTAG_YPOSITION, &y_pos))
+                y_pos = 0.0f;
+
+              layer = gimp_layer_new (image, layer_name, layer_width,
+                                      layer_height, GIMP_RGBA_IMAGE, opacity,
+                                      default_mode);
+
+              gimp_image_insert_layer (image, layer, NULL, -1);
+
+              /* Loading pixel data */
+              pixels = g_new (uint32_t, layer_width * layer_height);
+              if (! TIFFReadRGBAImage (tif, layer_width, layer_width, pixels, 0))
+                {
+                  g_free (pixels);
+                  continue;
+                }
+
+              buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+              for (row = 0; row < layer_height; row++)
+                {
+#if G_BYTE_ORDER != G_LITTLE_ENDIAN
+                  guint32 row_start = row * layer_width;
+                  guint32 row_end   = row_start + layer_width;
+                  guint32 i;
+
+                  /* Make sure our channels are in the right order */
+                  for (i = row_start; i < row_end; i++)
+                    pixels[i] = GUINT32_TO_LE (pixel[i]);
+#endif
+                  gegl_buffer_set (buffer,
+                                   GEGL_RECTANGLE (0, layer_height - row - 1,
+                                                   layer_width, 1),
+                                   0, format,
+                                   ((guchar *) pixels) + row * layer_width * 4,
+                                   GEGL_AUTO_ROWSTRIDE);
+                }
+              g_object_unref (buffer);
+              g_free (pixels);
+
+              /* The layers seem to have excessive padding that affects the
+               * offset, since it's calculated from the bottom-left corner
+               * of the layer. We can crop the layers to fix the y position
+               * offset. Since the layer width can also shrink due to the
+               * crop, we calculate the before and after difference and
+               * adjust the x offset too. */
+              procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                     "plug-in-autocrop-layer");
+              gimp_procedure_run (procedure,
+                                  "run-mode", GIMP_RUN_NONINTERACTIVE,
+                                  "image",    image,
+                                  "drawable", layer,
+                                  NULL);
+
+              x_pos += (layer_width - gimp_drawable_get_width (GIMP_DRAWABLE (layer)));
+              y_pos = image_height - gimp_drawable_get_height (GIMP_DRAWABLE (layer)) - y_pos;
+
+              gimp_layer_set_offsets (layer, ROUND (x_pos), ROUND (y_pos));
+              /* In Alias/Autodesk Sketchbook, the layers are the same size as the canvas */
+              gimp_layer_resize_to_image_size (layer);
+
+              gimp_item_set_visible (GIMP_ITEM (layer), visible);
+              /* Set locks after copying pixel data over */
+              gimp_item_set_lock_content (GIMP_ITEM (layer), locked);
+              gimp_layer_set_lock_alpha (layer, locked);
+
+              count++;
+              gimp_progress_update ((gdouble) count / (gdouble) layer_count);
+            }
+        }
+    }
 }
 
 static void
