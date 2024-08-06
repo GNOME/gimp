@@ -84,7 +84,9 @@ clean ()
     cleanedArray=($(find $1/ -iname ${2##*/}))
   fi
   for path_dest_full in "${cleanedArray[@]}"; do
-    echo "(INFO): cleaning $path_dest_full"
+    if [[ "$path_dest_full" = "${cleanedArray[0]}" ]]; then
+      echo "(INFO): cleaning $1/$2"
+    fi
     rm $path_dest_full
   done
 }
