@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-02 23:17+0000\n"
-"PO-Revision-Date: 2024-08-03 21:28+0300\n"
+"POT-Creation-Date: 2024-08-06 09:44+0000\n"
+"PO-Revision-Date: 2024-08-07 14:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -69,7 +69,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
@@ -144,7 +144,7 @@ msgstr "Потренувати козу (Javascript)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -6877,7 +6877,7 @@ msgstr "Доступні:"
 msgid "On film:"
 msgstr "На плівку:"
 
-#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:436
+#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:428
 msgid "_Add"
 msgstr "_Додати"
 
@@ -7330,7 +7330,8 @@ msgstr "Немає відповідностей"
 msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
 #: plug-ins/metadata/metadata-editor.c:659
@@ -8095,11 +8096,11 @@ msgstr "_Непрозорість:"
 msgid "Number of Segments"
 msgstr "Кількість сегментів"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid "Saved"
 msgstr "Збережене"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -8107,30 +8108,27 @@ msgstr ""
 "Визначення одиниці буде збережено лише перед виходом з GIMP, якщо цей "
 "стовпчик відмічений."
 
-#: plug-ins/common/unit-editor.c:116
-msgid "ID"
-msgstr "Ідентифікатор"
-
-#: plug-ins/common/unit-editor.c:116
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+#: plug-ins/common/unit-editor.c:114
+#| msgid ""
+#| "This string will be used to identify a unit in GIMP's configuration files."
+msgid "The name to be used to identify this unit in the graphical interface"
 msgstr ""
-"Рядок, який буде використовуватись для ідентифікації одиниці в "
-"конфігураційному файлі GIMP."
+"Назва, яку буде використано для ідентифікації цієї одиниці у графічному"
+" інтерфейсі"
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "Factor"
 msgstr "Множник"
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "How many units make up an inch."
 msgstr "Скільки одиниць припадає на дюйм."
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid "Digits"
 msgstr "Цифри"
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -8140,11 +8138,11 @@ msgstr ""
 "знаків у полі вводу, які будуть давати приблизно таку ж точність як поле "
 "вводу дюймів з двома десятковими знаками."
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid "Symbol"
 msgstr "Символ"
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -8152,99 +8150,75 @@ msgstr ""
 "Символ одиниці, якщо він є (наприклад \"'\" для дюймів). Використовуйте "
 "абревіатури, для одиниць які не мають символу."
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "Abbreviation"
 msgstr "Абревіатура"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Абревіатура одиниці (наприклад, \"см\" для сантиметрів)."
 
-#: plug-ins/common/unit-editor.c:129
-msgid "Singular"
-msgstr "Однина"
-
-#: plug-ins/common/unit-editor.c:129
-msgid "The unit's singular form."
-msgstr "Одиниця в однині."
-
-#: plug-ins/common/unit-editor.c:130
-msgid "Plural"
-msgstr "Множина"
-
-#: plug-ins/common/unit-editor.c:130
-msgid "The unit's plural form."
-msgstr "Одиниця в множині."
-
-#: plug-ins/common/unit-editor.c:174
+#: plug-ins/common/unit-editor.c:170
 msgid "U_nits"
 msgstr "_Одиниці виміру"
 
-#: plug-ins/common/unit-editor.c:179
+#: plug-ins/common/unit-editor.c:175
 msgid "Create or alter units used in GIMP"
 msgstr "Створити чи змінити одиниці виміру, що використовуються у GIMP"
 
-#: plug-ins/common/unit-editor.c:228 plug-ins/common/unit-editor.c:247
+#: plug-ins/common/unit-editor.c:222 plug-ins/common/unit-editor.c:241
 msgid "Unit Editor"
 msgstr "Редактор одиниць"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:251
+#: plug-ins/common/unit-editor.c:245
 #: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "_Оновити"
 
-#: plug-ins/common/unit-editor.c:258
+#: plug-ins/common/unit-editor.c:252
 msgid "_Help"
 msgstr "_Довідка"
 
-#: plug-ins/common/unit-editor.c:289
+#: plug-ins/common/unit-editor.c:283
 msgid "Create a new unit from scratch"
 msgstr "Створити нову одиницю"
 
-#: plug-ins/common/unit-editor.c:296
+#: plug-ins/common/unit-editor.c:290
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "Створити нову одиницю, використовуючи вибрану як шаблон"
 
-#: plug-ins/common/unit-editor.c:431
+#: plug-ins/common/unit-editor.c:423
 msgid "Add a New Unit"
 msgstr "Створити нову одиницю"
 
-#: plug-ins/common/unit-editor.c:460
+#: plug-ins/common/unit-editor.c:452
 msgid "_ID:"
 msgstr "_Ідентифікатор:"
 
-#: plug-ins/common/unit-editor.c:472
+#: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
 msgstr "_Множник:"
 
-#: plug-ins/common/unit-editor.c:483
+#: plug-ins/common/unit-editor.c:475
 msgid "_Digits:"
 msgstr "_Цифри:"
 
-#: plug-ins/common/unit-editor.c:495
+#: plug-ins/common/unit-editor.c:487
 msgid "_Symbol:"
 msgstr "С_имвол:"
 
-#: plug-ins/common/unit-editor.c:507
+#: plug-ins/common/unit-editor.c:499
 msgid "_Abbreviation:"
 msgstr "_Абревіатура:"
 
-#: plug-ins/common/unit-editor.c:519
-msgid "Si_ngular:"
-msgstr "_Однина:"
-
-#: plug-ins/common/unit-editor.c:531
-msgid "_Plural:"
-msgstr "Мно_жина:"
-
-#: plug-ins/common/unit-editor.c:574
+#: plug-ins/common/unit-editor.c:534
 msgid "Incomplete input"
 msgstr "Незавершений ввід"
 
-#: plug-ins/common/unit-editor.c:577
+#: plug-ins/common/unit-editor.c:537
 msgid "Please fill in all text fields."
 msgstr "Заповніть всі поля"
 
@@ -16350,6 +16324,27 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "ID"
+#~ msgstr "Ідентифікатор"
+
+#~ msgid "Singular"
+#~ msgstr "Однина"
+
+#~ msgid "The unit's singular form."
+#~ msgstr "Одиниця в однині."
+
+#~ msgid "Plural"
+#~ msgstr "Множина"
+
+#~ msgid "The unit's plural form."
+#~ msgstr "Одиниця в множині."
+
+#~ msgid "Si_ngular:"
+#~ msgstr "_Однина:"
+
+#~ msgid "_Plural:"
+#~ msgstr "Мно_жина:"
 
 #~ msgid ""
 #~ "(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, "
