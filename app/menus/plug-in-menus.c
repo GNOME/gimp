@@ -228,7 +228,7 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
         }
       else if (! strcmp (manager->name, "<Vectors>"))
         {
-          plug_in_menus_add_proc (manager, "/vectors-popup", plug_in_proc,
+          plug_in_menus_add_proc (manager, "/paths-popup", plug_in_proc,
                                   menu_path + strlen (manager->name));
         }
       else if (! strcmp (manager->name, "<Colormap>"))
