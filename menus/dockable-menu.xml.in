@@ -18,6 +18,7 @@
       <menuitem action="dockable-preview-size-medium" />
       <menuitem action="dockable-preview-size-large" />
       <menuitem action="dockable-preview-size-extra-large" />
+      <menuitem action="dockable-preview-size-huge" />
       <menuitem action="dockable-preview-size-enormous" />
       <menuitem action="dockable-preview-size-gigantic" />
     </menu>
