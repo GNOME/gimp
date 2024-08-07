@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-05 10:41+0000\n"
-"PO-Revision-Date: 2024-08-05 16:43+0300\n"
+"POT-Creation-Date: 2024-08-06 11:14+0000\n"
+"PO-Revision-Date: 2024-08-07 14:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -7731,8 +7731,6 @@ msgid "Select _Next Path"
 msgstr "Вибрати _наступний контур"
 
 #: app/actions/paths-actions.c:304
-#| msgctxt "paths-action"
-#| msgid "Select the path above the current path"
 msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "Вибрати контур під поточним контуром"
@@ -13482,7 +13480,7 @@ msgstr "Помилка завантаження «%s»: "
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:433
+#: app/xcf/xcf.c:434
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -13905,17 +13903,17 @@ msgstr "Набір записів та пошук за взірцем у наз�
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: app/core/gimpimage.c:3176
+#: app/core/gimpimage.c:3181
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: app/core/gimpimage.c:3228
+#: app/core/gimpimage.c:3233
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: app/core/gimpimage.c:4281
+#: app/core/gimpimage.c:4286
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13923,47 +13921,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: app/core/gimpimage.c:4343
+#: app/core/gimpimage.c:4348
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: app/core/gimpimage.c:4388
+#: app/core/gimpimage.c:4393
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: app/core/gimpimage.c:5223
+#: app/core/gimpimage.c:5228
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: app/core/gimpimage.c:5267 app/core/gimpimage.c:5298
+#: app/core/gimpimage.c:5272 app/core/gimpimage.c:5303
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: app/core/gimpimage.c:5292
+#: app/core/gimpimage.c:5297
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: app/core/gimpimage.c:5800
+#: app/core/gimpimage.c:5805
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: app/core/gimpimage.c:5830 app/core/gimpimage.c:5855
+#: app/core/gimpimage.c:5835 app/core/gimpimage.c:5860
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: app/core/gimpimage.c:5915
+#: app/core/gimpimage.c:5920
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: app/core/gimpimage.c:5950 app/core/gimpimage.c:5958
+#: app/core/gimpimage.c:5955 app/core/gimpimage.c:5963
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -17933,7 +17931,8 @@ msgstr "Роздільність уздовж _X:"
 msgid "_Y resolution:"
 msgstr "Роздільність уздовж _Y:"
 
-#: app/dialogs/print-size-dialog.c:243 app/widgets/gimpsizebox.c:253
+#: app/dialogs/print-size-dialog.c:243 app/widgets/gimpimagepropview.c:461
+#: app/widgets/gimpsizebox.c:253 app/widgets/gimptemplateeditor.c:362
 #, c-format
 msgid "pixels/%a"
 msgstr "точок/%a"
@@ -27867,11 +27866,6 @@ msgstr "Кількість каналів:"
 msgid "Number of paths:"
 msgstr "Кількість контурів:"
 
-#: app/widgets/gimpimagepropview.c:461 app/widgets/gimptemplateeditor.c:362
-#, c-format
-msgid "pixels/%s"
-msgstr "точок/%s"
-
 #: app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
@@ -28346,8 +28340,8 @@ msgstr ","
 
 #: app/widgets/gimptemplateeditor.c:227
 #, c-format
-msgid "%p"
-msgstr "%p"
+msgid "%n"
+msgstr "%n"
 
 #: app/widgets/gimptemplateeditor.c:299
 msgid "_Advanced Options"
@@ -28835,40 +28829,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: app/xcf/xcf.c:122 app/xcf/xcf.c:178
+#: app/xcf/xcf.c:123 app/xcf/xcf.c:179
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: app/xcf/xcf.c:255 app/xcf/xcf.c:344
+#: app/xcf/xcf.c:256 app/xcf/xcf.c:345
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: app/xcf/xcf.c:266
+#: app/xcf/xcf.c:267
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: app/xcf/xcf.c:308
+#: app/xcf/xcf.c:309
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: app/xcf/xcf.c:367
+#: app/xcf/xcf.c:368
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: app/xcf/xcf.c:375
+#: app/xcf/xcf.c:376
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: app/xcf/xcf.c:393
+#: app/xcf/xcf.c:394
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: app/xcf/xcf.c:481
+#: app/xcf/xcf.c:482
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
@@ -29523,6 +29517,14 @@ msgstr "Меню шаблону інструментів"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
+
+#, c-format
+#~ msgid "pixels/%s"
+#~ msgstr "точок/%s"
+
+#, c-format
+#~ msgid "%p"
+#~ msgstr "%p"
 
 #~ msgctxt "paths-action"
 #~ msgid "Select the vector below the current path"
