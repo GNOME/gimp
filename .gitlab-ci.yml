@@ -780,12 +780,12 @@ dist-installer-weekly:
   cache: []
   script:
     - C:\msys64\usr\bin\bash -lc "bash build/windows/installer/3_dist-gimp-inno_sym.sh"
-    - build/windows/installer/3_dist-gimp-inno.ps1 | Out-File -FilePath installer.log
+    - build/windows/installer/3_dist-gimp-inno.ps1
   artifacts:
     expose_as: 'Windows exe'
     paths:
       - build/windows/installer/_Output/
-      - installer.log
+      - inno.log
     expire_in: 8 days
 
 dist-store-weekly:

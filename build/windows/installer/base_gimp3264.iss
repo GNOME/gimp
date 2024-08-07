@@ -185,13 +185,13 @@ LZMABlockSize=76800
 #endif
 #ifdef NOCOMPRESSION
 ;UseSetupLdr=no
-OutputDir=_Output\unc
+OutputDir={#GIMP_DIR}\unc
 Compression=none
 ;InternalCompressLevel=0
 DiskSpanning=yes
 DiskSliceSize=max
 #else
-OutputDir=_Output
+OutputDir={#GIMP_DIR}
 Compression=lzma2/ultra64
 InternalCompressLevel=ultra
 SolidCompression=yes
@@ -209,11 +209,10 @@ LZMANumFastBytes=273
 
 #if !defined(REVISION) || REVISION == "0"
 OutputBaseFileName=gimp-{#GIMP_VERSION}-setup
-OutputManifestFile=gimp-{#GIMP_VERSION}-setup.txt
 #else
 OutputBaseFileName=gimp-{#GIMP_VERSION}.{#REVISION}-setup
-OutputManifestFile=gimp-{#GIMP_VERSION}.{#REVISION}-setup.txt
 #endif
+OutputManifestFile=inno.log
 
 
 ;UNINSTALLER
