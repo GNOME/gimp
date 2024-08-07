@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-02 23:17+0000\n"
-"PO-Revision-Date: 2024-08-04 19:16+0800\n"
+"POT-Creation-Date: 2024-08-06 09:44+0000\n"
+"PO-Revision-Date: 2024-08-07 09:35+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -70,7 +70,7 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
@@ -144,7 +144,7 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -6683,7 +6683,7 @@ msgstr "可用图像："
 msgid "On film:"
 msgstr "放入胶卷："
 
-#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:436
+#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:428
 msgid "_Add"
 msgstr "添加(_A)"
 
@@ -7124,7 +7124,8 @@ msgstr "无匹配"
 msgid "Plug-in Browser"
 msgstr "插件浏览器"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
 #: plug-ins/metadata/metadata-editor.c:659
@@ -7879,38 +7880,33 @@ msgstr "不透明度(_P)："
 msgid "Number of Segments"
 msgstr "段数"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid "Saved"
 msgstr "保存"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr "只有此列被选中，GIMP 退出时才会保存这个单位。"
 
-#: plug-ins/common/unit-editor.c:116
-msgid "ID"
-msgstr "ID"
+#: plug-ins/common/unit-editor.c:114
+msgid "The name to be used to identify this unit in the graphical interface"
+msgstr "用来在图形界面中识别该单位的名称"
 
 #: plug-ins/common/unit-editor.c:116
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr "这个字符串将在 GIMP 的配置文件中用于唯一识别一个单位。"
-
-#: plug-ins/common/unit-editor.c:118
 msgid "Factor"
 msgstr "系数"
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "How many units make up an inch."
 msgstr "一英寸等于此单位的多少倍。"
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid "Digits"
 msgstr "位数"
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -7919,11 +7915,11 @@ msgstr ""
 "这个区域是数字输入区域的提示。它指定在此单位的输入区域中，要得到跟“英寸”小数"
 "点后两位相当的精确度，需要在小数点后提供多少位数字。"
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid "Symbol"
 msgstr "符号"
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -7931,99 +7927,75 @@ msgstr ""
 "此单位的符号，如果有的话(例如英寸的符号是 \" )。如果此单位没有符号则使用它的"
 "缩写。"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "Abbreviation"
 msgstr "缩写"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "此单位的缩写(例如厘米的缩写是“cm”)。"
 
-#: plug-ins/common/unit-editor.c:129
-msgid "Singular"
-msgstr "单数"
-
-#: plug-ins/common/unit-editor.c:129
-msgid "The unit's singular form."
-msgstr "此单位的单数形式。"
-
-#: plug-ins/common/unit-editor.c:130
-msgid "Plural"
-msgstr "复数"
-
-#: plug-ins/common/unit-editor.c:130
-msgid "The unit's plural form."
-msgstr "此单位的复数形式。"
-
-#: plug-ins/common/unit-editor.c:174
+#: plug-ins/common/unit-editor.c:170
 msgid "U_nits"
 msgstr "单位(_N)"
 
-#: plug-ins/common/unit-editor.c:179
+#: plug-ins/common/unit-editor.c:175
 msgid "Create or alter units used in GIMP"
 msgstr "创建或改动 GIMP 中使用的单位"
 
-#: plug-ins/common/unit-editor.c:228 plug-ins/common/unit-editor.c:247
+#: plug-ins/common/unit-editor.c:222 plug-ins/common/unit-editor.c:241
 msgid "Unit Editor"
 msgstr "单位编辑器"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:251
+#: plug-ins/common/unit-editor.c:245
 #: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "刷新(_R)"
 
-#: plug-ins/common/unit-editor.c:258
+#: plug-ins/common/unit-editor.c:252
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: plug-ins/common/unit-editor.c:289
+#: plug-ins/common/unit-editor.c:283
 msgid "Create a new unit from scratch"
 msgstr "重新创建一个新的单位"
 
-#: plug-ins/common/unit-editor.c:296
+#: plug-ins/common/unit-editor.c:290
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "以当前选中的单位为模板创建一个新的单位"
 
-#: plug-ins/common/unit-editor.c:431
+#: plug-ins/common/unit-editor.c:423
 msgid "Add a New Unit"
 msgstr "添加新单位"
 
-#: plug-ins/common/unit-editor.c:460
+#: plug-ins/common/unit-editor.c:452
 msgid "_ID:"
 msgstr "标识(_I)："
 
-#: plug-ins/common/unit-editor.c:472
+#: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
 msgstr "系数(_F)："
 
-#: plug-ins/common/unit-editor.c:483
+#: plug-ins/common/unit-editor.c:475
 msgid "_Digits:"
 msgstr "位数(_D)："
 
-#: plug-ins/common/unit-editor.c:495
+#: plug-ins/common/unit-editor.c:487
 msgid "_Symbol:"
 msgstr "符号(_S)："
 
-#: plug-ins/common/unit-editor.c:507
+#: plug-ins/common/unit-editor.c:499
 msgid "_Abbreviation:"
 msgstr "缩写(_A)："
 
-#: plug-ins/common/unit-editor.c:519
-msgid "Si_ngular:"
-msgstr "单数(_N)："
-
-#: plug-ins/common/unit-editor.c:531
-msgid "_Plural:"
-msgstr "复数(_P)："
-
-#: plug-ins/common/unit-editor.c:574
+#: plug-ins/common/unit-editor.c:534
 msgid "Incomplete input"
 msgstr "输入不完整"
 
-#: plug-ins/common/unit-editor.c:577
+#: plug-ins/common/unit-editor.c:537
 msgid "Please fill in all text fields."
 msgstr "请填写所有的文字区域。"
 
@@ -15976,6 +15948,27 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Singular"
+#~ msgstr "单数"
+
+#~ msgid "The unit's singular form."
+#~ msgstr "此单位的单数形式。"
+
+#~ msgid "Plural"
+#~ msgstr "复数"
+
+#~ msgid "The unit's plural form."
+#~ msgstr "此单位的复数形式。"
+
+#~ msgid "Si_ngular:"
+#~ msgstr "单数(_N)："
+
+#~ msgid "_Plural:"
+#~ msgstr "复数(_P)："
 
 #~ msgid ""
 #~ "(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, "
