@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-02 23:17+0000\n"
-"PO-Revision-Date: 2024-08-03 21:25+0300\n"
+"POT-Creation-Date: 2024-08-06 09:43+0000\n"
+"PO-Revision-Date: 2024-08-07 14:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -175,7 +175,7 @@ msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
 
 #: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:344
-#: libgimpwidgets/gimpcolorbutton.c:554
+#: libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
@@ -450,13 +450,13 @@ msgid "_Open"
 msgstr "_Відкрити"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:493
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:493
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "С_кинути"
 
@@ -1731,73 +1731,35 @@ msgstr "Не вдалось розібрати дані IPTC."
 msgid "Parsing XMP data failed."
 msgstr "Не вдалось розібрати дані XMP."
 
-#: libgimpbase/gimpunit.c:86
-#| msgctxt "size-type"
-#| msgid "Pixels"
-msgctxt "unit-singular"
-msgid "pixel"
-msgstr "піксель"
-
-#: libgimpbase/gimpunit.c:86
-#| msgctxt "size-type"
-#| msgid "Pixels"
+#: libgimpbase/gimpunit.c:81
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "пікселі"
 
-#: libgimpbase/gimpunit.c:90
-msgctxt "unit-singular"
-msgid "inch"
-msgstr "дюйм"
-
-#: libgimpbase/gimpunit.c:90
+#: libgimpbase/gimpunit.c:88
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "дюйми"
 
-#: libgimpbase/gimpunit.c:93
-msgctxt "unit-singular"
-msgid "millimeter"
-msgstr "міліметр"
-
-#: libgimpbase/gimpunit.c:93
+#: libgimpbase/gimpunit.c:94
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "міліметри"
 
-#: libgimpbase/gimpunit.c:97
-#| msgctxt "size-type"
-#| msgid "Points"
-msgctxt "unit-singular"
-msgid "point"
-msgstr "пункт"
-
-#: libgimpbase/gimpunit.c:97
-#| msgctxt "size-type"
-#| msgid "Points"
+#: libgimpbase/gimpunit.c:101
 msgctxt "unit-plural"
 msgid "points"
 msgstr "пункти"
 
-#: libgimpbase/gimpunit.c:100
-msgctxt "unit-singular"
-msgid "pica"
-msgstr "піка"
-
-#: libgimpbase/gimpunit.c:100
+#: libgimpbase/gimpunit.c:107
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "піки"
 
-#: libgimpbase/gimpunit.c:108
+#: libgimpbase/gimpunit.c:117
+#| msgctxt "singular"
 #| msgid "percent"
-msgctxt "singular"
-msgid "percent"
-msgstr "відсоток"
-
-#: libgimpbase/gimpunit.c:108
-#| msgid "percent"
-msgctxt "plural"
+msgctxt "unit-plural"
 msgid "percent"
 msgstr "відсотки"
 
@@ -2191,9 +2153,9 @@ msgstr "очікувалось «yes» або «no» для булевого м�
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Помилка при синтаксичному розборі '%s' у рядку %d: %s"
 
-#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
-#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
-#: libgimpmodule/gimpmodule.c:573
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Помилка завантаження модуля '%s': %s"
@@ -2228,12 +2190,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не вдається створити каталог файлів попереднього перегляду '%s'."
 
-#: libgimpthumb/gimpthumbnail.c:481
+#: libgimpthumb/gimpthumbnail.c:530
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "К ескізі немає тегу Thumb::URI"
 
-#: libgimpthumb/gimpthumbnail.c:878
+#: libgimpthumb/gimpthumbnail.c:931
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не вдається створити файли попереднього перегляду %s: %s"
@@ -2242,19 +2204,19 @@ msgstr "Не вдається створити файли попередньог
 msgid "_Search:"
 msgstr "З_найти:"
 
-#: libgimpwidgets/gimpcolorbutton.c:377
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Колір переднього плану"
 
-#: libgimpwidgets/gimpcolorbutton.c:378
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "_Колір тла"
 
-#: libgimpwidgets/gimpcolorbutton.c:383
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "_Чорний"
 
-#: libgimpwidgets/gimpcolorbutton.c:384
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_Білий"
 
@@ -2279,7 +2241,7 @@ msgid "_Save"
 msgstr "_Зберегти"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
-#: libgimpwidgets/gimppatheditor.c:267
+#: libgimpwidgets/gimppatheditor.c:292
 msgid "Folder"
 msgstr "Тека"
 
@@ -2369,11 +2331,11 @@ msgstr "Старий:"
 msgid "HTML _notation:"
 msgstr "_Нотація HTML:"
 
-#: libgimpwidgets/gimpcontroller.c:105
+#: libgimpwidgets/gimpcontroller.c:114
 msgid "The controller's name"
 msgstr "Назва контролера"
 
-#: libgimpwidgets/gimpcontroller.c:113
+#: libgimpwidgets/gimpcontroller.c:122
 msgid "The controller's state, as human-readable string"
 msgstr "Стан контролера, зручний для читання рядок"
 
@@ -2421,7 +2383,7 @@ msgstr "Натисніть F1 для отримання повної довід�
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: libgimpwidgets/gimpintstore.c:255
+#: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
 msgstr "(Немає)"
 
@@ -2488,27 +2450,27 @@ msgstr[0] "Вибрано %d сторінку"
 msgstr[1] "Вибрано %d сторінки"
 msgstr[2] "Вибрано %d сторінок"
 
-#: libgimpwidgets/gimppatheditor.c:178
+#: libgimpwidgets/gimppatheditor.c:203
 msgid "Add a new folder"
 msgstr "Додати нову теку"
 
-#: libgimpwidgets/gimppatheditor.c:196
+#: libgimpwidgets/gimppatheditor.c:221
 msgid "Move the selected folder up"
 msgstr "Перемістити вибрану теку вгору"
 
-#: libgimpwidgets/gimppatheditor.c:214
+#: libgimpwidgets/gimppatheditor.c:239
 msgid "Move the selected folder down"
 msgstr "Перемістити вибрану теку вниз"
 
-#: libgimpwidgets/gimppatheditor.c:232
+#: libgimpwidgets/gimppatheditor.c:257
 msgid "Remove the selected folder from the list"
 msgstr "Вилучити вибрану теку зі списку"
 
-#: libgimpwidgets/gimppatheditor.c:258
+#: libgimpwidgets/gimppatheditor.c:283
 msgid "Writable"
 msgstr "Можливість запису"
 
-#: libgimpwidgets/gimppickbutton.c:123
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -3277,6 +3239,35 @@ msgstr "Цикли контрастності"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контрастність"
+
+#~| msgctxt "size-type"
+#~| msgid "Pixels"
+#~ msgctxt "unit-singular"
+#~ msgid "pixel"
+#~ msgstr "піксель"
+
+#~ msgctxt "unit-singular"
+#~ msgid "inch"
+#~ msgstr "дюйм"
+
+#~ msgctxt "unit-singular"
+#~ msgid "millimeter"
+#~ msgstr "міліметр"
+
+#~| msgctxt "size-type"
+#~| msgid "Points"
+#~ msgctxt "unit-singular"
+#~ msgid "point"
+#~ msgstr "пункт"
+
+#~ msgctxt "unit-singular"
+#~ msgid "pica"
+#~ msgstr "піка"
+
+#~| msgid "percent"
+#~ msgctxt "plural"
+#~ msgid "percent"
+#~ msgstr "відсотки"
 
 #~ msgid "Confirm Save"
 #~ msgstr "Підтвердження збереження"
