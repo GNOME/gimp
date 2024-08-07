@@ -716,7 +716,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
         }
     }
   else if (g_str_has_prefix (menu_path, "<Colormap>") ||
-           g_str_has_prefix (menu_path, "<Vectors>"))
+           g_str_has_prefix (menu_path, "<Paths>"))
     {
       if ((procedure->num_args < 2)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
@@ -752,7 +752,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "attempted to install procedure \"%s\" "
                    "in the invalid menu location \"%s\".\n"
                    "Use either \"<Image>\", "
-                   "\"<Layers>\", \"<Channels>\", \"<Vectors>\", "
+                   "\"<Layers>\", \"<Channels>\", \"<Paths>\", "
                    "\"<Colormap>\", \"<Brushes>\", \"<Dynamics>\", "
                    "\"<MyPaintBrushes>\", \"<Gradients>\", \"<Palettes>\", "
                    "\"<Patterns>\", \"<ToolPresets>\", \"<Fonts>\" "

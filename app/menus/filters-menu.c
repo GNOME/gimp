@@ -100,7 +100,7 @@ filters_menu_setup (GimpUIManager *manager,
             {
               g_printerr ("GEGL operation \"%s\" attempted to register an item in "
                           "the invalid menu \"%s\": use either \"<Image>\", "
-                          "\"<Layers>\", \"<Channels>\", \"<Vectors>\", "
+                          "\"<Layers>\", \"<Channels>\", \"<Paths>\", "
                           "\"<Colormap>\", \"<Brushes>\", \"<Dynamics>\", "
                           "\"<MyPaintBrushes>\", \"<Gradients>\", \"<Palettes>\", "
                           "\"<Patterns>\", \"<ToolPresets>\", \"<Fonts>\" "

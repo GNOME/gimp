@@ -167,7 +167,7 @@ menus_init (Gimp *gimp)
                                       "channels-menu", plug_in_menus_setup,
                                       NULL);
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<Vectors>",
+  gimp_menu_factory_manager_register (global_menu_factory, "<Paths>",
                                       "paths",
                                       "plug-in",
                                       NULL,
