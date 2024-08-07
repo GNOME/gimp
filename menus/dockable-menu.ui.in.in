@@ -18,6 +18,7 @@
         <item><attribute name="action">dockable.dockable-preview-size-medium</attribute></item>
         <item><attribute name="action">dockable.dockable-preview-size-large</attribute></item>
         <item><attribute name="action">dockable.dockable-preview-size-extra-large</attribute></item>
+        <item><attribute name="action">dockable.dockable-preview-size-huge</attribute></item>
         <item><attribute name="action">dockable.dockable-preview-size-enormous</attribute></item>
         <item><attribute name="action">dockable.dockable-preview-size-gigantic</attribute></item>
       </submenu>
