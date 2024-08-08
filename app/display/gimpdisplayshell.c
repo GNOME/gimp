@@ -495,7 +495,8 @@ gimp_display_shell_constructed (GObject *object)
   /* adjust the initial scale -- so that window fits on screen. */
   if (image)
     {
-      gimp_display_shell_set_initial_scale (shell, 1.0, //scale,
+      gimp_display_shell_set_initial_scale (shell,
+                                            (gdouble) gtk_widget_get_scale_factor (GTK_WIDGET (shell)),
                                             &shell_width, &shell_height);
     }
   else
