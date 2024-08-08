@@ -139,7 +139,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 
   gtk_widget_class_set_css_name (widget_class, "GimpColorScale");
 
-  fish_lch_to_rgb   = babl_fish (babl_format ("CIE LCH(ab) double"),
+  fish_lch_to_rgb   = babl_fish (babl_format ("CIE LCH(ab) float"),
                                  babl_format ("R'G'B' double"));
   fish_hsv_to_rgb   = babl_fish (babl_format ("HSV float"),
                                  babl_format ("R'G'B' double"));
@@ -503,10 +503,10 @@ gimp_color_scale_set_format (GimpColorScale *scale,
   if (scale->format != format)
     {
       scale->format = format;
-      fish_lch_to_rgb   = babl_fish (babl_format ("CIE LCH(ab) double"),
-                                     babl_format_with_space ("R'G'B' double", format));
-      fish_hsv_to_rgb   = babl_fish (babl_format_with_space ("HSV float", format),
-                                     babl_format_with_space ("R'G'B' double", format));
+      fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) float"),
+                                   babl_format_with_space ("R'G'B' double", format));
+      fish_hsv_to_rgb = babl_fish (babl_format_with_space ("HSV float", format),
+                                   babl_format_with_space ("R'G'B' double", format));
       scale->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (scale));
     }
@@ -632,7 +632,7 @@ gimp_color_scale_render (GimpColorScale *scale)
   GtkRange *range = GTK_RANGE (scale);
   gdouble   rgb[4];
   gfloat    hsv[3];
-  gdouble   lch[3];
+  gfloat    lch[3];
   gint      multiplier = 1;
   guint     x, y;
   gdouble  *channel_value   = NULL;
@@ -654,7 +654,7 @@ gimp_color_scale_render (GimpColorScale *scale)
 
   gegl_color_get_pixel (scale->color, babl_format_with_space ("R'G'B'A double", scale->format), rgb);
   gegl_color_get_pixel (scale->color, babl_format_with_space ("HSV float", scale->format), hsv);
-  gegl_color_get_pixel (scale->color, babl_format ("CIE LCH(ab) double"), lch);
+  gegl_color_get_pixel (scale->color, babl_format ("CIE LCH(ab) float"), lch);
 
   switch (scale->channel)
     {
@@ -667,9 +667,9 @@ gimp_color_scale_render (GimpColorScale *scale)
     case GIMP_COLOR_SELECTOR_BLUE:       channel_value = &rgb[2]; break;
     case GIMP_COLOR_SELECTOR_ALPHA:      channel_value = &rgb[3]; break;
 
-    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS: channel_value = &lch[0]; break;
-    case GIMP_COLOR_SELECTOR_LCH_CHROMA:    channel_value = &lch[1]; break;
-    case GIMP_COLOR_SELECTOR_LCH_HUE:       channel_value = &lch[2]; break;
+    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS: channel_value_f = &lch[0]; break;
+    case GIMP_COLOR_SELECTOR_LCH_CHROMA:    channel_value_f = &lch[1]; break;
+    case GIMP_COLOR_SELECTOR_LCH_HUE:       channel_value_f = &lch[2]; break;
     }
 
   switch (scale->channel)

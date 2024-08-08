@@ -832,10 +832,10 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
   values[GIMP_COLOR_SELECTOR_BLUE_U8]       = pixel[2] * 255.0;
   values[GIMP_COLOR_SELECTOR_ALPHA_U8]      = pixel[3] * 255.0;
 
-  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) double"), pixel);
-  values[GIMP_COLOR_SELECTOR_LCH_LIGHTNESS] = pixel[0];
-  values[GIMP_COLOR_SELECTOR_LCH_CHROMA]    = pixel[1];
-  values[GIMP_COLOR_SELECTOR_LCH_HUE]       = pixel[2];
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) float"), pixel_f);
+  values[GIMP_COLOR_SELECTOR_LCH_LIGHTNESS] = pixel_f[0];
+  values[GIMP_COLOR_SELECTOR_LCH_CHROMA]    = pixel_f[1];
+  values[GIMP_COLOR_SELECTOR_LCH_HUE]       = pixel_f[2];
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
     {

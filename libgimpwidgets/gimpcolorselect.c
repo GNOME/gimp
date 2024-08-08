@@ -347,9 +347,9 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelect");
 
-  fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
+  fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) float"),
                                   babl_format ("R'G'B' double"));
-  fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) double"),
+  fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) float"),
                                   babl_format ("R'G'B' u8"));
   rgbf_format        = babl_format ("R'G'B' float");
   rgbu_format        = babl_format ("R'G'B' u8");
@@ -681,9 +681,9 @@ gimp_color_select_set_format (GimpColorSelector *selector,
       rgbf_format        = babl_format_with_space ("R'G'B' float", format);
       rgbu_format        = babl_format_with_space ("R'G'B' u8", format);
       hsvf_format        = babl_format_with_space ("HSV float", format);
-      fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
+      fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) float"),
                                       babl_format_with_space ("R'G'B' double", format));
-      fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) double"),
+      fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) float"),
                                       babl_format_with_space ("R'G'B' u8", format));
 
       if (format == NULL || babl_format_get_space (format) == babl_space ("sRGB"))
@@ -806,7 +806,7 @@ gimp_color_select_simulation (GimpColorSelector *selector,
   if (format)
     {
       softproof_format      = format;
-      fish_lch_to_softproof = babl_fish (babl_format ("CIE LCH(ab) double"), format);
+      fish_lch_to_softproof = babl_fish (babl_format ("CIE LCH(ab) float"), format);
 
       if (babl_format_get_space (format) == babl_space ("sRGB"))
         {
@@ -939,22 +939,22 @@ gimp_color_select_update_values (GimpColorSelect *select)
       break;
 
     case COLOR_SELECT_LCH_LIGHTNESS:
-      values[0] = select->pos[2] * 100.0;
-      values[1] = select->pos[1] * 200.0;
-      values[2] = select->pos[0] * 360.0;
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) double"), values);
+      values_float[0] = select->pos[2] * 100.0;
+      values_float[1] = select->pos[1] * 200.0;
+      values_float[2] = select->pos[0] * 360.0;
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values);
       break;
     case COLOR_SELECT_LCH_CHROMA:
-      values[0] = select->pos[1] * 100.0;
-      values[1] = select->pos[2] * 200.0;
-      values[2] = select->pos[0] * 360.0;
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) double"), values);
+      values_float[0] = select->pos[1] * 100.0;
+      values_float[1] = select->pos[2] * 200.0;
+      values_float[2] = select->pos[0] * 360.0;
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values);
       break;
     case COLOR_SELECT_LCH_HUE:
-      values[0] = select->pos[1] * 100.0;
-      values[1] = select->pos[0] * 200.0;
-      values[2] = select->pos[2] * 360.0;
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) double"), values);
+      values_float[0] = select->pos[1] * 100.0;
+      values_float[1] = select->pos[0] * 200.0;
+      values_float[2] = select->pos[2] * 360.0;
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values);
       break;
 
     default:
@@ -971,13 +971,13 @@ gimp_color_select_update_pos (GimpColorSelect *select)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
   GeglColor         *color    = gimp_color_selector_get_color (selector);
-  gdouble            rgb[3];
+  gfloat             rgb[3];
   gdouble            lch[3];
   gfloat             hsv[3];
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", select->format), rgb);
   gegl_color_get_pixel (color, babl_format_with_space ("HSV float", select->format), hsv);
-  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) double"), lch);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) float"), lch);
   g_object_unref (color);
 
   switch (select->z_color_fill)
@@ -1602,7 +1602,7 @@ static void
 color_select_render_lch_lightness (ColorSelectFill *csf)
 {
   guchar  *p   = csf->buffer;
-  gdouble  lch[4] = { 0.0, 0.0, 0.0, 1.0 };
+  gfloat   lch[4] = { 0.0, 0.0, 0.0, 1.0 };
   guchar   rgb[3];
   gint     i;
 
@@ -1621,7 +1621,7 @@ static void
 color_select_render_lch_chroma (ColorSelectFill *csf)
 {
   guchar  *p   = csf->buffer;
-  gdouble  lch[4] = { 80.0, 0.0, 0.0, 1.0 };
+  gfloat   lch[4] = { 80.0, 0.0, 0.0, 1.0 };
   guchar   rgb[3];
   gint     i;
 
@@ -1640,7 +1640,7 @@ static void
 color_select_render_lch_hue (ColorSelectFill *csf)
 {
   guchar  *p      = csf->buffer;
-  gdouble  lch[4] = { 80.0, 200.0, 0.0, 1.0 };
+  gfloat   lch[4] = { 80.0, 200.0, 0.0, 1.0 };
   guchar   rgb[3];
   gint     i;
 
@@ -1895,7 +1895,7 @@ color_select_render_lch_chroma_lightness (ColorSelectFill *csf)
 {
   GeglColor *c = NULL;
   guchar    *p = csf->buffer;
-  gdouble    lch[3];
+  gfloat     lch[3];
 
   c = gegl_color_new (NULL);
 
@@ -1906,7 +1906,7 @@ color_select_render_lch_chroma_lightness (ColorSelectFill *csf)
     {
       lch[1] = i * 200.0 / csf->width;
 
-      gegl_color_set_pixel (c, babl_format ("CIE LCH(ab) double"), lch);
+      gegl_color_set_pixel (c, babl_format ("CIE LCH(ab) float"), lch);
 
       if (gimp_color_is_out_of_gamut (c, babl_format_get_space (rgbf_format)) ||
           (softproof_format &&
@@ -1932,7 +1932,7 @@ color_select_render_lch_hue_lightness (ColorSelectFill *csf)
 {
   GeglColor *c = NULL;
   guchar    *p = csf->buffer;
-  gdouble    lch[3];
+  gfloat     lch[3];
 
   c = gegl_color_new (NULL);
 
@@ -1943,7 +1943,7 @@ color_select_render_lch_hue_lightness (ColorSelectFill *csf)
     {
       lch[2] = i * 360.0 / csf->width;
 
-      gegl_color_set_pixel (c, babl_format ("CIE LCH(ab) double"), lch);
+      gegl_color_set_pixel (c, babl_format ("CIE LCH(ab) float"), lch);
 
       if (gimp_color_is_out_of_gamut (c, babl_format_get_space (rgbf_format)) ||
           (softproof_format &&
@@ -1969,7 +1969,7 @@ color_select_render_lch_hue_chroma (ColorSelectFill *csf)
 {
   GeglColor *c = NULL;
   guchar    *p = csf->buffer;
-  gdouble    lch[3];
+  gfloat     lch[3];
   gint       i;
 
   c = gegl_color_new (NULL);
@@ -1981,7 +1981,7 @@ color_select_render_lch_hue_chroma (ColorSelectFill *csf)
     {
       lch[2] = i * 360.0 / csf->width;
 
-      gegl_color_set_pixel (c, babl_format ("CIE LCH(ab) double"), lch);
+      gegl_color_set_pixel (c, babl_format ("CIE LCH(ab) float"), lch);
 
       if (gimp_color_is_out_of_gamut (c, babl_format_get_space (rgbf_format)) ||
           (softproof_format &&
