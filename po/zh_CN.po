@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-06 11:14+0000\n"
-"PO-Revision-Date: 2024-08-07 09:40+0800\n"
+"POT-Creation-Date: 2024-08-07 01:41+0000\n"
+"PO-Revision-Date: 2024-08-08 08:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -573,12 +573,12 @@ msgstr "创建新笔刷"
 #: app/actions/brushes-actions.c:55
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
-msgstr "复制笔刷(_U)"
+msgstr "再制笔刷(_U)"
 
 #: app/actions/brushes-actions.c:56
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "复制此笔刷"
+msgstr "再制此笔刷"
 
 #: app/actions/brushes-actions.c:61
 msgctxt "brushes-action"
@@ -750,7 +750,7 @@ msgstr "按上次使用的值新建通道"
 #: app/actions/channels-actions.c:63
 msgctxt "channels-action"
 msgid "D_uplicate Channels"
-msgstr "复制通道(_U)"
+msgstr "再制通道(_U)"
 
 #: app/actions/channels-actions.c:65
 msgctxt "channels-action"
@@ -1049,7 +1049,7 @@ msgstr "%s 通道副本"
 
 #: app/actions/channels-commands.c:421
 msgid "Duplicate channels"
-msgstr "复制通道"
+msgstr "再制通道"
 
 #: app/actions/channels-commands.c:464
 #, c-format
@@ -2507,7 +2507,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1235 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
 #: app/widgets/gimplayertreeview.c:814 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -3537,12 +3537,12 @@ msgstr "创建新动态"
 #: app/actions/dynamics-actions.c:49
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "复制动态(_U)"
+msgstr "再制动态(_U)"
 
 #: app/actions/dynamics-actions.c:50
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "复制此动态"
+msgstr "再制此动态"
 
 #: app/actions/dynamics-actions.c:55
 msgctxt "dynamics-action"
@@ -5417,12 +5417,12 @@ msgstr "创建新的渐变"
 #: app/actions/gradients-actions.c:50
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
-msgstr "复制渐变(_U)"
+msgstr "再制渐变(_U)"
 
 #: app/actions/gradients-actions.c:51
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
-msgstr "复制渐变"
+msgstr "再制渐变"
 
 #: app/actions/gradients-actions.c:56
 msgctxt "gradients-action"
@@ -5522,7 +5522,7 @@ msgstr "创建新的图像"
 #: app/actions/image-actions.c:61
 msgctxt "image-action"
 msgid "_Duplicate"
-msgstr "复制(_D)"
+msgstr "再制(_D)"
 
 #: app/actions/image-actions.c:62
 msgctxt "image-action"
@@ -6156,7 +6156,7 @@ msgstr "创建新图层群组并将其添加到图像"
 #: app/actions/layers-actions.c:95
 msgctxt "layers-action"
 msgid "D_uplicate Layers"
-msgstr "复制图层(_U)"
+msgstr "再制图层(_U)"
 
 #: app/actions/layers-actions.c:97
 msgctxt "layers-action"
@@ -6898,7 +6898,7 @@ msgstr[0] "图层降至底端"
 
 #: app/actions/layers-commands.c:818
 msgid "Duplicate layers"
-msgstr "复制图层"
+msgstr "再制图层"
 
 #: app/actions/layers-commands.c:960
 #, c-format
@@ -7061,12 +7061,12 @@ msgstr "创建新 MyPaint 笔刷"
 #: app/actions/mypaint-brushes-actions.c:49
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
-msgstr "复制 MyPaint 笔刷(_U)"
+msgstr "再制 MyPaint 笔刷(_U)"
 
 #: app/actions/mypaint-brushes-actions.c:50
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "复制该 MyPaint 笔刷"
+msgstr "再制该 MyPaint 笔刷"
 
 #: app/actions/mypaint-brushes-actions.c:55
 msgctxt "mypaint-brushes-action"
@@ -7198,12 +7198,12 @@ msgstr "导入色板"
 #: app/actions/palettes-actions.c:56
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
-msgstr "复制色板(_U)"
+msgstr "再制色板(_U)"
 
 #: app/actions/palettes-actions.c:57
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
-msgstr "复制色板"
+msgstr "再制色板"
 
 #: app/actions/palettes-actions.c:62
 msgctxt "palettes-action"
@@ -7320,12 +7320,12 @@ msgstr "按上次使用的值新建路径"
 #: app/actions/paths-actions.c:70
 msgctxt "paths-action"
 msgid "D_uplicate Paths"
-msgstr "复制路径(_U)"
+msgstr "再制路径(_U)"
 
 #: app/actions/paths-actions.c:71
 msgctxt "paths-action"
 msgid "Duplicate these paths"
-msgstr "复制这些路径"
+msgstr "再制这些路径"
 
 #: app/actions/paths-actions.c:76
 msgctxt "paths-action"
@@ -7700,7 +7700,7 @@ msgstr[0] "路径移至底端"
 
 #: app/actions/paths-commands.c:440
 msgid "Duplicate Paths"
-msgstr "复制路径"
+msgstr "再制路径"
 
 #: app/actions/paths-commands.c:478
 msgid "Remove Paths"
@@ -7743,12 +7743,12 @@ msgstr "创建新的图案"
 #: app/actions/patterns-actions.c:55
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
-msgstr "复制图案(_U)"
+msgstr "再制图案(_U)"
 
 #: app/actions/patterns-actions.c:56
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
-msgstr "复制此图案"
+msgstr "再制此图案"
 
 #: app/actions/patterns-actions.c:61
 msgctxt "patterns-action"
@@ -8126,12 +8126,12 @@ msgstr "创建新的模板"
 #: app/actions/templates-actions.c:54
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "复制模板(_U)…"
+msgstr "再制模板(_U)…"
 
 #: app/actions/templates-actions.c:55
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "复制选中的模板"
+msgstr "再制选中的模板"
 
 #: app/actions/templates-actions.c:60
 msgctxt "templates-action"
@@ -8271,7 +8271,7 @@ msgstr "打开文本文件 (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:712
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -8452,12 +8452,12 @@ msgstr "创建新的工具预设"
 #: app/actions/tool-presets-actions.c:52
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr "复制工具预设(_U)"
+msgstr "再制工具预设(_U)"
 
 #: app/actions/tool-presets-actions.c:53
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr "复制此工具预设"
+msgstr "再制此工具预设"
 
 #: app/actions/tool-presets-actions.c:58
 msgctxt "tool-presets-action"
@@ -15478,7 +15478,7 @@ msgstr "仅合并活动组内(_G)"
 msgid "_Discard invisible layers"
 msgstr "丢弃不可见图层(_D)"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:693
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:697
 msgid "Create a New Image"
 msgstr "新建图像"
 
@@ -15511,7 +15511,7 @@ msgid "Image Properties"
 msgstr "图像属性"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:187 app/tools/gimpcolorpickertool.c:351
+#: app/dialogs/welcome-dialog.c:190 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
 #: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:647
@@ -15905,7 +15905,7 @@ msgstr "重置所有首选项"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "您真的要将所有首选项重置到默认值吗？"
 
-#: app/dialogs/preferences-dialog.c:311 app/dialogs/welcome-dialog.c:353
+#: app/dialogs/preferences-dialog.c:311 app/dialogs/welcome-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "您需要重启 GIMP 以使下列改变生效："
 
@@ -16532,7 +16532,7 @@ msgstr "删除所有快捷键(_A)"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1969 app/dialogs/preferences-dialog.c:1970
-#: app/dialogs/welcome-dialog.c:537
+#: app/dialogs/welcome-dialog.c:541
 msgid "Theme"
 msgstr "主题"
 
@@ -16544,44 +16544,44 @@ msgstr "选择主题"
 msgid "Color scheme variant (if available)"
 msgstr "颜色方案变种（如果可用）"
 
-#: app/dialogs/preferences-dialog.c:2061 app/dialogs/welcome-dialog.c:589
+#: app/dialogs/preferences-dialog.c:2061 app/dialogs/welcome-dialog.c:593
 msgid "_Override icon sizes set by the theme"
 msgstr "覆盖由主题设置的图标大小(_O)"
 
-#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:598
+#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:602
 msgid "Small"
 msgstr "小"
 
-#: app/dialogs/preferences-dialog.c:2076 app/dialogs/welcome-dialog.c:600
+#: app/dialogs/preferences-dialog.c:2076 app/dialogs/welcome-dialog.c:604
 msgid "Medium"
 msgstr "中"
 
-#: app/dialogs/preferences-dialog.c:2078 app/dialogs/welcome-dialog.c:602
+#: app/dialogs/preferences-dialog.c:2078 app/dialogs/welcome-dialog.c:606
 msgid "Large"
 msgstr "大"
 
-#: app/dialogs/preferences-dialog.c:2080 app/dialogs/welcome-dialog.c:604
+#: app/dialogs/preferences-dialog.c:2080 app/dialogs/welcome-dialog.c:608
 msgid "Huge"
 msgstr "庞大"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:620
+#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:624
 msgid "Font Scaling"
 msgstr "字体缩放"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:622
+#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:626
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr "字体缩放无法与使用绝对大小的主题同时生效。"
 
-#: app/dialogs/preferences-dialog.c:2101 app/dialogs/welcome-dialog.c:628
+#: app/dialogs/preferences-dialog.c:2101 app/dialogs/welcome-dialog.c:632
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2103 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2103 app/dialogs/welcome-dialog.c:634
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2105 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2105 app/dialogs/welcome-dialog.c:636
 msgid "200%"
 msgstr "200%"
 
@@ -16597,7 +16597,7 @@ msgstr "图标主题"
 msgid "Select an Icon Theme"
 msgstr "选择图标主题"
 
-#: app/dialogs/preferences-dialog.c:2257 app/dialogs/welcome-dialog.c:582
+#: app/dialogs/preferences-dialog.c:2257 app/dialogs/welcome-dialog.c:586
 msgid "Use symbolic icons if available"
 msgstr "如果可用则使用符号图标"
 
@@ -16628,7 +16628,7 @@ msgstr "显示活动笔刷、图案和渐变(_B)"
 msgid "Show active _image"
 msgstr "显示活动图像(_I)"
 
-#: app/dialogs/preferences-dialog.c:2301 app/dialogs/welcome-dialog.c:668
+#: app/dialogs/preferences-dialog.c:2301 app/dialogs/welcome-dialog.c:672
 msgid "Use tool _groups"
 msgstr "使用工具组(_G)"
 
@@ -17795,7 +17795,7 @@ msgid "_Next Tip"
 msgstr "后一条提示(_N)"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1081
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1085
 msgid "Learn more"
 msgstr "了解更多"
 
@@ -17873,39 +17873,39 @@ msgid "Lock path _visibility"
 msgstr "锁定路径可见性(_V)"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:181
+#: app/dialogs/welcome-dialog.c:184
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "欢迎使用 GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:229 app/dialogs/welcome-dialog.c:230
+#: app/dialogs/welcome-dialog.c:232 app/dialogs/welcome-dialog.c:233
 msgid "Welcome"
 msgstr "欢迎"
 
-#: app/dialogs/welcome-dialog.c:244 app/dialogs/welcome-dialog.c:245
+#: app/dialogs/welcome-dialog.c:247 app/dialogs/welcome-dialog.c:248
 msgid "Personalize"
 msgstr "个性化"
 
-#: app/dialogs/welcome-dialog.c:256 app/dialogs/welcome-dialog.c:257
+#: app/dialogs/welcome-dialog.c:259 app/dialogs/welcome-dialog.c:260
 msgid "Contribute"
 msgstr "贡献"
 
-#: app/dialogs/welcome-dialog.c:268 app/dialogs/welcome-dialog.c:269
+#: app/dialogs/welcome-dialog.c:271 app/dialogs/welcome-dialog.c:272
 msgid "Create"
 msgstr "创建"
 
-#: app/dialogs/welcome-dialog.c:284 app/dialogs/welcome-dialog.c:285
+#: app/dialogs/welcome-dialog.c:287 app/dialogs/welcome-dialog.c:288
 msgid "Release Notes"
 msgstr "发行注记"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:416
+#: app/dialogs/welcome-dialog.c:420
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "您已经安装了 GIMP %s！"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:431
+#: app/dialogs/welcome-dialog.c:435
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -17913,22 +17913,22 @@ msgstr ""
 "GIMP 是一个用于图像创作和处理的自由软件。\n"
 "想要了解更多吗？"
 
-#: app/dialogs/welcome-dialog.c:460
+#: app/dialogs/welcome-dialog.c:464
 msgid "GIMP website"
 msgstr "GIMP 网站"
 
-#: app/dialogs/welcome-dialog.c:464
+#: app/dialogs/welcome-dialog.c:468
 msgid "Tutorials"
 msgstr "教程"
 
-#: app/dialogs/welcome-dialog.c:469
+#: app/dialogs/welcome-dialog.c:473
 msgid "Documentation"
 msgstr "文档"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:477
+#: app/dialogs/welcome-dialog.c:481
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -17936,74 +17936,74 @@ msgstr ""
 "GIMP 是一个通过 GNU 通用公共许可证 v3 版本授权的社区软件。\n"
 "想要贡献一份力量吗？"
 
-#: app/dialogs/welcome-dialog.c:502
+#: app/dialogs/welcome-dialog.c:506
 msgid "Contributing"
 msgstr "贡献"
 
-#: app/dialogs/welcome-dialog.c:507
+#: app/dialogs/welcome-dialog.c:511
 msgid "Donating"
 msgstr "捐助"
 
-#: app/dialogs/welcome-dialog.c:547
+#: app/dialogs/welcome-dialog.c:551
 msgid "Color scheme"
 msgstr "颜色方案"
 
-#: app/dialogs/welcome-dialog.c:573
+#: app/dialogs/welcome-dialog.c:577
 msgid "Icon theme"
 msgstr "图标主题"
 
-#: app/dialogs/welcome-dialog.c:586
+#: app/dialogs/welcome-dialog.c:590
 msgid "Icon Scaling"
 msgstr "图标缩放"
 
-#: app/dialogs/welcome-dialog.c:645
+#: app/dialogs/welcome-dialog.c:649
 msgid "GUI Language (requires restart)"
 msgstr "界面语言（需要重启）"
 
-#: app/dialogs/welcome-dialog.c:650
+#: app/dialogs/welcome-dialog.c:654
 msgid "Additional Customizations"
 msgstr "更多自定义"
 
-#: app/dialogs/welcome-dialog.c:654
+#: app/dialogs/welcome-dialog.c:658
 msgid "Merge menu and title bar (requires restart)"
 msgstr "合并菜单和标题栏（需要重启）"
 
-#: app/dialogs/welcome-dialog.c:662
+#: app/dialogs/welcome-dialog.c:666
 msgid "Enable check for updates (requires internet)"
 msgstr "启用检查更新（需要网络）"
 
-#: app/dialogs/welcome-dialog.c:696
+#: app/dialogs/welcome-dialog.c:700
 msgid "C_reate"
 msgstr "创建(_R)"
 
-#: app/dialogs/welcome-dialog.c:705
+#: app/dialogs/welcome-dialog.c:709
 msgid "Open an Existing Image"
 msgstr "打开现有图像"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:717
+#: app/dialogs/welcome-dialog.c:721
 msgid "Recent Images"
 msgstr "最近图像"
 
-#: app/dialogs/welcome-dialog.c:809
+#: app/dialogs/welcome-dialog.c:813
 msgid "O_pen Selected Images"
 msgstr "打开选中图像(_P)"
 
-#: app/dialogs/welcome-dialog.c:818
+#: app/dialogs/welcome-dialog.c:822
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr "启动时显示（您可以通过“帮助”菜单再次显示欢迎对话框）"
 
-#: app/dialogs/welcome-dialog.c:846
+#: app/dialogs/welcome-dialog.c:850
 #, c-format
 msgid "Ways to contribute"
 msgstr "贡献方式"
 
-#: app/dialogs/welcome-dialog.c:855 app/dialogs/welcome-dialog.c:866
+#: app/dialogs/welcome-dialog.c:859 app/dialogs/welcome-dialog.c:870
 msgid "Report Bugs"
 msgstr "报告缺陷"
 
-#: app/dialogs/welcome-dialog.c:857
+#: app/dialogs/welcome-dialog.c:861
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18012,50 +18012,50 @@ msgstr ""
 "像任何应用程序一样，GIMP 不是没有缺陷的，所以报告您遇到的缺陷对于开发工作非常"
 "重要。"
 
-#: app/dialogs/welcome-dialog.c:870 app/dialogs/welcome-dialog.c:880
+#: app/dialogs/welcome-dialog.c:874 app/dialogs/welcome-dialog.c:884
 msgid "Write Code"
 msgstr "编写代码"
 
-#: app/dialogs/welcome-dialog.c:872
+#: app/dialogs/welcome-dialog.c:876
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr "我们的开发者网站会是您想要开始学习成为代码贡献者的地方。"
 
-#: app/dialogs/welcome-dialog.c:884 app/dialogs/welcome-dialog.c:894
+#: app/dialogs/welcome-dialog.c:888 app/dialogs/welcome-dialog.c:898
 msgid "Translate"
 msgstr "翻译"
 
-#: app/dialogs/welcome-dialog.c:886
+#: app/dialogs/welcome-dialog.c:890
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "联系您所用语言的翻译团队"
 
-#: app/dialogs/welcome-dialog.c:898
+#: app/dialogs/welcome-dialog.c:902
 msgid "Donate"
 msgstr "捐助"
 
-#: app/dialogs/welcome-dialog.c:900
+#: app/dialogs/welcome-dialog.c:904
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "捐助资金很重要：它使 GIMP 可持续发展。"
 
-#: app/dialogs/welcome-dialog.c:908
+#: app/dialogs/welcome-dialog.c:912
 msgid "Donate via Liberapay"
 msgstr "通过 Liberapay 捐助"
 
-#: app/dialogs/welcome-dialog.c:911
+#: app/dialogs/welcome-dialog.c:915
 msgid "Other donation options"
 msgstr "其他捐助选项"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:945
+#: app/dialogs/welcome-dialog.c:949
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s 发布记录"
 
-#: app/dialogs/welcome-dialog.c:1056
+#: app/dialogs/welcome-dialog.c:1060
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "在带有 %s 项目符号的发布项目上点击来获取导览。"
