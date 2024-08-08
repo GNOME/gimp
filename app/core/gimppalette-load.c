@@ -583,11 +583,11 @@ gimp_palette_load_aco (GimpContext   *context,
         }
       else if (color_space == 7) /* CIE Lab */
         {
-          gdouble lab[3] = { ((gdouble) w) / 10000.0,
-                             ((gdouble) xLab) / 25500.0,
-                             ((gdouble) yLab) / 25500.0 };
+          gfloat lab[3] = { ((gfloat) w) / 10000.0f,
+                            ((gfloat) xLab) / 25500.0f,
+                            ((gfloat) yLab) / 25500.0f };
 
-          gegl_color_set_pixel (color, babl_format ("CIE Lab double"), lab);
+          gegl_color_set_pixel (color, babl_format ("CIE Lab float"), lab);
           color_ok = TRUE;
         }
       else if (color_space == 8) /* Grayscale */

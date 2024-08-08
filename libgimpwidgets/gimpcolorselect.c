@@ -176,7 +176,7 @@ struct _ColorSelectFill
   gint     height;
   gfloat   rgb[3];
   gfloat   hsv[3];
-  gdouble  lch[4];
+  gfloat   lch[4];
   guchar   oog_color[3];
 
   ColorSelectRenderFunc render_line;
@@ -1433,7 +1433,7 @@ gimp_color_select_render (GtkWidget           *preview,
 
   gegl_color_get_pixel (color, rgbf_format, csf.rgb);
   gegl_color_get_pixel (color, hsvf_format, csf.hsv);
-  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), csf.lch);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha float"), csf.lch);
 
   csf.oog_color[0] = oog_color[0];
   csf.oog_color[1] = oog_color[1];

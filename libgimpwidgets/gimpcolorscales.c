@@ -896,7 +896,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   GeglColor         *color    = gimp_color_selector_get_color (selector);
   gdouble            value    = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scale));
-  gdouble            lch[4];
+  gfloat             lch[4];
   gfloat             hsv[4];
   gdouble            rgb[4];
   gint               i;
@@ -907,7 +907,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", scales->format), rgb);
   gegl_color_get_pixel (color, babl_format_with_space ("HSVA float", scales->format), hsv);
-  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
+  gegl_color_get_pixel (color, babl_format ("CIE LCH(ab) alpha float"), lch);
 
   switch (i)
     {
@@ -940,15 +940,15 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
       break;
 
     case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
-      lch[0] = value;
+      lch[0] = (gfloat) value;
       break;
 
     case GIMP_COLOR_SELECTOR_LCH_CHROMA:
-      lch[1] = value;
+      lch[1] = (gfloat) value;
       break;
 
     case GIMP_COLOR_SELECTOR_LCH_HUE:
-      lch[2] = value;
+      lch[2] = (gfloat) value;
       break;
 
     case GIMP_COLOR_SELECTOR_RED_U8:
@@ -977,7 +977,7 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
   else if ((i >= GIMP_COLOR_SELECTOR_LCH_LIGHTNESS) &&
            (i <= GIMP_COLOR_SELECTOR_LCH_HUE))
     {
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) alpha double"), lch);
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) alpha float"), lch);
     }
   else if (((i >= GIMP_COLOR_SELECTOR_RED) &&
             (i <= GIMP_COLOR_SELECTOR_BLUE)) ||

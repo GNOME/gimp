@@ -132,8 +132,8 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   fish_linear_rgb_to_srgb = babl_fish (babl_format ("RGB double"),
                                        babl_format ("R'G'B' double"));
   fish_srgb_to_cie_lab    = babl_fish (babl_format ("R'G'B' double"),
-                                       babl_format ("CIE Lab double"));
-  fish_cie_lab_to_srgb    = babl_fish (babl_format ("CIE Lab double"),
+                                       babl_format ("CIE Lab float"));
+  fish_cie_lab_to_srgb    = babl_fish (babl_format ("CIE Lab float"),
                                        babl_format ("R'G'B' double"));
 }
 
@@ -552,6 +552,7 @@ gimp_gradient_get_color_at (GimpGradient                 *gradient,
 
   if (seg->color == GIMP_GRADIENT_SEGMENT_RGB)
     {
+      gfloat  float_components[3];
       gdouble left_components[3];
       gdouble right_components[3];
       gdouble ret_components[3];
@@ -559,8 +560,13 @@ gimp_gradient_get_color_at (GimpGradient                 *gradient,
       switch (blend_color_space)
         {
         case GIMP_GRADIENT_BLEND_CIE_LAB:
-          gegl_color_get_pixel (left_color, babl_format ("CIE Lab double"), left_components);
-          gegl_color_get_pixel (right_color, babl_format ("CIE Lab double"), right_components);
+          gegl_color_get_pixel (left_color, babl_format ("CIE Lab float"), float_components);
+          for (gint i = 0; i < 3; i++)
+            left_components[i] = float_components[i];
+
+          gegl_color_get_pixel (right_color, babl_format ("CIE Lab float"), float_components);
+          for (gint i = 0; i < 3; i++)
+            right_components[i] = float_components[i];
           break;
 
         case GIMP_GRADIENT_BLEND_RGB_LINEAR:
@@ -582,7 +588,9 @@ gimp_gradient_get_color_at (GimpGradient                 *gradient,
       switch (blend_color_space)
         {
         case GIMP_GRADIENT_BLEND_CIE_LAB:
-          gegl_color_set_pixel (*color, babl_format ("CIE Lab double"), ret_components);
+          for (gint i = 0; i < 3; i++)
+            float_components[i] = (gfloat) ret_components[i];
+          gegl_color_set_pixel (*color, babl_format ("CIE Lab float"), float_components);
           break;
 
         case GIMP_GRADIENT_BLEND_RGB_LINEAR:
