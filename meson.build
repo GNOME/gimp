@@ -1075,45 +1075,26 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 python3_minver = '>=3.6'
 
-python = pythonmod.find_installation('python3')
+python = pythonmod.find_installation('python3', required: true)
 message('Found Python @0@'.format(python.language_version()))
 
-have_python = get_option('python').enabled()
-
-if get_option('python').allowed()
-  python_found = (
-    python.found() and
-    python.language_version().version_compare(python3_minver)
-  )
-  if python_found
-    pygobject_found = run_command(
-      python, '-c',
-      '\n'.join([
-        '''import sys, gi''',
-        '''version = '@0@' '''.format('3.0'),
-        '''sys.exit(gi.check_version(version))''',
-      ]),
-      check: false
-    ).returncode() == 0
-    message('Found Pygobject: @0@'.format(pygobject_found))
-    python_found = python_found and pygobject_found
-  endif
-
-  if python_found
-    have_python = true
-  elif have_python
-    python_warning = '''
-    Python @0@ or PyGObject was not found.
-    Python plug-ins will be installed anyway but you should make sure that
-    a compatible Python interpreter is available at installation, otherwise
-    installed plug-ins won't be usable.
-    '''.format(python3_minver)
-    warning(python_warning)
-    warnings += python_warning
-  endif
-
-  MIMEtypes += 'image/openraster'
+if not python.language_version().version_compare(python3_minver)
+  error('Minimum supported Python version: @0@'.format(python3_minver))
 endif
+
+pygobject_found = run_command(python, '-c',
+                              '\n'.join([
+                              '''import sys, gi''',
+                              '''version = '@0@' '''.format('3.0'),
+                              '''sys.exit(gi.check_version(version))''']),
+                              check: false).returncode() == 0
+message('Found PyGObject: @0@'.format(pygobject_found))
+
+if not pygobject_found
+  error('PyGObject is required.')
+endif
+
+MIMEtypes += 'image/openraster'
 
 ## Javascript
 
@@ -2081,7 +2062,6 @@ final_message = [
                                 .format(can_import_avif, can_export_avif),
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
-'''  Python 3 plug-ins:   @0@'''.format(have_python),
 '''  Javascript plug-ins: @0@'''.format(have_javascript),
 '''  Lua plug-ins:        @0@'''.format(have_lua),
 '''  Vala plug-ins:       @0@'''.format(have_vala),

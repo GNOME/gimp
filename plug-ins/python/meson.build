@@ -24,10 +24,8 @@ foreach plugin : plugins
   name = plugin.get('name')
   srcs = plugin.get('srcs', [name + '.py'])
 
-  if have_python
-    install_data(srcs, install_dir: gimpplugindir / 'plug-ins' / name,
-                 install_mode: 'rwxr-xr-x')
-  endif
+  install_data(srcs, install_dir: gimpplugindir / 'plug-ins' / name,
+               install_mode: 'rwxr-xr-x')
 
   foreach src : srcs
     # Ugly trick to copy Python plug-ins into subfolders so that we can run GIMP
@@ -39,16 +37,14 @@ foreach plugin : plugins
   endforeach
 endforeach
 
-if have_python
-  # Fallback fix to the problem of non-configured interpreters
-  if platform_windows and not meson.is_cross_build() and python.found()
-    python_config = configuration_data()
-    python_config.set('PYTHON_PATH', '')
+# Fallback fix to the problem of non-configured interpreters
+if platform_windows and not meson.is_cross_build() and python.found()
+  python_config = configuration_data()
+  python_config.set('PYTHON_PATH', '')
 
-    configure_file(input : 'pygimp.interp.in',
-                   output: 'pygimp.interp',
-                   configuration: python_config,
-                   install: true,
-                   install_dir: gimpplugindir / 'interpreters')
-  endif
+  configure_file(input : 'pygimp.interp.in',
+                 output: 'pygimp.interp',
+                 configuration: python_config,
+                 install: true,
+                 install_dir: gimpplugindir / 'interpreters')
 endif

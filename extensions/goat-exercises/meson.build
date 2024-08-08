@@ -65,13 +65,11 @@ endif
 
 # Python 3 (pygobject) version.
 
-if have_python
-  install_data(
-    'goat-exercise-py3.py',
-    install_dir: gimpplugindir /  'extensions' / extension_name,
-  )
-  plug_ins = plug_ins + ':goat-exercise-py3.py'
-endif
+install_data(
+  'goat-exercise-py3.py',
+  install_dir: gimpplugindir /  'extensions' / extension_name,
+)
+plug_ins = plug_ins + ':goat-exercise-py3.py'
 
 # Javascript (GJS) version.
 
