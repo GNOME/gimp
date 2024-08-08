@@ -2109,7 +2109,8 @@ calc_deinit (void)
       return;
     }
 
-  g_list_free_full (calc.sflare_list, (GDestroyNotify) g_free);
+  g_list_free_full (g_steal_pointer (&calc.sflare_list), (GDestroyNotify) g_free);
+  calc.sflare_list = NULL;
 
   g_free (calc.glow_radial);
   g_free (calc.glow_angular);
@@ -2276,7 +2277,10 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
  *  glow, rays は簡易化のためになし。
  */
 void
-calc_sflare_pix (guchar *dest_pix, gdouble x, gdouble y, guchar *src_pix)
+calc_sflare_pix (guchar  *dest_pix,
+                 gdouble  x,
+                 gdouble  y,
+                 guchar  *src_pix)
 {
   GList         *list;
   CalcSFlare    *sflare;
@@ -2290,10 +2294,14 @@ calc_sflare_pix (guchar *dest_pix, gdouble x, gdouble y, guchar *src_pix)
     return;
 
   list = calc.sflare_list;
+
   while (list)
     {
       sflare = list->data;
       list = list->next;
+
+      if (! sflare)
+        break;
 
       if (x < sflare->bounds.x0 || x > sflare->bounds.x1
           || y < sflare->bounds.y0 || y > sflare->bounds.y1)
@@ -2862,7 +2870,7 @@ dlg_preview_deinit_func (Preview *preview, gpointer data)
   if (dlg->init_params_done)
     {
       calc_deinit ();
-      dlg->init_params_done = TRUE;
+      dlg->init_params_done = FALSE;
     }
 }
 
