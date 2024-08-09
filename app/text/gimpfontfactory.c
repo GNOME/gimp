@@ -455,6 +455,7 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
                                          GError   **error)
 {
   GFileEnumerator *enumerator;
+  GError          *file_error = NULL;
 
   g_return_if_fail (config != NULL);
 
@@ -464,7 +465,7 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
                                           G_FILE_ATTRIBUTE_STANDARD_TYPE ","
                                           G_FILE_ATTRIBUTE_TIME_MODIFIED,
                                           G_FILE_QUERY_INFO_NONE,
-                                          NULL, NULL);
+                                          NULL, &file_error);
   if (enumerator)
     {
       GFileInfo *info;
@@ -540,25 +541,50 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
         {
           gchar *path = g_file_get_path (file);
 
-          if (*error)
+          /* The font directories are supposed to exist since we create
+           * them in gimp_font_factory_add_directories() when they
+           * aren't already there.
+           * Yet there are cases where empty folders can be deleted and
+           * system paths are read-only. This happens for instance for
+           * MSIX (see #11401).
+           * So as a special exception, we ignore the case where the
+           * folders don't exist, but we still warn for all other types
+           * of errors.
+           */
+          if (! file_error || file_error->code != G_IO_ERROR_NOT_FOUND)
             {
-              gchar *current_message = g_strdup ((*error)->message);
+              if (*error)
+                {
+                  gchar *current_message = g_strdup ((*error)->message);
 
-              g_clear_error (error);
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           "%s\n- %s%s", current_message, path,
-                           G_DIR_SEPARATOR_S);
-              g_free (current_message);
-            }
-          else
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           "- %s%s", path, G_DIR_SEPARATOR_S);
+                  g_clear_error (error);
+                  if (file_error != NULL)
+                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                 "%s\n- %s%s (%s)", current_message, path,
+                                 G_DIR_SEPARATOR_S, file_error->message);
+                  else
+                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                 "%s\n- %s%s", current_message, path,
+                                 G_DIR_SEPARATOR_S);
+                  g_free (current_message);
+                }
+              else
+                {
+                  if (file_error != NULL)
+                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                 "- %s%s (%s)", path, G_DIR_SEPARATOR_S,
+                                 file_error->message);
+                  else
+                    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                 "- %s%s", path, G_DIR_SEPARATOR_S);
+                }
             }
 
           g_free (path);
         }
     }
+
+  g_clear_error (&file_error);
 }
 
 static void
