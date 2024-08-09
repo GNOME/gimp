@@ -175,7 +175,7 @@ edit_copy_invoker (GimpProcedure         *procedure,
         {
           GError *my_error = NULL;
 
-          non_empty = gimp_edit_copy (image, drawables_list, context, &my_error) != NULL;
+          non_empty = gimp_edit_copy (image, drawables_list, context, FALSE, &my_error) != NULL;
 
           if (! non_empty)
             {

@@ -283,7 +283,7 @@ edit_copy_cmd_callback (GimpAction *action,
   return_if_no_drawables (image, drawables, data);
 
   copy = gimp_edit_copy (image, drawables, action_data_get_context (data),
-                         &error);
+                         FALSE, &error);
 
   if (copy)
     {

@@ -83,7 +83,8 @@ gimp_edit_cut (GimpImage     *image,
 
   if (layers_only)
     {
-      gchar *undo_label;
+      gchar    *undo_label;
+      gboolean  success = TRUE;
 
       undo_label = g_strdup_printf (ngettext ("Cut Layer", "Cut %d Layers",
                                               g_list_length (drawables)),
@@ -141,16 +142,21 @@ gimp_edit_cut (GimpImage     *image,
       else
         {
           /* With selection, a cut is similar to a copy followed by a clear. */
-          gimp_edit_copy (image, drawables, context, error);
-
-          for (iter = drawables; iter; iter = iter->next)
-            if (! GIMP_IS_GROUP_LAYER (iter->data))
-              gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
+          if (gimp_edit_copy (image, drawables, context, TRUE, error))
+            {
+              for (iter = drawables; iter; iter = iter->next)
+                if (! GIMP_IS_GROUP_LAYER (iter->data))
+                  gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
+            }
+          else
+            {
+              success = FALSE;
+            }
         }
 
       gimp_image_undo_group_end (image);
 
-      return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
+      return success ? GIMP_OBJECT (gimp_get_clipboard_image (image->gimp)) : NULL;
     }
   else
     {
@@ -174,6 +180,7 @@ GimpObject *
 gimp_edit_copy (GimpImage     *image,
                 GList         *drawables,
                 GimpContext   *context,
+                gboolean       copy_for_cut,
                 GError       **error)
 {
   GList    *iter;
@@ -222,8 +229,14 @@ gimp_edit_copy (GimpImage     *image,
       if (iter == NULL)
         {
           if (error)
-            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                                 _("Cannot copy because the selected region is empty."));
+            {
+              if (copy_for_cut)
+                g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                     _("Cannot cut because the selected region is empty."));
+              else
+                g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                     _("Cannot copy because the selected region is empty."));
+            }
           return NULL;
         }
 
