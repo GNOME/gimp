@@ -32,7 +32,7 @@
         "--socket=wayland",
         "--device=dri",
         "--filesystem=host",
-        "--filesystem=xdg-config/GIMP",
+        "--filesystem=xdg-config/GIMP:create",
         "--filesystem=xdg-config/gtk-3.0",
         "--filesystem=/tmp",
         "--filesystem=xdg-run/gvfs",
