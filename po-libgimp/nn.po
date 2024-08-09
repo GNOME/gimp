@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-21 16:48+0000\n"
-"PO-Revision-Date: 2024-07-21 18:58+0200\n"
+"PO-Revision-Date: 2024-08-09 16:44+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -50,7 +50,7 @@ msgstr "_Bla gjennom …"
 #: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Programtillegget %s  kan ikkje handsama lag"
+msgstr "Programtillegget %s kan ikkje handsama lag"
 
 #: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
 #: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
@@ -1510,7 +1510,7 @@ msgstr "ILCreateFromPath() mislukkast"
 #: ../libgimpbase/gimputils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
-msgstr "Kan ikkje konvertere «%s» til ein gyldig NSURL."
+msgstr "Kan ikkje konvertera «%s» til ein gyldig NSURL."
 
 #: ../libgimpbase/gimputils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
@@ -1531,7 +1531,7 @@ msgstr "Dataa ser ikkje ut til å vera ein ICC fargeprofil"
 
 #: ../libgimpcolor/gimpcolorprofile.c:361
 msgid "Could not save color profile to memory"
-msgstr "Kunne ikkje lagra fargeprofilen til minnet"
+msgstr "Klarte ikkje lagra fargeprofilen til minnet"
 
 #: ../libgimpcolor/gimpcolorprofile.c:578
 msgid "(unnamed profile)"
@@ -1617,8 +1617,8 @@ msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"Den føretrekte RGB-fargeprofilen for arbeidsplassen. Han vil bli lagt inn "
-"som alternativ til den innebygde RGB-profilen når du kan velja fargeprofil."
+"Den føretrekte RGB-fargeprofilen for arbeidsplassen. Han vert lagt inn som "
+"alternativ til den innebygde RGB-profilen når du kan velja fargeprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
@@ -1639,8 +1639,8 @@ msgid ""
 "device profile. "
 msgstr ""
 "Fargeprofilen som skal brukast for utskriftsimulering av fargeprofilen i "
-"biletet til andre fargeprofilar, inkludert utskriftsimulering for skrivar og "
-"andre uteiningar."
+"biletet til andre fargeprofilar, medreknat utskriftsimulering for skrivar og "
+"andre uteiningar. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1649,10 +1649,11 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
-"Korleis fargane blir konverterte frå fargeprofilen i biletet til "
-"fargeprofilen for visingsmediet. Som opftast er relativt kolometrisk det "
-"beste valet. Med unnatak av LUT-monitorar bruker fleste dataskjermane "
-"matriseprofil. Ved å velja perseptuell vising vil dette gi relativ kolometri."
+"Korleis fargane vert konverterte frå fargeprofilen i biletet til "
+"fargeprofilen for visingsmediet. Som oftast er relativt kolometrisk det "
+"beste valet. Med unntak av LUT-monitorar brukar dei fleste dataskjermane "
+"matriseprofil. Ved å velja perseptuell vising vil dette gje relativ "
+"kolometri."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
@@ -1673,7 +1674,7 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
-"Korleis fargane blir konverterte frå fargeprofilen i biletet til "
+"Korleis fargane vert konverterte frå fargeprofilen i biletet til "
 "fargeprofilen for simuleringsmediet (som oftast dataskjermen). Prøv dei ut "
 "og vel den som passar best. "
 
@@ -2010,7 +2011,7 @@ msgstr "Opphavsrett: "
 
 #: ../libgimpwidgets/gimpcolorscales.c:208
 msgid "Scales"
-msgstr "Skalaer"
+msgstr "Skalaar"
 
 #: ../libgimpwidgets/gimpcolorscales.c:450
 msgid "0..100"
@@ -2030,7 +2031,7 @@ msgstr "HSV"
 
 #: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
-msgstr "Nåverande:"
+msgstr "Noverande:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
@@ -2633,7 +2634,7 @@ msgstr "DirectInput hendingar"
 #: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
 msgid "No device configured"
-msgstr "Inga eining er konfigurert"
+msgstr "Inga eining er sett opp"
 
 #: ../modules/controller-dx-dinput.c:1117
 #: ../modules/controller-linux-input.c:588
@@ -2811,7 +2812,7 @@ msgstr "Namnet på utstyret som inneheld MIDI-hendingane."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Skriv inn  «alsa» for å bruka ALSA-sekvenser."
+msgstr "Skriv inn «alsa» for å bruka ALSA-sekvenser."
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
@@ -2913,19 +2914,19 @@ msgstr "Åtvaringsfarge for bogus"
 
 #: ../modules/display-filter-clip-warning.c:220
 msgid "Include alpha component"
-msgstr "Inkluder alfakomponent"
+msgstr "Ta med alfakomponent"
 
 #: ../modules/display-filter-clip-warning.c:221
 msgid "Include alpha component in the warning"
-msgstr "Inkluder alfakomponent i åtyvaringa"
+msgstr "Ta med alfakomponenten i åtvaringa"
 
 #: ../modules/display-filter-clip-warning.c:227
 msgid "Include transparent pixels"
-msgstr "Inkluder gjennomsiktige pikslar"
+msgstr "Ta med gjennomsiktige pikslar"
 
 #: ../modules/display-filter-clip-warning.c:228
 msgid "Include fully transparent pixels in the warning"
-msgstr "Inkluder heilt gjennomsiktige pikslar i åtvaringa"
+msgstr "Ta med heilt gjennomsiktige pikslar i åtvaringa"
 
 #: ../modules/display-filter-clip-warning.c:232
 msgid "Clip Warning"
