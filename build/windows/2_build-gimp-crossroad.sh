@@ -68,7 +68,7 @@ if [ ! -f "_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
   mkdir -p _build$ARTIFACTS_SUFFIX && cd _build$ARTIFACTS_SUFFIX
   crossroad meson setup .. -Dgi-docgen=disabled                 \
                            -Djavascript=disabled -Dlua=disabled \
-                           -Dpython=disabled -Dvala=disabled
+                           -Dvala=disabled
 else
   cd _build$ARTIFACTS_SUFFIX
 fi

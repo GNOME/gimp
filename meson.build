@@ -1066,13 +1066,6 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 ## Python
 
-# By default, we want packagers to install Python plug-ins to get the
-# optimum experience. -Dpython=true will check for a Python 3
-# interpreter and PyGObject, and warns without.
-# It is up to the packager to ensure they are available at run time.
-# This can be useful in particular when cross-compiling since anyway
-# the interpreter is not useful at build time.
-
 python3_minver = '>=3.6'
 
 python = pythonmod.find_installation('python3', required: true)
