@@ -672,7 +672,8 @@ register_edit_procs (GimpPDB *pdb)
                                "gimp-edit-cut");
   gimp_procedure_set_static_help (procedure,
                                   "Cut from the specified drawables.",
-                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection and only one specified drawable, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to cut from.",
+                                  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection and only one specified drawable, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer.\n"
+                                  "This procedure will return %FALSE if the selected area lies completely outside the bounds of the current drawables and there is nothing to cut from.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -707,7 +708,9 @@ register_edit_procs (GimpPDB *pdb)
                                "gimp-edit-copy");
   gimp_procedure_set_static_help (procedure,
                                   "Copy from the specified drawables.",
-                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawables' contents will be stored in the internal GIMP edit buffer. This procedure will fail if the selected area lies completely outside the bounds of the current drawables and there is nothing to copy from. All the drawables must belong to the same image.",
+                                  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawables and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the specified drawables' contents will be stored in the internal GIMP edit buffer.\n"
+                                  "This procedure will return %FALSE if the selected area lies completely outside the bounds of the current drawables and there is nothing to copy from.\n"
+                                  "All the drawables must belong to the same image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

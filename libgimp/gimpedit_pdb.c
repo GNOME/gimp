@@ -48,9 +48,10 @@
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the gimp_edit_paste() command. If there is no selection and only one
  * specified drawable, then the specified drawable will be removed and
- * its contents stored in the internal GIMP edit buffer. This procedure
- * will fail if the selected area lies completely outside the bounds of
- * the current drawables and there is nothing to cut from.
+ * its contents stored in the internal GIMP edit buffer.
+ * This procedure will return %FALSE if the selected area lies
+ * completely outside the bounds of the current drawables and there is
+ * nothing to cut from.
  *
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
@@ -93,10 +94,11 @@ gimp_edit_cut (gint             num_drawables,
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the gimp_edit_paste() command. If there is no selection, then the
  * specified drawables' contents will be stored in the internal GIMP
- * edit buffer. This procedure will fail if the selected area lies
+ * edit buffer.
+ * This procedure will return %FALSE if the selected area lies
  * completely outside the bounds of the current drawables and there is
- * nothing to copy from. All the drawables must belong to the same
- * image.
+ * nothing to copy from.
+ * All the drawables must belong to the same image.
  *
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
