@@ -1,5 +1,5 @@
-lua=@LUA_PATH@luajit.exe
-luajit=@LUA_PATH@luajit.exe
-/usr/bin/luajit=@LUA_PATH@luajit.exe
-/usr/bin/lua=@LUA_PATH@luajit.exe
-:Lua:E::lua::luajit:
+lua=@LUA_PATH@
+luajit=@LUA_PATH@
+/usr/bin/luajit=@LUA_PATH@
+/usr/bin/lua=@LUA_PATH@
+:Lua:E::lua::@LUA_PATH@:
