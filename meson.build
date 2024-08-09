@@ -1126,12 +1126,35 @@ if get_option('lua').allowed()
     lua = find_program(lua_bin, required: false)
 
     if lua.found() and meson.can_run_host_binaries()
-      have_lua_lgi = run_command(lua, '-e',
-      '''
-      local lgi = require 'lgi'
-      ''',
-      check: false
-      ).returncode() == 0
+      if lua_bin == 'lua'
+        is_supported_lua = false
+        lua_cmd = run_command(lua, '-v', check: false)
+        if lua_cmd.returncode() == 0
+          message('Found Lua: @0@'.format(lua_cmd.stdout().strip()))
+          lua_stdout = lua_cmd.stdout().split()
+          if lua_stdout[0].to_lower() == lua_bin
+            message('Parsed Lua version: @0@'.format(lua_stdout[1]))
+            # We only want any lua version 5.1.x
+            if lua_stdout[1].version_compare('>=5.1.0') and lua_stdout[1].version_compare('<5.2.0')
+              is_supported_lua = true
+            else
+              warning('Unsupported Lua version (!= 5.1): @0@'.format(lua_stdout[1]))
+            endif
+          endif
+        else
+          warning('Failed to run `lua -v`')
+        endif
+      else
+        is_supported_lua = true
+      endif
+
+      if is_supported_lua
+        have_lua_lgi = run_command(lua, '-e',
+                                   '''
+                                   local lgi = require 'lgi'
+                                   ''',
+                                   check: false).returncode() == 0
+      endif
 
       if have_lua_lgi
         break
@@ -1142,8 +1165,8 @@ if get_option('lua').allowed()
   have_lua = get_option('lua').enabled() or have_lua_lgi
   if have_lua and not have_lua_lgi
     lua_warning = '''
-      Neither Luajit nor Lua, with lua-lgi support, was found. Or you are
-      cross-compiling so we couldn't test lua-lgi support.
+      Neither Luajit nor Lua 5.1, with lua-lgi support, was found.
+      Or you are cross-compiling so we couldn't test lua-lgi support.
       Lua plug-ins will be installed anyway but you should make sure that
       luajit or lua and that LGI are available at installation, otherwise
       installed plug-ins won't be usable.
