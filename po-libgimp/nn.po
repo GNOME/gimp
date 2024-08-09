@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-14 10:49+0000\n"
-"PO-Revision-Date: 2024-07-14 17:30+0200\n"
+"POT-Creation-Date: 2024-07-26 13:01+0000\n"
+"PO-Revision-Date: 2024-08-09 16:37+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -20,16 +20,16 @@ msgstr ""
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
-msgstr "_Bla gjennom …"
+msgstr "_Bla gjennom  … "
 
 #: libgimp/gimpdrawablechooser.c:238
 msgid "Browse..."
-msgstr "Bla gjennom …"
+msgstr "Bla gjennom …"
 
 #: libgimp/gimpexport.c:363 libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Programtillegget %s  kan ikkje handtera lag"
+msgstr "Programtillegget %s kan ikkje handtera lag"
 
 #: libgimp/gimpexport.c:364 libgimp/gimpexport.c:373 libgimp/gimpexport.c:382
 #: libgimp/gimpexport.c:400
@@ -64,7 +64,7 @@ msgstr "Programtillegget %s kan ikkje handtera gjennomsikt"
 #: libgimp/gimpexport.c:417
 #, c-format
 msgid "%s plug-in can't handle layer effects"
-msgstr "Programtillegget %s  kan ikkje handsama lageffektar"
+msgstr "Programtillegget %s kan ikkje handsama lageffektar"
 
 #: libgimp/gimpexport.c:418
 msgid "Merge Layer Effects"
@@ -168,12 +168,12 @@ msgstr "Endra biletstorleiken for å passa laga"
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:929 libgimp/gimpexportproceduredialog.c:416
+#: libgimp/gimpexport.c:923 libgimp/gimpexportproceduredialog.c:416
 #, c-format
 msgid "Export Image as %s"
 msgstr "Eksporter biletet som %s"
 
-#: libgimp/gimpexport.c:935 libgimp/gimpproceduredialog.c:340
+#: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:340
 #: libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -183,7 +183,7 @@ msgstr "Eksporter biletet som %s"
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: libgimp/gimpexport.c:936 libgimp/gimpproceduredialog.c:312
+#: libgimp/gimpexport.c:930 libgimp/gimpproceduredialog.c:312
 #: libgimp/gimpproceduredialog.c:611
 msgid "_Export"
 msgstr "_Eksporter"
@@ -218,7 +218,7 @@ msgstr "Lagra _fargeprofilen"
 
 #: libgimp/gimpexportprocedure.c:480
 msgid "Save the ICC color profile as metadata"
-msgstr "Lagra ICC-fargeprofilen  som metadata"
+msgstr "Lagra ICC-fargeprofilen som metadata"
 
 #: libgimp/gimpexportprocedure.c:485
 msgid "Save _thumbnail"
@@ -574,7 +574,7 @@ msgstr "Tving dimensjonar med sideforhold"
 #: libgimp/gimpresolutionentry-private.c:200
 #, c-format
 msgid "pixels/%a"
-msgstr "Pikslar/%a"
+msgstr "pikslar/%a"
 
 #: libgimp/gimpunitcache.c:54
 msgid "percent"
@@ -971,7 +971,7 @@ msgstr "Verdi (HSV)"
 #: libgimpbase/gimpbaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Avskygging"
+msgstr "Avskugging"
 
 #: libgimpbase/gimpbaseenums.c:487
 msgctxt "dodge-burn-type"
@@ -1657,7 +1657,7 @@ msgstr "Blokkjustert"
 #: libgimpbase/gimpbaseenums.c:1817
 msgctxt "transfer-mode"
 msgid "Shadows"
-msgstr "Skyggar"
+msgstr "Skuggar"
 
 #: libgimpbase/gimpbaseenums.c:1818
 msgctxt "transfer-mode"
@@ -1699,32 +1699,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskjer med sideforhold"
 
-#: libgimpbase/gimpmetadata.c:1243
+#: libgimpbase/gimpmetadata.c:1217
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan lasta inn metadata berre frå lokale filer"
 
-#: libgimpbase/gimpmetadata.c:1299
+#: libgimpbase/gimpmetadata.c:1273
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan lagra metadata berre i lokale filer"
 
-#: libgimpbase/gimpmetadata.c:1348
+#: libgimpbase/gimpmetadata.c:1322
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ugyldig storleik på Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1393
+#: libgimpbase/gimpmetadata.c:1367
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Analyseringa av Exif-data mislukka."
 
-#: libgimpbase/gimpmetadata.c:1445
+#: libgimpbase/gimpmetadata.c:1419
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Analyseringa av IPTC-data mislukka."
 
-#: libgimpbase/gimpmetadata.c:1493
+#: libgimpbase/gimpmetadata.c:1467
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Analyseringa av XMP-data mislukka."
@@ -1748,7 +1748,7 @@ msgstr "ILCreateFromPath() feila"
 #: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
-msgstr "Kan ikkje konvertere «%s» til ein gyldig NSURL."
+msgstr "Kan ikkje konvertera «%s» til ein gyldig NSURL."
 
 #: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
@@ -1769,7 +1769,7 @@ msgstr "Dataa ser ikkje ut til å vera ein ICC fargeprofil"
 
 #: libgimpcolor/gimpcolorprofile.c:361
 msgid "Could not save color profile to memory"
-msgstr "Kunne ikkje lagra fargeprofilen til minnet"
+msgstr "Klarte ikkje lagra fargeprofilen til minnet"
 
 #: libgimpcolor/gimpcolorprofile.c:578
 msgid "(unnamed profile)"
@@ -1855,17 +1855,16 @@ msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"Den føretrekte RGB-fargeprofilen for arbeidsplassen. Han vil bli lagt inn "
-"som alternativ til den innebygde RGB-profilen når du kan velja fargeprofil."
+"Den føretrekte RGB-fargeprofilen for arbeidsplassen. Han vert lagt inn som "
+"alternativ til den innebygde RGB-profilen når du kan velja fargeprofil."
 
 #: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"Den føretrekte gråskala-profilen for arbeidsplassen. Han vil bli lagt inn "
-"som alternativ til den innebygde gråskala-profilen når du kan velja "
-"fargeprofil."
+"Den føretrekte gråtone-profilen for arbeidsplassen. Han vert lagt inn som "
+"alternativ til den innebygde gråtone-profilen når du kan velja fargeprofil."
 
 #: libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1878,7 +1877,7 @@ msgid ""
 "device profile."
 msgstr ""
 "Fargeprofilen som skal brukast for utskriftssimulering på skjermen frå "
-"fargeprofilen i biletet, inkludert fargesimulering for ein skrivar og andre "
+"fargeprofilen i biletet, medrekna fargesimulering for ein skrivar og andre "
 "uteiningar."
 
 #: libgimpconfig/gimpcolorconfig.c:79
@@ -1888,10 +1887,11 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
-"Korleis fargane blir konverterte frå fargeprofilen i biletet til "
-"fargeprofilen for visingsmediet. Som opftast er relativt kolometrisk det "
-"beste valet. Med unnatak av LUT-monitorar bruker fleste dataskjermane "
-"matriseprofil. Ved å velja perseptuell vising vil dette gi relativ kolometri."
+"Korleis fargane vert konverterte frå fargeprofilen i biletet til "
+"fargeprofilen for visingsmediet. Som oftast er relativt kolometrisk det "
+"beste valet. Med unntak av LUT-monitorar brukar dei fleste dataskjermane "
+"matriseprofil. Ved å velja perseptuell vising vil dette gje relativ "
+"kolometri."
 
 #: libgimpconfig/gimpcolorconfig.c:86
 msgid ""
@@ -1946,15 +1946,15 @@ msgstr ""
 msgid ""
 "When enabled, set the color scales to display 0...255 instead of percentages"
 msgstr ""
-"Når denne er slått på, set fargeskalaene til å visa 0…255 i staden for "
-"prosent"
+"Når denne er slått på, vert fargeskalaane sette til å visa 0 … 255 i staden "
+"for prosent"
 
 #: libgimpconfig/gimpcolorconfig.c:118
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
-"Når denne er slått på, set fargeskalaene til å visa HSV blandemodus i staden "
-"for LCh"
+"Når denne er slått på, vert fargeskalaane sette til å visa HSV blandemodus i "
+"staden for LCh"
 
 #: libgimpconfig/gimpcolorconfig.c:226
 msgid "Mode of operation"
@@ -2018,7 +2018,7 @@ msgstr "Ikkje meir gamut åtvaringsfarge"
 
 #: libgimpconfig/gimpcolorconfig.c:335
 msgid "Show RGB 0..255 scales"
-msgstr "Vis RGB 0..255-skalaer"
+msgstr "Vis RGB 0..255-skalaar"
 
 #: libgimpconfig/gimpcolorconfig.c:342
 msgid "Show HSV instead of LCH"
@@ -2126,7 +2126,7 @@ msgstr "Feil ved lasting av modul «%s»: %s"
 
 #: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
-msgstr "Feil med modul"
+msgstr "Modulfeil"
 
 #: libgimpmodule/gimpmoduledb.c:451
 msgid "Loaded"
@@ -2147,12 +2147,12 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Fann ikkje ei gyldig mappe for miniatyrar.\n"
-"Miniatyrane blir lagra i mappa for temporære filer (%s) i staden."
+"Miniatyrane vert lagra i mappa for temporære filer (%s) i staden."
 
 #: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Greidde ikkje å oppretta miniatyrbiletmappa «%s»."
+msgstr "Greidde ikkje å oppretta mappa for miniatyrbile «%s»."
 
 #: libgimpthumb/gimpthumbnail.c:481
 #, c-format
@@ -2189,7 +2189,7 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Hexadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruka "
+"Heksadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruka "
 "CSS fargenamn."
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:108
@@ -2215,7 +2215,7 @@ msgstr "Ikkje ei vanleg fil."
 
 #: libgimpwidgets/gimpcolorprofilestore.c:160
 msgid "Select color profile from disk..."
-msgstr "Vel fargeprofil frå disk …"
+msgstr "Vel fargeprofil frå disk …"
 
 #: libgimpwidgets/gimpcolorprofilestore.c:289
 msgctxt "profile"
@@ -2234,37 +2234,37 @@ msgstr "Opphavsrett: "
 msgid "Scales"
 msgstr "Skalaer"
 
-#: libgimpwidgets/gimpcolorscales.c:362 libgimpwidgets/gimpcolorscales.c:694
+#: libgimpwidgets/gimpcolorscales.c:371 libgimpwidgets/gimpcolorscales.c:703
 #: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
 #: modules/color-selector-water.c:206 modules/color-selector-water.c:242
 #: modules/color-selector-wheel.c:136 modules/color-selector-wheel.c:175
 msgid "Profile: sRGB"
 msgstr "Profil: sRGB"
 
-#: libgimpwidgets/gimpcolorscales.c:459
+#: libgimpwidgets/gimpcolorscales.c:468
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:461
+#: libgimpwidgets/gimpcolorscales.c:470
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:482
+#: libgimpwidgets/gimpcolorscales.c:491
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:484
+#: libgimpwidgets/gimpcolorscales.c:493
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorscales.c:711 libgimpwidgets/gimpcolorselect.c:707
+#: libgimpwidgets/gimpcolorscales.c:720 libgimpwidgets/gimpcolorselect.c:707
 #: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: libgimpwidgets/gimpcolorscales.c:725 libgimpwidgets/gimpcolorselect.c:716
+#: libgimpwidgets/gimpcolorscales.c:734 libgimpwidgets/gimpcolorselect.c:716
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
 msgid "Profile: <i>unknown</i>"
 msgstr "Profil <i> ukjend</i>"
@@ -2837,7 +2837,7 @@ msgstr "DirectInput hendingar"
 #: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
-msgstr "Inga eining er konfigurert"
+msgstr "Inga eining er sett opp"
 
 #: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
@@ -3014,7 +3014,7 @@ msgstr "Namnet på utstyret som inneheld MIDI-hendingane."
 
 #: modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Skriv inn  «alsa» for å bruka ALSA-sekvenser."
+msgstr "Skriv inn «alsa» for å bruka ALSA-sekvenser."
 
 #: modules/controller-midi.c:221
 msgid "Channel:"
@@ -3132,19 +3132,19 @@ msgstr "Bogus åtvaringsfarge"
 
 #: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
-msgstr "Inkluder alfakomponenten"
+msgstr "Ta med alfakomponenten"
 
 #: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
-msgstr "Inkluder alfakomponenten i åtvaringa"
+msgstr "Ta med alfakomponenten i åtvaringa"
 
 #: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
-msgstr "Inkluder gjennomsiktige pikslar"
+msgstr "Ta med gjennomsiktige pikslar"
 
 #: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
-msgstr "Inkluder fullt gjennomsiktige pikslar i åtvaringa"
+msgstr "Ta med fullt gjennomsiktige pikslar i åtvaringa"
 
 #: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
