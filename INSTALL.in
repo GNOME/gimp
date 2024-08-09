@@ -277,6 +277,7 @@ help in that regard:
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
      OpenJPEG            @OPENJPEG_REQUIRED_VERSION@          JPEG 2000
+     Python              @PYTHON3_REQUIRED_VERSION@           Python 3 plug-ins
      qoi                 -              QOI
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
      vala                -              Vala plug-ins
@@ -289,7 +290,6 @@ help in that regard:
      sendmail for sending emails if --with-sendmail enabled
      gdb or lldb for our new bug-reporting dialog
      "gegl:matting-levin" GEGL operation for alternative matting engine
-     Python @PYTHON3_REQUIRED_VERSION@ and PyGObject for Python 3 plug-ins
      GJS for Javascript plug-ins
      Lua 5.1 (or LuaJIT) and LGI for Lua plug-ins
      dot for "Show Image Graph" (unstable branches)
@@ -390,9 +390,6 @@ These are:
   -Denable-console-bin=false  Use this option if you don't want the
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
-
-  -Dpython=false  If for some reason you don't want to install the
-     Python plug-ins, you can use -Dpython=false.
 
   -Djavascript=false  If for some reason you don't want to install the
      JavaScript plug-ins, you can use -Djavascript=false.
