@@ -458,7 +458,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   unit        = gimp_image_get_unit (image);
   unit_factor = gimp_unit_get_factor (unit);
 
-  g_snprintf (format_buf, sizeof (format_buf), _("pixels/%a"),
+  g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
               gimp_unit_get_abbreviation (unit));
   g_snprintf (buf, sizeof (buf), _("%g × %g %s"),
               xres / unit_factor,
