@@ -31,6 +31,7 @@
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-edit.h"
+#include "gimperror.h"
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
@@ -205,6 +206,26 @@ gimp_edit_copy (GimpImage     *image,
       GimpChannel   *clip_selection;
       GeglRectangle  selection_bounds;
       gboolean       has_selection = FALSE;
+
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          gint x1;
+          gint y1;
+          gint x2;
+          gint y2;
+
+          if (gimp_item_mask_bounds (iter->data, &x1, &y1, &x2, &y2) &&
+              x1 != x2 && y1 != y2)
+            break;
+        }
+
+      if (iter == NULL)
+        {
+          if (error)
+            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                 _("Cannot copy because the selected region is empty."));
+          return NULL;
+        }
 
       clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
