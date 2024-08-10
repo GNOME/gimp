@@ -449,7 +449,7 @@ new_unit_dialog (GtkWindow *main_window,
                           gimp_unit_get_name (template));
     }
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_ID:"), 0.0, 0.5,
+                            _("_Name:"), 0.0, 0.5,
                             entry, 1);
 
   gimp_help_set_help_data (entry, gettext (columns[NAME].help), NULL);
