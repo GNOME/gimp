@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-26 13:01+0000\n"
-"PO-Revision-Date: 2024-08-09 16:37+0200\n"
+"POT-Creation-Date: 2024-08-10 16:14+0000\n"
+"PO-Revision-Date: 2024-08-10 18:28+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -173,18 +173,18 @@ msgstr "Endra biletstorleiken for å passa laga"
 msgid "Export Image as %s"
 msgstr "Eksporter biletet som %s"
 
-#: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:340
-#: libgimpwidgets/gimpcolorbutton.c:554
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
+#: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:344
+#: libgimpwidgets/gimpcolorbutton.c:552
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: libgimp/gimpexport.c:930 libgimp/gimpproceduredialog.c:312
-#: libgimp/gimpproceduredialog.c:611
+#: libgimp/gimpexport.c:930 libgimp/gimpproceduredialog.c:316
+#: libgimp/gimpproceduredialog.c:615
 msgid "_Export"
 msgstr "_Eksporter"
 
@@ -273,7 +273,7 @@ msgstr ""
 "Modulen i dette programtillegget for fillasting returnerte «SUCCESS» som ein "
 "status utan bilete. Dette er ein feil i programtillegget. Kontakt utviklaren."
 
-#: libgimp/gimpparamspecs-desc.c:54
+#: libgimp/gimpparamspecs-desc.c:65
 msgid "Allowed values:"
 msgstr "Tillatne verdiar:"
 
@@ -297,88 +297,88 @@ msgstr "oppkallsfeil"
 msgid "cancelled"
 msgstr "avbrote"
 
-#: libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:161
 msgid "by name"
 msgstr "etter namn"
 
-#: libgimp/gimpprocbrowserdialog.c:165
+#: libgimp/gimpprocbrowserdialog.c:162
 msgid "by description"
 msgstr "etter beskriving"
 
-#: libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:163
 msgid "by help"
 msgstr "etter hjelp"
 
-#: libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:164
 msgid "by authors"
 msgstr "etter forfattar"
 
-#: libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:165
 msgid "by copyright"
 msgstr "etter opphavsrett"
 
-#: libgimp/gimpprocbrowserdialog.c:169
+#: libgimp/gimpprocbrowserdialog.c:166
 msgid "by date"
 msgstr "etter dato"
 
-#: libgimp/gimpprocbrowserdialog.c:170
+#: libgimp/gimpprocbrowserdialog.c:167
 msgid "by type"
 msgstr "etter type"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:371 libgimp/gimpprocbrowserdialog.c:529
-#: libgimpwidgets/gimpbrowser.c:168
+#: libgimp/gimpprocbrowserdialog.c:376 libgimp/gimpprocbrowserdialog.c:534
+#: libgimpwidgets/gimpbrowser.c:164
 msgid "No matches"
 msgstr "Ingen treff"
 
-#: libgimp/gimpprocbrowserdialog.c:374
+#: libgimp/gimpprocbrowserdialog.c:379
 msgid "Search term invalid or incomplete"
 msgstr "Søketermen er ugyldig eller ufullstendig"
 
-#: libgimp/gimpprocbrowserdialog.c:383
+#: libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching"
 msgstr "Søkjer"
 
-#: libgimp/gimpprocbrowserdialog.c:395
+#: libgimp/gimpprocbrowserdialog.c:400
 msgid "Searching by name"
 msgstr "Søkjer på namn"
 
-#: libgimp/gimpprocbrowserdialog.c:416
+#: libgimp/gimpprocbrowserdialog.c:421
 msgid "Searching by description"
 msgstr "Søkjer på beskriving"
 
-#: libgimp/gimpprocbrowserdialog.c:424
+#: libgimp/gimpprocbrowserdialog.c:429
 msgid "Searching by help"
 msgstr "Søkjer på hjelp"
 
-#: libgimp/gimpprocbrowserdialog.c:432
+#: libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by authors"
 msgstr "Søkjer på forfattar"
 
-#: libgimp/gimpprocbrowserdialog.c:440
+#: libgimp/gimpprocbrowserdialog.c:445
 msgid "Searching by copyright"
 msgstr "Søkjer på opphavsrett"
 
-#: libgimp/gimpprocbrowserdialog.c:448
+#: libgimp/gimpprocbrowserdialog.c:453
 msgid "Searching by date"
 msgstr "Søkjer på dato"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:461
 msgid "Searching by type"
 msgstr "Søkjer på type"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:474
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d prosedyre"
 msgstr[1] "%d prosedyrar"
 
-#: libgimp/gimpprocbrowserdialog.c:478
+#: libgimp/gimpprocbrowserdialog.c:483
 msgid "No matches for your query"
 msgstr "Ingen treff for spørjinga"
 
-#: libgimp/gimpprocbrowserdialog.c:482
+#: libgimp/gimpprocbrowserdialog.c:487
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -441,63 +441,63 @@ msgstr ""
 "Prosedyren «%s» vart kalla opp med ein ugyldig UTF-8-streng for argumentet "
 "«%s»."
 
-#: libgimp/gimpproceduredialog.c:310 libgimp/gimpproceduredialog.c:609
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Opna"
 
-#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
-#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:467
+#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:493
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: libgimp/gimpproceduredialog.c:322 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
-#: libgimp/gimpproceduredialog.c:375
+#: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
 msgstr "_Lasta inn lagra innstillingar"
 
-#: libgimp/gimpproceduredialog.c:376
+#: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Last inn innstillingane lagra ned knappen «Lagra innstillingar»"
 
-#: libgimp/gimpproceduredialog.c:388
+#: libgimp/gimpproceduredialog.c:392
 msgid "_Save Settings"
 msgstr "_Lagra innstillingane"
 
-#: libgimp/gimpproceduredialog.c:389
+#: libgimp/gimpproceduredialog.c:393
 msgid "Store current settings for later reuse"
 msgstr "Lagra gjeldande innstillingar for seinare bruk"
 
-#: libgimp/gimpproceduredialog.c:843
+#: libgimp/gimpproceduredialog.c:847
 msgid "Brush Chooser"
 msgstr "Penselveljar"
 
-#: libgimp/gimpproceduredialog.c:847
+#: libgimp/gimpproceduredialog.c:851
 msgid "Font Chooser"
 msgstr "Skrifttypeveljar"
 
-#: libgimp/gimpproceduredialog.c:851
+#: libgimp/gimpproceduredialog.c:855
 msgid "Gradient Chooser"
 msgstr "Fargeovergangsveljar"
 
-#: libgimp/gimpproceduredialog.c:855
+#: libgimp/gimpproceduredialog.c:859
 msgid "Palette Chooser"
 msgstr "Palettveljar"
 
-#: libgimp/gimpproceduredialog.c:859
+#: libgimp/gimpproceduredialog.c:863
 msgid "Pattern Chooser"
 msgstr "Mønsterveljar"
 
-#: libgimp/gimpproceduredialog.c:2661
+#: libgimp/gimpproceduredialog.c:2665
 msgid "Reset to _Initial Values"
 msgstr "Tilbakestill til dei _opphavlege innstillingane"
 
-#: libgimp/gimpproceduredialog.c:2670
+#: libgimp/gimpproceduredialog.c:2674
 msgid "Reset to _Factory Defaults"
 msgstr "Tilbakestill til _fabrikkinnstillingane"
 
@@ -575,10 +575,6 @@ msgstr "Tving dimensjonar med sideforhold"
 #, c-format
 msgid "pixels/%a"
 msgstr "pikslar/%a"
-
-#: libgimp/gimpunitcache.c:54
-msgid "percent"
-msgstr "prosent"
 
 #: libgimp/gimpvectorloadprocedure.c:111
 msgid "_Width (pixels)"
@@ -1729,6 +1725,36 @@ msgstr "Analyseringa av IPTC-data mislukka."
 msgid "Parsing XMP data failed."
 msgstr "Analyseringa av XMP-data mislukka."
 
+#: libgimpbase/gimpunit.c:81
+msgctxt "unit-plural"
+msgid "pixels"
+msgstr "pikslar"
+
+#: libgimpbase/gimpunit.c:88
+msgctxt "unit-plural"
+msgid "inches"
+msgstr "tommar"
+
+#: libgimpbase/gimpunit.c:94
+msgctxt "unit-plural"
+msgid "millimeters"
+msgstr "millimeter"
+
+#: libgimpbase/gimpunit.c:101
+msgctxt "unit-plural"
+msgid "points"
+msgstr "punkt"
+
+#: libgimpbase/gimpunit.c:107
+msgctxt "unit-plural"
+msgid "picas"
+msgstr "picas"
+
+#: libgimpbase/gimpunit.c:117
+msgctxt "unit-plural"
+msgid "percent"
+msgstr "prosent"
+
 #: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(ugyldig «UTF-8»-streng)"
@@ -1758,34 +1784,34 @@ msgstr "Koplinga til org.freedesktop.FileManager1 mislukka: "
 msgid "Calling ShowItems failed: "
 msgstr "Oppkallet av ShowItems feila: "
 
-#: libgimpcolor/gimpcolorprofile.c:258
+#: libgimpcolor/gimpcolorprofile.c:259
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "«%s» ser ikkje ut til å vere ein ICC fargeprofil"
 
-#: libgimpcolor/gimpcolorprofile.c:304
+#: libgimpcolor/gimpcolorprofile.c:305
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Dataa ser ikkje ut til å vera ein ICC fargeprofil"
 
-#: libgimpcolor/gimpcolorprofile.c:361
+#: libgimpcolor/gimpcolorprofile.c:362
 msgid "Could not save color profile to memory"
 msgstr "Klarte ikkje lagra fargeprofilen til minnet"
 
-#: libgimpcolor/gimpcolorprofile.c:578
+#: libgimpcolor/gimpcolorprofile.c:579
 msgid "(unnamed profile)"
 msgstr "(profil utan namn)"
 
-#: libgimpcolor/gimpcolorprofile.c:620
+#: libgimpcolor/gimpcolorprofile.c:621
 #, c-format
 msgid "Model: %s"
 msgstr "Modell: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:629
+#: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Produsent: %s"
 
-#: libgimpcolor/gimpcolorprofile.c:638
+#: libgimpcolor/gimpcolorprofile.c:639
 #, c-format
 msgid "Copyright: %s"
 msgstr "Opphavsrett: %s"
@@ -2024,50 +2050,50 @@ msgstr "Vis RGB 0..255-skalaar"
 msgid "Show HSV instead of LCH"
 msgstr "Vis HSV i staden for LCH"
 
-#: libgimpconfig/gimpcolorconfig.c:711 libgimpconfig/gimpcolorconfig.c:904
+#: libgimpconfig/gimpcolorconfig.c:709 libgimpconfig/gimpcolorconfig.c:902
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Fargeprofilen «%s» er ikkje for RGB-fargerommet."
 
-#: libgimpconfig/gimpcolorconfig.c:755 libgimpconfig/gimpcolorconfig.c:954
+#: libgimpconfig/gimpcolorconfig.c:753 libgimpconfig/gimpcolorconfig.c:952
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Fargeprofilen «%s» er ikkje for gråskala fargeprofil."
 
-#: libgimpconfig/gimpcolorconfig.c:799 libgimpconfig/gimpcolorconfig.c:1004
+#: libgimpconfig/gimpcolorconfig.c:797 libgimpconfig/gimpcolorconfig.c:1002
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Fargeprofilen «%s» er ikkje for CMYK fargeprofil."
 
-#: libgimpconfig/gimpconfig-deserialize.c:123
+#: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "verdien for teiknet %s er ikkje ein gyldig UTF-8-streng"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:501
+#: libgimpconfig/gimpconfig-deserialize.c:503
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "venta «ja» eller «nei» for bolsk teikn %s, men fekk «%s»"
 
-#: libgimpconfig/gimpconfig-deserialize.c:616
+#: libgimpconfig/gimpconfig-deserialize.c:618
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ugyldig verdi «%s» for teiknet %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:631
+#: libgimpconfig/gimpconfig-deserialize.c:633
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ugyldig verdi «%ld» for teiknet %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:700
+#: libgimpconfig/gimpconfig-deserialize.c:702
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "under tolking av «%s»: %s"
 
 #: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
-#: libgimpwidgets/gimpcolorprofilestore.c:761
+#: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
 msgstr "fatal tolkingsfeil"
 
@@ -2117,9 +2143,9 @@ msgstr ""
 "Feil ved tolking av «%s» i linje %d:\n"
 " %s"
 
-#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
-#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
-#: libgimpmodule/gimpmodule.c:573
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Feil ved lasting av modul «%s»: %s"
@@ -2154,37 +2180,37 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Greidde ikkje å oppretta mappa for miniatyrbile «%s»."
 
-#: libgimpthumb/gimpthumbnail.c:481
+#: libgimpthumb/gimpthumbnail.c:530
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniatyren inneheld ingen «Thumb::URI»-tag"
 
-#: libgimpthumb/gimpthumbnail.c:878
+#: libgimpthumb/gimpthumbnail.c:931
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Klarte ikkje oppretta miniatyrbilete for %s: %s"
 
-#: libgimpwidgets/gimpbrowser.c:141
+#: libgimpwidgets/gimpbrowser.c:137
 msgid "_Search:"
 msgstr "_Søk:"
 
-#: libgimpwidgets/gimpcolorbutton.c:377
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Forgrunnsfarge"
 
-#: libgimpwidgets/gimpcolorbutton.c:378
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "_Bakgrunnsfarge"
 
-#: libgimpwidgets/gimpcolorbutton.c:383
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "_Svart"
 
-#: libgimpwidgets/gimpcolorbutton.c:384
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_Kvit"
 
-#: libgimpwidgets/gimpcolorhexentry.c:133
+#: libgimpwidgets/gimpcolorhexentry.c:129
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2192,32 +2218,32 @@ msgstr ""
 "Heksadesimal fargenotasjon slik som brukt i HTML og CSS. Du kan også bruka "
 "CSS fargenamn."
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Alle filer (*.*)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-fargeprofil (*.icc, *.icm)"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Lagra"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:346
-#: libgimpwidgets/gimppatheditor.c:267
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
+#: libgimpwidgets/gimppatheditor.c:292
 msgid "Folder"
 msgstr "Mappe"
 
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:352
 msgid "Not a regular file."
 msgstr "Ikkje ei vanleg fil."
 
-#: libgimpwidgets/gimpcolorprofilestore.c:160
+#: libgimpwidgets/gimpcolorprofilestore.c:156
 msgid "Select color profile from disk..."
 msgstr "Vel fargeprofil frå disk …"
 
-#: libgimpwidgets/gimpcolorprofilestore.c:289
+#: libgimpwidgets/gimpcolorprofilestore.c:284
 msgctxt "profile"
 msgid "None"
 msgstr "Ingen"
@@ -2283,23 +2309,23 @@ msgstr "Utskriftssimuleringsprofil: sRGB"
 msgid "Soft-Proof Profile: %s"
 msgstr "Utskriftssimuleringsprofil: %s"
 
-#: libgimpwidgets/gimpcolorselection.c:241
+#: libgimpwidgets/gimpcolorselection.c:237
 msgid "Current:"
 msgstr "Nåverande:"
 
-#: libgimpwidgets/gimpcolorselection.c:250
+#: libgimpwidgets/gimpcolorselection.c:246
 msgid "Old:"
 msgstr "Gammal:"
 
-#: libgimpwidgets/gimpcolorselection.c:335
+#: libgimpwidgets/gimpcolorselection.c:331
 msgid "HTML _notation:"
 msgstr "HTML-_notasjon:"
 
-#: libgimpwidgets/gimpcontroller.c:105
+#: libgimpwidgets/gimpcontroller.c:114
 msgid "The controller's name"
 msgstr "Namnet på kontrollelementet"
 
-#: libgimpwidgets/gimpcontroller.c:113
+#: libgimpwidgets/gimpcontroller.c:122
 msgid "The controller's state, as human-readable string"
 msgstr "Status for kontrollelementet som ein leseleg streng"
 
@@ -2307,36 +2333,36 @@ msgstr "Status for kontrollelementet som ein leseleg streng"
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: libgimpwidgets/gimpfileentry.c:167
+#: libgimpwidgets/gimpfileentry.c:168
 msgid "Show file location in the file manager"
 msgstr "Sjå filplasseringa i filhandsamaren"
 
-#: libgimpwidgets/gimpfileentry.c:238
+#: libgimpwidgets/gimpfileentry.c:245
 msgid "Open a file selector to browse your folders"
 msgstr "Opnar ein filveljar slik at du kan sjå gjennom mappene dine"
 
-#: libgimpwidgets/gimpfileentry.c:239
+#: libgimpwidgets/gimpfileentry.c:246
 msgid "Open a file selector to browse your files"
 msgstr "Opnar ein filveljar slik at du kan sjå gjennom filene dine"
 
-#: libgimpwidgets/gimpfileentry.c:251
+#: libgimpwidgets/gimpfileentry.c:258
 msgid "Indicates whether or not the folder exists"
 msgstr "Indikerer om mappa finst eller ikkje"
 
-#: libgimpwidgets/gimpfileentry.c:252
+#: libgimpwidgets/gimpfileentry.c:259
 msgid "Indicates whether or not the file exists"
 msgstr "Indikerer om fila finst eller ikkje"
 
-#: libgimpwidgets/gimpfileentry.c:428
+#: libgimpwidgets/gimpfileentry.c:451
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Kan ikkje visa fila i filhandsamaren: %s"
 
-#: libgimpwidgets/gimpfileentry.c:455
+#: libgimpwidgets/gimpfileentry.c:481
 msgid "Select Folder"
 msgstr "Vel mappe"
 
-#: libgimpwidgets/gimpfileentry.c:457
+#: libgimpwidgets/gimpfileentry.c:483
 msgid "Select File"
 msgstr "Vel fil"
 
@@ -2347,93 +2373,93 @@ msgstr "Trykk F1 for meir hjelp"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: libgimpwidgets/gimpintstore.c:255
+#: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
 msgstr "(Tom)"
 
-#: libgimpwidgets/gimpmemsizeentry.c:252
+#: libgimpwidgets/gimpmemsizeentry.c:254
 msgid "Kibibyte"
 msgstr "Kibibyte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:253
+#: libgimpwidgets/gimpmemsizeentry.c:255
 msgid "Mebibyte"
 msgstr "Mebibyte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:254
+#: libgimpwidgets/gimpmemsizeentry.c:256
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
-#: libgimpwidgets/gimppageselector.c:185
+#: libgimpwidgets/gimppageselector.c:183
 msgid "N Pages"
 msgstr "N sider"
 
-#: libgimpwidgets/gimppageselector.c:186
+#: libgimpwidgets/gimppageselector.c:184
 msgid "The number of pages to open"
 msgstr "Kor mange sider som skal opnast"
 
-#: libgimpwidgets/gimppageselector.c:199
+#: libgimpwidgets/gimppageselector.c:197
 msgid "Target"
 msgstr "Mål"
 
-#: libgimpwidgets/gimppageselector.c:200
+#: libgimpwidgets/gimppageselector.c:198
 msgid "the target to open to"
 msgstr "målet som skal opnast til"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:283 libgimpwidgets/gimppageselector.c:1079
+#: libgimpwidgets/gimppageselector.c:279 libgimpwidgets/gimppageselector.c:1085
 msgid "Nothing selected"
 msgstr "Ingenting er vald"
 
-#: libgimpwidgets/gimppageselector.c:301
+#: libgimpwidgets/gimppageselector.c:297
 msgid "Select _All"
 msgstr "Vel _alt"
 
-#: libgimpwidgets/gimppageselector.c:321
+#: libgimpwidgets/gimppageselector.c:317
 msgid "Select _range:"
 msgstr "Vel _område:"
 
-#: libgimpwidgets/gimppageselector.c:333
+#: libgimpwidgets/gimppageselector.c:329
 msgid "Open _pages as"
 msgstr "Opna _sider som"
 
-#: libgimpwidgets/gimppageselector.c:461 libgimpwidgets/gimppageselector.c:659
+#: libgimpwidgets/gimppageselector.c:465 libgimpwidgets/gimppageselector.c:663
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
 
-#: libgimpwidgets/gimppageselector.c:1084
+#: libgimpwidgets/gimppageselector.c:1090
 msgid "One page selected"
 msgstr "Ei side vald"
 
-#: libgimpwidgets/gimppageselector.c:1091
-#: libgimpwidgets/gimppageselector.c:1095
+#: libgimpwidgets/gimppageselector.c:1097
+#: libgimpwidgets/gimppageselector.c:1101
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "Ei side er vald"
 msgstr[1] "Alle %d sidene er valde"
 
-#: libgimpwidgets/gimppatheditor.c:178
+#: libgimpwidgets/gimppatheditor.c:203
 msgid "Add a new folder"
 msgstr "Legg til ei ny mappe"
 
-#: libgimpwidgets/gimppatheditor.c:196
+#: libgimpwidgets/gimppatheditor.c:221
 msgid "Move the selected folder up"
 msgstr "Flytt den merkte mappa opp"
 
-#: libgimpwidgets/gimppatheditor.c:214
+#: libgimpwidgets/gimppatheditor.c:239
 msgid "Move the selected folder down"
 msgstr "Flytt den merkte mappa ned"
 
-#: libgimpwidgets/gimppatheditor.c:232
+#: libgimpwidgets/gimppatheditor.c:257
 msgid "Remove the selected folder from the list"
 msgstr "Fjern den merkte mappa frå lista"
 
-#: libgimpwidgets/gimppatheditor.c:258
+#: libgimpwidgets/gimppatheditor.c:283
 msgid "Writable"
 msgstr "Skrivbar"
 
-#: libgimpwidgets/gimppickbutton.c:123
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2442,23 +2468,23 @@ msgstr ""
 "for å velja farge."
 
 #. toggle button to (de)activate the instant preview
-#: libgimpwidgets/gimppreview.c:288
+#: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
 msgstr "_Førehandsvising"
 
-#: libgimpwidgets/gimppreviewarea.c:155
+#: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
 msgstr "Rutestorleik"
 
-#: libgimpwidgets/gimppreviewarea.c:163
+#: libgimpwidgets/gimppreviewarea.c:162
 msgid "Check Style"
 msgstr "Rutestil"
 
-#: libgimpwidgets/gimppreviewarea.c:171
+#: libgimpwidgets/gimppreviewarea.c:170
 msgid "Custom Checks Color 1"
 msgstr "Tilpassa kontrollar farge 1"
 
-#: libgimpwidgets/gimppreviewarea.c:178
+#: libgimpwidgets/gimppreviewarea.c:177
 msgid "Custom Checks Color 2"
 msgstr "Tilpassa kontrollar farge 2"
 
