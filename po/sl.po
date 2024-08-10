@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-06 11:14+0000\n"
-"PO-Revision-Date: 2024-08-06 13:23+0200\n"
+"POT-Creation-Date: 2024-08-09 18:42+0000\n"
+"PO-Revision-Date: 2024-08-10 15:35+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2518,7 +2518,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1235 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
 #: app/widgets/gimplayertreeview.c:814 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -8352,7 +8352,7 @@ msgstr "Odpri datoteko z besedilom (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:125
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:708
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:712
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:718
 msgid "_Open"
@@ -12276,12 +12276,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:779
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:813
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Prilepi"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1131
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1165
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Izreži"
@@ -12684,7 +12684,7 @@ msgstr "Zgodovina barv"
 msgid "Updating tag cache"
 msgstr "Posodabljanje medpomnilnika značk"
 
-#: app/core/gimp-edit.c:87
+#: app/core/gimp-edit.c:89
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
@@ -12693,11 +12693,19 @@ msgstr[1] "Izreži %d plast"
 msgstr[2] "Izreži %d plasti"
 msgstr[3] "Izreži %d plasti"
 
-#: app/core/gimp-edit.c:549 app/core/gimpimage-new.c:612
+#: app/core/gimp-edit.c:235
+msgid "Cannot cut because the selected region is empty."
+msgstr "Izrezovati ni mogoče, saj je izbrano območje prazno."
+
+#: app/core/gimp-edit.c:238
+msgid "Cannot copy because the selected region is empty."
+msgstr "Kopirati ni mogoče, saj je izbrano območje prazno."
+
+#: app/core/gimp-edit.c:583 app/core/gimpimage-new.c:612
 msgid "Pasted Layer"
 msgstr "Prilepljena plast"
 
-#: app/core/gimp-edit.c:1148
+#: app/core/gimp-edit.c:1182
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
@@ -15760,7 +15768,7 @@ msgstr "Spoji le v okviru a_ktivnih skupin"
 msgid "_Discard invisible layers"
 msgstr "_Opusti nevidne plasti"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:693
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:697
 msgid "Create a New Image"
 msgstr "Ustvari novo sliko"
 
@@ -15794,7 +15802,7 @@ msgid "Image Properties"
 msgstr "Lastnosti slike"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113
-#: app/dialogs/welcome-dialog.c:187 app/tools/gimpcolorpickertool.c:351
+#: app/dialogs/welcome-dialog.c:190 app/tools/gimpcolorpickertool.c:351
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:740
 #: app/widgets/gimpcontrollerlist.c:625 app/widgets/gimpcriticaldialog.c:206
 #: app/widgets/gimpcriticaldialog.c:228 app/widgets/gimpsettingsbox.c:647
@@ -16202,7 +16210,7 @@ msgstr "Ponastavi vse"
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Resnično želite ponastaviti vse možnosti na privzete vrednosti?"
 
-#: app/dialogs/preferences-dialog.c:311 app/dialogs/welcome-dialog.c:353
+#: app/dialogs/preferences-dialog.c:311 app/dialogs/welcome-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "Morali boste ponovno zagnati GIMP, da bodo naslednje spremembe učinkovale:"
@@ -16845,7 +16853,7 @@ msgstr "Odstrani _vse tipke za bližnjice"
 
 #. Themes
 #: app/dialogs/preferences-dialog.c:1969 app/dialogs/preferences-dialog.c:1970
-#: app/dialogs/welcome-dialog.c:537
+#: app/dialogs/welcome-dialog.c:541
 msgid "Theme"
 msgstr "Tema"
 
@@ -16857,46 +16865,46 @@ msgstr "Izberi temo"
 msgid "Color scheme variant (if available)"
 msgstr "Različica barvne sheme (če je na voljo)"
 
-#: app/dialogs/preferences-dialog.c:2061 app/dialogs/welcome-dialog.c:589
+#: app/dialogs/preferences-dialog.c:2061 app/dialogs/welcome-dialog.c:593
 msgid "_Override icon sizes set by the theme"
 msgstr "_Preglasi velikost ikon, kot jo določa tema"
 
-#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:598
+#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:602
 msgid "Small"
 msgstr "Majhno"
 
-#: app/dialogs/preferences-dialog.c:2076 app/dialogs/welcome-dialog.c:600
+#: app/dialogs/preferences-dialog.c:2076 app/dialogs/welcome-dialog.c:604
 msgid "Medium"
 msgstr "Srednje"
 
-#: app/dialogs/preferences-dialog.c:2078 app/dialogs/welcome-dialog.c:602
+#: app/dialogs/preferences-dialog.c:2078 app/dialogs/welcome-dialog.c:606
 msgid "Large"
 msgstr "Veliko"
 
-#: app/dialogs/preferences-dialog.c:2080 app/dialogs/welcome-dialog.c:604
+#: app/dialogs/preferences-dialog.c:2080 app/dialogs/welcome-dialog.c:608
 msgid "Huge"
 msgstr "Ogromno"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:620
+#: app/dialogs/preferences-dialog.c:2093 app/dialogs/welcome-dialog.c:624
 msgid "Font Scaling"
 msgstr "Spreminjanje velikosti pisave"
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:622
+#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:626
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Spreminjanje velikosti pisave ne bo delovalo z motivi, ki uporabljajo "
 "absolutne velikosti."
 
-#: app/dialogs/preferences-dialog.c:2101 app/dialogs/welcome-dialog.c:628
+#: app/dialogs/preferences-dialog.c:2101 app/dialogs/welcome-dialog.c:632
 msgid "50%"
 msgstr "50 %"
 
-#: app/dialogs/preferences-dialog.c:2103 app/dialogs/welcome-dialog.c:630
+#: app/dialogs/preferences-dialog.c:2103 app/dialogs/welcome-dialog.c:634
 msgid "100%"
 msgstr "100 %"
 
-#: app/dialogs/preferences-dialog.c:2105 app/dialogs/welcome-dialog.c:632
+#: app/dialogs/preferences-dialog.c:2105 app/dialogs/welcome-dialog.c:636
 msgid "200%"
 msgstr "200 %"
 
@@ -16912,7 +16920,7 @@ msgstr "Tema ikon"
 msgid "Select an Icon Theme"
 msgstr "Izberite temo ikon"
 
-#: app/dialogs/preferences-dialog.c:2257 app/dialogs/welcome-dialog.c:582
+#: app/dialogs/preferences-dialog.c:2257 app/dialogs/welcome-dialog.c:586
 msgid "Use symbolic icons if available"
 msgstr "Uporabi simbolne ikone, če so na voljo"
 
@@ -16943,7 +16951,7 @@ msgstr "Pokaži aktivne _čopiče, vzorce in prelive"
 msgid "Show active _image"
 msgstr "Pokaži aktivno _sliko"
 
-#: app/dialogs/preferences-dialog.c:2301 app/dialogs/welcome-dialog.c:668
+#: app/dialogs/preferences-dialog.c:2301 app/dialogs/welcome-dialog.c:672
 msgid "Use tool _groups"
 msgstr "Uporabi _skupine orodij"
 
@@ -17875,8 +17883,8 @@ msgstr "Ločljivost _X:"
 msgid "_Y resolution:"
 msgstr "Ločljivost _Y:"
 
-#: app/dialogs/print-size-dialog.c:243 app/widgets/gimpimagepropview.c:461
-#: app/widgets/gimpsizebox.c:253 app/widgets/gimptemplateeditor.c:362
+#: app/dialogs/print-size-dialog.c:243 app/widgets/gimpsizebox.c:253
+#: app/widgets/gimptemplateeditor.c:362
 #, c-format
 msgid "pixels/%a"
 msgstr "slik. točk/%a"
@@ -18117,7 +18125,7 @@ msgid "_Next Tip"
 msgstr "_Naslednji nasvet"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1081
+#: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1085
 msgid "Learn more"
 msgstr "Želim izvedeti več"
 
@@ -18196,39 +18204,39 @@ msgid "Lock path _visibility"
 msgstr "Zakleni _vidljivost poti"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:181
+#: app/dialogs/welcome-dialog.c:184
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Dobrodošli v GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:229 app/dialogs/welcome-dialog.c:230
+#: app/dialogs/welcome-dialog.c:232 app/dialogs/welcome-dialog.c:233
 msgid "Welcome"
 msgstr "Dobrodošli"
 
-#: app/dialogs/welcome-dialog.c:244 app/dialogs/welcome-dialog.c:245
+#: app/dialogs/welcome-dialog.c:247 app/dialogs/welcome-dialog.c:248
 msgid "Personalize"
 msgstr "Poosebi"
 
-#: app/dialogs/welcome-dialog.c:256 app/dialogs/welcome-dialog.c:257
+#: app/dialogs/welcome-dialog.c:259 app/dialogs/welcome-dialog.c:260
 msgid "Contribute"
 msgstr "Prispevajte"
 
-#: app/dialogs/welcome-dialog.c:268 app/dialogs/welcome-dialog.c:269
+#: app/dialogs/welcome-dialog.c:271 app/dialogs/welcome-dialog.c:272
 msgid "Create"
 msgstr "Ustvari"
 
-#: app/dialogs/welcome-dialog.c:284 app/dialogs/welcome-dialog.c:285
+#: app/dialogs/welcome-dialog.c:287 app/dialogs/welcome-dialog.c:288
 msgid "Release Notes"
 msgstr "Opombe ob izdaji"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:416
+#: app/dialogs/welcome-dialog.c:420
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "Namestili ste GIMP %s!"
 
 #. Welcome message: left
-#: app/dialogs/welcome-dialog.c:431
+#: app/dialogs/welcome-dialog.c:435
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -18236,22 +18244,22 @@ msgstr ""
 "GIMP je prosto programje za izdelavo slik in ravnanje z njimi.\n"
 "Ali želite izvedeti več?"
 
-#: app/dialogs/welcome-dialog.c:460
+#: app/dialogs/welcome-dialog.c:464
 msgid "GIMP website"
 msgstr "Spletišče GIMP"
 
-#: app/dialogs/welcome-dialog.c:464
+#: app/dialogs/welcome-dialog.c:468
 msgid "Tutorials"
 msgstr "Priročniki"
 
-#: app/dialogs/welcome-dialog.c:469
+#: app/dialogs/welcome-dialog.c:473
 msgid "Documentation"
 msgstr "Dokumentacija"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: app/dialogs/welcome-dialog.c:477
+#: app/dialogs/welcome-dialog.c:481
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -18260,77 +18268,77 @@ msgstr ""
 "GNU v3.\n"
 "Ali želite tudi sami prispevati?"
 
-#: app/dialogs/welcome-dialog.c:502
+#: app/dialogs/welcome-dialog.c:506
 msgid "Contributing"
 msgstr "Prispevajte"
 
-#: app/dialogs/welcome-dialog.c:507
+#: app/dialogs/welcome-dialog.c:511
 msgid "Donating"
 msgstr "Donacije"
 
-#: app/dialogs/welcome-dialog.c:547
+#: app/dialogs/welcome-dialog.c:551
 msgid "Color scheme"
 msgstr "Barvna shema"
 
-#: app/dialogs/welcome-dialog.c:573
+#: app/dialogs/welcome-dialog.c:577
 msgid "Icon theme"
 msgstr "Tema ikon"
 
-#: app/dialogs/welcome-dialog.c:586
+#: app/dialogs/welcome-dialog.c:590
 msgid "Icon Scaling"
 msgstr "Spreminjanje velikosti ikon"
 
-#: app/dialogs/welcome-dialog.c:645
+#: app/dialogs/welcome-dialog.c:649
 msgid "GUI Language (requires restart)"
 msgstr "Jezik grafičnega uporabniškega vmesnika (potreben je vnovični zagon)"
 
-#: app/dialogs/welcome-dialog.c:650
+#: app/dialogs/welcome-dialog.c:654
 msgid "Additional Customizations"
 msgstr "Dodatne prilagoditve"
 
-#: app/dialogs/welcome-dialog.c:654
+#: app/dialogs/welcome-dialog.c:658
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Spoji menijsko in naslovno vrstico (zahteva ponoven zagon)"
 
-#: app/dialogs/welcome-dialog.c:662
+#: app/dialogs/welcome-dialog.c:666
 msgid "Enable check for updates (requires internet)"
 msgstr ""
 "Omogoči preverjanje obstoja posodobitev (potrebna je internetna povezava)"
 
-#: app/dialogs/welcome-dialog.c:696
+#: app/dialogs/welcome-dialog.c:700
 msgid "C_reate"
 msgstr "Ustva_ri"
 
-#: app/dialogs/welcome-dialog.c:705
+#: app/dialogs/welcome-dialog.c:709
 msgid "Open an Existing Image"
 msgstr "Odpri obstoječo sliko"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:717
+#: app/dialogs/welcome-dialog.c:721
 msgid "Recent Images"
 msgstr "Nedavne slike"
 
-#: app/dialogs/welcome-dialog.c:809
+#: app/dialogs/welcome-dialog.c:813
 msgid "O_pen Selected Images"
 msgstr "O_dpri izbrane slike"
 
-#: app/dialogs/welcome-dialog.c:818
+#: app/dialogs/welcome-dialog.c:822
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 "Pokaži ob zagonu (okno dobrodošlice lahko znova prikažete prek menija "
 "»Pomoč«)"
 
-#: app/dialogs/welcome-dialog.c:846
+#: app/dialogs/welcome-dialog.c:850
 #, c-format
 msgid "Ways to contribute"
 msgstr "Načini, kako lahko prispevate"
 
-#: app/dialogs/welcome-dialog.c:855 app/dialogs/welcome-dialog.c:866
+#: app/dialogs/welcome-dialog.c:859 app/dialogs/welcome-dialog.c:870
 msgid "Report Bugs"
 msgstr "Prijavite napake"
 
-#: app/dialogs/welcome-dialog.c:857
+#: app/dialogs/welcome-dialog.c:861
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18339,11 +18347,11 @@ msgstr ""
 "Kot vsak program tudi GIMP ni brez hroščev, zato je poročanje o napakah, na "
 "katere naletite, zelo pomembno za razvoj."
 
-#: app/dialogs/welcome-dialog.c:870 app/dialogs/welcome-dialog.c:880
+#: app/dialogs/welcome-dialog.c:874 app/dialogs/welcome-dialog.c:884
 msgid "Write Code"
 msgstr "Programirajte"
 
-#: app/dialogs/welcome-dialog.c:872
+#: app/dialogs/welcome-dialog.c:876
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18352,39 +18360,39 @@ msgstr ""
 "Na našem spletnem mestu za razvijalce se lahko začete učiti o tem, kako "
 "prispevate kodo."
 
-#: app/dialogs/welcome-dialog.c:884 app/dialogs/welcome-dialog.c:894
+#: app/dialogs/welcome-dialog.c:888 app/dialogs/welcome-dialog.c:898
 msgid "Translate"
 msgstr "Prevajajte"
 
-#: app/dialogs/welcome-dialog.c:886
+#: app/dialogs/welcome-dialog.c:890
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Obrnite se na ustrezno prevajalsko ekipo za svoj jezik"
 
-#: app/dialogs/welcome-dialog.c:898
+#: app/dialogs/welcome-dialog.c:902
 msgid "Donate"
 msgstr "Donirajte"
 
-#: app/dialogs/welcome-dialog.c:900
+#: app/dialogs/welcome-dialog.c:904
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Doniranje denarja je pomembno: GIMP je trajnosten."
 
-#: app/dialogs/welcome-dialog.c:908
+#: app/dialogs/welcome-dialog.c:912
 msgid "Donate via Liberapay"
 msgstr "Donirajte preko storitve Liberapay"
 
-#: app/dialogs/welcome-dialog.c:911
+#: app/dialogs/welcome-dialog.c:915
 msgid "Other donation options"
 msgstr "Druge možnosti doniranja"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:945
+#: app/dialogs/welcome-dialog.c:949
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Opombe ob izdaji GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1056
+#: app/dialogs/welcome-dialog.c:1060
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Kliknite postavke izdaje z oznako %s, da si ogledate predstavitev."
@@ -18595,23 +18603,23 @@ msgstr "V"
 msgid "_Sample Merged"
 msgstr "_Vzorči spojeno"
 
-#: app/display/gimpdisplayshell.c:536
+#: app/display/gimpdisplayshell.c:539
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: app/display/gimpdisplayshell.c:699
+#: app/display/gimpdisplayshell.c:702
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: app/display/gimpdisplayshell.c:728
+#: app/display/gimpdisplayshell.c:731
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
-#: app/display/gimpdisplayshell.c:743
+#: app/display/gimpdisplayshell.c:746
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
-#: app/display/gimpdisplayshell.c:796 app/display/gimpdisplayshell.c:1548
+#: app/display/gimpdisplayshell.c:799 app/display/gimpdisplayshell.c:1551
 #: app/widgets/gimptoolbox.c:269
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
@@ -27762,6 +27770,11 @@ msgstr "Število kanalov:"
 msgid "Number of paths:"
 msgstr "Število poti:"
 
+#: app/widgets/gimpimagepropview.c:461
+#, c-format
+msgid "pixels/%s"
+msgstr "slik. točk/%s"
+
 #: app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
@@ -28916,12 +28929,12 @@ msgctxt "file-action"
 msgid "_Preview Size"
 msgstr "_Velikost predogleda"
 
-#: menus/dockable-menu.ui.in.in:25
+#: menus/dockable-menu.ui.in.in:26
 msgctxt "file-action"
 msgid "_Tab Style"
 msgstr "Slog zavi_hkov"
 
-#: menus/dockable-menu.ui.in.in:41
+#: menus/dockable-menu.ui.in.in:42
 msgctxt "file-action"
 msgid "Move to Screen"
 msgstr "Premakni na zaslon"
