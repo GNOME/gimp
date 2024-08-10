@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-21 19:23+0000\n"
-"PO-Revision-Date: 2024-08-09 18:05+0200\n"
+"POT-Creation-Date: 2024-08-10 16:14+0000\n"
+"PO-Revision-Date: 2024-08-10 18:23+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -22,19 +22,20 @@ msgstr ""
 "X-Poedit-SearchPath-1: .\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
-msgid "Exercise in _C minor"
-msgstr "Øving i _Cmoll"
+msgid "In _C"
+msgstr "I _C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
-msgid "Exercise a goat in the C language"
-msgstr "Øving med ei geit i språket C"
+#: extensions/goat-exercises/goat-exercise-c.c:121
+msgid "Plug-in example in C"
+msgstr "Eksempel i C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
-#: plug-ins/common/border-average.c:190 plug-ins/common/checkerboard.c:176
+#: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
 #: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:584
-#: plug-ins/common/contrast-retinex.c:246 plug-ins/common/crop-zealous.c:151
+#: plug-ins/common/contrast-retinex.c:249 plug-ins/common/crop-zealous.c:151
 #: plug-ins/common/curve-bend.c:648 plug-ins/common/decompose.c:387
-#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:231
+#: plug-ins/common/depth-merge.c:293 plug-ins/common/despeckle.c:235
 #: plug-ins/common/destripe.c:175 plug-ins/common/gradient-map.c:216
 #: plug-ins/common/grid.c:283 plug-ins/common/hot.c:316
 #: plug-ins/common/jigsaw.c:468 plug-ins/common/nl-filter.c:217
@@ -46,7 +47,7 @@ msgstr "Øving med ei geit i språket C"
 #: plug-ins/flame/flame.c:299 plug-ins/fractal-explorer/fractal-explorer.c:429
 #: plug-ins/gfig/gfig.c:215 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:266
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:538 plug-ins/pagecurl/pagecurl.c:299
 #, c-format
@@ -54,8 +55,8 @@ msgid "Procedure '%s' only works with one drawable."
 msgstr "Prosedyren «%s» kan arbeida berre med eitt teikneelement."
 
 #: extensions/goat-exercises/goat-exercise-c.c:180
-msgid "Exercise a goat (C)"
-msgstr "Øving med ei geit (C)"
+msgid "Plug-in Example in C"
+msgstr "Eksempel i C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:184
 #: extensions/goat-exercises/goat-exercise-gjs.js:94
@@ -69,7 +70,7 @@ msgstr "Øving med ei geit (C)"
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
@@ -79,8 +80,8 @@ msgstr "Øving med ei geit (C)"
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3331
-#: plug-ins/gradient-flare/gradient-flare.c:3445
+#: plug-ins/gradient-flare/gradient-flare.c:3339
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 #: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/ifs-compose/ifs-compose.c:2603
 #: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
@@ -125,32 +126,29 @@ msgstr ""
 "knappen «Kjeld»."
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
-msgid "Exercise a JavaScript goat"
-msgstr "Øving med ei geit i JavaScript"
+msgid "In _JavaScript"
+msgstr "I _JavaScript"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:67
-msgid "Exercise a goat in the JavaScript language (GJS)"
-msgstr "Øving med ei geit i språket JavaScript (GJS)"
-
 #: extensions/goat-exercises/goat-exercise-gjs.js:68
-msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
-msgstr "Tek med ei geit på ein tur i JavaScript med GJS-fortolkaren"
+msgid "Plug-in example in JavaScript (GJS)"
+msgstr "Eksempel i JavaScript (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
-msgid "Exercise a goat (JavaScript)"
-msgstr "Øving med ei geit (JavaScript)"
+msgid "Plug-in Example in JavaScript (GJS)"
+msgstr "Eksempel i JavaScript (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -179,53 +177,48 @@ msgstr "_OK"
 #. Not sure why run_mode has become a string instead of testing
 #. against Gimp.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
-msgid "Exercise a goat (Lua)"
-msgstr "Øving med ei geit (Lua)"
+msgid "Plug-in Example in Lua"
+msgstr "Eksempel i Lua"
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
-msgid "Exercise a Lua goat"
-msgstr "Øving med ei Lua-geit"
+msgid "In _Lua"
+msgstr "I _Lua"
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
-msgid "Exercise a goat in the Lua language"
-msgstr "Øving med ei geit i språket Lua"
+#: extensions/goat-exercises/goat-exercise-lua.lua:177
+msgid "Plug-in example in Lua"
+msgstr "Eksempel i Lua"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
-msgstr "Øving med ei geit og ein python"
+msgid "In _Python"
+msgstr "I _Python"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr "Øving med ei geit i språket Python 3"
-
 #: extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
-msgstr "Tek ein tur med ei geit i Python 3"
+msgid "Plug-in example in Python 3"
+msgstr "Eksempel i Python"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
 msgid "Procedure '{}' only works with one drawable."
 msgstr "Prosedyre '{}' verkar berre med eitt teikneelement."
 
 #: extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
-msgstr "Øving med ei geit (Python 3)"
+msgid "Plug-in Example in Python 3"
+msgstr "Eksempel i Python"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:45
-msgid "Exercise a Vala goat"
-msgstr "Øving med ei Vala-geit"
+msgid "In _Vala"
+msgstr "I _Vala"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:46
-msgid "Exercise a goat in the Vala language"
-msgstr "Øving med ei geit i språket Vala"
-
 #: extensions/goat-exercises/goat-exercise-vala.vala:47
-msgid "Takes a goat for a walk in Vala"
-msgstr "Tek ein tur med ei geit i Vala"
+msgid "Plug-in example in Vala"
+msgstr "Eksempel i Vala"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:67
-msgid "Exercise a goat (Vala)"
-msgstr "Øving med ei geit (Vala)"
+msgid "Plug-in Example in Vala"
+msgstr "Eksempel i Vala"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
 msgid "Goat Exercises"
@@ -258,71 +251,15 @@ msgstr "Innrett _synlege lag …"
 msgid "Align all visible layers of the image"
 msgstr "Rett inn alle synlege lag i biletet"
 
+#: plug-ins/common/align-layers.c:184
+msgid "Align visible layers"
+msgstr "Innrett synlege lag"
+
 #: plug-ins/common/align-layers.c:192
 msgid "_Horizontal style"
 msgstr "_Vassrett stil"
 
-#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:208
-msgid ""
-"(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, Snap "
-"to grid = 4)"
-msgstr ""
-"(Ingen = 0, Samla = 1, Fyll venstre til høgre = 2, Fyll høgre til venstre = "
-"3, Fest til rutenettet = 4)"
-
-#: plug-ins/common/align-layers.c:200
-msgid "Hori_zontal base"
-msgstr "_Vassrett basis"
-
-#: plug-ins/common/align-layers.c:201 plug-ins/common/align-layers.c:216
-msgid "(Left edge = 0, Center = 1, Right edge = 2)"
-msgstr "(Venstre kant = 0, Midten = 1, Høgre kant = 2)"
-
-#: plug-ins/common/align-layers.c:207
-msgid "_Vertical style"
-msgstr "_Loddrett stil"
-
-#: plug-ins/common/align-layers.c:215
-msgid "Ver_tical base"
-msgstr "_Loddrett basis"
-
-#: plug-ins/common/align-layers.c:222
-msgid "_Grid"
-msgstr "_Rutenett"
-
-#: plug-ins/common/align-layers.c:223 plug-ins/common/grid.c:815
-#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1555 plug-ins/imagemap/imap-menu.ui:197
-#: plug-ins/imagemap/imap-menu.ui:289
-msgid "Grid"
-msgstr "Rutenett"
-
-#: plug-ins/common/align-layers.c:229
-msgid "Ignore the _bottom layer even if visible"
-msgstr "_Ignorer det nedste laget sjølv om det er synleg"
-
-#: plug-ins/common/align-layers.c:230
-msgid "Ignore the bottom layer even if visible"
-msgstr "Ignorer det nedste laget sjølv om det er synleg"
-
-#: plug-ins/common/align-layers.c:236
-msgid "_Use the (invisible) bottom layer as the base"
-msgstr "Bruk det _usynlege botnlaget som basis"
-
-#: plug-ins/common/align-layers.c:237
-msgid "Use the (invisible) bottom layer as the base"
-msgstr "Bruk det (usynlege) botnlaget som basis"
-
-#: plug-ins/common/align-layers.c:287
-#, c-format
-msgid "There are not enough layers to align."
-msgstr "Det er ikkje nok lag til å kunna gjera ei innretting."
-
-#: plug-ins/common/align-layers.c:731
-msgid "Align Visible Layers"
-msgstr "Innrett synlege lag"
-
-#: plug-ins/common/align-layers.c:740 plug-ins/common/align-layers.c:758
+#: plug-ins/common/align-layers.c:194 plug-ins/common/align-layers.c:216
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
 #: plug-ins/file-dds/dds.c:189 plug-ins/file-tiff/file-tiff.c:236
 #: plug-ins/fractal-explorer/fractal-explorer.c:346
@@ -336,50 +273,98 @@ msgstr "Innrett synlege lag"
 msgid "None"
 msgstr "Ingen"
 
-#: plug-ins/common/align-layers.c:741 plug-ins/common/align-layers.c:759
+#: plug-ins/common/align-layers.c:195 plug-ins/common/align-layers.c:217
 msgid "Collect"
 msgstr "Samla"
 
-#: plug-ins/common/align-layers.c:742
+#: plug-ins/common/align-layers.c:196
 msgid "Fill (left to right)"
 msgstr "Fyll (frå venstre til høgre)"
 
-#: plug-ins/common/align-layers.c:743
+#: plug-ins/common/align-layers.c:197
 msgid "Fill (right to left)"
 msgstr "Fyll (frå høgre til venstre)"
 
-#: plug-ins/common/align-layers.c:744 plug-ins/common/align-layers.c:762
+#: plug-ins/common/align-layers.c:198 plug-ins/common/align-layers.c:220
 msgid "Snap to grid"
 msgstr "Fest til rutenettet"
 
-#: plug-ins/common/align-layers.c:750
+#: plug-ins/common/align-layers.c:204
+msgid "Hori_zontal base"
+msgstr "_Vassrett basis"
+
+#: plug-ins/common/align-layers.c:206
 msgid "Left edge"
 msgstr "Venstre kant"
 
-#: plug-ins/common/align-layers.c:751 plug-ins/common/align-layers.c:769
-#: plug-ins/gradient-flare/gradient-flare.c:2919
+#: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
+#: plug-ins/gradient-flare/gradient-flare.c:2927
 msgid "Center"
 msgstr "Sentrum"
 
-#: plug-ins/common/align-layers.c:752
+#: plug-ins/common/align-layers.c:208
 msgid "Right edge"
 msgstr "Høgre kant"
 
-#: plug-ins/common/align-layers.c:760
+#: plug-ins/common/align-layers.c:214
+msgid "_Vertical style"
+msgstr "_Loddrett stil"
+
+#: plug-ins/common/align-layers.c:218
 msgid "Fill (top to bottom)"
 msgstr "Fyll (frå topp til botn)"
 
-#: plug-ins/common/align-layers.c:761
+#: plug-ins/common/align-layers.c:219
 msgid "Fill (bottom to top)"
 msgstr "Fyll (frå botn til topp)"
 
-#: plug-ins/common/align-layers.c:768
+#: plug-ins/common/align-layers.c:226
+msgid "Ver_tical base"
+msgstr "_Loddrett basis"
+
+#: plug-ins/common/align-layers.c:228
 msgid "Top edge"
 msgstr "Toppkant"
 
-#: plug-ins/common/align-layers.c:770
+#: plug-ins/common/align-layers.c:230
 msgid "Bottom edge"
 msgstr "Botnkant"
+
+#: plug-ins/common/align-layers.c:236
+msgid "_Grid"
+msgstr "_Rutenett"
+
+#: plug-ins/common/align-layers.c:237 plug-ins/common/grid.c:815
+#: plug-ins/gfig/gfig-dialog.c:1356 plug-ins/gfig/gfig-menu.ui:31
+#: plug-ins/imagemap/imap_main.c:1563 plug-ins/imagemap/imap-menu.ui:192
+#: plug-ins/imagemap/imap-menu.ui:284
+msgid "Grid"
+msgstr "Rutenett"
+
+#: plug-ins/common/align-layers.c:243
+msgid "Ignore the _bottom layer even if visible"
+msgstr "_Ignorer det nedste laget sjølv om det er synleg"
+
+#: plug-ins/common/align-layers.c:244
+msgid "Ignore the bottom layer even if visible"
+msgstr "Ignorer det nedste laget sjølv om det er synleg"
+
+#: plug-ins/common/align-layers.c:250
+msgid "_Use the (invisible) bottom layer as the base"
+msgstr "Bruk det _usynlege botnlaget som basis"
+
+#: plug-ins/common/align-layers.c:251
+msgid "Use the (invisible) bottom layer as the base"
+msgstr "Bruk det (usynlege) botnlaget som basis"
+
+#: plug-ins/common/align-layers.c:301
+#, c-format
+msgid "There are not enough layers to align."
+msgstr "Det er ikkje nok lag til å kunna gjera ei innretting."
+
+#: plug-ins/common/align-layers.c:749
+msgid "Align Visible Layers"
+msgstr "Innrett synlege lag"
 
 #: plug-ins/common/animation-optimize.c:179
 msgid "Optimize (for _GIF)"
@@ -512,7 +497,7 @@ msgstr "Løy_s fane"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:850
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:680
-#: plug-ins/imagemap/imap-menu.ui:276
+#: plug-ins/imagemap/imap-menu.ui:271
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -635,7 +620,8 @@ msgstr "Persienne"
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
-#: plug-ins/file-tiff/file-tiff-load.c:1530
+#: plug-ins/file-tiff/file-tiff-load.c:1545
+#: plug-ins/file-tiff/file-tiff-load.c:2350
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:245
@@ -672,22 +658,63 @@ msgid "Bucket Si_ze"
 msgstr "_Bøttestorleik"
 
 #: plug-ins/common/border-average.c:152
-msgid "Bits for bucket size (default=4: 16 Levels)"
-msgstr "Bitar for bøttestorleik (standard = 4: 16 nivå)"
+msgid "Bits for bucket size"
+msgstr "Bitar for bøttestorleik"
 
-#: plug-ins/common/border-average.c:157 plug-ins/common/border-average.c:158
+#: plug-ins/common/border-average.c:153
+msgid "1"
+msgstr "1"
+
+#: plug-ins/common/border-average.c:154 plug-ins/metadata/metadata-tags.c:254
+msgid "2"
+msgstr "2"
+
+#: plug-ins/common/border-average.c:155 plug-ins/metadata/metadata-tags.c:254
+msgid "4"
+msgstr "4"
+
+#: plug-ins/common/border-average.c:156
+#| msgid "A8"
+msgid "8"
+msgstr "8"
+
+#: plug-ins/common/border-average.c:157
+#| msgid "1:6"
+msgid "16"
+msgstr "16"
+
+#: plug-ins/common/border-average.c:158
+#| msgid "2"
+msgid "32"
+msgstr "32"
+
+#: plug-ins/common/border-average.c:159
+#| msgid "4"
+msgid "64"
+msgstr "64"
+
+#: plug-ins/common/border-average.c:160
+#| msgid "1:2"
+msgid "128"
+msgstr "128"
+
+#: plug-ins/common/border-average.c:161
+msgid "256"
+msgstr "256"
+
+#: plug-ins/common/border-average.c:167 plug-ins/common/border-average.c:168
 msgid "The average color of the specified border."
 msgstr "Gjennomsnittsfarge på den spesifiserte ramma."
 
-#: plug-ins/common/border-average.c:217 plug-ins/common/border-average.c:395
+#: plug-ins/common/border-average.c:227 plug-ins/common/border-average.c:406
 msgid "Border Average"
 msgstr "Kantgjennomsnitt"
 
-#: plug-ins/common/border-average.c:406
+#: plug-ins/common/border-average.c:410
 msgid "Border Size"
 msgstr "Kantbreidd"
 
-#: plug-ins/common/border-average.c:433
+#: plug-ins/common/border-average.c:437
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Number of Colors"
 msgstr "Talet på fargar"
@@ -1750,38 +1777,38 @@ msgid "Le_vel"
 msgstr "_Nivå"
 
 #: plug-ins/common/contrast-retinex.c:212
-msgid "Retinex distribution through scales { Uniform (0), Low (1), High (2) }"
-msgstr "Retinex-fordeling gjennom skalaar { Eins (0), Låg (1), Høg (2) }"
+msgid "Retinex distribution through scales"
+msgstr "Retinex-fordeling gjennom skalaar"
 
-#: plug-ins/common/contrast-retinex.c:218
-msgid "Dy_namic"
-msgstr "Dy_namisk"
-
-#: plug-ins/common/contrast-retinex.c:219
-msgid "Variance value"
-msgstr "Variansverdi"
-
-#: plug-ins/common/contrast-retinex.c:272
-msgid "Retinex"
-msgstr "Retinex"
-
-#: plug-ins/common/contrast-retinex.c:306
-msgid "Retinex Image Enhancement"
-msgstr "Retinex fargeforbetring"
-
-#: plug-ins/common/contrast-retinex.c:321
+#: plug-ins/common/contrast-retinex.c:213
 msgid "Uniform"
 msgstr "Einsarta"
 
-#: plug-ins/common/contrast-retinex.c:322 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
 msgid "Low"
 msgstr "Lågt"
 
-#: plug-ins/common/contrast-retinex.c:323 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:215 plug-ins/metadata/metadata-tags.c:254
 msgid "High"
 msgstr "Høgt"
 
-#: plug-ins/common/contrast-retinex.c:658
+#: plug-ins/common/contrast-retinex.c:221
+msgid "Dy_namic"
+msgstr "Dy_namisk"
+
+#: plug-ins/common/contrast-retinex.c:222
+msgid "Variance value"
+msgstr "Variansverdi"
+
+#: plug-ins/common/contrast-retinex.c:275
+msgid "Retinex"
+msgstr "Retinex"
+
+#: plug-ins/common/contrast-retinex.c:308
+msgid "Retinex Image Enhancement"
+msgstr "Retinex fargeforbetring"
+
+#: plug-ins/common/contrast-retinex.c:649
 msgid "Retinex: filtering"
 msgstr "Retinex: filtrering"
 
@@ -1988,7 +2015,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
 #: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:541
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
 #: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
 #: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
@@ -2047,7 +2074,7 @@ msgstr "Arbeid på kurvene"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1212
-#: plug-ins/gradient-flare/gradient-flare.c:3047
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Copy"
 msgstr "_Kopier"
 
@@ -2424,49 +2451,45 @@ msgid "_Filter Type"
 msgstr "_Filtertype"
 
 #: plug-ins/common/despeckle.c:192
-msgid ""
-"Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
-"ADAPTIVE (3) }"
-msgstr ""
-"Filtertype { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
-"ADAPTIVE (3) }"
+msgid "Filter type"
+msgstr "Filtertype"
 
-#: plug-ins/common/despeckle.c:198
-msgid "_Black level"
-msgstr "_Svartnivå"
-
-#: plug-ins/common/despeckle.c:199
-msgid "Black level"
-msgstr "Svartnivå"
-
-#: plug-ins/common/despeckle.c:204
-msgid "_White level"
-msgstr "_Kvitnivå"
-
-#: plug-ins/common/despeckle.c:205
-msgid "White level"
-msgstr "Kvitnivå"
-
-#: plug-ins/common/despeckle.c:386 plug-ins/common/despeckle.c:760
-msgid "Despeckle"
-msgstr "Støvfjerning"
-
-#: plug-ins/common/despeckle.c:390
+#: plug-ins/common/despeckle.c:193
 msgid "Median"
 msgstr "Median"
 
-#: plug-ins/common/despeckle.c:391 plug-ins/gimpressionist/orientation.c:176
+#: plug-ins/common/despeckle.c:194 plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:183
 msgid "Adaptive"
 msgstr "Tilpassande"
 
-#: plug-ins/common/despeckle.c:392
+#: plug-ins/common/despeckle.c:195
 msgid "Recursive-Median"
 msgstr "Rekursiv median"
 
-#: plug-ins/common/despeckle.c:393
+#: plug-ins/common/despeckle.c:196
 msgid "Recursive-Adaptive"
 msgstr "Rekursivt adaptivt"
+
+#: plug-ins/common/despeckle.c:202
+msgid "_Black level"
+msgstr "_Svartnivå"
+
+#: plug-ins/common/despeckle.c:203
+msgid "Black level"
+msgstr "Svartnivå"
+
+#: plug-ins/common/despeckle.c:208
+msgid "_White level"
+msgstr "_Kvitnivå"
+
+#: plug-ins/common/despeckle.c:209
+msgid "White level"
+msgstr "Kvitnivå"
+
+#: plug-ins/common/despeckle.c:389 plug-ins/common/despeckle.c:756
+msgid "Despeckle"
+msgstr "Støvfjerning"
 
 #: plug-ins/common/destripe.c:126
 msgid "Des_tripe..."
@@ -2598,7 +2621,7 @@ msgstr "EOF eller feil ved lesing av biletheading"
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
-#: plug-ins/file-tiff/file-tiff-load.c:293
+#: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "Opnar «%s».."
@@ -4456,7 +4479,7 @@ msgstr "Legg til dette biletet"
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
 #: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
-#: plug-ins/file-tiff/file-tiff-load.c:1532
+#: plug-ins/file-tiff/file-tiff-load.c:1547
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
@@ -5251,7 +5274,6 @@ msgid "none"
 msgstr "ingen"
 
 #: plug-ins/common/file-psp.c:720
-#| msgid "red"
 msgid "rle"
 msgstr "rle"
 
@@ -5926,32 +5948,32 @@ msgstr "fann EOF ved lesinga"
 msgid "Write error occurred"
 msgstr "Det oppstod ein skrivefeil"
 
-#: plug-ins/common/file-svg.c:166
+#: plug-ins/common/file-svg.c:167
 msgid "SVG image"
 msgstr "SVG-bilete"
 
-#: plug-ins/common/file-svg.c:179
+#: plug-ins/common/file-svg.c:180
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:188
+#: plug-ins/common/file-svg.c:189
 msgid "_Paths"
 msgstr "_Banar"
 
-#: plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-svg.c:190
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Om og korleis importera banar slik at dei kan brukast av baneverktøya"
 
-#: plug-ins/common/file-svg.c:190
+#: plug-ins/common/file-svg.c:191
 msgid "Don't import paths"
 msgstr "Ikkje importer banar"
 
-#: plug-ins/common/file-svg.c:191
+#: plug-ins/common/file-svg.c:192
 msgid "Import paths individually"
 msgstr "Importer banane kvar for seg"
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:193
 msgid "Merge imported paths"
 msgstr "Føy saman dei importerte stiane"
 
@@ -5960,15 +5982,15 @@ msgstr "Føy saman dei importerte stiane"
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:273
+#: plug-ins/common/file-svg.c:274
 msgid "Disable safety size limits?"
 msgstr "Vil du slå av grensene for tryggingsstorleiken?"
 
-#: plug-ins/common/file-svg.c:278
+#: plug-ins/common/file-svg.c:279
 msgid "_No"
 msgstr "_Nei"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:280
 msgid "_Yes"
 msgstr "_Ja"
 
@@ -5982,7 +6004,7 @@ msgstr "_Ja"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:304
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -5992,24 +6014,24 @@ msgstr ""
 "Å slå av tryggingsgrensene kan hjelpa. Skadelege SVG-filer kan bruka dette "
 "til å bruka for mykje minne."
 
-#: plug-ins/common/file-svg.c:315
+#: plug-ins/common/file-svg.c:316
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Av tryggingsgrunnar bør denne berre brukast på inndata du stolar på!"
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:323
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "Prøve på nytt utan grenser for å unngå å handsama store datamengder?"
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/common/file-svg.c:543 plug-ins/file-exr/file-exr.c:358
 #: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "Ukjend årsak"
 
-#: plug-ins/common/file-svg.c:548
+#: plug-ins/common/file-svg.c:549
 msgid "Rendering SVG"
 msgstr "Lager SVG"
 
-#: plug-ins/common/file-svg.c:558
+#: plug-ins/common/file-svg.c:559
 msgid "Rendered SVG"
 msgstr "Teikna SVG"
 
@@ -6786,7 +6808,7 @@ msgstr ""
 "Ligg på \n"
 "filmen:"
 
-#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:436
+#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:428
 msgid "_Add"
 msgstr "_Legg til"
 
@@ -7236,7 +7258,8 @@ msgstr "Ingen treff"
 msgid "Plug-in Browser"
 msgstr "Lesar for programtillegg"
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
 #: plug-ins/metadata/metadata-editor.c:659
@@ -7782,7 +7805,7 @@ msgid "Layers"
 msgstr "Lag"
 
 #: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3045
+#: plug-ins/gradient-flare/gradient-flare.c:3053
 msgid "_New"
 msgstr "_Ny"
 
@@ -7794,8 +7817,8 @@ msgstr "D_uplikat"
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
-#: plug-ins/gradient-flare/gradient-flare.c:3048
-#: plug-ins/gradient-flare/gradient-flare.c:3331
+#: plug-ins/gradient-flare/gradient-flare.c:3056
+#: plug-ins/gradient-flare/gradient-flare.c:3339
 msgid "_Delete"
 msgstr "_Slett"
 
@@ -8002,11 +8025,11 @@ msgstr "_Dekkevne:"
 msgid "Number of Segments"
 msgstr "Talet på segment"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid "Saved"
 msgstr "Lagra"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -8014,30 +8037,25 @@ msgstr ""
 "Dersom denne er avmerka, vil einingsdefinisjonen verta lagra når du "
 "avsluttar GIMP."
 
-#: plug-ins/common/unit-editor.c:116
-msgid "ID"
-msgstr "ID"
-
-#: plug-ins/common/unit-editor.c:116
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+#: plug-ins/common/unit-editor.c:114
+msgid "The name to be used to identify this unit in the graphical interface"
 msgstr ""
-"Denne teksten vert nytta for å identifisera ei eining i oppsettfilene for "
-"GIMP."
+"Namnet som skal brukast for å identifisera ei eining i det grafiske "
+"grensesnittet"
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "Factor"
 msgstr "Faktor"
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "How many units make up an inch."
 msgstr "Kor mange einingar er det i ein Inch."
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid "Digits"
 msgstr "Siffer"
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -8047,11 +8065,11 @@ msgstr ""
 "kor mange desimalar som må til for å verta om lag like nøyaktig som ei "
 "\"inch\"-innskriving med to desimalar."
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid "Symbol"
 msgstr "Symbol"
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -8059,99 +8077,75 @@ msgstr ""
 "Symbolet for eininga dersom slikt finst (t.d. \"'\" for tommar). Elles vert "
 "avkortinga brukt."
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "Abbreviation"
 msgstr "Forkorting"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Forkorting for eininga, som t.d. «cm» for centimeter."
 
-#: plug-ins/common/unit-editor.c:129
-msgid "Singular"
-msgstr "Singularis"
-
-#: plug-ins/common/unit-editor.c:129
-msgid "The unit's singular form."
-msgstr "Eininga i eintal."
-
-#: plug-ins/common/unit-editor.c:130
-msgid "Plural"
-msgstr "Pluralis"
-
-#: plug-ins/common/unit-editor.c:130
-msgid "The unit's plural form."
-msgstr "Fleirtalsforma for eininga."
-
-#: plug-ins/common/unit-editor.c:174
+#: plug-ins/common/unit-editor.c:170
 msgid "U_nits"
 msgstr "Einingar"
 
-#: plug-ins/common/unit-editor.c:179
+#: plug-ins/common/unit-editor.c:175
 msgid "Create or alter units used in GIMP"
 msgstr "Opprett eller endra einingar brukte i GIMP"
 
-#: plug-ins/common/unit-editor.c:228 plug-ins/common/unit-editor.c:247
+#: plug-ins/common/unit-editor.c:222 plug-ins/common/unit-editor.c:241
 msgid "Unit Editor"
 msgstr "Einingshandsamar"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:251
+#: plug-ins/common/unit-editor.c:245
 #: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "_Oppdater"
 
-#: plug-ins/common/unit-editor.c:258
+#: plug-ins/common/unit-editor.c:252
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: plug-ins/common/unit-editor.c:289
+#: plug-ins/common/unit-editor.c:283
 msgid "Create a new unit from scratch"
 msgstr "Lag ei ny eining frå grunnen av"
 
-#: plug-ins/common/unit-editor.c:296
+#: plug-ins/common/unit-editor.c:290
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "Lag ny eining med den valde eininga som mal"
 
-#: plug-ins/common/unit-editor.c:431
+#: plug-ins/common/unit-editor.c:423
 msgid "Add a New Unit"
 msgstr "Legg til ei ny eining"
 
-#: plug-ins/common/unit-editor.c:460
+#: plug-ins/common/unit-editor.c:452
 msgid "_ID:"
 msgstr "_ID:"
 
-#: plug-ins/common/unit-editor.c:472
+#: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
 msgstr "_Faktor:"
 
-#: plug-ins/common/unit-editor.c:483
+#: plug-ins/common/unit-editor.c:475
 msgid "_Digits:"
 msgstr "_Tal:"
 
-#: plug-ins/common/unit-editor.c:495
+#: plug-ins/common/unit-editor.c:487
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: plug-ins/common/unit-editor.c:507
+#: plug-ins/common/unit-editor.c:499
 msgid "_Abbreviation:"
 msgstr "_Forkorting:"
 
-#: plug-ins/common/unit-editor.c:519
-msgid "Si_ngular:"
-msgstr "Si_ngularis:"
-
-#: plug-ins/common/unit-editor.c:531
-msgid "_Plural:"
-msgstr "_Pluralis:"
-
-#: plug-ins/common/unit-editor.c:574
+#: plug-ins/common/unit-editor.c:534
 msgid "Incomplete input"
 msgstr "Ufullstendig innskriving"
 
-#: plug-ins/common/unit-editor.c:577
+#: plug-ins/common/unit-editor.c:537
 msgid "Please fill in all text fields."
 msgstr "Fyll inn alle tekstfelta."
 
@@ -8856,7 +8850,7 @@ msgstr "Pikselformat"
 #. Create the combobox containing the presets
 #: plug-ins/file-dds/dds.c:213 plug-ins/file-dds/dds.c:276
 #: plug-ins/file-dds/dds.c:293 plug-ins/file-webp/file-webp-dialog.c:80
-#: plug-ins/gradient-flare/gradient-flare.c:2599
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "Default"
 msgstr "Standard"
 
@@ -10572,17 +10566,17 @@ msgstr ""
 "Den tilordna profilen for utskriftssimuleringa er ikkje ein CMYK-profil.\n"
 "Denne profilen vert ikkje teke med i det eksporterte biletet."
 
-#: plug-ins/file-tiff/file-tiff-load.c:301
+#: plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Ikkje eit TIFF-bilete, eller biletet er øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:334
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» inneheld ingen mapper"
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:341
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -10597,7 +10591,7 @@ msgstr[1] ""
 "TIFF «%s» tal på mapper etter heading mislukkast sjølv om det ser ut til å "
 "vera %d sider. Prøver å lasta fila med denne føresetnaden."
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:472
 msgid "Extra channels with unspecified data."
 msgstr "Ekstra kanal med uspesifiserte data."
 
@@ -10608,16 +10602,16 @@ msgstr "Ekstra kanal med uspesifiserte data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:484
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Uovereinsstemmande TIFF: Ekstra kanalar utan feltet \"ExtraSamples\"."
 
-#: plug-ins/file-tiff/file-tiff-load.c:569
+#: plug-ins/file-tiff/file-tiff-load.c:579
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Klarte ikkje lesa side %d av %d. Biletet kan vera øydelagt.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:598
+#: plug-ins/file-tiff/file-tiff-load.c:608
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -10626,7 +10620,7 @@ msgstr ""
 "Dette biletet har ein lineær fargeprofil, men denne vart ikkje sett på det "
 "første laget. Laga under lag nr. %d vert tolka som ikkje-lineære."
 
-#: plug-ins/file-tiff/file-tiff-load.c:606
+#: plug-ins/file-tiff/file-tiff-load.c:616
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -10636,33 +10630,33 @@ msgstr ""
 "fører til feil resultat, bør du vurdera å lasta inn kvart lag som eit "
 "separat bilete."
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:628
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Mistenkeleg bitdjupn: %d for side %d. Biletet kan vera øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:692
+#: plug-ins/file-tiff/file-tiff-load.c:702
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Har ikkje støtte for bitdjupna: %d for sida %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:707
+#: plug-ins/file-tiff/file-tiff-load.c:717
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Fekk ikkje tak i biletbreidda frå «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:715
+#: plug-ins/file-tiff/file-tiff-load.c:725
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Fekk ikkje tak i biletlengda frå «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:723
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Ugyldig biletdimensjon (%u x %u) for side %d. Biletet kan vera øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:744
+#: plug-ins/file-tiff/file-tiff-load.c:754
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -10671,7 +10665,7 @@ msgstr ""
 "Det var ikkje mogleg å få fotometrien frå «%s». Biletet er CCITT-komprimert, "
 "under forutsetjing av at min-er-kvit"
 
-#: plug-ins/file-tiff/file-tiff-load.c:751
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -10680,7 +10674,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:783
+#: plug-ins/file-tiff/file-tiff-load.c:793
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -10688,7 +10682,7 @@ msgstr ""
 "Det er ikkje definert ein alfa-kanaltype for %s. Forutsett at alfa ikkje er "
 "premultiplisert"
 
-#: plug-ins/file-tiff/file-tiff-load.c:808
+#: plug-ins/file-tiff/file-tiff-load.c:818
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10699,39 +10693,39 @@ msgstr ""
 "er ikkje sett medan det finst fleire kanaler. Om me reknar med at den første "
 "ekstra kanalen er ein alfa-kanal som ikkje har blitt premultiplisert."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1097
+#: plug-ins/file-tiff/file-tiff-load.c:1107
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Ugyldig eller ukjend komprimering %u. Set kompresjonen til null."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1155
+#: plug-ins/file-tiff/file-tiff-load.c:1165
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Klarte ikkje oppretta eit nytt bilete: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1325
+#: plug-ins/file-tiff/file-tiff-load.c:1335
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Ukjend oppløysingseining-type %d, går ut frå at det er dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1345
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Åtvaring: oppløysinga spesifisert utan einingstype, går ut frå dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1343
+#: plug-ins/file-tiff/file-tiff-load.c:1353
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Åtvaring: manglar informasjon om y-oppløysinga, går ut at det er den same "
 "som x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1370
 msgid "Invalid image resolution info, using default"
 msgstr "Ugyldig info om biletoppløysing, brukar standard"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1419
+#: plug-ins/file-tiff/file-tiff-load.c:1429
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Klarte ikkje få fargekartet frå «%s»"
@@ -10741,22 +10735,22 @@ msgstr "Klarte ikkje få fargekartet frå «%s»"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1507
+#: plug-ins/file-tiff/file-tiff-load.c:1517
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Mistenkeleg tal på ekstra kanalar: %d. Mogleg øydelagt bilete."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1567
+#: plug-ins/file-tiff/file-tiff-load.c:1582
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1720
+#: plug-ins/file-tiff/file-tiff-load.c:1740
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "Klarte ikkje lesa data frå TIFF «%s». Mogleg feil i fila."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1755
-#: plug-ins/file-tiff/file-tiff-load.c:1798
+#: plug-ins/file-tiff/file-tiff-load.c:1776
+#: plug-ins/file-tiff/file-tiff-load.c:1819
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -10764,45 +10758,45 @@ msgstr ""
 "Feil i forsøk på å opna den temporære %s fila «%s» for å lasta inn tiff "
 "metadata: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1878
+#: plug-ins/file-tiff/file-tiff-load.c:1899
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Inga støtte for biletformatet. Ingen RGBA-lastar tilgjengeleg"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1993
-#: plug-ins/file-tiff/file-tiff-load.c:2190
+#: plug-ins/file-tiff/file-tiff-load.c:2014
+#: plug-ins/file-tiff/file-tiff-load.c:2211
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Lesinga av flisa feila. Kan vera feil i biletet i linje %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2002
-#: plug-ins/file-tiff/file-tiff-load.c:2199
+#: plug-ins/file-tiff/file-tiff-load.c:2023
+#: plug-ins/file-tiff/file-tiff-load.c:2220
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Klarte ikkje lesa skannelinja. Biletet kan vera øydelagt på linje %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2551
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr "Importer frå TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2559
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "_Vis reduserte bilete"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2604
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr "Prosesser ekstra kanal som:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2607
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr "Ikkje-premultiplisert alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2608
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr "_Premultiplisert alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2609
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "_Kanal"
 
@@ -11229,7 +11223,7 @@ msgstr "Flamme"
 
 #: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3046
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_Edit"
 msgstr "R_ediger"
 
@@ -11590,7 +11584,7 @@ msgid "Rendering fractal"
 msgstr "Teiknar fraktal"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:880
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3330
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Er du sikker på at du vil slette \"%s\" frå lista og frå disken?"
@@ -11667,8 +11661,8 @@ msgid "Create line"
 msgstr "Lag linje"
 
 #: plug-ins/gfig/gfig-dialog.c:387 plug-ins/gfig/gfig-dialog.c:1436
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1572
-#: plug-ins/imagemap/imap-menu.ui:171 plug-ins/imagemap/imap-menu.ui:259
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1580
+#: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
 msgid "Rectangle"
 msgstr "Rektangel"
 
@@ -11677,9 +11671,9 @@ msgid "Create rectangle"
 msgstr "Lag rektangel"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3987
-#: plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui:176
-#: plug-ins/imagemap/imap-menu.ui:264
+#: plug-ins/gradient-flare/gradient-flare.c:3995
+#: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
+#: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
 msgstr "Sirkel"
 
@@ -11704,9 +11698,9 @@ msgid "Create arc"
 msgstr "Lag boge"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4004
-#: plug-ins/imagemap/imap_main.c:1576 plug-ins/imagemap/imap-menu.ui:181
-#: plug-ins/imagemap/imap-menu.ui:269
+#: plug-ins/gradient-flare/gradient-flare.c:4012
+#: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
+#: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -11753,8 +11747,8 @@ msgstr "Flytt eit enkelt punkt"
 #: plug-ins/gfig/gfig-dialog.c:408 plug-ins/gfig/gfig-dialog.c:1289
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1537 plug-ins/imagemap/imap-menu.ui:47
-#: plug-ins/imagemap/imap-menu.ui:330 plug-ins/imagemap/imap-menu.ui:367
+#: plug-ins/imagemap/imap_main.c:1545 plug-ins/imagemap/imap-menu.ui:47
+#: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
 msgid "Copy"
 msgstr "Kopier"
 
@@ -12070,12 +12064,12 @@ msgstr ""
 msgid "File"
 msgstr "Fil"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1522
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1530
 #: plug-ins/imagemap/imap-menu.ui:8
 msgid "Open"
 msgstr "Opna"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1524
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1532
 #: plug-ins/imagemap/imap-menu.ui:12
 msgid "Save"
 msgstr "Lagra"
@@ -12090,7 +12084,7 @@ msgid "Edit"
 msgstr "Rediger"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1530
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1538
 #: plug-ins/imagemap/imap-menu.ui:35
 msgid "Undo"
 msgstr "Angra"
@@ -12100,7 +12094,7 @@ msgstr "Angra"
 msgid "Clear"
 msgstr "Tøm"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1527
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1535
 #: plug-ins/imagemap/imap-menu.ui:77
 msgid "Preferences"
 msgstr "Innstillingar"
@@ -12186,7 +12180,7 @@ msgid "Adds random noise to the color"
 msgstr "Legg tilfeldig støy til fargen"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3651
 msgid "_General"
 msgstr "_Generelt"
 
@@ -12838,7 +12832,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "Grense for adaptiv utjamning"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2499
+#: plug-ins/gradient-flare/gradient-flare.c:2507
 msgid "Gradient Flare"
 msgstr "Gradientrefleks"
 
@@ -12877,19 +12871,19 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Feil ved skriving av G-refleksfila «%s»: %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2543
+#: plug-ins/gradient-flare/gradient-flare.c:2551
 msgid "A_uto update preview"
 msgstr "Automatisk _førehandsvising"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2598
+#: plug-ins/gradient-flare/gradient-flare.c:2606
 msgid "'Default' is created."
 msgstr "«Standard» er laga."
 
-#: plug-ins/gradient-flare/gradient-flare.c:2899
+#: plug-ins/gradient-flare/gradient-flare.c:2907
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2903
+#: plug-ins/gradient-flare/gradient-flare.c:2911
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -12899,174 +12893,174 @@ msgstr "_Y:"
 #.
 #. *    Scales
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:2943
-#: plug-ins/gradient-flare/gradient-flare.c:3696
-#: plug-ins/gradient-flare/gradient-flare.c:3798
-#: plug-ins/gradient-flare/gradient-flare.c:3929
+#: plug-ins/gradient-flare/gradient-flare.c:2951
+#: plug-ins/gradient-flare/gradient-flare.c:3704
+#: plug-ins/gradient-flare/gradient-flare.c:3806
+#: plug-ins/gradient-flare/gradient-flare.c:3937
 msgid "Parameters"
 msgstr "Parameter"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2977
+#: plug-ins/gradient-flare/gradient-flare.c:2985
 msgid "_Settings"
 msgstr "_Innstillingar"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3115
+#: plug-ins/gradient-flare/gradient-flare.c:3123
 msgid "S_elector"
 msgstr "_Utval"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3179
+#: plug-ins/gradient-flare/gradient-flare.c:3187
 msgid "New Gradient Flare"
 msgstr "Ny gradientrefleks"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3182
+#: plug-ins/gradient-flare/gradient-flare.c:3190
 msgid "Enter a name for the new GFlare"
 msgstr "Skriv namnet på den nye G-refleksen"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3183
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Unnamed"
 msgstr "Utan namn"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3203
-#: plug-ins/gradient-flare/gradient-flare.c:3285
+#: plug-ins/gradient-flare/gradient-flare.c:3211
+#: plug-ins/gradient-flare/gradient-flare.c:3293
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Namnet «%s» er i bruk frå før!"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3259
+#: plug-ins/gradient-flare/gradient-flare.c:3267
 msgid "Copy Gradient Flare"
 msgstr "Kopier gradientrefleks"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3262
+#: plug-ins/gradient-flare/gradient-flare.c:3270
 msgid "Enter a name for the copied GFlare"
 msgstr "Skriv namnet på den kopierte G-refleksen"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3316
+#: plug-ins/gradient-flare/gradient-flare.c:3324
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Kan ikkje slette. Det må finnast minst ein G-refleks."
 
-#: plug-ins/gradient-flare/gradient-flare.c:3326
+#: plug-ins/gradient-flare/gradient-flare.c:3334
 msgid "Delete Gradient Flare"
 msgstr "Slett G-refleksen"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3398
+#: plug-ins/gradient-flare/gradient-flare.c:3406
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "fann ikkje %s i lista over G-refleksar"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3440
+#: plug-ins/gradient-flare/gradient-flare.c:3448
 msgid "Gradient Flare Editor"
 msgstr "Gradientreflekshandsamaren"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3444
+#: plug-ins/gradient-flare/gradient-flare.c:3452
 msgid "_Rescan Gradients"
 msgstr "_Skann fargeovergangane på nytt"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3566
+#: plug-ins/gradient-flare/gradient-flare.c:3574
 msgid "Glow Paint Options"
 msgstr "Innstillingar for glød-teikning"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3576
-#: plug-ins/gradient-flare/gradient-flare.c:3602
-#: plug-ins/gradient-flare/gradient-flare.c:3628
+#: plug-ins/gradient-flare/gradient-flare.c:3584
+#: plug-ins/gradient-flare/gradient-flare.c:3610
+#: plug-ins/gradient-flare/gradient-flare.c:3636
 msgid "Opacity:"
 msgstr "Dekkevne:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3588
-#: plug-ins/gradient-flare/gradient-flare.c:3614
-#: plug-ins/gradient-flare/gradient-flare.c:3640
+#: plug-ins/gradient-flare/gradient-flare.c:3596
+#: plug-ins/gradient-flare/gradient-flare.c:3622
+#: plug-ins/gradient-flare/gradient-flare.c:3648
 msgid "Paint mode:"
 msgstr "Teiknemodus:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3592
+#: plug-ins/gradient-flare/gradient-flare.c:3600
 msgid "Rays Paint Options"
 msgstr "Innstillingane for teikning av strålar"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3618
+#: plug-ins/gradient-flare/gradient-flare.c:3626
 msgid "Second Flares Paint Options"
 msgstr "Innstillingar for sekundærrefleksen"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3669
-#: plug-ins/gradient-flare/gradient-flare.c:3769
-#: plug-ins/gradient-flare/gradient-flare.c:3902
+#: plug-ins/gradient-flare/gradient-flare.c:3677
+#: plug-ins/gradient-flare/gradient-flare.c:3777
+#: plug-ins/gradient-flare/gradient-flare.c:3910
 msgid "Gradients"
 msgstr "Fargeovergangar"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3680
-#: plug-ins/gradient-flare/gradient-flare.c:3782
-#: plug-ins/gradient-flare/gradient-flare.c:3913
+#: plug-ins/gradient-flare/gradient-flare.c:3688
+#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3921
 msgid "Radial gradient:"
 msgstr "Radiell fargeovergang:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3684
-#: plug-ins/gradient-flare/gradient-flare.c:3786
+#: plug-ins/gradient-flare/gradient-flare.c:3692
+#: plug-ins/gradient-flare/gradient-flare.c:3794
 msgid "Angular gradient:"
 msgstr "Kanta fargeovergang:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3688
-#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3696
+#: plug-ins/gradient-flare/gradient-flare.c:3798
 msgid "Angular size gradient:"
 msgstr "Fargeovergang for kanta storleik:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3707
-#: plug-ins/gradient-flare/gradient-flare.c:3809
-#: plug-ins/gradient-flare/gradient-flare.c:3940
+#: plug-ins/gradient-flare/gradient-flare.c:3715
+#: plug-ins/gradient-flare/gradient-flare.c:3817
+#: plug-ins/gradient-flare/gradient-flare.c:3948
 msgid "Size (%):"
 msgstr "Storleik (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3718
-#: plug-ins/gradient-flare/gradient-flare.c:3820
-#: plug-ins/gradient-flare/gradient-flare.c:3951
+#: plug-ins/gradient-flare/gradient-flare.c:3726
+#: plug-ins/gradient-flare/gradient-flare.c:3828
+#: plug-ins/gradient-flare/gradient-flare.c:3959
 msgid "Rotation:"
 msgstr "Rotasjon:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3729
-#: plug-ins/gradient-flare/gradient-flare.c:3831
-#: plug-ins/gradient-flare/gradient-flare.c:3962
+#: plug-ins/gradient-flare/gradient-flare.c:3737
+#: plug-ins/gradient-flare/gradient-flare.c:3839
+#: plug-ins/gradient-flare/gradient-flare.c:3970
 msgid "Hue rotation:"
 msgstr "Fargerotasjon:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3743
+#: plug-ins/gradient-flare/gradient-flare.c:3751
 msgid "G_low"
 msgstr "G_lød"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3842
+#: plug-ins/gradient-flare/gradient-flare.c:3850
 msgid "# of Spikes:"
 msgstr "Tal på strålar:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3853
+#: plug-ins/gradient-flare/gradient-flare.c:3861
 msgid "Spike thickness:"
 msgstr "Strålebreidd:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3867
+#: plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "_Rays"
 msgstr "St_råler"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3917
+#: plug-ins/gradient-flare/gradient-flare.c:3925
 msgid "Size factor gradient:"
 msgstr "Storleiksfaktor for overgang:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3921
+#: plug-ins/gradient-flare/gradient-flare.c:3929
 msgid "Probability gradient:"
 msgstr "Slumpovergang:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3979
+#: plug-ins/gradient-flare/gradient-flare.c:3987
 msgid "Shape of Second Flares"
 msgstr "Form på sekundærrefleksen"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/gradient-flare/gradient-flare.c:4046
 msgid "Random seed:"
 msgstr "Tilfeldig frø:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4052
+#: plug-ins/gradient-flare/gradient-flare.c:4060
 msgid "_Second Flares"
 msgstr "_Sekundærrefleks"
 
@@ -13303,7 +13297,7 @@ msgid "New"
 msgstr "Ny"
 
 #: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1532 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1540 plug-ins/imagemap/imap-menu.ui:39
 msgid "Redo"
 msgstr "Gjenopprett"
 
@@ -13429,13 +13423,13 @@ msgstr "Lag"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1535 plug-ins/imagemap/imap-menu.ui:43
-#: plug-ins/imagemap/imap-menu.ui:326 plug-ins/imagemap/imap-menu.ui:363
+#: plug-ins/imagemap/imap_main.c:1543 plug-ins/imagemap/imap-menu.ui:43
+#: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
 msgid "Cut"
 msgstr "Klipp ut"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap-menu.ui:343
+#: plug-ins/imagemap/imap-menu.ui:338
 msgid "Delete Point"
 msgstr "Fjern punkt"
 
@@ -13546,14 +13540,14 @@ msgid "Guides"
 msgstr "Hjelpelinjer"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: plug-ins/imagemap/imap-menu.ui:339
+#: plug-ins/imagemap/imap-menu.ui:334
 msgid "Insert Point"
 msgstr "Set inn punkt"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:238
-#: plug-ins/imagemap/imap-menu.ui:322 plug-ins/imagemap/imap-menu.ui:359
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:233
+#: plug-ins/imagemap/imap-menu.ui:317 plug-ins/imagemap/imap-menu.ui:354
 msgid "Move Down"
 msgstr "Flytt ned"
 
@@ -13571,13 +13565,13 @@ msgstr "Flytt til front"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
-#: plug-ins/imagemap/imap-menu.ui:234 plug-ins/imagemap/imap-menu.ui:318
-#: plug-ins/imagemap/imap-menu.ui:355
+#: plug-ins/imagemap/imap-menu.ui:229 plug-ins/imagemap/imap-menu.ui:313
+#: plug-ins/imagemap/imap-menu.ui:350
 msgid "Move Up"
 msgstr "Flytt opp"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1539
-#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:301
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
 msgid "Paste"
 msgstr "Lim inn"
 
@@ -13746,101 +13740,101 @@ msgstr "pikslar frå _venstre"
 msgid "pixels from _top"
 msgstr "pikslar _ovanfrå"
 
-#: plug-ins/imagemap/imap_main.c:220
+#: plug-ins/imagemap/imap_main.c:222
 msgid "_Image Map..."
 msgstr "_Biletkart …"
 
-#: plug-ins/imagemap/imap_main.c:224
+#: plug-ins/imagemap/imap_main.c:226
 msgid "Create a clickable imagemap"
 msgstr "Lag eit klikkbart biletkart"
 
-#: plug-ins/imagemap/imap_main.c:652 plug-ins/imagemap/imap_settings.c:170
+#: plug-ins/imagemap/imap_main.c:660 plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Utan namn>"
 
-#: plug-ins/imagemap/imap_main.c:800
+#: plug-ins/imagemap/imap_main.c:808
 msgid "Some data has been changed!"
 msgstr "Nokre data er endra!"
 
-#: plug-ins/imagemap/imap_main.c:803
+#: plug-ins/imagemap/imap_main.c:811
 msgid "Do you really want to discard your changes?"
 msgstr "Vil du verkeleg forkasta desse endringane?"
 
-#: plug-ins/imagemap/imap_main.c:1040
+#: plug-ins/imagemap/imap_main.c:1048
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Fila «%s» er lagra."
 
-#: plug-ins/imagemap/imap_main.c:1044
+#: plug-ins/imagemap/imap_main.c:1052
 msgid "Couldn't save file:"
 msgstr "Klarte ikkje lagra fila:"
 
-#: plug-ins/imagemap/imap_main.c:1057
+#: plug-ins/imagemap/imap_main.c:1065
 msgid "Image size has changed."
 msgstr "Biletstorleiken er endra."
 
-#: plug-ins/imagemap/imap_main.c:1058
+#: plug-ins/imagemap/imap_main.c:1066
 msgid "Resize area's?"
 msgstr "Endra storleiken på areala?"
 
-#: plug-ins/imagemap/imap_main.c:1100
+#: plug-ins/imagemap/imap_main.c:1108
 msgid "Couldn't read file:"
 msgstr "Klarte ikkje lese fila:"
 
-#: plug-ins/imagemap/imap_main.c:1153
+#: plug-ins/imagemap/imap_main.c:1161
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1542 plug-ins/imagemap/imap-menu.ui:108
-#: plug-ins/imagemap/imap-menu.ui:279
+#: plug-ins/imagemap/imap_main.c:1550 plug-ins/imagemap/imap-menu.ui:108
+#: plug-ins/imagemap/imap-menu.ui:274
 msgid "Zoom In"
 msgstr "Forstørr"
 
-#: plug-ins/imagemap/imap_main.c:1544 plug-ins/imagemap/imap-menu.ui:112
-#: plug-ins/imagemap/imap-menu.ui:283
+#: plug-ins/imagemap/imap_main.c:1552 plug-ins/imagemap/imap-menu.ui:112
+#: plug-ins/imagemap/imap-menu.ui:278
 msgid "Zoom Out"
 msgstr "Forminsk"
 
-#: plug-ins/imagemap/imap_main.c:1547
+#: plug-ins/imagemap/imap_main.c:1555
 msgid "Edit Map Info"
 msgstr "Rediger informasjonen i biletkartet"
 
-#: plug-ins/imagemap/imap_main.c:1550
+#: plug-ins/imagemap/imap_main.c:1558
 msgid "Move Area to Front"
 msgstr "Flytt området øvst"
 
-#: plug-ins/imagemap/imap_main.c:1552
+#: plug-ins/imagemap/imap_main.c:1560
 msgid "Move Area to Bottom"
 msgstr "Flytt områdetet nedst"
 
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:166
-#: plug-ins/imagemap/imap-menu.ui:254
+#: plug-ins/imagemap/imap_main.c:1578 plug-ins/imagemap/imap-menu.ui:161
+#: plug-ins/imagemap/imap-menu.ui:249
 msgid "Arrow"
 msgstr "Pil"
 
-#: plug-ins/imagemap/imap_main.c:1570
+#: plug-ins/imagemap/imap_main.c:1578
 msgid "Select Existing Area"
 msgstr "Vel område som finst frå før"
 
-#: plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/imagemap/imap_main.c:1580
 msgid "Define Rectangle area"
 msgstr "Definer rektangulært område"
 
-#: plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap_main.c:1582
 msgid "Define Circle/Oval area"
 msgstr "Definer sirkelforma område"
 
-#: plug-ins/imagemap/imap_main.c:1576
+#: plug-ins/imagemap/imap_main.c:1584
 msgid "Define Polygon area"
 msgstr "Definer mangekanta område"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
-#: plug-ins/imagemap/imap-menu.ui:310 plug-ins/imagemap/imap-menu.ui:347
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
 msgid "Edit Area Info..."
 msgstr "Rediger områdeinformasjon …"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1587 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Rediger info for vald område"
 
@@ -13958,6 +13952,10 @@ msgstr "_Automatisk konvertering"
 msgid "General Preferences"
 msgstr "Generelle innstillingar"
 
+#: plug-ins/imagemap/imap_preview.c:313
+msgid "Shortcut Menu"
+msgstr "Snarvegsmeny"
+
 #: plug-ins/imagemap/imap_rectangle.c:68
 msgid "_Rectangle"
 msgstr "_Rektangel"
@@ -14032,6 +14030,14 @@ msgstr "Format for biletkartfila"
 msgid "View Source"
 msgstr "Vis kjelde"
 
+#: plug-ins/imagemap/imap_statusbar.c:55
+msgid "Coordinates:"
+msgstr "Koordinat:"
+
+#: plug-ins/imagemap/imap_statusbar.c:70
+msgid "Active Area Size:"
+msgstr "Storleik på aktivt område:"
+
 #: plug-ins/imagemap/imap-menu.ui:16
 msgid "Save As"
 msgstr "Lagra som"
@@ -14061,74 +14067,73 @@ msgid "Zoom To"
 msgstr "Forstørr til"
 
 #: plug-ins/imagemap/imap-menu.ui:119
+#| msgid "1:1"
+msgid "8:1"
+msgstr "8:1"
+
+#: plug-ins/imagemap/imap-menu.ui:124
+#| msgid "1:1"
+msgid "4:1"
+msgstr "4:1"
+
+#: plug-ins/imagemap/imap-menu.ui:129
+#| msgid "1:1"
+msgid "2:1"
+msgstr "2:1"
+
+#: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:1"
 msgstr "1:1"
 
-#: plug-ins/imagemap/imap-menu.ui:124
+#: plug-ins/imagemap/imap-menu.ui:139
 msgid "1:2"
 msgstr "1:2"
 
-#: plug-ins/imagemap/imap-menu.ui:129
-msgid "1:3"
-msgstr "1:3"
-
-#: plug-ins/imagemap/imap-menu.ui:134
+#: plug-ins/imagemap/imap-menu.ui:144
 msgid "1:4"
 msgstr "1:4"
 
-#: plug-ins/imagemap/imap-menu.ui:139
-msgid "1:5"
-msgstr "1:5"
-
-#: plug-ins/imagemap/imap-menu.ui:144
-msgid "1:6"
-msgstr "1:6"
-
 #: plug-ins/imagemap/imap-menu.ui:149
-msgid "1:7"
-msgstr "1:7"
-
-#: plug-ins/imagemap/imap-menu.ui:154
 msgid "1:8"
 msgstr "1:8"
 
-#: plug-ins/imagemap/imap-menu.ui:163
+#: plug-ins/imagemap/imap-menu.ui:158
 msgid "Mappings"
 msgstr "Kartleggingar"
 
-#: plug-ins/imagemap/imap-menu.ui:188 plug-ins/imagemap/imap-menu.ui:247
+#: plug-ins/imagemap/imap-menu.ui:183 plug-ins/imagemap/imap-menu.ui:242
 msgid "Edit Map Info..."
 msgstr "Rediger biletkart-info …"
 
-#: plug-ins/imagemap/imap-menu.ui:194 plug-ins/imagemap/imap-menu.ui:251
+#: plug-ins/imagemap/imap-menu.ui:189 plug-ins/imagemap/imap-menu.ui:246
 msgid "Tools"
 msgstr "Verktøy"
 
-#: plug-ins/imagemap/imap-menu.ui:201 plug-ins/imagemap/imap-menu.ui:293
+#: plug-ins/imagemap/imap-menu.ui:196 plug-ins/imagemap/imap-menu.ui:288
 msgid "Grid Settings..."
 msgstr "Innstillingar for rutenettet …"
 
-#: plug-ins/imagemap/imap-menu.ui:207
+#: plug-ins/imagemap/imap-menu.ui:202
 msgid "Use GIMP Guides..."
 msgstr "Bruk hjelpelinjer …"
 
-#: plug-ins/imagemap/imap-menu.ui:211 plug-ins/imagemap/imap-menu.ui:297
+#: plug-ins/imagemap/imap-menu.ui:206 plug-ins/imagemap/imap-menu.ui:292
 msgid "Create Guides..."
 msgstr "Lag hjelperuter …"
 
-#: plug-ins/imagemap/imap-menu.ui:217
+#: plug-ins/imagemap/imap-menu.ui:212
 msgid "Help"
 msgstr "Hjelp"
 
-#: plug-ins/imagemap/imap-menu.ui:220 plug-ins/screenshot/screenshot.c:536
+#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:536
 msgid "Contents"
 msgstr "Innhald"
 
-#: plug-ins/imagemap/imap-menu.ui:224
+#: plug-ins/imagemap/imap-menu.ui:219
 msgid "About"
 msgstr "Om"
 
-#: plug-ins/imagemap/imap-menu.ui:314 plug-ins/imagemap/imap-menu.ui:351
+#: plug-ins/imagemap/imap-menu.ui:309 plug-ins/imagemap/imap-menu.ui:346
 msgid "Delete Area"
 msgstr "Slett området"
 
@@ -15519,16 +15524,8 @@ msgid "Age 14 or Under"
 msgstr "Alder 14 eller yngre"
 
 #: plug-ins/metadata/metadata-tags.c:254
-msgid "2"
-msgstr "2"
-
-#: plug-ins/metadata/metadata-tags.c:254
 msgid "3"
 msgstr "3"
-
-#: plug-ins/metadata/metadata-tags.c:254
-msgid "4"
-msgstr "4"
 
 #: plug-ins/metadata/metadata-tags.c:254
 msgid "6"
@@ -15831,108 +15828,108 @@ msgstr "_Skjermenbilete …"
 msgid "Create an image from an area of the screen"
 msgstr "Opprett eit nytt bilete frå eit ormråde av skjermen"
 
-#: plug-ins/screenshot/screenshot.c:164
+#: plug-ins/screenshot/screenshot.c:166
 msgid "Shoot _area"
 msgstr "Skot_område"
 
-#: plug-ins/screenshot/screenshot.c:165
-msgid "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
-msgstr "Skot-type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+#: plug-ins/screenshot/screenshot.c:167
+msgid "The shoot type"
+msgstr "Skot-type"
 
-#: plug-ins/screenshot/screenshot.c:195
-msgid "Include _mouse pointer"
-msgstr "Ta med _musepeikaren"
-
-#: plug-ins/screenshot/screenshot.c:196
-msgid "Your pointing device's cursor will be part of the image"
-msgstr "Markøren for peikareininga vil vera ein del av biletet"
-
-#: plug-ins/screenshot/screenshot.c:204
-msgid "Include window _decoration"
-msgstr "Ta med vindaugedekorasjonar"
-
-#: plug-ins/screenshot/screenshot.c:205
-msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "Tittellinje, vindeigekantar og skugge vil vera ein del av biletet"
-
-#: plug-ins/screenshot/screenshot.c:214
-msgid "Selection d_elay"
-msgstr "_Forseinking av utvalet"
-
-#: plug-ins/screenshot/screenshot.c:215
-msgid "Delay before selection of the window or the region"
-msgstr "Pause før val av vindauget eller regionen"
-
-#: plug-ins/screenshot/screenshot.c:219
-msgid "Screenshot dela_y"
-msgstr "_Forseinking av skjermbiletet"
-
-#: plug-ins/screenshot/screenshot.c:220
-msgid "Delay before snapping the screenshot"
-msgstr "Pause før skjermbiletet vert teke"
-
-#: plug-ins/screenshot/screenshot.c:224
-msgid "Color _Profile"
-msgstr "Farge_profil"
-
-#: plug-ins/screenshot/screenshot.c:264
-msgid "GDK initialization failed."
-msgstr "GDK-initialiseringa feila."
-
-#: plug-ins/screenshot/screenshot.c:302
-msgid "No screenshot backends available."
-msgstr "Ingen skjermbiletbakstykke tilgjengeleg."
-
-#: plug-ins/screenshot/screenshot.c:504
-#: plug-ins/screenshot/screenshot-x11.c:443
-msgid "Screenshot"
-msgstr "Skjermbilete"
-
-#: plug-ins/screenshot/screenshot.c:505
-msgid "S_nap"
-msgstr "_Grip"
-
-#: plug-ins/screenshot/screenshot.c:507
+#: plug-ins/screenshot/screenshot.c:168
 msgid "Take a screenshot of a single window"
 msgstr "Tek eit skjermbilete av eit enkelt vindauge"
 
-#: plug-ins/screenshot/screenshot.c:508
+#: plug-ins/screenshot/screenshot.c:169
 msgid "Take a screenshot of the entire screen"
 msgstr "Tek eit skjermbilete av heile skjermen"
 
-#: plug-ins/screenshot/screenshot.c:509
+#: plug-ins/screenshot/screenshot.c:171
 msgid "Select a region to grab"
 msgstr "Marker området som skal hentast inn"
+
+#: plug-ins/screenshot/screenshot.c:202
+msgid "Include _mouse pointer"
+msgstr "Ta med _musepeikaren"
+
+#: plug-ins/screenshot/screenshot.c:203
+msgid "Your pointing device's cursor will be part of the image"
+msgstr "Markøren for peikareininga vil vera ein del av biletet"
+
+#: plug-ins/screenshot/screenshot.c:211
+msgid "Include window _decoration"
+msgstr "Ta med vindaugedekorasjonar"
+
+#: plug-ins/screenshot/screenshot.c:212
+msgid "Title bar, window borders and shadow will be part of the image"
+msgstr "Tittellinje, vindeigekantar og skugge vil vera ein del av biletet"
+
+#: plug-ins/screenshot/screenshot.c:221
+msgid "Selection d_elay"
+msgstr "_Forseinking av utvalet"
+
+#: plug-ins/screenshot/screenshot.c:222
+msgid "Delay before selection of the window or the region"
+msgstr "Pause før val av vindauget eller regionen"
+
+#: plug-ins/screenshot/screenshot.c:226
+msgid "Screenshot dela_y"
+msgstr "_Forseinking av skjermbiletet"
+
+#: plug-ins/screenshot/screenshot.c:227
+msgid "Delay before snapping the screenshot"
+msgstr "Pause før skjermbiletet vert teke"
+
+#: plug-ins/screenshot/screenshot.c:231
+msgid "Color _Profile"
+msgstr "Farge_profil"
+
+#: plug-ins/screenshot/screenshot.c:233
+msgid "Tag image with monitor profile"
+msgstr "Merk biletet med _monitor-profilen"
+
+#: plug-ins/screenshot/screenshot.c:234
+msgid "Convert image with sRGB"
+msgstr "Konverterer eit bilete med sRGB"
+
+#: plug-ins/screenshot/screenshot.c:272
+msgid "GDK initialization failed."
+msgstr "GDK-initialiseringa feila."
+
+#: plug-ins/screenshot/screenshot.c:310
+msgid "No screenshot backends available."
+msgstr "Ingen skjermbiletbakstykke tilgjengeleg."
+
+#: plug-ins/screenshot/screenshot.c:511
+#: plug-ins/screenshot/screenshot-x11.c:444
+msgid "Screenshot"
+msgstr "Skjermbilete"
+
+#: plug-ins/screenshot/screenshot.c:512
+msgid "S_nap"
+msgstr "_Grip"
 
 #: plug-ins/screenshot/screenshot.c:595
 msgid "Delay"
 msgstr "Vent i"
 
-#: plug-ins/screenshot/screenshot.c:603
-msgid "Tag image with monitor profile"
-msgstr "Merk biletet med _monitor-profilen"
-
-#: plug-ins/screenshot/screenshot.c:604
-msgid "Convert image with sRGB"
-msgstr "Konverterer eit bilete med sRGB"
-
 #: plug-ins/screenshot/screenshot-win32.c:297
 msgid "No data captured"
 msgstr "Ingen data henta"
 
-#: plug-ins/screenshot/screenshot-x11.c:109
+#: plug-ins/screenshot/screenshot-x11.c:110
 msgid "Error selecting the window"
 msgstr "Feil ved markeringa av vindauget"
 
-#: plug-ins/screenshot/screenshot-x11.c:431
+#: plug-ins/screenshot/screenshot-x11.c:432
 msgid "Importing screenshot"
 msgstr "Importerer eit bilete av skjermen"
 
-#: plug-ins/screenshot/screenshot-x11.c:484
+#: plug-ins/screenshot/screenshot-x11.c:485
 msgid "Mouse Pointer"
 msgstr "Musepeikar"
 
-#: plug-ins/screenshot/screenshot-x11.c:662
+#: plug-ins/screenshot/screenshot-x11.c:664
 msgid "Specified window not found"
 msgstr "Fann ikkje det oppgjevne vindauget"
 
@@ -16216,6 +16213,111 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
+
+#~ msgid "Exercise in _C minor"
+#~ msgstr "Øving i _Cmoll"
+
+#~ msgid "Exercise a goat in the C language"
+#~ msgstr "Øving med ei geit i språket C"
+
+#~ msgid "Exercise a goat (C)"
+#~ msgstr "Øving med ei geit (C)"
+
+#~ msgid "Exercise a JavaScript goat"
+#~ msgstr "Øving med ei geit i JavaScript"
+
+#~ msgid "Exercise a goat in the JavaScript language (GJS)"
+#~ msgstr "Øving med ei geit i språket JavaScript (GJS)"
+
+#~ msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
+#~ msgstr "Tek med ei geit på ein tur i JavaScript med GJS-fortolkaren"
+
+#~ msgid "Exercise a goat (JavaScript)"
+#~ msgstr "Øving med ei geit (JavaScript)"
+
+#~ msgid "Exercise a goat (Lua)"
+#~ msgstr "Øving med ei geit (Lua)"
+
+#~ msgid "Exercise a Lua goat"
+#~ msgstr "Øving med ei Lua-geit"
+
+#~ msgid "Exercise a goat in the Lua language"
+#~ msgstr "Øving med ei geit i språket Lua"
+
+#~ msgid "Exercise a goat and a python"
+#~ msgstr "Øving med ei geit og ein python"
+
+#~ msgid "Exercise a goat in the Python 3 language"
+#~ msgstr "Øving med ei geit i språket Python 3"
+
+#~ msgid "Takes a goat for a walk in Python 3"
+#~ msgstr "Tek ein tur med ei geit i Python 3"
+
+#~ msgid "Exercise a goat (Python 3)"
+#~ msgstr "Øving med ei geit (Python 3)"
+
+#~ msgid "Exercise a Vala goat"
+#~ msgstr "Øving med ei Vala-geit"
+
+#~ msgid "Exercise a goat in the Vala language"
+#~ msgstr "Øving med ei geit i språket Vala"
+
+#~ msgid "Takes a goat for a walk in Vala"
+#~ msgstr "Tek ein tur med ei geit i Vala"
+
+#~ msgid "Exercise a goat (Vala)"
+#~ msgstr "Øving med ei geit (Vala)"
+
+#~ msgid ""
+#~ "(None = 0, Collect = 1, Fill left to right = 2, Fill right to left = 3, "
+#~ "Snap to grid = 4)"
+#~ msgstr ""
+#~ "(Ingen = 0, Samla = 1, Fyll venstre til høgre = 2, Fyll høgre til venstre "
+#~ "= 3, Fest til rutenettet = 4)"
+
+#~ msgid "(Left edge = 0, Center = 1, Right edge = 2)"
+#~ msgstr "(Venstre kant = 0, Midten = 1, Høgre kant = 2)"
+
+#~ msgid ""
+#~ "Filter type { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+#~ "ADAPTIVE (3) }"
+#~ msgstr ""
+#~ "Filtertype { MEDIAN (0), ADAPTIVE (1), RECURSIVE-MEDIAN (2), RECURSIVE-"
+#~ "ADAPTIVE (3) }"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Singular"
+#~ msgstr "Singularis"
+
+#~ msgid "The unit's singular form."
+#~ msgstr "Eininga i eintal."
+
+#~ msgid "Plural"
+#~ msgstr "Pluralis"
+
+#~ msgid "The unit's plural form."
+#~ msgstr "Fleirtalsforma for eininga."
+
+#~ msgid "Si_ngular:"
+#~ msgstr "Si_ngularis:"
+
+#~ msgid "_Plural:"
+#~ msgstr "_Pluralis:"
+
+#~ msgid "1:3"
+#~ msgstr "1:3"
+
+#~ msgid "1:5"
+#~ msgstr "1:5"
+
+#~ msgid "1:7"
+#~ msgstr "1:7"
+
+#~ msgid ""
+#~ "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
+#~ msgstr "Skot-type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }"
 
 #~ msgid "Orientation"
 #~ msgstr "Orientering"
@@ -18491,9 +18593,6 @@ msgstr "Overfører data frå skannar/kamera"
 
 #~ msgid "P_olar Coordinates..."
 #~ msgstr "P_olarkoordinat …"
-
-#~ msgid "Polar Coordinates"
-#~ msgstr "Polarkoordinat"
 
 #~ msgid "Circle _depth in percent:"
 #~ msgstr "Sirkel_djupne i prosent:"
