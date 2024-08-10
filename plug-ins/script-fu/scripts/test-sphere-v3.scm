@@ -145,9 +145,13 @@
 ; v3 >>> menu item is v3, alongside old one
 ; v3 >>> not yet localized
 
+; Translate the menu item and help, but not the dialog labels,
+; since only plugin authors will read the dialog labels.
+
 (script-fu-register-filter "script-fu-test-sphere-v3"
+  ; Translator: this means "in the Scheme programming language" aka ScriptFu.
   _"In _Scheme"
-  "Plug-in example in Scheme"
+  _"Plug-in example in Scheme"
   "Spencer Kimball, Sven Neumann"
   "Spencer Kimball"
   "1996, 1998"
