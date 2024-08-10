@@ -62,11 +62,12 @@ install_data(
 # Like other interpreted plugins.
 # Lacking a shebang, a .interp file is needed to associate .scm suffix
 
-# !!! These are demo plugins.
-# Install with a stable release along with goat exercise demos.
+# !!! test-sphere-v3 is example plugin.
+# Install with a stable release along with other language examples.
+
+# For now, there are no other stable plugins that are independently interpreted.
 
 scripts_independent = [
-  { 'name': 'ts-helloworld' },
   { 'name': 'test-sphere-v3' },
 ]
 

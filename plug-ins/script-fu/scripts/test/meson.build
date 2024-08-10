@@ -31,6 +31,7 @@ install_data(
 scripts_independent = [
   { 'name': 'test-bytes' },
   { 'name': 'test-display' },
+  { 'name': 'ts-helloworld' },
 ]
 
 foreach plugin : scripts_independent

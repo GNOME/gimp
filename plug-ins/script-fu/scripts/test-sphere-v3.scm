@@ -146,8 +146,8 @@
 ; v3 >>> not yet localized
 
 (script-fu-register-filter "script-fu-test-sphere-v3"
-  "Sphere v3..."
-  "Test script-fu-register-filter and GimpProcedureDialog: needs 2 selected layers."
+  _"In _Scheme"
+  "Plug-in example in Scheme"
   "Spencer Kimball, Sven Neumann"
   "Spencer Kimball"
   "1996, 1998"
@@ -183,4 +183,4 @@
 )
 
 (script-fu-menu-register "script-fu-test-sphere-v3"
-                         "<Image>/Filters/Development/Demos")
+                         "<Image>/Filters/Development/Plug-in Examples")
