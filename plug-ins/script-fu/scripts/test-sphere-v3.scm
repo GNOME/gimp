@@ -150,7 +150,7 @@
 
 (script-fu-register-filter "script-fu-test-sphere-v3"
   ; Translator: this means "in the Scheme programming language" aka ScriptFu.
-  _"In _Scheme"
+  _"Plug-In Example in _Scheme"
   _"Plug-in example in Scheme"
   "Spencer Kimball, Sven Neumann"
   "Spencer Kimball"
@@ -187,4 +187,4 @@
 )
 
 (script-fu-menu-register "script-fu-test-sphere-v3"
-                         "<Image>/Filters/Development/Plug-in Examples")
+                         "<Image>/Filters/Development/Plug-In Examples")

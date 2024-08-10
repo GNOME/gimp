@@ -42,11 +42,11 @@ public class Goat : Gimp.PlugIn {
     var procedure = new Gimp.ImageProcedure(this, name, Gimp.PDBProcType.PLUGIN, this.run);
     procedure.set_image_types("RGB*, INDEXED*, GRAY*");
     procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
-    procedure.set_menu_label(_("In _Vala"));
+    procedure.set_menu_label(_("Plug-In Example in _Vala"));
     procedure.set_documentation(_("Plug-in example in Vala"),
                                 _("Plug-in example in Vala"),
                                 PLUG_IN_PROC);
-    procedure.add_menu_path("<Image>/Filters/Development/Plug-in Examples/");
+    procedure.add_menu_path("<Image>/Filters/Development/Plug-In Examples/");
     procedure.set_attribution("Niels De Graef", "Niels De Graef", "2020");
     procedure.set_icon_name(GimpUi.ICON_GEGL);
 
@@ -64,7 +64,7 @@ public class Goat : Gimp.PlugIn {
       GimpUi.init(PLUG_IN_BINARY);
 
       var dialog =
-          new GimpUi.Dialog(_("Plug-in Example in Vala"),
+          new GimpUi.Dialog(_("Plug-In Example in Vala"),
                           PLUG_IN_ROLE,
                           null,
                           Gtk.DialogFlags.USE_HEADER_BAR,

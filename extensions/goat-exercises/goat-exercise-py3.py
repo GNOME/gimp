@@ -43,9 +43,9 @@ class Goat (Gimp.PlugIn):
         procedure.set_image_types("*")
         procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
 
-        procedure.set_menu_label(_("In _Python"))
+        procedure.set_menu_label(_("Plug-In Example in _Python 3"))
         procedure.set_icon_name(GimpUi.ICON_GEGL)
-        procedure.add_menu_path('<Image>/Filters/Development/Plug-in Examples/')
+        procedure.add_menu_path('<Image>/Filters/Development/Plug-In Examples/')
 
         procedure.set_documentation(_("Plug-in example in Python 3"),
                                     _("Plug-in example in Python 3"),
@@ -71,7 +71,7 @@ class Goat (Gimp.PlugIn):
             GimpUi.init("goat-exercise-py3.py")
 
             dialog = GimpUi.Dialog(use_header_bar=True,
-                                   title=_("Plug-in Example in Python 3"),
+                                   title=_("Plug-In Example in Python 3"),
                                    role="goat-exercise-Python3")
 
             dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)

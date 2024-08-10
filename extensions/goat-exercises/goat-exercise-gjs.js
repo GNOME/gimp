@@ -60,9 +60,9 @@ var Goat = GObject.registerClass({
         procedure.set_image_types("*");
         procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
 
-        procedure.set_menu_label(_("In _JavaScript"));
+        procedure.set_menu_label(_("Plug-In Example in _JavaScript"));
         procedure.set_icon_name(GimpUi.ICON_GEGL);
-        procedure.add_menu_path ('<Image>/Filters/Development/Plug-in Examples/');
+        procedure.add_menu_path ('<Image>/Filters/Development/Plug-In Examples/');
 
         procedure.set_documentation(_("Plug-in example in JavaScript (GJS)"),
                                     _("Plug-in example in JavaScript (GJS)"),
@@ -87,7 +87,7 @@ var Goat = GObject.registerClass({
             GimpUi.init("goat-exercise-gjs");
             /* TODO: help function and ID. */
             let dialog = new GimpUi.Dialog({
-              title: _("Plug-in Example in JavaScript (GJS)"),
+              title: _("Plug-In Example in JavaScript (GJS)"),
               role: "goat-exercise-JavaScript",
               use_header_bar: true,
             });
