@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-21 16:49+0000\n"
-"PO-Revision-Date: 2024-07-21 19:42+0200\n"
+"PO-Revision-Date: 2024-08-10 17:33+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
-msgstr "Interaktive konsoll for programmering med  Script-Fu"
+msgstr "Interaktive konsoll for programmering med Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
@@ -32,7 +32,7 @@ msgstr "Tenar for fjernoperering av Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
-msgstr "_Start tenaren …"
+msgstr "_Start tenaren …"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
@@ -127,7 +127,7 @@ msgstr "Interaktiv Scheme-utvikling"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
-msgstr "_Bla gjennom …"
+msgstr "_Bla gjennom  …"
 
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
@@ -266,7 +266,7 @@ msgstr "Punktbilete"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
-msgstr "Legg til _fasettkant…"
+msgstr "Legg til _fasettkant …"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:190
 msgid "Add a beveled border to an image"
@@ -295,7 +295,7 @@ msgstr "Kantlag"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "Legg til _ramme …"
+msgstr "Legg til _ramme  …"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
@@ -328,7 +328,7 @@ msgstr "Filteret «bland» må ha minst tre kjeldelag"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
-msgstr "_Bland …"
+msgstr "_Bland  …"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:229
 msgid ""
@@ -361,7 +361,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
-msgstr "_Brenn inn …"
+msgstr "_Brenn inn  …"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid ""
@@ -424,7 +424,7 @@ msgstr "Set inn"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:192
 msgid "Stencil C_arve..."
-msgstr "_Skjer ut …"
+msgstr "_Skjer ut  …"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:193
 msgid ""
@@ -472,7 +472,7 @@ msgstr "Uthev"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:232
 msgid "Stencil C_hrome..."
-msgstr "_Kromeffekt …"
+msgstr "_Kromeffekt  …"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:233
 msgid ""
@@ -516,7 +516,7 @@ msgstr "Effektlag"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
-msgstr "_Kretskort …"
+msgstr "_Kretskort  …"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
@@ -552,7 +552,7 @@ msgstr "Del laga"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
-msgstr "_Tekstil …"
+msgstr "_Tekstil  …"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
@@ -585,7 +585,7 @@ msgstr "Flekkar"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:82
 msgid "_Coffee Stain..."
-msgstr "_Kaffiflekkar …"
+msgstr "_Kaffiflekkar  …"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:83
 msgid "Add realistic looking coffee stains to the image"
@@ -601,7 +601,7 @@ msgstr "Gjer berre mørkare"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds..."
-msgstr "_Differenseskyer …"
+msgstr "_Differenseskyer  …"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -609,7 +609,7 @@ msgstr "Legg til massiv støy med lagmodus «differanse»"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "_Forvreng …"
+msgstr "_Forvreng  …"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
@@ -641,7 +641,7 @@ msgstr "Glatt ut _loddrett"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
-msgstr "_Slagskugge (tradisjonell)…"
+msgstr "_Slagskugge (tradisjonell) …"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
@@ -680,7 +680,7 @@ msgstr "Tillat endring av storleik"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
 msgid "_Erase Every Nth Row..."
-msgstr "Slett kvar _n-te rad …"
+msgstr "Slett kvar _n-te rad  …"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:43
 msgid "Erase every nth row or column"
@@ -718,7 +718,7 @@ msgstr "Fyll med bakgrunn"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:57
 msgid "_Erase Every Other Row..."
-msgstr "Sl_ett annakvar rad …"
+msgstr "Sl_ett annakvar rad  …"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:58
 msgid "Erase every other row or column"
@@ -738,7 +738,7 @@ msgstr "Odde"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
-msgstr "Lager _skrifttypekart …"
+msgstr "Lager _skrifttypekart  …"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:153
 msgid ""
@@ -781,11 +781,11 @@ msgstr "Svart på kvit"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Active colors"
-msgstr "Aktive fargar"
+msgstr "Gjeldande fargar"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
-msgstr "_Ullen kant …"
+msgstr "_Ullen kant  …"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
@@ -908,11 +908,11 @@ msgstr "_Nettsida for brukarhandboka"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
-msgstr "_Eigendefinert fargeovergang …"
+msgstr "_Eigendefinert fargeovergang  …"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:70
 msgid "Create an image filled with an example of the current gradient"
-msgstr "Lager eit bilete med eit eksempel på den aktive fargeovergangen"
+msgstr "Lagar eit bilete med eit eksempel på den gjeldande fargeovergangen"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:75
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:70
@@ -936,14 +936,14 @@ msgstr "Reversert fargeovergang"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:84
 msgid "_Grid..."
-msgstr "_Rutenett …"
+msgstr "_Rutenett  …"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:85
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
-"Teiknar eit rutenett ut frå x- og y-koordinata ved hjelp av den aktive "
+"Teiknar eit rutenett ut frå x- og y-koordinata ved hjelp av den gjeldande "
 "penselen"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
@@ -964,7 +964,7 @@ msgstr "Lagar fire hjelpelinjer ved kantane til det gjeldande utvalet"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "Ny hjelpelinje (i _%) …"
+msgstr "Ny hjelpelinje (i _%)  …"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -993,7 +993,7 @@ msgstr "_Posisjon (i %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
-msgstr "Ny _hjelpelinje …"
+msgstr "Ny _hjelpelinje  …"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
@@ -1014,7 +1014,7 @@ msgstr "Fjern alle vassrette og loddrette hjelpelinjer"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
 msgid "_Lava..."
-msgstr "_Lava …"
+msgstr "_Lava  …"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:118
 msgid "Fill the current selection with lava"
@@ -1043,7 +1043,7 @@ msgstr "Bruk gjeldande fargeovergang"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
-msgstr "Linje_nova …"
+msgstr "Linje_nova  …"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
@@ -1071,7 +1071,7 @@ msgstr "Slump"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
-msgstr "_Rektangulær …"
+msgstr "_Rektangulær  …"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "Create a rectangular brush"
@@ -1093,7 +1093,7 @@ msgstr "Mellomrom"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
-msgstr "Re_ktangulær, fjørkanta …"
+msgstr "Re_ktangulær, fjørkanta  …"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
@@ -1106,7 +1106,7 @@ msgstr "Fjør"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
-msgstr "_Elliptisk …"
+msgstr "_Elliptisk  …"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
@@ -1114,7 +1114,7 @@ msgstr "Lag ein elliptisk pensel"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr "Elliptisk, med fjørkant …"
+msgstr "Elliptisk, med fjørkant  …"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
@@ -1122,7 +1122,7 @@ msgstr "Opprett ein elliptisk pensel med fjørkantar"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
-msgstr "_Gamalt foto …"
+msgstr "_Gamalt foto  …"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
@@ -1153,7 +1153,7 @@ msgid ""
 "will be replaced)"
 msgstr ""
 "Namnet på fila som skal lagast (dersom det finst ei fil med dette namnet frå "
-"før, vil ho bli byt ut)"
+"før, vert ho byt ut)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1172,16 +1172,16 @@ msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
-"Eksporter den aktive paletten som eit CSS-stilark med fargenamna som "
+"Eksporter den gjeldande paletten som eit CSS-stilark med fargenamna som "
 "klassenamn og fargen som fargeeigenskap"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr "Eksporter den aktive paletten som ei PHP-ordliste (namn => farge)"
+msgstr "Eksporter den gjeldande paletten som ei PHP-ordliste (namn => farge)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr "Eksporter den aktive paletten som ei Python-ordliste (namn: farge)"
+msgstr "Eksporter den gjeldande paletten som ei Python-ordliste (namn: farge)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
@@ -1194,7 +1194,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr ""
-"Eksporter den aktive paletten som ei java.util.Hashtable<Streng, Farge>"
+"Eksporter den gjeldande paletten som ei java.util.Hashtable<Streng, Farge>"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
@@ -1203,7 +1203,7 @@ msgstr "Det er ingen bilete i utklippstavla å lime inn."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 msgid "New _Brush..."
-msgstr "Ny _pensel …"
+msgstr "Ny _pensel  …"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste the clipboard contents into a new brush"
@@ -1228,7 +1228,7 @@ msgstr "_Mellomrom"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
-msgstr "Nytt _mønsterelement …"
+msgstr "Nytt _mønsterelement  …"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste the clipboard contents into a new pattern"
@@ -1241,7 +1241,7 @@ msgstr "_Mønsternamn"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
-msgstr "_Perspektivskugge …"
+msgstr "_Perspektivskugge  …"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
@@ -1265,7 +1265,7 @@ msgstr "Interpolering"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:121
 msgid "_Predator..."
-msgstr "_Predator …"
+msgstr "_Predator  …"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
@@ -1293,14 +1293,14 @@ msgstr "Reverser rekkefølgja for biletlaga"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
-msgstr "_Krusning …"
+msgstr "_Krusning  …"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"Oppretter eit bilete med fleire lag ved å leggja ein krusningseffekt til det "
-"aktive laget"
+"Opprettar eit bilete med fleire lag ved å leggja ein krusningseffekt til det "
+"gjeldande laget"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
@@ -1329,7 +1329,7 @@ msgstr "Svart"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
-msgstr "_Avrunda hjørne …"
+msgstr "_Avrunda hjørne  …"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
@@ -1358,7 +1358,7 @@ msgstr "Legg til bakgrunn"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "_Byt palett …"
+msgstr "_Byt palett  …"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -1370,11 +1370,11 @@ msgstr "Palett"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
-msgstr "Avrunda r_ektangel …"
+msgstr "Avrunda r_ektangel  …"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
-msgstr "Avrund hjørna i det aktive utvalet"
+msgstr "Avrund hjørna i det gjeldande utvalet"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
 msgid "R_adius (%)"
@@ -1386,7 +1386,7 @@ msgstr "_Konkav"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
-msgstr "Til _pensel …"
+msgstr "Til _pensel  …"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
 msgid "Convert a selection to a brush"
@@ -1402,7 +1402,7 @@ msgstr "Konverter eit utval til eit bilete"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
-msgstr "Til _mønster…"
+msgstr "Til _mønster …"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
 msgid "Convert a selection to a pattern"
@@ -1410,7 +1410,7 @@ msgstr "Omform eit utval til eit mønster"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
-msgstr "_Dias …"
+msgstr "_Dias  …"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -1434,12 +1434,12 @@ msgstr "Tekstfarge"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
 msgid "_Spinning Globe..."
-msgstr "_Roterande kule …"
+msgstr "_Roterande kule  …"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
-"Lager ein animasjon ved å avbilde det aktive biletet på ei roterande kule"
+"Lagar ein animasjon ved å avbilda det gjeldande biletet på ei roterande kule"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
 msgid "Frames"
@@ -1463,7 +1463,7 @@ msgstr "Berekner blåst"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
 msgid "_Spyrogimp (older script-fu version)..."
-msgstr "_Spyrogimp (eldre script-fu-versjon)…"
+msgstr "_Spyrogimp (eldre script-fu-versjon) …"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
@@ -1580,15 +1580,15 @@ msgstr "Fargeovergang: Sløyfe, triangel"
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:272
 msgid "_Sphere..."
-msgstr "_Kule …"
+msgstr "_Kule  …"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
-msgstr "_Slør flisfugene …"
+msgstr "_Slør flisfugene  …"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "Slører biletkantane slik at bileta kan flisleggjast utan fuger"
+msgstr "Slørar biletkantane slik at bileta kan flisleggjast utan fuger"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:76
 msgid "Radius"
@@ -1624,14 +1624,14 @@ msgstr "Dekkevne for maska"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
-msgstr "_Bølgjer …"
+msgstr "_Bølgjer  …"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:96
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
-"Oppretter eit fleirlags bilete med ein effekt som kan minne om ringer i vatn "
+"Opprettar eit fleirlags bilete med ein effekt som kan minna om ringar i vatn "
 "etter eit steinkast"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
@@ -1640,7 +1640,7 @@ msgstr "Amplityde"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
-msgstr "Bølgelengde"
+msgstr "Bølgelengd"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
@@ -1648,7 +1648,7 @@ msgstr "Inverter retning"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:397
 msgid "_Weave..."
-msgstr "_Vevnad …"
+msgstr "_Vevnad  …"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:398
 msgid ""
@@ -1676,7 +1676,7 @@ msgstr "Skuggedjupn"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:409
 msgid "Thread length"
-msgstr "Trådlengde"
+msgstr "Trådlengd"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:410
 msgid "Thread density"
@@ -1692,7 +1692,7 @@ msgstr "Skugge"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:121
 msgid "_Xach-Effect..."
-msgstr "_Xach-Effect …"
+msgstr "_Xach-Effect  …"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
