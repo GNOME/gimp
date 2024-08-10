@@ -330,7 +330,7 @@ menus_init (Gimp *gimp)
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Selection>",
                                       "select",
-                                      "vectors",
+                                      "paths",
                                       NULL,
                                       "/selection-popup",
                                       "selection-menu", NULL,
