@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-07 01:41+0000\n"
-"PO-Revision-Date: 2024-08-08 08:47+0800\n"
+"POT-Creation-Date: 2024-08-09 18:42+0000\n"
+"PO-Revision-Date: 2024-08-10 08:45+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -12044,12 +12044,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "固定浮动选区"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:779
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:813
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1131
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1165
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "剪切"
@@ -12448,17 +12448,25 @@ msgstr "颜色历史"
 msgid "Updating tag cache"
 msgstr "正在更新标签缓存"
 
-#: app/core/gimp-edit.c:87
+#: app/core/gimp-edit.c:89
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "剪切 %d 个图层"
 
-#: app/core/gimp-edit.c:549 app/core/gimpimage-new.c:612
+#: app/core/gimp-edit.c:235
+msgid "Cannot cut because the selected region is empty."
+msgstr "无法剪切，因为选中区域为空。"
+
+#: app/core/gimp-edit.c:238
+msgid "Cannot copy because the selected region is empty."
+msgstr "无法复制，因为选中区域为空。"
+
+#: app/core/gimp-edit.c:583 app/core/gimpimage-new.c:612
 msgid "Pasted Layer"
 msgstr "被粘贴的图层"
 
-#: app/core/gimp-edit.c:1148
+#: app/core/gimp-edit.c:1182
 msgid "Global Buffer"
 msgstr "全局缓冲区"
 
@@ -17557,8 +17565,8 @@ msgstr "X 分辨率(_X)："
 msgid "_Y resolution:"
 msgstr "Y 分辨率(_Y)："
 
-#: app/dialogs/print-size-dialog.c:243 app/widgets/gimpimagepropview.c:461
-#: app/widgets/gimpsizebox.c:253 app/widgets/gimptemplateeditor.c:362
+#: app/dialogs/print-size-dialog.c:243 app/widgets/gimpsizebox.c:253
+#: app/widgets/gimptemplateeditor.c:362
 #, c-format
 msgid "pixels/%a"
 msgstr "像素/%a"
@@ -18266,23 +18274,23 @@ msgstr "高"
 msgid "_Sample Merged"
 msgstr "位样合并(_S)"
 
-#: app/display/gimpdisplayshell.c:536
+#: app/display/gimpdisplayshell.c:539
 msgid "Access the image menu"
 msgstr "获取图像菜单"
 
-#: app/display/gimpdisplayshell.c:699
+#: app/display/gimpdisplayshell.c:702
 msgid "Zoom image when window size changes"
 msgstr "当窗口大小改变时缩放图像"
 
-#: app/display/gimpdisplayshell.c:728
+#: app/display/gimpdisplayshell.c:731
 msgid "Toggle Quick Mask"
 msgstr "切换快速蒙版"
 
-#: app/display/gimpdisplayshell.c:743
+#: app/display/gimpdisplayshell.c:746
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: app/display/gimpdisplayshell.c:796 app/display/gimpdisplayshell.c:1548
+#: app/display/gimpdisplayshell.c:799 app/display/gimpdisplayshell.c:1551
 #: app/widgets/gimptoolbox.c:269
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
@@ -27285,6 +27293,11 @@ msgstr "通道数量："
 msgid "Number of paths:"
 msgstr "路径数量："
 
+#: app/widgets/gimpimagepropview.c:461
+#, c-format
+msgid "pixels/%s"
+msgstr "像素/%s"
+
 #: app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
@@ -28417,12 +28430,12 @@ msgctxt "file-action"
 msgid "_Preview Size"
 msgstr "预览大小(_P)"
 
-#: menus/dockable-menu.ui.in.in:25
+#: menus/dockable-menu.ui.in.in:26
 msgctxt "file-action"
 msgid "_Tab Style"
 msgstr "标签页样式(_T)"
 
-#: menus/dockable-menu.ui.in.in:41
+#: menus/dockable-menu.ui.in.in:42
 msgctxt "file-action"
 msgid "Move to Screen"
 msgstr "移动至屏幕"
@@ -28919,10 +28932,6 @@ msgstr "撤消历史菜单"
 #~ msgctxt "paths-action"
 #~ msgid "Select the vector below the current path"
 #~ msgstr "选择当前路径下方的路径"
-
-#, c-format
-#~ msgid "pixels/%s"
-#~ msgstr "像素/%s"
 
 #, c-format
 #~ msgid "%p"
