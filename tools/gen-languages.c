@@ -178,6 +178,7 @@ main (int    argc,
 static void
 gimp_language_store_parser_init (void)
 {
+  GTimer         *timer = g_timer_new ();
   GHashTable     *base_lang_list;
   gchar          *current_env;
   GDir           *locales_dir;
@@ -351,6 +352,10 @@ gimp_language_store_parser_init (void)
                        g_strdup ("English [en_US]"));
 
   g_hash_table_destroy (base_lang_list);
+
+  g_timer_stop (timer);
+  g_print ("%s: %f seconds\n", G_STRFUNC, g_timer_elapsed (timer, NULL));
+  g_timer_destroy (timer);
 }
 
 static void
@@ -451,22 +456,33 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
                         const gchar    **names,
                         const gchar    **values)
 {
-  const gchar *lang = NULL;
-  const gchar *code = NULL;
+  const gchar *lang       = NULL;
+  const gchar *code       = NULL;
+  gboolean     has_part12 = FALSE;
 
   while (*names && *values)
     {
       if (strcmp (*names, "name") == 0)
-        lang = *values;
+        {
+          lang = *values;
+        }
       else if (strcmp (*names, "part1_code") == 0)
         /* 2-letter ISO 639-1 codes have priority.
          * But some languages have no 2-letter code. Ex: Asturian (ast).
          */
-        code = *values;
+        {
+          code = *values;
+          has_part12 = TRUE;
+        }
       else if (strcmp (*names, "part2_code") == 0 && code == NULL)
-        code = *values;
+        {
+          code = *values;
+          has_part12 = TRUE;
+        }
       else if (strcmp (*names, "id") == 0 && code == NULL)
-        code = *values;
+        {
+          code = *values;
+        }
 
       names++;
       values++;
@@ -474,12 +490,16 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
 
   if (lang && *lang && code && *code)
     {
-      gchar *semicolon;
-      gchar *localized_name = g_strdup (dgettext ("iso_639_3", lang));
+      gchar    *semicolon;
+      gchar    *localized_name = g_strdup (dgettext ("iso_639_3", lang));
+      gboolean save_anyway     = FALSE;
 
       /* If the language is in our base table, we save its standard English name. */
       if (g_hash_table_contains (parser->base_lang_list, code))
-        g_hash_table_replace (parser->base_lang_list, g_strdup (code), g_strdup (lang));
+        {
+          g_hash_table_replace (parser->base_lang_list, g_strdup (code), g_strdup (lang));
+          save_anyway = TRUE;
+        }
 
       /*  there might be several language names; use the first one  */
       semicolon = strchr (localized_name, ';');
@@ -490,8 +510,12 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
           localized_name = g_strndup (localized_name, semicolon - localized_name);
           g_free (temp);
         }
-      /* In any case, we save the name in user-set language for all lang. */
-      g_hash_table_insert (all_lang_list, g_strdup (code), localized_name);
+      /* In any case, we save the name in user-set language for all lang
+       * with part 1 or part 2 code, or for the few language with no
+       * part 1|2 code but for which we have a localization.
+       */
+      if (has_part12 || save_anyway)
+        g_hash_table_insert (all_lang_list, g_strdup (code), localized_name);
     }
 }
 
