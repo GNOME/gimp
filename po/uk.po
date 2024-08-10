@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-09 18:42+0000\n"
-"PO-Revision-Date: 2024-08-10 09:13+0300\n"
+"POT-Creation-Date: 2024-08-10 16:11+0000\n"
+"PO-Revision-Date: 2024-08-10 22:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -12728,12 +12728,10 @@ msgstr[2] "Вирізати %d шарів"
 msgstr[3] "Вирізати шар"
 
 #: app/core/gimp-edit.c:235
-#| msgid "Cannot float selection because the selected region is empty."
 msgid "Cannot cut because the selected region is empty."
 msgstr "Не вдалось вирізати, бо позначена ділянка порожня."
 
 #: app/core/gimp-edit.c:238
-#| msgid "Cannot float selection because the selected region is empty."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Не вдалось скопіювати, бо позначена ділянка порожня."
 
@@ -20299,7 +20297,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Перетворити кольори на градації сірого"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1272
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1315
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:274
@@ -20338,7 +20336,7 @@ msgstr "Замінити часткову прозорість кольором"
 msgid "The color"
 msgstr "Колір"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1235
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1278
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -23446,21 +23444,34 @@ msgstr "%s, щоб взяти піпеткою колір тла"
 msgid "Anti erase  (%s)"
 msgstr "Антигумка  (%s)"
 
-#: app/tools/gimpfilteroptions.c:72
+#: app/tools/gimpfilteroptions.c:73
 msgid "_Preview"
 msgstr "_Попередній перегляд"
 
-#: app/tools/gimpfilteroptions.c:79
+#: app/tools/gimpfilteroptions.c:80
 msgid "Split _view"
 msgstr "Роз_ділити перегляд"
 
-#: app/tools/gimpfilteroptions.c:102
+#: app/tools/gimpfilteroptions.c:103
 msgid "On-canvas con_trols"
 msgstr "Керування на _полотгі"
 
-#: app/tools/gimpfilteroptions.c:103
+#: app/tools/gimpfilteroptions.c:104
 msgid "Show on-canvas filter controls"
 msgstr "Показувати засоби керування фільтром на полотні"
+
+#: app/tools/gimpfilteroptions.c:122
+#| msgid "Merge filter"
+msgid "_Merge filter"
+msgstr "З_лити фільтр"
+
+#: app/tools/gimpfilteroptions.c:123
+msgid ""
+"If enabled, the filter is immediately merged.\n"
+"Otherwise, it becomes an editable non-destructive filter."
+msgstr ""
+"Якщо увімкнено, результати фільтрування буде негайно об'єднано з основною.\n"
+"Якщо ж вимкнено, буде створено придатний до редагування неруйнівний фільтр."
 
 #: app/tools/gimpfiltertool.c:310 app/tools/gimpselectiontool.c:575
 #, c-format
@@ -23472,53 +23483,53 @@ msgstr "Точки растру позначеного запису заблок
 msgid "A selected layer is not visible."
 msgstr "Вибраний шар є невидимим."
 
-#: app/tools/gimpfiltertool.c:660
+#: app/tools/gimpfiltertool.c:675
 msgid "Click to switch the original and filtered sides"
 msgstr "Натисніть, щоб поміняти місцями оригінал і результат обробки"
 
-#: app/tools/gimpfiltertool.c:664
+#: app/tools/gimpfiltertool.c:679
 msgid "Click to switch between vertical and horizontal"
 msgstr "Натисніть, щоб перемкнутися між вертикальним і горизонтальним"
 
-#: app/tools/gimpfiltertool.c:668
+#: app/tools/gimpfiltertool.c:683
 msgid "Click to move the split guide"
 msgstr "Натисніть, щоб пересунути межу поділу"
 
-#: app/tools/gimpfiltertool.c:670
+#: app/tools/gimpfiltertool.c:685
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: перемикання оригінал/фільтрування"
 
-#: app/tools/gimpfiltertool.c:671
+#: app/tools/gimpfiltertool.c:686
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
-#: app/tools/gimpfiltertool.c:1161
+#: app/tools/gimpfiltertool.c:1199
 msgid "Add filter"
 msgstr "Додати фільтр"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1248
+#: app/tools/gimpfiltertool.c:1291
 msgid "Blending Options"
 msgstr "Параметри змішування"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1287
+#: app/tools/gimpfiltertool.c:1330
 msgid "Advanced Color Options"
 msgstr "Додаткові параметри кольорів"
 
-#: app/tools/gimpfiltertool.c:1700 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1743 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: app/tools/gimpfiltertool.c:1702 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1745 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
 
-#: app/tools/gimpfiltertool.c:1945
+#: app/tools/gimpfiltertool.c:1988
 msgid "Editing filter..."
 msgstr "Зміна фільтра…"
 
@@ -27942,51 +27953,51 @@ msgstr "Ефекти з активних інструментів не може 
 msgid "Remove filter"
 msgstr "Вилучити фільтр"
 
-#: app/widgets/gimpitemtreeview.c:3329
+#: app/widgets/gimpitemtreeview.c:3332
 msgid "No layer set stored"
 msgstr "Немає збережених наборів шарів"
 
-#: app/widgets/gimpitemtreeview.c:3351
+#: app/widgets/gimpitemtreeview.c:3354
 msgid "New layer set's name"
 msgstr "Назва нового набору шарів"
 
-#: app/widgets/gimpitemtreeview.c:3393 app/widgets/gimpitemtreeview.c:3408
+#: app/widgets/gimpitemtreeview.c:3396 app/widgets/gimpitemtreeview.c:3411
 msgid "Select layers by text search"
 msgstr "Позначення шарів за текстовим пошуком"
 
-#: app/widgets/gimpitemtreeview.c:3395 app/widgets/gimpitemtreeview.c:3410
+#: app/widgets/gimpitemtreeview.c:3398 app/widgets/gimpitemtreeview.c:3413
 msgid "Text search"
 msgstr "Текстовий пошук"
 
-#: app/widgets/gimpitemtreeview.c:3414
+#: app/widgets/gimpitemtreeview.c:3417
 msgid "Select layers by glob patterns"
 msgstr "Позначення шарів за взірцями із замінниками"
 
-#: app/widgets/gimpitemtreeview.c:3416
+#: app/widgets/gimpitemtreeview.c:3419
 msgid "Glob pattern search"
 msgstr "Пошук за взірцем із замінниками"
 
-#: app/widgets/gimpitemtreeview.c:3420
+#: app/widgets/gimpitemtreeview.c:3423
 msgid "Select layers by regular expressions"
 msgstr "Позначення шарів за формальними виразами"
 
-#: app/widgets/gimpitemtreeview.c:3422
+#: app/widgets/gimpitemtreeview.c:3425
 msgid "Regular Expression search"
 msgstr "Пошук за формальним виразом"
 
-#: app/widgets/gimpitemtreeview.c:3477
+#: app/widgets/gimpitemtreeview.c:3480
 msgid "search"
 msgstr "пошук"
 
-#: app/widgets/gimpitemtreeview.c:3478
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "glob"
 msgstr "замінник"
 
-#: app/widgets/gimpitemtreeview.c:3478
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "regexp"
 msgstr "форм. вираз"
 
-#: app/widgets/gimpitemtreeview.c:3647
+#: app/widgets/gimpitemtreeview.c:3650
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Некоректний формальний вираз: %s\n"
@@ -29353,9 +29364,10 @@ msgid "De_velopment"
 msgstr "Р_озробка"
 
 #: menus/image-menu.ui.in.in:846
+#| msgid "Plug-in Folders"
 msgctxt "filters-action"
-msgid "_Goat exercises"
-msgstr "Вправи із _козою"
+msgid "Plug-in _Examples"
+msgstr "_Приклади додатків"
 
 #: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
@@ -29506,6 +29518,10 @@ msgstr "Меню шаблону інструментів"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
+
+#~ msgctxt "filters-action"
+#~ msgid "_Goat exercises"
+#~ msgstr "Вправи із _козою"
 
 #, c-format
 #~ msgid "%p"
