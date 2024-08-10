@@ -9,25 +9,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-06 09:44+0000\n"
-"PO-Revision-Date: 2024-08-07 14:43+0300\n"
+"POT-Creation-Date: 2024-08-10 16:14+0000\n"
+"PO-Revision-Date: 2024-08-10 22:26+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 23.04.3\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
-msgid "Exercise in _C minor"
-msgstr "Вправа у С_і-мінор"
+msgid "In _C"
+msgstr "_C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
-msgid "Exercise a goat in the C language"
-msgstr "Потренувати козу у мові Сі"
+#: extensions/goat-exercises/goat-exercise-c.c:121
+msgid "Plug-in example in C"
+msgstr "Приклад додатка мовою C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
@@ -54,8 +55,8 @@ msgid "Procedure '%s' only works with one drawable."
 msgstr "Процедура «%s» працює лише для одного малюнка одночасно."
 
 #: extensions/goat-exercises/goat-exercise-c.c:180
-msgid "Exercise a goat (C)"
-msgstr "Потренувати козу (Сі)"
+msgid "Plug-in Example in C"
+msgstr "Приклад додатка мовою C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:184
 #: extensions/goat-exercises/goat-exercise-gjs.js:94
@@ -79,8 +80,8 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3331
-#: plug-ins/gradient-flare/gradient-flare.c:3445
+#: plug-ins/gradient-flare/gradient-flare.c:3339
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 #: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/ifs-compose/ifs-compose.c:2603
 #: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
@@ -124,20 +125,18 @@ msgstr ""
 "Ознайомтеся із найсвіжішою версією коду в інтернеті — натисніть кнопку «Код»."
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
-msgid "Exercise a JavaScript goat"
-msgstr "Потренувати козу JavaScript"
+#| msgid "_JavaScript"
+msgid "In _JavaScript"
+msgstr "_JavaScript"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:67
-msgid "Exercise a goat in the JavaScript language (GJS)"
-msgstr "Потренувати козу у мові JavaScript (GJS)"
-
 #: extensions/goat-exercises/goat-exercise-gjs.js:68
-msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
-msgstr "Вигуляйте козу у Javascript за допомогою інтерпретатора GJS"
+msgid "Plug-in example in JavaScript (GJS)"
+msgstr "Приклад додатка мовою JavaScript (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
-msgid "Exercise a goat (JavaScript)"
-msgstr "Потренувати козу (Javascript)"
+msgid "Plug-in Example in JavaScript (GJS)"
+msgstr "Приклад додатка мовою JavaScript (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
@@ -149,7 +148,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -178,53 +177,48 @@ msgstr "_Гаразд"
 #. Not sure why run_mode has become a string instead of testing
 #. against Gimp.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
-msgid "Exercise a goat (Lua)"
-msgstr "Потренувати козу (Lua)"
+msgid "Plug-in Example in Lua"
+msgstr "Приклад додатка мовою Lua"
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
-msgid "Exercise a Lua goat"
-msgstr "Потренувати козу Lua"
+msgid "In _Lua"
+msgstr "_Lua"
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
-msgid "Exercise a goat in the Lua language"
-msgstr "Потренувати козу у мові Lua"
+#: extensions/goat-exercises/goat-exercise-lua.lua:177
+msgid "Plug-in example in Lua"
+msgstr "Приклад додатка мовою Lua"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
-msgstr "Потренувати козу і повправляйтеся у Python"
+msgid "In _Python"
+msgstr "_Python"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr "Потренувати козу у мові Python 3"
-
 #: extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
-msgstr "Вигуляйте козу у Python 3"
+msgid "Plug-in example in Python 3"
+msgstr "Приклад додатка мовою Python 3"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
 msgid "Procedure '{}' only works with one drawable."
 msgstr "Процедура «{}» працює лише для одного малюнка одночасно."
 
 #: extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
-msgstr "Потренувати козу (Python 3)"
+msgid "Plug-in Example in Python 3"
+msgstr "Приклад додатка мовою Python 3"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:45
-msgid "Exercise a Vala goat"
-msgstr "Потренувати козу Vala"
+msgid "In _Vala"
+msgstr "_Vala"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:46
-msgid "Exercise a goat in the Vala language"
-msgstr "Потренувати козу у мові Vala"
-
 #: extensions/goat-exercises/goat-exercise-vala.vala:47
-msgid "Takes a goat for a walk in Vala"
-msgstr "Вигуляйте козу у Vala"
+msgid "Plug-in example in Vala"
+msgstr "Приклад додатка мовою Vala"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:67
-msgid "Exercise a goat (Vala)"
-msgstr "Потренувати козу (Vala)"
+msgid "Plug-in Example in Vala"
+msgstr "Приклад додатка мовою Vala"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
 msgid "Goat Exercises"
@@ -303,7 +297,7 @@ msgid "Left edge"
 msgstr "Ліва межа"
 
 #: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
-#: plug-ins/gradient-flare/gradient-flare.c:2919
+#: plug-ins/gradient-flare/gradient-flare.c:2927
 msgid "Center"
 msgstr "Центр"
 
@@ -625,7 +619,8 @@ msgstr "Жалюзі"
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
-#: plug-ins/file-tiff/file-tiff-load.c:1530
+#: plug-ins/file-tiff/file-tiff-load.c:1545
+#: plug-ins/file-tiff/file-tiff-load.c:2350
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:245
@@ -2003,8 +1998,7 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:667
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:681
 msgid "Cannot operate on layers with masks."
@@ -2082,7 +2076,7 @@ msgstr "Коригуючі криві"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1212
-#: plug-ins/gradient-flare/gradient-flare.c:3047
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Copy"
 msgstr "_Копіювати"
 
@@ -2629,7 +2623,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
-#: plug-ins/file-tiff/file-tiff-load.c:293
+#: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається «%s»"
@@ -2717,8 +2711,7 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:124
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
-"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:126
 msgid "CSource cannot be run non-interactively."
@@ -4506,7 +4499,7 @@ msgstr "Додати це зображення"
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
 #: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
-#: plug-ins/file-tiff/file-tiff-load.c:1532
+#: plug-ins/file-tiff/file-tiff-load.c:1547
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
@@ -4795,13 +4788,11 @@ msgstr ""
 #: plug-ins/common/file-png.c:1443
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
-"Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1452
 #, c-format
-msgid ""
-"Error while exporting '%s'. Could not create PNG header info structure."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -6073,8 +6064,7 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:316
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr ""
-"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:323
 msgid "Retry without limits preventing to parse huge data?"
@@ -7876,7 +7866,7 @@ msgid "Layers"
 msgstr "Шари"
 
 #: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3045
+#: plug-ins/gradient-flare/gradient-flare.c:3053
 msgid "_New"
 msgstr "_Новий"
 
@@ -7888,8 +7878,8 @@ msgstr "_Дублювати"
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
-#: plug-ins/gradient-flare/gradient-flare.c:3048
-#: plug-ins/gradient-flare/gradient-flare.c:3331
+#: plug-ins/gradient-flare/gradient-flare.c:3056
+#: plug-ins/gradient-flare/gradient-flare.c:3339
 msgid "_Delete"
 msgstr "_Видалити"
 
@@ -8109,12 +8099,10 @@ msgstr ""
 "стовпчик відмічений."
 
 #: plug-ins/common/unit-editor.c:114
-#| msgid ""
-#| "This string will be used to identify a unit in GIMP's configuration files."
 msgid "The name to be used to identify this unit in the graphical interface"
 msgstr ""
-"Назва, яку буде використано для ідентифікації цієї одиниці у графічному"
-" інтерфейсі"
+"Назва, яку буде використано для ідентифікації цієї одиниці у графічному "
+"інтерфейсі"
 
 #: plug-ins/common/unit-editor.c:116
 msgid "Factor"
@@ -8924,7 +8912,7 @@ msgstr "Формат у пікселях"
 #. Create the combobox containing the presets
 #: plug-ins/file-dds/dds.c:213 plug-ins/file-dds/dds.c:276
 #: plug-ins/file-dds/dds.c:293 plug-ins/file-webp/file-webp-dialog.c:80
-#: plug-ins/gradient-flare/gradient-flare.c:2599
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "Default"
 msgstr "Типовий"
 
@@ -10657,17 +10645,17 @@ msgstr ""
 "Призначений профіль проби кольорів не є профілем CMYK.\n"
 "Цей профіль не буде включено до експортованого зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:301
+#: plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Не є зображенням TIFF або зображення пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:334
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» не містить каталоги"
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:341
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -10685,7 +10673,7 @@ msgstr[2] ""
 "Не вдалося виконати облік каталогу TIFF «%s» за заголовком, хоча, здається, "
 "маємо %d сторінок. Буде виконано спробу завантажити файл із цим припущенням."
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:472
 msgid "Extra channels with unspecified data."
 msgstr "Зайві канали із даними поза специфікацією."
 
@@ -10696,17 +10684,17 @@ msgstr "Зайві канали із даними поза специфікац�
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:484
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Нестандартний TIFF: зайві канали без поля «ExtraSamples»."
 
-#: plug-ins/file-tiff/file-tiff-load.c:569
+#: plug-ins/file-tiff/file-tiff-load.c:579
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Не вдалося прочитати сторінку %d з %d. Зображення може бути пошкоджено.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:598
+#: plug-ins/file-tiff/file-tiff-load.c:608
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -10715,7 +10703,7 @@ msgstr ""
 "Для цього зображення визначено лінійний колірний профіль, але цей профіль не "
 "встановлено на першому шарі. Шари під шаром %d буде оброблено як нелінійні."
 
-#: plug-ins/file-tiff/file-tiff-load.c:606
+#: plug-ins/file-tiff/file-tiff-load.c:616
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -10725,36 +10713,36 @@ msgstr ""
 "використовуватимемо лише перший з них. Якщо це призведе до некоректних "
 "результатів, вам варто завантажити кожен з шарів як окреме зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:628
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Підозрілива бітова глибина: %d для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:692
+#: plug-ins/file-tiff/file-tiff-load.c:702
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Непідтримувана розрядність на канал %d для сторінки %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:707
+#: plug-ins/file-tiff/file-tiff-load.c:717
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Не вдалося отримати ширину зображення з «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:715
+#: plug-ins/file-tiff/file-tiff-load.c:725
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Не вдалося отримати довжину зображення з «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:723
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Некоректні розміри зображення (%u x %u) для сторінки %d. Можливо, зображення "
 "пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:744
+#: plug-ins/file-tiff/file-tiff-load.c:754
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -10763,7 +10751,7 @@ msgstr ""
 "Не вдалося отримати фотометричні дані з «%s». Зображення стиснено CCITT. "
 "Припускаємо, мінімальний колір — білий."
 
-#: plug-ins/file-tiff/file-tiff-load.c:751
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -10773,7 +10761,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:783
+#: plug-ins/file-tiff/file-tiff-load.c:793
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -10781,7 +10769,7 @@ msgstr ""
 "Для %s не визначено тип каналу прозорості. Припускаємо, що прозорість не "
 "перемножено попередньо"
 
-#: plug-ins/file-tiff/file-tiff-load.c:808
+#: plug-ins/file-tiff/file-tiff-load.c:818
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10792,42 +10780,42 @@ msgstr ""
 "встановлено, хоча є додаткові канали. Припускаємо, що перший додатковий "
 "канал не є попередньо помноженими даними прозорості."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1097
+#: plug-ins/file-tiff/file-tiff-load.c:1107
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Некоректне або невідоме стискання %u. Вимикаємо стискання."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1155
+#: plug-ins/file-tiff/file-tiff-load.c:1165
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Не вдалося створити зображення: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1325
+#: plug-ins/file-tiff/file-tiff-load.c:1335
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Невідомий тип одиниці роздільності %d. Припускаємо точки на дюйм."
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1345
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Попередження: роздільність вказано без типу одиниці. Припускаємо точки на "
 "дюйм."
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1343
+#: plug-ins/file-tiff/file-tiff-load.c:1353
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Попередження: немає даних щодо роздільності y, припускаємо ту саму, що і для "
 "x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1370
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Некоректні дані щодо роздільності зображення, використовуємо типові значення"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1419
+#: plug-ins/file-tiff/file-tiff-load.c:1429
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Не вдалося отримати мапи кольорів з «%s»"
@@ -10837,25 +10825,25 @@ msgstr "Не вдалося отримати мапи кольорів з «%s»
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1507
+#: plug-ins/file-tiff/file-tiff-load.c:1517
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 "Підозрілива кількість додаткових каналів: %d. Ймовірно, пошкоджене "
 "зображення."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1567
+#: plug-ins/file-tiff/file-tiff-load.c:1582
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1720
+#: plug-ins/file-tiff/file-tiff-load.c:1740
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Не вдалося прочитати дані з TIFF «%s». Ймовірно, вміст файла пошкоджено."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1755
-#: plug-ins/file-tiff/file-tiff-load.c:1798
+#: plug-ins/file-tiff/file-tiff-load.c:1776
+#: plug-ins/file-tiff/file-tiff-load.c:1819
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -10863,14 +10851,14 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла %s, «%s», для завантаження "
 "метаданих tiff: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1878
+#: plug-ins/file-tiff/file-tiff-load.c:1899
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: непідтримуваний формат зображення, немає доступного завантажувача RGBA"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1993
-#: plug-ins/file-tiff/file-tiff-load.c:2190
+#: plug-ins/file-tiff/file-tiff-load.c:2014
+#: plug-ins/file-tiff/file-tiff-load.c:2211
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
@@ -10878,35 +10866,35 @@ msgstr ""
 "— %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2002
-#: plug-ins/file-tiff/file-tiff-load.c:2199
+#: plug-ins/file-tiff/file-tiff-load.c:2023
+#: plug-ins/file-tiff/file-tiff-load.c:2220
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Не вдалося прочитати рядок сканування. Зображення може бути пошкоджено. "
 "Рядок помилки — %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2551
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2559
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "Показати з_меншені зображення"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2604
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr "Обробляти зайвий канал як:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2607
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr "Б_ез попередньо помноженої альфи"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2608
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr "_Попередньо помножена альфа"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2609
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "_Канал"
 
@@ -11333,7 +11321,7 @@ msgstr "Полум'я"
 
 #: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3046
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_Edit"
 msgstr "З_міни"
 
@@ -11697,7 +11685,7 @@ msgid "Rendering fractal"
 msgstr "Візуалізація фрактала"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:880
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3330
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Ви впевнені, що хочете видалити «%s» зі списку та диску?"
@@ -11784,7 +11772,7 @@ msgid "Create rectangle"
 msgstr "Створити прямокутник"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3987
+#: plug-ins/gradient-flare/gradient-flare.c:3995
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -11811,7 +11799,7 @@ msgid "Create arc"
 msgstr "Створити дугу"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4004
+#: plug-ins/gradient-flare/gradient-flare.c:4012
 #: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -12291,7 +12279,7 @@ msgid "Adds random noise to the color"
 msgstr "Додає випадковий шум до кольору"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3651
 msgid "_General"
 msgstr "_Загальний вигляд"
 
@@ -12465,8 +12453,7 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -12576,8 +12563,7 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -12943,7 +12929,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "Поріг для адаптивної наддискретизації"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2499
+#: plug-ins/gradient-flare/gradient-flare.c:2507
 msgid "Gradient Flare"
 msgstr "Градієнтний спалах"
 
@@ -12982,19 +12968,19 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Не вдається записати файл град.спалаху «%s»: %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2543
+#: plug-ins/gradient-flare/gradient-flare.c:2551
 msgid "A_uto update preview"
 msgstr "_Автоматичний перегляд"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2598
+#: plug-ins/gradient-flare/gradient-flare.c:2606
 msgid "'Default' is created."
 msgstr "\"Типовий\" створено."
 
-#: plug-ins/gradient-flare/gradient-flare.c:2899
+#: plug-ins/gradient-flare/gradient-flare.c:2907
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2903
+#: plug-ins/gradient-flare/gradient-flare.c:2911
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -13004,175 +12990,174 @@ msgstr "_Y:"
 #.
 #. *    Scales
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:2943
-#: plug-ins/gradient-flare/gradient-flare.c:3696
-#: plug-ins/gradient-flare/gradient-flare.c:3798
-#: plug-ins/gradient-flare/gradient-flare.c:3929
+#: plug-ins/gradient-flare/gradient-flare.c:2951
+#: plug-ins/gradient-flare/gradient-flare.c:3704
+#: plug-ins/gradient-flare/gradient-flare.c:3806
+#: plug-ins/gradient-flare/gradient-flare.c:3937
 msgid "Parameters"
 msgstr "Параметри"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2977
+#: plug-ins/gradient-flare/gradient-flare.c:2985
 msgid "_Settings"
 msgstr "П_араметри"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3115
+#: plug-ins/gradient-flare/gradient-flare.c:3123
 msgid "S_elector"
 msgstr "Т_ип спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3179
+#: plug-ins/gradient-flare/gradient-flare.c:3187
 msgid "New Gradient Flare"
 msgstr "Новий градієнтний спалах"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3182
+#: plug-ins/gradient-flare/gradient-flare.c:3190
 msgid "Enter a name for the new GFlare"
 msgstr "Введіть назву нового градієнтного спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3183
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Unnamed"
 msgstr "Без назви"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3203
-#: plug-ins/gradient-flare/gradient-flare.c:3285
+#: plug-ins/gradient-flare/gradient-flare.c:3211
+#: plug-ins/gradient-flare/gradient-flare.c:3293
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Назва «%s» вже використовується!"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3259
+#: plug-ins/gradient-flare/gradient-flare.c:3267
 msgid "Copy Gradient Flare"
 msgstr "Копіювання градієнтного спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3262
+#: plug-ins/gradient-flare/gradient-flare.c:3270
 msgid "Enter a name for the copied GFlare"
 msgstr "Введіть назву для копії градієнтного спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3316
+#: plug-ins/gradient-flare/gradient-flare.c:3324
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
-"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
-#: plug-ins/gradient-flare/gradient-flare.c:3326
+#: plug-ins/gradient-flare/gradient-flare.c:3334
 msgid "Delete Gradient Flare"
 msgstr "Видалення градієнтного спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3398
+#: plug-ins/gradient-flare/gradient-flare.c:3406
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "не знайдено %s в списку gflares_list"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3440
+#: plug-ins/gradient-flare/gradient-flare.c:3448
 msgid "Gradient Flare Editor"
 msgstr "Редактор градієнтних спалахів"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3444
+#: plug-ins/gradient-flare/gradient-flare.c:3452
 msgid "_Rescan Gradients"
 msgstr "Перечитати _градієнти"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3566
+#: plug-ins/gradient-flare/gradient-flare.c:3574
 msgid "Glow Paint Options"
 msgstr "Параметри малювання сяйва"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3576
-#: plug-ins/gradient-flare/gradient-flare.c:3602
-#: plug-ins/gradient-flare/gradient-flare.c:3628
+#: plug-ins/gradient-flare/gradient-flare.c:3584
+#: plug-ins/gradient-flare/gradient-flare.c:3610
+#: plug-ins/gradient-flare/gradient-flare.c:3636
 msgid "Opacity:"
 msgstr "Непрозорість:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3588
-#: plug-ins/gradient-flare/gradient-flare.c:3614
-#: plug-ins/gradient-flare/gradient-flare.c:3640
+#: plug-ins/gradient-flare/gradient-flare.c:3596
+#: plug-ins/gradient-flare/gradient-flare.c:3622
+#: plug-ins/gradient-flare/gradient-flare.c:3648
 msgid "Paint mode:"
 msgstr "Режим малювання:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3592
+#: plug-ins/gradient-flare/gradient-flare.c:3600
 msgid "Rays Paint Options"
 msgstr "Параметри малювання променів"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3618
+#: plug-ins/gradient-flare/gradient-flare.c:3626
 msgid "Second Flares Paint Options"
 msgstr "Параметри малювання другого спалаху"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3669
-#: plug-ins/gradient-flare/gradient-flare.c:3769
-#: plug-ins/gradient-flare/gradient-flare.c:3902
+#: plug-ins/gradient-flare/gradient-flare.c:3677
+#: plug-ins/gradient-flare/gradient-flare.c:3777
+#: plug-ins/gradient-flare/gradient-flare.c:3910
 msgid "Gradients"
 msgstr "Градієнти"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3680
-#: plug-ins/gradient-flare/gradient-flare.c:3782
-#: plug-ins/gradient-flare/gradient-flare.c:3913
+#: plug-ins/gradient-flare/gradient-flare.c:3688
+#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3921
 msgid "Radial gradient:"
 msgstr "Радіальний градієнт:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3684
-#: plug-ins/gradient-flare/gradient-flare.c:3786
+#: plug-ins/gradient-flare/gradient-flare.c:3692
+#: plug-ins/gradient-flare/gradient-flare.c:3794
 msgid "Angular gradient:"
 msgstr "Кутовий градієнт:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3688
-#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3696
+#: plug-ins/gradient-flare/gradient-flare.c:3798
 msgid "Angular size gradient:"
 msgstr "Кутовий розмір градієнта:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3707
-#: plug-ins/gradient-flare/gradient-flare.c:3809
-#: plug-ins/gradient-flare/gradient-flare.c:3940
+#: plug-ins/gradient-flare/gradient-flare.c:3715
+#: plug-ins/gradient-flare/gradient-flare.c:3817
+#: plug-ins/gradient-flare/gradient-flare.c:3948
 msgid "Size (%):"
 msgstr "Розмір (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3718
-#: plug-ins/gradient-flare/gradient-flare.c:3820
-#: plug-ins/gradient-flare/gradient-flare.c:3951
+#: plug-ins/gradient-flare/gradient-flare.c:3726
+#: plug-ins/gradient-flare/gradient-flare.c:3828
+#: plug-ins/gradient-flare/gradient-flare.c:3959
 msgid "Rotation:"
 msgstr "Обертання:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3729
-#: plug-ins/gradient-flare/gradient-flare.c:3831
-#: plug-ins/gradient-flare/gradient-flare.c:3962
+#: plug-ins/gradient-flare/gradient-flare.c:3737
+#: plug-ins/gradient-flare/gradient-flare.c:3839
+#: plug-ins/gradient-flare/gradient-flare.c:3970
 msgid "Hue rotation:"
 msgstr "Обертання _відтінку:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3743
+#: plug-ins/gradient-flare/gradient-flare.c:3751
 msgid "G_low"
 msgstr "Ся_йво"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3842
+#: plug-ins/gradient-flare/gradient-flare.c:3850
 msgid "# of Spikes:"
 msgstr "Кількість плям:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3853
+#: plug-ins/gradient-flare/gradient-flare.c:3861
 msgid "Spike thickness:"
 msgstr "Товщина плям:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3867
+#: plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "_Rays"
 msgstr "_Промені"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3917
+#: plug-ins/gradient-flare/gradient-flare.c:3925
 msgid "Size factor gradient:"
 msgstr "Градієнт масшт. множника:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3921
+#: plug-ins/gradient-flare/gradient-flare.c:3929
 msgid "Probability gradient:"
 msgstr "Градієнт ймовірності:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3979
+#: plug-ins/gradient-flare/gradient-flare.c:3987
 msgid "Shape of Second Flares"
 msgstr "Форма другого спалаху"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/gradient-flare/gradient-flare.c:4046
 msgid "Random seed:"
 msgstr "База випадковості:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4052
+#: plug-ins/gradient-flare/gradient-flare.c:4060
 msgid "_Second Flares"
 msgstr "_Другорядні спалахи"
 
@@ -15973,8 +15958,7 @@ msgstr "Включаючи _рамку вікна"
 
 #: plug-ins/screenshot/screenshot.c:212
 msgid "Title bar, window borders and shadow will be part of the image"
-msgstr ""
-"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
 
 #: plug-ins/screenshot/screenshot.c:221
 msgid "Selection d_elay"
@@ -16119,8 +16103,7 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:191
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
-"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:197
 msgid "Filter E_psilon"
@@ -16324,6 +16307,60 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Exercise in _C minor"
+#~ msgstr "Вправа у С_і-мінор"
+
+#~ msgid "Exercise a goat in the C language"
+#~ msgstr "Потренувати козу у мові Сі"
+
+#~ msgid "Exercise a goat (C)"
+#~ msgstr "Потренувати козу (Сі)"
+
+#~ msgid "Exercise a JavaScript goat"
+#~ msgstr "Потренувати козу JavaScript"
+
+#~ msgid "Exercise a goat in the JavaScript language (GJS)"
+#~ msgstr "Потренувати козу у мові JavaScript (GJS)"
+
+#~ msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
+#~ msgstr "Вигуляйте козу у Javascript за допомогою інтерпретатора GJS"
+
+#~ msgid "Exercise a goat (JavaScript)"
+#~ msgstr "Потренувати козу (Javascript)"
+
+#~ msgid "Exercise a goat (Lua)"
+#~ msgstr "Потренувати козу (Lua)"
+
+#~ msgid "Exercise a Lua goat"
+#~ msgstr "Потренувати козу Lua"
+
+#~ msgid "Exercise a goat in the Lua language"
+#~ msgstr "Потренувати козу у мові Lua"
+
+#~ msgid "Exercise a goat and a python"
+#~ msgstr "Потренувати козу і повправляйтеся у Python"
+
+#~ msgid "Exercise a goat in the Python 3 language"
+#~ msgstr "Потренувати козу у мові Python 3"
+
+#~ msgid "Takes a goat for a walk in Python 3"
+#~ msgstr "Вигуляйте козу у Python 3"
+
+#~ msgid "Exercise a goat (Python 3)"
+#~ msgstr "Потренувати козу (Python 3)"
+
+#~ msgid "Exercise a Vala goat"
+#~ msgstr "Потренувати козу Vala"
+
+#~ msgid "Exercise a goat in the Vala language"
+#~ msgstr "Потренувати козу у мові Vala"
+
+#~ msgid "Takes a goat for a walk in Vala"
+#~ msgstr "Вигуляйте козу у Vala"
+
+#~ msgid "Exercise a goat (Vala)"
+#~ msgstr "Потренувати козу (Vala)"
 
 #~ msgid "ID"
 #~ msgstr "Ідентифікатор"
