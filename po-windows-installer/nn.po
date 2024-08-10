@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-14 10:52+0000\n"
-"PO-Revision-Date: 2024-07-14 14:59+0200\n"
+"PO-Revision-Date: 2024-08-09 22:02+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -37,7 +37,7 @@ msgstr "Lisensavtalar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Oppsettet er bygd av Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Oppsettprogrammet er bygd av Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
@@ -65,7 +65,7 @@ msgstr ""
 "arbeidet ditt.%nViss du møter problem, må du først kontrollera at dei ikkje "
 "alt er løyste i GIT før du tek kontakt med utviklarane eller rapporterer det "
 "i GIMP gitlab:% n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nVil du "
-"likevel halda fram med installasjonen?"
+"likevel halda fram med installeringa?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
@@ -93,10 +93,10 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Installasjonsprogrammet har oppdaga at Windows ikkje køyrer i 32 bits per "
-"piksel-skjermmodus. Dette er kjent for å skape stabilitetsproblem med GIMP, "
-"så det vert tilrådd å endra fargedjupna på skjermen til 32 BPP før du held "
-"fram."
+"Installasjonsprogrammet har oppdaga at Windows ikkje køyrer i skjermmodus "
+"med 32 bits per piksel. Dette er kjent for å skapa stabilitetsproblem med "
+"GIMP, så det vert tilrådd å endra fargedjupna på skjermen til 32 BPP før du "
+"held fram."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
 msgid "E&xit"
@@ -151,7 +151,7 @@ msgstr "Køyretidsbibliotek"
 #: build/windows/installer/lang/setup.isl.xml.in:101
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
-"Køyretidsbibliotek som vert brukte av GIMP, inkludert GTK køyretidsomgivnadar"
+"Køyretidsbibliotek som vert brukte av GIMP, også GTK køyretidsomgivnadar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -159,7 +159,7 @@ msgstr "Feilfinningssymbol"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
 msgid "Include information to help with debugging GIMP"
-msgstr "Inkluderer informasjon til hjelp ved feilfinning i GIMP"
+msgstr "Ta også med informasjon til hjelp ved feilfinning i GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
 #: build/windows/installer/lang/setup.isl.xml.in:117
@@ -211,8 +211,8 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
 "support."
 msgstr ""
-"Inkluderer filer som er nødvendige for å bruka 32-bits programtillegg."
-"%nRequired for TWAIN-støtte."
+"Ta også med filer som er nødvendige for å bruka 32-bits programtillegg."
+"%nNødvendige for TWAIN-støtte."
 
 #: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
@@ -220,7 +220,7 @@ msgstr "Tilleggsikon:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:166
 msgid "Create a &desktop icon"
-msgstr "Lagar eit &skrivebordsikon"
+msgstr "Lag eit &skrivebordsikon"
 
 #: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Create a &Quick Launch icon"
@@ -235,7 +235,7 @@ msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
-"Det var eit problem med å oppdatere GIMP sin omgivnad i %1. Viss du får feil "
+"Det var eit problem med å oppdatera GIMP sin omgivnad i %1. Viss du får feil "
 "ved lasting av programtillegga, prøv å avinstallere GIMP og installere GIMP "
 "på nytt."
 
@@ -257,7 +257,7 @@ msgstr "Feil ved oppdateringa av %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Feil ved oppdatering av konfigurasjonsfila %1 for GIMP."
+msgstr "Feil ved oppdatering av oppsettfila %1 for GIMP."
 
 #: build/windows/installer/lang/setup.isl.xml.in:204
 msgid "Edit with GIMP"
@@ -297,7 +297,7 @@ msgstr "Vel &ubrukte"
 
 #: build/windows/installer/lang/setup.isl.xml.in:238
 msgid "File types to associate with GIMP:"
-msgstr "Filtypar som skal koplast til GIMP"
+msgstr "Filtypar som skal koplast til GIMP:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:242
 msgid "Removing previous version of GIMP:"
@@ -313,9 +313,9 @@ msgid ""
 msgstr ""
 "GIMP %1 kan ikkje installerast over den installerte GIMP-versjonen og den "
 "automatiske avinstalleringa av den gamle versjonen var mislukka.%n%nFjern "
-"den førre versjonen av GIMP manuelt før du installerer denne versjonen i % "
-"2, eller vel ein tilpassa installasjon og vel ei anna installasjonsmappe."
-"%n%nInstallasjonsprogrammet vert avslutta nå."
+"den førre versjonen av GIMP manuelt før du installerer denne versjonen i %2, "
+"eller vel ein tilpassa installasjon og vel ei anna installasjonsmappe."
+"%n%nInstallasjonsprogrammet vert avslutta no."
 
 #: build/windows/installer/lang/setup.isl.xml.in:250
 msgid ""
@@ -330,7 +330,7 @@ msgstr ""
 "fjernast automatisk.%n%nFjern den førre versjonen av GIMP og eventuelle "
 "tillegg før du installerer denne versjonen i %2, eller vel ein tilpassa "
 "installasjon og ei anna installasjonsmappe.%n%n Installasjonsprogrammet vert "
-"avslutta nå."
+"avslutta no."
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid ""
@@ -339,8 +339,8 @@ msgid ""
 "Setup will continue next time an administrator logs in."
 msgstr ""
 "Den førre GIMP-versjonen vart fjerna, men Windows må startast på nytt før "
-"installasjonen kan gjera seg ferdig.%n%nEtter at du har starta datamaskinen "
-"på nytt, held installasjonen fram neste gong ein administrator logga på."
+"installasjonen kan gjerast ferdig.%n%nEtter at du har starta datamaskinen på "
+"nytt, held installasjonen fram neste gong ein administrator logga på."
 
 #: build/windows/installer/lang/setup.isl.xml.in:259
 msgid "There was an error restarting the Setup. (%1)"
@@ -349,7 +349,7 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:263
 msgid "Cleaning up old files..."
-msgstr "Ryddar i gamle filer…"
+msgstr "Ryddar i gamle filer …"
 
 #: build/windows/installer/lang/setup.isl.xml.in:268
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
@@ -361,23 +361,23 @@ msgstr "for gratis oppdateringar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:276
 msgid "Setting up file associations..."
-msgstr "Set opp filtilknytingar…"
+msgstr "Set opp filtilknytingar …"
 
 #: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Setting up environment for GIMP Python extension..."
-msgstr "Set opp omgivnadar for GIMP Pythonutvidingar…"
+msgstr "Set opp omgivnadar for GIMP Pythonutvidingar …"
 
 #: build/windows/installer/lang/setup.isl.xml.in:282
 msgid "Setting up MyPaint brushes..."
-msgstr "Set opp MyPaint-penslar…"
+msgstr "Set opp MyPaint-penslar …"
 
 #: build/windows/installer/lang/setup.isl.xml.in:285
 msgid "Setting up GIMP environment..."
-msgstr "Set opp GIMP-omgivnadane…"
+msgstr "Set opp GIMP-omgivnadane …"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Set opp GIMP-konfigurasjon for 32-bits støtte for programtillegg…"
+msgstr "Set opp GIMP-oppsettet for 32-bits støtte for programtillegg …"
 
 #: build/windows/installer/lang/setup.isl.xml.in:293
 msgid "Launch GIMP"
