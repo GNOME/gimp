@@ -391,9 +391,9 @@ bumpmap_setup (GimpDrawable *bumpmap)
         }
 
       if (gimp_drawable_is_rgb (bumpmap))
-        bump_format = babl_format ("R'G'B' u8");
+        bump_format = babl_format ("R'aG'aB'aA u8");
       else
-        bump_format = babl_format ("Y' u8"); /* FIXME */
+        bump_format = babl_format ("Y'aA u8"); /* FIXME */
     }
 }
 
