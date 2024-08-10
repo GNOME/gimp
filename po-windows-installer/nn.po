@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-01-10 15:41+0000\n"
-"PO-Revision-Date: 2024-01-10 17:19+0100\n"
+"PO-Revision-Date: 2024-08-09 22:13+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team: none\n"
+"Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -24,7 +24,7 @@ msgstr "Lisensavtalar"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Oppsettet er bygd av Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Oppsettetprogrammet er bygd av Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
@@ -78,10 +78,10 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Installasjonsprogrammet har oppdaga at Windows ikkje køyrer i 32 bits per "
-"piksel-skjermmodus. Dette er kjent for å skape stabilitetsproblem med GIMP, "
-"så det vert tilrådd å endra fargedjupna på skjermen til 32 BPP før du held "
-"fram."
+"Installasjonsprogrammet har oppdaga at Windows ikkje køyrer i skjermmodus "
+"med 32 bits per piksel. Dette er kjent for å skapa stabilitetsproblem med "
+"GIMP, så det vert tilrådd å endra fargedjupna på skjermen til 32 BPP før du "
+"held fram."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
@@ -136,7 +136,7 @@ msgstr "Køyretidsbibliotek"
 #: ../build/windows/installer/lang/setup.isl.in.h:23
 msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
 msgstr ""
-"Køyretidsbibliotek som vert brukte av GIMP, inkludert GTK køyretidsomgivnadar"
+"Køyretidsbibliotek som vert brukte av GIMP, også GTK køyretidsomgivnadar"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
 msgid "Debug symbols"
@@ -144,11 +144,11 @@ msgstr "Feilfinningssymbol"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:25
 msgid "Include information to help with debugging GIMP"
-msgstr "Inkluderer informasjon til hjelp ved feilfinning i GIMP"
+msgstr "Ta også med informasjon til hjelp ved feilfinning i GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
-msgstr "MS-Windows-motor for GTK"
+msgstr "MS-Windows-motor for GTK+"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:27
 msgid "Native Windows look for GIMP"
@@ -161,7 +161,7 @@ msgstr "Støtte for eldre programtillegg"
 #: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr ""
-"Installerer bibliotek som er naudsynte for eldre tredjeparts programtillegg"
+"Installerer bibliotek som er nødvendige for eldre tredjeparts programtillegg"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
@@ -205,7 +205,7 @@ msgstr "Gjer at GIMP kan lasta inn PostScript-filer"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:39
 msgid "Support for 32-bit plug-ins"
-msgstr "Støtte for 32-bits programtillegg"
+msgstr "Støtte for 32-bitars programtillegg"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:41
 #, no-c-format
@@ -213,8 +213,8 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"Inkluderer filer som er nødvendige for å bruka 32-bits programtillegg."
-"%nTrengst for Python-støtte."
+"Ta med filer som er nødvendige for å bruka 32-bits programtillegg.%nTrengst "
+"for Python-støtte."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:42
 msgid "Additional icons:"
@@ -222,11 +222,11 @@ msgstr "Tilleggsikon:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:43
 msgid "Create a &desktop icon"
-msgstr "Lagar eit &skrivebordsikon"
+msgstr "Lag eit &skrivebordsikon"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:44
 msgid "Create a &Quick Launch icon"
-msgstr "Lagar eit &snarstartikon"
+msgstr "Lag eit &snarstartikon"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:45
 msgid "Remove previous GIMP version"
@@ -238,8 +238,8 @@ msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
-"Det var eit problem med å oppdatere GIMP sin omgivnad i %1. Viss du får feil "
-"ved lasting av programtillegga, prøv å avinstallere GIMP og installere GIMP "
+"Det var eit problem med å oppdatera GIMP sin omgivnad i %1. Viss du får feil "
+"ved lasting av programtillegga, prøv å avinstallera GIMP og installera GIMP "
 "på nytt."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
@@ -262,7 +262,7 @@ msgstr "Feil ved oppdateringa av %1."
 #: ../build/windows/installer/lang/setup.isl.in.h:54
 #, no-c-format
 msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Feil ved oppdatering av konfigurasjonsfila %1 for GIMP."
+msgstr "Feil ved oppdatering av oppsettfila %1 for GIMP."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:55
 msgid "Edit with GIMP"
@@ -321,7 +321,7 @@ msgstr ""
 "automatiske avinstalleringa av den gamle versjonen var mislukka.%n%nFjern "
 "den førre versjonen av GIMP manuelt før du installerer denne versjonen i % "
 "2, eller vel ein tilpassa installasjon og vel ei anna installasjonsmappe."
-"%n%nInstallasjonsprogrammet vert avslutta nå."
+"%n%nInstallasjonsprogrammet vert avslutta no."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
@@ -337,7 +337,7 @@ msgstr ""
 "fjernast automatisk.%n%nFjern den førre versjonen av GIMP og eventuelle "
 "tillegg før du installerer denne versjonen i %2, eller vel ein tilpassa "
 "installasjon og ei anna installasjonsmappe.%n%n Installasjonsprogrammet vert "
-"avslutta nå."
+"avslutta no."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:70
 #, no-c-format
@@ -375,19 +375,19 @@ msgstr "Set opp filtilknytingar…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up environment for GIMP Python extension..."
-msgstr "Set opp omgivnadar for GIMP Pythonutvidingar…"
+msgstr "Set opp omgivnadar for GIMP Pythonutvidingar …"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up MyPaint brushes..."
-msgstr "Set opp MyPaint-penslar…"
+msgstr "Set opp MyPaint-penslar …"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Setting up GIMP environment..."
-msgstr "Set opp GIMP-omgivnadane…"
+msgstr " Set opp GIMP-omgivnadane…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Set opp GIMP-konfigurasjon for 32-bits støtte for programtillegg…"
+msgstr "Set opp GIMP-oppsettet for 32-bits støtte for programtillegg …"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:82
 msgid "Launch GIMP"
