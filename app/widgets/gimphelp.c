@@ -48,7 +48,6 @@
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
 #include "gimplanguagecombobox.h"
-#include "gimplanguagestore-parser.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 #include "gimpmessagedialog.h"

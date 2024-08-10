@@ -30,7 +30,9 @@
 #include "widgets-types.h"
 
 #include "gimphelp.h"
-#include "gimplanguagestore-parser.h"
+#ifdef HAVE_ISO_CODES
+#include "gimplanguagestore-data.h"
+#endif
 #include "gimptranslationstore.h"
 
 #include "gimp-intl.h"
@@ -102,19 +104,10 @@ gimp_translation_store_init (GimpTranslationStore *store)
 static void
 gimp_translation_store_constructed (GObject *object)
 {
-  GHashTable     *lang_list;
-  GHashTableIter  lang_iter;
-  gpointer        code;
-  gpointer        name;
-  GList          *sublist = NULL;
-
-  lang_list = gimp_language_store_parser_get_languages (TRUE);
-  g_return_if_fail (lang_list != NULL);
+  GList *sublist = NULL;
 
   if (GIMP_TRANSLATION_STORE (object)->manual_l18n)
     sublist = gimp_help_get_installed_languages ();
-
-  g_hash_table_iter_init (&lang_iter, lang_list);
 
   if (GIMP_TRANSLATION_STORE (object)->manual_l18n &&
       GIMP_TRANSLATION_STORE (object)->empty_label)
@@ -123,15 +116,18 @@ gimp_translation_store_constructed (GObject *object)
                                                    GIMP_TRANSLATION_STORE (object)->empty_label,
                                                    "");
     }
-  while (g_hash_table_iter_next (&lang_iter, &code, &name))
+#ifdef HAVE_ISO_CODES
+  for (gint i = 0; i < GIMP_L10N_LANGS_SIZE; i++)
     {
+      GimpLanguageDef def = GimpL10nLanguages[i];
+
       if (! GIMP_TRANSLATION_STORE (object)->manual_l18n ||
-          g_list_find_custom (sublist, code, (GCompareFunc) g_strcmp0))
-        {
-          GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                       name, code);
-        }
+          g_list_find_custom (sublist, def.code, (GCompareFunc) g_strcmp0))
+        GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+                                                     def.name, def.code);
     }
+#endif
+
   g_list_free_full (sublist, g_free);
 }
 

@@ -17,6 +17,11 @@ stamp_widgets_enums = custom_target('stamp-widgets-enums.h',
   build_by_default: true
 )
 
+gimp_language_store_data = custom_target('gimplanguagestore-data.h',
+                                         input: [ gen_languages ],
+                                         output: 'gimplanguagestore-data.h',
+                                         command: [ gen_languages ])
+
 libappwidgets_sources = [
   'gimpaccellabel.c',
   'gimpaction-history.c',
@@ -132,7 +137,6 @@ libappwidgets_sources = [
   'gimpitemtreeview.c',
   'gimplanguagecombobox.c',
   'gimplanguageentry.c',
-  'gimplanguagestore-parser.c',
   'gimplanguagestore.c',
   'gimplayermodebox.c',
   'gimplayermodecombobox.c',
@@ -246,6 +250,8 @@ libappwidgets_sources = [
 
   'widgets-enums.c',
   stamp_widgets_enums,
+
+  gimp_language_store_data,
 
   appcoremarshal[1],
 ]

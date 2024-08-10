@@ -27,7 +27,9 @@
 #include "widgets-types.h"
 
 #include "gimplanguagestore.h"
-#include "gimplanguagestore-parser.h"
+#ifdef HAVE_ISO_CODES
+#include "gimplanguagestore-data.h"
+#endif
 
 
 static void   gimp_language_store_constructed (GObject           *object);
@@ -76,21 +78,17 @@ gimp_language_store_init (GimpLanguageStore *store)
 static void
 gimp_language_store_constructed (GObject *object)
 {
-  GHashTable     *lang_list;
-  GHashTableIter  lang_iter;
-  gpointer        code;
-  gpointer        name;
-
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  lang_list = gimp_language_store_parser_get_languages (FALSE);
-  g_return_if_fail (lang_list != NULL);
+#ifdef HAVE_ISO_CODES
+  for (gint i = 0; i < GIMP_ALL_LANGS_SIZE; i++)
+    {
+      GimpLanguageDef def = GimpAllLanguages[i];
 
-  g_hash_table_iter_init (&lang_iter, lang_list);
-
-  while (g_hash_table_iter_next (&lang_iter, &code, &name))
-    GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                 name, code);
+      GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+                                                   def.name, def.code);
+    }
+#endif
 }
 
 static void

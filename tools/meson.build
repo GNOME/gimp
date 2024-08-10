@@ -30,6 +30,14 @@ gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
   install: true,
 )
 
+gen_languages = executable('gen-languages',
+                           'gen-languages.c',
+                           '../app/config/gimpxmlparser.c',
+                           include_directories: [ rootInclude, appInclude ],
+                           dependencies: [ gio, gegl ],
+                           link_with: [ libgimpbase ],
+                           install: false)
+
 if enable_default_bin
   if not platform_windows
     install_symlink(fs.name(gimptool.full_path()).replace(exec_ver, ''),
