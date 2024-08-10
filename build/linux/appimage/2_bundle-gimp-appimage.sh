@@ -110,8 +110,6 @@ conf_app BABL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}babl-*"
 conf_app GEGL_PATH "$OPT_PREFIX" "${LIB_DIR}/${LIB_SUBDIR}gegl-*"
 conf_app GIMP3_SYSCONFDIR "$OPT_PREFIX" "etc/gimp/*"
 conf_app GIMP3_DATADIR "$OPT_PREFIX" "share/gimp/*"
-### Copy localized language list support
-find_dat "/usr/share/xml/iso-codes" "iso_639-2.xml" "iso_639.xml"
 ### Copy system theme support
 find_bin "gsettings*"
 find_bin "sed*"

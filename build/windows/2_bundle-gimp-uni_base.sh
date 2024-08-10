@@ -152,8 +152,6 @@ bundle "$GIMP_PREFIX" share/metainfo/org.gimp*.xml
 bundle "$MSYS_PREFIX" share/mypaint-data/
 ### Needed for full CJK and Cyrillic support in file-pdf
 bundle "$MSYS_PREFIX" share/poppler/
-### Needed for lang selection in Preferences
-bundle "$MSYS_PREFIX" share/xml/iso-codes/iso_639.xml
 
 
 ## Executables and DLLs.
