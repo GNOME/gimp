@@ -1,4 +1,5 @@
 #!/usr/bin/env gimp-script-fu-interpreter-3.0
+;!# Close comment started on first line. Needed by gettext.
 
 ; v3 >>> Has shebang, is interpreter
 
