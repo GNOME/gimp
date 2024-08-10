@@ -490,9 +490,7 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
 
   if (lang && *lang && code && *code)
     {
-      gchar    *semicolon;
-      gchar    *localized_name = g_strdup (dgettext ("iso_639_3", lang));
-      gboolean save_anyway     = FALSE;
+      gboolean save_anyway = FALSE;
 
       /* If the language is in our base table, we save its standard English name. */
       if (g_hash_table_contains (parser->base_lang_list, code))
@@ -501,21 +499,12 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
           save_anyway = TRUE;
         }
 
-      /*  there might be several language names; use the first one  */
-      semicolon = strchr (localized_name, ';');
-
-      if (semicolon)
-        {
-          gchar *temp = localized_name;
-          localized_name = g_strndup (localized_name, semicolon - localized_name);
-          g_free (temp);
-        }
-      /* In any case, we save the name in user-set language for all lang
-       * with part 1 or part 2 code, or for the few language with no
-       * part 1|2 code but for which we have a localization.
+      /* In any case, we save the name in US English for all lang with
+       * part 1 or part 2 code, or for the few language with no part 1|2
+       * code but for which we have a localization.
        */
       if (has_part12 || save_anyway)
-        g_hash_table_insert (all_lang_list, g_strdup (code), localized_name);
+        g_hash_table_insert (all_lang_list, g_strdup (code), g_strdup (lang));
     }
 }
 

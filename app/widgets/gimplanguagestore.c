@@ -31,6 +31,8 @@
 #include "gimplanguagestore-data.h"
 #endif
 
+#include "gimp-intl.h"
+
 
 static void   gimp_language_store_constructed (GObject           *object);
 
@@ -83,10 +85,24 @@ gimp_language_store_constructed (GObject *object)
 #ifdef HAVE_ISO_CODES
   for (gint i = 0; i < GIMP_ALL_LANGS_SIZE; i++)
     {
-      GimpLanguageDef def = GimpAllLanguages[i];
+      GimpLanguageDef  def            = GimpAllLanguages[i];
+      gchar           *localized_name = g_strdup (dgettext ("iso_639_3", def.name));
+      gchar           *semicolon;
+
+      /*  there might be several language names; use the first one  */
+      semicolon = strchr (localized_name, ';');
+
+      if (semicolon)
+        {
+          gchar *temp = localized_name;
+
+          localized_name = g_strndup (localized_name, semicolon - localized_name);
+          g_free (temp);
+        }
 
       GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                   def.name, def.code);
+                                                   localized_name, def.code);
+      g_free (localized_name);
     }
 #endif
 }
