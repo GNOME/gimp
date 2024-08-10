@@ -2540,7 +2540,7 @@ msgstr ""
 
 #: plug-ins/common/file-aa.c:154 plug-ins/file-dds/dds.c:211
 msgid "_Format"
-msgstr "_Formata"
+msgstr "_Format"
 
 #: plug-ins/common/file-aa.c:155
 msgid "File type to use"
