@@ -565,7 +565,7 @@ new_unit_action (GSimpleAction *action,
 
   unit = new_unit_dialog (self->window, gimp_unit_pixel ());
 
-  if (unit != gimp_unit_pixel ())
+  if (unit != NULL)
     {
       GtkTreeModel *model;
       GtkTreeIter   iter;
