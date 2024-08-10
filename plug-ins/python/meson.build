@@ -11,7 +11,7 @@ plugins = [
   { 'name': 'spyro-plus' },
 ]
 
-if not stable or not release
+if (not stable or not release) and get_option('buildtype')=='debug'
   plugins += [
     { 'name': 'test-dialog' },
   ]

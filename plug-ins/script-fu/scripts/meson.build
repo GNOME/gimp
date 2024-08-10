@@ -1,7 +1,5 @@
 subdir('images')
-if not stable or not release
-  subdir('test')
-endif
+subdir('test')
 
 # scripts interpreted by extension-script-fu, installed to /scripts
 scripts = [

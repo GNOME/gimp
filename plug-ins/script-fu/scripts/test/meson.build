@@ -1,11 +1,19 @@
 # test plugins
 
-# Some, but not all, plugins in this directory are installed in unstable build.
-# None should be installed in a release.
+# All are not for ordinary users.
 # None should be translated: not marked or marked but in potfiles.skip.
 
-# Note this meson.build is excluded from a release build at a higher level,
-# so here there are no "if not release statements"
+# Some can be installed by a build, other must be manually installed.
+
+# No plugin in this directory is installed in a "stable" or "release" version,
+# even if buildtype==debug.
+
+if (stable or release)
+  subdir_done()
+elif get_option('buildtype') != 'debug'
+  subdir_done()
+endif
+
 
 # scripts interpreted by extension-script-fu, installed to /scripts
 scripts = [
