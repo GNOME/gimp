@@ -776,8 +776,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.6.0.tar.gz",
-                            "sha256": "19cbeb9964ebe439413dd66d82ace1f904adc5f25d8a823c1b48c34bd0d29ea5",
+                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.7.0.tar.gz",
+                            "sha256": "529b067f5d80981f45ddf6766627b8fc5af619822f068f342aab776e683df4f3",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 4908,
@@ -808,8 +808,8 @@
                             "sources": [
                                 {
                                     "type": "archive",
-                                    "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.27.tar.gz",
-                                    "sha256": "aa2d68b1564fe2b13bc292672608e9cdeeeb6dc34995512e65c3b10f4599e897",
+                                    "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.28.tar.gz",
+                                    "sha256": "f1003466ad074e9b0c8d421a204121100b0751c96fc6fcf3d1456bd12f8a00a1",
                                     "x-checker-data": {
                                         "type": "anitya",
                                         "project-id": 2540,
@@ -822,6 +822,7 @@
                             "make-args": [
                                 "DYNAMIC_ARCH=0",
                                 "USE_OPENMP=0",
+                                "NO_CBLAS=1",
                                 "NO_LAPACKE=1"
                             ],
                             "make-install-args": [
