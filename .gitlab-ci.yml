@@ -293,8 +293,8 @@ gimp-debian-x64:
         ninja dist;
       fi
     # Make sure that GIMP is testable locally on Debian
-    # We apply these ugly patches since #6798 isn't fixed yet
-    # and appstream-cli get confused with our exotic naming and fails
+    # We apply these patches otherwise appstream-cli get confused
+    # with (non-reverse) DNS naming and fails. That's not a GIMP bug, see: #6798
     - cd ..
     - git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch
     - cd gimp-data
