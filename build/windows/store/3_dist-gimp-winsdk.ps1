@@ -27,6 +27,11 @@ Set-Alias 'signtool' "$win_sdk_path\signtool.exe"
 
 # Global variables
 $config_path = "$build_dir\config.h"
+if (-not (Test-Path "$config_path"))
+  {
+    Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' or configure GIMP with 'meson setup' on some MSYS2 shell to generate it." -ForegroundColor red
+    exit 1
+  }
 
 ## Get Identity Name (the dir shown in Explorer)
 $GIMP_UNSTABLE = Get-Content "$config_path"                               | Select-String 'GIMP_UNSTABLE' |
@@ -75,6 +80,11 @@ if (-not (Test-Path .gitignore.bak -Type Leaf))
   {
     Copy-Item .gitignore .gitignore.bak
   }
+if (-not (Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
+  {
+    Write-Host "(ERROR): No bundle found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' on some MSYS2 shell to make one." -ForegroundColor red
+    exit 1
+  }
 $supported_archs = "$a64_bundle","$x64_bundle"
 foreach ($bundle in $supported_archs)
   {
@@ -109,7 +119,7 @@ foreach ($bundle in $supported_archs)
 
 
         # 1. CONFIGURE MANIFEST
-        Write-Output '(INFO): configuring AppxManifest.xml'
+        Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
         Copy-Item build\windows\store\AppxManifest.xml $msix_arch
 
         ## Set Identity Name
@@ -148,31 +158,28 @@ foreach ($bundle in $supported_archs)
 
 
         # 2. CREATE ASSETS
-        Write-Output '(INFO): generating resources.pri'
-
-        ## Copy pre-generated icons to each msix_arch
         $icons_path = "$build_dir\build\windows\store\Assets"
-        if (Test-Path "$icons_path")
+        if (-not (Test-Path "$icons_path"))
           {
-            New-Item $msix_arch\Assets -ItemType Directory | Out-Null
-            Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
-          }
-        else
-          {
-            "(ERROR): MS Store icons not found. You can build them with '-Dms-store=true'"
+            Write-Host "(ERROR): MS Store icons not found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' or configure GIMP with '-Dms-store=true' on some MSYS2 shell to build them." -ForegroundColor red
             exit 1
           }
+        Write-Output "(INFO): generating resources.pri from $icons_path"
+
+        ## Copy pre-generated icons to each msix_arch
+        New-Item $msix_arch\Assets -ItemType Directory | Out-Null
+        Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
 
         ## Generate resources.pri
         Set-Location $msix_arch
-        makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File winsdk.log
+        makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log
         Set-Location ..\
         makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append
         Remove-Item $msix_arch\priconfig.xml
 
 
         # 3. COPY GIMP FILES
-        Write-Output '(INFO): copying GIMP files'
+        Write-Output "(INFO): copying files from $bundle bundle"
         $vfs = "$msix_arch\VFS\ProgramFilesX64\GIMP"
 
         ## Copy files into VFS folder (to support external 3P plug-ins)
@@ -230,7 +237,14 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     ## (This is needed not only for easier multi-arch testing but
     ##  also to make sure against Partner Center getting confused)
     $MSIX_ARTIFACT = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_neutral.msixbundle"
-    Write-Output "(INFO): packaging $MSIX_ARTIFACT (for testing purposes)"
+    if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*'))
+      {
+        Write-Output "(INFO): packaging $MSIX_ARTIFACT (for testing purposes)"
+      }
+    else
+      {
+        Write-Output "(INFO): packaging temporary $MSIX_ARTIFACT"
+      }
     New-Item _TempOutput -ItemType Directory | Out-Null
     Move-Item *.msix _TempOutput/
     makeappx bundle /bv "${CUSTOM_GIMP_VERSION}" /d _TempOutput /p $MSIX_ARTIFACT /o | Out-File winsdk.log -Append
@@ -262,7 +276,10 @@ if ($GITLAB_CI)
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
     New-Item build\windows\store\_Output -ItemType Directory | Out-Null
     Move-Item $MSIX_ARTIFACT build\windows\store\_Output
-    Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination build\windows\store\_Output
+    if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*'))
+      {
+        Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination build\windows\store\_Output
+      }
   }
 
 Remove-Item .gitignore
