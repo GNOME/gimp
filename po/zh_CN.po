@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-09 18:42+0000\n"
-"PO-Revision-Date: 2024-08-10 08:45+0800\n"
+"POT-Creation-Date: 2024-08-10 16:11+0000\n"
+"PO-Revision-Date: 2024-08-11 19:10+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -8178,7 +8178,7 @@ msgstr "删除(_D)"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "您确认要从列表以及硬盘中删除模板“%s”吗？"
+msgstr "您确定要从列表以及硬盘中删除模板“%s”吗？"
 
 #: app/actions/text-editor-actions.c:40
 msgctxt "text-editor-action"
@@ -15245,7 +15245,7 @@ msgstr "删除“%s”？"
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr "您确认要从列表删除“%s”并在硬盘上删除它吗？"
+msgstr "您确定要从列表删除“%s”并在硬盘上删除它吗？"
 
 #: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:188
 #: app/gui/gui-message.c:268
@@ -19891,7 +19891,7 @@ msgid "Turn colors into shades of gray"
 msgstr "将颜色转换为灰度色调"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1272
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1315
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:274
@@ -19930,7 +19930,7 @@ msgstr "使用颜色替换半透明部分"
 msgid "The color"
 msgstr "颜色"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1235
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1278
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -22953,21 +22953,33 @@ msgstr "%s 以拾取背景色"
 msgid "Anti erase  (%s)"
 msgstr "反擦除 (%s)"
 
-#: app/tools/gimpfilteroptions.c:72
+#: app/tools/gimpfilteroptions.c:73
 msgid "_Preview"
 msgstr "预览(_P)"
 
-#: app/tools/gimpfilteroptions.c:79
+#: app/tools/gimpfilteroptions.c:80
 msgid "Split _view"
 msgstr "分割视图(_V)"
 
-#: app/tools/gimpfilteroptions.c:102
+#: app/tools/gimpfilteroptions.c:103
 msgid "On-canvas con_trols"
 msgstr "画布上控制(_T)"
 
-#: app/tools/gimpfilteroptions.c:103
+#: app/tools/gimpfilteroptions.c:104
 msgid "Show on-canvas filter controls"
 msgstr "显示在画布上的滤镜控制"
+
+#: app/tools/gimpfilteroptions.c:122
+msgid "_Merge filter"
+msgstr "合并滤镜(_M)"
+
+#: app/tools/gimpfilteroptions.c:123
+msgid ""
+"If enabled, the filter is immediately merged.\n"
+"Otherwise, it becomes an editable non-destructive filter."
+msgstr ""
+"如果启用，滤镜将立即合并。\n"
+"否则，它会成为可编辑的非破坏性滤镜。"
 
 #: app/tools/gimpfiltertool.c:310 app/tools/gimpselectiontool.c:575
 #, c-format
@@ -22979,53 +22991,53 @@ msgstr "一个选中项目的像素已被锁定。"
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
-#: app/tools/gimpfiltertool.c:660
+#: app/tools/gimpfiltertool.c:675
 msgid "Click to switch the original and filtered sides"
 msgstr "单击以在原始图片和应用滤镜图片之间切换"
 
-#: app/tools/gimpfiltertool.c:664
+#: app/tools/gimpfiltertool.c:679
 msgid "Click to switch between vertical and horizontal"
 msgstr "单击以在竖直视图和水平视图之间切换"
 
-#: app/tools/gimpfiltertool.c:668
+#: app/tools/gimpfiltertool.c:683
 msgid "Click to move the split guide"
 msgstr "单击以移动分割参考线"
 
-#: app/tools/gimpfiltertool.c:670
+#: app/tools/gimpfiltertool.c:685
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s：切换原始图片和应用滤镜图片"
 
-#: app/tools/gimpfiltertool.c:671
+#: app/tools/gimpfiltertool.c:686
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1161
+#: app/tools/gimpfiltertool.c:1199
 msgid "Add filter"
 msgstr "添加滤镜"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1248
+#: app/tools/gimpfiltertool.c:1291
 msgid "Blending Options"
 msgstr "混合选项"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1287
+#: app/tools/gimpfiltertool.c:1330
 msgid "Advanced Color Options"
 msgstr "高级色彩选项"
 
-#: app/tools/gimpfiltertool.c:1700 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1743 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "导入“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1702 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1745 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1945
+#: app/tools/gimpfiltertool.c:1988
 msgid "Editing filter..."
 msgstr "编辑滤镜…"
 
@@ -27379,51 +27391,51 @@ msgstr "来自活动工具的效果无法被合并。"
 msgid "Remove filter"
 msgstr "移除滤镜"
 
-#: app/widgets/gimpitemtreeview.c:3329
+#: app/widgets/gimpitemtreeview.c:3332
 msgid "No layer set stored"
 msgstr "未存储图层集合"
 
-#: app/widgets/gimpitemtreeview.c:3351
+#: app/widgets/gimpitemtreeview.c:3354
 msgid "New layer set's name"
 msgstr "新图层集合的名字"
 
-#: app/widgets/gimpitemtreeview.c:3393 app/widgets/gimpitemtreeview.c:3408
+#: app/widgets/gimpitemtreeview.c:3396 app/widgets/gimpitemtreeview.c:3411
 msgid "Select layers by text search"
 msgstr "通过文字搜索选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3395 app/widgets/gimpitemtreeview.c:3410
+#: app/widgets/gimpitemtreeview.c:3398 app/widgets/gimpitemtreeview.c:3413
 msgid "Text search"
 msgstr "文字搜索"
 
-#: app/widgets/gimpitemtreeview.c:3414
+#: app/widgets/gimpitemtreeview.c:3417
 msgid "Select layers by glob patterns"
 msgstr "通过 glob 模式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3416
+#: app/widgets/gimpitemtreeview.c:3419
 msgid "Glob pattern search"
 msgstr "Glob 模式搜索"
 
-#: app/widgets/gimpitemtreeview.c:3420
+#: app/widgets/gimpitemtreeview.c:3423
 msgid "Select layers by regular expressions"
 msgstr "通过正则表达式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3422
+#: app/widgets/gimpitemtreeview.c:3425
 msgid "Regular Expression search"
 msgstr "正则表达式搜索"
 
-#: app/widgets/gimpitemtreeview.c:3477
+#: app/widgets/gimpitemtreeview.c:3480
 msgid "search"
 msgstr "搜索"
 
-#: app/widgets/gimpitemtreeview.c:3478
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3478
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "regexp"
 msgstr "正则"
 
-#: app/widgets/gimpitemtreeview.c:3647
+#: app/widgets/gimpitemtreeview.c:3650
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "无效的正则表达式：%s\n"
@@ -28776,8 +28788,8 @@ msgstr "开发(_V)"
 
 #: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
-msgid "_Goat exercises"
-msgstr "山羊训练(_G)"
+msgid "Plug-in _Examples"
+msgstr "插件示例(_E)"
 
 #: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
@@ -28928,6 +28940,10 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgctxt "filters-action"
+#~ msgid "_Goat exercises"
+#~ msgstr "山羊训练(_G)"
 
 #~ msgctxt "paths-action"
 #~ msgid "Select the vector below the current path"
