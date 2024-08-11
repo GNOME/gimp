@@ -15,9 +15,9 @@ This may also interest users who want to use different interpreters.
 
 ## Brief summary
 
-On Linux and MacOS, a shebang in a GIMP plugin text file
-is enough to indicate what interpreter to start.
-On Windows, you also need an .interp file installed with GIMP.
+On Linux (except for Lua) and MacOS, a shebang in a GIMP plugin
+text file is enough to indicate what interpreter to start.
+On Windows (and Linux for Lua), you also need an .interp file installed with GIMP.
 
 It can get complicated;
 there are many combinations of envirnoment variables, shebangs, file suffixes, and .interp files that can work.
@@ -63,10 +63,10 @@ only one of the GIMP apps should launch interpreted GIMP plugin files.
 
 ## Platform differences
 
-On Linux and MacOS, you simply need a shebang in a plugin text file.
+On Linux (except for Lua) and MacOS, you simply need a shebang in a plugin text file.
 
-On Windows, you must also define an .interp file.
-The .interp files are part of GIMP's installation on Windows
+On Windows (and Linux, at least for Lua), you must also define an .interp file.
+The .interp files are part of GIMP's installation on Windows (and Linux for Lua)
 (in both installer and Microsoft Store versions).
 The .interp files are built when the Windows installer is built.
 See the source file: /build/windows/installer/base_gimp3264.iss .
@@ -89,7 +89,7 @@ Even on Windows, the shebangs are in UNIX notation.
 Recommended examples for GIMP 3 (see repo directory /extensions/goat-exercises):
 
     #!/usr/bin/env   python3
-    #!/usr/bin/env   luajit
+    #!/usr/bin/env   lua
     #!/usr/bin/env   gjs
     #!/usr/bin/env   gimp-script-fu-interpreter-3.0
 
@@ -108,7 +108,7 @@ Whether the other examples actually work depends on:
 
 ## .interp files
 
-Again, .interp files are necessary on Windows.
+Again, .interp files are necessary on Windows (and Linux, at least for Lua).
 They tell GIMP which executable interpreter to launch for a GIMP plugin text file.
 
 You usually have one .interp file for each interpreter.
