@@ -143,7 +143,9 @@ for lang in "${lang_array[@]}"; do
   bundle "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES/*.mo
   if [ -d "$MSYS_PREFIX/share/locale/$lang/LC_MESSAGES/" ]; then
     bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
+    # For language list in text tool options
     bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639.mo
+    bundle "$MSYS_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639_3.mo
   fi
 done
 ### Needed for welcome page
