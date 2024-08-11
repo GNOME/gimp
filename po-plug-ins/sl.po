@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-06 09:44+0000\n"
-"PO-Revision-Date: 2024-08-06 13:25+0200\n"
+"POT-Creation-Date: 2024-08-10 21:51+0000\n"
+"PO-Revision-Date: 2024-08-11 12:39+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -25,12 +25,13 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
-msgid "Exercise in _C minor"
-msgstr "Povadi v _C-minorju"
+msgid "Plug-In Example in _C"
+msgstr "Primer vstavka v _C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
-msgid "Exercise a goat in the C language"
-msgstr "Povadi kozo v jeziku C"
+#: extensions/goat-exercises/goat-exercise-c.c:121
+msgid "Plug-in example in C"
+msgstr "Primer vstavka v C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
@@ -57,8 +58,8 @@ msgid "Procedure '%s' only works with one drawable."
 msgstr "Procedura »%s« deluje le z enim risanim predmetom."
 
 #: extensions/goat-exercises/goat-exercise-c.c:180
-msgid "Exercise a goat (C)"
-msgstr "Povadi kozo (C)"
+msgid "Plug-In Example in C"
+msgstr "Primer vstavka v C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:184
 #: extensions/goat-exercises/goat-exercise-gjs.js:94
@@ -82,8 +83,8 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3331
-#: plug-ins/gradient-flare/gradient-flare.c:3445
+#: plug-ins/gradient-flare/gradient-flare.c:3339
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 #: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/ifs-compose/ifs-compose.c:2603
 #: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
@@ -127,20 +128,17 @@ msgstr ""
 "koda«."
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
-msgid "Exercise a JavaScript goat"
-msgstr "Povadi kozo (JavaScript)"
+msgid "Plug-In Example in _JavaScript"
+msgstr "Primer vstavka v _JavaScriptu"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:67
-msgid "Exercise a goat in the JavaScript language (GJS)"
-msgstr "Povadi kozo v jeziku JavaScript (GJS)"
-
 #: extensions/goat-exercises/goat-exercise-gjs.js:68
-msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
-msgstr "Pelje kozo na sprehod v jeziku JavaScript s tolmačem GJS"
+msgid "Plug-in example in JavaScript (GJS)"
+msgstr "Primer vstavka v JavaScriptu (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
-msgid "Exercise a goat (JavaScript)"
-msgstr "Povadi kozo (JavaScript)"
+msgid "Plug-In Example in JavaScript (GJS)"
+msgstr "Primer vstavka v JavaScriptu (GJS)"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
@@ -152,7 +150,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -181,53 +179,48 @@ msgstr "V _redu"
 #. Not sure why run_mode has become a string instead of testing
 #. against Gimp.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
-msgid "Exercise a goat (Lua)"
-msgstr "Povadi kozo (Lua)"
+msgid "Plug-In Example in Lua"
+msgstr "Primer vstavka v Lui"
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
-msgid "Exercise a Lua goat"
-msgstr "Povadi kozo Lua"
+msgid "Plug-In Example in _Lua"
+msgstr "Primer vstavka v _Lui"
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
-msgid "Exercise a goat in the Lua language"
-msgstr "Povadi kozo v jeziku Lua"
+#: extensions/goat-exercises/goat-exercise-lua.lua:177
+msgid "Plug-in example in Lua"
+msgstr "Primer vstavka v Lui"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
-msgstr "Povadi kozo in pitona"
+msgid "Plug-In Example in _Python 3"
+msgstr "Primer vstavka v _Pythonu 3"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr "Povadi kozo v jeziku Python 3"
-
 #: extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
-msgstr "Pelje kozo na sprehod v jeziku Python 3"
+msgid "Plug-in example in Python 3"
+msgstr "Primer vstavka v Pythonu 3"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
 msgid "Procedure '{}' only works with one drawable."
 msgstr "Procedura »{}« deluje le z enim risanim predmetom."
 
 #: extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
-msgstr "Povadi kozo (Python 3)"
+msgid "Plug-In Example in Python 3"
+msgstr "Primer vstavka v Pythonu 3"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:45
-msgid "Exercise a Vala goat"
-msgstr "Povadi kozo (Vala)"
+msgid "Plug-In Example in _Vala"
+msgstr "Primer vstavka v _Vali"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:46
-msgid "Exercise a goat in the Vala language"
-msgstr "Povadi kozo v jeziku Vala"
-
 #: extensions/goat-exercises/goat-exercise-vala.vala:47
-msgid "Takes a goat for a walk in Vala"
-msgstr "Pelje kozo na sprehod v jeziku Vala"
+msgid "Plug-in example in Vala"
+msgstr "Primer vstavka v Vali"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:67
-msgid "Exercise a goat (Vala)"
-msgstr "Povadi kozo (Vala)"
+msgid "Plug-In Example in Vala"
+msgstr "Primer vstavka v Vali"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
 msgid "Goat Exercises"
@@ -306,7 +299,7 @@ msgid "Left edge"
 msgstr "levi rob"
 
 #: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
-#: plug-ins/gradient-flare/gradient-flare.c:2919
+#: plug-ins/gradient-flare/gradient-flare.c:2927
 msgid "Center"
 msgstr "sredinsko"
 
@@ -627,7 +620,8 @@ msgstr "Rolete"
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
-#: plug-ins/file-tiff/file-tiff-load.c:1530
+#: plug-ins/file-tiff/file-tiff-load.c:1545
+#: plug-ins/file-tiff/file-tiff-load.c:2350
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:245
@@ -2074,7 +2068,7 @@ msgstr "Spremeni krivulje"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1212
-#: plug-ins/gradient-flare/gradient-flare.c:3047
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Copy"
 msgstr "_Kopiraj"
 
@@ -2621,7 +2615,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
-#: plug-ins/file-tiff/file-tiff-load.c:293
+#: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s« ..."
@@ -4484,7 +4478,7 @@ msgstr "Dodaj to sliko"
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
 #: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
-#: plug-ins/file-tiff/file-tiff-load.c:1532
+#: plug-ins/file-tiff/file-tiff-load.c:1547
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
@@ -7807,7 +7801,7 @@ msgid "Layers"
 msgstr "Plasti"
 
 #: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3045
+#: plug-ins/gradient-flare/gradient-flare.c:3053
 msgid "_New"
 msgstr "_Nov"
 
@@ -7819,8 +7813,8 @@ msgstr "Po_dvoji"
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
-#: plug-ins/gradient-flare/gradient-flare.c:3048
-#: plug-ins/gradient-flare/gradient-flare.c:3331
+#: plug-ins/gradient-flare/gradient-flare.c:3056
+#: plug-ins/gradient-flare/gradient-flare.c:3339
 msgid "_Delete"
 msgstr "I_zbriši"
 
@@ -8122,8 +8116,8 @@ msgid "Add a New Unit"
 msgstr "Dodaj novo enoto"
 
 #: plug-ins/common/unit-editor.c:452
-msgid "_ID:"
-msgstr "_ID:"
+msgid "_Name:"
+msgstr "_Ime:"
 
 #: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
@@ -8852,7 +8846,7 @@ msgstr "Oblika slikovnih točk"
 #. Create the combobox containing the presets
 #: plug-ins/file-dds/dds.c:213 plug-ins/file-dds/dds.c:276
 #: plug-ins/file-dds/dds.c:293 plug-ins/file-webp/file-webp-dialog.c:80
-#: plug-ins/gradient-flare/gradient-flare.c:2599
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "Default"
 msgstr "privzeta"
 
@@ -10573,17 +10567,17 @@ msgstr ""
 "Dodeljen profil preverjanja videza ni profil CMYK.\n"
 "Ta profil ne bo vključen v izvoženo sliko."
 
-#: plug-ins/file-tiff/file-tiff-load.c:301
+#: plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Ni slika TIFF ali pa je slika okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:334
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF »%s« ne vsebuje nobenih map"
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:341
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -10604,7 +10598,7 @@ msgstr[3] ""
 "Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da so %d strani. "
 "Sledi poskus nalaganja datoteke s to predpostavko."
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:472
 msgid "Extra channels with unspecified data."
 msgstr "Dodatni kanali z nedoločenimi podatki."
 
@@ -10615,16 +10609,16 @@ msgstr "Dodatni kanali z nedoločenimi podatki."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:484
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nekonformni TIFF: dodatni kanali brez polja »ExtraSamples«."
 
-#: plug-ins/file-tiff/file-tiff-load.c:569
+#: plug-ins/file-tiff/file-tiff-load.c:579
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Strani %d od %d ni možno prebrati. Slika je morda okvarjena.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:598
+#: plug-ins/file-tiff/file-tiff-load.c:608
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -10633,7 +10627,7 @@ msgstr ""
 "Ta slika ima linearen barvni profil, vendar ni nastavljen na prvi plasti. "
 "Plasti pod plastjo št. %d bodo tolmačene kot nelinearne."
 
-#: plug-ins/file-tiff/file-tiff-load.c:606
+#: plug-ins/file-tiff/file-tiff-load.c:616
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -10643,32 +10637,32 @@ msgstr ""
 "v nepravilne rezultate, poskusite naložiti vsako plast posebej kot ločeno "
 "sliko."
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:628
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Sumljiva bitna globina: %d za stran %d. Slika je morda okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:692
+#: plug-ins/file-tiff/file-tiff-load.c:702
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Nepodprta bitna globina: %d za stran %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:707
+#: plug-ins/file-tiff/file-tiff-load.c:717
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Širine slike iz »%s« ni mogoče pridobiti"
 
-#: plug-ins/file-tiff/file-tiff-load.c:715
+#: plug-ins/file-tiff/file-tiff-load.c:725
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Dolžine slike iz »%s« ni mogoče pridobiti"
 
-#: plug-ins/file-tiff/file-tiff-load.c:723
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "Neveljavne mere slike (%u x %u) za stran %d. Slika je morda okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:744
+#: plug-ins/file-tiff/file-tiff-load.c:754
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -10677,7 +10671,7 @@ msgstr ""
 "Fotometrije ni mogoče pridobiti iz »%s«. Slika je stisnjeni CCITT, predviden "
 "bo parameter min-is-white"
 
-#: plug-ins/file-tiff/file-tiff-load.c:751
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -10686,7 +10680,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:783
+#: plug-ins/file-tiff/file-tiff-load.c:793
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -10694,7 +10688,7 @@ msgstr ""
 "Vrsta kanala alfa ni določena za %s. Predvideno bo, da alfa ni vnaprej "
 "množena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:808
+#: plug-ins/file-tiff/file-tiff-load.c:818
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10705,39 +10699,39 @@ msgstr ""
 "nastavljeno, medtem ko so prisotni dodatni kanali. Predvideno bo, da je prvi "
 "dodatni kanal ne vnaprej množena alfa."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1097
+#: plug-ins/file-tiff/file-tiff-load.c:1107
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Neveljavno ali neznano stiskanje %u. Nastavljanje stiskanja na »brez«."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1155
+#: plug-ins/file-tiff/file-tiff-load.c:1165
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Nove slike ni mogoče ustvariti: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1325
+#: plug-ins/file-tiff/file-tiff-load.c:1335
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Neznana vrsta enot ločljivosti %d, predvidevamo dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1345
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Opozorilo: navedena je ločljivost brez vrste enot, predvideno gre za dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1343
+#: plug-ins/file-tiff/file-tiff-load.c:1353
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Opozorilo: ni podatkov ločljivosti x, predvideno bo enako kot x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1370
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Neveljavni podatki o ločljivosti slike, uporabljena bo privzeta vrednost"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1419
+#: plug-ins/file-tiff/file-tiff-load.c:1429
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Barvnih vnosov oz. kataloga barv iz »%s« ni mogoče prebrati"
@@ -10747,24 +10741,24 @@ msgstr "Barvnih vnosov oz. kataloga barv iz »%s« ni mogoče prebrati"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1507
+#: plug-ins/file-tiff/file-tiff-load.c:1517
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Sumljivo število dodatnih kanalov: %d. Možna okvara slike."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1567
+#: plug-ins/file-tiff/file-tiff-load.c:1582
 msgid "TIFF Channel"
 msgstr "Kanal TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1720
+#: plug-ins/file-tiff/file-tiff-load.c:1740
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Podatkov ni mogoče prebrati iz TIFF »%s«. Datoteka je najverjetneje "
 "okvarjena."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1755
-#: plug-ins/file-tiff/file-tiff-load.c:1798
+#: plug-ins/file-tiff/file-tiff-load.c:1776
+#: plug-ins/file-tiff/file-tiff-load.c:1819
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -10772,46 +10766,46 @@ msgstr ""
 "Napaka pri odpiranju začasne %s-datoteke »%s« za nalaganje metapodatkov "
 "tiff: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1878
+#: plug-ins/file-tiff/file-tiff-load.c:1899
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: nepodprta vrsta slike, nalagalnik RGBA ni na voljo"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1993
-#: plug-ins/file-tiff/file-tiff-load.c:2190
+#: plug-ins/file-tiff/file-tiff-load.c:2014
+#: plug-ins/file-tiff/file-tiff-load.c:2211
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Branje datoteke je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2002
-#: plug-ins/file-tiff/file-tiff-load.c:2199
+#: plug-ins/file-tiff/file-tiff-load.c:2023
+#: plug-ins/file-tiff/file-tiff-load.c:2220
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Branje vrstice je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2551
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2559
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "_Pokaži pomanjšane slike"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2604
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr "Obdelaj dodatni kanal kot:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2607
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr "Vnaprej _ne pomnožena alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2608
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr "_Vnaprej pomnožena alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2609
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "Kana_l"
 
@@ -11238,7 +11232,7 @@ msgstr "Plamen"
 
 #: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3046
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_Edit"
 msgstr "_Uredi"
 
@@ -11599,7 +11593,7 @@ msgid "Rendering fractal"
 msgstr "Upodabljanje fraktala ..."
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:880
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3330
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Ste prepričani, da želite izbrisati »%s« s seznama in z diska?"
@@ -11686,7 +11680,7 @@ msgid "Create rectangle"
 msgstr "Ustvari pravokotnik"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3987
+#: plug-ins/gradient-flare/gradient-flare.c:3995
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -11713,7 +11707,7 @@ msgid "Create arc"
 msgstr "Ustvari lok"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4004
+#: plug-ins/gradient-flare/gradient-flare.c:4012
 #: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -12193,7 +12187,7 @@ msgid "Adds random noise to the color"
 msgstr "Barvi doda naključni šum"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3651
 msgid "_General"
 msgstr "_Splošno"
 
@@ -12845,7 +12839,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "Prag za prilegajoče nadvzorčenje"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2499
+#: plug-ins/gradient-flare/gradient-flare.c:2507
 msgid "Gradient Flare"
 msgstr "Odblesk s prelivi"
 
@@ -12886,19 +12880,19 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Datoteke odbleska s prelivi GFlare »%s« ni mogoče zapisati: %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2543
+#: plug-ins/gradient-flare/gradient-flare.c:2551
 msgid "A_uto update preview"
 msgstr "_Samodejno posodobi predogled"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2598
+#: plug-ins/gradient-flare/gradient-flare.c:2606
 msgid "'Default' is created."
 msgstr "Ustvarjen je »privzeti«."
 
-#: plug-ins/gradient-flare/gradient-flare.c:2899
+#: plug-ins/gradient-flare/gradient-flare.c:2907
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2903
+#: plug-ins/gradient-flare/gradient-flare.c:2911
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -12908,174 +12902,174 @@ msgstr "_Y:"
 #.
 #. *    Scales
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:2943
-#: plug-ins/gradient-flare/gradient-flare.c:3696
-#: plug-ins/gradient-flare/gradient-flare.c:3798
-#: plug-ins/gradient-flare/gradient-flare.c:3929
+#: plug-ins/gradient-flare/gradient-flare.c:2951
+#: plug-ins/gradient-flare/gradient-flare.c:3704
+#: plug-ins/gradient-flare/gradient-flare.c:3806
+#: plug-ins/gradient-flare/gradient-flare.c:3937
 msgid "Parameters"
 msgstr "Parametri"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2977
+#: plug-ins/gradient-flare/gradient-flare.c:2985
 msgid "_Settings"
 msgstr "_Nastavitve"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3115
+#: plug-ins/gradient-flare/gradient-flare.c:3123
 msgid "S_elector"
 msgstr "_Izbirnik"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3179
+#: plug-ins/gradient-flare/gradient-flare.c:3187
 msgid "New Gradient Flare"
 msgstr "Nov odblesk s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3182
+#: plug-ins/gradient-flare/gradient-flare.c:3190
 msgid "Enter a name for the new GFlare"
 msgstr "Vnesite ime za nov odblesk s prelivi GFlare"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3183
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3203
-#: plug-ins/gradient-flare/gradient-flare.c:3285
+#: plug-ins/gradient-flare/gradient-flare.c:3211
+#: plug-ins/gradient-flare/gradient-flare.c:3293
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Ime »%s« je že v uporabi!"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3259
+#: plug-ins/gradient-flare/gradient-flare.c:3267
 msgid "Copy Gradient Flare"
 msgstr "Kopiraj odblesk s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3262
+#: plug-ins/gradient-flare/gradient-flare.c:3270
 msgid "Enter a name for the copied GFlare"
 msgstr "Vnesite ime za kopirani odblesk s prelivi GFlare"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3316
+#: plug-ins/gradient-flare/gradient-flare.c:3324
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Ni mogoče izbrisati! Obstajati mora vsaj en odblesk s prelivi GFlare."
 
-#: plug-ins/gradient-flare/gradient-flare.c:3326
+#: plug-ins/gradient-flare/gradient-flare.c:3334
 msgid "Delete Gradient Flare"
 msgstr "Izbriši odblesk s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3398
+#: plug-ins/gradient-flare/gradient-flare.c:3406
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "v gflares_list ni mogoče najti %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3440
+#: plug-ins/gradient-flare/gradient-flare.c:3448
 msgid "Gradient Flare Editor"
 msgstr "Urejevalnik odbleska s prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3444
+#: plug-ins/gradient-flare/gradient-flare.c:3452
 msgid "_Rescan Gradients"
 msgstr "P_reglej prelive"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3566
+#: plug-ins/gradient-flare/gradient-flare.c:3574
 msgid "Glow Paint Options"
 msgstr "Možnosti slikanja odbleska"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3576
-#: plug-ins/gradient-flare/gradient-flare.c:3602
-#: plug-ins/gradient-flare/gradient-flare.c:3628
+#: plug-ins/gradient-flare/gradient-flare.c:3584
+#: plug-ins/gradient-flare/gradient-flare.c:3610
+#: plug-ins/gradient-flare/gradient-flare.c:3636
 msgid "Opacity:"
 msgstr "Prekrivnost:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3588
-#: plug-ins/gradient-flare/gradient-flare.c:3614
-#: plug-ins/gradient-flare/gradient-flare.c:3640
+#: plug-ins/gradient-flare/gradient-flare.c:3596
+#: plug-ins/gradient-flare/gradient-flare.c:3622
+#: plug-ins/gradient-flare/gradient-flare.c:3648
 msgid "Paint mode:"
 msgstr "Način risanja:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3592
+#: plug-ins/gradient-flare/gradient-flare.c:3600
 msgid "Rays Paint Options"
 msgstr "Možnosti slikanja žarkov"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3618
+#: plug-ins/gradient-flare/gradient-flare.c:3626
 msgid "Second Flares Paint Options"
 msgstr "Možnosti slikanja sekundarnih odbleskov"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3669
-#: plug-ins/gradient-flare/gradient-flare.c:3769
-#: plug-ins/gradient-flare/gradient-flare.c:3902
+#: plug-ins/gradient-flare/gradient-flare.c:3677
+#: plug-ins/gradient-flare/gradient-flare.c:3777
+#: plug-ins/gradient-flare/gradient-flare.c:3910
 msgid "Gradients"
 msgstr "Prelivi"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3680
-#: plug-ins/gradient-flare/gradient-flare.c:3782
-#: plug-ins/gradient-flare/gradient-flare.c:3913
+#: plug-ins/gradient-flare/gradient-flare.c:3688
+#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3921
 msgid "Radial gradient:"
 msgstr "Krožni preliv:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3684
-#: plug-ins/gradient-flare/gradient-flare.c:3786
+#: plug-ins/gradient-flare/gradient-flare.c:3692
+#: plug-ins/gradient-flare/gradient-flare.c:3794
 msgid "Angular gradient:"
 msgstr "Kotni preliv:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3688
-#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3696
+#: plug-ins/gradient-flare/gradient-flare.c:3798
 msgid "Angular size gradient:"
 msgstr "Velikost kota preliva:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3707
-#: plug-ins/gradient-flare/gradient-flare.c:3809
-#: plug-ins/gradient-flare/gradient-flare.c:3940
+#: plug-ins/gradient-flare/gradient-flare.c:3715
+#: plug-ins/gradient-flare/gradient-flare.c:3817
+#: plug-ins/gradient-flare/gradient-flare.c:3948
 msgid "Size (%):"
 msgstr "Velikost (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3718
-#: plug-ins/gradient-flare/gradient-flare.c:3820
-#: plug-ins/gradient-flare/gradient-flare.c:3951
+#: plug-ins/gradient-flare/gradient-flare.c:3726
+#: plug-ins/gradient-flare/gradient-flare.c:3828
+#: plug-ins/gradient-flare/gradient-flare.c:3959
 msgid "Rotation:"
 msgstr "Sukanje:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3729
-#: plug-ins/gradient-flare/gradient-flare.c:3831
-#: plug-ins/gradient-flare/gradient-flare.c:3962
+#: plug-ins/gradient-flare/gradient-flare.c:3737
+#: plug-ins/gradient-flare/gradient-flare.c:3839
+#: plug-ins/gradient-flare/gradient-flare.c:3970
 msgid "Hue rotation:"
 msgstr "Zasuk obarvanosti:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3743
+#: plug-ins/gradient-flare/gradient-flare.c:3751
 msgid "G_low"
 msgstr "_Žarenje"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3842
+#: plug-ins/gradient-flare/gradient-flare.c:3850
 msgid "# of Spikes:"
 msgstr "# žarkov:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3853
+#: plug-ins/gradient-flare/gradient-flare.c:3861
 msgid "Spike thickness:"
 msgstr "Debelina žarkov:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3867
+#: plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "_Rays"
 msgstr "_Žarki"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3917
+#: plug-ins/gradient-flare/gradient-flare.c:3925
 msgid "Size factor gradient:"
 msgstr "Preliv s faktorjem velikosti:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3921
+#: plug-ins/gradient-flare/gradient-flare.c:3929
 msgid "Probability gradient:"
 msgstr "Verjetnostni preliv:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3979
+#: plug-ins/gradient-flare/gradient-flare.c:3987
 msgid "Shape of Second Flares"
 msgstr "Oblika sekundarnih odbleskov"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/gradient-flare/gradient-flare.c:4046
 msgid "Random seed:"
 msgstr "Zrno naključja:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4052
+#: plug-ins/gradient-flare/gradient-flare.c:4060
 msgid "_Second Flares"
 msgstr "_Sekundarni odbleski"
 
