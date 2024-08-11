@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-06 09:44+0000\n"
-"PO-Revision-Date: 2024-08-07 09:35+0800\n"
+"POT-Creation-Date: 2024-08-10 21:51+0000\n"
+"PO-Revision-Date: 2024-08-11 19:06+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -23,12 +23,13 @@ msgstr ""
 "X-Generator: Gtranslator 46.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
-msgid "Exercise in _C minor"
-msgstr "在 C 小调中练习(_C)"
+msgid "Plug-In Example in _C"
+msgstr "_C 语言插件示例"
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
-msgid "Exercise a goat in the C language"
-msgstr "在 C 语言中锻炼一只山羊"
+#: extensions/goat-exercises/goat-exercise-c.c:121
+msgid "Plug-in example in C"
+msgstr "C 语言插件示例"
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
@@ -55,8 +56,8 @@ msgid "Procedure '%s' only works with one drawable."
 msgstr "程序“%s”仅对单个可绘区生效。"
 
 #: extensions/goat-exercises/goat-exercise-c.c:180
-msgid "Exercise a goat (C)"
-msgstr "锻炼一只山羊（C）"
+msgid "Plug-In Example in C"
+msgstr "C 语言插件示例"
 
 #: extensions/goat-exercises/goat-exercise-c.c:184
 #: extensions/goat-exercises/goat-exercise-gjs.js:94
@@ -80,8 +81,8 @@ msgstr "锻炼一只山羊（C）"
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3331
-#: plug-ins/gradient-flare/gradient-flare.c:3445
+#: plug-ins/gradient-flare/gradient-flare.c:3339
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 #: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/ifs-compose/ifs-compose.c:2603
 #: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
@@ -124,20 +125,17 @@ msgstr ""
 "点击“源代码”按钮可以查看最新版本的在线源代码。"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
-msgid "Exercise a JavaScript goat"
-msgstr "锻炼一只 JavaScript 山羊"
+msgid "Plug-In Example in _JavaScript"
+msgstr "_JavaScript 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:67
-msgid "Exercise a goat in the JavaScript language (GJS)"
-msgstr "用 JavaScript 语言（GJS）锻炼一只山羊"
-
 #: extensions/goat-exercises/goat-exercise-gjs.js:68
-msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
-msgstr "使用带有 GJS 解释器的 JavaScript 带着一只山羊散步"
+msgid "Plug-in example in JavaScript (GJS)"
+msgstr "JavaScript（GJS）插件示例"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
-msgid "Exercise a goat (JavaScript)"
-msgstr "锻炼一只山羊（JavaScript）"
+msgid "Plug-In Example in JavaScript (GJS)"
+msgstr "JavaScript（GJS）插件示例"
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
@@ -149,11 +147,11 @@ msgstr "锻炼一只山羊（JavaScript）"
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
-msgstr "确认(_O)"
+msgstr "确定(_O)"
 
 #. GIMP - The GNU Image Manipulation Program
 #. Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -178,53 +176,48 @@ msgstr "确认(_O)"
 #. Not sure why run_mode has become a string instead of testing
 #. against Gimp.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
-msgid "Exercise a goat (Lua)"
-msgstr "锻炼一只山羊（Lua）"
+msgid "Plug-In Example in Lua"
+msgstr "Lua 插件示例"
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
-msgid "Exercise a Lua goat"
-msgstr "锻炼一只 Lua 山羊"
+msgid "Plug-In Example in _Lua"
+msgstr "_Lua 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
-msgid "Exercise a goat in the Lua language"
-msgstr "在 Lua 语言中锻炼一只山羊"
+#: extensions/goat-exercises/goat-exercise-lua.lua:177
+msgid "Plug-in example in Lua"
+msgstr "Lua 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
-msgstr "锻炼一只山羊和巨蟒"
+msgid "Plug-In Example in _Python 3"
+msgstr "_Python 3 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr "使用 Python 3 语言锻炼一只山羊"
-
 #: extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
-msgstr "使用 Python 3 带着一只山羊散步"
+msgid "Plug-in example in Python 3"
+msgstr "Python 3 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
 msgid "Procedure '{}' only works with one drawable."
 msgstr "程序“{}”仅对单个可绘区生效。"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
-msgstr "锻炼一只山羊（Python 3）"
+msgid "Plug-In Example in Python 3"
+msgstr "Python 3 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:45
-msgid "Exercise a Vala goat"
-msgstr "锻炼一只 Vala 山羊"
+msgid "Plug-In Example in _Vala"
+msgstr "_Vala 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:46
-msgid "Exercise a goat in the Vala language"
-msgstr "在 Vala 语言中锻炼一只山羊"
-
 #: extensions/goat-exercises/goat-exercise-vala.vala:47
-msgid "Takes a goat for a walk in Vala"
-msgstr "使用 Vala 带着一只山羊散步"
+msgid "Plug-in example in Vala"
+msgstr "Vala 插件示例"
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:67
-msgid "Exercise a goat (Vala)"
-msgstr "锻炼一只山羊（Vala）"
+msgid "Plug-In Example in Vala"
+msgstr "Vala 插件示例"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
 msgid "Goat Exercises"
@@ -302,7 +295,7 @@ msgid "Left edge"
 msgstr "左边界"
 
 #: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
-#: plug-ins/gradient-flare/gradient-flare.c:2919
+#: plug-ins/gradient-flare/gradient-flare.c:2927
 msgid "Center"
 msgstr "中心"
 
@@ -622,7 +615,8 @@ msgstr "百叶窗"
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
-#: plug-ins/file-tiff/file-tiff-load.c:1530
+#: plug-ins/file-tiff/file-tiff-load.c:1545
+#: plug-ins/file-tiff/file-tiff-load.c:2350
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:245
@@ -2046,7 +2040,7 @@ msgstr "修改曲线"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1212
-#: plug-ins/gradient-flare/gradient-flare.c:3047
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Copy"
 msgstr "复制(_C)"
 
@@ -2588,7 +2582,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
-#: plug-ins/file-tiff/file-tiff-load.c:293
+#: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
@@ -4403,7 +4397,7 @@ msgstr "添加该图像"
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
 #: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
-#: plug-ins/file-tiff/file-tiff-load.c:1532
+#: plug-ins/file-tiff/file-tiff-load.c:1547
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
@@ -7660,7 +7654,7 @@ msgid "Layers"
 msgstr "图层"
 
 #: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3045
+#: plug-ins/gradient-flare/gradient-flare.c:3053
 msgid "_New"
 msgstr "新建(_N)"
 
@@ -7672,8 +7666,8 @@ msgstr "再制(_U)"
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
-#: plug-ins/gradient-flare/gradient-flare.c:3048
-#: plug-ins/gradient-flare/gradient-flare.c:3331
+#: plug-ins/gradient-flare/gradient-flare.c:3056
+#: plug-ins/gradient-flare/gradient-flare.c:3339
 msgid "_Delete"
 msgstr "删除(_D)"
 
@@ -7972,8 +7966,8 @@ msgid "Add a New Unit"
 msgstr "添加新单位"
 
 #: plug-ins/common/unit-editor.c:452
-msgid "_ID:"
-msgstr "标识(_I)："
+msgid "_Name:"
+msgstr "名称(_N)："
 
 #: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
@@ -8694,7 +8688,7 @@ msgstr "像素格式"
 #. Create the combobox containing the presets
 #: plug-ins/file-dds/dds.c:213 plug-ins/file-dds/dds.c:276
 #: plug-ins/file-dds/dds.c:293 plug-ins/file-webp/file-webp-dialog.c:80
-#: plug-ins/gradient-flare/gradient-flare.c:2599
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "Default"
 msgstr "默认"
 
@@ -10368,17 +10362,17 @@ msgstr ""
 "分配的软打样配置文件不是 CMYK 配置文件。\n"
 "该配置文件不会包含在导出的图像中。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:301
+#: plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "不是 TIFF 图像或图像已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:334
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF “%s”不包含任何目录"
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:341
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -10390,7 +10384,7 @@ msgstr[0] ""
 "TIFF“%s”虽然看起来存在 %d 页但通过文件头计算目录失败。正在尝试使用该假设值加"
 "载文件。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:472
 msgid "Extra channels with unspecified data."
 msgstr "具有未指明数据的额外通道。"
 
@@ -10401,16 +10395,16 @@ msgstr "具有未指明数据的额外通道。"
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:484
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "非一致性 TIFF：没有“额外采样”区域的额外通道。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:569
+#: plug-ins/file-tiff/file-tiff-load.c:579
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "无法读取 %2$d 页中的第 %1$d 页。图像可能是损坏的。\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:598
+#: plug-ins/file-tiff/file-tiff-load.c:608
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -10419,7 +10413,7 @@ msgstr ""
 "该图像具有线性色彩配置文件但未在第一个图层上设置。第 %d # 图层以下的图层将视"
 "为非线性。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:606
+#: plug-ins/file-tiff/file-tiff-load.c:616
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -10428,39 +10422,39 @@ msgstr ""
 "该图像具有多个色彩配置文件。我们将使用第一个。如果这导致不正确的结果您应考虑"
 "将每个图层作为单独图像载入。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:628
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "可疑的位深度：%2$d 页中的 %1$d。图像可能是损坏的。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:692
+#: plug-ins/file-tiff/file-tiff-load.c:702
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "不支持的位深度：第 %2$d 页的 %1$d。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:707
+#: plug-ins/file-tiff/file-tiff-load.c:717
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "无法从“%s”获取图像宽度"
 
-#: plug-ins/file-tiff/file-tiff-load.c:715
+#: plug-ins/file-tiff/file-tiff-load.c:725
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "无法从“%s”获取图像长度"
 
-#: plug-ins/file-tiff/file-tiff-load.c:723
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "第 %3$d 页有无效图像尺寸（%1$u x %2$u）。图像可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:744
+#: plug-ins/file-tiff/file-tiff-load.c:754
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr "无法从“%s”获取测光。图像是 CCITT 压缩的，假定最小值为白色"
 
-#: plug-ins/file-tiff/file-tiff-load.c:751
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "无法从“%s”获取测光。假定最小值为黑色"
@@ -10468,13 +10462,13 @@ msgstr "无法从“%s”获取测光。假定最小值为黑色"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:783
+#: plug-ins/file-tiff/file-tiff-load.c:793
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "没有为 %s 定义透明通道类型。假定透明不是自左乘的"
 
-#: plug-ins/file-tiff/file-tiff-load.c:808
+#: plug-ins/file-tiff/file-tiff-load.c:818
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10484,37 +10478,37 @@ msgstr ""
 "图像“%s”不符合 TIFF 标准：额外通道呈现的情况下未设置额外采样域。假定第一个额"
 "外通道是非自左乘透明。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1097
+#: plug-ins/file-tiff/file-tiff-load.c:1107
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "无效或未知的压缩方式 %u。将设置压缩为无。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1155
+#: plug-ins/file-tiff/file-tiff-load.c:1165
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "无法创建新图像：%s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1325
+#: plug-ins/file-tiff/file-tiff-load.c:1335
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "未知的分辨率单位类型 %d，假定为 dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1345
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "警告：指定的分辨率没有单位类型，假定为 dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1343
+#: plug-ins/file-tiff/file-tiff-load.c:1353
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "警告：没有 y 分辨率信息，假定与 x 相同"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1370
 msgid "Invalid image resolution info, using default"
 msgstr "无效的图像分辨率信息，将使用默认值"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1419
+#: plug-ins/file-tiff/file-tiff-load.c:1429
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "无法从“%s”获取颜色表"
@@ -10524,66 +10518,66 @@ msgstr "无法从“%s”获取颜色表"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1507
+#: plug-ins/file-tiff/file-tiff-load.c:1517
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "可疑的额外通道数量：%d。可能是损坏的图像。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1567
+#: plug-ins/file-tiff/file-tiff-load.c:1582
 msgid "TIFF Channel"
 msgstr "TIFF 通道"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1720
+#: plug-ins/file-tiff/file-tiff-load.c:1740
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "从 TIFF“%s”读取不到数据。该文件可能已损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1755
-#: plug-ins/file-tiff/file-tiff-load.c:1798
+#: plug-ins/file-tiff/file-tiff-load.c:1776
+#: plug-ins/file-tiff/file-tiff-load.c:1819
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 TIFF 元数据时出错：%s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1878
+#: plug-ins/file-tiff/file-tiff-load.c:1899
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s：不支持的图像格式，没有可用的 RGBA 加载器"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1993
-#: plug-ins/file-tiff/file-tiff-load.c:2190
+#: plug-ins/file-tiff/file-tiff-load.c:2014
+#: plug-ins/file-tiff/file-tiff-load.c:2211
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "读取分块失败。图像可能在第 %d 行损坏。"
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2002
-#: plug-ins/file-tiff/file-tiff-load.c:2199
+#: plug-ins/file-tiff/file-tiff-load.c:2023
+#: plug-ins/file-tiff/file-tiff-load.c:2220
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "读取扫描线失败。图像可能在第 %d 行损坏。"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2551
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2559
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "显示缩减的图像(_S)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2604
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr "处理额外通道为："
 
-#: plug-ins/file-tiff/file-tiff-load.c:2607
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr "非自左乘透明(_N)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2608
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr "自左乘透明(_M)"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2609
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "通道(_L)"
 
@@ -11006,7 +11000,7 @@ msgstr "火焰"
 
 #: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3046
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_Edit"
 msgstr "编辑(_E)"
 
@@ -11366,10 +11360,10 @@ msgid "Rendering fractal"
 msgstr "渲染分形"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:880
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3330
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "您确认要从列表和磁盘中删除“%s”吗？"
+msgstr "您确定要从列表和磁盘中删除“%s”吗？"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:884
 msgid "Delete Fractal"
@@ -11453,7 +11447,7 @@ msgid "Create rectangle"
 msgstr "创建矩形"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3987
+#: plug-ins/gradient-flare/gradient-flare.c:3995
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -11480,7 +11474,7 @@ msgid "Create arc"
 msgstr "创建弧线"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4004
+#: plug-ins/gradient-flare/gradient-flare.c:4012
 #: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -11954,7 +11948,7 @@ msgid "Adds random noise to the color"
 msgstr "给颜色添加随机的噪点"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3651
 msgid "_General"
 msgstr "常规(_G)"
 
@@ -12602,7 +12596,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "用于自适应超级采样的阈值"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2499
+#: plug-ins/gradient-flare/gradient-flare.c:2507
 msgid "Gradient Flare"
 msgstr "渐变闪光"
 
@@ -12641,19 +12635,19 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "无法写入渐变闪光文件“%s”：%s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2543
+#: plug-ins/gradient-flare/gradient-flare.c:2551
 msgid "A_uto update preview"
 msgstr "自动更新预览(_U)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2598
+#: plug-ins/gradient-flare/gradient-flare.c:2606
 msgid "'Default' is created."
 msgstr "“默认”已创建。"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2899
+#: plug-ins/gradient-flare/gradient-flare.c:2907
 msgid "_X:"
 msgstr "_X："
 
-#: plug-ins/gradient-flare/gradient-flare.c:2903
+#: plug-ins/gradient-flare/gradient-flare.c:2911
 msgid "_Y:"
 msgstr "_Y："
 
@@ -12663,174 +12657,174 @@ msgstr "_Y："
 #.
 #. *    Scales
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:2943
-#: plug-ins/gradient-flare/gradient-flare.c:3696
-#: plug-ins/gradient-flare/gradient-flare.c:3798
-#: plug-ins/gradient-flare/gradient-flare.c:3929
+#: plug-ins/gradient-flare/gradient-flare.c:2951
+#: plug-ins/gradient-flare/gradient-flare.c:3704
+#: plug-ins/gradient-flare/gradient-flare.c:3806
+#: plug-ins/gradient-flare/gradient-flare.c:3937
 msgid "Parameters"
 msgstr "参数"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2977
+#: plug-ins/gradient-flare/gradient-flare.c:2985
 msgid "_Settings"
 msgstr "设置(_S)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3115
+#: plug-ins/gradient-flare/gradient-flare.c:3123
 msgid "S_elector"
 msgstr "选择器(_E)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3179
+#: plug-ins/gradient-flare/gradient-flare.c:3187
 msgid "New Gradient Flare"
 msgstr "新建渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3182
+#: plug-ins/gradient-flare/gradient-flare.c:3190
 msgid "Enter a name for the new GFlare"
 msgstr "给新的渐变闪光输入一个名字"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3183
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Unnamed"
 msgstr "未命名"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3203
-#: plug-ins/gradient-flare/gradient-flare.c:3285
+#: plug-ins/gradient-flare/gradient-flare.c:3211
+#: plug-ins/gradient-flare/gradient-flare.c:3293
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "名字“%s”已经被使用！"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3259
+#: plug-ins/gradient-flare/gradient-flare.c:3267
 msgid "Copy Gradient Flare"
 msgstr "复制渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3262
+#: plug-ins/gradient-flare/gradient-flare.c:3270
 msgid "Enter a name for the copied GFlare"
 msgstr "给已复制的渐变闪光输入一个名字"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3316
+#: plug-ins/gradient-flare/gradient-flare.c:3324
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "无法删除！至少要有一个渐变闪光。"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3326
+#: plug-ins/gradient-flare/gradient-flare.c:3334
 msgid "Delete Gradient Flare"
 msgstr "删除渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3398
+#: plug-ins/gradient-flare/gradient-flare.c:3406
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "在 gflares_list 中没有找到 %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3440
+#: plug-ins/gradient-flare/gradient-flare.c:3448
 msgid "Gradient Flare Editor"
 msgstr "渐变闪光编辑器"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3444
+#: plug-ins/gradient-flare/gradient-flare.c:3452
 msgid "_Rescan Gradients"
 msgstr "重新扫描渐变(_R)"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3566
+#: plug-ins/gradient-flare/gradient-flare.c:3574
 msgid "Glow Paint Options"
 msgstr "辉光绘画选项"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3576
-#: plug-ins/gradient-flare/gradient-flare.c:3602
-#: plug-ins/gradient-flare/gradient-flare.c:3628
+#: plug-ins/gradient-flare/gradient-flare.c:3584
+#: plug-ins/gradient-flare/gradient-flare.c:3610
+#: plug-ins/gradient-flare/gradient-flare.c:3636
 msgid "Opacity:"
 msgstr "不透明度："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3588
-#: plug-ins/gradient-flare/gradient-flare.c:3614
-#: plug-ins/gradient-flare/gradient-flare.c:3640
+#: plug-ins/gradient-flare/gradient-flare.c:3596
+#: plug-ins/gradient-flare/gradient-flare.c:3622
+#: plug-ins/gradient-flare/gradient-flare.c:3648
 msgid "Paint mode:"
 msgstr "绘画模式："
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3592
+#: plug-ins/gradient-flare/gradient-flare.c:3600
 msgid "Rays Paint Options"
 msgstr "射线绘画选项"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3618
+#: plug-ins/gradient-flare/gradient-flare.c:3626
 msgid "Second Flares Paint Options"
 msgstr "二次闪光绘画选项"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3669
-#: plug-ins/gradient-flare/gradient-flare.c:3769
-#: plug-ins/gradient-flare/gradient-flare.c:3902
+#: plug-ins/gradient-flare/gradient-flare.c:3677
+#: plug-ins/gradient-flare/gradient-flare.c:3777
+#: plug-ins/gradient-flare/gradient-flare.c:3910
 msgid "Gradients"
 msgstr "渐变"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3680
-#: plug-ins/gradient-flare/gradient-flare.c:3782
-#: plug-ins/gradient-flare/gradient-flare.c:3913
+#: plug-ins/gradient-flare/gradient-flare.c:3688
+#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3921
 msgid "Radial gradient:"
 msgstr "径向渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3684
-#: plug-ins/gradient-flare/gradient-flare.c:3786
+#: plug-ins/gradient-flare/gradient-flare.c:3692
+#: plug-ins/gradient-flare/gradient-flare.c:3794
 msgid "Angular gradient:"
 msgstr "角度渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3688
-#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3696
+#: plug-ins/gradient-flare/gradient-flare.c:3798
 msgid "Angular size gradient:"
 msgstr "角度大小渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3707
-#: plug-ins/gradient-flare/gradient-flare.c:3809
-#: plug-ins/gradient-flare/gradient-flare.c:3940
+#: plug-ins/gradient-flare/gradient-flare.c:3715
+#: plug-ins/gradient-flare/gradient-flare.c:3817
+#: plug-ins/gradient-flare/gradient-flare.c:3948
 msgid "Size (%):"
 msgstr "大小（%）："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3718
-#: plug-ins/gradient-flare/gradient-flare.c:3820
-#: plug-ins/gradient-flare/gradient-flare.c:3951
+#: plug-ins/gradient-flare/gradient-flare.c:3726
+#: plug-ins/gradient-flare/gradient-flare.c:3828
+#: plug-ins/gradient-flare/gradient-flare.c:3959
 msgid "Rotation:"
 msgstr "旋转："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3729
-#: plug-ins/gradient-flare/gradient-flare.c:3831
-#: plug-ins/gradient-flare/gradient-flare.c:3962
+#: plug-ins/gradient-flare/gradient-flare.c:3737
+#: plug-ins/gradient-flare/gradient-flare.c:3839
+#: plug-ins/gradient-flare/gradient-flare.c:3970
 msgid "Hue rotation:"
 msgstr "色相旋转："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3743
+#: plug-ins/gradient-flare/gradient-flare.c:3751
 msgid "G_low"
 msgstr "辉光(_L)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3842
+#: plug-ins/gradient-flare/gradient-flare.c:3850
 msgid "# of Spikes:"
 msgstr "光芒数量："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3853
+#: plug-ins/gradient-flare/gradient-flare.c:3861
 msgid "Spike thickness:"
 msgstr "光芒厚度："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3867
+#: plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "_Rays"
 msgstr "射线(_R)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3917
+#: plug-ins/gradient-flare/gradient-flare.c:3925
 msgid "Size factor gradient:"
 msgstr "大小系数渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3921
+#: plug-ins/gradient-flare/gradient-flare.c:3929
 msgid "Probability gradient:"
 msgstr "可能性渐变："
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3979
+#: plug-ins/gradient-flare/gradient-flare.c:3987
 msgid "Shape of Second Flares"
 msgstr "二次闪光的形状"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/gradient-flare/gradient-flare.c:4046
 msgid "Random seed:"
 msgstr "随机种子："
 
-#: plug-ins/gradient-flare/gradient-flare.c:4052
+#: plug-ins/gradient-flare/gradient-flare.c:4060
 msgid "_Second Flares"
 msgstr "二次闪光(_S)"
 
@@ -15948,6 +15942,63 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Exercise in _C minor"
+#~ msgstr "在 C 小调中练习(_C)"
+
+#~ msgid "Exercise a goat in the C language"
+#~ msgstr "在 C 语言中锻炼一只山羊"
+
+#~ msgid "Exercise a goat (C)"
+#~ msgstr "锻炼一只山羊（C）"
+
+#~ msgid "Exercise a JavaScript goat"
+#~ msgstr "锻炼一只 JavaScript 山羊"
+
+#~ msgid "Exercise a goat in the JavaScript language (GJS)"
+#~ msgstr "用 JavaScript 语言（GJS）锻炼一只山羊"
+
+#~ msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
+#~ msgstr "使用带有 GJS 解释器的 JavaScript 带着一只山羊散步"
+
+#~ msgid "Exercise a goat (JavaScript)"
+#~ msgstr "锻炼一只山羊（JavaScript）"
+
+#~ msgid "Exercise a goat (Lua)"
+#~ msgstr "锻炼一只山羊（Lua）"
+
+#~ msgid "Exercise a Lua goat"
+#~ msgstr "锻炼一只 Lua 山羊"
+
+#~ msgid "Exercise a goat in the Lua language"
+#~ msgstr "在 Lua 语言中锻炼一只山羊"
+
+#~ msgid "Exercise a goat and a python"
+#~ msgstr "锻炼一只山羊和巨蟒"
+
+#~ msgid "Exercise a goat in the Python 3 language"
+#~ msgstr "使用 Python 3 语言锻炼一只山羊"
+
+#~ msgid "Takes a goat for a walk in Python 3"
+#~ msgstr "使用 Python 3 带着一只山羊散步"
+
+#~ msgid "Exercise a goat (Python 3)"
+#~ msgstr "锻炼一只山羊（Python 3）"
+
+#~ msgid "Exercise a Vala goat"
+#~ msgstr "锻炼一只 Vala 山羊"
+
+#~ msgid "Exercise a goat in the Vala language"
+#~ msgstr "在 Vala 语言中锻炼一只山羊"
+
+#~ msgid "Takes a goat for a walk in Vala"
+#~ msgstr "使用 Vala 带着一只山羊散步"
+
+#~ msgid "Exercise a goat (Vala)"
+#~ msgstr "锻炼一只山羊（Vala）"
+
+#~ msgid "_ID:"
+#~ msgstr "标识(_I)："
 
 #~ msgid "ID"
 #~ msgstr "ID"
