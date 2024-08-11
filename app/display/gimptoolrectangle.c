@@ -3780,6 +3780,9 @@ gimp_tool_rectangle_get_constraints (GimpToolRectangle       *rectangle,
           GList *items = gimp_image_get_selected_drawables (image);
           GList *iter;
 
+          if (items != NULL)
+            gimp_item_get_offset (items->data, min_x, min_y);
+
           /* Min and max constraints are respectively the smallest and
            * highest drawable coordinates.
            */
