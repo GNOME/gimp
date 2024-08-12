@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-23 11:03+0000\n"
-"PO-Revision-Date: 2024-04-23 16:19+0300\n"
+"POT-Creation-Date: 2024-08-12 09:56+0000\n"
+"PO-Revision-Date: 2024-08-12 19:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +75,7 @@ msgstr "_Класичний Gimp.Org"
 msgid "Alpha to _Logo"
 msgstr "_Альфа на емблему"
 
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Режим оцінки скриптфу дозволяє лише неінтерактивну роботу"
 
@@ -106,8 +106,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Зберегти вивід консолі скриптфу"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -132,27 +132,27 @@ msgstr "Ласкаво просимо до TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Керування GIMP за допомогою скриптів мовою Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:874
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Скриптфу: Параметри сервера"
 
-#: plug-ins/script-fu/server/script-fu-server.c:879
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Запустити сервер"
 
-#: plug-ins/script-fu/server/script-fu-server.c:912
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Прослуховувати IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:919
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Журнал сервера:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:938
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -168,44 +168,45 @@ msgstr "_Запустити сервер…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Сервер для віддаленого виконання скриптфу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:139
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "скриптфуне може обробляти два сценарії одночасно."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ви вже запустили сценарій \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:165
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "_Гаразд"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:272
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Скриптфу: Вибір кольору"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu File Selection"
 msgstr "Скриптфу: Вибір файлу"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:401
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
 msgid "Script-Fu Folder Selection"
 msgstr "Скриптфу: Вибір теки"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:796
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Помилка під час виконання: %s"
@@ -846,17 +847,17 @@ msgstr ""
 
 #. doesn't matter how many drawables are selected
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Орієнтація"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Горизонталь"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:38
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Вертикаль"
 
@@ -864,15 +865,15 @@ msgstr "Вертикаль"
 msgid "_Position (in %)"
 msgstr "_Розташування (у %)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Створити _напрямну…"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Додати напрямну до розташування, вказаному у точках"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Розташування"
 
@@ -1098,57 +1099,57 @@ msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Експортувати поточну палітру як java.util.Hashtable&lt;Рядок, Колір&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:43
 msgid "There is no image data in the clipboard to paste."
 msgstr "В буфері обміну немає зображення для вставки."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste as New _Brush..."
 msgstr "Вставити як новий _пензель…"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Вставити зміст буферу у новий пензель"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "_Назва пензля"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Мій пензель"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "Назва _файла"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "мійпензель"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "І_нтервал"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:49
 msgid "Paste as New _Pattern..."
 msgstr "Вставити як нову _текстуру…"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Вставити зміст буферу обміну у нову текстуру"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "Назва _текстури"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Моя текстура"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "моятекстура"
 
@@ -1325,9 +1326,14 @@ msgstr "Прозоре тло"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Індексувати до N кольорів (0 - залишити RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Сфера..."
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Приклад додатка мовою _Scheme"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Приклад додатка мовою Scheme"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
@@ -1485,6 +1491,9 @@ msgstr "Зсув тіні вздовж X"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Сфера..."
 
 #~ msgid "_Refresh Scripts"
 #~ msgstr "_Оновити сценарій"
