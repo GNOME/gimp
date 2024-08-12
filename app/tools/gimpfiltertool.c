@@ -398,8 +398,38 @@ gimp_filter_tool_initialize (GimpTool     *tool,
         {
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
-          toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
-                                               "merge-filter", NULL);
+          /* TODO: Once we can serialize GimpDrawable, remove so that filters with
+           * aux nodes can be non-destructive */
+          if (gegl_node_has_pad (filter_tool->operation, "aux"))
+            {
+              GParamSpec *param_spec;
+              GObject    *obj = G_OBJECT (tool_info->tool_options);
+              gchar      *tooltip;
+
+              param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (obj),
+                                                         "merge-filter");
+
+              toggle =
+                gtk_check_button_new_with_mnemonic (g_param_spec_get_nick (param_spec));
+
+              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
+              gtk_widget_set_sensitive (toggle, FALSE);
+
+              tooltip = g_strdup_printf ("%s\n<i>%s</i>",
+                                         g_param_spec_get_blurb (param_spec),
+                                         _("Disabled because this filter "
+                                           "depends on another image."));
+              gimp_help_set_help_data_with_markup (toggle, tooltip, NULL);
+              g_free (tooltip);
+
+              gtk_widget_set_visible (toggle, TRUE);
+            }
+          else
+            {
+              toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                                   "merge-filter", NULL);
+            }
+
           gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
         }
       else
@@ -505,6 +535,11 @@ gimp_filter_tool_control (GimpTool       *tool,
                          NULL);
 
           if (! g_strcmp0 (operation_name, "gegl:nop"))
+            non_destructive = FALSE;
+
+          /* TODO: Once we can serialize GimpDrawable, remove so that filters with
+           * aux nodes can be non-destructive */
+          if (gegl_node_has_pad (filter_tool->operation, "aux"))
             non_destructive = FALSE;
 
           g_free (operation_name);
@@ -1379,6 +1414,8 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
   GimpTool          *tool     = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options  = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
   GimpDrawable      *drawable = NULL;
+  GimpContainer     *filters;
+  gint               count;
 
   if (filter_tool->filter)
     {
@@ -1411,6 +1448,21 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   if (options->preview)
     gimp_drawable_filter_apply (filter_tool->filter, NULL);
+
+  /* TODO: Once we can serialize GimpDrawable, remove so that filters with
+   * aux nodes can be non-destructive */
+  if (gegl_node_has_pad (filter_tool->operation, "aux"))
+    {
+      filters  = gimp_drawable_get_filters (drawable);
+      count    = gimp_container_get_n_children (filters);
+
+      gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                              count - 1);
+      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+    }
 }
 
 static void
