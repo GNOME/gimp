@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-22 10:31+0000\n"
-"PO-Revision-Date: 2024-04-22 16:19+0200\n"
+"POT-Creation-Date: 2024-08-12 09:56+0000\n"
+"PO-Revision-Date: 2024-08-12 12:29+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -78,7 +78,7 @@ msgstr "_Classic.Gimp.Org"
 msgid "Alpha to _Logo"
 msgstr "Alfa v _logotip"
 
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Ocenjevalni način konzole Script-Fu omogoča le ne-interaktiven priklic"
 
@@ -109,8 +109,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Shrani izpis konzole Script-Fu"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
@@ -135,27 +135,27 @@ msgstr "Dobrodošli v TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Skriptanje GIMP-a v jeziku Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:874
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Možnosti strežnika Script-Fu"
 
-#: plug-ins/script-fu/server/script-fu-server.c:879
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Zaženi strežnik"
 
-#: plug-ins/script-fu/server/script-fu-server.c:912
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Poslušaj IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:919
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Vrata strežnika:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Dnevniška datoteka strežnika:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:938
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -171,44 +171,45 @@ msgstr "_Zaženi strežnik ..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Strežnik za oddaljeno upravljanje Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:139
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:165
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "V _redu"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:221
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:272
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Izbor barv Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu File Selection"
 msgstr "Izbor datoteke Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:401
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
 msgid "Script-Fu Folder Selection"
 msgstr "Izbor mape Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:796
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
@@ -847,17 +848,17 @@ msgstr "Doda vodilo na naveden položaj kot odstotek velikosti slike"
 
 #. doesn't matter how many drawables are selected
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Smer"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Vodoravno"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:38
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Navpično"
 
@@ -865,15 +866,15 @@ msgstr "Navpično"
 msgid "_Position (in %)"
 msgstr "_Položaj (v %)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Novo _vodilo …"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Na naveden položaj in orientacijo dodaj vodilo (v slikovnih točkah)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Položaj"
 
@@ -1098,57 +1099,57 @@ msgstr "Zemljevid J_ava ..."
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr "Izvozi aktivno paleto kot java.util.Hashtable&lt;Niz, Barva&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:43
 msgid "There is no image data in the clipboard to paste."
 msgstr "Na odložišču ni nikakršnih slikovnih podatkov za lepljenje."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste as New _Brush..."
 msgstr "Prilepi kot nov _čopič …"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Prilepi vsebino odložišča v nov čopič"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "Ime _čopiča"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Moj čopič"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "Ime _datoteke"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "mojčopič"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "_Razmik"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:49
 msgid "Paste as New _Pattern..."
 msgstr "Prilepi kot _nov vzorec …"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Prilepi vsebino odložišča v nov vzorec"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "Ime _vzorca"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Moj vzorec"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "mojvzorec"
 
@@ -1325,9 +1326,14 @@ msgstr "Prosojno ozadje"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indeksiranje do n barv (0 = ohrani RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Krogla …"
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Primer vstavka v _Scheme"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Primer vstavka v Scheme"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
