@@ -11,89 +11,73 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-24 15:18+0000\n"
-"PO-Revision-Date: 2024-02-24 16:21+0100\n"
+"POT-Creation-Date: 2024-08-12 09:56+0000\n"
+"PO-Revision-Date: 2024-08-12 11:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
 msgstr "Script-Fu-_konsol"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktiv konsol för Script-Fu-utveckling"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:309
 msgid "_GIMP Online"
 msgstr "_GIMP på nätet"
 
-#: plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:310
 msgid "_User Manual"
 msgstr "A_nvändarhandbok"
 
-#: plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:313
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Testa"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Buttons"
 msgstr "_Knappar"
 
-#: plug-ins/script-fu/script-fu.c:325
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Logos"
 msgstr "_Logotyper"
 
-#: plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:322
 msgid "_Patterns"
 msgstr "_Mönster"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Web Page Themes"
 msgstr "_Webbsideteman"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Alien Glow"
 msgstr "Rymd_glöd"
 
-#: plug-ins/script-fu/script-fu.c:334
+#: plug-ins/script-fu/script-fu.c:329
 msgid "_Beveled Pattern"
 msgstr "Av_fasat mönster"
 
-#: plug-ins/script-fu/script-fu.c:336
+#: plug-ins/script-fu/script-fu.c:331
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:339
+#: plug-ins/script-fu/script-fu.c:334
 msgid "Alpha to _Logo"
 msgstr "Alfa till _logotyp"
 
-#: plug-ins/script-fu/script-fu.c:345
-msgid "_Refresh Scripts"
-msgstr "_Uppdatera skript"
-
-#: plug-ins/script-fu/script-fu.c:350
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Läs om alla tillgängliga Script-Fu-skript"
-
-#: plug-ins/script-fu/script-fu.c:376
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Du kan inte använda ”Uppdatera skript” när en Script-Fu-dialogruta är "
-"öppen.  Stäng alla Script-Fu-fönster och försök igen."
-
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
 
@@ -124,8 +108,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Spara utdata från Script-Fu-konsol"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "A_vbryt"
 
@@ -150,27 +134,27 @@ msgstr "Välkommen till TinyScheme"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "Skript för GIMP i språket Scheme"
 
-#: plug-ins/script-fu/server/script-fu-server.c:874
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: plug-ins/script-fu/server/script-fu-server.c:879
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Starta servern"
 
-#: plug-ins/script-fu/server/script-fu-server.c:912
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Lyssna på IP:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:919
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Serverloggfil:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:938
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -186,44 +170,45 @@ msgstr "_Starta servern…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Server för fjärråtgärder i Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet ”%s”."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "Å_terställ"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fel vid körning av %s:"
@@ -584,7 +569,7 @@ msgstr "Enfärgat brus applicerat med differenslagerläget"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "_Förvrid…"
+msgstr "_Förvräng…"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
@@ -647,50 +632,50 @@ msgstr "Färg"
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "Render _Font Map..."
 msgstr "Rendera typsnitts_karta…"
 
-#: plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "Skapa en bild fylld med förhandsvisningar av typsnitt som matchar ett "
 "typsnittsfilter"
 
-#: plug-ins/script-fu/scripts/font-map.scm:167
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Text"
 msgstr "_Text"
 
-#: plug-ins/script-fu/scripts/font-map.scm:168
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "Use font _name as text"
 msgstr "Använd typsnitts_namnet som text"
 
-#: plug-ins/script-fu/scripts/font-map.scm:169
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Labels"
 msgstr "_Etiketter"
 
-#: plug-ins/script-fu/scripts/font-map.scm:170
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:171
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Font _size (pixels)"
 msgstr "Typsnitts_storlek (bildpunkter)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:172
+#: plug-ins/script-fu/scripts/font-map.scm:178
 msgid "_Border (pixels)"
 msgstr "_Kant (bildpunkter)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "_Color scheme"
 msgstr "Färg_schema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Black on white"
 msgstr "Svart på vitt"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Active colors"
 msgstr "Aktiva färger"
 
@@ -866,17 +851,17 @@ msgstr ""
 
 #. doesn't matter how many drawables are selected
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Riktning"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Horisontell"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:38
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -884,16 +869,16 @@ msgstr "Vertikal"
 msgid "_Position (in %)"
 msgstr "_Position (i %)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Ny _hjälplinje…"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Lägg till en hjälplinje med angiven orientering och position (i bildpunkter)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Position"
 
@@ -1039,23 +1024,11 @@ msgstr "Sepia"
 msgid "Mottle"
 msgstr "Fläck"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Mapp för utdatafilen"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-"Namnet på filen att skapa (om en fil med detta namn redan finns så kommer "
-"den att ersättas)"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Filnamnet som du angav är inte ett lämpligt namn för en fil."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1063,11 +1036,30 @@ msgstr ""
 "Alla tecken i namnet är antingen blanksteg eller tecken som inte får "
 "förekomma i filnamn."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:264
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Exporterade palett till fil: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:289
+msgid "Folder for the output file"
+msgstr "Mapp för utdatafilen"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Namnet på filen att skapa (om en fil med detta namn redan finns så kommer "
+"den att ersättas)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:319
 msgid "_CSS stylesheet..."
 msgstr "_CSS-stilmall…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:320
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1075,27 +1067,27 @@ msgstr ""
 "Exportera den aktiva paletten som en CSS-stilmall med färgnamnen som deras "
 "klassnamn samt själva färgen som färgattributet"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:340
 msgid "P_HP dictionary..."
 msgstr "P_HP-lexikon…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:341
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Exportera den aktiva paletten som ett PHP-lexikon (namn => färg)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:322
+#: plug-ins/script-fu/scripts/palette-export.scm:365
 msgid "_Python dictionary..."
 msgstr "_Python-lexikon…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:366
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Exportera den aktiva paletten som ett Python-lexikon (namn: färg)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:351
+#: plug-ins/script-fu/scripts/palette-export.scm:387
 msgid "_Text file..."
 msgstr "_Textfil…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:388
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1103,66 +1095,66 @@ msgstr ""
 "Skriv alla färgerna i en palett till en textfil, ett hexadecimalt värde per "
 "rad (inga namn)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:398
+#: plug-ins/script-fu/scripts/palette-export.scm:427
 msgid "J_ava map..."
 msgstr "J_ava-avbildning…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:428
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Exportera den aktiva paletten som en java.util.Hashtable&lt;Sträng,Färg&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:43
 msgid "There is no image data in the clipboard to paste."
 msgstr "Det finns inga bilddata i urklipp att klistra in."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste as New _Brush..."
 msgstr "Klistra in som ny _pensel…"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Klistra in urklippets innehåll till en ny pensel"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "P_enselnamn"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Min pensel"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "_Filnamn"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "minpensel"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "Me_llanrum"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:49
 msgid "Paste as New _Pattern..."
 msgstr "Klistra in som nytt _mönster…"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Klistra in urklippets innehåll till ett nytt mönster"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "_Mönsternamn"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Mitt mönster"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "mittmönster"
 
@@ -1342,9 +1334,14 @@ msgstr "Genomskinlig bakgrund"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexera till n färger (0 = behåll RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Sfär…"
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Exempel på insticksmodul i _Scheme"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Exempel på insticksmodul i Scheme"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
@@ -1503,6 +1500,22 @@ msgstr "X-avstånd för skuggkastning"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-avstånd för skuggkastning"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Sfär…"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "_Uppdatera skript"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Läs om alla tillgängliga Script-Fu-skript"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "Du kan inte använda ”Uppdatera skript” när en Script-Fu-dialogruta är "
+#~ "öppen.  Stäng alla Script-Fu-fönster och försök igen."
 
 #~ msgid "Add realistic looking coffee stains to the image"
 #~ msgstr "Lägg till realistiska kaffefläckar till bilden"
