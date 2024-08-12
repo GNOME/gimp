@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-02 23:17+0000\n"
-"PO-Revision-Date: 2024-08-03 06:36+0200\n"
+"POT-Creation-Date: 2024-08-10 16:14+0000\n"
+"PO-Revision-Date: 2024-08-12 06:27+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -169,7 +169,7 @@ msgid "Export Image as %s"
 msgstr "გამოსახულების გატანა, როგორც %s"
 
 #: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:344
-#: libgimpwidgets/gimpcolorbutton.c:554
+#: libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
@@ -427,13 +427,13 @@ msgid "_Open"
 msgstr "_გახსნა"
 
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
-#: libgimpwidgets/gimpcolorbutton.c:555 libgimpwidgets/gimpfileentry.c:493
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:493
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
 #: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_დიახ"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_საწყისი მნიშვნელობებზე დაბრუნება"
 
@@ -1699,63 +1699,33 @@ msgstr "IPTC მონაცემების ანალიზის შე�
 msgid "Parsing XMP data failed."
 msgstr "XMP მონაცემების ანალიზის შეცდომა."
 
-#: libgimpbase/gimpunit.c:86
-msgctxt "unit-singular"
-msgid "pixel"
-msgstr "პიქსელი"
-
-#: libgimpbase/gimpunit.c:86
+#: libgimpbase/gimpunit.c:81
 msgctxt "unit-plural"
 msgid "pixels"
 msgstr "პიქსელი"
 
-#: libgimpbase/gimpunit.c:90
-msgctxt "unit-singular"
-msgid "inch"
-msgstr "დუიმი"
-
-#: libgimpbase/gimpunit.c:90
+#: libgimpbase/gimpunit.c:88
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "დუიმი"
 
-#: libgimpbase/gimpunit.c:93
-msgctxt "unit-singular"
-msgid "millimeter"
-msgstr "მილიმეტრი"
-
-#: libgimpbase/gimpunit.c:93
+#: libgimpbase/gimpunit.c:94
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "მილიმეტრი"
 
-#: libgimpbase/gimpunit.c:97
-msgctxt "unit-singular"
-msgid "point"
-msgstr "წერტილი"
-
-#: libgimpbase/gimpunit.c:97
+#: libgimpbase/gimpunit.c:101
 msgctxt "unit-plural"
 msgid "points"
 msgstr "წერტილი"
 
-#: libgimpbase/gimpunit.c:100
-msgctxt "unit-singular"
-msgid "pica"
-msgstr "პიკა"
-
-#: libgimpbase/gimpunit.c:100
+#: libgimpbase/gimpunit.c:107
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "პიკა"
 
-#: libgimpbase/gimpunit.c:108
-msgctxt "singular"
-msgid "percent"
-msgstr "პროცენტი"
-
-#: libgimpbase/gimpunit.c:108
-msgctxt "plural"
+#: libgimpbase/gimpunit.c:117
+msgctxt "unit-plural"
 msgid "percent"
 msgstr "პროცენტი"
 
@@ -2114,9 +2084,9 @@ msgstr ""
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:221 libgimpmodule/gimpmodule.c:239
-#: libgimpmodule/gimpmodule.c:500 libgimpmodule/gimpmodule.c:523
-#: libgimpmodule/gimpmodule.c:573
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "მოდულის '%s' ჩატვირთვის შეცდომა: '%s'"
@@ -2149,12 +2119,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
-#: libgimpthumb/gimpthumbnail.c:481
+#: libgimpthumb/gimpthumbnail.c:530
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr ""
 
-#: libgimpthumb/gimpthumbnail.c:878
+#: libgimpthumb/gimpthumbnail.c:931
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""
@@ -2163,19 +2133,19 @@ msgstr ""
 msgid "_Search:"
 msgstr "_ძებნა:"
 
-#: libgimpwidgets/gimpcolorbutton.c:377
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_წინა პლანის ფერი"
 
-#: libgimpwidgets/gimpcolorbutton.c:378
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "_ფონის ფერი"
 
-#: libgimpwidgets/gimpcolorbutton.c:383
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "შა_ვი"
 
-#: libgimpwidgets/gimpcolorbutton.c:384
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_თეთრი"
 
@@ -2198,7 +2168,7 @@ msgid "_Save"
 msgstr "შენახვა"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
-#: libgimpwidgets/gimppatheditor.c:267
+#: libgimpwidgets/gimppatheditor.c:292
 msgid "Folder"
 msgstr "საქაღალდე"
 
@@ -2288,11 +2258,11 @@ msgstr "ძველი:"
 msgid "HTML _notation:"
 msgstr "HTML ნოტაცია:"
 
-#: libgimpwidgets/gimpcontroller.c:105
+#: libgimpwidgets/gimpcontroller.c:114
 msgid "The controller's name"
 msgstr ""
 
-#: libgimpwidgets/gimpcontroller.c:113
+#: libgimpwidgets/gimpcontroller.c:122
 msgid "The controller's state, as human-readable string"
 msgstr ""
 
@@ -2340,7 +2310,7 @@ msgstr ""
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: libgimpwidgets/gimpintstore.c:255
+#: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
 msgstr "(ცარიელი)"
 
@@ -2405,27 +2375,27 @@ msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "მონიშნულია %d გვერდი"
 
-#: libgimpwidgets/gimppatheditor.c:178
+#: libgimpwidgets/gimppatheditor.c:203
 msgid "Add a new folder"
 msgstr "ახალი საქაღალდის დამატება"
 
-#: libgimpwidgets/gimppatheditor.c:196
+#: libgimpwidgets/gimppatheditor.c:221
 msgid "Move the selected folder up"
 msgstr "მონიშნული დასტის მაღლა ატანა"
 
-#: libgimpwidgets/gimppatheditor.c:214
+#: libgimpwidgets/gimppatheditor.c:239
 msgid "Move the selected folder down"
 msgstr "მონიშნული დასტის დაბლა ჩამოტანა"
 
-#: libgimpwidgets/gimppatheditor.c:232
+#: libgimpwidgets/gimppatheditor.c:257
 msgid "Remove the selected folder from the list"
 msgstr "მონიშნული დასტის სიიდან წაშლა"
 
-#: libgimpwidgets/gimppatheditor.c:258
+#: libgimpwidgets/gimppatheditor.c:283
 msgid "Writable"
 msgstr "ჩაწერადი"
 
-#: libgimpwidgets/gimppickbutton.c:123
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -3179,6 +3149,30 @@ msgstr ""
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "კონ_ტრასტი"
+
+#~ msgctxt "unit-singular"
+#~ msgid "pixel"
+#~ msgstr "პიქსელი"
+
+#~ msgctxt "unit-singular"
+#~ msgid "inch"
+#~ msgstr "დუიმი"
+
+#~ msgctxt "unit-singular"
+#~ msgid "millimeter"
+#~ msgstr "მილიმეტრი"
+
+#~ msgctxt "unit-singular"
+#~ msgid "point"
+#~ msgstr "წერტილი"
+
+#~ msgctxt "unit-singular"
+#~ msgid "pica"
+#~ msgstr "პიკა"
+
+#~ msgctxt "plural"
+#~ msgid "percent"
+#~ msgstr "პროცენტი"
 
 #~ msgid "Confirm Save"
 #~ msgstr "შენახვის დადასტურება"
