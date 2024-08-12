@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-28 12:34+0000\n"
-"PO-Revision-Date: 2024-07-29 06:29+0200\n"
+"POT-Creation-Date: 2024-08-10 21:51+0000\n"
+"PO-Revision-Date: 2024-08-12 06:25+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -19,12 +19,13 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
-msgid "Exercise in _C minor"
-msgstr "C მინორში ვარჯიში"
+msgid "Plug-In Example in _C"
+msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
-msgid "Exercise a goat in the C language"
-msgstr "ავარჯიშეთ თხა C-ში"
+#: extensions/goat-exercises/goat-exercise-c.c:121
+msgid "Plug-in example in C"
+msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-c.c:150 plug-ins/common/blinds.c:202
 #: plug-ins/common/border-average.c:200 plug-ins/common/checkerboard.c:176
@@ -51,8 +52,8 @@ msgid "Procedure '%s' only works with one drawable."
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-c.c:180
-msgid "Exercise a goat (C)"
-msgstr "ავარჯიშეთ თხა (c)"
+msgid "Plug-In Example in C"
+msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-c.c:184
 #: extensions/goat-exercises/goat-exercise-gjs.js:94
@@ -66,7 +67,7 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/file-pdf-export.c:1028 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
-#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:435
+#: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
@@ -76,8 +77,8 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3331
-#: plug-ins/gradient-flare/gradient-flare.c:3445
+#: plug-ins/gradient-flare/gradient-flare.c:3339
+#: plug-ins/gradient-flare/gradient-flare.c:3453
 #: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/ifs-compose/ifs-compose.c:2603
 #: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
@@ -118,19 +119,16 @@ msgid ""
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:63
-msgid "Exercise a JavaScript goat"
+msgid "Plug-In Example in _JavaScript"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:67
-msgid "Exercise a goat in the JavaScript language (GJS)"
-msgstr ""
-
 #: extensions/goat-exercises/goat-exercise-gjs.js:68
-msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
+msgid "Plug-in example in JavaScript (GJS)"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:90
-msgid "Exercise a goat (JavaScript)"
+msgid "Plug-In Example in JavaScript (GJS)"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
@@ -138,12 +136,12 @@ msgstr ""
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2264
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
-#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:266
+#: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3446
+#: plug-ins/gradient-flare/gradient-flare.c:3454
 #: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -172,28 +170,26 @@ msgstr "_დიახ"
 #. Not sure why run_mode has become a string instead of testing
 #. against Gimp.RunMode.INTERACTIVE.
 #: extensions/goat-exercises/goat-exercise-lua.lua:67
-msgid "Exercise a goat (Lua)"
+msgid "Plug-In Example in Lua"
 msgstr ""
 
 #. CANCEL, CLOSE, DELETE_EVENT
 #: extensions/goat-exercises/goat-exercise-lua.lua:172
-msgid "Exercise a Lua goat"
-msgstr "ავარჯიშეთ თხა Lua-ში"
+msgid "Plug-In Example in _Lua"
+msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-lua.lua:176
-msgid "Exercise a goat in the Lua language"
-msgstr "ავარჯიშეთ თხა Lua-ში"
+#: extensions/goat-exercises/goat-exercise-lua.lua:177
+msgid "Plug-in example in Lua"
+msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
+msgid "Plug-In Example in _Python 3"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr ""
-
 #: extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
+msgid "Plug-in example in Python 3"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
@@ -201,23 +197,20 @@ msgid "Procedure '{}' only works with one drawable."
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
+msgid "Plug-In Example in Python 3"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:45
-msgid "Exercise a Vala goat"
+msgid "Plug-In Example in _Vala"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:46
-msgid "Exercise a goat in the Vala language"
-msgstr ""
-
 #: extensions/goat-exercises/goat-exercise-vala.vala:47
-msgid "Takes a goat for a walk in Vala"
+msgid "Plug-in example in Vala"
 msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-vala.vala:67
-msgid "Exercise a goat (Vala)"
+msgid "Plug-In Example in Vala"
 msgstr ""
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:5
@@ -292,7 +285,7 @@ msgid "Left edge"
 msgstr "მარცხენა კიდე"
 
 #: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
-#: plug-ins/gradient-flare/gradient-flare.c:2919
+#: plug-ins/gradient-flare/gradient-flare.c:2927
 msgid "Center"
 msgstr "ცენტრი"
 
@@ -612,7 +605,8 @@ msgstr ""
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:446
-#: plug-ins/file-tiff/file-tiff-load.c:1530
+#: plug-ins/file-tiff/file-tiff-load.c:1545
+#: plug-ins/file-tiff/file-tiff-load.c:2350
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
 #: plug-ins/gfig/gfig-dialog.c:1286 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:245
@@ -665,27 +659,22 @@ msgid "4"
 msgstr "4"
 
 #: plug-ins/common/border-average.c:156
-#| msgid "A8"
 msgid "8"
 msgstr "8"
 
 #: plug-ins/common/border-average.c:157
-#| msgid "1:6"
 msgid "16"
 msgstr "16"
 
 #: plug-ins/common/border-average.c:158
-#| msgid "2"
 msgid "32"
 msgstr "32"
 
 #: plug-ins/common/border-average.c:159
-#| msgid "4"
 msgid "64"
 msgstr "64"
 
 #: plug-ins/common/border-average.c:160
-#| msgid "1:2"
 msgid "128"
 msgstr "128"
 
@@ -1961,7 +1950,7 @@ msgstr ""
 #: plug-ins/common/file-ps.c:3736 plug-ins/common/file-psp.c:2615
 #: plug-ins/common/file-psp.c:2665 plug-ins/common/file-qoi.c:272
 #: plug-ins/common/file-raw-data.c:565 plug-ins/common/file-raw-data.c:1690
-#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:540
+#: plug-ins/common/file-sunras.c:430 plug-ins/common/file-svg.c:541
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:188
 #: plug-ins/common/file-xbm.c:720 plug-ins/common/file-xmc.c:651
 #: plug-ins/common/file-xmc.c:890 plug-ins/common/file-xwd.c:460
@@ -2020,7 +2009,7 @@ msgstr "მრუდების შეცვლა"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1212
-#: plug-ins/gradient-flare/gradient-flare.c:3047
+#: plug-ins/gradient-flare/gradient-flare.c:3055
 msgid "_Copy"
 msgstr "_კოპირება"
 
@@ -2560,7 +2549,7 @@ msgstr ""
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
 #: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:305
-#: plug-ins/file-tiff/file-tiff-load.c:293
+#: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s'-ის გახსნა"
@@ -4341,7 +4330,7 @@ msgstr "ამ გამოსახულების დამატება"
 #: plug-ins/common/file-pdf-export.c:1178
 #: plug-ins/common/file-pdf-export.c:1251
 #: plug-ins/common/file-pdf-export.c:1349 plug-ins/common/file-ps.c:2214
-#: plug-ins/file-tiff/file-tiff-load.c:1532
+#: plug-ins/file-tiff/file-tiff-load.c:1547
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
@@ -5476,7 +5465,7 @@ msgstr ""
 
 #: plug-ins/common/file-raw-data.c:395
 msgid "Unsigned Integer"
-msgstr ""
+msgstr "უნიშნო მთელი რიცხვი"
 
 #: plug-ins/common/file-raw-data.c:396
 msgid "Signed Integer"
@@ -5766,32 +5755,32 @@ msgstr ""
 msgid "Write error occurred"
 msgstr "ჩაწერის შეცდომა"
 
-#: plug-ins/common/file-svg.c:166
+#: plug-ins/common/file-svg.c:167
 msgid "SVG image"
 msgstr "SVG გამოსახულება"
 
-#: plug-ins/common/file-svg.c:179
+#: plug-ins/common/file-svg.c:180
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:188
+#: plug-ins/common/file-svg.c:189
 msgid "_Paths"
 msgstr "_კონტურები"
 
-#: plug-ins/common/file-svg.c:189
+#: plug-ins/common/file-svg.c:190
 msgid ""
 "Whether and how to import paths so that they can be used with the path tool"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:190
+#: plug-ins/common/file-svg.c:191
 msgid "Don't import paths"
 msgstr "კონტურები შემოტანილი არ იქნება"
 
-#: plug-ins/common/file-svg.c:191
+#: plug-ins/common/file-svg.c:192
 msgid "Import paths individually"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:192
+#: plug-ins/common/file-svg.c:193
 msgid "Merge imported paths"
 msgstr "შემოტანილი კონტურების შერწყმა"
 
@@ -5800,15 +5789,15 @@ msgstr "შემოტანილი კონტურების შერ�
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
 #.
-#: plug-ins/common/file-svg.c:273
+#: plug-ins/common/file-svg.c:274
 msgid "Disable safety size limits?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:278
+#: plug-ins/common/file-svg.c:279
 msgid "_No"
 msgstr "_არა"
 
-#: plug-ins/common/file-svg.c:279
+#: plug-ins/common/file-svg.c:280
 msgid "_Yes"
 msgstr "_დიახ"
 
@@ -5822,31 +5811,31 @@ msgstr "_დიახ"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:303
+#: plug-ins/common/file-svg.c:304
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
 "consume too much memory."
 msgstr ""
 
-#: plug-ins/common/file-svg.c:315
+#: plug-ins/common/file-svg.c:316
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:322
+#: plug-ins/common/file-svg.c:323
 msgid "Retry without limits preventing to parse huge data?"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:542 plug-ins/file-exr/file-exr.c:358
+#: plug-ins/common/file-svg.c:543 plug-ins/file-exr/file-exr.c:358
 #: plug-ins/file-exr/file-exr.c:372
 msgid "Unknown reason"
 msgstr "უცნობი მიზეზი"
 
-#: plug-ins/common/file-svg.c:548
+#: plug-ins/common/file-svg.c:549
 msgid "Rendering SVG"
 msgstr ""
 
-#: plug-ins/common/file-svg.c:558
+#: plug-ins/common/file-svg.c:559
 msgid "Rendered SVG"
 msgstr ""
 
@@ -6555,7 +6544,7 @@ msgstr "ხელმისაწვდომი გამოსახულე�
 msgid "On film:"
 msgstr ""
 
-#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:436
+#: plug-ins/common/film.c:1044 plug-ins/common/unit-editor.c:428
 msgid "_Add"
 msgstr "_დამატება"
 
@@ -6992,7 +6981,8 @@ msgstr "დათხვევა არ არსებობს"
 msgid "Plug-in Browser"
 msgstr ""
 
-#: plug-ins/common/plugin-browser.c:603 plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
+#: plug-ins/metadata/metadata-editor.c:609
 #: plug-ins/metadata/metadata-editor.c:645
 #: plug-ins/metadata/metadata-editor.c:652
 #: plug-ins/metadata/metadata-editor.c:659
@@ -7525,7 +7515,7 @@ msgid "Layers"
 msgstr "ფენები"
 
 #: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3045
+#: plug-ins/gradient-flare/gradient-flare.c:3053
 msgid "_New"
 msgstr "_ახალი"
 
@@ -7537,8 +7527,8 @@ msgstr "_დუბლირება"
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
-#: plug-ins/gradient-flare/gradient-flare.c:3048
-#: plug-ins/gradient-flare/gradient-flare.c:3331
+#: plug-ins/gradient-flare/gradient-flare.c:3056
+#: plug-ins/gradient-flare/gradient-flare.c:3339
 msgid "_Delete"
 msgstr "_წაშლა"
 
@@ -7745,147 +7735,118 @@ msgstr "_გაუმჭვირვალობა:"
 msgid "Number of Segments"
 msgstr "სეგმენტების რაოდენობა"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid "Saved"
 msgstr "შენახულია"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:112
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:116
-msgid "ID"
-msgstr "ID"
-
-#: plug-ins/common/unit-editor.c:116
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+#: plug-ins/common/unit-editor.c:114
+msgid "The name to be used to identify this unit in the graphical interface"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "Factor"
 msgstr "ფაქტორი"
 
-#: plug-ins/common/unit-editor.c:118
+#: plug-ins/common/unit-editor.c:116
 msgid "How many units make up an inch."
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid "Digits"
 msgstr "ციფრები"
 
-#: plug-ins/common/unit-editor.c:119
+#: plug-ins/common/unit-editor.c:117
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid "Symbol"
 msgstr "სიმბოლო"
 
-#: plug-ins/common/unit-editor.c:124
+#: plug-ins/common/unit-editor.c:122
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "Abbreviation"
 msgstr "აბრევიატურა"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:125
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:129
-msgid "Singular"
-msgstr "მხოლობითში"
-
-#: plug-ins/common/unit-editor.c:129
-msgid "The unit's singular form."
-msgstr ""
-
-#: plug-ins/common/unit-editor.c:130
-msgid "Plural"
-msgstr "მრავლობითი"
-
-#: plug-ins/common/unit-editor.c:130
-msgid "The unit's plural form."
-msgstr ""
-
-#: plug-ins/common/unit-editor.c:174
+#: plug-ins/common/unit-editor.c:170
 msgid "U_nits"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:179
+#: plug-ins/common/unit-editor.c:175
 msgid "Create or alter units used in GIMP"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:228 plug-ins/common/unit-editor.c:247
+#: plug-ins/common/unit-editor.c:222 plug-ins/common/unit-editor.c:241
 msgid "Unit Editor"
 msgstr ""
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:251
+#: plug-ins/common/unit-editor.c:245
 #: plug-ins/fractal-explorer/fractal-explorer.c:1337
 #: plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "_განახლება"
 
-#: plug-ins/common/unit-editor.c:258
+#: plug-ins/common/unit-editor.c:252
 msgid "_Help"
 msgstr "_დახმარება"
 
-#: plug-ins/common/unit-editor.c:289
+#: plug-ins/common/unit-editor.c:283
 msgid "Create a new unit from scratch"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:296
+#: plug-ins/common/unit-editor.c:290
 msgid "Create a new unit using the currently selected unit as template"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:431
+#: plug-ins/common/unit-editor.c:423
 msgid "Add a New Unit"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:460
-msgid "_ID:"
-msgstr "_ID:"
+#: plug-ins/common/unit-editor.c:452
+msgid "_Name:"
+msgstr "_სახელი:"
 
-#: plug-ins/common/unit-editor.c:472
+#: plug-ins/common/unit-editor.c:464
 msgid "_Factor:"
 msgstr "_ფაქტორი:"
 
-#: plug-ins/common/unit-editor.c:483
+#: plug-ins/common/unit-editor.c:475
 msgid "_Digits:"
 msgstr "_ციფრები:"
 
-#: plug-ins/common/unit-editor.c:495
+#: plug-ins/common/unit-editor.c:487
 msgid "_Symbol:"
 msgstr "_სიმბოლო:"
 
-#: plug-ins/common/unit-editor.c:507
+#: plug-ins/common/unit-editor.c:499
 msgid "_Abbreviation:"
 msgstr "_აბრევიატურა:"
 
-#: plug-ins/common/unit-editor.c:519
-msgid "Si_ngular:"
-msgstr "_მხოლობითი:"
-
-#: plug-ins/common/unit-editor.c:531
-msgid "_Plural:"
-msgstr "_მრავლობითი:"
-
-#: plug-ins/common/unit-editor.c:574
+#: plug-ins/common/unit-editor.c:534
 msgid "Incomplete input"
 msgstr ""
 
-#: plug-ins/common/unit-editor.c:577
+#: plug-ins/common/unit-editor.c:537
 msgid "Please fill in all text fields."
 msgstr ""
 
@@ -8580,7 +8541,7 @@ msgstr "პიქსელის ფორმატი"
 #. Create the combobox containing the presets
 #: plug-ins/file-dds/dds.c:213 plug-ins/file-dds/dds.c:276
 #: plug-ins/file-dds/dds.c:293 plug-ins/file-webp/file-webp-dialog.c:80
-#: plug-ins/gradient-flare/gradient-flare.c:2599
+#: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "Default"
 msgstr "ნაგულისხმევი"
 
@@ -10203,17 +10164,17 @@ msgid ""
 "This profile will not be included in the exported image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:301
+#: plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:328
+#: plug-ins/file-tiff/file-tiff-load.c:334
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:335
+#: plug-ins/file-tiff/file-tiff-load.c:341
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -10224,7 +10185,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:466
+#: plug-ins/file-tiff/file-tiff-load.c:472
 msgid "Extra channels with unspecified data."
 msgstr ""
 
@@ -10235,62 +10196,62 @@ msgstr ""
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:478
+#: plug-ins/file-tiff/file-tiff-load.c:484
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:569
+#: plug-ins/file-tiff/file-tiff-load.c:579
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:598
+#: plug-ins/file-tiff/file-tiff-load.c:608
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:606
+#: plug-ins/file-tiff/file-tiff-load.c:616
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:618
+#: plug-ins/file-tiff/file-tiff-load.c:628
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:692
+#: plug-ins/file-tiff/file-tiff-load.c:702
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:707
+#: plug-ins/file-tiff/file-tiff-load.c:717
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:715
+#: plug-ins/file-tiff/file-tiff-load.c:725
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:723
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:744
+#: plug-ins/file-tiff/file-tiff-load.c:754
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:751
+#: plug-ins/file-tiff/file-tiff-load.c:761
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -10298,13 +10259,13 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:783
+#: plug-ins/file-tiff/file-tiff-load.c:793
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:808
+#: plug-ins/file-tiff/file-tiff-load.c:818
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -10312,37 +10273,37 @@ msgid ""
 "is non-premultiplied alpha."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1097
+#: plug-ins/file-tiff/file-tiff-load.c:1107
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1155
+#: plug-ins/file-tiff/file-tiff-load.c:1165
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1325
+#: plug-ins/file-tiff/file-tiff-load.c:1335
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr ""
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1335
+#: plug-ins/file-tiff/file-tiff-load.c:1345
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1343
+#: plug-ins/file-tiff/file-tiff-load.c:1353
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1370
 msgid "Invalid image resolution info, using default"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1419
+#: plug-ins/file-tiff/file-tiff-load.c:1429
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr ""
@@ -10352,66 +10313,66 @@ msgstr ""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1507
+#: plug-ins/file-tiff/file-tiff-load.c:1517
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1567
+#: plug-ins/file-tiff/file-tiff-load.c:1582
 msgid "TIFF Channel"
 msgstr "TIFF არხი"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1720
+#: plug-ins/file-tiff/file-tiff-load.c:1740
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1755
-#: plug-ins/file-tiff/file-tiff-load.c:1798
+#: plug-ins/file-tiff/file-tiff-load.c:1776
+#: plug-ins/file-tiff/file-tiff-load.c:1819
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1878
+#: plug-ins/file-tiff/file-tiff-load.c:1899
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1993
-#: plug-ins/file-tiff/file-tiff-load.c:2190
+#: plug-ins/file-tiff/file-tiff-load.c:2014
+#: plug-ins/file-tiff/file-tiff-load.c:2211
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2002
-#: plug-ins/file-tiff/file-tiff-load.c:2199
+#: plug-ins/file-tiff/file-tiff-load.c:2023
+#: plug-ins/file-tiff/file-tiff-load.c:2220
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2551
+#: plug-ins/file-tiff/file-tiff-load.c:2774
 msgid "Import from TIFF"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2559
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Show reduced images"
 msgstr "შემცირებული გამოსახულებების _ჩვენება"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2604
+#: plug-ins/file-tiff/file-tiff-load.c:2827
 msgid "Process extra channel as:"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2607
+#: plug-ins/file-tiff/file-tiff-load.c:2830
 msgid "_Non-premultiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2608
+#: plug-ins/file-tiff/file-tiff-load.c:2831
 msgid "Pre_multiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2609
+#: plug-ins/file-tiff/file-tiff-load.c:2832
 msgid "Channe_l"
 msgstr "_არხი"
 
@@ -10834,7 +10795,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3046
+#: plug-ins/gradient-flare/gradient-flare.c:3054
 msgid "_Edit"
 msgstr "_ჩასწორება"
 
@@ -11190,7 +11151,7 @@ msgid "Rendering fractal"
 msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:880
-#: plug-ins/gradient-flare/gradient-flare.c:3322
+#: plug-ins/gradient-flare/gradient-flare.c:3330
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr ""
@@ -11275,7 +11236,7 @@ msgid "Create rectangle"
 msgstr "მართხკუთხედის შექმნა"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3987
+#: plug-ins/gradient-flare/gradient-flare.c:3995
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -11302,7 +11263,7 @@ msgid "Create arc"
 msgstr "რკალის შექმნა"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4004
+#: plug-ins/gradient-flare/gradient-flare.c:4012
 #: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -11776,7 +11737,7 @@ msgid "Adds random noise to the color"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3643
+#: plug-ins/gradient-flare/gradient-flare.c:3651
 msgid "_General"
 msgstr "ზოგადი"
 
@@ -12420,7 +12381,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr ""
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2499
+#: plug-ins/gradient-flare/gradient-flare.c:2507
 msgid "Gradient Flare"
 msgstr ""
 
@@ -12456,19 +12417,19 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:2543
+#: plug-ins/gradient-flare/gradient-flare.c:2551
 msgid "A_uto update preview"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:2598
+#: plug-ins/gradient-flare/gradient-flare.c:2606
 msgid "'Default' is created."
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:2899
+#: plug-ins/gradient-flare/gradient-flare.c:2907
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2903
+#: plug-ins/gradient-flare/gradient-flare.c:2911
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -12478,174 +12439,174 @@ msgstr "_Y:"
 #.
 #. *    Scales
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:2943
-#: plug-ins/gradient-flare/gradient-flare.c:3696
-#: plug-ins/gradient-flare/gradient-flare.c:3798
-#: plug-ins/gradient-flare/gradient-flare.c:3929
+#: plug-ins/gradient-flare/gradient-flare.c:2951
+#: plug-ins/gradient-flare/gradient-flare.c:3704
+#: plug-ins/gradient-flare/gradient-flare.c:3806
+#: plug-ins/gradient-flare/gradient-flare.c:3937
 msgid "Parameters"
 msgstr "პარამეტრები"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2977
+#: plug-ins/gradient-flare/gradient-flare.c:2985
 msgid "_Settings"
 msgstr "მორგება"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3115
+#: plug-ins/gradient-flare/gradient-flare.c:3123
 msgid "S_elector"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3179
+#: plug-ins/gradient-flare/gradient-flare.c:3187
 msgid "New Gradient Flare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3182
+#: plug-ins/gradient-flare/gradient-flare.c:3190
 msgid "Enter a name for the new GFlare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3183
+#: plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Unnamed"
 msgstr "უსახელო"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3203
-#: plug-ins/gradient-flare/gradient-flare.c:3285
+#: plug-ins/gradient-flare/gradient-flare.c:3211
+#: plug-ins/gradient-flare/gradient-flare.c:3293
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3259
+#: plug-ins/gradient-flare/gradient-flare.c:3267
 msgid "Copy Gradient Flare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3262
+#: plug-ins/gradient-flare/gradient-flare.c:3270
 msgid "Enter a name for the copied GFlare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3316
+#: plug-ins/gradient-flare/gradient-flare.c:3324
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3326
+#: plug-ins/gradient-flare/gradient-flare.c:3334
 msgid "Delete Gradient Flare"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3398
+#: plug-ins/gradient-flare/gradient-flare.c:3406
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3440
+#: plug-ins/gradient-flare/gradient-flare.c:3448
 msgid "Gradient Flare Editor"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3444
+#: plug-ins/gradient-flare/gradient-flare.c:3452
 msgid "_Rescan Gradients"
 msgstr ""
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3566
+#: plug-ins/gradient-flare/gradient-flare.c:3574
 msgid "Glow Paint Options"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3576
-#: plug-ins/gradient-flare/gradient-flare.c:3602
-#: plug-ins/gradient-flare/gradient-flare.c:3628
+#: plug-ins/gradient-flare/gradient-flare.c:3584
+#: plug-ins/gradient-flare/gradient-flare.c:3610
+#: plug-ins/gradient-flare/gradient-flare.c:3636
 msgid "Opacity:"
 msgstr "გაუმჭვირვალობა:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3588
-#: plug-ins/gradient-flare/gradient-flare.c:3614
-#: plug-ins/gradient-flare/gradient-flare.c:3640
+#: plug-ins/gradient-flare/gradient-flare.c:3596
+#: plug-ins/gradient-flare/gradient-flare.c:3622
+#: plug-ins/gradient-flare/gradient-flare.c:3648
 msgid "Paint mode:"
 msgstr "ხატვის რეჟიმი:"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3592
+#: plug-ins/gradient-flare/gradient-flare.c:3600
 msgid "Rays Paint Options"
 msgstr ""
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3618
+#: plug-ins/gradient-flare/gradient-flare.c:3626
 msgid "Second Flares Paint Options"
 msgstr ""
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3669
-#: plug-ins/gradient-flare/gradient-flare.c:3769
-#: plug-ins/gradient-flare/gradient-flare.c:3902
+#: plug-ins/gradient-flare/gradient-flare.c:3677
+#: plug-ins/gradient-flare/gradient-flare.c:3777
+#: plug-ins/gradient-flare/gradient-flare.c:3910
 msgid "Gradients"
 msgstr "გრადაციები"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3680
-#: plug-ins/gradient-flare/gradient-flare.c:3782
-#: plug-ins/gradient-flare/gradient-flare.c:3913
+#: plug-ins/gradient-flare/gradient-flare.c:3688
+#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3921
 msgid "Radial gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3684
-#: plug-ins/gradient-flare/gradient-flare.c:3786
+#: plug-ins/gradient-flare/gradient-flare.c:3692
+#: plug-ins/gradient-flare/gradient-flare.c:3794
 msgid "Angular gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3688
-#: plug-ins/gradient-flare/gradient-flare.c:3790
+#: plug-ins/gradient-flare/gradient-flare.c:3696
+#: plug-ins/gradient-flare/gradient-flare.c:3798
 msgid "Angular size gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3707
-#: plug-ins/gradient-flare/gradient-flare.c:3809
-#: plug-ins/gradient-flare/gradient-flare.c:3940
+#: plug-ins/gradient-flare/gradient-flare.c:3715
+#: plug-ins/gradient-flare/gradient-flare.c:3817
+#: plug-ins/gradient-flare/gradient-flare.c:3948
 msgid "Size (%):"
 msgstr "ზომა (%):"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3718
-#: plug-ins/gradient-flare/gradient-flare.c:3820
-#: plug-ins/gradient-flare/gradient-flare.c:3951
+#: plug-ins/gradient-flare/gradient-flare.c:3726
+#: plug-ins/gradient-flare/gradient-flare.c:3828
+#: plug-ins/gradient-flare/gradient-flare.c:3959
 msgid "Rotation:"
 msgstr "შემობრუნება:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3729
-#: plug-ins/gradient-flare/gradient-flare.c:3831
-#: plug-ins/gradient-flare/gradient-flare.c:3962
+#: plug-ins/gradient-flare/gradient-flare.c:3737
+#: plug-ins/gradient-flare/gradient-flare.c:3839
+#: plug-ins/gradient-flare/gradient-flare.c:3970
 msgid "Hue rotation:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3743
+#: plug-ins/gradient-flare/gradient-flare.c:3751
 msgid "G_low"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3842
+#: plug-ins/gradient-flare/gradient-flare.c:3850
 msgid "# of Spikes:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3853
+#: plug-ins/gradient-flare/gradient-flare.c:3861
 msgid "Spike thickness:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3867
+#: plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "_Rays"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3917
+#: plug-ins/gradient-flare/gradient-flare.c:3925
 msgid "Size factor gradient:"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:3921
+#: plug-ins/gradient-flare/gradient-flare.c:3929
 msgid "Probability gradient:"
 msgstr ""
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3979
+#: plug-ins/gradient-flare/gradient-flare.c:3987
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gradient-flare/gradient-flare.c:4038
+#: plug-ins/gradient-flare/gradient-flare.c:4046
 msgid "Random seed:"
 msgstr "შემთხვევითი მარცვალი:"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4052
+#: plug-ins/gradient-flare/gradient-flare.c:4060
 msgid "_Second Flares"
 msgstr ""
 
@@ -13531,6 +13492,10 @@ msgstr "_ავტომატური გადაყვანა"
 msgid "General Preferences"
 msgstr "საერთო პარამეტრები"
 
+#: plug-ins/imagemap/imap_preview.c:313
+msgid "Shortcut Menu"
+msgstr ""
+
 #: plug-ins/imagemap/imap_rectangle.c:68
 msgid "_Rectangle"
 msgstr ""
@@ -13605,6 +13570,14 @@ msgstr "რუკის ფაილის ფორმატი"
 msgid "View Source"
 msgstr "წყაროს ნახვა"
 
+#: plug-ins/imagemap/imap_statusbar.c:55
+msgid "Coordinates:"
+msgstr "კოორდინატები:"
+
+#: plug-ins/imagemap/imap_statusbar.c:70
+msgid "Active Area Size:"
+msgstr ""
+
 #: plug-ins/imagemap/imap-menu.ui:16
 msgid "Save As"
 msgstr "შენახვა, როგორც"
@@ -13634,17 +13607,14 @@ msgid "Zoom To"
 msgstr ""
 
 #: plug-ins/imagemap/imap-menu.ui:119
-#| msgid "1:1"
 msgid "8:1"
 msgstr "8:1"
 
 #: plug-ins/imagemap/imap-menu.ui:124
-#| msgid "1:1"
 msgid "4:1"
 msgstr "4:1"
 
 #: plug-ins/imagemap/imap-menu.ui:129
-#| msgid "1:1"
 msgid "2:1"
 msgstr "2:1"
 
@@ -15727,6 +15697,39 @@ msgstr ""
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr ""
+
+#~ msgid "Exercise in _C minor"
+#~ msgstr "C მინორში ვარჯიში"
+
+#~ msgid "Exercise a goat in the C language"
+#~ msgstr "ავარჯიშეთ თხა C-ში"
+
+#~ msgid "Exercise a goat (C)"
+#~ msgstr "ავარჯიშეთ თხა (c)"
+
+#~ msgid "Exercise a Lua goat"
+#~ msgstr "ავარჯიშეთ თხა Lua-ში"
+
+#~ msgid "Exercise a goat in the Lua language"
+#~ msgstr "ავარჯიშეთ თხა Lua-ში"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Singular"
+#~ msgstr "მხოლობითში"
+
+#~ msgid "Plural"
+#~ msgstr "მრავლობითი"
+
+#~ msgid "_ID:"
+#~ msgstr "_ID:"
+
+#~ msgid "Si_ngular:"
+#~ msgstr "_მხოლობითი:"
+
+#~ msgid "_Plural:"
+#~ msgstr "_მრავლობითი:"
 
 #~ msgid "(Left edge = 0, Center = 1, Right edge = 2)"
 #~ msgstr "(მარცხენა კიდე = 0, ცენტრი = 1, მარჯვენა კიდე = 2)"
