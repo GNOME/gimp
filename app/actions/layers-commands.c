@@ -607,7 +607,7 @@ layers_select_cmd_callback (GimpAction *action,
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  layers   = gimp_image_get_selected_layers (image);
+  layers   = g_list_copy (gimp_image_get_selected_layers (image));
   run_once = (g_list_length (layers) == 0);
 
   for (iter = layers; iter || run_once; iter = iter ? iter->next : NULL)
@@ -637,6 +637,7 @@ layers_select_cmd_callback (GimpAction *action,
       gimp_image_flush (image);
     }
 
+  g_list_free (layers);
   g_list_free (new_layers);
 }
 
