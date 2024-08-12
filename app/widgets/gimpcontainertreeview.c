@@ -35,6 +35,7 @@
 #include "core/gimpviewable.h"
 #include "core/gimp-utils.h"
 
+#include "gimpaction.h"
 #include "gimpcellrendererbutton.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainertreestore.h"
@@ -53,6 +54,7 @@
 enum
 {
   EDIT_NAME,
+  MOVE_CURSOR,
   LAST_SIGNAL
 };
 
@@ -97,6 +99,9 @@ static void          gimp_container_tree_view_clear_items       (GimpContainerVi
 static void          gimp_container_tree_view_set_view_size     (GimpContainerView           *view);
 
 static void          gimp_container_tree_view_real_edit_name    (GimpContainerTreeView       *tree_view);
+static gboolean      gimp_container_tree_view_real_move_cursor  (GimpContainerTreeView       *tree_view,
+                                                                 GtkMovementStep              step,
+                                                                 gint                         count);
 
 static gboolean      gimp_container_tree_view_edit_focus_out    (GtkWidget                   *widget,
                                                                  GdkEvent                    *event,
@@ -189,6 +194,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   widget_class->popup_menu    = gimp_container_tree_view_popup_menu;
 
   klass->edit_name            = gimp_container_tree_view_real_edit_name;
+  klass->move_cursor          = gimp_container_tree_view_real_move_cursor;
   klass->drop_possible        = gimp_container_tree_view_real_drop_possible;
   klass->drop_viewables       = gimp_container_tree_view_real_drop_viewables;
   klass->drop_color           = NULL;
@@ -197,6 +203,11 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   klass->drop_component       = NULL;
   klass->drop_pixbuf          = NULL;
 
+  klass->move_cursor_up_action    = NULL;
+  klass->move_cursor_down_action  = NULL;
+  klass->move_cursor_start_action = NULL;
+  klass->move_cursor_end_action   = NULL;
+
   tree_view_signals[EDIT_NAME] =
     g_signal_new ("edit-name",
                   G_TYPE_FROM_CLASS (klass),
@@ -204,11 +215,89 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
                   G_STRUCT_OFFSET (GimpContainerTreeViewClass, edit_name),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
+  /**
+   * GimpContainerTreeView::move-cursor:
+   * @tree_view: the object on which the signal is emitted.
+   * @step: the granularity of the move, as a #GtkMovementStep.
+   *        %GTK_MOVEMENT_DISPLAY_LINES, %GTK_MOVEMENT_PAGES and
+   *        %GTK_MOVEMENT_BUFFER_ENDS are supported.
+   * @direction: the direction to move: +1 to move forwards;
+   * -1 to move backwards. The resulting movement is
+   * undefined for all other values.
+   *
+   * This overrides the #GtkTreeView::move-cursor signal to have
+   * different cursor behavior in various cases.
+   *
+   * Returns: %TRUE if @step is supported, %FALSE otherwise.
+   */
+  tree_view_signals[MOVE_CURSOR] =
+    g_signal_new ("move-cursor",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpContainerTreeViewClass, move_cursor),
+                  NULL, NULL, NULL,
+                  G_TYPE_BOOLEAN, 2,
+                  GTK_TYPE_MOVEMENT_STEP,
+                  G_TYPE_INT);
 
   binding_set = gtk_binding_set_by_class (klass);
 
   gtk_binding_entry_add_signal (binding_set, GDK_KEY_F2, 0,
                                 "edit-name", 0);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Up, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_DISPLAY_LINES,
+                                G_TYPE_INT,  -1);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Up, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_DISPLAY_LINES,
+                                G_TYPE_INT,  -1);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Page_Up, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
+                                G_TYPE_INT,  -1);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Page_Up, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
+                                G_TYPE_INT,  -1);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Down, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_DISPLAY_LINES,
+                                G_TYPE_INT,  1);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Down, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_DISPLAY_LINES,
+                                G_TYPE_INT,  1);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Page_Down, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
+                                G_TYPE_INT,  1);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Page_Down, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
+                                G_TYPE_INT,  1);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Home, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_BUFFER_ENDS,
+                                G_TYPE_INT,  -1);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Home, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_BUFFER_ENDS,
+                                G_TYPE_INT,  -1);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_End, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_BUFFER_ENDS,
+                                G_TYPE_INT,  1);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_End, 0,
+                                "move-cursor", 2,
+                                G_TYPE_ENUM, GTK_MOVEMENT_BUFFER_ENDS,
+                                G_TYPE_INT,  1);
 }
 
 static void
@@ -261,6 +350,8 @@ gimp_container_tree_view_constructed (GObject *object)
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   GimpContainerView     *view      = GIMP_CONTAINER_VIEW (object);
   GimpContainerBox      *box       = GIMP_CONTAINER_BOX (object);
+  GtkTreeViewClass      *gtk_tree_view_class;
+  GtkBindingSet         *binding_set;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -276,6 +367,32 @@ gimp_container_tree_view_constructed (GObject *object)
                                   "has-tooltip",     TRUE,
                                   "show-expanders",  GIMP_CONTAINER_VIEW_GET_IFACE (view)->model_is_tree,
                                   NULL);
+
+  gtk_tree_view_class = GTK_TREE_VIEW_GET_CLASS (tree_view->view);
+  binding_set = gtk_binding_set_by_class (gtk_tree_view_class);
+
+  /* Remove various of the bindings created in
+   * gtk_tree_view_class_init() to recreate the correct behaviour for
+   * us.
+   */
+  gtk_binding_entry_remove (binding_set, GDK_KEY_Up, 0);
+  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Up, 0);
+
+  gtk_binding_entry_remove (binding_set, GDK_KEY_Down, 0);
+  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Down, 0);
+
+  gtk_binding_entry_remove (binding_set, GDK_KEY_Home, 0);
+  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Home, 0);
+
+  gtk_binding_entry_remove (binding_set, GDK_KEY_End, 0);
+  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_End, 0);
+
+  gtk_binding_entry_remove (binding_set, GDK_KEY_Page_Up, 0);
+  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Page_Up, 0);
+
+  gtk_binding_entry_remove (binding_set, GDK_KEY_Page_Down, 0);
+  gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Page_Down, 0);
+
 
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (tree_view->view));
@@ -1164,6 +1281,56 @@ gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
 
   if (! success)
     gtk_widget_error_bell (GTK_WIDGET (tree_view));
+}
+
+static gboolean
+gimp_container_tree_view_real_move_cursor (GimpContainerTreeView *tree_view,
+                                           GtkMovementStep        step,
+                                           gint                   count)
+{
+  GimpContainerTreeViewClass *klass;
+  const gchar                *action_name = NULL;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view), FALSE);
+  g_return_val_if_fail (step == GTK_MOVEMENT_DISPLAY_LINES ||
+                        step == GTK_MOVEMENT_PAGES         ||
+                        step == GTK_MOVEMENT_BUFFER_ENDS, FALSE);
+
+  klass = GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view);
+  switch (step)
+    {
+    case GTK_MOVEMENT_DISPLAY_LINES:
+    case GTK_MOVEMENT_PAGES:
+      /* TODO: PageUp|Down should likely have a different behaviour that
+       * up/down arrows.
+       */
+      if (count > 0)
+        action_name = klass->move_cursor_down_action;
+      else
+        action_name = klass->move_cursor_up_action;
+      break;
+    case GTK_MOVEMENT_BUFFER_ENDS:
+      if (count > 0)
+        action_name = klass->move_cursor_end_action;
+      else
+        action_name = klass->move_cursor_start_action;
+      break;
+    default:
+      break;
+    }
+
+  if (action_name != NULL)
+    {
+      GAction *action;
+
+      action = g_action_map_lookup_action (G_ACTION_MAP (g_application_get_default ()),
+                                           action_name);
+      g_return_val_if_fail (action != NULL, FALSE);
+
+      gimp_action_activate (GIMP_ACTION (action));
+    }
+
+  return TRUE;
 }
 
 
