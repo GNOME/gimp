@@ -203,10 +203,12 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   klass->drop_component       = NULL;
   klass->drop_pixbuf          = NULL;
 
-  klass->move_cursor_up_action    = NULL;
-  klass->move_cursor_down_action  = NULL;
-  klass->move_cursor_start_action = NULL;
-  klass->move_cursor_end_action   = NULL;
+  klass->move_cursor_up_action        = NULL;
+  klass->move_cursor_down_action      = NULL;
+  klass->move_cursor_up_flat_action   = NULL;
+  klass->move_cursor_down_flat_action = NULL;
+  klass->move_cursor_start_action     = NULL;
+  klass->move_cursor_end_action       = NULL;
 
   tree_view_signals[EDIT_NAME] =
     g_signal_new ("edit-name",
@@ -1300,10 +1302,22 @@ gimp_container_tree_view_real_move_cursor (GimpContainerTreeView *tree_view,
   switch (step)
     {
     case GTK_MOVEMENT_DISPLAY_LINES:
+      if (count > 0)
+        {
+          if (klass->move_cursor_down_flat_action)
+            action_name = klass->move_cursor_down_flat_action;
+          else
+            action_name = klass->move_cursor_down_action;
+        }
+      else
+        {
+          if (klass->move_cursor_up_flat_action)
+            action_name = klass->move_cursor_up_flat_action;
+          else
+            action_name = klass->move_cursor_up_action;
+        }
+      break;
     case GTK_MOVEMENT_PAGES:
-      /* TODO: PageUp|Down should likely have a different behaviour that
-       * up/down arrows.
-       */
       if (count > 0)
         action_name = klass->move_cursor_down_action;
       else

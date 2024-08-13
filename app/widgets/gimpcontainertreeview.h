@@ -106,6 +106,8 @@ struct _GimpContainerTreeViewClass
 
   const gchar * move_cursor_up_action;
   const gchar * move_cursor_down_action;
+  const gchar * move_cursor_up_flat_action;
+  const gchar * move_cursor_down_flat_action;
   const gchar * move_cursor_start_action;
   const gchar * move_cursor_end_action;
 };

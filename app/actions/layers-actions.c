@@ -528,14 +528,30 @@ static const GimpEnumActionEntry layers_select_actions[] =
 
   { "layers-select-previous", NULL,
     NC_("layers-action", "Select _Previous Layers"), NULL, { "Prior", NULL },
-    NC_("layers-action", "Select the layers above each currently selected layer"),
+    NC_("layers-action",
+        "Select the layers above each currently selected layer. "
+        "Layers will not be selected outside their current group level."),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_PREVIOUS },
 
   { "layers-select-next", NULL,
     NC_("layers-action", "Select _Next Layers"), NULL, { "Next", NULL },
-    NC_("layers-action", "Select the layers below each currently selected layer"),
+    NC_("layers-action",
+        "Select the layers below each currently selected layer. "
+        "Layers will not be selected outside their current group level."),
     GIMP_ACTION_SELECT_NEXT, FALSE,
+    GIMP_HELP_LAYER_NEXT },
+
+  { "layers-select-flattened-previous", NULL,
+    NC_("layers-action", "Select Previous Layers (flattened view)"), NULL, { NULL },
+    NC_("layers-action", "Select the layers above each currently selected layer"),
+    GIMP_ACTION_SELECT_FLAT_PREVIOUS, FALSE,
+    GIMP_HELP_LAYER_PREVIOUS },
+
+  { "layers-select-flattened-next", NULL,
+    NC_("layers-action", "Select Next Layers (flattened view)"), NULL, { NULL },
+    NC_("layers-action", "Select the layers below each currently selected layer"),
+    GIMP_ACTION_SELECT_FLAT_NEXT, FALSE,
     GIMP_HELP_LAYER_NEXT }
 };
 

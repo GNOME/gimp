@@ -28,6 +28,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimptooloptions.h"
 #include "core/gimptoolinfo.h"
 
@@ -729,6 +730,91 @@ action_select_object (GimpActionSelectType  select_type,
       select_index = gimp_container_get_child_index (container, current) + 10;
       break;
 
+    case GIMP_ACTION_SELECT_FLAT_PREVIOUS:
+      /* XXX We only support this case and the next for GimpItem
+       * containers.
+       */
+      g_return_val_if_fail (GIMP_IS_ITEM (current), NULL);
+      select_index = gimp_container_get_child_index (container, current) - 1;
+      if (select_index < 0)
+        {
+          GimpItem *parent = gimp_item_get_parent (GIMP_ITEM (current));
+
+          if (parent)
+            return GIMP_OBJECT (parent);
+          else
+            return current;
+        }
+      else
+        {
+          GimpObject    *prev;
+          GimpContainer *prev_container;
+
+          prev = gimp_container_get_child_by_index (container, select_index);
+          while ((prev_container = gimp_viewable_get_children (GIMP_VIEWABLE (prev))) != NULL)
+            {
+              if (gimp_viewable_get_expanded (GIMP_VIEWABLE (prev)))
+                {
+                  gint n_prev_children;
+
+                  n_prev_children = gimp_container_get_n_children (prev_container);
+                  if (n_prev_children > 0)
+                    {
+                      select_index = n_prev_children - 1;
+                      container = prev_container;
+                      prev = gimp_container_get_child_by_index (container, select_index);
+                      continue;
+                    }
+                }
+              break;
+            }
+        }
+      break;
+
+    case GIMP_ACTION_SELECT_FLAT_NEXT:
+        {
+          GimpContainer *current_container;
+
+          g_return_val_if_fail (GIMP_IS_ITEM (current), NULL);
+
+          if ((current_container = gimp_viewable_get_children (GIMP_VIEWABLE (current))) != NULL &&
+              gimp_viewable_get_expanded (GIMP_VIEWABLE (current))                               &&
+              gimp_container_get_n_children (current_container) > 0)
+            {
+              select_index = 0;
+              container = current_container;
+            }
+          else
+            {
+              select_index = gimp_container_get_child_index (container, current) + 1;
+              if (select_index >= n_children)
+                {
+                  while (TRUE)
+                    {
+                      GimpItem      *parent;
+                      GimpContainer *parent_container;
+                      gint           n_parent_children;
+
+                      parent = gimp_item_get_parent (GIMP_ITEM (current));
+                      if (parent == NULL)
+                        break;
+
+                      parent_container = gimp_item_get_container (parent);
+                      n_parent_children = gimp_container_get_n_children (parent_container);
+                      if (gimp_container_get_child_index (parent_container, GIMP_OBJECT (parent)) + 1 < n_parent_children)
+                        {
+                          container = parent_container;
+                          select_index = gimp_container_get_child_index (parent_container, GIMP_OBJECT (parent)) + 1;
+                          break;
+                        }
+
+                      current = GIMP_OBJECT (parent);
+                    }
+                }
+            }
+        }
+      break;
+
     default:
       if ((gint) select_type >= 0)
         select_index = (gint) select_type;
@@ -737,6 +823,7 @@ action_select_object (GimpActionSelectType  select_type,
       break;
     }
 
+  n_children = gimp_container_get_n_children (container);
   select_index = CLAMP (select_index, 0, n_children - 1);
 
   return gimp_container_get_child_by_index (container, select_index);
