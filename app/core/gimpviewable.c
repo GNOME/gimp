@@ -185,7 +185,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
-  klass->default_icon_name       = "dialog-question";
+  klass->default_icon_name       = "gimp-image";
   klass->name_changed_signal     = "name-changed";
   klass->name_editable           = FALSE;
 
