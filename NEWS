@@ -36,6 +36,11 @@ Core:
     feature depending on OS/desktop) is checked in macOS, Windows, GNOME
     or KDE, then the following animations are disabled: animated credits
     in About dialog and some easter eggs.
+  - New actions:
+    * layers-select-flattened-previous: moving the selection up visually
+      in the layers list.
+    * layers-select-flattened-next: moving the selection down visually
+      in the layers list.
 
 Tools:
 
@@ -46,6 +51,8 @@ Tools:
   - Scissors Select: consistently name the tool "Scissors Select" by
     dropping the alternate name "Intelligent Scissors" which was only
     used in menus.
+  - GEGL filters: new "Merge filter" checkbox in the dialog to directly
+    apply a filter destructively (like in 2.10 and older).
 
 Graphical User Interface:
 
@@ -55,6 +62,12 @@ Graphical User Interface:
     now easier to find the area to *grab* the scale vs. area to edit the text;
     the cursor changing helping to make out one from the other).
   - Some cleanups done with test plug-ins and scripts in menus.
+  - Add option for "Huge" Preview Size in dockable menu.
+  - Usage of Up/Down and PageUp/Down keys in items tree views are now
+    multi-item selection aware. Up/Down keys select items in visual
+    order, walking through item groups (in and out), except when they
+    are collapsed. PageUp/Down keys select items while not leaving
+    previously selected's items' group level.
 
 Plug-ins:
 
@@ -89,10 +102,20 @@ Plug-ins:
   - guides-new: guides can now be created off-canvas.
   - ImageMap: zoom factor is now floating point allowing zooming out
     past the 1:1 ratio.
+  - TIFF:
+    * Added support for loading Sketchbook TIFF layers.
+  - Goat Exercises:
+    * Renamed to "Plug-In Examples".
+    * "Sphere v3..." is now "Plug-in example in Scheme", showing up the
+      new types of Script-Fu scripts (with a standalone interpreter
+      rather than as scripts running on the Script-Fu always-on
+      extension). It is not the same as the historical Goat Exercises,
+      but it our best "new Script-Fu" example.
+    * All other test plug-ins/scripts are hidden in stable releases.
 
 API:
 
-  - Various classes are marked as derivable or final through GObject
+  - All public classes were marked as derivable or final through GObject
     macros G_DECLARE_(DERIVABLE|FINAL)_TYPE. It will make it easier to
     update them in the future without API/ABI breakage.
   - Changes in libgimp:
@@ -148,9 +171,17 @@ API:
   - Changes in libgimpbase:
     * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
       Protocol (only GeglColor and GimpColorArray).
-    * GimpUnit is now a proper class instead of a weird int type
-      extending an enum type of the same name. This also makes unit
-      parameters actually introspectable.
+    * GimpUnit:
+      - now a proper class instead of a weird int type extending an enum
+        type of the same name. This also makes unit parameters actually
+        introspectable.
+      - concepts of singular/plural removed from this class because it
+        just doesn't work out with proper internationalization.
+    * Removed functions:
+      - gimp_unit_get_singular()
+      - gimp_unit_get_plural()
+    * Modified functions:
+      - gimp_unit_get_identifier() renamed gimp_unit_get_name()
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
@@ -160,6 +191,7 @@ Build:
 
   - Minimum dependency version bumps:
     * babl 0.1.108
+    * harfbuzz 2.8.2
   - Started a skeleton for unit testing framework for libgimp (only a few tests
     so far but we eventually target exhaustivity).
   - CI:
@@ -186,6 +218,12 @@ Build:
   - Nightly flatpak: HEIC support is now an extension as in our beta
     flatpak.
   - macOS minimal support was bumped to version 11.
+  - Python plug-ins are made mandatory, not optional anymore.
+  - Our flatpak-s will now use $XDG_CONFIG_HOME config folder
+    unconditionally (not the `~/.var` folder). It won't depend anymore
+    on whether this config folder already existed or not.
+  - Only Lua 5.1 and luajit are supported. Earlier versions have
+    incompatibilities breaking Lua plug-ins.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
