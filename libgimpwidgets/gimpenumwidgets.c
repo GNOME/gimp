@@ -474,3 +474,36 @@ gimp_enum_icon_box_set_child_padding (GtkWidget *icon_box,
 
   g_list_free (children);
 }
+
+/**
+ * gimp_enum_icon_box_set_icon_size:
+ * @icon_box:  an icon box widget
+ * @icon_size: the #GtkIconSize enum
+ *
+ * Sets the icon size of all buttons in a box created by
+ * gimp_enum_icon_box_new().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_enum_icon_box_set_icon_size (GtkWidget   *icon_box,
+                                  GtkIconSize  icon_size)
+{
+  GList *children;
+  GList *list;
+
+  g_return_if_fail (GTK_IS_CONTAINER (icon_box));
+
+  children = gtk_container_get_children (GTK_CONTAINER (icon_box));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (list->data));
+
+      g_object_set (child,
+                    "icon-size", icon_size,
+                    NULL);
+    }
+
+  g_list_free (children);
+}

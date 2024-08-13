@@ -26,6 +26,10 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
+
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -45,14 +49,18 @@ enum
 };
 
 
-static void   gimp_selection_options_set_property (GObject      *object,
-                                                   guint         property_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
-static void   gimp_selection_options_get_property (GObject      *object,
-                                                   guint         property_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
+static void   gimp_selection_options_set_property  (GObject       *object,
+                                                    guint          property_id,
+                                                    const GValue  *value,
+                                                    GParamSpec    *pspec);
+static void   gimp_selection_options_get_property  (GObject       *object,
+                                                    guint          property_id,
+                                                    GValue        *value,
+                                                    GParamSpec    *pspec);
+static void   gimp_selection_options_style_updated (GimpGuiConfig *config,
+                                                    GParamSpec    *pspec,
+                                                    GtkWidget     *box);
+
 
 
 G_DEFINE_TYPE (GimpSelectionOptions, gimp_selection_options,
@@ -202,9 +210,11 @@ gimp_selection_options_get_modifiers (GimpChannelOps operation)
 GtkWidget *
 gimp_selection_options_gui (GimpToolOptions *tool_options)
 {
-  GObject              *config  = G_OBJECT (tool_options);
-  GimpSelectionOptions *options = GIMP_SELECTION_OPTIONS (tool_options);
-  GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
+  GObject              *config     = G_OBJECT (tool_options);
+  GimpContext          *context    = GIMP_CONTEXT (tool_options);
+  GimpGuiConfig        *gui_config = GIMP_GUI_CONFIG (context->gimp->config);
+  GimpSelectionOptions *options    = GIMP_SELECTION_OPTIONS (tool_options);
+  GtkWidget            *vbox       = gimp_tool_options_gui (tool_options);
   GtkWidget            *button;
 
   /*  the selection operation radio buttons  */
@@ -228,6 +238,17 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
     box = gimp_prop_enum_icon_box_new (config, "operation",
                                        "gimp-selection", 0, 0);
+
+    g_signal_connect_object (gui_config,
+                             "notify::override-theme-icon-size",
+                             G_CALLBACK (gimp_selection_options_style_updated),
+                             box, G_CONNECT_AFTER);
+    g_signal_connect_object (gui_config,
+                             "notify::custom-icon-size",
+                             G_CALLBACK (gimp_selection_options_style_updated),
+                             box, G_CONNECT_AFTER);
+    gimp_selection_options_style_updated (gui_config, NULL, box);
+
     gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
 
     children = gtk_container_get_children (GTK_CONTAINER (box));
@@ -287,4 +308,33 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   }
 
   return vbox;
+}
+
+static void
+gimp_selection_options_style_updated (GimpGuiConfig *config,
+                                      GParamSpec    *pspec,
+                                      GtkWidget     *box)
+{
+  GtkIconSize icon_size = GTK_ICON_SIZE_MENU;
+
+  if (config->override_icon_size)
+    {
+      switch (config->custom_icon_size)
+        {
+        case GIMP_ICON_SIZE_LARGE:
+          icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+          break;
+
+        case GIMP_ICON_SIZE_HUGE:
+          icon_size = GTK_ICON_SIZE_DND;
+          break;
+
+        case GIMP_ICON_SIZE_MEDIUM:
+        case GIMP_ICON_SIZE_SMALL:
+        default:
+          icon_size = GTK_ICON_SIZE_MENU;
+        }
+    }
+
+  gimp_enum_icon_box_set_icon_size (box, icon_size);
 }

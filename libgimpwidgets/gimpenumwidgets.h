@@ -76,6 +76,8 @@ GtkWidget * gimp_enum_icon_box_new_with_range     (GType          enum_type,
 void        gimp_enum_icon_box_set_child_padding  (GtkWidget     *icon_box,
                                                    gint           xpad,
                                                    gint           ypad);
+void        gimp_enum_icon_box_set_icon_size      (GtkWidget     *icon_box,
+                                                   GtkIconSize    icon_size);
 
 G_END_DECLS
 

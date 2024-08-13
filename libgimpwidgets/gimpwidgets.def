@@ -179,6 +179,7 @@ EXPORTS
 	gimp_enum_icon_box_new
 	gimp_enum_icon_box_new_with_range
 	gimp_enum_icon_box_set_child_padding
+	gimp_enum_icon_box_set_icon_size
 	gimp_enum_label_get_type
 	gimp_enum_label_new
 	gimp_enum_label_set_value
