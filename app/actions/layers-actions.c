@@ -528,13 +528,13 @@ static const GimpEnumActionEntry layers_select_actions[] =
 
   { "layers-select-previous", NULL,
     NC_("layers-action", "Select _Previous Layers"), NULL, { "Prior", NULL },
-    NC_("layers-action", "Select the layers above the current layers"),
+    NC_("layers-action", "Select the layers above each currently selected layer"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_PREVIOUS },
 
   { "layers-select-next", NULL,
     NC_("layers-action", "Select _Next Layers"), NULL, { "Next", NULL },
-    NC_("layers-action", "Select the layers below the current layers"),
+    NC_("layers-action", "Select the layers below each currently selected layer"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_NEXT }
 };
