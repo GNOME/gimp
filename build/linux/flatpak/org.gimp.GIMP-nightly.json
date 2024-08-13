@@ -161,8 +161,8 @@
             "sources" : [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.10.tar.gz",
-                    "sha256": "6e0fd3f0eb1cb907bd3593830ea2b3431b85f22a6f18f99f8cfa099fec70067d",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.2.4.tar.gz",
+                    "sha256": "81e6518f2c4656fdeaf18a018f135e96a96e7f66dbe1c1f05860dd94772176cc",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -188,8 +188,8 @@
                     "sources" : [
                         {
                             "type": "archive",
-                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.9.tar.gz",
-                            "sha256": "f1d8aacd46afed958babfced3190d2d3c8209b66da451f556abd6da94c165cf3",
+                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.11.tar.gz",
+                            "sha256": "9057849585e49b8b85abe7cc1e76e22963b01bfdc3b6d83eac90c499cd760063",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 223366,
@@ -202,6 +202,33 @@
                     "builddir" : true,
                     "config-opts": [
                         "-DBUILD_TESTING=OFF"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ]
+                },
+                {
+                    "name" : "libdeflate",
+                    "sources" : [
+                        {
+                            "type": "archive",
+                            "url" : "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.21.zip",
+                            "sha256": "619199c0b04d19fd40833f8d787f99bf25c1309ed89534a3df946e94fdfb32be",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 242778,
+                                "stable-only": true,
+                                "url-template": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v$version.zip"
+                            }
+                        }
+                    ],
+                    "buildsystem" : "cmake-ninja",
+                    "builddir" : true,
+                    "config-opts": [
+                        "-DLIBDEFLATE_BUILD_STATIC_LIB=OFF",
+                        "-DLIBDEFLATE_GZIP_SUPPORT=OFF",
+                        "-DLIBDEFLATE_BUILD_GZIP=OFF"
                     ],
                     "cleanup": [
                         "/include",
