@@ -401,6 +401,9 @@ libgimpui = library('gimpui-'+ gimp_api_version,
     gexiv2,
     gtk3,
   ],
+  sources: [
+    pdbgen
+  ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimpUI"', '-DGIMP_COMPILATION', ],
   link_with: [
     libgimpwidgets,
