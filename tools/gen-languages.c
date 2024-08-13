@@ -291,7 +291,7 @@ gimp_language_store_parser_init (void)
           g_setenv ("LANGUAGE", code, TRUE);
           setlocale (LC_ALL, "");
 
-          localized_name = g_strdup (dgettext ("iso_639", english_name));
+          localized_name = g_strdup (dgettext ("iso_639_3", english_name));
 
           /* If original and localized names are the same for other than English,
            * maybe localization failed. Try now in the main dialect. */
@@ -304,7 +304,7 @@ gimp_language_store_parser_init (void)
               g_setenv ("LANGUAGE", base_code, TRUE);
               setlocale (LC_ALL, "");
 
-              localized_name = g_strdup (dgettext ("iso_639", english_name));
+              localized_name = g_strdup (dgettext ("iso_639_3", english_name));
             }
 
           /*  there might be several language names; use the first one  */
