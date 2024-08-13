@@ -103,7 +103,8 @@ static void        gimp_operation_tool_add_gui         (GimpOperationTool *tool)
 static AuxInput *  gimp_operation_tool_aux_input_new   (GimpOperationTool *tool,
                                                         GeglNode          *operation,
                                                         const gchar       *input_pad,
-                                                        const gchar       *label);
+                                                        const gchar       *label,
+                                                        const gchar       *description);
 static void        gimp_operation_tool_aux_input_detach(AuxInput          *input);
 static void        gimp_operation_tool_aux_input_clear (AuxInput          *input);
 static void        gimp_operation_tool_aux_input_free  (AuxInput          *input);
@@ -549,15 +550,20 @@ gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
 
           g_return_if_fail (regex != NULL);
 
-          /* Translators: don't translate "Aux" */
-          label = g_regex_replace (regex,
-                                   input_pads[i], -1, 0,
-                                   _("Aux\\1 Input"),
-                                   0, NULL);
+          label = g_strdup (gegl_node_get_pad_label (filter_tool->operation, input_pads[i]));
+
+          if (label == NULL)
+            label = g_regex_replace (regex,
+                                     input_pads[i], -1, 0,
+                                     /* Translators: don't translate "Aux" */
+                                     _("Aux\\1 Input"),
+                                     0, NULL);
 
           input = gimp_operation_tool_aux_input_new (op_tool,
                                                      filter_tool->operation,
-                                                     input_pads[i], label);
+                                                     input_pads[i], label,
+                                                     gegl_node_get_pad_description (filter_tool->operation,
+                                                                                    input_pads[i]));
 
           op_tool->aux_inputs = g_list_prepend (op_tool->aux_inputs, input);
 
@@ -657,7 +663,8 @@ static AuxInput *
 gimp_operation_tool_aux_input_new (GimpOperationTool *op_tool,
                                    GeglNode          *operation,
                                    const gchar       *input_pad,
-                                   const gchar       *label)
+                                   const gchar       *label,
+                                   const gchar       *description)
 {
   AuxInput    *input = g_slice_new (AuxInput);
   GimpContext *context;
@@ -674,6 +681,8 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *op_tool,
   context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (op_tool));
 
   input->box = gimp_buffer_source_box_new (context, input->node, label);
+  if (description)
+    gtk_widget_set_tooltip_text (input->box, description);
 
   /* make AuxInput owner of the box */
   g_object_ref_sink (input->box);
