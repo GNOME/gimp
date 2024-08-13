@@ -971,8 +971,8 @@ gimp_color_select_update_pos (GimpColorSelect *select)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (select);
   GeglColor         *color    = gimp_color_selector_get_color (selector);
-  gfloat             rgb[3];
-  gdouble            lch[3];
+  gdouble            rgb[3];
+  gfloat             lch[3];
   gfloat             hsv[3];
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", select->format), rgb);
