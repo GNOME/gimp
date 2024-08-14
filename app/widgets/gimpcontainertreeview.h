@@ -61,9 +61,6 @@ struct _GimpContainerTreeViewClass
   /* signals */
 
   void     (* edit_name)      (GimpContainerTreeView   *tree_view);
-  gboolean (* move_cursor)    (GimpContainerTreeView   *tree_view,
-                               GtkMovementStep          step,
-                               gint                     count);
 
   /* virtual functions */
 
@@ -101,15 +98,6 @@ struct _GimpContainerTreeViewClass
                                GdkPixbuf               *pixbuf,
                                GimpViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
-
-  /* actions */
-
-  const gchar * move_cursor_up_action;
-  const gchar * move_cursor_down_action;
-  const gchar * move_cursor_up_flat_action;
-  const gchar * move_cursor_down_flat_action;
-  const gchar * move_cursor_start_action;
-  const gchar * move_cursor_end_action;
 };
 
 

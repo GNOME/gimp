@@ -208,12 +208,12 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class->drop_component  = gimp_layer_tree_view_drop_component;
   tree_view_class->drop_pixbuf     = gimp_layer_tree_view_drop_pixbuf;
 
-  tree_view_class->move_cursor_up_action        = "layers-select-previous";
-  tree_view_class->move_cursor_down_action      = "layers-select-next";
-  tree_view_class->move_cursor_up_flat_action   = "layers-select-flattened-previous";
-  tree_view_class->move_cursor_down_flat_action = "layers-select-flattened-next";
-  tree_view_class->move_cursor_start_action     = "layers-select-top";
-  tree_view_class->move_cursor_end_action       = "layers-select-bottom";
+  item_view_class->move_cursor_up_action        = "layers-select-previous";
+  item_view_class->move_cursor_down_action      = "layers-select-next";
+  item_view_class->move_cursor_up_flat_action   = "layers-select-flattened-previous";
+  item_view_class->move_cursor_down_flat_action = "layers-select-flattened-next";
+  item_view_class->move_cursor_start_action     = "layers-select-top";
+  item_view_class->move_cursor_end_action       = "layers-select-bottom";
 
   item_view_class->item_type       = GIMP_TYPE_LAYER;
   item_view_class->signal_name     = "selected-layers-changed";

@@ -102,10 +102,10 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   view_class->drop_viewables = gimp_channel_tree_view_drop_viewables;
   view_class->drop_component = gimp_channel_tree_view_drop_component;
 
-  view_class->move_cursor_up_action    = "channels-select-previous";
-  view_class->move_cursor_down_action  = "channels-select-next";
-  view_class->move_cursor_start_action = "channels-select-top";
-  view_class->move_cursor_end_action   = "channels-select-bottom";
+  iv_class->move_cursor_up_action    = "channels-select-previous";
+  iv_class->move_cursor_down_action  = "channels-select-next";
+  iv_class->move_cursor_start_action = "channels-select-top";
+  iv_class->move_cursor_end_action   = "channels-select-bottom";
 
   iv_class->set_image        = gimp_channel_tree_view_set_image;
 

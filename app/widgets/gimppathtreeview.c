@@ -87,10 +87,10 @@ gimp_path_tree_view_class_init (GimpPathTreeViewClass *klass)
 
   view_class->drop_svg      = gimp_path_tree_view_drop_svg;
 
-  view_class->move_cursor_up_action    = "paths-select-previous";
-  view_class->move_cursor_down_action  = "paths-select-next";
-  view_class->move_cursor_start_action = "paths-select-top";
-  view_class->move_cursor_end_action   = "paths-select-bottom";
+  iv_class->move_cursor_up_action    = "paths-select-previous";
+  iv_class->move_cursor_down_action  = "paths-select-next";
+  iv_class->move_cursor_start_action = "paths-select-top";
+  iv_class->move_cursor_end_action   = "paths-select-bottom";
 
   iv_class->item_type       = GIMP_TYPE_PATH;
   iv_class->signal_name     = "selected-paths-changed";

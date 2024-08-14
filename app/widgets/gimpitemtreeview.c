@@ -183,6 +183,9 @@ static void   gimp_item_tree_view_style_updated     (GtkWidget         *widget);
 
 static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
                                                      GimpImage         *image);
+static gboolean gimp_item_tree_view_key_press_event (GtkTreeView       *tree_view,
+                                                     GdkEventKey       *event,
+                                                     GimpItemTreeView *view);
 
 static void   gimp_item_tree_view_image_flush       (GimpImage         *image,
                                                      gboolean           invalidate_preview,
@@ -360,6 +363,10 @@ static gboolean gimp_item_tree_view_search_clicked             (GtkWidget       
                                                                 GdkEventButton   *event,
                                                                 GimpItemTreeView *view);
 
+static gboolean gimp_item_tree_view_move_cursor                (GimpItemTreeView *tree_view,
+                                                                guint             keyval,
+                                                                GdkModifierType   modifiers);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
                          GIMP_TYPE_CONTAINER_TREE_VIEW,
@@ -435,6 +442,13 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lock_visibility_icon_name = NULL;
   klass->lock_visibility_tooltip   = NULL;
   klass->lock_visibility_help_id   = NULL;
+
+  klass->move_cursor_up_action        = NULL;
+  klass->move_cursor_down_action      = NULL;
+  klass->move_cursor_up_flat_action   = NULL;
+  klass->move_cursor_down_flat_action = NULL;
+  klass->move_cursor_start_action     = NULL;
+  klass->move_cursor_end_action       = NULL;
 }
 
 static void
@@ -519,6 +533,10 @@ gimp_item_tree_view_constructed (GObject *object)
   gint                   button_spacing;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_signal_connect (tree_view->view, "key-press-event",
+                    G_CALLBACK (gimp_item_tree_view_key_press_event),
+                    tree_view);
 
   gtk_tree_view_set_headers_visible (tree_view->view, TRUE);
 
@@ -1461,6 +1479,44 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                                           item_view_class->item_type,
                                           view);
   gimp_item_tree_view_floating_selection_changed (view->priv->image, view);
+}
+
+static gboolean
+gimp_item_tree_view_key_press_event (GtkTreeView      *tree_view,
+                                     GdkEventKey      *event,
+                                     GimpItemTreeView *view)
+{
+  if (event->keyval == GDK_KEY_Up           ||
+      event->keyval == GDK_KEY_KP_Up        ||
+      event->keyval == GDK_KEY_Down         ||
+      event->keyval == GDK_KEY_KP_Down      ||
+      event->keyval == GDK_KEY_Page_Up      ||
+      event->keyval == GDK_KEY_KP_Page_Up   ||
+      event->keyval == GDK_KEY_Down         ||
+      event->keyval == GDK_KEY_KP_Down      ||
+      event->keyval == GDK_KEY_Page_Down    ||
+      event->keyval == GDK_KEY_KP_Page_Down ||
+      event->keyval == GDK_KEY_Home         ||
+      event->keyval == GDK_KEY_KP_Home      ||
+      event->keyval == GDK_KEY_End          ||
+      event->keyval == GDK_KEY_KP_End)
+    {
+      if (event->state & gimp_get_all_modifiers_mask ())
+        /* Let the event propagate, though to be fair, it would be nice
+         * to specify what happens with a Shift-arrow, or Ctrl-arrow,
+         * with a multi-item aware logic. It may also require a concept
+         * of "active" item among the selected one (very likely the last
+         * clicked item).
+         * TODO for a proper gimp-ux spec.
+         */
+        return FALSE;
+
+      gimp_item_tree_view_move_cursor (view, event->keyval, event->state);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void
@@ -3751,6 +3807,67 @@ gimp_item_tree_view_search_clicked (GtkWidget        *main_column_button,
                                     GimpItemTreeView *view)
 {
   gtk_popover_popup (GTK_POPOVER (view->priv->search_popover));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_item_tree_view_move_cursor (GimpItemTreeView *view,
+                                 guint             keyval,
+                                 GdkModifierType   modifiers)
+{
+  GimpItemTreeViewClass *klass;
+  const gchar           *action_name = NULL;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), FALSE);
+
+  klass = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
+  switch (keyval)
+    {
+    case GDK_KEY_Down:
+    case GDK_KEY_KP_Down:
+      if (klass->move_cursor_down_flat_action)
+        action_name = klass->move_cursor_down_flat_action;
+      else
+        action_name = klass->move_cursor_down_action;
+      break;
+    case GDK_KEY_Up:
+    case GDK_KEY_KP_Up:
+      if (klass->move_cursor_up_flat_action)
+        action_name = klass->move_cursor_up_flat_action;
+      else
+        action_name = klass->move_cursor_up_action;
+      break;
+    case GDK_KEY_Page_Down:
+    case GDK_KEY_KP_Page_Down:
+      action_name = klass->move_cursor_down_action;
+      break;
+    case GDK_KEY_Page_Up:
+    case GDK_KEY_KP_Page_Up:
+      action_name = klass->move_cursor_up_action;
+      break;
+    case GDK_KEY_End:
+    case GDK_KEY_KP_End:
+      action_name = klass->move_cursor_end_action;
+      break;
+    case GDK_KEY_Home:
+    case GDK_KEY_KP_Home:
+      action_name = klass->move_cursor_start_action;
+      break;
+    default:
+      break;
+    }
+
+  if (action_name != NULL)
+    {
+      GAction *action;
+
+      action = g_action_map_lookup_action (G_ACTION_MAP (g_application_get_default ()),
+                                           action_name);
+      g_return_val_if_fail (action != NULL, FALSE);
+
+      gimp_action_activate (GIMP_ACTION (action));
+    }
 
   return TRUE;
 }
