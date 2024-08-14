@@ -36,6 +36,9 @@ gen_languages = executable('gen-languages',
                            include_directories: [ rootInclude, appInclude ],
                            dependencies: [ gio, gegl ],
                            link_with: [ libgimpbase ],
+                           c_args: [
+                             '-DSRCDIR="@0@"'.format(meson.project_source_root()),
+                           ],
                            install: false)
 
 if enable_default_bin

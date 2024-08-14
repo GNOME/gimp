@@ -187,13 +187,18 @@ main (int    argc,
 static gboolean
 gimp_language_store_parser_init (GError **error)
 {
-  GTimer         *timer = g_timer_new ();
-  GHashTable     *base_lang_list;
-  gchar          *current_env;
-  GDir           *locales_dir;
-  GHashTableIter  lang_iter;
-  gpointer        key;
-  gboolean        success = TRUE;
+  GTimer           *timer  = g_timer_new ();
+  GInputStream     *input  = NULL;
+  GDataInputStream *dinput = NULL;
+  GHashTable       *base_lang_list;
+  gchar            *current_env;
+  GFile            *linguas;
+  GHashTableIter    lang_iter;
+  gpointer          key;
+  gchar            *locale;
+  gint              n_locales = 0;
+  gint              n_mo      = 0;
+  gboolean          success = TRUE;
 
   if (l10n_lang_list != NULL)
     {
@@ -215,68 +220,60 @@ gimp_language_store_parser_init (GError **error)
                                           (GDestroyNotify) g_free);
 
   /* Check all locales we have translations for. */
-  locales_dir = g_dir_open (gimp_locale_directory (), 0, error);
-  if (locales_dir)
+  linguas = g_file_new_build_filename (SRCDIR, "po", "LINGUAS", NULL);
+  input = G_INPUT_STREAM (g_file_read (linguas, NULL, error));
+  if (! input)
     {
-      const gchar *locale;
-      gint         n_locales = 0;
-      gint         n_mo      = 0;
+      success = FALSE;
+      goto cleanup;
+    }
 
-      while ((locale = g_dir_read_name (locales_dir)) != NULL)
+  dinput = g_data_input_stream_new (input);
+
+  while ((locale = g_data_input_stream_read_line (dinput, NULL, NULL, error)))
+    {
+      g_strstrip (locale);
+
+      if (strlen (locale) > 0 && locale[0] != '#')
         {
-          gchar *filename = g_build_filename (gimp_locale_directory (),
-                                              locale,
-                                              "LC_MESSAGES",
-                                              GETTEXT_PACKAGE ".mo",
-                                              NULL);
-          if (g_file_test (filename, G_FILE_TEST_EXISTS))
+          gchar *delimiter = NULL;
+          gchar *base_code = NULL;
+
+          delimiter = strchr (locale, '_');
+
+          if (delimiter)
+            base_code = g_strndup (locale, delimiter - locale);
+          else
+            base_code = g_strdup (locale);
+
+          delimiter = strchr (base_code, '@');
+
+          if (delimiter)
             {
-              gchar *delimiter = NULL;
-              gchar *base_code = NULL;
-
-              delimiter = strchr (locale, '_');
-
-              if (delimiter)
-                base_code = g_strndup (locale, delimiter - locale);
-              else
-                base_code = g_strdup (locale);
-
-              delimiter = strchr (base_code, '@');
-
-              if (delimiter)
-                {
-                  gchar *temp = base_code;
-                  base_code = g_strndup (base_code, delimiter - base_code);
-                  g_free (temp);
-                }
-
-              /* Save the full language code. */
-              g_hash_table_insert (l10n_lang_list, g_strdup (locale), NULL);
-              /* Save the base language code. */
-              g_hash_table_insert (base_lang_list, base_code, NULL);
-
-              n_mo++;
+              gchar *temp = base_code;
+              base_code = g_strndup (base_code, delimiter - base_code);
+              g_free (temp);
             }
 
-          n_locales++;
+          /* Save the full language code. */
+          g_hash_table_insert (l10n_lang_list, g_strdup (locale), NULL);
+          /* Save the base language code. */
+          g_hash_table_insert (base_lang_list, base_code, NULL);
 
-          g_free (filename);
+          n_mo++;
         }
 
-      g_dir_close (locales_dir);
+      n_locales++;
 
-      if (n_mo == 0)
-        {
-          g_set_error (error, G_IO_ERROR, 0,
-                       "No \"%s\" file was found in %s in %d locales",
-                       GETTEXT_PACKAGE ".mo", gimp_locale_directory (),
-                       n_locales);
-          success = FALSE;
-          goto cleanup;
-        }
+      g_free (locale);
     }
-  else
+
+  if (n_mo == 0)
     {
+      g_set_error (error, G_IO_ERROR, 0,
+                   "No \"%s\" files were found in %s in %d locales",
+                   GETTEXT_PACKAGE ".mo", gimp_locale_directory (),
+                   n_locales);
       success = FALSE;
       goto cleanup;
     }
@@ -392,6 +389,9 @@ cleanup:
   g_timer_stop (timer);
   g_print ("%s: %f seconds\n", G_STRFUNC, g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
+  g_object_unref (linguas);
+  g_clear_object (&input);
+  g_clear_object (&dinput);
 
   return success;
 }
