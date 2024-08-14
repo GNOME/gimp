@@ -650,6 +650,12 @@ _("Sets the default opacity for the 'New Layer' dialog.")
 #define LAYER_NEW_FILL_TYPE_BLURB \
 _("Sets the default fill type for the 'New Layer' dialog.")
 
+#define LAYER_NEW_INSERT_POSITION_BLURB \
+_("Sets the default insert position for the 'New Layer' dialog.")
+
+#define LAYER_NEW_INSERT_GROUP_POSITION_BLURB \
+_("Sets the default insert position in layer groups for the 'New Layer' dialog.")
+
 #define LAYER_RESIZE_FILL_TYPE_BLURB \
 _("Sets the default fill type for the 'Layer Boundary Size' dialog.")
 

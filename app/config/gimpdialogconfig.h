@@ -73,6 +73,8 @@ struct _GimpDialogConfig
   GimpLayerCompositeMode    layer_new_composite_mode;
   gdouble                   layer_new_opacity;
   GimpFillType              layer_new_fill_type;
+  GimpInsertPosition        layer_new_insert_position;
+  GimpInsertGroupPosition   layer_new_insert_group_position;
 
   GimpFillType              layer_resize_fill_type;
 

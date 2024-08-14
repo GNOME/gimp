@@ -174,3 +174,41 @@ typedef enum
   GIMP_THEME_DARK,   /*< desc="Dark Colors"   >*/
   GIMP_THEME_SYSTEM, /*< desc="System Colors" >*/
 } GimpThemeScheme;
+
+/**
+ * GimpInsertPosition:
+ * @GIMP_INSERT_ABOVE:            Insert above selected item
+ * @GIMP_INSERT_BELOW:            Insert below selected item
+ *
+ * Position for item insertion.
+ **/
+#define GIMP_TYPE_INSERT_POSITION (gimp_insert_position_get_type ())
+
+GType gimp_insert_position_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INSERT_ABOVE,         /*< desc="Above selected" >*/
+  GIMP_INSERT_BELOW,         /*< desc="Below selected" >*/
+} GimpInsertPosition;
+
+/**
+ * GimpInsertGroupPosition:
+ * @GIMP_INSERT_GROUP_TOP:              Insert as top child
+ * @GIMP_INSERT_GROUP_BOTTOM:           Insert as bottom child
+ * @GIMP_INSERT_GROUP_ABOVE:            Insert above selected group
+ * @GIMP_INSERT_GROUP_BELOW:            Insert below selected group
+ *
+ * Position for item insertion in an item group.
+ **/
+#define GIMP_TYPE_INSERT_GROUP_POSITION (gimp_insert_group_position_get_type ())
+
+GType gimp_insert_group_position_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INSERT_GROUP_TOP,           /*< desc="As top child" >*/
+  GIMP_INSERT_GROUP_BOTTOM,        /*< desc="As bottom child" >*/
+  GIMP_INSERT_GROUP_ABOVE,         /*< desc="Above the group" >*/
+  GIMP_INSERT_GROUP_BELOW,         /*< desc="Below the group" >*/
+} GimpInsertGroupPosition;

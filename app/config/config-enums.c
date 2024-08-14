@@ -420,6 +420,68 @@ gimp_theme_scheme_get_type (void)
   return type;
 }
 
+GType
+gimp_insert_position_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_INSERT_ABOVE, "GIMP_INSERT_ABOVE", "above" },
+    { GIMP_INSERT_BELOW, "GIMP_INSERT_BELOW", "below" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_INSERT_ABOVE, NC_("insert-position", "Above selected"), NULL },
+    { GIMP_INSERT_BELOW, NC_("insert-position", "Below selected"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpInsertPosition", values);
+      gimp_type_set_translation_context (type, "insert-position");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_insert_group_position_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_INSERT_GROUP_TOP, "GIMP_INSERT_GROUP_TOP", "top" },
+    { GIMP_INSERT_GROUP_BOTTOM, "GIMP_INSERT_GROUP_BOTTOM", "bottom" },
+    { GIMP_INSERT_GROUP_ABOVE, "GIMP_INSERT_GROUP_ABOVE", "above" },
+    { GIMP_INSERT_GROUP_BELOW, "GIMP_INSERT_GROUP_BELOW", "below" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_INSERT_GROUP_TOP, NC_("insert-group-position", "As top child"), NULL },
+    { GIMP_INSERT_GROUP_BOTTOM, NC_("insert-group-position", "As bottom child"), NULL },
+    { GIMP_INSERT_GROUP_ABOVE, NC_("insert-group-position", "Above the group"), NULL },
+    { GIMP_INSERT_GROUP_BELOW, NC_("insert-group-position", "Below the group"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpInsertGroupPosition", values);
+      gimp_type_set_translation_context (type, "insert-group-position");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

@@ -76,6 +76,8 @@ enum
   PROP_LAYER_NEW_COMPOSITE_MODE,
   PROP_LAYER_NEW_OPACITY,
   PROP_LAYER_NEW_FILL_TYPE,
+  PROP_LAYER_NEW_INSERT_POSITION,
+  PROP_LAYER_NEW_INSERT_GROUP_POSITION,
 
   PROP_LAYER_RESIZE_FILL_TYPE,
 
@@ -364,6 +366,22 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          LAYER_NEW_FILL_TYPE_BLURB,
                          GIMP_TYPE_FILL_TYPE,
                          GIMP_FILL_TRANSPARENT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_INSERT_POSITION,
+                         "layer-new-insert-position",
+                         "Default new layer position",
+                         LAYER_NEW_INSERT_POSITION_BLURB,
+                         GIMP_TYPE_INSERT_POSITION,
+                         GIMP_INSERT_ABOVE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_INSERT_GROUP_POSITION,
+                         "layer-new-insert-group-position",
+                         "Default new layer position in group",
+                         LAYER_NEW_INSERT_GROUP_POSITION_BLURB,
+                         GIMP_TYPE_INSERT_GROUP_POSITION,
+                         GIMP_INSERT_GROUP_TOP,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_RESIZE_FILL_TYPE,
@@ -705,6 +723,12 @@ gimp_dialog_config_set_property (GObject      *object,
     case PROP_LAYER_NEW_FILL_TYPE:
       config->layer_new_fill_type = g_value_get_enum (value);
       break;
+    case PROP_LAYER_NEW_INSERT_POSITION:
+      config->layer_new_insert_position = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_NEW_INSERT_GROUP_POSITION:
+      config->layer_new_insert_group_position = g_value_get_enum (value);
+      break;
 
     case PROP_LAYER_RESIZE_FILL_TYPE:
       config->layer_resize_fill_type = g_value_get_enum (value);
@@ -896,6 +920,12 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_LAYER_NEW_FILL_TYPE:
       g_value_set_enum (value, config->layer_new_fill_type);
+      break;
+    case PROP_LAYER_NEW_INSERT_POSITION:
+      g_value_set_enum (value, config->layer_new_insert_position);
+      break;
+    case PROP_LAYER_NEW_INSERT_GROUP_POSITION:
+      g_value_set_enum (value, config->layer_new_insert_group_position);
       break;
 
     case PROP_LAYER_RESIZE_FILL_TYPE:
