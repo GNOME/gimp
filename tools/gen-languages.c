@@ -403,13 +403,8 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-#ifdef ENABLE_RELOCATABLE_RESOURCES
-  file = gimp_installation_directory_file ("share", "xml", "iso-codes",
-                                           "iso_639_3.xml", NULL);
-#else
   file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S
                               "iso_639_3.xml");
-#endif
 
   success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
   if (error && *error)
