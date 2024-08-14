@@ -67,7 +67,7 @@ Graphical User Interface:
     multi-item selection aware. Up/Down keys select items in visual
     order, walking through item groups (in and out), except when they
     are collapsed. PageUp/Down keys select items while not leaving
-    previously selected's items' group level.
+    previously selected items' group level.
 
 Plug-ins:
 
@@ -110,7 +110,7 @@ Plug-ins:
       new types of Script-Fu scripts (with a standalone interpreter
       rather than as scripts running on the Script-Fu always-on
       extension). It is not the same as the historical Goat Exercises,
-      but it our best "new Script-Fu" example.
+      but it is our best "new Script-Fu" example.
     * All other test plug-ins/scripts are hidden in stable releases.
 
 API:
@@ -120,7 +120,7 @@ API:
     update them in the future without API/ABI breakage.
   - Changes in libgimp:
     * gimp_procedure_run_config() can run with no config objects (equivalent to
-      run the prodcedure with default arguments).
+      run the procedure with default arguments).
     * New GimpParamColor type (obsoleting GeglParamColor within GIMP) which has
       the additional setting `has_alpha` to advertize whether your plug-in
       argument accepts only opaque colors or transparent ones (hence generated
@@ -143,7 +143,7 @@ API:
       file handling.
     * GimpProcedureDialog: new fill_start() and fill_end() class methods
       which are ensured to be run exactly once, unlike fill_list().
-    * gimp_image_add_(h|v)guide() functions can now creates off-canvas
+    * gimp_image_add_(h|v)guide() functions can now create off-canvas
       guides (same as we can in GUI, now).
     * GimpChoice arguments can now generate a GimpIntRadioFrame as
       alternative widget in a GimpProcedureDialog (combo box is still
@@ -222,7 +222,7 @@ Build:
   - Our flatpak-s will now use $XDG_CONFIG_HOME config folder
     unconditionally (not the `~/.var` folder). It won't depend anymore
     on whether this config folder already existed or not.
-  - Only Lua 5.1 and luajit are supported. Earlier versions have
+  - Only Lua 5.1 and luajit are supported. Later versions have
     incompatibilities breaking Lua plug-ins.
 
 
