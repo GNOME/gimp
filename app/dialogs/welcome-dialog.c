@@ -521,12 +521,15 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
   GtkSizeGroup *size_group = NULL;
   GtkWidget    *scale;
   GtkListStore *store;
+  GObject      *color_config;
+  GFile        *file;
 
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *widget;
   GtkWidget    *button;
   GtkWidget    *grid;
+  gint          row;
 
   GObject      *object;
 
@@ -535,6 +538,7 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
 
   object = G_OBJECT (config);
 
+  g_object_set_data (G_OBJECT (welcome_dialog), "personalize-vbox", main_vbox);
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* Themes */
@@ -650,6 +654,43 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
                           GTK_CONTAINER (main_vbox), FALSE);
   prefs_language_combo_box_add (object, "language", GTK_BOX (vbox));
 #endif
+
+  color_config = G_OBJECT (GIMP_CORE_CONFIG (config)->color_management);
+  file = gimp_directory_file ("profilerc", NULL);
+  store = gimp_color_profile_store_new (file);
+  g_object_unref (file);
+  vbox = prefs_frame_new (_("Color Management"), GTK_CONTAINER (main_vbox), FALSE);
+  grid = prefs_grid_new (GTK_CONTAINER (vbox));
+  row = 0;
+
+  prefs_profile_combo_box_add (color_config,
+                               "rgb-profile",
+                               store,
+                               _("Select Preferred RGB Color Profile"),
+                               _("_RGB profile:"),
+                               GTK_GRID (grid), row++, size_group,
+                               object, "color-profile-path");
+
+  prefs_profile_combo_box_add (color_config,
+                               "gray-profile",
+                               store,
+                               _("Select Preferred Grayscale Color Profile"),
+                               _("_Grayscale profile:"),
+                               GTK_GRID (grid), row++, size_group,
+                               object, "color-profile-path");
+
+  prefs_profile_combo_box_add (color_config,
+                               "cmyk-profile",
+                               store,
+                               _("Select CMYK Color Profile"),
+                               _("_CMYK profile:"),
+                               GTK_GRID (grid), row++, size_group,
+                               object, "color-profile-path");
+
+  prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
+                            _("_File Open behavior:"),
+                            GTK_GRID (grid), row++, size_group);
+
 
   vbox = prefs_frame_new (_("Additional Customizations"), GTK_CONTAINER (main_vbox), FALSE);
 
@@ -1470,12 +1511,14 @@ welcome_scrollable_resize (gpointer data)
 {
   if (welcome_dialog)
     {
-      GtkWidget *prefs_box = g_object_get_data (G_OBJECT (welcome_dialog), "prefs-box");
-      GtkWidget *main_vbox = g_object_get_data (G_OBJECT (welcome_dialog), "welcome-vbox");
+      GtkWidget *prefs_box        = g_object_get_data (G_OBJECT (welcome_dialog), "prefs-box");
+      GtkWidget *main_vbox        = g_object_get_data (G_OBJECT (welcome_dialog), "welcome-vbox");
+      GtkWidget *personalize_vbox = g_object_get_data (G_OBJECT (welcome_dialog), "personalize-vbox");
 
-      /* Make the first page scrollable to prevent height issues on
-       * smaller screens */
+      /* Make the Welcome and Personalize pages scrollable to prevent
+       * height issues on smaller screens */
       gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), main_vbox, TRUE);
+      gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), personalize_vbox, TRUE);
 
       gtk_widget_queue_resize (GTK_WIDGET (welcome_dialog));
     }
