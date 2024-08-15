@@ -43,7 +43,15 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != "--relocatable" ]; then
   export MESON_OPTIONS='-Drelocatable-bundle=no -Dwindows-installer=false -Dms-store=false'
 elif [ "$GITLAB_CI" ] || [ "$1" = '--relocatable' ]; then
   echo "(INFO): GIMP will be built as a relocatable bundle"
-  export MESON_OPTIONS='-Drelocatable-bundle=yes -Dwindows-installer=true -Dms-store=true'
+  # On CI, only generate assets when necessary to the specific pipeline
+  if [[ "$CI_MERGE_REQUEST_LABELS" =~ '5. Windows Installer' ]] || [ "$GIMP_CI_WIN_INSTALLER" ] || [ "$CI_COMMIT_TAG" ] || [ "$1" = '--relocatable' ]; then
+    echo '(INFO): Installer assets will be built'
+    installer_option='-Dwindows-installer=true'
+  elif [[ "$CI_MERGE_REQUEST_LABELS" =~ '5. Microsoft Store' ]] || [ "$GIMP_CI_MS_STORE" ] || [ "$CI_COMMIT_TAG" ] || [ "$1" = '--relocatable' ]; then
+    echo '(INFO): MS Store assets will be built'
+    store_option='$-Dms-store=true'
+  fi
+  export MESON_OPTIONS="$installer_option $store_option"
 fi
 
 if [ ! -f "_build/build.ninja" ]; then
