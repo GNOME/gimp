@@ -1911,7 +1911,7 @@ load_rgba (TIFF        *tif,
       guint32 i;
 
       for (i = row_start; i < row_end; i++)
-        buffer[i] = GUINT32_TO_LE (buffer[i]);
+        buffer[i] = GUINT32_FROM_LE (buffer[i]);
 #endif
 
       gegl_buffer_set (channel[0].buffer,
@@ -2451,7 +2451,7 @@ load_sketchbook_layers (TIFF      *tif,
 
                   /* Make sure our channels are in the right order */
                   for (i = row_start; i < row_end; i++)
-                    pixels[i] = GUINT32_TO_LE (pixel[i]);
+                    pixels[i] = GUINT32_FROM_LE (pixels[i]);
 #endif
                   gegl_buffer_set (buffer,
                                    GEGL_RECTANGLE (0, layer_height - row - 1,
