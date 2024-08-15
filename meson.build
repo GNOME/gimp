@@ -1721,6 +1721,16 @@ if is_git_repository
   )
 endif
 
+if is_git_repository
+  has_gimp_data = run_command(python, '-c',
+    'import sys,os; sys.exit(0 if os.path.exists("gimp-data/meson.build") else 1)',
+    check: false
+  ).returncode() == 0
+
+  if not has_gimp_data
+    error('gimp-data submodule not present. Run: git submodule update --init')
+  endif
+endif
 
 configure_file(
   output: 'config.h',
