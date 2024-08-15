@@ -813,8 +813,33 @@ set_cursor (GimpCurveView *view,
       GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (view));
       GdkCursor  *cursor  = gdk_cursor_new_for_display (display, new_cursor);
 
+      /* If the user's theme doesn't have the cursor ID, we'll try a
+       * CSS fallback */
+      if (cursor == NULL)
+        {
+          switch (new_cursor)
+            {
+            case GDK_TCROSS:
+              cursor = gdk_cursor_new_from_name (display, "crosshair");
+              break;
+            case GDK_FLEUR:
+              cursor = gdk_cursor_new_from_name (display, "move");
+              break;
+            case GDK_X_CURSOR:
+              cursor = gdk_cursor_new_from_name (display, "not-allowed");
+              break;
+            case GDK_PENCIL:
+              cursor = gdk_cursor_new_from_name (display, "pointer");
+              break;
+            default:
+              break;
+            }
+        }
+
       gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (view)), cursor);
-      g_object_unref (cursor);
+
+      if (cursor)
+        g_object_unref (cursor);
 
       view->cursor_type = new_cursor;
     }
