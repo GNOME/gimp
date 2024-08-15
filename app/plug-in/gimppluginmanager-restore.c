@@ -51,6 +51,13 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  GimpPlugInDef     *plug_in_def;
+  GimpPlugInManager *manager;
+} PlugInJobData;
+
+
 static void    gimp_plug_in_manager_search            (GimpPlugInManager    *manager,
                                                        GimpInitStatusFunc    status_callback);
 static void    gimp_plug_in_manager_search_directory  (GimpPlugInManager    *manager,
@@ -81,7 +88,10 @@ static gint    gimp_plug_in_manager_file_proc_compare (gconstpointer         a,
                                                        gconstpointer         b,
                                                        gpointer              data);
 
-
+static void    gimp_plug_in_manager_thread_query      (PlugInJobData        *data,
+                                                       GimpContext          *context);
+static void    gimp_plug_in_manager_thread_init       (PlugInJobData        *data,
+                                                       GimpContext          *context);
 
 void
 gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
@@ -442,8 +452,10 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
                                 GimpContext        *context,
                                 GimpInitStatusFunc  status_callback)
 {
-  GSList *list;
-  gint    n_plugins;
+  GSList      *list;
+  gint         n_plugins;
+  GThreadPool *pool;
+  gint         num_processors;
 
   status_callback (_("Querying new Plug-ins"), "", 0.0);
 
@@ -460,13 +472,20 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
 
   if (n_plugins)
     {
-      gint nth;
+      gint           nth;
+      PlugInJobData *job_data;
 
       manager->write_pluginrc = TRUE;
 
+      num_processors = GIMP_GEGL_CONFIG (context->gimp->config)->num_processors;
+      pool = g_thread_pool_new_full ((GFunc) gimp_plug_in_manager_thread_query,
+                                     context,
+                                     (GDestroyNotify) g_free,
+                                     num_processors, TRUE, NULL);
+
       for (list = manager->plug_in_defs, nth = 0; list; list = list->next)
         {
-          GimpPlugInDef *plug_in_def = list->data;
+          GimpPlugInDef *plug_in_def = g_object_ref (list->data);
 
           if (plug_in_def->needs_query)
             {
@@ -482,9 +501,15 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
                 g_print ("Querying plug-in: '%s'\n",
                          gimp_file_get_utf8_name (plug_in_def->file));
 
-              gimp_plug_in_manager_call_query (manager, context, plug_in_def);
+              job_data = g_malloc (sizeof (PlugInJobData));
+
+              job_data->plug_in_def = g_object_ref (plug_in_def);
+              job_data->manager     = g_object_ref (manager);
+
+              g_thread_pool_push (pool, job_data, NULL);
             }
         }
+      g_thread_pool_free (pool, FALSE, TRUE);
     }
 
   status_callback (NULL, "", 1.0);
@@ -496,8 +521,10 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
                                     GimpContext        *context,
                                     GimpInitStatusFunc  status_callback)
 {
-  GSList *list;
-  gint    n_plugins;
+  GSList      *list;
+  gint         n_plugins;
+  GThreadPool *pool;
+  gint         num_processors;
 
   status_callback (_("Initializing Plug-ins"), "", 0.0);
 
@@ -511,11 +538,18 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
 
   if (n_plugins)
     {
-      gint nth;
+      gint           nth;
+      PlugInJobData *job_data;
+
+      num_processors = GIMP_GEGL_CONFIG (context->gimp->config)->num_processors;
+      pool = g_thread_pool_new_full ((GFunc) gimp_plug_in_manager_thread_init,
+                                     context,
+                                     (GDestroyNotify) g_free,
+                                     num_processors, TRUE, NULL);
 
       for (list = manager->plug_in_defs, nth = 0; list; list = list->next)
         {
-          GimpPlugInDef *plug_in_def = list->data;
+          GimpPlugInDef *plug_in_def = g_object_ref (list->data);
 
           if (plug_in_def->has_init)
             {
@@ -531,9 +565,15 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
                 g_print ("Initializing plug-in: '%s'\n",
                          gimp_file_get_utf8_name (plug_in_def->file));
 
-              gimp_plug_in_manager_call_init (manager, context, plug_in_def);
+              job_data = g_malloc (sizeof (PlugInJobData));
+
+              job_data->plug_in_def = plug_in_def;
+              job_data->manager     = g_object_ref (manager);
+
+              g_thread_pool_push (pool, job_data, NULL);
             }
         }
+      g_thread_pool_free (pool, FALSE, TRUE);
     }
 
   status_callback (NULL, "", 1.0);
@@ -1030,4 +1070,27 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
     }
 
   return strcmp (gimp_object_get_name (proc_a), gimp_object_get_name (proc_b));
+}
+
+static void
+gimp_plug_in_manager_thread_query (PlugInJobData     *data,
+                                   GimpContext       *context)
+{
+  GimpPlugInDef     *plug_in_def = data->plug_in_def;
+  GimpPlugInManager *manager     = data->manager;
+
+  gimp_plug_in_manager_call_query (manager, context, plug_in_def);
+
+  g_object_unref (plug_in_def);
+  g_object_unref (manager);
+}
+
+static void
+gimp_plug_in_manager_thread_init (PlugInJobData     *data,
+                                  GimpContext       *context)
+{
+  GimpPlugInDef     *plug_in_def = data->plug_in_def;
+  GimpPlugInManager *manager     = data->manager;
+
+  gimp_plug_in_manager_call_init (manager, context, plug_in_def);
 }
