@@ -359,6 +359,7 @@ app_activate_callback (GimpCoreApp *app,
   GimpInitStatusFunc  update_status_func = NULL;
   const gchar       **filenames;
   const gchar        *current_language;
+  const gchar        *system_lang_l10n   = NULL;
   gchar              *prev_language      = NULL;
   GError             *font_error         = NULL;
   gint                batch_retval;
@@ -369,9 +370,15 @@ app_activate_callback (GimpCoreApp *app,
 
   gimp_core_app_set_exit_status (app, EXIT_SUCCESS);
 
+  /* Language was already initialized. I call this again only to get the
+   * actual language information and the "System Language" string
+   * localized in the actual system language.
+   */
+  current_language = language_init (NULL, &system_lang_l10n);
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! gimp->no_interface)
-    update_status_func = gui_init (gimp, gimp_app_get_no_splash (GIMP_APP (app)), GIMP_APP (app), NULL);
+    update_status_func = gui_init (gimp, gimp_app_get_no_splash (GIMP_APP (app)),
+                                   GIMP_APP (app), NULL, system_lang_l10n);
 #endif
 
   if (! update_status_func)
@@ -385,10 +392,7 @@ app_activate_callback (GimpCoreApp *app,
   g_object_get (gimp->edit_config,
                 "prev-language", &prev_language,
                 NULL);
-  /* Language was already initialized. I call this again only to get the
-   * actual language information.
-   */
-  current_language = language_init (NULL);
+
   gimp->query_all = (prev_language == NULL ||
                      g_strcmp0 (prev_language, current_language) != 0);
   g_free (prev_language);

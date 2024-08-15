@@ -367,11 +367,6 @@ gimp_language_store_parser_init (GError **error)
   g_setenv ("LANGUAGE", setlocale (LC_ALL, NULL), TRUE);
   setlocale (LC_ALL, "");
 
-  /* g_str_hash() does not accept NULL. I give an empty code instead.
-   * Other solution would to create a custom hash. */
-  g_hash_table_insert (l10n_lang_list, g_strdup(""),
-                       g_strdup (_("System Language")));
-
   /* Go back to original localization. */
   if (current_env)
     {
@@ -379,7 +374,9 @@ gimp_language_store_parser_init (GError **error)
       g_free (current_env);
     }
   else
-    g_unsetenv ("LANGUAGE");
+    {
+      g_unsetenv ("LANGUAGE");
+    }
   setlocale (LC_ALL, "");
 
   /* Add special entry for C (en_US). */

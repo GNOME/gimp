@@ -37,6 +37,8 @@
 
 #include "gimp-intl.h"
 
+static const gchar *system_lang = NULL;
+
 enum
 {
   PROP_0,
@@ -126,6 +128,11 @@ gimp_translation_store_constructed (GObject *object)
         GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
                                                      def.name, def.code);
     }
+
+  g_return_if_fail (system_lang != NULL);
+
+  GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+                                               system_lang, "");
 #endif
 
   g_list_free_full (sublist, g_free);
@@ -175,6 +182,20 @@ gimp_translation_store_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+void
+gimp_translation_store_initialize (const gchar *system_lang_l10n)
+{
+  g_return_if_fail (system_lang_l10n != NULL);
+
+  if (system_lang != NULL)
+    {
+      g_warning ("gimp_translation_store_initialize() must be run only once.");
+      return;
+    }
+
+  system_lang = system_lang_l10n;
 }
 
 GtkListStore *

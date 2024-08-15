@@ -23,7 +23,8 @@
 #endif
 
 
-const gchar * language_init (const gchar *language);
+const gchar * language_init (const gchar  *language,
+                             const gchar **system_lang_l10n);
 
 
 #endif /* __LANGUAGE_H__ */

@@ -38,18 +38,38 @@
 
 #include "language.h"
 
+#include "gimp-intl.h"
+
 
 static gchar * language_get_system_lang_id (void);
 
 
 const gchar *
-language_init (const gchar *language)
+language_init (const gchar  *language,
+               const gchar **system_lang_l10n)
 {
   static gchar *actual_language = NULL;
+  static gchar *system_langstr  = NULL;
 
   if (actual_language != NULL)
-    /* Already initialized. */
-    return actual_language;
+    {
+      /* Already initialized. */
+
+      g_return_val_if_fail (system_langstr != NULL, actual_language);
+
+      if (system_lang_l10n)
+        *system_lang_l10n = system_langstr;
+
+      return actual_language;
+    }
+
+  /* This must be localized with the system language itself, before we
+   * apply any other language.
+   */
+  system_langstr = _("System Language");
+  if (system_lang_l10n)
+    *system_lang_l10n = system_langstr;
+
 
 #ifdef G_OS_WIN32
   if ((! language || strlen (language) == 0) &&

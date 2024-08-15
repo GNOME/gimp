@@ -66,6 +66,7 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpradioaction.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimptranslationstore.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -222,7 +223,8 @@ GimpInitStatusFunc
 gui_init (Gimp         *gimp,
           gboolean      no_splash,
           GimpApp      *app,
-          const gchar  *test_base_dir)
+          const gchar  *test_base_dir,
+          const gchar  *system_lang_l10n)
 {
   GimpInitStatusFunc  status_callback = NULL;
   gchar              *abort_message;
@@ -246,6 +248,7 @@ gui_init (Gimp         *gimp,
   gtk_widget_set_default_direction (gtk_get_locale_direction ());
 
   gui_unique_init (gimp);
+  gimp_translation_store_initialize (system_lang_l10n);
 
   /*  initialize icon themes before gimp_widgets_init() so we avoid
    *  setting the configured theme twice

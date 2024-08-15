@@ -120,7 +120,7 @@ gimp_test_app_activate_callback (GimpCoreApp *app,
 
   gimp_core_app_set_exit_status (app, EXIT_SUCCESS);
 
-  gui_init (gimp, TRUE, NULL, g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"));
+  gui_init (gimp, TRUE, NULL, g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"), "System Language");
   gimp_init_icon_theme_for_testing ();
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy, NULL);

@@ -485,7 +485,7 @@ gimp_early_configuration (void)
   language = gimp_early_rc_get_language (earlyrc);
 
   /*  change the locale if a language if specified  */
-  language_init (language);
+  language_init (language, NULL);
   if (language)
     g_free (language);
 
