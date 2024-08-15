@@ -321,6 +321,7 @@ gimp_language_store_parser_init (GError **error)
            * If it fails, gettext fallbacks to C (en_US) itself.
            */
           g_setenv ("LANGUAGE", code, TRUE);
+          g_setenv ("LANG", code, TRUE);
           setlocale (LC_ALL, "");
 
           localized_name = g_strdup (dgettext ("iso_639_3", english_name));
@@ -334,6 +335,7 @@ gimp_language_store_parser_init (GError **error)
               g_free (localized_name);
 
               g_setenv ("LANGUAGE", base_code, TRUE);
+              g_setenv ("LANG", base_code, TRUE);
               setlocale (LC_ALL, "");
 
               localized_name = g_strdup (dgettext ("iso_639_3", english_name));
