@@ -1053,8 +1053,8 @@ endif
 isocodes = dependency('iso-codes', required: false)
 if isocodes.found()
   isocodes_prefix = isocodes.get_variable(pkgconfig: 'prefix')
-  isocodes_location = isocodes_prefix / get_option('datadir') / 'xml' / 'iso-codes'
-  isocodes_localedir= isocodes_prefix / get_option('datadir') / 'locale'
+  isocodes_location = isocodes_prefix / 'share' / 'xml' / 'iso-codes'
+  isocodes_localedir= isocodes_prefix / 'share' / 'locale'
 endif
 conf.set('HAVE_ISO_CODES', isocodes.found())
 

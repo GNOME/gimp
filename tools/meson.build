@@ -38,6 +38,7 @@ gen_languages = executable('gen-languages',
                            link_with: [ libgimpbase ],
                            c_args: [
                              '-DSRCDIR="@0@"'.format(meson.project_source_root()),
+                             '-DISOCODES_LOCALEDIR="@0@"'.format(isocodes_localedir),
                            ],
                            install: false)
 

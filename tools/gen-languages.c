@@ -287,6 +287,7 @@ gimp_language_store_parser_init (GError **error)
 
   /* Generate the localized language names. */
   g_hash_table_iter_init (&lang_iter, l10n_lang_list);
+  gimp_bind_text_domain ("iso_639_3", ISOCODES_LOCALEDIR);
   while (g_hash_table_iter_next (&lang_iter, &key, NULL))
     {
       gchar *code           = (gchar*) key;
