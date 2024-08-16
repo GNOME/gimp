@@ -696,7 +696,7 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
                                guint                 hardware_keycode,
                                GimpActionView       *view)
 {
-  GimpAction      *action;
+  GimpAction      *action = NULL;
   guint            action_accel_key;
   GdkModifierType  action_accel_mask;
 
@@ -803,7 +803,7 @@ gimp_action_view_accel_cleared (GtkCellRendererAccel *accel,
                                 const char           *path_string,
                                 GimpActionView       *view)
 {
-  GimpAction      *action;
+  GimpAction      *action = NULL;
   guint            action_accel_key;
   GdkModifierType  action_accel_mask;
 
