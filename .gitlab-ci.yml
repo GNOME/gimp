@@ -424,8 +424,9 @@ gimp-win-x64-cross:
       - done-dll.list
     expire_in: 2 days
 
-## WINDOWS Aarch64 CI (native MSYS2) ##
-
+## WINDOWS pipelines (native MSYS2) ##
+## Since our build pipelines are split (for good reasons) into deps and gimp jobs,
+## 'matrix' isn't useful yet: https://gitlab.com/gitlab-org/gitlab/-/issues/396845
 .win:
   extends: .default
   rules:
@@ -438,6 +439,7 @@ gimp-win-x64-cross:
   # We use the same universal variables but not directly from PS
   before_script: []
 
+## WINDOWS Aarch64 CI (native MSYS2) ##
 .win-a64:
   extends: .win
   rules:
