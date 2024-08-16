@@ -221,8 +221,8 @@ gimp_edit_copy (GimpImage     *image,
           gint x2;
           gint y2;
 
-          if (gimp_item_mask_bounds (iter->data, &x1, &y1, &x2, &y2) &&
-              x1 != x2 && y1 != y2)
+          if (! gimp_item_mask_bounds (iter->data, &x1, &y1, &x2, &y2) ||
+              (x1 != x2 && y1 != y2))
             break;
         }
 
