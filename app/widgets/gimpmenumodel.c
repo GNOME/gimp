@@ -552,14 +552,20 @@ gimp_menu_model_get_submodel (GimpMenuModel *model,
       n_items = g_menu_model_get_n_items (G_MENU_MODEL (submodel));
       for (i = 0; i < n_items; i++)
         {
-          GMenuModel *subsubmodel;
-          gchar      *label = NULL;
-          gchar      *canon_label = NULL;
+          GMenuModel  *subsubmodel;
+          gchar       *label       = NULL;
+          gchar       *canon_label = NULL;
+          const gchar *en_label;
 
           subsubmodel = g_menu_model_get_item_link (G_MENU_MODEL (submodel), i, G_MENU_LINK_SUBMENU);
           g_menu_model_get_item_attribute (G_MENU_MODEL (submodel), i, G_MENU_ATTRIBUTE_LABEL, "s", &label);
+
           if (label)
-            canon_label = gimp_utils_make_canonical_menu_label (label);
+            {
+              en_label = g_object_get_data (G_OBJECT (subsubmodel),
+                                            "gimp-menu-model-en-label");
+              canon_label = gimp_utils_make_canonical_menu_label (en_label);
+            }
 
           if (subsubmodel && g_strcmp0 (canon_label, submenu) == 0)
             {
@@ -739,6 +745,7 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           gchar         *canon_label;
           gchar         *path;
           const gchar   *en_label;
+          gchar         *en_label_copy;
 
           g_return_if_fail (label != NULL);
           en_label = g_object_get_data (G_OBJECT (submenu),
@@ -752,6 +759,10 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
           submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path);
           item     = g_menu_item_new_submenu (label, G_MENU_MODEL (submodel));
+
+          en_label_copy = g_strdup (en_label);
+          g_object_set_data_full (G_OBJECT (submodel), "gimp-menu-model-en-label",
+                                  en_label_copy, (GDestroyNotify) g_free);
           submodel->priv->submenu_item = item;
 
           g_object_unref (submodel);
