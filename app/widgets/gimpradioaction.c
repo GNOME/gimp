@@ -300,7 +300,8 @@ gimp_radio_action_get_enabled (GAction *action)
 {
   GimpRadioAction *radio = GIMP_RADIO_ACTION (action);
 
-  return gimp_radio_action_get_current_value (radio) != radio->priv->value;
+  return gimp_radio_action_get_current_value (radio) != radio->priv->value &&
+         gimp_action_is_sensitive (GIMP_ACTION (action), NULL);
 }
 
 static void
