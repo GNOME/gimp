@@ -232,7 +232,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       /* TIFF capabilities are so dependent on export settings, we can't assign
        * defaults until we know how the user wants to export it */
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
-                                              0, export_edit_options, NULL);
+                                              0, export_edit_options, NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "bigtiff",
                                            _("Export in _BigTIFF variant file format"),

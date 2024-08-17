@@ -346,7 +346,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_GRAY   |
                                               GIMP_EXPORT_CAN_HANDLE_LAYERS |
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED,
-                                              export_edit_options, NULL);
+                                              export_edit_options, NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "vectorize",
                                            _("Convert _bitmaps to vector graphics where possible"),
@@ -541,7 +541,14 @@ pdf_export_multi (GimpProcedure        *procedure,
                 "images",   &image_ids,
                 NULL);
 
-  options = gimp_export_options_new ();
+  options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS,
+                          "capabilities",
+                          GIMP_EXPORT_CAN_HANDLE_RGB    |
+                          GIMP_EXPORT_CAN_HANDLE_ALPHA  |
+                          GIMP_EXPORT_CAN_HANDLE_GRAY   |
+                          GIMP_EXPORT_CAN_HANDLE_LAYERS |
+                          GIMP_EXPORT_CAN_HANDLE_INDEXED,
+                          NULL);
 
   if (uri != NULL)
     {
@@ -723,7 +730,7 @@ pdf_export_image (GimpProcedure        *procedure,
       cairo_save (cr);
 
       if (! (gimp_export_options_get_image (options,
-                                             &image) == GIMP_EXPORT_EXPORT))
+                                            &image) == GIMP_EXPORT_EXPORT))
         {
           /* gimp_drawable_histogram() only works within the bounds of
            * the selection, which is a problem (see issue #2431).

@@ -372,7 +372,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_RGB  |
                                               GIMP_EXPORT_CAN_HANDLE_GRAY |
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "raw",
                                           _("_Data formatting"),
@@ -415,7 +415,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_BITMAP,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "raw",
                                           _("_Data formatting"),
@@ -458,7 +458,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_GRAY,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "raw",
                                           _("_Data formatting"),
@@ -502,7 +502,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_RGB |
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "raw",
                                           _("_Data formatting"),
@@ -547,7 +547,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_GRAY  |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA |
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
     }
   else if (! strcmp (name, PFM_EXPORT_PROC))
     {
@@ -581,7 +581,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_RGB |
                                               GIMP_EXPORT_CAN_HANDLE_GRAY,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
     }
 

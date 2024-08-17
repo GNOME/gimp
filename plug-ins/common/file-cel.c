@@ -188,7 +188,7 @@ cel_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_RGB   |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA |
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_file_argument (procedure, "palette-file",
                                         _("_Palette file"),

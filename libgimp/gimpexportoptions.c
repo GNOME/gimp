@@ -528,23 +528,34 @@ export_action_perform (const ExportAction *action,
 
 /**
  * gimp_export_options_get_image:
- * @options:      The #GimpExportOptions object.
- * @image:        Pointer to the image.
+ * @options: (transfer none): The #GimpExportOptions object.
+ * @image: (inout) (transfer none): the image.
  *
- * Takes an image to be saved together with a description
- * of the capabilities of the image_format. A copy is created.
- * This copy is then converted, @image is changed to point to the
- * new image and the procedure returns GIMP_EXPORT_EXPORT.
- * The save_plugin has to take care of deleting the created image using
- * gimp_image_delete() once the image has been saved.
+ * Takes an image to be exported, possibly creating a temporary copy
+ * modified according to export settings in @options (such as the
+ * capabilities of the export format).
  *
- * Returns: An enum of #GimpExportReturn describing the user_action.
+ * If necessary, a copy is created, converted and modified, @image
+ * changed to point to the new image and the procedure returns
+ * [enum@ExportReturn.EXPORT].
+ * In this case, you must take care of deleting the created image using
+ * [method@Image.delete] once the image has been exported, unless you
+ * were planning to display it with [ctor@Display.new], or you will leak
+ * memory.
+ *
+ * If [enum@ExportReturn.IGNORE] is returned, then @image is still the
+ * original image. You should neither modify it, nor should you delete
+ * it in the end. If you wish to temporarily modify the image before
+ * export anyway, call [method@Image.duplicate] when
+ * [enum@ExportReturn.IGNORE] was returned.
+ *
+ * Returns: An enum of #GimpExportReturn.
  *
  * Since: 3.0
  **/
 GimpExportReturn
-gimp_export_options_get_image (GimpExportOptions       *options,
-                               GimpImage              **image)
+gimp_export_options_get_image (GimpExportOptions  *options,
+                               GimpImage         **image)
 {
   GSList                 *actions = NULL;
   GimpImageBaseType       type;
@@ -557,11 +568,18 @@ gimp_export_options_get_image (GimpExportOptions       *options,
   gboolean                background_has_alpha = TRUE;
   GimpExportReturn        retval               = GIMP_EXPORT_IGNORE;
 
-  g_return_val_if_fail (gimp_image_is_valid (*image), FALSE);
-  g_return_val_if_fail (options != NULL, FALSE);
+  g_return_val_if_fail (image && gimp_image_is_valid (*image), GIMP_EXPORT_IGNORE);
+  g_return_val_if_fail (GIMP_IS_EXPORT_OPTIONS (options), GIMP_EXPORT_IGNORE);
 
   /* Get capabilities from ExportOptions */
   g_object_get (options, "capabilities", &capabilities, NULL);
+
+  g_return_val_if_fail (capabilities & (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                        GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                        GIMP_EXPORT_CAN_HANDLE_BITMAP),
+                        GIMP_EXPORT_IGNORE);
+
 
   /* do some sanity checks */
   if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)

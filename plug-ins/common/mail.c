@@ -290,7 +290,6 @@ send_image (GObject       *config,
             gint32         run_mode)
 {
   GimpPDBStatusType  status  = GIMP_PDB_SUCCESS;
-  GimpExportOptions *options = NULL;
   gchar             *ext;
   GFile             *tmpfile;
   gchar             *tmpname;
@@ -330,9 +329,7 @@ send_image (GObject       *config,
   tmpfile = gimp_temp_file (ext + 1);
   tmpname = g_file_get_path (tmpfile);
 
-  options = gimp_export_options_new ();
-
-  if (! (gimp_file_save (run_mode, image, tmpfile, options) &&
+  if (! (gimp_file_save (run_mode, image, tmpfile, NULL) &&
          valid_file (tmpfile)))
     {
       goto error;

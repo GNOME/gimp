@@ -92,8 +92,10 @@ file_save (Gimp                *gimp,
 
   gimp_image_saving (image);
 
-  /* TEMP - Remove later */
-  options = gimp_export_options_new ();
+  /* XXX - In the future, we'll pass special generic export options this
+   * way (e.g. crops, resize, filter run at export or others).
+   */
+  options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS, NULL);
 
   drawables_list = gimp_image_get_selected_drawables (image);
 

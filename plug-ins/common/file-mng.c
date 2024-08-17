@@ -279,7 +279,7 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                               GIMP_EXPORT_CAN_HANDLE_LAYERS,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "interlaced",
                                            _("_Interlace"),

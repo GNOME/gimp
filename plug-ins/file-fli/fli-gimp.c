@@ -240,7 +240,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                               GIMP_EXPORT_CAN_HANDLE_LAYERS,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_int_argument (procedure, "from-frame",
                                        _("_From frame"),

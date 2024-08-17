@@ -179,12 +179,14 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * @run_mode: The run mode.
  * @image: Input image.
  * @file: The file to save the image in.
- * @options: Export option settings.
+ * @options: (nullable): Export option settings.
  *
  * Saves a file by extension.
  *
  * This procedure invokes the correct file save handler according to
  * the file's extension and/or prefix.
+ * The @options argument is currently unused and should be set to %NULL
+ * right now.
  *
  * Returns: TRUE on success.
  **/

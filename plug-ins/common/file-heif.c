@@ -256,7 +256,7 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_RGB |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_int_argument (procedure, "quality",
                                        _("_Quality"),
@@ -369,7 +369,7 @@ heif_create_procedure (GimpPlugIn  *plug_in,
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
                                               GIMP_EXPORT_CAN_HANDLE_RGB |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
 

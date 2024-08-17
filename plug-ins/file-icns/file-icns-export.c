@@ -465,7 +465,6 @@ icns_export_image (GFile        *file,
           GimpImage         *temp_image;
           GimpLayer         *temp_layer;
           GFile             *temp_file = NULL;
-          GimpExportOptions *options   = gimp_export_options_new ();
           FILE              *temp_fp;
           gint               temp_size;
           gint               macos_size;
@@ -484,7 +483,6 @@ icns_export_image (GFile        *file,
                                             "run-mode",         GIMP_RUN_NONINTERACTIVE,
                                             "image",            temp_image,
                                             "file",             temp_file,
-                                            "options",          options,
                                             "interlaced",       FALSE,
                                             "compression",      9,
                                             "bkgd",             FALSE,

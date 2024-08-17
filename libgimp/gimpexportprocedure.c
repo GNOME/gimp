@@ -65,8 +65,9 @@ struct _GimpExportProcedure
   GDestroyNotify            run_data_destroy;
 
   GimpExportCapabilities    capabilities;
-  GimpExportOptionsEditFunc create_func;
-  gpointer                  create_data;
+  GimpExportOptionsEditFunc edit_func;
+  gpointer                  edit_data;
+  GDestroyNotify            edit_data_destroy;
 
   gboolean                  supports_exif;
   gboolean                  supports_iptc;
@@ -440,14 +441,14 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
    * so we'll make sure it's initialized */
   if (options == NULL)
     {
-      options      = gimp_export_options_new ();
+      options      = g_object_new (GIMP_TYPE_EXPORT_OPTIONS, NULL);
       free_options = TRUE;
     }
 
-  if (export_proc->create_func != NULL)
+  if (export_proc->edit_func != NULL)
     {
-      export_proc->create_func (procedure, config, options,
-                                export_proc->create_data);
+      export_proc->edit_func (procedure, config, options,
+                              export_proc->edit_data);
 
       g_signal_connect_object (config, "notify",
                                G_CALLBACK (gimp_export_procedure_update_options),
@@ -484,6 +485,9 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
     g_object_unref (options);
   g_object_unref (config);
   gimp_value_array_unref (remaining);
+
+  if (export_proc->edit_data_destroy && export_proc->edit_data)
+    export_proc->edit_data_destroy (export_proc->edit_data);
 
   return return_values;
 }
@@ -582,8 +586,8 @@ gimp_export_procedure_update_options (GimpProcedureConfig *config,
   procedure   = gimp_procedure_config_get_procedure (config);
   export_proc = GIMP_EXPORT_PROCEDURE (procedure);
 
-  export_proc->create_func (procedure, config, options,
-                            export_proc->create_data);
+  export_proc->edit_func (procedure, config, options,
+                          export_proc->edit_data);
 }
 
 
@@ -662,8 +666,9 @@ gimp_export_procedure_new (GimpPlugIn       *plug_in,
  * gimp_export_procedure_set_capabilities:
  * @procedure:               a #GimpProcedure.
  * @capabilities:            a #GimpExportCapabilities enum
- * @create_func: (nullable): callback function to update export options
- * @create_data: (nullable): data for @create_func
+ * @edit_func: (nullable): callback function to update export options
+ * @edit_data: (nullable): data for @edit_func
+ * @edit_data_destroy: (nullable): free function for @edit_data, or %NULL
  *
  * Sets default #GimpExportCapabilities for image export.
  *
@@ -672,8 +677,9 @@ gimp_export_procedure_new (GimpPlugIn       *plug_in,
 void
 gimp_export_procedure_set_capabilities (GimpExportProcedure       *procedure,
                                         GimpExportCapabilities     capabilities,
-                                        GimpExportOptionsEditFunc  create_func,
-                                        gpointer                   create_data)
+                                        GimpExportOptionsEditFunc  edit_func,
+                                        gpointer                   edit_data,
+                                        GDestroyNotify             edit_data_destroy)
 {
   g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
 
@@ -684,10 +690,11 @@ gimp_export_procedure_set_capabilities (GimpExportProcedure       *procedure,
 
   /* TODO: Do more with this when we have user-specified callbacks for
    * image capabilities */
-  if (create_func != NULL)
+  if (edit_func != NULL)
     {
-      procedure->create_func = create_func;
-      procedure->create_data = create_data;
+      procedure->edit_func         = edit_func;
+      procedure->edit_data         = edit_data;
+      procedure->edit_data_destroy = edit_data_destroy;
     }
 }
 

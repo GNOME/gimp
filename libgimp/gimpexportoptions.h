@@ -34,9 +34,9 @@ G_BEGIN_DECLS
 /**
  * GimpExportReturn:
  * @GIMP_EXPORT_IGNORE: The image is unmodified but export shall continue anyway
- * @GIMP_EXPORT_EXPORT: The chosen transforms were applied to the image
+ * @GIMP_EXPORT_EXPORT: The chosen transforms were applied to a new image
  *
- * Possible return values of gimp_export_image().
+ * Possible return values of [method@ExportOptions.get_image].
  **/
 typedef enum
 {
@@ -46,7 +46,7 @@ typedef enum
 
 
 GimpExportReturn    gimp_export_options_get_image     (GimpExportOptions  *options,
-                                                       GimpImage         **image);
+                                                       GimpImage         **image) G_GNUC_WARN_UNUSED_RESULT;
 
 
 G_END_DECLS

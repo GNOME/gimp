@@ -942,11 +942,11 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_EXPORT_OPTIONS))
     {
-      GimpExportOptions *options = gimp_export_options_new ();
+      GimpExportOptions *options;
 
-      g_object_set (options,
-                    "capabilities", param->data.d_export_options.capabilities,
-                    NULL);
+      options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS,
+                              "capabilities", param->data.d_export_options.capabilities,
+                              NULL);
 
       g_value_set_object (value, options);
 

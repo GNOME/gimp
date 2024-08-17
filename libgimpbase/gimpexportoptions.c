@@ -26,6 +26,22 @@
 
 #include "gimpexportoptions.h"
 
+/**
+ * SECTION: gimpexportoptions
+ * @title: gimpexportoptions
+ * @short_description: Generic Export Options
+ *
+ * A class holding generic export options.
+
+ * Note: right now, GIMP does not provide any generic export option to
+ * manipulate, and there is practically no reason for you to create this
+ * object yourself. In Export PDB procedure, or again in functions such
+ * as [func@Gimp.file_save], you may just pass %NULL.
+ *
+ * In the future, this object will enable to pass various generic
+ * options, such as ability to crop or resize images at export time.
+ **/
+
 enum
 {
   PROP_0,
@@ -68,9 +84,9 @@ gimp_export_options_class_init (GimpExportOptionsClass *klass)
   object_class->set_property = gimp_export_options_set_property;
 
   /**
-   * GimpExportProcedure:capabilities:
+   * GimpExportOptions:capabilities:
    *
-   * What #GimpExportCapabilities are supported
+   * What [flags@ExportCapabilities] are supported.
    *
    * Since: 3.0.0
    */
@@ -134,16 +150,4 @@ gimp_export_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-/*  public functions  */
-
-GimpExportOptions *
-gimp_export_options_new (void)
-{
-  GimpExportOptions *options;
-
-  options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS, NULL);
-
-  return options;
 }

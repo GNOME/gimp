@@ -175,7 +175,7 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                               GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
-                                              export_edit_options, NULL);
+                                              export_edit_options, NULL, NULL);
 
       gimp_procedure_add_int_argument (procedure, "preset",
                                        _("Source _type"),

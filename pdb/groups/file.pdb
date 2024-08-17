@@ -222,6 +222,9 @@ sub file_save {
     $help = <<'HELP';
 This procedure invokes the correct file save handler according to the
 file's extension and/or prefix.
+
+The @options argument is currently unused and should be set to %NULL
+right now.
 HELP
 
     &josh_pdb_misc('1997');

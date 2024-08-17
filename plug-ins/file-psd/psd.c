@@ -241,7 +241,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                               GIMP_EXPORT_CAN_HANDLE_LAYERS  |
                                               GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "clippingpath",
                                            _("Assign a Clipping _Path"),

@@ -68,9 +68,6 @@ typedef enum
 } GimpExportCapabilities;
 
 
-GimpExportOptions *    gimp_export_options_new                    (void);
-
-
 G_END_DECLS
 
 #endif /* __GIMP_EXPORT_OPTIONS_H__ */

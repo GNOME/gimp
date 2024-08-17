@@ -493,7 +493,8 @@ register_file_procs (GimpPDB *pdb)
                                "gimp-file-save");
   gimp_procedure_set_static_help (procedure,
                                   "Saves a file by extension.",
-                                  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.",
+                                  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.\n"
+                                  "The @options argument is currently unused and should be set to %NULL right now.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",

@@ -393,7 +393,8 @@ gimp_plug_in_set_file_proc_save_handler (GimpPlugIn   *plug_in,
   if ((procedure->num_args < 4)                                ||
       ! GIMP_IS_PARAM_SPEC_RUN_MODE       (procedure->args[0]) ||
       ! GIMP_IS_PARAM_SPEC_IMAGE          (procedure->args[1]) ||
-      ! GIMP_IS_PARAM_SPEC_FILE           (procedure->args[2]))
+      ! GIMP_IS_PARAM_SPEC_FILE           (procedure->args[2]) ||
+      ! GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS (procedure->args[3]))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_FAILED,
                    "Plug-in \"%s\"\n(%s)\n"

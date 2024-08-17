@@ -95,8 +95,9 @@ GimpProcedure * gimp_export_procedure_new                   (GimpPlugIn         
 
 void            gimp_export_procedure_set_capabilities      (GimpExportProcedure       *procedure,
                                                              GimpExportCapabilities     capabilities,
-                                                             GimpExportOptionsEditFunc  create_func,
-                                                             gpointer                   create_data);
+                                                             GimpExportOptionsEditFunc  edit_func,
+                                                             gpointer                   edit_data,
+                                                             GDestroyNotify             edit_data_destroy);
 
 
 void            gimp_export_procedure_set_support_exif      (GimpExportProcedure       *procedure,
