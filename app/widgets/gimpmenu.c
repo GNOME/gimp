@@ -118,7 +118,7 @@ static void     gimp_menu_action_notify_visible   (GimpAction              *acti
 
 static void     gimp_menu_help_fun                (const gchar             *bogus_help_id,
                                                    gpointer                 help_data);
-static void     gimp_menu_hide_double_separators  (GimpMenu                *menu);
+static void     gimp_menu_update_visibility       (GimpMenu                *menu);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpMenu, gimp_menu, GTK_TYPE_MENU,
@@ -279,7 +279,7 @@ gimp_menu_append (GimpMenuShell *shell,
       g_clear_object (&subsection);
     }
 
-  gimp_menu_hide_double_separators (menu);
+  gimp_menu_update_visibility (menu);
 }
 
 static void
@@ -312,7 +312,7 @@ gimp_menu_add_ui (GimpMenuShell  *shell,
 
   gimp_menu_add_ui (GIMP_MENU_SHELL (submenu), paths + 1, action_name, top);
 
-  gimp_menu_hide_double_separators (menu);
+  gimp_menu_update_visibility (menu);
 }
 
 static void
@@ -339,7 +339,7 @@ gimp_menu_remove_ui (GimpMenuShell  *shell,
       gimp_menu_remove_ui (GIMP_MENU_SHELL (submenu), paths + 1, action_name);
     }
 
-  gimp_menu_hide_double_separators (menu);
+  gimp_menu_update_visibility (menu);
 }
 
 static void
@@ -654,7 +654,7 @@ gimp_menu_section_items_changed (GMenuModel *model,
     }
   g_list_free (children);
 
-  gimp_menu_hide_double_separators (menu);
+  gimp_menu_update_visibility (menu);
 }
 
 static void
@@ -779,7 +779,7 @@ gimp_menu_action_notify_visible (GimpAction       *action,
         }
     }
 
-  gimp_menu_hide_double_separators (GIMP_MENU (container));
+  gimp_menu_update_visibility (GIMP_MENU (container));
 }
 
 static void
@@ -839,13 +839,18 @@ gimp_menu_help_fun (const gchar *bogus_help_id,
  * function to hide and show separators after changes.
  *
  * This also hides start and end separators in the menu.
+ *
+ * Finally this function shows/hides the whole menu itself, in cases it
+ * has no visible items. There is no need to show an empty submenu.
  */
 static void
-gimp_menu_hide_double_separators (GimpMenu *menu)
+gimp_menu_update_visibility (GimpMenu *menu)
 {
   GList     *children;
   GList     *iter;
   GtkWidget *prev_item = NULL;
+  GtkWidget *menu_item = gtk_menu_get_attach_widget (GTK_MENU (menu));
+  gint       n_items   = 0;
 
   children = gtk_container_get_children (GTK_CONTAINER (menu));
   for (iter = children; iter; iter = iter->next)
@@ -867,6 +872,12 @@ gimp_menu_hide_double_separators (GimpMenu *menu)
         }
       else if (gtk_widget_get_visible (item))
         {
+          /* Right now, all but separators are meaningful items.
+           * XXX: though I should likely also check submenus. If a menu
+           * contains another empty submenu, we should likely hide the
+           * whole hierarchy.
+           */
+          n_items++;
           prev_item = item;
         }
     }
@@ -875,4 +886,6 @@ gimp_menu_hide_double_separators (GimpMenu *menu)
     gtk_widget_hide (prev_item);
 
   g_list_free (children);
+
+  gtk_widget_set_visible (GTK_WIDGET (menu_item), n_items > 0);
 }
