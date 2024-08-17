@@ -30,17 +30,19 @@ gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
   install: true,
 )
 
-gen_languages = executable('gen-languages',
-                           'gen-languages.c',
-                           '../app/config/gimpxmlparser.c',
-                           include_directories: [ rootInclude, appInclude ],
-                           dependencies: [ gio, gegl ],
-                           link_with: [ libgimpbase ],
-                           c_args: [
-                             '-DSRCDIR="@0@"'.format(meson.project_source_root()),
-                             '-DISOCODES_LOCALEDIR="@0@"'.format(isocodes_localedir),
-                           ],
-                           install: false)
+if isocodes.found()
+  gen_languages = executable('gen-languages',
+                             'gen-languages.c',
+                             '../app/config/gimpxmlparser.c',
+                             include_directories: [ rootInclude, appInclude ],
+                             dependencies: [ gio, gegl ],
+                             link_with: [ libgimpbase ],
+                             c_args: [
+                               '-DSRCDIR="@0@"'.format(meson.project_source_root()),
+                               '-DISOCODES_LOCALEDIR="@0@"'.format(isocodes_localedir),
+                             ],
+                             install: false)
+endif
 
 if enable_default_bin
   if not platform_windows

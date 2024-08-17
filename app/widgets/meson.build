@@ -17,10 +17,13 @@ stamp_widgets_enums = custom_target('stamp-widgets-enums.h',
   build_by_default: true
 )
 
-gimp_language_store_data = custom_target('gimplanguagestore-data.h',
-                                         input: [ gen_languages ],
-                                         output: 'gimplanguagestore-data.h',
-                                         command: [ gen_languages ])
+gimp_language_store_data = []
+if isocodes.found()
+  gimp_language_store_data = custom_target('gimplanguagestore-data.h',
+                                           input: [ gen_languages ],
+                                           output: 'gimplanguagestore-data.h',
+                                           command: [ gen_languages ])
+endif
 
 libappwidgets_sources = [
   'gimpaccellabel.c',
