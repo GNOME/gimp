@@ -311,6 +311,7 @@ send_image (GObject       *config,
   gchar             *subject  = NULL;
   gchar             *comment  = NULL;
 
+  mailcmd[0] = NULL;
   g_object_get (config,
                 "filename",     &filename,
                 "to-address",   &receipt,
