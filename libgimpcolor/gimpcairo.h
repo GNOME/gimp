@@ -24,11 +24,6 @@
 #define __GIMP_CAIRO_H__
 
 
-void              gimp_cairo_set_source_rgb        (cairo_t         *cr,
-                                                    const GimpRGB   *color);
-void              gimp_cairo_set_source_rgba       (cairo_t         *cr,
-                                                    const GimpRGB   *color);
-
 cairo_pattern_t * gimp_cairo_checkerboard_create   (cairo_t         *cr,
                                                     gint             size,
                                                     const GeglColor *light,
