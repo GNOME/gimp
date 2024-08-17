@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-10 16:11+0000\n"
-"PO-Revision-Date: 2024-08-12 06:30+0200\n"
+"POT-Creation-Date: 2024-08-13 22:06+0000\n"
+"PO-Revision-Date: 2024-08-17 03:55+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -284,227 +284,227 @@ msgid ""
 "G_FILENAME_ENCODING."
 msgstr ""
 
-#: app/actions/actions.c:112 app/dialogs/dialogs.c:426
+#: app/actions/actions.c:113 app/dialogs/dialogs.c:426
 #: app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
 msgstr "ფუნჯის რედაქტორი"
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:115 app/core/gimp-data-factories.c:358
+#: app/actions/actions.c:116 app/core/gimp-data-factories.c:358
 #: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3522
 msgid "Brushes"
 msgstr "ფუნჯები"
 
-#: app/actions/actions.c:118 app/dialogs/dialogs.c:362
+#: app/actions/actions.c:119 app/dialogs/dialogs.c:362
 msgid "Buffers"
 msgstr "ბაფერები"
 
-#: app/actions/actions.c:121 app/dialogs/dialogs.c:380
+#: app/actions/actions.c:122 app/dialogs/dialogs.c:380
 #: app/propgui/gimppropgui-newsprint.c:160
 #: app/widgets/gimppickablechooser.c:295
 msgid "Channels"
 msgstr "არხები"
 
-#: app/actions/actions.c:124 app/dialogs/convert-indexed-dialog.c:178
+#: app/actions/actions.c:125 app/dialogs/convert-indexed-dialog.c:178
 #: app/dialogs/dialogs.c:388
 msgid "Colormap"
 msgstr "ფერების რუკა"
 
-#: app/actions/actions.c:127
+#: app/actions/actions.c:128
 msgid "Context"
 msgstr "კონტექსტი"
 
-#: app/actions/actions.c:130 app/dialogs/dialogs.c:328
+#: app/actions/actions.c:131 app/dialogs/dialogs.c:328
 msgid "Pointer Information"
 msgstr "მაჩვენებლის ინფორმაცია"
 
-#: app/actions/actions.c:133 app/dialogs/dialogs.c:332
+#: app/actions/actions.c:134 app/dialogs/dialogs.c:332
 msgid "Dashboard"
 msgstr "სამუშაო დაფა"
 
-#: app/actions/actions.c:136
+#: app/actions/actions.c:137
 msgid "Debug"
 msgstr "პროგრამის შეცდომის პოვნა"
 
-#: app/actions/actions.c:139
+#: app/actions/actions.c:140
 msgid "Dialogs"
 msgstr "დიალოგები"
 
-#: app/actions/actions.c:142
+#: app/actions/actions.c:143
 msgid "Dock"
 msgstr "მიმაგრება"
 
-#: app/actions/actions.c:145
+#: app/actions/actions.c:146
 msgid "Dockable"
 msgstr "მიმაგრებადი"
 
 #. Document History
-#: app/actions/actions.c:148 app/dialogs/dialogs.c:368
+#: app/actions/actions.c:149 app/dialogs/dialogs.c:368
 #: app/dialogs/preferences-dialog.c:1286
 msgid "Document History"
 msgstr "დოკუმენტის ისტორია"
 
-#: app/actions/actions.c:151
+#: app/actions/actions.c:152
 msgid "Drawable"
 msgstr "ხატვადი"
 
-#: app/actions/actions.c:154 app/dialogs/dialogs.c:344
+#: app/actions/actions.c:155 app/dialogs/dialogs.c:344
 msgid "Paint Dynamics"
 msgstr "ხატვის დინამიკა"
 
-#: app/actions/actions.c:157 app/dialogs/dialogs.c:430
+#: app/actions/actions.c:158 app/dialogs/dialogs.c:430
 #: app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "ხატვის დინამიკის ჩასწორება"
 
-#: app/actions/actions.c:160
+#: app/actions/actions.c:161
 msgid "Edit"
 msgstr "ჩასწორება"
 
-#: app/actions/actions.c:163 app/dialogs/dialogs.c:324
+#: app/actions/actions.c:164 app/dialogs/dialogs.c:324
 msgid "Error Console"
 msgstr "შეცდომათა კონსოლი"
 
-#: app/actions/actions.c:166
+#: app/actions/actions.c:167
 msgid "File"
 msgstr "ფაილი"
 
-#: app/actions/actions.c:169
+#: app/actions/actions.c:170
 msgid "Filters"
 msgstr "ფილტრები"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:172 app/core/gimp-data-factories.c:392
+#: app/actions/actions.c:173 app/core/gimp-data-factories.c:392
 #: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3552
 msgid "Fonts"
 msgstr "ფონტები"
 
-#: app/actions/actions.c:175 app/dialogs/dialogs.c:434
+#: app/actions/actions.c:176 app/dialogs/dialogs.c:434
 #: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "გრადაციების რედაქტორი"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:178 app/core/gimp-data-factories.c:383
+#: app/actions/actions.c:179 app/core/gimp-data-factories.c:383
 #: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3546
 msgid "Gradients"
 msgstr "გრადაციები"
 
-#: app/actions/actions.c:181 app/core/gimp-data-factories.c:399
+#: app/actions/actions.c:182 app/core/gimp-data-factories.c:399
 #: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3558
 msgid "Tool Presets"
 msgstr "ხელსაწყოების პრესეტები"
 
-#: app/actions/actions.c:184 app/dialogs/dialogs.c:442
+#: app/actions/actions.c:185 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:99
 msgid "Tool Preset Editor"
 msgstr "ხელსაწყოების პრესეტების ჩასწორება"
 
-#: app/actions/actions.c:187
+#: app/actions/actions.c:188
 msgid "Help"
 msgstr "დახმარება"
 
-#: app/actions/actions.c:190
+#: app/actions/actions.c:191
 msgid "Image"
 msgstr "გამოსახულება"
 
-#: app/actions/actions.c:193 app/dialogs/dialogs.c:338
+#: app/actions/actions.c:194 app/dialogs/dialogs.c:338
 #: app/widgets/gimppickablechooser.c:214
 msgid "Images"
 msgstr "გამოსახულებები"
 
-#: app/actions/actions.c:196 app/dialogs/dialogs.c:376
+#: app/actions/actions.c:197 app/dialogs/dialogs.c:376
 #: app/dialogs/resize-dialog.c:171 app/widgets/gimppickablechooser.c:270
 msgid "Layers"
 msgstr "ფენები"
 
 #. initialize the list of mypaint brushes
-#: app/actions/actions.c:199 app/core/gimp-data-factories.c:368
+#: app/actions/actions.c:200 app/core/gimp-data-factories.c:368
 #: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3564
 msgid "MyPaint Brushes"
 msgstr "MyPaint-ის ფუნჯები"
 
-#: app/actions/actions.c:202 app/dialogs/dialogs.c:438
+#: app/actions/actions.c:203 app/dialogs/dialogs.c:438
 #: app/widgets/gimppaletteeditor.c:157
 msgid "Palette Editor"
 msgstr "პალიტრის რედაქტორი"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:205 app/core/gimp-data-factories.c:378
+#: app/actions/actions.c:206 app/core/gimp-data-factories.c:378
 #: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3540
 msgid "Palettes"
 msgstr "პალიტრები"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:208 app/core/gimp-data-factories.c:373
+#: app/actions/actions.c:209 app/core/gimp-data-factories.c:373
 #: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3534
 msgid "Patterns"
 msgstr "შაბლონები"
 
-#: app/actions/actions.c:211 app/dialogs/preferences-dialog.c:3570
+#: app/actions/actions.c:212 app/dialogs/preferences-dialog.c:3570
 msgid "Plug-ins"
 msgstr "დამატებები"
 
 #. Quick Mask Color
-#: app/actions/actions.c:214 app/core/gimpchannel.c:362
+#: app/actions/actions.c:215 app/core/gimpchannel.c:362
 #: app/dialogs/preferences-dialog.c:1839
 msgid "Quick Mask"
 msgstr "სწრაფი ნიღაბი"
 
-#: app/actions/actions.c:217 app/dialogs/dialogs.c:408
+#: app/actions/actions.c:218 app/dialogs/dialogs.c:408
 msgid "Sample Points"
 msgstr "სემპლის წერტილები"
 
-#: app/actions/actions.c:220
+#: app/actions/actions.c:221
 msgid "Select"
 msgstr "მონიშვნა"
 
 #. initialize the template list
-#: app/actions/actions.c:223 app/core/gimp.c:852 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:224 app/core/gimp.c:852 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "ნიმუშები"
 
-#: app/actions/actions.c:226
+#: app/actions/actions.c:227
 msgid "Text Tool"
 msgstr "ტექსტის ხელსაწყო"
 
-#: app/actions/actions.c:229
+#: app/actions/actions.c:230
 msgid "Text Editor"
 msgstr "ტექსტური რედაქტორი"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:316 app/gui/gui.c:541
+#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:541
 msgid "Tool Options"
 msgstr "ხელსაწყოების გამართვა"
 
-#: app/actions/actions.c:235 app/widgets/gimptoolpalette.c:327
+#: app/actions/actions.c:236 app/widgets/gimptoolpalette.c:327
 msgid "Tools"
 msgstr "ხელსაწყოები"
 
-#: app/actions/actions.c:238
+#: app/actions/actions.c:239
 msgid "Path Toolpath"
 msgstr "კონტურების ხელსაწყო"
 
-#: app/actions/actions.c:241 app/dialogs/dialogs.c:384
+#: app/actions/actions.c:242 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
 msgid "Paths"
 msgstr "კონტურები"
 
-#: app/actions/actions.c:244
+#: app/actions/actions.c:245
 msgid "View"
 msgstr "ხედი"
 
-#: app/actions/actions.c:247
+#: app/actions/actions.c:248
 msgid "Windows"
 msgstr "ფანჯრები"
 
 #. value description and new value shown in the status bar
-#: app/actions/actions.c:649
+#: app/actions/actions.c:650
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: app/actions/actions.c:675
+#: app/actions/actions.c:676
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -972,7 +972,7 @@ msgstr "არხის ფერის რედაქტირება"
 msgid "_Fill opacity:"
 msgstr "გაუმჭვირვალეობით _შევსება:"
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:326
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:331
 msgid "New Channel"
 msgstr "ახალი არხი"
 
@@ -1005,8 +1005,8 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "არხის ბოლომდე დაწევა"
 
 #: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:565
-#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:259
-#: app/widgets/gimplayertreeview.c:856
+#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:264
+#: app/widgets/gimplayertreeview.c:863
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s არხის კოპირება"
@@ -2472,7 +2472,7 @@ msgstr "შეიყვანეთ სანიშნის აღწერა"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
-#: app/widgets/gimplayertreeview.c:814 app/widgets/gimptoolbox.c:826
+#: app/widgets/gimplayertreeview.c:821 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6091,7 +6091,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "ფენის სახელის ჩასწორება"
 
-#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:972
+#: app/actions/layers-actions.c:70 app/actions/layers-actions.c:988
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "ახალი ფე_ნა..."
@@ -6101,7 +6101,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "ახალი ფენის შექმნა და მისი გამოსახულებაზე დამატება"
 
-#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:973
+#: app/actions/layers-actions.c:76 app/actions/layers-actions.c:989
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_ახალი ფენა"
@@ -6196,7 +6196,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "ნიღბის ან მცურავი ფენის _დამაგრება"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1306
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1313
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "ნიღბის ან მცურავი ფენის დამაგრება"
@@ -6733,72 +6733,96 @@ msgctxt "layers-action"
 msgid "Select _Previous Layers"
 msgstr "_წინა ფენების მონიშვნა"
 
-#: app/actions/layers-actions.c:531
+#: app/actions/layers-actions.c:532
 msgctxt "layers-action"
-msgid "Select the layers above the current layers"
-msgstr "მიმდინარე ფენის ზემოთ მდებარე ფენების მონიშვნა"
+msgid ""
+"Select the layers above each currently selected layer. Layers will not be "
+"selected outside their current group level."
+msgstr ""
 
-#: app/actions/layers-actions.c:536
+#: app/actions/layers-actions.c:538
 msgctxt "layers-action"
 msgid "Select _Next Layers"
 msgstr "შემდე_გი ფენების არჩევა"
 
-#: app/actions/layers-actions.c:537
+#: app/actions/layers-actions.c:540
 msgctxt "layers-action"
-msgid "Select the layers below the current layers"
-msgstr "მინდინარე ფენის ქვემოთ მდებარე ფენების მონიშვნა"
+msgid ""
+"Select the layers below each currently selected layer. Layers will not be "
+"selected outside their current group level."
+msgstr ""
 
-#: app/actions/layers-actions.c:545
+#: app/actions/layers-actions.c:546
+msgctxt "layers-action"
+msgid "Select Previous Layers (flattened view)"
+msgstr "წინა ფენების მონიშვნა (ბრტყელი ხედი)"
+
+#: app/actions/layers-actions.c:547
+msgctxt "layers-action"
+msgid "Select the layers above each currently selected layer"
+msgstr "ამჟამად მონიშნული თითოეული ფენის ზემოთ მდებარე ფენების მონიშვნა"
+
+#: app/actions/layers-actions.c:552
+msgctxt "layers-action"
+msgid "Select Next Layers (flattened view)"
+msgstr "შემდეგი ფენების არჩევა (ბრტყელი ხედი)"
+
+#: app/actions/layers-actions.c:553
+msgctxt "layers-action"
+msgid "Select the layers below each currently selected layer"
+msgstr "ამჟამად მონიშნული თითოეული ფენის ქვეშ მდებარე ფენების მონიშვნა"
+
+#: app/actions/layers-actions.c:561
 msgctxt "layers-action"
 msgid "Layer Opacity: Set"
 msgstr "ფენის გაუმჭვირვალობა: დაყენება"
 
-#: app/actions/layers-actions.c:549
+#: app/actions/layers-actions.c:565
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
 msgstr "ფენის გაუმჭვირვალობა: სრულიად გამჭვირვალე"
 
-#: app/actions/layers-actions.c:553
+#: app/actions/layers-actions.c:569
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
 msgstr "ფენის გაუმჭვირვალობა: სრულიად გაუმჭვირვალე"
 
-#: app/actions/layers-actions.c:557
+#: app/actions/layers-actions.c:573
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
 msgstr "ფენის გაუმჭვირვალობა: უფრო გამჭვირვალე"
 
-#: app/actions/layers-actions.c:561
+#: app/actions/layers-actions.c:577
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
 msgstr "ფენის გაუმჭვირვალობა: უფრო გაუმჭვირვალე"
 
-#: app/actions/layers-actions.c:565
+#: app/actions/layers-actions.c:581
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
 msgstr "ფენის გაუმჭვირვალობა: 10%-ით უფრო გამჭვირვალე"
 
-#: app/actions/layers-actions.c:569
+#: app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
 msgstr "ფენის გაუმჭვირვალობა: 10%-ით უფრო გაუმჭვირვალე"
 
-#: app/actions/layers-actions.c:577
+#: app/actions/layers-actions.c:593
 msgctxt "layers-action"
 msgid "Layer Mode: Select First"
 msgstr "ფენის რეჟიმი: პირველის არჩევა"
 
-#: app/actions/layers-actions.c:581
+#: app/actions/layers-actions.c:597
 msgctxt "layers-action"
 msgid "Layer Mode: Select Last"
 msgstr "ფენის რეჟიმი: ბოლოს არჩევა"
 
-#: app/actions/layers-actions.c:585
+#: app/actions/layers-actions.c:601
 msgctxt "layers-action"
 msgid "Layer Mode: Select Previous"
 msgstr "ფენის რეჟიმი: წინას არჩევა"
 
-#: app/actions/layers-actions.c:589
+#: app/actions/layers-actions.c:605
 msgctxt "layers-action"
 msgid "Layer Mode: Select Next"
 msgstr "ფენის რეჟიმი: შემდეგის არჩევა"
@@ -6806,18 +6830,18 @@ msgstr "ფენის რეჟიმი: შემდეგის არჩ�
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
-#: app/actions/layers-actions.c:618
+#: app/actions/layers-actions.c:634
 msgid "Shortcut: "
 msgstr "მალსახმობი: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
-#: app/actions/layers-actions.c:623
+#: app/actions/layers-actions.c:639
 msgid "-Click on thumbnail in Layers dockable"
 msgstr ""
 
-#: app/actions/layers-actions.c:967 app/actions/layers-actions.c:968
+#: app/actions/layers-actions.c:983 app/actions/layers-actions.c:984
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "_ახალი ფენაზე"
@@ -6831,7 +6855,7 @@ msgid "Edit Layer Attributes"
 msgstr "ფენის ატრიბუტების რედაქტირება"
 
 #: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:933
+#: app/widgets/gimplayertreeview.c:940
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "ახალი ფენა"
@@ -7006,7 +7030,7 @@ msgid "Empty Selection"
 msgstr "ცარიელი მონიშნული"
 
 #: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
-#: app/widgets/gimplayertreeview.c:1109
+#: app/widgets/gimplayertreeview.c:1116
 msgid "Set layers opacity"
 msgstr "ფენების გაუმჭვირვალობის დაყენება"
 
@@ -10289,12 +10313,12 @@ msgstr "ფენა"
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:93
-#: app/widgets/gimpchanneltreeview.c:332
+#: app/widgets/gimpchanneltreeview.c:337
 msgid "Channel"
 msgstr "არხი"
 
 #: app/config/gimpdialogconfig.c:432 app/vectors/gimppath.c:224
-#: app/widgets/gimppathtreeview.c:253
+#: app/widgets/gimppathtreeview.c:258
 msgid "Path"
 msgstr "კონტური"
 
@@ -13084,7 +13108,7 @@ msgstr "ფონის ფერი"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:289
+#: app/widgets/gimplayertreeview.c:296
 msgid "Opacity"
 msgstr "გაუმჭვირვალობა"
 
@@ -18404,12 +18428,12 @@ msgid "Drop color to layer"
 msgstr "ფენის ფერთ შევსება"
 
 #: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1877
-#: app/widgets/gimplayertreeview.c:805
+#: app/widgets/gimplayertreeview.c:812
 msgid "Drop layers"
 msgstr "ფენების მოცილება"
 
 #: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:882
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:889
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "მოცილებული ბაფერი"
@@ -19903,10 +19927,10 @@ msgid "Turn colors into shades of gray"
 msgstr "ფერების გადაყვანა ნაცრისფრის ტონებში"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1315
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1350
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
-#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:274
+#: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
 msgid "Mode"
 msgstr "რეჟიმი"
 
@@ -19942,7 +19966,7 @@ msgstr "ნაწილობრივი გამჭვირვალობ�
 msgid "The color"
 msgstr "ფერი"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1278
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1313
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -22989,53 +23013,57 @@ msgstr "მონიშნული ფენის პიქსელები 
 msgid "A selected layer is not visible."
 msgstr "მონიშნული ფენა უხილავია."
 
-#: app/tools/gimpfiltertool.c:675
+#: app/tools/gimpfiltertool.c:420
+msgid "Disabled because this filter depends on another image."
+msgstr "გათიშულია, რადგან ეს ფილტრი სხვა გამოსახულებაზეა დამოკიდებული."
+
+#: app/tools/gimpfiltertool.c:710
 msgid "Click to switch the original and filtered sides"
 msgstr "წკაპი წყაროსა და ფილტრირებულს შორის გასართველად"
 
-#: app/tools/gimpfiltertool.c:679
+#: app/tools/gimpfiltertool.c:714
 msgid "Click to switch between vertical and horizontal"
 msgstr "წკაპი ვერტიკალურსა და ჰორიზონტალურს შორის გადასართველად"
 
-#: app/tools/gimpfiltertool.c:683
+#: app/tools/gimpfiltertool.c:718
 msgid "Click to move the split guide"
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:685
+#: app/tools/gimpfiltertool.c:720
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s წყაროსა და ფილტრირებულს შორის გადართვა"
 
-#: app/tools/gimpfiltertool.c:686
+#: app/tools/gimpfiltertool.c:721
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s ჰორიზონტალურსა და ვერტიკალურს შორის გადართვა"
 
-#: app/tools/gimpfiltertool.c:1199
+#: app/tools/gimpfiltertool.c:1234
 msgid "Add filter"
 msgstr "ფილტრის დამატება"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1291
+#: app/tools/gimpfiltertool.c:1326
 msgid "Blending Options"
 msgstr "შერევის პარამეტრები"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1330
+#: app/tools/gimpfiltertool.c:1365
 msgid "Advanced Color Options"
 msgstr "ფერის დამატებითი პარამეტრები"
 
-#: app/tools/gimpfiltertool.c:1743 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1795 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "%s-ის პარამეტრების შემოტანა"
 
-#: app/tools/gimpfiltertool.c:1745 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1797 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "%s-ის პარამეტრების გატანა"
 
-#: app/tools/gimpfiltertool.c:1988
+#: app/tools/gimpfiltertool.c:2040
 msgid "Editing filter..."
 msgstr "ფილტრის ჩასწორება..."
 
@@ -27443,35 +27471,35 @@ msgstr "სისტემის ენა"
 msgid "Switch to another group of modes"
 msgstr "რეჟიმების სხვა ჯგუფზე გადართვა"
 
-#: app/widgets/gimplayertreeview.c:413 app/widgets/gimplayertreeview.c:416
+#: app/widgets/gimplayertreeview.c:420 app/widgets/gimplayertreeview.c:423
 msgid "Lock alpha channel"
 msgstr "ალფა არხის ჩაკეტვა"
 
-#: app/widgets/gimplayertreeview.c:414
+#: app/widgets/gimplayertreeview.c:421
 msgid "Unlock alpha channel"
 msgstr "ალფა არხის გახსნა"
 
-#: app/widgets/gimplayertreeview.c:415
+#: app/widgets/gimplayertreeview.c:422
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "ობიექტის საკუთარი ალფა-არხის ჩაკეტვა"
 
-#: app/widgets/gimplayertreeview.c:1052
+#: app/widgets/gimplayertreeview.c:1059
 msgid "Set layers mode"
 msgstr "ფენის რეჟიმის დაყენება"
 
-#: app/widgets/gimplayertreeview.c:1298
+#: app/widgets/gimplayertreeview.c:1305
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "მცურავი ნიღბის დამაგრება"
 
-#: app/widgets/gimplayertreeview.c:1301
+#: app/widgets/gimplayertreeview.c:1308
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "მცურავი ფენის დამაგრება"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1562
+#: app/widgets/gimplayertreeview.c:1569
 msgid "No channels to create a layer mask from."
 msgstr "ფენის ნიღბის შესაქმნელად არხები აღმოჩენილი არაა."
 
@@ -27769,7 +27797,7 @@ msgstr ","
 #: app/widgets/gimptemplateeditor.c:227
 #, c-format
 msgid "%n"
-msgstr ""
+msgstr "%n"
 
 #: app/widgets/gimptemplateeditor.c:299
 msgid "_Advanced Options"
@@ -28051,15 +28079,15 @@ msgstr "პრესეტი %s"
 msgid "[ Base Image ]"
 msgstr "[ საწყისი გამოსახულება ]"
 
-#: app/widgets/gimppathtreeview.c:111
+#: app/widgets/gimppathtreeview.c:116
 msgid "Lock path"
 msgstr "კონტურის ჩაკეტვა"
 
-#: app/widgets/gimppathtreeview.c:114
+#: app/widgets/gimppathtreeview.c:119
 msgid "Lock path position"
 msgstr "კონტურის მდებარეობის ჩაკეტვა"
 
-#: app/widgets/gimppathtreeview.c:117
+#: app/widgets/gimppathtreeview.c:122
 msgid "Lock path visibility"
 msgstr "კონტურის ხილვადობის ჩაკეტვა"
 
