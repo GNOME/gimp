@@ -870,7 +870,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
         }
       else if (! (pspec->flags & GIMP_PARAM_NO_VALIDATE))
         {
-          GValue string_value = G_VALUE_INIT;
+          GObject *old_value    = NULL;
+          GValue   string_value = G_VALUE_INIT;
 
           g_value_init (&string_value, G_TYPE_STRING);
 
@@ -879,6 +880,9 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
           else
             g_value_set_static_string (&string_value,
                                        "<not transformable to string>");
+
+          if (G_IS_PARAM_SPEC_OBJECT (pspec))
+            old_value = g_value_dup_object (arg);
 
           if (g_param_value_validate (pspec, arg))
             {
@@ -942,6 +946,57 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                    g_param_spec_get_name (pspec));
                     }
                 }
+              else if (GIMP_IS_PARAM_SPEC_UNIT (pspec) &&
+                       ((GIMP_UNIT (old_value) == gimp_unit_pixel () &&
+                         ! GIMP_PARAM_SPEC_UNIT (pspec)->allow_pixel) ||
+                        (GIMP_UNIT (old_value) == gimp_unit_percent () &&
+                         ! GIMP_PARAM_SPEC_UNIT (pspec)->allow_percent)))
+                {
+                  if (return_vals)
+                    {
+                      if (GIMP_UNIT (old_value) == gimp_unit_pixel ())
+                        g_set_error (error,
+                                     GIMP_PDB_ERROR,
+                                     GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
+                                     _("Procedure '%s' returned "
+                                       "`gimp_unit_pixel()` as GimpUnit return value #%d '%s'. "
+                                       "This return value does not allow pixel unit."),
+                                     gimp_object_get_name (procedure),
+                                     i + 1, g_param_spec_get_name (pspec));
+                      else
+                        g_set_error (error,
+                                     GIMP_PDB_ERROR,
+                                     GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
+                                     _("Procedure '%s' returned "
+                                       "`gimp_unit_percent()` as GimpUnit return value #%d '%s'. "
+                                       "This return value does not allow percent unit."),
+                                     gimp_object_get_name (procedure),
+                                     i + 1, g_param_spec_get_name (pspec));
+                    }
+                  else
+                    {
+                      if (GIMP_UNIT (old_value) == gimp_unit_pixel ())
+                        g_set_error (error,
+                                     GIMP_PDB_ERROR,
+                                     GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                                     _("Procedure '%s' has been called with "
+                                       "`gimp_unit_pixel()` for GimpUnit "
+                                       "argument #%d '%s'. "
+                                       "This argument does not allow pixel unit."),
+                                     gimp_object_get_name (procedure),
+                                     i + 1, g_param_spec_get_name (pspec));
+                      else
+                        g_set_error (error,
+                                     GIMP_PDB_ERROR,
+                                     GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                                     _("Procedure '%s' has been called with "
+                                       "`gimp_unit_percent()` for GimpUnit "
+                                       "argument #%d '%s'. "
+                                       "This argument does not allow percent unit."),
+                                     gimp_object_get_name (procedure),
+                                     i + 1, g_param_spec_get_name (pspec));
+                    }
+                }
               else
                 {
                   const gchar *value = g_value_get_string (&string_value);
@@ -980,6 +1035,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 }
 
               g_value_unset (&string_value);
+              g_clear_object (&old_value);
 
               return FALSE;
             }
