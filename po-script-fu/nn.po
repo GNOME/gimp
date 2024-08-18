@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-21 16:49+0000\n"
-"PO-Revision-Date: 2024-08-10 17:33+0200\n"
+"POT-Creation-Date: 2024-08-10 15:48+0000\n"
+"PO-Revision-Date: 2024-08-18 18:28+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -854,7 +854,7 @@ msgstr "Korleis bruke dialogar"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
-msgstr "Teikne enkle objekt"
+msgstr "Teikna _enkle objekt"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "Create and Use _Selections"
