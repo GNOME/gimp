@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-21 16:48+0000\n"
-"PO-Revision-Date: 2024-08-09 16:44+0200\n"
+"PO-Revision-Date: 2024-08-17 20:45+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -45,7 +45,7 @@ msgstr "Penselval"
 #: ../libgimp/gimpbrushselectbutton.c:920
 #: ../libgimp/gimppatternselectbutton.c:718
 msgid "_Browse..."
-msgstr "_Bla gjennom …"
+msgstr "_Bla gjennom …"
 
 #: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
@@ -128,7 +128,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Konverter til indeksert ved å nytta standardinnstillingane.\n"
-"(Gjer det manuelt for å finjustere resultatet)"
+"(Gjer det manuelt for å finjustera resultatet)"
 
 #: ../libgimp/gimpexport.c:395
 #, c-format
@@ -1994,7 +1994,7 @@ msgstr "Ikkje ei vanleg fil."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:147
 msgid "Select color profile from disk..."
-msgstr "Vel fargeprofil frå disk …"
+msgstr "Vel fargeprofil frå disk …"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:315
 msgctxt "profile"
@@ -2244,7 +2244,7 @@ msgstr[1] "Dette tekstfeltet er avgrensa til %d teikn."
 
 #: ../libgimpwidgets/gimpunitmenu.c:261
 msgid "More..."
-msgstr "Fleire …"
+msgstr "Fleire …"
 
 #: ../libgimpwidgets/gimpunitmenu.c:487
 msgid "Unit Selection"
