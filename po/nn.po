@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-08-10 15:40+0000\n"
-"PO-Revision-Date: 2024-08-10 18:11+0200\n"
+"PO-Revision-Date: 2024-08-18 19:42+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team: Norwegian nynorsk <i18n-no@lister.ping.uio.no>\n"
+"Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3168,7 +3168,7 @@ msgstr "_Vis opne bilete"
 #: app/actions/dock-actions.c:66
 msgctxt "dock-action"
 msgid "Auto _Follow Active Image"
-msgstr "Følj det brukte _bilete automatisk"
+msgstr "Følg det gjeldande _biletet automatisk"
 
 #: app/actions/dockable-actions.c:49
 msgctxt "dockable-action"
@@ -7843,7 +7843,7 @@ msgstr "Rediger mønsterelementet"
 #: app/actions/plug-in-actions.c:69
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
-msgstr "Tilbakestill alle _filtra"
+msgstr "Tilbakestill alle _filtera"
 
 #: app/actions/plug-in-actions.c:70
 msgctxt "plug-in-action"
@@ -7852,7 +7852,7 @@ msgstr "Tilbakestill alle programtillegga til standardinnstillingane"
 
 #: app/actions/plug-in-commands.c:180
 msgid "Reset all Filters"
-msgstr "Tilbakestill alle filtra"
+msgstr "Tilbakestill alle filtera"
 
 #: app/actions/plug-in-commands.c:186 app/actions/tool-options-commands.c:211
 #: app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101
@@ -7869,7 +7869,7 @@ msgstr "_Tilbakestill"
 #: app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
-"Er du sikker på at du vil setja alle filtra tilbake til standardverdiane?"
+"Er du sikker på at du vil setja alle filtera tilbake til standardverdiane?"
 
 #: app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -9165,7 +9165,7 @@ msgstr "Vis eit oversiktsvindauge for dette biletet"
 #: app/actions/view-actions.c:139
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "_Visingsfiltra …"
+msgstr "_Visingsfiletera …"
 
 #: app/actions/view-actions.c:140
 msgctxt "view-action"
@@ -10644,8 +10644,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Sikrar at heile biletet er synleg når det vert opna. Elles vil det verta "
-"vist i skala 1:1."
+"Når denne er slått på, vert heile biletet synleg når det vert opna. Elles "
+"vil det verta vist i skala 1 : 1."
 
 #: app/config/gimprc-blurbs.h:273
 msgid ""
@@ -10683,7 +10683,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:294
 msgid "The version of GIMP config files."
-msgstr "Konfigureringsfilene for GIMP-versjonen."
+msgstr "Oppsettsfilene for GIMP-versjonen."
 
 #: app/config/gimprc-blurbs.h:297
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11375,7 +11375,7 @@ msgstr "Bruk éi verktøykasse for grupperte verktøy."
 
 #: app/config/gimprc-blurbs.h:738
 msgid "Show the currently active image in the toolbox."
-msgstr "Vis det for tida gjeldande biletet i verktøykassa."
+msgstr "Vis det gjeldande biletet i verktøykassa."
 
 #: app/config/gimprc-blurbs.h:741
 msgid "Show the GIMP mascot at the top of the toolbox."
@@ -12924,7 +12924,7 @@ msgstr ""
 #: app/core/gimpbrush-load.c:519
 #, c-format
 msgid "Unable to decode abr format version %d."
-msgstr "Klarte ikkje å dekoda abr-formatversjon %d."
+msgstr "Klarte ikkje dekoda abr-formatversjon %d."
 
 #: app/core/gimpbrush-load.c:637 app/core/gimpbrush-load.c:856
 #, c-format
@@ -12956,8 +12956,7 @@ msgstr "Fatal tolkingsfeil i penselfila: Ukjend komprimeringsmetode."
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
-"Fatal tolkingsfeil i penselfila: Klarte ikkje å dekoda abr-formatversjonen "
-"%d."
+"Fatal tolkingsfeil i penselfila: Klarte ikkje dekoda abr-formatversjonen %d."
 
 #: app/core/gimpbrush-load.c:1209
 #, c-format
@@ -13365,7 +13364,7 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
-"Du har sett opp ei datamappe, men denne mappa er ikkje i søkestien. Du har "
+"Du har sett opp ei datamappe, men denne mappa er ikkje i søkjestien. Du har "
 "kanskje redigert fila gimprc manuelt? Ordna dette i mappeseksjonen av "
 "brukaroppsettet."
 
@@ -14483,7 +14482,7 @@ msgstr "MyPaint-penselfila er urimeleg stor, hoppar over."
 #: app/core/gimpmybrush-load.c:93
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
-msgstr "Klarte ikkje å deserialisere MyPaint-penselen."
+msgstr "Klarte ikkje deserialisere MyPaint-penselen."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
@@ -14662,7 +14661,7 @@ msgstr "Klarte ikkje lesa SBZ-fila"
 #: app/core/gimppalette-load.c:1459
 #, c-format
 msgid "Unable to open SBZ file"
-msgstr "Klarte ikkje å opna SBZ-fila"
+msgstr "Klarte ikkje opna SBZ-fila"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -15194,7 +15193,7 @@ msgstr ""
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
-msgstr "Søkehandlingar"
+msgstr "Søkjehandlingar"
 
 #: app/dialogs/channel-options-dialog.c:126
 msgid "Channel _name:"
@@ -16352,9 +16351,9 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
-"Vi vonar du aldri får bruk for desse innstillingane, men som alle andre "
+"Me vonar du aldri får bruk for desse innstillingane, men som alle andre "
 "program, inneheld også GIMP feil som kan gjera at programmet krasjar. Viss "
-"dette skjer, vonar me du vil rapportera dette slik at me kan gjera GIMP "
+"dette skjer, håpar me du vil rapportera dette slik at me kan gjera GIMP "
 "betre."
 
 #: app/dialogs/preferences-dialog.c:1324
@@ -16658,7 +16657,7 @@ msgstr "_Lagra verktøyinnstillingane ved avslutning"
 
 #: app/dialogs/preferences-dialog.c:1740
 msgid "Save Tool Options _Now"
-msgstr "Lagra verktøyinnstillingane _nå"
+msgstr "Lagra verktøyinnstillingane _no"
 
 #: app/dialogs/preferences-dialog.c:1747
 msgid "_Reset Saved Tool Options to Default Values"
@@ -16779,7 +16778,7 @@ msgstr "_Lagra tastatursnarvegane ved avslutning"
 
 #: app/dialogs/preferences-dialog.c:1941
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Lagra tastatursnarvegane _nå"
+msgstr "Lagra tastatursnarvegane _no"
 
 #: app/dialogs/preferences-dialog.c:1948
 msgid "_Reset Keyboard Shortcuts to Default Values"
@@ -17338,7 +17337,7 @@ msgstr "Opna vindauge i den skjermen dei var opna i tidlegare"
 
 #: app/dialogs/preferences-dialog.c:2988
 msgid "Save Window Positions _Now"
-msgstr "Lagra vindaugeposisjonane _nå"
+msgstr "Lagra vindaugeposisjonane _no"
 
 #: app/dialogs/preferences-dialog.c:2995
 msgid "_Reset Saved Window Positions to Default Values"
@@ -17557,7 +17556,7 @@ msgstr "_Lagra innstillingar for inndataeiningar ved avslutning"
 
 #: app/dialogs/preferences-dialog.c:3421
 msgid "Save Input Device Settings _Now"
-msgstr "Lagra innstillingar for inndataeiningar _nå"
+msgstr "Lagra innstillingar for inndataeiningar _no"
 
 #: app/dialogs/preferences-dialog.c:3428
 msgid "_Reset Saved Input Device Settings to Default Values"
@@ -17838,11 +17837,11 @@ msgstr "Lukk alle bileta"
 
 #: app/dialogs/quit-dialog.c:283
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "Du vil miste desse endringane dersom du sluttar av GIMP nå."
+msgstr "Du vil mista desse endringane dersom du sluttar av GIMP no."
 
 #: app/dialogs/quit-dialog.c:286
 msgid "If you close these images now, changes will be lost."
-msgstr "Du vil miste alle endringane dersom du lukkar biletet nå."
+msgstr "Du vil mista alle endringane dersom du lukkar biletet no."
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
@@ -21765,7 +21764,7 @@ msgstr "Lastar inn programutvidingar"
 
 #: app/plug-in/gimppluginmanager-restore.c:233
 msgid "Searching plug-ins"
-msgstr "Søker etter programtillegg"
+msgstr "Søkjer etter programtillegg"
 
 #: app/plug-in/gimppluginmanager-restore.c:358
 #, c-format
@@ -23182,7 +23181,7 @@ msgstr "_Kurvetype:"
 
 #: app/tools/gimpcurvestool.c:754 app/tools/gimplevelstool.c:745
 msgid "Could not read header: "
-msgstr "Klarte ikkje å lesa header: "
+msgstr "Klarte ikkje lesa header: "
 
 #: app/tools/gimpcurvestool.c:831
 msgid "Use _old curves file format"
@@ -24581,7 +24580,7 @@ msgstr "Ekspander frå sentrum"
 #. Current, as in what is currently in use.
 #: app/tools/gimprectangleoptions.c:751
 msgid "Current"
-msgstr "Nåverande"
+msgstr "Noverande"
 
 #: app/tools/gimprectangleoptions.c:867
 msgid "Fixed"
@@ -26680,7 +26679,7 @@ msgstr "Det var ikkje nok minne til å fullføra operasjonen."
 
 #: app/widgets/gimpcriticaldialog.c:398
 msgid "A sharing violation occurred."
-msgstr "Det har oppstått eit delingsbrot."
+msgstr "Det oppstod eit delingsbrot."
 
 #: app/widgets/gimpcriticaldialog.c:401
 msgid "Unknown Microsoft Windows error."
@@ -28055,7 +28054,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Klarte ikkje å omforma filnamnet «%s» til ein gyldig URI:\n"
+"Klarte ikkje omforma filnamnet «%s» til ei gyldig adresse:\n"
 "\n"
 "%s"
 
@@ -28638,7 +28637,7 @@ msgstr "Ikon"
 #: app/widgets/widgets-enums.c:213
 msgctxt "tab-style"
 msgid "Current status"
-msgstr "Status nå"
+msgstr "Status no"
 
 #: app/widgets/widgets-enums.c:214
 msgctxt "tab-style"
@@ -28718,16 +28717,16 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
-"Øydelagde 'exif-data' parasitt oppdaga\n"
-"Klarte ikkje å overføra exif-data: %s"
+"Øydelagde «exif-data»-parasitt oppdaga\n"
+"Klarte ikkje overføra exif-data: %s"
 
 #: app/xcf/xcf-load.c:540
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr ""
-"Øydelagde «gimp-metadata», parasitt oppdaga\n"
-"Klarte ikkje å overføra XMP-data."
+"Øydelagd «gimp-metadata»-parasitt oppdaga\n"
+"Klarte ikkje overføra XMP-data."
 
 #: app/xcf/xcf-load.c:564
 #, c-format
@@ -28794,7 +28793,7 @@ msgstr "Feil ved skriving til XCF: "
 #: app/xcf/xcf-write.c:199
 #, c-format
 msgid "Error writing XCF: failed to allocate %d bytes of memory."
-msgstr "Feil ved skriving til XCF: Klarte ikkje å tilordna %d byte med minne."
+msgstr "Feil ved skriving til XCF: Klarte ikkje tilordna %d byte med minne."
 
 #: app/xcf/xcf-write.c:293
 #, c-format
