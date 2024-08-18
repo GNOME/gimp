@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-14 10:51+0000\n"
-"PO-Revision-Date: 2024-08-10 17:23+0200\n"
+"PO-Revision-Date: 2024-08-18 20:58+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -60,7 +60,7 @@ msgstr "Tema for _nettside"
 
 #: plug-ins/script-fu/script-fu.c:327
 msgid "_Alien Glow"
-msgstr "Alien Glow"
+msgstr "_Alien Glow"
 
 #: plug-ins/script-fu/script-fu.c:329
 msgid "_Beveled Pattern"
@@ -234,11 +234,11 @@ msgstr "_Tjukkleik"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:196
 msgid "_Work on copy"
-msgstr "Arbeid på ein kopi"
+msgstr "_Arbeid på ein kopi"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:197
 msgid "_Keep bump layer"
-msgstr "Behald ruglelaget"
+msgstr "_Behald ruglelaget"
 
 #: plug-ins/script-fu/scripts/addborder.scm:123
 msgid "Border Layer"
@@ -254,11 +254,11 @@ msgstr "Lag ei ramme rundt biletet"
 
 #: plug-ins/script-fu/scripts/addborder.scm:185
 msgid "Border X size"
-msgstr "Breidde høgre og venstre kant"
+msgstr "X-storleik kant"
 
 #: plug-ins/script-fu/scripts/addborder.scm:186
 msgid "Border Y size"
-msgstr "Breidde øvre og nedre kant"
+msgstr "Y-storleik kant"
 
 #: plug-ins/script-fu/scripts/addborder.scm:187
 msgid "Border color"
@@ -386,8 +386,8 @@ msgstr "_Skjer ut …"
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
-"Bruk det valde teikneobjektet som eit mønster for å skjere ut i det valde "
-"bildetet."
+"Bruk det valde teikneobjektet som eit mønster for å skjera ut i det "
+"spesifiserte biletet."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:229
 msgid "Image to carve"
@@ -559,7 +559,7 @@ msgstr "Fargeovergang til fargeflekkar"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds"
-msgstr "Differenseskyer"
+msgstr "_Differenseskyer"
 
 #: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -575,7 +575,7 @@ msgstr "Forvreng utvalet"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "_Terskel (Høg 1<-->255 låg)"
+msgstr "_Terskel (større 1←→255 mindre)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:114
 msgid "_Spread"
@@ -583,7 +583,7 @@ msgstr "_Sprei"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:115
 msgid "_Granularity (1 is low)"
-msgstr "Korning (1 er låg)"
+msgstr "_Korning (1 er låg)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "S_mooth"
@@ -632,7 +632,7 @@ msgstr "Dekkevne"
 
 #: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "Render _Font Map..."
-msgstr "Lager _skrifttypekart …"
+msgstr "Set opp _skrifttypekart …"
 
 #: plug-ins/script-fu/scripts/font-map.scm:168
 msgid ""
@@ -659,7 +659,7 @@ msgstr "_Filter (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Font _size (pixels)"
-msgstr "Tekststorleik (pikslar)"
+msgstr "Tekst_storleik (pikslar)"
 
 #: plug-ins/script-fu/scripts/font-map.scm:178
 msgid "_Border (pixels)"
@@ -736,7 +736,7 @@ msgstr "Bokmerke i handboka"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:76
 msgid "_Preparing your Images for the Web"
-msgstr "_Tilpass bileta for nettsider"
+msgstr "_Tilpass biletet for nettsider"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:89
 msgid "_Working with Digital Camera Photos"
@@ -744,11 +744,11 @@ msgstr "Arbeid med foto frå _digitalkamera"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:102
 msgid "Create, Open and Save _Files"
-msgstr "Opprett, opna og lagra filer"
+msgstr "Opprett, opna og lagra _filer"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:115
 msgid "_Basic Concepts"
-msgstr "Oppsett av GIMP"
+msgstr "_Grunnleggjande konsept"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:128
 msgid "How to Use _Dialogs"
@@ -756,7 +756,7 @@ msgstr "Korleis bruka _dialogvindauge"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:141
 msgid "Drawing _Simple Objects"
-msgstr "Teikne enkle objekt"
+msgstr "Teikna _enkle objekt"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:154
 msgid "_Create and Use Selections"
@@ -814,7 +814,7 @@ msgstr "Lager eit bilete med eit eksempel på den gjeldande fargeovergangen"
 #: plug-ins/script-fu/scripts/mkbrush.scm:196
 #: plug-ins/script-fu/scripts/mkbrush.scm:265
 msgid "Width"
-msgstr "Breidde"
+msgstr "Breidd"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:76
 #: plug-ins/script-fu/scripts/mkbrush.scm:71
@@ -822,7 +822,7 @@ msgstr "Breidde"
 #: plug-ins/script-fu/scripts/mkbrush.scm:197
 #: plug-ins/script-fu/scripts/mkbrush.scm:266
 msgid "Height"
-msgstr "Høgde"
+msgstr "Høgd"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
@@ -838,7 +838,7 @@ msgstr "Lagar fire hjelpelinjer ved kantane til det gjeldande utvalet"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
-msgstr "Ny hjelpelinje (i _%) …"
+msgstr "Ny hjelpelinje (i _prosent) …"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -1159,7 +1159,7 @@ msgstr "mypattern"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
-msgstr "_Perspektivskugge …"
+msgstr "_Perspektiv …"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "Add a perspective shadow to the selected region (or alpha)"
@@ -1255,7 +1255,7 @@ msgstr "Legg til bakgrunn"
 
 #: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Se_t Colormap..."
-msgstr "_Byt palett …"
+msgstr "Set _fargekart …"
 
 #: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
 msgid "Change the colormap of an image to the colors in a specified palette."
