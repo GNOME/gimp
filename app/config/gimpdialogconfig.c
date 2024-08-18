@@ -473,7 +473,13 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            "selection-feather-radius",
                            "Selection feather radius",
                            SELECTION_FEATHER_RADIUS_BLURB,
-                           0.0, 32767.0, 5.0,
+                           /* NOTE: the max value is the max value of
+                            * "std-dev-x|y" arguments in operation
+                            * "gegl:gaussian-blur", multiplied by magic
+                            * number 3.5 (see gimp_gegl_apply_feather())
+                            * code).
+                            */
+                            0.0, 5250.0, 5.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SELECTION_FEATHER_EDGE_LOCK,
