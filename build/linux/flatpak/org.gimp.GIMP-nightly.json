@@ -650,15 +650,9 @@
             "name": "luajit",
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://luajit.org/download/LuaJIT-2.1.0-beta3.tar.gz",
-                    "sha256": "1ad2e34b111c802f9d0cdf019e986909123237a28c746b21295b63c9e785d9c3",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 6444,
-                        "stable-only": false,
-                        "url-template": "https://luajit.org/download/LuaJIT-$version.tar.gz"
-                    }
+                    "type": "git",
+                    "url": "https://github.com/LuaJIT/LuaJIT.git",
+                    "commit": "f725e44cda8f359869bf8f92ce71787ddca45618"
                 },
                 {
                     "type": "shell",
@@ -671,9 +665,6 @@
             "make-args": [
                 "DEFAULT_CC=ccache clang"
             ],
-            "post-install": [
-                "ln -s /app/bin/luajit-2.1.0-beta3 /app/bin/luajit"
-            ],
             "cleanup": [
                 "/include",
                 "/lib/pkgconfig",
@@ -685,8 +676,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/pavouk/lgi.git",
-                    "commit": "c21f35fccae87fd4e3625d4c878f584b7255d6f6"
+                    "url": "https://github.com/lgi-devs/lgi.git",
+                    "commit": "48ff62e5bc63d69c00085909a09cc5c75267e1c6"
                 }
             ],
             "buildsystem": "meson",
