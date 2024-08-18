@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-08-10 16:14+0000\n"
-"PO-Revision-Date: 2024-08-10 18:28+0200\n"
+"PO-Revision-Date: 2024-08-18 20:06+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -113,7 +113,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Konverter til indeksert ved å nytta standardinnstillingane.\n"
-"(Gjer det manuelt for å finjustere resultatet)"
+"(Gjer det manuelt for å finjustera resultatet)"
 
 #: libgimp/gimpexport.c:472
 #, c-format
@@ -226,7 +226,7 @@ msgstr "Lagra _miniatyren"
 
 #: libgimp/gimpexportprocedure.c:486
 msgid "Save a smaller representation of the image as metadata"
-msgstr "Lagre ein mindre representasjon av biletet som metadata"
+msgstr "Lagra ein mindre representasjon av biletet som metadata"
 
 #: libgimp/gimpexportprocedure.c:492
 msgid "Save c_omment"
@@ -2258,7 +2258,7 @@ msgstr "Opphavsrett: "
 
 #: libgimpwidgets/gimpcolorscales.c:207
 msgid "Scales"
-msgstr "Skalaer"
+msgstr "Skalaar"
 
 #: libgimpwidgets/gimpcolorscales.c:371 libgimpwidgets/gimpcolorscales.c:703
 #: libgimpwidgets/gimpcolorselect.c:518 libgimpwidgets/gimpcolorselect.c:691
@@ -2311,7 +2311,7 @@ msgstr "Utskriftssimuleringsprofil: %s"
 
 #: libgimpwidgets/gimpcolorselection.c:237
 msgid "Current:"
-msgstr "Nåverande:"
+msgstr "Noverande:"
 
 #: libgimpwidgets/gimpcolorselection.c:246
 msgid "Old:"
