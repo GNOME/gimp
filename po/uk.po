@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-13 22:06+0000\n"
-"PO-Revision-Date: 2024-08-14 21:11+0300\n"
+"POT-Creation-Date: 2024-08-18 15:48+0000\n"
+"PO-Revision-Date: 2024-08-18 19:45+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -153,6 +153,13 @@ msgstr "%s версії %s"
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "використовує %s версії %s (зібрано з версією %s)"
+
+#. This must be localized with the system language itself, before we
+#. * apply any other language.
+#.
+#: app/language.c:69
+msgid "System Language"
+msgstr "Як у системі"
 
 #: app/main.c:160
 msgid "Show version information and exit"
@@ -505,7 +512,7 @@ msgstr "Текст"
 msgid "Text Editor"
 msgstr "Текстовий редактор"
 
-#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:541
+#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:542
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
@@ -2454,8 +2461,8 @@ msgstr "240 секунд"
 #: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
-#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:439
-#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:489
+#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
+#: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
 #: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:716
 msgid "_Cancel"
@@ -6092,19 +6099,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Вилучити це зображення"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:701
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:719
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:702
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:720
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:717
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:735
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:718
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:736
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
@@ -6800,8 +6807,8 @@ msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
-"Вибрати шари над кожним поточним вибраним шаром. Шари не буде вибрано поза"
-" їхнім поточним груповим рівнем."
+"Вибрати шари над кожним поточним вибраним шаром. Шари не буде вибрано поза "
+"їхнім поточним груповим рівнем."
 
 #: app/actions/layers-actions.c:538
 msgctxt "layers-action"
@@ -6814,33 +6821,25 @@ msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
-"Вибрати шари під кожним поточним вибраним шаром. Шари не буде вибрано поза"
-" їхнім поточним груповим рівнем."
+"Вибрати шари під кожним поточним вибраним шаром. Шари не буде вибрано поза "
+"їхнім поточним груповим рівнем."
 
 #: app/actions/layers-actions.c:546
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layers"
 msgctxt "layers-action"
 msgid "Select Previous Layers (flattened view)"
 msgstr "Позначити попередні шари (спрощений перегляд)"
 
 #: app/actions/layers-actions.c:547
-#| msgctxt "layers-action"
-#| msgid "Select the layers above the current layers"
 msgctxt "layers-action"
 msgid "Select the layers above each currently selected layer"
 msgstr "Вибрати шари над кожним поточним вибраним шаром"
 
 #: app/actions/layers-actions.c:552
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layers"
 msgctxt "layers-action"
 msgid "Select Next Layers (flattened view)"
 msgstr "Позначити наступні шари (спрощений перегляд)"
 
 #: app/actions/layers-actions.c:553
-#| msgctxt "layers-action"
-#| msgid "Select the layers below the current layers"
 msgctxt "layers-action"
 msgid "Select the layers below each currently selected layer"
 msgstr "Вибрати шари під кожним поточним вибраним шаром"
@@ -13637,13 +13636,13 @@ msgid "Custom style"
 msgstr "Нетиповий стиль"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
-#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
+#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
 #: app/tools/gimptextoptions.c:177
 msgid "Antialiasing"
 msgstr "Згладжування"
 
 #: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:196
-#: app/tools/gimpselectionoptions.c:88
+#: app/tools/gimpselectionoptions.c:96
 msgid "Feather edges"
 msgstr "Розмивати межі"
 
@@ -13654,12 +13653,12 @@ msgstr "Увімкнути розмазування країв заповнен�
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:95 app/widgets/gimpbrusheditor.c:154
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "Радіус"
 
 #: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:204
-#: app/tools/gimpselectionoptions.c:96
+#: app/tools/gimpselectionoptions.c:104
 msgid "Radius of feathering"
 msgstr "Радіус розмазування"
 
@@ -14231,7 +14230,7 @@ msgstr "Неможливо об'єднати невидимий шар."
 msgid "Cannot merge down to a layer group."
 msgstr "Не вдалось виконати зведення у групу шарів."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2769
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2825
 msgid "The layer to merge down to is locked."
 msgstr "Шар, я який має бути виконане зведення, замкнений"
 
@@ -14359,7 +14358,7 @@ msgstr "Не вдалось відкрити файл мініатюри «%s»:
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2563
+#: app/widgets/gimpitemtreeview.c:2619
 msgid "A selected layer's pixels are locked."
 msgstr "Точки растру позначеного шару заблоковані від змін."
 
@@ -15362,7 +15361,7 @@ msgstr "Замкнути позицію і _розмір"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:733
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:751
 msgid "Lock visibility"
 msgstr "Заблокувати видимість"
 
@@ -18843,7 +18842,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1877
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1933
 #: app/widgets/gimplayertreeview.c:812
 msgid "Drop layers"
 msgstr "Перемістити шари"
@@ -20430,19 +20429,19 @@ msgstr "Значення"
 msgid "The alpha value"
 msgstr "Значення прозорості"
 
-#: app/gui/gui.c:328
+#: app/gui/gui.c:329
 msgid "Image Recovery"
 msgstr "Відновлення зображення"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:331
 msgid "_Discard"
 msgstr "Від_кинути"
 
-#: app/gui/gui.c:331
+#: app/gui/gui.c:332
 msgid "_Recover"
 msgstr "Від_новити"
 
-#: app/gui/gui.c:342
+#: app/gui/gui.c:343
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr ""
 "Оце тобі! Здається, роботу GIMP відновлено після аварійного завершення!"
@@ -20453,7 +20452,7 @@ msgstr ""
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:351
+#: app/gui/gui.c:352
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20471,7 +20470,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:566
+#: app/gui/gui.c:567
 msgid "Documents"
 msgstr "Документи"
 
@@ -21270,7 +21269,7 @@ msgstr ""
 "Процедура «%s» викликана з некоректним типом аргументу #%d. Очікувалось %s, "
 "отримано %s."
 
-#: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:82
+#: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:90
 msgid "Smooth edges"
 msgstr "Згладжування країв"
 
@@ -21344,7 +21343,7 @@ msgstr ""
 "Процедура «%s» викликана з деяким значенням аргументу «%s» (#%d). "
 "Очікувалось %s, отримано %s."
 
-#: app/pdb/gimpprocedure.c:893
+#: app/pdb/gimpprocedure.c:897
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -21353,7 +21352,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний ідентифікатор для аргументу «%s». "
 "Ймовірно, модуль намагається працювати з шаром, який вже не існує."
 
-#: app/pdb/gimpprocedure.c:906
+#: app/pdb/gimpprocedure.c:910
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -21362,7 +21361,7 @@ msgstr ""
 "Процедура «%s» викликана з некоректним ідентифікатором для аргументу «%s». "
 "Ймовірно, модуль намагається працювати з шаром, який вже не існує."
 
-#: app/pdb/gimpprocedure.c:923
+#: app/pdb/gimpprocedure.c:927
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -21371,7 +21370,7 @@ msgstr ""
 "Процедура «%s» повернула некоректний ідентифікатор аргументу «%s». Ймовірно, "
 "модуль намагається працювати із зображенням, яке вже не існує."
 
-#: app/pdb/gimpprocedure.c:936
+#: app/pdb/gimpprocedure.c:940
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -21380,7 +21379,57 @@ msgstr ""
 "Процедура «%s» викликана з некоректним ідентифікатором аргументу «%s». "
 "Ймовірно, модуль намагається працювати із зображенням, яке вже не існує."
 
-#: app/pdb/gimpprocedure.c:957
+#: app/pdb/gimpprocedure.c:961
+#, c-format
+#| msgid ""
+#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
+#| "value is out of range."
+msgid ""
+"Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
+"'%s'. This return value does not allow pixel unit."
+msgstr ""
+"Підпрограмою «%s» повернуто gimp_unit_pixel(), а GimpUnit повернуто значення"
+" %d, яке рівне «%s». Повернуте значення не дозволяє використовувати"
+" одиницю-піксель."
+
+#: app/pdb/gimpprocedure.c:970
+#, c-format
+#| msgid ""
+#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
+#| "value is out of range."
+msgid ""
+"Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
+"'%s'. This return value does not allow percent unit."
+msgstr ""
+"Підпрограмою «%s» повернуто gimp_unit_percent(), а GimpUnit повернуто"
+" значення %d, яке рівне «%s». Повернуте значення не дозволяє використовувати"
+" одиницю-відсоток."
+
+#: app/pdb/gimpprocedure.c:982
+#, c-format
+#| msgid ""
+#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
+#| "type %s). This value is out of range."
+msgid ""
+"Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
+"argument #%d '%s'. This argument does not allow pixel unit."
+msgstr ""
+"Підпрограму «%s» було викликано з `gimp_unit_pixel()` для аргументу GimpUnit"
+" %d «%s». Цей аргумент не дозволяє використання одиниці-пікселя."
+
+#: app/pdb/gimpprocedure.c:992
+#, c-format
+#| msgid ""
+#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
+#| "type %s). This value is out of range."
+msgid ""
+"Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
+"argument #%d '%s'. This argument does not allow percent unit."
+msgstr ""
+"Підпрограму «%s» було викликано з `gimp_unit_percent()` для аргументу"
+" GimpUnit %d «%s». Цей аргумент не дозволяє використання одиниці-відсотка."
+
+#: app/pdb/gimpprocedure.c:1012
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -21389,7 +21438,7 @@ msgstr ""
 "Процедура «%s» повернула «%s» як значення «%s» (#%d, тип %s). Значення "
 "знаходиться поза межами припустимого діапазону"
 
-#: app/pdb/gimpprocedure.c:971
+#: app/pdb/gimpprocedure.c:1026
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -21398,12 +21447,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: app/pdb/gimpprocedure.c:1025
+#: app/pdb/gimpprocedure.c:1081
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: app/pdb/gimpprocedure.c:1035
+#: app/pdb/gimpprocedure.c:1091
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -23321,7 +23370,7 @@ msgstr "_Криві…"
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2542
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2598
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
 "Неможливо змінити одразу декілька об'єктів для малювання. Виберіть лише один "
@@ -23537,13 +23586,11 @@ msgid "A selected item's pixels are locked."
 msgstr "Точки растру позначеного запису заблоковані від змін."
 
 #: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2554
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2610
 msgid "A selected layer is not visible."
 msgstr "Вибраний шар є невидимим."
 
 #: app/tools/gimpfiltertool.c:420
-#| msgid ""
-#| "Item '%s' (%d) cannot be used because it is attached to another image"
 msgid "Disabled because this filter depends on another image."
 msgstr "Вимкнено, оскільки цей фільтр залежить від іншого зображення."
 
@@ -23814,7 +23861,7 @@ msgid "Fuzzy Select"
 msgstr "Вибір зв'язаної ділянки"
 
 #: app/tools/gimpgegltool.c:83 app/tools/gimpgegltool.c:297
-#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:131
+#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "Операція GEGL"
 
@@ -24543,11 +24590,12 @@ msgstr "Заповнити кольором _тла"
 msgid "Make _transparent"
 msgstr "Зробити _прозорим"
 
-#: app/tools/gimpoperationtool.c:132
+#: app/tools/gimpoperationtool.c:133
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Інструмент Операція: виконання довільної операції GEGL"
 
-#: app/tools/gimpoperationtool.c:555
+#. Translators: don't translate "Aux"
+#: app/tools/gimpoperationtool.c:559
 msgid "Aux\\1 Input"
 msgstr "Вхідний дод.\\1"
 
@@ -24955,11 +25003,11 @@ msgstr "_Безшовний клон"
 msgid "Cloning the foreground object"
 msgstr "Клонується об'єкт переднього плану"
 
-#: app/tools/gimpselectionoptions.c:89
+#: app/tools/gimpselectionoptions.c:97
 msgid "Enable feathering of selection edges"
 msgstr "Увімкнути розмазування країв позначеного"
 
-#: app/tools/gimpselectionoptions.c:225 app/widgets/gimpbrushselect.c:190
+#: app/tools/gimpselectionoptions.c:235 app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Режим:"
 
@@ -27738,15 +27786,15 @@ msgstr "Змінити колір тла сітки"
 msgid "_Background color:"
 msgstr "Колір _тла:"
 
-#: app/widgets/gimphelp.c:370
+#: app/widgets/gimphelp.c:369
 msgid "Help browser is missing"
 msgstr "Програма перегляду довідки відсутня"
 
-#: app/widgets/gimphelp.c:371
+#: app/widgets/gimphelp.c:370
 msgid "The GIMP help browser is not available."
 msgstr "Програма для перегляду посібника з GIMP відсутня."
 
-#: app/widgets/gimphelp.c:372
+#: app/widgets/gimphelp.c:371
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -27754,40 +27802,40 @@ msgstr ""
 "Вбудований оглядач довідки GIMP відсутній. Натомість можете використовувати "
 "звичайний веб-оглядач."
 
-#: app/widgets/gimphelp.c:411
+#: app/widgets/gimphelp.c:410
 msgid "Help browser doesn't start"
 msgstr "Програма перегляду довідки не запускається"
 
-#: app/widgets/gimphelp.c:412
+#: app/widgets/gimphelp.c:411
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Не вдалось запустити програму перегляду довідки GIMP."
 
-#: app/widgets/gimphelp.c:414
+#: app/widgets/gimphelp.c:413
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Натомість можете для читання сторінок довідки використовувати веб-оглядач."
 
-#: app/widgets/gimphelp.c:440
+#: app/widgets/gimphelp.c:439
 msgid "Use _Web Browser"
 msgstr "Використовувати _веб-оглядач"
 
-#: app/widgets/gimphelp.c:771
+#: app/widgets/gimphelp.c:770
 msgid "GIMP user manual is missing"
 msgstr "Посібник з GIMP відсутній"
 
-#: app/widgets/gimphelp.c:782
+#: app/widgets/gimphelp.c:781
 msgid "The GIMP user manual is not installed in your language."
 msgstr "Не встановлено підручника користувача GIMP вашою рідною мовою."
 
-#: app/widgets/gimphelp.c:793
+#: app/widgets/gimphelp.c:792
 msgid "Read Selected _Language"
 msgstr "Читати позначеною _мовою"
 
-#: app/widgets/gimphelp.c:797
+#: app/widgets/gimphelp.c:796
 msgid "Available manuals..."
 msgstr "Доступні підручники…"
 
-#: app/widgets/gimphelp.c:809
+#: app/widgets/gimphelp.c:808
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
@@ -27795,7 +27843,7 @@ msgstr ""
 "Ви можете або вибрати підручник іншою мовою, або прочитати версію з "
 "інтернету."
 
-#: app/widgets/gimphelp.c:815
+#: app/widgets/gimphelp.c:814
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -27803,7 +27851,7 @@ msgstr ""
 "Варто або встановити пакет з довідкою, або змінити параметри програми, щоб "
 "використовувати довідку з інтернету"
 
-#: app/widgets/gimphelp.c:820
+#: app/widgets/gimphelp.c:819
 msgid "Read _Online"
 msgstr "_Читати з мережі"
 
@@ -27947,55 +27995,55 @@ msgstr[1] "Індексований колір (%d кольори)"
 msgstr[2] "Індексований колір (%d кольорів)"
 msgstr[3] "Індексований колір (монохромний)"
 
-#: app/widgets/gimpitemtreeview.c:703
+#: app/widgets/gimpitemtreeview.c:721
 msgid "Set Item Exclusive Content Lock"
 msgstr "Встановлення блокування виключного вмісту запису"
 
-#: app/widgets/gimpitemtreeview.c:719
+#: app/widgets/gimpitemtreeview.c:737
 msgid "Set Item Exclusive Position Lock"
 msgstr "Встановлення блокування виключної позиції запису"
 
-#: app/widgets/gimpitemtreeview.c:734
+#: app/widgets/gimpitemtreeview.c:752
 msgid "Unlock visibility"
 msgstr "Розблокувати видимість"
 
-#: app/widgets/gimpitemtreeview.c:735
+#: app/widgets/gimpitemtreeview.c:753
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Встановлення блокування виключної видимості запису"
 
-#: app/widgets/gimpitemtreeview.c:765
+#: app/widgets/gimpitemtreeview.c:783
 msgid "Toggle the visibility of all filters."
 msgstr "Перемикнути видимість контура усіх фільтрів."
 
-#: app/widgets/gimpitemtreeview.c:779
+#: app/widgets/gimpitemtreeview.c:797
 msgid "Edit the selected filter."
 msgstr "Редагувати позначений фільтр."
 
-#: app/widgets/gimpitemtreeview.c:792
+#: app/widgets/gimpitemtreeview.c:810
 msgid "Raise filter one step up in the stack."
 msgstr "Підняти фільтр на один рівень у стосі."
 
-#: app/widgets/gimpitemtreeview.c:805
+#: app/widgets/gimpitemtreeview.c:823
 msgid "Lower filter one step down in the stack."
 msgstr "Опустити фільтр на один рівень у стосі."
 
-#: app/widgets/gimpitemtreeview.c:818
+#: app/widgets/gimpitemtreeview.c:836
 msgid "Merge all active filters down."
 msgstr "Об'єднати усі активні фільтри вниз."
 
-#: app/widgets/gimpitemtreeview.c:831
+#: app/widgets/gimpitemtreeview.c:849
 msgid "Remove the selected filter."
 msgstr "Вилучити позначений фільтр."
 
-#: app/widgets/gimpitemtreeview.c:842
+#: app/widgets/gimpitemtreeview.c:860
 msgid "Layer Effects"
 msgstr "Ефекти шарів"
 
-#: app/widgets/gimpitemtreeview.c:873
+#: app/widgets/gimpitemtreeview.c:891
 msgid "Select items by patterns and store item sets"
 msgstr "Позначити елементи за взірцями і зберегти набори елементів"
 
-#: app/widgets/gimpitemtreeview.c:1727
+#: app/widgets/gimpitemtreeview.c:1783
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -28004,74 +28052,70 @@ msgstr[1] "Вибрано %d об'єкти"
 msgstr[2] "Вибрано %d об'єктів"
 msgstr[3] "Вибрано %d об'єкт"
 
-#: app/widgets/gimpitemtreeview.c:2638 app/widgets/gimpitemtreeview.c:2691
+#: app/widgets/gimpitemtreeview.c:2694 app/widgets/gimpitemtreeview.c:2747
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Не можна змінювати місце у порядку для фільтра, який редагують."
 
-#: app/widgets/gimpitemtreeview.c:2655 app/widgets/gimpitemtreeview.c:2708
+#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2764
 msgid "Reorder filter"
 msgstr "Перевпорядкувати фільтр"
 
-#: app/widgets/gimpitemtreeview.c:2753
+#: app/widgets/gimpitemtreeview.c:2809
 msgid "Effects from active tools can not be merged."
 msgstr "Ефекти з активних інструментів не може бути об'єднано."
 
-#: app/widgets/gimpitemtreeview.c:2806
+#: app/widgets/gimpitemtreeview.c:2862
 msgid "Remove filter"
 msgstr "Вилучити фільтр"
 
-#: app/widgets/gimpitemtreeview.c:3332
+#: app/widgets/gimpitemtreeview.c:3388
 msgid "No layer set stored"
 msgstr "Немає збережених наборів шарів"
 
-#: app/widgets/gimpitemtreeview.c:3354
+#: app/widgets/gimpitemtreeview.c:3410
 msgid "New layer set's name"
 msgstr "Назва нового набору шарів"
 
-#: app/widgets/gimpitemtreeview.c:3396 app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3452 app/widgets/gimpitemtreeview.c:3467
 msgid "Select layers by text search"
 msgstr "Позначення шарів за текстовим пошуком"
 
-#: app/widgets/gimpitemtreeview.c:3398 app/widgets/gimpitemtreeview.c:3413
+#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
 msgid "Text search"
 msgstr "Текстовий пошук"
 
-#: app/widgets/gimpitemtreeview.c:3417
+#: app/widgets/gimpitemtreeview.c:3473
 msgid "Select layers by glob patterns"
 msgstr "Позначення шарів за взірцями із замінниками"
 
-#: app/widgets/gimpitemtreeview.c:3419
+#: app/widgets/gimpitemtreeview.c:3475
 msgid "Glob pattern search"
 msgstr "Пошук за взірцем із замінниками"
 
-#: app/widgets/gimpitemtreeview.c:3423
+#: app/widgets/gimpitemtreeview.c:3479
 msgid "Select layers by regular expressions"
 msgstr "Позначення шарів за формальними виразами"
 
-#: app/widgets/gimpitemtreeview.c:3425
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "Regular Expression search"
 msgstr "Пошук за формальним виразом"
 
-#: app/widgets/gimpitemtreeview.c:3480
+#: app/widgets/gimpitemtreeview.c:3536
 msgid "search"
 msgstr "пошук"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "glob"
 msgstr "замінник"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "regexp"
 msgstr "форм. вираз"
 
-#: app/widgets/gimpitemtreeview.c:3650
+#: app/widgets/gimpitemtreeview.c:3706
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Некоректний формальний вираз: %s\n"
-
-#: app/widgets/gimplanguagestore-parser.c:253
-msgid "System Language"
-msgstr "Як у системі"
 
 #: app/widgets/gimplayermodebox.c:152
 msgid "Switch to another group of modes"
