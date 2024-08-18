@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-13 22:06+0000\n"
-"PO-Revision-Date: 2024-08-14 01:54+0200\n"
+"POT-Creation-Date: 2024-08-18 17:40+0000\n"
+"PO-Revision-Date: 2024-08-18 19:55+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -153,6 +153,13 @@ msgstr "%s različice %s"
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "uporablja %s različice %s (prevedeno z različico %s)"
+
+#. This must be localized with the system language itself, before we
+#. * apply any other language.
+#.
+#: app/language.c:69
+msgid "System Language"
+msgstr "Sistemski jezik"
 
 #: app/main.c:160
 msgid "Show version information and exit"
@@ -506,7 +513,7 @@ msgstr "Orodje za besedilo"
 msgid "Text Editor"
 msgstr "Urejevalnik besedila"
 
-#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:541
+#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:542
 msgid "Tool Options"
 msgstr "Možnosti orodja"
 
@@ -2454,8 +2461,8 @@ msgstr "240 s"
 #: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
-#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:439
-#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:489
+#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
+#: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
 #: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:716
 msgid "_Cancel"
@@ -6086,19 +6093,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Izbriši to sliko"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:701
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:719
 msgid "Lock content"
 msgstr "Zakleni vsebino"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:702
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:720
 msgid "Unlock content"
 msgstr "Odkleni vsebino"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:717
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:735
 msgid "Lock position"
 msgstr "Zakleni položaj"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:718
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:736
 msgid "Unlock position"
 msgstr "Odkleni položaj"
 
@@ -13586,13 +13593,13 @@ msgid "Custom style"
 msgstr "Slog po meri"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
-#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
+#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
 #: app/tools/gimptextoptions.c:177
 msgid "Antialiasing"
 msgstr "Glajenje robov"
 
 #: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:196
-#: app/tools/gimpselectionoptions.c:88
+#: app/tools/gimpselectionoptions.c:96
 msgid "Feather edges"
 msgstr "Operjeni robovi"
 
@@ -13603,12 +13610,12 @@ msgstr "Omogoči operjanje robov polnjenja"
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:95 app/widgets/gimpbrusheditor.c:154
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "Radij"
 
 #: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:204
-#: app/tools/gimpselectionoptions.c:96
+#: app/tools/gimpselectionoptions.c:104
 msgid "Radius of feathering"
 msgstr "Polmer operjanja"
 
@@ -14176,7 +14183,7 @@ msgstr "Nevidne plasti ni mogoče spojiti navzdol."
 msgid "Cannot merge down to a layer group."
 msgstr "Na skupino plasti ni mogoče spajati."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2769
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2825
 msgid "The layer to merge down to is locked."
 msgstr "Plast, na katero želite spajati, je zaklenjena."
 
@@ -14303,7 +14310,7 @@ msgstr "Sličice za predogled »%s« ni mogoče odpreti: %s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2563
+#: app/widgets/gimpitemtreeview.c:2619
 msgid "A selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
@@ -15300,7 +15307,7 @@ msgstr "Zakleni položaj in _velikost"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:733
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:751
 msgid "Lock visibility"
 msgstr "Zakleni vidljivost"
 
@@ -18762,7 +18769,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1877
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1933
 #: app/widgets/gimplayertreeview.c:812
 msgid "Drop layers"
 msgstr "Spusti plasti"
@@ -20347,19 +20354,19 @@ msgstr "Vrednost"
 msgid "The alpha value"
 msgstr "Vrednost alfe"
 
-#: app/gui/gui.c:328
+#: app/gui/gui.c:329
 msgid "Image Recovery"
 msgstr "Obnovitev slike"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:331
 msgid "_Discard"
 msgstr "_Zavrzi"
 
-#: app/gui/gui.c:331
+#: app/gui/gui.c:332
 msgid "_Recover"
 msgstr "_Obnovi"
 
-#: app/gui/gui.c:342
+#: app/gui/gui.c:343
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 
@@ -20369,7 +20376,7 @@ msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:351
+#: app/gui/gui.c:352
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20387,7 +20394,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:566
+#: app/gui/gui.c:567
 msgid "Documents"
 msgstr "Dokumenti"
 
@@ -21178,7 +21185,7 @@ msgstr ""
 "Procedura »%s« je bila klicana z napačno vrsto vrednosti argumenta #%d. "
 "Pričakovano %s, prejeto %s."
 
-#: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:82
+#: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:90
 msgid "Smooth edges"
 msgstr "Zgladi robove"
 
@@ -21252,7 +21259,7 @@ msgstr ""
 "Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
 "%d). Pričakovano %s, prejeto %s."
 
-#: app/pdb/gimpprocedure.c:893
+#: app/pdb/gimpprocedure.c:897
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -21261,7 +21268,7 @@ msgstr ""
 "Procedura »%s« je vrnila neveljaven ID za argument »%s«. Najverjetneje je od "
 "vtičnika pričakovano delovanje na plasti, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:906
+#: app/pdb/gimpprocedure.c:910
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -21270,7 +21277,7 @@ msgstr ""
 "Klic procedure »%s« ima neveljaven ID za argument »%s«. Najverjetneje "
 "poskuša vtičnik delovati na plasti, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:923
+#: app/pdb/gimpprocedure.c:927
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -21279,7 +21286,7 @@ msgstr ""
 "Procedura »%s« je vrnila neveljaven ID za argument »%s«. Najverjetneje "
 "poskuša vtičnik delovati na sliki, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:936
+#: app/pdb/gimpprocedure.c:940
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -21288,7 +21295,43 @@ msgstr ""
 "Klic procedure »%s« ima neveljaven ID za argument »%s«. Najverjetneje "
 "poskuša vtičnik delovati na sliki, ki več ne obstaja."
 
-#: app/pdb/gimpprocedure.c:957
+#: app/pdb/gimpprocedure.c:961
+#, c-format
+msgid ""
+"Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
+"'%s'. This return value does not allow pixel unit."
+msgstr ""
+"Procedura »%s« je vrnila »gimp_unit_pixel()« kot vrnjeno vrednost GimpUnit #"
+"%d '%s'. Ta vrnjena vrednost ne dovoli enot slikovnih točk."
+
+#: app/pdb/gimpprocedure.c:970
+#, c-format
+msgid ""
+"Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
+"'%s'. This return value does not allow percent unit."
+msgstr ""
+"Procedura »%s« je vrnila »gimp_unit_percent()« kot vrnjeno vrednost GimpUnit "
+"#%d '%s'. Ta vrnjena vrednost ne dovoli odstotkovnih enot."
+
+#: app/pdb/gimpprocedure.c:982
+#, c-format
+msgid ""
+"Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
+"argument #%d '%s'. This argument does not allow pixel unit."
+msgstr ""
+"Klic procedure »%s« z »gimp_unit_pixel()« za argument GimpUnit #%d '%s'. Ta "
+"argument ne dovoljuje enote slikovnih točk."
+
+#: app/pdb/gimpprocedure.c:992
+#, c-format
+msgid ""
+"Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
+"argument #%d '%s'. This argument does not allow percent unit."
+msgstr ""
+"Klic procedure »%s« z »gimp_unit_percent()« za argument GimpUnit #%d '%s'. "
+"Ta argument ne dovoljuje odstotkovne enote."
+
+#: app/pdb/gimpprocedure.c:1012
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -21297,7 +21340,7 @@ msgstr ""
 "Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
 "vrednost je izven dovoljenega obsega."
 
-#: app/pdb/gimpprocedure.c:971
+#: app/pdb/gimpprocedure.c:1026
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -21306,12 +21349,12 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: app/pdb/gimpprocedure.c:1025
+#: app/pdb/gimpprocedure.c:1081
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: app/pdb/gimpprocedure.c:1035
+#: app/pdb/gimpprocedure.c:1091
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -23223,7 +23266,7 @@ msgstr "_Krivulje ..."
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2542
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2598
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
 "Več risanih predmetov ni mogoče spremeniti hkrati. Izberite samo enega."
@@ -23439,7 +23482,7 @@ msgid "A selected item's pixels are locked."
 msgstr "Slikovne točke izbranega elementa so zaklenjene."
 
 #: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2554
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2610
 msgid "A selected layer is not visible."
 msgstr "Izbrana plast je nevidna."
 
@@ -23715,7 +23758,7 @@ msgid "Fuzzy Select"
 msgstr "Mehki izbor"
 
 #: app/tools/gimpgegltool.c:83 app/tools/gimpgegltool.c:297
-#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:131
+#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "Operacija GEGL"
 
@@ -24438,11 +24481,12 @@ msgstr "Zapolni z barvo o_zadja"
 msgid "Make _transparent"
 msgstr "Naredi _prosojno"
 
-#: app/tools/gimpoperationtool.c:132
+#: app/tools/gimpoperationtool.c:133
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Orodje Operacija: Uporabite poljubno operacijo GEGL"
 
-#: app/tools/gimpoperationtool.c:555
+#. Translators: don't translate "Aux"
+#: app/tools/gimpoperationtool.c:559
 msgid "Aux\\1 Input"
 msgstr "Zunanji\\1 vhod"
 
@@ -24846,11 +24890,11 @@ msgstr "Neopazno _kloniraj"
 msgid "Cloning the foreground object"
 msgstr "Kloniranje predmeta iz ospredja"
 
-#: app/tools/gimpselectionoptions.c:89
+#: app/tools/gimpselectionoptions.c:97
 msgid "Enable feathering of selection edges"
 msgstr "Omogoči operjanje robov izbora"
 
-#: app/tools/gimpselectionoptions.c:225 app/widgets/gimpbrushselect.c:190
+#: app/tools/gimpselectionoptions.c:235 app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "Način:"
 
@@ -27623,15 +27667,15 @@ msgstr "Spremeni barvo ozadja mreže"
 msgid "_Background color:"
 msgstr "Barva _ozadja:"
 
-#: app/widgets/gimphelp.c:370
+#: app/widgets/gimphelp.c:369
 msgid "Help browser is missing"
 msgstr "Brskalnik pomoči manjka"
 
-#: app/widgets/gimphelp.c:371
+#: app/widgets/gimphelp.c:370
 msgid "The GIMP help browser is not available."
 msgstr "Brskalnik pomoči GIMP ni na voljo."
 
-#: app/widgets/gimphelp.c:372
+#: app/widgets/gimphelp.c:371
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -27639,41 +27683,41 @@ msgstr ""
 "Očitno v vaši namestivi manjka vtičnik brskalnika pomoči GIMP. Namesto tega "
 "lahko strani pomoči prebirate s pomočjo svojega spletnega brskalnika."
 
-#: app/widgets/gimphelp.c:411
+#: app/widgets/gimphelp.c:410
 msgid "Help browser doesn't start"
 msgstr "Brskalnik pomoči se ne zažene."
 
-#: app/widgets/gimphelp.c:412
+#: app/widgets/gimphelp.c:411
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Vtičnika brskalnika pomoči GIMP ni mogoče zagnati."
 
-#: app/widgets/gimphelp.c:414
+#: app/widgets/gimphelp.c:413
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Namesto tega lahko strani pomoči prebirate s pomočjo svojega spletnega "
 "brskalnika."
 
-#: app/widgets/gimphelp.c:440
+#: app/widgets/gimphelp.c:439
 msgid "Use _Web Browser"
 msgstr "Uporabi spletni _brskalnik"
 
-#: app/widgets/gimphelp.c:771
+#: app/widgets/gimphelp.c:770
 msgid "GIMP user manual is missing"
 msgstr "Uporabniški priročnik za GIMP manjka"
 
-#: app/widgets/gimphelp.c:782
+#: app/widgets/gimphelp.c:781
 msgid "The GIMP user manual is not installed in your language."
 msgstr "Uporabniški priročnik za GIMP v vašem jeziku ni nameščen."
 
-#: app/widgets/gimphelp.c:793
+#: app/widgets/gimphelp.c:792
 msgid "Read Selected _Language"
 msgstr "Beri v izbranem _jeziku"
 
-#: app/widgets/gimphelp.c:797
+#: app/widgets/gimphelp.c:796
 msgid "Available manuals..."
 msgstr "Razpoložljivi priročniki ..."
 
-#: app/widgets/gimphelp.c:809
+#: app/widgets/gimphelp.c:808
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
@@ -27681,7 +27725,7 @@ msgstr ""
 "Lahko izberete priročnik v drugem jeziku ali preberete njegovo spletno "
 "različico."
 
-#: app/widgets/gimphelp.c:815
+#: app/widgets/gimphelp.c:814
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -27689,7 +27733,7 @@ msgstr ""
 "Namestite lahko dodaten paket pomoči ali pa spremenite nastavitve, da boste "
 "lahko uporabljali spletno različico."
 
-#: app/widgets/gimphelp.c:820
+#: app/widgets/gimphelp.c:819
 msgid "Read _Online"
 msgstr "P_reberi na spletu"
 
@@ -27833,55 +27877,55 @@ msgstr[1] "Indeksirane barve (%d barva, monokromatsko)"
 msgstr[2] "Indeksirane barve (%d barvi)"
 msgstr[3] "Indeksirane barve (%d barve)"
 
-#: app/widgets/gimpitemtreeview.c:703
+#: app/widgets/gimpitemtreeview.c:721
 msgid "Set Item Exclusive Content Lock"
 msgstr "Predmetu določite izključen zaklep vsebine"
 
-#: app/widgets/gimpitemtreeview.c:719
+#: app/widgets/gimpitemtreeview.c:737
 msgid "Set Item Exclusive Position Lock"
 msgstr "Predmetu določite izključen zaklep položaja"
 
-#: app/widgets/gimpitemtreeview.c:734
+#: app/widgets/gimpitemtreeview.c:752
 msgid "Unlock visibility"
 msgstr "Odkleni vidljivost"
 
-#: app/widgets/gimpitemtreeview.c:735
+#: app/widgets/gimpitemtreeview.c:753
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Predmetu določite izključen zaklep vidljivosti"
 
-#: app/widgets/gimpitemtreeview.c:765
+#: app/widgets/gimpitemtreeview.c:783
 msgid "Toggle the visibility of all filters."
 msgstr "Preklopite vidljivost vseh filtrov."
 
-#: app/widgets/gimpitemtreeview.c:779
+#: app/widgets/gimpitemtreeview.c:797
 msgid "Edit the selected filter."
 msgstr "Uredite izbrani filter."
 
-#: app/widgets/gimpitemtreeview.c:792
+#: app/widgets/gimpitemtreeview.c:810
 msgid "Raise filter one step up in the stack."
 msgstr "Dvigni filter za eno stopnjo na skladu."
 
-#: app/widgets/gimpitemtreeview.c:805
+#: app/widgets/gimpitemtreeview.c:823
 msgid "Lower filter one step down in the stack."
 msgstr "Spusti filter za eno stopnjo na skladu."
 
-#: app/widgets/gimpitemtreeview.c:818
+#: app/widgets/gimpitemtreeview.c:836
 msgid "Merge all active filters down."
 msgstr "Spojite vse dejavne filtre navzdol."
 
-#: app/widgets/gimpitemtreeview.c:831
+#: app/widgets/gimpitemtreeview.c:849
 msgid "Remove the selected filter."
 msgstr "Odstranite izbrani filter."
 
-#: app/widgets/gimpitemtreeview.c:842
+#: app/widgets/gimpitemtreeview.c:860
 msgid "Layer Effects"
 msgstr "Učinki plasti"
 
-#: app/widgets/gimpitemtreeview.c:873
+#: app/widgets/gimpitemtreeview.c:891
 msgid "Select items by patterns and store item sets"
 msgstr "Izberi elemente po vzorcih in shrani množice elementov"
 
-#: app/widgets/gimpitemtreeview.c:1727
+#: app/widgets/gimpitemtreeview.c:1783
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -27890,74 +27934,70 @@ msgstr[1] "%d element je izbran"
 msgstr[2] "%d elementa sta izbrana"
 msgstr[3] "%d elementi so izbrani"
 
-#: app/widgets/gimpitemtreeview.c:2638 app/widgets/gimpitemtreeview.c:2691
+#: app/widgets/gimpitemtreeview.c:2694 app/widgets/gimpitemtreeview.c:2747
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Filtra, ki ga urejate, ni mogoče prerazvrstiti."
 
-#: app/widgets/gimpitemtreeview.c:2655 app/widgets/gimpitemtreeview.c:2708
+#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2764
 msgid "Reorder filter"
 msgstr "Prerazvrsti filter"
 
-#: app/widgets/gimpitemtreeview.c:2753
+#: app/widgets/gimpitemtreeview.c:2809
 msgid "Effects from active tools can not be merged."
 msgstr "Učinkov dejavnih orodij ni mogoče spojiti."
 
-#: app/widgets/gimpitemtreeview.c:2806
+#: app/widgets/gimpitemtreeview.c:2862
 msgid "Remove filter"
 msgstr "Odstrani filter"
 
-#: app/widgets/gimpitemtreeview.c:3332
+#: app/widgets/gimpitemtreeview.c:3388
 msgid "No layer set stored"
 msgstr "Nobena množica plasti ni shranjena"
 
-#: app/widgets/gimpitemtreeview.c:3354
+#: app/widgets/gimpitemtreeview.c:3410
 msgid "New layer set's name"
 msgstr "Ime novega nabora plasti"
 
-#: app/widgets/gimpitemtreeview.c:3396 app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3452 app/widgets/gimpitemtreeview.c:3467
 msgid "Select layers by text search"
 msgstr "Izberi plati z iskanjem besedila"
 
-#: app/widgets/gimpitemtreeview.c:3398 app/widgets/gimpitemtreeview.c:3413
+#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
 msgid "Text search"
 msgstr "Iskanje besedila"
 
-#: app/widgets/gimpitemtreeview.c:3417
+#: app/widgets/gimpitemtreeview.c:3473
 msgid "Select layers by glob patterns"
 msgstr "Izberite plasti po vzorcih glob"
 
-#: app/widgets/gimpitemtreeview.c:3419
+#: app/widgets/gimpitemtreeview.c:3475
 msgid "Glob pattern search"
 msgstr "Iskanje vzorcev Glob"
 
-#: app/widgets/gimpitemtreeview.c:3423
+#: app/widgets/gimpitemtreeview.c:3479
 msgid "Select layers by regular expressions"
 msgstr "Izberi plasti z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3425
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "Regular Expression search"
 msgstr "Iskanje z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3480
+#: app/widgets/gimpitemtreeview.c:3536
 msgid "search"
 msgstr "išči"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "regexp"
 msgstr "regularni izraz"
 
-#: app/widgets/gimpitemtreeview.c:3650
+#: app/widgets/gimpitemtreeview.c:3706
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Neveljaven regularni izraz: %s\n"
-
-#: app/widgets/gimplanguagestore-parser.c:253
-msgid "System Language"
-msgstr "Sistemski jezik"
 
 #: app/widgets/gimplayermodebox.c:152
 msgid "Switch to another group of modes"
