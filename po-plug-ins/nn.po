@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-08-10 16:14+0000\n"
-"PO-Revision-Date: 2024-08-10 18:23+0200\n"
+"PO-Revision-Date: 2024-08-18 20:20+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -3918,7 +3918,7 @@ msgstr "gjer lysare (raskast)"
 
 #: plug-ins/common/file-jpegxl.c:2022
 msgid "thunder"
-msgstr "torever"
+msgstr "torevêr"
 
 #: plug-ins/common/file-jpegxl.c:2023
 msgid "falcon (faster)"
@@ -6533,7 +6533,7 @@ msgid ""
 msgstr ""
 "Markøren vart eksportert, men inneheld ei eller fleire rammer som er breiare "
 "eller høgare enn 8 teikn.\n"
-"Vi låste det til %dpx. Du bør kontrollera den eksporterte markøren."
+"Me låste det til %dpx. Du bør kontrollera den eksporterte markøren."
 
 #. translators: the %i is *always* 8 here
 #: plug-ins/common/file-xmc.c:1953
@@ -8608,7 +8608,7 @@ msgstr "Nettside"
 #: plug-ins/common/web-page.c:334
 #, c-format
 msgid "No URL was specified"
-msgstr "URL er ikkje spesifisert"
+msgstr "Adressa (URL) er ikkje spesifisert"
 
 #: plug-ins/common/web-page.c:392
 #, c-format
@@ -9547,8 +9547,8 @@ msgid ""
 "Any other sized layers will be ignored on export."
 msgstr ""
 "Gyldige ICNS-ikonstorleikar er:\n"
-" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
-"64x64, 128x128, 256x256, 512x512 og 1024x1024.\n"
+" 16 ×12, 16 ×16, 18 ×18, 24 × 24, 32 × 32, 36 × 36, 48 × 48,\n"
+"64 × 64, 128 × 128, 256 × 256, 512 × 512 og 1024 × 1024.\n"
 "Alle andre lagstorleikar vert ignorerte ved eksport."
 
 #. Don't show warning by default
@@ -10416,7 +10416,7 @@ msgstr ""
 
 #: plug-ins/file-tiff/file-tiff.c:193
 msgid "_Keep empty space around imported layers"
-msgstr "_Behald tome plassar rundt importerte lag"
+msgstr "_Behald tomme plassar rundt importerte lag"
 
 #: plug-ins/file-tiff/file-tiff.c:207
 msgid "Exports files in the TIFF or BigTIFF file formats"
@@ -11515,7 +11515,7 @@ msgstr "_Raud"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:343
 msgid "Red application mode"
-msgstr "Raud applikasjonsmodus"
+msgstr "Raud programmodus"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:344
 #: plug-ins/fractal-explorer/fractal-explorer.c:354
@@ -11529,7 +11529,7 @@ msgstr "_Grøn"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:353
 msgid "Green application mode"
-msgstr "Grøn applikasjonsmodus"
+msgstr "Grøn programmodus"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:362
 msgid "_Blue"
@@ -11537,7 +11537,7 @@ msgstr "_Blå"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:363
 msgid "Blue application mode"
-msgstr "Blå applikasjonsmodus"
+msgstr "Blå programmodus"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:372
 msgid "In_version"
