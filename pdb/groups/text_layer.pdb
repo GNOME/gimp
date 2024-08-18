@@ -42,7 +42,7 @@ HELP
           desc => 'The font to write the text with' },
         { name => 'size', type => '0.0 <= float <= 8192.0',
           desc => 'The size of text in either pixels or points' },
-        { name => 'unit', type => 'unit',
+        { name => 'unit', type => 'unit', allow_pixel => 1,
           desc => 'The units of specified size' }
     );
 
