@@ -1,14 +1,14 @@
 # Norwegian nynorsk translation of po.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Kolbjørn Stuestøl <kolbjoern@stuestoel.no> 2005.
+# Kolbjørn Stuestøl <kolbjoern@stuestoel.no> 2005 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-07-19 18:58+0000\n"
-"PO-Revision-Date: 2024-08-09 14:05+0200\n"
+"PO-Revision-Date: 2024-08-17 20:40+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -26,7 +26,7 @@ msgstr "GNU bilethandsamingsprogram"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:2
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
-msgstr "Lag teikningar eller rediger foto"
+msgstr "Lag bilete eller rediger foto"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:3
 msgid ""
@@ -34,7 +34,7 @@ msgid ""
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
-"GIMP er akronym for GNU Image Manipulation Program (GNU sitt "
+"GIMP er akronym for «GNU Image Manipulation Program» (GNU sitt "
 "biletbehandsamingsprogram). Det er eit gratis program for retusjering av "
 "foto, biletkomposisjon og biletredigering."
 
@@ -45,8 +45,8 @@ msgid ""
 "a mass production image renderer, an image format converter, etc."
 msgstr ""
 "Det har mange eigenskapar og kan brukast som eit enkelt teikne- og "
-"maleprogram, til retusjering av foto med topp kvalitet, til satsvis "
-"prosessering på nett, for å masseprodusera bilete, for å byte mellom ulike "
+"måleprogram, til retusjering av foto med topp kvalitet, til satsvis "
+"prosessering på nett, for å masseprodusera bilete, for å byta mellom ulike "
 "biletformat og mykje meir."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:5
@@ -58,14 +58,14 @@ msgid ""
 "Microsoft Windows and OS X."
 msgstr ""
 "GIMP kan gjere mykje og kan lett utvidast. Programmet kan gjerst større med "
-"programutvidingar (plug-ins) og kan såleis utvidast til å gjere nesten kva "
+"programutvidingar (plug-ins) og kan såleis utvidast til å gjera nesten kva "
 "som helst. Det er også innebygd avanserte skriptfunksjonar, slik at det er "
-"lett å lage spesielle verktøy for enkle oppgåver eller kompliserte "
-"bilethansamingar. GIMP er tilgjengeleg for Linux, Windows og OS X."
+"lett å laga spesielle verktøy for enkle oppgåver eller kompliserte "
+"biletmanipuleringar. GIMP er tilgjengeleg for Linux, Windows og OS X."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:6
 msgid "Painting in GIMP"
-msgstr "Måling i GIMP"
+msgstr "Teikna i GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:7
 msgid "Photo editing in GIMP"
@@ -115,7 +115,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Improvements in handling a few specific metadata"
-msgstr "Forbetringar i handsaming av spesifikke metadata"
+msgstr "Forbetringar i handsaming av nokre få spesifikke metadata"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
@@ -136,11 +136,12 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
 msgstr ""
-"Ny overskrift med ikon for «synlege» og «lenkje» i element som kan limast inn"
+"Ny overskrift med ikon for «synlege» og «lenkje» i element som kan limast "
+"inn i dokkpanel"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Clipping layers better supported when importing PSD files"
-msgstr "Betre støtte for klipping av lag i imorterte PSD-filer"
+msgstr "Betre støtte for klipping av lag i importerte PSD-filer"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Paths are now exported to PSD"
@@ -160,7 +161,7 @@ msgstr "Nytt val «Vis redusert bilete» ved lasting av TIFF-bilete"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "16-bit per channel export for raw image data"
-msgstr "Eksport av 16-bits per kanal får raw biletdata"
+msgstr "Eksport av 16-bits per kanal for raw biletdata"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
@@ -175,12 +176,12 @@ msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
 msgstr ""
-"Fargeplukking på X11 vil ignorere Wayland-portalen. Ny implementering for "
+"Fargeplukking på X11 vil ignorera Wayland-portalen. Ny implementering for "
 "fargeval på Windows"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Check for updates fixed on macOS"
-msgstr "Sjå etter oppdateringar er retta i macOS"
+msgstr "Sjå etter oppdateringar er korrigert i macOS"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
@@ -208,7 +209,7 @@ msgid ""
 "layers\" options"
 msgstr ""
 "Eksport av DDS har ny «spegelvending» (nyttig i nokre spelmaskiner) og "
-"«synlege lag»"
+"innstillingar for «synlege lag»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
@@ -218,8 +219,8 @@ msgstr "Forbetra støtte for BMP, DICOM, EPS, RAW, TGA, WebP"
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
-"Programtillegget for skjermbilete i Windows har no eit alternativ for å "
-"fanga markøren"
+"Programtillegget for skjermbilete i Windows har no eit alternativ for å ta "
+"med markøren"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Several usability improvements in official themes and icons"
@@ -247,7 +248,7 @@ msgid ""
 "evolutions, improves metadata support as well as support of several formats, "
 "such as PSD and AVIF."
 msgstr ""
-"I GIMP 2.10.30 er mange feil retta opp, backend-implementeringane er "
+"I GIMP 2.10.30 er mange feil retta opp, bakover-implementeringane er "
 "oppdaterte for å følgja OS-utviklinga, forbetra metadata-støtte og støtte "
 "for fleire format, som PSD og AVIF."
 
@@ -271,7 +272,7 @@ msgstr ""
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.24 er igjen ei utgåve stort sett med feilrettingar. Endringar du "
-"bør merka deg er:"
+"bør merkja deg er:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "GeoTIFF metadata support added"
@@ -296,7 +297,7 @@ msgstr ""
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
-"Dorbetra støtte for filformata HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
+"Forbetra støtte for filformata HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Many fixes and improvements to the metadata viewer and editor"
@@ -310,19 +311,23 @@ msgstr "Ny Kabyle-omsetjing"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
-msgstr "Det er no råd å festa punkt til rutenett, hjelpelinjer og banar"
+msgstr ""
+"Det er no råd å festa punkt utføre lerretet til rutenett, hjelpelinjer og "
+"banar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
-msgstr "GIMP 2.10.22 har mange feilrettingar. Viktige endringar er:"
+msgstr ""
+"GIMP 2.10.22 er stort sett ein versjon for feilrettingar. Viktige endringar "
+"er:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
-"Betre støtte for HEIF: valfri eksport med høg bit-djupn. Og forbetra import "
-"og eksport av AVIF"
+"Betre støtte for HEIF: valfri eksport med høg bit-djupn. Forbetra import og "
+"eksport av AVIF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Multiple improvements in Corel PaintShop Pro support"
@@ -349,7 +354,7 @@ msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
-"Motoren for verktøyet for å velja forgrunn er no Matting Levin sidan denne "
+"Motoren for verktøyet for å velja forgrunn er no «Matting Levin» sidan denne "
 "fungerer mykje betre"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
@@ -362,7 +367,7 @@ msgstr "Utførlig feilsøking viser no Flatpak-informasjon når det er relevant"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Various bug fixes"
-msgstr "Fleire feilrettingar"
+msgstr "Mange feilrettingar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
@@ -411,7 +416,7 @@ msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
-"I GIMP 2.10.18 vert det fiksa nokre kritiske feil, sett inn innebygd støtte "
+"I GIMP 2.10.18 vart det fiksa nokre kritiske feil, sett inn innebygd støtte "
 "for CMYK PSD-file og lagt til større kontrastvariasjonar i dei symbolske "
 "ikontemaa."
 
@@ -442,11 +447,11 @@ msgstr "Mykje forbetra brukaroppleving førehandsvisingane av transformasjonar"
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Områda det kan limast inn i vert no utheva når eit dialogvindauge som kan "
-"limast inn vert drege"
+"limast inn i eit dokkpanel vert drege"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "New 3D Transform tool to rotate and pan items"
-msgstr "Nytt 3D-verktøy for å rotere og flytta"
+msgstr "Nytt 3D-transformeringsverktøy for å rotera og flytta"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Much smoother brush outline motion on the canvas"
@@ -455,7 +460,7 @@ msgstr "Mykje mjukare rørsle av penselomrisset på lerretet"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
-"Konsolidert brukargrensesnitt for å samanslåing nedover og forankring av lag"
+"Konsolidert brukargrensesnitt for å fletta nedover og forankring av lag"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Update check to notify users that a new release/installer is available"
@@ -509,7 +514,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
-msgstr "Bruarinnstillingane: «Tillat redigering av ikkje-synlege lag»"
+msgstr "Brukarinnstillingane: «Tillat redigering av ikkje-synlege lag»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "HEIF import/export: color profile support"
@@ -540,7 +545,7 @@ msgstr "Samspelet mellom kurvene er generelt forbetra"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "A few enhancements specific to the Curves tool"
-msgstr "Nokre få forbetringar spesielt i kurveverktøa"
+msgstr "Nokre få forbetringar spesielt i kurveverktøya"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Layer support in TIFF"
@@ -564,32 +569,32 @@ msgid ""
 "Notable improvements include:"
 msgstr ""
 "GIMP 2.10.10 er ei stor oppdatering med mange nye funksjonar og "
-"feilrettingar. Nemneverdige forbetringar er også:"
+"feilrettingar. Nemneverdige forbetringar inkluderer:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
-"Bøttefyll: Ny «Fyll ved oppdaging av strekteikning» for ikkje perfekte "
-"strekteikningar"
+"Bøttefyll: Ny «Fyll ved oppdaging av strekteikning» for strekteikningar som "
+"ikkje er perfekt lukka"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
-msgstr "Verktøyet «Bøttefyll» kan no raskt henta farge med Bøttefyll + klikk"
+msgstr "Verktøyet «Bøttefyll» kan no raskt henta farge med Ctrl + klikk"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
-"Bøttefyll tillet å halda musepeikaren ved fylling av «liknande farge» og "
+"Bøttefyll tillét å halda musepeikaren ved fylling av «liknande farge» og "
 "«oppdaging av strekteikning»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
-"Skaleringsverktøyet skalerer rundt sentrum sjølv når du brukar numerisk "
+"Skaleringsverktøyet skalerar rundt sentrum sjølv når du brukar numerisk "
 "inngang"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
@@ -597,8 +602,8 @@ msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr ""
-"Verktøyet «Sameint transformering» har no som standard å behalda forholdet "
-"mellom sidene ved skalering"
+"Verktøyet «Sameint transformering» beheld no som standard forholdet mellom "
+"sidene ved skalering"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid ""
@@ -610,11 +615,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
-msgstr "Ny generisk kanvasmodifikator «Alt + midt-klikk» for å velja lag"
+msgstr "Ny generisk lerretsmodifikator «Alt + midt-klikk» for å velja lag"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "Parametric brushes now 32-bit float to avoid posterization"
-msgstr "Parameriske penslar brukar no 32-flyttal for å unngå posterisering"
+msgstr "Parameriske penslar brukar no 32-desimaltal for å unngå posterisering"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "Clipboard brushes and pattern can now be duplicated"
@@ -642,8 +647,7 @@ msgstr "Fleire optimaliseringar, også raskare laggruppering"
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
-"Vekselfilene og mellomlagringsfilene vert ikkje sett opp i oppsettmappa "
-"lenger"
+"Vekselfilene og mellomlagringsfilene vert no ikkje sett opp i oppsettmappa"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid ""
@@ -687,7 +691,7 @@ msgid ""
 "includes:"
 msgstr ""
 "GIMP 2.10.8 er ei utgjeving for å fiksa feil og innføra forbetringar. Dette "
-"omfattar særleg:"
+"omfattar:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid ""
@@ -735,7 +739,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr "Nytt «Velse planet»-filter (gegl:stereographic-projection)"
+msgstr "Nytt «Vesle planet»-filter (gegl:stereographic-projection)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "New \"Long Shadow\" filter"
@@ -791,15 +795,14 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
-"Raskare oppstart: Innlastinga av skrifttyper blokkerer ikkje oppstarten "
-"lenger"
+"Raskare oppstart: Innlastinga av skrifttyper blokkerar no ikkje oppstarten"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
-"Tagginga av skrifttyper brukar no same brukargrensesnitt som for penslar, "
+"Tagginga av skrifttypar brukar no same brukargrensesnitt som for penslar, "
 "mønsterelement og fargeovergangar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
@@ -833,7 +836,7 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 "Det har også eit nytt programtillegg for støtte for HEIF-formatet, både for "
-"import og eksport, samt 2 nye filter: 'Spherize' og 'Recursive Transform'. "
+"import og eksport, samt to nye filter: «Spherize» og «Recursive Transform». "
 "Dette er fine eksempel på vår avslappa funksjonspolicy i stabile "
 "mikroutgjevingar."
 
@@ -842,12 +845,12 @@ msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
-"Første utgjevinga av 2.10-serien som på ein god måte framhever porten til "
-"ein ny bilethansaingsmotor, GEGL. Dei beste endringane er:"
+"Første utgjevinga av 2.10-serien som på ein god måte framhevar porten til "
+"ein ny bilethansaingsmotor, GEGL. Dei viktigaste endringane er:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "High bit depth color processing (16/32-bit per color channel)"
-msgstr "Høgbits faargeprossesering (16-/32-bits per farge)"
+msgstr "Høgbits fargeprossesering (16-/32-bits per farge)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
@@ -867,7 +870,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
-msgstr "Fleirtråda og maskin-akselerert fargestyring prosessering og teikning"
+msgstr "Fleirtråda og maskin-akselerert fargestyring, prosessering og teikning"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "Most tools improved, several new transformation tools"
@@ -896,7 +899,8 @@ msgstr "Vising or redigering av metadata for Exif, XMP, IPTC og DICOM"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "Basic HiDPI support: automatically or user-selected icon size"
-msgstr "Grunnleggjande støtte for høg oppløying for brukarvalde ikonstorleikar"
+msgstr ""
+"Grunnleggjande støtte for høg oppløysing for brukarvalde ikonstorleikar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
@@ -913,7 +917,7 @@ msgid ""
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
 "I denne andre utgjevingskandidaten før GIMP 2.10.0, medan feilsøking "
-"framleis er eit hovudmål, er det sett nytt fokud på fart og optimalisering "
+"framleis er eit hovudmål, er det sett nytt fokus på fart og optimalisering "
 "for å gje ei jamnare teikneoppleving. Større endringar er:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
@@ -935,7 +939,7 @@ msgid ""
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
 "'Temaa «Lys og «Mørk» er skrivne om frå botnen av for å verta kvitt ulike "
-"problem med brukarvennlegheita. Tamaa «Lysare» og «mørkare» er fjerna."
+"problem med brukarvennlegheita. Temaa «Lysare» og «mørkare» er fjerna."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid ""
@@ -953,7 +957,7 @@ msgid ""
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
-"Programtilleggs-feilsøking forbetra for å sende ut stabelspor frå "
+"Programtilleggs-feilsøking forbetra for å senda ut stabelspor frå "
 "programtilleggsmodular med kommandolinjealternativet --stack-trace-mode, "
 "ikkje berre ved mottak av signal, men også på åtvaringar og kritiske feil "
 "når feilsøkingsnøkkelen 'fatal-warnings' er sett"
@@ -971,14 +975,15 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
-"Nytt Dashboard som kan limast inn for å følgja GIMP sin bruk av ressursar"
+"Nytt Dashboard som kan limast inn i dokkpanel for å følgja GIMP sin bruk av "
+"ressursar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
-"Nytt dialofvindauge for feilsøking for å produsera tilbakesporing og andre "
+"Nytt dialogvindauge for feilsøking for å produsera tilbakesporing og andre "
 "feilsøkingsdata, som oppmuntrar til å rapportera feil"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
@@ -1016,7 +1021,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid "On-canvas gradient editing"
-msgstr "Redigera fargeovergangar i lerretet"
+msgstr "Redigera fargeovergangar på lerretet"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid "Notification when an image is over/underexposed"
@@ -1128,7 +1133,7 @@ msgid ""
 "It is recommended to update."
 msgstr ""
 "Det er komen ein ny versjon av GIMP (%s).\n"
-"Det vert tilrådd å oppdatera."
+"Det vert rådd til å oppdatera."
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:185
 #, c-format
@@ -1170,7 +1175,7 @@ msgstr "Ikkje last inn penslar, fargeovergangar, mønsterelement  …"
 
 #: ../app/main.c:201
 msgid "Do not load any fonts"
-msgstr "Ikkje last skrifttypar"
+msgstr "Ikkje last inn skrifttypar"
 
 #: ../app/main.c:206
 msgid "Do not show a splash screen"
@@ -1221,7 +1226,7 @@ msgstr "Feilfinning i tilfelle krasj (never|query|always)"
 
 #: ../app/main.c:263
 msgid "Enable non-fatal debugging signal handlers"
-msgstr "Slå på signalhandterarane for ikkje-fatale feil"
+msgstr "Slå på signalhandsamaren for ikkje-fatale feil"
 
 #: ../app/main.c:268
 msgid "Make all warnings fatal"
@@ -1237,7 +1242,7 @@ msgstr "Send ei sortert liste over utgåtte prosedyrar i PDB"
 
 #: ../app/main.c:294
 msgid "Show a preferences page with experimental features"
-msgstr "Vis ei oppsettside med eksperimentelle eigenskapar"
+msgstr "Vis ei oppsettside med eksperimentelle funksjonar"
 
 #: ../app/main.c:299
 msgid "Show an image submenu with debug actions"
@@ -1253,7 +1258,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "GIMP greidde ikkje å setja opp det grafiske brukargrensesnittet.\n"
-"Kontroller oppsettet for skjermen og skjermdrivarane."
+"Kontrollér oppsettet for skjermen og skjermdrivarane."
 
 #: ../app/main.c:749
 msgid "Another GIMP instance is already running."
@@ -1266,7 +1271,7 @@ msgstr "GIMP-melding. Trykk ein tast for å lukka vindauget."
 #: ../app/main.c:841
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr "(Trykk ein tast for å lukka vindauget)\n"
+msgstr "(Trykk ein tast for å lukka dette vindauget)\n"
 
 #: ../app/main.c:858
 msgid "GIMP output. You can minimize this window, but don't close it."
@@ -1344,11 +1349,11 @@ msgstr "Avlusing"
 
 #: ../app/actions/actions.c:138
 msgid "Dialogs"
-msgstr "Dialogar"
+msgstr "Dialogvindauge"
 
 #: ../app/actions/actions.c:141
 msgid "Dock"
-msgstr "Samlevindauge"
+msgstr "Dokkpanel"
 
 #: ../app/actions/actions.c:144
 msgid "Dockable"
@@ -1566,7 +1571,7 @@ msgstr "_Dupliser pensel"
 #: ../app/actions/brushes-actions.c:60
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "Lag ein kopi av denne penselen"
+msgstr "Dupliser denne penselen"
 
 #: ../app/actions/brushes-actions.c:65
 msgctxt "brushes-action"
@@ -1611,12 +1616,12 @@ msgstr "Oppdater penslane"
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr "R_ediger penselen  …"
+msgstr "R_ediger penselen …"
 
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "Rediger den gjeldande penselen"
+msgstr "Rediger denne penselen"
 
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
@@ -1661,12 +1666,12 @@ msgstr "Lim inn buffer på _staden"
 #: ../app/actions/buffers-actions.c:68
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "Lim den valde bufferen inn på den opphavlege plassseringa"
+msgstr "Lim den valde bufferen inn på den opphavlege plasseringa"
 
 #: ../app/actions/buffers-actions.c:73
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "Lim bufferen _inn utvalet"
+msgstr "Lim bufferen _inn i utvalet"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
@@ -1741,7 +1746,7 @@ msgstr "_Ny kanal"
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr "Opprett ein ny kanal med tidlegare brukte verdiar"
+msgstr "Opprett ein ny kanal med sist brukte verdiar"
 
 #: ../app/actions/channels-actions.c:71
 msgctxt "channels-action"
@@ -1751,7 +1756,7 @@ msgstr "_Dupliser kanalen"
 #: ../app/actions/channels-actions.c:73
 msgctxt "channels-action"
 msgid "Create a duplicate of this channel and add it to the image"
-msgstr "Lag ein kopi av denne kanalen og legg han inn i biletet"
+msgstr "Lag eit duplikat av denne kanalen og legg han inn i biletet"
 
 #: ../app/actions/channels-actions.c:78
 msgctxt "channels-action"
@@ -1786,17 +1791,17 @@ msgstr "Lyft denne kanalen til toppen av kanalstabelen"
 #: ../app/actions/channels-actions.c:97
 msgctxt "channels-action"
 msgid "_Lower Channel"
-msgstr "_Senk kanal"
+msgstr "_Senk kanalen"
 
 #: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
-msgstr "Senk kanalen eitt steg i kanalstabelen"
+msgstr "Senk denne kanalen eitt steg i kanalstabelen"
 
 #: ../app/actions/channels-actions.c:103
 msgctxt "channels-action"
 msgid "Lower Channel to _Bottom"
-msgstr "Senk kanal til _botnen"
+msgstr "Senk kanalen til _botnen"
 
 #: ../app/actions/channels-actions.c:105
 msgctxt "channels-action"
@@ -1806,12 +1811,12 @@ msgstr "Senk denne kanalen til botnen av kanalstabelen"
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "Slå _visinga av kanal av/på"
+msgstr "Slå _visinga av kanalen av/på"
 
 #: ../app/actions/channels-actions.c:119
 msgctxt "channels-action"
 msgid "Toggle Channel _Linked State"
-msgstr "Byt _lenkjestatus for kanal"
+msgstr "Slå _lenkjestatus for kanalen av/på"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/channels-actions.c:125
@@ -1872,7 +1877,7 @@ msgstr "Oransj"
 #: ../app/actions/channels-actions.c:165
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
-msgstr "Fargefana for kanal: Sett til oransj"
+msgstr "Fargefana for kanal: Sett til oransje"
 
 #: ../app/actions/channels-actions.c:170
 msgctxt "channels-action"
@@ -1962,7 +1967,7 @@ msgstr "Vel den _øvste kanalen"
 #: ../app/actions/channels-actions.c:225
 msgctxt "channels-action"
 msgid "Select the topmost channel"
-msgstr "Vel den _øvste kanalen"
+msgstr "Vel den øvste kanalen"
 
 #: ../app/actions/channels-actions.c:230
 msgctxt "channels-action"
@@ -1972,7 +1977,7 @@ msgstr "Vel den n_edste kanalen"
 #: ../app/actions/channels-actions.c:231
 msgctxt "channels-action"
 msgid "Select the bottommost channel"
-msgstr "Vel den _nedste kanalen"
+msgstr "Vel den nedste kanalen"
 
 #: ../app/actions/channels-actions.c:236
 msgctxt "channels-action"
@@ -2041,7 +2046,7 @@ msgstr "Fargekartmeny"
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
 msgid "_Edit Color..."
-msgstr "R_ediger farge  …"
+msgstr "R_ediger farge …"
 
 #: ../app/actions/colormap-actions.c:50
 msgctxt "colormap-action"
@@ -2051,7 +2056,7 @@ msgstr "Rediger denne fargen"
 #: ../app/actions/colormap-actions.c:58
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
-msgstr "Legg til farge frå FG"
+msgstr "Legg til farge frå _FG"
 
 #: ../app/actions/colormap-actions.c:59
 msgctxt "colormap-action"
@@ -2061,7 +2066,7 @@ msgstr "Legg gjeldande forgrunnsfarge inn i fargekartet"
 #: ../app/actions/colormap-actions.c:64
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
-msgstr "Legg til farge frå BG"
+msgstr "Legg til farge frå _BG"
 
 #: ../app/actions/colormap-actions.c:65
 msgctxt "colormap-action"
@@ -2086,7 +2091,7 @@ msgstr "_Legg til i utvalet"
 #: ../app/actions/colormap-actions.c:80
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
-msgstr "Legg alle pikslane med denne fargen til i det opne utvalet"
+msgstr "Legg alle pikslane med denne fargen til i det gjeldande utvalet"
 
 #: ../app/actions/colormap-actions.c:85
 msgctxt "colormap-action"
@@ -2201,7 +2206,7 @@ msgstr "Set forgrunnsfargen til svart og bakgrunnsfargen til kvit"
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "S_wap Colors"
-msgstr "_Byt fargar"
+msgstr "_Byt fargane"
 
 #: ../app/actions/context-actions.c:89
 msgctxt "context-action"
@@ -2306,12 +2311,12 @@ msgstr "Forgrunn: Bruk neste farge i fargekartet"
 #: ../app/actions/context-actions.c:181
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr "Forgrunn: Hopp over bakgrunnsfargar frå fargekartet"
+msgstr "Forgrunn: Hopp over bakover frå fargekartet"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr "Forgrunn: Hopp over forgrunnsfargar frå fargekartet"
+msgstr "Forgrunn: Hopp over forover frå fargekartet"
 
 #: ../app/actions/context-actions.c:193
 msgctxt "context-action"
@@ -2321,12 +2326,12 @@ msgstr "Bakgrunn: Set farge frå fargekartet"
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr "Bakgrunn: Bruk første farge frå fargekartet"
+msgstr "Bakgrunn: Bruk første farge i fargekartet"
 
 #: ../app/actions/context-actions.c:201
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr "Bakgrunn: Bruk siste farge frå fargekartet"
+msgstr "Bakgrunn: Bruk siste farge i fargekartet"
 
 #: ../app/actions/context-actions.c:205
 msgctxt "context-action"
@@ -2341,12 +2346,12 @@ msgstr "Bakgrunn: Bruk neste farge frå fargekartet"
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr "Bakgrunn: Hopp over bakgrunnsfarge frå fargekartet"
+msgstr "Bakgrunn: Hopp over bakover i fargekartet"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr "Bakgrunn: Hopp over framoverfargen frå fargekartet"
+msgstr "Bakgrunn: Hopp over framover i fargekartet"
 
 #: ../app/actions/context-actions.c:225
 msgctxt "context-action"
@@ -2376,27 +2381,27 @@ msgstr "Forgrunn: Bruk neste farge i fargeprøven"
 #: ../app/actions/context-actions.c:245
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "Forgrunn: Hopp over bakoverfarge frå fargeprøve"
+msgstr "Forgrunn: Hopp over bakover i fargeprøven"
 
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr "Forgrunn: Hopp over framoverfarge frå fargeprøve"
+msgstr "Forgrunn: Hopp over framover i fargeprøven"
 
 #: ../app/actions/context-actions.c:257
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "Bakgrunnsfarge: Set farge frå fargeprøve"
+msgstr "Bakgrunnsfarge: Set farge frå fargeprøven"
 
 #: ../app/actions/context-actions.c:261
 msgctxt "context-action"
 msgid "Background: Use First Color From Swatch"
-msgstr "Bakgrunn: Bruk første farge i fargeprøven"
+msgstr "Bakgrunn: Bruk første fargen i fargeprøven"
 
 #: ../app/actions/context-actions.c:265
 msgctxt "context-action"
 msgid "Background: Use Last Color From Swatch"
-msgstr "Bakgrunn: Bruk siste farge i fargeprøven"
+msgstr "Bakgrunn: Bruk siste fargen i fargeprøven"
 
 #: ../app/actions/context-actions.c:269
 msgctxt "context-action"
@@ -2411,12 +2416,12 @@ msgstr "Bakgrunn: Bruk neste farge i fargeprøven"
 #: ../app/actions/context-actions.c:277
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr "Bakgrunn: Hopp over bakoverfarge frå fargeprøve"
+msgstr "Bakgrunn: Hopp over bakover i fargeprøve"
 
 #: ../app/actions/context-actions.c:281
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr "Bakgrunn: Hopp over framoverfarge frå fargeprøve"
+msgstr "Bakgrunn: Hopp over framover i fargeprøven"
 
 #: ../app/actions/context-actions.c:289
 msgctxt "context-action"
@@ -2526,17 +2531,17 @@ msgstr "Forgrunn blå: Auk med 10 %"
 #: ../app/actions/context-actions.c:385
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Bakgrunn raud: Set"
+msgstr "Bakgrunn raud: Sett"
 
 #: ../app/actions/context-actions.c:389
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Bakgrunn raud: Set til minimum"
+msgstr "Bakgrunn raud: Sett til minimum"
 
 #: ../app/actions/context-actions.c:393
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Bakgrunn raud: Set til maksimum"
+msgstr "Bakgrunn raud: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
@@ -2561,17 +2566,17 @@ msgstr "Bakgrunn raud: Auk med 10 %"
 #: ../app/actions/context-actions.c:417
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Bakgrunn grøn: Set"
+msgstr "Bakgrunn grøn: Sett"
 
 #: ../app/actions/context-actions.c:421
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Bakgrunn grøn: Set til minimum"
+msgstr "Bakgrunn grøn: Sett til minimum"
 
 #: ../app/actions/context-actions.c:425
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Bakgrunn grøn: Set til maksimum"
+msgstr "Bakgrunn grøn: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
@@ -2596,17 +2601,17 @@ msgstr "Bakgrunn grøn: Auk med 10 %"
 #: ../app/actions/context-actions.c:449
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "Bakgrunn blå: Set"
+msgstr "Bakgrunn blå: Sett"
 
 #: ../app/actions/context-actions.c:453
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Bakgrunn blå: Set tl maksimum"
+msgstr "Bakgrunn blå: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:457
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Bakgrunn blå: Set til minimum"
+msgstr "Bakgrunn blå: Sett til minimum"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
@@ -2631,17 +2636,17 @@ msgstr "Bakgrunn blå: Auk med 10 %"
 #: ../app/actions/context-actions.c:481
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Forgrunn kulør: Set"
+msgstr "Forgrunn kulør: Sett"
 
 #: ../app/actions/context-actions.c:485
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Forgrunn kulør: Set til minimum"
+msgstr "Forgrunn kulør: Sett til minimum"
 
 #: ../app/actions/context-actions.c:489
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "Forgrunn kulør: Set til maksimum"
+msgstr "Forgrunn kulør: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
@@ -2666,17 +2671,17 @@ msgstr "Forgrunn kulør: Auk med 10 %"
 #: ../app/actions/context-actions.c:513
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Forgrunn metning: Set"
+msgstr "Forgrunn metning: Sett"
 
 #: ../app/actions/context-actions.c:517
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Forgrunn metning: Set til minimum"
+msgstr "Forgrunn metning: Sett til minimum"
 
 #: ../app/actions/context-actions.c:521
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Forgrunn metning: Set til maksimum"
+msgstr "Forgrunn metning: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:525
 msgctxt "context-action"
@@ -2701,17 +2706,17 @@ msgstr "Forgrunn metning: Auk med 10 %"
 #: ../app/actions/context-actions.c:545
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Forgrunn verdi: Set"
+msgstr "Forgrunn verdi: Sett"
 
 #: ../app/actions/context-actions.c:549
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Forgrunn verdi: Set til minimum"
+msgstr "Forgrunn verdi: Sett til minimum"
 
 #: ../app/actions/context-actions.c:553
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Forgrunn verdi: Set til maksimum"
+msgstr "Forgrunn verdi: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
@@ -2736,17 +2741,17 @@ msgstr "Forgrunn verdi: Auk med 10 %"
 #: ../app/actions/context-actions.c:577
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Bakgrunn kulør: Set"
+msgstr "Bakgrunn kulør: Sett"
 
 #: ../app/actions/context-actions.c:581
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Bakgrunn kulør: Set til minimum"
+msgstr "Bakgrunn kulør: Sett til minimum"
 
 #: ../app/actions/context-actions.c:585
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Bakgrunn kulør: Set til maksimum"
+msgstr "Bakgrunn kulør: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
@@ -2771,17 +2776,17 @@ msgstr "Bakgrunn kulør: Auk med 10 %"
 #: ../app/actions/context-actions.c:609
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Bakgrunn metning: Set"
+msgstr "Bakgrunn metning: Sett"
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr "Bakgrunn metning: Set til minimum"
+msgstr "Bakgrunn metning: Sett til minimum"
 
 #: ../app/actions/context-actions.c:617
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr "Bakgrunn metning: Set til mmaksimum"
+msgstr "Bakgrunn metning: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:621
 msgctxt "context-action"
@@ -2806,17 +2811,17 @@ msgstr "Bakgrunn metning: Auk med 10 %"
 #: ../app/actions/context-actions.c:641
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Bakgrunn verdi: Set"
+msgstr "Bakgrunn verdi: Sett"
 
 #: ../app/actions/context-actions.c:645
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Bakgrunn verdi: Set til minimum"
+msgstr "Bakgrunn verdi: Sett til minimum"
 
 #: ../app/actions/context-actions.c:649
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Bakgrunn verdi: Set til maksimum"
+msgstr "Bakgrunn verdi: Sett til maksimum"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
@@ -3001,52 +3006,52 @@ msgstr "Overgangsval: Vel etter indeks"
 #: ../app/actions/context-actions.c:825
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to First"
-msgstr "Overgangsval: Byt til første"
+msgstr "Fargeovergangsval: Byt til første"
 
 #: ../app/actions/context-actions.c:829
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Last"
-msgstr "Overgang utval: Byt til siste"
+msgstr "Fargeovergangsval: Byt til siste"
 
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Previous"
-msgstr "Overgangsval: Byt til førre"
+msgstr "Fargeovergangsval: Byt til førre"
 
 #: ../app/actions/context-actions.c:837
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Next"
-msgstr "Overgangsval: Byt til neste"
+msgstr "Fargeovergangsval: Byt til neste"
 
 #: ../app/actions/context-actions.c:845
 msgctxt "context-action"
 msgid "Font Selection: Select by Index"
-msgstr "Skrifttype utval: Vel etter indeks"
+msgstr "Skrifttypeval: Vel etter indeks"
 
 #: ../app/actions/context-actions.c:849
 msgctxt "context-action"
 msgid "Font Selection: Switch to First"
-msgstr "Skrifttype utval: Byt til første"
+msgstr "Skrifttypeval: Byt til første"
 
 #: ../app/actions/context-actions.c:853
 msgctxt "context-action"
 msgid "Font Selection: Switch to Last"
-msgstr "Skrifttype utval: Byt til siste"
+msgstr "Skrifttypeval: Byt til siste"
 
 #: ../app/actions/context-actions.c:857
 msgctxt "context-action"
 msgid "Font Selection: Switch to Previous"
-msgstr "Skrifttype utval: Byt til førre"
+msgstr "Skrifttypeval: Byt til førre"
 
 #: ../app/actions/context-actions.c:861
 msgctxt "context-action"
 msgid "Font Selection: Switch to Next"
-msgstr "Skrifttype utval: Byt til neste"
+msgstr "Skrifttypeval: Byt til neste"
 
 #: ../app/actions/context-actions.c:869
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set"
-msgstr "Pensel avstand (redigerar): Set"
+msgstr "Penselavstand (redigering): Set"
 
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
@@ -3086,7 +3091,7 @@ msgstr "Penselform (redigering): Bruk sirkulær"
 #: ../app/actions/context-actions.c:905
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Square"
-msgstr "Pensel form (redigerar): Bruk kvadratisk"
+msgstr "Penselform (redigering): Bruk kvadratisk"
 
 #: ../app/actions/context-actions.c:909
 msgctxt "context-action"
@@ -3096,7 +3101,7 @@ msgstr "Penselform (redigering): Bruk rombe"
 #: ../app/actions/context-actions.c:917
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set"
-msgstr "Pensel radius (redigerar): Set"
+msgstr "Penselradius (redigering): Set"
 
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
@@ -3151,7 +3156,7 @@ msgstr "Penselradius (redigering): Auk relativt"
 #: ../app/actions/context-actions.c:965
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr "Pensel stråler (redigerar): Set"
+msgstr "Penselspissar (redigering): Set"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
@@ -3186,7 +3191,7 @@ msgstr "Penselspissar (redigering): Auk med 4"
 #: ../app/actions/context-actions.c:997
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "Pensel hardleik (redigerar): Set"
+msgstr "Penselhardleik (redigering): Set"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
@@ -3221,7 +3226,7 @@ msgstr "Penselhardleik (redigering): Auk med 0,1"
 #: ../app/actions/context-actions.c:1029
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set"
-msgstr "Pensel sideforhold (redigerar): Set"
+msgstr "Penselsideforhold (redigering): Set"
 
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
@@ -3246,12 +3251,12 @@ msgstr "Penselsideforhold (redigering): Auk med 0,1"
 #: ../app/actions/context-actions.c:1049
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 1"
-msgstr "Pensel sideforhold (redigerar): Minsk med 1"
+msgstr "Penselsideforhold (redigering): Minsk med 1"
 
 #: ../app/actions/context-actions.c:1053
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 1"
-msgstr "Pensel sideforhold (redigerar): Auk med 1"
+msgstr "Penselsideforhold (redigering): Auk med 1"
 
 #: ../app/actions/context-actions.c:1061
 msgctxt "context-action"
@@ -3346,7 +3351,7 @@ msgstr "_Historietidslengd"
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
 msgid "_Start/Stop Recording..."
-msgstr "_Start/Stopp opptak  …"
+msgstr "_Start/Stopp opptak …"
 
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
@@ -3356,7 +3361,7 @@ msgstr "Start/stopp opptak av ytingslogg"
 #: ../app/actions/dashboard-actions.c:56
 msgctxt "dashboard-action"
 msgid "_Add Marker..."
-msgstr "Legg til _markør  …"
+msgstr "Legg til _markør …"
 
 #: ../app/actions/dashboard-actions.c:57
 msgctxt "dashboard-action"
@@ -3502,7 +3507,7 @@ msgstr "_Avbryt"
 
 #: ../app/actions/dashboard-commands.c:119
 msgid "_Record"
-msgstr "_Post"
+msgstr "_Spel inn"
 
 #: ../app/actions/dashboard-commands.c:141
 msgid "All Files"
@@ -3602,22 +3607,22 @@ msgstr "Opna dialogvindauget for verktøyinnstillingane"
 #: ../app/actions/dialogs-actions.c:59
 msgctxt "dialogs-action"
 msgid "_Device Status"
-msgstr "Utst_yrstatus"
+msgstr "Utst_yrsstatus"
 
 #: ../app/actions/dialogs-actions.c:60
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "Opna dialogvindauget for utstyrstatus"
+msgstr "Opna dialogvindauget for utstyrsstatus"
 
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
-msgstr "_Symmetrisk teikning"
+msgstr "_Symmetriteikning"
 
 #: ../app/actions/dialogs-actions.c:66
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "Opna symmetridialogvindauget"
+msgstr "Opna dialogvindauget for symmetriteikning"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -3672,12 +3677,12 @@ msgstr "Opna dialogvindauget for histogram"
 #: ../app/actions/dialogs-actions.c:101
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "_Utvalshandterar"
+msgstr "_Utvalshandsamar"
 
 #: ../app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Opna utvalshandteraren"
+msgstr "Opna utvalshandsamaren"
 
 #: ../app/actions/dialogs-actions.c:107
 msgctxt "dialogs-action"
@@ -3752,22 +3757,22 @@ msgstr "Opna penselredigeringa"
 #: ../app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics"
-msgstr "Teikna _dynamisk"
+msgstr "Teikne_dynamikkar"
 
 #: ../app/actions/dialogs-actions.c:150
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "Opna dialogvindauget for penseldynamikk"
+msgstr "Opna dialogvindauget for teiknedynamikkar"
 
 #: ../app/actions/dialogs-actions.c:155
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "Rediger penseldynamikken"
+msgstr "Rediger teiknedynamikken"
 
 #: ../app/actions/dialogs-actions.c:156
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "Opnar for redigering av penseldynamikken"
+msgstr "Opnar for redigering av teiknedynamikken"
 
 #: ../app/actions/dialogs-actions.c:161
 msgctxt "dialogs-action"
@@ -3802,12 +3807,12 @@ msgstr "Opna dialogvindauget for fargeovergangar"
 #: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
-msgstr "Fargeovergangsredigering"
+msgstr "Redigering av fargeovergangar"
 
 #: ../app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
-msgstr "Opna overgangsredigeringa"
+msgstr "Opna redigeringa av fargeovergangar"
 
 #: ../app/actions/dialogs-actions.c:185
 msgctxt "dialogs-action"
@@ -3917,7 +3922,7 @@ msgstr "_Brukarinnstillingar"
 #: ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
-msgstr "Opnar dialogvindauget for brukarinnstillingar"
+msgstr "Opnar dialogvindauget for brukarinnstillingane"
 
 #: ../app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
@@ -3932,12 +3937,12 @@ msgstr "Opna dialogvindauget for inndatautstyret"
 #: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
-msgstr "_Tastatursnarvegar"
+msgstr "_Tastesnarvegar"
 
 #: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Opnar dialogvindauget for tastatursnarvegar"
+msgstr "Opnar dialogvindauget for tastesnarvegar"
 
 #: ../app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
@@ -3947,7 +3952,7 @@ msgstr "_Modular"
 #: ../app/actions/dialogs-actions.c:269
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Opna dialogvindauget for modulhandteraren"
+msgstr "Opna dialogvindauget for modulhandsamaren"
 
 #: ../app/actions/dialogs-actions.c:274
 msgctxt "dialogs-action"
@@ -3982,7 +3987,7 @@ msgstr "_Finn og køyr ein kommando"
 #: ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
-msgstr "Finn kommmandoar etter nøkkelord og køyr dei"
+msgstr "Finn kommandoar etter nøkkelord og køyr dei"
 
 #: ../app/actions/dialogs-actions.c:357
 msgid "Tool_box"
@@ -3990,7 +3995,7 @@ msgstr "_Verktøykassa"
 
 #: ../app/actions/dialogs-actions.c:358
 msgid "Raise the toolbox"
-msgstr "Lyft verktøykassa på skjermen"
+msgstr "Lyft verktøykassa"
 
 #: ../app/actions/dialogs-actions.c:362
 msgid "New Tool_box"
@@ -3998,7 +4003,7 @@ msgstr "_Ny verktøykasse"
 
 #: ../app/actions/dialogs-actions.c:363
 msgid "Create a new toolbox"
-msgstr "Lag ei ny verktøykasse"
+msgstr "Opprett ei ny verktøykasse"
 
 #: ../app/actions/dock-actions.c:46
 msgctxt "dock-action"
@@ -4008,12 +4013,12 @@ msgstr "_Flytt til skjermen"
 #: ../app/actions/dock-actions.c:50
 msgctxt "dock-action"
 msgid "Close Dock"
-msgstr "Lukk samlevindauget"
+msgstr "Lukk dokkpanelet"
 
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "_Opna skjerm  …"
+msgstr "_Opna skjermen …"
 
 #: ../app/actions/dock-actions.c:56
 msgctxt "dock-action"
@@ -4028,12 +4033,12 @@ msgstr "_Vis biletutvalet"
 #: ../app/actions/dock-actions.c:70
 msgctxt "dock-action"
 msgid "Auto _Follow Active Image"
-msgstr "Følj gjeldande _bilete automatisk"
+msgstr "_Følg gjeldande bilete automatisk"
 
 #: ../app/actions/dockable-actions.c:49
 msgctxt "dockable-action"
 msgid "Dialogs Menu"
-msgstr "Dialogmenyen"
+msgstr "Dialogvindaugemenyen"
 
 #: ../app/actions/dockable-actions.c:54
 msgctxt "dockable-action"
@@ -4063,12 +4068,12 @@ msgstr "Løy_s fane"
 #: ../app/actions/dockable-actions.c:85
 msgctxt "preview-size"
 msgid "_Tiny"
-msgstr "Ekstra lite_n"
+msgstr "_Bitte lite"
 
 #: ../app/actions/dockable-actions.c:87
 msgctxt "preview-size"
 msgid "E_xtra Small"
-msgstr "Veldig l_iten"
+msgstr "_Ekstra liten"
 
 #: ../app/actions/dockable-actions.c:89
 msgctxt "preview-size"
@@ -4113,7 +4118,7 @@ msgstr "_Ikon"
 #: ../app/actions/dockable-actions.c:109
 msgctxt "tab-style"
 msgid "Current _Status"
-msgstr "Status _nå"
+msgstr "Status _no"
 
 #: ../app/actions/dockable-actions.c:111
 msgctxt "tab-style"
@@ -4138,17 +4143,17 @@ msgstr "Automatisk"
 #: ../app/actions/dockable-actions.c:127
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr "_Lås fanen til samlevindauget"
+msgstr "_Lås fana til dokkpanelet"
 
 #: ../app/actions/dockable-actions.c:129
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
-msgstr "Vern denne fanen mot å verta flytt på med musepeikaren"
+msgstr "Vern denne fana mot å verta flytt med musepeikaren"
 
 #: ../app/actions/dockable-actions.c:135
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
-msgstr "Vis _knapperekka"
+msgstr "Vis _knapperekkja"
 
 #: ../app/actions/dockable-actions.c:144
 msgctxt "dockable-action"
@@ -4188,7 +4193,7 @@ msgstr "Lyft bilete dersom det alt er opna"
 #: ../app/actions/documents-actions.c:58
 msgctxt "documents-action"
 msgid "File Open _Dialog"
-msgstr "Dialog for filopning"
+msgstr "Dialogvindauge for _filopning"
 
 #: ../app/actions/documents-actions.c:59
 msgctxt "documents-action"
@@ -4208,7 +4213,7 @@ msgstr "Kopier biletadressa til utklippstavla"
 #: ../app/actions/documents-actions.c:70
 msgctxt "documents-action"
 msgid "Show in _File Manager"
-msgstr "Vis i i _filhandsamaren"
+msgstr "Vis i _filhandsamaren"
 
 #: ../app/actions/documents-actions.c:71
 msgctxt "documents-action"
@@ -4238,22 +4243,22 @@ msgstr "Tøm heile dokumentloggen"
 #: ../app/actions/documents-actions.c:88
 msgctxt "documents-action"
 msgid "Recreate _Preview"
-msgstr "Last _førehandsvisinga på nytt"
+msgstr "Lag _førehandsvisinga på nytt"
 
 #: ../app/actions/documents-actions.c:89
 msgctxt "documents-action"
 msgid "Recreate preview"
-msgstr "Lastar førehandsvisinga på nytt"
+msgstr "Lagar ny førehandsvising"
 
 #: ../app/actions/documents-actions.c:94
 msgctxt "documents-action"
 msgid "Reload _all Previews"
-msgstr "Last _alle førehandsvisingane på nytt"
+msgstr "Lag _alle førehandsvisingane på nytt"
 
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Reload all previews"
-msgstr "Last alle førehandsvisingane på nytt"
+msgstr "Lag alle førehandsvisingane på nytt"
 
 #: ../app/actions/documents-actions.c:100
 msgctxt "documents-action"
@@ -4263,7 +4268,7 @@ msgstr "Fjern _hengande oppføringar"
 #: ../app/actions/documents-actions.c:102
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr "Fjern innslag der den tilhøyrande fila ikkje er tilgjengeleg"
+msgstr "Fjern innslag der den samsvarande fila ikkje er tilgjengeleg"
 
 #: ../app/actions/documents-commands.c:230
 msgid "Clear Document History"
@@ -4276,15 +4281,15 @@ msgstr "_Tøm"
 
 #: ../app/actions/documents-commands.c:253
 msgid "Clear the Recent Documents list?"
-msgstr "Fjerna den gjeldande dokumentloggen?"
+msgstr "Skal den gjeldande dokumentloggen fjernast?"
 
 #: ../app/actions/documents-commands.c:256
 msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
-"Tømmer du dokumentloggen, vil alle oppføringane forsvinna frå loggen for "
-"alltid i alle oppsett."
+"Viss du slettar dokumentloggen, vert alle bileta fjerna permanent frå lista "
+"over tidlegare brukte dokument."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -4304,7 +4309,7 @@ msgstr "_Kvitbalanse"
 #: ../app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
-msgstr "Automatisk korrektsjon av kvitbalanse"
+msgstr "Automatisk korreksjon av kvitbalanse"
 
 #: ../app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
@@ -4314,28 +4319,28 @@ msgstr "Slå _visinga av teikneobjekta av/på"
 #: ../app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr "Slå teikneelement _lenkja status av/på"
+msgstr "Slå _lenkja status for teikneelementa av/på"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:72
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawable"
-msgstr "_Lås pikslane til teikneobjekta"
+msgstr "_Lås pikslane til teikneelementa"
 
 #: ../app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr "Sperr pikslane i dette teiknemediet mot å verta endra"
+msgstr "Sperr pikslane i dette teikneelementet mot å verta endra"
 
 #: ../app/actions/drawable-actions.c:80
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawable"
-msgstr "Lås _plasseringa av teikneobjekta"
+msgstr "Lås _plasseringa av teikneelementa"
 
 #: ../app/actions/drawable-actions.c:82
 msgctxt "drawable-action"
 msgid "Keep the position on this drawable from being modified"
-msgstr "Hindra endring av plasseringa av teiknemediet"
+msgstr "Hindra endring av plasseringa av teikneelementa"
 
 #: ../app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
@@ -4345,7 +4350,7 @@ msgstr "Spegelvend _vassrett"
 #: ../app/actions/drawable-actions.c:92
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr "Spegelvend teiknemediet vassrett"
+msgstr "Spegelvend teikneelementet vassrett"
 
 #: ../app/actions/drawable-actions.c:97
 msgctxt "drawable-action"
@@ -4355,7 +4360,7 @@ msgstr "Spegelvend _loddrett"
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr "Spegelvend teiknemediet loddrett"
+msgstr "Spegelvend teikneelementet loddrett"
 
 #: ../app/actions/drawable-actions.c:106
 msgctxt "drawable-action"
@@ -4365,7 +4370,7 @@ msgstr "Roter 90° _med klokka"
 #: ../app/actions/drawable-actions.c:107
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
-msgstr "Roter teiknemediet 90° mot høgre"
+msgstr "Roter teikneelementet 90° mot høgre"
 
 #: ../app/actions/drawable-actions.c:112
 msgctxt "drawable-action"
@@ -4375,17 +4380,17 @@ msgstr "Roter _180°"
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
-msgstr "Snu teiknemediet opp/ned"
+msgstr "Snu teikneelementet opp/ned"
 
 #: ../app/actions/drawable-actions.c:118
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Roter 90° mot klokka"
+msgstr "Roter 90° m_ot klokka"
 
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
-msgstr "Roter teiknemediet 90° mot venstre"
+msgstr "Roter teikneelementet 90° mot venstre"
 
 #: ../app/actions/drawable-commands.c:78
 msgid "White Balance operates only on RGB color layers."
@@ -4409,17 +4414,17 @@ msgstr "Opprett ein ny dynamikk"
 #: ../app/actions/dynamics-actions.c:53
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Kopier dynamikk"
+msgstr "Dupliser _dynamikkane"
 
 #: ../app/actions/dynamics-actions.c:54
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "Lag ein kopi av denne dynamikken"
+msgstr "Dupliser desse dynamikkane"
 
 #: ../app/actions/dynamics-actions.c:59
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "Kopier dynamikkadressa"
+msgstr "Kopier _dynamikkadressa"
 
 #: ../app/actions/dynamics-actions.c:60
 msgctxt "dynamics-action"
@@ -4439,42 +4444,42 @@ msgstr "Vis adressa for dynamikkfila i filhandsamaren"
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr "_Slett dynamikken"
+msgstr "_Slett dynamikkane"
 
 #: ../app/actions/dynamics-actions.c:72
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr "Slett denne dynamikken"
+msgstr "Slett desse dynamikkane"
 
 #: ../app/actions/dynamics-actions.c:77
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
-msgstr "_Oppdater dynamikken"
+msgstr "_Oppdater dynamikkeane"
 
 #: ../app/actions/dynamics-actions.c:78
 msgctxt "dynamics-action"
 msgid "Refresh dynamics"
-msgstr "Oppdater dynamikken"
+msgstr "Oppdater dynamikkane"
 
 #: ../app/actions/dynamics-actions.c:86
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Rediger dynamikk  …"
+msgstr "_Rediger dynamikkane …"
 
 #: ../app/actions/dynamics-actions.c:87
 msgctxt "dynamics-action"
 msgid "Edit this dynamics"
-msgstr "Rediger dynamikk"
+msgstr "Rediger desse dynamikkane"
 
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Opnar menyen for redigering av penseldynamikken"
+msgstr "Opnar menyen for redigering av penseldynamikkane"
 
 #: ../app/actions/dynamics-editor-actions.c:51
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "Rediger gjeldande dynamikk"
+msgstr "Rediger gjeldande dynamikkar"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -4596,7 +4601,7 @@ msgstr "_Nytt bilete"
 #: ../app/actions/edit-actions.c:135
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "Klipp _ut namngjevne  …"
+msgstr "Klipp _ut namngjeve …"
 
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
@@ -4606,7 +4611,7 @@ msgstr "Flytt dei valde pikslane til ein namngjeve buffer"
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "_Kopier namngjeve  …"
+msgstr "_Kopier namngjeve …"
 
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
@@ -4617,17 +4622,17 @@ msgstr "Kopier dei valde pikslane til ein namngjeve buffer"
 #: ../app/actions/edit-actions.c:147
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Kopier _synlege namngjevne  …"
+msgstr "Kopier _synlege namngjevne …"
 
 #: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "Kopier det som er synleg i det valde området"
+msgstr "Kopier det som er synleg i det valde området til ein namngjeve buffer"
 
 #: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "_Lim inn namngjeve  …"
+msgstr "_Lim inn namngjeve …"
 
 #: ../app/actions/edit-actions.c:155
 msgctxt "edit-action"
@@ -4637,12 +4642,12 @@ msgstr "Lim inn innhaldet frå ein namngjeven buffer"
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
 msgid "Cl_ear"
-msgstr "_Slett utvalet"
+msgstr "_Slett"
 
 #: ../app/actions/edit-actions.c:161
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "Slett det markerte området"
+msgstr "Slett dei merkte pikslane"
 
 #: ../app/actions/edit-actions.c:169
 msgctxt "edit-action"
@@ -4715,7 +4720,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Fyll med _forgrunnsfarge"
+msgstr "Fyll med _FG-farge"
 
 #: ../app/actions/edit-actions.c:215
 msgctxt "edit-action"
@@ -4725,7 +4730,7 @@ msgstr "Fyll utvalet med forgrunnsfargen"
 #: ../app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
-msgstr "Fyll med _bakgrunnsfarge"
+msgstr "Fyll med _BG-farge"
 
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
@@ -4775,7 +4780,7 @@ msgstr "Tømmer du angreloggen for dette biletet, vil du få frigjort %s minne."
 
 #: ../app/actions/edit-commands.c:238
 msgid "Cut layer to the clipboard."
-msgstr "Klipp ut lagetr til utklippstavla."
+msgstr "Klipp ut laget til utklippstavla."
 
 #: ../app/actions/edit-commands.c:239
 msgid "Cut pixels to the clipboard."
@@ -4783,7 +4788,7 @@ msgstr "Klipp ut pikslar til utklippstavla."
 
 #: ../app/actions/edit-commands.c:275
 msgid "Copied layer to the clipboard."
-msgstr "Kopierte lag til utklippstavla."
+msgstr "Kopierte laget til utklippstavla."
 
 #: ../app/actions/edit-commands.c:276 ../app/actions/edit-commands.c:306
 msgid "Copied pixels to the clipboard."
@@ -4792,7 +4797,7 @@ msgstr "Kopierte pikslar til utklippstavla."
 #: ../app/actions/edit-commands.c:386 ../app/actions/edit-commands.c:629
 #: ../app/tools/gimpseamlessclonetool.c:297
 msgid "There is no image data in the clipboard to paste."
-msgstr "Det er ingen bilete i utklippstavla å lime inn."
+msgstr "Det er ingen bilete i utklippstavla å lima inn."
 
 #: ../app/actions/edit-commands.c:402
 msgid "Cut Named"
@@ -4869,7 +4874,7 @@ msgstr "_Uthev"
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "_Lagra feilloggen til fil  …"
+msgstr "_Lagra feilloggen til fil …"
 
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
@@ -4879,7 +4884,7 @@ msgstr "Skriv alle feilmeldingane til ei fil"
 #: ../app/actions/error-console-actions.c:69
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Lagra _utvalet i ei fil  …"
+msgstr "Lagra _utvalet i ei fil …"
 
 #: ../app/actions/error-console-actions.c:70
 msgctxt "error-console-action"
@@ -4961,7 +4966,7 @@ msgstr "Opna _tidlegare brukte"
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "_Opna  …"
+msgstr "_Opna …"
 
 #: ../app/actions/file-actions.c:78
 msgctxt "file-action"
@@ -4971,7 +4976,7 @@ msgstr "Opna ei biletfil"
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "Op_na som lag  …"
+msgstr "Op_na som lag …"
 
 #: ../app/actions/file-actions.c:84
 msgctxt "file-action"
@@ -4981,7 +4986,7 @@ msgstr "Opna ei biletfil som lag"
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "O_pna ei adresse  …"
+msgstr "O_pna ei adresse …"
 
 #: ../app/actions/file-actions.c:90
 msgctxt "file-action"
@@ -4991,7 +4996,7 @@ msgstr "Opna ei biletfil frå ei spesifisert adresse"
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
 msgid "Create _Template..."
-msgstr "Opprett _mal  …"
+msgstr "Opprett _mal …"
 
 #: ../app/actions/file-actions.c:96
 msgctxt "file-action"
@@ -5061,7 +5066,7 @@ msgstr "Lagra dette biletet"
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
 msgid "Save _As..."
-msgstr "L_agra som  …"
+msgstr "L_agra som …"
 
 #: ../app/actions/file-actions.c:141
 msgctxt "file-action"
@@ -5071,7 +5076,7 @@ msgstr "Lagra dette biletet med eit anna namn"
 #: ../app/actions/file-actions.c:146
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "Lagra ein _kopi  …"
+msgstr "Lagra ein _kopi …"
 
 #: ../app/actions/file-actions.c:148
 msgctxt "file-action"
@@ -5085,7 +5090,7 @@ msgstr ""
 #: ../app/actions/file-actions.c:154
 msgctxt "file-action"
 msgid "Save and Close..."
-msgstr "Lagra og lukk  …"
+msgstr "Lagra og lukk …"
 
 #: ../app/actions/file-actions.c:155
 msgctxt "file-action"
@@ -5095,7 +5100,7 @@ msgstr "Lagra dette biletet og lukk biletvindauget"
 #: ../app/actions/file-actions.c:160 ../app/actions/file-actions.c:334
 msgctxt "file-action"
 msgid "E_xport..."
-msgstr "_Eksporter  …"
+msgstr "_Eksporter …"
 
 #: ../app/actions/file-actions.c:161
 msgctxt "file-action"
@@ -5125,7 +5130,7 @@ msgstr "Eksporter biletet til ulike format som t.d. PNG eller JPEG"
 #: ../app/actions/file-actions.c:315
 msgctxt "file-action"
 msgid "_Save..."
-msgstr "_Lagra  …"
+msgstr "_Lagra …"
 
 #: ../app/actions/file-actions.c:320
 #, c-format
@@ -5182,7 +5187,7 @@ msgstr "_Tilbakestill"
 #: ../app/actions/file-commands.c:443
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "Tilbakestill «%s» til «%s»?"
+msgstr "Tilbakestilla «%s» til «%s»?"
 
 #: ../app/actions/file-commands.c:448
 msgid ""
@@ -5365,7 +5370,7 @@ msgstr "Auk mørke område i biletet"
 #: ../app/actions/filters-actions.c:173
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr "_Alien Map …"
+msgstr "_Alien-kart …"
 
 #: ../app/actions/filters-actions.c:178
 msgctxt "filters-action"
@@ -5380,7 +5385,7 @@ msgstr "L_upeeffekt …"
 #: ../app/actions/filters-actions.c:188
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
-msgstr "_Bayermatrise  …"
+msgstr "_Bayermatrise …"
 
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
@@ -6025,7 +6030,7 @@ msgstr ""
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
-msgstr "Meny for overgangshandteraren"
+msgstr "Meny for fargeovergangshandsamaren"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgctxt "gradient-editor-action"
@@ -8005,7 +8010,7 @@ msgstr "Rediger MyPaint-penselen"
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
-msgstr "Meny for paletthandteraren"
+msgstr "Meny for paletthandsamaren"
 
 #: ../app/actions/palette-editor-actions.c:48
 msgctxt "palette-editor-action"
@@ -8259,7 +8264,7 @@ msgstr "Rediger mønsterelementet"
 #: ../app/actions/plug-in-actions.c:84
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
-msgstr "Tilbakestill alle _filtra"
+msgstr "Tilbakestill alle _filtera"
 
 #: ../app/actions/plug-in-actions.c:85
 msgctxt "plug-in-action"
@@ -8268,7 +8273,7 @@ msgstr "Tilbakestill alle programtillegga til standardinnstillingane"
 
 #: ../app/actions/plug-in-commands.c:180
 msgid "Reset all Filters"
-msgstr "Tilbakestill alle filtra"
+msgstr "Tilbakestill alle filtera"
 
 #: ../app/actions/plug-in-commands.c:186
 #: ../app/actions/tool-options-commands.c:211 ../app/dialogs/fill-dialog.c:114
@@ -8287,7 +8292,7 @@ msgstr "_Tilbakestill"
 #: ../app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
-"Er du sikker på at du vil setja alle filtra tilbake til standardverdiane?"
+"Er du sikker på at du vil setja alle filtera tilbake til standardverdiane?"
 
 #: ../app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -8353,7 +8358,7 @@ msgstr "Bruk resultantfargen for alle synlege lag"
 #: ../app/actions/select-actions.c:44
 msgctxt "select-action"
 msgid "Selection Editor Menu"
-msgstr "Meny for utvalshandteraren"
+msgstr "Meny for utvalshandsamaren"
 
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
@@ -9475,7 +9480,7 @@ msgstr "Vektøyhardleik: Auk relativt"
 #: ../app/actions/tools-actions.c:535
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
-msgstr "Verktøyyvinging: Set"
+msgstr "Verktøytvinging: Set"
 
 #: ../app/actions/tools-actions.c:539
 msgctxt "tools-action"
@@ -10082,7 +10087,7 @@ msgstr "Vis eit oversiktsvindauge for dette biletet"
 #: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "_Visingsfiltra …"
+msgstr "_Visingsfiltera …"
 
 #: ../app/actions/view-actions.c:144
 msgctxt "view-action"
@@ -11357,8 +11362,8 @@ msgid ""
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"Vindaugetype for samlevindauge. Dette kan påverka måten vindaugehandteraren "
-"set opp og handterar desse vindauga på."
+"Vindaugetype for samlevindauge. Dette kan påverka måten vindaugehandsamaren "
+"set opp og handsamar desse vindauga på."
 
 #: ../app/config/gimprc-blurbs.h:161
 msgid "When enabled, the selected brush will be used for all tools."
@@ -13457,7 +13462,7 @@ msgstr "Ugyldig tal på penselspissar."
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
 msgid "Invalid brush hardness."
-msgstr "Ugyldig, penselhardleik."
+msgstr "Ugyldig penselhardleik."
 
 #: ../app/core/gimpbrushgenerated-load.c:242
 #, c-format
@@ -13877,7 +13882,7 @@ msgstr "Ikkje nok punkt å fylle"
 #: ../app/core/gimpdrawable-fill.c:267
 msgctxt "undo-type"
 msgid "Render Stroke"
-msgstr "Teikna strøk"
+msgstr "Teikna strok"
 
 #: ../app/core/gimpdrawable-gradient.c:125
 #: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1055
@@ -14842,7 +14847,7 @@ msgstr "MyPaint-fila er urimeleg stor, hopar over."
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
-msgstr "Klarte ikkje å deserialisere MyPaint-penselen."
+msgstr "Klarte ikkje deserialisera MyPaint-penselen."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
@@ -15256,7 +15261,7 @@ msgstr "Kaleidoskop"
 
 #: ../app/core/gimpsymmetry-mandala.c:162
 msgid "Reflect consecutive strokes"
-msgstr "Reflekter påfølgjande strøk"
+msgstr "Reflekter påfølgjande strok"
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
@@ -15268,7 +15273,7 @@ msgstr "Vassrett symmetri"
 
 #: ../app/core/gimpsymmetry-mirror.c:128
 msgid "Reflect the initial stroke across a horizontal axis"
-msgstr "Reflekter det første strøket over ein vassrett akse"
+msgstr "Reflekter det første stroket over ein vassrett akse"
 
 #: ../app/core/gimpsymmetry-mirror.c:135
 msgid "Vertical Symmetry"
@@ -15276,7 +15281,7 @@ msgstr "Loddrett symmetri"
 
 #: ../app/core/gimpsymmetry-mirror.c:136
 msgid "Reflect the initial stroke across a vertical axis"
-msgstr "Reflekter det første strøket over ein loddrett akse"
+msgstr "Reflekter det første stroket over ein loddrett akse"
 
 #: ../app/core/gimpsymmetry-mirror.c:143
 msgid "Central Symmetry"
@@ -15284,7 +15289,7 @@ msgstr "Midtsymmetri"
 
 #: ../app/core/gimpsymmetry-mirror.c:144
 msgid "Invert the initial stroke through a point"
-msgstr "Inverter det opphavlege strøket gjennom eit punkt"
+msgstr "Inverter det opphavlege stroket gjennom eit punkt"
 
 #: ../app/core/gimpsymmetry-mirror.c:152
 msgid "Disable brush reflection"
@@ -15328,7 +15333,7 @@ msgstr "X-skift mellom linjer (pikslar)"
 
 #: ../app/core/gimpsymmetry-tiling.c:139
 msgid "Max strokes X"
-msgstr "Maks strøk X"
+msgstr "Maks strok X"
 
 #: ../app/core/gimpsymmetry-tiling.c:140
 msgid "Maximum number of strokes on the X axis"
@@ -15336,7 +15341,7 @@ msgstr "Det høgaste talet på strok på X-aksen"
 
 #: ../app/core/gimpsymmetry-tiling.c:147
 msgid "Max strokes Y"
-msgstr "Maks strøk Y"
+msgstr "Maks strok Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:148
 msgid "Maximum number of strokes on the Y axis"
@@ -15893,7 +15898,7 @@ msgstr "Utval"
 
 #: ../app/dialogs/dialogs.c:392
 msgid "Selection Editor"
-msgstr "Utvalshandteraren"
+msgstr "Utvalshandsamaren"
 
 #: ../app/dialogs/dialogs.c:396
 msgid "Symmetry Painting"
@@ -16332,7 +16337,7 @@ msgstr "Killer GEGL frå det ytre rommet"
 
 #: ../app/dialogs/module-dialog.c:129
 msgid "Module Manager"
-msgstr "Modulhandterar"
+msgstr "Modulhandsamaren"
 
 #: ../app/dialogs/module-dialog.c:133
 msgid "_Refresh"
@@ -16662,7 +16667,7 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
-"Vi håpar du aldri får bruk for desse innstillingane, men som alle "
+"Me håpar du aldri får bruk for desse innstillingane, men som alle "
 "dataprogram har også GIMP feil og kan krasja av og til. Viss dette hender, "
 "kan du hjelpa oss ved å rapportera feila."
 
@@ -17454,7 +17459,7 @@ msgstr "Fyll omrisset av utvalet og dialogvindauga for fyll bane"
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2519
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr "Dialogvindauge for strøk av utval og bane"
+msgstr "Dialogvindauge for strok av utval og bane"
 
 #: ../app/dialogs/preferences-dialog.c:2542
 #: ../app/dialogs/preferences-dialog.c:2543
@@ -17581,7 +17586,7 @@ msgstr "_Kalibrer …"
 #: ../app/dialogs/preferences-dialog.c:2814
 #: ../app/dialogs/preferences-dialog.c:2815
 msgid "Window Management"
-msgstr "Vindaugehandtering"
+msgstr "Vindaugehandsaming"
 
 #: ../app/dialogs/preferences-dialog.c:2820
 msgid "Window Manager Hints"
@@ -17589,7 +17594,7 @@ msgstr "Vindaugetypar"
 
 #: ../app/dialogs/preferences-dialog.c:2826
 msgid "Hint for _docks and toolbox:"
-msgstr "_Hint for samlevindauge og verktøyboksen:"
+msgstr "_Hint for samlevindauge og verktøykassa:"
 
 #: ../app/dialogs/preferences-dialog.c:2829
 msgid "Focus"
@@ -18247,7 +18252,7 @@ msgstr "I_nterpolasjon:"
 
 #: ../app/dialogs/stroke-dialog.c:122
 msgid "Choose Stroke Style"
-msgstr "Vel strøkstil"
+msgstr "Vel strokstil"
 
 #: ../app/dialogs/stroke-dialog.c:129
 msgid "_Stroke"
@@ -18278,7 +18283,7 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:111
 msgid "The GIMP tips file could not be parsed!"
-msgstr "Klarte ikkje å tolka GIMP si tips-fil!"
+msgstr "Klarte ikkje tolka GIMP si tips-fil!"
 
 #: ../app/dialogs/tips-dialog.c:139
 msgid "GIMP Tip of the Day"
@@ -18360,7 +18365,7 @@ msgstr "_Stinamn:"
 
 #: ../app/dialogs/vectors-options-dialog.c:108
 msgid "Lock path _strokes"
-msgstr "Lås banestrøka"
+msgstr "Lås banestroka"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
 msgid "Lock path _position"
@@ -18952,7 +18957,7 @@ msgstr "Den gjeldande banen er låst."
 
 #: ../app/display/gimptoolpath.c:592
 msgid "Add Stroke"
-msgstr "Legg til strøk"
+msgstr "Legg til strok"
 
 #: ../app/display/gimptoolpath.c:616
 msgid "Add Anchor"
@@ -18980,7 +18985,7 @@ msgstr "Dra kurve"
 
 #: ../app/display/gimptoolpath.c:769
 msgid "Connect Strokes"
-msgstr "Kopla strøka saman"
+msgstr "Kopla stroka saman"
 
 #: ../app/display/gimptoolpath.c:801
 msgid "Drag Path"
@@ -19380,7 +19385,7 @@ msgstr "Normal (tradisjonell)"
 #: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
 msgid "Normal (l)"
-msgstr "Normal (I)"
+msgstr "Normal (1)"
 
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
@@ -19397,7 +19402,7 @@ msgstr "Bak (tradisjonell)"
 #: ../app/operations/operations-enums.c:161
 msgctxt "layer-mode"
 msgid "Behind (l)"
-msgstr "Bak (I)"
+msgstr "Bak (1)"
 
 #: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
@@ -19409,7 +19414,7 @@ msgstr "Multipliser (tradisjonell)"
 #: ../app/operations/operations-enums.c:165
 msgctxt "layer-mode"
 msgid "Multiply (l)"
-msgstr "Multipliser (I)"
+msgstr "Multipliser (1)"
 
 #: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
@@ -19421,7 +19426,7 @@ msgstr "Skjerm(tradisjonell)"
 #: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "Skjerm (I)"
+msgstr "Skjerm (1)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
@@ -19445,7 +19450,7 @@ msgstr "Differanse (tradisjonell)"
 #: ../app/operations/operations-enums.c:177
 msgctxt "layer-mode"
 msgid "Difference (l)"
-msgstr "Differanse (I)"
+msgstr "Differanse (1)"
 
 #: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
@@ -19457,7 +19462,7 @@ msgstr "Legg til (tradisjonell)"
 #: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Addition (l)"
-msgstr "Legg til (I)"
+msgstr "Legg til (1)"
 
 #: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
@@ -19469,7 +19474,7 @@ msgstr "Trekk frå (tradisjonell)"
 #: ../app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Subtract (l)"
-msgstr "Trekk frå (I)"
+msgstr "Trekk frå (1)"
 
 #: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
@@ -19481,7 +19486,7 @@ msgstr "Gjer berre mørkare (tradisjonell)"
 #: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "Gjer berre mørkare (I)"
+msgstr "Gjer berre mørkare (1)"
 
 #: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
@@ -19493,7 +19498,7 @@ msgstr "Gjer berre lysare (tradisjonell)"
 #: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "Gjer berre lysare (I)"
+msgstr "Gjer berre lysare (1)"
 
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
@@ -19517,7 +19522,7 @@ msgstr "HSV-metning (tradisjonell)"
 #: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "HSV Saturation (l)"
-msgstr "HSV-metning (I)"
+msgstr "HSV-metning (1)"
 
 #: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
@@ -19529,7 +19534,7 @@ msgstr "HSL farge (tradisjonell)"
 #: ../app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "HSL Color (l)"
-msgstr "HSL-farge (I)"
+msgstr "HSL-farge (1)"
 
 #: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
@@ -19541,7 +19546,7 @@ msgstr "HSV verdi (tradisjonell)"
 #: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "HSV Value (l)"
-msgstr "HSV-verdi (I)"
+msgstr "HSV-verdi (1)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
@@ -19553,7 +19558,7 @@ msgstr "Divider (tradisjonell)"
 #: ../app/operations/operations-enums.c:213
 msgctxt "layer-mode"
 msgid "Divide (l)"
-msgstr "Del opp (I)"
+msgstr "Divider (1)"
 
 #: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
@@ -19565,7 +19570,7 @@ msgstr "Avskugg (tradisjonell)"
 #: ../app/operations/operations-enums.c:217
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "Avskugg (I)"
+msgstr "Avskugg (1)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
@@ -19577,7 +19582,7 @@ msgstr "Etterbelys (tradisjonell)"
 #: ../app/operations/operations-enums.c:221
 msgctxt "layer-mode"
 msgid "Burn (l)"
-msgstr "Etterbelys (I)"
+msgstr "Etterbelys (1)"
 
 #: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
@@ -19589,7 +19594,7 @@ msgstr "Hardt lys (tradisjonell)"
 #: ../app/operations/operations-enums.c:225
 msgctxt "layer-mode"
 msgid "Hard light (l)"
-msgstr "Hardt lys (i)"
+msgstr "Hardt lys (1)"
 
 #: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
@@ -19601,7 +19606,7 @@ msgstr "Mjukt lys (tradisjonell)"
 #: ../app/operations/operations-enums.c:229
 msgctxt "layer-mode"
 msgid "Soft light (l)"
-msgstr "Mjukt lys (I)"
+msgstr "Mjukt lys (1)"
 
 #: ../app/operations/operations-enums.c:230
 msgctxt "layer-mode"
@@ -19613,7 +19618,7 @@ msgstr "Trekk ut korn (tradisjonell)"
 #: ../app/operations/operations-enums.c:233
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "Trekk ut korn (I)"
+msgstr "Trekk ut korn (1)"
 
 #: ../app/operations/operations-enums.c:234
 msgctxt "layer-mode"
@@ -19625,7 +19630,7 @@ msgstr "Flett korn (tradisjonell)"
 #: ../app/operations/operations-enums.c:237
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "Flett korn (I)"
+msgstr "Flett korn (1)"
 
 #: ../app/operations/operations-enums.c:238
 msgctxt "layer-mode"
@@ -19637,7 +19642,7 @@ msgstr "Slett farge (tradisjonell)"
 #: ../app/operations/operations-enums.c:241
 msgctxt "layer-mode"
 msgid "Color erase (l)"
-msgstr "Slett farge (I)"
+msgstr "Slett farge (1)"
 
 #: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
@@ -19732,7 +19737,7 @@ msgstr "HSV-verdi"
 #: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
 msgid "Divide"
-msgstr "Del opp"
+msgstr "Divider"
 
 #: ../app/operations/operations-enums.c:261
 msgctxt "layer-mode"
@@ -20515,7 +20520,7 @@ msgstr "Lager mjukare penselstrok"
 
 #: ../app/paint/gimppaintoptions.c:430
 msgid "Depth of smoothing"
-msgstr "Kor djup utglattinga skal vere"
+msgstr "Kor djup utglattinga skal vera"
 
 #: ../app/paint/gimppaintoptions.c:435
 msgid "Weight"
@@ -20541,7 +20546,7 @@ msgstr "Gni ut"
 #: ../app/paint/gimpsmudgeoptions.c:71
 msgctxt "smudge-tool"
 msgid "Rate"
-msgstr "Mengd"
+msgstr "Grad"
 
 #: ../app/paint/gimpsmudgeoptions.c:72
 msgid "The strength of smudging"
@@ -20994,7 +20999,7 @@ msgstr "Biletet «%s» (%d) inneheld ikkje prøvepunkt med ID %d"
 #: ../app/pdb/gimppdb-utils.c:841
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
-msgstr "Vektorobjektet %d inneheld ikkje strøk med ID %d"
+msgstr "Vektorobjektet %d inneheld ikkje strok med ID %d"
 
 #: ../app/pdb/gimppdb.c:412
 #, c-format
@@ -22377,7 +22382,7 @@ msgstr "Kjeldebiletet for å rekna ut strekteikninga"
 
 #: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
-msgstr "Sørste gaplengda"
+msgstr "Største gaplengda"
 
 #: ../app/tools/gimpbucketfilloptions.c:203
 msgid "Maximum gap (in pixels) in line art which can be closed"
@@ -22798,7 +22803,7 @@ msgstr "_Kurvetype:"
 
 #: ../app/tools/gimpcurvestool.c:751 ../app/tools/gimplevelstool.c:746
 msgid "Could not read header: "
-msgstr "Klarte ikkje å lesa header: "
+msgstr "Klarte ikkje lesa header: "
 
 #: ../app/tools/gimpcurvestool.c:825
 msgid "Use _old curves file format"
@@ -23107,7 +23112,7 @@ msgstr "Talet på gjentakingar som skal utførast"
 
 #: ../app/tools/gimpforegroundselectoptions.c:321
 msgid "Reset stroke width native size"
-msgstr "Tilbakestill strøkbreidda til den opphavlege for penselen"
+msgstr "Tilbakestill strokbreidda til den opphavlege for penselen"
 
 #: ../app/tools/gimpforegroundselecttool.c:193
 msgid "Foreground Select"
@@ -23206,7 +23211,7 @@ msgstr "GEGL-operasjon"
 
 #: ../app/tools/gimpgegltool.c:79
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr "GEGL-verktøyet: Vel ein GEGL-operasjon (32 bit fargehandtering)"
+msgstr "GEGL-verktøyet: Bruk ein vilkårleg GEGL-operasjon"
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
@@ -23215,7 +23220,7 @@ msgstr "_GEGL-operasjon …"
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:497
 msgid "Select an operation from the list above"
-msgstr "Vel ein operasjon frå nedtrekkslista ovanfor"
+msgstr "Vel ein operasjon frå lista ovanfor"
 
 #: ../app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
@@ -23365,7 +23370,7 @@ msgstr "Start-endepunkt"
 
 #: ../app/tools/gimpgradienttool-editor.c:1671
 msgid "End Endpoint"
-msgstr "Ende-endepunkt"
+msgstr "Slutt-endepunkt"
 
 #: ../app/tools/gimpgradienttool-editor.c:1724
 #, c-format
@@ -23900,7 +23905,7 @@ msgstr "Ved _høgd/2"
 #. The edge behavior frame
 #: ../app/tools/gimpoffsettool.c:534
 msgid "Edge Behavior"
-msgstr "Kanthandtering"
+msgstr "Kanthandsaming"
 
 #: ../app/tools/gimpoffsettool.c:541
 msgid "W_rap around"
@@ -23924,7 +23929,7 @@ msgstr "Tilleggsinngang 1"
 
 #: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr "Penselverktøyet: Teiknar mjuke penselstrøk"
+msgstr "Penselverktøyet: Teiknar mjuke penselstrok"
 
 #: ../app/tools/gimppaintbrushtool.c:59
 msgid "_Paintbrush"
@@ -23956,15 +23961,15 @@ msgstr "Tilbakestill hardleiken til den opphavlege for penselen"
 
 #: ../app/tools/gimppaintoptions-gui.c:209
 msgid "Reset force to default"
-msgstr "Tilbakestill penseltvinginga til standardverdiane"
+msgstr "Tilbakestill tvinginga til standardverdiane"
 
 #: ../app/tools/gimppaintoptions-gui.c:225
 msgid "Edit this dynamics"
-msgstr "Rediger denne dynamikken"
+msgstr "Rediger desse dynamikkane"
 
 #: ../app/tools/gimppaintoptions-gui.c:325
 msgid "Fade Options"
-msgstr "Innstillingar for uttoning"
+msgstr "Innstillingar for toning"
 
 #: ../app/tools/gimppaintoptions-gui.c:369
 msgid "Color Options"
@@ -24473,15 +24478,15 @@ msgid ""
 "press Enter"
 msgstr ""
 "Bestemmer om teksten skal leggjast i eit rektangel eller på ei ny linje når "
-"du trykker «Enter»"
+"du trykkjer «Enter»"
 
 #: ../app/tools/gimptextoptions.c:209
 msgid "Use editor"
-msgstr "Bruk teksthandteraren"
+msgstr "Bruk teksthandsamaren"
 
 #: ../app/tools/gimptextoptions.c:210
 msgid "Use an external editor window for text entry"
-msgstr "Bruk GIMPs teksthandterar for å skriva inn tekst"
+msgstr "Bruk ein ekstern teksthandsamar for å skriva inn tekst"
 
 #: ../app/tools/gimptextoptions.c:595
 msgid "Hinting:"
@@ -24556,7 +24561,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool-editor.c:1357
 msgid "GIMP Text Editor"
-msgstr "GIMP teksthandterar"
+msgstr "GIMP teksthandsamar"
 
 #: ../app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
@@ -25067,7 +25072,7 @@ msgstr "Grad"
 
 #: ../app/tools/gimpwarpoptions.c:165
 msgid "Periodic stroke rate"
-msgstr "Periodisk strøkfrekvens"
+msgstr "Periodisk strokfrekvens"
 
 #: ../app/tools/gimpwarpoptions.c:171
 msgid "Frames"
@@ -25105,7 +25110,7 @@ msgstr "_Forvrenging"
 
 #: ../app/tools/gimpwarptool.c:598 ../app/tools/gimpwarptool.c:610
 msgid "Warp Tool Stroke"
-msgstr "Forvreng verktøystrøka"
+msgstr "Forvreng verktøystroka"
 
 #: ../app/tools/gimpwarptool.c:769
 msgid "Cannot warp layer groups."
@@ -25113,7 +25118,7 @@ msgstr "Kan ikkje forvrenga laggrupper."
 
 #: ../app/tools/gimpwarptool.c:806
 msgid "No stroke events selected."
-msgstr "Inga strøkhending vald."
+msgstr "Inga strokhending vald."
 
 #: ../app/tools/gimpwarptool.c:828
 msgid "No warp to erase."
@@ -25129,7 +25134,7 @@ msgstr "Forvrenging"
 
 #: ../app/tools/gimpwarptool.c:1393
 msgid "Please add some warp strokes first."
-msgstr "Lag nokre forvrengingsstrøk først."
+msgstr "Lag nokre forvrengingsstrok først."
 
 #: ../app/tools/gimpwarptool.c:1407 ../app/tools/gimpwarptool.c:1444
 #, c-format
@@ -26777,8 +26782,8 @@ msgstr "Auto"
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
-"Når denne er slått på, vil dialogvindauget automatisk følgja biletet du "
-"arbeider med."
+"Når denne er slått på, vil dialogvindauget automatisk følja biletet du "
+"arbeidar med."
 
 #: ../app/widgets/gimpdrawabletreeview.c:122
 msgid "Lock pixels"
@@ -27129,7 +27134,7 @@ msgstr "Hent inn ikonbilete"
 
 #: ../app/widgets/gimpiconsizescale.c:123
 msgid "Guess icon size from resolution"
-msgstr "Giss ikonstorleiken ut frå oppløysinga"
+msgstr "Gjett ikonstorleiken ut frå oppløysinga"
 
 #: ../app/widgets/gimpiconsizescale.c:124
 msgid "Use icon size from the theme"
@@ -27905,7 +27910,7 @@ msgstr "Ikon"
 #: ../app/widgets/widgets-enums.c:214
 msgctxt "tab-style"
 msgid "Current status"
-msgstr "Status nå"
+msgstr "Gjeldande status"
 
 #: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
@@ -28515,7 +28520,7 @@ msgstr "uklare"
 #~ msgstr "Legg innstillingane i favorittar"
 
 #~ msgid "_Manage Settings..."
-#~ msgstr "_Handter innstillingane …"
+#~ msgstr "_Handsam innstillingane …"
 
 #~ msgid "Add Settings to Favorites"
 #~ msgstr "Legg innstillingane til i favorittlista"
@@ -28559,7 +28564,7 @@ msgstr "uklare"
 
 #~ msgctxt "config-action"
 #~ msgid "If possible, use GEGL for image processing"
-#~ msgstr "Dersom det er mogleg, bruk GEGL (32 bit RGBA) for bilethandteringa"
+#~ msgstr "Dersom det er mogleg, bruk GEGL (32 bit RGBA) for bilethandsaminga"
 
 #~ msgid "Equalize does not operate on indexed layers."
 #~ msgstr "«Utjamning» verkar ikkje på indekserte lag."
@@ -28881,7 +28886,7 @@ msgstr "uklare"
 #~ msgstr "Fargefølsemd:"
 
 #~ msgid "Add more strokes or press Enter to accept the selection"
-#~ msgstr "Legg til fleire strøk eller trykk <Enter> for å godta utvalet"
+#~ msgstr "Legg til fleire strok eller trykk <Enter> for å godta utvalet"
 
 #~ msgid "Mark foreground by painting on the object to extract"
 #~ msgstr "Marker forgrunnen ved å teikna på objektet som skal plukkast ut"
