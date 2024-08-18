@@ -492,8 +492,8 @@ register_buffer_procs (GimpPDB *pdb)
                                    g_param_spec_enum ("image-type",
                                                       "image type",
                                                       "The buffer image type",
-                                                      GIMP_TYPE_IMAGE_BASE_TYPE,
-                                                      GIMP_RGB,
+                                                      GIMP_TYPE_IMAGE_TYPE,
+                                                      GIMP_RGB_IMAGE,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

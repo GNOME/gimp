@@ -270,12 +270,12 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
  *
  * Since: 2.4
  **/
-GimpImageBaseType
+GimpImageType
 gimp_buffer_get_image_type (const gchar *buffer_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpImageBaseType image_type = 0;
+  GimpImageType image_type = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,

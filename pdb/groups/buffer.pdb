@@ -213,7 +213,7 @@ sub buffer_get_image_type {
     );
 
     @outargs = (
-	{ name => 'image_type', type => 'enum GimpImageBaseType',
+	{ name => 'image_type', type => 'enum GimpImageType',
           desc => "The buffer image type" }
     );
 

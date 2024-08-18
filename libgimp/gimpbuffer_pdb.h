@@ -32,14 +32,14 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar**           gimp_buffers_get_list      (const gchar *filter);
-gchar*            gimp_buffer_rename         (const gchar *buffer_name,
-                                              const gchar *new_name);
-gboolean          gimp_buffer_delete         (const gchar *buffer_name);
-gint              gimp_buffer_get_width      (const gchar *buffer_name);
-gint              gimp_buffer_get_height     (const gchar *buffer_name);
-gint              gimp_buffer_get_bytes      (const gchar *buffer_name);
-GimpImageBaseType gimp_buffer_get_image_type (const gchar *buffer_name);
+gchar**       gimp_buffers_get_list      (const gchar *filter);
+gchar*        gimp_buffer_rename         (const gchar *buffer_name,
+                                          const gchar *new_name);
+gboolean      gimp_buffer_delete         (const gchar *buffer_name);
+gint          gimp_buffer_get_width      (const gchar *buffer_name);
+gint          gimp_buffer_get_height     (const gchar *buffer_name);
+gint          gimp_buffer_get_bytes      (const gchar *buffer_name);
+GimpImageType gimp_buffer_get_image_type (const gchar *buffer_name);
 
 
 G_END_DECLS
