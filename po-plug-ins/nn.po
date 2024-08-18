@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-07-21 16:48+0000\n"
-"PO-Revision-Date: 2024-08-09 17:30+0200\n"
+"POT-Creation-Date: 2024-08-10 15:47+0000\n"
+"PO-Revision-Date: 2024-08-18 18:23+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -4599,7 +4599,7 @@ msgid ""
 msgstr ""
 "Markøren vart eksportert, men han inneheld ei eller fleire rammer større enn "
 "8 siffer.\n"
-"Vi festa det på %dpx. Du bør kontrollera eksportmarkøren."
+"Me festa det på %dpx. Du bør kontrollera eksportmarkøren."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2248
@@ -6809,7 +6809,7 @@ msgstr "Feil ved lesinga av pikseldata frå «%s"
 
 #: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
-msgstr "G3-Fax-bilete"
+msgstr "G3-Faks-bilete"
 
 #: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
 #, c-format
@@ -9023,7 +9023,7 @@ msgstr "Einsfarga bakgrunn"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Bruk gjennomsiktig bakgrunn. Berre penselstrøka vert synlege"
+msgstr "Bruk gjennomsiktig bakgrunn. Berre penselstroka vert synlege"
 
 #: ../plug-ins/gimpressionist/general.c:202
 msgid "Paint edges"
@@ -9031,7 +9031,7 @@ msgstr "Teikna kantane"
 
 #: ../plug-ins/gimpressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr "Penselstrøka skal halda fram til kanten av biletet"
+msgstr "Penselstroka skal halda fram til kanten av biletet"
 
 #: ../plug-ins/gimpressionist/general.c:212
 msgid "Tileable"
@@ -9047,7 +9047,7 @@ msgstr "Slagskugge"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
-msgstr "Legg til ein skuggeeffekt på kvart penselstrøk"
+msgstr "Legg til ein skuggeeffekt på kvart penselstrok"
 
 #: ../plug-ins/gimpressionist/general.c:239
 msgid "Edge darken:"
@@ -9055,7 +9055,7 @@ msgstr "Formørk ved kanten:"
 
 #: ../plug-ins/gimpressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr "Mengda av «formørking» av kanten til kvart penselstrøk"
+msgstr "Mengda av «formørking» av kanten til kvart penselstrok"
 
 #: ../plug-ins/gimpressionist/general.c:248
 msgid "Shadow darken:"
@@ -9143,7 +9143,7 @@ msgstr "Vinkelspennet (storleiken) på den første penselen som skal lagast"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "La lysverdien til området bestemma retninga på penselstrøka"
+msgstr "La lysverdien til området bestemma retninga på penselstroka"
 
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
@@ -9154,11 +9154,11 @@ msgstr "Radius"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "La avstanden frå biletsenteret bestemma retninga på penselstrøka"
+msgstr "La avstanden frå biletsenteret bestemma retninga på penselstroka"
 
 #: ../plug-ins/gimpressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
-msgstr "Lag ein tilfeldig retning for kvart penselstrøk"
+msgstr "Lag ein tilfeldig retning for kvart penselstrok"
 
 #: ../plug-ins/gimpressionist/orientation.c:167
 #: ../plug-ins/gimpressionist/size.c:170
@@ -9167,7 +9167,7 @@ msgstr "Radial"
 
 #: ../plug-ins/gimpressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "La retningen frå biletsenteret bestemma retninga på penselstrøka"
+msgstr "La retningen frå biletsenteret bestemma retninga på penselstroka"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
 #: ../plug-ins/gimpressionist/size.c:178
@@ -9177,11 +9177,11 @@ msgstr "Flygande"
 #: ../plug-ins/gimpressionist/orientation.c:176
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "Penselstrøka følgjer eit «flygande» mønster"
+msgstr "Penselstroka følgjer eit «flygande» mønster"
 
 #: ../plug-ins/gimpressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "La kuløren på området bestemma retninga på penselstrøka"
+msgstr "La kuløren på området bestemma retninga på penselstroka"
 
 #: ../plug-ins/gimpressionist/orientation.c:183
 #: ../plug-ins/gimpressionist/size.c:186
@@ -9199,7 +9199,7 @@ msgstr "Manuell"
 
 #: ../plug-ins/gimpressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
-msgstr "Bestem retninga på penselstrøka manuelt"
+msgstr "Bestem retninga på penselstroka manuelt"
 
 #: ../plug-ins/gimpressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
@@ -9356,11 +9356,11 @@ msgstr "Likt fordelt"
 
 #: ../plug-ins/gimpressionist/placement.c:88
 msgid "Place strokes randomly around the image"
-msgstr "Plaser strøka tilfeldig rundt om på biletet"
+msgstr "Plaser stroka tilfeldig rundt om på biletet"
 
 #: ../plug-ins/gimpressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
-msgstr "Plasserer strøka jamt utover biletet"
+msgstr "Plasserer stroka jamt utover biletet"
 
 #: ../plug-ins/gimpressionist/placement.c:101
 msgid "Centered"
@@ -9368,7 +9368,7 @@ msgstr "Sentrert"
 
 #: ../plug-ins/gimpressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
-msgstr "Fokuser penselstrøka rundt midten av biletet"
+msgstr "Fokuser penselstroka rundt midten av biletet"
 
 #: ../plug-ins/gimpressionist/placement.c:119
 msgid "Stroke _density:"
@@ -9376,7 +9376,7 @@ msgstr "_Dekkevne:"
 
 #: ../plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
-msgstr "Relativ dekkevne for penselstrøka"
+msgstr "Relativ dekkevne for penselstroka"
 
 #.
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
@@ -9473,24 +9473,24 @@ msgstr "Storleiken er avhengig av:"
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "La lysverdien i området bestemma storleiken på penselstrøket"
+msgstr "La lysverdien i området bestemma storleiken på penselstroket"
 
 #: ../plug-ins/gimpressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr "La avstanden frå biletsenteret bestemma storleiken på penselstrøket"
+msgstr "La avstanden frå biletsenteret bestemma storleiken på penselstroket"
 
 #: ../plug-ins/gimpressionist/size.c:167
 msgid "Selects a random size for each stroke"
-msgstr "Vel ein tilfeldig storleik for penselstrøket"
+msgstr "Vel ein tilfeldig storleik for penselstroket"
 
 #: ../plug-ins/gimpressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr "La retninga frå biletsenteret bestemma storleiken på penselstrøket"
+msgstr "La retninga frå biletsenteret bestemma storleiken på penselstroket"
 
 #: ../plug-ins/gimpressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
-msgstr "La kuløren i området bestemma storleiken på penselstrøket"
+msgstr "La kuløren i området bestemma storleiken på penselstroket"
 
 #: ../plug-ins/gimpressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
