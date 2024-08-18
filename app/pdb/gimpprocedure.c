@@ -1039,6 +1039,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
 
               return FALSE;
             }
+          g_clear_object (&old_value);
 
           /*  UTT-8 validate all strings  */
           if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING ||
