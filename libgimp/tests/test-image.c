@@ -27,9 +27,17 @@ gimp_c_test_run (GimpProcedure        *procedure,
   GIMP_TEST_END(n_images == 1 && images[0] == new_image);
   g_free (images);
 
-  GIMP_TEST_START("gimp_text_layer_new()");
+  GIMP_TEST_START("gimp_text_layer_new() with point unit");
   text_layer = gimp_text_layer_new (new_image, "hello world", gimp_context_get_font (),
                                     20, gimp_unit_point ());
+  GIMP_TEST_END(GIMP_IS_TEXT_LAYER (text_layer));
+
+  GIMP_TEST_START("gimp_image_insert_layer()");
+  GIMP_TEST_END(gimp_image_insert_layer (new_image, GIMP_LAYER (text_layer), NULL, 0));
+
+  GIMP_TEST_START("gimp_text_layer_new() with pixel unit");
+  text_layer = gimp_text_layer_new (new_image, "hello world", gimp_context_get_font (),
+                                    20, gimp_unit_pixel ());
   GIMP_TEST_END(GIMP_IS_TEXT_LAYER (text_layer));
 
   GIMP_TEST_START("gimp_image_insert_layer()");
