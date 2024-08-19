@@ -257,6 +257,8 @@ help in that regard:
      mypaint-brushes-1.0
      pangocairo           @PANGO_REQUIRED_VERSION@
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
+     PyGObject
+     Python               @PYTHON3_REQUIRED_VERSION@
      zlib
 
  22. Summary of optional packages:
@@ -279,7 +281,6 @@ help in that regard:
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
      OpenJPEG            @OPENJPEG_REQUIRED_VERSION@          JPEG 2000
-     Python              @PYTHON3_REQUIRED_VERSION@          Python 3 plug-ins
      qoi                 -              QOI
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
      vala                -              Vala plug-ins
