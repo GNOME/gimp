@@ -20,6 +20,17 @@
 #define __BMP_EXPORT_H__
 
 
+typedef enum
+{
+  RGB_565,
+  RGBA_5551,
+  RGB_555,
+  RGB_888,
+  RGBA_8888,
+  RGBX_8888
+} RGBMode;
+
+
 GimpPDBStatusType   export_image (GFile         *file,
                                   GimpImage     *image,
                                   GimpDrawable  *drawable,

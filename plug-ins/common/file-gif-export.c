@@ -217,14 +217,15 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                        0, G_MAXINT, 100,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "default-dispose",
-                                       _("Frame disposal _when unspecified"),
-                                       _("(animated gif) Default disposal type "
-                                         "(0=`don't care`, "
-                                         "1=combine, "
-                                         "2=replace)"),
-                                       0, 2, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "default-dispose",
+                                          _("Frame disposal _when unspecified"),
+                                          _("(animated gif) Default disposal type"),
+                                          gimp_choice_new_with_values ("unspecified", DISPOSE_UNSPECIFIED, _("I don't care"),                  NULL,
+                                                                       "combine",     DISPOSE_COMBINE,     _("Cumulative layers (combine)"),   NULL,
+                                                                       "replace",     DISPOSE_REPLACE,     _("One frame per layer (replace)"), NULL,
+                                                                       NULL),
+                                          "unspecified",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "as-animation",
                                            _("_As animation"),
@@ -795,13 +796,15 @@ export_image (GFile         *file,
                 "loop",              &config_loop,
                 "number-of-repeats", &config_number_of_repeats,
                 "default-delay",     &config_default_delay,
-                "default-dispose",   &config_default_dispose,
                 "force-delay",       &config_use_default_delay,
                 "force-dispose",     &config_use_default_dispose,
                 "as-animation",      &config_as_animation,
                 "save-comment",      &config_save_comment,
                 "gimp-comment",      &config_comment,
                 NULL);
+  config_default_dispose =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "default-dispose");
 
   /* The GIF spec says 7bit ASCII for the comment block. */
   if (config_save_comment && config_comment && strlen (config_comment))
@@ -1314,7 +1317,6 @@ save_dialog (GimpImage     *image,
     {
       GtkWidget    *grid;
       GtkWidget    *widget;
-      GtkListStore *store;
 
       grid = gtk_grid_new ();
       gtk_grid_set_column_spacing (GTK_GRID (grid), 1);
@@ -1350,16 +1352,9 @@ save_dialog (GimpImage     *image,
       gtk_grid_attach (GTK_GRID (grid), widget, 1, 1, 1, 1);
       gtk_widget_set_visible (widget, TRUE);
 
-      store = gimp_int_store_new (_("I don't care"),
-                                  DISPOSE_UNSPECIFIED,
-                                  _("Cumulative layers (combine)"),
-                                  DISPOSE_COMBINE,
-                                  _("One frame per layer (replace)"),
-                                  DISPOSE_REPLACE,
-                                  NULL);
-      widget = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                                    "default-dispose",
-                                                    GIMP_INT_STORE (store));
+      widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                 "default-dispose",
+                                                 G_TYPE_NONE);
       gtk_grid_attach (GTK_GRID (grid), widget, 0, 2, 2, 1);
       gtk_widget_set_visible (widget, TRUE);
 

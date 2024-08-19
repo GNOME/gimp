@@ -216,13 +216,18 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                                            TRUE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "rgb-format",
-                                       _("R_GB format"),
-                                       _("Export format for RGB images "
-                                         "(0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
-                                         "4=RGBA_8888, 5=RGBX_8888)"),
-                                       0, 5, 3,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "rgb-format",
+                                          _("R_GB format"),
+                                          _("Export format for RGB images"),
+                                          gimp_choice_new_with_values ("rgb-565",   RGB_565,   _("16 bit (R5 G6 B5)"),    NULL,
+                                                                       "rgba-5551", RGBA_5551, _("16 bit (A1 R5 G5 B5)"), NULL,
+                                                                       "rgb-555",   RGB_555,   _("16 bit (X1 R5 G5 B5)"), NULL,
+                                                                       "rgb-888",   RGB_888,   _("24 bit (R8 G8 B8)"),    NULL,
+                                                                       "rgba-8888", RGBA_8888, _("32 bit (A8 R8 G8 B8)"), NULL,
+                                                                       "rgbx-8888", RGBX_8888, _("32 bit (X8 R8 G8 B8"),  NULL,
+                                                                       NULL),
+                                          "rgb-888",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;

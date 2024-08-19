@@ -42,17 +42,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-typedef enum
-{
-  RGB_565,
-  RGBA_5551,
-  RGB_555,
-  RGB_888,
-  RGBA_8888,
-  RGBX_8888
-} RGBMode;
-
-
 static  void      write_image     (FILE          *f,
                                    guchar        *src,
                                    gint           width,
@@ -167,7 +156,7 @@ export_image (GFile         *file,
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         g_object_set (config,
-                      "rgb-format", RGBA_8888,
+                      "rgb-format", "rgba-8888",
                       "use-rle",    FALSE,
                       NULL);
       else
@@ -185,7 +174,7 @@ export_image (GFile         *file,
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         g_object_set (config,
-                      "rgb-format", RGB_888,
+                      "rgb-format", "rgb-888",
                       "use-rle",    FALSE,
                       NULL);
       else
@@ -289,9 +278,9 @@ export_image (GFile         *file,
             return GIMP_PDB_CANCEL;
         }
 
-      g_object_get (config,
-                    "rgb-format", &rgb_format,
-                    NULL);
+      rgb_format =
+        gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                             "rgb-format");
 
       /* mask_info_size is only set to non-zero for 16- and 32-bpp */
       switch (rgb_format)
@@ -327,8 +316,10 @@ export_image (GFile         *file,
   g_object_get (config,
                 "use-rle",           &use_rle,
                 "write-color-space", &write_color_space,
-                "rgb-format",        &rgb_format,
                 NULL);
+  rgb_format =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "rgb-format");
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -931,9 +922,8 @@ format_sensitive_callback (GObject *config,
   gint value;
   gint channels = GPOINTER_TO_INT (data);
 
-  g_object_get (config,
-                "rgb-format", &value,
-                NULL);
+  value = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                               "rgb-format");
 
   switch (value)
     {
@@ -954,9 +944,8 @@ config_notify (GObject          *config,
   gint    channels = GPOINTER_TO_INT (data);
   RGBMode format;
 
-  g_object_get (config,
-                "rgb-format", &format,
-                NULL);
+  format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "rgb-format");
 
   switch (format)
     {
@@ -966,7 +955,10 @@ config_notify (GObject          *config,
         {
           g_signal_handlers_block_by_func (config, config_notify, data);
 
-          g_object_set (config, "rgb-format", format - 1, NULL);
+          if (format == RGBA_5551)
+            g_object_set (config, "rgb-format", "rgb-565", NULL);
+          else if (format == RGBA_8888)
+            g_object_set (config, "rgb-format", "rgb-888", NULL);
 
           g_signal_handlers_unblock_by_func (config, config_notify, data);
         }
@@ -984,13 +976,12 @@ save_dialog (GimpProcedure *procedure,
              gint           channels,
              gint           bpp)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *toggle;
-  GtkWidget    *vbox;
-  GtkWidget    *combo;
-  GtkListStore *store;
-  gboolean      is_format_sensitive;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *toggle;
+  GtkWidget *vbox;
+  GtkWidget *combo;
+  gboolean   is_format_sensitive;
+  gboolean   run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
@@ -1023,16 +1014,8 @@ save_dialog (GimpProcedure *procedure,
                                     FALSE, "write-color-space");
 
   /* RGB Encoding Options */
-  store = gimp_int_store_new (_("16 bit (R5 G6 B5)"),    RGB_565,
-                              _("16 bit (A1 R5 G5 B5)"), RGBA_5551,
-                              _("16 bit (X1 R5 G5 B5)"), RGB_555,
-                              _("24 bit (R8 G8 B8)"),    RGB_888,
-                              _("32 bit (A8 R8 G8 B8)"), RGBA_8888,
-                              _("32 bit (X8 R8 G8 B8)"), RGBX_8888,
-                              NULL);
-  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "rgb-format",
-                                               GIMP_INT_STORE (store));
+  combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "rgb-format", G_TYPE_NONE);
   g_object_set (combo, "margin", 12, NULL);
 
   /* Determine if RGB Format combo should be initially sensitive */

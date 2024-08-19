@@ -316,11 +316,14 @@ tga_create_procedure (GimpPlugIn  *plug_in,
                                            TRUE,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "origin",
-                                       _("Ori_gin"),
-                                       _("Image origin (0 = top-left, 1 = bottom-left)"),
-                                       0, 1, ORIGIN_BOTTOM_LEFT,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "origin",
+                                          _("Ori_gin"),
+                                          _("Image origin"),
+                                          gimp_choice_new_with_values ("bottom-left", ORIGIN_BOTTOM_LEFT, _("Bottom left"), NULL,
+                                                                       "top-left",    ORIGIN_TOP_LEFT,    _("Top left"),    NULL,
+                                                                       NULL),
+                                          "bottom-left",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -1199,9 +1202,10 @@ export_image (GFile         *file,
   TgaOrigin      origin;
 
   g_object_get (config,
-                "rle",    &rle,
-                "origin", &origin,
+                "rle", &rle,
                 NULL);
+  origin = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "origin");
 
   buffer = gimp_drawable_get_buffer (drawable);
 
@@ -1425,19 +1429,12 @@ save_dialog (GimpImage     *image,
              GObject       *config)
 {
   GtkWidget    *dialog;
-  GtkListStore *store;
   GtkWidget    *vbox;
   gboolean      run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
-
-  store = gimp_int_store_new (_("Bottom left"), ORIGIN_BOTTOM_LEFT,
-                              _("Top left"),    ORIGIN_TOP_LEFT,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "origin", GIMP_INT_STORE (store));
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "tga-save-vbox",

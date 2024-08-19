@@ -282,19 +282,25 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                        8, 12, 8,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "pixel-format",
-                                       _("_Pixel format"),
-                                       _("Format of color sub-sampling"),
-                                       HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                                       HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "pixel-format",
+                                          _("_Pixel format"),
+                                          _("Format of color sub-sampling"),
+                                          gimp_choice_new_with_values ("rgb",    HEIFPLUGIN_EXPORT_FORMAT_RGB,    _("RGB"),    NULL,
+                                                                       "yuv444", HEIFPLUGIN_EXPORT_FORMAT_YUV444, _("YUV444"), NULL,
+                                                                       "yuv420", HEIFPLUGIN_EXPORT_FORMAT_YUV420, _("YUV420"), NULL,
+                                                                       NULL),
+                                          "yuv420",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "encoder-speed",
-                                       _("Enco_der speed"),
-                                       _("Tradeoff between speed and compression"),
-                                       HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
-                                       HEIFPLUGIN_ENCODER_SPEED_BALANCED,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "encoder-speed",
+                                          _("Enco_der speed"),
+                                          _("Tradeoff between speed and compression"),
+                                          gimp_choice_new_with_values ("slow",     HEIFPLUGIN_ENCODER_SPEED_SLOW,     _("Slow"),     NULL,
+                                                                       "balanced", HEIFPLUGIN_ENCODER_SPEED_BALANCED, _("Balanced"), NULL,
+                                                                       "fast",     HEIFPLUGIN_ENCODER_SPEED_FASTER,   _("Fast"),     NULL,
+                                                                       NULL),
+                                          "balanced",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "save-exif",
                                            _("Save Exi_f"),
@@ -397,19 +403,25 @@ heif_create_procedure (GimpPlugIn  *plug_in,
                                        8, 12, 8,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "pixel-format",
-                                       _("_Pixel format"),
-                                       _("Format of color sub-sampling"),
-                                       HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                                       HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "pixel-format",
+                                          _("_Pixel format"),
+                                          _("Format of color sub-sampling"),
+                                          gimp_choice_new_with_values ("rgb",    HEIFPLUGIN_EXPORT_FORMAT_RGB,    _("RGB"),    NULL,
+                                                                       "yuv444", HEIFPLUGIN_EXPORT_FORMAT_YUV444, _("YUV444"), NULL,
+                                                                       "yuv420", HEIFPLUGIN_EXPORT_FORMAT_YUV420, _("YUV420"), NULL,
+                                                                       NULL),
+                                          "yuv420",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "encoder-speed",
-                                       _("Enco_der speed"),
-                                       _("Tradeoff between speed and compression"),
-                                       HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
-                                       HEIFPLUGIN_ENCODER_SPEED_BALANCED,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "encoder-speed",
+                                          _("Enco_der speed"),
+                                          _("Tradeoff between speed and compression"),
+                                          gimp_choice_new_with_values ("slow",     HEIFPLUGIN_ENCODER_SPEED_SLOW,     _("Slow"),     NULL,
+                                                                       "balanced", HEIFPLUGIN_ENCODER_SPEED_BALANCED, _("Balanced"), NULL,
+                                                                       "fast",     HEIFPLUGIN_ENCODER_SPEED_FASTER,   _("Fast"),     NULL,
+                                                                       NULL),
+                                          "balanced",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "save-exif",
                                            _("Save Exi_f"),
@@ -1428,13 +1440,17 @@ export_image (GFile                        *file,
   g_object_get (config,
                 "lossless",           &lossless,
                 "quality",            &quality,
-                "pixel-format",       &pixel_format,
                 "save-bit-depth",     &save_bit_depth,
-                "encoder-speed",      &encoder_speed,
                 "save-color-profile", &save_profile,
                 "save-exif", &save_exif,
                 "save-xmp", &save_xmp,
                 NULL);
+  pixel_format =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "pixel-format");
+  encoder_speed =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "encoder-speed");
 
   if (compression == heif_compression_HEVC)
     {
@@ -2410,9 +2426,7 @@ save_dialog (GimpProcedure *procedure,
 {
   GtkWidget    *dialog;
   GtkWidget    *quality_scale;
-  GtkListStore *store_pixelformats;
   GtkListStore *store_bitdepths;
-  GtkListStore *store_speeds;
   gboolean      run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
@@ -2431,14 +2445,6 @@ save_dialog (GimpProcedure *procedure,
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  store_pixelformats = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
-                                           _("YUV444"), HEIFPLUGIN_EXPORT_FORMAT_YUV444,
-                                           _("YUV420"), HEIFPLUGIN_EXPORT_FORMAT_YUV420,
-                                           NULL);
-
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "pixel-format", GIMP_INT_STORE (store_pixelformats));
-
   store_bitdepths = gimp_int_store_new (_("8 bit/channel"),   8,
                                         _("10 bit/channel"), 10,
                                         _("12 bit/channel"), 12,
@@ -2446,14 +2452,6 @@ save_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-bit-depth", GIMP_INT_STORE (store_bitdepths));
-
-  store_speeds = gimp_int_store_new (_("Slow"), HEIFPLUGIN_ENCODER_SPEED_SLOW,
-                                     _("Balanced"), HEIFPLUGIN_ENCODER_SPEED_BALANCED,
-                                     _("Fast"), HEIFPLUGIN_ENCODER_SPEED_FASTER,
-                                     NULL);
-
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "encoder-speed", GIMP_INT_STORE (store_speeds));
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "lossless", "quality",

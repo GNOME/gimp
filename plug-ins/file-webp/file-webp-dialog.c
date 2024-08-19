@@ -62,11 +62,10 @@ save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget     *dialog;
-  GtkListStore  *store;
-  gint32         nlayers;
-  gboolean       animation_supported = FALSE;
-  gboolean       run;
+  GtkWidget *dialog;
+  gint32     nlayers;
+  gboolean   animation_supported = FALSE;
+  gboolean   run;
 
   g_free (gimp_image_get_layers (image, &nlayers));
 
@@ -75,17 +74,6 @@ save_dialog (GimpImage     *image,
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
-
-  /* Create the combobox containing the presets */
-  store = gimp_int_store_new (_("Default"), WEBP_PRESET_DEFAULT,
-                              _("Picture"), WEBP_PRESET_PICTURE,
-                              _("Photo"),   WEBP_PRESET_PHOTO,
-                              _("Drawing"), WEBP_PRESET_DRAWING,
-                              _("Icon"),    WEBP_PRESET_ICON,
-                              _("Text"),    WEBP_PRESET_TEXT,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "preset", GIMP_INT_STORE (store));
 
   /* Create scale for image and alpha quality */
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),

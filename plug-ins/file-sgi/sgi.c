@@ -196,11 +196,15 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
                                               NULL, NULL, NULL);
 
-      gimp_procedure_add_int_argument (procedure, "compression",
-                                       _("Compression _type"),
-                                       _("Compression level (0 = none, 1 = RLE, 2 = ARLE)"),
-                                       0, 2, SGI_COMP_RLE,
-                                       GIMP_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "compression",
+                                          _("Compression _type"),
+                                          _("Compression level"),
+                                          gimp_choice_new_with_values ("none", SGI_COMP_NONE, _("No compression"),                        NULL,
+                                                                       "rle",  SGI_COMP_RLE,  _("RLE compression"),                       NULL,
+                                                                       "arle", SGI_COMP_ARLE, _("Aggressive RLE (not supported by SGI)"), NULL,
+                                                                       NULL),
+                                          "rle",
+                                          G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -574,9 +578,9 @@ export_image (GFile        *file,
   guchar      *pptr;        /* Current pixel */
   gushort    **rows;        /* SGI image data */
 
-  g_object_get (config,
-                "compression", &compression,
-                NULL);
+  compression =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "compression");
 
   /*
    * Get the drawable for the current image...
@@ -709,24 +713,13 @@ save_dialog (GimpProcedure *procedure,
              GObject       *config,
              GimpImage     *image)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *vbox;
-  GtkListStore *store;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  gboolean   run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
                                              image);
-
-  store = gimp_int_store_new (_("No compression"),
-                              SGI_COMP_NONE,
-                              _("RLE compression"),
-                              SGI_COMP_RLE,
-                              _("Aggressive RLE (not supported by SGI)"),
-                              SGI_COMP_ARLE,
-                              NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "compression", GIMP_INT_STORE (store));
 
   vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                          "sgi-vbox", "compression", NULL);

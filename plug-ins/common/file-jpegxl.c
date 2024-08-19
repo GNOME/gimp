@@ -207,12 +207,21 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                                        8, 16, 8,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "speed",
-                                       _("Effort/S_peed"),
-                                       _("Encoder effort setting"),
-                                       1, 9,
-                                       7,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "speed",
+                                          _("Effort/S_peed"),
+                                          _("Encoder effort setting"),
+                                          gimp_choice_new_with_values ("lightning", 1, _("lightning (fastest)"), NULL,
+                                                                       "thunder",   2, _("thunder"),             NULL,
+                                                                       "falcon",    3, _("falcon (faster)"),     NULL,
+                                                                       "cheetah",   4, _("cheetah"),             NULL,
+                                                                       "hare",      5, _("hare"),                NULL,
+                                                                       "wombat",    6, _("wombat"),              NULL,
+                                                                       "squirrel",  7, _("squirrel"),            NULL,
+                                                                       "kitten",    8, _("kitten"),              NULL,
+                                                                       "tortoise",  9, _("tortoise (slower)"),   NULL,
+                                                                       NULL),
+                                          "squirrel",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "uses-original-profile",
                                            _("Save ori_ginal profile"),
@@ -1399,13 +1408,14 @@ export_image (GFile               *file,
   g_object_get (config,
                 "lossless",              &lossless,
                 "compression",           &compression,
-                "speed",                 &speed,
                 "save-bit-depth",        &bit_depth,
                 "cmyk",                  &cmyk,
                 "uses-original-profile", &uses_original_profile,
                 "save-exif",             &save_exif,
                 "save-xmp",              &save_xmp,
                 NULL);
+  speed = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                               "speed");
 
   if (lossless || cmyk)
     {
@@ -2024,20 +2034,6 @@ save_dialog (GimpImage     *image,
                           compression_scale, "sensitive",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
-
-  store = gimp_int_store_new (_("lightning (fastest)"), 1,
-                              _("thunder"),             2,
-                              _("falcon (faster)"),     3,
-                              _("cheetah"),             4,
-                              _("hare"),                5,
-                              _("wombat"),              6,
-                              _("squirrel"),            7,
-                              _("kitten"),              8,
-                              _("tortoise (slower)"),   9,
-                              NULL);
-
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "speed", GIMP_INT_STORE (store));
 
   store = gimp_int_store_new (_("8 bit/channel"),   8,
                               _("16 bit/channel"), 16,

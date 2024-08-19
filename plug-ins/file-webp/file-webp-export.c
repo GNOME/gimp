@@ -161,12 +161,13 @@ save_layer (GFile         *file,
   gboolean          use_sharp_yuv;
 
   g_object_get (config,
-                "preset",        &preset,
                 "lossless",      &lossless,
                 "quality",       &quality,
                 "alpha-quality", &alpha_quality,
                 "use-sharp-yuv", &use_sharp_yuv,
                 NULL);
+  preset = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "preset");
 
   webp_decide_output (image, config, &profile, &out_linear);
   if (profile)
@@ -543,18 +544,19 @@ save_animation (GFile         *file,
   g_return_val_if_fail (n_drawables > 0, FALSE);
 
   g_object_get (config,
-                "preset",             &preset,
-                "lossless",           &lossless,
-                "animation",          &animation,
-                "animation-loop",     &loop,
-                "minimize-size",      &minimize_size,
-                "keyframe-distance",  &keyframe_distance,
-                "quality",            &quality,
-                "alpha-quality",      &alpha_quality,
-                "default-delay",      &default_delay,
-                "force-delay",        &force_delay,
-                "use-sharp-yuv",      &use_sharp_yuv,
+                "lossless",          &lossless,
+                "animation",         &animation,
+                "animation-loop",    &loop,
+                "minimize-size",     &minimize_size,
+                "keyframe-distance", &keyframe_distance,
+                "quality",           &quality,
+                "alpha-quality",     &alpha_quality,
+                "default-delay",     &default_delay,
+                "force-delay",       &force_delay,
+                "use-sharp-yuv",     &use_sharp_yuv,
                 NULL);
+  preset = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                                "preset");
 
   layers = gimp_image_list_layers (image);
 

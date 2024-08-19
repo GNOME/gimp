@@ -154,8 +154,8 @@ webp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("WebP image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in the WebP image format",
-                                        "Saves files in the WebP image format",
+                                        _("Saves files in the WebP image format"),
+                                        _("Saves files in the WebP image format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Nathan Osman, Ben Touchette",
@@ -177,12 +177,18 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA,
                                               export_edit_options, NULL, NULL);
 
-      gimp_procedure_add_int_argument (procedure, "preset",
-                                       _("Source _type"),
-                                       _("WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
-                                         "Icon=4, Text=5)"),
-                                       0, 5, WEBP_PRESET_DEFAULT,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "preset",
+                                          _("Source _type"),
+                                          _("WebP encoder preset"),
+                                          gimp_choice_new_with_values ("default", WEBP_PRESET_DEFAULT, _("Default"), NULL,
+                                                                       "picture", WEBP_PRESET_PICTURE, _("Picture"), NULL,
+                                                                       "photo",   WEBP_PRESET_PHOTO,   _("Photo"),   NULL,
+                                                                       "drawing", WEBP_PRESET_DRAWING, _("Drawing"), NULL,
+                                                                       "icon",    WEBP_PRESET_ICON,    _("Icon"),    NULL,
+                                                                       "text",    WEBP_PRESET_TEXT,    _("Text"),    NULL,
+                                                                       NULL),
+                                          "default",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "lossless",
                                            _("L_ossless"),

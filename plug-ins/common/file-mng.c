@@ -319,20 +319,25 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                                        1, G_MAXINT, 100,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "default-chunks",
-                                       _("Default chunks t_ype"),
-                                       _("(ANIMATED MNG) Default chunks type "
-                                         "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
-                                         "2 = All PNG; 3 = All JNG)"),
-                                       0, 3, CHUNKS_PNG_D,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "default-chunks",
+                                          _("Default chunks t_ype"),
+                                          _("(ANIMATED MNG) Default chunks type"),
+                                          gimp_choice_new_with_values ("png-delta", CHUNKS_PNG_D, _("PNG + delta PNG"), NULL,
+                                                                       "jng-delta", CHUNKS_JNG_D, _("JNG + delta PNG"), NULL,
+                                                                       "all-png",   CHUNKS_PNG,   _("All PNG"),         NULL,
+                                                                       "all-jng",   CHUNKS_JNG,   _("All JNG"),         NULL,
+                                                                       NULL),
+                                          "png-delta",
+                                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "default-dispose",
-                                       _("De_fault frame disposal"),
-                                       _("(ANIMATED MNG) Default dispose type "
-                                         "(0 = combine; 1 = replace)"),
-                                       0, 1, DISPOSE_COMBINE,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_choice_argument (procedure, "default-dispose",
+                                          _("De_fault frame disposal"),
+                                          _("(ANIMATED MNG) Default dispose type"),
+                                          gimp_choice_new_with_values ("combine", DISPOSE_COMBINE, _("Combine"), NULL,
+                                                                       "replace", DISPOSE_REPLACE, _("Replace"), NULL,
+                                                                       NULL),
+                                          "combine",
+                                          G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "bkgd",
                                            _("Save _background color"),
@@ -807,13 +812,17 @@ mng_export_image (GFile         *file,
                 "jpeg-smoothing",  &config_jpeg_smoothing,
                 "loop",            &config_loop,
                 "default-delay",   &config_default_delay,
-                "default-chunks",  &config_default_chunks,
-                "default-dispose", &config_default_dispose,
                 "bkgd",            &config_bkgd,
                 "gama",            &config_gama,
                 "phys",            &config_phys,
                 "time",            &config_time,
                 NULL);
+  config_default_dispose =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "default-dispose");
+  config_default_chunks =
+    gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
+                                         "default-chunks");
 
   layers = gimp_image_get_layers (image, &num_layers);
 
@@ -1566,15 +1575,14 @@ mng_save_dialog (GimpImage     *image,
                  GimpProcedure *procedure,
                  GObject       *config)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *frame;
-  GtkWidget    *hbox;
-  GtkListStore *store;
-  GtkWidget    *combo;
-  GtkWidget    *label;
-  GtkWidget    *scale;
-  gint          num_layers;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *frame;
+  GtkWidget *hbox;
+  GtkWidget *combo;
+  GtkWidget *label;
+  GtkWidget *scale;
+  gint       num_layers;
+  gboolean   run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
@@ -1594,27 +1602,25 @@ mng_save_dialog (GimpImage     *image,
   g_free (gimp_image_get_layers (image, &num_layers));
 
   if (num_layers == 1)
-    store = gimp_int_store_new (_("PNG"), CHUNKS_PNG_D,
-                                _("JNG"), CHUNKS_JNG_D,
-                                NULL);
-  else
-    store = gimp_int_store_new (_("PNG + delta PNG"), CHUNKS_PNG_D,
-                                _("JNG + delta PNG"), CHUNKS_JNG_D,
-                                _("All PNG"),         CHUNKS_PNG,
-                                _("All JNG"),         CHUNKS_JNG,
-                                NULL);
+    {
+      GimpParamSpecChoice *cspec;
 
-  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "default-chunks",
-                                               GIMP_INT_STORE (store));
+      cspec =
+        GIMP_PARAM_SPEC_CHOICE (g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                              "default-chunks"));
+
+      gimp_choice_set_sensitive (cspec->choice, "all-png", FALSE);
+      gimp_choice_set_sensitive (cspec->choice, "all-jng", FALSE);
+    }
+
+  combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "default-chunks",
+                                            G_TYPE_NONE);
   gtk_widget_set_margin_bottom (combo, 6);
 
-  store = gimp_int_store_new (_("Combine"), DISPOSE_COMBINE,
-                              _("Replace"), DISPOSE_REPLACE,
-                              NULL);
-  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "default-dispose",
-                                               GIMP_INT_STORE (store));
+  combo = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "default-dispose",
+                                            G_TYPE_NONE);
   gtk_widget_set_margin_bottom (combo, 6);
 
   scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
