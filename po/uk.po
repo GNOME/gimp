@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-18 15:48+0000\n"
-"PO-Revision-Date: 2024-08-18 19:45+0300\n"
+"POT-Creation-Date: 2024-08-19 15:23+0000\n"
+"PO-Revision-Date: 2024-08-19 21:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -13523,7 +13523,7 @@ msgstr "Помилка завантаження «%s»: "
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:434
+#: app/xcf/xcf.c:435
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -13874,7 +13874,7 @@ msgstr "Блокування позицій для груп шарів було 
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Блокування каналу прозорості для груп шарів було додано у %s"
 
-#: app/core/gimpimage.c:2921 app/core/gimpimage.c:2953
+#: app/core/gimpimage.c:2921 app/core/gimpimage.c:2957
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Блокування видимості було додано у %s"
@@ -13889,74 +13889,74 @@ msgstr "Формат даних щодо шрифту у текстовому ш
 msgid "Layer effects were added in %s"
 msgstr "До %s було додано ефекти шарів"
 
-#: app/core/gimpimage.c:2962
+#: app/core/gimpimage.c:2966
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Було додано позначення декількох контурів у %s"
 
-#: app/core/gimpimage.c:2974
+#: app/core/gimpimage.c:2978
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Зберігання міток кольорів у контурі було додано у %s"
 
-#: app/core/gimpimage.c:2981
+#: app/core/gimpimage.c:2985
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Зберігання блокувань у контурі було додано у %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:2999
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: app/core/gimpimage.c:3003
+#: app/core/gimpimage.c:3007
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: app/core/gimpimage.c:3011
+#: app/core/gimpimage.c:3015
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: app/core/gimpimage.c:3028
+#: app/core/gimpimage.c:3032
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: app/core/gimpimage.c:3035
+#: app/core/gimpimage.c:3039
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: app/core/gimpimage.c:3052
+#: app/core/gimpimage.c:3056
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: app/core/gimpimage.c:3063
+#: app/core/gimpimage.c:3067
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Набір записів та пошук за взірцем у назві запису було додано у %s"
 
-#: app/core/gimpimage.c:3069
+#: app/core/gimpimage.c:3073
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: app/core/gimpimage.c:3181
+#: app/core/gimpimage.c:3187
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: app/core/gimpimage.c:3233
+#: app/core/gimpimage.c:3239
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: app/core/gimpimage.c:4286
+#: app/core/gimpimage.c:4292
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13964,47 +13964,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: app/core/gimpimage.c:4348
+#: app/core/gimpimage.c:4354
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: app/core/gimpimage.c:4393
+#: app/core/gimpimage.c:4399
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: app/core/gimpimage.c:5228
+#: app/core/gimpimage.c:5234
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: app/core/gimpimage.c:5272 app/core/gimpimage.c:5303
+#: app/core/gimpimage.c:5278 app/core/gimpimage.c:5309
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: app/core/gimpimage.c:5297
+#: app/core/gimpimage.c:5303
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: app/core/gimpimage.c:5805
+#: app/core/gimpimage.c:5811
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: app/core/gimpimage.c:5835 app/core/gimpimage.c:5860
+#: app/core/gimpimage.c:5841 app/core/gimpimage.c:5866
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: app/core/gimpimage.c:5920
+#: app/core/gimpimage.c:5926
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: app/core/gimpimage.c:5955 app/core/gimpimage.c:5963
+#: app/core/gimpimage.c:5961 app/core/gimpimage.c:5969
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -19378,11 +19378,11 @@ msgstr "Натисніть і перетягніть, щоб пересунут�
 msgid "Click-Drag to shear"
 msgstr "Натисніть і перетягніть для перекошування"
 
-#: app/file/file-open.c:140 app/file/file-save.c:126
+#: app/file/file-open.c:140 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "Не є звичайним файлом"
 
-#: app/file/file-open.c:149 app/file/file-save.c:135
+#: app/file/file-open.c:149 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "Доступ заборонений"
 
@@ -19433,15 +19433,15 @@ msgstr "Завантажено %s даних зображення"
 msgid "Uploaded %s of image data"
 msgstr "Вивантажено %s даних зображення"
 
-#: app/file/file-save.c:99
+#: app/file/file-save.c:105
 msgid "There is no active layer to save"
 msgstr "Немає активного шару для збереження"
 
-#: app/file/file-save.c:119
+#: app/file/file-save.c:125
 msgid "Failed to get file information"
 msgstr "Не вдалось отримати інформацію про файл"
 
-#: app/file/file-save.c:290
+#: app/file/file-save.c:297
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Доповненню %s не вдалось зберегти зображення"
@@ -21381,53 +21381,41 @@ msgstr ""
 
 #: app/pdb/gimpprocedure.c:961
 #, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr ""
-"Підпрограмою «%s» повернуто gimp_unit_pixel(), а GimpUnit повернуто значення"
-" %d, яке рівне «%s». Повернуте значення не дозволяє використовувати"
-" одиницю-піксель."
+"Підпрограмою «%s» повернуто gimp_unit_pixel(), а GimpUnit повернуто значення "
+"%d, яке рівне «%s». Повернуте значення не дозволяє використовувати одиницю-"
+"піксель."
 
 #: app/pdb/gimpprocedure.c:970
 #, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
 msgstr ""
-"Підпрограмою «%s» повернуто gimp_unit_percent(), а GimpUnit повернуто"
-" значення %d, яке рівне «%s». Повернуте значення не дозволяє використовувати"
-" одиницю-відсоток."
+"Підпрограмою «%s» повернуто gimp_unit_percent(), а GimpUnit повернуто "
+"значення %d, яке рівне «%s». Повернуте значення не дозволяє використовувати "
+"одиницю-відсоток."
 
 #: app/pdb/gimpprocedure.c:982
 #, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 msgstr ""
-"Підпрограму «%s» було викликано з `gimp_unit_pixel()` для аргументу GimpUnit"
-" %d «%s». Цей аргумент не дозволяє використання одиниці-пікселя."
+"Підпрограму «%s» було викликано з `gimp_unit_pixel()` для аргументу GimpUnit "
+"%d «%s». Цей аргумент не дозволяє використання одиниці-пікселя."
 
 #: app/pdb/gimpprocedure.c:992
 #, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr ""
-"Підпрограму «%s» було викликано з `gimp_unit_percent()` для аргументу"
-" GimpUnit %d «%s». Цей аргумент не дозволяє використання одиниці-відсотка."
+"Підпрограму «%s» було викликано з `gimp_unit_percent()` для аргументу "
+"GimpUnit %d «%s». Цей аргумент не дозволяє використання одиниці-відсотка."
 
 #: app/pdb/gimpprocedure.c:1012
 #, c-format
@@ -21447,12 +21435,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: app/pdb/gimpprocedure.c:1081
+#: app/pdb/gimpprocedure.c:1082
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: app/pdb/gimpprocedure.c:1091
+#: app/pdb/gimpprocedure.c:1092
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -28940,49 +28928,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: app/xcf/xcf.c:123 app/xcf/xcf.c:179
+#: app/xcf/xcf.c:124 app/xcf/xcf.c:180
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: app/xcf/xcf.c:256 app/xcf/xcf.c:345
+#: app/xcf/xcf.c:257 app/xcf/xcf.c:346
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: app/xcf/xcf.c:267
+#: app/xcf/xcf.c:268
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: app/xcf/xcf.c:309
+#: app/xcf/xcf.c:310
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: app/xcf/xcf.c:368
+#: app/xcf/xcf.c:369
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: app/xcf/xcf.c:376
+#: app/xcf/xcf.c:377
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: app/xcf/xcf.c:394
+#: app/xcf/xcf.c:395
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: app/xcf/xcf.c:482
+#: app/xcf/xcf.c:483
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
 
-#: app/xcf/xcf-load.c:294
+#: app/xcf/xcf-load.c:295
 msgid "Invalid image mode and precision combination."
 msgstr "Хибне поєднання режиму зображення і точності."
 
-#: app/xcf/xcf-load.c:501
+#: app/xcf/xcf-load.c:502
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28991,7 +28979,7 @@ msgstr ""
 "Виявлено пошкоджені паразитом 'exif-data'.\n"
 "Дані exif не можна перенести: %s"
 
-#: app/xcf/xcf-load.c:540
+#: app/xcf/xcf-load.c:541
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28999,7 +28987,7 @@ msgstr ""
 "Виявлено пошкодження додатка «gimp-metadata».\n"
 "Не вдалося перенести дані XMP."
 
-#: app/xcf/xcf-load.c:564
+#: app/xcf/xcf-load.c:565
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -29012,32 +29000,32 @@ msgstr ""
 "Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні. "
 "Повідомлення про помилку: %s."
 
-#: app/xcf/xcf-load.c:904
+#: app/xcf/xcf-load.c:905
 msgid "Linked Layers"
 msgstr "Пов'язані шари"
 
-#: app/xcf/xcf-load.c:914
+#: app/xcf/xcf-load.c:915
 msgid "Linked Channels"
 msgstr "Пов'язані канали"
 
-#: app/xcf/xcf-load.c:939
+#: app/xcf/xcf-load.c:940
 msgid "Linked Paths"
 msgstr "Пов'язані контури"
 
-#: app/xcf/xcf-load.c:986
+#: app/xcf/xcf-load.c:987
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: app/xcf/xcf-load.c:1006
+#: app/xcf/xcf-load.c:1007
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: app/xcf/xcf-load.c:1163
+#: app/xcf/xcf-load.c:1164
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29046,6 +29034,34 @@ msgstr ""
 "Попередження: формат файла XCF версії 0\n"
 "неправильно зберігає індексовані мапи кольорів.\n"
 "Поточна мапа буде замінена на мапу у градаціях сірого."
+
+#: app/xcf/xcf-load.c:2523
+#, c-format
+msgid ""
+"XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
+"property was ignored and the filter may not render properly.\n"
+"This should not happen. You should report the issue to the filter's "
+"developers."
+msgstr ""
+"Попередження щодо XCF: у версії %s фільтра «%s» немає властивості %s."
+" Властивість було проігноровано, обробка фільтра може бути неналежною.\n"
+"Цього не повинно було статися. Вам слід повідомити про цю проблему"
+" розробникам фільтра."
+
+#: app/xcf/xcf-load.c:3408
+#, c-format
+msgid ""
+"XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
+"discarded.\n"
+"It either means that you are using an old version of the filter or that it "
+"was updated without proper version management. In the latter case, you "
+"should report the issue to the filter's developers."
+msgstr ""
+"Попередження щодо XCF: підтримки версії %s фільтра «%s» не передбачено."
+" Фільтр відкинуто.\n"
+"Це означає або те, що ви використовуєте застарілу версію фільтра, або те, що"
+" фільтр було оновлено без належного керування версіями. В останньому випадку"
+" вам слід повідомити про цю проблему розробникам фільтра."
 
 #: app/xcf/xcf-read.c:195
 msgid "Invalid UTF-8 string in XCF file"
