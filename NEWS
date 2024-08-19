@@ -41,6 +41,10 @@ Core:
       in the layers list.
     * layers-select-flattened-next: moving the selection down visually
       in the layers list.
+  - The default icon for GimpViewable is now gimp-image rather than
+    dialog-question. In particular this shows up in some interfaces like
+    GEGL filters with aux nodes (when the aux input has not been chosen
+    yet).
 
 Tools:
 
@@ -51,8 +55,12 @@ Tools:
   - Scissors Select: consistently name the tool "Scissors Select" by
     dropping the alternate name "Intelligent Scissors" which was only
     used in menus.
-  - GEGL filters: new "Merge filter" checkbox in the dialog to directly
-    apply a filter destructively (like in 2.10 and older).
+  - GEGL filters:
+    * new "Merge filter" checkbox in the dialog to directly apply a
+      filter destructively (like in 2.10 and older).
+    * Filters with aux nodes can only be merged (no non-destructive
+      workflow possible for such filters yet).
+    * Auxiliary nodes now have their nicer name printed in the GUI.
 
 Graphical User Interface:
 
@@ -162,6 +170,13 @@ API:
     * New GimpGroupLayer class (subclass of GimpLayer).
     * GimpVectors was renamed to GimpPath and all gimp_vectors_ function
       renamed gimp_path_ accordingly.
+    * gimp_buffer_get_image_type() return type is now GimpImageBaseType.
+    * New GimpExportOptions class and a better infrastructure to handle
+      intermediate image creation at export, replacing
+      gimp_export_image() with gimp_export_options_get_image(). This is
+      also a preparation for future API allowing generic settings during
+      export (resizing, cropping, adding filters or other actions at
+      export time).
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -224,6 +239,10 @@ Build:
     on whether this config folder already existed or not.
   - Only Lua 5.1 and luajit are supported. Later versions have
     incompatibilities breaking Lua plug-ins.
+  - List of languages is now pre-parsed during build, which accelerates
+    startup a bit (especially on Windows).
+  - Better error messaging of the configure step when gimp-data
+    submodule was not initialized or when it is out-of-sync.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
