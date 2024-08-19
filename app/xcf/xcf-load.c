@@ -99,6 +99,7 @@ typedef struct
   gchar                 *name;
   gchar                 *icon_name;
   gchar                 *operation_name;
+  gchar                 *op_version;
   GimpChannel           *mask;
   gboolean               is_visible;
   gdouble                opacity;
@@ -2519,8 +2520,12 @@ xcf_load_effect_props (XcfInfo      *info,
               {
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_WARNING,
-                              "XCF Warning: filter \"%s\" does not "
-                              "have the %s property. It was not set.",
+                              _("XCF Warning: version %s of filter \"%s\" does not "
+                                "have the %s property. The property was ignored and "
+                                "the filter may not render properly.\n"
+                                "This should not happen. "
+                                "You should report the issue to the filter's developers."),
+                              filter->op_version ? filter->op_version : "0:0",
                               filter->operation_name, filter_prop_name);
                 valid_prop_value = FALSE;
                 goto set_or_seek_node_property;
@@ -3365,6 +3370,12 @@ xcf_load_effect (XcfInfo      *info,
   xcf_read_string (info, &string, 1);
   filter->operation_name = string;
 
+  if (info->file_version >= 22)
+    {
+      xcf_read_string (info, &string, 1);
+      filter->op_version = string;
+    }
+
   if (! gegl_has_operation (filter->operation_name) ||
       ! g_strcmp0 (filter->operation_name, "gegl:nop"))
     {
@@ -3382,6 +3393,24 @@ xcf_load_effect (XcfInfo      *info,
                       "XCF Warning: the \"%s\" (%s) filter is "
                       "not installed. It was discarded.",
                       filter->name, filter->operation_name);
+
+      return filter;
+    }
+
+  if (filter->op_version &&
+      g_strcmp0 (gegl_operation_get_op_version (filter->operation_name),
+                 filter->op_version) != 0)
+    {
+      filter->unsupported_operation = TRUE;
+
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_ERROR,
+                    _("XCF Warning: version '%s' of filter '%s' is unsupported. "
+                      "The filter was discarded.\n"
+                      "It either means that you are using an old version of the filter or "
+                      "that it was updated without proper version management. "
+                      "In the latter case, you should report the issue to the filter's developers."),
+                    filter->op_version, filter->operation_name);
 
       return filter;
     }
@@ -3428,6 +3457,7 @@ xcf_load_free_effect (FilterData *data)
   g_free (data->name);
   g_free (data->icon_name);
   g_free (data->operation_name);
+  g_free (data->op_version);
   g_clear_object (&data->operation);
   g_clear_object (&data->mask);
   g_free (data);

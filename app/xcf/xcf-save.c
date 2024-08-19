@@ -2131,6 +2131,7 @@ xcf_save_effect (XcfInfo     *info,
   GimpDrawableFilter *filter_drawable;
   GeglNode           *node;
   gchar              *operation;
+  const gchar        *op_version;
   GimpChannel        *effect_mask;
   goffset             offset;
   GError             *tmp_error = NULL;
@@ -2158,6 +2159,13 @@ xcf_save_effect (XcfInfo     *info,
   /* Write out GEGL operation name */
   xcf_write_string_check_error (info, (gchar **) &operation, 1, ;);
   g_free (operation);
+
+  if (info->file_version >= 22)
+    {
+      /* Write out GEGL operation version */
+      op_version = gegl_operation_get_op_version (operation);
+      xcf_write_string_check_error (info, (gchar **) &op_version, 1, ;);
+    }
 
   /* write out the effect properties */
   xcf_save_effect_props (info, image, filter, error);

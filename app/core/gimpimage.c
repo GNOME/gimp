@@ -2938,7 +2938,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
         {
           ADD_REASON (g_strdup_printf (_("Layer effects were added in %s"),
                                        "GIMP 3.0"));
-          version = MAX (20, version);
+          /* Version 20 added layer effects; version 22 stored the effect
+           * version as an additional field. Only ever store as XCF 22
+           * when layer effects are used.
+           */
+          version = MAX (22, version);
         }
     }
   g_list_free (items);
@@ -3113,6 +3117,8 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 18:
     case 19:
     case 20:
+    case 21:
+    case 22:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;
