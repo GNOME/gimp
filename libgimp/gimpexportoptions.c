@@ -537,17 +537,17 @@ export_action_perform (const ExportAction *action,
  *
  * If necessary, a copy is created, converted and modified, @image
  * changed to point to the new image and the procedure returns
- * [enum@ExportReturn.EXPORT].
+ * [enum@Gimp.ExportReturn.EXPORT].
  * In this case, you must take care of deleting the created image using
  * [method@Image.delete] once the image has been exported, unless you
  * were planning to display it with [ctor@Display.new], or you will leak
  * memory.
  *
- * If [enum@ExportReturn.IGNORE] is returned, then @image is still the
+ * If [enum@Gimp.ExportReturn.IGNORE] is returned, then @image is still the
  * original image. You should neither modify it, nor should you delete
  * it in the end. If you wish to temporarily modify the image before
  * export anyway, call [method@Image.duplicate] when
- * [enum@ExportReturn.IGNORE] was returned.
+ * [enum@Gimp.ExportReturn.IGNORE] was returned.
  *
  * Returns: An enum of #GimpExportReturn.
  *
