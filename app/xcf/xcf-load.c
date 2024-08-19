@@ -3404,7 +3404,7 @@ xcf_load_effect (XcfInfo      *info,
       filter->unsupported_operation = TRUE;
 
       gimp_message (info->gimp, G_OBJECT (info->progress),
-                    GIMP_MESSAGE_ERROR,
+                    GIMP_MESSAGE_WARNING,
                     _("XCF Warning: version '%s' of filter '%s' is unsupported. "
                       "The filter was discarded.\n"
                       "It either means that you are using an old version of the filter or "
