@@ -4,7 +4,7 @@
 libgimp/gimp.c
 libgimp/gimpbrushchooser.c
 libgimp/gimpdrawablechooser.c
-libgimp/gimpexport.c
+libgimp/gimpexportoptions.c
 libgimp/gimpexportprocedure.c
 libgimp/gimpexportproceduredialog.c
 libgimp/gimpimagemetadata.c
