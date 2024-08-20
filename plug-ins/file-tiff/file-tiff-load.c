@@ -1303,10 +1303,10 @@ load_image (GimpProcedure        *procedure,
 
       /* any resolution info in the file? */
       {
-        gdouble   xres = 72.0;
-        gdouble   yres = 72.0;
-        gushort   read_unit;
-        GimpUnit *unit = gimp_unit_pixel (); /* invalid unit */
+        gdouble   xres      = 72.0;
+        gdouble   yres      = 72.0;
+        gushort   read_unit = RESUNIT_NONE;
+        GimpUnit *unit      = gimp_unit_pixel (); /* invalid unit */
 
         if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres))
           {

@@ -224,7 +224,7 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                                                                        "rgb-555",   RGB_555,   _("16 bit (X1 R5 G5 B5)"), NULL,
                                                                        "rgb-888",   RGB_888,   _("24 bit (R8 G8 B8)"),    NULL,
                                                                        "rgba-8888", RGBA_8888, _("32 bit (A8 R8 G8 B8)"), NULL,
-                                                                       "rgbx-8888", RGBX_8888, _("32 bit (X8 R8 G8 B8"),  NULL,
+                                                                       "rgbx-8888", RGBX_8888, _("32 bit (X8 R8 G8 B8)"),  NULL,
                                                                        NULL),
                                           "rgb-888",
                                           G_PARAM_READWRITE);

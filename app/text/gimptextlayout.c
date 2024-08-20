@@ -377,8 +377,8 @@ gimp_text_layout_get_transform (GimpTextLayout *layout,
                                 cairo_matrix_t *matrix)
 {
   GimpText *text;
-  gdouble   xres;
-  gdouble   yres;
+  gdouble   xres = 0;
+  gdouble   yres = 0;
   gdouble   norm;
 
   g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
