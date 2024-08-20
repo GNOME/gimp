@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-13 22:06+0000\n"
-"PO-Revision-Date: 2024-08-14 16:03+0800\n"
+"POT-Creation-Date: 2024-08-19 15:23+0000\n"
+"PO-Revision-Date: 2024-08-20 09:21+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -158,6 +158,13 @@ msgstr "%s 版本 %s"
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "使用 %s 版本 %s（针对版本 %s 编译）"
+
+#. This must be localized with the system language itself, before we
+#. * apply any other language.
+#.
+#: app/language.c:69
+msgid "System Language"
+msgstr "系统语言"
 
 #: app/main.c:160
 msgid "Show version information and exit"
@@ -508,7 +515,7 @@ msgstr "文字工具"
 msgid "Text Editor"
 msgstr "文字编辑器"
 
-#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:541
+#: app/actions/actions.c:233 app/dialogs/dialogs.c:316 app/gui/gui.c:542
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -2443,8 +2450,8 @@ msgstr "240 秒"
 #: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
-#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:439
-#: app/widgets/gimphelp.c:774 app/widgets/gimpiconpicker.c:489
+#: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
+#: app/widgets/gimphelp.c:773 app/widgets/gimpiconpicker.c:489
 #: app/widgets/gimpmodifierseditor.c:688 app/widgets/gimppdbdialog.c:148
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:716
 msgid "_Cancel"
@@ -6054,19 +6061,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "删除此图像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:701
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:719
 msgid "Lock content"
 msgstr "锁定内容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:702
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:720
 msgid "Unlock content"
 msgstr "解锁内容"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:717
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:735
 msgid "Lock position"
 msgstr "锁定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:718
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:736
 msgid "Unlock position"
 msgstr "解锁位置"
 
@@ -13205,7 +13212,7 @@ msgstr "载入“%s”时出错"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:434
+#: app/xcf/xcf.c:435
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "无法打开“%s”以读取："
@@ -13318,13 +13325,13 @@ msgid "Custom style"
 msgstr "自定义样式"
 
 #: app/core/gimpfilloptions.c:128 app/pdb/gimppdbcontext.c:101
-#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
+#: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:89
 #: app/tools/gimptextoptions.c:177
 msgid "Antialiasing"
 msgstr "抗锯齿"
 
 #: app/core/gimpfilloptions.c:135 app/tools/gimpbucketfilloptions.c:196
-#: app/tools/gimpselectionoptions.c:88
+#: app/tools/gimpselectionoptions.c:96
 msgid "Feather edges"
 msgstr "羽化边缘"
 
@@ -13335,12 +13342,12 @@ msgstr "启用填充边缘羽化"
 #: app/core/gimpfilloptions.c:142 app/paint/gimpmybrushoptions.c:87
 #: app/tools/gimpbucketfilloptions.c:203 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
-#: app/tools/gimpselectionoptions.c:95 app/widgets/gimpbrusheditor.c:154
+#: app/tools/gimpselectionoptions.c:103 app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "半径"
 
 #: app/core/gimpfilloptions.c:143 app/tools/gimpbucketfilloptions.c:204
-#: app/tools/gimpselectionoptions.c:96
+#: app/tools/gimpselectionoptions.c:104
 msgid "Radius of feathering"
 msgstr "羽化半径"
 
@@ -13555,7 +13562,7 @@ msgstr "图层组位置锁定已添加到 %s"
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2921 app/core/gimpimage.c:2953
+#: app/core/gimpimage.c:2921 app/core/gimpimage.c:2957
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
@@ -13570,118 +13577,118 @@ msgstr "文字图层中字体信息的格式已在 %s 中更改"
 msgid "Layer effects were added in %s"
 msgstr "图层效果已添加到 %s"
 
-#: app/core/gimpimage.c:2962
+#: app/core/gimpimage.c:2966
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:2974
+#: app/core/gimpimage.c:2978
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:2981
+#: app/core/gimpimage.c:2985
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2995
+#: app/core/gimpimage.c:2999
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3003
+#: app/core/gimpimage.c:3007
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3011
+#: app/core/gimpimage.c:3015
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3028
+#: app/core/gimpimage.c:3032
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3035
+#: app/core/gimpimage.c:3039
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3052
+#: app/core/gimpimage.c:3056
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3063
+#: app/core/gimpimage.c:3067
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3069
+#: app/core/gimpimage.c:3073
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3181
+#: app/core/gimpimage.c:3187
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3233
+#: app/core/gimpimage.c:3239
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4286
+#: app/core/gimpimage.c:4292
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4348
+#: app/core/gimpimage.c:4354
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4393
+#: app/core/gimpimage.c:4399
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像删除内嵌信息"
 
-#: app/core/gimpimage.c:5228
+#: app/core/gimpimage.c:5234
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5272 app/core/gimpimage.c:5303
+#: app/core/gimpimage.c:5278 app/core/gimpimage.c:5309
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "删除图层"
 
-#: app/core/gimpimage.c:5297
+#: app/core/gimpimage.c:5303
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "删除浮动选区"
 
-#: app/core/gimpimage.c:5805
+#: app/core/gimpimage.c:5811
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5835 app/core/gimpimage.c:5860
+#: app/core/gimpimage.c:5841 app/core/gimpimage.c:5866
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "删除通道"
 
-#: app/core/gimpimage.c:5920
+#: app/core/gimpimage.c:5926
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:5955 app/core/gimpimage.c:5963
+#: app/core/gimpimage.c:5961 app/core/gimpimage.c:5969
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "删除路径"
@@ -13900,7 +13907,7 @@ msgstr "无法向下合并不可见图层。"
 msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2769
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2825
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
@@ -14021,7 +14028,7 @@ msgstr "无法打开缩略图“%s”：%s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2563
+#: app/widgets/gimpitemtreeview.c:2619
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
@@ -15017,7 +15024,7 @@ msgstr "锁定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:733
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:751
 msgid "Lock visibility"
 msgstr "锁定可见性"
 
@@ -18415,7 +18422,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1877
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1933
 #: app/widgets/gimplayertreeview.c:812
 msgid "Drop layers"
 msgstr "拖放图层"
@@ -18946,11 +18953,11 @@ msgstr "单击并拖动以移动此中心点"
 msgid "Click-Drag to shear"
 msgstr "单击并拖动以切变"
 
-#: app/file/file-open.c:140 app/file/file-save.c:126
+#: app/file/file-open.c:140 app/file/file-save.c:132
 msgid "Not a regular file"
 msgstr "不是普通文件"
 
-#: app/file/file-open.c:149 app/file/file-save.c:135
+#: app/file/file-open.c:149 app/file/file-save.c:141
 msgid "Permission denied"
 msgstr "访问被拒绝"
 
@@ -19001,15 +19008,15 @@ msgstr "下载了大小为 %s 的图像数据"
 msgid "Uploaded %s of image data"
 msgstr "上传了大小为 %s 的图像数据"
 
-#: app/file/file-save.c:99
+#: app/file/file-save.c:105
 msgid "There is no active layer to save"
 msgstr "没有激活图层可以保存"
 
-#: app/file/file-save.c:119
+#: app/file/file-save.c:125
 msgid "Failed to get file information"
 msgstr "无法获取文件信息"
 
-#: app/file/file-save.c:290
+#: app/file/file-save.c:297
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "%s 插件无法保存图像"
@@ -19991,19 +19998,19 @@ msgstr "明度"
 msgid "The alpha value"
 msgstr "透明通道明度"
 
-#: app/gui/gui.c:328
+#: app/gui/gui.c:329
 msgid "Image Recovery"
 msgstr "图像恢复"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:331
 msgid "_Discard"
 msgstr "放弃(_D)"
 
-#: app/gui/gui.c:331
+#: app/gui/gui.c:332
 msgid "_Recover"
 msgstr "恢复(_R)"
 
-#: app/gui/gui.c:342
+#: app/gui/gui.c:343
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 
@@ -20013,7 +20020,7 @@ msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:351
+#: app/gui/gui.c:352
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20024,7 +20031,7 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:566
+#: app/gui/gui.c:567
 msgid "Documents"
 msgstr "文档"
 
@@ -20803,7 +20810,7 @@ msgid ""
 "%s, got %s."
 msgstr "调用“%s”过程使用了错误类型的参数 #%d。需要 %s，但获得了 %s。"
 
-#: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:82
+#: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:90
 msgid "Smooth edges"
 msgstr "平滑边缘"
 
@@ -20874,7 +20881,7 @@ msgid ""
 msgstr ""
 "调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: app/pdb/gimpprocedure.c:893
+#: app/pdb/gimpprocedure.c:897
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -20883,7 +20890,7 @@ msgstr ""
 "“%s”过程对于“%s”参数返回了无效的 ID。很有可能是插件正在试图操作一个已不再存在"
 "的图层。"
 
-#: app/pdb/gimpprocedure.c:906
+#: app/pdb/gimpprocedure.c:910
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -20892,7 +20899,7 @@ msgstr ""
 "调用“%s”过程使用了无效的 ID 用于“%s”参数。很有可能是插件正在试图操作一个已不"
 "再存在的图层。"
 
-#: app/pdb/gimpprocedure.c:923
+#: app/pdb/gimpprocedure.c:927
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -20901,7 +20908,7 @@ msgstr ""
 "“%s”过程返回了无效的 ID 用于“%s”参数。很有可能是插件正在试图操作一个已不再存"
 "在的图像。"
 
-#: app/pdb/gimpprocedure.c:936
+#: app/pdb/gimpprocedure.c:940
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -20910,26 +20917,62 @@ msgstr ""
 "调用“%s”过程使用了无效的 ID 用于“%s”参数。很有可能是插件正在试图操作一个已不"
 "再存在的图像。"
 
-#: app/pdb/gimpprocedure.c:957
+#: app/pdb/gimpprocedure.c:961
+#, c-format
+msgid ""
+"Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
+"'%s'. This return value does not allow pixel unit."
+msgstr ""
+"“%s”过程返回了“gimp_unit_pixel()”作为 GimpUnit 返回值 #%d“%s”。此返回值不允许"
+"像素单位。"
+
+#: app/pdb/gimpprocedure.c:970
+#, c-format
+msgid ""
+"Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
+"'%s'. This return value does not allow percent unit."
+msgstr ""
+"“%s”过程返回了“gimp_unit_percent()”作为 GimpUnit 返回值 #%d“%s”。此返回值不允"
+"许百分比单位。"
+
+#: app/pdb/gimpprocedure.c:982
+#, c-format
+msgid ""
+"Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
+"argument #%d '%s'. This argument does not allow pixel unit."
+msgstr ""
+"“%s”过程被通过“gimp_unit_pixel()”调用用于 GimpUnit 参数 #%d“%s”。此参数不允许"
+"像素单位。"
+
+#: app/pdb/gimpprocedure.c:992
+#, c-format
+msgid ""
+"Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
+"argument #%d '%s'. This argument does not allow percent unit."
+msgstr ""
+"“%s”过程被通过“gimp_unit_percent()”调用用于 GimpUnit 参数 #%d“%s”。此参数不允"
+"许百分比单位。"
+
+#: app/pdb/gimpprocedure.c:1012
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，%s 类型）。此值超出范围。"
 
-#: app/pdb/gimpprocedure.c:971
+#: app/pdb/gimpprocedure.c:1026
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，%s 类型）。此值超出范围。"
 
-#: app/pdb/gimpprocedure.c:1025
+#: app/pdb/gimpprocedure.c:1082
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "“%s”过程为参数“%s”返回了一个无效的 UTF-8 字符串。"
 
-#: app/pdb/gimpprocedure.c:1035
+#: app/pdb/gimpprocedure.c:1092
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -22797,7 +22840,7 @@ msgstr "曲线(_C)…"
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2542
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2598
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "无法修改多个可绘区。仅选择一个。"
 
@@ -23011,7 +23054,7 @@ msgid "A selected item's pixels are locked."
 msgstr "一个选中项目的像素已被锁定。"
 
 #: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2554
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2610
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
@@ -23280,7 +23323,7 @@ msgid "Fuzzy Select"
 msgstr "模糊选择"
 
 #: app/tools/gimpgegltool.c:83 app/tools/gimpgegltool.c:297
-#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:131
+#: app/tools/gimpgegltool.c:299 app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "GEGL 操作"
 
@@ -23997,11 +24040,12 @@ msgstr "以背景色填充(_B)"
 msgid "Make _transparent"
 msgstr "透明(_T)"
 
-#: app/tools/gimpoperationtool.c:132
+#: app/tools/gimpoperationtool.c:133
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "操作工具：使用无基准的 GEGL 操作"
 
-#: app/tools/gimpoperationtool.c:555
+#. Translators: don't translate "Aux"
+#: app/tools/gimpoperationtool.c:559
 msgid "Aux\\1 Input"
 msgstr "Aux\\1 输入"
 
@@ -24399,11 +24443,11 @@ msgstr "无缝克隆(_S)"
 msgid "Cloning the foreground object"
 msgstr "正在克隆前景对象"
 
-#: app/tools/gimpselectionoptions.c:89
+#: app/tools/gimpselectionoptions.c:97
 msgid "Enable feathering of selection edges"
 msgstr "开启选区边缘羽化"
 
-#: app/tools/gimpselectionoptions.c:225 app/widgets/gimpbrushselect.c:190
+#: app/tools/gimpselectionoptions.c:235 app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
 msgstr "模式："
 
@@ -27150,15 +27194,15 @@ msgstr "改变网格背景色"
 msgid "_Background color:"
 msgstr "背景色(_B)："
 
-#: app/widgets/gimphelp.c:370
+#: app/widgets/gimphelp.c:369
 msgid "Help browser is missing"
 msgstr "帮助浏览器缺失"
 
-#: app/widgets/gimphelp.c:371
+#: app/widgets/gimphelp.c:370
 msgid "The GIMP help browser is not available."
 msgstr "GIMP 帮助浏览器不可用。"
 
-#: app/widgets/gimphelp.c:372
+#: app/widgets/gimphelp.c:371
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -27166,51 +27210,51 @@ msgstr ""
 "您似乎没有安装 GIMP 帮助浏览器插件。您可以使用网页浏览器以浏览 GIMP 帮助文"
 "件。"
 
-#: app/widgets/gimphelp.c:411
+#: app/widgets/gimphelp.c:410
 msgid "Help browser doesn't start"
 msgstr "帮助浏览器没有启动"
 
-#: app/widgets/gimphelp.c:412
+#: app/widgets/gimphelp.c:411
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "无法启动 GIMP 帮助浏览器插件。"
 
-#: app/widgets/gimphelp.c:414
+#: app/widgets/gimphelp.c:413
 msgid "You may instead use the web browser for reading the help pages."
 msgstr "作为替代您可以使用网络浏览器阅读帮助页面。"
 
-#: app/widgets/gimphelp.c:440
+#: app/widgets/gimphelp.c:439
 msgid "Use _Web Browser"
 msgstr "使用网页浏览器(_W)"
 
-#: app/widgets/gimphelp.c:771
+#: app/widgets/gimphelp.c:770
 msgid "GIMP user manual is missing"
 msgstr "GIMP 用户手册缺失"
 
-#: app/widgets/gimphelp.c:782
+#: app/widgets/gimphelp.c:781
 msgid "The GIMP user manual is not installed in your language."
 msgstr "GIMP 用户指南未安装您的语言版本。"
 
-#: app/widgets/gimphelp.c:793
+#: app/widgets/gimphelp.c:792
 msgid "Read Selected _Language"
 msgstr "阅读选择的语言(_L)"
 
-#: app/widgets/gimphelp.c:797
+#: app/widgets/gimphelp.c:796
 msgid "Available manuals..."
 msgstr "可用手册…"
 
-#: app/widgets/gimphelp.c:809
+#: app/widgets/gimphelp.c:808
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr "您可以选择其他语言的手册或阅读在线版本。"
 
-#: app/widgets/gimphelp.c:815
+#: app/widgets/gimphelp.c:814
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr "您可以选择安装额外的帮助包，或修改首选项以使用在线版本。"
 
-#: app/widgets/gimphelp.c:820
+#: app/widgets/gimphelp.c:819
 msgid "Read _Online"
 msgstr "在线阅读(_O)"
 
@@ -27349,128 +27393,124 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引颜色（%d 个颜色）"
 
-#: app/widgets/gimpitemtreeview.c:703
+#: app/widgets/gimpitemtreeview.c:721
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
 
-#: app/widgets/gimpitemtreeview.c:719
+#: app/widgets/gimpitemtreeview.c:737
 msgid "Set Item Exclusive Position Lock"
 msgstr "设置项目唯一位置锁定"
 
-#: app/widgets/gimpitemtreeview.c:734
+#: app/widgets/gimpitemtreeview.c:752
 msgid "Unlock visibility"
 msgstr "解锁可见性"
 
-#: app/widgets/gimpitemtreeview.c:735
+#: app/widgets/gimpitemtreeview.c:753
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "设置项目唯一可见性锁定"
 
-#: app/widgets/gimpitemtreeview.c:765
+#: app/widgets/gimpitemtreeview.c:783
 msgid "Toggle the visibility of all filters."
 msgstr "切换所有滤镜的可见性。"
 
-#: app/widgets/gimpitemtreeview.c:779
+#: app/widgets/gimpitemtreeview.c:797
 msgid "Edit the selected filter."
 msgstr "编辑选中滤镜。"
 
-#: app/widgets/gimpitemtreeview.c:792
+#: app/widgets/gimpitemtreeview.c:810
 msgid "Raise filter one step up in the stack."
 msgstr "在堆叠中将滤镜升高一步。"
 
-#: app/widgets/gimpitemtreeview.c:805
+#: app/widgets/gimpitemtreeview.c:823
 msgid "Lower filter one step down in the stack."
 msgstr "在堆叠中将滤镜降低一步。"
 
-#: app/widgets/gimpitemtreeview.c:818
+#: app/widgets/gimpitemtreeview.c:836
 msgid "Merge all active filters down."
 msgstr "向下合并所有活动滤镜。"
 
-#: app/widgets/gimpitemtreeview.c:831
+#: app/widgets/gimpitemtreeview.c:849
 msgid "Remove the selected filter."
 msgstr "移除选中滤镜。"
 
-#: app/widgets/gimpitemtreeview.c:842
+#: app/widgets/gimpitemtreeview.c:860
 msgid "Layer Effects"
 msgstr "图层效果"
 
-#: app/widgets/gimpitemtreeview.c:873
+#: app/widgets/gimpitemtreeview.c:891
 msgid "Select items by patterns and store item sets"
 msgstr "按模式选择项目并存储项目集合"
 
-#: app/widgets/gimpitemtreeview.c:1727
+#: app/widgets/gimpitemtreeview.c:1783
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d 个项目被选中"
 
-#: app/widgets/gimpitemtreeview.c:2638 app/widgets/gimpitemtreeview.c:2691
+#: app/widgets/gimpitemtreeview.c:2694 app/widgets/gimpitemtreeview.c:2747
 msgid "Cannot reorder a filter that is being edited."
 msgstr "无法重新排列正在编辑的滤镜。"
 
-#: app/widgets/gimpitemtreeview.c:2655 app/widgets/gimpitemtreeview.c:2708
+#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2764
 msgid "Reorder filter"
 msgstr "重新排列滤镜"
 
-#: app/widgets/gimpitemtreeview.c:2753
+#: app/widgets/gimpitemtreeview.c:2809
 msgid "Effects from active tools can not be merged."
 msgstr "来自活动工具的效果无法被合并。"
 
-#: app/widgets/gimpitemtreeview.c:2806
+#: app/widgets/gimpitemtreeview.c:2862
 msgid "Remove filter"
 msgstr "移除滤镜"
 
-#: app/widgets/gimpitemtreeview.c:3332
+#: app/widgets/gimpitemtreeview.c:3388
 msgid "No layer set stored"
 msgstr "未存储图层集合"
 
-#: app/widgets/gimpitemtreeview.c:3354
+#: app/widgets/gimpitemtreeview.c:3410
 msgid "New layer set's name"
 msgstr "新图层集合的名字"
 
-#: app/widgets/gimpitemtreeview.c:3396 app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3452 app/widgets/gimpitemtreeview.c:3467
 msgid "Select layers by text search"
 msgstr "通过文字搜索选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3398 app/widgets/gimpitemtreeview.c:3413
+#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
 msgid "Text search"
 msgstr "文字搜索"
 
-#: app/widgets/gimpitemtreeview.c:3417
+#: app/widgets/gimpitemtreeview.c:3473
 msgid "Select layers by glob patterns"
 msgstr "通过 glob 模式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3419
+#: app/widgets/gimpitemtreeview.c:3475
 msgid "Glob pattern search"
 msgstr "Glob 模式搜索"
 
-#: app/widgets/gimpitemtreeview.c:3423
+#: app/widgets/gimpitemtreeview.c:3479
 msgid "Select layers by regular expressions"
 msgstr "通过正则表达式选择图层"
 
-#: app/widgets/gimpitemtreeview.c:3425
+#: app/widgets/gimpitemtreeview.c:3481
 msgid "Regular Expression search"
 msgstr "正则表达式搜索"
 
-#: app/widgets/gimpitemtreeview.c:3480
+#: app/widgets/gimpitemtreeview.c:3536
 msgid "search"
 msgstr "搜索"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "regexp"
 msgstr "正则"
 
-#: app/widgets/gimpitemtreeview.c:3650
+#: app/widgets/gimpitemtreeview.c:3706
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "无效的正则表达式：%s\n"
-
-#: app/widgets/gimplanguagestore-parser.c:253
-msgid "System Language"
-msgstr "系统语言"
 
 #: app/widgets/gimplayermodebox.c:152
 msgid "Switch to another group of modes"
@@ -28286,49 +28326,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "状态和描述"
 
-#: app/xcf/xcf.c:123 app/xcf/xcf.c:179
+#: app/xcf/xcf.c:124 app/xcf/xcf.c:180
 msgid "GIMP XCF image"
 msgstr "GIMP XCF 图像"
 
-#: app/xcf/xcf.c:256 app/xcf/xcf.c:345
+#: app/xcf/xcf.c:257 app/xcf/xcf.c:346
 msgid "Memory Stream"
 msgstr "内存流"
 
-#: app/xcf/xcf.c:267
+#: app/xcf/xcf.c:268
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
 
-#: app/xcf/xcf.c:309
+#: app/xcf/xcf.c:310
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 错误：不支持的 XCF 文件版本 %d"
 
-#: app/xcf/xcf.c:368
+#: app/xcf/xcf.c:369
 #, c-format
 msgid "Saving '%s'"
 msgstr "正在保存“%s”"
 
-#: app/xcf/xcf.c:376
+#: app/xcf/xcf.c:377
 #, c-format
 msgid "Closing '%s'"
 msgstr "正在关闭“%s”"
 
-#: app/xcf/xcf.c:394
+#: app/xcf/xcf.c:395
 #, c-format
 msgid "Error writing '%s': "
 msgstr "写入“%s”时出错："
 
-#: app/xcf/xcf.c:482
+#: app/xcf/xcf.c:483
 #, c-format
 msgid "Error creating '%s': "
 msgstr "创建“%s”时出错："
 
-#: app/xcf/xcf-load.c:294
+#: app/xcf/xcf-load.c:295
 msgid "Invalid image mode and precision combination."
 msgstr "无效的图像模式和精度组合。"
 
-#: app/xcf/xcf-load.c:501
+#: app/xcf/xcf-load.c:502
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28337,7 +28377,7 @@ msgstr ""
 "发现内嵌“exif-数据”已损坏。\n"
 "Exif 数据无法被迁移：%s"
 
-#: app/xcf/xcf-load.c:540
+#: app/xcf/xcf-load.c:541
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28345,7 +28385,7 @@ msgstr ""
 "发现内嵌“gimp-元数据”已损坏。\n"
 "XMP 数据无法被迁移。"
 
-#: app/xcf/xcf-load.c:564
+#: app/xcf/xcf-load.c:565
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28356,31 +28396,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:904
+#: app/xcf/xcf-load.c:905
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:914
+#: app/xcf/xcf-load.c:915
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:939
+#: app/xcf/xcf-load.c:940
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:986
+#: app/xcf/xcf-load.c:987
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:1006
+#: app/xcf/xcf-load.c:1007
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:1163
+#: app/xcf/xcf-load.c:1164
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28389,6 +28429,31 @@ msgstr ""
 "XCF 警告：版本 0 的 XCF 文件格式\n"
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
+
+#: app/xcf/xcf-load.c:2523
+#, c-format
+msgid ""
+"XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
+"property was ignored and the filter may not render properly.\n"
+"This should not happen. You should report the issue to the filter's "
+"developers."
+msgstr ""
+"XCF 警告：版本“%s”的滤镜“%s”没有 %s 属性。该属性已被忽略且滤镜可能没有正确渲"
+"染。\n"
+"这种情况不应发生。您应将该问题报告给滤镜的开发者。"
+
+#: app/xcf/xcf-load.c:3408
+#, c-format
+msgid ""
+"XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
+"discarded.\n"
+"It either means that you are using an old version of the filter or that it "
+"was updated without proper version management. In the latter case, you "
+"should report the issue to the filter's developers."
+msgstr ""
+"XCF 警告：版本“%s”的滤镜“%s”不受支持。该滤镜已被丢弃。\n"
+"这意味着您正在使用该滤镜的旧版本或该滤镜更新时没有恰当的版本管理。如果是后"
+"者，您应将该问题报告给滤镜的开发者。"
 
 #: app/xcf/xcf-read.c:195
 msgid "Invalid UTF-8 string in XCF file"
