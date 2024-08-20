@@ -81,6 +81,9 @@ self_build ()
     echo "Using tagged release of $1: $tag"
   fi
 
+  if [ "$1" == "gegl" ]; then
+    git_options="--branch=wip/Jehan/gimp-9172-relocatable-localization"
+  fi
   if [ ! -d "$1" ]; then
     git clone $git_options --depth $GIT_DEPTH $repo || exit 1
   else

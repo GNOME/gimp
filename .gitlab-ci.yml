@@ -474,6 +474,7 @@ deps-win-a64:
       - _install/
       - babl/_build/meson-logs/meson-log.txt
       - gegl/_build/meson-logs/meson-log.txt
+      - gegl/gegl/gegl-init.c
     expire_in: 2 hours
 
 gimp-win-a64:
