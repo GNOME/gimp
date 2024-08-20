@@ -23516,7 +23516,7 @@ msgstr ""
 
 #: ../app/tools/gimpiscissorstool.c:292
 msgid "Scissors Select"
-msgstr "Vel saks"
+msgstr "Intelligent saks"
 
 #: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
