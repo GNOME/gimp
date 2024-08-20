@@ -211,6 +211,7 @@ gimp_edit_copy (GimpImage     *image,
        */
       GimpImage     *clip_image;
       GimpChannel   *clip_selection;
+      GList         *remove = NULL;
       GeglRectangle  selection_bounds;
       gboolean       has_selection = FALSE;
 
@@ -240,10 +241,36 @@ gimp_edit_copy (GimpImage     *image,
           return NULL;
         }
 
+      drawables = g_list_copy (drawables);
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          GList *iter2;
+
+          for (iter2 = drawables; iter2; iter2 = iter2->next)
+            {
+              if (iter2 == iter)
+                continue;
+
+              if (gimp_viewable_is_ancestor (iter2->data, iter->data))
+                {
+                  /* When copying a layer group, all its children come
+                   * with anyway.
+                   */
+                  remove = g_list_prepend (remove, iter);
+                  break;
+                }
+            }
+        }
+      for (iter = remove; iter; iter = iter->next)
+        drawables = g_list_delete_link (drawables, iter->data);
+
+      g_list_free (remove);
+
       clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
       gimp_set_clipboard_image (image->gimp, clip_image);
       g_object_unref (clip_image);
+      g_list_free (drawables);
 
       clip_selection = gimp_image_get_mask (clip_image);
       if (! gimp_channel_is_empty (clip_selection))
