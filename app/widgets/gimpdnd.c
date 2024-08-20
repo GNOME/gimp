@@ -2204,6 +2204,10 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
                                                                &gimp_context,
                                                                get_list_data);
 
+  g_object_set_data_full (G_OBJECT (widget),
+                          "gimp-dnd-viewables",  viewables,
+                          (GDestroyNotify) g_list_free);
+
   if (! viewables)
     return NULL;
 
@@ -2234,7 +2238,6 @@ gimp_dnd_get_viewable_list_icon (GtkWidget      *widget,
       desc = gimp_viewable_get_description (viewable, NULL);
       desc_width_chars =  MIN (strlen (desc), 10);
     }
-  g_list_free (viewables);
 
   if (desc)
     {
@@ -2362,11 +2365,8 @@ gimp_dnd_viewable_list_dest_remove (GtkWidget *widget,
 GList *
 gimp_dnd_get_drag_list (GtkWidget *widget)
 {
-  const GimpDndDataDef    *dnd_data;
-  GimpDndType              data_type;
-  GimpDndDragViewableListFunc  get_data_func = NULL;
-  gpointer                 get_data_data = NULL;
-  GimpContext             *context;
+  GimpDndType  data_type;
+  GList       *viewables;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
 
@@ -2376,20 +2376,15 @@ gimp_dnd_get_drag_list (GtkWidget *widget)
   if (! data_type)
     return NULL;
 
-  dnd_data = dnd_data_defs + data_type;
+  /* Note: do not use the stored get_data_func_name at the end of a
+   * paste, only at drag-begin (handled inside the get_icon_func() call)
+   * for item lists, because the content of item container may change
+   * during the paste, in particular when moving from one image tab to
+   * another. Cf. #7497.
+   */
+  viewables = g_object_get_data (G_OBJECT (widget), "gimp-dnd-viewables");
 
-  if (dnd_data->get_data_func_name)
-    get_data_func = g_object_get_data (G_OBJECT (widget),
-                                       dnd_data->get_data_func_name);
-
-  if (dnd_data->get_data_data_name)
-    get_data_data = g_object_get_data (G_OBJECT (widget),
-                                       dnd_data->get_data_data_name);
-
-  if (! get_data_func)
-    return NULL;
-
-  return (GList *) (* get_data_func) (widget, &context, get_data_data);
+  return g_list_copy (viewables);
 }
 
 
@@ -2504,15 +2499,17 @@ gimp_dnd_get_item_list_data (GtkWidget        *widget,
                              gpointer          get_item_data,
                              GtkSelectionData *selection)
 {
-  GList       *items;
-  GimpContext *gimp_context;
+  GList *items;
 
-  items = (* (GimpDndDragViewableListFunc) get_item_func) (widget, &gimp_context,
-                                                           get_item_data);
+  /* Note: do not use get_item_func() during a paste, only at drag-begin
+   * (handled inside the get_icon_func() call) for item lists, because
+   * the content of item container may change during the paste, in
+   * particular when moving from one image tab to another. Cf. #7497.
+   */
+  items = g_object_get_data (G_OBJECT (widget), "gimp-dnd-viewables");
 
   if (items)
     gimp_selection_data_set_item_list (selection, items);
-  g_list_free (items);
 }
 
 static gboolean
