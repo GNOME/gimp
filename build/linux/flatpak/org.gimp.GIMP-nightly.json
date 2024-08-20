@@ -122,10 +122,6 @@
                 "-Dtools=false",
                 "-Dvapi=false"
             ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ],
             "modules": [
                 {
                     "name": "exiv2",
@@ -148,10 +144,6 @@
                         "-DEXIV2_BUILD_EXIV2_COMMAND=OFF",
                         "-DEXIV2_ENABLE_INIH=OFF",
                         "-DEXIV2_ENABLE_VIDEO=OFF"
-                    ],
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
                     ]
                 }
             ]
