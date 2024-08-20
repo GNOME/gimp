@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-18 21:04+0000\n"
-"PO-Revision-Date: 2024-08-18 23:37+0200\n"
+"POT-Creation-Date: 2024-08-20 12:51+0000\n"
+"PO-Revision-Date: 2024-08-20 16:56+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -69,7 +69,7 @@ msgstr "Primer vstavka v C"
 #: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
 #: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
 #: plug-ins/common/curve-bend.c:1803 plug-ins/common/curve-bend.c:1838
-#: plug-ins/common/file-gif-export.c:1211 plug-ins/common/file-heif.c:2273
+#: plug-ins/common/file-gif-export.c:1214 plug-ins/common/file-heif.c:2289
 #: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
@@ -143,7 +143,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2274
+#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2290
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
@@ -518,11 +518,11 @@ msgstr "Hitrost predvajanja"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:1355
+#: plug-ins/common/animation-play.c:902 plug-ins/common/file-gif-export.c:224
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:1357
+#: plug-ins/common/animation-play.c:907 plug-ins/common/file-gif-export.c:225
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
@@ -607,19 +607,19 @@ msgstr "Rolete"
 #: plug-ins/common/file-cel.c:476 plug-ins/common/file-dicom.c:728
 #: plug-ins/common/file-farbfeld.c:296 plug-ins/common/file-gegl.c:446
 #: plug-ins/common/file-gif-load.c:1147 plug-ins/common/file-iff.c:345
-#: plug-ins/common/file-jp2-load.c:1303 plug-ins/common/file-pcx.c:711
+#: plug-ins/common/file-jp2-load.c:1272 plug-ins/common/file-pcx.c:711
 #: plug-ins/common/file-pcx.c:719 plug-ins/common/file-pcx.c:727
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
 #: plug-ins/common/file-pnm.c:840 plug-ins/common/file-qoi.c:299
 #: plug-ins/common/file-raw-data.c:1858 plug-ins/common/file-sunras.c:1059
-#: plug-ins/common/file-tga.c:1100 plug-ins/common/file-wbmp.c:274
+#: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:688
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
-#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:451
+#: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:455
 #: plug-ins/file-tiff/file-tiff-load.c:1545
 #: plug-ins/file-tiff/file-tiff-load.c:2350
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:559
@@ -1231,12 +1231,12 @@ msgstr "Shrani parametre raziskovalca MZP"
 
 #: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:787
 #: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
-#: plug-ins/common/file-mng.c:865 plug-ins/common/file-mng.c:1215
+#: plug-ins/common/file-mng.c:874 plug-ins/common/file-mng.c:1224
 #: plug-ins/common/file-pcx.c:1186 plug-ins/common/file-pdf-export.c:687
 #: plug-ins/common/file-png.c:1491 plug-ins/common/file-raw-data.c:1363
 #: plug-ins/common/file-raw-data.c:1392 plug-ins/common/file-sunras.c:614
-#: plug-ins/common/file-tga.c:1221 plug-ins/common/file-xmc.c:1272
-#: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:341
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-xmc.c:1272
+#: plug-ins/common/sphere-designer.c:2206 plug-ins/file-bmp/bmp-export.c:332
 #: plug-ins/file-fli/fli-gimp.c:796 plug-ins/file-icns/file-icns-export.c:436
 #: plug-ins/file-ico/ico-export.c:1356 plug-ins/file-ico/ico-export.c:1576
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2219
@@ -1482,7 +1482,8 @@ msgstr "_Pordelost cr709:"
 
 #: plug-ins/common/compose.c:244 plug-ins/common/compose.c:438
 #: plug-ins/common/compose.c:501 plug-ins/common/decompose.c:193
-#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:2434
+#: plug-ins/common/decompose.c:300 plug-ins/common/file-heif.c:288
+#: plug-ins/common/file-heif.c:409
 msgid "RGB"
 msgstr "RGB"
 
@@ -1506,7 +1507,7 @@ msgstr "Barvni model HSL"
 
 #: plug-ins/common/compose.c:273 plug-ins/common/compose.c:442
 #: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:211
-#: plug-ins/common/decompose.c:305 plug-ins/common/file-jp2-load.c:1000
+#: plug-ins/common/decompose.c:305 plug-ins/common/file-jp2-load.c:255
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2003,14 +2004,14 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/curve-bend.c:840 plug-ins/common/file-cel.c:326
 #: plug-ins/common/file-cel.c:378 plug-ins/common/file-dicom.c:360
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:416
-#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1399
+#: plug-ins/common/file-iff.c:219 plug-ins/common/file-mng.c:1408
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:639 plug-ins/common/file-ps.c:1159
 #: plug-ins/common/file-ps.c:3741 plug-ins/common/file-psp.c:2620
 #: plug-ins/common/file-psp.c:2670 plug-ins/common/file-qoi.c:278
 #: plug-ins/common/file-raw-data.c:573 plug-ins/common/file-raw-data.c:1695
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:541
-#: plug-ins/common/file-tga.c:424 plug-ins/common/file-wbmp.c:188
+#: plug-ins/common/file-tga.c:427 plug-ins/common/file-wbmp.c:188
 #: plug-ins/common/file-xbm.c:725 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
@@ -2600,12 +2601,12 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #: plug-ins/common/file-cel.c:369 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:844 plug-ins/common/file-jp2-load.c:1077
+#: plug-ins/common/file-heif.c:856 plug-ins/common/file-jp2-load.c:1046
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:685
 #: plug-ins/common/file-ps.c:1149 plug-ins/common/file-raw-data.c:1687
-#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:416
+#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
 #: plug-ins/common/file-wbmp.c:180 plug-ins/common/file-wmf.c:618
 #: plug-ins/common/file-xbm.c:717 plug-ins/common/file-xmc.c:646
 #: plug-ins/common/file-xpm.c:361 plug-ins/common/file-xwd.c:457
@@ -2614,7 +2615,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/file-icns/file-icns-load.c:508 plug-ins/file-ico/ico-load.c:673
 #: plug-ins/file-ico/ico-load.c:811 plug-ins/file-jpeg/jpeg-load.c:90
 #: plug-ins/file-psd/psd-load.c:193 plug-ins/file-raw/file-darktable.c:452
-#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:310
+#: plug-ins/file-raw/file-rawtherapee.c:345 plug-ins/file-sgi/sgi.c:314
 #: plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
@@ -2681,18 +2682,18 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:821 plug-ins/common/file-farbfeld.c:347
-#: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:349
-#: plug-ins/common/file-jpegxl.c:1396 plug-ins/common/file-pcx.c:1070
+#: plug-ins/common/file-gif-export.c:942 plug-ins/common/file-html-table.c:349
+#: plug-ins/common/file-jpegxl.c:1405 plug-ins/common/file-pcx.c:1070
 #: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
 #: plug-ins/common/file-pnm.c:1605 plug-ins/common/file-ps.c:1370
 #: plug-ins/common/file-qoi.c:353 plug-ins/common/file-sunras.c:605
-#: plug-ins/common/file-tga.c:1213 plug-ins/common/file-xbm.c:1026
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-xbm.c:1026
 #: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:333 plug-ins/file-fits/fits.c:661
+#: plug-ins/file-bmp/bmp-export.c:324 plug-ins/file-fits/fits.c:661
 #: plug-ins/file-fli/fli-gimp.c:763 plug-ins/file-icns/file-icns-export.c:621
 #: plug-ins/file-ico/ico-export.c:1348 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
-#: plug-ins/file-sgi/sgi.c:622 plug-ins/file-tiff/file-tiff-export.c:1074
+#: plug-ins/file-sgi/sgi.c:626 plug-ins/file-tiff/file-tiff-export.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvažanje »%s« ..."
@@ -3015,57 +3016,58 @@ msgid "Frame disposal _when unspecified"
 msgstr "Opu_stitev sličic, kjer ni določeno"
 
 #: plug-ins/common/file-gif-export.c:222
-msgid ""
-"(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)"
-msgstr ""
-"(animirani GIF) Privzeta vrsta odlaganja (0 = vseeno; 1 = združi; 2 = "
-"zamenjaj)"
+msgid "(animated gif) Default disposal type"
+msgstr "(animirani GIF) Privzeta vrsta odlaganja"
 
-#: plug-ins/common/file-gif-export.c:230
+#: plug-ins/common/file-gif-export.c:223
+msgid "I don't care"
+msgstr "vseeno mi je"
+
+#: plug-ins/common/file-gif-export.c:231
 msgid "_As animation"
 msgstr "Kot _animacija"
 
-#: plug-ins/common/file-gif-export.c:231
+#: plug-ins/common/file-gif-export.c:232
 msgid "Export GIF as animation?"
 msgstr "Izvozi sliko GIF kot animacijo?"
 
-#: plug-ins/common/file-gif-export.c:236
+#: plug-ins/common/file-gif-export.c:237
 msgid "_Use delay entered above for all frames"
 msgstr "_Uporabi zgoraj vneseno zakasnitev za vse sličice"
 
-#: plug-ins/common/file-gif-export.c:237
+#: plug-ins/common/file-gif-export.c:238
 msgid "(animated gif) Use specified delay for all frames"
 msgstr "(animirani GIF) Uporabi privzeto zakasnitev za vse sličice"
 
-#: plug-ins/common/file-gif-export.c:242
+#: plug-ins/common/file-gif-export.c:243
 msgid "Use dis_posal entered above for all frames"
 msgstr "Upo_rabi zgoraj vneseno opustitev za vse sličice"
 
-#: plug-ins/common/file-gif-export.c:244
+#: plug-ins/common/file-gif-export.c:245
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr "(animirani IGF) Uporabi navedeno odlaganje za vse sličice"
 
-#: plug-ins/common/file-gif-export.c:249
+#: plug-ins/common/file-gif-export.c:250
 msgid "Sa_ve comment"
 msgstr "Shra_ni komentar"
 
-#: plug-ins/common/file-gif-export.c:250
+#: plug-ins/common/file-gif-export.c:251
 msgid "Save the image comment in the GIF file"
 msgstr "Shrani komentar slike v datoteko GIF"
 
-#: plug-ins/common/file-gif-export.c:255
+#: plug-ins/common/file-gif-export.c:256
 msgid "Commen_t"
 msgstr "Komen_tar"
 
-#: plug-ins/common/file-gif-export.c:256
+#: plug-ins/common/file-gif-export.c:257
 msgid "Image comment"
 msgstr "Komentar slike"
 
-#: plug-ins/common/file-gif-export.c:547
+#: plug-ins/common/file-gif-export.c:548
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Nadaljnja redukcija barv enostavno ni možna. Shranjeno kot prekrivno."
 
-#: plug-ins/common/file-gif-export.c:666
+#: plug-ins/common/file-gif-export.c:667
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -3074,7 +3076,7 @@ msgstr ""
 "Shranjevanje ‘%s’ ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so "
 "daljše ali širše od %d slikovnih točk."
 
-#: plug-ins/common/file-gif-export.c:689
+#: plug-ins/common/file-gif-export.c:690
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -3083,7 +3085,7 @@ msgstr ""
 "Ni možno izvoziti »%s«.  Prosimo, pretvorite svojo sliko v natančnost 8-"
 "bitnih celih števil, saj zapis datoteke GIF ne podpira višjih natančnosti."
 
-#: plug-ins/common/file-gif-export.c:816
+#: plug-ins/common/file-gif-export.c:819
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3091,19 +3093,19 @@ msgstr ""
 "Zapis GIF podpira komentarje le v 7-bitni kodni tabeli ASCII. Komentar ne bo "
 "shranjen."
 
-#: plug-ins/common/file-gif-export.c:912
+#: plug-ins/common/file-gif-export.c:915
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Barvnih slik RGB ni mogoče izvoziti. Najprej pretvorite v indeksirano ali "
 "sivinsko sliko."
 
-#: plug-ins/common/file-gif-export.c:1132
+#: plug-ins/common/file-gif-export.c:1135
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Zaradi preprečitve preobremenitve CPE pri animaciji je vstavljena zakasnitev."
 
-#: plug-ins/common/file-gif-export.c:1206
+#: plug-ins/common/file-gif-export.c:1209
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3111,11 +3113,11 @@ msgstr ""
 "Slika, ki jo želite izvoziti kot GIF, vsebuje plasti, ki se raztezajo prek "
 "dejanskih meja slike."
 
-#: plug-ins/common/file-gif-export.c:1212
+#: plug-ins/common/file-gif-export.c:1215
 msgid "Cr_op"
 msgstr "_Obreži"
 
-#: plug-ins/common/file-gif-export.c:1223
+#: plug-ins/common/file-gif-export.c:1226
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3123,7 +3125,7 @@ msgstr ""
 "Datotečni zapis GIF tega ne podpira.  Izberite, ali želite vse plasti "
 "porezati na robove slike ali pa preklicati izvažanje."
 
-#: plug-ins/common/file-gif-export.c:1278
+#: plug-ins/common/file-gif-export.c:1281
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3132,19 +3134,15 @@ msgstr ""
 "Vaša slika bo ob izvozu pretvorjena, kar lahko spremeni vrednosti slikovnih "
 "točk."
 
-#: plug-ins/common/file-gif-export.c:1347 plug-ins/common/file-mng.c:1635
+#: plug-ins/common/file-gif-export.c:1349 plug-ins/common/file-mng.c:1641
 msgid "milliseconds"
 msgstr "milisekund"
 
-#: plug-ins/common/file-gif-export.c:1353
-msgid "I don't care"
-msgstr "vseeno mi je"
-
-#: plug-ins/common/file-gif-export.c:1389
+#: plug-ins/common/file-gif-export.c:1384
 msgid "Animated GIF"
 msgstr "Animirani GIF"
 
-#: plug-ins/common/file-gif-export.c:1396
+#: plug-ins/common/file-gif-export.c:1391
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3441,181 +3439,181 @@ msgstr "Izvozi slike HEIF"
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Shrani sliko v zapisu HEIF (High Efficiency Image File Format)."
 
-#: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:377
+#: plug-ins/common/file-heif.c:262 plug-ins/common/file-heif.c:383
 #: plug-ins/file-jpeg/jpeg.c:210
 msgid "_Quality"
 msgstr "_Kakovost"
 
-#: plug-ins/common/file-heif.c:263 plug-ins/common/file-heif.c:378
+#: plug-ins/common/file-heif.c:263 plug-ins/common/file-heif.c:384
 msgid "Quality factor (0 = worst, 100 = best)"
 msgstr "Faktor kakovosti (0 = najslabše, 100 = najboljše)"
 
-#: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:383
-#: plug-ins/common/file-jpegxl.c:193 plug-ins/file-webp/file-webp.c:188
+#: plug-ins/common/file-heif.c:268 plug-ins/common/file-heif.c:389
+#: plug-ins/common/file-jpegxl.c:193 plug-ins/file-webp/file-webp.c:194
 msgid "L_ossless"
 msgstr "_Brez izgub"
 
-#: plug-ins/common/file-heif.c:269 plug-ins/common/file-heif.c:384
+#: plug-ins/common/file-heif.c:269 plug-ins/common/file-heif.c:390
 #: plug-ins/common/file-jpegxl.c:194
 msgid "Use lossless compression"
 msgstr "Uporabi stiskanje brez izgub"
 
-#: plug-ins/common/file-heif.c:274 plug-ins/common/file-heif.c:389
+#: plug-ins/common/file-heif.c:274 plug-ins/common/file-heif.c:395
 msgid "Save color prof_ile"
 msgstr "Shrani barvni prof_il"
 
-#: plug-ins/common/file-heif.c:275 plug-ins/common/file-heif.c:390
+#: plug-ins/common/file-heif.c:275 plug-ins/common/file-heif.c:396
 msgid "Save the image's color profile"
 msgstr "Shrani barvni profil slike"
 
-#: plug-ins/common/file-heif.c:280 plug-ins/common/file-heif.c:395
+#: plug-ins/common/file-heif.c:280 plug-ins/common/file-heif.c:401
 #: plug-ins/common/file-jpegxl.c:205
 msgid "_Bit depth"
 msgstr "_Bitna globina"
 
-#: plug-ins/common/file-heif.c:281 plug-ins/common/file-heif.c:396
+#: plug-ins/common/file-heif.c:281 plug-ins/common/file-heif.c:402
 #: plug-ins/common/file-jpegxl.c:206
 msgid "Bit depth of exported image"
 msgstr "Bitna globina izvožene slike"
 
-#: plug-ins/common/file-heif.c:286 plug-ins/common/file-heif.c:401
+#: plug-ins/common/file-heif.c:286 plug-ins/common/file-heif.c:407
 #: plug-ins/common/file-png.c:296
 msgid "_Pixel format"
 msgstr "Oblika sli_kovnih točk"
 
-#: plug-ins/common/file-heif.c:287 plug-ins/common/file-heif.c:402
+#: plug-ins/common/file-heif.c:287 plug-ins/common/file-heif.c:408
 msgid "Format of color sub-sampling"
 msgstr "Oblika barvnega pod-vzorčenja"
 
-#: plug-ins/common/file-heif.c:293 plug-ins/common/file-heif.c:408
+#: plug-ins/common/file-heif.c:289 plug-ins/common/file-heif.c:410
+msgid "YUV444"
+msgstr "YUV444"
+
+#: plug-ins/common/file-heif.c:290 plug-ins/common/file-heif.c:411
+msgid "YUV420"
+msgstr "YUV420"
+
+#: plug-ins/common/file-heif.c:296 plug-ins/common/file-heif.c:417
 msgid "Enco_der speed"
 msgstr "Hitrost ho_dirnika"
 
-#: plug-ins/common/file-heif.c:294 plug-ins/common/file-heif.c:409
+#: plug-ins/common/file-heif.c:297 plug-ins/common/file-heif.c:418
 msgid "Tradeoff between speed and compression"
 msgstr "Kompromis med hitrostjo in stiskanjem"
 
-#: plug-ins/common/file-heif.c:300 plug-ins/common/file-heif.c:415
-#: plug-ins/common/file-jpegxl.c:230
+#: plug-ins/common/file-heif.c:298 plug-ins/common/file-heif.c:419
+msgid "Slow"
+msgstr "Počasi"
+
+#: plug-ins/common/file-heif.c:299 plug-ins/common/file-heif.c:420
+msgid "Balanced"
+msgstr "Uravnoteženo"
+
+#: plug-ins/common/file-heif.c:300 plug-ins/common/file-heif.c:421
+msgid "Fast"
+msgstr "Hitro"
+
+#: plug-ins/common/file-heif.c:306 plug-ins/common/file-heif.c:427
+#: plug-ins/common/file-jpegxl.c:239
 msgid "Save Exi_f"
 msgstr "Shrani podatke Exi_f"
 
-#: plug-ins/common/file-heif.c:301 plug-ins/common/file-heif.c:416
-#: plug-ins/common/file-jpegxl.c:231
+#: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:428
+#: plug-ins/common/file-jpegxl.c:240
 msgid "Toggle saving Exif data"
 msgstr "Preklopi shranjevanje podatkov Exif"
 
-#: plug-ins/common/file-heif.c:306 plug-ins/common/file-heif.c:421
-#: plug-ins/common/file-jpegxl.c:236
+#: plug-ins/common/file-heif.c:312 plug-ins/common/file-heif.c:433
+#: plug-ins/common/file-jpegxl.c:245
 msgid "Save _XMP"
 msgstr "Shrani podatke _XMP"
 
-#: plug-ins/common/file-heif.c:307 plug-ins/common/file-heif.c:422
-#: plug-ins/common/file-jpegxl.c:237
+#: plug-ins/common/file-heif.c:313 plug-ins/common/file-heif.c:434
+#: plug-ins/common/file-jpegxl.c:246
 msgid "Toggle saving XMP data"
 msgstr "Preklopi shranjevanje podatkov XMP"
 
-#: plug-ins/common/file-heif.c:320
+#: plug-ins/common/file-heif.c:326
 msgid "Loads AVIF images"
 msgstr "Naloži slike AVIF"
 
-#: plug-ins/common/file-heif.c:321
+#: plug-ins/common/file-heif.c:327
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "Naloži sliko v zapisu AVIF (AV1 Image File Format)."
 
-#: plug-ins/common/file-heif.c:354
+#: plug-ins/common/file-heif.c:360
 msgid "Exports AVIF images"
 msgstr "Izvozi slike AVIF"
 
-#: plug-ins/common/file-heif.c:355
+#: plug-ins/common/file-heif.c:361
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Shrani sliko v zapisu AVIF (AV1 Image File Format)."
 
-#: plug-ins/common/file-heif.c:432
+#: plug-ins/common/file-heif.c:444
 msgid "JPEG 2000 encapsulated in HEIF"
 msgstr "JPEG 2000, ovit v HEIF"
 
-#: plug-ins/common/file-heif.c:435
+#: plug-ins/common/file-heif.c:447
 msgid "Loads HEJ2 images"
 msgstr "Naloži slike HEJ2"
 
-#: plug-ins/common/file-heif.c:436
+#: plug-ins/common/file-heif.c:448
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Naloži sliko JPEG2000, ovito v HEIF (HEJ2)"
 
-#: plug-ins/common/file-heif.c:884 plug-ins/common/file-heif.c:917
-#: plug-ins/common/file-heif.c:958 plug-ins/common/file-heif.c:1020
+#: plug-ins/common/file-heif.c:896 plug-ins/common/file-heif.c:929
+#: plug-ins/common/file-heif.c:970 plug-ins/common/file-heif.c:1032
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Nalaganje slike HEIF slike ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:906
+#: plug-ins/common/file-heif.c:918
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Nalaganje slike HEIF ni uspelo: vhodna datoteka ne vsebuje berljivih slik."
 
-#: plug-ins/common/file-heif.c:1142
+#: plug-ins/common/file-heif.c:1154
 msgid "image content"
 msgstr "Vsebina slike"
 
-#: plug-ins/common/file-heif.c:1481
+#: plug-ins/common/file-heif.c:1497
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Izvažanje »%s« z uporabo kodirnika %s ..."
 
-#: plug-ins/common/file-heif.c:1529 plug-ins/common/file-heif.c:1914
+#: plug-ins/common/file-heif.c:1545 plug-ins/common/file-heif.c:1930
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodiranje slike HEIF je spodletelo: %s"
 
-#: plug-ins/common/file-heif.c:2035
+#: plug-ins/common/file-heif.c:2051
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Zapisovanje slike HEIF ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:2124
+#: plug-ins/common/file-heif.c:2140
 msgid "primary"
 msgstr "Primarno"
 
-#: plug-ins/common/file-heif.c:2269
+#: plug-ins/common/file-heif.c:2285
 msgid "Load HEIF Image"
 msgstr "Naloži sliko HEIF"
 
-#: plug-ins/common/file-heif.c:2283
+#: plug-ins/common/file-heif.c:2299
 msgid "Select Image"
 msgstr "Izberi sliko"
 
-#: plug-ins/common/file-heif.c:2435
-msgid "YUV444"
-msgstr "YUV444"
-
-#: plug-ins/common/file-heif.c:2436
-msgid "YUV420"
-msgstr "YUV420"
-
-#: plug-ins/common/file-heif.c:2442 plug-ins/common/file-jpegxl.c:2042
+#: plug-ins/common/file-heif.c:2448 plug-ins/common/file-jpegxl.c:2038
 msgid "8 bit/channel"
 msgstr "8 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2443
+#: plug-ins/common/file-heif.c:2449
 msgid "10 bit/channel"
 msgstr "10 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2444
+#: plug-ins/common/file-heif.c:2450
 msgid "12 bit/channel"
 msgstr "12 bitov/kanal"
-
-#: plug-ins/common/file-heif.c:2450
-msgid "Slow"
-msgstr "Počasi"
-
-#: plug-ins/common/file-heif.c:2451
-msgid "Balanced"
-msgstr "Uravnoteženo"
-
-#: plug-ins/common/file-heif.c:2452
-msgid "Fast"
-msgstr "Hitro"
 
 #: plug-ins/common/file-html-table.c:153
 msgid "HTML table"
@@ -3810,88 +3808,92 @@ msgid "Color s_pace"
 msgstr "Barvni _prostor"
 
 #: plug-ins/common/file-jp2-load.c:250
-msgid ""
-"Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
-"xvYCC (5) }"
-msgstr ""
-"Barvni prostor { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
-"xvYCC (5) }"
+msgid "Color space"
+msgstr "Barvni prostor"
 
-#. Can be RGB, YUV and YCC.
-#. Can be RGB, YUV and YCC with alpha or CMYK.
-#: plug-ins/common/file-jp2-load.c:989 plug-ins/common/file-jp2-load.c:997
+#: plug-ins/common/file-jp2-load.c:251
 msgid "sRGB"
 msgstr "sRGB"
 
-#: plug-ins/common/file-jp2-load.c:990 plug-ins/common/file-jp2-load.c:998
+#: plug-ins/common/file-jp2-load.c:252
+msgid "Grayscale"
+msgstr "Sivinsko"
+
+#: plug-ins/common/file-jp2-load.c:253
 msgid "YCbCr"
 msgstr "YCbCr"
 
-#: plug-ins/common/file-jp2-load.c:991 plug-ins/common/file-jp2-load.c:999
+#: plug-ins/common/file-jp2-load.c:254
 msgid "xvYCC"
 msgstr "xvYCC"
 
-#: plug-ins/common/file-jp2-load.c:1006
+#: plug-ins/common/file-jp2-load.c:256 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:297 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
+msgid "Unknown"
+msgstr "Neznano"
+
+#: plug-ins/common/file-jp2-load.c:977
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Nepodprta JPEG 2000%s »%s« s/z %d komponentami."
 
-#: plug-ins/common/file-jp2-load.c:1085 plug-ins/common/file-wmf.c:596
+#: plug-ins/common/file-jp2-load.c:1054 plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "»%s« ni mogoče odpreti za branje."
 
-#: plug-ins/common/file-jp2-load.c:1094
+#: plug-ins/common/file-jp2-load.c:1063
 #, c-format
 msgid "Failed to initialize decoder for '%s', out of memory?"
 msgstr "Dekodirnika za »%s« ni uspelo inicializirati, je zmanjkalo pomnilnika?"
 
-#: plug-ins/common/file-jp2-load.c:1110
+#: plug-ins/common/file-jp2-load.c:1079
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Parametrov dekodirnika za »%s« ni mogoče nastaviti."
 
-#: plug-ins/common/file-jp2-load.c:1118
+#: plug-ins/common/file-jp2-load.c:1087
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Glave JP2 iz »%s« ni mogoče prebrati."
 
-#: plug-ins/common/file-jp2-load.c:1126
+#: plug-ins/common/file-jp2-load.c:1095
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Slike JP2 v »%s« ni mogoče dekodirati."
 
-#: plug-ins/common/file-jp2-load.c:1134
+#: plug-ins/common/file-jp2-load.c:1103
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Slike JP2 v »%s« ni mogoče dekompresirati."
 
-#: plug-ins/common/file-jp2-load.c:1165
+#: plug-ins/common/file-jp2-load.c:1134
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Slike CIELAB JP2 v »%s« ni mogoče dekodirati."
 
-#: plug-ins/common/file-jp2-load.c:1222
+#: plug-ins/common/file-jp2-load.c:1191
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
 msgstr "Neznan barvni prostor v kodnem toku JP2 »%s«."
 
-#: plug-ins/common/file-jp2-load.c:1233
+#: plug-ins/common/file-jp2-load.c:1202
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr "Slike YCbCr JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2-load.c:1243
+#: plug-ins/common/file-jp2-load.c:1212
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Slike CMYK JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2-load.c:1253
+#: plug-ins/common/file-jp2-load.c:1222
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr "Slike xvYCC JP2 »%s« ni mogoče pretvoriti v RGB."
 
-#: plug-ins/common/file-jp2-load.c:1280
+#: plug-ins/common/file-jp2-load.c:1249
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Nepodprti barvni prostor v sliki JP2 »%s«."
@@ -3928,74 +3930,74 @@ msgstr "Napor/_hitrost"
 msgid "Encoder effort setting"
 msgstr "Nastavitev napora kodirnika"
 
+#: plug-ins/common/file-jpegxl.c:213
+msgid "lightning (fastest)"
+msgstr "strela (najhitrejše)"
+
+#: plug-ins/common/file-jpegxl.c:214
+msgid "thunder"
+msgstr "grom"
+
+#: plug-ins/common/file-jpegxl.c:215
+msgid "falcon (faster)"
+msgstr "sokol (hitreje)"
+
+#: plug-ins/common/file-jpegxl.c:216
+msgid "cheetah"
+msgstr "gepard"
+
+#: plug-ins/common/file-jpegxl.c:217
+msgid "hare"
+msgstr "zajec"
+
 #: plug-ins/common/file-jpegxl.c:218
+msgid "wombat"
+msgstr "vombat"
+
+#: plug-ins/common/file-jpegxl.c:219
+msgid "squirrel"
+msgstr "veverica"
+
+#: plug-ins/common/file-jpegxl.c:220
+msgid "kitten"
+msgstr "mucka"
+
+#: plug-ins/common/file-jpegxl.c:221
+msgid "tortoise (slower)"
+msgstr "želva (počasneje)"
+
+#: plug-ins/common/file-jpegxl.c:227
 msgid "Save ori_ginal profile"
 msgstr "Shrani ori_ginalni profil"
 
-#: plug-ins/common/file-jpegxl.c:219
+#: plug-ins/common/file-jpegxl.c:228
 msgid "Store ICC profile to exported JXL file"
 msgstr "Shrani profil ICC v izvoženo datoteko JXL"
 
-#: plug-ins/common/file-jpegxl.c:224 plug-ins/file-tiff/file-tiff.c:265
+#: plug-ins/common/file-jpegxl.c:233 plug-ins/file-tiff/file-tiff.c:265
 msgid "Export as CMY_K"
 msgstr "Izvozi kot CMY_K"
 
-#: plug-ins/common/file-jpegxl.c:225
+#: plug-ins/common/file-jpegxl.c:234
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
 "Izvozite sliko JPEG XL CMYK z uporabo barvnega profila preverjanja videza"
 
-#: plug-ins/common/file-jpegxl.c:2028
-msgid "lightning (fastest)"
-msgstr "strela (najhitrejše)"
-
-#: plug-ins/common/file-jpegxl.c:2029
-msgid "thunder"
-msgstr "grom"
-
-#: plug-ins/common/file-jpegxl.c:2030
-msgid "falcon (faster)"
-msgstr "sokol (hitreje)"
-
-#: plug-ins/common/file-jpegxl.c:2031
-msgid "cheetah"
-msgstr "gepard"
-
-#: plug-ins/common/file-jpegxl.c:2032
-msgid "hare"
-msgstr "zajec"
-
-#: plug-ins/common/file-jpegxl.c:2033
-msgid "wombat"
-msgstr "vombat"
-
-#: plug-ins/common/file-jpegxl.c:2034
-msgid "squirrel"
-msgstr "veverica"
-
-#: plug-ins/common/file-jpegxl.c:2035
-msgid "kitten"
-msgstr "mucka"
-
-#: plug-ins/common/file-jpegxl.c:2036
-msgid "tortoise (slower)"
-msgstr "želva (počasneje)"
-
-#: plug-ins/common/file-jpegxl.c:2043
+#: plug-ins/common/file-jpegxl.c:2039
 msgid "16 bit/channel"
 msgstr "16 bitov/kanal"
 
-#: plug-ins/common/file-jpegxl.c:2051
+#: plug-ins/common/file-jpegxl.c:2047
 msgid "CMYK profile required for export"
 msgstr "Profil CMYK, potreben za izvoz"
 
-#: plug-ins/common/file-jpegxl.c:2059 plug-ins/file-jpeg/jpeg-export.c:899
+#: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-export.c:899
 #: plug-ins/file-psd/psd-export.c:2464
 #: plug-ins/file-tiff/file-tiff-export.c:1315
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
-#: plug-ins/common/file-jpegxl.c:2078 plug-ins/file-jpeg/jpeg-export.c:910
+#: plug-ins/common/file-jpegxl.c:2074 plug-ins/file-jpeg/jpeg-export.c:910
 #: plug-ins/file-psd/psd-export.c:2475
 #: plug-ins/file-tiff/file-tiff-export.c:1327
 #, c-format
@@ -4073,102 +4075,90 @@ msgid "Default chunks t_ype"
 msgstr "Privzeta vrsta ko_ščkov"
 
 #: plug-ins/common/file-mng.c:324
-msgid ""
-"(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta "
-"PNG; 2 = All PNG; 3 = All JNG)"
-msgstr ""
-"(ANIMIRANI MNG) Privzeta vrsta koščkov (0 = PNG + delta PNG; 1 = JNG + delta "
-"PNG; 2 = cel PNG; 3 = cel JNG)"
+msgid "(ANIMATED MNG) Default chunks type"
+msgstr "(ANIMIRANI MNG) Privzeta vrsta ko_ščkov"
 
-#: plug-ins/common/file-mng.c:331
+#: plug-ins/common/file-mng.c:325
+msgid "PNG + delta PNG"
+msgstr "PNG + delta PNG"
+
+#: plug-ins/common/file-mng.c:326
+msgid "JNG + delta PNG"
+msgstr "JNG + delta PNG"
+
+#: plug-ins/common/file-mng.c:327
+msgid "All PNG"
+msgstr "Vse PNG"
+
+#: plug-ins/common/file-mng.c:328
+msgid "All JNG"
+msgstr "Vse JNG"
+
+#: plug-ins/common/file-mng.c:334
 msgid "De_fault frame disposal"
 msgstr "Privzeta _opustitev sličic"
 
-#: plug-ins/common/file-mng.c:332
-msgid "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"
-msgstr "(animirani MNG) Privzeta vrsta odlaganja (0 = združi; 1 = zamenjaj)"
+#: plug-ins/common/file-mng.c:335
+msgid "(ANIMATED MNG) Default dispose type"
+msgstr "(ANIMIRANI MNG) Privzeta vrsta odlaganja"
 
-#: plug-ins/common/file-mng.c:338 plug-ins/common/file-png.c:258
+#: plug-ins/common/file-mng.c:336
+msgid "Combine"
+msgstr "Združi"
+
+#: plug-ins/common/file-mng.c:337
+msgid "Replace"
+msgstr "Zamenjaj"
+
+#: plug-ins/common/file-mng.c:343 plug-ins/common/file-png.c:258
 msgid "Save _background color"
 msgstr "Shrani _barvo ozadja"
 
-#: plug-ins/common/file-mng.c:339
+#: plug-ins/common/file-mng.c:344
 msgid "Write bKGd (background color) chunk"
 msgstr "Zapiši košček bKGd (barva ozadja)"
 
-#: plug-ins/common/file-mng.c:344
+#: plug-ins/common/file-mng.c:349
 msgid "Save _gamma"
 msgstr "Shrani _gamo"
 
-#: plug-ins/common/file-mng.c:345
+#: plug-ins/common/file-mng.c:350
 msgid "Write gAMA (gamma) chunk"
 msgstr "Zapiši košček gAMA (gama)"
 
-#: plug-ins/common/file-mng.c:350
+#: plug-ins/common/file-mng.c:355
 msgid "Sa_ve resolution"
 msgstr "S_hrani ločljivost"
 
-#: plug-ins/common/file-mng.c:351
+#: plug-ins/common/file-mng.c:356
 msgid "Write pHYs (image resolution) chunk"
 msgstr "Zapiši košček pHYs (ločljivost slike)"
 
-#: plug-ins/common/file-mng.c:356 plug-ins/common/file-png.c:276
+#: plug-ins/common/file-mng.c:361 plug-ins/common/file-png.c:276
 msgid "Save creation _time"
 msgstr "Shrani _čas nastanka"
 
-#: plug-ins/common/file-mng.c:357
+#: plug-ins/common/file-mng.c:362
 msgid "Write tIME (creation time) chunk"
 msgstr "Zapiši košček tIME (čas nastanka)"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:718 plug-ins/common/file-png.c:2316
+#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2316
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
 
-#: plug-ins/common/file-mng.c:1588
+#: plug-ins/common/file-mng.c:1596
 msgid "MNG Options"
 msgstr "Možnosti MNG"
 
-#: plug-ins/common/file-mng.c:1597 plug-ins/common/file-png.c:232
-msgid "PNG"
-msgstr "PNG"
-
-#: plug-ins/common/file-mng.c:1598
-msgid "JNG"
-msgstr "JNG"
-
-#: plug-ins/common/file-mng.c:1601
-msgid "PNG + delta PNG"
-msgstr "PNG + delta PNG"
-
-#: plug-ins/common/file-mng.c:1602
-msgid "JNG + delta PNG"
-msgstr "JNG + delta PNG"
-
-#: plug-ins/common/file-mng.c:1603
-msgid "All PNG"
-msgstr "Vse PNG"
-
-#: plug-ins/common/file-mng.c:1604
-msgid "All JNG"
-msgstr "Vse JNG"
-
-#: plug-ins/common/file-mng.c:1612
-msgid "Combine"
-msgstr "Združi"
-
-#: plug-ins/common/file-mng.c:1613
-msgid "Replace"
-msgstr "Zamenjaj"
-
-#: plug-ins/common/file-mng.c:1648
+#: plug-ins/common/file-mng.c:1654
 msgid "Animated MNG Options"
 msgstr "Možnosti za animirani MNG ..."
 
-#: plug-ins/common/file-mng.c:1658
+#: plug-ins/common/file-mng.c:1664
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -4640,6 +4630,10 @@ msgstr "Neveljavna datoteka Esm Software PIX"
 #: plug-ins/common/file-png.c:186 plug-ins/common/file-png.c:216
 msgid "PNG image"
 msgstr "Slika PNG"
+
+#: plug-ins/common/file-png.c:232
+msgid "PNG"
+msgstr "PNG"
 
 #: plug-ins/common/file-png.c:246
 msgid "_Interlacing (Adam7)"
@@ -6115,31 +6109,31 @@ msgid "Ori_gin"
 msgstr "I_zvor"
 
 #: plug-ins/common/file-tga.c:321
-msgid "Image origin (0 = top-left, 1 = bottom-left)"
-msgstr "Izvor slike (0 = levo zgoraj, 1 = desno spodaj)"
+msgid "Image origin"
+msgstr "Izvor slike"
 
-#: plug-ins/common/file-tga.c:434
+#: plug-ins/common/file-tga.c:322
+msgid "Bottom left"
+msgstr "Levo spodaj"
+
+#: plug-ins/common/file-tga.c:323
+msgid "Top left"
+msgstr "Levo zgoraj"
+
+#: plug-ins/common/file-tga.c:437
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Iz »%s« ni mogoče prebrati glave"
 
-#: plug-ins/common/file-tga.c:453
+#: plug-ins/common/file-tga.c:456
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Iz »%s« ni mogoče prebrati razširitve"
 
-#: plug-ins/common/file-tga.c:466
+#: plug-ins/common/file-tga.c:469
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
-
-#: plug-ins/common/file-tga.c:1436
-msgid "Bottom left"
-msgstr "Levo spodaj"
-
-#: plug-ins/common/file-tga.c:1437
-msgid "Top left"
-msgstr "Levo zgoraj"
 
 #: plug-ins/common/file-wbmp.c:118
 msgid "Wireless BMP image"
@@ -6522,8 +6516,8 @@ msgstr ""
 "»gtk-cursor-theme-size«."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1259 plug-ins/file-webp/file-webp-export.c:198
-#: plug-ins/file-webp/file-webp-export.c:597
+#: plug-ins/common/file-xmc.c:1259 plug-ins/file-webp/file-webp-export.c:199
+#: plug-ins/file-webp/file-webp-export.c:599
 #, c-format
 msgid "Saving '%s'"
 msgstr "Shranjevanje »%s«"
@@ -8492,7 +8486,7 @@ msgid "Basic Options"
 msgstr "Osnovne nastavitve"
 
 #: plug-ins/common/warp.c:450 plug-ins/file-jpeg/jpeg-export.c:951
-#: plug-ins/file-webp/file-webp-dialog.c:107
+#: plug-ins/file-webp/file-webp-dialog.c:95
 msgid "Advanced Options"
 msgstr "Napredne možnosti"
 
@@ -8709,19 +8703,19 @@ msgstr "Prenašanje spletne strani »%s«"
 msgid "Transferring webpage image for '%s'"
 msgstr "Prenašanje slike spletne strani za »%s«"
 
-#: plug-ins/file-bmp/bmp-export.c:199 plug-ins/file-bmp/bmp-export.c:232
+#: plug-ins/file-bmp/bmp-export.c:188 plug-ins/file-bmp/bmp-export.c:221
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
 
-#: plug-ins/file-bmp/bmp-export.c:201 plug-ins/file-bmp/bmp-export.c:234
+#: plug-ins/file-bmp/bmp-export.c:190 plug-ins/file-bmp/bmp-export.c:223
 msgid "Alpha channel will be ignored."
 msgstr "Kanal alfa ne bo upoštevan."
 
-#: plug-ins/file-bmp/bmp-export.c:1009
+#: plug-ins/file-bmp/bmp-export.c:1000
 msgid "Compatibility"
 msgstr "Združljivost"
 
-#: plug-ins/file-bmp/bmp-export.c:1015
+#: plug-ins/file-bmp/bmp-export.c:1006
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Disabling this "
@@ -8730,31 +8724,6 @@ msgstr ""
 "Nekateri programi ne morejo brati slik BMP, ki vsebujejo podatke o barvnem "
 "prostoru. GIMP privzeto zapiše podatke o barvnem prostoru. S to možnostjo "
 "GIMP v datoteko ne bo zapisal podatkov o barvnem prostoru."
-
-#. RGB Encoding Options
-#: plug-ins/file-bmp/bmp-export.c:1026
-msgid "16 bit (R5 G6 B5)"
-msgstr "16-bitno (R5 G6 B5)"
-
-#: plug-ins/file-bmp/bmp-export.c:1027
-msgid "16 bit (A1 R5 G5 B5)"
-msgstr "16-bitno (a1 R5 G5 B5)"
-
-#: plug-ins/file-bmp/bmp-export.c:1028
-msgid "16 bit (X1 R5 G5 B5)"
-msgstr "16-bitno (X1 R5 G5 B5)"
-
-#: plug-ins/file-bmp/bmp-export.c:1029
-msgid "24 bit (R8 G8 B8)"
-msgstr "24-bitno (R8 G8 B8)"
-
-#: plug-ins/file-bmp/bmp-export.c:1030
-msgid "32 bit (A8 R8 G8 B8)"
-msgstr "32-bitno (A8 R8 G8 B8)"
-
-#: plug-ins/file-bmp/bmp-export.c:1031
-msgid "32 bit (X8 R8 G8 B8)"
-msgstr "32-bitno (X8 R8 G8 B8)"
 
 #: plug-ins/file-bmp/bmp-load.c:146
 msgid "Bad colormap"
@@ -8836,12 +8805,32 @@ msgid "R_GB format"
 msgstr "Oblika R_GB"
 
 #: plug-ins/file-bmp/bmp.c:221
-msgid ""
-"Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
-"4=RGBA_8888, 5=RGBX_8888)"
-msgstr ""
-"Oblika izvoza za slike RGB (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, "
-"4=RGBA_8888, 5=RGBX_8888)"
+msgid "Export format for RGB images"
+msgstr "Oblika izvoza za slike RGB"
+
+#: plug-ins/file-bmp/bmp.c:222
+msgid "16 bit (R5 G6 B5)"
+msgstr "16-bitno (R5 G6 B5)"
+
+#: plug-ins/file-bmp/bmp.c:223
+msgid "16 bit (A1 R5 G5 B5)"
+msgstr "16-bitno (a1 R5 G5 B5)"
+
+#: plug-ins/file-bmp/bmp.c:224
+msgid "16 bit (X1 R5 G5 B5)"
+msgstr "16-bitno (X1 R5 G5 B5)"
+
+#: plug-ins/file-bmp/bmp.c:225
+msgid "24 bit (R8 G8 B8)"
+msgstr "24-bitno (R8 G8 B8)"
+
+#: plug-ins/file-bmp/bmp.c:226
+msgid "32 bit (A8 R8 G8 B8)"
+msgstr "32-bitno (A8 R8 G8 B8)"
+
+#: plug-ins/file-bmp/bmp.c:227
+msgid "32 bit (X8 R8 G8 B8)"
+msgstr "32-bitno (X8 R8 G8 B8)"
 
 #: plug-ins/file-dds/dds.c:130 plug-ins/file-dds/dds.c:168
 msgid "DDS image"
@@ -8935,9 +8924,8 @@ msgstr "Uporabi metriko zaznavne napake med stiskanjem"
 msgid "Pixel format"
 msgstr "Oblika slikovnih točk"
 
-#. Create the combobox containing the presets
 #: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
-#: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp-dialog.c:80
+#: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:183
 #: plug-ins/gradient-flare/gradient-flare.c:2607
 msgid "Default"
 msgstr "privzeta"
@@ -10497,45 +10485,45 @@ msgid "Compression _type"
 msgstr "Vrsta s_tiskanja"
 
 #: plug-ins/file-sgi/sgi.c:201
-msgid "Compression level (0 = none, 1 = RLE, 2 = ARLE)"
-msgstr "Stopnja stiskanja (0 = brez, 1 = RLE, 2 = ARLE)"
+msgid "Compression level"
+msgstr "Raven stiskanja"
 
-#: plug-ins/file-sgi/sgi.c:318
+#: plug-ins/file-sgi/sgi.c:202
+msgid "No compression"
+msgstr "brez stiskanja"
+
+#: plug-ins/file-sgi/sgi.c:203
+msgid "RLE compression"
+msgstr "stiskanje RLE"
+
+#: plug-ins/file-sgi/sgi.c:204
+msgid "Aggressive RLE (not supported by SGI)"
+msgstr "agresivni RLE (ni podprt s strani SGI)"
+
+#: plug-ins/file-sgi/sgi.c:322
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "»%s« ni mogoče odpreti za branje."
 
-#: plug-ins/file-sgi/sgi.c:334
+#: plug-ins/file-sgi/sgi.c:338
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Neveljavna širina: %hu"
 
-#: plug-ins/file-sgi/sgi.c:342
+#: plug-ins/file-sgi/sgi.c:346
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Neveljavna višina: %hu"
 
-#: plug-ins/file-sgi/sgi.c:350
+#: plug-ins/file-sgi/sgi.c:354
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Neveljavno število kanalov: %hu"
 
-#: plug-ins/file-sgi/sgi.c:631
+#: plug-ins/file-sgi/sgi.c:635
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Datoteke »%s« ni mogoče odpreti za pisanje."
-
-#: plug-ins/file-sgi/sgi.c:721
-msgid "No compression"
-msgstr "brez stiskanja"
-
-#: plug-ins/file-sgi/sgi.c:723
-msgid "RLE compression"
-msgstr "stiskanje RLE"
-
-#: plug-ins/file-sgi/sgi.c:725
-msgid "Aggressive RLE (not supported by SGI)"
-msgstr "agresivni RLE (ni podprt s strani SGI)"
 
 #: plug-ins/file-tiff/file-tiff.c:164 plug-ins/file-tiff/file-tiff.c:210
 msgid "TIFF or BigTIFF image"
@@ -10949,6 +10937,10 @@ msgstr "Kana_l"
 msgid "WebP image"
 msgstr "Slika WebP"
 
+#: plug-ins/file-webp/file-webp.c:157 plug-ins/file-webp/file-webp.c:158
+msgid "Saves files in the WebP image format"
+msgstr "Shrani datoteke v zapisu WebP"
+
 #: plug-ins/file-webp/file-webp.c:167
 msgid "WebP"
 msgstr "WebP"
@@ -10958,73 +10950,89 @@ msgid "Source _type"
 msgstr "Vrsta _vira"
 
 #: plug-ins/file-webp/file-webp.c:182
-msgid ""
-"WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, "
-"Text=5)"
-msgstr ""
-"Prednastavitev kodirnika webP (privzeto=0, slika=1, fotografija=2, risba=3, "
-"ikona=4, besedilo=5)"
+msgid "WebP encoder preset"
+msgstr "Prednastavitev kodirnika WebP"
 
-#: plug-ins/file-webp/file-webp.c:189
+#: plug-ins/file-webp/file-webp.c:184
+msgid "Picture"
+msgstr "Slika"
+
+#: plug-ins/file-webp/file-webp.c:185
+msgid "Photo"
+msgstr "Fotografija"
+
+#: plug-ins/file-webp/file-webp.c:186
+msgid "Drawing"
+msgstr "Risba"
+
+#: plug-ins/file-webp/file-webp.c:187
+msgid "Icon"
+msgstr "Ikona"
+
+#: plug-ins/file-webp/file-webp.c:188
+msgid "Text"
+msgstr "Besedilo"
+
+#: plug-ins/file-webp/file-webp.c:195
 msgid "Use lossless encoding"
 msgstr "Uporabi kodiranje brez izgub"
 
-#: plug-ins/file-webp/file-webp.c:194
+#: plug-ins/file-webp/file-webp.c:200
 msgid "Image _quality"
 msgstr "_Kakovost slike"
 
-#: plug-ins/file-webp/file-webp.c:195
+#: plug-ins/file-webp/file-webp.c:201
 msgid "Quality of the image"
 msgstr "Kakovost slike"
 
-#: plug-ins/file-webp/file-webp.c:200
+#: plug-ins/file-webp/file-webp.c:206
 msgid "Alpha q_uality"
 msgstr "Kakovost al_fe"
 
-#: plug-ins/file-webp/file-webp.c:201
+#: plug-ins/file-webp/file-webp.c:207
 msgid "Quality of the image's alpha channel"
 msgstr "Kakovost kanala alfa slike"
 
-#: plug-ins/file-webp/file-webp.c:206
+#: plug-ins/file-webp/file-webp.c:212
 msgid "Use Sharp YU_V"
 msgstr "Uporabi ostri YU_V"
 
 #. TRANSLATORS: \xe2\x86\x92 is a Unicode
 #. * "Rightward Arrow" in UTF-8 encoding.
 #.
-#: plug-ins/file-webp/file-webp.c:210
+#: plug-ins/file-webp/file-webp.c:216
 msgid "Use sharper (but slower) RGB→YUV conversion"
 msgstr "Uporabi ostrejšo (a počasnejšo) pretvorbo RGB→YUV"
 
-#: plug-ins/file-webp/file-webp.c:215
+#: plug-ins/file-webp/file-webp.c:221
 msgid "Loop _forever"
 msgstr "Zankaj ne_skončno"
 
-#: plug-ins/file-webp/file-webp.c:216
+#: plug-ins/file-webp/file-webp.c:222
 msgid "Loop animation infinitely"
 msgstr "Neskončno zankaj animacijo"
 
-#: plug-ins/file-webp/file-webp.c:221
+#: plug-ins/file-webp/file-webp.c:227
 msgid "_Minimize output size (slower)"
 msgstr "_Minimiziraj izhodno velikost (počasneje)"
 
-#: plug-ins/file-webp/file-webp.c:222
+#: plug-ins/file-webp/file-webp.c:228
 msgid "Minimize output file size"
 msgstr "Minimiziraj velikost izhodne datoteke"
 
-#: plug-ins/file-webp/file-webp.c:227
+#: plug-ins/file-webp/file-webp.c:233
 msgid "Max distance between _key-frames"
 msgstr "Največja razdalja med _ključnima sličicama"
 
-#: plug-ins/file-webp/file-webp.c:228
+#: plug-ins/file-webp/file-webp.c:234
 msgid "Maximum distance between keyframes"
 msgstr "Največja razdalja med ključnima sličicama"
 
-#: plug-ins/file-webp/file-webp.c:233
+#: plug-ins/file-webp/file-webp.c:239
 msgid "_Default delay between frames"
 msgstr "_Privzeta zakasnitev med sličicami"
 
-#: plug-ins/file-webp/file-webp.c:234
+#: plug-ins/file-webp/file-webp.c:240
 msgid ""
 "Default delay (in milliseconds) to use when timestamps for frames are not "
 "available or forced."
@@ -11032,19 +11040,19 @@ msgstr ""
 "Privzeta zamuda (v milisekundah) za uporabo, ko časovni žigi za sličice niso "
 "na voljo ali so vsiljeni."
 
-#: plug-ins/file-webp/file-webp.c:240
+#: plug-ins/file-webp/file-webp.c:246
 msgid "Use default dela_y for all frames"
 msgstr "Uporabi privzeto _zakasnitev za vse sličice"
 
-#: plug-ins/file-webp/file-webp.c:241
+#: plug-ins/file-webp/file-webp.c:247
 msgid "Force default delay on all frames"
 msgstr "Vsili privzeto zakasnitev za vse sličice"
 
-#: plug-ins/file-webp/file-webp.c:246
+#: plug-ins/file-webp/file-webp.c:252
 msgid "Save a_nimation"
 msgstr "Shrani a_nimacijo"
 
-#: plug-ins/file-webp/file-webp.c:247
+#: plug-ins/file-webp/file-webp.c:253
 msgid "Use layers for animation"
 msgstr "Uporabi plasti za animacijo"
 
@@ -11055,26 +11063,6 @@ msgstr "(brez ključnih sličic)"
 #: plug-ins/file-webp/file-webp-dialog.c:52
 msgid "(all frames are keyframes)"
 msgstr "(vse sličice so ključne sličice)"
-
-#: plug-ins/file-webp/file-webp-dialog.c:81
-msgid "Picture"
-msgstr "Slika"
-
-#: plug-ins/file-webp/file-webp-dialog.c:82
-msgid "Photo"
-msgstr "Fotografija"
-
-#: plug-ins/file-webp/file-webp-dialog.c:83
-msgid "Drawing"
-msgstr "Risba"
-
-#: plug-ins/file-webp/file-webp-dialog.c:84
-msgid "Icon"
-msgstr "Ikona"
-
-#: plug-ins/file-webp/file-webp-dialog.c:85
-msgid "Text"
-msgstr "Besedilo"
 
 #: plug-ins/file-webp/file-webp-export.c:101
 msgid "out of memory"
@@ -11126,13 +11114,13 @@ msgstr "terminator seznama"
 msgid "unknown error"
 msgstr "neznana napaka"
 
-#: plug-ins/file-webp/file-webp-export.c:208
-#: plug-ins/file-webp/file-webp-export.c:607
+#: plug-ins/file-webp/file-webp-export.c:209
+#: plug-ins/file-webp/file-webp-export.c:609
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Datoteke »%s« ni mogoče odpreti za pisanje: %s"
 
-#: plug-ins/file-webp/file-webp-export.c:294
+#: plug-ins/file-webp/file-webp-export.c:295
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Napaka WebP: »%s«"
@@ -15683,11 +15671,6 @@ msgstr "6"
 #: plug-ins/metadata/metadata-tags.c:254
 msgid "7"
 msgstr "7"
-
-#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
-#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
-msgid "Unknown"
-msgstr "Neznano"
 
 #. DO NOT SAVE
 #: plug-ins/metadata/metadata-tags.c:262
