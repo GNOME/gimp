@@ -33,10 +33,23 @@ if (-not (Test-Path "$config_path"))
     exit 1
   }
 
-## Get Identity Name (the dir shown in Explorer)
-$GIMP_UNSTABLE = Get-Content "$config_path"                               | Select-String 'GIMP_UNSTABLE' |
+## Figure out if GIMP is unstable (dev)
+$gimp_unstable = Get-Content "$config_path"                               | Select-String 'GIMP_UNSTABLE' |
                  Foreach-Object {$_ -replace '#define GIMP_UNSTABLE ',''}
-if ($GIMP_UNSTABLE -eq '1')
+if ($gimp_unstable -eq '1')
+  {
+    $dev = '1'
+  }
+
+$gimp_version = Get-Content "$config_path"                               | Select-String 'GIMP_VERSION'        |
+                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+if ($gimp_version -match 'RC[0-9]')
+  {
+    $dev = 'rc'
+  }
+
+## Get Identity Name (the dir shown in Explorer)
+if ($dev)
   {
     $IDENTITY_NAME="GIMP.GIMPPreview"
   }
@@ -48,31 +61,39 @@ else
 ## Get GIMP app version (major.minor)
 $GIMP_APP_VERSION = Get-Content "$config_path"                                   | Select-String 'GIMP_APP_VERSION "'  |
                     Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+$major = ($GIMP_APP_VERSION.Split('.'))[0]
+$minor = ($GIMP_APP_VERSION.Split('.'))[-1]
 
 ## Get GIMP micro version
-$gimp_version = Get-Content "$config_path"                               | Select-String 'GIMP_VERSION'        |
-                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-$micro = $gimp_version -replace "$GIMP_APP_VERSION.",""
-if (($micro).tostring().length -eq 1)
+$micro = ($gimp_version.Split('.'))[-1]
+if ($dev -eq 'rc')
   {
-    $micro_digit = '0'
+    $micro = $micro -replace ".{4}$"
+  }
+
+$micro_digit = $micro
+if ($micro -eq '0')
+  {
+    $micro_digit = ''
   }
 
 ## Get GIMP revision
 if ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD_*')
   {
+    Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
     $revision = $GIMP_CI_MS_STORE -replace 'MSIXUPLOAD_',''
   }
-if (($revision).tostring().length -eq 1)
+
+if ($revision -ne '0')
   {
-    $revision_digit = '0'
+    $revision_text = ", revision: $revision"
   }
 
 ## Get custom GIMP version (major.minor.micro+revision.0), a compliant way to publish to Partner Center:
 ## https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements)
-$CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${micro}${revision_digit}${revision}.0"
+$CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${revision}.0"
 
-Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION"
+Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (major: $major, minor: $minor, micro: ${micro}${revision_text})"
 
 
 # Autodetects what arch bundles will be packaged
@@ -127,7 +148,7 @@ foreach ($bundle in $supported_archs)
         Set-Content $msix_arch\AppxManifest.xml
 
         ## Set Display Name (the name shown in MS Store)
-        if ($GIMP_UNSTABLE -eq '1')
+        if ($dev)
           {
             $display_name='GIMP (Preview)'
           }
@@ -203,10 +224,9 @@ foreach ($bundle in $supported_archs)
 
 
         # 4. MAKE .MSIX AND CORRESPONDING .APPXSYM
-        $MSIX_ARTIFACT = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.msix"
-        $APPXSYM = $MSIX_ARTIFACT -replace '.msix','.appxsym'
 
         ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
+        $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
         #if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
         #  {
         #    Get-ChildItem $msix_arch -Filter *.pdb -Recurse |
@@ -216,6 +236,7 @@ foreach ($bundle in $supported_archs)
         #  }
 
         ## Make .msix from each msix_arch
+        $MSIX_ARTIFACT = $APPXSYM -replace '.appxsym','.msix'
         if (-not ((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)))
           {
             Write-Output "(INFO): packaging $MSIX_ARTIFACT (for testing purposes)"
@@ -260,6 +281,8 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
         #Get-ChildItem *.appxsym | Remove-Item -Recurse -Force
         Get-ChildItem *.msixbundle | Remove-Item -Recurse -Force
       }
+    #FIXME: .msixupload should be published automatically
+    #https://gitlab.gnome.org/GNOME/gimp/-/issues/11397
   }
 
 
