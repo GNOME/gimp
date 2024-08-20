@@ -9,6 +9,10 @@ if [ "$1" != '--authorized' ] && [ "$1" != '--force' ]; then
   exit 1
 fi
 
+if [ "$1" = '--force' ] && [ "$MSYSTEM_CARCH" = "i686" ]; then
+  echo -e "\033[33m(WARNING)\033[0m: 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922"
+fi
+
 
 # NOTE: The bundling scripts, different from building scripts, need to set
 # the ARTIFACTS_SUFFIX, even locally: 1) to avoid confusion (bundle dirs are

@@ -15,6 +15,10 @@ if [ -z "$GITLAB_CI" ]; then
   cd $(dirname $PWD)
 fi
 
+if [ "$MSYSTEM_CARCH" = "i686" ]; then
+  echo -e "\033[33m(WARNING)\033[0m: 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922"
+fi
+
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 if [ "$MSYSTEM_CARCH" != "aarch64" ]; then

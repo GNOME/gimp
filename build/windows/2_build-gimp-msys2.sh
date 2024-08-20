@@ -13,6 +13,10 @@ if [ -z "$GITLAB_CI" ]; then
   git submodule update --init --force
 fi
 
+if [ "$MSYSTEM_CARCH" = "i686" ]; then
+  echo -e "\033[33m(WARNING)\033[0m: 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922"
+fi
+
 
 if [ "$GITLAB_CI" ]; then
   # Install the required (pre-built) packages for GIMP again
