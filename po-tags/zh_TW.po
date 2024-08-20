@@ -8,19 +8,20 @@ msgstr ""
 "Project-Id-Version: gimp-tags\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2011-01-01 19:46+0800\n"
-"PO-Revision-Date: 2010-10-04 20:11+0800\n"
-"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"PO-Revision-Date: 2024-08-20 21:22+0800\n"
+"Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "模糊"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:2
-#, fuzzy
 msgid "round"
-msgstr "圓形"
+msgstr "圓滑"
