@@ -51,6 +51,12 @@ $gimp_version = Get-Content "$CONFIG_PATH"                               | Selec
                 Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
 $APPVER = $gimp_version
 
+if ($GIMP_CI_WIN_INSTALLER -and $GIMP_CI_WIN_INSTALLER -match '[0-9]')
+  {
+    Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
+    $revision = $GIMP_CI_WIN_INSTALLER
+  }
+
 if ($revision -ne '0')
   {
     $APPVER = "$gimp_version.$revision"
@@ -141,7 +147,20 @@ fix_msg $INNO_PATH\Languages\Unofficial
 
 
 # 4. PREPARE GIMP FILES
-# FIXME: We can't do this on CI
+
+## GIMP revision on about dialog
+## FIXME: This should be done with Inno scripting
+if ($GITLAB_CI)
+  {
+    $supported_archs = "$GIMP32","$GIMP64","$GIMPA64"
+    foreach ($bundle in $supported_archs)
+      {
+        (Get-Content "$bundle\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
+        Set-Content "$bundle\share\gimp\*\gimp-release"
+      }
+  }
+
+## FIXME: We can't do this on CI
 if (-not $GITLAB_CI)
   {
     Write-Output "(INFO): extracting .debug symbols from bundles"
