@@ -1960,8 +1960,10 @@ calc_sample_one_gradient (void)
   GFlare        *gflare = calc.gflare;
   GradientName  *grad_name;
   guchar        *gradient;
-  gdouble       hue_deg;
-  gint          i, j, hue;
+  gdouble        hue_deg;
+  gint           i, j, hue;
+  const Babl    *to_hsv = babl_fish ("R'G'B'A u8", "HSVA float");
+  const Babl    *to_rgb = babl_fish ("HSVA float", "R'G'B'A u8");
 
   for (i = 0; i < G_N_ELEMENTS (table); i++)
     {
@@ -1986,27 +1988,22 @@ calc_sample_one_gradient (void)
 
               if (hue > 0)
                 {
+                  gfloat *hsva;
+
+                  hsva = g_new0 (gfloat, sizeof (gfloat) * (GRADIENT_RESOLUTION * 4));
+                  babl_process (to_hsv, gradient, hsva, GRADIENT_RESOLUTION);
+
                   for (j = 0; j < GRADIENT_RESOLUTION; j++)
                     {
-                      GimpRGB rgb;
-                      GimpHSV hsv;
+                      hsva[j * 4] = (hsva[j * 4] + ((gdouble) hue / 255.0));
 
-                      rgb.r = (gdouble) gradient[j*4]   / 255.0;
-                      rgb.g = (gdouble) gradient[j*4+1] / 255.0;
-                      rgb.b = (gdouble) gradient[j*4+2] / 255.0;
-
-                      gimp_rgb_to_hsv (&rgb, &hsv);
-
-                      hsv.h = (hsv.h + ((gdouble) hue / 255.0));
-                      if (hsv.h > 1.0)
-                        hsv.h -= 1.0;
-
-                      gimp_hsv_to_rgb (&hsv, &rgb);
-
-                      gradient[j*4]   = ROUND (rgb.r * 255.0);
-                      gradient[j*4+1] = ROUND (rgb.g * 255.0);
-                      gradient[j*4+2] = ROUND (rgb.b * 255.0);
+                      if (hsva[j * 4] > 1.0)
+                        hsva[j * 4] -= 1.0;
                     }
+
+                  babl_process (to_rgb, hsva, gradient, GRADIENT_RESOLUTION);
+
+                  g_free (hsva);
                 }
             }
 

@@ -33,13 +33,9 @@ G_BEGIN_DECLS
 
 /*  GimpRGB function  */
 
-void   gimp_rgb_to_hsv          (const GimpRGB  *rgb,
-                                 GimpHSV        *hsv);
 void   gimp_rgb_to_hsl          (const GimpRGB  *rgb,
                                  GimpHSL        *hsl);
 
-void   gimp_hsv_to_rgb          (const GimpHSV  *hsv,
-                                 GimpRGB        *rgb);
 void   gimp_hsl_to_rgb          (const GimpHSL  *hsl,
                                  GimpRGB        *rgb);
 

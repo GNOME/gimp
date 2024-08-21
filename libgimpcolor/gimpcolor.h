@@ -33,7 +33,6 @@
 #include <libgimpcolor/gimpcolorspace.h>
 #include <libgimpcolor/gimpcolortransform.h>
 #include <libgimpcolor/gimphsl.h>
-#include <libgimpcolor/gimphsv.h>
 #include <libgimpcolor/gimppixbuf.h>
 #include <libgimpcolor/gimprgb.h>
 

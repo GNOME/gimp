@@ -9,7 +9,6 @@ libgimpcolor_sources = files(
   'gimpcolorspace.c',
   'gimpcolortransform.c',
   'gimphsl.c',
-  'gimphsv.c',
   'gimppixbuf.c',
   'gimprgb.c',
 )
@@ -24,7 +23,6 @@ libgimpcolor_headers_introspectable = files(
   'gimpcolorspace.h',
   'gimpcolortransform.h',
   'gimphsl.h',
-  'gimphsv.h',
   'gimppixbuf.h',
   'gimprgb.h',
 

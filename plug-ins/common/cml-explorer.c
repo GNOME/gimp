@@ -661,6 +661,8 @@ CML_main_function (gboolean preview_p)
   GeglBuffer *dest_buffer;
   const Babl *src_format;
   const Babl *dest_format;
+  const Babl *to_hsv;
+  const Babl *to_rgb;
   guchar     *dest_buf = NULL;
   guchar     *src_buf  = NULL;
   gint        x, y;
@@ -683,6 +685,9 @@ CML_main_function (gboolean preview_p)
                                       &x, &y,
                                       &width_by_pixel, &height_by_pixel))
     return TRUE;
+
+  to_hsv = babl_fish (babl_format ("R'G'B' float"), babl_format ("HSV float"));
+  to_rgb = babl_fish (babl_format ("HSV float"), babl_format ("R'G'B' float"));
 
   src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable);
   src_is_gray   = dest_is_gray   = gimp_drawable_is_gray (drawable);
@@ -881,7 +886,7 @@ CML_main_function (gboolean preview_p)
 
   if (VALS.initial_value == 3)
     {
-      int       index;
+      int index;
 
       for (index = 0;
            index < MIN (cell_num, width_by_pixel / VALS.scale);
@@ -941,19 +946,14 @@ CML_main_function (gboolean preview_p)
 
           if (! dest_is_gray)
             {
-              GimpHSV hsv;
-              GimpRGB rgb;
+              gfloat hsv[3] = { h / 255.0, s / 255.0, v / 255.0 };
+              gfloat rgb[3];
 
-              gimp_hsv_set (&hsv,
-                            (gdouble) h / 255.0,
-                            (gdouble) s / 255.0,
-                            (gdouble) v / 255.0);
+              babl_process (to_rgb, hsv, rgb, 1);
 
-              gimp_hsv_to_rgb (&hsv, &rgb);
-
-              r = ROUND (rgb.r * 255.0);
-              g = ROUND (rgb.g * 255.0);
-              b = ROUND (rgb.b * 255.0);
+              r = ROUND (rgb[0] * 255.0);
+              g = ROUND (rgb[1] * 255.0);
+              b = ROUND (rgb[2] * 255.0);
             }
 
           /* render destination */
@@ -980,29 +980,28 @@ CML_main_function (gboolean preview_p)
                       }
                     else
                       {
-                        GimpRGB rgb;
-                        GimpHSV hsv;
+                        gfloat rgb[3];
+                        gfloat hsv[3];
 
-                        rgb.r = (gdouble) rgbi[0] / 255.0;
-                        rgb.g = (gdouble) rgbi[1] / 255.0;
-                        rgb.b = (gdouble) rgbi[2] / 255.0;
+                        for (i = 0; i < 3; i++)
+                          rgb[i] = (gfloat) rgbi[i] / 255.0;
 
-                        gimp_rgb_to_hsv (&rgb, &hsv);
+                        babl_process (to_hsv, rgb, hsv, 1);
 
                         if (VALS.hue.function != CML_KEEP_VALUES)
-                          hsv.h = (gdouble) h / 255.0;
+                          hsv[0] = (gfloat) h / 255.0;
 
                         if  (VALS.sat.function != CML_KEEP_VALUES)
-                          hsv.s = (gdouble) s / 255.0;
+                          hsv[1] = (gfloat) s / 255.0;
 
                         if (VALS.val.function != CML_KEEP_VALUES)
-                          hsv.v = (gdouble) v / 255.0;
+                          hsv[2] = (gfloat) v / 255.0;
 
-                        gimp_hsv_to_rgb (&hsv, &rgb);
+                        babl_process (to_rgb, hsv, rgb, 1);
 
-                        r = ROUND (rgb.r * 255.0);
-                        g = ROUND (rgb.g * 255.0);
-                        b = ROUND (rgb.b * 255.0);
+                        r = ROUND (rgb[0] * 255.0);
+                        g = ROUND (rgb[1] * 255.0);
+                        b = ROUND (rgb[2] * 255.0);
                       }
                   }
 
@@ -1933,12 +1932,15 @@ function_graph_draw (GtkWidget *widget,
                      cairo_t   *cr,
                      gpointer  *data)
 {
-  gint       x, y;
-  gint       rgbi[3];
-  GimpHSV    hsv;
-  GimpRGB    rgb;
-  gint       channel_id = GPOINTER_TO_INT (data[0]);
-  CML_PARAM *param      = data[1];
+  gint        x, y;
+  gint        rgbi[3];
+  gfloat      hsv[3];
+  gfloat      rgb[3];
+  gint        channel_id = GPOINTER_TO_INT (data[0]);
+  CML_PARAM  *param      = data[1];
+  const Babl *fish;
+
+  fish = babl_fish (babl_format ("HSV float"), babl_format ("R'G'B' float"));
 
   cairo_set_line_width (cr, 1.0);
 
@@ -1951,18 +1953,18 @@ function_graph_draw (GtkWidget *widget,
       if ((0 <= channel_id) && (channel_id <= 2))
         rgbi[channel_id] = CANNONIZE ((*param), ((gdouble) x / (gdouble) 255));
 
-      hsv.h = (gdouble) rgbi[0] / 255.0;
-      hsv.s = (gdouble) rgbi[1] / 255.0;
-      hsv.v = (gdouble) rgbi[2] / 255.0;
+      hsv[0] = (gdouble) rgbi[0] / 255.0;
+      hsv[1] = (gdouble) rgbi[1] / 255.0;
+      hsv[2] = (gdouble) rgbi[2] / 255.0;
 
-      gimp_hsv_to_rgb (&hsv, &rgb);
+      babl_process (fish, hsv, rgb, 1);
 
       for (y = 0; y < GRAPHSIZE; y++)
         {
           GIMP_CAIRO_RGB24_SET_PIXEL((img+(y*img_stride+x*4)),
-                                     ROUND (rgb.r * 255.0),
-                                     ROUND (rgb.g * 255.0),
-                                     ROUND (rgb.b * 255.0));
+                                     ROUND (rgb[0] * 255.0),
+                                     ROUND (rgb[1] * 255.0),
+                                     ROUND (rgb[2] * 255.0));
         }
     }
 
