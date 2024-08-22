@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-08-20 12:19+0000\n"
-"PO-Revision-Date: 2024-08-22 12:16+0000\n"
+"PO-Revision-Date: 2024-08-22 13:26+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -6751,7 +6751,7 @@ msgstr "Skara laghulurnar við núverandi myndval"
 #: app/actions/layers-actions.c:487
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
-msgstr "Al_farás til vals"
+msgstr "Al_farás í myndval"
 
 #: app/actions/layers-actions.c:489
 msgctxt "layers-action"
@@ -6819,6 +6819,8 @@ msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
+"Velja lögin sem eru fyrir ofan hvert það lag sem er valið núna. Lög verða"
+" ekki valin utan við fyrirliggjandi stig hópsins þeirra."
 
 #: app/actions/layers-actions.c:538
 msgctxt "layers-action"
@@ -6831,6 +6833,8 @@ msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
+"Velja lögin sem eru fyrir neðan hvert það lag sem er valið núna. Lög verða"
+" ekki valin utan við fyrirliggjandi stig hópsins þeirra."
 
 #: app/actions/layers-actions.c:546
 #| msgctxt "layers-action"
@@ -7106,7 +7110,7 @@ msgstr "Fjarlægja alfa-gegnsæislitrás"
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
-msgstr "Alfa-gegnsæislitrás til vals"
+msgstr "Alfa-gegnsæislitrás í myndval"
 
 #: app/actions/layers-commands.c:1833 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
@@ -13173,7 +13177,7 @@ msgstr "Rúnnað rétthyrnt val"
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
-msgstr "%s litrás til myndvals"
+msgstr "%s litrás í myndval"
 
 #: app/core/gimpchannel-select.c:532
 msgctxt "undo-type"
@@ -13238,7 +13242,7 @@ msgstr "Stroka litrás"
 #: app/core/gimpchannel.c:266
 msgctxt "undo-type"
 msgid "Channel to Selection"
-msgstr "Litrás til myndvals"
+msgstr "Litrás í myndval"
 
 #: app/core/gimpchannel.c:267
 msgctxt "undo-type"
@@ -20395,6 +20399,8 @@ msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
 "gimp-light.css nor gimp.css."
 msgstr ""
+"Ógilt þema: mappan '%s' inniheldur hvorki gimp-dark.css, gimp-gray.css, "
+"gimp-light.css né gimp.css."
 
 #: app/menus/shortcuts-rc.c:137
 #, c-format
@@ -21316,7 +21322,7 @@ msgstr ""
 "'%s'. Þetta niðurstöðugildi gefur ekki kost á prósentueiningum."
 
 #: app/pdb/gimpprocedure.c:982
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
 #| "type %s). This value is out of range."
@@ -21324,11 +21330,12 @@ msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 msgstr ""
-"Aðferðin '%s' hefur verið kölluð fram með gildinu '%s' fyrir frumbreytuna "
-"'%s' (#%d, tegund %s). Þetta gildi er fyrir utan sviðið."
+"Aðferðin '%s' hefur verið kölluð fram með `gimp_unit_pixel()` fyrir"
+" GimpUnit-frumbreytuna #%d "
+"'%s'. Þessi frumbreyta gefur ekki kost á mynddílaeiningum."
 
 #: app/pdb/gimpprocedure.c:992
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
 #| "type %s). This value is out of range."
@@ -21336,8 +21343,9 @@ msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr ""
-"Aðferðin '%s' hefur verið kölluð fram með gildinu '%s' fyrir frumbreytuna "
-"'%s' (#%d, tegund %s). Þetta gildi er fyrir utan sviðið."
+"Aðferðin '%s' hefur verið kölluð fram með `gimp_unit_percent()` fyrir"
+" GimpUnit-frumbreytuna #%d "
+"'%s'. Þessi frumbreyta gefur ekki kost á prósentueiningum."
 
 #: app/pdb/gimpprocedure.c:1012
 #, c-format
