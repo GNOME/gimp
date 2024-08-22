@@ -388,6 +388,35 @@ gimp_image_new_copy_drawables (GimpImage *image,
           if (gimp_layer_can_lock_alpha (new_layer))
             gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
 
+          if (gimp_drawable_has_filters (GIMP_DRAWABLE (iter->data)))
+            {
+              GList         *filter_list;
+              GimpContainer *filters;
+
+              filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+
+              for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+                   filter_list = g_list_previous (filter_list))
+                {
+                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                    {
+                      GimpDrawableFilter *old_filter = filter_list->data;
+                      GimpDrawableFilter *filter;
+
+                      filter = gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer), old_filter);
+
+                      if (filter != NULL)
+                        {
+                          gimp_drawable_filter_apply (filter, NULL);
+                          gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                          gimp_drawable_filter_layer_mask_freeze (filter);
+                          g_object_unref (filter);
+                        }
+                    }
+                }
+            }
+
           gimp_image_add_layer (new_image, new_layer, new_parent, index++, TRUE);
 
           /* If a group, loop through children. */
@@ -419,8 +448,6 @@ gimp_image_new_from_drawables (Gimp     *gimp,
   gdouble            xres;
   gdouble            yres;
   GimpColorProfile  *profile = NULL;
-  GList             *old_layers_list;
-  GList             *new_layers_list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (drawables != NULL, NULL);
@@ -477,48 +504,6 @@ gimp_image_new_from_drawables (Gimp     *gimp,
     }
 
   gimp_image_new_copy_drawables (image, drawables, new_image, tag_copies, NULL, NULL, NULL, NULL);
-
-  /* Copy any attached layer effects */
-  old_layers_list = drawables;
-  for (new_layers_list = gimp_image_get_layer_iter (new_image);
-       new_layers_list; new_layers_list = g_list_next (new_layers_list))
-    {
-      GimpLayer *layer     = old_layers_list->data;
-      GimpLayer *new_layer = new_layers_list->data;
-
-      if (gimp_drawable_has_filters (GIMP_DRAWABLE (layer)))
-        {
-          GList         *filter_list;
-          GimpContainer *filters;
-
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
-
-          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
-               filter_list = g_list_previous (filter_list))
-            {
-              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
-                {
-                  GimpDrawableFilter *old_filter = filter_list->data;
-                  GimpDrawableFilter *filter;
-
-                  filter =
-                    gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
-                                                    old_filter);
-
-                  if (filter != NULL)
-                    {
-                      gimp_drawable_filter_apply (filter, NULL);
-                      gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
-
-                      gimp_drawable_filter_layer_mask_freeze (filter);
-                      g_object_unref (filter);
-                    }
-                }
-            }
-        }
-
-      old_layers_list = g_list_next (old_layers_list);
-    }
 
   gimp_image_undo_enable (new_image);
 
