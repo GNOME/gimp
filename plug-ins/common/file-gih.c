@@ -297,7 +297,7 @@ gih_export (GimpProcedure        *procedure,
 
           parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
 
-          g_object_set (config, "description", parasite_data , NULL);
+          g_object_set (config, "description", parasite_data, NULL);
 
           gimp_parasite_free (parasite);
         }
@@ -326,25 +326,35 @@ gih_export (GimpProcedure        *procedure,
           parasite_data = g_strndup (parasite_data, parasite_size);
 
           gimp_pixpipe_params_parse (parasite_data, &gihparams);
+
           g_object_set (config,
-                        "num-cells",       gihparams.ncells,
-                        "dimension",       gihparams.dim,
-                        "selection-modes", gihparams.selection,
+                        "num-cells", gihparams.ncells,
+                        "dimension", gihparams.dim,
                         NULL);
 
           if (gihparams.dim > 0)
             {
-              GBytes *ranks = NULL;
-              guint8  rank_int[gihparams.dim];
+              GBytes  *ranks = NULL;
+              guint8   rank_int[gihparams.dim];
+              gchar  **selection_modes;
+
+              selection_modes = g_new0 (gchar *, gihparams.dim + 1);
 
               for (gint i = 0; i < gihparams.dim; i++)
-                rank_int[i] = (guint8) gihparams.rank[i];
+                {
+                  selection_modes[i] = gihparams.selection[i];
+                  rank_int[i]        = (guint8) gihparams.rank[i];
+                }
 
               ranks =
                 g_bytes_new (rank_int, sizeof (guint8) * gihparams.dim);
-              g_object_set (config, "ranks", ranks, NULL);
+              g_object_set (config,
+                            "ranks",           ranks,
+                            "selection-modes", selection_modes,
+                            NULL);
 
               g_bytes_unref (ranks);
+              g_free (selection_modes);
             }
 
           gimp_parasite_free (parasite);
