@@ -2418,7 +2418,7 @@ load_sketchbook_layers (TIFF      *tif,
               layer_name = tiff_get_page_name (tif);
 
               TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &layer_width);
-              TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &layer_height);
+              TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &layer_height);
 
               if (! TIFFGetField (tif, TIFFTAG_XPOSITION, &x_pos))
                 x_pos = 0.0f;
@@ -2434,7 +2434,7 @@ load_sketchbook_layers (TIFF      *tif,
 
               /* Loading pixel data */
               pixels = g_new (uint32_t, layer_width * layer_height);
-              if (! TIFFReadRGBAImage (tif, layer_width, layer_width, pixels, 0))
+              if (! TIFFReadRGBAImage (tif, layer_width, layer_height, pixels, 0))
                 {
                   g_free (pixels);
                   continue;
