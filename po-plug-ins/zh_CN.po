@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-20 12:51+0000\n"
-"PO-Revision-Date: 2024-08-21 07:56+0800\n"
+"POT-Creation-Date: 2024-08-20 23:58+0000\n"
+"PO-Revision-Date: 2024-08-24 09:10+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3403,11 +3403,11 @@ msgstr "使用无损压缩"
 
 #: plug-ins/common/file-heif.c:274 plug-ins/common/file-heif.c:395
 msgid "Save color prof_ile"
-msgstr "保存色彩配置文件(_I)"
+msgstr "保存特性文件(_I)"
 
 #: plug-ins/common/file-heif.c:275 plug-ins/common/file-heif.c:396
 msgid "Save the image's color profile"
-msgstr "保存图像的色彩配置文件"
+msgstr "保存图像的特性文件"
 
 #: plug-ins/common/file-heif.c:280 plug-ins/common/file-heif.c:401
 #: plug-ins/common/file-jpegxl.c:205
@@ -3901,11 +3901,11 @@ msgstr "乌龟（较慢）"
 
 #: plug-ins/common/file-jpegxl.c:227
 msgid "Save ori_ginal profile"
-msgstr "保存原始配置文件(_G)"
+msgstr "保存原始特性文件(_G)"
 
 #: plug-ins/common/file-jpegxl.c:228
 msgid "Store ICC profile to exported JXL file"
-msgstr "存储 ICC 配置文件至导出的 JXL 文件"
+msgstr "存储 ICC 特性文件至导出的 JXL 文件"
 
 #: plug-ins/common/file-jpegxl.c:233 plug-ins/file-tiff/file-tiff.c:265
 msgid "Export as CMY_K"
@@ -3913,7 +3913,7 @@ msgstr "导出为 CMYK(_K)"
 
 #: plug-ins/common/file-jpegxl.c:234
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
-msgstr "使用软打样色彩配置文件创建 CMYK JPEG XL 图像"
+msgstr "使用软打样特性文件创建 CMYK JPEG XL 图像"
 
 #: plug-ins/common/file-jpegxl.c:2039
 msgid "16 bit/channel"
@@ -3927,14 +3927,14 @@ msgstr "需要 CMYK 色彩配置用于导出"
 #: plug-ins/file-psd/psd-export.c:2464
 #: plug-ins/file-tiff/file-tiff-export.c:1315
 msgid "Name of the color profile used for CMYK export."
-msgstr "用于 CMYK 导出的色彩配置文件的名称。"
+msgstr "用于 CMYK 导出的特性文件的名称。"
 
 #: plug-ins/common/file-jpegxl.c:2074 plug-ins/file-jpeg/jpeg-export.c:910
 #: plug-ins/file-psd/psd-export.c:2475
 #: plug-ins/file-tiff/file-tiff-export.c:1327
 #, c-format
 msgid "Profile: %s"
-msgstr "配置文件：%s"
+msgstr "特性文件：%s"
 
 #: plug-ins/common/file-mng.c:254
 msgid "MNG animation"
@@ -5399,7 +5399,7 @@ msgstr "读取扩展的数据块出错"
 #: plug-ins/common/file-psp.c:2578
 #, c-format
 msgid "Error reading colorprofile chunk"
-msgstr "读取颜色配置文件数据块时出错"
+msgstr "读取特性文件数据块时出错"
 
 #: plug-ins/common/file-psp.c:2631
 #, c-format
@@ -8752,11 +8752,11 @@ msgstr "YCoCg 已缩放（DXT5）"
 
 #: plug-ins/file-dds/dds.c:214
 msgid "Use percept_ual error metric"
-msgstr "使用感官错误度量(_U)"
+msgstr "使用感知错误度量(_U)"
 
 #: plug-ins/file-dds/dds.c:215
 msgid "Use a perceptual error metric during compression"
-msgstr "在压缩过程中使用感官错误度量"
+msgstr "在压缩过程中使用感知错误度量"
 
 #: plug-ins/file-dds/dds.c:221
 msgid "Pixel format"
@@ -9647,7 +9647,7 @@ msgstr "启用预览以获得文件大小。"
 #: plug-ins/file-jpeg/jpeg-export.c:891 plug-ins/file-psd/psd-export.c:2456
 #: plug-ins/file-tiff/file-tiff-export.c:1307
 msgid "No soft-proofing profile"
-msgstr "无软打样配置文件"
+msgstr "无软打样特性文件"
 
 #: plug-ins/file-jpeg/jpeg-load.c:221
 msgid "JPEG preview"
@@ -9721,7 +9721,7 @@ msgstr "导出为 CMYK(_Y)"
 
 #: plug-ins/file-jpeg/jpeg.c:235
 msgid "Create a CMYK JPEG image using the soft-proofing color profile"
-msgstr "使用软打样色彩配置文件创建 CMYK JPEG 图像"
+msgstr "使用软打样特性文件创建 CMYK JPEG 图像"
 
 #: plug-ins/file-jpeg/jpeg.c:240
 msgid "Su_bsampling"
@@ -10103,7 +10103,7 @@ msgstr "导出为 CMYK(_C)"
 
 #: plug-ins/file-psd/psd.c:269
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
-msgstr "使用软打样色彩配置文件导出 CMYK PSD 图像"
+msgstr "使用软打样特性文件导出 CMYK PSD 图像"
 
 #: plug-ins/file-psd/psd.c:274
 msgid "Export as _Duotone"
@@ -10401,7 +10401,7 @@ msgstr "完整保留被透明通道屏蔽的颜色数据（不存储预乘的分
 
 #: plug-ins/file-tiff/file-tiff.c:266
 msgid "Create a CMYK TIFF image using the soft-proofing color profile"
-msgstr "使用软打样色彩配置文件创建 CMYK TIFF 图像"
+msgstr "使用软打样特性文件创建 CMYK TIFF 图像"
 
 #: plug-ins/file-tiff/file-tiff.c:271
 msgid "Save La_yers"
@@ -10473,8 +10473,8 @@ msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
 "This profile will not be included in the exported image."
 msgstr ""
-"分配的软打样配置文件不是 CMYK 配置文件。\n"
-"该配置文件不会包含在导出的图像中。"
+"分配的软打样特性文件不是 CMYK 特性文件。\n"
+"该特性文件不会包含在导出的图像中。"
 
 #: plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
@@ -10524,8 +10524,8 @@ msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
-"该图像具有线性色彩配置文件但未在第一个图层上设置。第 %d # 图层以下的图层将视"
-"为非线性。"
+"该图像具有线性特性文件但未在第一个图层上设置。第 %d # 图层以下的图层将视为非"
+"线性。"
 
 #: plug-ins/file-tiff/file-tiff-load.c:616
 msgid ""
@@ -10533,8 +10533,8 @@ msgid ""
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
-"该图像具有多个色彩配置文件。我们将使用第一个。如果这导致不正确的结果您应考虑"
-"将每个图层作为单独图像载入。"
+"该图像具有多个特性文件。我们将使用第一个。如果这导致不正确的结果您应考虑将每"
+"个图层作为单独图像载入。"
 
 #: plug-ins/file-tiff/file-tiff-load.c:628
 #, c-format
@@ -15749,11 +15749,11 @@ msgstr "捕获屏幕截图前的延迟"
 
 #: plug-ins/screenshot/screenshot.c:231
 msgid "Color _Profile"
-msgstr "色彩配置文件(_P)"
+msgstr "特性文件(_P)"
 
 #: plug-ins/screenshot/screenshot.c:233
 msgid "Tag image with monitor profile"
-msgstr "使用显示器配置文件标记图像"
+msgstr "使用显示器特性文件标记图像"
 
 #: plug-ins/screenshot/screenshot.c:234
 msgid "Convert image with sRGB"
