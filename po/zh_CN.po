@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-19 15:23+0000\n"
-"PO-Revision-Date: 2024-08-20 09:21+0800\n"
+"POT-Creation-Date: 2024-08-20 12:19+0000\n"
+"PO-Revision-Date: 2024-08-24 09:32+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -5539,52 +5539,52 @@ msgstr "创建此图像的副本"
 #: app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
-msgstr "指定色彩配置文件(_A)…"
+msgstr "指定特性文件(_A)…"
 
 #: app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr "设置图像使用的色彩配置文件"
+msgstr "设置图像使用的特性文件"
 
 #: app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "转换到色彩配置文件(_C)…"
+msgstr "转换到特性文件(_C)…"
 
 #: app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
-msgstr "为图像应用一个颜色配置文件"
+msgstr "为图像应用一个特性文件"
 
 #: app/actions/image-actions.c:79
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "丢弃色彩配置文件(_D)"
+msgstr "丢弃特性文件(_D)"
 
 #: app/actions/image-actions.c:80
 msgctxt "image-action"
 msgid "Remove the image's color profile"
-msgstr "删除图像的色彩配置文件"
+msgstr "删除图像的特性文件"
 
 #: app/actions/image-actions.c:85
 msgctxt "image-action"
 msgid "_Soft-proof Profile..."
-msgstr "软打样配置文件(_S)…"
+msgstr "软打样特性文件(_S)…"
 
 #: app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "Set the soft-proofing profile"
-msgstr "设置软打样配置文件"
+msgstr "设置软打样特性文件"
 
 #: app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
-msgstr "将色彩配置文件保存到文件(_S)…"
+msgstr "将特性文件保存到文件(_S)…"
 
 #: app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
-msgstr "将图像的色彩配置文件保存到一个 ICC 文件"
+msgstr "将图像的特性文件保存到一个 ICC 文件"
 
 #: app/actions/image-actions.c:97
 msgctxt "image-action"
@@ -5701,7 +5701,7 @@ msgstr "显示关于此图像的信息"
 #: app/actions/image-actions.c:166
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "使用 sRGB 配置文件(_S)"
+msgstr "使用 sRGB 特性文件(_S)"
 
 #: app/actions/image-actions.c:167
 msgctxt "image-action"
@@ -5710,8 +5710,8 @@ msgid ""
 "discarding the image's color profile, but allows to easily restore the "
 "profile."
 msgstr ""
-"临时为该图像使用 sRGB 配置文件。其与丢弃图像的色彩配置文件效果相同，但允许轻"
-"松恢复配置文件。"
+"临时为该图像使用 sRGB 特性文件。其与丢弃图像的特性文件效果相同，但允许轻松恢"
+"复特性文件。"
 
 #: app/actions/image-actions.c:175
 msgctxt "image-action"
@@ -5831,17 +5831,17 @@ msgstr "非线性"
 #: app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Convert the image to non-linear gamma from the color profile"
-msgstr "将该图像从色彩配置文件转换为非线性伽马"
+msgstr "将该图像从特性文件转换为非线性伽马"
 
 #: app/actions/image-actions.c:254
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
-msgstr "感官（sRGB）"
+msgstr "感知（sRGB）"
 
 #: app/actions/image-actions.c:256
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "将图像转换为感官性 (sRGB) 伽马"
+msgstr "将图像转换为感知性 (sRGB) 伽马"
 
 #: app/actions/image-actions.c:263
 msgctxt "image-action"
@@ -5946,11 +5946,11 @@ msgstr "灰度(_G)…"
 #: app/actions/image-commands.c:576
 #, c-format
 msgid "Saving color profile failed: %s"
-msgstr "保存色彩配置文件失败：%s"
+msgstr "保存特性文件失败：%s"
 
 #: app/actions/image-commands.c:616
 msgid "Save Color Profile"
-msgstr "保存色彩配置文件"
+msgstr "保存特性文件"
 
 #: app/actions/image-commands.c:665
 msgid "Set Image Canvas Size"
@@ -6478,12 +6478,12 @@ msgstr "图层混合空间：RGB（线性）"
 #: app/actions/layers-actions.c:325 app/actions/layers-actions.c:346
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
-msgstr "RGB（感官）"
+msgstr "RGB（感知）"
 
 #: app/actions/layers-actions.c:326
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
-msgstr "图层混合空间：RGB（感官）"
+msgstr "图层混合空间：RGB（感知）"
 
 #: app/actions/layers-actions.c:335
 msgctxt "layers-action"
@@ -6498,7 +6498,7 @@ msgstr "图层合成空间：RGB（线性）"
 #: app/actions/layers-actions.c:347
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
-msgstr "图层合成空间：RGB（感官）"
+msgstr "图层合成空间：RGB（感知）"
 
 #: app/actions/layers-actions.c:356
 msgctxt "layers-action"
@@ -10397,7 +10397,7 @@ msgstr "打开带有内嵌 ICC 色彩配置的文件时如何处理。"
 
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
-msgstr "为所有色彩配置文件对话框设置默认文件夹路径。"
+msgstr "为所有特性文件对话框设置默认文件夹路径。"
 
 #: app/config/gimprc-blurbs.h:59
 msgid "Sets the type of mouse pointers to use."
@@ -10553,7 +10553,7 @@ msgstr "默认使用的导出文件类型。"
 
 #: app/config/gimprc-blurbs.h:236
 msgid "Export the image's color profile by default."
-msgstr "默认导出图像的色彩配置文件。"
+msgstr "默认导出图像的特性文件。"
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Export the image's comment by default."
@@ -10986,13 +10986,13 @@ msgstr "调整图形界面的字体大小。"
 #: app/config/gimprc-blurbs.h:574
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
-msgstr "为“转换到色彩配置文件”对话框设置默认再现意图。"
+msgstr "为“转换到特性文件”对话框设置默认再现意图。"
 
 #: app/config/gimprc-blurbs.h:577
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
-msgstr "为“转换到色彩配置文件”对话框设置默认“黑点补偿”状态。"
+msgstr "为“转换到特性文件”对话框设置默认“黑点补偿”状态。"
 
 #: app/config/gimprc-blurbs.h:581
 msgid ""
@@ -11459,17 +11459,17 @@ msgstr "询问做什么"
 #: app/core/core-enums.c:210
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
-msgstr "保持内嵌的配置文件"
+msgstr "保持内嵌的特性文件"
 
 #: app/core/core-enums.c:211
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "转换为内置 sRGB 或灰度配置文件"
+msgstr "转换为内置 sRGB 或灰度特性文件"
 
 #: app/core/core-enums.c:212
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr "转换为首选的 RGB 或灰度色彩配置文件（默认为内置）"
+msgstr "转换为首选的 RGB 或灰度特性文件（默认为内置）"
 
 #: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
@@ -12153,7 +12153,7 @@ msgstr "更改索引色板"
 #: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
-msgstr "隐藏/显示色彩配置文件"
+msgstr "隐藏/显示特性文件"
 
 #: app/core/core-enums.c:1357
 msgctxt "undo-type"
@@ -13700,55 +13700,55 @@ msgstr "整理对象"
 
 #: app/core/gimpimage-color-profile.c:121
 msgid "Enable 'Use sRGB Profile'"
-msgstr "启用“使用 sRGB 配置文件”"
+msgstr "启用“使用 sRGB 特性文件”"
 
 #: app/core/gimpimage-color-profile.c:138
 msgid "Disable 'Use sRGB Profile'"
-msgstr "禁用“使用 sRGB 配置文件”"
+msgstr "禁用“使用 sRGB 特性文件”"
 
 #: app/core/gimpimage-color-profile.c:202
 #, c-format
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
-msgstr "ICC 配置文件验证失败：内嵌信息的名字不是“%s”"
+msgstr "ICC 特性文件验证失败：内嵌信息的名字不是“%s”"
 
 #: app/core/gimpimage-color-profile.c:217
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
-msgstr "ICC 配置文件验证失败：内嵌信息的标志不是 (PERSISTENT | UNDOABLE)"
+msgstr "ICC 特性文件验证失败：内嵌信息的标志不是 (PERSISTENT | UNDOABLE)"
 
 #: app/core/gimpimage-color-profile.c:276
 msgid "ICC profile validation failed: "
-msgstr "ICC 配置文件验证失败："
+msgstr "ICC 特性文件验证失败："
 
 #: app/core/gimpimage-color-profile.c:278
 msgid "Simulation ICC profile validation failed: "
-msgstr "模拟 ICC 配置文件验证失败："
+msgstr "模拟 ICC 特性文件验证失败："
 
 #: app/core/gimpimage-color-profile.c:548
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
-msgstr "ICC 配置文件验证失败：色彩配置文件不可用于灰度色彩空间"
+msgstr "ICC 特性文件验证失败：特性文件不可用于灰度色彩空间"
 
 #: app/core/gimpimage-color-profile.c:558
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
-msgstr "ICC 配置文件验证失败：色彩配置文件不可用于 RGB 色彩空间"
+msgstr "ICC 特性文件验证失败：特性文件不可用于 RGB 色彩空间"
 
 #: app/core/gimpimage-color-profile.c:617
 msgid "Assigning color profile"
-msgstr "正在指定色彩配置文件"
+msgstr "正在指定特性文件"
 
 #: app/core/gimpimage-color-profile.c:618
 msgid "Discarding color profile"
-msgstr "正在丢弃色彩配置文件"
+msgstr "正在丢弃特性文件"
 
 #: app/core/gimpimage-color-profile.c:622
 msgid "Assign color profile"
-msgstr "指定色彩配置文件"
+msgstr "指定特性文件"
 
 #: app/core/gimpimage-color-profile.c:623
 msgid "Discard color profile"
-msgstr "丢弃色彩配置文件"
+msgstr "丢弃特性文件"
 
 #: app/core/gimpimage-color-profile.c:666
 #, c-format
@@ -13757,7 +13757,7 @@ msgstr "从“%s”转换为“%s”"
 
 #: app/core/gimpimage-color-profile.c:671
 msgid "Color profile conversion"
-msgstr "色彩配置文件转换"
+msgstr "特性文件转换"
 
 #: app/core/gimpimage-colormap.c:85
 #, c-format
@@ -14843,15 +14843,15 @@ msgstr "精度"
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
 #: app/operations/gimplevelsconfig.c:110 app/widgets/gimphistogrameditor.c:115
 msgid "Linear/Perceptual"
-msgstr "线性/感官"
+msgstr "线性/感知"
 
 #: app/core/gimptemplate.c:221
 msgid "Color profile"
-msgstr "色彩配置文件"
+msgstr "特性文件"
 
 #: app/core/gimptemplate.c:228
 msgid "Simulation profile"
-msgstr "模拟配置文件"
+msgstr "模拟特性文件"
 
 #: app/core/gimptemplate.c:235
 msgid "Simulation Rendering Intent"
@@ -15034,11 +15034,11 @@ msgstr "从选区初始化(_S)"
 
 #: app/dialogs/color-profile-dialog.c:128
 msgid "Assign ICC Color Profile"
-msgstr "指定 ICC 色彩配置文件"
+msgstr "指定 ICC 特性文件"
 
 #: app/dialogs/color-profile-dialog.c:131
 msgid "Assign a color profile to the image"
-msgstr "为图像指定色彩配置文件"
+msgstr "为图像指定特性文件"
 
 #: app/dialogs/color-profile-dialog.c:137
 msgid "_Assign"
@@ -15050,11 +15050,11 @@ msgstr "指定"
 
 #: app/dialogs/color-profile-dialog.c:146
 msgid "Convert to ICC Color Profile"
-msgstr "转换为 ICC 色彩配置文件"
+msgstr "转换为 ICC 特性文件"
 
 #: app/dialogs/color-profile-dialog.c:149
 msgid "Convert the image to a color profile"
-msgstr "转换图像为色彩配置文件"
+msgstr "转换图像为特性文件"
 
 #: app/dialogs/color-profile-dialog.c:155
 #: app/dialogs/color-profile-dialog.c:173
@@ -15088,11 +15088,11 @@ msgstr "将图像转换为灰度"
 
 #: app/dialogs/color-profile-dialog.c:200
 msgid "Soft-Proof Profile"
-msgstr "软打样配置文件"
+msgstr "软打样特性文件"
 
 #: app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr "选择软打样配置文件"
+msgstr "选择软打样特性文件"
 
 #: app/dialogs/color-profile-dialog.c:209
 #: app/tools/gimpforegroundselecttool.c:332
@@ -15101,15 +15101,15 @@ msgstr "选择(_S)"
 
 #: app/dialogs/color-profile-dialog.c:212
 msgid "New Color Profile"
-msgstr "新建色彩配置文件"
+msgstr "新的特性文件"
 
 #: app/dialogs/color-profile-dialog.c:241
 msgid "Current Color Profile"
-msgstr "当前色彩配置文件"
+msgstr "当前特性文件"
 
 #: app/dialogs/color-profile-dialog.c:261
 msgid "Profile _details"
-msgstr "配置文件详情(_D)"
+msgstr "特性文件详情(_D)"
 
 #: app/dialogs/color-profile-dialog.c:290
 #: app/dialogs/color-profile-import-dialog.c:197
@@ -15123,7 +15123,7 @@ msgstr "黑点补偿(_B)"
 
 #: app/dialogs/color-profile-dialog.c:386
 msgid "Select Destination Profile"
-msgstr "选择目标配置文件"
+msgstr "选择目标特性文件"
 
 #: app/dialogs/color-profile-dialog.c:485
 #: app/widgets/gimpwidgets-constructors.c:86
@@ -15134,11 +15134,11 @@ msgstr "无"
 
 #: app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert the image to the built-in grayscale color profile?"
-msgstr "要将图像转换为内置的灰度色彩配置文件吗？"
+msgstr "要将图像转换为内置的灰度特性文件吗？"
 
 #: app/dialogs/color-profile-import-dialog.c:98
 msgid "Convert the image to the built-in sRGB color profile?"
-msgstr "将图像转换为内置 sRGB 色彩配置文件吗？"
+msgstr "将图像转换为内置的 sRGB 特性文件吗？"
 
 #: app/dialogs/color-profile-import-dialog.c:107
 msgid "Keep the Embedded Working Space?"
@@ -15146,7 +15146,7 @@ msgstr "保持内嵌的工作空间吗？"
 
 #: app/dialogs/color-profile-import-dialog.c:110
 msgid "Keep the image's color profile"
-msgstr "保持该图像的色彩配置文件"
+msgstr "保持该图像的特性文件"
 
 #: app/dialogs/color-profile-import-dialog.c:115
 msgid "_Keep"
@@ -15159,23 +15159,23 @@ msgstr "转换(_C)"
 #: app/dialogs/color-profile-import-dialog.c:130
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr "图像“%s”带有嵌入的色彩配置文件"
+msgstr "图像“%s”带有嵌入的特性文件"
 
 #: app/dialogs/color-profile-import-dialog.c:151
 msgid "Built-in Profile"
-msgstr "内置配置文件"
+msgstr "内置特性文件"
 
 #: app/dialogs/color-profile-import-dialog.c:161
 msgid "Convert the image to the preferred grayscale color profile?"
-msgstr "要将图像转换为首选的灰度色彩配置文件吗？"
+msgstr "要将图像转换为首选的灰度特性文件吗？"
 
 #: app/dialogs/color-profile-import-dialog.c:163
 msgid "Convert the image to the preferred RGB color profile?"
-msgstr "将图像转换为首选的 RGB 色彩配置文件吗？"
+msgstr "将图像转换为首选的 RGB 特性文件吗？"
 
 #: app/dialogs/color-profile-import-dialog.c:167
 msgid "Preferred Profile"
-msgstr "首选配置文件"
+msgstr "首选特性文件"
 
 #: app/dialogs/color-profile-import-dialog.c:222
 #: app/dialogs/metadata-rotation-import-dialog.c:227
@@ -15249,7 +15249,7 @@ msgstr "非线性"
 
 #: app/dialogs/convert-precision-dialog.c:191
 msgid "Perceptual (sRGB)"
-msgstr "感官（sRGB）"
+msgstr "感知（sRGB）"
 
 #: app/dialogs/convert-precision-dialog.c:228
 msgid "_Layers:"
@@ -15564,7 +15564,7 @@ msgstr "属性(_P)"
 
 #: app/dialogs/image-properties-dialog.c:91
 msgid "C_olor Profile"
-msgstr "色彩配置文件(_O)"
+msgstr "特性文件(_O)"
 
 #: app/dialogs/image-properties-dialog.c:96
 msgid "Co_mment"
@@ -16180,15 +16180,15 @@ msgstr "启用色彩管理"
 
 #: app/dialogs/preferences-dialog.c:1405
 msgid "Select Monitor Color Profile"
-msgstr "选择显示器色彩配置文件"
+msgstr "选择显示器特性文件"
 
 #: app/dialogs/preferences-dialog.c:1406
 msgid "_Monitor profile:"
-msgstr "显示器配置文件(_M)："
+msgstr "显示器特性文件(_M)："
 
 #: app/dialogs/preferences-dialog.c:1412
 msgid "_Try to use the system monitor profile"
-msgstr "尝试使用系统显示器配置文件(_T)"
+msgstr "尝试使用系统显示器特性文件(_T)"
 
 #: app/dialogs/preferences-dialog.c:1419
 msgid "_Rendering intent:"
@@ -16232,31 +16232,31 @@ msgstr "选择警告颜色"
 #. Preferred profiles
 #: app/dialogs/preferences-dialog.c:1470
 msgid "Preferred Profiles"
-msgstr "首选配置文件"
+msgstr "首选特性文件"
 
 #: app/dialogs/preferences-dialog.c:1479
 msgid "Select Preferred RGB Color Profile"
-msgstr "选择首选的 RGB 色彩配置文件"
+msgstr "选择首选的 RGB 特性文件"
 
 #: app/dialogs/preferences-dialog.c:1480
 msgid "_RGB profile:"
-msgstr "_RGB 配置文件："
+msgstr "_RGB 特性文件："
 
 #: app/dialogs/preferences-dialog.c:1487
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "选择首选的灰度色彩配置文件"
+msgstr "选择首选的灰度特性文件"
 
 #: app/dialogs/preferences-dialog.c:1488
 msgid "_Grayscale profile:"
-msgstr "灰度配置文件(_G)："
+msgstr "灰度特性文件(_G)："
 
 #: app/dialogs/preferences-dialog.c:1495
 msgid "Select CMYK Color Profile"
-msgstr "选择 CMYK 色彩配置文件"
+msgstr "选择 CMYK 特性文件"
 
 #: app/dialogs/preferences-dialog.c:1496
 msgid "_CMYK profile:"
-msgstr "CMYK 配置文件(_C)："
+msgstr "_CMYK 特性文件："
 
 #. Policies
 #: app/dialogs/preferences-dialog.c:1501
@@ -16299,7 +16299,7 @@ msgstr "为导入的图像添加一个透明通道(_A)"
 
 #: app/dialogs/preferences-dialog.c:1562
 msgid "Color _profile policy:"
-msgstr "色彩配置文件方案(_P)："
+msgstr "特性文件方案(_P)："
 
 #: app/dialogs/preferences-dialog.c:1565
 msgid "Metadata _rotation policy:"
@@ -16312,7 +16312,7 @@ msgstr "导出方案"
 
 #: app/dialogs/preferences-dialog.c:1573
 msgid "Export the i_mage's color profile by default"
-msgstr "默认导出图像的色彩配置文件(_M)"
+msgstr "默认导出图像的特性文件(_M)"
 
 #: app/dialogs/preferences-dialog.c:1576
 msgid "Export the image's comment by default"
@@ -16687,29 +16687,29 @@ msgstr "重置对话框默认值(_D)"
 #. Color profile import dialog
 #: app/dialogs/preferences-dialog.c:2341
 msgid "Color Profile Import Dialog"
-msgstr "色彩配置文件导入对话框"
+msgstr "特性文件导入对话框"
 
 #: app/dialogs/preferences-dialog.c:2346
 msgid "Color profile policy:"
-msgstr "色彩配置文件方案："
+msgstr "特性文件方案："
 
 #. All color profile chooser dialogs
 #: app/dialogs/preferences-dialog.c:2350
 msgid "Color Profile File Dialogs"
-msgstr "色彩配置文件对话框"
+msgstr "特性文件对话框"
 
 #: app/dialogs/preferences-dialog.c:2355
 msgid "Profile folder:"
-msgstr "配置文件夹："
+msgstr "特性文件文件夹："
 
 #: app/dialogs/preferences-dialog.c:2356
 msgid "Select Default Folder for Color Profiles"
-msgstr "为色彩配置文件选择默认文件夹"
+msgstr "为特性文件选择默认文件夹"
 
 #. Convert to Color Profile Dialog
 #: app/dialogs/preferences-dialog.c:2360
 msgid "Convert to Color Profile Dialog"
-msgstr "转换到色彩配置文件对话框"
+msgstr "转换到特性文件对话框"
 
 #: app/dialogs/preferences-dialog.c:2365
 msgid "Rendering intent:"
@@ -18546,7 +18546,7 @@ msgid ""
 "Toggle soft-proofing view when a soft-proofing profile is set\n"
 "Right-click to show the soft-proofing options"
 msgstr ""
-"软打样配置文件设置时切换软打样视图\n"
+"软打样特性文件设置时切换软打样视图\n"
 "右键单击以显示软打样选项"
 
 #: app/display/gimpstatusbar.c:498
@@ -18555,15 +18555,15 @@ msgstr "启用软打样(_P)"
 
 #: app/display/gimpstatusbar.c:511 app/display/gimpstatusbar.c:2153
 msgid "Current Soft-Proofing Profile"
-msgstr "当前软打样配置文件"
+msgstr "当前软打样特性文件"
 
 #: app/display/gimpstatusbar.c:525
 msgid "Soft-Proofing Profile"
-msgstr "软打样配置文件"
+msgstr "软打样特性文件"
 
 #: app/display/gimpstatusbar.c:534
 msgid "_Soft-proofing Profile: "
-msgstr "软打样配置文件(_S)："
+msgstr "软打样特性文件(_S)："
 
 #: app/display/gimpstatusbar.c:553
 msgid "_Rendering Intent: "
@@ -19203,7 +19203,7 @@ msgstr "RGB（线性）"
 #: app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
 msgid "RGB (perceptual)"
-msgstr "RGB（感官）"
+msgstr "RGB（感知）"
 
 #: app/operations/operations-enums.c:29
 msgctxt "layer-color-space"
@@ -19776,7 +19776,7 @@ msgstr "保持明度"
 
 #: app/operations/gimpcurvesconfig.c:106 app/operations/gimplevelsconfig.c:111
 msgid "Work on linear or perceptual RGB"
-msgstr "以线性或感官 RGB 工作"
+msgstr "以线性或感知 RGB 工作"
 
 #: app/operations/gimpcurvesconfig.c:113 app/operations/gimplevelsconfig.c:118
 msgid "Linear"
@@ -25792,7 +25792,7 @@ msgstr "索引："
 #: app/widgets/gimpcolorframe.c:945 app/widgets/gimpcolorframe.c:1154
 msgctxt "Color"
 msgid "Profile:"
-msgstr "配置文件："
+msgstr "特性文件："
 
 #: app/widgets/gimpcolorframe.c:853 app/widgets/gimpcolorframe.c:854
 #: app/widgets/gimpcolorframe.c:927 app/widgets/gimpcolorframe.c:928
@@ -25812,7 +25812,7 @@ msgstr "Hex："
 #: app/widgets/gimpcolorframe.c:1156
 msgctxt "Color"
 msgid "No Profile"
-msgstr "无配置文件"
+msgstr "无特性文件"
 
 #. TRANSLATORS: H for Hue (HSV color space)
 #: app/widgets/gimpcolorframe.c:987
@@ -26956,7 +26956,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: app/widgets/gimpdockbook.c:248
+#: app/widgets/gimpdockbook.c:257
 msgid "Configure this tab"
 msgstr "配置此标签页"
 
@@ -27860,19 +27860,19 @@ msgstr "伽马值(_G)："
 
 #: app/widgets/gimptemplateeditor.c:442
 msgid "Choose A Color Profile"
-msgstr "选择一份色彩配置文件"
+msgstr "选择一份特性文件"
 
 #: app/widgets/gimptemplateeditor.c:446
 msgid "Co_lor profile:"
-msgstr "色彩配置文件(_L)："
+msgstr "特性文件(_L)："
 
 #: app/widgets/gimptemplateeditor.c:453
 msgid "Choose A Soft-Proofing Color Profile"
-msgstr "选择软打样色彩配置文件"
+msgstr "选择软打样特性文件"
 
 #: app/widgets/gimptemplateeditor.c:457
 msgid "_Soft-proofing color profile:"
-msgstr "软打样色彩配置文件(_S)："
+msgstr "软打样特性文件(_S)："
 
 #: app/widgets/gimptemplateeditor.c:466
 msgid "_Soft-proofing rendering intent:"
