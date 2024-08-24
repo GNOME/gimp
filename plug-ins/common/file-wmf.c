@@ -235,7 +235,7 @@ wmf_extract (GimpProcedure        *procedure,
   if (! load_wmf_size (file, &width, &height, &guessed))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Could not open '%s' for reading AA"),
+                   _("Could not open '%s' for reading"),
                    gimp_file_get_utf8_name (file));
       return FALSE;
     }
