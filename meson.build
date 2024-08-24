@@ -1125,7 +1125,15 @@ if get_option('lua').allowed()
         if lua_cmd.returncode() == 0
           message('Found Lua: @0@'.format(lua_cmd.stdout().strip()))
           lua_stdout = lua_cmd.stdout().split()
-          if lua_stdout[0].to_lower() == lua_bin
+          if lua_stdout.length() < 2 or lua_stdout[0].to_lower() != lua_bin
+            # The output function used to be configurable, and we had a
+            # report where it was on stderr instead of stdout. This is
+            # why we fall back to stdout.
+            # See #11950.
+            lua_stdout = lua_cmd.stderr().split()
+          endif
+
+          if lua_stdout.length() > 1 and lua_stdout[0].to_lower() == lua_bin
             message('Parsed Lua version: @0@'.format(lua_stdout[1]))
             # We only want any lua version 5.1.x
             if lua_stdout[1].version_compare('>=5.1.0') and lua_stdout[1].version_compare('<5.2.0')
@@ -1133,6 +1141,8 @@ if get_option('lua').allowed()
             else
               warning('Unsupported Lua version (!= 5.1): @0@'.format(lua_stdout[1]))
             endif
+          else
+            warning('Failed to parse Lua version.')
           endif
         else
           warning('Failed to run `lua -v`')
