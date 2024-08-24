@@ -429,7 +429,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
 
-  gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (shell), NULL, gimp_standard_help_func,
                      GIMP_HELP_IMAGE_WINDOW, NULL, NULL);
 }
 

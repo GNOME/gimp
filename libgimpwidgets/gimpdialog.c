@@ -186,7 +186,7 @@ gimp_dialog_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (private->help_func)
-    gimp_help_connect (GTK_WIDGET (object),
+    gimp_help_connect (GTK_WIDGET (object), NULL,
                        private->help_func, private->help_id,
                        object, NULL);
 

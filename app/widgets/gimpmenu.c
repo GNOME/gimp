@@ -154,7 +154,7 @@ gimp_menu_init (GimpMenu *menu)
 
   gimp_menu_shell_init (GIMP_MENU_SHELL (menu));
 
-  gimp_help_connect (GTK_WIDGET (menu), gimp_menu_help_fun,
+  gimp_help_connect (GTK_WIDGET (menu), NULL, gimp_menu_help_fun,
                      GIMP_HELP_MAIN, menu, NULL);
 }
 

@@ -1487,7 +1487,7 @@ dialog (GimpImap *imap)
   gtk_window_set_resizable (GTK_WINDOW (imap->dlg), TRUE);
 
   main_set_title (NULL);
-  gimp_help_connect (imap->dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
+  gimp_help_connect (imap->dlg, NULL, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
   gtk_window_set_position (GTK_WINDOW (imap->dlg), GTK_WIN_POS_MOUSE);
 

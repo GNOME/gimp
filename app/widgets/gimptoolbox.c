@@ -185,7 +185,7 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 {
   toolbox->p = gimp_toolbox_get_instance_private (toolbox);
 
-  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (toolbox), NULL, gimp_standard_help_func,
                      GIMP_HELP_TOOLBOX, NULL, NULL);
 }
 

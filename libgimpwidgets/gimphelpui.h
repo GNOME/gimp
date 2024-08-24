@@ -38,6 +38,7 @@ void   gimp_standard_help_func             (const gchar    *help_id,
 
 /*  connect the help callback of a window  */
 void   gimp_help_connect                   (GtkWidget      *widget,
+                                            const gchar    *tooltip,
                                             GimpHelpFunc    help_func,
                                             const gchar    *help_id,
                                             gpointer        help_data,

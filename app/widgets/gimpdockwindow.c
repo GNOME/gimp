@@ -451,7 +451,7 @@ gimp_dock_window_constructed (GObject *object)
                 "context",   dock_window->p->context,
                 NULL);
 
-  gimp_help_connect (GTK_WIDGET (dock_window), gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (dock_window), NULL, gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL, NULL);
 
   if (dock_window->p->auto_follow_active)

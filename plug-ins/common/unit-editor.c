@@ -221,7 +221,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   self->window = GTK_WINDOW (gtk_application_window_new (self->app));
   gtk_window_set_title (self->window, _("Unit Editor"));
   gtk_window_set_role (self->window, PLUG_IN_ROLE);
-  gimp_help_connect (GTK_WIDGET (self->window),
+  gimp_help_connect (GTK_WIDGET (self->window), NULL,
                      gimp_standard_help_func, PLUG_IN_PROC,
                      self->window, NULL);
 

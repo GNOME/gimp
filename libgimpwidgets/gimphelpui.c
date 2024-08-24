@@ -105,6 +105,8 @@ gimp_standard_help_func (const gchar *help_id,
  * gimp_help_connect:
  * @widget:            The widget you want to connect the help accelerator for.
  *                     Will be a #GtkWindow in most cases.
+ * @tooltip: (nullable): The text for this widget's tooltip. For windows, you
+ *                     usually want to set %NULL.
  * @help_func:         The function which will be called if the user presses "F1".
  * @help_id:           The @help_id which will be passed to @help_func.
  * @help_data:         The @help_data pointer which will be passed to @help_func.
@@ -113,9 +115,15 @@ gimp_standard_help_func (const gchar *help_id,
  * Note that this function is automatically called by all libgimp dialog
  * constructors. You only have to call it for windows/dialogs you created
  * "manually".
+ *
+ * Most of the time, what you want to call for non-windows widgets is
+ * simply [func@GimpUi.help_set_help_data]. Yet if you need to set up an
+ * @help_func, call `gimp_help_connect` instead. Note that `gimp_help_set_help_data`
+ * is implied, so you don't have to call it too.
  **/
 void
 gimp_help_connect (GtkWidget      *widget,
+                   const gchar    *tooltip,
                    GimpHelpFunc    help_func,
                    const gchar    *help_id,
                    gpointer        help_data,
@@ -147,7 +155,7 @@ gimp_help_connect (GtkWidget      *widget,
       initialized = TRUE;
     }
 
-  gimp_help_set_help_data (widget, NULL, help_id);
+  gimp_help_set_help_data (widget, tooltip, help_id);
 
   g_object_set_data_full (G_OBJECT (widget), "gimp-help-data",
                           help_data, help_data_destroy);
@@ -162,7 +170,7 @@ gimp_help_connect (GtkWidget      *widget,
 /**
  * gimp_help_set_help_data:
  * @widget:  The #GtkWidget you want to set a @tooltip and/or @help_id for.
- * @tooltip: The text for this widget's tooltip (or %NULL).
+ * @tooltip: (nullable): The text for this widget's tooltip (or %NULL).
  * @help_id: The @help_id for the #GtkTipsQuery tooltips inspector.
  *
  * The reason why we don't use gtk_widget_set_tooltip_text() is that

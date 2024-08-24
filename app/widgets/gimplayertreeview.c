@@ -285,7 +285,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   g_signal_connect (view->priv->layer_mode_box, "notify::layer-mode",
                     G_CALLBACK (gimp_layer_tree_view_layer_mode_box_callback),
                     view);
-  gimp_help_connect (view->priv->layer_mode_box, gimp_standard_help_func,
+  gimp_help_connect (view->priv->layer_mode_box, NULL, gimp_standard_help_func,
                      GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU, NULL, NULL);
 
   /*  Opacity scale  */
@@ -294,7 +294,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                                                        1.0, 10.0, 0.0);
   scale = gimp_spin_scale_new (view->priv->opacity_adjustment, _("Opacity"), 1);
   gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
-  gimp_help_connect (scale, gimp_standard_help_func,
+  gimp_help_connect (scale, NULL, gimp_standard_help_func,
                      GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE, NULL, NULL);
   gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
                                    NULL, scale);

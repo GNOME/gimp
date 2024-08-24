@@ -778,7 +778,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
     gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog),
                                private->last_file, NULL);
 
-  gimp_help_connect (private->file_dialog, gimp_standard_help_func,
+  gimp_help_connect (private->file_dialog, NULL, gimp_standard_help_func,
                      private->help_id, NULL, NULL);
 
   /*  allow callbacks to add widgets to the dialog  */

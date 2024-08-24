@@ -771,9 +771,6 @@ gimp_item_tree_view_constructed (GObject *object)
       item_view->priv->effects_box     = gtk_box_new (GTK_ORIENTATION_VERTICAL, button_spacing);
       item_view->priv->effects_options = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
 
-      gimp_help_connect (item_view->priv->effects_filters, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
-
       /* Effects Buttons */
       item_view->priv->effects_visible_button = gtk_toggle_button_new ();
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item_view->priv->effects_visible_button),
@@ -781,8 +778,6 @@ gimp_item_tree_view_constructed (GObject *object)
       image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE,
                                             GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_container_add (GTK_CONTAINER (item_view->priv->effects_visible_button), image);
-      gimp_help_connect (item_view->priv->effects_visible_button, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gimp_help_set_help_data (item_view->priv->effects_visible_button,
                                _("Toggle the visibility of all filters."),
                                GIMP_HELP_LAYER_EFFECTS);
@@ -797,8 +792,6 @@ gimp_item_tree_view_constructed (GObject *object)
       item_view->priv->effects_edit_button =
         gtk_button_new_from_icon_name (GIMP_ICON_EDIT,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gimp_help_connect (item_view->priv->effects_edit_button, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gimp_help_set_help_data (item_view->priv->effects_edit_button,
                                _("Edit the selected filter."),
                                GIMP_HELP_LAYER_EFFECTS);
@@ -812,8 +805,6 @@ gimp_item_tree_view_constructed (GObject *object)
       item_view->priv->effects_raise_button =
         gtk_button_new_from_icon_name (GIMP_ICON_GO_UP,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gimp_help_connect (item_view->priv->effects_raise_button, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gimp_help_set_help_data (item_view->priv->effects_raise_button,
                                _("Raise filter one step up in the stack."),
                                GIMP_HELP_LAYER_EFFECTS);
@@ -827,8 +818,6 @@ gimp_item_tree_view_constructed (GObject *object)
       item_view->priv->effects_lower_button =
         gtk_button_new_from_icon_name (GIMP_ICON_GO_DOWN,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gimp_help_connect (item_view->priv->effects_lower_button, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gimp_help_set_help_data (item_view->priv->effects_lower_button,
                                _("Lower filter one step down in the stack."),
                                GIMP_HELP_LAYER_EFFECTS);
@@ -842,8 +831,6 @@ gimp_item_tree_view_constructed (GObject *object)
       item_view->priv->effects_merge_button =
         gtk_button_new_from_icon_name (GIMP_ICON_LAYER_MERGE_DOWN,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gimp_help_connect (item_view->priv->effects_merge_button, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gimp_help_set_help_data (item_view->priv->effects_merge_button,
                                _("Merge all active filters down."),
                                GIMP_HELP_LAYER_EFFECTS);
@@ -857,8 +844,6 @@ gimp_item_tree_view_constructed (GObject *object)
       item_view->priv->effects_remove_button =
         gtk_button_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gimp_help_connect (item_view->priv->effects_remove_button, gimp_standard_help_func,
-                         GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gimp_help_set_help_data (item_view->priv->effects_remove_button,
                                _("Remove the selected filter."),
                                GIMP_HELP_LAYER_EFFECTS);
@@ -881,6 +866,8 @@ gimp_item_tree_view_constructed (GObject *object)
       gtk_popover_set_modal (GTK_POPOVER (item_view->priv->effects_popover), TRUE);
       gtk_container_add (GTK_CONTAINER (item_view->priv->effects_popover),
                          item_view->priv->effects_filters);
+      gimp_help_connect (item_view->priv->effects_filters, NULL,
+                         gimp_standard_help_func, GIMP_HELP_LAYER_EFFECTS, NULL, NULL);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_filters), label,
                           FALSE, FALSE, 0);
       gtk_box_pack_start (GTK_BOX (item_view->priv->effects_filters),
@@ -1313,8 +1300,7 @@ gimp_item_tree_view_add_lock (GimpItemTreeView *view,
                     G_CALLBACK (gimp_item_tree_view_lock_button_release),
                     view);
 
-  gimp_help_connect (toggle, gimp_standard_help_func, help_id, NULL, NULL);
-  gimp_help_set_help_data (toggle, tooltip, help_id);
+  gimp_help_connect (toggle, tooltip, gimp_standard_help_func, help_id, NULL, NULL);
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "button-icon-size", &icon_size,

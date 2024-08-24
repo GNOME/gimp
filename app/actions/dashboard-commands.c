@@ -248,7 +248,7 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                             G_CALLBACK (gtk_true),
                             NULL);
 
-          gimp_help_connect (dialog, gimp_standard_help_func,
+          gimp_help_connect (dialog, NULL, gimp_standard_help_func,
                              GIMP_HELP_DASHBOARD_LOG_RECORD, NULL, NULL);
 
           dialogs_attach_dialog (G_OBJECT (dashboard), LOG_RECORD_KEY, dialog);

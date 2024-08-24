@@ -757,7 +757,7 @@ build_dialog (GimpPlay *play,
                                    ACTIONS, G_N_ELEMENTS (ACTIONS),
                                    play);
 
-  gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
+  gimp_help_connect (window, NULL, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
