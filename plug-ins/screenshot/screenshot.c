@@ -453,7 +453,9 @@ shoot (GdkMonitor           *monitor,
        GimpProcedureConfig  *config,
        GError              **error)
 {
+#if defined(PLATFORM_OSX) || defined(G_OS_WIN32)
   ShootType shoot_type;
+#endif
   gboolean  decorate;
   guint     select_delay;
   guint     screenshot_delay;
@@ -465,8 +467,10 @@ shoot (GdkMonitor           *monitor,
                 "include-decoration", &decorate,
                 "include-pointer",    &show_cursor,
                 NULL);
+#if defined(PLATFORM_OSX) || defined(G_OS_WIN32)
   shoot_type = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                                     "shoot-type");
+#endif
 
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
