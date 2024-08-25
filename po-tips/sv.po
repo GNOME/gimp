@@ -1,23 +1,23 @@
 # Swedish messages for gimp-tips.
-# Copyright © 2002, 2003, 2007, 2015, 2018, 2022 Free Software Foundation, Inc.
+# Copyright © 2002, 2003, 2007, 2015, 2018, 2022, 2024 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2004.
 # Daniel Nylander <po@danielnylander.se>, 2007.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2022, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-27 16:23+0000\n"
-"PO-Revision-Date: 2022-06-27 21:28+0200\n"
+"POT-Creation-Date: 2024-01-22 18:34+0000\n"
+"PO-Revision-Date: 2024-01-27 15:00+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/tips/gimp-tips.xml.in:18
 msgid ""
@@ -101,7 +101,7 @@ msgstr ""
 "dra. Om detta gör att fönstret flyttar sig använder din fönsterhanterare "
 "redan <tt>Alt</tt>-tangenten. De flesta fönsterhanterare kan konfigureras "
 "till att ignorera <tt>Alt</tt>-tangenten eller till att använda <tt>Super</"
-"tt>-tangenten (eller ”Windows-logotypen”) istället."
+"tt>-tangenten (eller ”Windows-logotypen”) i stället."
 
 #: data/tips/gimp-tips.xml.in:82
 msgid ""
@@ -169,7 +169,7 @@ msgid ""
 "tt> before making a selection subtracts from the current one."
 msgstr ""
 "Att trycka på <tt>Skift</tt> och hålla den nedtryckt innan en markering görs "
-"låter dig lägga till den aktuella markeringen istället för att ersätta den. "
+"låter dig lägga till den aktuella markeringen i stället för att ersätta den. "
 "Att använda <tt>Ctrl</tt> innan en markering görs tar bort från den aktuella."
 
 #: data/tips/gimp-tips.xml.in:132
@@ -266,10 +266,9 @@ msgid ""
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
-"Att hålla ner <tt>Ctrl</tt> och klicka på lagermaskens förhandsgranskning i "
+"Att hålla ner <tt>Ctrl</tt> och klicka på lagermaskens förhandsvisning i "
 "lagerdialogen växlar effekten av lagermasken. <tt>Alt</tt>-klick på "
-"lagermaskens förhandsgranskning i lagerdialogen växlar visning av masken "
-"direkt."
+"lagermaskens förhandsvisning i lagerdialogen växlar visning av masken direkt."
 
 #: data/tips/gimp-tips.xml.in:206
 msgid ""
@@ -287,9 +286,9 @@ msgid ""
 "color."
 msgstr ""
 "Håll ner <tt>Ctrl</tt> och klicka med fyllnadsverktyget för att göra så att "
-"det använder bakgrundsfärgen istället för förgrundsfärgen. På samma sätt "
-"ställer ett <tt>Ctrl</tt>-klick med pipettverktyget in bakgrundsfärgen "
-"istället för förgrundsfärgen."
+"det använder bakgrundsfärgen i stället för förgrundsfärgen. På samma sätt "
+"ställer ett <tt>Ctrl</tt>-klick med pipettverktyget in bakgrundsfärgen i "
+"stället för förgrundsfärgen."
 
 #: data/tips/gimp-tips.xml.in:220
 msgid ""
@@ -349,8 +348,8 @@ msgstr ""
 #~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
 #~ "toggles viewing the mask directly."
 #~ msgstr ""
-#~ "<tt>Alt</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen "
-#~ "växlar direkt visning av masken."
+#~ "<tt>Alt</tt>-klick på lagermaskens förhandsvisning i lagerdialogen växlar "
+#~ "direkt visning av masken."
 
 #~ msgid ""
 #~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
