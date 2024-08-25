@@ -18256,7 +18256,7 @@ msgstr "Vel strokstil"
 
 #: ../app/dialogs/stroke-dialog.c:129
 msgid "_Stroke"
-msgstr "_Strøk"
+msgstr "_Strok"
 
 #: ../app/dialogs/stroke-dialog.c:238
 msgid "P_aint tool:"
@@ -22213,7 +22213,7 @@ msgstr "Innrett venstreside av målet"
 
 #: ../app/tools/gimpalignoptions.c:306
 msgid "Align center of target"
-msgstr "Innrett midten av målet"
+msgstr "Innrett sentrum av målet"
 
 #: ../app/tools/gimpalignoptions.c:310
 msgid "Align right edge of target"
@@ -23284,7 +23284,7 @@ msgstr ""
 
 #: ../app/tools/gimpgradienttool.c:165
 msgid "Gradient Tool: Fill selected area with a color gradient"
-msgstr "Overganagsverktøyet: Fyll valde område med ein fargeovergang"
+msgstr "Fargeovergangsverktøyet: Fyll valde område med ein fargeovergang"
 
 #: ../app/tools/gimpgradienttool.c:166
 msgid "Gra_dient"
@@ -23445,21 +23445,21 @@ msgstr "Bur-transformering"
 #: ../app/tools/gimphandletransformtool.c:112
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"Burtransformeringsverktøyet: Deformerer laget, utvalet eller banen ved å "
+"andtaksransformeringsverktøyet: Deformerer laget, utvalet eller banen ved å "
 "bruka handtak"
 
 #: ../app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
-msgstr "_Bur-transformering"
+msgstr "_Handtakstransformering"
 
 #: ../app/tools/gimphandletransformtool.c:138
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "Bur-transformering"
+msgstr "Handtaks-transformering"
 
 #: ../app/tools/gimphandletransformtool.c:139
 msgid "Handle transformation"
-msgstr "Burtransformering"
+msgstr "Handtakstransformering"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
@@ -24390,7 +24390,7 @@ msgstr "Forskyv vassrett med %-3.3g, loddrett med %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:191
 msgid "Shear magnitude _X"
-msgstr "Forskyvingsgrad _X"
+msgstr "shear-dialog.pngshear-dialog.pngshear-dialog.png _X"
 
 #: ../app/tools/gimpsheartool.c:202
 msgid "Shear magnitude _Y"
@@ -24617,7 +24617,7 @@ msgstr "Tak med lenkja element i førehandsvisinga"
 
 #: ../app/tools/gimptransformgridoptions.c:133
 msgid "Synchronous preview"
-msgstr "Synkroniser førehandsvisinga"
+msgstr "Synkron førehandsvising"
 
 #: ../app/tools/gimptransformgridoptions.c:134
 msgid "Render the preview synchronously"
@@ -25085,7 +25085,7 @@ msgstr "Talet på animasjonsrammer"
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:359
 msgid "Stroke"
-msgstr "Strøk"
+msgstr "Strok"
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:383
@@ -25233,7 +25233,7 @@ msgstr "Teikna bakgrunn"
 #: ../app/tools/tools-enums.c:219
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr "Teikna ukjend"
+msgstr "Teikna ukjende"
 
 #: ../app/tools/tools-enums.c:247
 msgctxt "matting-preview-mode"
