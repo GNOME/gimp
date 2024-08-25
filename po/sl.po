@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-19 15:23+0000\n"
-"PO-Revision-Date: 2024-08-19 17:47+0200\n"
+"POT-Creation-Date: 2024-08-25 20:48+0000\n"
+"PO-Revision-Date: 2024-08-25 23:14+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1013,7 +1013,7 @@ msgstr "Uredi barvo kanala"
 msgid "_Fill opacity:"
 msgstr "Pro_sojnost polnila:"
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:331
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:332
 msgid "New Channel"
 msgstr "Nov kanal"
 
@@ -1057,9 +1057,9 @@ msgstr[1] "Spusti kanal na dno"
 msgstr[2] "Spusti kanala na dno"
 msgstr[3] "Spusti kanale na dno"
 
-#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:565
-#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:264
-#: app/widgets/gimplayertreeview.c:863
+#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:550
+#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
+#: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopija kanala %s"
@@ -2423,7 +2423,7 @@ msgid "240 Seconds"
 msgstr "240 s"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:238
-#: app/actions/edit-commands.c:172 app/actions/error-console-commands.c:101
+#: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
 #: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185
@@ -2526,7 +2526,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
-#: app/widgets/gimplayertreeview.c:821 app/widgets/gimptoolbox.c:826
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3403,7 +3403,7 @@ msgstr "Odstrani vnose, za katere ustrezna datoteka ni na voljo"
 msgid "Clear Document History"
 msgstr "Počisti zgodovino dokumenta"
 
-#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:173
+#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:171
 #: app/dialogs/preferences-dialog.c:621
 msgid "Cl_ear"
 msgstr "Po_čisti"
@@ -3900,21 +3900,21 @@ msgstr "_Razveljavi"
 msgid "_Redo"
 msgstr "_Ponovi"
 
-#: app/actions/edit-commands.c:164
+#: app/actions/edit-commands.c:162
 msgid "Clear Undo History"
 msgstr "Počisti zgodovino razveljavitev"
 
-#: app/actions/edit-commands.c:191
+#: app/actions/edit-commands.c:189
 msgid "Really clear image's undo history?"
 msgstr "Želite res pobrisati vso zgodovino razveljavitev za to sliko?"
 
-#: app/actions/edit-commands.c:204
+#: app/actions/edit-commands.c:202
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "Čiščenje zgodovine razveljavitev za to sliko bi sprostilo %s pomnilnika."
 
-#: app/actions/edit-commands.c:248
+#: app/actions/edit-commands.c:246
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
@@ -3923,72 +3923,72 @@ msgstr[1] "Izreže %d plast na odložišče."
 msgstr[2] "Izreže %d plasti na odložišče."
 msgstr[3] "Izreže %d plasti na odložišče."
 
-#: app/actions/edit-commands.c:253
+#: app/actions/edit-commands.c:251
 msgid "Cut pixels to the clipboard."
 msgstr "Izreži slikovne točke na odložišče."
 
-#: app/actions/edit-commands.c:296
+#: app/actions/edit-commands.c:294
 msgid "Copied layer to the clipboard."
 msgstr "Plast kopirana na odložišče."
 
-#: app/actions/edit-commands.c:297 app/actions/edit-commands.c:329
+#: app/actions/edit-commands.c:295 app/actions/edit-commands.c:327
 msgid "Copied pixels to the clipboard."
 msgstr "Slikovne točke kopirane na odložišče."
 
-#: app/actions/edit-commands.c:446 app/actions/edit-commands.c:785
+#: app/actions/edit-commands.c:444 app/actions/edit-commands.c:734
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Na odložišču ni nikakršnih slikovnih podatkov za lepljenje."
 
-#: app/actions/edit-commands.c:462
+#: app/actions/edit-commands.c:460
 msgid "Cut Named"
 msgstr "Kopiraj imenovano"
 
-#: app/actions/edit-commands.c:465 app/actions/edit-commands.c:487
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:463 app/actions/edit-commands.c:485
+#: app/actions/edit-commands.c:507
 msgid "Enter a name for this buffer"
 msgstr "Vnesite ime za ta medpomnilnik"
 
-#: app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:482
 msgid "Copy Named"
 msgstr "Kopiraj imenovano"
 
-#: app/actions/edit-commands.c:506
+#: app/actions/edit-commands.c:504
 msgid "Copy Visible Named"
 msgstr "Kopiraj vidno v imenovano"
 
-#: app/actions/edit-commands.c:554
+#: app/actions/edit-commands.c:552
 msgid "Clear"
 msgstr "Počisti"
 
-#: app/actions/edit-commands.c:627
+#: app/actions/edit-commands.c:625
 msgid "A selected layer's alpha channel is locked."
 msgstr "Kanal alfa izbrane plasti je zaklenjen."
 
-#: app/actions/edit-commands.c:693
+#: app/actions/edit-commands.c:691
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Prilepljeno kot nova plast, ker cilj ni posamična plast ali maska plasti."
 
-#: app/actions/edit-commands.c:700
+#: app/actions/edit-commands.c:698
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Prilepljeno kot nova plast, ker je cilj skupina plasti."
 
-#: app/actions/edit-commands.c:707
+#: app/actions/edit-commands.c:705
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Prilepljeno kot nova plast, ker so slikovne točke cilja zaklenjene."
 
-#: app/actions/edit-commands.c:802
+#: app/actions/edit-commands.c:751
 msgid "There are no selected layers or channels to cut from."
 msgstr "Ni izbrane plasti ali kanala, da bi z njih izrezali."
 
-#: app/actions/edit-commands.c:807 app/actions/edit-commands.c:840
-#: app/actions/edit-commands.c:865
+#: app/actions/edit-commands.c:756 app/actions/edit-commands.c:789
+#: app/actions/edit-commands.c:814
 msgid "(Unnamed Buffer)"
 msgstr "(neimenovan medpomnilnik)"
 
-#: app/actions/edit-commands.c:835
+#: app/actions/edit-commands.c:784
 msgid "There are no selected layers or channels to copy from."
 msgstr "Ni izbrane plasti ali kanala, da bi z njih kopirali."
 
@@ -6257,7 +6257,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "_Zasidraj plavajočo plast ali masko"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1313
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1312
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Zasidraj plavajočo plast ali masko"
@@ -6920,7 +6920,7 @@ msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
 #: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:940
+#: app/widgets/gimplayertreeview.c:939
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Novih plasti"
@@ -7125,7 +7125,7 @@ msgid "Empty Selection"
 msgstr "Izprazni izbor"
 
 #: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
-#: app/widgets/gimplayertreeview.c:1116
+#: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Nastavi prekrivnost plasti"
 
@@ -10433,7 +10433,7 @@ msgstr "Plast"
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:93
-#: app/widgets/gimpchanneltreeview.c:337
+#: app/widgets/gimpchanneltreeview.c:338
 msgid "Channel"
 msgstr "Kanal"
 
@@ -12311,12 +12311,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:813
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:872
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Prilepi"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1165
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1224
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Izreži"
@@ -12719,7 +12719,7 @@ msgstr "Zgodovina barv"
 msgid "Updating tag cache"
 msgstr "Posodabljanje medpomnilnika značk"
 
-#: app/core/gimp-edit.c:89
+#: app/core/gimp-edit.c:91
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
@@ -12728,19 +12728,19 @@ msgstr[1] "Izreži %d plast"
 msgstr[2] "Izreži %d plasti"
 msgstr[3] "Izreži %d plasti"
 
-#: app/core/gimp-edit.c:235
+#: app/core/gimp-edit.c:238
 msgid "Cannot cut because the selected region is empty."
 msgstr "Izrezovati ni mogoče, saj je izbrano območje prazno."
 
-#: app/core/gimp-edit.c:238
+#: app/core/gimp-edit.c:241
 msgid "Cannot copy because the selected region is empty."
 msgstr "Kopirati ni mogoče, saj je izbrano območje prazno."
 
-#: app/core/gimp-edit.c:583 app/core/gimpimage-new.c:612
+#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
 msgid "Pasted Layer"
 msgstr "Prilepljena plast"
 
-#: app/core/gimp-edit.c:1182
+#: app/core/gimp-edit.c:1241
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
@@ -13353,7 +13353,7 @@ msgstr "Barva ozadja"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:296
+#: app/widgets/gimplayertreeview.c:295
 msgid "Opacity"
 msgstr "Prekrivnost"
 
@@ -14183,7 +14183,7 @@ msgstr "Nevidne plasti ni mogoče spojiti navzdol."
 msgid "Cannot merge down to a layer group."
 msgstr "Na skupino plasti ni mogoče spajati."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2825
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2826
 msgid "The layer to merge down to is locked."
 msgstr "Plast, na katero želite spajati, je zaklenjena."
 
@@ -14310,7 +14310,7 @@ msgstr "Sličice za predogled »%s« ni mogoče odpreti: %s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2619
+#: app/widgets/gimpitemtreeview.c:2620
 msgid "A selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
@@ -18769,13 +18769,13 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1933
-#: app/widgets/gimplayertreeview.c:812
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1934
+#: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "Spusti plasti"
 
 #: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:889
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:888
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Spuščen medpomnilnik"
@@ -23266,7 +23266,7 @@ msgstr "_Krivulje ..."
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2598
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
 "Več risanih predmetov ni mogoče spremeniti hkrati. Izberite samo enega."
@@ -23482,7 +23482,7 @@ msgid "A selected item's pixels are locked."
 msgstr "Slikovne točke izbranega elementa so zaklenjene."
 
 #: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2610
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
 msgid "A selected layer is not visible."
 msgstr "Izbrana plast je nevidna."
 
@@ -27428,7 +27428,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: app/widgets/gimpdockbook.c:248
+#: app/widgets/gimpdockbook.c:257
 msgid "Configure this tab"
 msgstr "Prilagodi ta zavihek"
 
@@ -27893,39 +27893,39 @@ msgstr "Odkleni vidljivost"
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Predmetu določite izključen zaklep vidljivosti"
 
-#: app/widgets/gimpitemtreeview.c:783
+#: app/widgets/gimpitemtreeview.c:782
 msgid "Toggle the visibility of all filters."
 msgstr "Preklopite vidljivost vseh filtrov."
 
-#: app/widgets/gimpitemtreeview.c:797
+#: app/widgets/gimpitemtreeview.c:796
 msgid "Edit the selected filter."
 msgstr "Uredite izbrani filter."
 
-#: app/widgets/gimpitemtreeview.c:810
+#: app/widgets/gimpitemtreeview.c:809
 msgid "Raise filter one step up in the stack."
 msgstr "Dvigni filter za eno stopnjo na skladu."
 
-#: app/widgets/gimpitemtreeview.c:823
+#: app/widgets/gimpitemtreeview.c:822
 msgid "Lower filter one step down in the stack."
 msgstr "Spusti filter za eno stopnjo na skladu."
 
-#: app/widgets/gimpitemtreeview.c:836
+#: app/widgets/gimpitemtreeview.c:835
 msgid "Merge all active filters down."
 msgstr "Spojite vse dejavne filtre navzdol."
 
-#: app/widgets/gimpitemtreeview.c:849
+#: app/widgets/gimpitemtreeview.c:848
 msgid "Remove the selected filter."
 msgstr "Odstranite izbrani filter."
 
-#: app/widgets/gimpitemtreeview.c:860
+#: app/widgets/gimpitemtreeview.c:859
 msgid "Layer Effects"
 msgstr "Učinki plasti"
 
-#: app/widgets/gimpitemtreeview.c:891
+#: app/widgets/gimpitemtreeview.c:892
 msgid "Select items by patterns and store item sets"
 msgstr "Izberi elemente po vzorcih in shrani množice elementov"
 
-#: app/widgets/gimpitemtreeview.c:1783
+#: app/widgets/gimpitemtreeview.c:1784
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -27934,67 +27934,67 @@ msgstr[1] "%d element je izbran"
 msgstr[2] "%d elementa sta izbrana"
 msgstr[3] "%d elementi so izbrani"
 
-#: app/widgets/gimpitemtreeview.c:2694 app/widgets/gimpitemtreeview.c:2747
+#: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Filtra, ki ga urejate, ni mogoče prerazvrstiti."
 
-#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2764
+#: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
 msgid "Reorder filter"
 msgstr "Prerazvrsti filter"
 
-#: app/widgets/gimpitemtreeview.c:2809
+#: app/widgets/gimpitemtreeview.c:2810
 msgid "Effects from active tools can not be merged."
 msgstr "Učinkov dejavnih orodij ni mogoče spojiti."
 
-#: app/widgets/gimpitemtreeview.c:2862
+#: app/widgets/gimpitemtreeview.c:2863
 msgid "Remove filter"
 msgstr "Odstrani filter"
 
-#: app/widgets/gimpitemtreeview.c:3388
+#: app/widgets/gimpitemtreeview.c:3389
 msgid "No layer set stored"
 msgstr "Nobena množica plasti ni shranjena"
 
-#: app/widgets/gimpitemtreeview.c:3410
+#: app/widgets/gimpitemtreeview.c:3411
 msgid "New layer set's name"
 msgstr "Ime novega nabora plasti"
 
-#: app/widgets/gimpitemtreeview.c:3452 app/widgets/gimpitemtreeview.c:3467
+#: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
 msgid "Select layers by text search"
 msgstr "Izberi plati z iskanjem besedila"
 
-#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
+#: app/widgets/gimpitemtreeview.c:3455 app/widgets/gimpitemtreeview.c:3470
 msgid "Text search"
 msgstr "Iskanje besedila"
 
-#: app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3474
 msgid "Select layers by glob patterns"
 msgstr "Izberite plasti po vzorcih glob"
 
-#: app/widgets/gimpitemtreeview.c:3475
+#: app/widgets/gimpitemtreeview.c:3476
 msgid "Glob pattern search"
 msgstr "Iskanje vzorcev Glob"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3480
 msgid "Select layers by regular expressions"
 msgstr "Izberi plasti z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3482
 msgid "Regular Expression search"
 msgstr "Iskanje z regularnimi izrazi"
 
-#: app/widgets/gimpitemtreeview.c:3536
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "search"
 msgstr "išči"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "regexp"
 msgstr "regularni izraz"
 
-#: app/widgets/gimpitemtreeview.c:3706
+#: app/widgets/gimpitemtreeview.c:3707
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Neveljaven regularni izraz: %s\n"
@@ -28003,35 +28003,35 @@ msgstr "Neveljaven regularni izraz: %s\n"
 msgid "Switch to another group of modes"
 msgstr "Preklopi na drugo skupino načinov"
 
-#: app/widgets/gimplayertreeview.c:420 app/widgets/gimplayertreeview.c:423
+#: app/widgets/gimplayertreeview.c:419 app/widgets/gimplayertreeview.c:422
 msgid "Lock alpha channel"
 msgstr "Zakleni kanal alfa"
 
-#: app/widgets/gimplayertreeview.c:421
+#: app/widgets/gimplayertreeview.c:420
 msgid "Unlock alpha channel"
 msgstr "Odkleni kanal alfa"
 
-#: app/widgets/gimplayertreeview.c:422
+#: app/widgets/gimplayertreeview.c:421
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Predmetu določite izključen zaklep kanala alfa"
 
-#: app/widgets/gimplayertreeview.c:1059
+#: app/widgets/gimplayertreeview.c:1058
 msgid "Set layers mode"
 msgstr "Določi način plasti"
 
-#: app/widgets/gimplayertreeview.c:1305
+#: app/widgets/gimplayertreeview.c:1304
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Zasidraj plavajočo plast"
 
-#: app/widgets/gimplayertreeview.c:1308
+#: app/widgets/gimplayertreeview.c:1307
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Zasidraj plavajočo plast"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1569
+#: app/widgets/gimplayertreeview.c:1568
 msgid "No channels to create a layer mask from."
 msgstr "Ni kanalov, da bi iz njih ustvarili masko plasti."
 
@@ -29386,7 +29386,7 @@ msgstr "Raz_voj"
 
 #: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
-msgid "Plug-in _Examples"
+msgid "Plug-In _Examples"
 msgstr "Pri_meri vstavkov"
 
 #: menus/image-menu.ui.in.in:849
