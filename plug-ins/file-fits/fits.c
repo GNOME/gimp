@@ -204,15 +204,6 @@ fits_create_procedure (GimpPlugIn  *plug_in,
                                                                            NULL),
                                               "black",
                                               G_PARAM_READWRITE);
-
-      gimp_procedure_add_choice_aux_argument (procedure, "use-data-min-max",
-                                              _("Pi_xel value scaling"),
-                                              _("Whether to use DATAMIN/DATAMAX-scaling if possible"),
-                                              gimp_choice_new_with_values ("automatic",    0, _("Automatic"),          NULL,
-                                                                           "data-min-max", 1, _("By DATAMIN/DATAMAX"), NULL,
-                                                                           NULL),
-                                              "automatic",
-                                              G_PARAM_READWRITE);
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -368,12 +359,9 @@ load_image (GFile        *file,
   gint               channels    = 1;
   gint               replace;
   gdouble            replace_val = 0;
-  gboolean           use_datamin;
 
   replace = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                                  "replace");
-  use_datamin = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
-                                                     "use-data-min-max");
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -1011,10 +999,6 @@ load_dialog (GimpProcedure *procedure,
 
   frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                             "replace", GIMP_TYPE_INT_RADIO_FRAME);
-  gtk_widget_set_margin_bottom (frame, 12);
-
-  frame = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                            "use-data-min-max", GIMP_TYPE_INT_RADIO_FRAME);
   gtk_widget_set_margin_bottom (frame, 12);
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
