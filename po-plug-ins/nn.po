@@ -3613,7 +3613,8 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Skaler biletet til papirstorleiken utan å endra forholdet mellom sidene."
+"Trykk på denne for å skalera sluttbiletet for å passa i den gjevne storleiken "
+"utan å endra forholdet mellom sidene."
 
 #. Unit
 #: ../plug-ins/common/file-ps.c:3785
