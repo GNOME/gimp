@@ -1445,7 +1445,7 @@ check_load_vals (GimpProcedureConfig *config)
   gint     pnm_type       = 6;
   gint     text_alpha     = 1;
   gint     graphics_alpha = 1;
-  gchar   *pages;
+  gchar   *pages          = NULL;
 
   if (config)
     {
