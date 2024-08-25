@@ -826,7 +826,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "oglw", 4) == 0)
             {
-              gint32    size;
+              gint32    size = 0;
               gint32    ver;
               gint32    blur;
               gint32    intensity;
@@ -928,7 +928,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "bevl", 4) == 0)
             {
-              gint32    size;
+              gint32    size = 0;
               gint32    ver;
               gint32    angle;
               gint32    strength;
@@ -1044,7 +1044,7 @@ load_resource_lyvr (const PSDlayerres  *res_a,
                     GInputStream       *input,
                     GError            **error)
 {
-  gint32 version;
+  gint32 version = 0;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: layer version",
                     res_a->key);
