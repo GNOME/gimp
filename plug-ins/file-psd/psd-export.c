@@ -791,9 +791,9 @@ save_resources (GOutputStream        *output,
           if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
             {
               write_gint16 (output, PSD_CS_RGB, "channel color space");
-              write_gint16 (output, DOUBLE_TO_INT16 (1.0), "channel color r");
-              write_gint16 (output, DOUBLE_TO_INT16 (0.0), "channel color g");
-              write_gint16 (output, DOUBLE_TO_INT16 (0.0), "channel color b");
+              write_gint16 (output, (gint16) DOUBLE_TO_INT16 (1.0), "channel color r");
+              write_gint16 (output, (gint16) DOUBLE_TO_INT16 (0.0), "channel color g");
+              write_gint16 (output, (gint16) DOUBLE_TO_INT16 (0.0), "channel color b");
               write_gint16 (output, 0,                     "channel color padding");
               write_gint16 (output, 100,                   "channel opacity");
               write_gchar  (output, 1,                     "channel mode");
@@ -1189,7 +1189,7 @@ save_paths (GOutputStream  *output,
 
       if (tmpname && err == NULL)
         {
-          g_string_append_c (data, MIN (len, 255));
+          g_string_append_c (data, (gchar) MIN (len, 255));
           g_string_append_len (data, tmpname, MIN (len, 255));
           g_free (tmpname);
         }
@@ -1312,7 +1312,7 @@ save_clipping_path (GOutputStream  *output,
     g_string_append_len (data, "\x00", 1);
   g_string_append_c (data, len + 6 + 1);
 
-  g_string_append_c (data, MIN (len, 255));
+  g_string_append_c (data, (gchar) MIN (len, 255));
   g_string_append_len (data, tmpname, MIN (len, 255));
   g_free (tmpname);
 
