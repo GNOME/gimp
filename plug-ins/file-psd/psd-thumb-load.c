@@ -157,8 +157,8 @@ read_header_block (PSDimage      *img_a,
                    GInputStream  *input,
                    GError       **error)
 {
-  guint16  version;
-  gchar    sig[4] = {0};
+  guint16  version = 0;
+  gchar    sig[4]  = {0};
   gchar    buf[6];
 
   if (psd_read (input, sig,                4, error) < 4 ||
