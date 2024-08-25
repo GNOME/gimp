@@ -843,7 +843,7 @@
         <submenu>
           <attribute name="label" translatable="yes" context="filters-action">De_velopment</attribute>
           <submenu>
-            <attribute name="label" translatable="yes" context="filters-action">Plug-in _Examples</attribute>
+            <attribute name="label" translatable="yes" context="filters-action">Plug-In _Examples</attribute>
           </submenu>
           <submenu>
             <attribute name="label" translatable="yes" context="filters-action">_Python-Fu</attribute>
