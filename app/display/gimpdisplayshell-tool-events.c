@@ -63,6 +63,7 @@
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
+#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
 #include "gimpdisplayshell-cursor.h"
@@ -172,6 +173,15 @@ gimp_display_shell_events (GtkWidget        *widget,
     return TRUE;
 
   gimp = gimp_display_get_gimp (shell->display);
+
+  /* When a display is being created, we may have some weird cases where
+   * we get never-ending focus events fighting for which image window
+   * should have focus, in an infinite loop. See #11957.
+   * Just ignore focus events in these cases, and in particular, don't
+   * set the display from such focus events.
+   */
+  if (! gimp_displays_accept_focus_events (gimp))
+    return TRUE;
 
   switch (event->type)
     {

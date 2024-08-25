@@ -187,6 +187,9 @@ static void   gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
                                                     GtkWidget        *child,
                                                     gdouble          *x,
                                                     gdouble          *y);
+static gboolean gimp_display_shell_draw            (GimpDisplayShell *shell,
+                                                    cairo_t          *cr,
+                                                    gpointer         *data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
@@ -373,6 +376,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->equidistance_side_vertical   = GIMP_ARRANGE_HFILL;
   shell->near_layer_vertical1         = NULL;
   shell->near_layer_vertical2         = NULL;
+  shell->drawn                        = FALSE;
 
   env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
 
@@ -428,6 +432,10 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   g_signal_connect (shell, "key-press-event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
+
+  g_signal_connect (shell, "draw",
+                    G_CALLBACK (gimp_display_shell_draw),
+                    NULL);
 
   gimp_help_connect (GTK_WIDGET (shell), NULL, gimp_standard_help_func,
                      GIMP_HELP_IMAGE_WINDOW, NULL, NULL);
@@ -1333,6 +1341,19 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
     }
 }
 
+static gboolean
+gimp_display_shell_draw (GimpDisplayShell *shell,
+                         cairo_t          *cr,
+                         gpointer         *data)
+{
+  g_signal_handlers_disconnect_by_func (G_OBJECT (shell),
+                                        G_CALLBACK (gimp_display_shell_draw),
+                                        data);
+
+  shell->drawn = TRUE;
+
+  return FALSE;
+}
 
 /*  public functions  */
 
@@ -2268,4 +2289,23 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
 
   gimp_display_shell_expose_full (shell);
   gimp_display_shell_render_invalidate_full (shell);
+}
+
+/**
+ * gimp_display_shell_is_drawn:
+ * @shell:
+ *
+ * This should be run when you need to verify that the shell or its
+ * display were actually drawn. gtk_widget_is_visible(),
+ * gtk_widget_get_mapped() or gtk_widget_get_realized() are not enough
+ * because they may all return TRUE before the window is actually on
+ * screen.
+ *
+ * Returns: whether @shell was actually drawn on screen, i.e. the "draw"
+ * signal has run.
+ */
+gboolean
+gimp_display_shell_is_drawn (GimpDisplayShell *shell)
+{
+  return shell->drawn;
 }

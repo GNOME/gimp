@@ -19,18 +19,19 @@
 #define __GIMP_DISPLAY_FOREACH_H__
 
 
-gboolean        gimp_displays_dirty            (Gimp      *gimp);
-GimpContainer * gimp_displays_get_dirty_images (Gimp      *gimp);
-void            gimp_displays_delete           (Gimp      *gimp);
-void            gimp_displays_close            (Gimp      *gimp);
-void            gimp_displays_reconnect        (Gimp      *gimp,
-                                                GimpImage *old,
-                                                GimpImage *new);
+gboolean        gimp_displays_dirty               (Gimp      *gimp);
+GimpContainer * gimp_displays_get_dirty_images    (Gimp      *gimp);
+void            gimp_displays_delete              (Gimp      *gimp);
+void            gimp_displays_close               (Gimp      *gimp);
+void            gimp_displays_reconnect           (Gimp      *gimp,
+                                                   GimpImage *old,
+                                                   GimpImage *new);
 
-gint            gimp_displays_get_num_visible  (Gimp      *gimp);
+gint            gimp_displays_get_num_visible     (Gimp      *gimp);
 
-void            gimp_displays_set_busy         (Gimp      *gimp);
-void            gimp_displays_unset_busy       (Gimp      *gimp);
+void            gimp_displays_set_busy            (Gimp      *gimp);
+void            gimp_displays_unset_busy          (Gimp      *gimp);
+gboolean        gimp_displays_accept_focus_events (Gimp      *gimp);
 
 
 #endif /*  __GIMP_DISPLAY_FOREACH_H__  */

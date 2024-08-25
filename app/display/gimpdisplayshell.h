@@ -253,6 +253,8 @@ struct _GimpDisplayShell
   GimpAlignmentType  equidistance_side_vertical;
   GimpLayer         *near_layer_vertical1;
   GimpLayer         *near_layer_vertical2;
+
+  gboolean           drawn;
 };
 
 struct _GimpDisplayShellClass
@@ -358,6 +360,8 @@ void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     gint                offset_y,
                                                     GeglColor          *color,
                                                     gboolean            inverted);
+
+gboolean          gimp_display_shell_is_drawn      (GimpDisplayShell   *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */
