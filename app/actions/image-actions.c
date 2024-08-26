@@ -381,6 +381,7 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
+  Gimp             *gimp           = action_data_get_gimp (data);
   GimpImage        *image          = action_data_get_image (data);
   gboolean          is_indexed     = FALSE;
   gboolean          is_u8_gamma    = FALSE;
@@ -394,6 +395,12 @@ image_actions_update (GimpActionGroup *group,
   gboolean          profile        = FALSE;
   gboolean          s_bpc          = FALSE;
 
+  if (gimp)
+    {
+      GimpContext *context = gimp_get_user_context (gimp);
+
+      g_return_if_fail (context && image == gimp_context_get_image (context));
+    }
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
