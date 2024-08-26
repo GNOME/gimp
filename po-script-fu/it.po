@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-05-27 15:04+0000\n"
-"PO-Revision-Date: 2024-05-30 15:38+0200\n"
+"POT-Creation-Date: 2024-08-20 12:24+0000\n"
+"PO-Revision-Date: 2024-08-24 00:37+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -853,17 +853,17 @@ msgstr ""
 
 #. doesn't matter how many drawables are selected
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Direzione"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Orizzontale"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:38
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Verticale"
 
@@ -871,16 +871,16 @@ msgstr "Verticale"
 msgid "_Position (in %)"
 msgstr "_Posizione (in %)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Nuova _guida..."
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 "Aggiunge una guida con l'orientamento e la posizione specificata (in pixel)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Posizione"
 
@@ -1109,57 +1109,57 @@ msgstr ""
 "Esporta la tavolozza attiva come una java.util.Hashtable&lt;stringa, "
 "colore&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:43
 msgid "There is no image data in the clipboard to paste."
 msgstr "Negli appunti non ci sono dati di tipo immagine da incollare."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste as New _Brush..."
 msgstr "Incolla come nuovo _pennello..."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Incolla i contenuti degli appunti in un nuovo pennello"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "Nome _pennello"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Mio pennello"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "Nome _file"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "miopennello"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "_Spaziatura"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:49
 msgid "Paste as New _Pattern..."
 msgstr "Incolla come nuovo _motivo..."
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Incolla il contenuto degli appunti in un nuovo motivo"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "Nome _motivo"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Mio motivo"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "miomotivo"
 
@@ -1341,6 +1341,15 @@ msgstr "Sfondo trasparente"
 #: plug-ins/script-fu/scripts/spinning-globe.scm:110
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indicizzato a n colori (0 = rimane RGB)"
+
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Esempio plugin in _Scheme"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Esempio plugin in Scheme"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
