@@ -44,7 +44,8 @@
  *
  * This procedure checks if the given display ID is valid and refers to
  * an existing display.
- * Note: in most use cases, you should not use this function. If you
+ *
+ * *Note*: in most use cases, you should not use this function. If you
  * got a [class@Gimp.Display] from the API, you should trust it is
  * valid. This function is mostly for internal usage.
  *

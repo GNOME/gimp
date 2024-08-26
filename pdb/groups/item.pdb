@@ -23,7 +23,8 @@ sub item_id_is_valid {
 This procedure checks if the given item ID is valid and refers to an
 existing item.
 
-Note: in most use cases, you should not use this function. If you got a
+
+*Note*: in most use cases, you should not use this function. If you got a
 [class@Gimp.Item] from the API, you should trust it is valid. This
 function is mostly for internal usage.
 HELP
@@ -58,7 +59,8 @@ sub item_id_is_drawable {
     $help = <<HELP;
 This procedure returns %TRUE if the specified item ID is a drawable.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
@@ -93,7 +95,8 @@ sub item_id_is_layer {
     $help = <<HELP;
 This procedure returns %TRUE if the specified item ID is a layer.
 
-Note: in most use cases, you should not use this function. If the goal
+
+*Note*: in most use cases, you should not use this function. If the goal
 is to verify the accurate type for a [class@Gimp.Item], you should
 either use [method@Gimp.Item.is_layer] or the specific type-checking
 methods for the used language.
@@ -151,7 +154,8 @@ sub item_id_is_text_layer {
     $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a text layer.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
@@ -186,7 +190,8 @@ sub item_id_is_group_layer {
     $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a group layer.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
@@ -219,7 +224,8 @@ sub item_id_is_channel {
     $help = <<HELP;
 This procedure returns %TRUE if the specified item ID is a channel.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
@@ -254,7 +260,8 @@ sub item_id_is_layer_mask {
     $help = <<HELP;
 This procedure returns %TRUE if the specified item ID is a layer mask.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
@@ -289,7 +296,8 @@ sub item_id_is_selection {
     $help = <<HELP;
 This procedure returns %TRUE if the specified item ID is a selection.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
@@ -324,7 +332,8 @@ sub item_id_is_path {
     $help = <<HELP;
 This procedure returns %TRUE if the specified item ID is a path.
 
-Note: in most use cases, you should not use this function. See
+
+*Note*: in most use cases, you should not use this function. See
 [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 

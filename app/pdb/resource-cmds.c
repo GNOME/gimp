@@ -606,7 +606,8 @@ register_resource_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Returns TRUE if the resource ID is valid.",
                                   "This procedure checks if the given resource ID is valid and refers to an existing resource.\n"
-                                  "Note: in most use cases, you should not use this function. If you got a [class@Gimp.Resource] from the API, you should trust it is valid. This function is mostly for internal usage.",
+                                  "\n"
+                                  "*Note*: in most use cases, you should not use this function. If you got a [class@Gimp.Resource] from the API, you should trust it is valid. This function is mostly for internal usage.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -811,7 +812,8 @@ register_resource_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Returns a triplet identifying the resource.",
                                   "This procedure returns 2 strings and a boolean. The first string is the resource name, similar to what you would obtain calling 'gimp-resource-get-name'. The second is an opaque identifier for the collection this resource belongs to.\n"
-                                  "Note: as far as GIMP is concerned, a collection of resource usually corresponds to a single file on disk (which may or may not contain several resources). Therefore the identifier may be derived from the local file path. Nevertheless you should not use this string as such as this is not guaranteed to be always the case. You should consider it as an opaque identifier only to be used again through _'gimp-resource-get-by-identifier'.",
+                                  "\n"
+                                  "*Note*: as far as GIMP is concerned, a collection of resource usually corresponds to a single file on disk (which may or may not contain several resources). Therefore the identifier may be derived from the local file path. Nevertheless you should not use this string as such as this is not guaranteed to be always the case. You should consider it as an opaque identifier only to be used again through _'gimp-resource-get-by-identifier'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",

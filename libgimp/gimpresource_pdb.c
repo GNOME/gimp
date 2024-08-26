@@ -133,7 +133,8 @@ _gimp_resource_get_by_identifiers (const gchar *type_name,
  *
  * This procedure checks if the given resource ID is valid and refers
  * to an existing resource.
- * Note: in most use cases, you should not use this function. If you
+ *
+ * *Note*: in most use cases, you should not use this function. If you
  * got a [class@Gimp.Resource] from the API, you should trust it is
  * valid. This function is mostly for internal usage.
  *
@@ -397,13 +398,14 @@ gimp_resource_get_name (GimpResource *resource)
  * the resource name, similar to what you would obtain calling
  * gimp_resource_get_name(). The second is an opaque identifier for the
  * collection this resource belongs to.
- * Note: as far as GIMP is concerned, a collection of resource usually
- * corresponds to a single file on disk (which may or may not contain
- * several resources). Therefore the identifier may be derived from the
- * local file path. Nevertheless you should not use this string as such
- * as this is not guaranteed to be always the case. You should consider
- * it as an opaque identifier only to be used again through
- * _gimp_resource_get_by_identifier().
+ *
+ * *Note*: as far as GIMP is concerned, a collection of resource
+ * usually corresponds to a single file on disk (which may or may not
+ * contain several resources). Therefore the identifier may be derived
+ * from the local file path. Nevertheless you should not use this
+ * string as such as this is not guaranteed to be always the case. You
+ * should consider it as an opaque identifier only to be used again
+ * through _gimp_resource_get_by_identifier().
  *
  * Returns: Whether this is the identifier for internal data.
  *
