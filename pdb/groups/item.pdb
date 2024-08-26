@@ -56,7 +56,7 @@ CODE
 sub item_id_is_drawable {
     $blurb = 'Returns whether the item ID is a drawable.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a drawable.
 
 
@@ -92,7 +92,7 @@ CODE
 sub item_id_is_layer {
     $blurb = 'Returns whether the item ID is a layer.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a layer.
 
 
@@ -221,7 +221,7 @@ CODE
 sub item_id_is_channel {
     $blurb = 'Returns whether the item ID is a channel.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a channel.
 
 
@@ -257,7 +257,7 @@ CODE
 sub item_id_is_layer_mask {
     $blurb = 'Returns whether the item ID is a layer mask.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a layer mask.
 
 
@@ -293,7 +293,7 @@ CODE
 sub item_id_is_selection {
     $blurb = 'Returns whether the item ID is a selection.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a selection.
 
 
@@ -329,7 +329,7 @@ CODE
 sub item_id_is_path {
     $blurb = 'Returns whether the item ID is a path.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item ID is a path.
 
 
@@ -426,7 +426,7 @@ CODE
 sub item_is_group {
     $blurb = 'Returns whether the item is a group item.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item is a group item which
 can have children.
 HELP
@@ -455,7 +455,7 @@ CODE
 sub item_get_parent {
     $blurb = "Returns the item's parent item.";
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns the item's parent item, if any.
 HELP
 
@@ -483,7 +483,7 @@ CODE
 sub item_get_children {
     $blurb = "Returns the item's list of children.";
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns the list of items which are children of the specified
 item. The order is topmost to bottommost.
 HELP
@@ -537,7 +537,7 @@ CODE
 sub item_get_expanded {
     $blurb = 'Returns whether the item is expanded.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure returns %TRUE if the specified item is expanded.
 HELP
 
@@ -565,7 +565,7 @@ CODE
 sub item_set_expanded {
     $blurb = 'Sets the expanded state of the item.';
 
-    $help = <<HELP;
+    $help = <<'HELP';
 This procedure expands or collapses the item.
 HELP
 

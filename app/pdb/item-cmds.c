@@ -1102,7 +1102,7 @@ register_item_procs (GimpPDB *pdb)
                                   "Returns whether the item ID is a drawable.",
                                   "This procedure returns %TRUE if the specified item ID is a drawable.\n"
                                   "\n"
-                                  "*Note*: in most use cases, you should not use this function. See [func.Item.id_is_layer] for a discussion on alternatives.",
+                                  "*Note*: in most use cases, you should not use this function. See [func@Gimp.Item.id_is_layer] for a discussion on alternatives.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1133,7 +1133,7 @@ register_item_procs (GimpPDB *pdb)
                                   "Returns whether the item ID is a layer.",
                                   "This procedure returns %TRUE if the specified item ID is a layer.\n"
                                   "\n"
-                                  "*Note*: in most use cases, you should not use this function. If the goal is to verify the accurate type for a [class.Item], you should either use [method.Item.is_layer] or the specific type-checking methods for the used language.\n"
+                                  "*Note*: in most use cases, you should not use this function. If the goal is to verify the accurate type for a [class@Gimp.Item], you should either use [method@Gimp.Item.is_layer] or the specific type-checking methods for the used language.\n"
                                   "For instance, in C:\n"
                                   "```C\n"
                                   "if (GIMP_IS_LAYER (item))\n"
@@ -1236,7 +1236,7 @@ register_item_procs (GimpPDB *pdb)
                                   "Returns whether the item ID is a channel.",
                                   "This procedure returns %TRUE if the specified item ID is a channel.\n"
                                   "\n"
-                                  "*Note*: in most use cases, you should not use this function. See [func.Item.id_is_layer] for a discussion on alternatives.",
+                                  "*Note*: in most use cases, you should not use this function. See [func@Gimp.Item.id_is_layer] for a discussion on alternatives.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1267,7 +1267,7 @@ register_item_procs (GimpPDB *pdb)
                                   "Returns whether the item ID is a layer mask.",
                                   "This procedure returns %TRUE if the specified item ID is a layer mask.\n"
                                   "\n"
-                                  "*Note*: in most use cases, you should not use this function. See [func.Item.id_is_layer] for a discussion on alternatives.",
+                                  "*Note*: in most use cases, you should not use this function. See [func@Gimp.Item.id_is_layer] for a discussion on alternatives.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1298,7 +1298,7 @@ register_item_procs (GimpPDB *pdb)
                                   "Returns whether the item ID is a path.",
                                   "This procedure returns %TRUE if the specified item ID is a path.\n"
                                   "\n"
-                                  "*Note*: in most use cases, you should not use this function. See [func.Item.id_is_layer] for a discussion on alternatives.",
+                                  "*Note*: in most use cases, you should not use this function. See [func@Gimp.Item.id_is_layer] for a discussion on alternatives.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1329,7 +1329,7 @@ register_item_procs (GimpPDB *pdb)
                                   "Returns whether the item ID is a selection.",
                                   "This procedure returns %TRUE if the specified item ID is a selection.\n"
                                   "\n"
-                                  "*Note*: in most use cases, you should not use this function. See [func.Item.id_is_layer] for a discussion on alternatives.",
+                                  "*Note*: in most use cases, you should not use this function. See [func@Gimp.Item.id_is_layer] for a discussion on alternatives.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
