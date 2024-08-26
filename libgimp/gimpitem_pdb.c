@@ -40,10 +40,13 @@
  * gimp_item_id_is_valid:
  * @item_id: The item ID to check.
  *
- * Returns TRUE if the item ID is valid.
+ * Returns %TRUE if the item ID is valid.
  *
  * This procedure checks if the given item ID is valid and refers to an
  * existing item.
+ * Note: in most use cases, you should not use this function. If you
+ * got a [class@Gimp.Item] from the API, you should trust it is valid.
+ * This function is mostly for internal usage.
  *
  * Returns: Whether the item ID is valid.
  *
@@ -79,7 +82,9 @@ gimp_item_id_is_valid (gint item_id)
  *
  * Returns whether the item ID is a drawable.
  *
- * This procedure returns TRUE if the specified item ID is a drawable.
+ * This procedure returns %TRUE if the specified item ID is a drawable.
+ * Note: in most use cases, you should not use this function. See
+ * [func.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item ID is a drawable, FALSE otherwise.
  *
@@ -115,7 +120,21 @@ gimp_item_id_is_drawable (gint item_id)
  *
  * Returns whether the item ID is a layer.
  *
- * This procedure returns TRUE if the specified item ID is a layer.
+ * This procedure returns %TRUE if the specified item ID is a layer.
+ * Note: in most use cases, you should not use this function. If the
+ * goal is to verify the accurate type for a [class.Item], you should
+ * either use [method.Item.is_layer] or the specific type-checking
+ * methods for the used language.
+ * For instance, in C:
+ * ```C
+ * if (GIMP_IS_LAYER (item))
+ * do_something ();
+ * ```
+ * Or in the Python binding, you could run:
+ * ```py3
+ * if isinstance(item, Gimp.Layer):
+ * do_something()
+ * ```
  *
  * Returns: TRUE if the item is a layer, FALSE otherwise.
  *
@@ -151,8 +170,10 @@ gimp_item_id_is_layer (gint item_id)
  *
  * Returns whether the item ID is a text layer.
  *
- * This procedure returns TRUE if the specified item ID is a text
+ * This procedure returns %TRUE if the specified item ID is a text
  * layer.
+ * Note: in most use cases, you should not use this function. See
+ * [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item is a text layer, FALSE otherwise.
  *
@@ -188,8 +209,10 @@ gimp_item_id_is_text_layer (gint item_id)
  *
  * Returns whether the item ID is a group layer.
  *
- * This procedure returns TRUE if the specified item ID is a group
+ * This procedure returns %TRUE if the specified item ID is a group
  * layer.
+ * Note: in most use cases, you should not use this function. See
+ * [func@Gimp.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item is a group layer, FALSE otherwise.
  *
@@ -225,7 +248,9 @@ gimp_item_id_is_group_layer (gint item_id)
  *
  * Returns whether the item ID is a channel.
  *
- * This procedure returns TRUE if the specified item ID is a channel.
+ * This procedure returns %TRUE if the specified item ID is a channel.
+ * Note: in most use cases, you should not use this function. See
+ * [func.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item ID is a channel, FALSE otherwise.
  *
@@ -261,8 +286,10 @@ gimp_item_id_is_channel (gint item_id)
  *
  * Returns whether the item ID is a layer mask.
  *
- * This procedure returns TRUE if the specified item ID is a layer
+ * This procedure returns %TRUE if the specified item ID is a layer
  * mask.
+ * Note: in most use cases, you should not use this function. See
+ * [func.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item ID is a layer mask, FALSE otherwise.
  *
@@ -298,7 +325,9 @@ gimp_item_id_is_layer_mask (gint item_id)
  *
  * Returns whether the item ID is a path.
  *
- * This procedure returns TRUE if the specified item ID is a path.
+ * This procedure returns %TRUE if the specified item ID is a path.
+ * Note: in most use cases, you should not use this function. See
+ * [func.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item ID is a path, FALSE otherwise.
  *
@@ -334,7 +363,10 @@ gimp_item_id_is_path (gint item_id)
  *
  * Returns whether the item ID is a selection.
  *
- * This procedure returns TRUE if the specified item ID is a selection.
+ * This procedure returns %TRUE if the specified item ID is a
+ * selection.
+ * Note: in most use cases, you should not use this function. See
+ * [func.Item.id_is_layer] for a discussion on alternatives.
  *
  * Returns: TRUE if the item ID is a selection, FALSE otherwise.
  *
@@ -445,7 +477,7 @@ gimp_item_delete (GimpItem *item)
  *
  * Returns whether the item is a group item.
  *
- * This procedure returns TRUE if the specified item is a group item
+ * This procedure returns %TRUE if the specified item is a group item
  * which can have children.
  *
  * Returns: TRUE if the item is a group, FALSE otherwise.
@@ -564,7 +596,7 @@ gimp_item_get_children (GimpItem *item,
  *
  * Returns whether the item is expanded.
  *
- * This procedure returns TRUE if the specified item is expanded.
+ * This procedure returns %TRUE if the specified item is expanded.
  *
  * Returns: TRUE if the item is expanded, FALSE otherwise.
  *

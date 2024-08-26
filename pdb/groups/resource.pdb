@@ -107,6 +107,10 @@ sub resource_id_is_valid {
     $help = <<'HELP';
 This procedure checks if the given resource ID is valid and refers to an
 existing resource.
+
+Note: in most use cases, you should not use this function. If you got a
+[class@Gimp.Resource] from the API, you should trust it is valid. This
+function is mostly for internal usage.
 HELP
 
     &mitch_pdb_misc('2023', '3.0');

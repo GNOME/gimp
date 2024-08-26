@@ -133,6 +133,9 @@ _gimp_resource_get_by_identifiers (const gchar *type_name,
  *
  * This procedure checks if the given resource ID is valid and refers
  * to an existing resource.
+ * Note: in most use cases, you should not use this function. If you
+ * got a [class@Gimp.Resource] from the API, you should trust it is
+ * valid. This function is mostly for internal usage.
  *
  * Returns: Whether the resource ID is valid.
  *

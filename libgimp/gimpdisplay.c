@@ -132,6 +132,9 @@ gimp_display_get_property (GObject    *object,
  * gimp_display_get_id:
  * @display: The display.
  *
+ * Note: in most use cases, you should not need a display's ID which is
+ * mostly internal data and not reusable across sessions.
+ *
  * Returns: the display ID.
  *
  * Since: 3.0
@@ -147,6 +150,11 @@ gimp_display_get_id (GimpDisplay *display)
  * @display_id: The display id.
  *
  * Returns a #GimpDisplay representing @display_id.
+ *
+ * Note: in most use cases, you should not need to retrieve a
+ * #GimpDisplay by its ID, which is mostly internal data and not
+ * reusable across sessions. Use the appropriate functions for your use
+ * case instead.
  *
  * Returns: (nullable) (transfer none): a #GimpDisplay for @display_id or
  *          %NULL if @display_id does not represent a valid display.

@@ -605,7 +605,8 @@ register_resource_procs (GimpPDB *pdb)
                                "gimp-resource-id-is-valid");
   gimp_procedure_set_static_help (procedure,
                                   "Returns TRUE if the resource ID is valid.",
-                                  "This procedure checks if the given resource ID is valid and refers to an existing resource.",
+                                  "This procedure checks if the given resource ID is valid and refers to an existing resource.\n"
+                                  "Note: in most use cases, you should not use this function. If you got a [class@Gimp.Resource] from the API, you should trust it is valid. This function is mostly for internal usage.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

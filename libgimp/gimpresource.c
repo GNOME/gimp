@@ -278,6 +278,9 @@ gimp_resource_deserialize_create (GType     type,
  * gimp_resource_get_id:
  * @resource: The resource.
  *
+ * Note: in most use cases, you should not need a resource's ID which is
+ * mostly internal data and not reusable across sessions.
+ *
  * Returns: the resource ID.
  *
  * Since: 3.0
@@ -304,6 +307,11 @@ gimp_resource_get_id (GimpResource *resource)
  * Returns a #GimpResource representing @resource_id. Since #GimpResource is an
  * abstract class, the real object type will actually be the proper
  * subclass.
+ *
+ * Note: in most use cases, you should not need to retrieve a
+ * #GimpResource by its ID, which is mostly internal data and not
+ * reusable across sessions. Use the appropriate functions for your use
+ * case instead.
  *
  * Returns: (nullable) (transfer none): a #GimpResource for @resource_id or
  *          %NULL if @resource_id does not represent a valid resource.

@@ -17,11 +17,15 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub item_id_is_valid {
-    $blurb = 'Returns TRUE if the item ID is valid.';
+    $blurb = 'Returns %TRUE if the item ID is valid.';
 
     $help = <<'HELP';
 This procedure checks if the given item ID is valid and refers to an
 existing item.
+
+Note: in most use cases, you should not use this function. If you got a
+[class@Gimp.Item] from the API, you should trust it is valid. This
+function is mostly for internal usage.
 HELP
 
     &neo_pdb_misc('2007', '3.0');
@@ -52,7 +56,10 @@ sub item_id_is_drawable {
     $blurb = 'Returns whether the item ID is a drawable.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item ID is a drawable.
+This procedure returns %TRUE if the specified item ID is a drawable.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &std_pdb_misc;
@@ -84,7 +91,33 @@ sub item_id_is_layer {
     $blurb = 'Returns whether the item ID is a layer.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item ID is a layer.
+This procedure returns %TRUE if the specified item ID is a layer.
+
+Note: in most use cases, you should not use this function. If the goal
+is to verify the accurate type for a [class@Gimp.Item], you should
+either use [method@Gimp.Item.is_layer] or the specific type-checking
+methods for the used language.
+
+For instance, in C:
+
+```C
+
+if (GIMP_IS_LAYER (item))
+
+  do_something ();
+
+```
+
+Or in the Python binding, you could run:
+
+```py3
+
+if isinstance(item, Gimp.Layer):
+
+  do_something()
+
+```
+
 HELP
 
     &std_pdb_misc;
@@ -116,7 +149,10 @@ sub item_id_is_text_layer {
     $blurb = 'Returns whether the item ID is a text layer.';
 
     $help = <<'HELP';
-This procedure returns TRUE if the specified item ID is a text layer.
+This procedure returns %TRUE if the specified item ID is a text layer.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &mitch_pdb_misc('2010', '3.0');
@@ -148,7 +184,10 @@ sub item_id_is_group_layer {
     $blurb = 'Returns whether the item ID is a group layer.';
 
     $help = <<'HELP';
-This procedure returns TRUE if the specified item ID is a group layer.
+This procedure returns %TRUE if the specified item ID is a group layer.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &jehan_pdb_misc('2024', '3.0');
@@ -178,7 +217,10 @@ sub item_id_is_channel {
     $blurb = 'Returns whether the item ID is a channel.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item ID is a channel.
+This procedure returns %TRUE if the specified item ID is a channel.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &std_pdb_misc;
@@ -210,7 +252,10 @@ sub item_id_is_layer_mask {
     $blurb = 'Returns whether the item ID is a layer mask.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item ID is a layer mask.
+This procedure returns %TRUE if the specified item ID is a layer mask.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &std_pdb_misc;
@@ -242,7 +287,10 @@ sub item_id_is_selection {
     $blurb = 'Returns whether the item ID is a selection.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item ID is a selection.
+This procedure returns %TRUE if the specified item ID is a selection.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &std_pdb_misc;
@@ -274,7 +322,10 @@ sub item_id_is_path {
     $blurb = 'Returns whether the item ID is a path.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item ID is a path.
+This procedure returns %TRUE if the specified item ID is a path.
+
+Note: in most use cases, you should not use this function. See
+[func@Gimp.Item.id_is_layer] for a discussion on alternatives.
 HELP
 
     &std_pdb_misc;
@@ -367,7 +418,7 @@ sub item_is_group {
     $blurb = 'Returns whether the item is a group item.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item is a group item which
+This procedure returns %TRUE if the specified item is a group item which
 can have children.
 HELP
 
@@ -478,7 +529,7 @@ sub item_get_expanded {
     $blurb = 'Returns whether the item is expanded.';
 
     $help = <<HELP;
-This procedure returns TRUE if the specified item is expanded.
+This procedure returns %TRUE if the specified item is expanded.
 HELP
 
     &ell_pdb_misc('2017', '2.10');

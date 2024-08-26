@@ -134,6 +134,9 @@ gimp_item_get_property (GObject    *object,
  * gimp_item_get_id:
  * @item: The item.
  *
+ * Note: in most use cases, you should not need an item's ID which is
+ * mostly internal data and not reusable across sessions.
+ *
  * Returns: the item ID.
  *
  * Since: 3.0
@@ -160,6 +163,10 @@ gimp_item_get_id (GimpItem *item)
  * Returns a #GimpItem representing @item_id. Since #GimpItem is an
  * abstract class, the real object type will actually be the proper
  * subclass.
+ *
+ * Note: in most use cases, you should not need to retrieve a #GimpItem
+ * by its ID, which is mostly internal data and not reusable across
+ * sessions. Use the appropriate functions for your use case instead.
  *
  * Returns: (nullable) (transfer none): a #GimpItem for @item_id or
  *          %NULL if @item_id does not represent a valid item.

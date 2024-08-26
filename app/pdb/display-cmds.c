@@ -245,7 +245,8 @@ register_display_procs (GimpPDB *pdb)
                                "gimp-display-id-is-valid");
   gimp_procedure_set_static_help (procedure,
                                   "Returns TRUE if the display ID is valid.",
-                                  "This procedure checks if the given display ID is valid and refers to an existing display.",
+                                  "This procedure checks if the given display ID is valid and refers to an existing display.\n"
+                                  "Note: in most use cases, you should not use this function. If you got a [class@Gimp.Display] from the API, you should trust it is valid. This function is mostly for internal usage.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Sven Neumann <sven@gimp.org>",
