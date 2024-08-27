@@ -203,13 +203,13 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_int_argument (procedure, "cell-width",
                                        _("Cell _width"),
                                        _("Width of the brush cells in pixels"),
-                                       1, 1000, 1,
+                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                        GIMP_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "cell-height",
                                        _("Cell _height"),
                                        _("Height of the brush cells in pixels"),
-                                       1, 1000, 1,
+                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                        GIMP_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "num-cells",
