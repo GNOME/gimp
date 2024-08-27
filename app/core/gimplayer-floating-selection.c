@@ -34,6 +34,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
 #include "gimplayermask.h"
+#include "gimpselection.h"
 
 #include "gimp-intl.h"
 
@@ -217,7 +218,7 @@ floating_sel_activate_drawable (GimpLayer *layer)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
-  GList        *selected_drawables;
+  GList        *selected_drawables = NULL;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_layer_is_floating_sel (layer));
@@ -234,12 +235,12 @@ floating_sel_activate_drawable (GimpLayer *layer)
       selected_drawables = g_list_prepend (NULL, gimp_layer_mask_get_layer (mask));
       gimp_image_set_selected_layers (image, selected_drawables);
     }
-  else if (GIMP_IS_CHANNEL (drawable))
+  else if (GIMP_IS_CHANNEL (drawable) && ! GIMP_IS_SELECTION (drawable))
     {
       selected_drawables = g_list_prepend (NULL, drawable);
       gimp_image_set_selected_channels (image, selected_drawables);
     }
-  else
+  else if (! GIMP_IS_SELECTION (drawable))
     {
       selected_drawables = g_list_prepend (NULL, drawable);
       gimp_image_set_selected_layers (image, selected_drawables);
