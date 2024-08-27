@@ -399,7 +399,13 @@ image_actions_update (GimpActionGroup *group,
     {
       GimpContext *context = gimp_get_user_context (gimp);
 
-      g_return_if_fail (context && image == gimp_context_get_image (context));
+      /* The discrepancy may happens when a new image just got opened
+       * and context was not fully updated yet. We just skip the actions
+       * update. There will soon be more events triggering it with
+       * consistent context.
+       */
+      if (! context || image != gimp_context_get_image (context))
+        return;
     }
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
