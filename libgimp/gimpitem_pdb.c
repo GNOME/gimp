@@ -128,15 +128,19 @@ gimp_item_id_is_drawable (gint item_id)
  * goal is to verify the accurate type for a [class@Gimp.Item], you
  * should either use [method@Gimp.Item.is_layer] or the specific
  * type-checking methods for the used language.
+ *
  * For instance, in C:
+ *
  * ```C
  * if (GIMP_IS_LAYER (item))
- * do_something ();
+ *   do_something ();
  * ```
+ *
  * Or in the Python binding, you could run:
+ *
  * ```py3
  * if isinstance(item, Gimp.Layer):
- * do_something()
+ *   do_something()
  * ```
  *
  * Returns: TRUE if the item is a layer, FALSE otherwise.

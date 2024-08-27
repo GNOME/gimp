@@ -158,6 +158,58 @@ sub nicelist {
     foreach (@$list) { &trimspace(\$_) }
 }
 
+# trimspace2 and nicetext2 are basically copies of the non-2 versions,
+# except that they return the value. I was unable to make the original
+# version (directly modifying the argument) work with the split() call.
+# Inversely, I could not have the niceargs() function use the
+# return-version nicetext2(). Something is wrong and that's very likely
+# my limited knowledge of how perl works. So I just keep both versions
+# around for now, because what I needed anyway was to special-case the
+# triple-backticked (blockquotes) in the 'help' section. Anyone, be my
+# guest to merge these back into one and remove code duplication, if you
+# know how!
+sub trimspace2 {
+    my $text = shift;
+    my $trimmed = '';
+    my $in_triple_ticks = 0;
+
+    foreach $subtext (split /```/, $text) {
+        if ($in_triple_ticks) {
+            # Don't touch formatting inside triple-backticked
+            # blockquotes.
+            $subtext =~ s/\s+$//;
+            $subtext = "\n```" . $subtext . "\n```\n";
+            $in_triple_ticks = 0;
+        }
+        else {
+            # Removing single newlines.
+            $subtext =~ s/(\S)[\ \t\r\f]*\n[\ \t\r\f]*(\S)/$1 $2/g;
+            # All multi-space are transformed in single space.
+            $subtext =~ s/[\ \t\r\f]+/ /gs;
+            # Remove one newline per groups of newlines.
+            $subtext =~ s/\n(([\ \t\r\f]*\n)+)/$1/g;
+            $subtext =~ s/[\ \t\r\f]*\n[\ \t\r\f]/\n/g;
+            $in_triple_ticks = 1;
+        }
+        $trimmed .= $subtext;
+    }
+    $text = $trimmed;
+
+    # Remove leading and trailing whitespaces.
+    $text =~ s/^\s+//;
+    $text =~ s/\s+$//;
+    return $text;
+}
+
+sub nicetext2 {
+    my $val = shift;
+    if (defined $val) {
+	$val = trimspace2($val);
+	$val =~ s/"/\\"/g;
+    }
+    return $val;
+}
+
 # Add args for array lengths
 
 sub arrayexpand {
@@ -200,11 +252,11 @@ sub canonicalargs {
 
 # Post-process each pdb entry
 while ((undef, $entry) = each %pdb) {
-    &nicetext(\$entry->{blurb});
-    &nicetext(\$entry->{help});
-    &nicetext(\$entry->{author});
-    &nicetext(\$entry->{copyright});
-    &nicetext(\$entry->{date});
+    $entry->{blurb}     = nicetext2($entry->{blurb});
+    $entry->{help}      = nicetext2($entry->{help});
+    $entry->{author}    = nicetext2($entry->{author});
+    $entry->{copyright} = nicetext2($entry->{copyright});
+    $entry->{date}      = nicetext2($entry->{date});
 
     foreach (qw(in out)) {
 	my $args = $_ . 'args';

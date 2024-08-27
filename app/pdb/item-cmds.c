@@ -1134,15 +1134,19 @@ register_item_procs (GimpPDB *pdb)
                                   "This procedure returns %TRUE if the specified item ID is a layer.\n"
                                   "\n"
                                   "*Note*: in most use cases, you should not use this function. If the goal is to verify the accurate type for a [class@Gimp.Item], you should either use [method@Gimp.Item.is_layer] or the specific type-checking methods for the used language.\n"
+                                  "\n"
                                   "For instance, in C:\n"
+                                  "\n"
                                   "```C\n"
                                   "if (GIMP_IS_LAYER (item))\n"
-                                  "do_something ();\n"
+                                  "  do_something ();\n"
                                   "```\n"
+                                  "\n"
                                   "Or in the Python binding, you could run:\n"
+                                  "\n"
                                   "```py3\n"
                                   "if isinstance(item, Gimp.Layer):\n"
-                                  "do_something()\n"
+                                  "  do_something()\n"
                                   "```",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
