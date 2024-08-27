@@ -154,7 +154,6 @@ gimp_colormap_editor_dispose (GObject *object)
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
 
   g_clear_pointer (&editor->color_dialog, gtk_widget_destroy);
-  g_clear_weak_pointer (&editor->selection);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -186,7 +185,6 @@ gimp_colormap_editor_set_context (GimpDocked  *docked,
   if (context)
     {
       editor->selection = gimp_colormap_selection_new (context);
-      g_set_weak_pointer (&editor->selection, editor->selection);
       gtk_box_pack_start (GTK_BOX (editor), editor->selection, TRUE, TRUE, 0);
       gtk_widget_show (editor->selection);
 
