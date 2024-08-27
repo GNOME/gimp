@@ -1045,6 +1045,11 @@ gimp_display_shell_unrealize (GtkWidget *widget)
     gtk_widget_unrealize (shell->nav_popup);
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+
+  shell->drawn = FALSE;
+  g_signal_connect (shell, "draw",
+                    G_CALLBACK (gimp_display_shell_draw),
+                    NULL);
 }
 
 static void
