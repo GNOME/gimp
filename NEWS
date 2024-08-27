@@ -45,6 +45,8 @@ Core:
     dialog-question. In particular this shows up in some interfaces like
     GEGL filters with aux nodes (when the aux input has not been chosen
     yet).
+  - XCF 22: the GEGL Operation version is now stored for each layer
+    filter.
 
 Tools:
 
@@ -76,6 +78,9 @@ Graphical User Interface:
     order, walking through item groups (in and out), except when they
     are collapsed. PageUp/Down keys select items while not leaving
     previously selected items' group level.
+  - Dockbook: tab scrolling behavior (using scroll to switch between
+    dockable tabs) which was removed from GtkNotebook in GTK+3 got
+    reimplemented in our code.
 
 Plug-ins:
 
@@ -101,7 +106,8 @@ Plug-ins:
     file-raw-data, file-jpeg, file-ps, decompose, blinds, curve-bend,
     file-pcx, file-pnm, file-psp, hot, jigsaw, nl-filter, fits,
     align-layer, border-average, contrast-retinex, despeckle,
-    screenshot.
+    screenshot, file-gif-export, file-heif, file-jp2-load, file-jpegxl,
+    file-mng, file-tga, file-bmp, file-sgi, file-webp.
   - New file-plug-in testing framework. It comes with Gitlab junit reports.
   - JPEG XL: half-float import support.
   - file-darktable: use the new API which darktable developed from us
@@ -183,6 +189,9 @@ API:
       - gimp_prop_choice_radio_frame_new()
       - gimp_int_radio_frame_set_title()
       - gimp_widget_animation_enabled()
+    * Updated functions:
+      - gimp_help_connect() has a new `tooltip` argument as a proper
+        advanced version of gimp_help_set_help_data().
   - Changes in libgimpbase:
     * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
       Protocol (only GeglColor and GimpColorArray).
@@ -201,11 +210,18 @@ API:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
     * GimpCMYK type and all usage was removed.
+    * GimpHSV type and all usage was removed.
+  - PDB:
+    * Triple-backtick blocks in PDB-generated functions' descriptions is
+      now recognized so that pre-formatted code is kept as-is. E.g.
+      indentation is not broken anymore in code samples on the gi-docgen
+      API documentation.
 
 Build:
 
   - Minimum dependency version bumps:
     * babl 0.1.108
+    * GEGL 0.4.49 (TODO: update to stable 0.4.50 when released)
     * harfbuzz 2.8.2
   - Started a skeleton for unit testing framework for libgimp (only a few tests
     so far but we eventually target exhaustivity).
