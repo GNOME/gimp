@@ -955,11 +955,12 @@ gimp_edit_paste (GimpImage     *image,
                  gint           viewport_height)
 {
   GList    *layers;
-  gboolean  use_offset    = FALSE;
-  gint      layers_bbox_x = 0;
-  gint      layers_bbox_y = 0;
-  gint      offset_y      = 0;
-  gint      offset_x      = 0;
+  gboolean  use_offset     = FALSE;
+  gint      layers_bbox_x  = 0;
+  gint      layers_bbox_y  = 0;
+  gint      offset_y       = 0;
+  gint      offset_x       = 0;
+  GType     drawables_type = G_TYPE_NONE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
@@ -968,6 +969,32 @@ gimp_edit_paste (GimpImage     *image,
     {
       g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
       g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), NULL);
+      g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
+      g_return_val_if_fail (drawables_type == G_TYPE_NONE || G_OBJECT_TYPE (iter->data) == drawables_type, NULL);
+
+      drawables_type = G_OBJECT_TYPE (iter->data);
+
+      /* Currently we can only paste to channels (named channels, layer
+       * masks, selection, etc.) as floating.
+       */
+      if (GIMP_IS_CHANNEL (iter->data))
+        {
+          switch (paste_type)
+            {
+            case GIMP_PASTE_TYPE_NEW_LAYER:
+            case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+            case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+              paste_type = GIMP_PASTE_TYPE_FLOATING;
+              break;
+            case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+            case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+            case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+              paste_type = GIMP_PASTE_TYPE_FLOATING_IN_PLACE;
+              break;
+            default:
+              break;
+            }
+        }
     }
 
   if (merged && GIMP_IS_IMAGE (paste))
