@@ -1110,12 +1110,13 @@ endif
 ## Lua
 
 have_lua = false
+have_lua_output = have_lua
 # At time of writing, lua-lgi works with Lua 5.1, 5.2, 5.3 and LuaJIT2, but we
 # support only Lua 5.1 API. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11876
 if get_option('lua').allowed()
   have_lua_lgi = false
 
-  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua' ]
+  foreach lua_bin : [ 'luajit', 'lua5.1', 'lua-5.1', 'lua' ]
     lua = find_program(lua_bin, required: false)
 
     if lua.found() and meson.can_run_host_binaries()
@@ -1177,6 +1178,8 @@ if get_option('lua').allowed()
     warning(lua_warning)
     warnings += lua_warning
   endif
+
+  have_lua_output = '@0@ (@1@)'.format(have_lua, have_lua_lgi ? lua.full_path() : 'no working lua-lgi found!')
 endif
 
 # Check for XML tools
@@ -2112,7 +2115,7 @@ final_message = [
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
 '''  Javascript plug-ins: @0@'''.format(have_javascript),
-'''  Lua plug-ins:        @0@'''.format(have_lua),
+'''  Lua plug-ins:        @0@'''.format(have_lua_output),
 '''  Vala plug-ins:       @0@'''.format(have_vala),
 '''  TWAIN (Win32):       @0@'''.format(platform_windows),
 '''  WMF:                 @0@'''.format(wmf.found()),
