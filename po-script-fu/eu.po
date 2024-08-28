@@ -11,8 +11,8 @@
 msgid ""
 msgstr "Project-Id-Version: gimp-script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-02-24 15:18+0000\n"
-"PO-Revision-Date: 2024-02-26 10:00+0100\n"
+"POT-Creation-Date: 2024-08-20 12:24+0000\n"
+"PO-Revision-Date: 2024-08-28 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -21,77 +21,63 @@ msgstr "Project-Id-Version: gimp-script-fu master\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _kontsola"
 
-#: plug-ins/script-fu/script-fu.c:127
+#: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Script-Fu garapeneko kontsola interaktiboa"
 
-#: plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:309
 msgid "_GIMP Online"
 msgstr "Lineako _GIMP"
 
-#: plug-ins/script-fu/script-fu.c:315
+#: plug-ins/script-fu/script-fu.c:310
 msgid "_User Manual"
 msgstr "_Eskuliburua"
 
-#: plug-ins/script-fu/script-fu.c:318
+#: plug-ins/script-fu/script-fu.c:313
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:320
+#: plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Proba"
 
-#: plug-ins/script-fu/script-fu.c:323
+#: plug-ins/script-fu/script-fu.c:318
 msgid "_Buttons"
 msgstr "B_otoiak"
 
-#: plug-ins/script-fu/script-fu.c:325
+#: plug-ins/script-fu/script-fu.c:320
 msgid "_Logos"
 msgstr "_Logotipoak"
 
-#: plug-ins/script-fu/script-fu.c:327
+#: plug-ins/script-fu/script-fu.c:322
 msgid "_Patterns"
 msgstr "_Ereduak"
 
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:325
 msgid "_Web Page Themes"
 msgstr "_Web orriko gaiak"
 
-#: plug-ins/script-fu/script-fu.c:332
+#: plug-ins/script-fu/script-fu.c:327
 msgid "_Alien Glow"
 msgstr "Estralurtarren _dirdira"
 
-#: plug-ins/script-fu/script-fu.c:334
+#: plug-ins/script-fu/script-fu.c:329
 msgid "_Beveled Pattern"
 msgstr "Eredu _alakatua"
 
-#: plug-ins/script-fu/script-fu.c:336
+#: plug-ins/script-fu/script-fu.c:331
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: plug-ins/script-fu/script-fu.c:339
+#: plug-ins/script-fu/script-fu.c:334
 msgid "Alpha to _Logo"
 msgstr "Alfa _logora"
 
-#: plug-ins/script-fu/script-fu.c:345
-msgid "_Refresh Scripts"
-msgstr "_Freskatu script-ak"
-
-#: plug-ins/script-fu/script-fu.c:350
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Irakurri berriro erabilgarri dauden Script-Fu script guztiak"
-
-#: plug-ins/script-fu/script-fu.c:376
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr "Ezin duzu 'Freskatu script-ak' erabili Script-Fu elkarrizketa-koadroa irekita dagoenean. Itxi Script-Fu leiho guztiak eta saiatu berriro."
-
-#: plug-ins/script-fu/script-fu-eval.c:50
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-ren ebaluatze moduak deitze ez-interaktiboak bakarrik baimentzen ditu"
 
@@ -122,8 +108,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Gorde Script-Fu kontsolaren irteera"
 
 #: plug-ins/script-fu/console/script-fu-console.c:250
-#: plug-ins/script-fu/server/script-fu-server.c:878
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
+#: plug-ins/script-fu/server/script-fu-server.c:922
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Utzi"
 
@@ -148,27 +134,27 @@ msgstr "Ongi etorri TinyScheme-ra"
 msgid "Scripting GIMP in the Scheme language"
 msgstr "GIMP script bidez hedatzea Scheme lengoaiarekin"
 
-#: plug-ins/script-fu/server/script-fu-server.c:874
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-ren zerbitzari-aukerak"
 
-#: plug-ins/script-fu/server/script-fu-server.c:879
+#: plug-ins/script-fu/server/script-fu-server.c:923
 msgid "_Start Server"
 msgstr "_Abiarazi zerbitzaria..."
 
-#: plug-ins/script-fu/server/script-fu-server.c:912
+#: plug-ins/script-fu/server/script-fu-server.c:956
 msgid "Listen on IP:"
 msgstr "Entzun IPn:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:919
+#: plug-ins/script-fu/server/script-fu-server.c:963
 msgid "Server port:"
 msgstr "Zerbitzari-ataka:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:925
+#: plug-ins/script-fu/server/script-fu-server.c:969
 msgid "Server logfile:"
 msgstr "Zerbitzariaren egunkaria:"
 
-#: plug-ins/script-fu/server/script-fu-server.c:938
+#: plug-ins/script-fu/server/script-fu-server.c:982
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -182,44 +168,45 @@ msgstr "_Abiarazi zerbitzaria..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Urruneko Script-Fu eragiketen zerbitzaria"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:189
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu-k ezin du bi script aldi berean landu."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:191
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" scripta jadanik exekutatzen ari zara."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
 msgid "_Reset"
 msgstr "_Berrezarri"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:224
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_OK"
 msgstr "_Ados"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:278
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:331
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-ren kolore-hautapena"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:457
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-ren fitxategi-hautapena"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-ren karpeta-hautapena"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:867
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Errorea gertatu da %s exekutatzean:"
@@ -426,7 +413,7 @@ msgstr "Jaregin itzala"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:227
 msgid "Chrome"
-msgstr "Kromatu"
+msgstr "Chrome"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:228
 #: plug-ins/script-fu/scripts/xach-effect.scm:68
@@ -632,48 +619,48 @@ msgstr "Kolorea"
 msgid "Opacity"
 msgstr "Opakutasuna"
 
-#: plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "Render _Font Map..."
 msgstr "Errendatu _letra-mapa..."
 
-#: plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr "Sortu irudia letra-izenaren iragazkiarekin bat datozen letra-tipoen aurrebistekin beteta"
 
-#: plug-ins/script-fu/scripts/font-map.scm:167
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Text"
 msgstr "_Testua"
 
-#: plug-ins/script-fu/scripts/font-map.scm:168
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "Use font _name as text"
 msgstr "Erabili letra-tipoaren _izena testu gisa"
 
-#: plug-ins/script-fu/scripts/font-map.scm:169
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Labels"
 msgstr "_Etiketak"
 
-#: plug-ins/script-fu/scripts/font-map.scm:170
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Filter (regexp)"
 msgstr "_Iragazkia (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:171
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Font _size (pixels)"
 msgstr "Letra-_tamaina (pixeletan)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:172
+#: plug-ins/script-fu/scripts/font-map.scm:178
 msgid "_Border (pixels)"
 msgstr "_Ertza (pixeletan)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "_Color scheme"
 msgstr "_Kolorearen eskema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Black on white"
 msgstr "Beltza zurian"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:179
 msgid "Active colors"
 msgstr "Aktibatu koloreak"
 
@@ -846,17 +833,17 @@ msgstr "Gehitu gida irudi-tamainaren ehunekotan zehaztutako posizioan"
 
 #. doesn't matter how many drawables are selected
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "_Noranzkoa"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "Horizontala"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:38
-#: plug-ins/script-fu/scripts/guides-new.scm:34
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "Bertikala"
 
@@ -864,15 +851,15 @@ msgstr "Bertikala"
 msgid "_Position (in %)"
 msgstr "_Posizioa (ehunekoetan)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "Gida _berria..."
 
-#: plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Gehitu gida zehaztutako orientazioan eta posizioan (pixeletan)"
 
-#: plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "_Posizioa"
 
@@ -1017,121 +1004,128 @@ msgstr "Sepia"
 msgid "Mottle"
 msgstr "Marmola"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "Irteerako fitxategiaren karpeta"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr "Sortuko den fitxategiaren izena (izen berdineko fitxategia egonez gero, ordeztua izango da)"
-
-#: plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Idatzi duzun fitxategi-izena ez da fitxategi baten izenarentzako egokia."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr "Izeneko karaktere guztiak edo zuriuneak dira edo fitxategi-izenetan ager ezin daitezkeen karaktereak dira."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:264
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "Paleta honako fitxategira esportatu da: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:289
+msgid "Folder for the output file"
+msgstr "Irteerako fitxategiaren karpeta"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:290
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr "Sortuko den fitxategiaren izena (izen berdineko fitxategia egonez gero, ordeztua izango da)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:319
 msgid "_CSS stylesheet..."
 msgstr "_CSS estilo-orria..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:320
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr "Esportatu paleta aktiboa CSS estilo-orri gisa kolore-sarreraren izena beraien klase-izen gisa, eta kolore bera kolorearen atributu gisa"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:340
 msgid "P_HP dictionary..."
 msgstr "P_HP hiztegia..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:341
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Esportatu paleta aktiboa PHP hiztegi gisa (izena => kolorea)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:322
+#: plug-ins/script-fu/scripts/palette-export.scm:365
 msgid "_Python dictionary..."
 msgstr "_Python hiztegia..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:366
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Esportatu paleta aktiboa Python hiztegi gisa (izena: kolorea)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:351
+#: plug-ins/script-fu/scripts/palette-export.scm:387
 msgid "_Text file..."
 msgstr "_Testu-fitxategia..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:388
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr "Idatzi paleta bateko kolore guztiak testu-fitxategi batean, balio hamaseitar bat lerroko (izenik gabe)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:398
+#: plug-ins/script-fu/scripts/palette-export.scm:427
 msgid "J_ava map..."
 msgstr "J_ava mapa..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:428
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr "Esportatu paleta aktiboa java.util.Hashtable&lt;String,Color&gt; gisa"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:43
 msgid "There is no image data in the clipboard to paste."
 msgstr "Ez dago irudiaren daturik arbelean itsasteko."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste as New _Brush..."
 msgstr "Itsatsi _brotxa berri gisa..."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Itsatsi arbeleko edukia brotxa berrian"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "_Brotxaren izena"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Nire brotxa"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "_Fitxategi-izena"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "nirebrotxa"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "_Tartea"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:49
 msgid "Paste as New _Pattern..."
 msgstr "Itsatsi _eredu berri gisa..."
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Itsatsi arbeleko edukia eredu berrian"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "_Ereduaren izena"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Nire eredua"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "nireeredua"
 
@@ -1305,9 +1299,14 @@ msgstr "Atzeko plano gardena"
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Indexatu n koloretan (0 = Mantendu RGB)"
 
-#: plug-ins/script-fu/scripts/test-sphere.scm:247
-msgid "_Sphere..."
-msgstr "_Esfera..."
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Plugin baten adibidea _Scheme lengoaian"
+
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Plugin baten adibidea Scheme lengoaian"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
@@ -1460,6 +1459,22 @@ msgstr "Itzalaren X desplazamendua"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Itzalaren Y desplazamendua"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "_Freskatu script-ak"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "Irakurri berriro erabilgarri dauden Script-Fu script guztiak"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "Ezin duzu 'Freskatu script-ak' erabili Script-Fu elkarrizketa-koadroa "
+#~ "irekita dagoenean. Itxi Script-Fu leiho guztiak eta saiatu berriro."
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Esfera..."
 
 #~ msgid "Script-Fu Font Selection"
 #~ msgstr "Script-Fu-ren letra-tipoaren hautapena"
