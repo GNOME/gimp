@@ -1388,6 +1388,20 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_object (&value, resource);
             }
         }
+      else if (GIMP_VALUE_HOLDS_EXPORT_OPTIONS (&value))
+        {
+          /* ExportOptions is work in progress.
+           * For now, you can't instantiate (no gimp_export_options_new())
+           * and a script must always pass the equivalent of NULL
+           * when calling PDB functions having formal arg type ExportOptions.
+           *
+           * TEMPORARY: eat the actual Scheme arg but bind to C NULL.
+           * FUTURE: (unlikely) ScriptFu plugins can use non-NULL export options.
+           * check Scheme type of actual arg, must be int ID
+           * create a GimpExportOptions (actually a proxy?)
+           */
+            g_value_set_object (&value, NULL);
+        }
       else
         {
           g_snprintf (error_str, sizeof (error_str),

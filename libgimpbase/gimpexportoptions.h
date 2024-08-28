@@ -32,7 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_EXPORT_OPTIONS (gimp_export_options_get_type ())
+#define GIMP_TYPE_EXPORT_OPTIONS               (gimp_export_options_get_type ())
+#define GIMP_VALUE_HOLDS_EXPORT_OPTIONS(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_EXPORT_OPTIONS))
 G_DECLARE_FINAL_TYPE (GimpExportOptions, gimp_export_options, GIMP, EXPORT_OPTIONS, GObject)
 
 

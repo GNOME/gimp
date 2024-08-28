@@ -49,7 +49,8 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-export 1 img filename spacing name)
+    ; -1: NULL export_options
+    (file-gbr-export 1 img filename -1 spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
@@ -119,7 +120,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-export 1 img filename spacing name)
+    (file-gbr-export 1 img filename -1 spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
@@ -175,7 +176,7 @@
 
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-export 1 img filename spacing name)
+    (file-gbr-export 1 img filename -1 spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
@@ -244,7 +245,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-export 1 img filename spacing name)
+    (file-gbr-export 1 img filename -1 spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)

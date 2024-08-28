@@ -33,6 +33,7 @@
         (file-pat-export RUN-NONINTERACTIVE
                        pattern-image
                        path
+                       -1  ; NULL ExportOptions
                        name)
 
         (gimp-image-delete pattern-image)
