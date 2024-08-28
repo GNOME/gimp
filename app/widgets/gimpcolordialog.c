@@ -281,6 +281,8 @@ gimp_color_dialog_finalize (GObject *object)
   GimpColorDialog    *dialog          = GIMP_COLOR_DIALOG (object);
   GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
 
+  g_clear_weak_pointer (&dialog->active_image);
+
   if (dialog->user_context_aware && viewable_dialog->context)
     {
       GimpContext *user_context = viewable_dialog->context->gimp->user_context;

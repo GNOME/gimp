@@ -322,6 +322,10 @@ gimp_color_editor_dispose (GObject *object)
 {
   GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
 
+  g_clear_weak_pointer (&editor->active_display);
+  g_clear_weak_pointer (&editor->active_image);
+  g_clear_weak_pointer (&editor->active_shell);
+
   if (editor->context)
     gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
 
