@@ -302,6 +302,8 @@ gimp_colormap_selection_dispose (GObject *object)
   GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (object);
 
   g_clear_pointer (&selection->color_dialog, gtk_widget_destroy);
+  g_clear_weak_pointer (&selection->active_image);
+  g_clear_weak_pointer (&selection->active_palette);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
