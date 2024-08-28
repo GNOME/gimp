@@ -1030,12 +1030,12 @@ gimp_widget_set_accel_help (GtkWidget  *widget,
       g_signal_handlers_disconnect_by_func (prev_action,
                                             gimp_widget_accels_changed,
                                             widget);
-      g_object_weak_unref (G_OBJECT (action),
+      g_object_weak_unref (G_OBJECT (prev_action),
                            gimp_accel_help_accel_group_weak_notify,
                            widget);
       g_object_weak_unref (G_OBJECT (widget),
                            gimp_accel_help_widget_weak_notify,
-                           action);
+                           prev_action);
       g_object_set_data (G_OBJECT (widget), "gimp-accel-help-action", NULL);
     }
 
