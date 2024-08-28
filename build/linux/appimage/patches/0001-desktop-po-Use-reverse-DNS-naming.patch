@@ -1,6 +1,6 @@
-From dc8762b7a11794a3481eced7ff0eaf9202b7799e Mon Sep 17 00:00:00 2001
+From e3c70a67c9f03a3a5af44b1dcf87a3cda4f4443b Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunolopesdsilv@outlook.com>
-Date: Sat, 30 Mar 2024 13:53:37 -0300
+Date: Thu, 29 Aug 2024 00:34:06 +0200
 Subject: [PATCH] desktop, po: Use reverse DNS naming
 
 ---
@@ -24,12 +24,12 @@ index bee2e93c48..a517e351ab 100644
  desktop_conf = configuration_data()
  desktop_conf.set('GIMP_COMMAND',      gimp_command)
 diff --git a/desktop/org.gimp.GIMP.appdata.xml.in.in b/desktop/org.gimp.GIMP.appdata.xml.in.in
-index fbc01608bf..e934469013 100644
+index e1dcfa7fdc..41a51e1b68 100644
 --- a/desktop/org.gimp.GIMP.appdata.xml.in.in
 +++ b/desktop/org.gimp.GIMP.appdata.xml.in.in
 @@ -65,12 +65,12 @@
    </kudos>
-   <translation type="gettext">gimp20</translation>
+   <translation type="gettext">gimp30</translation>
  
 -  <launchable type="desktop-id">gimp.desktop</launchable>
 +  <launchable type="desktop-id">org.gimp.GIMP.desktop</launchable>
@@ -117,7 +117,7 @@ index 0ebe7fa7e0..046e737fca 100644
    if (pixbuf)
      icons = g_list_prepend (icons, pixbuf);
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index bb40043cde..130728ca42 100644
+index bc577b54a4..11bb18e8c1 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
 @@ -2,7 +2,7 @@
@@ -143,5 +143,5 @@ index 7e957d8dd4..00ec4d8961 100644
  libgimp
  libgimpbase
 -- 
-2.44.0.windows.1
+2.43.0
 

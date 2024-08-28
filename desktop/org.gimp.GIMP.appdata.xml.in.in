@@ -63,7 +63,7 @@
     <kudo>ModernToolkit</kudo>
     <kudo>UserDocs</kudo>
   </kudos>
-  <translation type="gettext">gimp20</translation>
+  <translation type="gettext">gimp30</translation>
 
   <launchable type="desktop-id">gimp.desktop</launchable>
   <provides>
