@@ -1996,6 +1996,7 @@ gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
 
   if (context)
     active_image = gimp_context_get_image (context);
+
   /* Since we are running idle, it is possible this runs after the
    * active display switched, and therefore we may call the wrong
    * actions for an image. See #10441.
@@ -2007,6 +2008,7 @@ gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
       private->update_ui_manager_idle_id = 0;
       return G_SOURCE_REMOVE;
     }
+
   gimp_ui_manager_update (menus_get_image_manager_singleton (private->active_shell->display->gimp),
                           private->active_shell->display);
 
