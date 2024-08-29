@@ -45,13 +45,11 @@ if desktop_validate.found()
 endif
 
 if appstreamcli.found()
-   # TODO: should we use validate-strict when the last errors for a strict
-   # validation are fixed?
   test('appdata_file',
-    appstreamcli,
-    args: [ 'validate', appdatafile ],
+    find_program('test-appdata.sh', required: true, dirs: [meson.current_source_dir()]),
     env: [
-      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.project_build_root(),
+      'GIMP_TESTING_BUILDDIR=' + meson.current_build_dir(),
+      'GIMP_RELEASE=' + (release ? '1' : '0'),
     ],
     suite: 'desktop',
   )
