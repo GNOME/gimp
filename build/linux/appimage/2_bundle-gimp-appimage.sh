@@ -177,6 +177,7 @@ sed -i "s|GIMP_APP_VERSION|${GIMP_APP_VERSION}|" $GIMP_DISTRIB/AppRun
 
 # CONFIGURE METADATA
 sed -i '/kudo/d' $OPT_PREFIX/share/metainfo/org.gimp.GIMP.appdata.xml
+sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" $OPT_PREFIX/share/metainfo/org.gimp.GIMP.appdata.xml
 if [ "$2" = "AppDir" ]; then
   mkdir -p $GIMP_PREFIX/share
   cp -r $GIMP_DISTRIB/share/metainfo $GIMP_PREFIX/share
