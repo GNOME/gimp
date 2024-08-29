@@ -887,5 +887,6 @@ gimp_menu_update_visibility (GimpMenu *menu)
 
   g_list_free (children);
 
-  gtk_widget_set_visible (GTK_WIDGET (menu_item), n_items > 0);
+  if (menu_item != NULL && G_TYPE_FROM_INSTANCE (menu_item) == GTK_TYPE_MENU_ITEM)
+    gtk_widget_set_visible (GTK_WIDGET (menu_item), n_items > 0);
 }
