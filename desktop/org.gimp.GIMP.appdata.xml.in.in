@@ -74,6 +74,24 @@
   </provides>
 
   <releases>
+    <release version="3.0.0~rc1" date="TODO" type="development">
+      <description>
+        <p>
+        GIMP 3.0.0-RC1 is the first release candidate of the GIMP 3 stable branch.
+        Most work has happened under the hood on bug fixes, API changes,
+        plug-ins ported to new API and stability in general.
+        Some more visible changes include:
+        </p>
+        <ul>
+          <li>Logo updated</li>
+          <li>The dialog for layer effects now proposes a "Merge filter" checkbox</li>
+          <li>Arrow key navigation in item dockables is now multi-layer aware</li>
+          <li>Dockable tab navigation with scroll input was reimplemented (feature removed from GTK)</li>
+          <li>New support for Sketchbook TIFF layers</li>
+          <li>Public libgimp API v3 now stable</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.18" date="2024-02-17" type="development">
       <description>
         <p>
