@@ -2113,8 +2113,6 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
 
-  gimp_display_shell_appearance_update (private->active_shell);
-
   if (gtk_widget_get_window (GTK_WIDGET (window)))
     {
       /*  we are fully initialized, use the window's current monitor
@@ -2138,6 +2136,8 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   gimp_context_set_display (gimp_get_user_context (private->gimp),
                             active_display);
+
+  gimp_display_shell_appearance_update (private->active_shell);
 
   gimp_image_window_update_ui_manager (window);
 
