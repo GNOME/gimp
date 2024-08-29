@@ -126,6 +126,13 @@ combobox arrow, combobox button * {
   -gtk-icon-shadow: none;
 }
 
+/* Define colors so the nib handle appears in Gimp Ink Options */
+GimpBlobEditor {
+  color: @fg-color;
+  background-color: @bg-color;
+  border: 0.1em solid @fg-color;
+}
+
 /* Get rid of the outline around all tabs in the gimpcolordialog */
 GimpColorNotebook .frame {
   border-color: @bg-color;
