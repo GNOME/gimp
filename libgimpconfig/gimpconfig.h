@@ -21,6 +21,8 @@
 
 #include <gegl.h>
 
+#include <libgimpbase/gimpbase.h>
+
 #define __GIMP_CONFIG_H_INSIDE__
 
 #include <libgimpconfig/gimpconfigtypes.h>

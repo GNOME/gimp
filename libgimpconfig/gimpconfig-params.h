@@ -37,21 +37,21 @@ G_BEGIN_DECLS
  *
  * A property that can and should be serialized and deserialized.
  **/
-#define GIMP_CONFIG_PARAM_SERIALIZE    (1 << (0 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_SERIALIZE    (1 << (0 + GIMP_PARAM_FLAG_SHIFT))
 
 /**
  * GIMP_CONFIG_PARAM_AGGREGATE:
  *
  * The object property is to be treated as part of the parent object.
  **/
-#define GIMP_CONFIG_PARAM_AGGREGATE    (1 << (1 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_AGGREGATE    (1 << (1 + GIMP_PARAM_FLAG_SHIFT))
 
 /**
  * GIMP_CONFIG_PARAM_RESTART:
  *
  * Changes to this property take effect only after a restart.
  **/
-#define GIMP_CONFIG_PARAM_RESTART      (1 << (2 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_RESTART      (1 << (2 + GIMP_PARAM_FLAG_SHIFT))
 
 /**
  * GIMP_CONFIG_PARAM_CONFIRM:
@@ -59,14 +59,14 @@ G_BEGIN_DECLS
  * Changes to this property should be confirmed by the user before
  * being applied.
  **/
-#define GIMP_CONFIG_PARAM_CONFIRM      (1 << (3 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_CONFIRM      (1 << (3 + GIMP_PARAM_FLAG_SHIFT))
 
 /**
  * GIMP_CONFIG_PARAM_DEFAULTS:
  *
  * Don't serialize this property if it has the default value.
  **/
-#define GIMP_CONFIG_PARAM_DEFAULTS     (1 << (4 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_DEFAULTS     (1 << (4 + GIMP_PARAM_FLAG_SHIFT))
 
 /**
  * GIMP_CONFIG_PARAM_IGNORE:
@@ -74,14 +74,22 @@ G_BEGIN_DECLS
  * This property exists for obscure reasons or is needed for backward
  * compatibility. Ignore the value read and don't serialize it.
  **/
-#define GIMP_CONFIG_PARAM_IGNORE       (1 << (5 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_IGNORE       (1 << (5 + GIMP_PARAM_FLAG_SHIFT))
 
 /**
  * GIMP_CONFIG_PARAM_DONT_COMPARE:
  *
  * Ignore this property when comparing objects.
  **/
-#define GIMP_CONFIG_PARAM_DONT_COMPARE (1 << (6 + G_PARAM_USER_SHIFT))
+#define GIMP_CONFIG_PARAM_DONT_COMPARE (1 << (6 + GIMP_PARAM_FLAG_SHIFT))
+
+/**
+ * GIMP_CONFIG_PARAM_FLAG_SHIFT:
+ *
+ * Minimum shift count to be used for core application defined
+ * [flags@GObject.ParamFlags].
+ */
+#define GIMP_CONFIG_PARAM_FLAG_SHIFT   (7 + GIMP_PARAM_FLAG_SHIFT)
 
 /**
  * GIMP_CONFIG_PARAM_FLAGS:

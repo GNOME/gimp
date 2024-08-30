@@ -35,10 +35,15 @@ G_BEGIN_DECLS
  *
  * Since 3.0
  */
-/*
- * Keep in sync with libgimpconfig/gimpconfig-params.h
+#define GIMP_PARAM_NO_VALIDATE    (1 << (0 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_PARAM_FLAG_SHIFT:
+ *
+ * Minimum shift count to be used for libgimpconfig defined
+ * [flags@GObject.ParamFlags] (see libgimpconfig/gimpconfig-params.h).
  */
-#define GIMP_PARAM_NO_VALIDATE (1 << (6 + G_PARAM_USER_SHIFT))
+#define GIMP_PARAM_FLAG_SHIFT     (1 + G_PARAM_USER_SHIFT)
 
 /**
  * GIMP_PARAM_STATIC_STRINGS:

@@ -25,8 +25,8 @@
 #include "gimpobject.h"
 
 
-/* shift one more than GIMP_CONFIG_PARAM_DONT_COMPARE */
-#define GIMP_SYMMETRY_PARAM_GUI (1 << (7 + G_PARAM_USER_SHIFT))
+/* shift one more than latest GIMP_CONFIG_PARAM_* */
+#define GIMP_SYMMETRY_PARAM_GUI (1 << (0 + GIMP_CONFIG_PARAM_FLAG_SHIFT))
 
 
 #define GIMP_TYPE_SYMMETRY            (gimp_symmetry_get_type ())
