@@ -77,7 +77,7 @@ static GdkWindow * gimp_ui_get_foreign_window      (gpointer           window);
 #endif
 static gboolean    gimp_window_transient_on_mapped (GtkWidget         *window,
                                                     GdkEventAny       *event,
-                                                    GimpDisplay       *display);
+                                                    GBytes            *handle);
 
 
 static gboolean gimp_ui_initialized = FALSE;
@@ -198,16 +198,59 @@ gimp_window_transient_show (GtkWidget *window)
 #endif
 
 /**
+ * gimp_window_set_transient_for:
+ * @window: the #GtkWindow that should become transient
+ * @handle: handle of the window that should become the parent
+ *
+ * Indicates to the window manager that @window is a transient dialog
+ * to the window identified by @handle.
+ *
+ * Note that @handle is an opaque data, which you should not try to
+ * construct yourself or make sense of. It may be different things
+ * depending on the OS or even the display server. You should only use
+ * a handle returned by [func@Gimp.progress_get_window_handle],
+ * [method@Gimp.Display.get_window_handle] or
+ * [method@GimpUi.Dialog.get_native_handle].
+ *
+ * Most of the time you will want to use the convenience function
+ * [func@GimpUi.window_set_transient].
+ *
+ * Since: 3.0
+ */
+void
+gimp_window_set_transient_for (GtkWindow *window,
+                               GBytes    *handle)
+{
+  g_return_if_fail (gimp_ui_initialized);
+  g_return_if_fail (GTK_IS_WINDOW (window));
+  g_return_if_fail (handle != NULL);
+
+  g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
+                                        0, 0, NULL,
+                                        gimp_window_transient_on_mapped,
+                                        NULL);
+
+  g_signal_connect_data (window, "map-event",
+                         G_CALLBACK (gimp_window_transient_on_mapped),
+                         g_bytes_ref (handle),
+                         (GClosureNotify) g_bytes_unref,
+                         G_CONNECT_AFTER);
+
+  if (gtk_widget_get_mapped (GTK_WIDGET (window)))
+    gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, handle);
+}
+
+/**
  * gimp_window_set_transient_for_display:
  * @window:  the #GtkWindow that should become transient
  * @display: display of the image window that should become the parent
  *
  * Indicates to the window manager that @window is a transient dialog
  * associated with the GIMP image window that is identified by its
- * display. See gdk_window_set_transient_for () for more information.
+ * display. See [method@Gdk.Window.set_transient_for] for more information.
  *
  * Most of the time you will want to use the convenience function
- * gimp_window_set_transient().
+ * [func@GimpUi.window_set_transient].
  *
  * Since: 2.4
  */
@@ -215,16 +258,26 @@ void
 gimp_window_set_transient_for_display (GtkWindow   *window,
                                        GimpDisplay *display)
 {
+  GBytes *handle;
+
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  g_signal_connect_after (window, "map-event",
-                          G_CALLBACK (gimp_window_transient_on_mapped),
-                          display);
+  g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
+                                        0, 0, NULL,
+                                        gimp_window_transient_on_mapped,
+                                        NULL);
+
+  handle = gimp_display_get_window_handle (display);
+  g_signal_connect_data (window, "map-event",
+                         G_CALLBACK (gimp_window_transient_on_mapped),
+                         handle,
+                         (GClosureNotify) g_bytes_unref,
+                         G_CONNECT_AFTER);
 
   if (gtk_widget_get_mapped (GTK_WIDGET (window)))
-    gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, display);
+    gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, handle);
 }
 
 /**
@@ -240,12 +293,22 @@ gimp_window_set_transient_for_display (GtkWindow   *window,
 void
 gimp_window_set_transient (GtkWindow *window)
 {
+  GBytes *handle;
+
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
 
-  g_signal_connect_after (window, "map-event",
-                          G_CALLBACK (gimp_window_transient_on_mapped),
-                          NULL);
+  g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
+                                        0, 0, NULL,
+                                        gimp_window_transient_on_mapped,
+                                        NULL);
+
+  handle = gimp_progress_get_window_handle ();
+  g_signal_connect_data (window, "map-event",
+                         G_CALLBACK (gimp_window_transient_on_mapped),
+                         handle,
+                         (GClosureNotify) g_bytes_unref,
+                         G_CONNECT_AFTER);
 
   if (gtk_widget_get_mapped (GTK_WIDGET (window)))
     gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, NULL);
@@ -351,15 +414,9 @@ gimp_ui_get_foreign_window (gpointer window)
 static gboolean
 gimp_window_transient_on_mapped (GtkWidget   *window,
                                  GdkEventAny *event,
-                                 GimpDisplay *display)
+                                 GBytes      *handle)
 {
-  GBytes   *handle;
-  gboolean  transient_set = FALSE;
-
-  if (display != NULL)
-    handle = gimp_display_get_window_handle (display);
-  else
-    handle = gimp_progress_get_window_handle ();
+  gboolean transient_set = FALSE;
 
   if (handle == NULL)
     return FALSE;
@@ -434,8 +491,6 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
                         NULL);
 #endif
     }
-
-  g_bytes_unref (handle);
 
   return FALSE;
 }
