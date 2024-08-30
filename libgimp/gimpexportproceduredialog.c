@@ -39,6 +39,7 @@ struct _GimpExportProcedureDialog
   GimpImage           *image;
 
   GThread             *metadata_thread;
+  gboolean             metadata_thread_running;
   GMutex               metadata_thread_mutex;
 };
 
@@ -79,9 +80,10 @@ gimp_export_procedure_dialog_class_init (GimpExportProcedureDialogClass *klass)
 static void
 gimp_export_procedure_dialog_init (GimpExportProcedureDialog *dialog)
 {
-  dialog->additional_metadata = NULL;
-  dialog->image               = NULL;
-  dialog->metadata_thread     = NULL;
+  dialog->additional_metadata     = NULL;
+  dialog->image                   = NULL;
+  dialog->metadata_thread         = NULL;
+  dialog->metadata_thread_running = FALSE;
   g_mutex_init (&dialog->metadata_thread_mutex);
 }
 
@@ -91,7 +93,14 @@ gimp_export_procedure_dialog_finalize (GObject *object)
   GimpExportProcedureDialog *dialog = GIMP_EXPORT_PROCEDURE_DIALOG (object);
 
   g_list_free_full (dialog->additional_metadata, g_free);
-  g_clear_pointer (&dialog->metadata_thread, g_thread_unref);
+  g_mutex_lock (&dialog->metadata_thread_mutex);
+  if (dialog->metadata_thread_running)
+    {
+      g_mutex_unlock (&dialog->metadata_thread_mutex);
+      g_thread_join (dialog->metadata_thread);
+      g_mutex_lock (&dialog->metadata_thread_mutex);
+    }
+  g_mutex_unlock (&dialog->metadata_thread_mutex);
   g_mutex_clear (&dialog->metadata_thread_mutex);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -348,6 +357,10 @@ gimp_export_procedure_dialog_edit_metadata_thread (gpointer data)
   GimpExportProcedureDialog *dialog = data;
   GimpProcedure             *procedure;
 
+  g_mutex_lock (&dialog->metadata_thread_mutex);
+  dialog->metadata_thread_running = TRUE;
+  g_mutex_unlock (&dialog->metadata_thread_mutex);
+
   procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), "plug-in-metadata-editor");
   gimp_procedure_run (procedure,
                       "run-mode", GIMP_RUN_INTERACTIVE,
@@ -355,8 +368,7 @@ gimp_export_procedure_dialog_edit_metadata_thread (gpointer data)
                       NULL);
 
   g_mutex_lock (&dialog->metadata_thread_mutex);
-  g_thread_unref (dialog->metadata_thread);
-  dialog->metadata_thread = NULL;
+  dialog->metadata_thread_running = FALSE;
   g_mutex_unlock (&dialog->metadata_thread_mutex);
 
   return NULL;
@@ -370,11 +382,16 @@ gimp_export_procedure_dialog_activate_edit_metadata (GtkLinkButton             *
 
   g_mutex_lock (&dialog->metadata_thread_mutex);
 
-  if (! dialog->metadata_thread)
-    /* Only run if not already running. */
-    dialog->metadata_thread = g_thread_try_new ("Edit Metadata",
-                                                      gimp_export_procedure_dialog_edit_metadata_thread,
-                                                      dialog, NULL);
+  /* Only run if not already running. */
+  if (! dialog->metadata_thread_running)
+    {
+      if (dialog->metadata_thread)
+        g_thread_join (dialog->metadata_thread);
+
+      dialog->metadata_thread = g_thread_try_new ("Edit Metadata",
+                                                  gimp_export_procedure_dialog_edit_metadata_thread,
+                                                  dialog, NULL);
+    }
 
   g_mutex_unlock (&dialog->metadata_thread_mutex);
 
