@@ -182,7 +182,8 @@ gimp_config_serialize_property (GimpConfig       *config,
   if (! (param_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
     return FALSE;
 
-  if (param_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
+  if (param_spec->flags & GIMP_CONFIG_PARAM_IGNORE ||
+      param_spec->flags & GIMP_PARAM_DONT_SERIALIZE)
     return TRUE;
 
   g_value_init (&value, param_spec->value_type);
