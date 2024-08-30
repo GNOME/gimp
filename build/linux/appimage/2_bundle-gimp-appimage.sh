@@ -6,6 +6,49 @@
 
 set -e
 
+if [ -z "$GITLAB_CI" ]; then
+  # Make the script work locally
+  if [ "$0" != 'build/linux/appimage/2_bundle-gimp-appimage.sh' ] && [ ${PWD/*\//} != 'appimage' ]; then
+    echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir'
+    exit 1
+  elif [ ${PWD/*\//} = 'appimage' ]; then
+    cd ../../..
+  fi
+fi
+
+
+# SPECIAL BUILDING
+
+## We apply these patches otherwise appstream-cli get confused with
+## (non-reverse) DNS naming and fails. That's NOT a GIMP bug, see: #6798
+echo '(INFO): patching GIMP with reverse DNS naming'
+git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch >/dev/null 2>&1
+cd gimp-data
+git apply -v ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch >/dev/null 2>&1
+cd ..
+
+## Prepare env. Universal variables from .gitlab-ci.yml
+IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+IFS=$' \t\n'
+for VAR in "${VAR_ARRAY[@]}"; do
+  eval "$VAR" || continue
+done
+
+## Rebuild GIMP
+echo '(INFO): rebuilding GIMP as relocatable'
+meson configure _build -Drelocatable-bundle=yes -Dvector-icons=true >/dev/null 2>&1
+mkdir -p build/linux/appimage/_Output
+cd _build
+ninja &> ../build/linux/appimage/_Output/ninja.log
+if [ $? -ne 0 ]; then
+  cat ../build/linux/appimage/_Output/ninja.log
+else
+  rm ../build/linux/appimage/_Output/ninja.log
+fi
+ninja install >/dev/null 2>&1
+ccache --show-stats
+cd ..
+
 
 # AGNOSTIC VARIABLES (only touch them to make even more portable, without casuistry)
 
@@ -21,18 +64,10 @@ elif [ "$1" = "AppDir" ]; then
   OPT_PREFIX="${GIMP_DISTRIB}"
 fi
 
-## This script is distro-agnostic too. We take universal variables from .gitlab-ci.yml
-IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
-IFS=$' \t\n'
-for VAR in "${VAR_ARRAY[@]}"; do
-  eval "$VAR" || continue
-done
-
-
 #(MOSTLY) AGNOSTIC FUNCTIONS
 prep_pkg ()
 {
-  apt-get install -y --no-install-recommends $1
+  apt-get install -y --no-install-recommends $1 >/dev/null 2>&1
 }
 
 find_bin ()
@@ -43,6 +78,7 @@ find_bin ()
 
 find_lib ()
 {
+  mkdir -p $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR}
   find /usr/${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
   find /usr/${LIB_DIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
   find /${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${1} -execdir cp -r '{}' $OPT_PREFIX/${LIB_DIR}/${LIB_SUBDIR} \;
@@ -64,21 +100,22 @@ conf_app ()
 
 
 # PREPARE ENVIRONMENT
-apt-get install -y --no-install-recommends wget
+apt-get install -y --no-install-recommends wget >/dev/null 2>&1
 
 ## For now, we always use the latest version of go-appimagetool
-wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
+wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
 mv *.AppImage appimagetool.appimage
 go_appimagetool=appimagetool.appimage
 chmod +x "$go_appimagetool"
 
 ## go-appimagetool have buggy appstreamcli so we need to use the legacy one
 legacy_appimagetool="appimagetool-x86_64.AppImage"
-wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/$legacy_appimagetool"
+wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/$legacy_appimagetool" >/dev/null 2>&1
 chmod +x "$legacy_appimagetool"
 
 
 # BUNDLE FILES
+echo '(INFO): making .appimage bundle'
 
 ## System base (needed to use GIMP or to avoid polluting the terminal output)
 conf_app LD_LINUX "/usr" "lib64/ld-*.so.*"
@@ -135,7 +172,7 @@ conf_app PYTHONPATH "/usr" "${LIB_DIR}/${LIB_SUBDIR}python3.11"
 
 ## Final adjustments
 ### Auto detect and copy deps of binaries copied above
-"./$go_appimagetool" --appimage-extract-and-run -s deploy $OPT_PREFIX/share/applications/org.gimp.GIMP.desktop
+"./$go_appimagetool" --appimage-extract-and-run -s deploy $OPT_PREFIX/share/applications/org.gimp.GIMP.desktop >/dev/null 2>&1
 ### Rearranje babl, GEGL and GIMP (only the needed files)
 if [ -z "$2" ] || [ "$2" = "usr" ]; then
   cp -r $GIMP_DISTRIB/etc $GIMP_PREFIX
@@ -193,7 +230,6 @@ fi
 
 
 # MAKE APPIMAGE
-"./$legacy_appimagetool" --appimage-extract-and-run $GIMP_DISTRIB # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-$(uname -m).AppImage.zsync"
-mkdir build/linux/appimage/_Output
+"./$legacy_appimagetool" --appimage-extract-and-run $GIMP_DISTRIB &> build/linux/appimage/_Output/appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-$(uname -m).AppImage.zsync"
 GIMP_VERSION=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 mv GNU*.AppImage build/linux/appimage/_Output/GIMP-${GIMP_VERSION}-$(uname -m).AppImage

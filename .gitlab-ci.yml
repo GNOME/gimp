@@ -292,20 +292,8 @@ gimp-debian-x64:
     - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
         ninja dist;
       fi
-    # Make sure that GIMP is testable locally on Debian
-    # We apply these patches otherwise appstream-cli get confused
-    # with (non-reverse) DNS naming and fails. That's not a GIMP bug, see: #6798
     - cd ..
-    - git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch
-    - cd gimp-data
-    - git apply -v ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch
-    - cd ..
-    - meson configure _build -Drelocatable-bundle=yes -Dvector-icons=true
-    - cd _build
-    - ninja
-    - ninja install
-    - ccache --show-stats
-    - cd ..
+    # Make sure that any Debian pipeline is easily testable locally on Debian
     - bash build/linux/appimage/2_bundle-gimp-appimage.sh
   artifacts:
     expose_as: 'Linux appimage'
