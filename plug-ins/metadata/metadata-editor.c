@@ -133,6 +133,7 @@ static void     metadata_editor_create_tree_grid (const me_column_info *tree_inf
 
 static gboolean metadata_editor_dialog           (GimpImage           *image,
                                                   GimpMetadata        *metadata,
+                                                  GimpProcedureConfig *config,
                                                   GError             **error);
 
 static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
@@ -768,6 +769,11 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
                                       "Ben Touchette",
                                       "Ben Touchette",
                                       "2017");
+
+      gimp_procedure_add_bytes_argument (procedure, "parent-handle",
+                                         _("Parent's window handle"),
+                                         _("The opaque handle of the window to set this plug-in's dialog transient to"),
+                                         G_PARAM_READWRITE | GIMP_PARAM_DONT_SERIALIZE);
     }
 
   return procedure;
@@ -800,7 +806,7 @@ metadata_run (GimpProcedure        *procedure,
       gimp_image_set_metadata (image, metadata);
     }
 
-  if (metadata_editor_dialog (image, metadata, &error))
+  if (metadata_editor_dialog (image, metadata, config, &error))
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
   else
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, error);
@@ -1140,9 +1146,10 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
 }
 
 static gboolean
-metadata_editor_dialog (GimpImage     *image,
-                        GimpMetadata  *g_metadata,
-                        GError       **error)
+metadata_editor_dialog (GimpImage            *image,
+                        GimpMetadata         *g_metadata,
+                        GimpProcedureConfig  *config,
+                        GError              **error)
 {
   GExiv2Metadata *metadata;
   GtkWidget      *dialog;
@@ -1154,8 +1161,11 @@ metadata_editor_dialog (GimpImage     *image,
   GtkWidget      *grid;
   GtkWidget      *widget;
   GtkListStore   *store;
+  GBytes         *parent_handle = NULL;
   gchar          *title;
   gchar          *name;
+
+  g_object_get (config, "parent-handle", &parent_handle, NULL);
 
   metadata = GEXIV2_METADATA (g_metadata);
 
@@ -1189,7 +1199,13 @@ metadata_editor_dialog (GimpImage     *image,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  if (parent_handle && g_bytes_get_size (parent_handle) != 0)
+    gimp_window_set_transient_for (GTK_WINDOW (dialog), parent_handle);
+  else
+    gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+  g_bytes_unref (parent_handle);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 

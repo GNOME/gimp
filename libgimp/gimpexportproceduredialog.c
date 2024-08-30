@@ -356,15 +356,18 @@ gimp_export_procedure_dialog_edit_metadata_thread (gpointer data)
 {
   GimpExportProcedureDialog *dialog = data;
   GimpProcedure             *procedure;
+  GBytes                    *dialog_handle;
 
   g_mutex_lock (&dialog->metadata_thread_mutex);
   dialog->metadata_thread_running = TRUE;
   g_mutex_unlock (&dialog->metadata_thread_mutex);
 
-  procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), "plug-in-metadata-editor");
+  procedure     = gimp_pdb_lookup_procedure (gimp_get_pdb (), "plug-in-metadata-editor");
+  dialog_handle = gimp_dialog_get_native_handle (GIMP_DIALOG (dialog));
   gimp_procedure_run (procedure,
-                      "run-mode", GIMP_RUN_INTERACTIVE,
-                      "image",    dialog->image,
+                      "run-mode",      GIMP_RUN_INTERACTIVE,
+                      "image",         dialog->image,
+                      "parent-handle", dialog_handle,
                       NULL);
 
   g_mutex_lock (&dialog->metadata_thread_mutex);
