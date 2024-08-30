@@ -770,7 +770,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
     {
       GimpPlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
 
-#ifdef GIMP_UNSTABLE
+#ifndef GIMP_RELEASE
       g_printerr ("plug-in '%s' aborted before sending its "
                   "temporary procedure return values\n",
                   gimp_object_get_name (plug_in));
@@ -792,10 +792,11 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
   if (plug_in->main_proc_frame.main_loop &&
       g_main_loop_is_running (plug_in->main_proc_frame.main_loop))
     {
-#ifdef GIMP_UNSTABLE
-      g_printerr ("plug-in '%s' aborted before sending its "
-                  "procedure return values\n",
-                  gimp_object_get_name (plug_in));
+#ifndef GIMP_RELEASE
+      if (! kill_it)
+        g_printerr ("plug-in '%s' aborted before sending its "
+                    "procedure return values\n",
+                    gimp_object_get_name (plug_in));
 #endif
 
       g_main_loop_quit (plug_in->main_proc_frame.main_loop);
@@ -804,7 +805,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
   if (plug_in->ext_main_loop &&
       g_main_loop_is_running (plug_in->ext_main_loop))
     {
-#ifdef GIMP_UNSTABLE
+#ifndef GIMP_RELEASE
       g_printerr ("extension '%s' aborted before sending its "
                   "extension_ack message\n",
                   gimp_object_get_name (plug_in));

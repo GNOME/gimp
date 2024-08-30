@@ -820,6 +820,13 @@ file_save_dialog_save_image (GimpProgress        *progress,
 
   gimp_image_set_xcf_compression (image, xcf_compression);
 
+  /* The save may fail and the progress widget be already freed if we
+   * close the main window while the save dialog is running. So add a
+   * weak pointer to avoid sending an error message to an already-freed
+   * GimpProgress. See #11922.
+   */
+  g_object_add_weak_pointer (G_OBJECT (progress), (gpointer *) &progress);
+
   status = file_save (gimp, image, progress, file,
                       save_proc, run_mode,
                       change_saved_state, export_backward, export_forward,
@@ -832,7 +839,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
       break;
 
     case GIMP_PDB_CANCEL:
-      if (verbose_cancel)
+      if (verbose_cancel && progress)
         gimp_message_literal (gimp,
                               G_OBJECT (progress), GIMP_MESSAGE_INFO,
                               _("Saving canceled"));
@@ -840,14 +847,18 @@ file_save_dialog_save_image (GimpProgress        *progress,
 
     default:
       {
-        gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                      _("Saving '%s' failed:\n\n%s"),
-                      gimp_file_get_utf8_name (file),
-                      error ? error->message : _("Unknown error"));
+        if (progress)
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
+                        _("Saving '%s' failed:\n\n%s"),
+                        gimp_file_get_utf8_name (file),
+                        error ? error->message : _("Unknown error"));
         g_clear_error (&error);
       }
       break;
     }
+
+  if (progress)
+    g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer *) &progress);
 
   for (list = gimp_action_groups_from_name ("file");
        list;
