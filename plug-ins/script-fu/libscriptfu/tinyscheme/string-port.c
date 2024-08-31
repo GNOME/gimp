@@ -426,7 +426,8 @@ string_port_open_input_string (scheme *sc, pointer scheme_string, int prop)
 void
 string_port_dispose_struct (scheme  *sc, port *port)
 {
-  g_debug ("%s content size %ld", G_STRFUNC, strlen (port->rep.string.start) + 1);
+  g_debug ("%s content size %" G_GSIZE_FORMAT, G_STRFUNC,
+           strlen (port->rep.string.start) + 1);
 
   /* Free allocated buffer. */
   sc->free (port->rep.string.start);
