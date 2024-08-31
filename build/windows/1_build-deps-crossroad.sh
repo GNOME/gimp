@@ -64,8 +64,10 @@ else
 
 ## Install the required (pre-built) packages for babl, GEGL and GIMP
 crossroad source msys2
-crossroad install $(cat ${GIMP_DIR}build/windows/all-deps-uni.txt |
-                    sed "s/\${MINGW_PACKAGE_PREFIX}-//g" | sed 's/\\//g')
+deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt |
+       sed "s/\${MINGW_PACKAGE_PREFIX}-//g"          | sed 's/\\//g')
+## NOTE: Crossroad is too prone to fail at downloading deps so let's retry
+crossroad install $deps || crossroad install $deps
 if [ $? -ne 0 ]; then
   echo "Installation of pre-built dependencies failed.";
   exit 1;
