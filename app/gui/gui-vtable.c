@@ -1018,7 +1018,7 @@ gui_inhibit (Gimp *gimp)
       n_images = n_dirty_images;
     }
 
-  if (gtk_application_is_inhibited (app, GTK_APPLICATION_INHIBIT_LOGOUT))
+  if (cookie != 0)
     {
       gtk_application_uninhibit (app, cookie);
       cookie = 0;
