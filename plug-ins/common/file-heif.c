@@ -557,10 +557,7 @@ heif_export (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    {
-      gimp_image_delete (image);
-      g_free (drawables);
-    }
+    gimp_image_delete (image);
 
   g_list_free (drawables);
   return gimp_procedure_new_return_values (procedure, status, error);
