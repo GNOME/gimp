@@ -12,51 +12,46 @@ set -e
 # PATHS MAPPING
 HERE="$(dirname "$(readlink -f "${0}")")"
 
-## General paths
-export PATH="$HERE"/OPT_PREFIX_WILDbin/:"$PATH"
-export LD_LIBRARY_PATH="$HERE"/OPT_PREFIX_WILDlib/:"$HERE"/OPT_PREFIX_WILDlib/x86_64-linux-gnu/:"$HERE"/OPT_PREFIX_WILDlib64/:"$LD_LIBRARY_PATH"
-export GI_TYPELIB_PATH="$HERE"/GI_TYPELIB_PATH_WILD:"$GI_TYPELIB_PATH"
-export XDG_DATA_DIRS="$HERE"/OPT_PREFIX_WILDshare/:"$XDG_DATA_DIRS"
+## Minimum runtime paths
+export PATH="$HERE"/usr/bin/:"$PATH"
+export LD_LIBRARY_PATH="$HERE"/usr/lib/:"$HERE"/usr/lib/x86_64-linux-gnu/:"$HERE"/usr/lib64/:"$LD_LIBRARY_PATH"
+export XDG_DATA_DIRS="$HERE"/usr/share/:"$XDG_DATA_DIRS"
+LD_LINUX="$HERE/LD_LINUX_WILD --inhibit-cache"
 
-## Compatibility layer
-LD_LINUX="$HERE/LD_LINUX_WILD --inhibit-cache --library-path $LD_LIBRARY_PATH"
-DISTRO=$(eval "$LD_LINUX" "$HERE"/OPT_PREFIX_WILDbin/uname -a)
-echo "This is a CI native build of GIMP (please see devel-docs/os-support.txt)."
-case "$DISTRO" in
-  *Debian*|*debian*)
-    echo '.js   (JavaScript) plug-ins | supported.'
-    echo '.lua  (Lua) plug-ins        | NOT supported!'
-    echo '.py   (Python) plug-ins     | supported.'
-    echo '.scm  (ScriptFu) plug-ins   | supported.'
-    echo '.vala (Vala) plug-ins       | supported.'
-esac
-
-## Other paths (base)
+## GTK-related paths
 export GIO_MODULE_DIR="$HERE"/GIO_MODULE_DIR_WILD/modules
 export GDK_PIXBUF_MODULEDIR="$HERE"/GDK_PIXBUF_MODULEDIR_WILD/loaders
 export GDK_PIXBUF_MODULE_FILE="$HERE"/GDK_PIXBUF_MODULE_FILE_WILD/loaders.cache
 export GTK_PATH="$HERE"/GTK_PATH_WILD
 export GTK_IM_MODULE_FILE="$HERE"/GTK_IM_MODULE_FILE_WILD/immodules.cache
-export GTK_THEME=$(eval "$LD_LINUX" "$HERE"/OPT_PREFIX_WILDbin/gsettings get org.gnome.desktop.interface gtk-theme | "$HERE"/OPT_PREFIX_WILDbin/sed "s/'//g" || echo 'Default')
+#export GTK_THEME=$(eval "$LD_LINUX" "$HERE"/usr/bin/gsettings get org.gnome.desktop.interface gtk-theme)
 
 ## GIMP-specific paths
 export BABL_PATH="$HERE"/BABL_PATH_WILD
 export GEGL_PATH="$HERE"/GEGL_PATH_WILD
-export GIMP3_SYSCONFDIR="$HERE"/GIMP3_SYSCONFDIR_WILD
 export GIMP3_PLUGINDIR="$HERE"/GIMP3_PLUGINDIR_WILD
 export GIMP3_DATADIR="$HERE"/GIMP3_DATADIR_WILD
-export GIMP3_LOCALEDIR="$HERE"/OPT_PREFIX_WILDshare/locale
+export GIMP3_LOCALEDIR="$HERE"/GIMP3_LOCALEDIR_WILD
+export GIMP3_SYSCONFDIR="$HERE"/GIMP3_SYSCONFDIR_WILD
 if [ -z ${XDG_CONFIG_HOME} ]; then
   export GIMP3_DIRECTORY="$HOME/.config/GIMP/GIMP_APP_VERSION"
 else
   export GIMP3_DIRECTORY="$XDG_CONFIG_HOME/GIMP/GIMP_APP_VERSION"
 fi
 
-## Other paths (GIMP related)
+## Other paths (feature-related)
 export LIBGL_DRIVERS_PATH="$HERE"/LIBGL_DRIVERS_PATH_WILD
-export PYTHONPATH="$HERE"/PYTHONPATH_WILD
+export GI_TYPELIB_PATH="$HERE"/GI_TYPELIB_PATH_WILD:"$GI_TYPELIB_PATH"
+export PYTHONHOME="$HERE"/usr
+export PYTHONDONTWRITEBYTECODE=1
 
 
 # RUN MAIN_BIN
-cd "$HERE"/OPT_PREFIX_WILD
-LD_PRELOAD=/OPT_PREFIX_WILDlib/x86_64-linux-gnu/libc.so.6 "$HERE"/OPT_PREFIX_WILDbin/gimp-GIMP_APP_VERSION "$@"
+echo "This is a CI build of GIMP compatible with Debian DEBIAN_VERSION. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/7661"
+echo '.js   (JavaScript) plug-ins | supported.'
+echo '.lua  (Lua) plug-ins        | NOT supported!'
+echo '.py   (Python) plug-ins     | supported.'
+echo '.scm  (ScriptFu) plug-ins   | supported.'
+echo '.vala (Vala) plug-ins       | supported.'
+
+LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libc.so.6 "$HERE"/usr/bin/gimp-GIMP_APP_VERSION "$@"
