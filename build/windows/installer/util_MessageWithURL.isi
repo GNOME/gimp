@@ -50,7 +50,7 @@ function LoadIconWithScaleDown(hInstance: Integer; pIconName: Integer; cxDesired
 //function LoadImage(hinst: Integer; lpszName: Integer; uType: Cardinal; cxDesired, cyDesired: Integer; fuLoad: Cardinal): Integer; external 'LoadImageW@user32 stdcall';
 function DrawIcon(hdc: HBitmap; x,y: Integer; hIcon: Integer): Integer; external 'DrawIcon@user32 stdcall';
 //function DrawIconEx(hdc: HBitmap; xLeft,yTop: Integer; hIcon: Integer; cxWidth, cyWidth: Integer; istepIfAniCur: Cardinal; hbrFlickerFreeDraw: Integer; diFlags: Cardinal): Integer; external 'DrawIconEx@user32 stdcall';
-//function DestroyIcon(hIcon: Integer): Integer; external 'DestroyIcon@user32 stdcall';
+function DestroyIcon(hIcon: Integer): Integer; external 'DestroyIcon@user32 stdcall';
 
 function DrawFocusRect(hDC: Integer; var lprc: TRect): BOOL; external 'DrawFocusRect@user32 stdcall';
 
