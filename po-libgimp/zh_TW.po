@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-08-30 17:20+0000\n"
-"PO-Revision-Date: 2024-09-01 16:02+0800\n"
+"PO-Revision-Date: 2024-09-01 17:26+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -560,7 +560,7 @@ msgstr "維持寬高比(_K)"
 #: libgimp/gimpresolutionentry-private.c:145
 #: libgimp/gimpvectorloadprocedure.c:126
 msgid "Force dimensions with aspect ratio"
-msgstr "維度強制維持寬高比"
+msgstr "尺寸強制維持寬高比"
 
 #: libgimp/gimpresolutionentry-private.c:199
 #: libgimp/gimpresolutionentry-private.c:200
@@ -578,11 +578,11 @@ msgstr "高度（像素）(_H)"
 
 #: libgimp/gimpvectorloadprocedure.c:130
 msgid "_Prefer native dimensions"
-msgstr "偏好原生維度(_P)"
+msgstr "偏好原生尺寸(_P)"
 
 #: libgimp/gimpvectorloadprocedure.c:131
 msgid "Load and use dimensions from source file"
-msgstr "載入並使用來源檔案的維度"
+msgstr "載入並使用來源檔案的尺寸"
 
 #: libgimp/gimpvectorloadprocedure.c:139
 msgid "Resolu_tion"
@@ -604,7 +604,7 @@ msgstr "物理單位"
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
-msgstr "無法從向量影像圖資料中取出或計算的度量維度。"
+msgstr "無法從向量影像圖資料中取出或計算度量尺寸。"
 
 #: libgimp/gimpvectorloadprocedure.c:373
 msgid "Vector image loading plug-in failed: "
@@ -614,7 +614,7 @@ msgstr "向量影像載入外掛元件時失敗："
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
-msgstr "維度不能為 0，而且無法從向量影像中取出原生維度。"
+msgstr "尺寸不能為 0，而且無法從向量影像中取出原生尺寸。"
 
 #. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
 #. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
