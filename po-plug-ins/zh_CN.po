@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-20 23:58+0000\n"
-"PO-Revision-Date: 2024-08-24 09:10+0800\n"
+"POT-Creation-Date: 2024-08-31 22:17+0000\n"
+"PO-Revision-Date: 2024-09-01 21:29+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -64,10 +64,10 @@ msgstr "C 语言插件示例"
 #: extensions/goat-exercises/goat-exercise-lua.lua:71
 #: extensions/goat-exercises/goat-exercise-py3.py:77
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1375
-#: plug-ins/common/cml-explorer.c:2142 plug-ins/common/cml-explorer.c:2352
+#: plug-ins/common/busy-dialog.c:280 plug-ins/common/cml-explorer.c:1374
+#: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1803 plug-ins/common/curve-bend.c:1838
-#: plug-ins/common/file-gif-export.c:1214 plug-ins/common/file-heif.c:2289
+#: plug-ins/common/file-gif-export.c:1214 plug-ins/common/file-heif.c:2286
 #: plug-ins/common/file-pdf-export.c:1069 plug-ins/common/file-pdf-load.c:591
 #: plug-ins/common/grid.c:819 plug-ins/common/qbist.c:841
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
@@ -81,17 +81,17 @@ msgstr "C 语言插件示例"
 #: plug-ins/gfig/gfig-dialog.c:827 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
-#: plug-ins/gradient-flare/gradient-flare.c:3339
-#: plug-ins/gradient-flare/gradient-flare.c:3453
+#: plug-ins/gradient-flare/gradient-flare.c:3336
+#: plug-ins/gradient-flare/gradient-flare.c:3450
 #: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/ifs-compose/ifs-compose.c:2603
 #: plug-ins/ifs-compose/ifs-compose.c:2640 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
-#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1177
-#: plug-ins/metadata/metadata-editor.c:1673
-#: plug-ins/metadata/metadata-editor.c:5524
-#: plug-ins/metadata/metadata-editor.c:5559
+#: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1187
+#: plug-ins/metadata/metadata-editor.c:1689
+#: plug-ins/metadata/metadata-editor.c:5540
+#: plug-ins/metadata/metadata-editor.c:5575
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -140,14 +140,14 @@ msgstr "JavaScript（GJS）插件示例"
 #: extensions/goat-exercises/goat-exercise-gjs.js:96
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
-#: plug-ins/common/cml-explorer.c:1376 plug-ins/common/file-heif.c:2290
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2287
 #: plug-ins/common/file-pdf-load.c:592 plug-ins/common/grid.c:820
 #: plug-ins/common/sphere-designer.c:2656 plug-ins/common/unit-editor.c:260
 #: plug-ins/file-exr/file-exr.c:437 plug-ins/file-psd/psd-load.c:3743
 #: plug-ins/flame/flame.c:828 plug-ins/fractal-explorer/fractal-explorer.c:1393
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
-#: plug-ins/gradient-flare/gradient-flare.c:3454
+#: plug-ins/gradient-flare/gradient-flare.c:3451
 #: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
@@ -295,7 +295,7 @@ msgid "Left edge"
 msgstr "左边界"
 
 #: plug-ins/common/align-layers.c:207 plug-ins/common/align-layers.c:229
-#: plug-ins/gradient-flare/gradient-flare.c:2927
+#: plug-ins/gradient-flare/gradient-flare.c:2924
 msgid "Center"
 msgstr "中心"
 
@@ -605,13 +605,13 @@ msgstr "百叶窗"
 #: plug-ins/common/file-jp2-load.c:1272 plug-ins/common/file-pcx.c:711
 #: plug-ins/common/file-pcx.c:719 plug-ins/common/file-pcx.c:727
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:921
-#: plug-ins/common/file-pnm.c:840 plug-ins/common/file-qoi.c:299
+#: plug-ins/common/file-pnm.c:840 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:1858 plug-ins/common/file-sunras.c:1059
 #: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:866
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:399
 #: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
-#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:688
+#: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:676
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
 #: plug-ins/file-psd/psd-load.c:2940 plug-ins/file-sgi/sgi.c:455
@@ -997,28 +997,28 @@ msgid ""
 "only used in non-interactive runs."
 msgstr "CML 探索器使用其设定制作图像的参数文件。该参数仅在非交互式运行中使用。"
 
-#: plug-ins/common/cml-explorer.c:904
+#: plug-ins/common/cml-explorer.c:909
 msgid "CML Explorer: evoluting"
 msgstr "CML 探索器：演化"
 
-#: plug-ins/common/cml-explorer.c:1371
+#: plug-ins/common/cml-explorer.c:1370
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "耦合映像格子探索器"
 
-#: plug-ins/common/cml-explorer.c:1415
+#: plug-ins/common/cml-explorer.c:1414
 msgid "New Seed"
 msgstr "新的种子"
 
-#: plug-ins/common/cml-explorer.c:1426
+#: plug-ins/common/cml-explorer.c:1425
 msgid "Fix Seed"
 msgstr "固定种子"
 
-#: plug-ins/common/cml-explorer.c:1437
+#: plug-ins/common/cml-explorer.c:1436
 msgid "Random Seed"
 msgstr "随机种子"
 
 #. The Load button
-#: plug-ins/common/cml-explorer.c:1452 plug-ins/common/cml-explorer.c:2353
+#: plug-ins/common/cml-explorer.c:1451 plug-ins/common/cml-explorer.c:2355
 #: plug-ins/common/curve-bend.c:1266 plug-ins/common/curve-bend.c:1804
 #: plug-ins/common/file-cel.c:985 plug-ins/common/qbist.c:842
 #: plug-ins/common/qbist.c:997 plug-ins/common/sphere-designer.c:2295
@@ -1034,7 +1034,7 @@ msgid "_Open"
 msgstr "打开(_O)"
 
 #. The Save button
-#: plug-ins/common/cml-explorer.c:1460 plug-ins/common/cml-explorer.c:2143
+#: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1278 plug-ins/common/curve-bend.c:1839
 #: plug-ins/common/file-pdf-export.c:1068 plug-ins/common/qbist.c:884
 #: plug-ins/common/qbist.c:1005 plug-ins/common/sphere-designer.c:2295
@@ -1049,51 +1049,51 @@ msgstr "打开(_O)"
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: plug-ins/common/cml-explorer.c:1479
+#: plug-ins/common/cml-explorer.c:1478
 msgid "_Hue"
 msgstr "色相(_H)"
 
-#: plug-ins/common/cml-explorer.c:1483
+#: plug-ins/common/cml-explorer.c:1482
 msgid "Sat_uration"
 msgstr "饱和度(_U)"
 
-#: plug-ins/common/cml-explorer.c:1487
+#: plug-ins/common/cml-explorer.c:1486
 msgid "_Value"
 msgstr "明度(_V)"
 
-#: plug-ins/common/cml-explorer.c:1491
+#: plug-ins/common/cml-explorer.c:1490
 msgid "_Advanced"
 msgstr "高级(_A)"
 
-#: plug-ins/common/cml-explorer.c:1506
+#: plug-ins/common/cml-explorer.c:1505
 msgid "Channel Independent Parameters"
 msgstr "通道独立参数"
 
-#: plug-ins/common/cml-explorer.c:1528
+#: plug-ins/common/cml-explorer.c:1527
 msgid "Initial value:"
 msgstr "初始值："
 
-#: plug-ins/common/cml-explorer.c:1533
+#: plug-ins/common/cml-explorer.c:1532
 msgid "Zoom scale:"
 msgstr "缩放比："
 
-#: plug-ins/common/cml-explorer.c:1540
+#: plug-ins/common/cml-explorer.c:1539
 msgid "Start offset:"
 msgstr "起始位移："
 
-#: plug-ins/common/cml-explorer.c:1548
+#: plug-ins/common/cml-explorer.c:1547
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "随机种子（仅用于“来自种子”模式）"
 
-#: plug-ins/common/cml-explorer.c:1558
+#: plug-ins/common/cml-explorer.c:1557
 msgid "Seed:"
 msgstr "种子："
 
-#: plug-ins/common/cml-explorer.c:1570
+#: plug-ins/common/cml-explorer.c:1569
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "按上次种子切换至“来自种子”"
 
-#: plug-ins/common/cml-explorer.c:1582
+#: plug-ins/common/cml-explorer.c:1581
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -1104,107 +1104,107 @@ msgstr ""
 "相同的种子产生相同的图像，只要（1）图像宽度相同（这就是可绘图像不同于预览图像"
 "的原因）， 并且（2）所有的变化率都等于零。"
 
-#: plug-ins/common/cml-explorer.c:1590
+#: plug-ins/common/cml-explorer.c:1589
 msgid "O_thers"
 msgstr "其它(_T)"
 
-#: plug-ins/common/cml-explorer.c:1605
+#: plug-ins/common/cml-explorer.c:1604
 msgid "Copy Settings"
 msgstr "复制设置"
 
-#: plug-ins/common/cml-explorer.c:1624
+#: plug-ins/common/cml-explorer.c:1623
 msgid "Source channel:"
 msgstr "来源通道："
 
-#: plug-ins/common/cml-explorer.c:1639 plug-ins/common/cml-explorer.c:1686
+#: plug-ins/common/cml-explorer.c:1638 plug-ins/common/cml-explorer.c:1685
 msgid "Destination channel:"
 msgstr "目标通道："
 
-#: plug-ins/common/cml-explorer.c:1643
+#: plug-ins/common/cml-explorer.c:1642
 msgid "Copy Parameters"
 msgstr "复制参数"
 
-#: plug-ins/common/cml-explorer.c:1651
+#: plug-ins/common/cml-explorer.c:1650
 msgid "Selective Load Settings"
 msgstr "选择性加载设置"
 
-#: plug-ins/common/cml-explorer.c:1671
+#: plug-ins/common/cml-explorer.c:1670
 msgid "Source channel in file:"
 msgstr "文件中的源通道："
 
-#: plug-ins/common/cml-explorer.c:1692
+#: plug-ins/common/cml-explorer.c:1691
 msgid "_Misc"
 msgstr "杂项(_M)"
 
-#: plug-ins/common/cml-explorer.c:1751
+#: plug-ins/common/cml-explorer.c:1750
 msgid "Function type:"
 msgstr "函数类型："
 
-#: plug-ins/common/cml-explorer.c:1767
+#: plug-ins/common/cml-explorer.c:1766
 msgid "Composition:"
 msgstr "合成："
 
-#: plug-ins/common/cml-explorer.c:1781
+#: plug-ins/common/cml-explorer.c:1780
 msgid "Misc arrange:"
 msgstr "其他处理："
 
-#: plug-ins/common/cml-explorer.c:1785
+#: plug-ins/common/cml-explorer.c:1784
 msgid "Use cyclic range"
 msgstr "使用循环范围"
 
-#: plug-ins/common/cml-explorer.c:1794
+#: plug-ins/common/cml-explorer.c:1793
 msgid "Mod. rate:"
 msgstr "修改率："
 
-#: plug-ins/common/cml-explorer.c:1801
+#: plug-ins/common/cml-explorer.c:1800
 msgid "Env. sensitivity:"
 msgstr "环境敏感度："
 
-#: plug-ins/common/cml-explorer.c:1808
+#: plug-ins/common/cml-explorer.c:1807
 msgid "Diffusion dist.:"
 msgstr "漫反射分布："
 
-#: plug-ins/common/cml-explorer.c:1815
+#: plug-ins/common/cml-explorer.c:1814
 msgid "# of subranges:"
 msgstr "子范围 #："
 
-#: plug-ins/common/cml-explorer.c:1822
+#: plug-ins/common/cml-explorer.c:1821
 msgid "P(ower factor):"
 msgstr "P（幂系数）："
 
-#: plug-ins/common/cml-explorer.c:1830
+#: plug-ins/common/cml-explorer.c:1829
 msgid "Parameter k:"
 msgstr "参数 k："
 
-#: plug-ins/common/cml-explorer.c:1838
+#: plug-ins/common/cml-explorer.c:1837
 msgid "Range low:"
 msgstr "低范围："
 
-#: plug-ins/common/cml-explorer.c:1845
+#: plug-ins/common/cml-explorer.c:1844
 msgid "Range high:"
 msgstr "高范围："
 
-#: plug-ins/common/cml-explorer.c:1856
+#: plug-ins/common/cml-explorer.c:1855
 msgid "Plot a Graph of the Settings"
 msgstr "绘制此设置的曲线图"
 
-#: plug-ins/common/cml-explorer.c:1898
+#: plug-ins/common/cml-explorer.c:1897
 msgid "Ch. sensitivity:"
 msgstr "通道灵敏度："
 
-#: plug-ins/common/cml-explorer.c:1906
+#: plug-ins/common/cml-explorer.c:1905
 msgid "Mutation rate:"
 msgstr "变化率："
 
-#: plug-ins/common/cml-explorer.c:1914
+#: plug-ins/common/cml-explorer.c:1913
 msgid "Mutation dist.:"
 msgstr "变化分布："
 
-#: plug-ins/common/cml-explorer.c:2006
+#: plug-ins/common/cml-explorer.c:2008
 msgid "Graph of the Current Settings"
 msgstr "当前设置的曲线图"
 
-#: plug-ins/common/cml-explorer.c:2010 plug-ins/common/plugin-browser.c:562
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:562
 #: plug-ins/common/procedure-browser.c:169 plug-ins/gfig/gfig-dialog.c:355
 #: plug-ins/gfig/gfig-dialog.c:1214 plug-ins/gfig/gfig-dialog.c:1359
 #: plug-ins/ifs-compose/ifs-compose.c:1215
@@ -1212,15 +1212,15 @@ msgstr "当前设置的曲线图"
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: plug-ins/common/cml-explorer.c:2078
+#: plug-ins/common/cml-explorer.c:2080
 msgid "Warning: the source and the destination are the same channel."
 msgstr "警告：源和目标是同一个通道。"
 
-#: plug-ins/common/cml-explorer.c:2138
+#: plug-ins/common/cml-explorer.c:2140
 msgid "Save CML Explorer Parameters"
 msgstr "保存 CML 探索器参数"
 
-#: plug-ins/common/cml-explorer.c:2208 plug-ins/common/curve-bend.c:787
+#: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:787
 #: plug-ins/common/file-dicom.c:1541 plug-ins/common/file-farbfeld.c:355
 #: plug-ins/common/file-mng.c:874 plug-ins/common/file-mng.c:1224
 #: plug-ins/common/file-pcx.c:1186 plug-ins/common/file-pdf-export.c:687
@@ -1240,37 +1240,37 @@ msgstr "保存 CML 探索器参数"
 msgid "Could not open '%s' for writing: %s"
 msgstr "无法打开“%s”并写入：%s"
 
-#: plug-ins/common/cml-explorer.c:2221 plug-ins/common/cml-explorer.c:2300
-#: plug-ins/common/cml-explorer.c:2318
+#: plug-ins/common/cml-explorer.c:2223 plug-ins/common/cml-explorer.c:2302
+#: plug-ins/common/cml-explorer.c:2320
 #, c-format
 msgid "Could not write to '%s': %s"
 msgstr "无法写入到“%s”：%s"
 
-#: plug-ins/common/cml-explorer.c:2327
+#: plug-ins/common/cml-explorer.c:2329
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "参数已保存至“%s”"
 
-#: plug-ins/common/cml-explorer.c:2348
+#: plug-ins/common/cml-explorer.c:2350
 msgid "Load CML Explorer Parameters"
 msgstr "加载 CML 探索器参数"
 
-#: plug-ins/common/cml-explorer.c:2482
+#: plug-ins/common/cml-explorer.c:2484
 #, c-format
 msgid "Error: \"%s\" is not a CML parameter file."
 msgstr "错误：“%s”不是 CML 参数文件。"
 
-#: plug-ins/common/cml-explorer.c:2489
+#: plug-ins/common/cml-explorer.c:2491
 #, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "警告：“%s”是一个旧格式的文件。"
 
-#: plug-ins/common/cml-explorer.c:2493
+#: plug-ins/common/cml-explorer.c:2495
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr "警告：“%s”是一个较新版本的 CML 探索器的参数文件。"
 
-#: plug-ins/common/cml-explorer.c:2564
+#: plug-ins/common/cml-explorer.c:2566
 msgid "Error: failed to load parameters"
 msgstr "错误：加载参数失败"
 
@@ -1980,7 +1980,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:639 plug-ins/common/file-ps.c:1159
 #: plug-ins/common/file-ps.c:3741 plug-ins/common/file-psp.c:2620
-#: plug-ins/common/file-psp.c:2670 plug-ins/common/file-qoi.c:278
+#: plug-ins/common/file-psp.c:2670 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:573 plug-ins/common/file-raw-data.c:1695
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:541
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-wbmp.c:188
@@ -1988,7 +1988,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2095 plug-ins/file-bmp/bmp-load.c:226
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:260
-#: plug-ins/file-fits/fits.c:383 plug-ins/file-fli/fli-gimp.c:437
+#: plug-ins/file-fits/fits.c:371 plug-ins/file-fli/fli-gimp.c:437
 #: plug-ins/file-fli/fli-gimp.c:488 plug-ins/file-icns/file-icns-load.c:516
 #: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:681
 #: plug-ins/file-ico/ico-load.c:819 plug-ins/file-ico/ico-load.c:1021
@@ -2041,7 +2041,7 @@ msgstr "修改曲线"
 
 #. The Copy button
 #: plug-ins/common/curve-bend.c:1212
-#: plug-ins/gradient-flare/gradient-flare.c:3055
+#: plug-ins/gradient-flare/gradient-flare.c:3052
 msgid "_Copy"
 msgstr "复制(_C)"
 
@@ -2568,7 +2568,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:369 plug-ins/common/file-dicom.c:352
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:408
-#: plug-ins/common/file-heif.c:856 plug-ins/common/file-jp2-load.c:1046
+#: plug-ins/common/file-heif.c:853 plug-ins/common/file-jp2-load.c:1046
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:782 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:631 plug-ins/common/file-pnm.c:685
@@ -2651,10 +2651,10 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-jpegxl.c:1405 plug-ins/common/file-pcx.c:1070
 #: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
 #: plug-ins/common/file-pnm.c:1605 plug-ins/common/file-ps.c:1370
-#: plug-ins/common/file-qoi.c:353 plug-ins/common/file-sunras.c:605
+#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-xbm.c:1026
 #: plug-ins/common/file-xpm.c:682 plug-ins/common/file-xwd.c:693
-#: plug-ins/file-bmp/bmp-export.c:324 plug-ins/file-fits/fits.c:661
+#: plug-ins/file-bmp/bmp-export.c:324 plug-ins/file-fits/fits.c:649
 #: plug-ins/file-fli/fli-gimp.c:763 plug-ins/file-icns/file-icns-export.c:621
 #: plug-ins/file-ico/ico-export.c:1348 plug-ins/file-ico/ico-export.c:1560
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2165
@@ -2841,7 +2841,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有透明通道的图像。"
 
 #: plug-ins/common/file-dicom.c:1525 plug-ins/common/file-ps.c:1365
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:656
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:644
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "无法对未知的图像类型操作。"
@@ -3333,20 +3333,20 @@ msgstr "尺寸(_I)"
 msgid "How many dimensions the animated brush has"
 msgstr "动画笔刷具有的尺寸数量"
 
-#: plug-ins/common/file-gih.c:519
+#: plug-ins/common/file-gih.c:529
 msgid "Width Mismatch!"
 msgstr "宽度不匹配！"
 
-#: plug-ins/common/file-gih.c:520
+#: plug-ins/common/file-gih.c:530
 msgid "Height Mismatch!"
 msgstr "高度不匹配！"
 
-#: plug-ins/common/file-gih.c:567
+#: plug-ins/common/file-gih.c:577
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "在每个图层上显示为 %d × %d 网格"
 
-#: plug-ins/common/file-gih.c:753
+#: plug-ins/common/file-gih.c:763
 msgid "Ranks:"
 msgstr "等级："
 
@@ -3504,56 +3504,56 @@ msgstr "载入 HEJ2 图像"
 msgid "Load JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "加载在 HEIF（HEJ2）中封装的 JPEG 2000 图像"
 
-#: plug-ins/common/file-heif.c:896 plug-ins/common/file-heif.c:929
-#: plug-ins/common/file-heif.c:970 plug-ins/common/file-heif.c:1032
+#: plug-ins/common/file-heif.c:893 plug-ins/common/file-heif.c:926
+#: plug-ins/common/file-heif.c:967 plug-ins/common/file-heif.c:1029
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "加载 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:918
+#: plug-ins/common/file-heif.c:915
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr "加载 HEIF 图像失败：输入的文件未包含可读取图像"
 
-#: plug-ins/common/file-heif.c:1154
+#: plug-ins/common/file-heif.c:1151
 msgid "image content"
 msgstr "图像内容"
 
-#: plug-ins/common/file-heif.c:1497
+#: plug-ins/common/file-heif.c:1494
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "正在使用 %2$s 编码器导出“%1$s”"
 
-#: plug-ins/common/file-heif.c:1545 plug-ins/common/file-heif.c:1930
+#: plug-ins/common/file-heif.c:1542 plug-ins/common/file-heif.c:1927
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "编码 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2051
+#: plug-ins/common/file-heif.c:2048
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "写入 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2140
+#: plug-ins/common/file-heif.c:2137
 msgid "primary"
 msgstr "主要"
 
-#: plug-ins/common/file-heif.c:2285
+#: plug-ins/common/file-heif.c:2282
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:2299
+#: plug-ins/common/file-heif.c:2296
 msgid "Select Image"
 msgstr "选择图像"
 
-#: plug-ins/common/file-heif.c:2448 plug-ins/common/file-jpegxl.c:2038
+#: plug-ins/common/file-heif.c:2445 plug-ins/common/file-jpegxl.c:2038
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: plug-ins/common/file-heif.c:2449
+#: plug-ins/common/file-heif.c:2446
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: plug-ins/common/file-heif.c:2450
+#: plug-ins/common/file-heif.c:2447
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
@@ -3773,7 +3773,8 @@ msgstr "未知"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "不支持 JPEG 2000%s “%s”带有 %d 分量。"
 
-#: plug-ins/common/file-jp2-load.c:1054 plug-ins/common/file-wmf.c:596
+#: plug-ins/common/file-jp2-load.c:1054 plug-ins/common/file-wmf.c:238
+#: plug-ins/common/file-wmf.c:596
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "无法打开“%s”并读取"
@@ -4254,7 +4255,7 @@ msgstr "右边框超出边界（须 < %d）：%d"
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1252 plug-ins/common/file-qoi.c:372
+#: plug-ins/common/file-pcx.c:1252 plug-ins/common/file-qoi.c:369
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4395,7 +4396,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
 #: plug-ins/common/file-pdf-export.c:1051
-#: plug-ins/metadata/metadata-editor.c:5560
+#: plug-ins/metadata/metadata-editor.c:5576
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -4614,7 +4615,6 @@ msgid "PNG export format"
 msgstr "PNG 导出格式"
 
 #: plug-ins/common/file-png.c:298 plug-ins/common/file-ps.c:424
-#: plug-ins/file-fits/fits.c:211
 msgid "Automatic"
 msgstr "自动"
 
@@ -5455,7 +5455,7 @@ msgstr "以 QOI 格式导出图像"
 msgid "Export image in the QOI file format (Quite OK Image)"
 msgstr "以 QOI（Quite OK 图像）格式导出图像"
 
-#: plug-ins/common/file-qoi.c:290
+#: plug-ins/common/file-qoi.c:287
 #, c-format
 msgid "Failed to read QOI file"
 msgstr "读取 QOI 文件失败"
@@ -6053,11 +6053,6 @@ msgstr "微软 WMF 文件"
 #: plug-ins/common/file-wmf.c:189
 msgid "WMF"
 msgstr "WMF"
-
-#: plug-ins/common/file-wmf.c:238
-#, c-format
-msgid "Could not open '%s' for reading AA"
-msgstr "无法打开“%s”来读取 AA"
 
 #: plug-ins/common/file-wmf.c:631
 msgid "Rendered WMF"
@@ -7201,10 +7196,10 @@ msgid "Plug-in Browser"
 msgstr "插件浏览器"
 
 #: plug-ins/common/plugin-browser.c:603 plug-ins/common/unit-editor.c:114
-#: plug-ins/metadata/metadata-editor.c:609
-#: plug-ins/metadata/metadata-editor.c:645
-#: plug-ins/metadata/metadata-editor.c:652
-#: plug-ins/metadata/metadata-editor.c:659
+#: plug-ins/metadata/metadata-editor.c:610
+#: plug-ins/metadata/metadata-editor.c:646
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
 msgid "Name"
 msgstr "名称"
 
@@ -7736,7 +7731,7 @@ msgid "Layers"
 msgstr "图层"
 
 #: plug-ins/common/sphere-designer.c:2762
-#: plug-ins/gradient-flare/gradient-flare.c:3053
+#: plug-ins/gradient-flare/gradient-flare.c:3050
 msgid "_New"
 msgstr "新建(_N)"
 
@@ -7748,8 +7743,8 @@ msgstr "再制(_U)"
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1359
 #: plug-ins/gimpressionist/presets.c:1071
-#: plug-ins/gradient-flare/gradient-flare.c:3056
-#: plug-ins/gradient-flare/gradient-flare.c:3339
+#: plug-ins/gradient-flare/gradient-flare.c:3053
+#: plug-ins/gradient-flare/gradient-flare.c:3336
 msgid "_Delete"
 msgstr "删除(_D)"
 
@@ -8764,7 +8759,7 @@ msgstr "像素格式"
 
 #: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
 #: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:183
-#: plug-ins/gradient-flare/gradient-flare.c:2607
+#: plug-ins/gradient-flare/gradient-flare.c:2604
 msgid "Default"
 msgstr "默认"
 
@@ -9189,7 +9184,7 @@ msgstr "无效的图像尺寸（%d x %d）。图像可能已损坏。"
 msgid "Could not create image."
 msgstr "无法创建图像。"
 
-#: plug-ins/file-fits/fits.c:179 plug-ins/file-fits/fits.c:226
+#: plug-ins/file-fits/fits.c:179 plug-ins/file-fits/fits.c:217
 msgid "Flexible Image Transport System"
 msgstr "灵活图像传输系统"
 
@@ -9214,44 +9209,32 @@ msgstr "对于未定义像素的替换"
 msgid "White"
 msgstr "白色"
 
-#: plug-ins/file-fits/fits.c:209
-msgid "Pi_xel value scaling"
-msgstr "像素值缩放(_X)"
-
-#: plug-ins/file-fits/fits.c:210
-msgid "Whether to use DATAMIN/DATAMAX-scaling if possible"
-msgstr "如果可用则是否使用 DATAMIN/DATAMAX-缩放"
-
-#: plug-ins/file-fits/fits.c:212
-msgid "By DATAMIN/DATAMAX"
-msgstr "按 DATAMIN/DATAMAX"
-
-#: plug-ins/file-fits/fits.c:229
+#: plug-ins/file-fits/fits.c:220
 msgid "Export file in the FITS file format"
 msgstr "导出 FITS 格式的文件"
 
-#: plug-ins/file-fits/fits.c:230
+#: plug-ins/file-fits/fits.c:221
 msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr "FITS 导出无法处理带透明通道的图像类型。"
 
-#: plug-ins/file-fits/fits.c:396
+#: plug-ins/file-fits/fits.c:384
 msgid "Error during opening of FITS file"
 msgstr "打开 FITS 文件时出错"
 
-#: plug-ins/file-fits/fits.c:409 plug-ins/file-fits/fits.c:615
+#: plug-ins/file-fits/fits.c:397 plug-ins/file-fits/fits.c:603
 msgid "FITS file keeps no displayable images"
 msgstr "FITS 文件没有包含可显示图像"
 
-#: plug-ins/file-fits/fits.c:507
+#: plug-ins/file-fits/fits.c:495
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:645
+#: plug-ins/file-fits/fits.c:633
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS 导出无法处理带透明通道的图像"
 
-#: plug-ins/file-fits/fits.c:1010
+#: plug-ins/file-fits/fits.c:998
 msgid "Open FITS File"
 msgstr "打开 FITS 文件"
 
@@ -11116,7 +11099,7 @@ msgstr "火焰"
 
 #: plug-ins/flame/flame.c:1234 plug-ins/gimpressionist/orientation.c:190
 #: plug-ins/gimpressionist/size.c:199
-#: plug-ins/gradient-flare/gradient-flare.c:3054
+#: plug-ins/gradient-flare/gradient-flare.c:3051
 msgid "_Edit"
 msgstr "编辑(_E)"
 
@@ -11476,7 +11459,7 @@ msgid "Rendering fractal"
 msgstr "渲染分形"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:880
-#: plug-ins/gradient-flare/gradient-flare.c:3330
+#: plug-ins/gradient-flare/gradient-flare.c:3327
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "您确定要从列表和磁盘中删除“%s”吗？"
@@ -11563,7 +11546,7 @@ msgid "Create rectangle"
 msgstr "创建矩形"
 
 #: plug-ins/gfig/gfig-dialog.c:389 plug-ins/gfig/gfig-menu.ui:54
-#: plug-ins/gradient-flare/gradient-flare.c:3995
+#: plug-ins/gradient-flare/gradient-flare.c:3992
 #: plug-ins/imagemap/imap_main.c:1582 plug-ins/imagemap/imap-menu.ui:171
 #: plug-ins/imagemap/imap-menu.ui:259
 msgid "Circle"
@@ -11590,7 +11573,7 @@ msgid "Create arc"
 msgstr "创建弧线"
 
 #: plug-ins/gfig/gfig-dialog.c:395 plug-ins/gfig/gfig-menu.ui:69
-#: plug-ins/gradient-flare/gradient-flare.c:4012
+#: plug-ins/gradient-flare/gradient-flare.c:4009
 #: plug-ins/imagemap/imap_main.c:1584 plug-ins/imagemap/imap-menu.ui:176
 #: plug-ins/imagemap/imap-menu.ui:264
 msgid "Polygon"
@@ -12011,7 +11994,7 @@ msgstr "伽马："
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "改变所选笔刷的伽马（明亮度）"
 
-#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1363
+#: plug-ins/gimpressionist/brush.c:585 plug-ins/metadata/metadata-editor.c:1379
 msgid "Select:"
 msgstr "选择："
 
@@ -12064,7 +12047,7 @@ msgid "Adds random noise to the color"
 msgstr "给颜色添加随机的噪点"
 
 #: plug-ins/gimpressionist/general.c:141
-#: plug-ins/gradient-flare/gradient-flare.c:3651
+#: plug-ins/gradient-flare/gradient-flare.c:3648
 msgid "_General"
 msgstr "常规(_G)"
 
@@ -12712,7 +12695,7 @@ msgid "Threshold for adaptive supersampling"
 msgstr "用于自适应超级采样的阈值"
 
 #: plug-ins/gradient-flare/gradient-flare.c:1009
-#: plug-ins/gradient-flare/gradient-flare.c:2507
+#: plug-ins/gradient-flare/gradient-flare.c:2504
 msgid "Gradient Flare"
 msgstr "渐变闪光"
 
@@ -12751,19 +12734,19 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "无法写入渐变闪光文件“%s”：%s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2551
+#: plug-ins/gradient-flare/gradient-flare.c:2548
 msgid "A_uto update preview"
 msgstr "自动更新预览(_U)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2606
+#: plug-ins/gradient-flare/gradient-flare.c:2603
 msgid "'Default' is created."
 msgstr "“默认”已创建。"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2907
+#: plug-ins/gradient-flare/gradient-flare.c:2904
 msgid "_X:"
 msgstr "_X："
 
-#: plug-ins/gradient-flare/gradient-flare.c:2911
+#: plug-ins/gradient-flare/gradient-flare.c:2908
 msgid "_Y:"
 msgstr "_Y："
 
@@ -12773,174 +12756,174 @@ msgstr "_Y："
 #.
 #. *    Scales
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:2951
-#: plug-ins/gradient-flare/gradient-flare.c:3704
-#: plug-ins/gradient-flare/gradient-flare.c:3806
-#: plug-ins/gradient-flare/gradient-flare.c:3937
+#: plug-ins/gradient-flare/gradient-flare.c:2948
+#: plug-ins/gradient-flare/gradient-flare.c:3701
+#: plug-ins/gradient-flare/gradient-flare.c:3803
+#: plug-ins/gradient-flare/gradient-flare.c:3934
 msgid "Parameters"
 msgstr "参数"
 
-#: plug-ins/gradient-flare/gradient-flare.c:2985
+#: plug-ins/gradient-flare/gradient-flare.c:2982
 msgid "_Settings"
 msgstr "设置(_S)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3123
+#: plug-ins/gradient-flare/gradient-flare.c:3120
 msgid "S_elector"
 msgstr "选择器(_E)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3187
+#: plug-ins/gradient-flare/gradient-flare.c:3184
 msgid "New Gradient Flare"
 msgstr "新建渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3190
+#: plug-ins/gradient-flare/gradient-flare.c:3187
 msgid "Enter a name for the new GFlare"
 msgstr "给新的渐变闪光输入一个名字"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3191
+#: plug-ins/gradient-flare/gradient-flare.c:3188
 msgid "Unnamed"
 msgstr "未命名"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3211
-#: plug-ins/gradient-flare/gradient-flare.c:3293
+#: plug-ins/gradient-flare/gradient-flare.c:3208
+#: plug-ins/gradient-flare/gradient-flare.c:3290
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "名字“%s”已经被使用！"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3267
+#: plug-ins/gradient-flare/gradient-flare.c:3264
 msgid "Copy Gradient Flare"
 msgstr "复制渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3270
+#: plug-ins/gradient-flare/gradient-flare.c:3267
 msgid "Enter a name for the copied GFlare"
 msgstr "给已复制的渐变闪光输入一个名字"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3324
+#: plug-ins/gradient-flare/gradient-flare.c:3321
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "无法删除！至少要有一个渐变闪光。"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3334
+#: plug-ins/gradient-flare/gradient-flare.c:3331
 msgid "Delete Gradient Flare"
 msgstr "删除渐变闪光"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3406
+#: plug-ins/gradient-flare/gradient-flare.c:3403
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "在 gflares_list 中没有找到 %s"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3448
+#: plug-ins/gradient-flare/gradient-flare.c:3445
 msgid "Gradient Flare Editor"
 msgstr "渐变闪光编辑器"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3452
+#: plug-ins/gradient-flare/gradient-flare.c:3449
 msgid "_Rescan Gradients"
 msgstr "重新扫描渐变(_R)"
 
 #. Glow
-#: plug-ins/gradient-flare/gradient-flare.c:3574
+#: plug-ins/gradient-flare/gradient-flare.c:3571
 msgid "Glow Paint Options"
 msgstr "辉光绘画选项"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3584
-#: plug-ins/gradient-flare/gradient-flare.c:3610
-#: plug-ins/gradient-flare/gradient-flare.c:3636
+#: plug-ins/gradient-flare/gradient-flare.c:3581
+#: plug-ins/gradient-flare/gradient-flare.c:3607
+#: plug-ins/gradient-flare/gradient-flare.c:3633
 msgid "Opacity:"
 msgstr "不透明度："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3596
-#: plug-ins/gradient-flare/gradient-flare.c:3622
-#: plug-ins/gradient-flare/gradient-flare.c:3648
+#: plug-ins/gradient-flare/gradient-flare.c:3593
+#: plug-ins/gradient-flare/gradient-flare.c:3619
+#: plug-ins/gradient-flare/gradient-flare.c:3645
 msgid "Paint mode:"
 msgstr "绘画模式："
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3600
+#: plug-ins/gradient-flare/gradient-flare.c:3597
 msgid "Rays Paint Options"
 msgstr "射线绘画选项"
 
 #. Rays
-#: plug-ins/gradient-flare/gradient-flare.c:3626
+#: plug-ins/gradient-flare/gradient-flare.c:3623
 msgid "Second Flares Paint Options"
 msgstr "二次闪光绘画选项"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3677
-#: plug-ins/gradient-flare/gradient-flare.c:3777
-#: plug-ins/gradient-flare/gradient-flare.c:3910
+#: plug-ins/gradient-flare/gradient-flare.c:3674
+#: plug-ins/gradient-flare/gradient-flare.c:3774
+#: plug-ins/gradient-flare/gradient-flare.c:3907
 msgid "Gradients"
 msgstr "渐变"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3688
-#: plug-ins/gradient-flare/gradient-flare.c:3790
-#: plug-ins/gradient-flare/gradient-flare.c:3921
+#: plug-ins/gradient-flare/gradient-flare.c:3685
+#: plug-ins/gradient-flare/gradient-flare.c:3787
+#: plug-ins/gradient-flare/gradient-flare.c:3918
 msgid "Radial gradient:"
 msgstr "径向渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3692
-#: plug-ins/gradient-flare/gradient-flare.c:3794
+#: plug-ins/gradient-flare/gradient-flare.c:3689
+#: plug-ins/gradient-flare/gradient-flare.c:3791
 msgid "Angular gradient:"
 msgstr "角度渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3696
-#: plug-ins/gradient-flare/gradient-flare.c:3798
+#: plug-ins/gradient-flare/gradient-flare.c:3693
+#: plug-ins/gradient-flare/gradient-flare.c:3795
 msgid "Angular size gradient:"
 msgstr "角度大小渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3715
-#: plug-ins/gradient-flare/gradient-flare.c:3817
-#: plug-ins/gradient-flare/gradient-flare.c:3948
+#: plug-ins/gradient-flare/gradient-flare.c:3712
+#: plug-ins/gradient-flare/gradient-flare.c:3814
+#: plug-ins/gradient-flare/gradient-flare.c:3945
 msgid "Size (%):"
 msgstr "大小（%）："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3726
-#: plug-ins/gradient-flare/gradient-flare.c:3828
-#: plug-ins/gradient-flare/gradient-flare.c:3959
+#: plug-ins/gradient-flare/gradient-flare.c:3723
+#: plug-ins/gradient-flare/gradient-flare.c:3825
+#: plug-ins/gradient-flare/gradient-flare.c:3956
 msgid "Rotation:"
 msgstr "旋转："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3737
-#: plug-ins/gradient-flare/gradient-flare.c:3839
-#: plug-ins/gradient-flare/gradient-flare.c:3970
+#: plug-ins/gradient-flare/gradient-flare.c:3734
+#: plug-ins/gradient-flare/gradient-flare.c:3836
+#: plug-ins/gradient-flare/gradient-flare.c:3967
 msgid "Hue rotation:"
 msgstr "色相旋转："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3751
+#: plug-ins/gradient-flare/gradient-flare.c:3748
 msgid "G_low"
 msgstr "辉光(_L)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3850
+#: plug-ins/gradient-flare/gradient-flare.c:3847
 msgid "# of Spikes:"
 msgstr "光芒数量："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3861
+#: plug-ins/gradient-flare/gradient-flare.c:3858
 msgid "Spike thickness:"
 msgstr "光芒厚度："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3875
+#: plug-ins/gradient-flare/gradient-flare.c:3872
 msgid "_Rays"
 msgstr "射线(_R)"
 
-#: plug-ins/gradient-flare/gradient-flare.c:3925
+#: plug-ins/gradient-flare/gradient-flare.c:3922
 msgid "Size factor gradient:"
 msgstr "大小系数渐变："
 
-#: plug-ins/gradient-flare/gradient-flare.c:3929
+#: plug-ins/gradient-flare/gradient-flare.c:3926
 msgid "Probability gradient:"
 msgstr "可能性渐变："
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gradient-flare/gradient-flare.c:3987
+#: plug-ins/gradient-flare/gradient-flare.c:3984
 msgid "Shape of Second Flares"
 msgstr "二次闪光的形状"
 
-#: plug-ins/gradient-flare/gradient-flare.c:4046
+#: plug-ins/gradient-flare/gradient-flare.c:4043
 msgid "Random seed:"
 msgstr "随机种子："
 
-#: plug-ins/gradient-flare/gradient-flare.c:4060
+#: plug-ins/gradient-flare/gradient-flare.c:4057
 msgid "_Second Flares"
 msgstr "二次闪光(_S)"
 
@@ -13998,7 +13981,7 @@ msgstr "创建参考线…"
 msgid "Help"
 msgstr "帮助"
 
-#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:536
+#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:540
 msgid "Contents"
 msgstr "内容"
 
@@ -14760,458 +14743,467 @@ msgstr "将图像映射到方盒表面"
 msgid "Images for the Cap Faces"
 msgstr "上下底面的图像"
 
-#: plug-ins/metadata/metadata-editor.c:488
+#: plug-ins/metadata/metadata-editor.c:489
 msgid "Document Title"
 msgstr "文档标题"
 
-#: plug-ins/metadata/metadata-editor.c:489
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Author"
 msgstr "作者"
 
-#: plug-ins/metadata/metadata-editor.c:490
+#: plug-ins/metadata/metadata-editor.c:491
 msgid "Author Title"
 msgstr "作者头衔"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:491
-#: plug-ins/metadata/metadata-editor.c:1208
+#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:1224
 msgid "Description"
 msgstr "描述"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:493
 msgid "Description Writer"
 msgstr "描述的作者"
 
-#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:494
 msgid "Rating"
 msgstr "评级"
 
-#: plug-ins/metadata/metadata-editor.c:494
+#: plug-ins/metadata/metadata-editor.c:495
 msgid "Keywords"
 msgstr "关键词"
 
-#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:497
 msgid "Copyright Status"
 msgstr "版权状态"
 
-#: plug-ins/metadata/metadata-editor.c:497
-#: plug-ins/metadata/metadata-editor.c:626
+#: plug-ins/metadata/metadata-editor.c:498
+#: plug-ins/metadata/metadata-editor.c:627
 msgid "Copyright Notice"
 msgstr "版权公告"
 
-#: plug-ins/metadata/metadata-editor.c:498
+#: plug-ins/metadata/metadata-editor.c:499
 msgid "Copyright URL"
 msgstr "版权网址"
 
-#: plug-ins/metadata/metadata-editor.c:504
+#: plug-ins/metadata/metadata-editor.c:505
 msgid "Address"
 msgstr "地址"
-
-#: plug-ins/metadata/metadata-editor.c:505
-#: plug-ins/metadata/metadata-editor.c:520
-#: plug-ins/metadata/metadata-editor.c:541
-#: plug-ins/metadata/metadata-editor.c:599
-msgid "City"
-msgstr "城市"
 
 #: plug-ins/metadata/metadata-editor.c:506
 #: plug-ins/metadata/metadata-editor.c:521
 #: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:600
+msgid "City"
+msgstr "城市"
+
+#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:543
 msgid "State / Province"
 msgstr "州/省"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:508
 msgid "Postal Code"
 msgstr "邮政编码"
 
-#: plug-ins/metadata/metadata-editor.c:508
-#: plug-ins/metadata/metadata-editor.c:522
-#: plug-ins/metadata/metadata-editor.c:543
-#: plug-ins/metadata/metadata-editor.c:601
+#: plug-ins/metadata/metadata-editor.c:509
+#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:602
 msgid "Country"
 msgstr "国家"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:511
 msgid "Phone(s)"
 msgstr "电话"
 
-#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:512
 msgid "E-mail(s)"
 msgstr "电子邮箱"
 
-#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:513
 msgid "Website(s)"
 msgstr "网站"
 
-#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:515
 msgid "Creation Date"
 msgstr "创建日期"
 
-#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "Intellectual Genre"
 msgstr "新闻类别"
 
-#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:518
 msgid "IPTC Scene Code"
 msgstr "IPTC 场景代码"
 
-#: plug-ins/metadata/metadata-editor.c:519
-#: plug-ins/metadata/metadata-editor.c:540
-#: plug-ins/metadata/metadata-editor.c:598
+#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:541
+#: plug-ins/metadata/metadata-editor.c:599
 msgid "Sublocation"
 msgstr "子位置"
 
-#: plug-ins/metadata/metadata-editor.c:523
-#: plug-ins/metadata/metadata-editor.c:544
+#: plug-ins/metadata/metadata-editor.c:524
+#: plug-ins/metadata/metadata-editor.c:545
 msgid "Country ISO-Code"
 msgstr "国家 ISO 代码"
 
-#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Urgency"
 msgstr "紧急"
 
-#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "Headline"
 msgstr "标题"
 
-#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:528
 msgid "IPTC Subject Code"
 msgstr "IPTC 主题代码"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Job Identifier"
 msgstr "工作标识"
 
-#: plug-ins/metadata/metadata-editor.c:530
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Instructions"
 msgstr "说明"
 
-#: plug-ins/metadata/metadata-editor.c:531
+#: plug-ins/metadata/metadata-editor.c:532
 msgid "Credit Line"
 msgstr "新闻来源"
 
-#: plug-ins/metadata/metadata-editor.c:532
-#: plug-ins/metadata/metadata-editor.c:624
+#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:625
 msgid "Source"
 msgstr "来源"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:534
 msgid "Usage Terms"
 msgstr "使用条款"
 
-#: plug-ins/metadata/metadata-editor.c:539
+#: plug-ins/metadata/metadata-editor.c:540
 msgid "Person Shown"
 msgstr "人物显示"
 
-#: plug-ins/metadata/metadata-editor.c:545
-#: plug-ins/metadata/metadata-editor.c:603
+#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:604
 msgid "World Region"
 msgstr "世界区域"
 
-#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:547
 msgid "Location Shown"
 msgstr "位置显示"
 
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:549
 msgid "Featured Organization"
 msgstr "专题机构"
 
-#: plug-ins/metadata/metadata-editor.c:550
+#: plug-ins/metadata/metadata-editor.c:551
 msgid "Organization Code"
 msgstr "机构代码"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:553
 msgid "Event"
 msgstr "事件"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:554
 msgid "Artwork or Object"
 msgstr "艺术作品或对象"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:557
 msgid "Additional Model Info"
 msgstr "附加模特信息"
 
-#: plug-ins/metadata/metadata-editor.c:557
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Model Age"
 msgstr "模特年龄"
 
-#: plug-ins/metadata/metadata-editor.c:558
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Minor Model Age Disclosure"
 msgstr "未成年模特公开年龄"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:560
 msgid "Model Release Status"
 msgstr "模特发布状态"
 
-#: plug-ins/metadata/metadata-editor.c:560
-#: plug-ins/metadata/metadata-editor.c:632
+#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:633
 msgid "Model Release Identifier"
 msgstr "模特发布标识"
 
-#: plug-ins/metadata/metadata-editor.c:563
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Image Supplier Name"
 msgstr "图像供应商名称"
 
-#: plug-ins/metadata/metadata-editor.c:564
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Image Supplier ID"
 msgstr "图像供应商标识"
 
-#: plug-ins/metadata/metadata-editor.c:565
+#: plug-ins/metadata/metadata-editor.c:566
 msgid "Supplier's Image ID"
 msgstr "供应商的图像标识"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:567
 msgid "Registry Entry"
 msgstr "注册登记"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Max. Available Width"
 msgstr "最大可用宽度"
 
-#: plug-ins/metadata/metadata-editor.c:569
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Max. Available Height"
 msgstr "最大可用高度"
 
-#: plug-ins/metadata/metadata-editor.c:570
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Digital Source Type"
 msgstr "数码源类型"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:573
 msgid "Image Creator"
 msgstr "图像创建者"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:575
 msgid "Copyright Owner"
 msgstr "版权所有者"
 
-#: plug-ins/metadata/metadata-editor.c:576
+#: plug-ins/metadata/metadata-editor.c:577
 msgid "Licensor"
 msgstr "许可证颁发者"
 
-#: plug-ins/metadata/metadata-editor.c:578
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Property Release Status"
 msgstr "所有权发布状态"
 
-#: plug-ins/metadata/metadata-editor.c:579
+#: plug-ins/metadata/metadata-editor.c:580
 msgid "Property Release Identifier"
 msgstr "所有权发布标识"
 
-#: plug-ins/metadata/metadata-editor.c:600
+#: plug-ins/metadata/metadata-editor.c:601
 msgid "Province / State"
 msgstr "省/州"
 
-#: plug-ins/metadata/metadata-editor.c:602
+#: plug-ins/metadata/metadata-editor.c:603
 msgid "Country ISO Code"
 msgstr "国家 ISO 代码"
 
-#: plug-ins/metadata/metadata-editor.c:615
+#: plug-ins/metadata/metadata-editor.c:616
 msgid "Code"
 msgstr "代码"
 
-#: plug-ins/metadata/metadata-editor.c:621
+#: plug-ins/metadata/metadata-editor.c:622
 msgid "Title"
 msgstr "标题"
 
-#: plug-ins/metadata/metadata-editor.c:622
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Date Created"
 msgstr "创建日期"
 
-#: plug-ins/metadata/metadata-editor.c:623
+#: plug-ins/metadata/metadata-editor.c:624
 msgid "Creator"
 msgstr "创建者"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:626
 msgid "Source Inventory ID"
 msgstr "源库存标识"
 
-#: plug-ins/metadata/metadata-editor.c:638
+#: plug-ins/metadata/metadata-editor.c:639
 msgid "Organization Identifier"
 msgstr "机构标识"
 
-#: plug-ins/metadata/metadata-editor.c:639
+#: plug-ins/metadata/metadata-editor.c:640
 msgid "Item Identifier"
 msgstr "项目标识"
 
-#: plug-ins/metadata/metadata-editor.c:646
-#: plug-ins/metadata/metadata-editor.c:653
-#: plug-ins/metadata/metadata-editor.c:660
-#: plug-ins/metadata/metadata-editor.c:672
+#: plug-ins/metadata/metadata-editor.c:647
+#: plug-ins/metadata/metadata-editor.c:654
+#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:673
 msgid "Identifier"
 msgstr "标识"
 
-#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:662
 msgid "Phone Number 1"
 msgstr "电话号码 1"
 
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:663
 msgid "Phone Type 1"
 msgstr "电话类型 1"
 
-#: plug-ins/metadata/metadata-editor.c:663
+#: plug-ins/metadata/metadata-editor.c:664
 msgid "Phone Number 2"
 msgstr "电话号码 2"
 
-#: plug-ins/metadata/metadata-editor.c:664
+#: plug-ins/metadata/metadata-editor.c:665
 msgid "Phone Type 2"
 msgstr "电话类型 2"
 
-#: plug-ins/metadata/metadata-editor.c:665
+#: plug-ins/metadata/metadata-editor.c:666
 msgid "Email Address"
 msgstr "电子邮箱地址"
 
-#: plug-ins/metadata/metadata-editor.c:666
+#: plug-ins/metadata/metadata-editor.c:667
 msgid "Web Address"
 msgstr "网址"
 
-#: plug-ins/metadata/metadata-editor.c:679
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Category"
 msgstr "类别"
 
-#: plug-ins/metadata/metadata-editor.c:680
+#: plug-ins/metadata/metadata-editor.c:681
 msgid "Supplemental Category"
 msgstr "补充类别"
 
-#: plug-ins/metadata/metadata-editor.c:686
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Longitude"
 msgstr "经度"
 
-#: plug-ins/metadata/metadata-editor.c:687
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Longitude Reference"
 msgstr "经度参考"
 
-#: plug-ins/metadata/metadata-editor.c:688
+#: plug-ins/metadata/metadata-editor.c:689
 msgid "Latitude"
 msgstr "纬度"
 
-#: plug-ins/metadata/metadata-editor.c:689
+#: plug-ins/metadata/metadata-editor.c:690
 msgid "Latitude Reference"
 msgstr "纬度参考"
 
-#: plug-ins/metadata/metadata-editor.c:690
+#: plug-ins/metadata/metadata-editor.c:691
 msgid "Altitude"
 msgstr "海拔"
 
-#: plug-ins/metadata/metadata-editor.c:692
+#: plug-ins/metadata/metadata-editor.c:693
 msgid "Altitude Reference"
 msgstr "海拔参考"
 
-#: plug-ins/metadata/metadata-editor.c:698
+#: plug-ins/metadata/metadata-editor.c:699
 msgid "Patient"
 msgstr "患者"
 
-#: plug-ins/metadata/metadata-editor.c:699
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Patient ID"
 msgstr "患者标识"
 
-#: plug-ins/metadata/metadata-editor.c:700
+#: plug-ins/metadata/metadata-editor.c:701
 msgid "Date of Birth"
 msgstr "出生日期"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:703
 msgid "Patient Sex"
 msgstr "患者性别"
 
-#: plug-ins/metadata/metadata-editor.c:704
+#: plug-ins/metadata/metadata-editor.c:705
 msgid "Study ID"
 msgstr "研究标识"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Referring Physician"
 msgstr "参考医师"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:707
 msgid "Study Date"
 msgstr "研究日期"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:709
 msgid "Study Description"
 msgstr "研究描述"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Series Number"
 msgstr "序列号"
 
-#: plug-ins/metadata/metadata-editor.c:710
+#: plug-ins/metadata/metadata-editor.c:711
 msgid "Modality"
 msgstr "特征"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:712
 msgid "Series Date"
 msgstr "序列日期"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:714
 msgid "Series Description"
 msgstr "系列描述"
 
-#: plug-ins/metadata/metadata-editor.c:715
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Equipment Institution"
 msgstr "设备机构"
 
-#: plug-ins/metadata/metadata-editor.c:716
+#: plug-ins/metadata/metadata-editor.c:717
 msgid "Equipment Manufacturer"
 msgstr "设备制造商"
 
-#: plug-ins/metadata/metadata-editor.c:756
+#: plug-ins/metadata/metadata-editor.c:757
 msgid "_Edit Metadata"
 msgstr "编辑元数据(_E)"
 
-#: plug-ins/metadata/metadata-editor.c:760
+#: plug-ins/metadata/metadata-editor.c:761
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "编辑元数据（IPTC，EXIF，XMP）"
 
-#: plug-ins/metadata/metadata-editor.c:1170
+#: plug-ins/metadata/metadata-editor.c:774
+msgid "Parent's window handle"
+msgstr "上级窗口处理"
+
+#: plug-ins/metadata/metadata-editor.c:775
+msgid ""
+"The opaque handle of the window to set this plug-in's dialog transient to"
+msgstr "设定该插件对话框短暂停留窗口的不透明处理"
+
+#: plug-ins/metadata/metadata-editor.c:1180
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "元数据编辑器：%s"
 
-#: plug-ins/metadata/metadata-editor.c:1178
+#: plug-ins/metadata/metadata-editor.c:1188
 msgid "_Write Metadata"
 msgstr "写入元数据(_W)"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1214
+#: plug-ins/metadata/metadata-editor.c:1230
 #: plug-ins/metadata/metadata-viewer.c:393
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1220
+#: plug-ins/metadata/metadata-editor.c:1236
 msgid "IPTC Extension"
 msgstr "IPTC 扩展"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1326
+#: plug-ins/metadata/metadata-editor.c:1342
 msgid "Categories"
 msgstr "类别"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1332
+#: plug-ins/metadata/metadata-editor.c:1348
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1343
+#: plug-ins/metadata/metadata-editor.c:1359
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1365
+#: plug-ins/metadata/metadata-editor.c:1381
 msgid "Import metadata"
 msgstr "导入元数据"
 
-#: plug-ins/metadata/metadata-editor.c:1367
+#: plug-ins/metadata/metadata-editor.c:1383
 msgid "Export metadata"
 msgstr "导出元数据"
 
-#: plug-ins/metadata/metadata-editor.c:1670
+#: plug-ins/metadata/metadata-editor.c:1686
 msgid "Choose Date"
 msgstr "选择日期"
 
-#: plug-ins/metadata/metadata-editor.c:1674
+#: plug-ins/metadata/metadata-editor.c:1690
 msgid "Set Date"
 msgstr "设置日期"
 
-#: plug-ins/metadata/metadata-editor.c:2408
+#: plug-ins/metadata/metadata-editor.c:2424
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -15226,7 +15218,7 @@ msgstr ""
 "或 10.45\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2414
+#: plug-ins/metadata/metadata-editor.c:2430
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -15241,24 +15233,24 @@ msgstr ""
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
 "删除所有文字可删除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2548
+#: plug-ins/metadata/metadata-editor.c:2564
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4658
+#: plug-ins/metadata/metadata-editor.c:4674
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5521
+#: plug-ins/metadata/metadata-editor.c:5537
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5525
+#: plug-ins/metadata/metadata-editor.c:5541
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: plug-ins/metadata/metadata-editor.c:5556
+#: plug-ins/metadata/metadata-editor.c:5572
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
@@ -15767,16 +15759,16 @@ msgstr "GDK 初始化失败。"
 msgid "No screenshot backends available."
 msgstr "无可用截图后端。"
 
-#: plug-ins/screenshot/screenshot.c:511
+#: plug-ins/screenshot/screenshot.c:515
 #: plug-ins/screenshot/screenshot-x11.c:444
 msgid "Screenshot"
 msgstr "屏幕截图"
 
-#: plug-ins/screenshot/screenshot.c:512
+#: plug-ins/screenshot/screenshot.c:516
 msgid "S_nap"
 msgstr "截图(_N)"
 
-#: plug-ins/screenshot/screenshot.c:595
+#: plug-ins/screenshot/screenshot.c:599
 msgid "Delay"
 msgstr "延迟"
 
@@ -16053,6 +16045,19 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:500
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#, c-format
+#~ msgid "Could not open '%s' for reading AA"
+#~ msgstr "无法打开“%s”来读取 AA"
+
+#~ msgid "Pi_xel value scaling"
+#~ msgstr "像素值缩放(_X)"
+
+#~ msgid "Whether to use DATAMIN/DATAMAX-scaling if possible"
+#~ msgstr "如果可用则是否使用 DATAMIN/DATAMAX-缩放"
+
+#~ msgid "By DATAMIN/DATAMAX"
+#~ msgstr "按 DATAMIN/DATAMAX"
 
 #~ msgid ""
 #~ "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), "
