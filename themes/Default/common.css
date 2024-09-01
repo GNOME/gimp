@@ -550,7 +550,18 @@ menuitem menuitem {
 /* A top (File, Edit) menubar item when its menu is expanded. */
 menubar > menuitem:hover {
   color: @fg-color;
-  background: @extreme-selected-color;
+  background: @extreme-bg-color;
+}
+
+/* Top menubar subitem style */
+menubar menu menuitem {
+  color: @fg-color;
+  background-color: @bg-color;
+}
+
+menubar menu menuitem:hover {
+  color: @fg-color;
+  background-color: @extreme-bg-color;
 }
 
 menuitem *:hover {
