@@ -1,20 +1,19 @@
 # Turkish translation for GIMP
-#
-# Copyright (C) 2017-2022 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Copyright (C) 2017-2024 GIMP's COPYRIGHT HOLDER
+# This file is distributed under the same license as the GIMP package.
 #
 # Muhammet Kara <muhammetk@gmail.com>, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2018, 2022.
-# Sabri Ünal <libreajans@gmail.com>, 2019, 2022.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2018, 2022, 2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2019, 2022, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-09 12:25+0000\n"
+"POT-Creation-Date: 2024-08-25 19:26+0000\n"
 "PO-Revision-Date: 2024-03-11 12:17+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -307,10 +306,10 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:250
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor. Kurulum, "
 "eski sürümü nasıl kaldıracağını kendiliğinden saptayamıyor.%n%nBu sürümü %2 "
@@ -381,15 +380,3 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr "GIMP, seçili dizinde kurulmuş gibi gözükmüyor. Yine de sürdürülsün mü?"
-
-#~ msgid "MS-Windows engine for GTK"
-#~ msgstr "GTK için MS-Windows motoru"
-
-#~ msgid "Native Windows look for GIMP"
-#~ msgstr "GIMP için doğal Windows görünüşü"
-
-#~ msgid "Support for old plug-ins"
-#~ msgstr "Eski eklentiler için destek"
-
-#~ msgid "Install libraries needed by old third-party plug-ins"
-#~ msgstr "Eski üçüncü taraf eklentilerin gereksindiği kütüphaneleri kur"
