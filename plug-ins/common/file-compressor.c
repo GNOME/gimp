@@ -716,7 +716,7 @@ gzip_export (GFile *infile,
 
 static gboolean
 bzip2_load (GFile *infile,
-           GFile  *outfile)
+            GFile *outfile)
 {
   gboolean  ret;
   int       fd;

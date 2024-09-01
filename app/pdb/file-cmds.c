@@ -232,6 +232,7 @@ file_save_invoker (GimpProcedure         *procedure,
   GimpPlugInProcedure *file_proc;
   GFile               *file;
   GimpProcedure       *proc;
+  gint                 custom_args_start = 3;
   gint                 i;
 
   file = g_value_get_object (gimp_value_array_index (args, 2));
@@ -259,10 +260,14 @@ file_save_invoker (GimpProcedure         *procedure,
                      gimp_value_array_index (new_args, 1));
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
-  g_value_transform (gimp_value_array_index (args, 3),
-                     gimp_value_array_index (new_args, 3));
+  if (proc->num_args > 3)
+    {
+      custom_args_start++;
+      g_value_transform (gimp_value_array_index (args, 3),
+                         gimp_value_array_index (new_args, 3));
+    }
 
-  for (i = 4; i < proc->num_args; i++)
+  for (i = custom_args_start; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (gimp_value_array_index (new_args, i), "");
 
