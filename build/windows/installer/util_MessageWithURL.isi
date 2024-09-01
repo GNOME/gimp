@@ -46,7 +46,7 @@ function GetDialogBaseUnits(): Integer; external 'GetDialogBaseUnits@User32 stdc
 
 //function GetSysColor(nIndex: Integer): DWORD; external 'GetSysColor@user32.dll stdcall';
 
-function LoadIconWithScaleDown(hInstance: Integer; pIconName: Integer; cxDesired, cyDesired: Integer; hicon: THandle): Integer; external 'LoadIconWithScaleDown@comctl32 stdcall';
+function LoadIconWithScaleDown(hInstance: Integer; pIconName: Integer; cxDesired, cyDesired: Integer; hicon: THandle): Integer; external 'LoadIconWithScaleDown@comdlg32 stdcall';
 //function LoadImage(hinst: Integer; lpszName: Integer; uType: Cardinal; cxDesired, cyDesired: Integer; fuLoad: Cardinal): Integer; external 'LoadImageW@user32 stdcall';
 function DrawIcon(hdc: HBitmap; x,y: Integer; hIcon: Integer): Integer; external 'DrawIcon@user32 stdcall';
 //function DrawIconEx(hdc: HBitmap; xLeft,yTop: Integer; hIcon: Integer; cxWidth, cyWidth: Integer; istepIfAniCur: Cardinal; hbrFlickerFreeDraw: Integer; diFlags: Cardinal): Integer; external 'DrawIconEx@user32 stdcall';
