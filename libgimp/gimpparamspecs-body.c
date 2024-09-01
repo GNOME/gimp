@@ -984,40 +984,10 @@ gimp_param_spec_display (const gchar *name,
   return G_PARAM_SPEC (dspec);
 }
 
-/* Notes about GimpParamResource
- *
- * Similar to GimpParamColor.
- * Except this does not define convenience method: get_default returning GimpResource.
- * There is only value_get_default, which returns a GValue.
- *
- * GParamSpec and derived classes are used not only to describe args to
- * long-lived GimpProcedure (which are often properties of a config)
- * but to describe other properties
- * and to describe args of short-lived temporary procedures (e.g. callbacks.)
- * In the other uses, the default field is often not used,
- * Thus the default field can be NULL.
- * See gimpgpparamspecs-body.c where the default is always NULL.
- *
- * g_param_spec_get_default_value: this is unusual and subtle
- * and not documented without reading GObject code!!!
- * g_param_spec_get_default_value is a method of the superclass GParamSpec.
- * It is virtual, but not pure virtual i.e. need not be reimplemented,
- * and has a base implementation.
- * Its implementation calls g_param_value_set_default, a virtual method
- * of the superclass that subclasses should override.
- * Note that it is named value_set_default, not just set_default.
- * The method g_param_value_set_default does NOT set any field in a GParamSpec,
- * but sets an OUT GValue.
- * In pattern/idiom terms, GParamSpec.get_default_value is a "template" method.
- * It calls the "abstract primitive operation" value_set_default.
- * If a subclass of GParamSpec does NOT override value_set_default,
- * then method GParamSpec.get_default_value calls the base implementation
- * of value_set_default which returns a zero'd GValue.
- */
 
- /*
-  * GIMP_TYPE_PARAM_RESOURCE
-  */
+/*
+ * GIMP_TYPE_PARAM_RESOURCE
+ */
 
  static void       gimp_param_resource_class_init (GParamSpecClass *klass);
  static void       gimp_param_resource_init       (GParamSpec      *pspec);
@@ -1052,14 +1022,14 @@ gimp_param_spec_display (const gchar *name,
    return type;
  }
 
- static void
- gimp_param_resource_class_init (GParamSpecClass *klass)
- {
-   klass->value_type        = GIMP_TYPE_RESOURCE;
-   klass->finalize          = gimp_param_resource_finalize;
-   klass->value_validate    = gimp_param_resource_validate;
-   klass->value_set_default = gimp_param_resource_value_set_default;
- }
+static void
+gimp_param_resource_class_init (GParamSpecClass *klass)
+{
+  klass->value_type        = GIMP_TYPE_RESOURCE;
+  klass->finalize          = gimp_param_resource_finalize;
+  klass->value_validate    = gimp_param_resource_validate;
+  klass->value_set_default = gimp_param_resource_value_set_default;
+}
 
 static void
 gimp_param_resource_init (GParamSpec *pspec)
@@ -1103,37 +1073,13 @@ gimp_param_resource_validate (GParamSpec *pspec,
   return FALSE;
 }
 
-/* Set gvalue from pspec's default value.
- *
- * Implements virtual method GParamSpec.value_get_default,
- * which is called by superclass method GParamSpec.get_default_value,
- * which yields a GValue that will
- * "remain valid for the life of p-spec and must not be modified."
- * Without this, the base implementation of GParamSpec.get_default_value
- * returns a zero'ed GValue value.
- *
- * This does nothing on the core side.
- * Core does not use the defaulting mechanism of GParamSpec for objects.
- *
- * When the pspec is not valid, or the pspec has a NULL default_value,
- * may return with gvalue's value==NULL.
- *
- * Inherited by subclasses of GimpParamSpecResource.
- */
 static void
 gimp_param_resource_value_set_default (GParamSpec *pspec,
                                        GValue     *value)
 {
-  #ifdef LIBGIMP_COMPILATION
+  g_return_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec));
 
-  g_return_if_fail ( GIMP_IS_PARAM_SPEC_RESOURCE (pspec));
-
-  /* not transfer ownership */
   g_value_set_object (value, GIMP_PARAM_SPEC_RESOURCE (pspec)->default_value);
-
-  #endif
-
-  /* Whether on core or libgimp, the OUT GValue might hold a NULL object pointer. */
 }
 
 
