@@ -33,8 +33,9 @@
 
 #include "gimpscalecombobox.h"
 
-
-#define MAX_ITEMS  10
+/*  Use U+2009 THIN SPACE to separate the percent sign from the number */
+#define PERCENT_SPACE "\342\200\211"
+#define MAX_ITEMS     10
 
 enum
 {
@@ -326,20 +327,6 @@ gimp_scale_combo_box_scale_iter_set (GtkListStore *store,
 {
   gchar label[32];
 
-#ifdef G_OS_WIN32
-
-  /*  use a normal space until pango's windows backend uses harfbuzz,
-   *  see bug #735505
-   */
-#define PERCENT_SPACE " "
-
-#else
-
-  /*  use U+2009 THIN SPACE to separate the percent sign from the number */
-#define PERCENT_SPACE "\342\200\211"
-
-#endif
-
   if (scale > 1.0)
     g_snprintf (label, sizeof (label),
                 "%d" PERCENT_SPACE "%%", (gint) ROUND (100.0 * scale));
@@ -439,6 +426,8 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
   gboolean      iter_valid;
   gboolean      persistent;
   gint          n_digits;
+  gchar        *label        = NULL;
+  gint          label_length = 5;
 
   g_return_if_fail (GIMP_IS_SCALE_COMBO_BOX (combo_box));
   g_return_if_fail (scale > 0.0);
@@ -486,6 +475,7 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
 
   gtk_tree_model_get (model, &iter,
                       COLUMN_PERSISTENT, &persistent,
+                      COLUMN_LABEL,      &label,
                       -1);
   if (! persistent)
     {
@@ -495,12 +485,16 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
         gimp_scale_combo_box_mru_remove_last (combo_box);
     }
 
+  if (label)
+    label_length = (g_utf8_strlen (label, -1) > 5) ?
+                    g_utf8_strlen (label, -1) : 5;
+
   /* Update entry size appropriately. */
   entry = gtk_bin_get_child (GTK_BIN (combo_box));
   n_digits = (gint) floor (log10 (scale) + 1);
 
   g_object_set (entry,
-                "width-chars", MAX (5, n_digits + 4),
+                "width-chars", MAX (label_length, n_digits + 4),
                 NULL);
 }
 
