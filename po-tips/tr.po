@@ -1,21 +1,20 @@
 # Turkish translation for GIMP
-#
-# Copyright (C) 2010-2022 gimp's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Copyright (C) 2010-2022 GIMP's COPYRIGHT HOLDER
+# This file is distributed under the same license as the GIMP package.
 #
 # Ubuntu Launchpad Translators, 2010.
 # Muhammet Kara <muhammet.k@gmail.com>, 2011.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2022.
-# Sabri Ünal <libreajans@gmail.com>, 2019, 2022.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2022, 2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2019, 2022, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp tips master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-11 21:18+0000\n"
+"POT-Creation-Date: 2024-08-25 19:26+0000\n"
 "PO-Revision-Date: 2024-03-13 19:05+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
-"Language-Team: Turkish <gnome-turk@gnome.org>\n"
+"Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,23 +232,6 @@ msgstr ""
 
 #: data/tips/gimp-tips.xml.in:175
 msgid ""
-"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
-"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
-"should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
-"prevent accidentally assigning/reassigning shortcuts."
-msgstr ""
-"\"Devingen Klavye Kısayolları\"'nı Tercihler iletişim kutusundan "
-"etkinleştirdikten sonra kısayol tuşları yeniden atayabilirsin. Bunu yapmak "
-"için menü açılır, bir menü ögesi seçilir ve istenilen tuş kombinasyonuna "
-"basılır. Eğer \"Klavye Kısayollarını Kaydet\" etkinleştirilmişse tuş "
-"ilişkilendirmeleri GIMP'den çıktığın zaman saklanır. Muhtemelen yanlışlıkla "
-"kısayol atamayı önlemek için daha sonra \"Devingen Klavye Kısayolları\"'nı "
-"devre dışı bırakman gerekir."
-
-#: data/tips/gimp-tips.xml.in:186
-msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
@@ -257,7 +239,7 @@ msgstr ""
 "gizlemek veya göstermek için görüntü penceresinin içinde <tt>Tab</tt> tuşuna "
 "basabilirsin."
 
-#: data/tips/gimp-tips.xml.in:193
+#: data/tips/gimp-tips.xml.in:182
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -266,7 +248,7 @@ msgstr ""
 "tıklamak, o katman dışındaki tüm katmanları gizler. Tekrar <tt>Shift</tt> "
 "tuşuna basarak tıklamak tüm katmanları gösterir."
 
-#: data/tips/gimp-tips.xml.in:199
+#: data/tips/gimp-tips.xml.in:188
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -277,7 +259,7 @@ msgstr ""
 "kutusundaki katman maskesinin ön izlemesine <tt>Alt</tt>-tıklama maskeyi "
 "doğrudan görüntülemeyi açar."
 
-#: data/tips/gimp-tips.xml.in:206
+#: data/tips/gimp-tips.xml.in:195
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -286,7 +268,7 @@ msgstr ""
 "katmanlarında döngü oluşturmak için <tt>Alt</tt>-<tt>Tab</tt> tuşlarını "
 "kullanabilirsin."
 
-#: data/tips/gimp-tips.xml.in:212
+#: data/tips/gimp-tips.xml.in:201
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -298,7 +280,7 @@ msgstr ""
 "<tt>Ctrl</tt>-tıklama ile kullanmak arka plan yerine arka plan rengini "
 "ayarlar."
 
-#: data/tips/gimp-tips.xml.in:220
+#: data/tips/gimp-tips.xml.in:209
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -306,7 +288,7 @@ msgstr ""
 "Döndürme aracını <tt>Ctrl</tt> tuşuna basarak kullanmak döndürmeyi 15 "
 "dercelik açı ile kıstılar."
 
-#: data/tips/gimp-tips.xml.in:226
+#: data/tips/gimp-tips.xml.in:215
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool "
