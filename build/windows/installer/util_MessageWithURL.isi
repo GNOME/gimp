@@ -46,7 +46,7 @@ function GetDialogBaseUnits(): Integer; external 'GetDialogBaseUnits@User32 stdc
 
 //function GetSysColor(nIndex: Integer): DWORD; external 'GetSysColor@user32.dll stdcall';
 
-function LoadIcon(hInstance: Integer; lpIconName: Integer): Integer; external 'LoadIconW@user32 stdcall';
+function LoadIconWithScaleDown(hInstance: Integer; pIconName: Integer; cxDesired, cyDesired: Integer; hicon: THandle): Integer; external 'LoadIconWithScaleDown@comctl32 stdcall';
 //function LoadImage(hinst: Integer; lpszName: Integer; uType: Cardinal; cxDesired, cyDesired: Integer; fuLoad: Cardinal): Integer; external 'LoadImageW@user32 stdcall';
 function DrawIcon(hdc: HBitmap; x,y: Integer; hIcon: Integer): Integer; external 'DrawIcon@user32 stdcall';
 //function DrawIconEx(hdc: HBitmap; xLeft,yTop: Integer; hIcon: Integer; cxWidth, cyWidth: Integer; istepIfAniCur: Cardinal; hbrFlickerFreeDraw: Integer; diFlags: Cardinal): Integer; external 'DrawIconEx@user32 stdcall';
@@ -217,7 +217,7 @@ begin
 	end;
 
 	//TODO: icon loads with wrong size when using Large Fonts (SM_CXICON/CYICON is 40, but 32x32 icon loads - find out how to get the right size)
-	Icon := LoadIcon(0,TypIcon);
+	LoadIconWithScaleDown(0,TypIcon,GetSystemMetrics(SM_CXICON),GetSystemMetrics(SM_CYICON),Icon);
 	//Icon := LoadImage(0,TypIcon,IMAGE_ICON,0,0,LR_SHARED or LR_DEFAULTSIZE);
 	with TypImg do
 	begin
@@ -233,7 +233,7 @@ begin
 		DrawIcon(Bitmap.Canvas.Handle,0,0,Icon); //draws icon scaled
 		//DrawIconEx(Bitmap.Canvas.Handle,0,0,Icon,0,0,0,0,DI_NORMAL {or DI_DEFAULTSIZE}); //draws icon without scaling
 	end;
-	//DestroyIcon(Icon); //not needed with LR_SHARED or with LoadIcon
+	DestroyIcon(Icon);
 end;
 
 
