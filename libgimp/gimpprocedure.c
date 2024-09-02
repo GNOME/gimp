@@ -1438,8 +1438,7 @@ _gimp_procedure_add_argument (GimpProcedure *procedure,
       return NULL;
     }
 
-  priv->args = g_renew (GParamSpec *, priv->args,
-                                   priv->n_args + 1);
+  priv->args = g_renew (GParamSpec *, priv->args, priv->n_args + 1);
 
   priv->args[priv->n_args] = pspec;
 
@@ -1497,8 +1496,7 @@ _gimp_procedure_add_aux_argument (GimpProcedure *procedure,
       return pspec;
     }
 
-  priv->aux_args = g_renew (GParamSpec *, priv->aux_args,
-                                       priv->n_aux_args + 1);
+  priv->aux_args = g_renew (GParamSpec *, priv->aux_args, priv->n_aux_args + 1);
 
   priv->aux_args[priv->n_aux_args] = pspec;
 
@@ -1543,8 +1541,7 @@ _gimp_procedure_add_return_value (GimpProcedure *procedure,
       return pspec;
     }
 
-  priv->values = g_renew (GParamSpec *, priv->values,
-                                     priv->n_values + 1);
+  priv->values = g_renew (GParamSpec *, priv->values, priv->n_values + 1);
 
   priv->values[priv->n_values] = pspec;
 
