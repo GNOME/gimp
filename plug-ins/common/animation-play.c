@@ -583,11 +583,10 @@ shape_pressed (GtkWidget      *widget,
       p->y = (gint) event->y;
 
       gtk_grab_add (widget);
-      gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
-                        GDK_BUTTON_RELEASE_MASK |
-                        GDK_BUTTON_MOTION_MASK  |
-                        GDK_POINTER_MOTION_HINT_MASK,
-                        NULL, NULL, 0);
+      gdk_seat_grab (gdk_event_get_seat ((GdkEvent *) event),
+                     gtk_widget_get_window (widget),
+                     GDK_SEAT_CAPABILITY_ALL, TRUE,
+                     NULL, (GdkEvent *) event, NULL, NULL);
       gdk_window_raise (gtk_widget_get_window (widget));
     }
 
@@ -597,9 +596,13 @@ shape_pressed (GtkWidget      *widget,
 static gboolean
 shape_released (GtkWidget *widget)
 {
+  GdkDisplay *display;
+
+  display = gtk_widget_get_display (widget);
+
   gtk_grab_remove (widget);
-  gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
-  gdk_display_flush (gtk_widget_get_display (widget));
+  gdk_seat_ungrab (gdk_display_get_default_seat (display));
+  gdk_display_flush (display);
 
   return FALSE;
 }
