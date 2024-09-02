@@ -1380,6 +1380,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                                                     progress);
 
   /* Update the masks of any filters */
+  /* TODO: Move to gimp_drawable_real_convert_type () once it's updated
+   * to run for all GimpDrawable child classes */
   if (gimp_drawable_has_filters (drawable))
     {
       GList         *filter_list;
