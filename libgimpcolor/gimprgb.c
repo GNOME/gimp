@@ -197,42 +197,6 @@ gimp_rgb_clamp (GimpRGB *rgb)
   rgb->a = CLAMP (rgb->a, 0.0, 1.0);
 }
 
-/**
- * gimp_rgb_luminance:
- * @rgb: a #GimpRGB struct
- *
- * Returns: the luminous intensity of the range from 0.0 to 1.0.
- *
- * Since: 2.4
- **/
-gdouble
-gimp_rgb_luminance (const GimpRGB *rgb)
-{
-  gdouble luminance;
-
-  g_return_val_if_fail (rgb != NULL, 0.0);
-
-  luminance = GIMP_RGB_LUMINANCE (rgb->r, rgb->g, rgb->b);
-
-  return CLAMP (luminance, 0.0, 1.0);
-}
-
-/**
- * gimp_rgb_luminance_uchar:
- * @rgb: a #GimpRGB struct
- *
- * Returns: the luminous intensity in the range from 0 to 255.
- *
- * Since: 2.4
- **/
-guchar
-gimp_rgb_luminance_uchar (const GimpRGB *rgb)
-{
-  g_return_val_if_fail (rgb != NULL, 0);
-
-  return ROUND (gimp_rgb_luminance (rgb) * 255.0);
-}
-
 void
 gimp_rgb_composite (GimpRGB              *color1,
                     const GimpRGB        *color2,
