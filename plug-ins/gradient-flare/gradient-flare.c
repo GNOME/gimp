@@ -1258,7 +1258,7 @@ plugin_put_pixel_func (gint      ix,
     }
   else
     {
-      guchar rgb[3] = {color->r * 255, color->g * 255, color->b * 255};
+      guchar rgb[3] = { color->r * 255, color->g * 255, color->b * 255 };
 
       dest[0] = GIMP_RGB_LUMINANCE (rgb[0], rgb[1], rgb[2]);
     }

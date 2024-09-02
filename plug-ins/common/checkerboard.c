@@ -258,10 +258,10 @@ do_checkerboard_pattern (GObject      *config,
 {
   CheckerboardParam_t  param;
   GeglColor           *color;
-  guchar               fg[4]     = {0, 0, 0, 0};
-  guchar               bg[4]     = {0, 0, 0, 0};
-  guchar               fg_lum[1] = {0};
-  guchar               bg_lum[1] = {0};
+  guchar               fg[4]     = { 0, 0, 0, 0 };
+  guchar               bg[4]     = { 0, 0, 0, 0 };
+  guchar               fg_lum[1] = { 0 };
+  guchar               bg_lum[1] = { 0 };
   const Babl          *format;
   gint                 bpp;
   gboolean             mode = FALSE;
