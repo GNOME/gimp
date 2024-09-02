@@ -246,6 +246,7 @@ CODE
 gimp_param_spec_resource ("$name",
                           "$nick",
                           "$blurb",
+                          GIMP_TYPE_RESOURCE,
                           $none_ok,
                           $default,
                           $flags)

@@ -229,16 +229,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                     flags);
         }
     }
-  else if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
-    {
-      GimpParamSpecUnit *spec = GIMP_PARAM_SPEC_UNIT (pspec);
-
-      copy = gimp_param_spec_unit (name, nick, blurb,
-                                   spec->allow_pixel,
-                                   spec->allow_percent,
-                                   spec->default_value,
-                                   flags);
-    }
   else if (GIMP_IS_PARAM_SPEC_CHOICE (pspec))
     {
       GimpParamSpecChoice *spec = GIMP_PARAM_SPEC_CHOICE (pspec);
@@ -248,33 +238,20 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                      spec->default_value,
                                      flags);
     }
-  else if (GIMP_IS_PARAM_SPEC_COLOR (pspec))
+  else if (GIMP_IS_PARAM_SPEC_OBJECT (pspec))
     {
-      GeglColor *color;
-      GValue     value = G_VALUE_INIT;
-
-      g_value_init (&value, GEGL_TYPE_COLOR);
-      g_param_value_set_default (pspec, &value);
-      color = g_value_dup_object (&value);
-      g_value_unset (&value);
-
-      copy = gimp_param_spec_color (name, nick, blurb,
-                                    gimp_param_spec_color_has_alpha (pspec),
-                                    color, flags);
-      g_clear_object (&color);
+      /* GimpParamSpecColor, GimpParamSpecUnit and all GimpParamSpecResource types. */
+      copy = gimp_param_spec_object_duplicate (pspec);
+      copy->flags = flags;
     }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
       GeglColor *color;
-      GValue     value = G_VALUE_INIT;
 
-      g_value_init (&value, GEGL_TYPE_COLOR);
-      g_param_value_set_default (pspec, &value);
-      color = g_value_dup_object (&value);
-      g_value_unset (&value);
+      color = gegl_param_spec_color_get_default (pspec);
+      color = gegl_color_duplicate (color);
 
-      copy = gegl_param_spec_color (name, nick, blurb,
-                                    color, flags);
+      copy = gegl_param_spec_color (name, nick, blurb, color, flags);
       g_clear_object (&color);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) &&
@@ -284,7 +261,9 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
       GeglColor *color;
 
       value = (GValue *) g_param_spec_get_default_value (pspec);
-      color = g_value_dup_object (value);
+      color = g_value_get_object (value);
+      if (color)
+        color = gegl_color_duplicate (color);
 
       copy = gegl_param_spec_color (name, nick, blurb,
                                     /*TRUE,*/
@@ -350,12 +329,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           g_strcmp0 (type_name, "GimpItem")       == 0 ||
           g_strcmp0 (type_name, "GimpLayerMask")  == 0 ||
           g_strcmp0 (type_name, "GimpSelection")  == 0 ||
-          g_strcmp0 (type_name, "GimpResource")   == 0 ||
-          g_strcmp0 (type_name, "GimpBrush")      == 0 ||
-          g_strcmp0 (type_name, "GimpFont")       == 0 ||
-          g_strcmp0 (type_name, "GimpGradient")   == 0 ||
-          g_strcmp0 (type_name, "GimpPalette")    == 0 ||
-          g_strcmp0 (type_name, "GimpPattern")    == 0 ||
           g_strcmp0 (type_name, "GimpPath")       == 0)
         {
           copy = g_param_spec_object (name, nick, blurb,

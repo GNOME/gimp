@@ -2229,6 +2229,43 @@ gimp_procedure_create_config (GimpProcedure *procedure)
                                                    priv->n_args);
 }
 
+/**
+ * _gimp_procedure_get_ref_count:
+ * @procedure: A #GimpProcedure
+ *
+ * Internal function to count the number of reference held by this
+ * procedure inside its list of arguments's defaults.
+ *
+ * Returns: a reference count, which you will probably have to multiply
+ *          by 2, if a config object has been created too.
+ *
+ * Since: 3.0
+ **/
+gint
+_gimp_procedure_get_ref_count (GimpProcedure *procedure,
+                               GObject       *object)
+{
+  GimpProcedurePrivate *priv;
+  gint                  ref_count = 0;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), 0);
+
+  priv = gimp_procedure_get_instance_private (procedure);
+  for (gint i = 0; i < priv->n_args; i++)
+    {
+      GParamSpec *pspec = priv->args[i];
+
+      if (GIMP_IS_PARAM_SPEC_OBJECT (pspec))
+        {
+          if (gimp_param_spec_object_has_default (pspec) &&
+              gimp_param_spec_object_get_default (pspec) == object)
+            ref_count++;
+        }
+    }
+
+  return ref_count;
+}
+
 
 /*  private functions  */
 

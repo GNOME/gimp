@@ -302,15 +302,14 @@ gimp_config_reset_properties (GObject *object)
       if ((prop_spec->flags & G_PARAM_WRITABLE) &&
           ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
         {
-          if (G_IS_PARAM_SPEC_OBJECT (prop_spec)     &&
-              ! GIMP_IS_PARAM_SPEC_COLOR (prop_spec) &&
-              ! GEGL_IS_PARAM_SPEC_COLOR (prop_spec) &&
-              ! GIMP_IS_PARAM_SPEC_UNIT (prop_spec))
+          if (G_IS_PARAM_SPEC_OBJECT (prop_spec)        &&
+              ! GIMP_IS_PARAM_SPEC_OBJECT (prop_spec)   &&
+              g_type_class_peek (prop_spec->value_type) &&
+              g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                     GIMP_TYPE_CONFIG))
             {
               if ((prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE) &&
-                  (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE) &&
-                  g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                         GIMP_TYPE_CONFIG))
+                  (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
                 {
                   g_value_init (&value, prop_spec->value_type);
 

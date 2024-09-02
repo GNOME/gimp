@@ -2371,6 +2371,7 @@ gimp_procedure_add_resource_argument (GimpProcedure *procedure,
 {
   _gimp_procedure_add_argument (procedure,
                                 gimp_param_spec_resource (name, nick, blurb,
+                                                          GIMP_TYPE_RESOURCE,
                                                           none_ok,
                                                           default_value,
                                                           flags));
@@ -2399,6 +2400,7 @@ gimp_procedure_add_resource_aux_argument (GimpProcedure *procedure,
 {
   _gimp_procedure_add_aux_argument (procedure,
                                     gimp_param_spec_resource (name, nick, blurb,
+                                                              GIMP_TYPE_RESOURCE,
                                                               TRUE,
                                                               default_value,
                                                               flags));
@@ -2425,6 +2427,7 @@ gimp_procedure_add_resource_return_value (GimpProcedure *procedure,
 {
   _gimp_procedure_add_return_value (procedure,
                                     gimp_param_spec_resource (name, nick, blurb,
+                                                              GIMP_TYPE_RESOURCE,
                                                               TRUE, NULL, flags));
 }
 

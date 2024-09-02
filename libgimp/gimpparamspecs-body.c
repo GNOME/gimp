@@ -989,46 +989,46 @@ gimp_param_spec_display (const gchar *name,
  * GIMP_TYPE_PARAM_RESOURCE
  */
 
- static void       gimp_param_resource_class_init (GParamSpecClass *klass);
- static void       gimp_param_resource_init       (GParamSpec      *pspec);
- static void       gimp_param_resource_finalize   (GParamSpec      *pspec);
- static gboolean   gimp_param_resource_validate   (GParamSpec      *pspec,
-                                                   GValue          *value);
- static void       gimp_param_resource_value_set_default
-                                                  (GParamSpec      *pspec,
-                                                   GValue          *value);
- GType
- gimp_param_resource_get_type (void)
- {
-   static GType type = 0;
+static void         gimp_param_resource_class_init (GimpParamSpecObjectClass *klass);
+static void         gimp_param_resource_init       (GParamSpec               *pspec);
+static GParamSpec * gimp_param_resource_duplicate  (GParamSpec               *pspec);
+static gboolean     gimp_param_resource_validate   (GParamSpec               *pspec,
+                                                    GValue                   *value);
 
-   if (! type)
-     {
-       const GTypeInfo info =
-       {
-         sizeof (GParamSpecClass),
-         NULL, NULL,
-         (GClassInitFunc) gimp_param_resource_class_init,
-         NULL, NULL,
-         sizeof (GimpParamSpecResource),
-         0,
-         (GInstanceInitFunc) gimp_param_resource_init
-       };
 
-       type = g_type_register_static (G_TYPE_PARAM_OBJECT,
-                                      "GimpParamResource", &info, 0);
-     }
+GType
+gimp_param_resource_get_type (void)
+{
+  static GType type = 0;
 
-   return type;
- }
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GimpParamSpecObjectClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_resource_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecResource),
+        0,
+        (GInstanceInitFunc) gimp_param_resource_init
+      };
+
+      type = g_type_register_static (GIMP_TYPE_PARAM_OBJECT, "GimpParamResource", &info, 0);
+    }
+
+  return type;
+}
 
 static void
-gimp_param_resource_class_init (GParamSpecClass *klass)
+gimp_param_resource_class_init (GimpParamSpecObjectClass *klass)
 {
-  klass->value_type        = GIMP_TYPE_RESOURCE;
-  klass->finalize          = gimp_param_resource_finalize;
-  klass->value_validate    = gimp_param_resource_validate;
-  klass->value_set_default = gimp_param_resource_value_set_default;
+  GParamSpecClass *pclass = G_PARAM_SPEC_CLASS (klass);
+
+  klass->duplicate       = gimp_param_resource_duplicate;
+
+  pclass->value_type     = GIMP_TYPE_RESOURCE;
+  pclass->value_validate = gimp_param_resource_validate;
 }
 
 static void
@@ -1037,19 +1037,24 @@ gimp_param_resource_init (GParamSpec *pspec)
   GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
 
   rspec->none_ok = FALSE;
-  rspec->default_value = NULL;
 }
 
-static void
-gimp_param_resource_finalize (GParamSpec *pspec)
+static GParamSpec *
+gimp_param_resource_duplicate (GParamSpec *pspec)
 {
-  GimpParamSpecResource *rspec        = GIMP_PARAM_SPEC_RESOURCE (pspec);
-  GParamSpecClass       *parent_class = g_type_class_peek (
-                                          g_type_parent (GIMP_TYPE_PARAM_RESOURCE));
+  GParamSpec *duplicate;
 
-  g_clear_object (&rspec->default_value);
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec), NULL);
 
-  parent_class->finalize (pspec);
+  duplicate = gimp_param_spec_resource (pspec->name,
+                                        g_param_spec_get_nick (pspec),
+                                        g_param_spec_get_blurb (pspec),
+                                        pspec->value_type,
+                                        GIMP_PARAM_SPEC_RESOURCE (pspec)->none_ok,
+                                        GIMP_RESOURCE (gimp_param_spec_object_get_default (pspec)),
+                                        pspec->flags);
+
+  return duplicate;
 }
 
 static gboolean
@@ -1072,16 +1077,6 @@ gimp_param_resource_validate (GParamSpec *pspec,
 
   return FALSE;
 }
-
-static void
-gimp_param_resource_value_set_default (GParamSpec *pspec,
-                                       GValue     *value)
-{
-  g_return_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec));
-
-  g_value_set_object (value, GIMP_PARAM_SPEC_RESOURCE (pspec)->default_value);
-}
-
 
 /**
  * gimp_param_spec_resource:
@@ -1117,22 +1112,37 @@ GParamSpec *
 gimp_param_spec_resource (const gchar  *name,
                           const gchar  *nick,
                           const gchar  *blurb,
+                          GType         resource_type,
                           gboolean      none_ok,
                           GimpResource *default_value,
                           GParamFlags   flags)
 {
   GimpParamSpecResource *rspec;
+  GType                  param_type;
 
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_RESOURCE,
-                                 name, nick, blurb, flags);
+  if (resource_type == GIMP_TYPE_RESOURCE ||
+      resource_type == G_TYPE_NONE)
+    param_type = GIMP_TYPE_PARAM_RESOURCE;
+  else if (resource_type == GIMP_TYPE_BRUSH)
+    param_type = GIMP_TYPE_PARAM_BRUSH;
+  else if (resource_type == GIMP_TYPE_PATTERN)
+    param_type = GIMP_TYPE_PARAM_PATTERN;
+  else if (resource_type == GIMP_TYPE_GRADIENT)
+    param_type = GIMP_TYPE_PARAM_GRADIENT;
+  else if (resource_type == GIMP_TYPE_PALETTE)
+    param_type = GIMP_TYPE_PARAM_PALETTE;
+  else if (resource_type == GIMP_TYPE_FONT)
+    param_type = GIMP_TYPE_PARAM_FONT;
+  else
+    g_return_val_if_reached (NULL);
+
+  rspec = g_param_spec_internal (param_type, name, nick, blurb, flags);
 
   g_return_val_if_fail (rspec, NULL);
 
   rspec->none_ok = none_ok ? TRUE : FALSE;
 
-  rspec->default_value = default_value;
-  if (default_value)
-    g_object_ref (default_value);
+  gimp_param_spec_object_set_default (G_PARAM_SPEC (rspec), G_OBJECT (default_value));
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1154,7 +1164,7 @@ gimp_param_brush_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_brush_class_init,
         NULL, NULL,
@@ -1209,20 +1219,9 @@ gimp_param_spec_brush (const gchar *name,
                        GimpBrush   *default_value,
                        GParamFlags  flags)
 {
-  GimpParamSpecResource *rspec;
-
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_BRUSH,
-                                 name, nick, blurb, flags);
-
-  g_return_val_if_fail (rspec, NULL);
-
-  rspec->none_ok = none_ok ? TRUE : FALSE;
-
-  rspec->default_value = GIMP_RESOURCE (default_value);
-  if (default_value)
-    g_object_ref (default_value);
-
-  return G_PARAM_SPEC (rspec);
+  return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_BRUSH,
+                                   none_ok, GIMP_RESOURCE (default_value),
+                                   flags);
 }
 
 
@@ -1242,7 +1241,7 @@ gimp_param_pattern_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_pattern_class_init,
         NULL, NULL,
@@ -1297,20 +1296,9 @@ gimp_param_spec_pattern (const gchar *name,
                          GimpPattern *default_value,
                          GParamFlags  flags)
 {
-  GimpParamSpecResource *rspec;
-
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_PATTERN,
-                                 name, nick, blurb, flags);
-
-  g_return_val_if_fail (rspec, NULL);
-
-  rspec->none_ok = none_ok ? TRUE : FALSE;
-
-  rspec->default_value = GIMP_RESOURCE (default_value);
-  if (default_value)
-    g_object_ref (default_value);
-
-  return G_PARAM_SPEC (rspec);
+  return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_PATTERN,
+                                   none_ok, GIMP_RESOURCE (default_value),
+                                   flags);
 }
 
 
@@ -1330,7 +1318,7 @@ gimp_param_gradient_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_gradient_class_init,
         NULL, NULL,
@@ -1385,18 +1373,9 @@ gimp_param_spec_gradient (const gchar  *name,
                           GimpGradient *default_value,
                           GParamFlags   flags)
 {
-  GimpParamSpecResource *rspec;
-
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_GRADIENT,
-                                 name, nick, blurb, flags);
-
-  g_return_val_if_fail (rspec, NULL);
-
-  rspec->none_ok = none_ok ? TRUE : FALSE;
-
-  rspec->default_value = GIMP_RESOURCE (default_value);
-
-  return G_PARAM_SPEC (rspec);
+  return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_GRADIENT,
+                                   none_ok, GIMP_RESOURCE (default_value),
+                                   flags);
 }
 
 
@@ -1416,7 +1395,7 @@ gimp_param_palette_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_palette_class_init,
         NULL, NULL,
@@ -1471,20 +1450,9 @@ gimp_param_spec_palette (const gchar *name,
                          GimpPalette *default_value,
                          GParamFlags  flags)
 {
-  GimpParamSpecResource *rspec;
-
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_PALETTE,
-                                 name, nick, blurb, flags);
-
-  g_return_val_if_fail (rspec, NULL);
-
-  rspec->none_ok = none_ok ? TRUE : FALSE;
-
-  rspec->default_value = GIMP_RESOURCE (default_value);
-  if (default_value)
-    g_object_ref (default_value);
-
-  return G_PARAM_SPEC (rspec);
+  return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_PALETTE,
+                                   none_ok, GIMP_RESOURCE (default_value),
+                                   flags);
 }
 
 
@@ -1504,7 +1472,7 @@ gimp_param_font_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_font_class_init,
         NULL, NULL,
@@ -1559,18 +1527,7 @@ gimp_param_spec_font (const gchar *name,
                       GimpFont    *default_value,
                       GParamFlags  flags)
 {
-  GimpParamSpecResource *rspec;
-
-  rspec = g_param_spec_internal (GIMP_TYPE_PARAM_FONT,
-                                 name, nick, blurb, flags);
-
-  g_return_val_if_fail (rspec, NULL);
-
-  rspec->none_ok = none_ok ? TRUE : FALSE;
-
-  rspec->default_value = GIMP_RESOURCE (default_value);
-  if (default_value)
-    g_object_ref (default_value);
-
-  return G_PARAM_SPEC (rspec);
+  return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_FONT,
+                                   none_ok, GIMP_RESOURCE (default_value),
+                                   flags);
 }

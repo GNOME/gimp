@@ -93,7 +93,6 @@ GParamSpec * gimp_param_spec_color_from_string (const gchar *name,
                                                 const gchar *default_color_string,
                                                 GParamFlags  flags);
 
-GeglColor  * gimp_param_spec_color_get_default (GParamSpec  *pspec);
 gboolean     gimp_param_spec_color_has_alpha   (GParamSpec  *pspec);
 
 G_END_DECLS

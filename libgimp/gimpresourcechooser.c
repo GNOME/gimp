@@ -188,6 +188,7 @@ gimp_resource_chooser_class_init (GimpResourceChooserClass *klass)
     gimp_param_spec_resource ("resource",
                               "Resource",
                               "The currently selected resource",
+                              GIMP_TYPE_RESOURCE,
                               TRUE,  /* none_ok */
                               NULL,  /* no default for this property. */
                               GIMP_PARAM_READWRITE);

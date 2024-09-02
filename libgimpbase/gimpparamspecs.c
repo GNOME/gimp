@@ -96,10 +96,13 @@ gimp_param_choice_value_set_default (GParamSpec *pspec,
 static void
 gimp_param_choice_finalize (GParamSpec *pspec)
 {
-  GimpParamSpecChoice *spec_choice = GIMP_PARAM_SPEC_CHOICE (pspec);
+  GimpParamSpecChoice *spec_choice  = GIMP_PARAM_SPEC_CHOICE (pspec);
+  GParamSpecClass     *parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_CHOICE));
 
   g_free (spec_choice->default_value);
   g_object_unref (spec_choice->choice);
+
+  parent_class->finalize (pspec);
 }
 
 static gboolean
@@ -185,6 +188,183 @@ gimp_param_spec_choice (const gchar *name,
   choice_spec->default_value = g_strdup (default_value);
 
   return G_PARAM_SPEC (choice_spec);
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_OBJECT
+ */
+
+static void         gimp_param_object_class_init          (GimpParamSpecObjectClass *klass);
+static void         gimp_param_object_init                (GimpParamSpecObject      *pspec);
+static void         gimp_param_object_finalize            (GParamSpec               *pspec);
+static void         gimp_param_object_value_set_default   (GParamSpec               *pspec,
+                                                           GValue                   *value);
+
+static GParamSpec * gimp_param_spec_object_real_duplicate (GParamSpec               *pspec);
+
+
+GType
+gimp_param_object_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GimpParamSpecObjectClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_object_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecObject),
+        0,
+        (GInstanceInitFunc) gimp_param_object_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_OBJECT,
+                                     "GimpParamObject", &info, G_TYPE_FLAG_ABSTRACT);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_object_class_init (GimpParamSpecObjectClass *klass)
+{
+  GParamSpecClass *pclass = G_PARAM_SPEC_CLASS (klass);
+
+  klass->duplicate          = gimp_param_spec_object_real_duplicate;
+
+  pclass->value_type        = G_TYPE_OBJECT;
+  pclass->finalize          = gimp_param_object_finalize;
+  pclass->value_set_default = gimp_param_object_value_set_default;
+}
+
+static void
+gimp_param_object_init (GimpParamSpecObject *ospec)
+{
+  ospec->_default_value = NULL;
+}
+
+static void
+gimp_param_object_finalize (GParamSpec *pspec)
+{
+  GimpParamSpecObject *ospec        = GIMP_PARAM_SPEC_OBJECT (pspec);
+  GParamSpecClass     *parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_OBJECT));
+
+  g_clear_object (&ospec->_default_value);
+
+  parent_class->finalize (pspec);
+}
+
+static void
+gimp_param_object_value_set_default (GParamSpec *pspec,
+                                     GValue     *value)
+{
+  g_return_if_fail (GIMP_IS_PARAM_SPEC_OBJECT (pspec));
+
+  g_value_set_object (value, GIMP_PARAM_SPEC_OBJECT (pspec)->_default_value);
+}
+
+static GParamSpec *
+gimp_param_spec_object_real_duplicate (GParamSpec *pspec)
+{
+  GimpParamSpecObject *ospec;
+  GimpParamSpecObject *duplicate;
+
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_OBJECT (pspec), NULL);
+
+  ospec = GIMP_PARAM_SPEC_OBJECT (pspec);
+  duplicate = g_param_spec_internal (G_TYPE_FROM_INSTANCE (pspec),
+                                     pspec->name,
+                                     g_param_spec_get_nick (pspec),
+                                     g_param_spec_get_blurb (pspec),
+                                     pspec->flags);
+
+  duplicate->_default_value = ospec->_default_value ? g_object_ref (ospec->_default_value) : NULL;
+  duplicate->_has_default   = ospec->_has_default;
+
+  return G_PARAM_SPEC (duplicate);
+}
+
+/**
+ * gimp_param_spec_object_get_default:
+ * @pspec: a #GObject #GParamSpec
+ *
+ * Get the default object value of the param spec.
+ *
+ * It is a programming error to call this on a
+ * [struct@Gimp.ParamSpecObject] with no default value. You should
+ * verify first with [func@Gimp.ParamSpecObject.has_default].
+ *
+ * Returns: (transfer none): the default value.
+ */
+GObject *
+gimp_param_spec_object_get_default (GParamSpec  *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_OBJECT (pspec), NULL);
+  g_return_val_if_fail (GIMP_PARAM_SPEC_OBJECT (pspec)->_has_default, NULL);
+
+  return GIMP_PARAM_SPEC_OBJECT (pspec)->_default_value;
+}
+
+/**
+ * gimp_param_spec_object_set_default:
+ * @pspec: a #GObject #GParamSpec
+ * @default_value: (transfer none) (nullable): a default value.
+ *
+ * Set the default object value of the param spec. This will switch the
+ * `has_default` flag so that [func@Gimp.ParamSpecObject.has_default]
+ * will now return %TRUE.
+ *
+ * A %NULL @default_value still counts as a default (unless the specific
+ * @pspec does not allow %NULL as a default).
+ */
+void
+gimp_param_spec_object_set_default (GParamSpec *pspec,
+                                    GObject    *default_value)
+{
+  g_return_if_fail (GIMP_IS_PARAM_SPEC_OBJECT (pspec));
+
+  GIMP_PARAM_SPEC_OBJECT (pspec)->_has_default = TRUE;
+  g_set_object (&GIMP_PARAM_SPEC_OBJECT (pspec)->_default_value, default_value);
+}
+
+/**
+ * gimp_param_spec_object_has_default:
+ * @pspec: a #GObject #GParamSpec
+ *
+ * This function tells whether a default was set, typically with
+ * [func@Gimp.ParamSpecObject.set_default] or any other way. It
+ * does not guarantee that the default is an actual object (it may be
+ * %NULL if valid as a default).
+ *
+ * Returns: whether a default value was set.
+ */
+gboolean
+gimp_param_spec_object_has_default (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_OBJECT (pspec), FALSE);
+
+  return GIMP_PARAM_SPEC_OBJECT (pspec)->_has_default;
+}
+
+/**
+ * gimp_param_spec_object_duplicate:
+ * @pspec: a [struct@Gimp.ParamSpecObject].
+ *
+ * This function duplicates @pspec appropriately, depending on the
+ * accurate spec type.
+ *
+ * Returns: (transfer floating): a newly created param spec.
+ */
+GParamSpec *
+gimp_param_spec_object_duplicate (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_OBJECT (pspec), NULL);
+
+  return GIMP_PARAM_SPEC_OBJECT_GET_CLASS (pspec)->duplicate (pspec);
 }
 
 

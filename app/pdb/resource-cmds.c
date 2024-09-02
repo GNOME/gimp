@@ -542,6 +542,7 @@ register_resource_procs (GimpPDB *pdb)
                                    gimp_param_spec_resource ("resource",
                                                              "resource",
                                                              "The resource",
+                                                             GIMP_TYPE_RESOURCE,
                                                              TRUE,
                                                              NULL,
                                                              GIMP_PARAM_READWRITE));
@@ -593,6 +594,7 @@ register_resource_procs (GimpPDB *pdb)
                                    gimp_param_spec_resource ("resource",
                                                              "resource",
                                                              "The resource",
+                                                             GIMP_TYPE_RESOURCE,
                                                              FALSE,
                                                              NULL,
                                                              GIMP_PARAM_READWRITE));
@@ -793,6 +795,7 @@ register_resource_procs (GimpPDB *pdb)
                                gimp_param_spec_resource ("resource",
                                                          "resource",
                                                          "The resource",
+                                                         GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
                                                          GIMP_PARAM_READWRITE));
@@ -826,6 +829,7 @@ register_resource_procs (GimpPDB *pdb)
                                gimp_param_spec_resource ("resource",
                                                          "resource",
                                                          "The resource",
+                                                         GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
                                                          GIMP_PARAM_READWRITE));
@@ -870,6 +874,7 @@ register_resource_procs (GimpPDB *pdb)
                                gimp_param_spec_resource ("resource",
                                                          "resource",
                                                          "The resource",
+                                                         GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
                                                          GIMP_PARAM_READWRITE));
@@ -900,6 +905,7 @@ register_resource_procs (GimpPDB *pdb)
                                gimp_param_spec_resource ("resource",
                                                          "resource",
                                                          "The resource",
+                                                         GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
                                                          GIMP_PARAM_READWRITE));
@@ -907,6 +913,7 @@ register_resource_procs (GimpPDB *pdb)
                                    gimp_param_spec_resource ("resource-copy",
                                                              "resource copy",
                                                              "A copy of the resource.",
+                                                             GIMP_TYPE_RESOURCE,
                                                              FALSE,
                                                              NULL,
                                                              GIMP_PARAM_READWRITE));
@@ -931,6 +938,7 @@ register_resource_procs (GimpPDB *pdb)
                                gimp_param_spec_resource ("resource",
                                                          "resource",
                                                          "The resource",
+                                                         GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
                                                          GIMP_PARAM_READWRITE));
@@ -962,6 +970,7 @@ register_resource_procs (GimpPDB *pdb)
                                gimp_param_spec_resource ("resource",
                                                          "resource",
                                                          "The resource",
+                                                         GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
                                                          GIMP_PARAM_READWRITE));

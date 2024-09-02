@@ -151,6 +151,7 @@ typedef struct _GimpPlugInPrivate
   GList      *temp_procedures;
 
   GList      *procedure_stack;
+  GList      *ran_procedure_stack;
   GHashTable *displays;
   GHashTable *images;
   GHashTable *items;
@@ -292,6 +293,13 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
 static void
 gimp_plug_in_init (GimpPlugIn *plug_in)
 {
+  GimpPlugInPrivate *priv;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  priv->procedure_stack     = NULL;
+  priv->ran_procedure_stack = NULL;
+  priv->temp_procedures     = NULL;
 }
 
 static void
@@ -369,6 +377,7 @@ gimp_plug_in_finalize (GObject *object)
   gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", TRUE);
 
   gimp_plug_in_destroy_hashes (plug_in);
+  g_clear_list (&priv->ran_procedure_stack, g_object_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -600,10 +609,9 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 
       priv = gimp_plug_in_get_instance_private (plug_in);
 
-      priv->temp_procedures =
-        g_list_remove (priv->temp_procedures,
-                       procedure);
-      g_object_unref (procedure);
+      priv->temp_procedures = g_list_remove (priv->temp_procedures, procedure);
+      if (! g_list_find (priv->ran_procedure_stack, procedure))
+        g_object_unref (procedure);
     }
 }
 
@@ -1436,12 +1444,9 @@ gimp_plug_in_main_proc_run (GimpPlugIn *plug_in,
   priv      = gimp_plug_in_get_instance_private (plug_in);
 
   if (procedure)
-    {
-      gimp_plug_in_proc_run_internal (plug_in,
-                                      proc_run, procedure,
-                                      &proc_return);
-      g_object_unref (procedure);
-    }
+    gimp_plug_in_proc_run_internal (plug_in,
+                                    proc_run, procedure,
+                                    &proc_return);
 
   gimp_plug_in_main_run_cleanup (plug_in);
 
@@ -1464,11 +1469,9 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
   priv      = gimp_plug_in_get_instance_private (plug_in);
 
   if (procedure)
-    {
-      gimp_plug_in_proc_run_internal (plug_in,
-                                      proc_run, procedure,
-                                      &proc_return);
-    }
+    gimp_plug_in_proc_run_internal (plug_in,
+                                    proc_run, procedure,
+                                    &proc_return);
 
   gimp_plug_in_temp_run_cleanup (plug_in);
 
@@ -1650,7 +1653,9 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 {
   GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
 
-  priv->procedure_stack = g_list_remove (priv->procedure_stack, procedure);
+  priv->procedure_stack     = g_list_remove (priv->procedure_stack, procedure);
+  if (! g_list_find (priv->ran_procedure_stack, procedure))
+    priv->ran_procedure_stack = g_list_prepend (priv->ran_procedure_stack, procedure);
 
   /* Don't destroy proxies now because any proc, especially temporary procs,
    * may have passed a reference to a proc higher in the stack e.g. the main procedure.
@@ -1940,23 +1945,34 @@ gimp_plug_in_destroy_proxies (GimpPlugIn  *plug_in,
                               const gchar *type,
                               gboolean     destroy_all)
 {
-  GHashTableIter iter;
-  gpointer       key, value;
+  GimpPlugInPrivate *priv;
+  GHashTableIter     iter;
+  gpointer           key, value;
 
   if (! hash_table)
     return;
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
 
   g_hash_table_iter_init (&iter, hash_table);
 
   while (g_hash_table_iter_next (&iter, &key, &value))
     {
       GObject *object = value;
+      gint     ref_count = 0;
 
-      if (object->ref_count == 1)
+      for (GList *list = priv->ran_procedure_stack; list; list = list->next)
+        ref_count += _gimp_procedure_get_ref_count (list->data, object);
+
+      if (object->ref_count == 1 + ref_count * 2)
         {
+          /* There may be additional references as argument defaults (we
+           * multiply by 2, because there would be one copy of the spec
+           * in the config type too).
+           */
           g_hash_table_iter_remove (&iter);
         }
-      else if (! G_IS_OBJECT (object))
+      else if (! G_IS_OBJECT (object) || object->ref_count < 1 + ref_count * 2)
         {
           /* this is debug code, a plug-in MUST NOT unref a proxy. To be nice,
            * we steal the object from the table, as removing it normally would

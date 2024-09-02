@@ -268,7 +268,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
        * Args to PDB procedures are not sent as GimpParamResource crossing wire.
        */
       if (! strcmp (param_def->type_name, "GimpParamResource"))
-        return gimp_param_spec_resource (name, nick, blurb,
+        return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_RESOURCE,
                                          param_def->meta.m_id.none_ok, NULL, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamBrush"))
@@ -431,7 +431,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
         }
       else if (GIMP_IS_PARAM_SPEC_COLOR (pspec))
         {
-          default_color = gimp_param_spec_color_get_default (pspec);
+          default_color = GEGL_COLOR (gimp_param_spec_object_get_default (pspec));
           param_def->meta.m_gegl_color.has_alpha = gimp_param_spec_color_has_alpha (pspec);
         }
       else

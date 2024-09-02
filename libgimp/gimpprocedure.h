@@ -225,6 +225,9 @@ G_GNUC_INTERNAL GimpProcedureConfig * _gimp_procedure_create_run_config (GimpPro
 G_GNUC_INTERNAL GimpValueArray      * _gimp_procedure_run_array         (GimpProcedure  *procedure,
                                                                          GimpValueArray *args);
 
+G_GNUC_INTERNAL gint                  _gimp_procedure_get_ref_count     (GimpProcedure  *procedure,
+                                                                         GObject        *object);
+
 
 G_END_DECLS
 

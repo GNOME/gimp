@@ -119,6 +119,68 @@ GParamSpec * gimp_param_spec_choice     (const gchar  *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_OBJECT
+ */
+
+#define GIMP_TYPE_PARAM_OBJECT                  (gimp_param_object_get_type ())
+#define GIMP_PARAM_SPEC_OBJECT(pspec)           (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_OBJECT, GimpParamSpecObject))
+#define GIMP_PARAM_SPEC_OBJECT_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PARAM_OBJECT, GimpParamSpecObjectClass))
+#define GIMP_IS_PARAM_SPEC_OBJECT(pspec)        (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_OBJECT))
+#define GIMP_IS_PARAM_SPEC_OBJECT_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PARAM_OBJECT))
+#define GIMP_PARAM_SPEC_OBJECT_GET_CLASS(pspec) (G_TYPE_INSTANCE_GET_CLASS ((pspec), G_TYPE_PARAM_OBJECT, GimpParamSpecObjectClass))
+
+
+typedef struct _GimpParamSpecObject      GimpParamSpecObject;
+typedef struct _GimpParamSpecObjectClass GimpParamSpecObjectClass;
+
+struct _GimpParamSpecObject
+{
+  GParamSpecObject  parent_instance;
+
+  /*< private >*/
+  GObject          *_default_value;
+  gboolean          _has_default;
+};
+
+struct _GimpParamSpecObjectClass
+{
+  /* XXX: vapigen fails with the following error without the private
+   * comment:
+   * > error: The type name `GLib.ParamSpecClass' could not be found
+   * Not sure why it doesn't search for GObject.ParamSpecClass instead.
+   * Anyway putting it private is good enough and hides the parent_class
+   * to bindings.
+   */
+  /*< private >*/
+  GParamSpecClass   parent_class;
+
+  GParamSpec      * (* duplicate) (GParamSpec *pspec);
+
+  /* Padding for future expansion */
+  void              (*_gimp_reserved0) (void);
+  void              (*_gimp_reserved1) (void);
+  void              (*_gimp_reserved2) (void);
+  void              (*_gimp_reserved3) (void);
+  void              (*_gimp_reserved4) (void);
+  void              (*_gimp_reserved5) (void);
+  void              (*_gimp_reserved6) (void);
+  void              (*_gimp_reserved7) (void);
+  void              (*_gimp_reserved8) (void);
+  void              (*_gimp_reserved9) (void);
+};
+
+GType        gimp_param_object_get_type         (void) G_GNUC_CONST;
+
+GObject    * gimp_param_spec_object_get_default (GParamSpec  *pspec);
+void         gimp_param_spec_object_set_default (GParamSpec  *pspec,
+                                                 GObject     *default_value);
+gboolean     gimp_param_spec_object_has_default (GParamSpec  *pspec);
+
+GParamSpec * gimp_param_spec_object_duplicate   (GParamSpec  *pspec);
+
+
+
+/*
  * GIMP_TYPE_ARRAY
  */
 

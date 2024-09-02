@@ -130,6 +130,7 @@ EXPORTS
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
 	gimp_param_object_array_get_type
+	gimp_param_object_get_type
 	gimp_param_parasite_get_type
 	gimp_param_spec_array
 	gimp_param_spec_choice
@@ -138,6 +139,10 @@ EXPORTS
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
 	gimp_param_spec_object_array
+	gimp_param_spec_object_duplicate
+	gimp_param_spec_object_get_default
+	gimp_param_spec_object_has_default
+	gimp_param_spec_object_set_default
 	gimp_param_spec_parasite
 	gimp_param_spec_unit
 	gimp_param_spec_value_array

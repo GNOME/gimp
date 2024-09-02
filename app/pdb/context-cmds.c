@@ -5783,6 +5783,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_resource ("resource",
                                                              "resource",
                                                              "The active resource",
+                                                             GIMP_TYPE_RESOURCE,
                                                              FALSE,
                                                              NULL,
                                                              GIMP_PARAM_READWRITE));

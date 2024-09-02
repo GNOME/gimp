@@ -94,11 +94,11 @@ typedef struct _GimpParamSpecUnit GimpParamSpecUnit;
 
 struct _GimpParamSpecUnit
 {
-  GParamSpecObject  parent_instance;
+  GimpParamSpecObject  parent_instance;
 
-  gboolean          allow_pixel;
-  gboolean          allow_percent;
-  GimpUnit         *default_value;
+  gboolean             allow_pixel;
+  gboolean             allow_percent;
+  GimpUnit            *default_value;
 };
 
 GType        gimp_param_unit_get_type (void) G_GNUC_CONST;

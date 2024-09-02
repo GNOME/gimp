@@ -929,12 +929,13 @@ gimp_units_to_points (gdouble   value,
  * GIMP_TYPE_PARAM_UNIT
  */
 
-static void       gimp_param_unit_class_init  (GParamSpecClass *klass);
-static void       gimp_param_unit_init        (GParamSpec      *pspec);
-static void       gimp_param_unit_set_default (GParamSpec      *pspec,
-                                               GValue          *value);
-static gboolean   gimp_param_unit_validate    (GParamSpec      *pspec,
-                                               GValue          *value);
+static void         gimp_param_unit_class_init  (GimpParamSpecObjectClass *klass);
+static void         gimp_param_unit_init        (GParamSpec               *pspec);
+static GParamSpec * gimp_param_unit_duplicate   (GParamSpec               *pspec);
+static void         gimp_param_unit_set_default (GParamSpec               *pspec,
+                                                 GValue                   *value);
+static gboolean     gimp_param_unit_validate    (GParamSpec               *pspec,
+                                                 GValue                   *value);
 
 /**
  * gimp_param_unit_get_type:
@@ -954,7 +955,7 @@ gimp_param_unit_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_unit_class_init,
         NULL, NULL,
@@ -963,7 +964,7 @@ gimp_param_unit_get_type (void)
         (GInstanceInitFunc) gimp_param_unit_init
       };
 
-      type = g_type_register_static (G_TYPE_PARAM_OBJECT,
+      type = g_type_register_static (GIMP_TYPE_PARAM_OBJECT,
                                      "GimpParamUnit", &info, 0);
     }
 
@@ -971,11 +972,15 @@ gimp_param_unit_get_type (void)
 }
 
 static void
-gimp_param_unit_class_init (GParamSpecClass *klass)
+gimp_param_unit_class_init (GimpParamSpecObjectClass *klass)
 {
-  klass->value_type        = GIMP_TYPE_UNIT;
-  klass->value_set_default = gimp_param_unit_set_default;
-  klass->value_validate    = gimp_param_unit_validate;
+  GParamSpecClass *pclass = G_PARAM_SPEC_CLASS (klass);
+
+  klass->duplicate          = gimp_param_unit_duplicate;
+
+  pclass->value_type        = GIMP_TYPE_UNIT;
+  pclass->value_set_default = gimp_param_unit_set_default;
+  pclass->value_validate    = gimp_param_unit_validate;
 }
 
 static void
@@ -986,6 +991,26 @@ gimp_param_unit_init (GParamSpec *pspec)
   uspec->allow_pixel   = TRUE;
   uspec->allow_percent = TRUE;
   uspec->default_value = gimp_unit_inch ();
+}
+
+static GParamSpec *
+gimp_param_unit_duplicate (GParamSpec *pspec)
+{
+  GParamSpec        *duplicate;
+  GimpParamSpecUnit *uspec;
+
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_UNIT (pspec), NULL);
+
+  uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+  duplicate = gimp_param_spec_unit (pspec->name,
+                                    g_param_spec_get_nick (pspec),
+                                    g_param_spec_get_blurb (pspec),
+                                    uspec->allow_pixel,
+                                    uspec->allow_percent,
+                                    uspec->default_value,
+                                    pspec->flags);
+
+  return duplicate;
 }
 
 static void

@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gegl.h>
 #include <gio/gio.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -33,6 +34,7 @@
 
 #include "gimplimits.h"
 #include "gimpmetadata.h"
+#include "gimpparamspecs.h"
 #include "gimpunit.h"
 
 #include "libgimp/libgimp-intl.h"

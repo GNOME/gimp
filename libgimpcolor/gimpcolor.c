@@ -43,17 +43,6 @@
  **/
 
 
-static void         gimp_param_color_class_init     (GParamSpecClass *klass);
-static void         gimp_param_color_init           (GParamSpec      *pspec);
-static void         gimp_param_color_finalize       (GParamSpec      *pspec);
-static gboolean     gimp_param_color_validate       (GParamSpec      *pspec,
-                                                     GValue          *value);
-static void         gimp_param_color_set_default    (GParamSpec *pspec,
-                                                     GValue     *value);
-static gint         gimp_param_color_cmp            (GParamSpec   *param_spec,
-                                                     const GValue *value1,
-                                                     const GValue *value2);
-
 static const Babl * gimp_babl_format_get_with_alpha (const Babl *format);
 static gfloat       gimp_color_get_CIE2000_distance (GeglColor  *color1,
                                                      GeglColor  *color2);
@@ -340,12 +329,22 @@ gimp_color_is_out_of_gamut (GeglColor  *color,
  * GIMP_TYPE_PARAM_COLOR
  */
 
+static void         gimp_param_color_class_init     (GimpParamSpecObjectClass *klass);
+static void         gimp_param_color_init           (GParamSpec               *pspec);
+static GParamSpec * gimp_param_color_duplicate      (GParamSpec               *pspec);
+static gboolean     gimp_param_color_validate       (GParamSpec               *pspec,
+                                                     GValue                   *value);
+static void         gimp_param_color_set_default    (GParamSpec               *pspec,
+                                                     GValue                   *value);
+static gint         gimp_param_color_cmp            (GParamSpec               *param_spec,
+                                                     const GValue             *value1,
+                                                     const GValue             *value2);
+
 struct _GimpParamSpecColor
 {
-  GParamSpecObject  parent_instance;
+  GimpParamSpecObject  parent_instance;
 
-  GeglColor        *default_color;
-  gboolean          has_alpha;
+  gboolean             has_alpha;
 
   /* TODO: these 2 settings are not currently settable:
    * - none_ok: whether a parameter were to allow NULL as a value. Of course, it
@@ -359,8 +358,8 @@ struct _GimpParamSpecColor
    * These can be implemented later as independent functions, especially as the
    * GimpParamSpecColor struct is private.
    */
-  gboolean          none_ok;
-  gboolean          validate;
+  gboolean              none_ok;
+  gboolean              validate;
 };
 
 GType
@@ -372,7 +371,7 @@ gimp_param_color_get_type (void)
     {
       const GTypeInfo info =
       {
-        sizeof (GParamSpecClass),
+        sizeof (GimpParamSpecObjectClass),
         NULL, NULL,
         (GClassInitFunc) gimp_param_color_class_init,
         NULL, NULL,
@@ -381,20 +380,23 @@ gimp_param_color_get_type (void)
         (GInstanceInitFunc) gimp_param_color_init
       };
 
-      type = g_type_register_static (G_TYPE_PARAM_OBJECT, "GimpParamColor", &info, 0);
+      type = g_type_register_static (GIMP_TYPE_PARAM_OBJECT, "GimpParamColor", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_color_class_init (GParamSpecClass *klass)
+gimp_param_color_class_init (GimpParamSpecObjectClass *klass)
 {
-  klass->finalize          = gimp_param_color_finalize;
-  klass->value_type        = GEGL_TYPE_COLOR;
-  klass->value_validate    = gimp_param_color_validate;
-  klass->value_set_default = gimp_param_color_set_default;
-  klass->values_cmp        = gimp_param_color_cmp;
+  GParamSpecClass *pclass = G_PARAM_SPEC_CLASS (klass);
+
+  klass->duplicate          = gimp_param_color_duplicate;
+
+  pclass->value_type        = GEGL_TYPE_COLOR;
+  pclass->value_validate    = gimp_param_color_validate;
+  pclass->value_set_default = gimp_param_color_set_default;
+  pclass->values_cmp        = gimp_param_color_cmp;
 }
 
 static void
@@ -402,21 +404,28 @@ gimp_param_color_init (GParamSpec *pspec)
 {
   GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
 
-  cspec->default_color = NULL;
   cspec->has_alpha     = TRUE;
   cspec->none_ok       = TRUE;
   cspec->validate      = FALSE;
 }
 
-static void
-gimp_param_color_finalize (GParamSpec *pspec)
+static GParamSpec *
+gimp_param_color_duplicate (GParamSpec *pspec)
 {
-  GimpParamSpecColor *cspec        = GIMP_PARAM_SPEC_COLOR (pspec);
-  GParamSpecClass    *parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_COLOR));
+  GParamSpec         *duplicate;
+  GimpParamSpecColor *cspec;
 
-  g_clear_object (&cspec->default_color);
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_COLOR (pspec), NULL);
 
-  parent_class->finalize (pspec);
+  cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+  duplicate = gimp_param_spec_color (pspec->name,
+                                     g_param_spec_get_nick (pspec),
+                                     g_param_spec_get_blurb (pspec),
+                                     cspec->has_alpha,
+                                     GEGL_COLOR (gimp_param_spec_object_get_default (pspec)),
+                                     pspec->flags);
+
+  return duplicate;
 }
 
 static gboolean
@@ -451,10 +460,11 @@ static void
 gimp_param_color_set_default (GParamSpec *pspec,
                               GValue     *value)
 {
-  GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
+  GeglColor *color;
 
-  if (cspec->default_color)
-    g_value_take_object (value, gegl_color_duplicate (cspec->default_color));
+  color = GEGL_COLOR (gimp_param_spec_object_get_default (pspec));
+  if (color)
+    g_value_take_object (value, gegl_color_duplicate (color));
 }
 
 static gint
@@ -496,6 +506,9 @@ gimp_param_color_cmp (GParamSpec   *param_spec,
  * @flags: flags for the property specified
  *
  * Creates a new #GParamSpec instance specifying a #GeglColor property.
+ * Note that the @default_color is duplicated, so reusing object will
+ * not change the default color of the returned
+ * [struct@Gimp.ParamSpecColor].
  *
  * Returns: (transfer full): a newly created parameter specification
  */
@@ -508,14 +521,17 @@ gimp_param_spec_color (const gchar *name,
                        GParamFlags  flags)
 {
   GimpParamSpecColor *cspec;
+  GeglColor          *dup_color = NULL;
 
   cspec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR, name, nick, blurb, flags);
 
-  cspec->default_color = default_color;
   if (default_color)
-    g_object_ref (default_color);
+    dup_color = gegl_color_duplicate (default_color);
 
-  cspec->has_alpha     = has_alpha;
+  gimp_param_spec_object_set_default (G_PARAM_SPEC (cspec), G_OBJECT (dup_color));
+  g_clear_object (&dup_color);
+
+  cspec->has_alpha = has_alpha;
 
   return G_PARAM_SPEC (cspec);
 }
@@ -542,30 +558,20 @@ gimp_param_spec_color_from_string (const gchar *name,
                                    GParamFlags  flags)
 {
   GimpParamSpecColor *cspec;
+  GeglColor          *default_color;
 
   cspec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR,
                                  name, nick, blurb, flags);
 
-  cspec->default_color = g_object_new (GEGL_TYPE_COLOR,
-                                       "string", default_color_string,
-                                       NULL);
-  cspec->has_alpha     = has_alpha;
+  default_color = g_object_new (GEGL_TYPE_COLOR,
+                                "string", default_color_string,
+                                NULL);
+  gimp_param_spec_object_set_default (G_PARAM_SPEC (cspec), G_OBJECT (default_color));
+  cspec->has_alpha = has_alpha;
+
+  g_clear_object (&default_color);
 
   return G_PARAM_SPEC (cspec);
-}
-
-/**
- * gimp_param_spec_color_get_default:
- * @pspec: a #GeglColor #GParamSpec
- *
- * Get the default color value of the param spec
- *
- * Returns: (transfer none): the default #GeglColor
- */
-GeglColor *
-gimp_param_spec_color_get_default (GParamSpec *pspec)
-{
-  return GIMP_PARAM_SPEC_COLOR (pspec)->default_color;
 }
 
 /**
