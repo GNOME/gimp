@@ -1379,6 +1379,47 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                                                     push_undo,
                                                     progress);
 
+  /* Update the masks of any filters */
+  if (gimp_drawable_has_filters (drawable))
+    {
+      GList         *filter_list;
+      GimpContainer *filters = gimp_drawable_get_filters (drawable);
+
+      for (filter_list = GIMP_LIST (filters)->queue->tail;
+           filter_list;
+           filter_list = g_list_previous (filter_list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+            {
+              GimpDrawableFilter *filter = filter_list->data;
+              GimpChannel        *mask;
+              const gchar        *name;
+              const gchar        *type;
+              gchar              *mask_format;
+
+              mask = gimp_drawable_filter_get_mask (filter);
+
+              old_format = gimp_drawable_get_format (GIMP_DRAWABLE (mask));
+
+              name = babl_get_name (babl_format_get_model (old_format));
+              type = babl_get_name (babl_format_get_type (new_format, 0));
+
+              mask_format = g_strdup_printf ("%s %s", name, type);
+
+              GIMP_DRAWABLE_GET_CLASS (mask)->convert_type (mask, dest_image,
+                                                            babl_format (mask_format),
+                                                            src_profile,
+                                                            dest_profile,
+                                                            layer_dither_type,
+                                                            mask_dither_type,
+                                                            push_undo,
+                                                            progress);
+              g_free (mask_format);
+            }
+        }
+      g_list_free (filter_list);
+    }
+
   if (progress)
     gimp_progress_set_value (progress, 1.0);
 }
