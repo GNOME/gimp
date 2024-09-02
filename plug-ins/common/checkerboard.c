@@ -258,7 +258,10 @@ do_checkerboard_pattern (GObject      *config,
 {
   CheckerboardParam_t  param;
   GeglColor           *color;
-  GimpRGB              fg, bg;
+  guchar               fg[4]     = {0, 0, 0, 0};
+  guchar               bg[4]     = {0, 0, 0, 0};
+  guchar               fg_lum[1] = {0};
+  guchar               bg_lum[1] = {0};
   const Babl          *format;
   gint                 bpp;
   gboolean             mode = FALSE;
@@ -271,37 +274,39 @@ do_checkerboard_pattern (GObject      *config,
                   NULL);
 
   color = gimp_context_get_background ();
-  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &bg);
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A u8", NULL), bg);
+  gegl_color_get_pixel (color, babl_format_with_space ("Y' u8", NULL), bg_lum);
   g_object_unref (color);
   color = gimp_context_get_foreground ();
-  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), &fg);
+  gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A u8", NULL), fg);
+  gegl_color_get_pixel (color, babl_format_with_space ("Y' u8", NULL), fg_lum);
   g_object_unref (color);
 
   if (gimp_drawable_is_gray (drawable))
     {
-      param.bg[0] = gimp_rgb_luminance_uchar (&bg);
-      gimp_rgba_get_uchar (&bg, NULL, NULL, NULL, param.bg + 1);
+      param.bg[0] = bg_lum[0];
+      param.bg[1] = bg[3];
 
-      param.fg[0] = gimp_rgb_luminance_uchar (&fg);
-      gimp_rgba_get_uchar (&fg, NULL, NULL, NULL, param.fg + 3);
-
-      if (gimp_drawable_has_alpha (drawable))
-        format = babl_format ("R'G'B'A u8");
-      else
-        format = babl_format ("R'G'B' u8");
-    }
-  else
-    {
-      gimp_rgba_get_uchar (&bg,
-                           param.bg, param.bg + 1, param.bg + 2, param.bg + 1);
-
-      gimp_rgba_get_uchar (&fg,
-                           param.fg, param.fg + 1, param.fg + 2, param.fg + 3);
+      param.fg[0] = fg_lum[0];
+      param.fg[1] = fg[3];
 
       if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
+    }
+  else
+    {
+      for (gint i = 0; i < 4; i++)
+        {
+          param.bg[i] = bg[i];
+          param.fg[i] = fg[i];
+        }
+
+      if (gimp_drawable_has_alpha (drawable))
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
     }
 
   bpp = babl_format_get_bytes_per_pixel (format);

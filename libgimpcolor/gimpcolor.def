@@ -82,8 +82,6 @@ EXPORTS
 	gimp_rgb_composite
 	gimp_rgb_get_type
 	gimp_rgb_get_uchar
-	gimp_rgb_luminance
-	gimp_rgb_luminance_uchar
 	gimp_rgb_max
 	gimp_rgb_min
 	gimp_rgb_multiply
