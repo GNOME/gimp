@@ -1406,7 +1406,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
 
               mask_format = g_strdup_printf ("%s %s", name, type);
 
-              GIMP_DRAWABLE_GET_CLASS (mask)->convert_type (mask, dest_image,
+              GIMP_DRAWABLE_GET_CLASS (mask)->convert_type (GIMP_DRAWABLE (mask),
+                                                            dest_image,
                                                             babl_format (mask_format),
                                                             src_profile,
                                                             dest_profile,
