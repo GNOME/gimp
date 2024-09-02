@@ -1393,32 +1393,20 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
             {
               GimpDrawableFilter *filter = filter_list->data;
               GimpChannel        *mask;
-              const gchar        *name;
-              const gchar        *type;
-              gchar              *mask_format;
+              const Babl         *mask_format;
 
               mask = gimp_drawable_filter_get_mask (filter);
+              mask_format = gimp_image_get_mask_format (dest_image);
 
-              old_format = gimp_drawable_get_format (GIMP_DRAWABLE (mask));
-
-              name = babl_get_name (babl_format_get_model (old_format));
-              type = babl_get_name (babl_format_get_type (new_format, 0));
-
-              mask_format = g_strdup_printf ("%s %s", name, type);
-
-              GIMP_DRAWABLE_GET_CLASS (mask)->convert_type (GIMP_DRAWABLE (mask),
-                                                            dest_image,
-                                                            babl_format (mask_format),
-                                                            src_profile,
-                                                            dest_profile,
-                                                            layer_dither_type,
-                                                            mask_dither_type,
-                                                            push_undo,
-                                                            progress);
-              g_free (mask_format);
+              gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
+                                          GIMP_GRAY,
+                                          gimp_babl_format_get_precision (mask_format),
+                                          FALSE,
+                                          NULL, NULL,
+                                          layer_dither_type, mask_dither_type,
+                                          push_undo, progress);
             }
         }
-      g_list_free (filter_list);
     }
 
   if (progress)
