@@ -1123,25 +1123,25 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
 
   if (color_tag > GIMP_COLOR_TAG_NONE)
     {
-      gegl_color_set_rgba (color,
-                           colors[color_tag].r / 255.0f,
-                           colors[color_tag].g / 255.0f,
-                           colors[color_tag].b / 255.0f,
-                           1.0f);
-
       if (inherited)
         {
-          /* TODO: Replace once gimp_rgb_composite () is replaced with
-           * GeglColor composite function */
-          GimpRGB temp_color;
+          /* Composite color on top of white (20% opacity) */
+          gdouble opacity = 0.2f;
+          gdouble factor  = 1.0f - opacity;
 
-          gegl_color_get_pixel (color, babl_format ("R'G'B'A double"),
-                                &temp_color);
-          gimp_rgb_set_alpha (&temp_color, 1.0f);
-          gimp_rgb_composite (&temp_color, &(GimpRGB) {1.0, 1.0, 1.0, 0.2},
-                              GIMP_RGB_COMPOSITE_NORMAL);
-          gegl_color_set_pixel (color, babl_format ("R'G'B'A double"),
-                                &temp_color);
+          gegl_color_set_rgba (color,
+                               (colors[color_tag].r / 255.0f) * factor + opacity,
+                               (colors[color_tag].g / 255.0f) * factor + opacity,
+                               (colors[color_tag].b / 255.0f) * factor + opacity,
+                               1.0f);
+        }
+      else
+        {
+          gegl_color_set_rgba (color,
+                               colors[color_tag].r / 255.0f,
+                               colors[color_tag].g / 255.0f,
+                               colors[color_tag].b / 255.0f,
+                               1.0f);
         }
 
       return TRUE;
