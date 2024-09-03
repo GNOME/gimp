@@ -377,15 +377,6 @@ button.default {
   border: 1px solid shade(@fg-color, 0.7);
 }
 
-/* This is the default active action, the somehow "suggested" action. Usually it
- * means this is either the expected next step action (e.g. activating a
- * filter), or else the less destructive action (e.g. when closing an unsaved
- * image, the default is "Cancel").
- */
-button.suggested-action {
-  border: 1px dotted shade(@fg-color, 0.5);
-}
-
 button:not(.flat)
 {
   border-color: @edge-border-color;
@@ -401,6 +392,22 @@ button.titlebutton
 button:checked, button.titlebutton:hover {
   background: @selected-color;
   border-color: @edge-border-color;
+}
+
+/* This is the default active action, the somehow "suggested" action. Usually it
+ * means this is either the expected next step action (e.g. activating a
+ * filter), or else the less destructive action (e.g. when closing an unsaved
+ * image, the default is "Cancel").
+ */
+button.suggested-action {
+  border: 1px solid shade(@fg-color, 0.8);
+}
+
+/* The "destructive" action will be for instance the "Delete Layer"
+ * button when pasting as floating data.
+ */
+button.destructive-action {
+  border: 1px dashed shade(@fg-color, 0.8)
 }
 
 /* Spinbuttons: there are two kinds:
