@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-20 12:19+0000\n"
-"PO-Revision-Date: 2024-08-22 13:26+0000\n"
+"POT-Creation-Date: 2024-08-25 20:48+0000\n"
+"PO-Revision-Date: 2024-09-03 11:43+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -1015,7 +1015,7 @@ msgstr "Breyta lit litrásar"
 msgid "_Fill opacity:"
 msgstr "Ógegnsæi _fyllingar:"
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:331
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:332
 msgid "New Channel"
 msgstr "Ný litrás"
 
@@ -1051,9 +1051,9 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Setja litrás neðst"
 msgstr[1] "Setja litrásir neðst"
 
-#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:565
-#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:264
-#: app/widgets/gimplayertreeview.c:863
+#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:550
+#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
+#: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Afritun %s litrásar"
@@ -2416,7 +2416,7 @@ msgid "240 Seconds"
 msgstr "240 sekúndur"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:238
-#: app/actions/edit-commands.c:172 app/actions/error-console-commands.c:101
+#: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
 #: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185
@@ -2519,7 +2519,7 @@ msgstr "Settu inn lýsingu á merkingunni"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
-#: app/widgets/gimplayertreeview.c:821 app/widgets/gimptoolbox.c:826
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3029,7 +3029,6 @@ msgid "Open the dashboard"
 msgstr "Opna stjórnborðið"
 
 #: app/actions/dialogs-actions.c:311 app/actions/dialogs-actions.c:312
-#| msgid "_Manage Settings..."
 msgctxt "dialogs-action"
 msgid "_Settings..."
 msgstr "_Stillingar..."
@@ -3394,7 +3393,7 @@ msgstr "Fjarlægja færslur þar sem tilheyrandi skrá er ekki tiltæk"
 msgid "Clear Document History"
 msgstr "Hreinsa ferilskráningu skjala"
 
-#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:173
+#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:171
 #: app/dialogs/preferences-dialog.c:621
 msgid "Cl_ear"
 msgstr "Hr_einsa"
@@ -3897,91 +3896,91 @@ msgstr "_Afturkalla"
 msgid "_Redo"
 msgstr "_Endurgera"
 
-#: app/actions/edit-commands.c:164
+#: app/actions/edit-commands.c:162
 msgid "Clear Undo History"
 msgstr "Eyða ferli afturkallana"
 
-#: app/actions/edit-commands.c:191
+#: app/actions/edit-commands.c:189
 msgid "Really clear image's undo history?"
 msgstr "Hreinsa í alvörunni afturköllunarferil þessarar myndar?"
 
-#: app/actions/edit-commands.c:204
+#: app/actions/edit-commands.c:202
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Hreinsun afturköllunarferils þessarar myndar mun losa um %s af minni."
 
-#: app/actions/edit-commands.c:248
+#: app/actions/edit-commands.c:246
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Klippti lag yfir á klippispjaldið."
 msgstr[1] "Klippti %d lög yfir á klippispjaldið."
 
-#: app/actions/edit-commands.c:253
+#: app/actions/edit-commands.c:251
 msgid "Cut pixels to the clipboard."
 msgstr "Klippti mynddíla yfir á klippispjaldið."
 
-#: app/actions/edit-commands.c:296
+#: app/actions/edit-commands.c:294
 msgid "Copied layer to the clipboard."
 msgstr "Afritaði lag yfir á klippispjaldið."
 
-#: app/actions/edit-commands.c:297 app/actions/edit-commands.c:329
+#: app/actions/edit-commands.c:295 app/actions/edit-commands.c:327
 msgid "Copied pixels to the clipboard."
 msgstr "Afritaði mynddíla á klippispjaldið."
 
-#: app/actions/edit-commands.c:446 app/actions/edit-commands.c:785
+#: app/actions/edit-commands.c:444 app/actions/edit-commands.c:734
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Það eru engin myndgögn á klippispjaldinu sem hægt er að líma."
 
-#: app/actions/edit-commands.c:462
+#: app/actions/edit-commands.c:460
 msgid "Cut Named"
 msgstr "Klippa nefnt"
 
-#: app/actions/edit-commands.c:465 app/actions/edit-commands.c:487
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:463 app/actions/edit-commands.c:485
+#: app/actions/edit-commands.c:507
 msgid "Enter a name for this buffer"
 msgstr "Sláðu inn nafn biðminnis"
 
-#: app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:482
 msgid "Copy Named"
 msgstr "Afrita nefnt"
 
-#: app/actions/edit-commands.c:506
+#: app/actions/edit-commands.c:504
 msgid "Copy Visible Named"
 msgstr "Afrita sýnilegt nefnt "
 
-#: app/actions/edit-commands.c:554
+#: app/actions/edit-commands.c:552
 msgid "Clear"
 msgstr "Hreinsa"
 
-#: app/actions/edit-commands.c:627
+#: app/actions/edit-commands.c:625
 msgid "A selected layer's alpha channel is locked."
 msgstr "Alfa-gegnsæislitrás valda lagsins er læst."
 
-#: app/actions/edit-commands.c:693
+#: app/actions/edit-commands.c:691
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr "Límt sem nýtt lag vegna þess að úttakið er ekki stakt lag eða laghula."
 
-#: app/actions/edit-commands.c:700
+#: app/actions/edit-commands.c:698
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Límt sem nýtt lag vegna þess að virka lagið er lagahópur."
 
-#: app/actions/edit-commands.c:707
+#: app/actions/edit-commands.c:705
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Límt sem nýtt lag vegna þess að mynddílar virka lagsins eru læstir."
 
-#: app/actions/edit-commands.c:802
+#: app/actions/edit-commands.c:751
 msgid "There are no selected layers or channels to cut from."
 msgstr "Það eru engin valin lög eða litrásir sem hægt er að klippa úr."
 
-#: app/actions/edit-commands.c:807 app/actions/edit-commands.c:840
-#: app/actions/edit-commands.c:865
+#: app/actions/edit-commands.c:756 app/actions/edit-commands.c:789
+#: app/actions/edit-commands.c:814
 msgid "(Unnamed Buffer)"
 msgstr "(ónefnt biðminni)"
 
-#: app/actions/edit-commands.c:835
+#: app/actions/edit-commands.c:784
 msgid "There are no selected layers or channels to copy from."
 msgstr "Það eru engin valin lög eða litrásir sem hægt er að afrita úr."
 
@@ -6187,8 +6186,6 @@ msgid "Create a new layer group and add it to the image"
 msgstr "Búa til nýjan lagahóp og bæta honum við myndina"
 
 #: app/actions/layers-actions.c:95
-#| msgctxt "layers-action"
-#| msgid "D_uplicate Layer"
 msgctxt "layers-action"
 msgid "D_uplicate Layers"
 msgstr "_Tvítaka lög"
@@ -6209,57 +6206,41 @@ msgid "Delete selected layers"
 msgstr "Eyða völdum lögum"
 
 #: app/actions/layers-actions.c:108
-#| msgctxt "layers-action"
-#| msgid "_Raise Layer"
 msgctxt "layers-action"
 msgid "_Raise Layers"
 msgstr "_Hækka lög"
 
 #: app/actions/layers-actions.c:109
-#| msgctxt "layers-action"
-#| msgid "Raise this layer one step in the layer stack"
 msgctxt "layers-action"
 msgid "Raise the selected layers one step in the layer stack"
 msgstr "Hækka valin lög um eitt þrep í lagastaflanum"
 
 #: app/actions/layers-actions.c:114
-#| msgctxt "layers-action"
-#| msgid "Layer to _Top"
 msgctxt "layers-action"
 msgid "Layers to _Top"
 msgstr "Lög efs_t"
 
 #: app/actions/layers-actions.c:115
-#| msgctxt "layers-action"
-#| msgid "Move this layer to the top of the layer stack"
 msgctxt "layers-action"
 msgid "Move the selected layers to the top of the layer stack"
 msgstr "Færa þessi lög efst í lagastaflann"
 
 #: app/actions/layers-actions.c:120
-#| msgctxt "layers-action"
-#| msgid "_Lower Layer"
 msgctxt "layers-action"
 msgid "_Lower Layers"
 msgstr "_Lækka lög"
 
 #: app/actions/layers-actions.c:121
-#| msgctxt "layers-action"
-#| msgid "Lower this layer one step in the layer stack"
 msgctxt "layers-action"
 msgid "Lower the selected layers one step in the layer stack"
 msgstr "Lækka valin lög um eitt þrep í lagastaflanum"
 
 #: app/actions/layers-actions.c:126
-#| msgctxt "layers-action"
-#| msgid "Layer to _Bottom"
 msgctxt "layers-action"
 msgid "Layers to _Bottom"
 msgstr "Lö_g neðst"
 
 #: app/actions/layers-actions.c:127
-#| msgctxt "layers-action"
-#| msgid "Move this layer to the bottom of the layer stack"
 msgctxt "layers-action"
 msgid "Move the selected layers to the bottom of the layer stack"
 msgstr "Færa valin lög neðst í lagastaflann"
@@ -6269,7 +6250,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "Fest_a fljótandi lag eða hulu"
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1313
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1312
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Festa fljótandi lagið eða laghuluna"
@@ -6470,8 +6451,6 @@ msgid "_Disable Layer Masks"
 msgstr "_Gera laghulur óvirkar"
 
 #: app/actions/layers-actions.c:278
-#| msgctxt "layers-action"
-#| msgid "Dismiss the effect of the layer mask"
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer masks"
 msgstr "Hunsa áhrif frá laghulum"
@@ -6683,22 +6662,16 @@ msgid "Layer Color Tag: Set to Gray"
 msgstr "Litamerki lags: Setja sem grátt"
 
 #: app/actions/layers-actions.c:445
-#| msgctxt "layers-action"
-#| msgid "Apply Layer _Mask"
 msgctxt "layers-action"
 msgid "Apply Layer _Masks"
 msgstr "Beita laghulu_m"
 
 #: app/actions/layers-actions.c:446
-#| msgctxt "layers-action"
-#| msgid "Apply the effect of the layer mask and remove it"
 msgctxt "layers-action"
 msgid "Apply the effect of the layer masks and remove them"
 msgstr "Beita áhrifum frá laghulum og fjarlægja þær"
 
 #: app/actions/layers-actions.c:451
-#| msgctxt "layers-action"
-#| msgid "Delete Layer Mas_k"
 msgctxt "layers-action"
 msgid "Delete Layer Mas_ks"
 msgstr "E_yða laghulum"
@@ -6819,8 +6792,8 @@ msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
-"Velja lögin sem eru fyrir ofan hvert það lag sem er valið núna. Lög verða"
-" ekki valin utan við fyrirliggjandi stig hópsins þeirra."
+"Velja lögin sem eru fyrir ofan hvert það lag sem er valið núna. Lög verða "
+"ekki valin utan við fyrirliggjandi stig hópsins þeirra."
 
 #: app/actions/layers-actions.c:538
 msgctxt "layers-action"
@@ -6833,33 +6806,25 @@ msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
-"Velja lögin sem eru fyrir neðan hvert það lag sem er valið núna. Lög verða"
-" ekki valin utan við fyrirliggjandi stig hópsins þeirra."
+"Velja lögin sem eru fyrir neðan hvert það lag sem er valið núna. Lög verða "
+"ekki valin utan við fyrirliggjandi stig hópsins þeirra."
 
 #: app/actions/layers-actions.c:546
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layers"
 msgctxt "layers-action"
 msgid "Select Previous Layers (flattened view)"
 msgstr "Velja fyrri lög (flött sýn)"
 
 #: app/actions/layers-actions.c:547
-#| msgctxt "layers-action"
-#| msgid "Select the layers above the current layers"
 msgctxt "layers-action"
 msgid "Select the layers above each currently selected layer"
 msgstr "Velja lögin sem eru fyrir ofan hvert það lag sem er valið núna"
 
 #: app/actions/layers-actions.c:552
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layers"
 msgctxt "layers-action"
 msgid "Select Next Layers (flattened view)"
 msgstr "Velja næstu lög (flött sýn)"
 
 #: app/actions/layers-actions.c:553
-#| msgctxt "layers-action"
-#| msgid "Select the layers below the current layers"
 msgctxt "layers-action"
 msgid "Select the layers below each currently selected layer"
 msgstr "Velja lögin sem eru fyrir neðan hvert það lag sem er valið núna"
@@ -6947,7 +6912,7 @@ msgid "Edit Layer Attributes"
 msgstr "Breyta eiginleikum lags"
 
 #: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:940
+#: app/widgets/gimplayertreeview.c:939
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nýtt lag"
@@ -7132,7 +7097,7 @@ msgid "Empty Selection"
 msgstr "Autt myndval"
 
 #: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
-#: app/widgets/gimplayertreeview.c:1116
+#: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Stilla ógegnsæi lagsins"
 
@@ -7436,14 +7401,11 @@ msgid "Duplicate these paths"
 msgstr "Tvítaka þessa ferla"
 
 #: app/actions/paths-actions.c:76
-#| msgctxt "paths-action"
-#| msgid "_Delete Path"
 msgctxt "paths-action"
 msgid "_Delete Paths"
 msgstr "_Eyða ferlum"
 
 #: app/actions/paths-actions.c:77
-#| msgid "Delete the selected preset"
 msgctxt "paths-action"
 msgid "Delete the selected paths"
 msgstr "Eyða völdum ferlum"
@@ -7454,55 +7416,41 @@ msgid "Merge _Visible Paths"
 msgstr "Sa_meina sýnilega ferla"
 
 #: app/actions/paths-actions.c:87
-#| msgctxt "paths-action"
-#| msgid "_Raise Path"
 msgctxt "paths-action"
 msgid "_Raise Paths"
 msgstr "_Hækka ferla"
 
 #: app/actions/paths-actions.c:88
-#| msgid "Export the selected paths"
 msgctxt "paths-action"
 msgid "Raise the selected paths"
 msgstr "Hækka valda ferla"
 
 #: app/actions/paths-actions.c:93
-#| msgctxt "paths-action"
-#| msgid "Raise Path to _Top"
 msgctxt "paths-action"
 msgid "Raise Paths to _Top"
 msgstr "Se_tja ferla efst"
 
 #: app/actions/paths-actions.c:94
-#| msgctxt "paths-action"
-#| msgid "Raise this path to the top"
 msgctxt "paths-action"
 msgid "Raise the selected paths to the top"
 msgstr "Setja valda ferla efst"
 
 #: app/actions/paths-actions.c:99
-#| msgctxt "paths-action"
-#| msgid "_Lower Path"
 msgctxt "paths-action"
 msgid "_Lower Paths"
 msgstr "_Lækka ferla"
 
 #: app/actions/paths-actions.c:100
-#| msgid "Export the selected paths"
 msgctxt "paths-action"
 msgid "Lower the selected paths"
 msgstr "Lækka valda ferla"
 
 #: app/actions/paths-actions.c:105
-#| msgctxt "paths-action"
-#| msgid "Lower Path to _Bottom"
 msgctxt "paths-action"
 msgid "Lower Paths to _Bottom"
 msgstr "S_etja ferla neðst"
 
 #: app/actions/paths-actions.c:106
-#| msgctxt "paths-action"
-#| msgid "Lower this path to the bottom"
 msgctxt "paths-action"
 msgid "Lower the selected paths to the bottom"
 msgstr "Setja valda ferla neðst"
@@ -7783,8 +7731,6 @@ msgid "Select _Next Path"
 msgstr "Velja _næsta feril"
 
 #: app/actions/paths-actions.c:304
-#| msgctxt "paths-action"
-#| msgid "Select the path above the current path"
 msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "Velja ferilinn sem er fyrir neðan ferilinn sem þú ert að vinna á núna"
@@ -8453,8 +8399,6 @@ msgid "Clear all text"
 msgstr "Hreinsa allan texta"
 
 #: app/actions/text-tool-actions.c:81
-#| msgctxt "layers-action"
-#| msgid "Text to _Path"
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "Texti í _feril"
@@ -10448,7 +10392,7 @@ msgstr "Lag"
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:93
-#: app/widgets/gimpchanneltreeview.c:337
+#: app/widgets/gimpchanneltreeview.c:338
 msgid "Channel"
 msgstr "Litrás"
 
@@ -11164,7 +11108,6 @@ msgid "Chooses the color scheme variant of the theme."
 msgstr "Velur tilbrigði litastefs í þema."
 
 #: app/config/gimprc-blurbs.h:556
-#| msgid "The name of the theme to use."
 msgid "The name of the icon theme to use."
 msgstr "Heiti táknmyndaþemunnar sem á að nota."
 
@@ -12272,15 +12215,11 @@ msgid "Add alpha channel"
 msgstr "Bæta inn alfa-gegnsæislitrás"
 
 #: app/core/core-enums.c:1326 app/core/core-enums.c:1382
-#| msgctxt "undo-type"
-#| msgid "Add layer mask"
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "Bæta inn laghulum"
 
 #: app/core/core-enums.c:1327 app/core/core-enums.c:1384
-#| msgctxt "undo-type"
-#| msgid "Apply layer mask"
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "Beita laghulum"
@@ -12325,12 +12264,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Festa fljótandi val"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:813
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:872
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Líma"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1165
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1224
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klippa"
@@ -12501,15 +12440,11 @@ msgid "Convert text layer"
 msgstr "Umbreyta textalagi"
 
 #: app/core/core-enums.c:1383
-#| msgctxt "undo-type"
-#| msgid "Delete layer mask"
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "Eyða laghulum"
 
 #: app/core/core-enums.c:1385
-#| msgctxt "undo-type"
-#| msgid "Show layer mask"
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "Sýna laghulur"
@@ -12734,28 +12669,26 @@ msgstr "Ferill lita"
 msgid "Updating tag cache"
 msgstr "Uppfæri biðminni fyrir merkingar"
 
-#: app/core/gimp-edit.c:89
+#: app/core/gimp-edit.c:91
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Klippa lag"
 msgstr[1] "Klippa %d lög"
 
-#: app/core/gimp-edit.c:235
-#| msgid "Cannot float selection because the selected region is empty."
+#: app/core/gimp-edit.c:238
 msgid "Cannot cut because the selected region is empty."
 msgstr "Get ekki klippt því valið svæði er tómt."
 
-#: app/core/gimp-edit.c:238
-#| msgid "Cannot float selection because the selected region is empty."
+#: app/core/gimp-edit.c:241
 msgid "Cannot copy because the selected region is empty."
 msgstr "Get ekki afritað því valið svæði er tómt."
 
-#: app/core/gimp-edit.c:583 app/core/gimpimage-new.c:612
+#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
 msgid "Pasted Layer"
 msgstr "Límt lag"
 
-#: app/core/gimp-edit.c:1182
+#: app/core/gimp-edit.c:1241
 msgid "Global Buffer"
 msgstr "Víðvært biðminni"
 
@@ -13357,7 +13290,7 @@ msgstr "Bakgrunnslitur"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:296
+#: app/widgets/gimplayertreeview.c:295
 msgid "Opacity"
 msgstr "Ógegnsæi"
 
@@ -13432,10 +13365,6 @@ msgstr "Hleð inn letri (þetta getur tekið smá tíma...)"
 
 #: app/core/gimpdatafactory.c:993
 #, c-format
-#| msgid ""
-#| "You have a writable data folder configured (%s), but this folder does not "
-#| "exist. Please create the folder or fix your configuration in the "
-#| "Preferences dialog's 'Folders' section."
 msgid ""
 "You have a writable data folder configured (%s), but this folder could not "
 "be created: \"%s\"\n"
@@ -13443,8 +13372,8 @@ msgid ""
 "Please check your configuration in the Preferences dialog's 'Folders' "
 "section."
 msgstr ""
-"Þú hefur tilgreint skrifaðgengilega gagnamöppu (%s), en ekki var hægt að búa"
-" til þessa möppu: \"%s\"\n"
+"Þú hefur tilgreint skrifaðgengilega gagnamöppu (%s), en ekki var hægt að búa "
+"til þessa möppu: \"%s\"\n"
 "\n"
 "Athugaðu uppsetninguna þína í kjörstillingaglugganum á flipanum 'Möppur'."
 
@@ -14190,7 +14119,7 @@ msgstr "Get ekki sameinað niður ósýnilegt lag."
 msgid "Cannot merge down to a layer group."
 msgstr "Get ekki sameinað niður í lagahóp."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2825
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2826
 msgid "The layer to merge down to is locked."
 msgstr "Lagið sem á að sameina niður í er læst."
 
@@ -14314,7 +14243,7 @@ msgstr "Ekki tókst að opna '%s' smámyndina: %s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2619
+#: app/widgets/gimpitemtreeview.c:2620
 msgid "A selected layer's pixels are locked."
 msgstr "Mynddílar valins lags eru læstir."
 
@@ -14456,7 +14385,6 @@ msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Get ekki bætt við hulu af annarri stærð en viðkomandi lag."
 
 #: app/core/gimplayer.c:1923
-#| msgid "Add Layer Masks"
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Bæta inn laghulum"
@@ -14467,32 +14395,26 @@ msgid "Transfer Alpha to Mask"
 msgstr "Færa alfalitrás í laghulu"
 
 #: app/core/gimplayer.c:2210
-#| msgid "Apply Layer Masks"
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Beita laghulum"
 
 #: app/core/gimplayer.c:2211
-#| msgid "Delete Layer Masks"
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Eyða laghulum"
 
 #: app/core/gimplayer.c:2318
-#| msgctxt "undo-type"
-#| msgid "Enable Layer Mask"
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Virkja laghulur"
 
 #: app/core/gimplayer.c:2319
-#| msgid "Disable Layer Masks"
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Gera laghulur óvirkar"
 
 #: app/core/gimplayer.c:2400
-#| msgid "Show Layer Masks"
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Sýna laghulur"
@@ -18227,7 +18149,6 @@ msgid "Path _name:"
 msgstr "_Heiti ferils:"
 
 #: app/dialogs/path-options-dialog.c:108
-#| msgid "Lock path"
 msgid "Lock p_ath"
 msgstr "Læs_a ferli"
 
@@ -18414,7 +18335,6 @@ msgid "Donate via Liberapay"
 msgstr "Styrkja í gegnum Liberapay"
 
 #: app/dialogs/welcome-dialog.c:915
-#| msgid "Other Options"
 msgid "Other donation options"
 msgstr "Aðrir valkostir fyrir styrki"
 
@@ -18765,13 +18685,13 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Sleppa lit á lag"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1933
-#: app/widgets/gimplayertreeview.c:812
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1934
+#: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "Sleppa lögum"
 
 #: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:889
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:888
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Sleppt biðminni"
@@ -20399,8 +20319,8 @@ msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
 "gimp-light.css nor gimp.css."
 msgstr ""
-"Ógilt þema: mappan '%s' inniheldur hvorki gimp-dark.css, gimp-gray.css, "
-"gimp-light.css né gimp.css."
+"Ógilt þema: mappan '%s' inniheldur hvorki gimp-dark.css, gimp-gray.css, gimp-"
+"light.css né gimp.css."
 
 #: app/menus/shortcuts-rc.c:137
 #, c-format
@@ -21121,7 +21041,6 @@ msgstr "Myndin '%s' (%d) inniheldur ekki sýnatökupunkt með auðkenninu %d"
 
 #: app/pdb/gimppdb-utils.c:812
 #, c-format
-#| msgid "Vectors object %d does not contain stroke with ID %d"
 msgid "Path object %d does not contain stroke with ID %d"
 msgstr "Ferilhluturinn %d inniheldur ekki stroku með auðkenninu %d"
 
@@ -21298,9 +21217,6 @@ msgstr ""
 
 #: app/pdb/gimpprocedure.c:961
 #, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
@@ -21310,42 +21226,31 @@ msgstr ""
 
 #: app/pdb/gimpprocedure.c:970
 #, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
 msgstr ""
-"Aðferðin '%s' skilaði `gimp_unit_percent()` sem GimpUnit-niðurstöðugildinu #"
-"%d "
-"'%s'. Þetta niðurstöðugildi gefur ekki kost á prósentueiningum."
+"Aðferðin '%s' skilaði `gimp_unit_percent()` sem GimpUnit-niðurstöðugildinu "
+"#%d '%s'. Þetta niðurstöðugildi gefur ekki kost á prósentueiningum."
 
 #: app/pdb/gimpprocedure.c:982
 #, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 msgstr ""
-"Aðferðin '%s' hefur verið kölluð fram með `gimp_unit_pixel()` fyrir"
-" GimpUnit-frumbreytuna #%d "
-"'%s'. Þessi frumbreyta gefur ekki kost á mynddílaeiningum."
+"Aðferðin '%s' hefur verið kölluð fram með `gimp_unit_pixel()` fyrir GimpUnit-"
+"frumbreytuna #%d '%s'. Þessi frumbreyta gefur ekki kost á mynddílaeiningum."
 
 #: app/pdb/gimpprocedure.c:992
 #, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr ""
-"Aðferðin '%s' hefur verið kölluð fram með `gimp_unit_percent()` fyrir"
-" GimpUnit-frumbreytuna #%d "
-"'%s'. Þessi frumbreyta gefur ekki kost á prósentueiningum."
+"Aðferðin '%s' hefur verið kölluð fram með `gimp_unit_percent()` fyrir "
+"GimpUnit-frumbreytuna #%d '%s'. Þessi frumbreyta gefur ekki kost á "
+"prósentueiningum."
 
 #: app/pdb/gimpprocedure.c:1012
 #, c-format
@@ -23272,7 +23177,7 @@ msgstr "Lit_ferlar..."
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2598
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "Get ekki breytt mörgum myndhlutum. Veldu aðeins einn."
 
@@ -23469,7 +23374,6 @@ msgid "Show on-canvas filter controls"
 msgstr "Sýna stjórntæki fyrir síur á myndfleti"
 
 #: app/tools/gimpfilteroptions.c:122
-#| msgid "Merge filter"
 msgid "_Merge filter"
 msgstr "Sa_meina síu"
 
@@ -23485,13 +23389,11 @@ msgid "A selected item's pixels are locked."
 msgstr "Mynddílar valins atriðis eru læstir."
 
 #: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2610
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
 msgid "A selected layer is not visible."
 msgstr "Valið lag er ekki sýnilegt."
 
 #: app/tools/gimpfiltertool.c:420
-#| msgid ""
-#| "Item '%s' (%d) cannot be used because it is attached to another image"
 msgid "Disabled because this filter depends on another image."
 msgstr "Ekki er hægt að nota þessa síu vegna þess að hún er háð annarri mynd."
 
@@ -23636,7 +23538,6 @@ msgid "Matting engine to use"
 msgstr "Möttunarvél sem á að nota"
 
 #: app/tools/gimpforegroundselectoptions.c:132
-#| msgid "Levels"
 msgctxt "measurement"
 msgid "Levels"
 msgstr "Litatíðnidreifing"
@@ -24089,7 +23990,6 @@ msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr "Skæraval: Veldu form með verkfæri sem lagar valið að brúnum"
 
 #: app/tools/gimpiscissorstool.c:294
-#| msgid "Scissors Select"
 msgid "_Scissors Select"
 msgstr "_Skæraval"
 
@@ -27893,106 +27793,106 @@ msgstr "Aflæsa sýnileika"
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Stilla læsingu sérstaks sýnileika þessa atriðis"
 
-#: app/widgets/gimpitemtreeview.c:783
+#: app/widgets/gimpitemtreeview.c:782
 msgid "Toggle the visibility of all filters."
 msgstr "Víxla sýnileika allra sía af/á."
 
-#: app/widgets/gimpitemtreeview.c:797
+#: app/widgets/gimpitemtreeview.c:796
 msgid "Edit the selected filter."
 msgstr "Breyta valinni síu."
 
-#: app/widgets/gimpitemtreeview.c:810
+#: app/widgets/gimpitemtreeview.c:809
 msgid "Raise filter one step up in the stack."
 msgstr "Hækka síu um eitt þrep í staflanum."
 
-#: app/widgets/gimpitemtreeview.c:823
+#: app/widgets/gimpitemtreeview.c:822
 msgid "Lower filter one step down in the stack."
 msgstr "Lækka síu um eitt þrep í staflanum."
 
-#: app/widgets/gimpitemtreeview.c:836
+#: app/widgets/gimpitemtreeview.c:835
 msgid "Merge all active filters down."
 msgstr "Sameina allar virkar síur niður."
 
-#: app/widgets/gimpitemtreeview.c:849
+#: app/widgets/gimpitemtreeview.c:848
 msgid "Remove the selected filter."
 msgstr "Fjarlægja valda síu."
 
-#: app/widgets/gimpitemtreeview.c:860
+#: app/widgets/gimpitemtreeview.c:859
 msgid "Layer Effects"
 msgstr "Lagabrellur"
 
-#: app/widgets/gimpitemtreeview.c:891
+#: app/widgets/gimpitemtreeview.c:892
 msgid "Select items by patterns and store item sets"
 msgstr "Velja atriði eftir mynstri og geyma atriðasett"
 
-#: app/widgets/gimpitemtreeview.c:1783
+#: app/widgets/gimpitemtreeview.c:1784
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d atriði valið"
 msgstr[1] "%d atriði valin"
 
-#: app/widgets/gimpitemtreeview.c:2694 app/widgets/gimpitemtreeview.c:2747
+#: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Ekki er hægt að endurraða síu sem verið er að breyta."
 
-#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2764
+#: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
 msgid "Reorder filter"
 msgstr "Endurraða síu"
 
-#: app/widgets/gimpitemtreeview.c:2809
+#: app/widgets/gimpitemtreeview.c:2810
 msgid "Effects from active tools can not be merged."
 msgstr "Ekki er hægt að sameina sjónhverfingar frá virkum verkfærum."
 
-#: app/widgets/gimpitemtreeview.c:2862
+#: app/widgets/gimpitemtreeview.c:2863
 msgid "Remove filter"
 msgstr "Fjarlægja síu"
 
-#: app/widgets/gimpitemtreeview.c:3388
+#: app/widgets/gimpitemtreeview.c:3389
 msgid "No layer set stored"
 msgstr "Ekkert lagasett geymt"
 
-#: app/widgets/gimpitemtreeview.c:3410
+#: app/widgets/gimpitemtreeview.c:3411
 msgid "New layer set's name"
 msgstr "Heiti á nýju lagasetti"
 
-#: app/widgets/gimpitemtreeview.c:3452 app/widgets/gimpitemtreeview.c:3467
+#: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
 msgid "Select layers by text search"
 msgstr "Velja lög með textaleit"
 
-#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
+#: app/widgets/gimpitemtreeview.c:3455 app/widgets/gimpitemtreeview.c:3470
 msgid "Text search"
 msgstr "Textaleit"
 
-#: app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3474
 msgid "Select layers by glob patterns"
 msgstr "Velja lög eftir mynstri með algildisstöfum"
 
-#: app/widgets/gimpitemtreeview.c:3475
+#: app/widgets/gimpitemtreeview.c:3476
 msgid "Glob pattern search"
 msgstr "Mynsturleit með algildisstöfum"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3480
 msgid "Select layers by regular expressions"
 msgstr "Velja lög eftir reglulegum segðum"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3482
 msgid "Regular Expression search"
 msgstr "Leit með reglulegri segð"
 
-#: app/widgets/gimpitemtreeview.c:3536
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "search"
 msgstr "leita"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "glob"
 msgstr "algildisstafir"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "regexp"
 msgstr "regl. segð"
 
-#: app/widgets/gimpitemtreeview.c:3706
+#: app/widgets/gimpitemtreeview.c:3707
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Ógild regluleg segð: %s\n"
@@ -28001,35 +27901,35 @@ msgstr "Ógild regluleg segð: %s\n"
 msgid "Switch to another group of modes"
 msgstr "Skipa yfir í annan hóp hama"
 
-#: app/widgets/gimplayertreeview.c:420 app/widgets/gimplayertreeview.c:423
+#: app/widgets/gimplayertreeview.c:419 app/widgets/gimplayertreeview.c:422
 msgid "Lock alpha channel"
 msgstr "Læsa alfa-gegnsæislitrás"
 
-#: app/widgets/gimplayertreeview.c:421
+#: app/widgets/gimplayertreeview.c:420
 msgid "Unlock alpha channel"
 msgstr "Aflæsa alfa-gegnsæislitrás"
 
-#: app/widgets/gimplayertreeview.c:422
+#: app/widgets/gimplayertreeview.c:421
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Stilla læsingu sérstakrar alfa-gegnsæislitrásar þessa atriðis"
 
-#: app/widgets/gimplayertreeview.c:1059
+#: app/widgets/gimplayertreeview.c:1058
 msgid "Set layers mode"
 msgstr "Stilla ham laga"
 
-#: app/widgets/gimplayertreeview.c:1305
+#: app/widgets/gimplayertreeview.c:1304
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Festa fljótandi laghuluna"
 
-#: app/widgets/gimplayertreeview.c:1308
+#: app/widgets/gimplayertreeview.c:1307
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Festa fljótandi lagið"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1569
+#: app/widgets/gimplayertreeview.c:1568
 msgid "No channels to create a layer mask from."
 msgstr "Engar rásir til að útbúa laghulu úr."
 
@@ -28622,7 +28522,6 @@ msgid "Lock path position"
 msgstr "Læsa staðsetningu ferils"
 
 #: app/widgets/gimppathtreeview.c:122
-#| msgid "Lock path _visibility"
 msgid "Lock path visibility"
 msgstr "Læsa sýnileika ferils"
 
@@ -29372,10 +29271,11 @@ msgid "De_velopment"
 msgstr "F_orritsþróun"
 
 #: menus/image-menu.ui.in.in:846
-#| msgid "Plug-in Folders"
+#| msgctxt "filters-action"
+#| msgid "Plug-in _Examples"
 msgctxt "filters-action"
-msgid "Plug-in _Examples"
-msgstr "Dæmi um hjálparforrit"
+msgid "Plug-In _Examples"
+msgstr "Dæmi um _hjálparforrit"
 
 #: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
