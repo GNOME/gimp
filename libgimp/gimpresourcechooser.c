@@ -480,7 +480,7 @@ gimp_resource_chooser_set_property (GObject      *object,
       break;
 
     case PROP_RESOURCE:
-      priv->resource = g_value_get_object (gvalue);
+      gimp_resource_chooser_set_resource (self, g_value_get_object (gvalue));
       break;
 
     default:
