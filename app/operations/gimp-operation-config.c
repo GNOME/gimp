@@ -151,6 +151,10 @@ gimp_operation_config_get_type (Gimp        *gimp,
               strcmp (pspec->name, "input")     &&
               strcmp (pspec->name, "output"))
             {
+              GParamFlags flags;
+
+              flags = pspec->flags & ~(GEGL_PARAM_PAD_INPUT | GEGL_PARAM_PAD_OUTPUT);
+
               if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
                 {
                   /* As special exception, let's transform GeglParamColor
@@ -165,7 +169,7 @@ gimp_operation_config_get_type (Gimp        *gimp,
                                                      g_param_spec_get_blurb (pspec),
                                                      TRUE,
                                                      gegl_param_spec_color_get_default (pspec),
-                                                     pspec->flags);
+                                                     flags);
                   prop_keys = gegl_operation_list_property_keys (operation, pspec->name, &n_keys);
                   for (gint k = 0; k < n_keys; k++)
                     {
@@ -179,10 +183,13 @@ gimp_operation_config_get_type (Gimp        *gimp,
                 }
               else
                 {
-                  pspecs[j] = pspec;
+                  pspecs[j] = gimp_config_param_spec_duplicate (pspec);
+                  if (pspecs[j])
+                    pspecs[j]->flags = flags;
                 }
 
-              j++;
+              if (pspecs[j])
+                j++;
             }
         }
 
