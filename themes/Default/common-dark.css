@@ -35,3 +35,8 @@ button:not(.flat) {
 button:not(.flat):hover {
   box-shadow: none;
 }
+
+/* Prevent system dark modes from overriding Curves grid colors */
+.grid {
+  color: rgb (220, 220, 220);
+}
