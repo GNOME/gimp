@@ -383,7 +383,7 @@ class SelectionToPath:
         config.set_property('image', self.image)
         result = proc.run(config)
 
-        self.path = self.image.get_vectors()[0]
+        self.path = self.image.get_paths()[0]
         self.stroke_ids = self.path.get_strokes()
 
         # A path may contain several strokes. If so lets throw away a stroke that
@@ -395,7 +395,7 @@ class SelectionToPath:
 
             for stroke in range(len(self.stroke_ids)):
                 stroke_id = self.stroke_ids[stroke]
-                vectors_stroke_type, control_points, closed = self.path.stroke_get_points(stroke_id)
+                path_stroke_type, control_points, closed = self.path.stroke_get_points(stroke_id)
                 if control_points == frame_strokes:
                     del self.stroke_ids[stroke]
                     break
@@ -564,9 +564,9 @@ class AbstractStrokeTool():
             control_points += [i, k] * 3
 
         # Create path
-        path = Gimp.Vectors.new(layer.get_image(), 'temp_path')
-        layer.get_image().insert_vectors(path, None, 0)
-        sid = path.stroke_new_from_points(Gimp.VectorsStrokeType.BEZIER,
+        path = Gimp.Path.new(layer.get_image(), 'temp_path')
+        layer.get_image().insert_path(path, None, 0)
+        sid = path.stroke_new_from_points(Gimp.PathStrokeType.BEZIER,
                                           control_points, False)
 
         # Draw it.
@@ -580,7 +580,7 @@ class AbstractStrokeTool():
         Gimp.context_pop()
 
         # Get rid of the path.
-        layer.get_image().remove_vectors(path)
+        layer.get_image().remove_path(path)
 
 
 # Drawing tool that should be quick, for purposes of previewing the pattern.
@@ -642,8 +642,8 @@ class SaveToPathTool():
         We dont add this to the list of tools. """
 
     def __init__(self, img):
-        self.path = Gimp.Vectors.new(img, path_name)
-        img.insert_vectors(self.path, None, 0)
+        self.path = Gimp.Path.new(img, path_name)
+        img.insert_path(self.path, None, 0)
 
     def draw(self, layer, strokes, color=None):
         # We need to multiply every point by 3, because we are creating a path,
@@ -652,7 +652,7 @@ class SaveToPathTool():
         for i, k in zip(strokes[0::2], strokes[1::2]):
             control_points += [i, k] * 3
 
-        self.path.stroke_new_from_points(Gimp.VectorsStrokeType.BEZIER,
+        self.path.stroke_new_from_points(Gimp.PathStrokeType.BEZIER,
                                          control_points, False)
 
 
