@@ -26,7 +26,6 @@
 #include "libgimpbase/gimpwire.h" /* FIXME kill this include */
 
 #include "gimpplugin-private.h"
-#include "gimpprocedure-private.h"
 
 
 enum
@@ -168,10 +167,9 @@ gimp_display_get_by_id (gint32 display_id)
 {
   if (display_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      GimpPlugIn *plug_in = gimp_get_plug_in ();
 
-      return _gimp_procedure_get_display (procedure, display_id);
+      return _gimp_plug_in_get_display (plug_in, display_id);
     }
 
   return NULL;

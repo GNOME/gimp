@@ -26,7 +26,6 @@
 
 #include "gimppixbuf.h"
 #include "gimpplugin-private.h"
-#include "gimpprocedure-private.h"
 
 
 enum
@@ -157,10 +156,9 @@ gimp_image_get_by_id (gint32 image_id)
 {
   if (image_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      GimpPlugIn *plug_in = gimp_get_plug_in ();
 
-      return _gimp_procedure_get_image (procedure, image_id);
+      return _gimp_plug_in_get_image (plug_in, image_id);
     }
 
   return NULL;

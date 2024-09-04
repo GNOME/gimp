@@ -36,7 +36,6 @@
 #include "gimppdb_pdb.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
-#include "gimpprocedure-private.h"
 #include "gimpprocedureconfig-private.h"
 
 #include "libgimp-intl.h"
@@ -103,11 +102,6 @@ typedef struct _GimpProcedurePrivate
   GDestroyNotify    run_data_destroy;
 
   gboolean          installed;
-
-  GHashTable       *displays;
-  GHashTable       *images;
-  GHashTable       *items;
-  GHashTable       *resources;
 } GimpProcedurePrivate;
 
 
@@ -266,8 +260,6 @@ gimp_procedure_finalize (GObject *object)
 
       g_clear_pointer (&priv->values, g_free);
     }
-
-  _gimp_procedure_destroy_proxies (procedure);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -2482,166 +2474,4 @@ gimp_procedure_set_icon (GimpProcedure *procedure,
 
   if (priv->installed)
     gimp_procedure_install_icon (procedure);
-}
-
-
-/*  internal functions  */
-
-GimpDisplay *
-_gimp_procedure_get_display (GimpProcedure *procedure,
-                             gint32         display_id)
-{
-  GimpProcedurePrivate *priv;
-  GimpDisplay          *display = NULL;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (gimp_display_id_is_valid (display_id), NULL);
-
-  priv = gimp_procedure_get_instance_private (procedure);
-
-  if (G_UNLIKELY (! priv->displays))
-    priv->displays =
-      g_hash_table_new_full (g_direct_hash,
-                             g_direct_equal,
-                             NULL,
-                             (GDestroyNotify) g_object_unref);
-
-  display = g_hash_table_lookup (priv->displays,
-                                 GINT_TO_POINTER (display_id));
-
-  if (! display)
-    {
-      display = _gimp_plug_in_get_display (priv->plug_in,
-                                           display_id);
-
-      if (display)
-        g_hash_table_insert (priv->displays,
-                             GINT_TO_POINTER (display_id),
-                             g_object_ref (display));
-    }
-
-  return display;
-}
-
-GimpImage *
-_gimp_procedure_get_image (GimpProcedure *procedure,
-                           gint32         image_id)
-{
-  GimpProcedurePrivate *priv;
-  GimpImage            *image = NULL;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (gimp_image_id_is_valid (image_id), NULL);
-
-  priv = gimp_procedure_get_instance_private (procedure);
-
-  if (G_UNLIKELY (! priv->images))
-    priv->images =
-      g_hash_table_new_full (g_direct_hash,
-                             g_direct_equal,
-                             NULL,
-                             (GDestroyNotify) g_object_unref);
-
-  image = g_hash_table_lookup (priv->images,
-                               GINT_TO_POINTER (image_id));
-
-  if (! image)
-    {
-      image = _gimp_plug_in_get_image (priv->plug_in,
-                                       image_id);
-
-      if (image)
-        g_hash_table_insert (priv->images,
-                             GINT_TO_POINTER (image_id),
-                             g_object_ref (image));
-    }
-
-  return image;
-}
-
-GimpItem *
-_gimp_procedure_get_item (GimpProcedure *procedure,
-                          gint32         item_id)
-{
-  GimpProcedurePrivate *priv;
-  GimpItem             *item = NULL;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (gimp_item_id_is_valid (item_id), NULL);
-
-  priv = gimp_procedure_get_instance_private (procedure);
-
-  if (G_UNLIKELY (! priv->items))
-    priv->items =
-      g_hash_table_new_full (g_direct_hash,
-                             g_direct_equal,
-                             NULL,
-                             (GDestroyNotify) g_object_unref);
-
-  item = g_hash_table_lookup (priv->items,
-                              GINT_TO_POINTER (item_id));
-
-  if (! item)
-    {
-      item = _gimp_plug_in_get_item (priv->plug_in,
-                                     item_id);
-
-      if (item)
-        g_hash_table_insert (priv->items,
-                             GINT_TO_POINTER (item_id),
-                             g_object_ref (item));
-    }
-
-  return item;
-}
-
-GimpResource *
-_gimp_procedure_get_resource (GimpProcedure *procedure,
-                              gint32         resource_id)
-{
-  GimpProcedurePrivate *priv;
-  GimpResource         *resource = NULL;
-
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (gimp_resource_id_is_valid (resource_id), NULL);
-
-  priv = gimp_procedure_get_instance_private (procedure);
-
-  if (G_UNLIKELY (! priv->resources))
-    priv->resources =
-      g_hash_table_new_full (g_direct_hash,
-                             g_direct_equal,
-                             NULL,
-                             (GDestroyNotify) g_object_unref);
-
-  resource = g_hash_table_lookup (priv->resources,
-                                  GINT_TO_POINTER (resource_id));
-
-  if (! resource)
-    {
-      resource = _gimp_plug_in_get_resource (priv->plug_in,
-                                             resource_id);
-
-      if (resource)
-        g_hash_table_insert (priv->resources,
-                             GINT_TO_POINTER (resource_id),
-                             g_object_ref (resource));
-    }
-
-  return resource;
-}
-
-void
-_gimp_procedure_destroy_proxies (GimpProcedure *procedure)
-{
-  GimpProcedurePrivate *priv;
-
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-
-  priv = gimp_procedure_get_instance_private (procedure);
-
-  g_clear_pointer (&priv->displays,  g_hash_table_unref);
-  g_clear_pointer (&priv->images,    g_hash_table_unref);
-  g_clear_pointer (&priv->items,     g_hash_table_unref);
-  g_clear_pointer (&priv->resources, g_hash_table_unref);
 }

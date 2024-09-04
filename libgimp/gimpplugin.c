@@ -35,7 +35,6 @@
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
-#include "gimpprocedure-private.h"
 
 
 /**
@@ -1653,12 +1652,6 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 
   priv->procedure_stack = g_list_remove (priv->procedure_stack, procedure);
 
-  /* Make procedure object unref it's proxy references.
-   * Our hashes still have references to proxies.
-   * Calling procs may also have retained references to proxies.
-   */
-  _gimp_procedure_destroy_proxies (procedure);
-
   /* Don't destroy proxies now because any proc, especially temporary procs,
    * may have passed a reference to a proc higher in the stack e.g. the main procedure.
    * We don't have separate proxy hashes for each pushed procedure,
@@ -1961,10 +1954,6 @@ gimp_plug_in_destroy_proxies (GimpPlugIn  *plug_in,
 
       if (object->ref_count == 1)
         {
-          /* this is the normal case for an unused proxy, since we already
-           * destroyed the only other reference in procedure with
-           * _gimp_procedure_destroy_proxies().
-           */
           g_hash_table_iter_remove (&iter);
         }
       else if (! G_IS_OBJECT (object))

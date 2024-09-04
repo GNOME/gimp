@@ -23,7 +23,6 @@
 #include "libgimpbase/gimpwire.h" /* FIXME kill this include */
 
 #include "gimpplugin-private.h"
-#include "gimpprocedure-private.h"
 
 
 /* GimpResource: base class for resources.
@@ -325,10 +324,9 @@ gimp_resource_get_by_id (gint32 resource_id)
 {
   if (resource_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      GimpPlugIn *plug_in = gimp_get_plug_in ();
 
-      return _gimp_procedure_get_resource (procedure, resource_id);
+      return _gimp_plug_in_get_resource (plug_in, resource_id);
     }
 
   return NULL;
