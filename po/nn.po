@@ -24185,7 +24185,7 @@ msgstr "Retning (%s)"
 #. the straighten button
 #: app/tools/gimpmeasureoptions.c:162 app/tools/gimpmeasureoptions.c:172
 msgid "Straighten"
-msgstr "Rett ut"
+msgstr "Rett opp"
 
 #: app/tools/gimpmeasureoptions.c:176
 msgid "Rotate the active layer, selection or path by the measured angle"
