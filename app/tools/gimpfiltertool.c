@@ -49,6 +49,7 @@
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
@@ -393,8 +394,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview", NULL);
 
-      /* Only show merge filter option if we're not editing an NDE filter */
-      if (GIMP_IS_LAYER (drawable) && ! filter_tool->existing_filter)
+      /* Only show merge filter option if we're not editing an NDE filter or
+       * applying to a layer group */
+      if ((GIMP_IS_LAYER (drawable) && ! GIMP_IS_GROUP_LAYER (drawable)) &&
+          ! filter_tool->existing_filter)
         {
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
@@ -544,6 +547,10 @@ gimp_filter_tool_control (GimpTool       *tool,
 
           g_free (operation_name);
         }
+
+      /* Ensure that filters applied to group layers are non-destructive */
+      if (GIMP_IS_GROUP_LAYER (drawable))
+        non_destructive = TRUE;
 
       gimp_filter_tool_commit (filter_tool, non_destructive);
       break;
