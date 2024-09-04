@@ -174,6 +174,8 @@ gimp_config_class_init (GObjectClass  *klass,
                        g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name, type_name);
         }
     }
+
+  g_free (pspecs);
 }
 
 static void
