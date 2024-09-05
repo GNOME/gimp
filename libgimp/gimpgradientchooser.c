@@ -126,10 +126,6 @@ gimp_gradient_chooser_init (GimpGradientChooser *self)
                     G_CALLBACK (gimp_gradient_select_preview_draw_handler),
                     self);
 
-  g_signal_connect (self, "resource-set",
-                    G_CALLBACK (gimp_gradient_select_model_change_handler),
-                    self);
-
   gtk_widget_show_all (GTK_WIDGET (self));
 
   gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
@@ -248,6 +244,13 @@ gimp_gradient_select_preview_size_allocate (GtkWidget           *widget,
 {
   /* Width needed to draw preview. */
   local_grad_data_set_allocation_width (self, allocation->width);
+
+  g_signal_handlers_disconnect_by_func (self,
+                                        G_CALLBACK (gimp_gradient_select_model_change_handler),
+                                        self);
+  g_signal_connect (self, "resource-set",
+                    G_CALLBACK (gimp_gradient_select_model_change_handler),
+                    self);
 }
 
 /* Draw array of samples.
