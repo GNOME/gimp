@@ -291,39 +291,32 @@ file_gbr_drawable_to_brush (GimpDrawable        *drawable,
       if (gimp_drawable_has_alpha (drawable))
         {
           GeglBufferIterator *iter;
-          GimpRGB             white;
-
-          gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
           iter = gegl_buffer_iterator_new (buffer, rect, 0,
-                                           babl_format ("Y'A u8"),
+                                           babl_format ("Y'A float"),
                                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE,
                                            1);
 
           while (gegl_buffer_iterator_next (iter))
             {
-              guint8 *data = (guint8 *) iter->items[0].data;
+              gfloat *data = (gfloat *) iter->items[0].data;
               gint    j;
 
               for (j = 0; j < iter->length; j++)
                 {
-                  GimpRGB gray;
-                  gint    x, y;
-                  gint    dest;
+                  gint x, y;
+                  gint dest;
 
-                  gimp_rgba_set_uchar (&gray,
-                                       data[0], data[0], data[0],
-                                       data[1]);
-
-                  gimp_rgb_composite (&gray, &white,
-                                      GIMP_RGB_COMPOSITE_BEHIND);
+                  /* Composite brush color on top of white (1.0, 1.0, 1.0, 1.0) */
+                  if (data[1] < 1.0)
+                    data[0] = (1.0 - data[1]) + (data[0] * data[1]);
 
                   x = iter->items[0].roi.x + j % iter->items[0].roi.width;
                   y = iter->items[0].roi.y + j / iter->items[0].roi.width;
 
                   dest = y * width + x;
 
-                  gimp_rgba_get_uchar (&gray, &m[dest], NULL, NULL, NULL);
+                  m[dest] = (guchar) (data[0] * 255);
 
                   data += 2;
                 }
