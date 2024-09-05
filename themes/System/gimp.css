@@ -121,11 +121,6 @@ entry.italic {
     font-style: italic;
 }
 
-.grid {
-    /* why does this not work */
-    color: rgba (1.0, 0.0, 0.0, 1.0);
-}
-
 tooltip decoration {
   box-shadow: 0px 0px;
 }
