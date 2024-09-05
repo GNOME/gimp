@@ -640,12 +640,11 @@ rgb_to_hsl (GimpDrawable     *drawable,
             LICEffectChannel  effect_channel)
 {
   GeglBuffer *buffer;
-  guchar     *themap, data[4];
+  guchar     *themap;
+  gfloat      data[3];
   gint        x, y;
   gint        height_max;
   gint        width_max;
-  GimpRGB     color;
-  GimpHSL     color_hsl;
   gdouble     val = 0.0;
   gint64      maxc, index = 0;
   GRand      *gr;
@@ -665,25 +664,20 @@ rgb_to_hsl (GimpDrawable     *drawable,
     {
       for (x = 0; x < width_max; x++)
         {
-          data[3] = 255;
-
           gegl_buffer_sample (buffer, x, y, NULL,
-                              data, babl_format ("R'G'B'A u8"),
+                              data, babl_format ("HSL float"),
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-          gimp_rgba_set_uchar (&color, data[0], data[1], data[2], data[3]);
-          gimp_rgb_to_hsl (&color, &color_hsl);
 
           switch (effect_channel)
             {
             case LIC_HUE:
-              val = color_hsl.h * 255;
+              val = data[0] * 255;
               break;
             case LIC_SATURATION:
-              val = color_hsl.s * 255;
+              val = data[1] * 255;
               break;
             case LIC_BRIGHTNESS:
-              val = color_hsl.l * 255;
+              val = data[2] * 255;
               break;
             }
 
