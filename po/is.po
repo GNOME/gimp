@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-08-25 17:57+0000\n"
-"PO-Revision-Date: 2024-09-03 11:36+0000\n"
+"PO-Revision-Date: 2024-09-05 14:00+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -100,7 +100,7 @@ msgstr "Stuðningur við Adobe ACB og ASE litaspjöld"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New gradient: FG to Transparent (Hardedge)"
-msgstr ""
+msgstr "Nýr litstigull: FG til gegnsæis (skarpar brúnir)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Some text tool algorithm enhancement when replacing formatted text"
@@ -496,11 +496,11 @@ msgstr "Leit að uppsettu letri notenda í Windows"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid "Incremental mode in the Dodge/Burn tool"
-msgstr ""
+msgstr "Stigvaxandi hamur í Upplita/Brenna verkfæri"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "Free Select tool creates preliminary selection"
-msgstr ""
+msgstr "Frjálsa valverkfærið útbýr drög að vali"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid ""
@@ -520,19 +520,19 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
-msgstr ""
+msgstr "Fyllingarverkfærið gerir kleift að plokka lit með Ctrl+smella"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
-"Fyllingarverkfærð gerir kleift að fylla \"áþekka liti\" og \"með greindri "
+"Fyllingarverkfærið gerir kleift að fylla \"áþekka liti\" og \"með greindri "
 "línumynd\" með því að halda músinni"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Scale tool scales around center even when using numeric input"
-msgstr ""
+msgstr "Kvarðaverkfærið kvarðar út frá miðju, einnig við innsetningu tölugilda"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid ""
