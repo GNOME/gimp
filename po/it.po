@@ -43,8 +43,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-20 12:19+0000\n"
-"PO-Revision-Date: 2024-08-23 22:57+0200\n"
+"POT-Creation-Date: 2024-08-26 14:41+0000\n"
+"PO-Revision-Date: 2024-08-29 17:02+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -1048,7 +1048,7 @@ msgstr "Modifica il colore del canale"
 msgid "_Fill opacity:"
 msgstr "_Opacità riempimento:"
 
-#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:331
+#: app/actions/channels-commands.c:167 app/widgets/gimpchanneltreeview.c:332
 msgid "New Channel"
 msgstr "Nuovo canale"
 
@@ -1084,9 +1084,9 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Abbassa il canale fino in fondo"
 msgstr[1] "Abbassa i canali fino in fondo"
 
-#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:565
-#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:264
-#: app/widgets/gimplayertreeview.c:863
+#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:550
+#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
+#: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia canale %s"
@@ -2450,7 +2450,7 @@ msgid "240 Seconds"
 msgstr "240 secondi"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:238
-#: app/actions/edit-commands.c:172 app/actions/error-console-commands.c:101
+#: app/actions/edit-commands.c:170 app/actions/error-console-commands.c:101
 #: app/actions/file-commands.c:449 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:185
@@ -2553,7 +2553,7 @@ msgstr "Inserire una descrizione per il marcatore"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
-#: app/widgets/gimplayertreeview.c:821 app/widgets/gimptoolbox.c:826
+#: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3431,7 +3431,7 @@ msgstr "Rimuove le voci che corrispondono a file non disponibili"
 msgid "Clear Document History"
 msgstr "Cancella la cronologia documenti"
 
-#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:173
+#: app/actions/documents-commands.c:239 app/actions/edit-commands.c:171
 #: app/dialogs/preferences-dialog.c:621
 msgid "Cl_ear"
 msgstr "Canc_ella"
@@ -3937,98 +3937,98 @@ msgstr "Ann_ulla"
 msgid "_Redo"
 msgstr "_Ripeti"
 
-#: app/actions/edit-commands.c:164
+#: app/actions/edit-commands.c:162
 msgid "Clear Undo History"
 msgstr "Cancella cronologia annullamenti"
 
-#: app/actions/edit-commands.c:191
+#: app/actions/edit-commands.c:189
 msgid "Really clear image's undo history?"
 msgstr "Cancellare la cronologia annullamenti?"
 
-#: app/actions/edit-commands.c:204
+#: app/actions/edit-commands.c:202
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "La cancellazione della cronologia degli annullamenti di quest'immagine "
 "libererà %s di memoria."
 
-#: app/actions/edit-commands.c:248
+#: app/actions/edit-commands.c:246
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Taglia livello negli appunti."
 msgstr[1] "Taglia %d livelli negli appunti."
 
-#: app/actions/edit-commands.c:253
+#: app/actions/edit-commands.c:251
 msgid "Cut pixels to the clipboard."
 msgstr "Taglia i pixel negli appunti."
 
-#: app/actions/edit-commands.c:296
+#: app/actions/edit-commands.c:294
 msgid "Copied layer to the clipboard."
 msgstr "Copia livello negli appunti."
 
-#: app/actions/edit-commands.c:297 app/actions/edit-commands.c:329
+#: app/actions/edit-commands.c:295 app/actions/edit-commands.c:327
 msgid "Copied pixels to the clipboard."
 msgstr "Pixel copiati negli appunti."
 
-#: app/actions/edit-commands.c:446 app/actions/edit-commands.c:785
+#: app/actions/edit-commands.c:444 app/actions/edit-commands.c:734
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Negli appunti non ci sono dati di tipo immagine da incollare."
 
-#: app/actions/edit-commands.c:462
+#: app/actions/edit-commands.c:460
 msgid "Cut Named"
 msgstr "Taglia con nome"
 
-#: app/actions/edit-commands.c:465 app/actions/edit-commands.c:487
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:463 app/actions/edit-commands.c:485
+#: app/actions/edit-commands.c:507
 msgid "Enter a name for this buffer"
 msgstr "Inserisci un nome per questo buffer"
 
-#: app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:482
 msgid "Copy Named"
 msgstr "Copia con nome"
 
-#: app/actions/edit-commands.c:506
+#: app/actions/edit-commands.c:504
 msgid "Copy Visible Named"
 msgstr "Copia visibile con nome "
 
-#: app/actions/edit-commands.c:554
+#: app/actions/edit-commands.c:552
 msgid "Clear"
 msgstr "Pulisci"
 
-#: app/actions/edit-commands.c:627
+#: app/actions/edit-commands.c:625
 msgid "A selected layer's alpha channel is locked."
 msgstr "Il canale alfa di un livello selezionato è bloccato."
 
-#: app/actions/edit-commands.c:693
+#: app/actions/edit-commands.c:691
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Incollato come nuovo livello dato che l'obiettivo non è un singolo livello o "
 "maschera."
 
-#: app/actions/edit-commands.c:700
+#: app/actions/edit-commands.c:698
 msgid "Pasted as new layer because the target is a layer group."
 msgstr ""
 "Incollato come nuovo livello dato che l'obiettivo è un gruppo di livelli."
 
-#: app/actions/edit-commands.c:707
+#: app/actions/edit-commands.c:705
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 "Incollato come nuovo livello perché i pixel del livello obiettivo sono "
 "bloccati."
 
-#: app/actions/edit-commands.c:802
+#: app/actions/edit-commands.c:751
 msgid "There are no selected layers or channels to cut from."
 msgstr "Non c'è un livello o un canale selezionati da cui tagliare."
 
-#: app/actions/edit-commands.c:807 app/actions/edit-commands.c:840
-#: app/actions/edit-commands.c:865
+#: app/actions/edit-commands.c:756 app/actions/edit-commands.c:789
+#: app/actions/edit-commands.c:814
 msgid "(Unnamed Buffer)"
 msgstr "(buffer senza nome)"
 
-#: app/actions/edit-commands.c:835
+#: app/actions/edit-commands.c:784
 msgid "There are no selected layers or channels to copy from."
 msgstr "Non c'è un livello o un canale selezionato da cui copiare."
 
@@ -5799,7 +5799,7 @@ msgctxt "image-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Usa la compensazione del punto nero per il provino video"
 
-#: app/actions/image-actions.c:185 app/actions/image-actions.c:516
+#: app/actions/image-actions.c:185 app/actions/image-actions.c:523
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
@@ -5809,7 +5809,7 @@ msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Converti immagine allo spazio colore RGB"
 
-#: app/actions/image-actions.c:190 app/actions/image-actions.c:518
+#: app/actions/image-actions.c:190 app/actions/image-actions.c:525
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Scala di _grigi"
@@ -6009,12 +6009,12 @@ msgctxt "image-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "L'intento di rendering per il provino video è colorimetrico assoluto"
 
-#: app/actions/image-actions.c:509
+#: app/actions/image-actions.c:516
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB..."
 
-#: app/actions/image-actions.c:511
+#: app/actions/image-actions.c:518
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Scala di _grigi..."
@@ -6303,7 +6303,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "Àncor_a livello o maschera fluttuante "
 
-#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1313
+#: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1312
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Àncora livello o maschera fluttuante"
@@ -6850,7 +6850,9 @@ msgctxt "layers-action"
 msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
-msgstr "Seleziona i livelli sopra ogni livello attualmente selezionato. I livelli non saranno selezionati al di fuori del loro livello di gruppo corrente."
+msgstr ""
+"Seleziona i livelli sopra ogni livello attualmente selezionato. I livelli "
+"non saranno selezionati al di fuori del loro livello di gruppo corrente."
 
 #: app/actions/layers-actions.c:538
 msgctxt "layers-action"
@@ -6862,7 +6864,9 @@ msgctxt "layers-action"
 msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
-msgstr "Seleziona i livelli sotto ogni livello attualmente selezionato. I livelli non saranno selezionati al di fuori del loro livello di gruppo corrente."
+msgstr ""
+"Seleziona i livelli sotto ogni livello attualmente selezionato. I livelli "
+"non saranno selezionati al di fuori del loro livello di gruppo corrente."
 
 #: app/actions/layers-actions.c:546
 msgctxt "layers-action"
@@ -6967,7 +6971,7 @@ msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
 #: app/actions/layers-commands.c:358 app/widgets/gimpdrawabletreeview.c:354
-#: app/widgets/gimplayertreeview.c:940
+#: app/widgets/gimplayertreeview.c:939
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nuovo livello"
@@ -7152,7 +7156,7 @@ msgid "Empty Selection"
 msgstr "Svuota selezione"
 
 #: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
-#: app/widgets/gimplayertreeview.c:1116
+#: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Imposta l'opacità dei livelli"
 
@@ -10462,7 +10466,7 @@ msgstr "Livello"
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:93
-#: app/widgets/gimpchanneltreeview.c:337
+#: app/widgets/gimpchanneltreeview.c:338
 msgid "Channel"
 msgstr "Canale"
 
@@ -12434,12 +12438,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Àncora selezione fluttuante"
 
-#: app/core/core-enums.c:1336 app/core/gimp-edit.c:813
+#: app/core/core-enums.c:1336 app/core/gimp-edit.c:872
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Incolla"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1165
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1224
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Taglia"
@@ -12839,26 +12843,26 @@ msgstr "Cronologia colore"
 msgid "Updating tag cache"
 msgstr "Aggiornamento cache dei marcatori"
 
-#: app/core/gimp-edit.c:89
+#: app/core/gimp-edit.c:91
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Taglia livello"
 msgstr[1] "Taglia %d livelli"
 
-#: app/core/gimp-edit.c:235
+#: app/core/gimp-edit.c:238
 msgid "Cannot cut because the selected region is empty."
 msgstr "Impossibile tagliare perché la regione selezionata è vuota."
 
-#: app/core/gimp-edit.c:238
+#: app/core/gimp-edit.c:241
 msgid "Cannot copy because the selected region is empty."
 msgstr "Impossibile copiare perché la regione selezionata è vuota."
 
-#: app/core/gimp-edit.c:583 app/core/gimpimage-new.c:612
+#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
 msgid "Pasted Layer"
 msgstr "Livello incollato"
 
-#: app/core/gimp-edit.c:1182
+#: app/core/gimp-edit.c:1241
 msgid "Global Buffer"
 msgstr "Buffer globale"
 
@@ -13470,7 +13474,7 @@ msgstr "Colore di sfondo"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:296
+#: app/widgets/gimplayertreeview.c:295
 msgid "Opacity"
 msgstr "Opacità"
 
@@ -14313,7 +14317,7 @@ msgstr "Impossibile fondere un livello invisibile."
 msgid "Cannot merge down to a layer group."
 msgstr "Impossibile fondere in un gruppo di livelli."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2825
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2826
 msgid "The layer to merge down to is locked."
 msgstr "Il livello da fondere in basso è bloccato."
 
@@ -14438,7 +14442,7 @@ msgstr "Impossibile aprire la miniatura '%s': %s."
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2619
+#: app/widgets/gimpitemtreeview.c:2620
 msgid "A selected layer's pixels are locked."
 msgstr "I pixel di un livello selezionato sono bloccati."
 
@@ -18773,23 +18777,23 @@ msgstr "A"
 msgid "_Sample Merged"
 msgstr "Campionamento diffu_so"
 
-#: app/display/gimpdisplayshell.c:539
+#: app/display/gimpdisplayshell.c:547
 msgid "Access the image menu"
 msgstr "Accedi al menu immagine"
 
-#: app/display/gimpdisplayshell.c:702
+#: app/display/gimpdisplayshell.c:710
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
 
-#: app/display/gimpdisplayshell.c:731
+#: app/display/gimpdisplayshell.c:739
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
-#: app/display/gimpdisplayshell.c:746
+#: app/display/gimpdisplayshell.c:754
 msgid "Navigate the image display"
 msgstr "Naviga nella finestra immagine"
 
-#: app/display/gimpdisplayshell.c:799 app/display/gimpdisplayshell.c:1551
+#: app/display/gimpdisplayshell.c:807 app/display/gimpdisplayshell.c:1572
 #: app/widgets/gimptoolbox.c:269
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
@@ -18906,13 +18910,13 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Rilascia il colore sul livello"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1933
-#: app/widgets/gimplayertreeview.c:812
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1934
+#: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "Rilascia i livelli"
 
 #: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:889
+#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:888
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Buffer rilasciato"
@@ -19005,7 +19009,7 @@ msgstr "(pulito)"
 msgid "(none)"
 msgstr "(nessuna)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1742
+#: app/display/gimpdisplayshell-tool-events.c:1752
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Livello prelevato: \"%s\""
@@ -21454,28 +21458,36 @@ msgstr ""
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
-msgstr "La procedura '%s' ha restituito `gimp_unit_pixel()` come valore di ritorno GimpUnit #%d '%s'. Questo valore restituito non permette unità pixel."
+msgstr ""
+"La procedura '%s' ha restituito `gimp_unit_pixel()` come valore di ritorno "
+"GimpUnit #%d '%s'. Questo valore restituito non permette unità pixel."
 
 #: app/pdb/gimpprocedure.c:970
 #, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
-msgstr "La procedura '%s' ha restituito `gimp_unit_percent()` come valore GimpUnit di ritorno #%d '%s'. Questo valore restituito non permette unità percentuali."
+msgstr ""
+"La procedura '%s' ha restituito `gimp_unit_percent()` come valore GimpUnit "
+"di ritorno #%d '%s'. Questo valore restituito non permette unità percentuali."
 
 #: app/pdb/gimpprocedure.c:982
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
-msgstr "La procedura '%s' è stata chiamata con `gimp_unit_pixel()` per l'argomento GimpUnit #%d '%s'. Questo valore di ritorno non permette unità pixel."
+msgstr ""
+"La procedura '%s' è stata chiamata con `gimp_unit_pixel()` per l'argomento "
+"GimpUnit #%d '%s'. Questo valore di ritorno non permette unità pixel."
 
 #: app/pdb/gimpprocedure.c:992
 #, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
-msgstr "La procedura '%s' è stata chiamata con `gimp_unit_percent()` per l'argomento GimpUnit #%d '%s'. Questo argomento non permette unità percentuali."
+msgstr ""
+"La procedura '%s' è stata chiamata con `gimp_unit_percent()` per l'argomento "
+"GimpUnit #%d '%s'. Questo argomento non permette unità percentuali."
 
 #: app/pdb/gimpprocedure.c:1012
 #, c-format
@@ -23426,7 +23438,7 @@ msgstr "_Curve..."
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2598
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "Impossibile modificare più aree disegnabili. Selezionarne solo una."
 
@@ -23644,7 +23656,7 @@ msgid "A selected item's pixels are locked."
 msgstr "I pixel di un elemento selezionato sono bloccati."
 
 #: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2610
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
 msgid "A selected layer is not visible."
 msgstr "Il livello selezionato non è visibile."
 
@@ -26587,16 +26599,16 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "n/d"
 
-#: app/widgets/gimpcolormapeditor.c:244
+#: app/widgets/gimpcolormapeditor.c:246
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Modifica voce mappa colore #%d"
 
-#: app/widgets/gimpcolormapeditor.c:252
+#: app/widgets/gimpcolormapeditor.c:254
 msgid "Edit Colormap Entry"
 msgstr "Modifica voce mappa colore"
 
-#: app/widgets/gimpcolormapeditor.c:468
+#: app/widgets/gimpcolormapeditor.c:470
 msgid "The color is used in this indexed image"
 msgstr "Il colore è usato in questa immagine indicizzata"
 
@@ -28093,107 +28105,107 @@ msgstr "Sblocca visibilità"
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Imposta blocco visibilità esclusiva elemento"
 
-#: app/widgets/gimpitemtreeview.c:783
+#: app/widgets/gimpitemtreeview.c:782
 msgid "Toggle the visibility of all filters."
 msgstr "Commuta la visibilità di tutti i filtri."
 
-#: app/widgets/gimpitemtreeview.c:797
+#: app/widgets/gimpitemtreeview.c:796
 msgid "Edit the selected filter."
 msgstr "Modifica il filtro selezionato."
 
-#: app/widgets/gimpitemtreeview.c:810
+#: app/widgets/gimpitemtreeview.c:809
 msgid "Raise filter one step up in the stack."
 msgstr "Alza il filtro di una posizione nella pila."
 
-#: app/widgets/gimpitemtreeview.c:823
+#: app/widgets/gimpitemtreeview.c:822
 msgid "Lower filter one step down in the stack."
 msgstr "Abbassa il filtro di una posizione nella pila."
 
-#: app/widgets/gimpitemtreeview.c:836
+#: app/widgets/gimpitemtreeview.c:835
 msgid "Merge all active filters down."
 msgstr "Fondi in basso tutti i filtri attivi."
 
-#: app/widgets/gimpitemtreeview.c:849
+#: app/widgets/gimpitemtreeview.c:848
 msgid "Remove the selected filter."
 msgstr "Rimuovo il filtro selezionato."
 
-#: app/widgets/gimpitemtreeview.c:860
+#: app/widgets/gimpitemtreeview.c:859
 msgid "Layer Effects"
 msgstr "Effetti di livello"
 
-#: app/widgets/gimpitemtreeview.c:891
+#: app/widgets/gimpitemtreeview.c:892
 msgid "Select items by patterns and store item sets"
 msgstr ""
 "Seleziona gli elementi tramite modelli e memorizza gli insiemi di elementi"
 
-#: app/widgets/gimpitemtreeview.c:1783
+#: app/widgets/gimpitemtreeview.c:1784
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d elemento selezionato"
 msgstr[1] "%d elementi selezionati"
 
-#: app/widgets/gimpitemtreeview.c:2694 app/widgets/gimpitemtreeview.c:2747
+#: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Impossibile riordinare un filtro in fase di modifica."
 
-#: app/widgets/gimpitemtreeview.c:2711 app/widgets/gimpitemtreeview.c:2764
+#: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
 msgid "Reorder filter"
 msgstr "Riordina filtro"
 
-#: app/widgets/gimpitemtreeview.c:2809
+#: app/widgets/gimpitemtreeview.c:2810
 msgid "Effects from active tools can not be merged."
 msgstr "Gli effetti degli strumenti attivi non possono venire fusi."
 
-#: app/widgets/gimpitemtreeview.c:2862
+#: app/widgets/gimpitemtreeview.c:2863
 msgid "Remove filter"
 msgstr "Rimuovi filtro"
 
-#: app/widgets/gimpitemtreeview.c:3388
+#: app/widgets/gimpitemtreeview.c:3389
 msgid "No layer set stored"
 msgstr "Nessun set livelli memorizzato"
 
-#: app/widgets/gimpitemtreeview.c:3410
+#: app/widgets/gimpitemtreeview.c:3411
 msgid "New layer set's name"
 msgstr "Nuovo nome del set livelli"
 
-#: app/widgets/gimpitemtreeview.c:3452 app/widgets/gimpitemtreeview.c:3467
+#: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
 msgid "Select layers by text search"
 msgstr "Seleziona livelli per ricerca testuale"
 
-#: app/widgets/gimpitemtreeview.c:3454 app/widgets/gimpitemtreeview.c:3469
+#: app/widgets/gimpitemtreeview.c:3455 app/widgets/gimpitemtreeview.c:3470
 msgid "Text search"
 msgstr "Ricerca testuale"
 
-#: app/widgets/gimpitemtreeview.c:3473
+#: app/widgets/gimpitemtreeview.c:3474
 msgid "Select layers by glob patterns"
 msgstr "Seleziona livelli per caratteri jolly"
 
-#: app/widgets/gimpitemtreeview.c:3475
+#: app/widgets/gimpitemtreeview.c:3476
 msgid "Glob pattern search"
 msgstr "Ricerca per caratteri jolly"
 
-#: app/widgets/gimpitemtreeview.c:3479
+#: app/widgets/gimpitemtreeview.c:3480
 msgid "Select layers by regular expressions"
 msgstr "Seleziona livelli per espressione regolare"
 
-#: app/widgets/gimpitemtreeview.c:3481
+#: app/widgets/gimpitemtreeview.c:3482
 msgid "Regular Expression search"
 msgstr "Ricerca per espressione regolare"
 
-#: app/widgets/gimpitemtreeview.c:3536
+#: app/widgets/gimpitemtreeview.c:3537
 msgid "search"
 msgstr "cerca"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3538
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3706
+#: app/widgets/gimpitemtreeview.c:3707
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Espressione regolare non valida: %s\n"
@@ -28202,35 +28214,35 @@ msgstr "Espressione regolare non valida: %s\n"
 msgid "Switch to another group of modes"
 msgstr "Passa ad un altro gruppo di modalità"
 
-#: app/widgets/gimplayertreeview.c:420 app/widgets/gimplayertreeview.c:423
+#: app/widgets/gimplayertreeview.c:419 app/widgets/gimplayertreeview.c:422
 msgid "Lock alpha channel"
 msgstr "Blocca il canale alfa"
 
-#: app/widgets/gimplayertreeview.c:421
+#: app/widgets/gimplayertreeview.c:420
 msgid "Unlock alpha channel"
 msgstr "Sblocca canale alfa"
 
-#: app/widgets/gimplayertreeview.c:422
+#: app/widgets/gimplayertreeview.c:421
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Imposta blocco canale alfa esclusivo elemento"
 
-#: app/widgets/gimplayertreeview.c:1059
+#: app/widgets/gimplayertreeview.c:1058
 msgid "Set layers mode"
 msgstr "Imposta la modalità dei livelli"
 
-#: app/widgets/gimplayertreeview.c:1305
+#: app/widgets/gimplayertreeview.c:1304
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Àncora la maschera fluttuante"
 
-#: app/widgets/gimplayertreeview.c:1308
+#: app/widgets/gimplayertreeview.c:1307
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Àncora il livello fluttuante"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1569
+#: app/widgets/gimplayertreeview.c:1568
 msgid "No channels to create a layer mask from."
 msgstr "Nessun canale da cui creare una maschera di livello."
 
@@ -29140,8 +29152,11 @@ msgid ""
 "This should not happen. You should report the issue to the filter's "
 "developers."
 msgstr ""
-"Avviso XCF: la versione %s del filtro \"%s\" non ha la proprietà %s. La proprietà è stata ignorata e il filtro potrebbe non essere renderizzato correttamente.\n"
-"Ciò non dovrebbe accadere. Bisognerebbe segnalare il problema agli sviluppatori del filtro."
+"Avviso XCF: la versione %s del filtro \"%s\" non ha la proprietà %s. La "
+"proprietà è stata ignorata e il filtro potrebbe non essere renderizzato "
+"correttamente.\n"
+"Ciò non dovrebbe accadere. Bisognerebbe segnalare il problema agli "
+"sviluppatori del filtro."
 
 #: app/xcf/xcf-load.c:3408
 #, c-format
@@ -29152,8 +29167,11 @@ msgid ""
 "was updated without proper version management. In the latter case, you "
 "should report the issue to the filter's developers."
 msgstr ""
-"Avviso XCF: la versione '%s' del filtro '%s' non è supportata. Il filtro è stato scartato.\n"
-"Significa che si sta usando una vecchia versione del filtro o che è stato aggiornato senza una corretta gestione della versione. In quest'ultimo caso, bisognerebbe segnalare il problema agli sviluppatori del filtro."
+"Avviso XCF: la versione '%s' del filtro '%s' non è supportata. Il filtro è "
+"stato scartato.\n"
+"Significa che si sta usando una vecchia versione del filtro o che è stato "
+"aggiornato senza una corretta gestione della versione. In quest'ultimo caso, "
+"bisognerebbe segnalare il problema agli sviluppatori del filtro."
 
 #: app/xcf/xcf-read.c:195
 msgid "Invalid UTF-8 string in XCF file"
@@ -29584,8 +29602,8 @@ msgstr "S_viluppo"
 
 #: menus/image-menu.ui.in.in:846
 msgctxt "filters-action"
-msgid "Plug-in _Examples"
-msgstr "_Esempi di plug-in"
+msgid "Plug-In _Examples"
+msgstr "_Esempi di plugin"
 
 #: menus/image-menu.ui.in.in:849
 msgctxt "filters-action"
