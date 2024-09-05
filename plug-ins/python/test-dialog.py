@@ -152,7 +152,7 @@ class TestDialogPlugin (Gimp.PlugIn):
         procedure.add_menu_path ("<Image>/Filters/Development/Demos")
 
         procedure.add_brush_argument ("brush", "_Brush", "Brush", True,
-                                      Gimp.Font.get_by_name ("2. Hardness 025"),
+                                      Gimp.Brush.get_by_name ("2. Hardness 025"),
                                       GObject.ParamFlags.READWRITE)
         procedure.add_font_argument ("font", "_Font", "Font", True,
                                      Gimp.Font.get_by_name ("Serif"),
