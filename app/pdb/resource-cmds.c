@@ -545,6 +545,7 @@ register_resource_procs (GimpPDB *pdb)
                                                              GIMP_TYPE_RESOURCE,
                                                              TRUE,
                                                              NULL,
+                                                             FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -597,6 +598,7 @@ register_resource_procs (GimpPDB *pdb)
                                                              GIMP_TYPE_RESOURCE,
                                                              FALSE,
                                                              NULL,
+                                                             FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -798,6 +800,7 @@ register_resource_procs (GimpPDB *pdb)
                                                          GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
@@ -832,6 +835,7 @@ register_resource_procs (GimpPDB *pdb)
                                                          GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-internal",
@@ -877,6 +881,7 @@ register_resource_procs (GimpPDB *pdb)
                                                          GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("editable",
@@ -908,6 +913,7 @@ register_resource_procs (GimpPDB *pdb)
                                                          GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_resource ("resource-copy",
@@ -916,6 +922,7 @@ register_resource_procs (GimpPDB *pdb)
                                                              GIMP_TYPE_RESOURCE,
                                                              FALSE,
                                                              NULL,
+                                                             FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -941,6 +948,7 @@ register_resource_procs (GimpPDB *pdb)
                                                          GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("new-name",
@@ -973,6 +981,7 @@ register_resource_procs (GimpPDB *pdb)
                                                          GIMP_TYPE_RESOURCE,
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

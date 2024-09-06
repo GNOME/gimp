@@ -357,7 +357,7 @@ class PaletteSort (Gimp.PlugIn):
                                          GObject.ParamFlags.READWRITE)
             procedure.add_palette_argument ("palette", _("_Palette"),
                                             _("Palette"), True,
-                                            None, # Default to context.
+                                            None, True, # Default to context.
                                             GObject.ParamFlags.READWRITE)
 
             selection_choice = Gimp.Choice.new()

@@ -249,66 +249,77 @@ gimp_param_spec_resource ("$name",
                           GIMP_TYPE_RESOURCE,
                           $none_ok,
                           $default,
+                          FALSE,
                           $flags)
 CODE
     }
     elsif ($pdbtype eq 'brush') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
+	$default_to_context = exists $arg->{default_to_context} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
 gimp_param_spec_brush ("$name",
                        "$nick",
                        "$blurb",
                        $none_ok,
                        $default,
+                       $default_to_context,
                        $flags)
 CODE
     }
     elsif ($pdbtype eq 'font') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
   $default = exists $arg->{default} ? $arg->{default} : NULL;
+  $default_to_context = exists $arg->{default_to_context} ? 'TRUE' : 'FALSE';
   $pspec = <<CODE;
 gimp_param_spec_font ("$name",
                       "$nick",
                       "$blurb",
                       $none_ok,
                       $default,
+                      $default_to_context,
                       $flags)
 CODE
     }
     elsif ($pdbtype eq 'gradient') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
   $default = exists $arg->{default} ? $arg->{default} : NULL;
+  $default_to_context = exists $arg->{default_to_context} ? 'TRUE' : 'FALSE';
   $pspec = <<CODE;
 gimp_param_spec_gradient ("$name",
                           "$nick",
                           "$blurb",
                           $none_ok,
                           $default,
+                          $default_to_context,
                           $flags)
 CODE
     }
     elsif ($pdbtype eq 'palette') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
   $default = exists $arg->{default} ? $arg->{default} : NULL;
+  $default_to_context = exists $arg->{default_to_context} ? 'TRUE' : 'FALSE';
   $pspec = <<CODE;
 gimp_param_spec_palette ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
                          $default,
+                         $default_to_context,
                          $flags)
 CODE
     }
     elsif ($pdbtype eq 'pattern') {
   $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
   $default = exists $arg->{default} ? $arg->{default} : NULL;
+  $default_to_context = exists $arg->{default_to_context} ? 'TRUE' : 'FALSE';
   $pspec = <<CODE;
 gimp_param_spec_pattern ("$name",
                          "$nick",
                          "$blurb",
                          $none_ok,
                          $default,
+                         $default_to_context,
                          $flags)
 CODE
     }

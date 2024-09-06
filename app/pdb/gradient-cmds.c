@@ -1285,6 +1285,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                              "The gradient",
                                                              FALSE,
                                                              NULL,
+                                                             FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1316,6 +1317,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                              "The gradient",
                                                              TRUE,
                                                              NULL,
+                                                             FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -1340,6 +1342,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-segments",
@@ -1370,6 +1373,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-samples",
@@ -1417,6 +1421,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-samples",
@@ -1470,6 +1475,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1508,6 +1514,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1546,6 +1553,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1584,6 +1592,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1622,6 +1631,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1659,6 +1669,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1702,6 +1713,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1739,6 +1751,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1782,6 +1795,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1819,6 +1833,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1862,6 +1877,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1900,6 +1916,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("segment",
@@ -1938,6 +1955,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -1982,6 +2000,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2026,6 +2045,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2063,6 +2083,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2106,6 +2127,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2143,6 +2165,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2186,6 +2209,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2223,6 +2247,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2260,6 +2285,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2297,6 +2323,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",
@@ -2334,6 +2361,7 @@ register_gradient_procs (GimpPDB *pdb)
                                                          "The gradient",
                                                          FALSE,
                                                          NULL,
+                                                         FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("start-segment",

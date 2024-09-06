@@ -59,7 +59,8 @@ typedef enum
   GP_PARAM_DEF_TYPE_GEGL_COLOR,
   GP_PARAM_DEF_TYPE_ID,
   GP_PARAM_DEF_TYPE_ID_ARRAY,
-  GP_PARAM_DEF_TYPE_EXPORT_OPTIONS
+  GP_PARAM_DEF_TYPE_EXPORT_OPTIONS,
+  GP_PARAM_DEF_TYPE_RESOURCE
 } GPParamDefType;
 
 typedef enum
@@ -97,6 +98,7 @@ typedef struct _GPParamDefGeglColor      GPParamDefGeglColor;
 typedef struct _GPParamDefID             GPParamDefID;
 typedef struct _GPParamDefIDArray        GPParamDefIDArray;
 typedef struct _GPParamDefExportOptions  GPParamDefExportOptions;
+typedef struct _GPParamDefResource       GPParamDefResource;
 typedef struct _GPParam                  GPParam;
 typedef struct _GPParamArray             GPParamArray;
 typedef struct _GPParamIDArray           GPParamIDArray;
@@ -232,6 +234,13 @@ struct _GPParamDefExportOptions
   gint capabilities;
 };
 
+struct _GPParamDefResource
+{
+  gint32 none_ok;
+  gint32 default_to_context;
+  gint32 default_resource_id;
+};
+
 struct _GPParamDef
 {
   GPParamDefType  param_def_type;
@@ -255,6 +264,7 @@ struct _GPParamDef
     GPParamDefIDArray          m_id_array;
     GPParamDefChoice           m_choice;
     GPParamDefExportOptions    m_export_options;
+    GPParamDefResource         m_resource;
   } meta;
 };
 

@@ -334,14 +334,14 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_font_argument (procedure, name,
                                         nick, arg->label,
                                         FALSE,  /* none OK */
-                                        gimp_font_get_by_name ("Serif"),
+                                        NULL, TRUE,
                                         G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
     case SF_PALETTE:
       gimp_procedure_add_palette_argument (procedure, name,
                                            nick, arg->label,
                                            FALSE,  /* none OK */
-                                           gimp_palette_get_by_name ("Default"),
+                                           NULL, TRUE,
                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -349,7 +349,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_pattern_argument (procedure, name,
                                            nick, arg->label,
                                            FALSE,  /* none OK */
-                                           gimp_pattern_get_by_name ("Paper"),
+                                           NULL, TRUE,
                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -357,7 +357,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_gradient_argument (procedure, name,
                                             nick, arg->label,
                                             FALSE,  /* none OK */
-                                            gimp_gradient_get_by_name ("Incandescent"),
+                                            NULL, TRUE,
                                             G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
@@ -365,7 +365,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       gimp_procedure_add_brush_argument (procedure, name,
                                          nick, arg->label,
                                          FALSE,  /* none OK */
-                                         gimp_brush_get_by_name ("2. Hardness 025"),
+                                         NULL, TRUE,
                                          G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 

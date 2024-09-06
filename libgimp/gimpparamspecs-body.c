@@ -989,11 +989,12 @@ gimp_param_spec_display (const gchar *name,
  * GIMP_TYPE_PARAM_RESOURCE
  */
 
-static void         gimp_param_resource_class_init (GimpParamSpecObjectClass *klass);
-static void         gimp_param_resource_init       (GParamSpec               *pspec);
-static GParamSpec * gimp_param_resource_duplicate  (GParamSpec               *pspec);
-static gboolean     gimp_param_resource_validate   (GParamSpec               *pspec,
-                                                    GValue                   *value);
+static void         gimp_param_resource_class_init  (GimpParamSpecObjectClass *klass);
+static void         gimp_param_resource_init        (GParamSpec               *pspec);
+static GParamSpec * gimp_param_resource_duplicate   (GParamSpec               *pspec);
+static GObject    * gimp_param_resource_get_default (GParamSpec               *pspec);
+static gboolean     gimp_param_resource_validate    (GParamSpec               *pspec,
+                                                     GValue                   *value);
 
 
 GType
@@ -1026,6 +1027,7 @@ gimp_param_resource_class_init (GimpParamSpecObjectClass *klass)
   GParamSpecClass *pclass = G_PARAM_SPEC_CLASS (klass);
 
   klass->duplicate       = gimp_param_resource_duplicate;
+  klass->get_default     = gimp_param_resource_get_default;
 
   pclass->value_type     = GIMP_TYPE_RESOURCE;
   pclass->value_validate = gimp_param_resource_validate;
@@ -1043,19 +1045,64 @@ static GParamSpec *
 gimp_param_resource_duplicate (GParamSpec *pspec)
 {
   GParamSpec *duplicate;
+  GObject    *default_value = NULL;
 
   g_return_val_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec), NULL);
+
+  if (gimp_param_spec_object_has_default (pspec) &&
+      ! GIMP_PARAM_SPEC_RESOURCE (pspec)->default_to_context)
+    default_value = gimp_param_spec_object_get_default (pspec);
 
   duplicate = gimp_param_spec_resource (pspec->name,
                                         g_param_spec_get_nick (pspec),
                                         g_param_spec_get_blurb (pspec),
                                         pspec->value_type,
                                         GIMP_PARAM_SPEC_RESOURCE (pspec)->none_ok,
-                                        GIMP_RESOURCE (gimp_param_spec_object_get_default (pspec)),
+                                        GIMP_RESOURCE (default_value),
+                                        GIMP_PARAM_SPEC_RESOURCE (pspec)->default_to_context,
                                         pspec->flags);
 
   return duplicate;
 }
+
+#ifdef LIBGIMP_COMPILATION
+#define GIMP_USER_CONTEXT
+#else
+#define GIMP_USER_CONTEXT gimp_get_user_context (gimp_core_app_get_gimp (GIMP_CORE_APP (g_application_get_default ())))
+#endif
+
+static GObject *
+gimp_param_resource_get_default (GParamSpec *pspec)
+{
+  GimpParamSpecResource    *rspec;
+  GimpParamSpecObjectClass *parent_class = g_type_class_peek (GIMP_TYPE_PARAM_OBJECT);
+
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_RESOURCE (pspec), NULL);
+
+  rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+
+  if (rspec->default_to_context)
+    {
+      if (GIMP_IS_PARAM_SPEC_BRUSH (pspec))
+        return G_OBJECT (gimp_context_get_brush (GIMP_USER_CONTEXT));
+      else if (GIMP_IS_PARAM_SPEC_PATTERN (pspec))
+        return G_OBJECT (gimp_context_get_pattern (GIMP_USER_CONTEXT));
+      else if (GIMP_IS_PARAM_SPEC_GRADIENT (pspec))
+        return G_OBJECT (gimp_context_get_gradient (GIMP_USER_CONTEXT));
+      else if (GIMP_IS_PARAM_SPEC_PALETTE (pspec))
+        return G_OBJECT (gimp_context_get_palette (GIMP_USER_CONTEXT));
+      else if (GIMP_IS_PARAM_SPEC_FONT (pspec))
+        return G_OBJECT (gimp_context_get_font (GIMP_USER_CONTEXT));
+      else
+        g_return_val_if_reached (NULL);
+    }
+  else
+    {
+      return parent_class->get_default (pspec);
+    }
+}
+
+#undef GIMP_USER_CONTEXT
 
 static gboolean
 gimp_param_resource_validate (GParamSpec *pspec,
@@ -1064,8 +1111,18 @@ gimp_param_resource_validate (GParamSpec *pspec,
   GimpParamSpecResource *rspec    = GIMP_PARAM_SPEC_RESOURCE (pspec);
   GObject               *resource = value->data[0].v_pointer;
 
+  if (resource == gimp_param_resource_get_default (pspec))
+    /* This handles in particular the particular case where none_ok is
+     * FALSE yet the context's default is NULL. We let this
+     * near-inconsistency pass.
+     */
+    return FALSE;
+
   if (! rspec->none_ok && resource == NULL)
-    return TRUE;
+    {
+      g_set_object (&value->data[0].v_pointer, gimp_param_resource_get_default (pspec));
+      return TRUE;
+    }
 
   if (resource && (! g_type_is_a (G_OBJECT_TYPE (resource), pspec->value_type) ||
                    ! gimp_resource_is_valid ((gpointer) resource)))
@@ -1083,28 +1140,23 @@ gimp_param_resource_validate (GParamSpec *pspec,
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
+ * @resource_type: a %GType, subtype of [class@Gimp.Resource].
  * @none_ok: Whether %NULL is a valid value.
- * @default_value: (nullable): default resource
+ * @default_value: (nullable): Default resource.
+ * @default_to_context: Whether the context is the context's resource
+ *                      for the given @resource_type.
  * @flags:   Flags for the property specified.
  *
- * Creates a new #GimpParamSpecResource specifying a
- * [type@Resource] property.
+ * Creates a new #GimpParamSpecResource specifying a [type@Resource] property.
+ * See [func@GObject.ParamSpec.internal] for details on property names.
  *
- * See g_param_spec_internal() for details on property names.
+ * @default_to_context cannot be %TRUE for a @resource_type of value
+ * [class@Gimp.Resource], but only for specific subtypes. If it is
+ * %TRUE, @default_value must be %NULL. Instead of a fixed default,
+ * whatever is the context's resource for the given type at run time
+ * will be used as dynamic default.
  *
- * The default_value is mainly used when declaring interactive plugin args.
- * When such a param spec has a NULL default_value,
- * a GimpResource chooser widget in the plugin's dialog
- * will initially show a value from the context,
- * and not have a choice such as "None", and will return a non-NULL value.
- * Also plugins that are in the context menu of a resource browser (dockable)
- * should declare a NULL default_value.
- * Then the value will be the user selected item in the browser.
- *
- * For declaring args for non-interactive use, none_ok TRUE means
- * the procedure receiving the argument will handle NULL gracefully.
- *
- * Returns: (transfer full): The newly created #GimpParamSpecResource.
+ * Returns: (transfer floating): The newly created #GimpParamSpecResource.
  *
  * Since: 3.0
  **/
@@ -1115,34 +1167,48 @@ gimp_param_spec_resource (const gchar  *name,
                           GType         resource_type,
                           gboolean      none_ok,
                           GimpResource *default_value,
+                          gboolean      default_to_context,
                           GParamFlags   flags)
 {
   GimpParamSpecResource *rspec;
   GType                  param_type;
 
-  if (resource_type == GIMP_TYPE_RESOURCE ||
-      resource_type == G_TYPE_NONE)
-    param_type = GIMP_TYPE_PARAM_RESOURCE;
-  else if (resource_type == GIMP_TYPE_BRUSH)
-    param_type = GIMP_TYPE_PARAM_BRUSH;
-  else if (resource_type == GIMP_TYPE_PATTERN)
-    param_type = GIMP_TYPE_PARAM_PATTERN;
-  else if (resource_type == GIMP_TYPE_GRADIENT)
-    param_type = GIMP_TYPE_PARAM_GRADIENT;
-  else if (resource_type == GIMP_TYPE_PALETTE)
-    param_type = GIMP_TYPE_PARAM_PALETTE;
-  else if (resource_type == GIMP_TYPE_FONT)
-    param_type = GIMP_TYPE_PARAM_FONT;
+  g_return_val_if_fail (g_type_is_a (resource_type, GIMP_TYPE_RESOURCE) ||
+                        g_type_is_a (resource_type, GIMP_TYPE_PARAM_RESOURCE), NULL);
+
+  if (! g_type_is_a (resource_type, GIMP_TYPE_PARAM_RESOURCE))
+    {
+      if (resource_type == GIMP_TYPE_RESOURCE ||
+          resource_type == G_TYPE_NONE)
+        param_type = GIMP_TYPE_PARAM_RESOURCE;
+      else if (resource_type == GIMP_TYPE_BRUSH)
+        param_type = GIMP_TYPE_PARAM_BRUSH;
+      else if (resource_type == GIMP_TYPE_PATTERN)
+        param_type = GIMP_TYPE_PARAM_PATTERN;
+      else if (resource_type == GIMP_TYPE_GRADIENT)
+        param_type = GIMP_TYPE_PARAM_GRADIENT;
+      else if (resource_type == GIMP_TYPE_PALETTE)
+        param_type = GIMP_TYPE_PARAM_PALETTE;
+      else if (resource_type == GIMP_TYPE_FONT)
+        param_type = GIMP_TYPE_PARAM_FONT;
+      else
+        g_return_val_if_reached (NULL);
+    }
   else
-    g_return_val_if_reached (NULL);
+    {
+      param_type = resource_type;
+    }
+  g_return_val_if_fail (param_type != GIMP_TYPE_RESOURCE || ! default_to_context, NULL);
 
   rspec = g_param_spec_internal (param_type, name, nick, blurb, flags);
 
   g_return_val_if_fail (rspec, NULL);
 
-  rspec->none_ok = none_ok ? TRUE : FALSE;
+  rspec->none_ok            = none_ok ? TRUE : FALSE;
+  rspec->default_to_context = default_to_context ? TRUE : FALSE;
 
-  gimp_param_spec_object_set_default (G_PARAM_SPEC (rspec), G_OBJECT (default_value));
+  if (! rspec->default_to_context)
+    gimp_param_spec_object_set_default (G_PARAM_SPEC (rspec), G_OBJECT (default_value));
 
   return G_PARAM_SPEC (rspec);
 }
@@ -1197,17 +1263,14 @@ gimp_param_brush_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
- * @default_value: (nullable): default brush
+ * @default_value: (nullable): Default brush.
+ * @default_to_context: Whether the context is the context's brush.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecBrush specifying a
- * [type@Brush] property.
+ * [type@Brush] property. See also [func@Gimp.param_spec_resource].
  *
- * See g_param_spec_internal() for details on property names.
- * See gimp_param_spec_resource() for details on none-ok
- * and NULL default_value.
- *
- * Returns: (transfer full): The newly created #GimpParamSpecBrush.
+ * Returns: (transfer floating): The newly created #GimpParamSpecBrush.
  *
  * Since: 3.0
  **/
@@ -1217,11 +1280,12 @@ gimp_param_spec_brush (const gchar *name,
                        const gchar *blurb,
                        gboolean     none_ok,
                        GimpBrush   *default_value,
+                       gboolean     default_to_context,
                        GParamFlags  flags)
 {
   return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_BRUSH,
                                    none_ok, GIMP_RESOURCE (default_value),
-                                   flags);
+                                   default_to_context, flags);
 }
 
 
@@ -1274,17 +1338,14 @@ gimp_param_pattern_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
- * @default_value: (nullable): default pattern
+ * @default_value: (nullable): Default pattern.
+ * @default_to_context: Whether the context is the context's pattern.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPattern specifying a
- * [type@Pattern] property.
+ * [type@Pattern] property. See also [func@Gimp.param_spec_resource].
  *
- * See g_param_spec_internal() for details on property names.
- * See gimp_param_spec_resource() for details on none-ok
- * and NULL default_value.
- *
- * Returns: (transfer full): The newly created #GimpParamSpecPattern.
+ * Returns: (transfer floating): The newly created #GimpParamSpecPattern.
  *
  * Since: 3.0
  **/
@@ -1294,11 +1355,12 @@ gimp_param_spec_pattern (const gchar *name,
                          const gchar *blurb,
                          gboolean     none_ok,
                          GimpPattern *default_value,
+                         gboolean     default_to_context,
                          GParamFlags  flags)
 {
   return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_PATTERN,
                                    none_ok, GIMP_RESOURCE (default_value),
-                                   flags);
+                                   default_to_context, flags);
 }
 
 
@@ -1351,17 +1413,14 @@ gimp_param_gradient_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
- * @default_value: (nullable): default gradient
+ * @default_value: (nullable): Default gradient.
+ * @default_to_context: Whether the context is the context's gradient.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecGradient specifying a
- * [type@Gradient] property.
+ * [type@Gradient] property. See also [func@Gimp.param_spec_resource].
  *
- * See g_param_spec_internal() for details on property names.
- * See gimp_param_spec_resource() for details on none-ok
- * and NULL default_value.
- *
- * Returns: (transfer full): The newly created #GimpParamSpecGradient.
+ * Returns: (transfer floating): The newly created #GimpParamSpecGradient.
  *
  * Since: 3.0
  **/
@@ -1371,11 +1430,12 @@ gimp_param_spec_gradient (const gchar  *name,
                           const gchar  *blurb,
                           gboolean      none_ok,
                           GimpGradient *default_value,
+                          gboolean      default_to_context,
                           GParamFlags   flags)
 {
   return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_GRADIENT,
                                    none_ok, GIMP_RESOURCE (default_value),
-                                   flags);
+                                   default_to_context, flags);
 }
 
 
@@ -1428,17 +1488,14 @@ gimp_param_palette_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
- * @default_value: (nullable): default palette
+ * @default_value: (nullable): Default palette.
+ * @default_to_context: Whether the context is the context's palette.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecPalette specifying a
- * [type@Palette] property.
+ * [type@Palette] property. See also [func@Gimp.param_spec_resource].
  *
- * See g_param_spec_internal() for details on property names.
- * See gimp_param_spec_resource() for details on none-ok
- * and NULL default_value.
- *
- * Returns: (transfer full): The newly created #GimpParamSpecPalette.
+ * Returns: (transfer floating): The newly created #GimpParamSpecPalette.
  *
  * Since: 3.0
  **/
@@ -1448,11 +1505,12 @@ gimp_param_spec_palette (const gchar *name,
                          const gchar *blurb,
                          gboolean     none_ok,
                          GimpPalette *default_value,
+                         gboolean     default_to_context,
                          GParamFlags  flags)
 {
   return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_PALETTE,
                                    none_ok, GIMP_RESOURCE (default_value),
-                                   flags);
+                                   default_to_context, flags);
 }
 
 
@@ -1505,17 +1563,14 @@ gimp_param_font_init (GParamSpec *pspec)
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether %NULL is a valid value.
- * @default_value: (nullable): default font
+ * @default_value: (nullable): Default font.
+ * @default_to_context: Whether the context is the context's font.
  * @flags:   Flags for the property specified.
  *
  * Creates a new #GimpParamSpecFont specifying a
- * [type@Font] property.
+ * [type@Font] property. See also [func@Gimp.param_spec_resource].
  *
- * See g_param_spec_internal() for details on property names.
- * See gimp_param_spec_resource() for details on none-ok
- * and NULL default_value.
- *
- * Returns: (transfer full): The newly created #GimpParamSpecFont.
+ * Returns: (transfer floating): The newly created #GimpParamSpecFont.
  *
  * Since: 3.0
  **/
@@ -1525,9 +1580,10 @@ gimp_param_spec_font (const gchar *name,
                       const gchar *blurb,
                       gboolean     none_ok,
                       GimpFont    *default_value,
+                      gboolean     default_to_context,
                       GParamFlags  flags)
 {
   return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_FONT,
                                    none_ok, GIMP_RESOURCE (default_value),
-                                   flags);
+                                   default_to_context, flags);
 }

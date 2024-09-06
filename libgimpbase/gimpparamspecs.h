@@ -154,7 +154,8 @@ struct _GimpParamSpecObjectClass
   /*< private >*/
   GParamSpecClass   parent_class;
 
-  GParamSpec      * (* duplicate) (GParamSpec *pspec);
+  GParamSpec      * (* duplicate)   (GParamSpec *pspec);
+  GObject         * (* get_default) (GParamSpec *pspec);
 
   /* Padding for future expansion */
   void              (*_gimp_reserved0) (void);

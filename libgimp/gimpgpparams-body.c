@@ -25,6 +25,18 @@
  *  app/plug-in/gimpgpparams.c
  */
 
+static GimpImage   * get_image_by_id    (gpointer gimp,
+                                         gint     id);
+static GimpItem    * get_item_by_id     (gpointer gimp,
+                                         gint     id);
+static GimpDisplay * get_display_by_id  (gpointer gimp,
+                                         gint     id);
+static GObject     * get_resource_by_id (gint     id);
+static gint          get_resource_id    (GObject *resource);
+static GimpUnit    * get_unit_by_id     (gpointer gimp,
+                                         gint     id);
+
+
 GParamSpec *
 _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
 {
@@ -262,34 +274,6 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_path (name, nick, blurb,
                                      param_def->meta.m_id.none_ok,
                                      flags);
-
-      /* When send GimpParamResource or subclass over wire, pass NULL name_of_default.
-       * Neither core nor libgimp seems to use it.
-       * Args to PDB procedures are not sent as GimpParamResource crossing wire.
-       */
-      if (! strcmp (param_def->type_name, "GimpParamResource"))
-        return gimp_param_spec_resource (name, nick, blurb, GIMP_TYPE_RESOURCE,
-                                         param_def->meta.m_id.none_ok, NULL, flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamBrush"))
-        return gimp_param_spec_brush (name, nick, blurb,
-                                      param_def->meta.m_id.none_ok, NULL, flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamFont"))
-        return gimp_param_spec_font (name, nick, blurb,
-                                     param_def->meta.m_id.none_ok, NULL, flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamGradient"))
-        return gimp_param_spec_gradient (name, nick, blurb,
-                                         param_def->meta.m_id.none_ok, NULL, flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamPalette"))
-        return gimp_param_spec_palette (name, nick, blurb,
-                                        param_def->meta.m_id.none_ok, NULL, flags);
-
-      if (! strcmp (param_def->type_name, "GimpParamPattern"))
-        return gimp_param_spec_pattern (name, nick, blurb,
-                                        param_def->meta.m_id.none_ok, NULL, flags);
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
@@ -297,6 +281,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_object_array (name, nick, blurb,
                                              g_type_from_name (param_def->meta.m_id_array.type_name),
                                              flags);
+      break;
 
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       if (! strcmp (param_def->type_name, "GimpParamExportOptions"))
@@ -305,6 +290,18 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                                  param_def->meta.m_export_options.capabilities,
                                                  flags);
         }
+      break;
+
+    case GP_PARAM_DEF_TYPE_RESOURCE:
+      if (g_type_from_name (param_def->type_name) != 0 &&
+          g_type_is_a (g_type_from_name (param_def->type_name), GIMP_TYPE_PARAM_RESOURCE))
+        return gimp_param_spec_resource (name, nick, blurb, g_type_from_name (param_def->type_name),
+                                         param_def->meta.m_resource.none_ok,
+                                         param_def->meta.m_resource.default_to_context ?
+                                         NULL : GIMP_RESOURCE (get_resource_by_id (param_def->meta.m_resource.default_resource_id)),
+                                         param_def->meta.m_resource.default_to_context,
+                                         flags);
+
       break;
     }
 
@@ -497,11 +494,20 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (GIMP_IS_PARAM_SPEC_RESOURCE (pspec))
     {
-      GimpParamSpecResource *rspec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+      GimpParamSpecResource *rspec         = GIMP_PARAM_SPEC_RESOURCE (pspec);
+      GObject               *default_value = NULL;
 
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_RESOURCE;
 
-      param_def->meta.m_id.none_ok = rspec->none_ok;
+      if (gimp_param_spec_object_has_default (pspec))
+        default_value = gimp_param_spec_object_get_default (pspec);
+
+      param_def->meta.m_resource.none_ok = rspec->none_ok;
+      param_def->meta.m_resource.default_to_context = rspec->default_to_context;
+      if (default_value != NULL && ! rspec->default_to_context)
+        param_def->meta.m_resource.default_resource_id = get_resource_id (default_value);
+      else
+        param_def->meta.m_resource.default_resource_id = 0;
     }
   else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
     {

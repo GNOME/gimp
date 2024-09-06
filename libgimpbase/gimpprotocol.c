@@ -1285,6 +1285,21 @@ _gp_param_def_read (GIOChannel *channel,
                                    user_data))
         return FALSE;
       break;
+
+    case GP_PARAM_DEF_TYPE_RESOURCE:
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_resource.none_ok, 1,
+                                   user_data))
+        return FALSE;
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_resource.default_to_context, 1,
+                                   user_data))
+        return FALSE;
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_resource.default_resource_id, 1,
+                                   user_data))
+        return FALSE;
+      break;
     }
 
   return TRUE;
@@ -1337,6 +1352,9 @@ _gp_param_def_destroy (GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
+      break;
+
+    case GP_PARAM_DEF_TYPE_RESOURCE:
       break;
     }
 }
@@ -1618,6 +1636,21 @@ _gp_param_def_write (GIOChannel *channel,
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       if (! _gimp_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_export_options.capabilities, 1,
+                                    user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_RESOURCE:
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_resource.none_ok, 1,
+                                    user_data))
+        return FALSE;
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_resource.default_to_context, 1,
+                                    user_data))
+        return FALSE;
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_resource.default_resource_id, 1,
                                     user_data))
         return FALSE;
       break;

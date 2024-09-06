@@ -204,7 +204,7 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                                          GObject.ParamFlags.READWRITE)
             procedure.add_gradient_argument ("gradient", _("_Gradient to use"),
                                              "", True,
-                                             None, # Default to context.
+                                             None, True, # Default to context.
                                              GObject.ParamFlags.READWRITE)
             procedure.add_file_argument ("file", _("_File"),
                                          "", GObject.ParamFlags.READWRITE)

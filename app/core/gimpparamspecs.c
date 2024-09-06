@@ -24,8 +24,11 @@
 
 #include "core-types.h"
 
+#include "gimpcoreapp.h"
+
 #include "gimp.h"
 #include "gimpbrush.h"
+#include "gimpcontext.h"
 #include "gimpdisplay.h"
 #include "gimpgradient.h"
 #include "gimpgrouplayer.h"

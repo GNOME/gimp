@@ -217,6 +217,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                                      "The font",
                                                      FALSE,
                                                      NULL,
+                                                     FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer ("text-layer",
@@ -262,6 +263,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                                      "The name of the font",
                                                      FALSE,
                                                      NULL,
+                                                     FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",

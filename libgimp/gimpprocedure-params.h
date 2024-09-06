@@ -1025,12 +1025,14 @@ void gimp_procedure_add_brush_argument                 (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GimpBrush     *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_brush_aux_argument             (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GimpBrush     *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_brush_return_value             (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1044,12 +1046,14 @@ void gimp_procedure_add_font_argument                  (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GimpFont      *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_font_aux_argument              (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GimpFont      *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_font_return_value              (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1063,12 +1067,14 @@ void gimp_procedure_add_gradient_argument              (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GimpGradient  *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_gradient_aux_argument          (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GimpGradient  *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_gradient_return_value          (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1082,12 +1088,14 @@ void gimp_procedure_add_palette_argument               (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GimpPalette   *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_palette_aux_argument           (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GimpPalette   *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_palette_return_value           (GimpProcedure *procedure,
                                                         const gchar   *name,
@@ -1101,12 +1109,14 @@ void gimp_procedure_add_pattern_argument               (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         gboolean       none_ok,
                                                         GimpPattern   *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_pattern_aux_argument           (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GimpPattern   *default_value,
+                                                        gboolean       default_to_context,
                                                         GParamFlags    flags);
 void gimp_procedure_add_pattern_return_value           (GimpProcedure *procedure,
                                                         const gchar   *name,

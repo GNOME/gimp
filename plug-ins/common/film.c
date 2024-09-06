@@ -165,14 +165,11 @@ film_create_procedure (GimpPlugIn  *plug_in,
   GeglColor     *default_film_color;
   GeglColor     *default_number_color;
   gdouble        default_number_rgb[4] = { 0.93, 0.61, 0.0, 1.0 };
-  GimpFont      *default_font = NULL;
 
   gegl_init (NULL, NULL);
   default_film_color   = gegl_color_new ("black");
   default_number_color = gegl_color_new (NULL);
   gegl_color_set_pixel (default_number_color, babl_format ("R'G'B'A double"), default_number_rgb);
-
-  default_font = gimp_font_get_by_name ("Serif");
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
@@ -220,8 +217,7 @@ film_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_font_argument (procedure, "number-font",
                                         _("Number _font"),
                                         _("Font for drawing numbers"),
-                                        FALSE,  /* none_ok */
-                                        default_font,
+                                        FALSE, NULL, TRUE,
                                         G_PARAM_READWRITE);
 
       gimp_procedure_add_color_argument (procedure, "number-color",
