@@ -5,7 +5,6 @@ EXPORTS
 	gimp_bilinear_32
 	gimp_bilinear_8
 	gimp_bilinear_rgb
-	gimp_bilinear_rgba
 	gimp_cairo_checkerboard_create
 	gimp_cairo_surface_create_buffer
 	gimp_cairo_surface_get_format

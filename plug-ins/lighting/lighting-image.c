@@ -239,11 +239,17 @@ pos_to_float (gdouble  x,
 
 GimpRGB
 get_image_color (gdouble  u,
-		 gdouble  v,
-		 gint    *inside)
+                 gdouble  v,
+                 gint    *inside)
 {
-  gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  gint     x1;
+  gint     y1;
+  gint     x2;
+  gint     y2;
+  GimpRGB  p[4];
+  GimpRGB  p_rgba;
+  gdouble  pixel[4];
+  gdouble  pixels[16];
 
   x1 = RINT (u);
   y1 = RINT (v);
@@ -269,7 +275,19 @@ get_image_color (gdouble  u,
   p[2] = peek (x1, y2);
   p[3] = peek (x2, y2);
 
-  return gimp_bilinear_rgba (u, v, p);
+  for (gint i = 0; i < 4; i++)
+    {
+      pixels[(i * 4)]     = p[i].r;
+      pixels[(i * 4) + 1] = p[i].g;
+      pixels[(i * 4) + 2] = p[i].b;
+      pixels[(i * 4) + 3] = p[i].a;
+    }
+
+  gimp_bilinear_rgb (u, v, pixels, TRUE, pixel);
+
+  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
+
+  return p_rgba;
 }
 
 gdouble
