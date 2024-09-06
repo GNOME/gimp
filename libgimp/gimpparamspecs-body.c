@@ -107,7 +107,7 @@ gimp_param_image_validate (GParamSpec *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecImage.
+ * Returns: (transfer floating): The newly created #GimpParamSpecImage.
  *
  * Since: 3.0
  **/
@@ -214,7 +214,7 @@ gimp_param_item_validate (GParamSpec *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecItem.
+ * Returns: (transfer floating): The newly created #GimpParamSpecItem.
  *
  * Since: 3.0
  **/
@@ -294,7 +294,7 @@ gimp_param_drawable_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecDrawable.
+ * Returns: (transfer floating): The newly created #GimpParamSpecDrawable.
  *
  * Since: 3.0
  **/
@@ -374,7 +374,7 @@ gimp_param_layer_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecLayer.
+ * Returns: (transfer floating): The newly created #GimpParamSpecLayer.
  *
  * Since: 3.0
  **/
@@ -454,7 +454,7 @@ gimp_param_text_layer_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecTextLayer.
+ * Returns: (transfer floating): The newly created #GimpParamSpecTextLayer.
  *
  * Since: 3.0
  **/
@@ -534,7 +534,7 @@ gimp_param_group_layer_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecGroupLayer.
+ * Returns: (transfer floating): The newly created #GimpParamSpecGroupLayer.
  *
  * Since: 3.0
  **/
@@ -614,7 +614,7 @@ gimp_param_channel_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecChannel.
+ * Returns: (transfer floating): The newly created #GimpParamSpecChannel.
  *
  * Since: 3.0
  **/
@@ -694,7 +694,7 @@ gimp_param_layer_mask_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecLayerMask.
+ * Returns: (transfer floating): The newly created #GimpParamSpecLayerMask.
  *
  * Since: 3.0
  **/
@@ -774,7 +774,7 @@ gimp_param_selection_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecSelection.
+ * Returns: (transfer floating): The newly created #GimpParamSpecSelection.
  *
  * Since: 3.0
  **/
@@ -854,7 +854,7 @@ gimp_param_path_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecPath.
+ * Returns: (transfer floating): The newly created #GimpParamSpecPath.
  *
  * Since: 3.0
  **/
@@ -961,7 +961,7 @@ gimp_param_display_validate (GParamSpec *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecDisplay.
+ * Returns: (transfer floating): The newly created #GimpParamSpecDisplay.
  *
  * Since: 3.0
  **/

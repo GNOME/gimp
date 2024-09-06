@@ -165,7 +165,7 @@ gimp_param_choice_values_cmp (GParamSpec   *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecChoice.
+ * Returns: (transfer floating): The newly created #GimpParamSpecChoice.
  *
  * Since: 3.0
  **/
@@ -538,7 +538,7 @@ gimp_param_array_values_cmp (GParamSpec   *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecArray.
+ * Returns: (transfer floating): The newly created #GimpParamSpecArray.
  *
  * Since: 3.0
  **/
@@ -673,7 +673,7 @@ gimp_param_int32_array_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecInt32Array.
+ * Returns: (transfer floating): The newly created #GimpParamSpecInt32Array.
  *
  * Since: 3.0
  **/
@@ -843,7 +843,7 @@ gimp_param_float_array_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecFloatArray.
+ * Returns: (transfer floating): The newly created #GimpParamSpecFloatArray.
  *
  * Since: 3.0
  **/
@@ -1254,7 +1254,7 @@ gimp_param_object_array_values_cmp (GParamSpec   *pspec,
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecObjectArray.
+ * Returns: (transfer floating): The newly created #GimpParamSpecObjectArray.
  *
  * Since: 3.0
  **/
@@ -1464,7 +1464,7 @@ gimp_param_export_options_init (GParamSpec *pspec)
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecExportOptions.
+ * Returns: (transfer floating): The newly created #GimpParamSpecExportOptions.
  *
  * Since: 3.0
  **/
