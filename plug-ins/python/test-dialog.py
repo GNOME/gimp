@@ -153,21 +153,26 @@ class TestDialogPlugin (Gimp.PlugIn):
 
         procedure.add_brush_argument ("brush", "_Brush", "Brush", True,
                                       Gimp.Brush.get_by_name ("2. Hardness 025"),
+                                      False,
                                       GObject.ParamFlags.READWRITE)
         procedure.add_font_argument ("font", "_Font", "Font", True,
                                      Gimp.Font.get_by_name ("Serif"),
+                                     False,
                                      GObject.ParamFlags.READWRITE)
         procedure.add_gradient_argument ("gradient", "_Gradient",
                                          "Gradient", True,
                                          Gimp.Gradient.get_by_name ("Incandescent"),
+                                         False,
                                          GObject.ParamFlags.READWRITE)
         procedure.add_palette_argument ("palette", "_Palette",
                                         "Palette", True,
                                         Gimp.Palette.get_by_name ("Default"),
+                                        False,
                                         GObject.ParamFlags.READWRITE)
         procedure.add_pattern_argument ("pattern", "Pa_ttern",
                                         "Pattern", True,
                                         Gimp.Pattern.get_by_name ("Paper"),
+                                        False,
                                         GObject.ParamFlags.READWRITE)
 
         return procedure
