@@ -146,6 +146,7 @@ gimp_resource_chooser_class_init (GimpResourceChooserClass *klass)
   object_class->get_property = gimp_resource_chooser_get_property;
 
   klass->resource_set        = NULL;
+  klass->draw_interior       = NULL;
 
   /**
    * GimpResourceChooser:title:

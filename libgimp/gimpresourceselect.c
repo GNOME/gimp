@@ -139,25 +139,6 @@ create_callback_PDB_procedure_params (GimpProcedure *procedure,
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      gimp_procedure_add_double_argument (procedure, "opacity",
-                                          "Opacity",
-                                          NULL,
-                                          0.0, 100.0, 100.0,
-                                          G_PARAM_READWRITE);
-
-      gimp_procedure_add_int_argument (procedure, "spacing",
-                                       "Spacing",
-                                       NULL,
-                                       -1, 1000, 20,
-                                       G_PARAM_READWRITE);
-
-      gimp_procedure_add_enum_argument (procedure, "paint-mode",
-                                        "Paint mode",
-                                        NULL,
-                                        GIMP_TYPE_LAYER_MODE,
-                                        GIMP_LAYER_MODE_NORMAL,
-                                        G_PARAM_READWRITE);
-
       gimp_procedure_add_int_argument (procedure, "mask-width",
                                        "Brush width",
                                        NULL,
