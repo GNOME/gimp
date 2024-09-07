@@ -158,6 +158,7 @@ image-debian-x64:
             clang
             lld
             libomp-dev
+            libunwind-dev
             appstream
             at-spi2-core
             desktop-file-utils
@@ -190,11 +191,13 @@ image-debian-x64:
             libjxl-dev
             liblcms2-dev
             liblzma-dev
+            libmaxflow-dev
             libmng-dev
             libmypaint-dev
             libopenexr-dev
             libopenjp2-7-dev
             libpoppler-glib-dev
+            libqoi-dev
             libraw-dev
             libraw20
             librsvg2-dev
@@ -209,6 +212,7 @@ image-debian-x64:
             libxmu-dev
             libxpm-dev
             luajit
+            lua-lgi
             meson
             mypaint-brushes
             poppler-data
@@ -255,7 +259,7 @@ deps-debian-x64:
     - ninja install
     - ccache --show-stats
     - mkdir ../../gegl/_build && cd ../../gegl/_build
-    - meson setup .. -Dprefix="${GIMP_PREFIX}"
+    - meson setup .. -Dprefix="${GIMP_PREFIX}" -Dworkshop=true
     - ninja
     - ninja install
     - ccache --show-stats
