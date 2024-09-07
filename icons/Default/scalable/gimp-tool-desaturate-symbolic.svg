@@ -150,7 +150,7 @@
          height="16"
          width="16"
          id="rect5151"
-         style="fill:none;stroke:none" />
+         style="fill:none;stroke:none;opacity:0" />
       <path
          id="path5153"
          d="m 122.0002,278 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"
