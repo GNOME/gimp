@@ -157,7 +157,7 @@ gimp_bilinear_32 (gdouble  x,
  * gimp_bilinear_rgb:
  * @x:
  * @y:
- * @values:    (array fixed-size=16): Array of pixels in R'G'B/R'G'B'A double format
+ * @values:    (array fixed-size=16): Array of pixels in RGBA double format
  * @has_alpha: Whether @values has an alpha channel
  * @retvalues: (array fixed-size=4):  Resulting pixel
  */
