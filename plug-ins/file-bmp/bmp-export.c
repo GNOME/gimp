@@ -179,7 +179,7 @@ export_image (GFile         *file,
                       NULL);
       else
         g_object_set (config,
-                      "use-rle",    FALSE,
+                      "use-rle", FALSE,
                       NULL);
       break;
 
@@ -243,7 +243,7 @@ export_image (GFile         *file,
         {
           BitsPerPixel = 1;
           g_object_set (config,
-                        "use-rle",    FALSE,
+                        "use-rle", FALSE,
                         NULL);
         }
 
@@ -992,7 +992,7 @@ save_dialog (GimpProcedure *procedure,
   /* Run-Length Encoded */
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "use-rle",
-                                       (channels > 1 || bpp == 1),
+                                       ! (channels > 1 || bpp == 1),
                                        NULL, NULL, FALSE);
 
   /* Compatibility Options */
@@ -1028,7 +1028,7 @@ save_dialog (GimpProcedure *procedure,
 
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "rgb-format",
-                                       (channels < 3),
+                                       (channels >= 3),
                                        NULL, NULL, FALSE);
 
   /* Formatting the dialog */
