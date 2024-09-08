@@ -23,7 +23,7 @@
 
 
 (define (script-fu-lava image
-                        drawable
+                        drawables
                         seed
                         tile_size
                         mask_size
@@ -32,7 +32,8 @@
                         separate-layer
                         current-grad)
   (let* (
-        (type (car (gimp-drawable-type-with-alpha drawable)))
+        (first-layer (vector-ref drawables 0))
+        (type (car (gimp-drawable-type-with-alpha first-layer)))
         (image-width (car (gimp-image-get-width image)))
         (image-height (car (gimp-image-get-height image)))
         (active-selection 0)
@@ -54,16 +55,16 @@
             (gimp-context-set-defaults)
             (gimp-image-undo-group-start image)
 
-            (if (= (car (gimp-drawable-has-alpha drawable)) FALSE)
-                (gimp-layer-add-alpha drawable)
+            (if (= (car (gimp-drawable-has-alpha first-layer)) FALSE)
+                (gimp-layer-add-alpha first-layer)
             )
 
             (if (= (car (gimp-selection-is-empty image)) TRUE)
-                (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+                (gimp-image-select-item image CHANNEL-OP-REPLACE first-layer)
             )
 
             (set! active-selection (car (gimp-selection-save image)))
-            (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
+            (gimp-image-set-selected-layers image 1 (make-vector 1 first-layer))
 
             (set! selection-bounds (gimp-selection-bounds image))
             (set! select-offset-x (cadr selection-bounds))
@@ -111,7 +112,7 @@
                 (gimp-selection-none image)
             )
 
-            (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
+            (gimp-image-set-selected-layers image 1 (make-vector 1 first-layer))
             (gimp-image-remove-channel image active-selection)
 
             (gimp-image-undo-group-end image)
@@ -125,19 +126,18 @@
   )
 )
 
-(script-fu-register "script-fu-lava"
+(script-fu-register-filter "script-fu-lava"
   _"_Lava..."
   _"Fill the current selection with lava"
   "Adrian Likins <adrian@gimp.org>"
   "Adrian Likins"
   "10/12/97"
   "RGB* GRAY*"
-  SF-IMAGE       "Image"          0
-  SF-DRAWABLE    "Drawable"       0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Seed"           '(10 1 30000 1 10 0 1)
   SF-ADJUSTMENT _"Size"           '(10 0 100 1 10 0 1)
   SF-ADJUSTMENT _"Roughness"      '(7 3 50 1 10 0 0)
-  SF-GRADIENT   _"Gradient"       "German flag smooth"
+  SF-GRADIENT   _"Gradient"       "Incandescent"
   SF-TOGGLE     _"Keep selection" TRUE
   SF-TOGGLE     _"Separate layer" TRUE
   SF-TOGGLE     _"Use current gradient" FALSE
