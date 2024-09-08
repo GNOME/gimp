@@ -29,6 +29,7 @@
 
 #include "../operations-types.h"
 
+#include "gimpcolor-legacy.h"
 #include "gimpoperationhslcolorlegacy.h"
 
 
@@ -84,9 +85,10 @@ gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
 
   while (samples--)
     {
-      gfloat layer_hsl[3], out_hsl[3];
-      gfloat out_rgb[3];
-      gfloat comp_alpha, new_alpha;
+      gdouble layer_hsl[4], out_hsl[4];
+      gdouble layer_rgb[4] = {layer[0], layer[1], layer[2], 1.0};
+      gdouble out_rgb[4]   = {in[0], in[1], in[2], 1.0};
+      gfloat  comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
       if (mask)
@@ -99,18 +101,13 @@ gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
           gint   b;
           gfloat ratio = comp_alpha / new_alpha;
 
-          /* TODO: shouldn't these conversions be processed in image space, or
-           * doesn't it matter?
-           */
-          babl_process (babl_fish (babl_format ("R'G'B' float"), babl_format ("HSL float")),
-                        layer, layer_hsl, 1);
-          babl_process (babl_fish (babl_format ("R'G'B' float"), babl_format ("HSL float")),
-                        in, out_hsl, 1);
+          gimp_rgb_to_hsl_legacy (layer_rgb, layer_hsl);
+          gimp_rgb_to_hsl_legacy (out_rgb, out_hsl);
 
           out_hsl[0] = layer_hsl[0];
           out_hsl[1] = layer_hsl[1];
-          babl_process (babl_fish (babl_format ("HSL float"), babl_format ("R'G'B' float")),
-                        out_hsl, out_rgb, 1);
+          gimp_hsl_to_rgb_legacy (out_hsl, out_rgb);
+
 
           for (b = RED; b < ALPHA; b++)
             out[b] = out_rgb[b] * ratio + in[b] * (1.0f - ratio);
@@ -120,9 +117,7 @@ gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
           gint b;
 
           for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
+            out[b] = in[b];
         }
 
       out[ALPHA] = in[ALPHA];

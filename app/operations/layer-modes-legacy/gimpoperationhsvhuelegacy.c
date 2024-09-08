@@ -29,6 +29,7 @@
 
 #include "../operations-types.h"
 
+#include "gimpcolor-legacy.h"
 #include "gimpoperationhsvhuelegacy.h"
 
 
@@ -84,9 +85,10 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
 
   while (samples--)
     {
-      gfloat layer_hsv[3], out_hsv[3];
-      gfloat out_rgb[3];
-      gfloat comp_alpha, new_alpha;
+      gdouble layer_hsv[4], out_hsv[4];
+      gdouble layer_rgb[4] = {layer[0], layer[1], layer[2], 1.0};
+      gdouble out_rgb[4]   = {in[0], in[1], in[2], 1.0};
+      gfloat  comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
       if (mask)
@@ -99,18 +101,16 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
           gint   b;
           gfloat ratio = comp_alpha / new_alpha;
 
-          babl_process (babl_fish (babl_format ("R'G'B' float"), babl_format ("HSV float")),
-                        layer, layer_hsv, 1);
-          babl_process (babl_fish (babl_format ("R'G'B' float"), babl_format ("HSV float")),
-                        in, out_hsv, 1);
+          gimp_rgb_to_hsv_legacy (layer_rgb, layer_hsv);
+          gimp_rgb_to_hsv_legacy (out_rgb, out_hsv);
 
           /*  Composition should have no effect if saturation is zero.
            *  otherwise, black would be painted red (see bug #123296).
            */
           if (layer_hsv[1])
             out_hsv[0] = layer_hsv[0];
-          babl_process (babl_fish (babl_format ("HSV float"), babl_format ("R'G'B' float")),
-                        out_hsv, out_rgb, 1);
+
+          gimp_hsv_to_rgb_legacy (out_hsv, out_rgb);
 
           for (b = RED; b < ALPHA; b++)
             out[b] = out_rgb[b] * ratio + in[b] * (1.0f - ratio);
@@ -120,9 +120,7 @@ gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
           gint b;
 
           for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
+            out[b] = in[b];
         }
 
       out[ALPHA] = in[ALPHA];
