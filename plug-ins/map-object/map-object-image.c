@@ -189,8 +189,14 @@ get_image_color (gdouble  u,
                  gdouble  v,
                  gint    *inside)
 {
-  gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  gint     x1;
+  gint     y1;
+  gint     x2;
+  gint     y2;
+  GimpRGB  p[4];
+  GimpRGB  p_rgba;
+  gdouble  pixel[4];
+  gdouble  pixels[16];
 
   pos_to_int (u, v, &x1, &y1);
 
@@ -212,7 +218,19 @@ get_image_color (gdouble  u,
       p[2] = peek (x1, y2);
       p[3] = peek (x2, y2);
 
-      return gimp_bilinear_rgba (u * width, v * height, p);
+      for (gint i = 0; i < 4; i++)
+        {
+          pixels[(i * 4)]     = p[i].r;
+          pixels[(i * 4) + 1] = p[i].g;
+          pixels[(i * 4) + 2] = p[i].b;
+          pixels[(i * 4) + 3] = p[i].a;
+        }
+
+      gimp_bilinear_rgb (u * width, v * height, pixels, TRUE, pixel);
+
+      gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
+
+      return p_rgba;
     }
 
   if (checkbounds (x1, y1) == FALSE)
@@ -232,14 +250,26 @@ get_image_color (gdouble  u,
      return peek (x1, y1);
    }
 
-  *inside=TRUE;
+  *inside = TRUE;
 
   p[0] = peek (x1, y1);
   p[1] = peek (x2, y1);
   p[2] = peek (x1, y2);
   p[3] = peek (x2, y2);
 
-  return gimp_bilinear_rgba (u * width, v * height, p);
+  for (gint i = 0; i < 4; i++)
+    {
+      pixels[(i * 4)]     = p[i].r;
+      pixels[(i * 4) + 1] = p[i].g;
+      pixels[(i * 4) + 2] = p[i].b;
+      pixels[(i * 4) + 3] = p[i].a;
+    }
+
+  gimp_bilinear_rgb (u * width, v * height, pixels, TRUE, pixel);
+
+  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
+
+  return p_rgba;
 }
 
 GimpRGB
@@ -247,9 +277,16 @@ get_box_image_color (gint    image,
                      gdouble u,
                      gdouble v)
 {
-  gint    w, h;
-  gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  gint     w;
+  gint     h;
+  gint     x1;
+  gint     y1;
+  gint     x2;
+  gint     y2;
+  GimpRGB  p[4];
+  GimpRGB  p_rgba;
+  gdouble  pixel[4];
+  gdouble  pixels[16];
 
   w = gegl_buffer_get_width  (box_buffers[image]);
   h = gegl_buffer_get_height (box_buffers[image]);
@@ -271,7 +308,19 @@ get_box_image_color (gint    image,
   p[2] = peek_box_image (image, x1, y2);
   p[3] = peek_box_image (image, x2, y2);
 
-  return gimp_bilinear_rgba (u * w, v * h, p);
+  for (gint i = 0; i < 4; i++)
+    {
+      pixels[(i * 4)]     = p[i].r;
+      pixels[(i * 4) + 1] = p[i].g;
+      pixels[(i * 4) + 2] = p[i].b;
+      pixels[(i * 4) + 3] = p[i].a;
+    }
+
+  gimp_bilinear_rgb (u * w, v * h, pixels, TRUE, pixel);
+
+  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
+
+  return p_rgba;
 }
 
 GimpRGB
@@ -279,9 +328,16 @@ get_cylinder_image_color (gint    image,
                           gdouble u,
                           gdouble v)
 {
-  gint    w, h;
-  gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  gint     w;
+  gint     h;
+  gint     x1;
+  gint     y1;
+  gint     x2;
+  gint     y2;
+  GimpRGB  p[4];
+  GimpRGB  p_rgba;
+  gdouble  pixel[4];
+  gdouble  pixels[16];
 
   w = gegl_buffer_get_width  (cylinder_buffers[image]);
   h = gegl_buffer_get_height (cylinder_buffers[image]);
@@ -303,7 +359,19 @@ get_cylinder_image_color (gint    image,
   p[2] = peek_cylinder_image (image, x1, y2);
   p[3] = peek_cylinder_image (image, x2, y2);
 
-  return gimp_bilinear_rgba (u * w, v * h, p);
+  for (gint i = 0; i < 4; i++)
+    {
+      pixels[(i * 4)]     = p[i].r;
+      pixels[(i * 4) + 1] = p[i].g;
+      pixels[(i * 4) + 2] = p[i].b;
+      pixels[(i * 4) + 3] = p[i].a;
+    }
+
+  gimp_bilinear_rgb (u * w, v * h, pixels, TRUE, pixel);
+
+  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
+
+  return p_rgba;
 }
 
 /****************************************/

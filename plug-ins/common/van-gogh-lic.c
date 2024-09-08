@@ -541,6 +541,8 @@ getpixel (GeglBuffer *buffer,
   register gint x1, y1, x2, y2;
   gint width, height;
   static GimpRGB pp[4];
+  gdouble        pixel[4];
+  gdouble        pixels[16];
 
   width  = border_w;
   height = border_h;
@@ -566,10 +568,17 @@ getpixel (GeglBuffer *buffer,
   peek (buffer, x1, y2, &pp[2]);
   peek (buffer, x2, y2, &pp[3]);
 
-  if (source_drw_has_alpha)
-    *p = gimp_bilinear_rgba (u, v, pp);
-  else
-    *p = gimp_bilinear_rgb (u, v, pp);
+  for (gint i = 0; i < 4; i++)
+    {
+      pixels[(i * 4)]     = pp[i].r;
+      pixels[(i * 4) + 1] = pp[i].g;
+      pixels[(i * 4) + 2] = pp[i].b;
+      pixels[(i * 4) + 3] = pp[i].a;
+    }
+
+  gimp_bilinear_rgb (u, v, pixels, source_drw_has_alpha, pixel);
+
+  gimp_rgba_set (p, pixel[0], pixel[1], pixel[2], pixel[3]);
 }
 
 static void
