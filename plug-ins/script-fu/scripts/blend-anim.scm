@@ -31,7 +31,7 @@
 ; be saved. A minimum of three layers is required.
 
 (define (script-fu-blend-anim img
-                              drawable
+                              drawables
                               frames
                               max-blur
                               looped)
@@ -224,15 +224,14 @@
   )
 )
 
-(script-fu-register "script-fu-blend-anim"
+(script-fu-register-filter "script-fu-blend-anim"
     _"_Blend..."
     _"Create intermediate layers to blend two or more layers over a background as an animation"
     "Sven Neumann <sven@gimp.org>"
     "Sven Neumann"
     "1999/12/21"
     "RGB* GRAY*"
-    SF-IMAGE       "Image"               0
-    SF-DRAWABLE    "Drawable"            0
+    SF-TWO-OR-MORE-DRAWABLE
     SF-ADJUSTMENT _"Intermediate frames" '(3 1 1024 1 10 0 1)
     SF-ADJUSTMENT _"Max. blur radius"    '(0 0 1024 1 10 0 1)
     SF-TOGGLE     _"Looped"              TRUE

@@ -44,21 +44,20 @@
   )
 )
 
-(define (script-fu-set-cmap img drawable palette)
+(define (script-fu-set-cmap img drawables palette)
   (gimp-image-set-colormap img
                            (script-fu-make-cmap-array palette))
   (gimp-displays-flush)
 )
 
-(script-fu-register "script-fu-set-cmap"
+(script-fu-register-filter "script-fu-set-cmap"
     _"Se_t Colormap..."
     _"Change the colormap of an image to the colors in a specified palette."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
     "September 29, 2004"
     "INDEXED*"
-    SF-IMAGE     "Image"    0
-    SF-DRAWABLE  "Drawable" 0
+    SF-ONE-OR-MORE-DRAWABLE
     SF-PALETTE  _"Palette"  "Default"
 )
 

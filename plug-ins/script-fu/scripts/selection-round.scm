@@ -130,33 +130,31 @@
 )
 
 
-(define (script-fu-selection-round image drawable radius)
-  (script-fu-selection-rounded-rectangle image drawable (* radius 100) FALSE)
+(define (script-fu-selection-round image drawables radius)
+  (script-fu-selection-rounded-rectangle image drawables (* radius 100) FALSE)
 )
 
 
-(script-fu-register "script-fu-selection-rounded-rectangle"
+(script-fu-register-filter "script-fu-selection-rounded-rectangle"
   _"Rounded R_ectangle..."
   _"Round the corners of the current selection"
   "Alan Horkan, Sven Neumann" ; authors
   "Sven Neumann"              ; copyright
   "2004/06/07"
   "*"
-  SF-IMAGE       "Image"      0
-  SF-DRAWABLE    "Drawable"   0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"R_adius (%)" '(50 0 100 1 10 0 0)
   SF-TOGGLE     _"Co_ncave"    FALSE
 )
 
-(script-fu-register "script-fu-selection-round"
+(script-fu-register-filter "script-fu-selection-round"
   ""
   "This procedure is deprecated! Use 'script-fu-selection-rounded-rectangle' instead."
   "Sven Neumann"              ; authors
   "Sven Neumann"              ; copyright
   "1998/02/06"
   "*"
-  SF-IMAGE       "Image"      0
-  SF-DRAWABLE    "Drawable"   0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT  "Relative radius" '(1 0 128 0.1 1 1 1)
 )
 

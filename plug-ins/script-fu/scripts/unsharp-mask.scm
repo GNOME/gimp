@@ -3,8 +3,9 @@
 ;;; Author: Narazaki Shuji <narazaki@gimp.org>
 ;;; Version 0.8
 
-(define (script-fu-unsharp-mask img drw mask-size mask-opacity)
+(define (script-fu-unsharp-mask img drws mask-size mask-opacity)
   (let* (
+        (drw (vector-ref drws 0))
         (drawable-width (car (gimp-drawable-get-width drw)))
         (drawable-height (car (gimp-drawable-get-height drw)))
         (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
@@ -76,15 +77,14 @@
   )
 )
 
-(script-fu-register "script-fu-unsharp-mask"
+(script-fu-register-filter "script-fu-unsharp-mask"
   "Unsharp Mask..."
   "Make a new image from the current layer by applying the unsharp mask method"
   "Shuji Narazaki <narazaki@gimp.org>"
   "Shuji Narazaki"
   "1997,1998"
-  ""
-  SF-IMAGE      "Image"             0
-  SF-DRAWABLE   "Drawable to apply" 0
+  "*"
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Mask size"        '(5 1 100 1 1 0 1)
   SF-ADJUSTMENT _"Mask opacity"     '(50 0 100 1 1 0 1)
 )

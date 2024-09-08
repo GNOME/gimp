@@ -25,7 +25,7 @@
 ;
 
 (define (script-fu-perspective-shadow image
-                                      drawable
+                                      drawables
                                       alpha
                                       rel-distance
                                       rel-length
@@ -35,6 +35,7 @@
                                       interpolation
                                       allow-resize)
   (let* (
+        (drawable (vector-ref drawables 0))
         (shadow-blur (max shadow-blur 0))
         (shadow-opacity (min shadow-opacity 100))
         (shadow-opacity (max shadow-opacity 0))
@@ -193,15 +194,14 @@
   )
 )
 
-(script-fu-register "script-fu-perspective-shadow"
+(script-fu-register-filter "script-fu-perspective-shadow"
   _"_Perspective..."
   _"Add a perspective shadow to the selected region (or alpha)"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "2000/11/08"
   "RGB* GRAY*"
-  SF-IMAGE       "Image"                        0
-  SF-DRAWABLE    "Drawable"                     0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Angle"                        '(45 0 180 1 10 1 0)
   SF-ADJUSTMENT _"Relative distance of horizon" '(5 0.1 24.1 0.1 1 1 1)
   SF-ADJUSTMENT _"Relative length of shadow"    '(1 0.1 24   0.1 1 1 1)

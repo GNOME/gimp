@@ -19,16 +19,17 @@
 ;
 
 (define (script-fu-difference-clouds image
-                                     drawable)
+                                     drawables)
 
-  (let* ((draw-offset-x (car (gimp-drawable-get-offsets drawable)))
-         (draw-offset-y (cadr (gimp-drawable-get-offsets drawable)))
-         (has-sel       (car (gimp-drawable-mask-intersect drawable)))
-         (sel-offset-x  (cadr (gimp-drawable-mask-intersect drawable)))
-         (sel-offset-y  (caddr (gimp-drawable-mask-intersect drawable)))
-         (width         (cadddr (gimp-drawable-mask-intersect drawable)))
-         (height        (caddr (cddr (gimp-drawable-mask-intersect drawable))))
-         (type          (car (gimp-drawable-type-with-alpha drawable)))
+  (let* ((layer (vector-ref drawables 0))
+         (draw-offset-x (car (gimp-drawable-get-offsets layer)))
+         (draw-offset-y (cadr (gimp-drawable-get-offsets layer)))
+         (has-sel       (car (gimp-drawable-mask-intersect layer)))
+         (sel-offset-x  (cadr (gimp-drawable-mask-intersect layer)))
+         (sel-offset-y  (caddr (gimp-drawable-mask-intersect layer)))
+         (width         (cadddr (gimp-drawable-mask-intersect layer)))
+         (height        (caddr (cddr (gimp-drawable-mask-intersect layer))))
+         (type          (car (gimp-drawable-type-with-alpha layer)))
          (diff-clouds  -1)
          (offset-x      0)
          (offset-y      0)
@@ -51,7 +52,7 @@
     (set! offset-y (+ draw-offset-y sel-offset-y))
 
     ; Offset the clouds layer
-    (if (gimp-item-is-layer drawable)
+    (if (gimp-item-is-layer layer)
       (gimp-item-transform-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
@@ -66,15 +67,14 @@
   )
 )
 
-(script-fu-register "script-fu-difference-clouds"
-                    _"_Difference Clouds"
-                    _"Solid noise applied with Difference layer mode"
-                    "Martin Nordholts <enselic@hotmail.com>"
-                    "Martin Nordholts"
-                    "2006/10/25"
-                    "RGB* GRAY*"
-                    SF-IMAGE       "Image"           0
-                    SF-DRAWABLE    "Drawable"        0)
+(script-fu-register-filter "script-fu-difference-clouds"
+                           _"_Difference Clouds"
+                           _"Solid noise applied with Difference layer mode"
+                           "Martin Nordholts <enselic@hotmail.com>"
+                           "Martin Nordholts"
+                           "2006/10/25"
+                           "RGB* GRAY*"
+                           SF-ONE-OR-MORE-DRAWABLE)
 
 (script-fu-menu-register "script-fu-difference-clouds"
 			 "<Image>/Filters/Render/Noise")

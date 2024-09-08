@@ -22,14 +22,15 @@
 
 
 (define (script-fu-circuit image
-                           drawable
+                           drawables
                            mask-size
                            seed
                            remove-bg
                            keep-selection
                            separate-layer)
   (let* (
-        (type (car (gimp-drawable-type-with-alpha drawable)))
+        (layer (vector-ref drawables 0))
+        (type (car (gimp-drawable-type-with-alpha layer)))
         (image-width (car (gimp-image-get-width image)))
         (image-height (car (gimp-image-get-height image)))
         (active-selection 0)
@@ -48,11 +49,11 @@
 
     (gimp-image-undo-group-start image)
 
-    (gimp-layer-add-alpha drawable)
+    (gimp-layer-add-alpha layer)
 
     (if (= (car (gimp-selection-is-empty image)) TRUE)
         (begin
-          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (gimp-image-select-item image CHANNEL-OP-REPLACE layer)
           (set! active-selection (car (gimp-selection-save image)))
           (set! from-selection FALSE))
         (begin
@@ -80,7 +81,7 @@
           (gimp-selection-none image)
           (gimp-drawable-edit-clear effect-layer)
           (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-edit-copy 1 (vector drawable))
+          (gimp-edit-copy 1 (vector layer))
 
           (let* (
                  (pasted (gimp-edit-paste effect-layer FALSE))
@@ -90,7 +91,7 @@
            (gimp-floating-sel-anchor floating-sel)
           )
           (gimp-image-set-selected-layers image 1 (vector effect-layer)))
-          (set! effect-layer drawable)
+          (set! effect-layer layer)
     )
     (set! active-layer effect-layer)
 
@@ -117,7 +118,7 @@
         (gimp-selection-none image))
 
     (gimp-image-remove-channel image active-selection)
-    (gimp-image-set-selected-layers image 1 (vector drawable))
+    (gimp-image-set-selected-layers image 1 (vector layer))
 
     (gimp-image-undo-group-end image)
 
@@ -127,15 +128,14 @@
   )
 )
 
-(script-fu-register "script-fu-circuit"
+(script-fu-register-filter "script-fu-circuit"
   _"_Circuit..."
   _"Fill the selected region (or alpha) with traces like those on a circuit board"
   "Adrian Likins <adrian@gimp.org>"
   "Adrian Likins"
   "10/17/97"
   "RGB* GRAY*"
-  SF-IMAGE      "Image"             0
-  SF-DRAWABLE   "Drawable"          0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Oilify mask size" '(17 3 50 1 10 0 1)
   SF-ADJUSTMENT _"Circuit seed"     '(3 1 3000000 1 10 0 1)
   SF-TOGGLE     _"No background (only for separate layer)" FALSE

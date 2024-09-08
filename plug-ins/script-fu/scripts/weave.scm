@@ -360,7 +360,7 @@
 ; The main weave function
 
 (define (script-fu-weave img
-                         drawable
+                         drawables
                          ribbon-width
                          ribbon-spacing
                          shadow-darkness
@@ -372,6 +372,7 @@
   (gimp-image-undo-group-start img)
 
   (let* (
+        (drawable (vector-ref drawables 0))
         (d-img (car (gimp-item-get-image drawable)))
         (d-width (car (gimp-drawable-get-width drawable)))
         (d-height (car (gimp-drawable-get-height drawable)))
@@ -414,15 +415,14 @@
   (gimp-displays-flush)
 )
 
-(script-fu-register "script-fu-weave"
+(script-fu-register-filter "script-fu-weave"
   _"_Weave..."
   _"Create a new layer filled with a weave effect to be used as an overlay or bump map"
   "Federico Mena Quintero"
   "Federico Mena Quintero"
   "June 1997"
   "RGB* GRAY*"
-  SF-IMAGE       "Image to Weave"    0
-  SF-DRAWABLE    "Drawable to Weave" 0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Ribbon width"     '(30  0 256 1 10 1 1)
   SF-ADJUSTMENT _"Ribbon spacing"   '(10  0 256 1 10 1 1)
   SF-ADJUSTMENT _"Shadow darkness"  '(75  0 100 1 10 1 1)

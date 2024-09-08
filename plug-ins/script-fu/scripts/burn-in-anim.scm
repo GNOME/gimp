@@ -12,7 +12,7 @@
 ;
 
 (define (script-fu-burn-in-anim org-img
-                                org-layer
+                                org-layers
                                 glow-color
                                 fadeout
                                 bl-width
@@ -23,6 +23,7 @@
                                 speed)
 
   (let* (
+        (img (vector-ref org-img 0))
         ;--- main variable: "bl-x" runs from 0 to layer-width
         (bl-x 0)
         (frame-nr 0)
@@ -49,17 +50,17 @@
         (set! speed (* -1 speed)) )
 
     ;--- check image and work on a copy
-    (if (and (= (car (gimp-image-get-layers org-img)) 2)
-             (= (car (gimp-image-get-floating-sel org-img)) -1))
+    (if (and (= (car (gimp-image-get-layers img)) 2)
+             (= (car (gimp-image-get-floating-sel img)) -1))
 
         ;--- main program structure starts here, begin of "if-1"
         (begin
           (gimp-context-push)
           (gimp-context-set-defaults)
 
-          (set! img (car (gimp-image-duplicate org-img)))
+          (set! img (car (gimp-image-duplicate img)))
           (gimp-image-undo-disable img)
-          (if (> (car (gimp-drawable-type org-layer)) 1 )
+          (if (> (car (gimp-drawable-type (vector-ref org-layers 0))) 1 )
               (gimp-image-convert-rgb img))
           (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
           (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
@@ -220,15 +221,14 @@
 )
 
 
-(script-fu-register "script-fu-burn-in-anim"
+(script-fu-register-filter "script-fu-burn-in-anim"
     _"B_urn-In..."
     _"Create intermediate layers to produce an animated 'burn-in' transition between two layers"
     "Roland Berger roland@fuchur.leute.server.de"
     "Roland Berger"
     "January 2001"
     "RGBA GRAYA INDEXEDA"
-    SF-IMAGE    "The image"            0
-    SF-DRAWABLE "Layer to animate"     0
+    SF-TWO-OR-MORE-DRAWABLE
     SF-COLOR   _"Glow color"           "white"
     SF-TOGGLE  _"Fadeout"              FALSE
     SF-VALUE   _"Fadeout width"        "100"

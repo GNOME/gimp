@@ -23,7 +23,7 @@
 
 
 (define (script-fu-xach-effect image
-                               drawable
+                               drawables
                                hl-offset-x
                                hl-offset-y
                                hl-color
@@ -35,6 +35,7 @@
                                ds-offset-y
                                keep-selection)
   (let* (
+        (drawable (vector-ref drawables 0))
         (ds-blur (max ds-blur 0))
         (ds-opacity (min ds-opacity 100))
         (ds-opacity (max ds-opacity 0))
@@ -117,15 +118,14 @@
   )
 )
 
-(script-fu-register "script-fu-xach-effect"
+(script-fu-register-filter "script-fu-xach-effect"
   _"_Xach-Effect..."
   _"Add a subtle translucent 3D effect to the selected region (or alpha)"
   "Adrian Likins <adrian@gimp.org>"
   "Adrian Likins"
   "9/28/97"
   "RGB* GRAY*"
-  SF-IMAGE       "Image"                   0
-  SF-DRAWABLE    "Drawable"                0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Highlight X offset"      '(-1 -100 100 1 10 0 1)
   SF-ADJUSTMENT _"Highlight Y offset"      '(-1 -100 100 1 10 0 1)
   SF-COLOR      _"Highlight color"         "white"
