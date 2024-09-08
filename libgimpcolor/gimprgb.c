@@ -322,31 +322,6 @@ gimp_rgba_get_uchar (const GimpRGB *rgba,
   if (a) *a = ROUND (CLAMP (rgba->a, 0.0, 1.0) * 255.0);
 }
 
-void
-gimp_rgba_add (GimpRGB       *rgba1,
-               const GimpRGB *rgba2)
-{
-  g_return_if_fail (rgba1 != NULL);
-  g_return_if_fail (rgba2 != NULL);
-
-  rgba1->r += rgba2->r;
-  rgba1->g += rgba2->g;
-  rgba1->b += rgba2->b;
-  rgba1->a += rgba2->a;
-}
-
-void
-gimp_rgba_multiply (GimpRGB *rgba,
-                    gdouble  factor)
-{
-  g_return_if_fail (rgba != NULL);
-
-  rgba->r *= factor;
-  rgba->g *= factor;
-  rgba->b *= factor;
-  rgba->a *= factor;
-}
-
 gdouble
 gimp_rgba_distance (const GimpRGB *rgba1,
                     const GimpRGB *rgba2)

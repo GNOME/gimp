@@ -99,11 +99,6 @@ void      gimp_rgba_get_uchar      (const GimpRGB *rgba,
                                     guchar        *blue,
                                     guchar        *alpha);
 
-void      gimp_rgba_add            (GimpRGB       *rgba1,
-                                    const GimpRGB *rgba2);
-void      gimp_rgba_multiply       (GimpRGB       *rgba,
-                                    gdouble        factor);
-
 gdouble   gimp_rgba_distance       (const GimpRGB *rgba1,
                                     const GimpRGB *rgba2);
 

@@ -175,8 +175,9 @@ gimp_bilinear_rgb (gdouble    x,
   gdouble  a[4]  = { 1.0, 1.0, 1.0, 1.0 };
   gdouble  alpha = 1.0;
 
-  for (gint i = 0; i < 4; i++)
+  for (gint i = 0; i < 3; i++)
     retvalues[i] = 0.0;
+  retvalues[3] = 1.0;
 
   g_return_if_fail (values != NULL);
 
@@ -207,7 +208,7 @@ gimp_bilinear_rgb (gdouble    x,
       for (gint i = 0; i < 3; i++)
         {
           m0 = ix * a[0] * values[0 + i] + x * a[1] * values[4 + i];
-          m1 = ix * a[2] * values[8 + 1] + x * a[3] * values[12 + i];
+          m1 = ix * a[2] * values[8 + i] + x * a[3] * values[12 + i];
 
           retvalues[i] = (iy * m0 + y * m1) / alpha;
         }
