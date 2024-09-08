@@ -647,6 +647,60 @@
             ]
         },
         {
+            "name": "libilbm",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/svanderburg/libilbm.git",
+                    "commit": "586f5822275ef5780509a851cb90c7407b2633d9"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "./bootstrap"
+                    ]
+                },
+                {
+                    "type": "patch",
+                    "paths": [
+                        "patches/libilbm-no-ilbmpack-ilbmpp-acbm2ilbm-ilbm2acbm.patch"
+                    ]
+                }
+            ],
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ],
+            "modules": [
+                {
+                    "name": "libiff",
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/svanderburg/libiff.git",
+                            "commit": "b5f542a83c824f26e0816770c9a17c22bd388606"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [
+                                "./bootstrap"
+                            ]
+                        },
+                        {
+                            "type": "patch",
+                            "paths": [
+                                "patches/libiff-no-iffjoin-and-iffp.patch"
+                            ]
+                        }
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ]
+                }
+            ]
+        },
+        {
             "name": "luajit",
             "sources": [
                 {

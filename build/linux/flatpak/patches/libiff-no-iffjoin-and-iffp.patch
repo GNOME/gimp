@@ -1,0 +1,49 @@
+From 7da16ebeab61c92227021cc7662054b36e800cab Mon Sep 17 00:00:00 2001
+From: Bruno <brunvonlope@outlook.com>
+Date: Sun, 8 Sep 2024 11:12:03 -0300
+Subject: [PATCH] configure, makefile: No need to build 'iffjoin' and 'iffpp'
+
+---
+ Makefile.am     | 2 +-
+ configure.ac    | 4 ----
+ src/Makefile.am | 2 +-
+ 3 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 43a2338..af437a6 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1 +1 @@
+-SUBDIRS = doc src tests
++SUBDIRS = src
+diff --git a/configure.ac b/configure.ac
+index 0c29576..2638651 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -22,13 +22,9 @@ AC_SUBST(IFF_BIG_ENDIAN)
+ 
+ AC_CONFIG_FILES([
+ Makefile
+-doc/Makefile
+ src/Makefile
+ src/libiff.pc
+ src/libiff/ifftypes.h
+ src/libiff/Makefile
+-src/iffjoin/Makefile
+-src/iffpp/Makefile
+-tests/Makefile
+ ])
+ AC_OUTPUT
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 1b3db17..cfce91d 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,4 +1,4 @@
+-SUBDIRS = libiff iffjoin iffpp
++SUBDIRS = libiff
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = libiff.pc
+-- 
+2.45.0.windows.1
+
