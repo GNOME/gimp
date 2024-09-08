@@ -313,10 +313,10 @@ static void
 peek (GeglBuffer *buffer,
       gint        x,
       gint        y,
-      GimpRGB    *color)
+      gdouble    *color)
 {
   gegl_buffer_sample (buffer, x, y, NULL,
-                      color, babl_format ("R'G'B'A double"),
+                      color, babl_format ("RGBA double"),
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 }
 
@@ -324,10 +324,10 @@ static void
 poke (GeglBuffer *buffer,
       gint        x,
       gint        y,
-      GimpRGB    *color)
+      gdouble    *color)
 {
   gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
-                   babl_format ("R'G'B'A double"), color,
+                   babl_format ("RGBA double"), color,
                    GEGL_AUTO_ROWSTRIDE);
 }
 
@@ -534,15 +534,14 @@ lic_noise (gint    x,
 
 static void
 getpixel (GeglBuffer *buffer,
-          GimpRGB    *p,
+          gdouble    *p,
           gdouble     u,
           gdouble     v)
 {
   register gint x1, y1, x2, y2;
   gint width, height;
-  static GimpRGB pp[4];
-  gdouble        pixel[4];
-  gdouble        pixels[16];
+  gdouble     pp[4];
+  gdouble     pixels[16];
 
   width  = border_w;
   height = border_h;
@@ -563,22 +562,20 @@ getpixel (GeglBuffer *buffer,
   x2 = (x1 + 1) % width;
   y2 = (y1 + 1) % height;
 
-  peek (buffer, x1, y1, &pp[0]);
-  peek (buffer, x2, y1, &pp[1]);
-  peek (buffer, x1, y2, &pp[2]);
-  peek (buffer, x2, y2, &pp[3]);
-
+  peek (buffer, x1, y1, pp);
   for (gint i = 0; i < 4; i++)
-    {
-      pixels[(i * 4)]     = pp[i].r;
-      pixels[(i * 4) + 1] = pp[i].g;
-      pixels[(i * 4) + 2] = pp[i].b;
-      pixels[(i * 4) + 3] = pp[i].a;
-    }
+    pixels[i] = pp[i];
+  peek (buffer, x2, y1, pp);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 4] = pp[i];
+  peek (buffer, x1, y2, pp);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 8] = pp[i];
+  peek (buffer, x2, y2, pp);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 12] = pp[i];
 
-  gimp_bilinear_rgb (u, v, pixels, source_drw_has_alpha, pixel);
-
-  gimp_rgba_set (p, pixel[0], pixel[1], pixel[2], pixel[3]);
+  gimp_bilinear_rgb (u, v, pixels, source_drw_has_alpha, p);
 }
 
 static void
@@ -587,13 +584,13 @@ lic_image (GeglBuffer *buffer,
            gint        y,
            gdouble     vx,
            gdouble     vy,
-           GimpRGB    *color)
+           gdouble    *color)
 {
   gdouble u, step = 2.0 * l / isteps;
   gdouble xx = (gdouble) x, yy = (gdouble) y;
   gdouble c, s;
-  GimpRGB col = { 0, 0, 0, 0 };
-  GimpRGB col1, col2, col3;
+  gdouble col[4] = { 0, 0, 0, 0 };
+  gdouble col1[4], col2[4], col3[4];
 
   /* Get vector at x,y */
   /* ================= */
@@ -604,44 +601,71 @@ lic_image (GeglBuffer *buffer,
   /* Calculate integral numerically */
   /* ============================== */
 
-  getpixel (buffer, &col1, xx + l * c, yy + l * s);
+  getpixel (buffer, col1, xx + l * c, yy + l * s);
 
   if (source_drw_has_alpha)
-    gimp_rgba_multiply (&col1, filter (-l));
+    {
+      for (gint i = 0; i < 4; i++)
+        col1[i] *= filter (-l);
+    }
   else
-    gimp_rgb_multiply (&col1, filter (-l));
+    {
+      for (gint i = 0; i < 3; i++)
+        col1[i] *= filter (-l);
+    }
 
   for (u = -l + step; u <= l; u += step)
     {
-      getpixel (buffer, &col2, xx - u * c, yy - u * s);
+      getpixel (buffer, col2, xx - u * c, yy - u * s);
 
       if (source_drw_has_alpha)
         {
-          gimp_rgba_multiply (&col2, filter (u));
+          for (gint i = 0; i < 4; i++)
+            {
+              col2[i] *= filter (u);
+              col3[i] = col1[i];
+            }
 
-          col3 = col1;
-          gimp_rgba_add (&col3, &col2);
-          gimp_rgba_multiply (&col3, 0.5 * step);
-          gimp_rgba_add (&col, &col3);
+          for (gint i = 0; i < 4; i++)
+            {
+              col3[i] += col2[i];
+              col3[i] *= (0.5 * step);
+              col[i] += col3[i];
+            }
         }
       else
         {
-          gimp_rgb_multiply (&col2, filter (u));
+          for (gint i = 0; i < 3; i++)
+            {
+              col2[i] *= filter (u);
+              col3[i] = col1[i];
+            }
 
-          col3 = col1;
-          gimp_rgb_add (&col3, &col2);
-          gimp_rgb_multiply (&col3, 0.5 * step);
-          gimp_rgb_add (&col, &col3);
+          for (gint i = 0; i < 3; i++)
+            {
+              col3[i] += col2[i];
+              col3[i] *= (0.5 * step);
+              col[i] += col3[i];
+            }
         }
-      col1 = col2;
-    }
-  if (source_drw_has_alpha)
-    gimp_rgba_multiply (&col, 1.0 / l);
-  else
-    gimp_rgb_multiply (&col, 1.0 / l);
-  gimp_rgb_clamp (&col);
 
-  *color = col;
+      for (gint i = 0; i < 4; i++)
+        col1[i] = col2[i];
+    }
+
+  if (source_drw_has_alpha)
+    {
+      for (gint i = 0; i < 4; i++)
+        col[i] *= (1.0 / l);
+    }
+  else
+    {
+      for (gint i = 0; i < 3; i++)
+        col[i] *= (1.0 / l);
+    }
+
+  for (gint i = 0; i < 4; i++)
+    color[i] = CLAMP (col[i], 0.0, 1.0);
 }
 
 static guchar *
@@ -714,7 +738,7 @@ compute_lic (GimpProcedureConfig *config,
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
   gint        xcount, ycount;
-  GimpRGB     color;
+  gdouble     color[4] = { 0.0, 0.0, 0.0, 1.0 };
   gdouble     vx, vy, tmp;
   gint        effect_convolve;
 
@@ -755,21 +779,27 @@ compute_lic (GimpProcedureConfig *config,
 
           if (effect_convolve == 0)
             {
-              peek (src_buffer, xcount, ycount, &color);
+              peek (src_buffer, xcount, ycount, color);
 
               tmp = lic_noise (xcount, ycount, vx, vy);
 
               if (source_drw_has_alpha)
-                gimp_rgba_multiply (&color, tmp);
+                {
+                  for (gint i = 0; i < 4; i++)
+                    color[i] *= tmp;
+                }
               else
-                gimp_rgb_multiply (&color, tmp);
+                {
+                  for (gint i = 0; i < 3; i++)
+                    color[i] *= tmp;
+                }
             }
           else
             {
-              lic_image (src_buffer, xcount, ycount, vx, vy, &color);
+              lic_image (src_buffer, xcount, ycount, vx, vy, color);
             }
 
-          poke (dest_buffer, xcount, ycount, &color);
+          poke (dest_buffer, xcount, ycount, color);
         }
 
       gimp_progress_update ((gfloat) ycount / (gfloat) border_h);
