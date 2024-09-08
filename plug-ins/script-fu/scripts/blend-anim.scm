@@ -231,7 +231,7 @@
     "Sven Neumann"
     "1999/12/21"
     "RGB* GRAY*"
-    SF-TWO-OR-MORE-DRAWABLE
+    SF-ONE-OR-MORE-DRAWABLE
     SF-ADJUSTMENT _"Intermediate frames" '(3 1 1024 1 10 0 1)
     SF-ADJUSTMENT _"Max. blur radius"    '(0 0 1024 1 10 0 1)
     SF-TOGGLE     _"Looped"              TRUE
