@@ -632,7 +632,11 @@ gimp_font_factory_add_font (GimpContainer        *container,
         }
       else
         {
-          gimp_data_make_internal (GIMP_DATA (font), "gimp-font-standard-alias");
+          gchar *collection;
+
+          collection = g_strdup_printf ("gimp-font-standard-alias: %s", name);
+          gimp_data_make_internal (GIMP_DATA (font), collection);
+          g_free (collection);
         }
 
       gimp_container_add (container, GIMP_OBJECT (font));

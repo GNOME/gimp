@@ -1404,7 +1404,11 @@ gimp_data_identify (GimpData    *data,
 
   identified = (is_internal == gimp_data_is_internal (data)      &&
                 g_strcmp0 (collection, current_collection) == 0  &&
-                g_strcmp0 (name, gimp_object_get_name (GIMP_OBJECT (data))) == 0);
+                /* Internal data have unique collection names. Moreover
+                 * their names can be localized so it should not be
+                 * relied upon for comparison.
+                 */
+                (is_internal ? TRUE : g_strcmp0 (name, gimp_object_get_name (GIMP_OBJECT (data))) == 0));
 
   g_free (current_collection);
 
