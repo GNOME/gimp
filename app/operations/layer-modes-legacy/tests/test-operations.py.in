@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+
+import hashlib
+import re
+
+NEW_IMAGE_WIDTH=4096
+NEW_IMAGE_HEIGHT=4096
+
+template_image = Gimp.Image.new(NEW_IMAGE_WIDTH, NEW_IMAGE_HEIGHT, Gimp.ImageBaseType.RGB)
+
+layer1 = Gimp.Layer.new(template_image, None, NEW_IMAGE_WIDTH, NEW_IMAGE_HEIGHT,
+                        Gimp.ImageType.RGBA_IMAGE, 100.0, Gimp.LayerMode.NORMAL)
+template_image.insert_layer(layer1, None, 0)
+layer2 = Gimp.Layer.new(template_image, None, NEW_IMAGE_WIDTH, NEW_IMAGE_HEIGHT,
+                        Gimp.ImageType.RGBA_IMAGE, 100.0, Gimp.LayerMode.HSV_VALUE)
+template_image.insert_layer(layer2, None, 0)
+
+#display = Gimp.Display.new(template_image)
+
+def fill_layer(layer, shift):
+  shadow_buffer = layer.get_shadow_buffer()
+  n_pixels = NEW_IMAGE_WIDTH * NEW_IMAGE_HEIGHT
+  data = []
+  start_r = 0
+  start_g = 0
+  start_b = 0
+  start_a = 0
+  for loop1 in range(8):
+    for loop2 in range(8):
+      for loop3 in range(8):
+        for loop4 in range(8):
+          for i in range(8):
+            for j in range(8):
+              for k in range(8):
+                for l in range(8):
+                  ri = (i + start_r) % 8
+                  rj = (j + start_g) % 8
+                  rk = (k + start_b) % 8
+                  rl = (l + start_a) % 8
+                  r = min(255, int(256 / 7 * ri))
+                  g = min(255, int(256 / 7 * rj))
+                  b = min(255, int(256 / 7 * rk))
+                  a = min(255, int(256 / 7 * rl))
+                  data += [r, g, b, a]
+          if shift:
+             start_r += 1
+        if shift:
+           start_g += 1
+      if shift:
+        start_b += 1
+    if shift:
+      start_a += 1
+
+  rect = shadow_buffer.get_extent()
+  shadow_buffer.set(rect, "R'G'B'A u8", data)
+
+  shadow_buffer.flush()
+  layer.merge_shadow(True)
+  layer.update(rect.x, rect.y, rect.width, rect.height)
+
+# We create an image with 2 layers, using 8 values per channel, created
+# so that every pixel combination is blended/composited with every pixel
+# combination, by shifting the second layer by one value at each loop.
+# This is why we have (8x8x8x8)^2 combinations, hence a 4096x4096 image.
+fill_layer(layer1, True)
+fill_layer(layer2, False)
+
+#Gimp.displays_flush()
+
+modes = {
+@OPS@
+}
+
+def compare_with_reference(mode, blend_space, composite_mode, composite_space):
+  image = template_image.duplicate()
+  result = image.merge_visible_layers(Gimp.MergeType.CLIP_TO_IMAGE)
+
+  buffer = result.get_buffer()
+  rect = buffer.get_extent()
+  data = buffer.get(rect, 1.0, "R'G'B'A u8", Gegl.AbyssPolicy.BLACK)
+
+  ## TODO: struct.unpack('f', data[8:12]) -> second float!
+  m = hashlib.sha256()
+  m.update(bytes(data))
+  spaces_id = ':'.join([blend_space, composite_mode, composite_space])
+  test_title  = 'Layer mode "{}" can be set in {} composited as {} in {}'.format(mode, blend_space, composite_mode, composite_space)
+  test_title += ' but layer_modes[{}] has no hash for "{}".\n'.format(mode, spaces_id)
+  test_title += 'Fix: app/operations/layer-modes-legacy/meson.build'
+  gimp_assert(test_title, spaces_id in modes[mode])
+
+  expected_digest = modes[mode][spaces_id]
+  file_name = 'test-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.xcf'
+  file_path = os.path.join('@OUTDIR@', file_name)
+  gimp_assert('"{}" ({}) - '.format(mode, blend_space)                       +
+              'composite {} ({}) - '.format(composite_mode, composite_space) +
+              'hash: {} (expected: {})'.format(m.hexdigest(), expected_digest),
+              m.hexdigest() == expected_digest, template_image, file_path)
+  image.delete()
+
+for mode in modes:
+  layer2.set_mode(modes[mode]['enum'])
+
+  layer2.set_blend_space(Gimp.LayerColorSpace.RGB_LINEAR)
+  if layer2.get_blend_space() == Gimp.LayerColorSpace.AUTO:
+    blend_spaces = {
+      'auto': Gimp.LayerColorSpace.AUTO
+    }
+  else:
+    blend_spaces = {
+      'linear':     Gimp.LayerColorSpace.RGB_LINEAR,
+      'perceptual': Gimp.LayerColorSpace.RGB_PERCEPTUAL
+    }
+
+  layer2.set_composite_mode(Gimp.LayerCompositeMode.UNION)
+  if layer2.get_composite_mode() == Gimp.LayerCompositeMode.AUTO:
+    composite_modes = {
+      'auto': Gimp.LayerCompositeMode.AUTO
+    }
+  else:
+    composite_modes = {
+      'union':            Gimp.LayerCompositeMode.UNION,
+      'clip-to-backdrop': Gimp.LayerCompositeMode.CLIP_TO_BACKDROP,
+      'clip-to-layer':    Gimp.LayerCompositeMode.CLIP_TO_LAYER,
+      'intersection':     Gimp.LayerCompositeMode.INTERSECTION
+    }
+
+  layer2.set_composite_space(Gimp.LayerColorSpace.RGB_LINEAR)
+  if layer2.get_composite_space() == Gimp.LayerColorSpace.AUTO:
+    composite_spaces = {
+      'auto': Gimp.LayerColorSpace.AUTO
+    }
+  else:
+    composite_spaces = {
+      'linear':     Gimp.LayerColorSpace.RGB_LINEAR,
+      'perceptual': Gimp.LayerColorSpace.RGB_PERCEPTUAL
+    }
+
+  for blend_space in blend_spaces:
+    layer2.set_blend_space(blend_spaces[blend_space])
+    for composite_mode in composite_modes:
+      layer2.set_composite_mode(composite_modes[composite_mode])
+      for composite_space in composite_spaces:
+        layer2.set_composite_space(composite_spaces[composite_space])
+        compare_with_reference(mode, blend_space, composite_mode, composite_space)
+
+template_image.delete()
