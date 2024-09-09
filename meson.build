@@ -1997,6 +1997,7 @@ subdir('gimp-data/images/')
 
 # Unit testing
 subdir('libgimp/tests')
+subdir('app/operations/layer-modes-legacy/tests')
 
 # Docs
 subdir('docs')

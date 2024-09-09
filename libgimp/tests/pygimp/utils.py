@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
+import gi
+from gi.repository import Gimp, Gio
+
 import inspect
+import re
+import os
 import sys
 
 gimp_test_filename = ''
 
-def gimp_assert(subtest_name, test):
+def gimp_assert(subtest_name, test, image=None, outpath=None):
   '''
   Please call me like this, for instance, if I were testing if gimp_image_new()
   succeeded:
@@ -17,6 +22,12 @@ def gimp_assert(subtest_name, test):
     sys.stderr.write("ERROR: {} - line {}: {}\n".format(gimp_test_filename,
                                                         frames[1].lineno,
                                                         subtest_name))
+    if image is not None and outpath is not None:
+      Gimp.file_save(Gimp.RunMode.NONINTERACTIVE, image,
+                     Gio.file_new_for_path(outpath),
+                     None)
+      sys.stderr.write("       Test file saved as: {}\n".format(outpath))
+
     sys.stderr.write("***** END FAILED SUBTEST ******\n\n")
   assert test
 
