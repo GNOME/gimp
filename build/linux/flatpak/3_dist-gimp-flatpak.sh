@@ -11,8 +11,8 @@ fi
 
 # Generate a Flatpak "bundle" to be tested with GNOME runtime installed
 # (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
-echo -e "\e[0Ksection_start:`date +%s`:flat_making[collapsed=true]\r\e[0KPackaging repo as org.gimp.GIMP.flatpak"
-flatpak build-bundle repo org.gimp.GIMP.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo org.gimp.GIMP ${BRANCH}
+echo -e "\e[0Ksection_start:`date +%s`:flat_making[collapsed=true]\r\e[0KPackaging repo as org.gimp.GIMP.Nightly.flatpak"
+flatpak build-bundle repo org.gimp.GIMP.Nightly.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo org.gimp.GIMP.Nightly ${BRANCH}
 echo -e "\e[0Ksection_end:`date +%s`:flat_making\r\e[0K"
 
 

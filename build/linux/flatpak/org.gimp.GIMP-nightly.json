@@ -1,5 +1,5 @@
 {
-    "app-id": "org.gimp.GIMP",
+    "app-id": "org.gimp.GIMP.Nightly",
     "branch": "master",
     "runtime": "org.gnome.Platform",
     "runtime-version": "master",
@@ -15,6 +15,7 @@
         "cxxflags": "-fdiagnostics-color=always"
     },
     "separate-locales": false,
+    "rename-appdata-file": "org.gimp.GIMP.appdata.xml",
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
     "copy-icon": true,
