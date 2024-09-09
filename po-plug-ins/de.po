@@ -16,7 +16,7 @@
 # Daniel Winzen <d@winzen4.de>, 2013.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2010-2011, 2013.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2016-2018.
-# Tim Sabsch <tim@sabsch.com>, 2018-2023.
+# Tim Sabsch <tim@sabsch.com>, 2018-2024.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2021.
 # Jürgen Benvenuti <gastornis@posteo.org>, 2023, 2024.
 #
@@ -25,16 +25,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-03-02 10:15+0000\n"
-"PO-Revision-Date: 2024-03-04 18:54+0100\n"
-"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"POT-Creation-Date: 2024-09-05 14:05+0000\n"
+"PO-Revision-Date: 2024-09-09 20:11+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -84,7 +84,7 @@ msgstr "Sichtbare Ebenen ausrichten"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
+#: ../plug-ins/common/van-gogh-lic.c:655 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1401 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
@@ -142,7 +142,7 @@ msgstr "Abbre_chen"
 #: ../plug-ins/common/smooth-palette.c:439 ../plug-ins/common/softglow.c:633
 #: ../plug-ins/common/sparkle.c:336 ../plug-ins/common/sphere-designer.c:2562
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
-#: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
+#: ../plug-ins/common/van-gogh-lic.c:656 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
 #: ../plug-ins/file-dds/ddsread.c:1402 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
@@ -463,7 +463,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1375
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1116
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1123
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:693
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -881,7 +881,7 @@ msgid "_Save"
 msgstr "_Speichern"
 
 #: ../plug-ins/common/cml-explorer.c:1336 ../plug-ins/common/filter-pack.c:758
-#: ../plug-ins/common/van-gogh-lic.c:677
+#: ../plug-ins/common/van-gogh-lic.c:682
 msgid "_Hue"
 msgstr "_Farbton"
 
@@ -1065,7 +1065,7 @@ msgstr "CML-Explorer-Parameter speichern"
 #: ../plug-ins/common/file-pdf-save.c:550 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1173
 #: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1227 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1234 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -2267,10 +2267,10 @@ msgstr "»%s«: EOF oder Fehler beim Lesen der Bilddaten"
 #.
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:895
 #: ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-jpegxl.c:787 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-jpegxl.c:794 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1221
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1228
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -4294,24 +4294,24 @@ msgstr "Die Erweiterung von »%s« konnte nicht gelesen werden"
 msgid "Cannot read header from '%s'"
 msgstr "Kopfzeile von »%s« konnte nicht gelesen werden"
 
-#: ../plug-ins/common/file-tga.c:1439
+#: ../plug-ins/common/file-tga.c:1446
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1448 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1455 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "_RLE-Kompression"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1469
 msgid "Or_igin:"
 msgstr "_Ursprung:"
 
-#: ../plug-ins/common/file-tga.c:1466
+#: ../plug-ins/common/file-tga.c:1473
 msgid "Bottom left"
 msgstr "Unten links"
 
-#: ../plug-ins/common/file-tga.c:1467
+#: ../plug-ins/common/file-tga.c:1474
 msgid "Top left"
 msgstr "Oben links"
 
@@ -5020,7 +5020,7 @@ msgstr "_Glanzlichter"
 msgid "Windows"
 msgstr "Fenster"
 
-#: ../plug-ins/common/filter-pack.c:762 ../plug-ins/common/van-gogh-lic.c:678
+#: ../plug-ins/common/filter-pack.c:762 ../plug-ins/common/van-gogh-lic.c:683
 msgid "_Saturation"
 msgstr "_Sättigung"
 
@@ -6323,73 +6323,73 @@ msgstr "Einheiten bearbeiten"
 msgid "_Refresh"
 msgstr "_Aktualisieren"
 
-#: ../plug-ins/common/van-gogh-lic.c:575 ../plug-ins/common/van-gogh-lic.c:646
+#: ../plug-ins/common/van-gogh-lic.c:580 ../plug-ins/common/van-gogh-lic.c:651
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: ../plug-ins/common/van-gogh-lic.c:672
+#: ../plug-ins/common/van-gogh-lic.c:677
 msgid "Effect Channel"
 msgstr "Effekt-Kanal"
 
-#: ../plug-ins/common/van-gogh-lic.c:679
+#: ../plug-ins/common/van-gogh-lic.c:684
 msgid "_Brightness"
 msgstr "_Helligkeit"
 
 # TODO
-#: ../plug-ins/common/van-gogh-lic.c:685
+#: ../plug-ins/common/van-gogh-lic.c:690
 msgid "Effect Operator"
 msgstr "Effekt-Operator"
 
-#: ../plug-ins/common/van-gogh-lic.c:690
+#: ../plug-ins/common/van-gogh-lic.c:695
 msgid "_Derivative"
 msgstr "_Ableitung"
 
-#: ../plug-ins/common/van-gogh-lic.c:691
+#: ../plug-ins/common/van-gogh-lic.c:696
 msgid "_Gradient"
 msgstr "Farb_verlauf"
 
 # TODO! Zusammenrollen ?
-#: ../plug-ins/common/van-gogh-lic.c:697
+#: ../plug-ins/common/van-gogh-lic.c:702
 msgid "Convolve"
 msgstr "Falten"
 
-#: ../plug-ins/common/van-gogh-lic.c:702
+#: ../plug-ins/common/van-gogh-lic.c:707
 msgid "_With white noise"
 msgstr "Mit _weißem Rauschen"
 
-#: ../plug-ins/common/van-gogh-lic.c:703
+#: ../plug-ins/common/van-gogh-lic.c:708
 msgid "W_ith source image"
 msgstr "Mit _Quellbild"
 
-#: ../plug-ins/common/van-gogh-lic.c:722
+#: ../plug-ins/common/van-gogh-lic.c:727
 msgid "_Effect image:"
 msgstr "_Effektbild:"
 
-#: ../plug-ins/common/van-gogh-lic.c:733
+#: ../plug-ins/common/van-gogh-lic.c:738
 msgid "_Filter length:"
 msgstr "Filter_länge:"
 
-#: ../plug-ins/common/van-gogh-lic.c:742
+#: ../plug-ins/common/van-gogh-lic.c:747
 msgid "_Noise magnitude:"
 msgstr "_Rauschanteil:"
 
-#: ../plug-ins/common/van-gogh-lic.c:751
+#: ../plug-ins/common/van-gogh-lic.c:756
 msgid "In_tegration steps:"
 msgstr "In_tegrationsschritte:"
 
-#: ../plug-ins/common/van-gogh-lic.c:760
+#: ../plug-ins/common/van-gogh-lic.c:765
 msgid "_Minimum value:"
 msgstr "_Minimalwert:"
 
-#: ../plug-ins/common/van-gogh-lic.c:769
+#: ../plug-ins/common/van-gogh-lic.c:774
 msgid "M_aximum value:"
 msgstr "M_aximalwert:"
 
-#: ../plug-ins/common/van-gogh-lic.c:815
+#: ../plug-ins/common/van-gogh-lic.c:820
 msgid "Special effects that nobody understands"
 msgstr "Spezialeffekte, die niemand versteht"
 
-#: ../plug-ins/common/van-gogh-lic.c:820
+#: ../plug-ins/common/van-gogh-lic.c:825
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC) …"
 
@@ -12420,7 +12420,7 @@ msgstr "Originalmedien mit geringfügigen menschlichen Bearbeitungen"
 
 #: ../plug-ins/metadata/metadata-tags.c:186
 msgid "Composite of captured elements"
-msgstr ""
+msgstr "Zusammensetzung aufgenommener Elemente"
 
 #: ../plug-ins/metadata/metadata-tags.c:187
 msgid "Algorithmically-enhanced media"
@@ -12436,11 +12436,11 @@ msgstr "Digitale Kunst"
 
 #: ../plug-ins/metadata/metadata-tags.c:190
 msgid "Virtual recording"
-msgstr ""
+msgstr "Virtuelle Aufnahme"
 
 #: ../plug-ins/metadata/metadata-tags.c:191
 msgid "Composite including synthetic elements"
-msgstr ""
+msgstr "Zusammensetzung einschließlich synthentischer Elemente"
 
 #: ../plug-ins/metadata/metadata-tags.c:192
 msgid "Trained algorithmic media"
