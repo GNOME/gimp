@@ -629,11 +629,26 @@ raw_load (GimpProcedure         *procedure,
     }
   else
     {
-      /* we only run interactively due to the nature of this plugin.
-       * things like generate preview etc like to call us non-
-       * interactively.  here we stop that.
+      gint width;
+      gint height;
+
+      g_object_get (config,
+                    "width",  &width,
+                    "height", &height,
+                    NULL);
+      /* This is a very crappy way to stop GIMP from automatic runs,
+       * e.g. when generating previews (which usually makes no sense on
+       * raw data files as we can't guess the actual width/height).
+       * Unfortunately it means that we also break the odd case when one
+       * had a file which used exactly the PREVIEW_SIZE for both
+       * dimensions by chance! We will have to handle this better.
+       * FIXME!
        */
-      status = GIMP_PDB_CALLING_ERROR;
+      if (width == PREVIEW_SIZE && height == PREVIEW_SIZE)
+        {
+          /* TODO: set an error message after the string freeze. */
+          status = GIMP_PDB_CALLING_ERROR;
+        }
     }
 
   /* we are okay, and the user clicked OK in the load dialog */
