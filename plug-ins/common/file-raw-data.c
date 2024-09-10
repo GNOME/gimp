@@ -97,14 +97,14 @@ typedef enum
 typedef enum
 {
   /* RGB Images */
-  RAW_RGB_8BPP,
-  RAW_RGB_16BPP,
-  RAW_RGB_32BPP,
+  RAW_RGB_8BPC,
+  RAW_RGB_16BPC,
+  RAW_RGB_32BPC,
 
   /* RGB Image with an Alpha channel */
-  RAW_RGBA_8BPP,
-  RAW_RGBA_16BPP,
-  RAW_RGBA_32BPP,
+  RAW_RGBA_8BPC,
+  RAW_RGBA_16BPC,
+  RAW_RGBA_32BPC,
 
   RAW_RGB565,       /* RGB Image 16bit, 5,6,5 bits per channel */
   RAW_BGR565,       /* RGB Image 16bit, 5,6,5 bits per channel, red and blue swapped */
@@ -118,9 +118,9 @@ typedef enum
   RAW_GRAY_16BPP,
   RAW_GRAY_32BPP,
 
-  RAW_GRAYA_8BPP,
-  RAW_GRAYA_16BPP,
-  RAW_GRAYA_32BPP,
+  RAW_GRAYA_8BPC,
+  RAW_GRAYA_16BPC,
+  RAW_GRAYA_32BPC,
 
   RAW_INDEXED,      /* Indexed image */
   RAW_INDEXEDA,     /* Indexed image with an Alpha channel */
@@ -369,12 +369,12 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_choice_argument (procedure, "pixel-format",
                                           _("Pi_xel format"),
                                           _("The layout of pixel data, such as components and their order"),
-                                          gimp_choice_new_with_values ("rgb-8bpp",              RAW_RGB_8BPP,    _("RGB 8-bit"),                NULL,
-                                                                       "rgb-16bpp",             RAW_RGB_16BPP,   _("RGB 16-bit"),               NULL,
-                                                                       "rgb-32bpp",             RAW_RGB_32BPP,   _("RGB 32-bit"),               NULL,
-                                                                       "rgba-8bpp",             RAW_RGBA_8BPP,   _("RGBA 8-bit"),               NULL,
-                                                                       "rgba-16bpp",            RAW_RGBA_16BPP,  _("RGBA 16-bit"),              NULL,
-                                                                       "rgba-32bpp",            RAW_RGBA_32BPP,  _("RGBA 32-bit"),              NULL,
+                                          gimp_choice_new_with_values ("rgb-8bpc",              RAW_RGB_8BPC,    _("RGB 8-bit"),                NULL,
+                                                                       "rgb-16bpc",             RAW_RGB_16BPC,   _("RGB 16-bit"),               NULL,
+                                                                       "rgb-32bpc",             RAW_RGB_32BPC,   _("RGB 32-bit"),               NULL,
+                                                                       "rgba-8bpc",             RAW_RGBA_8BPC,   _("RGBA 8-bit"),               NULL,
+                                                                       "rgba-16bpc",            RAW_RGBA_16BPC,  _("RGBA 16-bit"),              NULL,
+                                                                       "rgba-32bpc",            RAW_RGBA_32BPC,  _("RGBA 32-bit"),              NULL,
                                                                        "rgb565",                RAW_RGB565,      _("RGB565"),                   NULL,
                                                                        "bgr565",                RAW_BGR565,      _("BGR565"),                   NULL,
                                                                        "grayscale-1bpp",        RAW_GRAY_1BPP,   _("B&W 1 bit"),                NULL,
@@ -383,13 +383,13 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                                                        "grayscale-8bpp",        RAW_GRAY_8BPP,   _("Grayscale 8-bit"),          NULL,
                                                                        "grayscale-16bpp",       RAW_GRAY_16BPP,  _("Grayscale 16-bit"),         NULL,
                                                                        "grayscale-32bpp",       RAW_GRAY_32BPP,  _("Grayscale 32-bit"),         NULL,
-                                                                       "grayscale-alpha-8bpp",  RAW_GRAYA_8BPP,  _("Grayscale-Alpha 8-bit"),    NULL,
-                                                                       "grayscale-alpha-16bpp", RAW_GRAYA_16BPP, _("Grayscale-Alpha 16-bit"),   NULL,
-                                                                       "grayscale-alpha-32bpp", RAW_GRAYA_32BPP, _("Grayscale-Alpha 32-bit"),   NULL,
+                                                                       "grayscale-alpha-8bpc",  RAW_GRAYA_8BPC,  _("Grayscale-Alpha 8-bit"),    NULL,
+                                                                       "grayscale-alpha-16bpc", RAW_GRAYA_16BPC, _("Grayscale-Alpha 16-bit"),   NULL,
+                                                                       "grayscale-alpha-32bpc", RAW_GRAYA_32BPC, _("Grayscale-Alpha 32-bit"),   NULL,
                                                                        "indexed",               RAW_INDEXED,     _("Indexed"),                  NULL,
                                                                        "indexed-alpha",         RAW_INDEXEDA,    _("Indexed Alpha"),            NULL,
                                                                        NULL),
-                                          "rgb-8bpp", G_PARAM_READWRITE);
+                                          "rgb-8bpc", G_PARAM_READWRITE);
       gimp_procedure_add_choice_argument (procedure, "data-type",
                                           _("_Data type"),
                                           _("Data type used to represent pixel values"),
@@ -1479,15 +1479,15 @@ get_bpp (GimpProcedureConfig *config,
 
       switch (image_type)
         {
-        case RAW_RGB_8BPP:
+        case RAW_RGB_8BPC:
           *bpp = 3;
           break;
 
-        case RAW_RGB_16BPP:
+        case RAW_RGB_16BPC:
           *bpp = 6;
           break;
 
-        case RAW_RGB_32BPP:
+        case RAW_RGB_32BPC:
           *bpp = 12;
           break;
 
@@ -1496,15 +1496,15 @@ get_bpp (GimpProcedureConfig *config,
           *bpp = 2;
           break;
 
-        case RAW_RGBA_8BPP:
+        case RAW_RGBA_8BPC:
           *bpp = 4;
           break;
 
-        case RAW_RGBA_16BPP:
+        case RAW_RGBA_16BPC:
           *bpp = 8;
           break;
 
-        case RAW_RGBA_32BPP:
+        case RAW_RGBA_32BPC:
           *bpp = 16;
           break;
 
@@ -1540,15 +1540,15 @@ get_bpp (GimpProcedureConfig *config,
           *bpp   = 4;
           break;
 
-        case RAW_GRAYA_8BPP:
+        case RAW_GRAYA_8BPC:
           *bpp   = 2;
           break;
 
-        case RAW_GRAYA_16BPP:
+        case RAW_GRAYA_16BPC:
           *bpp   = 4;
           break;
 
-        case RAW_GRAYA_32BPP:
+        case RAW_GRAYA_32BPC:
           *bpp   = 8;
           break;
         }
@@ -1705,10 +1705,10 @@ load_image (GFile                *file,
 
   switch (pixel_format)
     {
-    case RAW_RGB_8BPP:        /* standard RGB */
+    case RAW_RGB_8BPC:        /* standard RGB */
       bpp = 3;
 
-    case RAW_RGB_16BPP:
+    case RAW_RGB_16BPC:
       if (bpp == 0)
         {
           bpp = 6;
@@ -1718,7 +1718,7 @@ load_image (GFile                *file,
             precision = GIMP_PRECISION_U16_NON_LINEAR;
         }
 
-    case RAW_RGB_32BPP:
+    case RAW_RGB_32BPC:
       if (bpp == 0)
         {
           bpp = 12;
@@ -1739,13 +1739,13 @@ load_image (GFile                *file,
       itype = GIMP_RGB;
       break;
 
-    case RAW_RGBA_8BPP:       /* RGB + alpha */
+    case RAW_RGBA_8BPC:       /* RGB + alpha */
       bpp   = 4;
       ltype = GIMP_RGBA_IMAGE;
       itype = GIMP_RGB;
       break;
 
-    case RAW_RGBA_16BPP:
+    case RAW_RGBA_16BPC:
       bpp   = 8;
       ltype = GIMP_RGBA_IMAGE;
       itype = GIMP_RGB;
@@ -1755,7 +1755,7 @@ load_image (GFile                *file,
         precision = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
-    case RAW_RGBA_32BPP:
+    case RAW_RGBA_32BPC:
       bpp   = 16;
       ltype = GIMP_RGBA_IMAGE;
       itype = GIMP_RGB;
@@ -1821,14 +1821,14 @@ load_image (GFile                *file,
         precision = GIMP_PRECISION_U32_NON_LINEAR;
       break;
 
-    case RAW_GRAYA_8BPP:
+    case RAW_GRAYA_8BPC:
       bpp       = 2;
       ltype     = GIMP_GRAYA_IMAGE;
       itype     = GIMP_GRAY;
       precision = GIMP_PRECISION_U8_NON_LINEAR;
       break;
 
-    case RAW_GRAYA_16BPP:
+    case RAW_GRAYA_16BPC:
       bpp       = 4;
       ltype     = GIMP_GRAYA_IMAGE;
       itype     = GIMP_GRAY;
@@ -1838,7 +1838,7 @@ load_image (GFile                *file,
         precision = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
-    case RAW_GRAYA_32BPP:
+    case RAW_GRAYA_32BPC:
       bpp       = 8;
       ltype     = GIMP_GRAYA_IMAGE;
       itype     = GIMP_GRAY;
@@ -1864,21 +1864,21 @@ load_image (GFile                *file,
 
   switch (pixel_format)
     {
-    case RAW_RGB_8BPP:
-    case RAW_RGB_16BPP:
-    case RAW_RGB_32BPP:
+    case RAW_RGB_8BPC:
+    case RAW_RGB_16BPC:
+    case RAW_RGB_32BPC:
 
-    case RAW_RGBA_8BPP:
-    case RAW_RGBA_16BPP:
-    case RAW_RGBA_32BPP:
+    case RAW_RGBA_8BPC:
+    case RAW_RGBA_16BPC:
+    case RAW_RGBA_32BPC:
 
     case RAW_GRAY_8BPP:
     case RAW_GRAY_16BPP:
     case RAW_GRAY_32BPP:
 
-    case RAW_GRAYA_8BPP:
-    case RAW_GRAYA_16BPP:
-    case RAW_GRAYA_32BPP:
+    case RAW_GRAYA_8BPC:
+    case RAW_GRAYA_16BPC:
+    case RAW_GRAYA_32BPC:
       if (planar_configuration == RAW_PLANAR_CONTIGUOUS)
         raw_load_standard (data, width, height, bpp, offset, pixel_format,
                            endianness == RAW_BIG_ENDIAN,
@@ -2032,16 +2032,16 @@ preview_update (GimpPreviewArea *preview,
 
   switch (pixel_format)
     {
-    case RAW_RGBA_8BPP:
+    case RAW_RGBA_8BPC:
       bpc = 1;
       bpp = 4;
-    case RAW_RGBA_16BPP:
+    case RAW_RGBA_16BPC:
       if (bpc == 0)
         {
           bpc = 2;
           bpp = 8;
         }
-    case RAW_RGBA_32BPP:
+    case RAW_RGBA_32BPC:
       if (bpc == 0)
         {
           bpc = 4;
@@ -2050,19 +2050,19 @@ preview_update (GimpPreviewArea *preview,
       n_components = 4;
       preview_type = GIMP_RGBA_IMAGE;
 
-    case RAW_RGB_8BPP:
+    case RAW_RGB_8BPC:
       if (bpc == 0)
         {
           bpc = 1;
           bpp = 3;
         }
-    case RAW_RGB_16BPP:
+    case RAW_RGB_16BPC:
       if (bpc == 0)
         {
           bpc = 2;
           bpp = 6;
         }
-    case RAW_RGB_32BPP:
+    case RAW_RGB_32BPC:
       if (bpc == 0)
         {
           bpc = 4;
@@ -2074,19 +2074,19 @@ preview_update (GimpPreviewArea *preview,
           preview_type = GIMP_RGB_IMAGE;
         }
 
-    case RAW_GRAYA_8BPP:
+    case RAW_GRAYA_8BPC:
       if (bpc == 0)
         {
           bpc = 1;
           bpp = 2;
         }
-    case RAW_GRAYA_16BPP:
+    case RAW_GRAYA_16BPC:
       if (bpc == 0)
         {
           bpc = 2;
           bpp = 4;
         }
-    case RAW_GRAYA_32BPP:
+    case RAW_GRAYA_32BPC:
       if (bpc == 0)
         {
           bpc = 4;
