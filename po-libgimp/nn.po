@@ -29,7 +29,7 @@ msgstr "Bla gjennom …"
 #: libgimp/gimpexport.c:363 libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Programtillegget %s kan ikkje handtera lag"
+msgstr "Programtillegget %s kan ikkje handsama lag"
 
 #: libgimp/gimpexport.c:364 libgimp/gimpexport.c:373 libgimp/gimpexport.c:382
 #: libgimp/gimpexport.c:400
@@ -40,12 +40,12 @@ msgstr "Flett saman synlege lag"
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"Programtillegget %s kan ikkje handtera lagforskyving, storleik og dekkevne"
+"Programtillegget %s kan ikkje handsama lagforskyving, storleik og dekkevne"
 
 #: libgimp/gimpexport.c:381 libgimp/gimpexport.c:390
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Programtillegget %s kan berre handtera lag som animasjonsrammer"
+msgstr "Programtillegget %s kan berre handsama lag som animasjonsrammer"
 
 #: libgimp/gimpexport.c:382 libgimp/gimpexport.c:391
 msgid "Save as Animation"
@@ -59,7 +59,7 @@ msgstr "Flat ut biletet"
 #: libgimp/gimpexport.c:408
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "Programtillegget %s kan ikkje handtera gjennomsikt"
+msgstr "Programtillegget %s kan ikkje handsama gjennomsikt"
 
 #: libgimp/gimpexport.c:417
 #, c-format
@@ -78,7 +78,7 @@ msgstr "Programtillegget %s kan ikkje handsama gjennomsiktige lag"
 #: libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Programtillegget %s kan ikkje handtera lagmasker"
+msgstr "Programtillegget %s kan ikkje handsama lagmasker"
 
 #: libgimp/gimpexport.c:436
 msgid "Apply Layer Masks"
@@ -87,7 +87,7 @@ msgstr "Legg til lagmasker"
 #: libgimp/gimpexport.c:444
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Programtillegget %s kan berre handtera RGB-bilete"
+msgstr "Programtillegget %s kan berre handsama RGB-bilete"
 
 #: libgimp/gimpexport.c:445 libgimp/gimpexport.c:483 libgimp/gimpexport.c:492
 msgid "Convert to RGB"
@@ -96,7 +96,7 @@ msgstr "Konverter til RGB"
 #: libgimp/gimpexport.c:453
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Programtillegget %s kan berre handtera gråtonebilete"
+msgstr "Programtillegget %s kan berre handsama gråtonebilete"
 
 #: libgimp/gimpexport.c:454 libgimp/gimpexport.c:483 libgimp/gimpexport.c:504
 msgid "Convert to Grayscale"
@@ -105,7 +105,7 @@ msgstr "Konverter til gråtoner"
 #: libgimp/gimpexport.c:462
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Programtillegget %s kan berre handtera indekserte bilete"
+msgstr "Programtillegget %s kan berre handsama indekserte bilete"
 
 #: libgimp/gimpexport.c:463 libgimp/gimpexport.c:492 libgimp/gimpexport.c:502
 msgid ""
@@ -119,7 +119,7 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"Programtillegget %s kan berre handtera indekserte punktbilet (to fargar)"
+"Programtillegget %s kan berre handsama indekserte punktbilet (to fargar)"
 
 #: libgimp/gimpexport.c:473
 msgid ""
@@ -132,7 +132,7 @@ msgstr ""
 #: libgimp/gimpexport.c:482
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Programtillegget %s kan berre handtera RGB- og gråskalabilete"
+msgstr "Programtillegget %s kan berre handsama RGB- og gråskalabilete"
 
 #: libgimp/gimpexport.c:491
 #, c-format
@@ -142,7 +142,7 @@ msgstr "Programtillegget %s kan berre handsama RGB og indekserte bilete"
 #: libgimp/gimpexport.c:501
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Programtillegget %s kan berre handtera gråskala og indekserte bilete"
+msgstr "Programtillegget %s kan berre handsama gråskala og indekserte bilete"
 
 #: libgimp/gimpexport.c:512
 #, c-format
