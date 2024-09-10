@@ -943,12 +943,12 @@ msgstr "Trekk dei merkte kanalane frå det gjeldande utvalet"
 #: app/actions/channels-actions.c:201
 msgctxt "channels-action"
 msgid "_Intersect Channels with Selection"
-msgstr "Lag _snitt mellom kanalane og utvalet"
+msgstr "Lag _snitt med kanalane og utvalet"
 
 #: app/actions/channels-actions.c:202
 msgctxt "channels-action"
 msgid "Intersect selected channels with the current selection and each other"
-msgstr "Lag snitt mellom dei merkte kanalane og det gjeldande utvalet"
+msgstr "Lag snitt med dei merkte kanalane og det gjeldande utvalet"
 
 #: app/actions/channels-actions.c:210
 msgctxt "channels-action"
@@ -1141,7 +1141,7 @@ msgstr "_Snitt med utvalet"
 #: app/actions/colormap-actions.c:96
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Lag snitt mellom denne fargen og det gjeldande utvalet"
+msgstr "Lag snitt meld denne fargen og det gjeldande utvalet"
 
 #: app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -2700,12 +2700,12 @@ msgstr "Opna dialogvindauget for histogram"
 #: app/actions/dialogs-actions.c:117
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "_Utvalshandterar"
+msgstr "_Utvalshandsamar"
 
 #: app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Opna utvalshandteraren"
+msgstr "Opna utvalshandsamaren"
 
 #: app/actions/dialogs-actions.c:124
 msgctxt "dialogs-action"
@@ -3080,7 +3080,7 @@ msgstr "_Modular"
 #: app/actions/dialogs-actions.c:342
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Opna dialogvindauget for modulhandteraren"
+msgstr "Opna dialogvindauget for modulhandsamaren"
 
 #: app/actions/dialogs-actions.c:347
 msgctxt "dialogs-action"
@@ -3452,7 +3452,7 @@ msgstr "Syt for at posisjonen på dei merkte teikneelementa ikkje vert endra"
 #: app/actions/drawable-actions.c:85
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
-msgstr "Spegelvend _horisontalt"
+msgstr "Spegelvend _vassrett"
 
 #: app/actions/drawable-actions.c:86
 msgctxt "drawable-action"
@@ -3462,7 +3462,7 @@ msgstr "Spegelvend teikneelementa vassrett"
 #: app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
-msgstr "Spegelvend _vertikalt"
+msgstr "Spegelvend _loddrett"
 
 #: app/actions/drawable-actions.c:92
 msgctxt "drawable-action"
@@ -5868,22 +5868,22 @@ msgstr "Konverter biletet til perseptuell (sRGB) gamma"
 #: app/actions/image-actions.c:263
 msgctxt "image-action"
 msgid "Flip _Horizontally"
-msgstr "Spegelvend _horisontalt"
+msgstr "Spegelvend _vassrett"
 
 #: app/actions/image-actions.c:264
 msgctxt "image-action"
 msgid "Flip image horizontally"
-msgstr "Spegelvend biletet horisontalt"
+msgstr "Spegelvend biletet vassrett"
 
 #: app/actions/image-actions.c:269
 msgctxt "image-action"
 msgid "Flip _Vertically"
-msgstr "Spegelvend _vertikalt"
+msgstr "Spegelvend _loddrett"
 
 #: app/actions/image-actions.c:270
 msgctxt "image-action"
 msgid "Flip image vertically"
-msgstr "Spegelvend biletet vertikalt"
+msgstr "Spegelvend biletet loddrett"
 
 #: app/actions/image-actions.c:278
 msgctxt "image-action"
@@ -6205,7 +6205,7 @@ msgstr "Slett dei merkte laga"
 #: app/actions/layers-actions.c:108
 msgctxt "layers-action"
 msgid "_Raise Layers"
-msgstr "_Lyft laget"
+msgstr "_Lyft laga"
 
 #: app/actions/layers-actions.c:109
 msgctxt "layers-action"
@@ -6713,12 +6713,12 @@ msgstr "Trekk lagmaskene frå det gjeldande utvalet"
 #: app/actions/layers-actions.c:478
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
-msgstr "Lag _snitt mellom maskene og utvalet"
+msgstr "Lag _snitt med maskene og utvalet"
 
 #: app/actions/layers-actions.c:479
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
-msgstr "Lag snitt mellom lagmaskene og det gjeldande utvalet"
+msgstr "Lag snitt med lagmaskene og det gjeldande utvalet"
 
 #: app/actions/layers-actions.c:487
 msgctxt "layers-action"
@@ -6753,12 +6753,12 @@ msgstr "Trekk alfakanalen for laget frå det gjeldande utvalet"
 #: app/actions/layers-actions.c:508
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
-msgstr "_Snitt mellom alfa og utvalet"
+msgstr "_Snitt med alfa og utvalet"
 
 #: app/actions/layers-actions.c:510
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "Lag snitt mellom alfakanalen for laget og det gjeldande utvalet"
+msgstr "Lag snitt med alfakanalen for laget og det gjeldande utvalet"
 
 #: app/actions/layers-actions.c:518
 msgctxt "layers-action"
@@ -7060,7 +7060,7 @@ msgstr "Trekk masker frå utvalet"
 #: app/actions/layers-commands.c:1759
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
-msgstr "Snitt mellom masker og utvaletet"
+msgstr "Snitt med masker og utvaletet"
 
 #: app/actions/layers-commands.c:1780
 msgid "Add Alpha Channel"
@@ -7089,7 +7089,7 @@ msgstr "Trekk alfa frå utvalet"
 #: app/actions/layers-commands.c:1841 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
-msgstr "Snitt mellom alfa og utvalet"
+msgstr "Snitt med alfa og utvalet"
 
 #: app/actions/layers-commands.c:1852
 msgid "Empty Selection"
@@ -8016,7 +8016,7 @@ msgstr "_Mjuk kant …"
 #: app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "Slør kanten av utvalet slik at den toner gradvis ut"
+msgstr "Slør kanten av utvalet slik at han toner gradvis ut"
 
 #: app/actions/select-actions.c:81
 msgctxt "select-action"
@@ -10760,9 +10760,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Set den horisontale oppløysinga til skjermen i punkt per tomme (dpi). Dersom "
+"Set den vassrette oppløysinga til skjermen i punkt per tomme (dpi). Dersom "
 "denne vert sett til 0, vil X-tenaren verta tvinga til å spørja om "
-"informasjon både om horisontal og vertikal oppløysing."
+"informasjon både om vassrett og loddrett oppløysing."
 
 #: app/config/gimprc-blurbs.h:328
 msgid ""
@@ -10770,9 +10770,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Set den vertikale oppløysinga til skjermen i punkt per tomme (dpi). Dersom "
+"Set den loddrette oppløysinga til skjermen i punkt per tomme (dpi). Dersom "
 "denne vert sett til 0, vil X-tenaren verta tvinga til å spørja om "
-"informasjon både om horisontal og vertikal oppløysing."
+"informasjon både om vassrett og loddrett oppløysing."
 
 #: app/config/gimprc-blurbs.h:333
 msgid "When enabled, non-visible layers can be edited as normal."
@@ -13656,7 +13656,7 @@ msgstr "Mellomrom X"
 
 #: app/core/gimpgrid.c:111
 msgid "Horizontal spacing of grid lines."
-msgstr "Horisontal linjeavstand for rutenettet."
+msgstr "Vassrett linjeavstand for rutenettet."
 
 #: app/core/gimpgrid.c:117
 msgid "Spacing Y"
@@ -13664,7 +13664,7 @@ msgstr "Mellomrom Y"
 
 #: app/core/gimpgrid.c:118
 msgid "Vertical spacing of grid lines."
-msgstr "Vertikal linjeavstand for rutenettet."
+msgstr "Loddrett linjeavstand for rutenettet."
 
 #: app/core/gimpgrid.c:124
 msgid "Spacing unit"
@@ -13678,7 +13678,7 @@ msgstr "Forskyving X"
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
-"Horisontal forskyving av den første linja i rutenettet. Dette kan vere eit "
+"Vassrett forskyving av den første linja i rutenettet. Dette kan vere eit "
 "negativt tal."
 
 #: app/core/gimpgrid.c:140
@@ -13688,7 +13688,7 @@ msgstr "Forskyving Y"
 #: app/core/gimpgrid.c:141
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
-"Vertikal forskyving av den første linja i rutenettet. Dette kan vere eit "
+"Loddrett forskyving av den første linja i rutenettet. Dette kan vere eit "
 "negativt tal."
 
 #: app/core/gimpgrid.c:149
@@ -14065,12 +14065,12 @@ msgstr "Tilbakestill biletet"
 #: app/core/gimpimage-guides.c:51
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "Legg til horisontal hjelpelinje"
+msgstr "Legg til vassrett hjelpelinje"
 
 #: app/core/gimpimage-guides.c:73
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
-msgstr "Legg til vertikal hjelpelinje"
+msgstr "Legg til loddrett hjelpelinje"
 
 #: app/core/gimpimage-guides.c:117
 msgctxt "undo-type"
@@ -15545,7 +15545,7 @@ msgstr "Utval"
 
 #: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
-msgstr "Utvalshandteraren"
+msgstr "Utvalshandsamaren"
 
 #: app/dialogs/dialogs.c:400
 msgid "Symmetry Painting"
@@ -16049,7 +16049,7 @@ msgstr "Vil du rotera biletet?"
 
 #: app/dialogs/module-dialog.c:108
 msgid "Module Manager"
-msgstr "Modulhandterar"
+msgstr "Modulhandsamar"
 
 #: app/dialogs/module-dialog.c:112
 msgid "_Refresh"
@@ -17314,12 +17314,12 @@ msgstr "Pikslar"
 #: app/dialogs/preferences-dialog.c:2870 app/widgets/gimpgrideditor.c:197
 #: app/widgets/gimpgrideditor.c:232
 msgid "Horizontal"
-msgstr "Horisontal"
+msgstr "Vassrett"
 
 #: app/dialogs/preferences-dialog.c:2872 app/widgets/gimpgrideditor.c:199
 #: app/widgets/gimpgrideditor.c:234
 msgid "Vertical"
-msgstr "Vertikal"
+msgstr "Loddrett"
 
 #: app/dialogs/preferences-dialog.c:2874 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
@@ -17340,7 +17340,7 @@ msgstr "_Kalibrer …"
 
 #: app/dialogs/preferences-dialog.c:2955 app/dialogs/preferences-dialog.c:2956
 msgid "Window Management"
-msgstr "Vindaugehandtering"
+msgstr "Vindaugehandsaming"
 
 #: app/dialogs/preferences-dialog.c:2961
 msgid "Window Manager Hints"
@@ -18026,7 +18026,7 @@ msgstr "_Vassrett:"
 
 #: app/dialogs/resolution-calibrate-dialog.c:150
 msgid "_Vertical:"
-msgstr "_Vertikal:"
+msgstr "_Loddrett:"
 
 #. Image size frame
 #: app/dialogs/scale-dialog.c:103 app/widgets/gimptemplateeditor.c:187
@@ -18870,15 +18870,15 @@ msgstr "Avbryt <i>%s</i>"
 
 #: app/display/gimptoolcompass.c:847
 msgid "Click to place vertical and horizontal guides"
-msgstr "Klikk for å plassera vertikale og horisontale hjelpelinjer"
+msgstr "Klikk for å plassera loddrette og vassrette hjelpelinjer"
 
 #: app/display/gimptoolcompass.c:855
 msgid "Click to place a horizontal guide"
-msgstr "Klikk for å plassera ei horisontal hjelpelinje"
+msgstr "Klikk for å plassera ei vassrett hjelpelinje"
 
 #: app/display/gimptoolcompass.c:863
 msgid "Click to place a vertical guide"
-msgstr "Klikk for å plassera ei vertikal hjelpelinje"
+msgstr "Klikk for å plassera ei loddrett hjelpelinje"
 
 #: app/display/gimptoolcompass.c:871
 msgid "Click-Drag to add a new point"
@@ -20660,7 +20660,7 @@ msgstr "Reverser"
 
 #: app/paint/gimppaintoptions.c:375
 msgid "Reverse direction of fading"
-msgstr "Reverser retninga for uttoninga"
+msgstr "Reverser retninga for toninga"
 
 #: app/paint/gimppaintoptions.c:380 app/paint/gimppaintoptions.c:400
 #: app/tools/gimpgradientoptions.c:307 app/tools/gimppaintoptions-gui.c:363
@@ -20669,7 +20669,7 @@ msgstr "Gjenta"
 
 #: app/paint/gimppaintoptions.c:381
 msgid "How fade is repeated as you paint"
-msgstr "Korleis uttoninga skal skje i biletet"
+msgstr "Korleis ut/inntoninga skal skje i biletet"
 
 #: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
 #: app/tools/gimppaintoptions-gui.c:396
@@ -23507,8 +23507,8 @@ msgstr "Spegelvend"
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
-"Verktøyet «spegelvend» spegelvender lag, utval eller banar horisontalt eller "
-"vertikalt"
+"Verktøyet «spegelvend» spegelvender lag, utval eller banar vassrett eller "
+"loddrett"
 
 #: app/tools/gimpfliptool.c:112
 msgid "_Flip"
@@ -23517,12 +23517,12 @@ msgstr "Spegel_vend"
 #: app/tools/gimpfliptool.c:310
 msgctxt "undo-type"
 msgid "Flip horizontally"
-msgstr "Spegelvender horisontalt"
+msgstr "Spegelvender vassrett"
 
 #: app/tools/gimpfliptool.c:313
 msgctxt "undo-type"
 msgid "Flip vertically"
-msgstr "Spegelvender vertikalt"
+msgstr "Spegelvender loddrett"
 
 #: app/tools/gimpforegroundselectoptions.c:91
 msgid "Draw Mode"
@@ -24390,20 +24390,20 @@ msgstr "Klikk og dra for å forskyva teiknemediet"
 
 #: app/tools/gimpoffsettool.c:515
 msgid "By width/_2, height/2"
-msgstr "Ved breidd/_2, høgd/2"
+msgstr "Ved breidd : _2, høgd : 2"
 
 #: app/tools/gimpoffsettool.c:527
 msgid "By _width/2"
-msgstr "Ved _breidd/2"
+msgstr "Ved _breidd : 2"
 
 #: app/tools/gimpoffsettool.c:535
 msgid "By _height/2"
-msgstr "Ved _høgd/2"
+msgstr "Ved _høgd : 2"
 
 #. The edge behavior frame
 #: app/tools/gimpoffsettool.c:544
 msgid "Edge Behavior"
-msgstr "Kanthandtering"
+msgstr "Kanthandsaming"
 
 #: app/tools/gimpoffsettool.c:551
 msgid "W_rap around"
@@ -24468,7 +24468,7 @@ msgstr "Rediger denne dynamikken"
 
 #: app/tools/gimppaintoptions-gui.c:334
 msgid "Fade Options"
-msgstr "Innstillingar for uttoning"
+msgstr "Innstillingar for ut/inntoning"
 
 #: app/tools/gimppaintoptions-gui.c:374
 msgid "Color Options"
@@ -24907,20 +24907,20 @@ msgstr "_Forskyv"
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr "Forskyv horisontalt med %-3.3g"
+msgstr "Forskyv vassrett med %-3.3g"
 
 #: app/tools/gimpsheartool.c:166
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr "Forskyv vertikalt med %-3.3g"
+msgstr "Forskyv loddrett med %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: app/tools/gimpsheartool.c:171
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr "Forskyv horisontalt med %-3.3g, vertikalt med %-3.3g"
+msgstr "Forskyv vassrett med %-3.3g, loddrett med %-3.3g"
 
 #: app/tools/gimpsheartool.c:189
 msgid "Shear magnitude _X"
@@ -25019,7 +25019,7 @@ msgstr "Bruk redigeringsvindauge"
 
 #: app/tools/gimptextoptions.c:251
 msgid "Use an external editor window for text entry"
-msgstr "Bruk GIMPs teksthandterar for å skriva inn tekst"
+msgstr "Bruk GIMP sin teksthandsamar for å skriva inn tekst"
 
 #: app/tools/gimptextoptions.c:257
 msgid "Show on-canvas editor"
@@ -25142,7 +25142,7 @@ msgstr "Nøyaktig éin bane må merkjast."
 
 #: app/tools/gimptexttool-editor.c:1374
 msgid "GIMP Text Editor"
-msgstr "GIMP teksthandterar"
+msgstr "GIMP teksthandsamar"
 
 #: app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
@@ -29004,7 +29004,7 @@ msgstr "Skrifttypemeny"
 #: menus/gradient-editor-menu.ui:6
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
-msgstr "Meny for overgangshandteraren"
+msgstr "Meny for overgangshandsamaren"
 
 #: menus/gradients-menu.ui:7
 msgctxt "gradients-action"
@@ -29383,7 +29383,7 @@ msgstr "Menyen for MyPaint-penslane"
 #: menus/palette-editor-menu.ui:6
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
-msgstr "Meny for paletthandteraren"
+msgstr "Meny for paletthandsamaren"
 
 #: menus/palettes-menu.ui:6
 msgctxt "palettes-action"
@@ -29413,7 +29413,7 @@ msgstr "Menyen for prøvepunkta"
 #: menus/selection-menu.ui:6
 msgctxt "select-action"
 msgid "Selection Editor Menu"
-msgstr "Meny for utvalshandteraren"
+msgstr "Meny for utvalshandsamaren"
 
 #: menus/templates-menu.ui:6
 msgctxt "templates-action"
