@@ -5030,7 +5030,7 @@ msgstr "Prøv grenseboks"
 
 #: plug-ins/common/file-ps.c:408
 msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
-msgstr "USANN: Bruk breidd/høgd, SANN: Bruk BoundingBox"
+msgstr "USANN: Bruk breidd : høgd, SANN: Bruk BoundingBox"
 
 #: plug-ins/common/file-ps.c:413
 msgid "_Pages"
@@ -6962,7 +6962,7 @@ msgid ""
 "Horizontal\n"
 "Lines"
 msgstr ""
-"Horsontal\n"
+"Vassrett\n"
 "Linjer"
 
 #: plug-ins/common/grid.c:899
@@ -6970,7 +6970,7 @@ msgid ""
 "Vertical\n"
 "Lines"
 msgstr ""
-"Vertikall\n"
+"Loddrett\n"
 "Linjer"
 
 #: plug-ins/common/grid.c:901
@@ -6994,11 +6994,11 @@ msgstr "Forskyving:"
 #. attach color selectors
 #: plug-ins/common/grid.c:1066
 msgid "Horizontal Color"
-msgstr "Horisontal farge"
+msgstr "Vassrett farge"
 
 #: plug-ins/common/grid.c:1085
 msgid "Vertical Color"
-msgstr "Vertikal farge"
+msgstr "Loddrett farge"
 
 #: plug-ins/common/grid.c:1103
 msgid "Intersection Color"
@@ -7090,7 +7090,7 @@ msgstr "Puslespelutsjånad"
 
 #: plug-ins/common/jigsaw.c:413 plug-ins/common/tile-small.c:505
 msgid "_Horizontal"
-msgstr "_Horisontal"
+msgstr "_Vassrett"
 
 #: plug-ins/common/jigsaw.c:414
 msgid "Number of pieces going across"
@@ -7098,7 +7098,7 @@ msgstr "Talet på bitar bortover"
 
 #: plug-ins/common/jigsaw.c:419 plug-ins/common/tile-small.c:515
 msgid "_Vertical"
-msgstr "_Vertikal"
+msgstr "_Loddrett"
 
 #: plug-ins/common/jigsaw.c:420
 msgid "Number of pieces going down"
@@ -11984,11 +11984,11 @@ msgstr "Form fargeovergang"
 
 #: plug-ins/gfig/gfig-dialog.c:535
 msgid "Vertical gradient"
-msgstr "Vertikal fargeovergang"
+msgstr "Loddrett fargeovergang"
 
 #: plug-ins/gfig/gfig-dialog.c:536
 msgid "Horizontal gradient"
-msgstr "Horisontal fargeovergang"
+msgstr "Vassrett fargeovergang"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: plug-ins/gfig/gfig-dialog.c:609
@@ -15891,11 +15891,11 @@ msgstr "Ingen"
 
 #: plug-ins/print/print-page-layout.c:497
 msgid "Horizontally"
-msgstr "Horisontalt"
+msgstr "Vassrett"
 
 #: plug-ins/print/print-page-layout.c:498
 msgid "Vertically"
-msgstr "Vertikal"
+msgstr "Loddrett"
 
 #: plug-ins/print/print-page-layout.c:499
 msgid "Both"
