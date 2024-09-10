@@ -111,6 +111,17 @@ poke (gint      x,
                    GEGL_AUTO_ROWSTRIDE);
 }
 
+void
+poke_adaptive (gint      x,
+               gint      y,
+               gdouble  *color,
+               gpointer  user_data)
+{
+  gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                   babl_format ("R'G'B'A double"), color,
+                   GEGL_AUTO_ROWSTRIDE);
+}
+
 gint
 checkbounds (gint x,
              gint y)

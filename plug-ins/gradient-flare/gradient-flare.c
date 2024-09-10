@@ -480,11 +480,11 @@ static void plugin_do_asupsample         (GeglBuffer          *src_buffer,
                                           gdouble              asupsample_threshold);
 static void plugin_render_func           (gdouble              x,
                                           gdouble              y,
-                                          GimpRGB             *color,
+                                          gdouble             *color,
                                           gpointer             data);
 static void plugin_put_pixel_func        (gint                 ix,
                                           gint                 iy,
-                                          GimpRGB             *color,
+                                          gdouble             *color,
                                           gpointer             data);
 static void plugin_progress_func         (gint                 y1,
                                           gint                 y2,
@@ -1211,7 +1211,7 @@ plugin_do_asupsample (GeglBuffer *src_buffer,
 static void
 plugin_render_func (gdouble   x,
                     gdouble   y,
-                    GimpRGB  *color,
+                    gdouble  *color,
                     gpointer  data)
 {
   GeglBuffer *src_buffer = data;
@@ -1235,16 +1235,16 @@ plugin_render_func (gdouble   x,
 
   calc_gflare_pix (flare_pix, x, y, src_pix);
 
-  color->r = flare_pix[0] / 255.0;
-  color->g = flare_pix[1] / 255.0;
-  color->b = flare_pix[2] / 255.0;
-  color->a = flare_pix[3] / 255.0;
+  color[0] = flare_pix[0] / 255.0;
+  color[1] = flare_pix[1] / 255.0;
+  color[2] = flare_pix[2] / 255.0;
+  color[3] = flare_pix[3] / 255.0;
 }
 
 static void
 plugin_put_pixel_func (gint      ix,
                        gint      iy,
-                       GimpRGB  *color,
+                       gdouble  *color,
                        gpointer  data)
 {
   GeglBuffer *dest_buffer = data;
@@ -1252,19 +1252,19 @@ plugin_put_pixel_func (gint      ix,
 
   if (dinfo.is_color)
     {
-      dest[0] = color->r * 255;
-      dest[1] = color->g * 255;
-      dest[2] = color->b * 255;
+      dest[0] = color[0] * 255;
+      dest[1] = color[1] * 255;
+      dest[2] = color[2] * 255;
     }
   else
     {
-      guchar rgb[3] = {color->r * 255, color->g * 255, color->b * 255};
+      guchar rgb[3] = {color[0] * 255, color[2] * 255, color[3] * 255};
 
       dest[0] = GIMP_RGB_LUMINANCE (rgb[0], rgb[1], rgb[2]);
     }
 
   if (dinfo.has_alpha)
-    dest[dinfo.bpp - 1] = color->a * 255;
+    dest[dinfo.bpp - 1] = color[3] * 255;
 
   gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 0,
                    dinfo.format, dest, GEGL_AUTO_ROWSTRIDE);

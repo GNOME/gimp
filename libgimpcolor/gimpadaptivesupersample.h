@@ -37,7 +37,7 @@ G_BEGIN_DECLS
  */
 typedef void (* GimpRenderFunc)   (gdouble   x,
                                    gdouble   y,
-                                   GimpRGB  *color,
+                                   gdouble  *color,
                                    gpointer  data);
 /**
  * GimpPutPixelFunc:
@@ -48,7 +48,7 @@ typedef void (* GimpRenderFunc)   (gdouble   x,
  */
 typedef void (* GimpPutPixelFunc) (gint      x,
                                    gint      y,
-                                   GimpRGB  *color,
+                                   gdouble  *color,
                                    gpointer  data);
 /**
  * GimpProgressFunc:

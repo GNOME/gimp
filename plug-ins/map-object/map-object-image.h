@@ -46,6 +46,11 @@ extern void        poke                     (gint          x,
                                              gint          y,
                                              GimpRGB      *color,
                                              gpointer      user_data);
+/* TODO: Merge back with poke when removing GimpRGB fully */
+extern void        poke_adaptive            (gint          x,
+                                             gint          y,
+                                             gdouble      *color,
+                                             gpointer      user_data);
 extern GimpVector3 int_to_pos               (gint          x,
                                              gint          y);
 extern void        pos_to_int               (gdouble       x,

@@ -183,16 +183,22 @@ init_compute (void)
 static void
 render (gdouble   x,
         gdouble   y,
-        GimpRGB  *col,
+        gdouble  *col,
         gpointer  data)
 {
   GimpVector3 pos;
+  GimpRGB     temp;
 
   pos.x = x / (gdouble) width;
   pos.y = y / (gdouble) height;
   pos.z = 0.0;
 
-  *col = get_ray_color (&pos);
+  temp = get_ray_color (&pos);
+
+  col[0] = temp.r;
+  col[1] = temp.g;
+  col[2] = temp.b;
+  col[3] = temp.a;
 }
 
 static void
@@ -301,7 +307,7 @@ compute_image (void)
                                       mapvals.pixelthreshold,
                                       render,
                                       NULL,
-                                      poke,
+                                      poke_adaptive,
                                       NULL,
                                       show_progress,
                                       NULL);

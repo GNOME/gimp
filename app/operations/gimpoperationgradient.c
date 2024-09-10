@@ -153,15 +153,15 @@ static gdouble         gradient_calc_shapeburst_dimpled_factor   (GeglSampler   
 
 static void            gradient_render_pixel                     (gdouble                x,
                                                                   gdouble                y,
-                                                                  GimpRGB               *color,
+                                                                  gdouble               *color,
                                                                   gpointer               render_data);
 
 static void            gradient_put_pixel                        (gint                   x,
                                                                   gint                   y,
-                                                                  GimpRGB               *color,
+                                                                  gdouble               *color,
                                                                   gpointer               put_pixel_data);
 
-static void            gradient_dither_pixel                     (GimpRGB               *color,
+static void            gradient_dither_pixel                     (gdouble               *color,
                                                                   GRand                 *dither_rand,
                                                                   gfloat                *dest);
 
@@ -881,7 +881,7 @@ gradient_calc_shapeburst_dimpled_factor (GeglSampler *dist_sampler,
 static void
 gradient_render_pixel (gdouble   x,
                        gdouble   y,
-                       GimpRGB  *rgb,
+                       gdouble  *rgb,
                        gpointer  render_data)
 {
   RenderBlendData *rbd = render_data;
@@ -994,7 +994,8 @@ gradient_render_pixel (gdouble   x,
     case GIMP_REPEAT_TRUNCATE:
       if (factor < 0.0 || factor > 1.0)
         {
-          gimp_rgba_set (rgb, 0.0, 0.0, 0.0, 0.0);
+          for (gint i = 0; i < 4; i++)
+            rgb[i] = 0.0;
           return;
         }
       break;
@@ -1004,10 +1005,17 @@ gradient_render_pixel (gdouble   x,
 
   if (rbd->gradient_cache)
     {
+      GimpRGB temp;
+
       factor = CLAMP (factor, 0.0, 1.0);
 
-      *rgb =
+      temp =
         rbd->gradient_cache[ROUND (factor * (rbd->gradient_cache_size - 1))];
+
+      rgb[0] = temp.r;
+      rgb[1] = temp.g;
+      rgb[2] = temp.b;
+      rgb[3] = temp.a;
     }
   else
     {
@@ -1028,7 +1036,7 @@ gradient_render_pixel (gdouble   x,
 static void
 gradient_put_pixel (gint      x,
                     gint      y,
-                    GimpRGB  *color,
+                    gdouble  *color,
                     gpointer  put_pixel_data)
 {
   PutPixelData *ppd   = put_pixel_data;
@@ -1043,15 +1051,15 @@ gradient_put_pixel (gint      x,
     }
   else
     {
-      *dest++ = color->r;
-      *dest++ = color->g;
-      *dest++ = color->b;
-      *dest++ = color->a;
+      *dest++ = color[0];
+      *dest++ = color[1];
+      *dest++ = color[2];
+      *dest++ = color[3];
     }
 }
 
 static void
-gradient_dither_pixel (GimpRGB *color,
+gradient_dither_pixel (gdouble *color,
                        GRand   *dither_rand,
                        gfloat  *dest)
 {
@@ -1060,27 +1068,27 @@ gradient_dither_pixel (GimpRGB *color,
 
   i = g_rand_int (dither_rand);
 
-  if ((color->r == color->g) && (color->r == color->b))
+  if ((color[0] == color[1]) && (color[0] == color[2]))
     {
       gdouble dither = (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
-      r              = color->r + dither;
-      g              = color->g + dither;
-      b              = color->b + dither;
+      r              = color[0] + dither;
+      g              = color[1] + dither;
+      b              = color[2] + dither;
     }
   else
     {
-      r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      r = color[0] + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
       i >>= 8;
-      g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      g = color[1] + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
       i >>= 8;
-      b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+      b = color[2] + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
       i >>= 8;
     }
 
-  if (color->a > 0.0 && color->a < 1.0)
-    a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+  if (color[3] > 0.0 && color[3] < 1.0)
+    a = color[3] + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
   else
-    a = color->a;
+    a = color[3];
 
   *dest++ = CLAMP (r, 0.0, 1.0);
   *dest++ = CLAMP (g, 0.0, 1.0);
@@ -1214,10 +1222,10 @@ gimp_operation_gradient_process (GeglOperation       *operation,
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
-                    GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
+                    gdouble color[4] = { 0.0, 0.0, 0.0, 1.0 };
 
-                    gradient_render_pixel (x, y, &color, &rbd);
-                    gradient_dither_pixel (&color, dither_rand, dest);
+                    gradient_render_pixel (x, y, color, &rbd);
+                    gradient_dither_pixel (color, dither_rand, dest);
 
                     dest += 4;
                   }
@@ -1227,14 +1235,14 @@ gimp_operation_gradient_process (GeglOperation       *operation,
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
-                    GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
+                    gdouble color[4] = { 0.0, 0.0, 0.0, 1.0 };
 
-                    gradient_render_pixel (x, y, &color, &rbd);
+                    gradient_render_pixel (x, y, color, &rbd);
 
-                    *dest++ = color.r;
-                    *dest++ = color.g;
-                    *dest++ = color.b;
-                    *dest++ = color.a;
+                    *dest++ = color[0];
+                    *dest++ = color[1];
+                    *dest++ = color[2];
+                    *dest++ = color[3];
                   }
             }
         }
