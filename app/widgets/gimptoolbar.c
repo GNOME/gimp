@@ -265,8 +265,6 @@ gimp_toolbar_add_action (GimpToolbar *toolbar,
         }
 
       gtk_tool_button_set_label (GTK_TOOL_BUTTON (item), action_label);
-      gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item),
-                                     gimp_action_get_icon_name (GIMP_ACTION (action)));
       gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (item),
                                          gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)));
 
@@ -277,8 +275,7 @@ gimp_toolbar_add_action (GimpToolbar *toolbar,
                                G_CALLBACK (gimp_toolbar_toggle_action_toggled),
                                item, 0);
     }
-  else if (GIMP_IS_PROCEDURE_ACTION (action) ||
-           GIMP_IS_ENUM_ACTION (action))
+  else
     {
       item = gtk_tool_button_new (NULL, action_label);
 
@@ -286,12 +283,9 @@ gimp_toolbar_add_action (GimpToolbar *toolbar,
                                 G_CALLBACK (gimp_action_activate),
                                 action);
     }
-  else
-    {
-      item = gtk_tool_button_new (NULL, action_label);
 
-      gtk_actionable_set_action_name (GTK_ACTIONABLE (item), action_name);
-    }
+  gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item),
+                                 gimp_action_get_icon_name (GIMP_ACTION (action)));
 
   g_object_set_data (G_OBJECT (item), GIMP_TOOLBAR_ACTION_KEY, action);
 

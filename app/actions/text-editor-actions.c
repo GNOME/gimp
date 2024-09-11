@@ -36,11 +36,6 @@
 
 static const GimpActionEntry text_editor_actions[] =
 {
-  { "text-editor-toolbar", GIMP_ICON_EDIT,
-    NC_("text-editor-action", "Text Editor Toolbar"),
-    NULL, { NULL }, NULL, NULL,
-    GIMP_HELP_TEXT_EDITOR_DIALOG },
-
   { "text-editor-load", GIMP_ICON_DOCUMENT_OPEN,
     NC_("text-editor-action", "Open"), NULL, { NULL },
     NC_("text-editor-action", "Load text from file"),
