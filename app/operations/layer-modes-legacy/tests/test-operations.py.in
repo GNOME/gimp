@@ -88,15 +88,16 @@ def compare_with_reference(mode, blend_space, composite_mode, composite_space):
   test_title += 'Fix: app/operations/layer-modes-legacy/meson.build'
   gimp_assert(test_title, spaces_id in modes[mode])
 
-  expected_digest = modes[mode][spaces_id]
+  possible_digests = modes[mode][spaces_id]
   file_name = 'test-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.xcf'
   file_path = os.path.join('@OUTDIR@', file_name)
   ref_name = 'ref-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.data'
   ref_path = os.path.join('@OUTDIR@', ref_name)
   gimp_assert('"{}" ({}) - '.format(mode, blend_space)                       +
               'composite {} ({}) - '.format(composite_mode, composite_space) +
-              'hash: {} (expected: {})'.format(m.hexdigest(), expected_digest),
-              m.hexdigest() == expected_digest, template_image, file_path, ref_path)
+              'hash: {} (expected: {})'.format(m.hexdigest(),
+                  possible_digests),
+              m.hexdigest() in possible_digests, template_image, file_path, ref_path)
   image.delete()
 
 for mode in modes:

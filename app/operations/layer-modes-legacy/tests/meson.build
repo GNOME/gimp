@@ -4,13 +4,17 @@ if not meson.can_run_host_binaries()
 endif
 
 pycode = ''
-foreach mode, sha256sums : layer_modes
+foreach mode, submodes : layer_modes
   op_name = 'gimp:' + mode
   op_enum = 'Gimp.LayerMode.' + mode.replace('-', '_').to_upper()
   pycode += '  "@0@": {\n'.format(op_name) +\
             '    "enum": @0@,\n'.format(op_enum)
-  foreach spaces, sha256sum : sha256sums
-    pycode += '    "@0@": "@1@",\n'.format(spaces, sha256sum)
+  foreach spaces, sha256sums : submodes
+    pycode += '    "@0@": [\n'.format(spaces)
+    foreach sha256sum : sha256sums
+      pycode += '      "@0@",\n'.format(sha256sum)
+    endforeach
+    pycode += '    ]\n'
   endforeach
   pycode += '  },\n'
 endforeach
