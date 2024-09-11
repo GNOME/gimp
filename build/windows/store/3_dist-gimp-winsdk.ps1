@@ -97,10 +97,6 @@ Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (
 
 
 # Autodetects what arch bundles will be packaged
-if (-not (Test-Path .gitignore.bak -Type Leaf))
-  {
-    Copy-Item .gitignore .gitignore.bak
-  }
 if (-not (Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
   {
     Write-Host "(ERROR): No bundle found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' on some MSYS2 shell to make one." -ForegroundColor red
@@ -119,7 +115,13 @@ foreach ($bundle in $supported_archs)
           {
             $msix_arch = 'x64'
           }
+        Write-Output "(INFO): Arch: $msix_arch"
 
+        ## Prevent Git going crazy
+        if (-not (Test-Path .gitignore.bak -Type Leaf))
+          {
+            Copy-Item .gitignore .gitignore.bak
+          }
         $ig_content = "`n$msix_arch`n*.appxsym`n*.zip"
         if (Test-Path .gitignore -Type Leaf)
           {
@@ -131,7 +133,7 @@ foreach ($bundle in $supported_archs)
             Set-Content .gitignore "$ig_content"
           }
 
-        Write-Output "(INFO): Arch: $msix_arch"
+        ## Create temporary dir
         if (Test-Path $msix_arch)
           {
             Remove-Item $msix_arch/ -Recurse
@@ -142,6 +144,10 @@ foreach ($bundle in $supported_archs)
         # 1. CONFIGURE MANIFEST
         Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
         Copy-Item build\windows\store\AppxManifest.xml $msix_arch
+
+        ## Set msix_arch
+        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "neutral","$msix_arch"} |
+        Set-Content $msix_arch\AppxManifest.xml
 
         ## Set Identity Name
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@IDENTITY_NAME@","$IDENTITY_NAME"} |
@@ -165,10 +171,6 @@ foreach ($bundle in $supported_archs)
 
         ## Set GIMP app version (major.minor)
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_APP_VERSION@","$GIMP_APP_VERSION"} |
-        Set-Content $msix_arch\AppxManifest.xml
-
-        ## Set msix_arch
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "neutral","$msix_arch"} |
         Set-Content $msix_arch\AppxManifest.xml
 
         ## Match supported filetypes
@@ -206,9 +208,6 @@ foreach ($bundle in $supported_archs)
         ## Copy files into VFS folder (to support external 3P plug-ins)
         Copy-Item "$bundle" "$vfs" -Recurse -Force
 
-        ## Remove uneeded files (to match the Inno Windows Installer artifact)
-        Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
-
         ## Set revision (on GIMP about dialog)
         (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
         Set-Content "$vfs\share\gimp\*\gimp-release"
@@ -218,6 +217,9 @@ foreach ($bundle in $supported_archs)
           {
             Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
           }
+
+        ## Remove uneeded files (to match the Inno Windows Installer artifact)
+        Get-ChildItem "$vfs" -Recurse -Include (".gitignore", "gimp.cmd") | Remove-Item -Recurse
 
         ## Remove uncompliant files (to avoid WACK/'signtool' issues)
         Get-ChildItem "$vfs" -Recurse -Include ("*.debug", "*.tar") | Remove-Item -Recurse
