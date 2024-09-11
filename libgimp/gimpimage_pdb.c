@@ -1257,6 +1257,214 @@ gimp_image_remove_path (GimpImage *image,
 }
 
 /**
+ * gimp_image_import_paths_from_file:
+ * @image: The image.
+ * @file: The SVG file to import.
+ * @merge: Merge paths into a single path object.
+ * @scale: Scale the SVG to image dimensions.
+ * @num_paths: (out): The number of newly created path.
+ * @path: (out) (array length=num_paths) (element-type GimpPath) (transfer container): The list of newly created path.
+ *
+ * Import paths from an SVG file.
+ *
+ * This procedure imports paths from an SVG file. SVG elements other
+ * than paths and basic shapes are ignored.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_image_import_paths_from_file (GimpImage   *image,
+                                   GFile       *file,
+                                   gboolean     merge,
+                                   gboolean     scale,
+                                   gint        *num_paths,
+                                   GimpPath  ***path)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_FILE, file,
+                                          G_TYPE_BOOLEAN, merge,
+                                          G_TYPE_BOOLEAN, scale,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-import-paths-from-file",
+                                               args);
+  gimp_value_array_unref (args);
+
+  *num_paths = 0;
+  *path = NULL;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *path = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_import_paths_from_string:
+ * @image: The image.
+ * @string: A string that must be a complete and valid SVG document.
+ * @length: Number of bytes in string or -1 if the string is NULL terminated.
+ * @merge: Merge paths into a single path object.
+ * @scale: Scale the SVG to image dimensions.
+ * @num_paths: (out): The number of newly created path.
+ * @path: (out) (array length=num_paths) (element-type GimpPath) (transfer container): The list of newly created path.
+ *
+ * Import paths from an SVG string.
+ *
+ * This procedure works like [method@Gimp.Image.import_paths_from_file]
+ * but takes a string rather than reading the SVG from a file. This
+ * allows you to write scripts that generate SVG and feed it to GIMP.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_image_import_paths_from_string (GimpImage     *image,
+                                     const gchar   *string,
+                                     gint           length,
+                                     gboolean       merge,
+                                     gboolean       scale,
+                                     gint          *num_paths,
+                                     GimpPath    ***path)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_STRING, string,
+                                          G_TYPE_INT, length,
+                                          G_TYPE_BOOLEAN, merge,
+                                          G_TYPE_BOOLEAN, scale,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-import-paths-from-string",
+                                               args);
+  gimp_value_array_unref (args);
+
+  *num_paths = 0;
+  *path = NULL;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *path = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_export_path_to_file:
+ * @image: The image.
+ * @file: The SVG file to create.
+ * @path: (nullable): The path object to export, or %NULL for all in the image.
+ *
+ * save a path as an SVG file.
+ *
+ * This procedure creates an SVG file to save a Path object, that is, a
+ * path. The resulting file can be edited using a vector graphics
+ * application, or later reloaded into GIMP. Pass %NULL as the 'path'
+ * argument to export all paths in the image.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.6
+ **/
+gboolean
+gimp_image_export_path_to_file (GimpImage *image,
+                                GFile     *file,
+                                GimpPath  *path)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_FILE, file,
+                                          GIMP_TYPE_PATH, path,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-export-path-to-file",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_export_path_to_string:
+ * @image: The image.
+ * @path: (nullable): The path object to export, or %NULL for all in the image.
+ *
+ * Save a path as an SVG string.
+ *
+ * This procedure works like [method@Gimp.Image.export_path_to_file]
+ * but creates a string rather than a file. The string is
+ * NULL-terminated and holds a complete XML document. Pass %NULL as the
+ * 'path' argument to export all paths in the image.
+ *
+ * Returns: (transfer full):
+ *          A string whose contents are a complete SVG document.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.6
+ **/
+gchar *
+gimp_image_export_path_to_string (GimpImage *image,
+                                  GimpPath  *path)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *string = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_PATH, path,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-export-path-to-string",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    string = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return string;
+}
+
+/**
  * gimp_image_freeze_paths:
  * @image: The image.
  *

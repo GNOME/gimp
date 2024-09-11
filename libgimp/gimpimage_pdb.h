@@ -32,173 +32,191 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean                 gimp_image_id_is_valid                (gint                 image_id);
-GimpImage**              gimp_get_images                       (gint                *num_images);
-GimpImage*               gimp_image_new                        (gint                 width,
-                                                                gint                 height,
-                                                                GimpImageBaseType    type);
-GimpImage*               gimp_image_new_with_precision         (gint                 width,
-                                                                gint                 height,
-                                                                GimpImageBaseType    type,
-                                                                GimpPrecision        precision);
-GimpImage*               gimp_image_duplicate                  (GimpImage           *image);
-gboolean                 gimp_image_delete                     (GimpImage           *image);
-GimpImageBaseType        gimp_image_get_base_type              (GimpImage           *image);
-GimpPrecision            gimp_image_get_precision              (GimpImage           *image);
-GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage           *image);
-gint                     gimp_image_get_width                  (GimpImage           *image);
-gint                     gimp_image_get_height                 (GimpImage           *image);
-GimpLayer**              gimp_image_get_layers                 (GimpImage           *image,
-                                                                gint                *num_layers);
-GimpChannel**            gimp_image_get_channels               (GimpImage           *image,
-                                                                gint                *num_channels);
-GimpPath**               gimp_image_get_paths                  (GimpImage           *image,
-                                                                gint                *num_paths);
-gboolean                 gimp_image_unset_active_channel       (GimpImage           *image);
-GimpLayer*               gimp_image_get_floating_sel           (GimpImage           *image);
-GimpDrawable*            gimp_image_floating_sel_attached_to   (GimpImage           *image);
-gboolean                 gimp_image_pick_color                 (GimpImage           *image,
-                                                                gint                 num_drawables,
-                                                                const GimpItem     **drawables,
-                                                                gdouble              x,
-                                                                gdouble              y,
-                                                                gboolean             sample_merged,
-                                                                gboolean             sample_average,
-                                                                gdouble              average_radius,
-                                                                GeglColor          **color);
-GimpLayer*               gimp_image_pick_correlate_layer       (GimpImage           *image,
-                                                                gint                 x,
-                                                                gint                 y);
-gboolean                 gimp_image_insert_layer               (GimpImage           *image,
-                                                                GimpLayer           *layer,
-                                                                GimpLayer           *parent,
-                                                                gint                 position);
-gboolean                 gimp_image_remove_layer               (GimpImage           *image,
-                                                                GimpLayer           *layer);
-gboolean                 gimp_image_freeze_layers              (GimpImage           *image);
-gboolean                 gimp_image_thaw_layers                (GimpImage           *image);
-gboolean                 gimp_image_insert_channel             (GimpImage           *image,
-                                                                GimpChannel         *channel,
-                                                                GimpChannel         *parent,
-                                                                gint                 position);
-gboolean                 gimp_image_remove_channel             (GimpImage           *image,
-                                                                GimpChannel         *channel);
-gboolean                 gimp_image_freeze_channels            (GimpImage           *image);
-gboolean                 gimp_image_thaw_channels              (GimpImage           *image);
-gboolean                 gimp_image_insert_path                (GimpImage           *image,
-                                                                GimpPath            *path,
-                                                                GimpPath            *parent,
-                                                                gint                 position);
-gboolean                 gimp_image_remove_path                (GimpImage           *image,
-                                                                GimpPath            *path);
-gboolean                 gimp_image_freeze_paths               (GimpImage           *image);
-gboolean                 gimp_image_thaw_paths                 (GimpImage           *image);
-gint                     gimp_image_get_item_position          (GimpImage           *image,
-                                                                GimpItem            *item);
-gboolean                 gimp_image_raise_item                 (GimpImage           *image,
-                                                                GimpItem            *item);
-gboolean                 gimp_image_lower_item                 (GimpImage           *image,
-                                                                GimpItem            *item);
-gboolean                 gimp_image_raise_item_to_top          (GimpImage           *image,
-                                                                GimpItem            *item);
-gboolean                 gimp_image_lower_item_to_bottom       (GimpImage           *image,
-                                                                GimpItem            *item);
-gboolean                 gimp_image_reorder_item               (GimpImage           *image,
-                                                                GimpItem            *item,
-                                                                GimpItem            *parent,
-                                                                gint                 position);
-GimpLayer*               gimp_image_flatten                    (GimpImage           *image);
-GimpLayer*               gimp_image_merge_visible_layers       (GimpImage           *image,
-                                                                GimpMergeType        merge_type);
-GimpLayer*               gimp_image_merge_down                 (GimpImage           *image,
-                                                                GimpLayer           *merge_layer,
-                                                                GimpMergeType        merge_type);
-G_GNUC_INTERNAL GBytes*  _gimp_image_get_colormap              (GimpImage           *image);
-G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage           *image,
-                                                                GBytes              *colormap);
-GimpPalette*             gimp_image_get_palette                (GimpImage           *image);
-G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata              (GimpImage           *image);
-G_GNUC_INTERNAL gboolean _gimp_image_set_metadata              (GimpImage           *image,
-                                                                const gchar         *metadata_string);
-gboolean                 gimp_image_clean_all                  (GimpImage           *image);
-gboolean                 gimp_image_is_dirty                   (GimpImage           *image);
-G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage           *image,
-                                                                gint                 width,
-                                                                gint                 height,
-                                                                gint                *actual_width,
-                                                                gint                *actual_height,
-                                                                gint                *bpp,
-                                                                GBytes             **thumbnail_data);
-GimpLayer**              gimp_image_get_selected_layers        (GimpImage           *image,
-                                                                gint                *num_layers);
-gboolean                 gimp_image_set_selected_layers        (GimpImage           *image,
-                                                                gint                 num_layers,
-                                                                const GimpLayer    **layers);
-GimpChannel**            gimp_image_get_selected_channels      (GimpImage           *image,
-                                                                gint                *num_channels);
-gboolean                 gimp_image_set_selected_channels      (GimpImage           *image,
-                                                                gint                 num_channels,
-                                                                const GimpChannel  **channels);
-GimpPath**               gimp_image_get_selected_paths         (GimpImage           *image,
-                                                                gint                *num_paths);
-gboolean                 gimp_image_set_selected_paths         (GimpImage           *image,
-                                                                gint                 num_paths,
-                                                                const GimpPath     **paths);
-GimpItem**               gimp_image_get_selected_drawables     (GimpImage           *image,
-                                                                gint                *num_drawables);
-GimpSelection*           gimp_image_get_selection              (GimpImage           *image);
-gboolean                 gimp_image_get_component_active       (GimpImage           *image,
-                                                                GimpChannelType      component);
-gboolean                 gimp_image_set_component_active       (GimpImage           *image,
-                                                                GimpChannelType      component,
-                                                                gboolean             active);
-gboolean                 gimp_image_get_component_visible      (GimpImage           *image,
-                                                                GimpChannelType      component);
-gboolean                 gimp_image_set_component_visible      (GimpImage           *image,
-                                                                GimpChannelType      component,
-                                                                gboolean             visible);
-GFile*                   gimp_image_get_file                   (GimpImage           *image);
-gboolean                 gimp_image_set_file                   (GimpImage           *image,
-                                                                GFile               *file);
-GFile*                   gimp_image_get_xcf_file               (GimpImage           *image);
-GFile*                   gimp_image_get_imported_file          (GimpImage           *image);
-GFile*                   gimp_image_get_exported_file          (GimpImage           *image);
-gchar*                   gimp_image_get_name                   (GimpImage           *image);
-gboolean                 gimp_image_get_resolution             (GimpImage           *image,
-                                                                gdouble             *xresolution,
-                                                                gdouble             *yresolution);
-gboolean                 gimp_image_set_resolution             (GimpImage           *image,
-                                                                gdouble              xresolution,
-                                                                gdouble              yresolution);
-GimpUnit*                gimp_image_get_unit                   (GimpImage           *image);
-gboolean                 gimp_image_set_unit                   (GimpImage           *image,
-                                                                GimpUnit            *unit);
-guint                    gimp_image_get_tattoo_state           (GimpImage           *image);
-gboolean                 gimp_image_set_tattoo_state           (GimpImage           *image,
-                                                                guint                tattoo_state);
-GimpLayer*               gimp_image_get_layer_by_tattoo        (GimpImage           *image,
-                                                                guint                tattoo);
-GimpChannel*             gimp_image_get_channel_by_tattoo      (GimpImage           *image,
-                                                                guint                tattoo);
-GimpPath*                gimp_image_get_path_by_tattoo         (GimpImage           *image,
-                                                                guint                tattoo);
-GimpLayer*               gimp_image_get_layer_by_name          (GimpImage           *image,
-                                                                const gchar         *name);
-GimpChannel*             gimp_image_get_channel_by_name        (GimpImage           *image,
-                                                                const gchar         *name);
-GimpPath*                gimp_image_get_path_by_name           (GimpImage           *image,
-                                                                const gchar         *name);
-gboolean                 gimp_image_attach_parasite            (GimpImage           *image,
-                                                                const GimpParasite  *parasite);
-gboolean                 gimp_image_detach_parasite            (GimpImage           *image,
-                                                                const gchar         *name);
-GimpParasite*            gimp_image_get_parasite               (GimpImage           *image,
-                                                                const gchar         *name);
-gchar**                  gimp_image_get_parasite_list          (GimpImage           *image);
-gboolean                 gimp_image_policy_rotate              (GimpImage           *image,
-                                                                gboolean             interactive);
-gboolean                 gimp_image_policy_color_profile       (GimpImage           *image,
-                                                                gboolean             interactive);
+gboolean                 gimp_image_id_is_valid                (gint                  image_id);
+GimpImage**              gimp_get_images                       (gint                 *num_images);
+GimpImage*               gimp_image_new                        (gint                  width,
+                                                                gint                  height,
+                                                                GimpImageBaseType     type);
+GimpImage*               gimp_image_new_with_precision         (gint                  width,
+                                                                gint                  height,
+                                                                GimpImageBaseType     type,
+                                                                GimpPrecision         precision);
+GimpImage*               gimp_image_duplicate                  (GimpImage            *image);
+gboolean                 gimp_image_delete                     (GimpImage            *image);
+GimpImageBaseType        gimp_image_get_base_type              (GimpImage            *image);
+GimpPrecision            gimp_image_get_precision              (GimpImage            *image);
+GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage            *image);
+gint                     gimp_image_get_width                  (GimpImage            *image);
+gint                     gimp_image_get_height                 (GimpImage            *image);
+GimpLayer**              gimp_image_get_layers                 (GimpImage            *image,
+                                                                gint                 *num_layers);
+GimpChannel**            gimp_image_get_channels               (GimpImage            *image,
+                                                                gint                 *num_channels);
+GimpPath**               gimp_image_get_paths                  (GimpImage            *image,
+                                                                gint                 *num_paths);
+gboolean                 gimp_image_unset_active_channel       (GimpImage            *image);
+GimpLayer*               gimp_image_get_floating_sel           (GimpImage            *image);
+GimpDrawable*            gimp_image_floating_sel_attached_to   (GimpImage            *image);
+gboolean                 gimp_image_pick_color                 (GimpImage            *image,
+                                                                gint                  num_drawables,
+                                                                const GimpItem      **drawables,
+                                                                gdouble               x,
+                                                                gdouble               y,
+                                                                gboolean              sample_merged,
+                                                                gboolean              sample_average,
+                                                                gdouble               average_radius,
+                                                                GeglColor           **color);
+GimpLayer*               gimp_image_pick_correlate_layer       (GimpImage            *image,
+                                                                gint                  x,
+                                                                gint                  y);
+gboolean                 gimp_image_insert_layer               (GimpImage            *image,
+                                                                GimpLayer            *layer,
+                                                                GimpLayer            *parent,
+                                                                gint                  position);
+gboolean                 gimp_image_remove_layer               (GimpImage            *image,
+                                                                GimpLayer            *layer);
+gboolean                 gimp_image_freeze_layers              (GimpImage            *image);
+gboolean                 gimp_image_thaw_layers                (GimpImage            *image);
+gboolean                 gimp_image_insert_channel             (GimpImage            *image,
+                                                                GimpChannel          *channel,
+                                                                GimpChannel          *parent,
+                                                                gint                  position);
+gboolean                 gimp_image_remove_channel             (GimpImage            *image,
+                                                                GimpChannel          *channel);
+gboolean                 gimp_image_freeze_channels            (GimpImage            *image);
+gboolean                 gimp_image_thaw_channels              (GimpImage            *image);
+gboolean                 gimp_image_insert_path                (GimpImage            *image,
+                                                                GimpPath             *path,
+                                                                GimpPath             *parent,
+                                                                gint                  position);
+gboolean                 gimp_image_remove_path                (GimpImage            *image,
+                                                                GimpPath             *path);
+gboolean                 gimp_image_import_paths_from_file     (GimpImage            *image,
+                                                                GFile                *file,
+                                                                gboolean              merge,
+                                                                gboolean              scale,
+                                                                gint                 *num_paths,
+                                                                GimpPath           ***path);
+gboolean                 gimp_image_import_paths_from_string   (GimpImage            *image,
+                                                                const gchar          *string,
+                                                                gint                  length,
+                                                                gboolean              merge,
+                                                                gboolean              scale,
+                                                                gint                 *num_paths,
+                                                                GimpPath           ***path);
+gboolean                 gimp_image_export_path_to_file        (GimpImage            *image,
+                                                                GFile                *file,
+                                                                GimpPath             *path);
+gchar*                   gimp_image_export_path_to_string      (GimpImage            *image,
+                                                                GimpPath             *path);
+gboolean                 gimp_image_freeze_paths               (GimpImage            *image);
+gboolean                 gimp_image_thaw_paths                 (GimpImage            *image);
+gint                     gimp_image_get_item_position          (GimpImage            *image,
+                                                                GimpItem             *item);
+gboolean                 gimp_image_raise_item                 (GimpImage            *image,
+                                                                GimpItem             *item);
+gboolean                 gimp_image_lower_item                 (GimpImage            *image,
+                                                                GimpItem             *item);
+gboolean                 gimp_image_raise_item_to_top          (GimpImage            *image,
+                                                                GimpItem             *item);
+gboolean                 gimp_image_lower_item_to_bottom       (GimpImage            *image,
+                                                                GimpItem             *item);
+gboolean                 gimp_image_reorder_item               (GimpImage            *image,
+                                                                GimpItem             *item,
+                                                                GimpItem             *parent,
+                                                                gint                  position);
+GimpLayer*               gimp_image_flatten                    (GimpImage            *image);
+GimpLayer*               gimp_image_merge_visible_layers       (GimpImage            *image,
+                                                                GimpMergeType         merge_type);
+GimpLayer*               gimp_image_merge_down                 (GimpImage            *image,
+                                                                GimpLayer            *merge_layer,
+                                                                GimpMergeType         merge_type);
+G_GNUC_INTERNAL GBytes*  _gimp_image_get_colormap              (GimpImage            *image);
+G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage            *image,
+                                                                GBytes               *colormap);
+GimpPalette*             gimp_image_get_palette                (GimpImage            *image);
+G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata              (GimpImage            *image);
+G_GNUC_INTERNAL gboolean _gimp_image_set_metadata              (GimpImage            *image,
+                                                                const gchar          *metadata_string);
+gboolean                 gimp_image_clean_all                  (GimpImage            *image);
+gboolean                 gimp_image_is_dirty                   (GimpImage            *image);
+G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage            *image,
+                                                                gint                  width,
+                                                                gint                  height,
+                                                                gint                 *actual_width,
+                                                                gint                 *actual_height,
+                                                                gint                 *bpp,
+                                                                GBytes              **thumbnail_data);
+GimpLayer**              gimp_image_get_selected_layers        (GimpImage            *image,
+                                                                gint                 *num_layers);
+gboolean                 gimp_image_set_selected_layers        (GimpImage            *image,
+                                                                gint                  num_layers,
+                                                                const GimpLayer     **layers);
+GimpChannel**            gimp_image_get_selected_channels      (GimpImage            *image,
+                                                                gint                 *num_channels);
+gboolean                 gimp_image_set_selected_channels      (GimpImage            *image,
+                                                                gint                  num_channels,
+                                                                const GimpChannel   **channels);
+GimpPath**               gimp_image_get_selected_paths         (GimpImage            *image,
+                                                                gint                 *num_paths);
+gboolean                 gimp_image_set_selected_paths         (GimpImage            *image,
+                                                                gint                  num_paths,
+                                                                const GimpPath      **paths);
+GimpItem**               gimp_image_get_selected_drawables     (GimpImage            *image,
+                                                                gint                 *num_drawables);
+GimpSelection*           gimp_image_get_selection              (GimpImage            *image);
+gboolean                 gimp_image_get_component_active       (GimpImage            *image,
+                                                                GimpChannelType       component);
+gboolean                 gimp_image_set_component_active       (GimpImage            *image,
+                                                                GimpChannelType       component,
+                                                                gboolean              active);
+gboolean                 gimp_image_get_component_visible      (GimpImage            *image,
+                                                                GimpChannelType       component);
+gboolean                 gimp_image_set_component_visible      (GimpImage            *image,
+                                                                GimpChannelType       component,
+                                                                gboolean              visible);
+GFile*                   gimp_image_get_file                   (GimpImage            *image);
+gboolean                 gimp_image_set_file                   (GimpImage            *image,
+                                                                GFile                *file);
+GFile*                   gimp_image_get_xcf_file               (GimpImage            *image);
+GFile*                   gimp_image_get_imported_file          (GimpImage            *image);
+GFile*                   gimp_image_get_exported_file          (GimpImage            *image);
+gchar*                   gimp_image_get_name                   (GimpImage            *image);
+gboolean                 gimp_image_get_resolution             (GimpImage            *image,
+                                                                gdouble              *xresolution,
+                                                                gdouble              *yresolution);
+gboolean                 gimp_image_set_resolution             (GimpImage            *image,
+                                                                gdouble               xresolution,
+                                                                gdouble               yresolution);
+GimpUnit*                gimp_image_get_unit                   (GimpImage            *image);
+gboolean                 gimp_image_set_unit                   (GimpImage            *image,
+                                                                GimpUnit             *unit);
+guint                    gimp_image_get_tattoo_state           (GimpImage            *image);
+gboolean                 gimp_image_set_tattoo_state           (GimpImage            *image,
+                                                                guint                 tattoo_state);
+GimpLayer*               gimp_image_get_layer_by_tattoo        (GimpImage            *image,
+                                                                guint                 tattoo);
+GimpChannel*             gimp_image_get_channel_by_tattoo      (GimpImage            *image,
+                                                                guint                 tattoo);
+GimpPath*                gimp_image_get_path_by_tattoo         (GimpImage            *image,
+                                                                guint                 tattoo);
+GimpLayer*               gimp_image_get_layer_by_name          (GimpImage            *image,
+                                                                const gchar          *name);
+GimpChannel*             gimp_image_get_channel_by_name        (GimpImage            *image,
+                                                                const gchar          *name);
+GimpPath*                gimp_image_get_path_by_name           (GimpImage            *image,
+                                                                const gchar          *name);
+gboolean                 gimp_image_attach_parasite            (GimpImage            *image,
+                                                                const GimpParasite   *parasite);
+gboolean                 gimp_image_detach_parasite            (GimpImage            *image,
+                                                                const gchar          *name);
+GimpParasite*            gimp_image_get_parasite               (GimpImage            *image,
+                                                                const gchar          *name);
+gchar**                  gimp_image_get_parasite_list          (GimpImage            *image);
+gboolean                 gimp_image_policy_rotate              (GimpImage            *image,
+                                                                gboolean              interactive);
+gboolean                 gimp_image_policy_color_profile       (GimpImage            *image,
+                                                                gboolean              interactive);
 
 
 G_END_DECLS

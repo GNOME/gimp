@@ -501,9 +501,9 @@ svg_load (GimpProcedure         *procedure,
       GimpPath **paths;
       gint       num_paths;
 
-      gimp_path_import_from_file (image, file,
-                                  g_strcmp0 (import_paths, "import-merged") == 0,
-                                  TRUE, &num_paths, &paths);
+      gimp_image_import_paths_from_file (image, file,
+                                         g_strcmp0 (import_paths, "import-merged") == 0,
+                                         TRUE, &num_paths, &paths);
       if (num_paths > 0)
         g_free (paths);
     }

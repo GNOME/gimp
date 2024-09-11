@@ -397,6 +397,8 @@ EXPORTS
 	gimp_image_delete_sample_point
 	gimp_image_detach_parasite
 	gimp_image_duplicate
+	gimp_image_export_path_to_file
+	gimp_image_export_path_to_string
 	gimp_image_find_next_guide
 	gimp_image_find_next_sample_point
 	gimp_image_flatten
@@ -465,6 +467,8 @@ EXPORTS
 	gimp_image_grid_set_spacing
 	gimp_image_grid_set_style
 	gimp_image_id_is_valid
+	gimp_image_import_paths_from_file
+	gimp_image_import_paths_from_string
 	gimp_image_insert_channel
 	gimp_image_insert_layer
 	gimp_image_insert_path
@@ -716,13 +720,9 @@ EXPORTS
 	gimp_path_bezier_stroke_new_ellipse
 	gimp_path_bezier_stroke_new_moveto
 	gimp_path_copy
-	gimp_path_export_to_file
-	gimp_path_export_to_string
 	gimp_path_get_by_id
 	gimp_path_get_strokes
 	gimp_path_get_type
-	gimp_path_import_from_file
-	gimp_path_import_from_string
 	gimp_path_new
 	gimp_path_new_from_text_layer
 	gimp_path_remove_stroke

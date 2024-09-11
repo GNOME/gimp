@@ -77,7 +77,7 @@
 (test! "path export methods")
 
 ; export single path to string succeeds
-(assert `(gimp-path-export-to-string
+(assert `(gimp-image-export-path-to-string
             ,testImage
             ,testPath))
 
@@ -85,18 +85,18 @@
 ; passing 0 for path means "all"
 ; FIXME this is wierd, should be a separate method gimp-image-export-paths-to-string
 ; The name implies a single path
-(assert `(gimp-path-export-to-string
+(assert `(gimp-image-export-path-to-string
             ,testImage
             0))
 
 ; export single path to file succeeds
-(assert `(gimp-path-export-to-file
+(assert `(gimp-image-export-path-to-file
             ,testImage
             "tmp.svg"
             ,testPath))
 
 ; export all paths to file succeeds
-(assert `(gimp-path-export-to-file
+(assert `(gimp-image-export-path-to-file
             ,testImage
             "tmp2.svg"
             0))
