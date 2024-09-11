@@ -1381,9 +1381,9 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                          gboolean          push_undo,
                          GimpProgress     *progress)
 {
-  GimpLayer       *layer = GIMP_LAYER (drawable);
-  GimpObjectQueue *queue = NULL;
-  const Babl      *dest_space;
+  GimpLayer       *layer      = GIMP_LAYER (drawable);
+  GimpObjectQueue *queue      = NULL;
+  const Babl      *dest_space = NULL;
   const Babl      *space_format;
   gboolean         convert_mask;
 
@@ -1424,13 +1424,8 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                                       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                       NULL);
     }
-  else
-    {
-      dest_space = gimp_image_get_layer_space (dest_image);
-    }
 
-  space_format = babl_format_with_space ((const gchar *) new_format,
-                                         dest_space);
+  space_format = babl_format_with_space ((const gchar *) new_format, dest_space);
 
   GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, space_format,
                                               src_profile, dest_profile,

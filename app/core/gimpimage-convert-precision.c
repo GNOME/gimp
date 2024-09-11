@@ -56,10 +56,7 @@ gimp_image_convert_precision (GimpImage        *image,
                               GeglDitherMethod  mask_dither_type,
                               GimpProgress     *progress)
 {
-  GimpColorProfile *old_profile;
-  GimpColorProfile *new_profile = NULL;
-  const Babl       *old_format;
-  const Babl       *new_format;
+  GimpColorProfile *profile;
   GimpObjectQueue  *queue;
   GimpProgress     *sub_progress;
   GList            *layers;
@@ -101,56 +98,17 @@ gimp_image_convert_precision (GimpImage        *image,
   /*  Push the image precision to the stack  */
   gimp_image_undo_push_image_precision (image, NULL);
 
-  old_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
-  old_format  = gimp_image_get_layer_format (image, FALSE);
+  /* Use the actual image's profile, and in particular don't be clever
+   * by using a builtin profile. I.e. don't use gimp_color_managed_get_color_profile().
+   * We don't want a profile change, and the format is enough to take
+   * care of any TRC override if needed.
+   */
+  profile = gimp_image_get_color_profile (image);
 
   gimp_image_set_converting (image, TRUE);
 
   /*  Set the new precision  */
   g_object_set (image, "precision", precision, NULL);
-
-  new_format = gimp_image_get_layer_format (image, FALSE);
-
-  /* we use old_format and new_format just for looking at their
-   * TRCs, new_format's space might be incorrect, don't use it
-   * for anything else.
-   */
-  if (gimp_babl_format_get_trc (old_format) !=
-      gimp_babl_format_get_trc (new_format))
-    {
-      GimpImageBaseType base_type = gimp_image_get_base_type (image);
-      GimpTRCType       new_trc   = gimp_babl_trc (precision);
-
-      /* if the image doesn't use the builtin profile, create a new
-       * one, using the original profile's chromacities and
-       * whitepoint, but a linear/sRGB-gamma TRC.
-       */
-      if (gimp_image_get_color_profile (image))
-        {
-          if (new_trc == GIMP_TRC_LINEAR)
-            {
-              new_profile =
-                gimp_color_profile_new_linear_from_color_profile (old_profile);
-            }
-          else
-            {
-              new_profile =
-                gimp_color_profile_new_srgb_trc_from_color_profile (old_profile);
-            }
-        }
-
-      /* we always need a profile for convert_type with changing TRC
-       * on the same image, use the new precision's builtin profile if
-       * the profile couldn't be converted or the image used the old
-       * TRC's builtin profile.
-       */
-      if (! new_profile)
-        {
-          new_profile = gimp_babl_get_builtin_color_profile (base_type,
-                                                             new_trc);
-          g_object_ref (new_profile);
-        }
-    }
 
   while ((drawable = gimp_object_queue_pop (queue)))
     {
@@ -188,23 +146,14 @@ gimp_image_convert_precision (GimpImage        *image,
                                       gimp_drawable_get_base_type (drawable),
                                       precision,
                                       gimp_drawable_has_alpha (drawable),
-                                      old_profile,
-                                      new_profile,
+                                      profile, profile,
                                       dither_type,
                                       mask_dither_type,
                                       TRUE, sub_progress);
         }
     }
 
-  if (new_profile)
-    {
-      gimp_image_set_color_profile (image, new_profile, NULL);
-      g_object_unref (new_profile);
-    }
-  else
-    {
-      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
-    }
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 
   gimp_image_set_converting (image, FALSE);
 
