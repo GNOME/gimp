@@ -86,7 +86,7 @@ Plug-ins:
 
   - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
     file-pdf-save-multi, qbist, file-xmc, file-tiff-load, file-icns,
-    file-ico.
+    file-ico, lava.scm.
   - PSD:
     * unsupported layers are not dropped anymore (they will usually show
       empty instead).
@@ -126,6 +126,10 @@ Plug-ins:
       extension). It is not the same as the historical Goat Exercises,
       but it is our best "new Script-Fu" example.
     * All other test plug-ins/scripts are hidden in stable releases.
+  - GIH: max size increased to GIMP_MAX_IMAGE_SIZE.
+  - Metadata Editor: add ability to set itself transient to any other
+    window (even across process).
+  - file-raw-data can now be run interactively.
 
 API:
 
@@ -183,6 +187,16 @@ API:
       also a preparation for future API allowing generic settings during
       export (resizing, cropping, adding filters or other actions at
       export time).
+    * New functions:
+      - gimp_window_set_transient_for()
+    * GimpResource:
+      - The ParamSpec arguments (including every subtype) may now have a
+        default value.
+      - The ParamSpec arguments now have a default_to_context parameter,
+        which overrides any default value with a dynamic one
+        (context-dependant).
+    * GimpBrushSelect now chooses only a brush (no more widgets to
+      select a spacing, opacity or paint mode).
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -206,6 +220,11 @@ API:
       - gimp_unit_get_plural()
     * Modified functions:
       - gimp_unit_get_identifier() renamed gimp_unit_get_name()
+    * New argument flag GIMP_PARAM_DONT_SERIALIZE.
+    * New type GimpParamSpecObject, which is basically a
+      GParamSpecObject with a default value. It is now used as parent
+      type for GimpParamSpecColor, GimpParamSpecUnit and all
+      GimpParamSpecResource subtypes.
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
@@ -254,11 +273,15 @@ Build:
     unconditionally (not the `~/.var` folder). It won't depend anymore
     on whether this config folder already existed or not.
   - Only Lua 5.1 and luajit are supported. Later versions have
-    incompatibilities breaking Lua plug-ins.
+    incompatibilities breaking Lua plug-ins. The detection of the lua
+    version (by parsing `lua -v output` if needed) is also improved.
   - List of languages is now pre-parsed during build, which accelerates
     startup a bit (especially on Windows).
   - Better error messaging of the configure step when gimp-data
     submodule was not initialized or when it is out-of-sync.
+  - Improved AppStream metadata file validation taking care of the case
+    when the release date is not yet known.
+  - The last of deprecated gdk_pointer_grab() calls are now removed.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
