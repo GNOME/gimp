@@ -91,10 +91,12 @@ def compare_with_reference(mode, blend_space, composite_mode, composite_space):
   expected_digest = modes[mode][spaces_id]
   file_name = 'test-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.xcf'
   file_path = os.path.join('@OUTDIR@', file_name)
+  ref_name = 'ref-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.data'
+  ref_path = os.path.join('@OUTDIR@', ref_name)
   gimp_assert('"{}" ({}) - '.format(mode, blend_space)                       +
               'composite {} ({}) - '.format(composite_mode, composite_space) +
               'hash: {} (expected: {})'.format(m.hexdigest(), expected_digest),
-              m.hexdigest() == expected_digest, template_image, file_path)
+              m.hexdigest() == expected_digest, template_image, file_path, ref_path)
   image.delete()
 
 for mode in modes:
