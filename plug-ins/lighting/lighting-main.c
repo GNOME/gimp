@@ -399,7 +399,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
                                                                            "light-spot",        SPOT_LIGHT,        _("Spot"),        NULL,
                                                                            NULL),
                                               "light-none",
-                                             G_PARAM_READWRITE);
+                                              G_PARAM_READWRITE);
 
       gimp_procedure_add_color_aux_argument (procedure, "light-color-3",
                                              _("Color"),
@@ -652,7 +652,8 @@ set_default_settings (void)
   gimp_vector3_set (&mapvals.lightsource[0].position,  -1.0, -1.0, 1.0);
   gimp_vector3_set (&mapvals.lightsource[0].direction, -1.0, -1.0, 1.0);
 
-  gimp_rgba_set (&mapvals.lightsource[0].color, 1.0, 1.0, 1.0, 1.0);
+  for (gint i = 0; i < 4; i++)
+    mapvals.lightsource[0].color[i] = 1.0;
   mapvals.lightsource[0].intensity = 1.0;
   mapvals.lightsource[0].type      = POINT_LIGHT;
   mapvals.lightsource[0].active    = TRUE;
@@ -673,7 +674,8 @@ set_default_settings (void)
 
   for (k = 1; k < NUM_LIGHTS; k++)
     {
-      gimp_rgba_set (&mapvals.lightsource[k].color, 1.0, 1.0, 1.0, 1.0);
+      for (gint i = 0; i < 4; i++)
+        mapvals.lightsource[k].color[i] = 1.0;
       mapvals.lightsource[k].intensity = 1.0;
       mapvals.lightsource[k].type      = NO_LIGHT;
       mapvals.lightsource[k].active    = TRUE;

@@ -849,9 +849,9 @@ save_preset_response (GtkFileChooser *chooser,
                          g_ascii_dtostr (buffer3, blen, source->direction.z));
 
                 fprintf (fp, "Color: %s %s %s\n",
-                         g_ascii_dtostr (buffer1, blen, source->color.r),
-                         g_ascii_dtostr (buffer2, blen, source->color.g),
-                         g_ascii_dtostr (buffer3, blen, source->color.b));
+                         g_ascii_dtostr (buffer1, blen, source->color[0]),
+                         g_ascii_dtostr (buffer2, blen, source->color[1]),
+                         g_ascii_dtostr (buffer3, blen, source->color[2]));
 
                 fprintf (fp, "Intensity: %s\n",
                          g_ascii_dtostr (buffer1, blen, source->intensity));
@@ -1005,10 +1005,10 @@ load_preset_response (GtkFileChooser *chooser,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
               fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
-              source->color.r = g_ascii_strtod (buffer1, &endptr);
-              source->color.g = g_ascii_strtod (buffer2, &endptr);
-              source->color.b = g_ascii_strtod (buffer3, &endptr);
-              source->color.a = 1.0;
+              source->color[0] = g_ascii_strtod (buffer1, &endptr);
+              source->color[1] = g_ascii_strtod (buffer2, &endptr);
+              source->color[2] = g_ascii_strtod (buffer3, &endptr);
+              source->color[3] = 1.0;
 
               snprintf (fmt_str, sizeof (fmt_str),
                         " Intensity: %%%" G_GSIZE_FORMAT "s",

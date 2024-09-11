@@ -33,7 +33,7 @@ cairo_surface_t *preview_surface = NULL;
 glong   maxcounter;
 gint    width, height;
 gint    env_width, env_height;
-GimpRGB background;
+gdouble background[4];
 
 gint border_x1, border_y1, border_x2, border_y2;
 
@@ -46,8 +46,8 @@ guchar sinemap[256], spheremap[256], logmap[256];
 guchar
 peek_map (GeglBuffer *buffer,
           const Babl *format,
-	  gint        x,
-	  gint        y)
+          gint        x,
+          gint        y)
 {
   guchar data[4];
   guchar ret_val;
@@ -67,28 +67,24 @@ peek_map (GeglBuffer *buffer,
   return ret_val;
 }
 
-GimpRGB
-peek (gint x,
-      gint y)
+void
+peek (gint     x,
+      gint     y,
+      gdouble *color)
 {
-  GimpRGB color;
-
   gegl_buffer_sample (source_buffer, x, y, NULL,
-                      &color, babl_format ("R'G'B'A double"),
+                      color, babl_format ("R'G'B'A double"),
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   if (! babl_format_has_alpha (gegl_buffer_get_format (source_buffer)))
-    color.a = 1.0;
-
-  return color;
+    color[3] = 1.0;
 }
 
-GimpRGB
-peek_env_map (gint x,
-	      gint y)
+void
+peek_env_map (gint     x,
+              gint     y,
+              gdouble *color)
 {
-  GimpRGB color;
-
   if (x < 0)
     x = 0;
   else if (x >= env_width)
@@ -99,18 +95,16 @@ peek_env_map (gint x,
     y = env_height - 1;
 
   gegl_buffer_sample (env_buffer, x, y, NULL,
-                      &color, babl_format ("R'G'B'A double"),
+                      color, babl_format ("R'G'B'A double"),
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  color.a = 1.0;
-
-  return color;
+  color[3] = 1.0;
 }
 
 void
-poke (gint    x,
-      gint    y,
-      GimpRGB *color)
+poke (gint     x,
+      gint     y,
+      gdouble *color)
 {
   if (x < 0)
     x = 0;
@@ -128,7 +122,7 @@ poke (gint    x,
 
 gint
 check_bounds (gint x,
-	      gint y)
+              gint y)
 {
   if (x < border_x1 ||
       y < border_y1 ||
@@ -237,18 +231,17 @@ pos_to_float (gdouble  x,
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GimpRGB
+void
 get_image_color (gdouble  u,
                  gdouble  v,
-                 gint    *inside)
+                 gint    *inside,
+                 gdouble *color)
 {
   gint     x1;
   gint     y1;
   gint     x2;
   gint     y2;
-  GimpRGB  p[4];
-  GimpRGB  p_rgba;
-  gdouble  pixel[4];
+  gdouble  p[4];
   gdouble  pixels[16];
 
   x1 = RINT (u);
@@ -257,7 +250,10 @@ get_image_color (gdouble  u,
   if (check_bounds (x1, y1) == FALSE)
     {
       *inside = FALSE;
-      return background;
+      for (gint i = 0; i < 4; i++)
+        color[i] = background[i];
+
+      return;
     }
 
   x2 = (x1 + 1);
@@ -266,36 +262,34 @@ get_image_color (gdouble  u,
   if (check_bounds (x2, y2) == FALSE)
     {
       *inside = TRUE;
-      return peek (x1, y1);
+      peek (x1, y1, color);
+
+      return;
     }
 
   *inside = TRUE;
-  p[0] = peek (x1, y1);
-  p[1] = peek (x2, y1);
-  p[2] = peek (x1, y2);
-  p[3] = peek (x2, y2);
-
+  peek (x1, y1, p);
   for (gint i = 0; i < 4; i++)
-    {
-      pixels[(i * 4)]     = p[i].r;
-      pixels[(i * 4) + 1] = p[i].g;
-      pixels[(i * 4) + 2] = p[i].b;
-      pixels[(i * 4) + 3] = p[i].a;
-    }
+    pixels[i] = p[i];
+  peek (x2, y1, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 4] = p[i];
+  peek (x1, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 8] = p[i];
+  peek (x2, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 12] = p[i];
 
-  gimp_bilinear_rgb (u, v, pixels, TRUE, pixel);
-
-  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
-
-  return p_rgba;
+  gimp_bilinear_rgb (u, v, pixels, TRUE, color);
 }
 
 gdouble
 get_map_value (GeglBuffer *buffer,
                const Babl *format,
-	       gdouble     u,
-	       gdouble     v,
-	       gint       *inside)
+               gdouble     u,
+               gdouble     v,
+               gint       *inside)
 {
   gint    x1, y1, x2, y2;
   gdouble p[4];

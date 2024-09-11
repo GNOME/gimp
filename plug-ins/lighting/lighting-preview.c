@@ -36,18 +36,24 @@ static guint preview_update_timer = 0;
 
 /* Protos */
 /* ====== */
-static gboolean
-interactive_preview_timer_callback ( gpointer data );
+static gboolean  interactive_preview_timer_callback  (gpointer data);
+
+void             composite_behind                    (gdouble *color1,
+                                                      gdouble *color2);
 
 static void
-compute_preview (gint startx, gint starty, gint w, gint h)
+compute_preview (gint startx,
+                 gint starty,
+                 gint w,
+                 gint h)
 {
   gint xcnt, ycnt, f1, f2;
   guchar r, g, b;
   gdouble imagex, imagey;
   gint32 index = 0;
-  GimpRGB color;
-  GimpRGB lightcheck, darkcheck;
+  gdouble color[4];
+  gdouble lightcheck[4] = { GIMP_CHECK_LIGHT,  GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0 };
+  gdouble darkcheck[4]  = { GIMP_CHECK_DARK,  GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0 };
   GimpVector3 pos;
   get_ray_func ray_func;
 
@@ -87,12 +93,6 @@ compute_preview (gint startx, gint starty, gint w, gint h)
     ypostab[ycnt] = (gdouble) height *((gdouble) ycnt / (gdouble) h);
 
   precompute_init (width, height);
-
-  gimp_rgba_set (&lightcheck,
-                 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT,
-                 1.0);
-  gimp_rgba_set (&darkcheck, GIMP_CHECK_DARK, GIMP_CHECK_DARK,
-                 GIMP_CHECK_DARK, 1.0);
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
@@ -138,9 +138,9 @@ compute_preview (gint startx, gint starty, gint w, gint h)
                   precompute_normals (0, width, RINT (imagey));
                 }
 
-              color = (*ray_func) (&pos);
+              (*ray_func) (&pos, color);
 
-              if (color.a < 1.0)
+              if (color[3] < 1.0)
                 {
                   f1 = ((xcnt % 32) < 16);
                   f2 = ((ycnt % 32) < 16);
@@ -148,25 +148,33 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
                   if (f1)
                     {
-                      if (color.a == 0.0)
-                        color = lightcheck;
+                      if (color[3] == 0.0)
+                        {
+                          for (gint i = 0; i < 4; i++)
+                            color[i] = lightcheck[i];
+                        }
                       else
-                        gimp_rgb_composite (&color,
-                                            &lightcheck,
-                                            GIMP_RGB_COMPOSITE_BEHIND);
+                        {
+                          composite_behind (color, lightcheck);
+                        }
                     }
                   else
                     {
-                      if (color.a == 0.0)
-                        color = darkcheck;
+                      if (color[3] == 0.0)
+                        {
+                          for (gint i = 0; i < 4; i++)
+                            color[i] = darkcheck[i];
+                        }
                       else
-                        gimp_rgb_composite (&color,
-                                            &darkcheck,
-                                            GIMP_RGB_COMPOSITE_BEHIND);
+                        {
+                          composite_behind (color, darkcheck);
+                        }
                     }
                 }
 
-              gimp_rgb_get_uchar (&color, &r, &g, &b);
+              r = (guchar) (color[0] * 255);
+              g = (guchar) (color[1] * 255);
+              b = (guchar) (color[2] * 255);
               GIMP_CAIRO_RGB24_SET_PIXEL((preview_rgb_data + index), r, g, b);
               index += 4;
               imagex++;
@@ -496,4 +504,22 @@ interactive_preview_timer_callback (gpointer data)
   preview_update_timer = 0;
 
   return FALSE;
+}
+
+void
+composite_behind (gdouble *color1,
+                  gdouble *color2)
+{
+  g_return_if_fail (color1 != NULL);
+  g_return_if_fail (color2 != NULL);
+
+  if (color1[3] < 1.0)
+    {
+      gdouble factor = color2[3] * (1.0 - color1[3]);
+
+      color1[0] = color2[0] * factor + color1[0] * color1[3];
+      color1[1] = color2[1] * factor + color1[1] * color1[3];
+      color1[2] = color2[2] * factor + color1[2] * color1[3];
+      color1[3] = factor + color1[3];
+    }
 }

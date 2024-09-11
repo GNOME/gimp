@@ -24,7 +24,7 @@ void
 compute_image (void)
 {
   gint         xcount, ycount;
-  GimpRGB      color;
+  gdouble      color[4];
   glong        progress_counter = 0;
   GimpVector3  p;
   GimpImage   *new_image = NULL;
@@ -112,19 +112,19 @@ compute_image (void)
       index = 0;
 
       for (xcount = 0; xcount < width; xcount++)
-	{
-	  p = int_to_pos (xcount, ycount);
-	  color = (* ray_func) (&p);
+        {
+          p = int_to_pos (xcount, ycount);
+          (* ray_func) (&p, color);
 
-	  row[index++] = (guchar) (color.r * 255.0);
-	  row[index++] = (guchar) (color.g * 255.0);
-	  row[index++] = (guchar) (color.b * 255.0);
+          row[index++] = (guchar) (color[0] * 255.0);
+          row[index++] = (guchar) (color[1] * 255.0);
+          row[index++] = (guchar) (color[2] * 255.0);
 
-	  if (has_alpha)
-	    row[index++] = (guchar) (color.a * 255.0);
+          if (has_alpha)
+            row[index++] = (guchar) (color[3] * 255.0);
 
-	  progress_counter++;
-	}
+          progress_counter++;
+        }
 
       gimp_progress_update ((gdouble) progress_counter /
                             (gdouble) maxcounter);
@@ -236,37 +236,37 @@ copy_from_config (GimpProcedureConfig *config)
   if (color_1)
     {
       gegl_color_get_pixel (color_1, babl_format ("R'G'B'A double"),
-                            &mapvals.lightsource[0].color);
+                            mapvals.lightsource[0].color);
       g_object_unref (color_1);
     }
   if (color_2)
     {
       gegl_color_get_pixel (color_2, babl_format ("R'G'B'A double"),
-                            &mapvals.lightsource[1].color);
+                            mapvals.lightsource[1].color);
       g_object_unref (color_2);
     }
   if (color_3)
     {
       gegl_color_get_pixel (color_3, babl_format ("R'G'B'A double"),
-                            &mapvals.lightsource[2].color);
+                            mapvals.lightsource[2].color);
       g_object_unref (color_3);
     }
   if (color_4)
     {
       gegl_color_get_pixel (color_4, babl_format ("R'G'B'A double"),
-                            &mapvals.lightsource[3].color);
+                            mapvals.lightsource[3].color);
       g_object_unref (color_4);
     }
   if (color_5)
     {
       gegl_color_get_pixel (color_5, babl_format ("R'G'B'A double"),
-                            &mapvals.lightsource[4].color);
+                            mapvals.lightsource[4].color);
       g_object_unref (color_5);
     }
   if (color_6)
     {
       gegl_color_get_pixel (color_6, babl_format ("R'G'B'A double"),
-                            &mapvals.lightsource[5].color);
+                            mapvals.lightsource[5].color);
       g_object_unref (color_6);
     }
 

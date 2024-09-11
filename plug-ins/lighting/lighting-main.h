@@ -44,7 +44,6 @@ typedef struct
   gdouble     specular_ref;
   gdouble     highlight;
   gboolean    metallic;
-  GimpRGB     color;
 } MaterialSettings;
 
 typedef struct
@@ -52,7 +51,7 @@ typedef struct
   LightType    type;
   GimpVector3  position;
   GimpVector3  direction;
-  GimpRGB      color;
+  gdouble      color[4];
   gdouble      intensity;
   gboolean     active;
 } LightSettings;
@@ -72,7 +71,6 @@ typedef struct
   GimpVector3      planenormal;
   LightSettings    lightsource[NUM_LIGHTS];
   MaterialSettings material;
-  MaterialSettings ref_material;
 
   gdouble      pixel_threshold;
   gdouble      bumpmax,bumpmin;
