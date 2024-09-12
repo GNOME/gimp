@@ -110,7 +110,7 @@
   "23rd April 1998"
   "RGB*,GRAY*"
   SF-ONE-OR-MORE-DRAWABLE
-  SF-ADJUSTMENT _"_Threshold (bigger 1 <--> 254 smaller)" '(127 1 254 1 10 0 0)
+  SF-ADJUSTMENT _"_Threshold (bigger 1<-->254 smaller)" '(127 1 254 1 10 0 0)
   SF-ADJUSTMENT _"_Spread"                 '(8 0 512 1 10 0 1)
   SF-ADJUSTMENT _"_Granularity (1 is low)" '(4 1 25 1 10 0 1)
   SF-ADJUSTMENT _"S_mooth"                 '(2 1 150 1 10 0 1)
