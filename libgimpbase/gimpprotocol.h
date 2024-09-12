@@ -317,7 +317,6 @@ struct _GPParam
     GBytes                *d_bytes;
     GPParamColor           d_gegl_color;
     GPParamColorArray      d_color_array;
-    GimpRGB                d_color;
     GimpParasite           d_parasite;
     GPParamArray           d_array;
     GPParamIDArray         d_id_array;
