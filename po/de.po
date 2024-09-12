@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-09 18:49+0000\n"
-"PO-Revision-Date: 2024-09-10 22:12+0200\n"
+"POT-Creation-Date: 2024-09-11 18:54+0000\n"
+"PO-Revision-Date: 2024-09-11 23:04+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -2782,11 +2782,9 @@ msgid "Open the undo history dialog"
 msgstr "Das Journal anzeigen"
 
 #: app/actions/dialogs-actions.c:140
-#, fuzzy
-#| msgid "Filter Dialogs"
 msgctxt "dialogs-action"
 msgid "_Pointer Dialog"
-msgstr "Filterdialoge"
+msgstr "Dialog für _Zeiger"
 
 #: app/actions/dialogs-actions.c:141
 msgctxt "dialogs-action"
@@ -3846,12 +3844,9 @@ msgstr ""
 "Den Inhalt der Zwischenablage an Ort und Stelle als einzelne Ebene einfügen"
 
 #: app/actions/edit-actions.c:183
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste _Into Selection"
 msgctxt "edit-action"
 msgid "Paste as Floating Data _Into Selection"
-msgstr "_In Auswahl einfügen"
+msgstr "Als s_chwebende Daten in Auswahl einfügen"
 
 #: app/actions/edit-actions.c:185
 msgctxt "edit-action"
@@ -3859,12 +3854,9 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "Den Inhalt der Zwischenablage in die Auswahl einfügen"
 
 #: app/actions/edit-actions.c:190
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste Int_o Selection In Place"
 msgctxt "edit-action"
 msgid "Paste as Floating Data Int_o Selection In Place"
-msgstr "In die Auswahl an Ort und _Stelle einfügen"
+msgstr "Als sc_hwebende Daten in Auswahl an Ort und Stelle einfügen"
 
 #: app/actions/edit-actions.c:192
 msgctxt "edit-action"
@@ -3876,37 +3868,26 @@ msgstr ""
 "einfügen"
 
 #: app/actions/edit-actions.c:198
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "_Paste as Single Layer"
 msgctxt "edit-action"
 msgid "Paste as _Floating Data"
-msgstr "Als einzelne Ebene e_infügen"
+msgstr "Als sch_webende Daten einfügen"
 
 #: app/actions/edit-actions.c:199
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard as a single layer"
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as Floating Data"
-msgstr "Den Inhalt der Zwischenablage als einzelne Ebene einfügen"
+msgstr "Den Inhalt der Zwischenablage als schwebende Daten einfügen"
 
 #: app/actions/edit-actions.c:204
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste as Single Layer In P_lace"
 msgctxt "edit-action"
 msgid "Paste as Floa_ting Data In Place"
-msgstr "Als einzelne Ebene an _Ort und Stelle einfügen"
+msgstr "A_ls schwebende Daten an Ort und Stelle einfügen"
 
 #: app/actions/edit-actions.c:205
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard at its original position"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard as Floating Data at its original position"
-msgstr "Den Inhalt der Zwischenablage an Ort und Stelle einfügen"
+msgstr ""
+"Den Inhalt der Zwischenablage als schwebende Daten an Ort und Stelle einfügen"
 
 #: app/actions/edit-actions.c:213
 msgctxt "edit-action"
@@ -4023,11 +4004,11 @@ msgid "A selected layer's alpha channel is locked."
 msgstr "Der Alphakanal einer ausgewählten Ebene ist gesperrt."
 
 #: app/actions/edit-commands.c:691
-#, fuzzy
-#| msgid "Pasted as new layer because the target is a layer group."
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
-msgstr "Als neue Ebene eingefügt, weil das Ziel eine Ebenengruppe ist."
+msgstr ""
+"Als neue Ebene eingefügt, weil das Ziel keine einzelne Ebene oder "
+"Ebenenmaske ist."
 
 #: app/actions/edit-commands.c:698
 msgid "Pasted as new layer because the target is a layer group."
@@ -5935,11 +5916,9 @@ msgid "Non-Linear"
 msgstr "Nicht-Linear"
 
 #: app/actions/image-actions.c:250
-#, fuzzy
-#| msgid "Convert the image to a color profile"
 msgctxt "image-convert-action"
 msgid "Convert the image to non-linear gamma from the color profile"
-msgstr "Das Bild in ein Farbprofil umwandeln"
+msgstr "Das Bild in nicht-lineares Gamma aus dem Farbprofil umwandeln"
 
 #: app/actions/image-actions.c:254
 msgctxt "image-convert-action"
@@ -6195,10 +6174,8 @@ msgid "Unlock position"
 msgstr "Position entsperren"
 
 #: app/actions/items-commands.c:276
-#, fuzzy
-#| msgid "There are no selected layers to crop."
 msgid "There are no selected items to fill."
-msgstr "Es gibt keine gewählten Ebenen zum Ausschneiden."
+msgstr "Es gibt keine ausgewählten Elemente zum Ausfüllen."
 
 #: app/actions/items-commands.c:313 app/tools/gimpvectortool.c:748
 msgid "There are no selected layers or channels to fill."
@@ -6342,20 +6319,14 @@ msgid "Move the selected layers to the bottom of the layer stack"
 msgstr "Die ausgewählten Ebenen an das Ende des Ebenenstapels setzen"
 
 #: app/actions/layers-actions.c:132
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
-msgstr "Schwebende Auswahl verankern"
+msgstr "_Schwebende Ebene oder Maske verankern"
 
 #: app/actions/layers-actions.c:133 app/widgets/gimplayertreeview.c:1312
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
-msgstr "Schwebende Auswahl verankern"
+msgstr "Die schwebende Ebene oder Maske verankern"
 
 #: app/actions/layers-actions.c:138 app/actions/layers-actions.c:147
 msgctxt "layers-action"
@@ -6508,11 +6479,9 @@ msgstr ""
 "der Transparenz ermöglichen"
 
 #: app/actions/layers-actions.c:242
-#, fuzzy
-#| msgid "Add Layer Mask Dialog"
 msgctxt "layers-action"
 msgid "Add La_yer Masks with Last Values"
-msgstr "Dialog zum Hinzufügen einer Ebenenmaske"
+msgstr "Ebenenmasken mit den _letzten Werten hinzufügen"
 
 #: app/actions/layers-actions.c:244
 msgctxt "layers-action"
@@ -6561,12 +6530,9 @@ msgid "_Disable Layer Masks"
 msgstr "Ebenenmasken _deaktivieren"
 
 #: app/actions/layers-actions.c:278
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Dismiss the effect of the layer mask"
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer masks"
-msgstr "Effekt der Ebenenmaske übergehen"
+msgstr "Effekt der Ebenenmasken übergehen"
 
 #: app/actions/layers-actions.c:284
 msgctxt "layers-action"
@@ -6781,12 +6747,9 @@ msgid "Apply Layer _Masks"
 msgstr "Ebenenmasken an_wenden"
 
 #: app/actions/layers-actions.c:446
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Apply the effect of the layer mask and remove it"
 msgctxt "layers-action"
 msgid "Apply the effect of the layer masks and remove them"
-msgstr "Effekt anwenden und die Ebenenmaske entfernen"
+msgstr "Effekt anwenden und die Ebenenmasken entfernen"
 
 #: app/actions/layers-actions.c:451
 msgctxt "layers-action"
@@ -6910,6 +6873,8 @@ msgid ""
 "Select the layers above each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
+"Die Ebenen über jeder aktuell ausgewählten Ebene auswählen. Ebenen außerhalb "
+"ihrer aktuellen Gruppentiefe werden nicht ausgewählt."
 
 #: app/actions/layers-actions.c:538
 msgctxt "layers-action"
@@ -6922,38 +6887,28 @@ msgid ""
 "Select the layers below each currently selected layer. Layers will not be "
 "selected outside their current group level."
 msgstr ""
+"Die Ebenen unter jeder aktuell ausgewählten Ebene auswählen. Ebenen "
+"außerhalb ihrer aktuellen Gruppentiefe werden nicht ausgewählt."
 
 #: app/actions/layers-actions.c:546
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Previous Layers"
 msgctxt "layers-action"
 msgid "Select Previous Layers (flattened view)"
-msgstr "_Vorherige Ebenen auswählen"
+msgstr "Vorherige Ebenen auswählen (zusammengefügte Ansicht)"
 
 #: app/actions/layers-actions.c:547
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layers above the current layers"
 msgctxt "layers-action"
 msgid "Select the layers above each currently selected layer"
-msgstr "Die Ebene oberhalb der aktiven Ebenen auswählen"
+msgstr "Die Ebenen oberhalb der aktuell ausgewählten Ebenen auswählen"
 
 #: app/actions/layers-actions.c:552
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Next Layers"
 msgctxt "layers-action"
 msgid "Select Next Layers (flattened view)"
-msgstr "_Nächste Ebenen auswählen"
+msgstr "Nächste Ebenen auswählen (zusammengefügte Ansicht)"
 
 #: app/actions/layers-actions.c:553
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layers below the current layers"
 msgctxt "layers-action"
 msgid "Select the layers below each currently selected layer"
-msgstr "Die Ebenen unterhalb der aktiven Ebene auswählen"
+msgstr "Die Ebenen unterhalb der aktuell ausgewählten Ebenen auswählen"
 
 #: app/actions/layers-actions.c:561
 msgctxt "layers-action"
@@ -7536,19 +7491,14 @@ msgid "Duplicate these paths"
 msgstr "Diese Pfade duplizieren"
 
 #: app/actions/paths-actions.c:76
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "_Delete Path"
 msgctxt "paths-action"
 msgid "_Delete Paths"
-msgstr "Pfad _löschen"
+msgstr "Pfade _löschen"
 
 #: app/actions/paths-actions.c:77
-#, fuzzy
-#| msgid "Delete the selected preset"
 msgctxt "paths-action"
 msgid "Delete the selected paths"
-msgstr "Die gewählte Einstellung löschen"
+msgstr "Die ausgewählten Pfade löschen"
 
 #: app/actions/paths-actions.c:82
 msgctxt "paths-action"
@@ -7556,66 +7506,44 @@ msgid "Merge _Visible Paths"
 msgstr "Sichtbare Pfade _vereinen"
 
 #: app/actions/paths-actions.c:87
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "_Raise Path"
 msgctxt "paths-action"
 msgid "_Raise Paths"
-msgstr "Pfad _anheben"
+msgstr "Pfade _anheben"
 
 #: app/actions/paths-actions.c:88
-#, fuzzy
-#| msgid "Export the active path"
 msgctxt "paths-action"
 msgid "Raise the selected paths"
-msgstr "Aktiven Pfad exportieren"
+msgstr "Die ausgewählten Pfade anheben"
 
 #: app/actions/paths-actions.c:93
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Raise Path to _Top"
 msgctxt "paths-action"
 msgid "Raise Paths to _Top"
-msgstr "Pfad nach ganz _oben"
+msgstr "Pfade nach ganz _oben"
 
 #: app/actions/paths-actions.c:94
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Raise this path to the top"
 msgctxt "paths-action"
 msgid "Raise the selected paths to the top"
-msgstr "Diesen Pfad nach ganz oben anheben"
+msgstr "Die ausgewählten Pfade nach ganz oben anheben"
 
 #: app/actions/paths-actions.c:99
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "_Lower Path"
 msgctxt "paths-action"
 msgid "_Lower Paths"
-msgstr "Pfad a_bsenken"
+msgstr "Pfade a_bsenken"
 
 #: app/actions/paths-actions.c:100
-#, fuzzy
-#| msgid "Export the active path"
 msgctxt "paths-action"
 msgid "Lower the selected paths"
-msgstr "Aktiven Pfad exportieren"
+msgstr "Die ausgewählten Pfade absenken"
 
 #: app/actions/paths-actions.c:105
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Lower Path to _Bottom"
 msgctxt "paths-action"
 msgid "Lower Paths to _Bottom"
-msgstr "Pfad nach ganz _unten"
+msgstr "Pfade nach ganz _unten"
 
 #: app/actions/paths-actions.c:106
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Lower this path to the bottom"
 msgctxt "paths-action"
 msgid "Lower the selected paths to the bottom"
-msgstr "Diesen Pfad nach ganz unten absenken"
+msgstr "Die ausgewählten Pfade nach ganz unten absenken"
 
 #: app/actions/paths-actions.c:111
 msgctxt "paths-action"
@@ -7794,19 +7722,14 @@ msgid "Path to selection"
 msgstr "Auswahl aus Pfad"
 
 #: app/actions/paths-actions.c:242
-#, fuzzy
-#| msgid "Selection from Path"
 msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
-msgstr "Auswahl aus Pfad"
+msgstr "Auswahl aus P_fade"
 
 #: app/actions/paths-actions.c:243
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Replace selection with path"
 msgctxt "paths-action"
 msgid "Replace selection with paths"
-msgstr "Die Auswahl durch den Pfad ersetzen"
+msgstr "Die Auswahl durch Pfade ersetzen"
 
 #: app/actions/paths-actions.c:248
 msgctxt "paths-action"
@@ -7900,12 +7823,9 @@ msgid "Select _Next Path"
 msgstr "_Nächsten Pfad auswählen"
 
 #: app/actions/paths-actions.c:304
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Select the path above the current path"
 msgctxt "paths-action"
 msgid "Select the path below the current path"
-msgstr "Den Pfad oberhalb des aktuellen Pfads auswählen"
+msgstr "Den Pfad unterhalb des aktuellen Pfads auswählen"
 
 #: app/actions/paths-commands.c:173 app/actions/paths-commands.c:894
 msgid "Path Attributes"
@@ -8162,36 +8082,24 @@ msgid "Invert the selection"
 msgstr "Die Auswahl invertieren"
 
 #: app/actions/select-actions.c:62
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "_Float"
 msgctxt "select-action"
 msgid "Cu_t and Float"
-msgstr "_Schwebend"
+msgstr "_Ausschneiden und Schweben"
 
 #: app/actions/select-actions.c:63
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer into the selection"
 msgctxt "select-action"
 msgid "Cut the selection directly into a floating selection"
-msgstr "Die gewählte Ablage in die Auswahl einfügen"
+msgstr "Die Auswahl ausschneiden und als schwebende Auswahl einfügen"
 
 #: app/actions/select-actions.c:68
-#, fuzzy
-#| msgid "Color and opacity:"
 msgctxt "select-action"
 msgid "_Copy and Float"
-msgstr "Farbe und Deckkraft:"
+msgstr "_Kopieren und Schweben"
 
 #: app/actions/select-actions.c:69
-#, fuzzy
-#| msgid "Cannot select item while a floating selection is active."
 msgctxt "select-action"
 msgid "Copy the selection directly into a floating selection"
-msgstr ""
-"Objekt kann nicht ausgewählt werden, solange eine schwebende Auswahl aktiv "
-"ist."
+msgstr "Die Auswahl kopieren und als schwebende Auswahl einfügen"
 
 #: app/actions/select-actions.c:74
 msgctxt "select-action"
@@ -8452,85 +8360,80 @@ msgstr ""
 
 #: app/actions/text-editor-actions.c:40
 msgctxt "text-editor-action"
-msgid "Text Editor Toolbar"
-msgstr "Werkzeugleiste des Texteditors"
-
-#: app/actions/text-editor-actions.c:45
-msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Öffnen"
 
-#: app/actions/text-editor-actions.c:46
+#: app/actions/text-editor-actions.c:41
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Text aus Datei laden"
 
-#: app/actions/text-editor-actions.c:51
+#: app/actions/text-editor-actions.c:46
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Löschen"
 
-#: app/actions/text-editor-actions.c:52
+#: app/actions/text-editor-actions.c:47
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Gesamten Text löschen"
 
-#: app/actions/text-editor-actions.c:60
+#: app/actions/text-editor-actions.c:55
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "Links nach rechts"
 
-#: app/actions/text-editor-actions.c:61
+#: app/actions/text-editor-actions.c:56
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Von links nach rechts"
 
-#: app/actions/text-editor-actions.c:66
+#: app/actions/text-editor-actions.c:61
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "Rechts nach links"
 
-#: app/actions/text-editor-actions.c:67
+#: app/actions/text-editor-actions.c:62
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Von rechts nach links"
 
-#: app/actions/text-editor-actions.c:72
+#: app/actions/text-editor-actions.c:67
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
 msgstr "TTB-RTL"
 
-#: app/actions/text-editor-actions.c:73
+#: app/actions/text-editor-actions.c:68
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Vertikal, rechts nach links (gemischte Ausrichtung)"
 
-#: app/actions/text-editor-actions.c:78
+#: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
 msgstr "TTB-RTL-UPRIGHT"
 
-#: app/actions/text-editor-actions.c:79
+#: app/actions/text-editor-actions.c:74
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Vertikal, rechts nach links (aufrechte Ausrichtung)"
 
-#: app/actions/text-editor-actions.c:84
+#: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
 msgstr "TTB-LTR"
 
-#: app/actions/text-editor-actions.c:85
+#: app/actions/text-editor-actions.c:80
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Vertikal, links nach rechts (gemischte Ausrichtung)"
 
-#: app/actions/text-editor-actions.c:90
+#: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
 msgstr "TTB-LTR-UPRIGHT"
 
-#: app/actions/text-editor-actions.c:91
+#: app/actions/text-editor-actions.c:86
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Vertikal, links nach rechts (aufrechte Ausrichtung)"
@@ -8591,9 +8494,6 @@ msgid "Clear all text"
 msgstr "Gesamten Text löschen"
 
 #: app/actions/text-tool-actions.c:81
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Text to _Path"
 msgctxt "text-tool-action"
 msgid "Text to _Path"
 msgstr "_Pfad aus Text"
@@ -9260,10 +9160,9 @@ msgid "Tool's Force: Increase Relative"
 msgstr "Werkzeugkraft: Relativ erhöhen"
 
 #: app/actions/tools-actions.c:817
-#, fuzzy, c-format
-#| msgid "Activate the _focused image"
+#, c-format
 msgid "Activate tool \"%s\""
-msgstr "Das _fokussierte Bild aktivieren"
+msgstr "Werkzeug »%s« aktivieren"
 
 #: app/actions/vector-toolpath-actions.c:45
 msgctxt "vector-toolpath-action"
@@ -10230,6 +10129,8 @@ msgid ""
 "Experimental multi-display stuff!\n"
 "Click OK and have fun crashing GIMP..."
 msgstr ""
+"Experimente mit mehreren Bildschirmen!\n"
+"Klicken Sie auf OK und viel Spaß beim Absturz von GIMP …"
 
 #: app/actions/window-commands.c:92
 msgid "Please enter the name of the new display:"
@@ -10348,22 +10249,19 @@ msgstr "Einzelfenster-Modus deaktiviert"
 #. * between quotes is the image name and other view identifiers.
 #.
 #: app/actions/windows-actions.c:391
-#, fuzzy, c-format
-#| msgid "R_e-Show \"%s\""
+#, c-format
 msgid "Show \"%s-%d.%d\""
-msgstr "»%s« _erneut anzeigen"
+msgstr "»%s-%d.%d« anzeigen"
 
 #. TRANSLATORS: the first argument (%1$s) is the image name, the
 #. * second (%2$d) is its tab order in the graphical interface.
 #.
 #: app/actions/windows-actions.c:465
-#, fuzzy, c-format
-#| msgctxt "windows-action"
-#| msgid "Switch to the next image"
+#, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
-msgstr[0] "Zum nächsten Bild wechseln"
-msgstr[1] "Zum nächsten Bild wechseln"
+msgstr[0] "Zur ersten Bildansicht wechseln: %1$s"
+msgstr[1] "Zur Bildansicht %2$d wechseln: %1$s"
 
 #: app/actions/windows-commands.c:208
 msgid ""
@@ -10694,10 +10592,10 @@ msgid "Timestamp of the last update check."
 msgstr "Zeitstempel der letzten Aktualisierungsanfrage."
 
 #: app/config/gimprc-blurbs.h:53
-#, fuzzy
-#| msgid "The image '%s' has an embedded color profile"
 msgid "What to do when opening a file with an embedded ICC color profile."
-msgstr "Das Bild »%s« enthält ein eingebettetes Farbprofil"
+msgstr ""
+"Legt fest, was zu tun ist, wenn eine Datei mit einem eingebetteten ICC-"
+"Farbprofil geöffnet wird."
 
 #: app/config/gimprc-blurbs.h:56
 msgid "Sets the default folder path for all color profile file dialogs."
@@ -10931,7 +10829,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:266
 msgid "Sets the preferred pen and touch input API."
-msgstr ""
+msgstr "Setzt die bevorzugte Stift- und Tast-Schnittstelle."
 
 #: app/config/gimprc-blurbs.h:269
 msgid ""
@@ -10946,12 +10844,16 @@ msgid ""
 "Whether to zoom based on distance moved or time spent moving, when zooming "
 "via dragging the mouse."
 msgstr ""
+"Legt fest, ob bei einer Vergrößerung durch Ziehen mit der Maus die "
+"Entfernung oder die Dauer der Bewegung berücksichtigt werden soll."
 
 #: app/config/gimprc-blurbs.h:277
 msgid ""
 "Adjusts the rate at which dragging the mouse will zoom the canvas, in "
 "percentage."
 msgstr ""
+"Stellt die Geschwindigkeit ein, mit der das Ziehen der Maus die Leinwand in "
+"Prozent vergrößert."
 
 #: app/config/gimprc-blurbs.h:281
 msgid ""
@@ -11004,10 +10906,10 @@ msgstr ""
 "das mehr Speicher belegen würde, als hier angegeben."
 
 #: app/config/gimprc-blurbs.h:314
-#, fuzzy
-#| msgid "How to handle embedded color profiles when opening a file."
 msgid "How to handle \"Orientation\" metadata when opening a file."
-msgstr "Wie mit eingebetteten Farbprofilen beim Dateiöffnen umgegangen wird."
+msgstr ""
+"Legt fest, wie beim Öffnen einer Datei mit Metadaten »Ausrichtung« "
+"gehandhabt werden soll."
 
 #: app/config/gimprc-blurbs.h:323
 msgid ""
@@ -11036,10 +10938,6 @@ msgstr ""
 "bearbeitet werden."
 
 #: app/config/gimprc-blurbs.h:336
-#, fuzzy
-#| msgid ""
-#| "If enabled, the move tool sets the edited layer or path as active.  This "
-#| "used to be the default behaviour in older versions."
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behavior in older versions."
@@ -11059,7 +10957,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:349
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
-"Legt fest, wie viele Threads GIMP versucht gleichzeitig für Vorgänge zu "
+"Legt fest, wie viele Threads GIMP versucht, gleichzeitig für Vorgänge zu "
 "verwenden, die dies unterstützen."
 
 #: app/config/gimprc-blurbs.h:371
@@ -11204,7 +11102,7 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Legt fest, ob die Lineale standardmäßig angezeigt werden soll. Dies kann "
+"Legt fest, ob die Lineale standardmäßig angezeigt werden sollen. Dies kann "
 "auch mit Hilfe des Befehls »Ansicht->Lineale anzeigen« beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:454
@@ -11212,8 +11110,8 @@ msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Legt fest, ob die Bildlaufleisten standardmäßig angezeigt werden soll. Dies "
-"kann auch mit Hilfe des Befehls »Ansicht->Bildlaufleisten anzeigen« "
+"Legt fest, ob die Bildlaufleisten standardmäßig angezeigt werden sollen. "
+"Dies kann auch mit Hilfe des Befehls »Ansicht->Bildlaufleisten anzeigen« "
 "beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:458
@@ -11247,8 +11145,8 @@ msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
-"Legt fest, ob die Leinwandgrenzen standardmäßig angezeigt werden soll. Dies "
-"kann auch mit Hilfe des Befehls »Ansicht->Leinwandgrenzen anzeigen« "
+"Legt fest, ob die Leinwandgrenzen standardmäßig angezeigt werden sollen. "
+"Dies kann auch mit Hilfe des Befehls »Ansicht->Leinwandgrenzen anzeigen« "
 "beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:474
@@ -11256,8 +11154,8 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Legt fest, ob die Hilfslinien standardmäßig angezeigt werden soll. Dies kann "
-"auch mit Hilfe des Befehls »Ansicht->Hilfslinien anzeigen« beeinflusst "
+"Legt fest, ob die Hilfslinien standardmäßig angezeigt werden sollen. Dies "
+"kann auch mit Hilfe des Befehls »Ansicht->Hilfslinien anzeigen« beeinflusst "
 "werden."
 
 #: app/config/gimprc-blurbs.h:478
@@ -11273,8 +11171,9 @@ msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Legt fest, ob die Prüfpunkte standardmäßig angezeigt werden. Dies kann auch "
-"mit Hilfe des Befehls »Ansicht->Prüfpunkte anzeigen« beeinflusst werden."
+"Legt fest, ob die Prüfpunkte standardmäßig angezeigt werden sollen. Dies "
+"kann auch mit Hilfe des Befehls »Ansicht->Prüfpunkte anzeigen« beeinflusst "
+"werden."
 
 #: app/config/gimprc-blurbs.h:486
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -12385,14 +12284,12 @@ msgstr "Das Bild drehen und dann die Metadaten verwerfen"
 #: app/core/core-enums.c:1030
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
-msgstr ""
+msgstr "Wintab"
 
 #: app/core/core-enums.c:1031
-#, fuzzy
-#| msgid "Windows"
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
-msgstr "Fenster"
+msgstr "Windows Ink"
 
 #: app/core/core-enums.c:1060
 msgctxt "thumbnail-size"
@@ -14469,15 +14366,15 @@ msgstr "Bild in indizierten Modus umwandeln (Stufe 2)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Bild in indizierten Modus umwandeln (Stufe 3)"
 
-#: app/core/gimpimage-convert-precision.c:79
+#: app/core/gimpimage-convert-precision.c:76
 #, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Bild nach %s umwandeln"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:249
-#: app/core/gimpimage-convert-precision.c:270
+#: app/core/gimpimage-convert-precision.c:198
+#: app/core/gimpimage-convert-precision.c:219
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:129
@@ -14801,21 +14698,17 @@ msgstr "Diese Ebene kann nicht weiter angehoben werden."
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: app/core/gimplayer.c:733 app/core/gimplayer.c:2005
+#: app/core/gimplayer.c:733 app/core/gimplayer.c:2000
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s Maske"
 
 #: app/core/gimplayer.c:777
-#, fuzzy
-#| msgid "Selection Mask"
 msgid "Floating Mask"
-msgstr "Auswahlmaske"
+msgstr "Schwebende Maske"
 
 #: app/core/gimplayer.c:779
-#, fuzzy
-#| msgid "Floated Layer"
 msgid "Floating Layer"
 msgstr "Schwebende Ebene"
 
@@ -14832,39 +14725,39 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1906
+#: app/core/gimplayer.c:1901
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Es konnte keine Ebenenmaske hinzugefügt werden, weil diese Ebene bereits "
 "eine Maske hat."
 
-#: app/core/gimplayer.c:1917
+#: app/core/gimplayer.c:1912
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Ebenenmasken mit anderen Abmessungen als die der Ebene können nicht "
 "hinzufügt werden."
 
-#: app/core/gimplayer.c:1923
+#: app/core/gimplayer.c:1918
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Ebenenmasken hinzufügen"
 
-#: app/core/gimplayer.c:2047
+#: app/core/gimplayer.c:2042
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha in Maske übernehmen"
 
-#: app/core/gimplayer.c:2210
+#: app/core/gimplayer.c:2205
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Ebenenmasken anwenden"
 
-#: app/core/gimplayer.c:2211
+#: app/core/gimplayer.c:2206
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Ebenenmasken löschen"
 
-#: app/core/gimplayer.c:2318
+#: app/core/gimplayer.c:2313
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Enable Layer Mask"
@@ -14872,46 +14765,46 @@ msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Ebenenmaske aktivieren"
 
-#: app/core/gimplayer.c:2319
+#: app/core/gimplayer.c:2314
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Ebenenmasken deaktivieren"
 
-#: app/core/gimplayer.c:2400
+#: app/core/gimplayer.c:2395
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Ebenenmasken anzeigen"
 
-#: app/core/gimplayer.c:2479
+#: app/core/gimplayer.c:2474
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: app/core/gimplayer.c:2509
+#: app/core/gimplayer.c:2504
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: app/core/gimplayer.c:2530
+#: app/core/gimplayer.c:2525
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
-#: app/core/gimplayer.c:2713
+#: app/core/gimplayer.c:2708
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgid "Set layer's blend space"
 msgstr "Ebenentransparenz ändern"
 
-#: app/core/gimplayer.c:2760
+#: app/core/gimplayer.c:2755
 #, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Layer Composite Space: Auto"
 msgid "Set layer's composite space"
 msgstr "Ebenen-Kompositionsraum: Automatisch"
 
-#: app/core/gimplayer.c:2807
+#: app/core/gimplayer.c:2802
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
@@ -15086,10 +14979,9 @@ msgid "Premature end of file."
 msgstr "Unerwartetes Ende der Datei."
 
 #: app/core/gimppalette-load.c:709
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette version."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültige ACB-Palettenversion."
 
 #: app/core/gimppalette-load.c:716
 #, c-format
@@ -15097,23 +14989,20 @@ msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP unterstützt nur ACB Paletten in Version 1"
 
 #: app/core/gimppalette-load.c:724
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette identifier."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ACB-Palettenidentifizierer."
 
 #: app/core/gimppalette-load.c:740 app/core/gimppalette-load.c:759
 #: app/core/gimppalette-load.c:977 app/core/gimppalette-load.c:998
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette name."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ACB-Palettenname."
 
 #: app/core/gimppalette-load.c:775
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette suffix."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiges ACB-Palettensuffix."
 
 #: app/core/gimppalette-load.c:794 app/core/gimppalette-load.c:1064
 #, c-format
@@ -15126,55 +15015,47 @@ msgid "Invalid number of colors: %s."
 msgstr "Ungültige Anzahl der Farben: %s."
 
 #: app/core/gimppalette-load.c:814 app/core/gimppalette-load.c:824
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette page info."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültige ACB-Palettenseiten-Information."
 
 #: app/core/gimppalette-load.c:836 app/core/gimppalette-load.c:849
-#, fuzzy, c-format
-#| msgid "Invalid empty palette name"
+#, c-format
 msgid "Invalid ACB palette color space."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ACB-Palettenfarbraum."
 
 #: app/core/gimppalette-load.c:987
 msgid "Invalid ACB name size."
 msgstr "Ungültige ACB-Namensgröße."
 
 #: app/core/gimppalette-load.c:1055
-#, fuzzy, c-format
-#| msgid "Invalid brush hardness."
+#, c-format
 msgid "Invalid ASE header: %s"
-msgstr "Ungültige Pinselhärte."
+msgstr "Ungültige ASE-Kopfzeile: %s"
 
 #: app/core/gimppalette-load.c:1082
-#, fuzzy, c-format
-#| msgid "Invalid UTF-8 data in file '%s'."
+#, c-format
 msgid "Invalid ASE file: %s."
-msgstr "Ungültige UTF-8-Daten in Datei »%s«."
+msgstr "Ungültige ASE-Datei: %s."
 
 #: app/core/gimppalette-load.c:1173
-#, fuzzy, c-format
-#| msgid "Invalid column count."
+#, c-format
 msgid "Invalid color components: %s."
-msgstr "Ungültige Spaltenanzahl."
+msgstr "Ungültige Farbkomponenten: %s."
 
 #: app/core/gimppalette-load.c:1185 app/core/gimppalette-load.c:1209
-#, fuzzy, c-format
-#| msgid "Invalid column count."
+#, c-format
 msgid "Invalid ASE color entry: %s."
-msgstr "Ungültige Spaltenanzahl."
+msgstr "Ungültiger ASE-Farbeintrag: %s."
 
 #: app/core/gimppalette-load.c:1241 app/core/gimppalette-load.c:1257
 #: app/core/gimppalette-load.c:1276
-#, fuzzy
-#| msgid "Invalid empty palette name"
 msgid "Invalid ASE palette name."
-msgstr "Ungültiger, leerer Palettenname"
+msgstr "Ungültiger ASE-Palettenname."
 
 #: app/core/gimppalette-load.c:1250
 msgid "Invalid ASE block size."
-msgstr ""
+msgstr "Ungültige ASE-Blockgröße."
 
 #: app/core/gimppalette-load.c:1266
 msgid "Invalid ASE name size."
@@ -15183,12 +15064,12 @@ msgstr "Ungültige ASE-Namensgröße."
 #: app/core/gimppalette-load.c:1395
 #, c-format
 msgid "Unable to read SBZ file"
-msgstr ""
+msgstr "SBZ-Datei kann nicht gelesen werden"
 
 #: app/core/gimppalette-load.c:1459
 #, c-format
 msgid "Unable to open SBZ file"
-msgstr ""
+msgstr "SBZ-Datei kann nicht geöffnet werden"
 
 #: app/core/gimppalettemru.c:125 app/core/gimppalettemru.c:271
 msgid "History Color"
@@ -15213,12 +15094,13 @@ msgstr ""
 "GIMP-Muster müssen in Graustufen oder RGB vorliegen."
 
 #: app/core/gimppattern-load.c:99
-#, fuzzy, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
-msgstr "Ungültige Kopfdaten in »%s«: Breite=%lu, Höhe=%lu, Bytes=%lu"
+msgstr ""
+"Ungültige Kopfdaten in »%s«: Breite=%lu (maximal %lu), Höhe=%lu (maximal "
+"%lu), Bytes=%lu"
 
 #: app/core/gimppattern-load.c:116
 #, c-format
@@ -15240,16 +15122,13 @@ msgid "Fatal parse error in pattern file: "
 msgstr "Schwerwiegender Fehler in Musterdatei: "
 
 #: app/core/gimppattern-save.c:52
-#, fuzzy, c-format
-#| msgid ""
-#| "Unsupported pattern depth %d.\n"
-#| "GIMP Patterns must be GRAY or RGB."
+#, c-format
 msgid ""
 "Unsupported pattern dimensions %d x %d.\n"
 "GIMP Patterns have a maximum size of %d x %d."
 msgstr ""
-"Nicht unterstützte Mustertiefe %d.\n"
-"GIMP-Muster müssen in Graustufen oder RGB vorliegen."
+"Nicht unterstützte Muster-Ausmaße %d x %d.\n"
+"GIMP-Muster dürfen maximal %d x %d groß sein."
 
 #: app/core/gimppdbprogress.c:267
 #, c-format
@@ -15922,10 +15801,8 @@ msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Soll das Bild in das gewünschte RGB-Farbprofil umgewandelt werden?"
 
 #: app/dialogs/color-profile-import-dialog.c:167
-#, fuzzy
-#| msgid "Preferred Profiles"
 msgid "Preferred Profile"
-msgstr "Bevorzugte Profile"
+msgstr "Bevorzugtes Profil"
 
 #: app/dialogs/color-profile-import-dialog.c:222
 #: app/dialogs/metadata-rotation-import-dialog.c:227
@@ -17071,8 +16948,6 @@ msgid "Policies"
 msgstr "Regeln"
 
 #: app/dialogs/preferences-dialog.c:1506
-#, fuzzy
-#| msgid "_File Open behaviour:"
 msgid "_File Open behavior:"
 msgstr "Verhalten des _Datei-Öffnen-Dialogs:"
 
@@ -17705,10 +17580,8 @@ msgid "Select Default Folder for Exporting Paths"
 msgstr "Vorgabe-Ordner zum Exportieren von Pfaden auswählen"
 
 #: app/dialogs/preferences-dialog.c:2542
-#, fuzzy
-#| msgid "Export the active path only"
 msgid "Export the selected paths only"
-msgstr "Nur den aktiven Pfad exportieren"
+msgstr "Nur die ausgewählten Pfade exportieren"
 
 #. Import Path Dialog
 #: app/dialogs/preferences-dialog.c:2546
@@ -18145,7 +18018,7 @@ msgstr "Erweiterte Eingabegeräte"
 
 #: app/dialogs/preferences-dialog.c:3395
 msgid "Pointer Input API:"
-msgstr ""
+msgstr "Zeigereingabe-Schnittstelle:"
 
 #: app/dialogs/preferences-dialog.c:3406
 msgid "S_hare tool and tool options between input devices"
@@ -18572,10 +18445,9 @@ msgid "Resizing text layers will make them uneditable"
 msgstr "Größenänderung von Textebenen macht sie unbearbeitbar"
 
 #: app/dialogs/resize-dialog.c:759
-#, fuzzy, c-format
-#| msgid "_Scale imported paths to fit image"
+#, c-format
 msgid "Scale template to %.2f ppi"
-msgstr "Importierte Pfade auf Bildgröße _skalieren"
+msgstr "Vorlage auf %.2f PPI skalieren"
 
 #: app/dialogs/resize-dialog.c:764
 #, c-format
@@ -18705,10 +18577,8 @@ msgid "Export Path to SVG"
 msgstr "Pfade nach SVG exportieren"
 
 #: app/dialogs/path-export-dialog.c:131
-#, fuzzy
-#| msgid "Export the active path"
 msgid "Export the selected paths"
-msgstr "Aktiven Pfad exportieren"
+msgstr "Die ausgewählten Pfade exportieren"
 
 #: app/dialogs/path-export-dialog.c:132
 msgid "Export all paths from this image"
@@ -18789,15 +18659,11 @@ msgstr "Sie installierten GIMP %s!"
 
 #. Welcome message: left
 #: app/dialogs/welcome-dialog.c:435
-#, fuzzy
-#| msgid ""
-#| "GIMP is a Free Software for image authoring and manipulation.\n"
-#| "Want to know more?"
 msgid ""
 "GIMP is Free Software for image authoring and manipulation.\n"
 "Want to know more?"
 msgstr ""
-"GIMP ist eine freie Software zur Bildbearbeitung und -erstellung.\n"
+"GIMP ist freie Software zur Bildbearbeitung und -erstellung.\n"
 "Möchten Sie mehr erfahren?"
 
 #: app/dialogs/welcome-dialog.c:464
@@ -18816,16 +18682,11 @@ msgstr "Dokumentation"
 #. * properly set up?
 #. Welcome message: right
 #: app/dialogs/welcome-dialog.c:481
-#, fuzzy
-#| msgid ""
-#| "GIMP is a Community Software under the GNU general public license v3.\n"
-#| "Want to contribute?"
 msgid ""
 "GIMP is Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
 msgstr ""
-"GIMP ist eine Gemeinschafts-Software mit der »GNU general public license "
-"v3«.\n"
+"GIMP ist Gemeinschafts-Software mit der »GNU general public license v3«.\n"
 "Möchten Sie mitmachen?"
 
 #: app/dialogs/welcome-dialog.c:506
@@ -18949,13 +18810,11 @@ msgstr ""
 
 #: app/dialogs/welcome-dialog.c:912
 msgid "Donate via Liberapay"
-msgstr ""
+msgstr "Über Liberapay spenden"
 
 #: app/dialogs/welcome-dialog.c:915
-#, fuzzy
-#| msgid "Other Options"
 msgid "Other donation options"
-msgstr "Weitere Optionen"
+msgstr "Weitere Spendenmöglichkeiten"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:949
@@ -21308,7 +21167,7 @@ msgstr "Wiederholung"
 
 #: app/paint/gimppaintoptions.c:381
 msgid "How fade is repeated as you paint"
-msgstr "Legt fest, wie das Verblassen beim Zeichnen wiederholt wird"
+msgstr "Legt fest, wie das Verblassen beim Zeichnen wiederholt werden soll"
 
 #: app/paint/gimppaintoptions.c:393 app/tools/gimpgradientoptions.c:282
 #: app/tools/gimppaintoptions-gui.c:396
@@ -21460,12 +21319,9 @@ msgid "Curves"
 msgstr "Kurven"
 
 #: app/pdb/drawable-color-cmds.c:331
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "_Extract Component..."
 msgctxt "undo-type"
 msgid "Extract Component"
-msgstr "Komponente _extrahieren …"
+msgstr "Komponente extrahieren"
 
 #: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
@@ -21488,12 +21344,9 @@ msgid "Levels"
 msgstr "Werte"
 
 #: app/pdb/drawable-color-cmds.c:737
-#, fuzzy
-#| msgctxt "filters-action"
-#| msgid "S_hadows-Highlights..."
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
-msgstr "Sc_hatten-Glanzlichter …"
+msgstr "Schatten-Glanzlichter"
 
 #: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
@@ -21984,7 +21837,7 @@ msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. "
 "%d) aufgerufen. %s erwartet, %s erhalten."
 
-#: app/pdb/image-cmds.c:2462
+#: app/pdb/image-cmds.c:2670
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22013,42 +21866,42 @@ msgstr "2D Transformation"
 msgid "2D Transforming"
 msgstr "2D Transformation"
 
-#: app/pdb/path-cmds.c:330
+#: app/pdb/path-cmds.c:328
 msgid "Remove path stroke"
 msgstr "Nachgezogenen Pfad entfernen"
 
 # CHECK
-#: app/pdb/path-cmds.c:367
+#: app/pdb/path-cmds.c:365
 msgid "Close path stroke"
 msgstr "Nachgezogenen Pfad schließen"
 
-#: app/pdb/path-cmds.c:406
+#: app/pdb/path-cmds.c:404
 #, fuzzy
 #| msgid "Remove path stroke"
 msgid "Reverse path stroke"
 msgstr "Nachgezogenen Pfad entfernen"
 
-#: app/pdb/path-cmds.c:451
+#: app/pdb/path-cmds.c:449
 msgid "Translate path stroke"
 msgstr "Nachgezogenen Pfad anpassen"
 
-#: app/pdb/path-cmds.c:496
+#: app/pdb/path-cmds.c:494
 msgid "Scale path stroke"
 msgstr "Nachgezogenen Pfad skalieren"
 
-#: app/pdb/path-cmds.c:543
+#: app/pdb/path-cmds.c:541
 msgid "Rotate path stroke"
 msgstr "Nachgezogenen Pfad drehen"
 
-#: app/pdb/path-cmds.c:588 app/pdb/path-cmds.c:637
+#: app/pdb/path-cmds.c:586 app/pdb/path-cmds.c:635
 msgid "Flip path stroke"
 msgstr "Nachgezogenen Pfad spiegeln"
 
-#: app/pdb/path-cmds.c:768 app/pdb/path-cmds.c:892 app/pdb/path-cmds.c:1122
+#: app/pdb/path-cmds.c:766 app/pdb/path-cmds.c:890 app/pdb/path-cmds.c:1120
 msgid "Add path stroke"
 msgstr "Nachgezogenen Pfad hinzufügen"
 
-#: app/pdb/path-cmds.c:946 app/pdb/path-cmds.c:1002 app/pdb/path-cmds.c:1066
+#: app/pdb/path-cmds.c:944 app/pdb/path-cmds.c:1000 app/pdb/path-cmds.c:1064
 msgid "Extend path stroke"
 msgstr "Nachgezogenen Pfad erweitern"
 
@@ -25243,10 +25096,8 @@ msgid "Show scribbles"
 msgstr "_Lineale anzeigen"
 
 #: app/tools/gimppaintselecttool.c:167
-#, fuzzy
-#| msgid "P_aint tool:"
 msgid "Paint Select"
-msgstr "_Malwerkzeug:"
+msgstr "Malende Auswahl"
 
 #: app/tools/gimppaintselecttool.c:168
 #, fuzzy
@@ -25255,10 +25106,8 @@ msgid "Paint Select Tool: Select objects by painting roughly"
 msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
 
 #: app/tools/gimppaintselecttool.c:169
-#, fuzzy
-#| msgid "P_aint tool:"
 msgid "P_aint Select"
-msgstr "_Malwerkzeug:"
+msgstr "_Malende Auswahl"
 
 #: app/tools/gimppaintselecttool.c:349
 #, fuzzy
@@ -25273,11 +25122,9 @@ msgid "Cannot paint select on layer groups."
 msgstr "Es kann nicht auf Ebenenmasken gezeichnet werden."
 
 #: app/tools/gimppaintselecttool.c:653
-#, fuzzy
-#| msgid "P_aint tool:"
 msgctxt "command"
 msgid "Paint Select"
-msgstr "_Malwerkzeug:"
+msgstr "Malende Auswahl"
 
 #: app/tools/gimppainttool.c:177
 msgid "Click to paint"
@@ -28377,10 +28224,9 @@ msgstr "Position: %0.4f"
 #. * the RGB space depending on the active image.
 #.
 #: app/widgets/gimpgradienteditor.c:1335
-#, fuzzy, c-format
-#| msgid "RGB (%0.3f, %0.3f, %0.3f)"
+#, c-format
 msgid "sRGB (%0.3f, %0.3f, %0.3f)"
-msgstr "RGB (%0.3f, %0.3f, %0.3f)"
+msgstr "sRGB (%0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpgradienteditor.c:1337
 #, c-format
@@ -28393,10 +28239,9 @@ msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Brillianz: %0.1f    Deckkraft: %0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1374
-#, fuzzy, c-format
-#| msgid "RGB (%d, %d, %d)"
+#, c-format
 msgid "sRGB (%d, %d, %d)"
-msgstr "RGB (%d, %d, %d)"
+msgstr "sRGB (%d, %d, %d)"
 
 #: app/widgets/gimpgradienteditor.c:1385
 msgid "Foreground color set to:"
@@ -28829,25 +28674,20 @@ msgid "Set layers mode"
 msgstr "Ebenenmodus festlegen"
 
 #: app/widgets/gimplayertreeview.c:1304
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
-msgstr "Schwebende Auswahl verankern"
+msgstr "Schwebende Maske verankern"
 
 #: app/widgets/gimplayertreeview.c:1307
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
-msgstr "Schwebende Auswahl verankern"
+msgstr "Schwebende Ebene verankern"
 
 #. No channel. We cannot perform the add
 #. * mask action.
 #: app/widgets/gimplayertreeview.c:1568
-#, fuzzy
-#| msgid "Cannot rename layer masks."
 msgid "No channels to create a layer mask from."
-msgstr "Ebenenmaske konnte nicht umbenannt werden."
+msgstr "Keine Kanäle, aus denen eine Ebenenmaske erstellt werden kann."
 
 #: app/widgets/gimpmessagebox.c:446
 #, c-format
@@ -29765,6 +29605,11 @@ msgid ""
 "This should not happen. You should report the issue to the filter's "
 "developers."
 msgstr ""
+"XCF-Warnung: Version %s des Filters »%s« hat nicht die Eigenschaft %s. Die "
+"Eigenschaft wurde ignoriert, und das Filter wird möglicherweise nicht "
+"richtig dargestellt.\n"
+"Dies sollte nicht passieren. Sie sollten das Problem an die Entwickler des "
+"Filters melden."
 
 #: app/xcf/xcf-load.c:3408
 #, c-format
@@ -29775,6 +29620,11 @@ msgid ""
 "was updated without proper version management. In the latter case, you "
 "should report the issue to the filter's developers."
 msgstr ""
+"XCF-Warnung: Die Version »%s« des Filters »%s« wird nicht unterstützt. Das "
+"Filter wurde verworfen.\n"
+"Dies bedeutet entweder, dass Sie eine alte Version des Filters verwenden "
+"oder dass es ohne angemessene Versionsverwaltung aktualisiert wurde. Im "
+"letzteren Fall sollten Sie das Problem an die Entwickler des Filters melden."
 
 #: app/xcf/xcf-read.c:195
 msgid "Invalid UTF-8 string in XCF file"
@@ -30361,6 +30211,10 @@ msgstr "Menü für Werkzeug-Voreinstellungen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Journal-Menü"
+
+#~ msgctxt "text-editor-action"
+#~ msgid "Text Editor Toolbar"
+#~ msgstr "Werkzeugleiste des Texteditors"
 
 #~ msgctxt "text-tool-action"
 #~ msgid "_Path from Text"
