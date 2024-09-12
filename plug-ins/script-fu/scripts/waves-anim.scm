@@ -29,7 +29,7 @@
 ; the gif-plug-in.
 
 (define (script-fu-waves-anim img
-                              drawable
+                              drawables
                               amplitude
                               wavelength
                               num-frames
@@ -91,15 +91,14 @@
   )
 )
 
-(script-fu-register "script-fu-waves-anim"
+(script-fu-register-filter "script-fu-waves-anim"
   _"_Waves..."
   _"Create a multi-layer image with an effect like a stone was thrown into the current image"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "1997/13/12"
   "RGB* GRAY*"
-  SF-IMAGE       "Image" 0
-  SF-DRAWABLE    "Drawable" 0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Amplitude"        '(10 1   101 1 10 1 0)
   SF-ADJUSTMENT _"Wavelength"       '(10 0.1 100 1 10 1 0)
   SF-ADJUSTMENT _"Number of frames" '(6  1   512 1 10 0 1)

@@ -37,11 +37,12 @@
 
 
 
-(define (script-fu-carve-it mask-img mask-drawable bg-layer carve-white)
+(define (script-fu-carve-it bg-img bg-layers mask-img mask-drawable carve-white)
   (let* (
+        (src-layer (vector-ref bg-layers 0))
         (width (car (gimp-drawable-get-width mask-drawable)))
         (height (car (gimp-drawable-get-height mask-drawable)))
-        (type (car (gimp-drawable-type bg-layer)))
+        (type (car (gimp-drawable-type src-layer)))
         (img (car (gimp-image-new width height (cond ((= type RGB-IMAGE) RGB)
                                                      ((= type RGBA-IMAGE) RGB)
                                                      ((= type GRAY-IMAGE) GRAY)
@@ -55,7 +56,7 @@
         (brush-size (carve-scale size 0.3))
         (brush (car (gimp-brush-new "Carve It")))
         (mask (car (gimp-channel-new img width height "Engraving Mask" 50 '(0 0 0))))
-        (inset-gamma (calculate-inset-gamma (car (gimp-item-get-image bg-layer)) bg-layer))
+        (inset-gamma (calculate-inset-gamma (car (gimp-item-get-image src-layer)) src-layer))
         (mask-fat 0)
         (mask-emboss 0)
         (mask-highlight 0)
@@ -66,10 +67,10 @@
         (csl-mask 0)
         (inset-layer 0)
         (il-mask 0)
-        (bg-width (car (gimp-drawable-get-width bg-layer)))
-        (bg-height (car (gimp-drawable-get-height bg-layer)))
-        (bg-type (car (gimp-drawable-type bg-layer)))
-        (bg-image (car (gimp-item-get-image bg-layer)))
+        (bg-width (car (gimp-drawable-get-width src-layer)))
+        (bg-height (car (gimp-drawable-get-height src-layer)))
+        (bg-type (car (gimp-drawable-type src-layer)))
+        (bg-image (car (gimp-item-get-image src-layer)))
         (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 LAYER-MODE-NORMAL)))
         )
 
@@ -83,7 +84,7 @@
     (gimp-selection-all img)
     (gimp-drawable-edit-clear layer1)
     (gimp-selection-none img)
-    (copy-layer-carve-it img layer1 bg-image bg-layer)
+    (copy-layer-carve-it img layer1 bg-image src-layer)
 
     (gimp-edit-copy 1 (vector mask-drawable))
     (gimp-image-insert-channel img mask -1 0)
@@ -217,16 +218,16 @@
   )
 )
 
-(script-fu-register "script-fu-carve-it"
+(script-fu-register-filter "script-fu-carve-it"
     _"Stencil C_arve..."
     _"Use the specified drawable as a stencil to carve from the specified image."
     "Spencer Kimball"
     "Spencer Kimball"
     "1997"
     "GRAY"
+    SF-ONE-OR-MORE-DRAWABLE
     SF-IMAGE     "Mask image"        0
     SF-DRAWABLE  "Mask drawable"     0
-    SF-DRAWABLE _"Image to carve"    0
     SF-TOGGLE   _"Carve white areas" TRUE
 )
 

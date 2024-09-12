@@ -3,7 +3,7 @@
 ;   This script requires a grayscale image containing a single layer.
 ;   This layer is used as the mask for the SOTA chrome effect
 
-(define (script-fu-sota-chrome-it mask-img mask-drawable chrome-saturation
+(define (script-fu-sota-chrome-it mask-img mask-drawables chrome-saturation
          chrome-lightness chrome-factor env-map hc cc carve-white)
 
   (define (set-pt a index x y)
@@ -80,6 +80,7 @@
         (banding-height (car (gimp-drawable-get-height banding-layer)))
         (banding-width (car (gimp-drawable-get-width banding-layer)))
         (banding-type (car (gimp-drawable-type banding-layer)))
+        (mask-drawable (vector-ref mask-drawables 0))
         (width (car (gimp-drawable-get-width mask-drawable)))
         (height (car (gimp-drawable-get-height mask-drawable)))
         (img (car (gimp-image-new width height GRAY)))
@@ -238,15 +239,14 @@
   )
 )
 
-(script-fu-register "script-fu-sota-chrome-it"
+(script-fu-register-filter "script-fu-sota-chrome-it"
   _"Stencil C_hrome..."
   _"Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
   "Spencer Kimball"
   "Spencer Kimball"
   "1997"
   "GRAY"
-  SF-IMAGE       "Chrome image"      0
-  SF-DRAWABLE    "Chrome mask"       0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Chrome saturation" '(-80 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome lightness"  '(-47 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome factor"     '(0.75 0 1 0.1 0.2 2 0)

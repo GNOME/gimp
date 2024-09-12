@@ -42,7 +42,7 @@
       (plug-in-gauss-rle RUN-NONINTERACTIVE theImage theLayer 1.5 TRUE TRUE)
   )
   (if (> inBorderSize 0)
-      (script-fu-fuzzy-border theImage theLayer '(255 255 255)
+      (script-fu-fuzzy-border theImage (vector theLayer) '(255 255 255)
                               inBorderSize TRUE 8 FALSE 100 FALSE TRUE )
   )
   (set! theLayer (car (gimp-image-flatten theImage)))
@@ -81,19 +81,18 @@
       (gimp-image-undo-group-end theImage)
   )
 
-  (gimp-displays-flush theImage)
+  (gimp-displays-flush)
   )
 )
 
-(script-fu-register "script-fu-old-photo"
+(script-fu-register-filter "script-fu-old-photo"
   _"_Old Photo..."
   _"Make an image look like an old photo"
   "Chris Gutteridge"
   "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
   "16th April 1998"
   "RGB* GRAY*"
-  SF-IMAGE      "The image"     0
-  SF-DRAWABLE   "The layer"     0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-TOGGLE     _"Defocus"      TRUE
   SF-ADJUSTMENT _"Border size"  '(20 0 300 1 10 0 1)
      ; since this plug-in uses the fuzzy-border plug-in, I used the

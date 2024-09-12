@@ -36,7 +36,7 @@
 
 
 (define (script-fu-drop-shadow image
-                               drawable
+                               drawables
                                shadow-transl-x
                                shadow-transl-y
                                shadow-blur
@@ -44,6 +44,7 @@
                                shadow-opacity
                                allow-resize)
   (let* (
+        (drawable (vector-ref drawables 0))
         (shadow-blur (max shadow-blur 0))
         (shadow-opacity (min shadow-opacity 100))
         (shadow-opacity (max shadow-opacity 0))
@@ -166,15 +167,14 @@
   )
 )
 
-(script-fu-register "script-fu-drop-shadow"
+(script-fu-register-filter "script-fu-drop-shadow"
   _"_Drop Shadow (legacy)..."
   _"Add a drop shadow to the selected region (or alpha)"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "1999/12/21"
   "RGB* GRAY*"
-  SF-IMAGE      "Image"           0
-  SF-DRAWABLE   "Drawable"        0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Offset X"       '(4 -4096 4096 1 10 0 1)
   SF-ADJUSTMENT _"Offset Y"       '(4 -4096 4096 1 10 0 1)
   SF-ADJUSTMENT _"Blur radius"    '(15 0 1024 1 10 0 1)

@@ -12,7 +12,7 @@
 ;
 
 (define (script-fu-burn-in-anim org-img
-                                org-layer
+                                org-layers
                                 glow-color
                                 fadeout
                                 bl-width
@@ -59,7 +59,7 @@
 
           (set! img (car (gimp-image-duplicate org-img)))
           (gimp-image-undo-disable img)
-          (if (> (car (gimp-drawable-type org-layer)) 1 )
+          (if (> (car (gimp-drawable-type (vector-ref org-layers 0))) 1 )
               (gimp-image-convert-rgb img))
           (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
           (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
@@ -220,15 +220,14 @@
 )
 
 
-(script-fu-register "script-fu-burn-in-anim"
+(script-fu-register-filter "script-fu-burn-in-anim"
     _"B_urn-In..."
     _"Create intermediate layers to produce an animated 'burn-in' transition between two layers"
     "Roland Berger roland@fuchur.leute.server.de"
     "Roland Berger"
     "January 2001"
     "RGBA GRAYA INDEXEDA"
-    SF-IMAGE    "The image"            0
-    SF-DRAWABLE "Layer to animate"     0
+    SF-ONE-OR-MORE-DRAWABLE
     SF-COLOR   _"Glow color"           "white"
     SF-TOGGLE  _"Fadeout"              FALSE
     SF-VALUE   _"Fadeout width"        "100"

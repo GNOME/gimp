@@ -44,7 +44,7 @@
 
 
 (define (script-fu-slide img
-                         drawable
+                         drawables
                          text
                          number
                          font
@@ -59,6 +59,7 @@
   )
 
   (let* (
+        (drawable (vector-ref drawables 0))
         (type (car (gimp-drawable-type-with-alpha drawable)))
         (image (cond ((= work-on-copy TRUE)
                       (car (gimp-image-duplicate img)))
@@ -246,15 +247,14 @@
   )
 )
 
-(script-fu-register "script-fu-slide"
+(script-fu-register-filter "script-fu-slide"
   _"_Slide..."
   _"Add a slide-film like frame, sprocket holes, and labels to an image"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "2004/03/28"
   "RGB GRAY"
-  SF-IMAGE     "Image"         0
-  SF-DRAWABLE  "Drawable"      0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-STRING   _"Text"          "GIMP"
   SF-STRING   _"Number"        "32"
   SF-FONT     _"Font"          "Serif"

@@ -55,7 +55,7 @@
       (set! theSpread (/ theSize 25))
       (if (> theSpread 200) (set! theSpread 200))
 
-      (script-fu-distress-selection theImage theStain
+      (script-fu-distress-selection theImage (vector theStain)
                                     (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1)
                                     theSpread 4 2 TRUE TRUE)
 

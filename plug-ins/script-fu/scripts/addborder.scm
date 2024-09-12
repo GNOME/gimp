@@ -23,7 +23,7 @@
 ; If > 255 set to 255
 ; Return the new value
 
-(define (script-fu-addborder aimg adraw xsize ysize color dvalue allow-resize)
+(define (script-fu-addborder aimg adraws xsize ysize color dvalue allow-resize)
 
   (define (deltacolor col delta)
     (let* ((newcol (+ col delta)))
@@ -97,9 +97,10 @@
       n_array)
   )
 
-  (let* ((img (car (gimp-item-get-image adraw)))
-         (imagewidth (car (gimp-image-get-width img)))
-         (imageheight (car (gimp-image-get-height img)))
+  (let* (
+         (first-layer (vector-ref adraws 0))
+         (imagewidth (car (gimp-image-get-width aimg)))
+         (imageheight (car (gimp-image-get-height aimg)))
          (innerwidth 0)
          (innerheight 0)
          (outerwidth 0)
@@ -117,55 +118,55 @@
                (set! innerwidth (- imagewidth (* 2 xsize)))
                (set! innerheight (- imageheight (* 2 ysize)))))
 
-         (let* ((layer (car (gimp-layer-new img
+         (let* ((layer (car (gimp-layer-new aimg
                                             outerwidth outerheight
-                                            (car (gimp-drawable-type-with-alpha adraw))
+                                            (car (gimp-drawable-type-with-alpha first-layer))
                                             _"Border Layer" 100 LAYER-MODE-NORMAL))))
 
            (gimp-context-push)
            (gimp-context-set-antialias FALSE)
            (gimp-context-set-feather FALSE)
 
-           (gimp-image-undo-group-start img)
+           (gimp-image-undo-group-start aimg)
 
            (if (= allow-resize TRUE)
-               (gimp-image-resize img
+               (gimp-image-resize aimg
                                   outerwidth
                                   outerheight
                                   xsize
                                   ysize))
 
-           (gimp-image-insert-layer img layer 0 0)
+           (gimp-image-insert-layer aimg layer 0 0)
            (gimp-drawable-fill layer FILL-TRANSPARENT)
 
            (gimp-context-set-background (adjcolor color dvalue))
-           (gimp-image-select-polygon img
+           (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
                                       10
                                       (gen_top_array xsize ysize innerwidth innerheight outerwidth outerheight))
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
            (gimp-context-set-background (adjcolor color (/ dvalue 2)))
-           (gimp-image-select-polygon img
+           (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
                                       10
                                       (gen_left_array xsize ysize innerwidth innerheight outerwidth outerheight))
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
            (gimp-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
-           (gimp-image-select-polygon img
+           (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
                                       10
                                       (gen_right_array xsize ysize innerwidth innerheight outerwidth outerheight))
 
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
            (gimp-context-set-background (adjcolor color (- 0 dvalue)))
-           (gimp-image-select-polygon img
+           (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
                                       10
                                       (gen_bottom_array xsize ysize innerwidth innerheight outerwidth outerheight))
 
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
-           (gimp-selection-none img)
-           (gimp-image-undo-group-end img)
+           (gimp-selection-none aimg)
+           (gimp-image-undo-group-end aimg)
            (gimp-displays-flush)
 
            (gimp-context-pop)
@@ -173,15 +174,14 @@
     )
 )
 
-(script-fu-register "script-fu-addborder"
+(script-fu-register-filter "script-fu-addborder"
   _"Add _Border..."
   _"Add a border around an image"
   "Andy Thomas <alt@picnic.demon.co.uk>, Michael Schumacher <schumaml@gmx.de>"
   "Andy Thomas, Michael Schumacher"
   "6/10/1997, 26/05/2017"
   "*"
-  SF-IMAGE       "Input image" 0
-  SF-DRAWABLE    "Input drawable" 0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Border X size" '(12 1 250 1 10 0 1)
   SF-ADJUSTMENT _"Border Y size" '(12 1 250 1 10 0 1)
   SF-COLOR      _"Border color" '(38 31 207)

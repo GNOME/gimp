@@ -23,7 +23,7 @@
 ; Define the function:
 
 (define (script-fu-fuzzy-border inImage
-                                inLayer
+                                inLayers
                                 inColor
                                 inSize
                                 inBlur
@@ -48,6 +48,7 @@
        (theHeight (car (gimp-image-get-height inImage)))
        (theImage (if (= inCopy TRUE) (car (gimp-image-duplicate inImage))
                                       inImage))
+       (inLayer (vector-ref inLayers 0))
        (theLayer 0)
        )
 
@@ -145,15 +146,14 @@
   )
 )
 
-(script-fu-register "script-fu-fuzzy-border"
+(script-fu-register-filter "script-fu-fuzzy-border"
   _"_Fuzzy Border..."
   _"Add a jagged, fuzzy border to an image"
   "Chris Gutteridge"
   "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
   "3rd April 1998"
   "RGB* GRAY*"
-  SF-IMAGE      "The image"               0
-  SF-DRAWABLE   "The layer"               0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-COLOR      _"Color"                  "white"
   SF-ADJUSTMENT _"Border size"            '(16 1 300 1 10 0 1)
   SF-TOGGLE     _"Blur border"            TRUE

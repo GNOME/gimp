@@ -4,8 +4,9 @@
 ;
 ; Tim Newsome <drz@froody.bloke.com> 4/11/97
 
-(define (script-fu-clothify timg tdrawable bx by azimuth elevation depth)
+(define (script-fu-clothify timg tdrawables bx by azimuth elevation depth)
   (let* (
+        (tdrawable (vector-ref tdrawables 0))
         (width (car (gimp-drawable-get-width tdrawable)))
         (height (car (gimp-drawable-get-height tdrawable)))
         (img (car (gimp-image-new width height RGB)))
@@ -48,15 +49,14 @@
 )
 
 
-(script-fu-register "script-fu-clothify"
+(script-fu-register-filter "script-fu-clothify"
   _"_Clothify..."
   _"Add a cloth-like texture to the selected region (or alpha)"
   "Tim Newsome <drz@froody.bloke.com>"
   "Tim Newsome"
   "4/11/97"
   "RGB* GRAY*"
-  SF-IMAGE       "Input image"    0
-  SF-DRAWABLE    "Input drawable" 0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Blur X"         '(9 3 100 1 10 0 1)
   SF-ADJUSTMENT _"Blur Y"         '(9 3 100 1 10 0 1)
   SF-ADJUSTMENT _"Azimuth"        '(135 0 360 1 10 1 0)

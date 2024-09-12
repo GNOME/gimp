@@ -38,7 +38,7 @@
 
 
 (define (script-fu-round-corners img
-                                 drawable
+                                 drawables
                                  radius
                                  shadow-toggle
                                  shadow-x
@@ -46,7 +46,8 @@
                                  shadow-blur
                                  background-toggle
                                  work-on-copy)
-  (let* ((shadow-blur (abs shadow-blur))
+  (let* ((drawable (vector-ref drawables 0))
+         (shadow-blur (abs shadow-blur))
          (radius (abs radius))
          (diam (* 2 radius))
          (width (car (gimp-image-get-width img)))
@@ -90,7 +91,7 @@
   (if (= shadow-toggle TRUE)
       (begin
         (script-fu-drop-shadow image
-                               pic-layer
+                               (vector pic-layer)
                                shadow-x
                                shadow-y
                                shadow-blur
@@ -127,15 +128,14 @@
   (gimp-displays-flush))
 )
 
-(script-fu-register "script-fu-round-corners"
+(script-fu-register-filter "script-fu-round-corners"
   _"_Round Corners..."
   _"Round the corners of an image and optionally add a drop-shadow and background"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "1999/12/21"
   "RGB* GRAY*"
-  SF-IMAGE      "Image"            0
-  SF-DRAWABLE   "Drawable"         0
+  SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Edge radius"     '(15 0 4096 1 10 0 1)
   SF-TOGGLE     _"Add drop-shadow" TRUE
   SF-ADJUSTMENT _"Shadow X offset" '(8 -4096 4096 1 10 0 1)
