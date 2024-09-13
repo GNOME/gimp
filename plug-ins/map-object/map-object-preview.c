@@ -88,8 +88,9 @@ compute_preview (gint x,
   gdouble      realw;
   gdouble      realh;
   GimpVector3  p1, p2;
-  GimpRGB      color;
-  GimpRGB      lightcheck, darkcheck;
+  gdouble      color[4];
+  gdouble      lightcheck[4] = { GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0 };
+  gdouble      darkcheck[4]  = { GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0 };
   gint         xcnt, ycnt, f1, f2;
   guchar       r, g, b;
   glong        index = 0;
@@ -119,7 +120,8 @@ compute_preview (gint x,
 
   if (mapvals.transparent_background == TRUE)
     {
-      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      for (gint i = 0; i < 4; i++)
+        background[i] = 0.0;
     }
   else
     {
@@ -127,15 +129,12 @@ compute_preview (gint x,
 
       gegl_color = gimp_context_get_background ();
       gimp_color_set_alpha (gegl_color, 1.0);
-      gegl_color_get_rgba_with_space (gegl_color, &background.r, &background.g, &background.b, &background.a, NULL);
+      gegl_color_get_rgba_with_space (gegl_color, &background[0], &background[1],
+                                      &background[2], &background[3], NULL);
 
       g_object_unref (gegl_color);
     }
 
-  gimp_rgba_set (&lightcheck,
-                 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0);
-  gimp_rgba_set (&darkcheck,
-                 GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0);
   gimp_vector3_set (&p2, -1.0, -1.0, 0.0);
 
   cairo_surface_flush (preview_surface);
@@ -149,9 +148,9 @@ compute_preview (gint x,
           p1.y = ypostab[ycnt];
 
           p2 = p1;
-          color = (* get_ray_color) (&p1);
+          (* get_ray_color) (&p1, color);
 
-          if (color.a < 1.0)
+          if (color[3] < 1.0)
             {
               f1 = ((xcnt % 32) < 16);
               f2 = ((ycnt % 32) < 16);
@@ -159,23 +158,33 @@ compute_preview (gint x,
 
               if (f1)
                 {
-                  if (color.a == 0.0)
-                    color = lightcheck;
+                  if (color[3] == 0.0)
+                    {
+                      for (gint i = 0; i < 4; i++)
+                        color[i] = lightcheck[i];
+                    }
                   else
-                    gimp_rgb_composite (&color, &lightcheck,
-                                        GIMP_RGB_COMPOSITE_BEHIND);
+                    {
+                      composite (color, lightcheck, COMPOSITE_BEHIND);
+                    }
                  }
               else
                 {
-                  if (color.a == 0.0)
-                    color = darkcheck;
+                  if (color[3] == 0.0)
+                    {
+                      for (gint i = 0; i < 4; i++)
+                        color[i] = darkcheck[i];
+                    }
                   else
-                    gimp_rgb_composite (&color, &darkcheck,
-                                        GIMP_RGB_COMPOSITE_BEHIND);
+                    {
+                      composite (color, darkcheck, COMPOSITE_BEHIND);
+                    }
                 }
             }
 
-          gimp_rgb_get_uchar (&color, &r, &g, &b);
+          r = (guchar) (color[0] * 255);
+          g = (guchar) (color[1] * 255);
+          b = (guchar) (color[2] * 255);
           GIMP_CAIRO_RGB24_SET_PIXEL((preview_rgb_data + index), r, g, b);
           index += 4;
         }

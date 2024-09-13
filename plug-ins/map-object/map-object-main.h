@@ -28,6 +28,12 @@ typedef enum
   MAP_CYLINDER
 } MapType;
 
+typedef enum
+{
+  COMPOSITE_NORMAL,
+  COMPOSITE_BEHIND,
+} CompositeType;
+
 /* Typedefs */
 /* ======== */
 
@@ -38,7 +44,7 @@ typedef struct
   gdouble  diffuse_ref;
   gdouble  specular_ref;
   gdouble  highlight;
-  GimpRGB  color;
+  gdouble  color[4];
 } MaterialSettings;
 
 typedef struct
@@ -46,7 +52,7 @@ typedef struct
   LightType    type;
   GimpVector3  position;
   GimpVector3  direction;
-  GimpRGB      color;
+  gdouble      color[4];
   gdouble      intensity;
 } LightSettings;
 

@@ -42,80 +42,67 @@ cairo_surface_t *preview_surface = NULL;
 
 glong    maxcounter, old_depth, max_depth;
 gint     width, height;
-GimpRGB  background;
+gdouble  background[4];
 
 gint border_x, border_y, border_w, border_h;
+
+
+void  peek_box_image  (gint     image,
+                       gint     x,
+                       gint     y,
+                       gdouble *color);
+
 
 /******************/
 /* Implementation */
 /******************/
 
-GimpRGB
-peek (gint x,
-      gint y)
+void
+peek (gint     x,
+      gint     y,
+      gdouble *color)
 {
-  GimpRGB color;
-
   gegl_buffer_sample (source_buffer, x, y, NULL,
-                      &color, babl_format ("R'G'B'A double"),
+                      color, babl_format ("R'G'B'A double"),
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   if (! babl_format_has_alpha (gegl_buffer_get_format (source_buffer)))
-    color.a = 1.0;
-
-  return color;
+    color[3] = 1.0;
 }
 
-static GimpRGB
-peek_box_image (gint image,
-                gint x,
-                gint y)
+void
+peek_box_image (gint     image,
+                gint     x,
+                gint     y,
+                gdouble *color)
 {
-  GimpRGB color;
-
   gegl_buffer_sample (box_buffers[image], x, y, NULL,
-                      &color, babl_format ("R'G'B'A double"),
+                      color, babl_format ("R'G'B'A double"),
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   if (! babl_format_has_alpha (gegl_buffer_get_format (box_buffers[image])))
-    color.a = 1.0;
-
-  return color;
+    color[3] = 1.0;
 }
 
-static GimpRGB
-peek_cylinder_image (gint image,
-                     gint x,
-                     gint y)
+static void
+peek_cylinder_image (gint     image,
+                     gint     x,
+                     gint     y,
+                     gdouble *color)
 {
-  GimpRGB color;
-
   gegl_buffer_sample (cylinder_buffers[image], x, y, NULL,
-                      &color, babl_format ("R'G'B'A double"),
+                      color, babl_format ("R'G'B'A double"),
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   if (! babl_format_has_alpha (gegl_buffer_get_format (cylinder_buffers[image])))
-    color.a = 1.0;
-
-  return color;
+    color[3] = 1.0;
 }
 
 void
 poke (gint      x,
       gint      y,
-      GimpRGB  *color,
+      gdouble  *color,
       gpointer  user_data)
-{
-  gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
-                   babl_format ("R'G'B'A double"), color,
-                   GEGL_AUTO_ROWSTRIDE);
-}
-
-void
-poke_adaptive (gint      x,
-               gint      y,
-               gdouble  *color,
-               gpointer  user_data)
 {
   gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
                    babl_format ("R'G'B'A double"), color,
@@ -195,18 +182,17 @@ pos_to_int (gdouble  x,
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GimpRGB
+void
 get_image_color (gdouble  u,
                  gdouble  v,
-                 gint    *inside)
+                 gint    *inside,
+                 gdouble *color)
 {
   gint     x1;
   gint     y1;
   gint     x2;
   gint     y2;
-  GimpRGB  p[4];
-  GimpRGB  p_rgba;
-  gdouble  pixel[4];
+  gdouble  p[4];
   gdouble  pixels[16];
 
   pos_to_int (u, v, &x1, &y1);
@@ -224,31 +210,32 @@ get_image_color (gdouble  u,
       x2 = (x1 + 1) % width;
       y2 = (y1 + 1) % height;
 
-      p[0] = peek (x1, y1);
-      p[1] = peek (x2, y1);
-      p[2] = peek (x1, y2);
-      p[3] = peek (x2, y2);
-
+      peek (x1, y1, p);
       for (gint i = 0; i < 4; i++)
-        {
-          pixels[(i * 4)]     = p[i].r;
-          pixels[(i * 4) + 1] = p[i].g;
-          pixels[(i * 4) + 2] = p[i].b;
-          pixels[(i * 4) + 3] = p[i].a;
-        }
+        pixels[i] = p[i];
+      peek (x2, y1, p);
+      for (gint i = 0; i < 4; i++)
+        pixels[i + 4] = p[i];
+      peek (x1, y2, p);
+      for (gint i = 0; i < 4; i++)
+        pixels[i + 8] = p[i];
+      peek (x2, y2, p);
+      for (gint i = 0; i < 4; i++)
+        pixels[i + 12] = p[i];
 
-      gimp_bilinear_rgb (u * width, v * height, pixels, TRUE, pixel);
+      gimp_bilinear_rgb (u * width, v * height, pixels, TRUE, color);
 
-      gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
-
-      return p_rgba;
+      return;
     }
 
   if (checkbounds (x1, y1) == FALSE)
     {
       *inside =FALSE;
 
-      return background;
+      for (gint i = 0; i < 4; i++)
+        color[i] = background[i];
+
+      return;
     }
 
   x2 = (x1 + 1);
@@ -258,35 +245,32 @@ get_image_color (gdouble  u,
    {
      *inside = TRUE;
 
-     return peek (x1, y1);
+     return peek (x1, y1, color);
    }
 
   *inside = TRUE;
 
-  p[0] = peek (x1, y1);
-  p[1] = peek (x2, y1);
-  p[2] = peek (x1, y2);
-  p[3] = peek (x2, y2);
-
+  peek (x1, y1, p);
   for (gint i = 0; i < 4; i++)
-    {
-      pixels[(i * 4)]     = p[i].r;
-      pixels[(i * 4) + 1] = p[i].g;
-      pixels[(i * 4) + 2] = p[i].b;
-      pixels[(i * 4) + 3] = p[i].a;
-    }
+    pixels[i] = p[i];
+  peek (x2, y1, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 4] = p[i];
+  peek (x1, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 8] = p[i];
+  peek (x2, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 12] = p[i];
 
-  gimp_bilinear_rgb (u * width, v * height, pixels, TRUE, pixel);
-
-  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
-
-  return p_rgba;
+  gimp_bilinear_rgb (u * width, v * height, pixels, TRUE, color);
 }
 
-GimpRGB
-get_box_image_color (gint    image,
-                     gdouble u,
-                     gdouble v)
+void
+get_box_image_color (gint     image,
+                     gdouble  u,
+                     gdouble  v,
+                     gdouble *color)
 {
   gint     w;
   gint     h;
@@ -294,9 +278,7 @@ get_box_image_color (gint    image,
   gint     y1;
   gint     x2;
   gint     y2;
-  GimpRGB  p[4];
-  GimpRGB  p_rgba;
-  gdouble  pixel[4];
+  gdouble  p[4];
   gdouble  pixels[16];
 
   w = gegl_buffer_get_width  (box_buffers[image]);
@@ -306,38 +288,40 @@ get_box_image_color (gint    image,
   y1 = (gint) ((v * (gdouble) h));
 
   if (checkbounds_box_image (image, x1, y1) == FALSE)
-    return background;
+    {
+      for (gint i = 0; i < 4; i++)
+        color[i] = background[i];
+
+      return;
+    }
 
   x2 = (x1 + 1);
   y2 = (y1 + 1);
 
   if (checkbounds_box_image (image, x2, y2) == FALSE)
-    return peek_box_image (image, x1,y1);
+    return peek_box_image (image, x1, y1, color);
 
-  p[0] = peek_box_image (image, x1, y1);
-  p[1] = peek_box_image (image, x2, y1);
-  p[2] = peek_box_image (image, x1, y2);
-  p[3] = peek_box_image (image, x2, y2);
-
+  peek_box_image (image, x1, y1, p);
   for (gint i = 0; i < 4; i++)
-    {
-      pixels[(i * 4)]     = p[i].r;
-      pixels[(i * 4) + 1] = p[i].g;
-      pixels[(i * 4) + 2] = p[i].b;
-      pixels[(i * 4) + 3] = p[i].a;
-    }
+    pixels[i] = p[i];
+  peek_box_image (image, x2, y1, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 4] = p[i];
+  peek_box_image (image, x1, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 8] = p[i];
+  peek_box_image (image, x2, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 12] = p[i];
 
-  gimp_bilinear_rgb (u * w, v * h, pixels, TRUE, pixel);
-
-  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
-
-  return p_rgba;
+  gimp_bilinear_rgb (u * w, v * w, pixels, TRUE, color);
 }
 
-GimpRGB
-get_cylinder_image_color (gint    image,
-                          gdouble u,
-                          gdouble v)
+void
+get_cylinder_image_color (gint     image,
+                          gdouble  u,
+                          gdouble  v,
+                          gdouble *color)
 {
   gint     w;
   gint     h;
@@ -345,9 +329,7 @@ get_cylinder_image_color (gint    image,
   gint     y1;
   gint     x2;
   gint     y2;
-  GimpRGB  p[4];
-  GimpRGB  p_rgba;
-  gdouble  pixel[4];
+  gdouble  p[4];
   gdouble  pixels[16];
 
   w = gegl_buffer_get_width  (cylinder_buffers[image]);
@@ -357,32 +339,33 @@ get_cylinder_image_color (gint    image,
   y1 = (gint) ((v * (gdouble) h));
 
   if (checkbounds_cylinder_image (image, x1, y1) == FALSE)
-    return background;
+    {
+      for (gint i = 0; i < 4; i++)
+        color[i] = background[i];
+
+      return;
+    }
 
   x2 = (x1 + 1);
   y2 = (y1 + 1);
 
   if (checkbounds_cylinder_image (image, x2, y2) == FALSE)
-    return peek_cylinder_image (image, x1,y1);
+    return peek_cylinder_image (image, x1, y1, color);
 
-  p[0] = peek_cylinder_image (image, x1, y1);
-  p[1] = peek_cylinder_image (image, x2, y1);
-  p[2] = peek_cylinder_image (image, x1, y2);
-  p[3] = peek_cylinder_image (image, x2, y2);
-
+  peek_cylinder_image (image, x1, y1, p);
   for (gint i = 0; i < 4; i++)
-    {
-      pixels[(i * 4)]     = p[i].r;
-      pixels[(i * 4) + 1] = p[i].g;
-      pixels[(i * 4) + 2] = p[i].b;
-      pixels[(i * 4) + 3] = p[i].a;
-    }
+    pixels[i] = p[i];
+  peek_cylinder_image (image, x2, y1, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 4] = p[i];
+  peek_cylinder_image (image, x1, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 8] = p[i];
+  peek_cylinder_image (image, x2, y2, p);
+  for (gint i = 0; i < 4; i++)
+    pixels[i + 12] = p[i];
 
-  gimp_bilinear_rgb (u * w, v * h, pixels, TRUE, pixel);
-
-  gimp_rgba_set (&p_rgba, pixel[0], pixel[1], pixel[2], pixel[3]);
-
-  return p_rgba;
+  gimp_bilinear_rgb (u * w, v * h, pixels, TRUE, color);
 }
 
 /****************************************/
@@ -416,7 +399,8 @@ image_setup (GimpDrawable        *drawable,
 
   if (transparent_background == TRUE)
     {
-      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      for (gint i = 0; i < 4; i++)
+        background[i] = 0;
     }
   else
     {
@@ -424,7 +408,8 @@ image_setup (GimpDrawable        *drawable,
 
       gegl_color = gimp_context_get_background ();
       gimp_color_set_alpha (gegl_color, 1.0);
-      gegl_color_get_rgba_with_space (gegl_color, &background.r, &background.g, &background.b, &background.a, NULL);
+      gegl_color_get_rgba_with_space (gegl_color, &background[0], &background[1],
+                                      &background[2], &background[3], NULL);
 
       g_object_unref (gegl_color);
     }

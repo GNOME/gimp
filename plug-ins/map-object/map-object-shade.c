@@ -31,17 +31,17 @@ typedef struct
 /* Phong shading */
 /*****************/
 
-static GimpRGB
+static void
 phong_shade (GimpVector3 *pos,
              GimpVector3 *viewpoint,
              GimpVector3 *normal,
-             GimpRGB     *diff_col,
-             GimpRGB     *spec_col,
+             gdouble     *diff_col,
+             gdouble     *spec_col,
              LightType    type)
 {
-  GimpRGB       ambientcolor, diffusecolor, specularcolor;
-  gdouble      NL, RV, dist;
-  GimpVector3  L, NN, V, N;
+  gdouble       ambientcolor[4], diffusecolor[4], specularcolor[4];
+  gdouble       NL, RV, dist;
+  GimpVector3   L, NN, V, N;
   GimpVector3  *light;
 
   light = mapvals.lightsource.type == DIRECTIONAL_LIGHT
@@ -52,8 +52,10 @@ phong_shade (GimpVector3 *pos,
   /* ========================= */
 
   N = *normal;
-  ambientcolor = *diff_col;
-  gimp_rgb_multiply (&ambientcolor, mapvals.material.ambient_int);
+  for (gint i = 0; i < 4; i++)
+    ambientcolor[i] = diff_col[i];
+  for (gint i = 0; i < 3; i++)
+    ambientcolor[i] *= mapvals.material.ambient_int;
 
   /* Compute (N*L) term of Phong's equation */
   /* ====================================== */
@@ -86,22 +88,33 @@ phong_shade (GimpVector3 *pos,
       /* Compute diffuse and specular intensity contribution */
       /* =================================================== */
 
-      diffusecolor = *diff_col;
-      gimp_rgb_multiply (&diffusecolor, mapvals.material.diffuse_ref);
-      gimp_rgb_multiply (&diffusecolor, NL);
+     for (gint i = 0; i < 4; i++)
+       diffusecolor[i] = diff_col[i];
+     for (gint i = 0; i < 3; i++)
+       {
+         diffusecolor[i] *= mapvals.material.diffuse_ref;
+         diffusecolor[i] *= NL;
+       }
 
-      specularcolor = *spec_col;
-      gimp_rgb_multiply (&specularcolor, mapvals.material.specular_ref);
-      gimp_rgb_multiply (&specularcolor, RV);
+     for (gint i = 0; i < 4; i++)
+       specularcolor[i] = spec_col[i];
+     for (gint i = 0; i < 3; i++)
+       {
+         specularcolor[i] *= mapvals.material.specular_ref;
+         specularcolor[i] *= RV;
+       }
 
-      gimp_rgb_add (&diffusecolor, &specularcolor);
-      gimp_rgb_multiply (&diffusecolor, mapvals.material.diffuse_int);
-      gimp_rgb_clamp (&diffusecolor);
-
-      gimp_rgb_add (&ambientcolor, &diffusecolor);
+     for (gint i = 0; i < 3; i++)
+       {
+         diffusecolor[i] += specularcolor[i];
+         diffusecolor[i] *= mapvals.material.diffuse_int;
+         diffusecolor[i] = CLAMP (diffusecolor[i], 0.0, 1.0);
+         ambientcolor[i] += diffusecolor[i];
+       }
     }
 
-  return ambientcolor;
+  for (gint i = 0; i < 4; i++)
+    diff_col[i] = ambientcolor[i];
 }
 
 static gint
@@ -183,17 +196,19 @@ plane_intersect (GimpVector3 *dir,
  * of the plane at a given point
  *****************************************************************************/
 
-GimpRGB
-get_ray_color_plane (GimpVector3 *pos)
+void
+get_ray_color_plane (GimpVector3 *pos,
+                     gdouble     *color)
 {
-  GimpRGB color = background;
-
   static gint         inside = FALSE;
   static GimpVector3  ray, spos;
   static gdouble      vx, vy;
 
   /* Construct a line from our VP to the point */
   /* ========================================= */
+
+  for (gint i = 0; i < 4; i++)
+    color[i] = background[i];
 
   gimp_vector3_sub (&ray, pos, &mapvals.viewpoint);
   gimp_vector3_normalize (&ray);
@@ -203,32 +218,28 @@ get_ray_color_plane (GimpVector3 *pos)
 
   if (plane_intersect (&ray, &mapvals.viewpoint, &spos, &vx, &vy) == TRUE)
     {
-      color = get_image_color (vx, vy, &inside);
+      get_image_color (vx, vy, &inside, color);
 
-      if (color.a != 0.0 && inside == TRUE &&
+      if (color[3] != 0.0 && inside == TRUE &&
           mapvals.lightsource.type != NO_LIGHT)
         {
           /* Compute shading at this point */
           /* ============================= */
 
-          color = phong_shade (&spos,
-                               &mapvals.viewpoint,
-                               &mapvals.normal,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&spos,
+                       &mapvals.viewpoint,
+                       &mapvals.normal,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
     }
 
-  if (mapvals.transparent_background == FALSE && color.a < 1.0)
-    {
-      gimp_rgb_composite (&color, &background,
-                          GIMP_RGB_COMPOSITE_BEHIND);
-    }
-
-  return color;
+  if (mapvals.transparent_background == FALSE && color[3] < 1.0)
+    composite (color, background, COMPOSITE_BEHIND);
 }
 
 /***********************************************************************/
@@ -323,21 +334,22 @@ sphere_intersect (GimpVector3 *dir,
  * of the sphere at a given point
  *****************************************************************************/
 
-GimpRGB
-get_ray_color_sphere (GimpVector3 *pos)
+void
+get_ray_color_sphere (GimpVector3 *pos,
+                      gdouble     *color)
 {
-  GimpRGB color = background;
-
-  static GimpRGB      color2;
+  static gdouble      color2[4];
   static gint         inside = FALSE;
   static GimpVector3  normal, ray, spos1, spos2;
   static gdouble      vx, vy;
 
+  for (gint i = 0; i < 4; i++)
+    color[i] = background[i];
   /* Check if ray is within the bounding box */
   /* ======================================= */
 
   if (pos->x<bx1 || pos->x>bx2 || pos->y<by1 || pos->y>by2)
-    return color;
+    return;
 
   /* Construct a line from our VP to the point */
   /* ========================================= */
@@ -356,76 +368,75 @@ get_ray_color_sphere (GimpVector3 *pos)
       gimp_vector3_sub (&normal, &spos1, &mapvals.position);
       gimp_vector3_normalize (&normal);
       sphere_to_image (&normal, &vx, &vy);
-      color = get_image_color (vx, vy, &inside);
+      get_image_color (vx, vy, &inside, color);
 
       /* Check for total transparency... */
       /* =============================== */
 
-      if (color.a < 1.0)
+      if (color[3] < 1.0)
         {
           /* Hey, we can see  through here!      */
           /* Lets see what's on the other side.. */
           /* =================================== */
 
-          color = phong_shade (&spos1,
-                               &mapvals.viewpoint,
-                               &normal,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&spos1,
+                       &mapvals.viewpoint,
+                       &normal,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
 
           gimp_vector3_sub (&normal, &spos2, &mapvals.position);
           gimp_vector3_normalize (&normal);
           sphere_to_image (&normal, &vx, &vy);
-          color2 = get_image_color (vx, vy, &inside);
+          get_image_color (vx, vy, &inside, color2);
 
           /* Make the normal point inwards */
           /* ============================= */
 
           gimp_vector3_mul (&normal, -1.0);
 
-          color2 = phong_shade (&spos2,
-                                &mapvals.viewpoint,
-                                &normal,
-                                &color2,
-                                &mapvals.lightsource.color,
-                                mapvals.lightsource.type);
+          phong_shade (&spos2,
+                       &mapvals.viewpoint,
+                       &normal,
+                       color2,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color2);
+          for (gint i = 0; i < 4; i++)
+            color2[i] = CLAMP (color2[i], 0.0, 1.0);
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
-          gimp_rgb_composite (&color, &color2, GIMP_RGB_COMPOSITE_NORMAL);
-          gimp_rgb_clamp (&color);
+          composite (color, color2, COMPOSITE_NORMAL);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
-      else if (color.a != 0.0 &&
+      else if (color[3] != 0.0 &&
                inside == TRUE &&
                mapvals.lightsource.type != NO_LIGHT)
         {
           /* Compute shading at this point */
           /* ============================= */
 
-          color = phong_shade (&spos1,
-                               &mapvals.viewpoint,
-                               &normal,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&spos1,
+                       &mapvals.viewpoint,
+                       &normal,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
     }
 
-  if (mapvals.transparent_background == FALSE && color.a < 1.0)
-    {
-      gimp_rgb_composite (&color, &background,
-                          GIMP_RGB_COMPOSITE_BEHIND);
-    }
-
-  return color;
+  if (mapvals.transparent_background == FALSE && color[3] < 1.0)
+    composite (color, background, COMPOSITE_BEHIND);
 }
 
 /***************************************************/
@@ -834,16 +845,19 @@ intersect_box (GimpVector3        scale,
   return result;
 }
 
-GimpRGB
-get_ray_color_box (GimpVector3 *pos)
+void
+get_ray_color_box (GimpVector3 *pos,
+                   gdouble     *color)
 {
   GimpVector3        lvp, ldir, vp, p, dir, ns, nn;
-  GimpRGB             color, color2;
+  gdouble            color2[4];
   gfloat             m[16];
   gint               i;
   FaceIntersectInfo  face_intersect[2];
 
-  color = background;
+  for (i = 0; i < 4; i++)
+    color[i] = background[i];
+
   vp = mapvals.viewpoint;
   p = *pos;
 
@@ -904,77 +918,78 @@ get_ray_color_box (GimpVector3 *pos)
           face_intersect[i].n = nn;
         }
 
-      color = get_box_image_color (face_intersect[0].face,
-                                   face_intersect[0].u,
-                                   face_intersect[0].v);
+      get_box_image_color (face_intersect[0].face,
+                           face_intersect[0].u,
+                           face_intersect[0].v,
+                           color);
 
       /* Check for total transparency... */
       /* =============================== */
 
-      if (color.a < 1.0)
+      if (color[3] < 1.0)
         {
           /* Hey, we can see  through here!      */
           /* Lets see what's on the other side.. */
           /* =================================== */
 
-          color = phong_shade (&face_intersect[0].s,
-                               &mapvals.viewpoint,
-                               &face_intersect[0].n,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&face_intersect[0].s,
+                       &mapvals.viewpoint,
+                       &face_intersect[0].n,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
 
-          color2 = get_box_image_color (face_intersect[1].face,
-                                        face_intersect[1].u,
-                                        face_intersect[1].v);
+          get_box_image_color (face_intersect[1].face,
+                               face_intersect[1].u,
+                               face_intersect[1].v,
+                               color2);
 
           /* Make the normal point inwards */
           /* ============================= */
 
           gimp_vector3_mul (&face_intersect[1].n, -1.0);
 
-          color2 = phong_shade (&face_intersect[1].s,
-                                &mapvals.viewpoint,
-                                &face_intersect[1].n,
-                                &color2,
-                                &mapvals.lightsource.color,
-                                mapvals.lightsource.type);
+          phong_shade (&face_intersect[1].s,
+                       &mapvals.viewpoint,
+                       &face_intersect[1].n,
+                       color2,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color2);
+          for (gint i = 0; i < 4; i++)
+            color2[i] = CLAMP (color2[i], 0.0, 1.0);
 
-          if (mapvals.transparent_background == FALSE && color2.a < 1.0)
-            {
-              gimp_rgb_composite (&color2, &background,
-                                  GIMP_RGB_COMPOSITE_BEHIND);
-            }
+          if (mapvals.transparent_background == FALSE && color2[3] < 1.0)
+            composite (color2, background, COMPOSITE_BEHIND);
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
-          gimp_rgb_composite (&color, &color2, GIMP_RGB_COMPOSITE_NORMAL);
-          gimp_rgb_clamp (&color);
+          composite (color, color2, COMPOSITE_NORMAL);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
-      else if (color.a != 0.0 && mapvals.lightsource.type != NO_LIGHT)
+      else if (color[3] != 0.0 && mapvals.lightsource.type != NO_LIGHT)
         {
-          color = phong_shade (&face_intersect[0].s,
-                               &mapvals.viewpoint,
-                               &face_intersect[0].n,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&face_intersect[0].s,
+                       &mapvals.viewpoint,
+                       &face_intersect[0].n,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
     }
   else
     {
       if (mapvals.transparent_background == TRUE)
-        gimp_rgb_set_alpha (&color, 0.0);
+        color[3] = 0.0;
     }
-
-  return color;
 }
 
 static gboolean
@@ -1106,32 +1121,32 @@ intersect_cylinder (GimpVector3        vp,
   return result;
 }
 
-static GimpRGB
-get_cylinder_color (gint    face,
-                    gdouble u,
-                    gdouble v)
+static void
+get_cylinder_color (gint     face,
+                    gdouble  u,
+                    gdouble  v,
+                    gdouble *color)
 {
-  GimpRGB  color;
-  gint    inside;
+  gint inside;
 
   if (face == 0)
-    color = get_image_color (u, v, &inside);
+    get_image_color (u, v, &inside, color);
   else
-    color = get_cylinder_image_color (face - 1, u, v);
-
-  return color;
+    get_cylinder_image_color (face - 1, u, v, color);
 }
 
-GimpRGB
-get_ray_color_cylinder (GimpVector3 *pos)
+void
+get_ray_color_cylinder (GimpVector3 *pos,
+                        gdouble     *color)
 {
   GimpVector3       lvp, ldir, vp, p, dir, ns, nn;
-  GimpRGB            color, color2;
+  gdouble           color2[4];
   gfloat            m[16];
   gint              i;
   FaceIntersectInfo face_intersect[2];
 
-  color = background;
+  for (i = 0; i < 4; i++)
+    color[i] = background[i];
   vp = mapvals.viewpoint;
   p = *pos;
 
@@ -1180,75 +1195,117 @@ get_ray_color_cylinder (GimpVector3 *pos)
           face_intersect[i].n = nn;
         }
 
-      color = get_cylinder_color (face_intersect[0].face,
-                                  face_intersect[0].u,
-                                  face_intersect[0].v);
+      get_cylinder_color (face_intersect[0].face,
+                          face_intersect[0].u,
+                          face_intersect[0].v,
+                          color);
 
       /* Check for transparency... */
       /* ========================= */
 
-      if (color.a < 1.0)
+      if (color[3] < 1.0)
         {
           /* Hey, we can see  through here!      */
           /* Lets see what's on the other side.. */
           /* =================================== */
 
-          color = phong_shade (&face_intersect[0].s,
-                               &mapvals.viewpoint,
-                               &face_intersect[0].n,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&face_intersect[0].s,
+                       &mapvals.viewpoint,
+                       &face_intersect[0].n,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
 
-          color2 = get_cylinder_color (face_intersect[1].face,
-                                       face_intersect[1].u,
-                                       face_intersect[1].v);
+          get_cylinder_color (face_intersect[1].face,
+                              face_intersect[1].u,
+                              face_intersect[1].v,
+                              color2);
 
           /* Make the normal point inwards */
           /* ============================= */
 
           gimp_vector3_mul (&face_intersect[1].n, -1.0);
 
-          color2 = phong_shade (&face_intersect[1].s,
-                                &mapvals.viewpoint,
-                                &face_intersect[1].n,
-                                &color2,
-                                &mapvals.lightsource.color,
-                                mapvals.lightsource.type);
+          phong_shade (&face_intersect[1].s,
+                       &mapvals.viewpoint,
+                       &face_intersect[1].n,
+                       color2,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color2);
+          for (gint i = 0; i < 4; i++)
+            color2[i] = CLAMP (color2[i], 0.0, 1.0);
 
-          if (mapvals.transparent_background == FALSE && color2.a < 1.0)
-            {
-              gimp_rgb_composite (&color2, &background,
-                                  GIMP_RGB_COMPOSITE_BEHIND);
-            }
+          if (mapvals.transparent_background == FALSE && color2[3] < 1.0)
+            composite (color2, background, COMPOSITE_BEHIND);
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
-          gimp_rgb_composite (&color, &color2, GIMP_RGB_COMPOSITE_NORMAL);
-          gimp_rgb_clamp (&color);
+          composite (color, color2, COMPOSITE_NORMAL);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
-      else if (color.a != 0.0 && mapvals.lightsource.type != NO_LIGHT)
+      else if (color[3] != 0.0 && mapvals.lightsource.type != NO_LIGHT)
         {
-          color = phong_shade (&face_intersect[0].s,
-                               &mapvals.viewpoint,
-                               &face_intersect[0].n,
-                               &color,
-                               &mapvals.lightsource.color,
-                               mapvals.lightsource.type);
+          phong_shade (&face_intersect[0].s,
+                       &mapvals.viewpoint,
+                       &face_intersect[0].n,
+                       color,
+                       mapvals.lightsource.color,
+                       mapvals.lightsource.type);
 
-          gimp_rgb_clamp (&color);
+          for (gint i = 0; i < 4; i++)
+            color[i] = CLAMP (color[i], 0.0, 1.0);
         }
     }
   else
     {
       if (mapvals.transparent_background == TRUE)
-        gimp_rgb_set_alpha (&color, 0.0);
+        color[3] = 0.0;
     }
+}
 
-  return color;
+void
+composite (gdouble              *color1,
+           gdouble              *color2,
+           CompositeType         composite)
+{
+  g_return_if_fail (color1 != NULL);
+  g_return_if_fail (color2 != NULL);
+
+  if (composite == COMPOSITE_NORMAL)
+    {
+      /*  put color2 on top of color1  */
+      if (color2[3] == 1.0)
+        {
+          for (gint i = 0; i < 4; i++)
+            color1[i] = color2[i];
+        }
+      else
+        {
+          gdouble factor = color1[3] * (1.0 - color2[3]);
+
+          color1[0] = color1[0] * factor + color2[0] * color2[3];
+          color1[1] = color1[1] * factor + color2[1] * color2[3];
+          color1[2] = color1[2] * factor + color2[2] * color2[3];
+          color1[3] = factor + color2[3];
+        }
+    }
+  else if (composite == COMPOSITE_BEHIND)
+    {
+      /*  put color2 below color1  */
+      if (color1[3] < 1.0)
+        {
+          gdouble factor = color2[3] * (1.0 - color1[3]);
+
+          color1[0] = color2[0] * factor + color1[0] * color1[3];
+          color1[1] = color2[1] * factor + color1[1] * color1[3];
+          color1[2] = color2[2] * factor + color1[2] * color1[3];
+          color1[3] = factor + color1[3];
+        }
+    }
 }

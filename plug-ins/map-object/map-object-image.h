@@ -23,7 +23,7 @@ extern cairo_surface_t *preview_surface;
 
 extern glong    maxcounter, old_depth, max_depth;
 extern gint     width, height;
-extern GimpRGB  background;
+extern gdouble  background[4];
 
 extern gint border_x1, border_y1, border_x2, border_y2;
 
@@ -40,14 +40,10 @@ extern glong       out_xy_to_index          (gint          x,
                                              gint          y);
 extern gint        checkbounds              (gint          x,
                                              gint          y);
-extern GimpRGB     peek                     (gint          x,
-                                             gint          y);
-extern void        poke                     (gint          x,
+extern void        peek                     (gint          x,
                                              gint          y,
-                                             GimpRGB      *color,
-                                             gpointer      user_data);
-/* TODO: Merge back with poke when removing GimpRGB fully */
-extern void        poke_adaptive            (gint          x,
+                                             gdouble      *color);
+extern void        poke                     (gint          x,
                                              gint          y,
                                              gdouble      *color,
                                              gpointer      user_data);
@@ -58,14 +54,17 @@ extern void        pos_to_int               (gdouble       x,
                                              gint         *scr_x,
                                              gint         *scr_y);
 
-extern GimpRGB     get_image_color          (gdouble      u,
+extern void        get_image_color          (gdouble      u,
                                              gdouble      v,
-                                             gint        *inside);
-extern GimpRGB     get_box_image_color      (gint         image,
+                                             gint        *inside,
+                                             gdouble     *color);
+extern void        get_box_image_color      (gint         image,
                                              gdouble      u,
-                                             gdouble      v);
-extern GimpRGB     get_cylinder_image_color (gint         image,
+                                             gdouble      v,
+                                             gdouble     *color);
+extern void        get_cylinder_image_color (gint         image,
                                              gdouble      u,
-                                             gdouble      v);
+                                             gdouble      v,
+                                             gdouble     *color);
 
 #endif  /* __MAPOBJECT_IMAGE_H__ */

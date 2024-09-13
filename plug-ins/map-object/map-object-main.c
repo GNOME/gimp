@@ -471,7 +471,8 @@ set_default_settings (void)
   mapvals.showgrid               = TRUE;
 
   mapvals.lightsource.intensity = 1.0;
-  gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);
+  for (i = 0; i < 4; i++)
+    mapvals.lightsource.color[i] = 1.0;
 
   mapvals.material.ambient_int  = 0.3;
   mapvals.material.diffuse_int  = 1.0;
