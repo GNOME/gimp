@@ -37,7 +37,7 @@
 
 
 #define GRADIENT_CACHE_N_SUPERSAMPLES 4
-#define GRADIENT_CACHE_MAX_SIZE       ((1 << 20) / sizeof (GimpRGB))
+#define GRADIENT_CACHE_MAX_SIZE       ((1 << 20) / (sizeof (gdouble) * 4))
 
 
 enum
@@ -65,7 +65,7 @@ typedef struct
   GimpGradient                *gradient;
   gboolean                     reverse;
   GimpGradientBlendColorSpace  blend_color_space;
-  GimpRGB                     *gradient_cache;
+  gdouble                     *gradient_cache;
   gint                         gradient_cache_size;
   GimpGradientSegment         *last_seg;
   gdouble                      offset;
@@ -1005,17 +1005,13 @@ gradient_render_pixel (gdouble   x,
 
   if (rbd->gradient_cache)
     {
-      GimpRGB temp;
+      gint index;
 
       factor = CLAMP (factor, 0.0, 1.0);
+      index  = ROUND (factor * (rbd->gradient_cache_size - 1));
 
-      temp =
-        rbd->gradient_cache[ROUND (factor * (rbd->gradient_cache_size - 1))];
-
-      rgb[0] = temp.r;
-      rgb[1] = temp.g;
-      rgb[2] = temp.b;
-      rgb[3] = temp.a;
+      for (gint i = 0; i < 4; i++)
+        rgb[i] = rbd->gradient_cache[(index * 4) + i];
     }
   else
     {
@@ -1267,7 +1263,8 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
 {
   GimpGradientSegment *last_seg = NULL;
   gint                 cache_size;
-  gint                 i;
+  gdouble              pixel[4];
+  gint                 i, j;
 
   if (! self->gradient)
     return;
@@ -1296,7 +1293,7 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
       return;
     }
 
-  self->gradient_cache      = g_new0 (GimpRGB, cache_size);
+  self->gradient_cache      = g_new0 (gdouble, cache_size * 4);
   self->gradient_cache_size = cache_size;
 
   for (i = 0; i < self->gradient_cache_size; i++)
@@ -1310,7 +1307,11 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
                                              self->gradient_blend_color_space,
                                              &color);
       if (color)
-        gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), self->gradient_cache + i);
+        {
+          gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), pixel);
+          for (j = 0; j < 4; j++)
+            self->gradient_cache[i * 4 + j] = pixel[j];
+        }
 
       g_clear_object (&color);
     }

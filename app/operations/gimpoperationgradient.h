@@ -56,7 +56,7 @@ struct _GimpOperationGradient
 
   gboolean                     dither;
 
-  GimpRGB                     *gradient_cache;
+  gdouble                     *gradient_cache;
   gint                         gradient_cache_size;
   GMutex                       gradient_cache_mutex;
 };
