@@ -5608,7 +5608,7 @@ msgstr "Lagra fargeprofilen i biletet til ei ICC-fil"
 #: app/actions/image-actions.c:97
 msgctxt "image-action"
 msgid "Can_vas Size..."
-msgstr "_Lerretformat …"
+msgstr "_Lerretsformat …"
 
 #: app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -11205,20 +11205,20 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:608
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr "Set standard fylltype for dialogvindauget «Lerretformat»."
+msgstr "Set standard fylltype for dialogvindauget «Lerretsformat»."
 
 #: app/config/gimprc-blurbs.h:611
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "Set standardverdien for kor mange lag som skal endra storleik i "
-"dialogvindauget «Lerretformat»."
+"dialogvindauget «Lerretsformat»."
 
 #: app/config/gimprc-blurbs.h:614
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "Set standard-status for «Endra storleik på tekstlag» i dialogvindauget "
-"«Lerretformat»."
+"«Lerretsformat»."
 
 #: app/config/gimprc-blurbs.h:617
 msgid "Sets how items are searched and selected from a textual pattern."
@@ -15407,7 +15407,7 @@ msgstr "_Ikkje spør igjen"
 
 #: app/dialogs/color-profile-import-dialog.c:224
 msgid "Your choice can later be edited in Preferences > Color Management"
-msgstr "Du kan seinare redigera vala dine i «Innstillingar → Fargehandsaming»"
+msgstr "Du kan seinare redigera vala dine i «Innstillingar → Fargestyring»"
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -18187,7 +18187,7 @@ msgstr "Velkommen"
 
 #: app/dialogs/welcome-dialog.c:247 app/dialogs/welcome-dialog.c:248
 msgid "Personalize"
-msgstr "Gjer personleg"
+msgstr "Tilpass"
 
 #: app/dialogs/welcome-dialog.c:259 app/dialogs/welcome-dialog.c:260
 msgid "Contribute"
@@ -29108,7 +29108,7 @@ msgstr "_Koding"
 #: menus/image-menu.ui.in.in:337
 msgctxt "image-action"
 msgid "Color Ma_nagement"
-msgstr "Fargehandsaming"
+msgstr "Fargestyring"
 
 #: menus/image-menu.ui.in.in:354
 msgctxt "image-action"
