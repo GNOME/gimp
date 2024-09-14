@@ -180,8 +180,8 @@
                     "sources" : [
                         {
                             "type": "archive",
-                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.11.tar.gz",
-                            "sha256": "9057849585e49b8b85abe7cc1e76e22963b01bfdc3b6d83eac90c499cd760063",
+                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.12.tar.gz",
+                            "sha256": "8a1bc258f3149b5729c2f4f8ffd337c0e57f09096e4ba9784329f40c4a9035da",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 223366,
@@ -234,8 +234,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.08.0.tar.xz",
-                    "sha256": "97453fbddf0c9a9eafa0ea45ac710d3d49bcf23a62e864585385d3c0b4403174",
+                    "url": "https://poppler.freedesktop.org/poppler-24.09.0.tar.xz",
+                    "sha256": "ebd857987e2395608c69fdc44009692d5906f13b612c5280beff65a0b75dc255",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -405,7 +405,8 @@
             ],
             "cleanup": [
                 "/include",
-                "/lib/pkgconfig"
+                "/lib/pkgconfig",
+                "/share"
             ],
             "modules": [
                 {
@@ -840,8 +841,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.1.tar.gz",
-                            "sha256": "b645488ec0d9b02ebdbf27d9ae307f705de2b6133edb64617a72c7b4c6c3ff44",
+                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.2.tar.gz",
+                            "sha256": "996c48c87baaeb5fc04bd85c7e66d3651a56fe749c531c60926d75b4db5d2181",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 4908,
@@ -920,8 +921,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.0.0/graphviz-12.0.0.tar.gz",
-                            "sha256": "ea12b4f73e7c7eb9fb9c1c29f7763491306c322f6f2332a352d09debc37f0ed7",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.1.1/graphviz-12.1.1.tar.gz",
+                            "sha256": "8fea54ab3ae6f2456df2f1ee8060f0262f2f4434c5b6ece2216777a2505a88e3",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
