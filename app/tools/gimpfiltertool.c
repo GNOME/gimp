@@ -2043,10 +2043,15 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
     {
       GimpContainer *filters;
       GimpChannel   *mask;
+      GimpDrawable  *existing_drawable;
       gint           index;
       const gchar   *name = _("Editing filter...");
 
-      filters = gimp_drawable_get_filters (drawable);
+      /* Get drawable from existing filter, as we might have a different
+       * drawable selected in the layer tree */
+      existing_drawable =
+        gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+      filters = gimp_drawable_get_filters (existing_drawable);
 
       mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
       if (filters)
