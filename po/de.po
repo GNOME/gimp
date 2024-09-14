@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-11 18:54+0000\n"
-"PO-Revision-Date: 2024-09-11 23:04+0200\n"
+"POT-Creation-Date: 2024-09-14 02:11+0000\n"
+"PO-Revision-Date: 2024-09-14 20:04+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -9268,12 +9268,12 @@ msgstr "Vorherige Vergrößerungsstufe wiederherstellen"
 #: app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "Angepasste_r Drehwinkel …"
+msgstr "Andere_r Drehwinkel …"
 
 #: app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
-msgstr "Einen angepassten Drehwinkel festlegen"
+msgstr "Einen benutzerdefinierten Drehwinkel festlegen"
 
 #: app/actions/view-actions.c:119
 msgctxt "view-action"
@@ -9780,7 +9780,7 @@ msgstr "Einen benutzerdefinierten Vergrößerungsfaktor setzen"
 #: app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "Angepasste_r Vergrößerungsfaktor …"
+msgstr "Andere_r Vergrößerungsfaktor …"
 
 #: app/actions/view-actions.c:456
 msgctxt "view-action"
@@ -15707,7 +15707,7 @@ msgstr "Softproofing-Profil"
 
 #: app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr "Softproofing-Farbprofil auswählen"
+msgstr "Softproofing-Profil auswählen"
 
 #: app/dialogs/color-profile-dialog.c:209
 #: app/tools/gimpforegroundselecttool.c:332
@@ -16731,14 +16731,12 @@ msgstr "An Leinwand_kanten einrasten"
 msgid "Snap to _Active Path"
 msgstr "Am _aktiven Pfad einrasten"
 
-# Es geht um das Standardverhalten, ob beim Zeichnen der Pinsel automatisch an Hilfslinien einrasten soll oder nicht. Aus Konsistenzgründen hab ich mich hier gegen die Variante mit »magnetisch« entschieden.
 #: app/dialogs/preferences-dialog.c:1118
 #, fuzzy
 #| msgid "Snap to _Guides"
 msgid "Snap to _Bounding Box"
 msgstr "An _Hilfslinien einrasten"
 
-# Es geht um das Standardverhalten, ob beim Zeichnen der Pinsel automatisch an Hilfslinien einrasten soll oder nicht. Aus Konsistenzgründen hab ich mich hier gegen die Variante mit »magnetisch« entschieden.
 #: app/dialogs/preferences-dialog.c:1121
 #, fuzzy
 #| msgid "Snap to _Guides"
@@ -17156,10 +17154,8 @@ msgid "_Pattern"
 msgstr "_Muster"
 
 #: app/dialogs/preferences-dialog.c:1785
-#, fuzzy
-#| msgid "Linked Layers"
 msgid "E_xpand Layers"
-msgstr "Verknüpfte Ebenen"
+msgstr "Ebenen er_weitern"
 
 #. Move Tool
 #: app/dialogs/preferences-dialog.c:1789
@@ -18609,21 +18605,16 @@ msgid "Path _name:"
 msgstr "Pfad_name:"
 
 #: app/dialogs/path-options-dialog.c:108
-#, fuzzy
-#| msgid "Lock path"
 msgid "Lock p_ath"
-msgstr "Pfad sperren"
+msgstr "Pfa_d sperren"
 
-# CHECK
 #: app/dialogs/path-options-dialog.c:109
 msgid "Lock path _position"
 msgstr "Pfad_position sperren"
 
 #: app/dialogs/path-options-dialog.c:110
-#, fuzzy
-#| msgid "Lock visibility"
 msgid "Lock path _visibility"
-msgstr "Sichtbarkeit sperren"
+msgstr "Pfad_sichtbarkeit sperren"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:184
@@ -18735,27 +18726,18 @@ msgstr "Ein bestehendes Bild öffnen"
 
 #. Recent Files
 #: app/dialogs/welcome-dialog.c:721
-#, fuzzy
-#| msgid "Revert Image"
 msgid "Recent Images"
-msgstr "Bild wiederherstellen"
+msgstr "Zuletzt verwendete Bilder"
 
 #: app/dialogs/welcome-dialog.c:813
-#, fuzzy
-#| msgctxt "images-action"
-#| msgid "_Delete Image"
 msgid "O_pen Selected Images"
-msgstr "Bild _löschen"
+msgstr "Ausgewählte Bilder ö_ffnen"
 
 #: app/dialogs/welcome-dialog.c:822
-#, fuzzy
-#| msgid ""
-#| "Show Welcome Dialog On Start (You can show it again from the \"Help\" "
-#| "menu)"
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
-"Willkommen-Dialog beim Start anzeigen (Sie können ihn aus dem »Hilfe«-Menü "
+"Beim Start anzeigen (Sie können den Willkommensdialog aus dem »Hilfe«-Menü "
 "erneut aufrufen)"
 
 #: app/dialogs/welcome-dialog.c:850
@@ -18922,7 +18904,7 @@ msgstr "Entfernen"
 #: app/display/display-enums.c:544
 msgctxt "vector-mode"
 msgid "Design"
-msgstr "Design"
+msgstr "Entwerfen"
 
 #: app/display/display-enums.c:545
 msgctxt "vector-mode"
@@ -19254,11 +19236,9 @@ msgid "Othe_r (%s)..."
 msgstr "A_ndere (%s) …"
 
 #: app/display/gimpdisplayshell-scale-dialog.c:250
-#, fuzzy, c-format
-#| msgctxt "view-padding-color"
-#| msgid "_Custom Color..."
+#, c-format
 msgid "Custom Zoom (%s)..."
-msgstr "_Benutzerdefinierte Farbe …"
+msgstr "Benutzerdefinierte Vergrößerung (%s) …"
 
 #: app/display/gimpdisplayshell-title.c:329
 msgid "(modified)"
@@ -19307,22 +19287,16 @@ msgid "_Proof Colors"
 msgstr "_Farbdarstellung"
 
 #: app/display/gimpstatusbar.c:511 app/display/gimpstatusbar.c:2153
-#, fuzzy
-#| msgid "Select Soft-Proof Profile"
 msgid "Current Soft-Proofing Profile"
-msgstr "Softproofing-Farbprofil auswählen"
+msgstr "Aktuelles Softproofing-Profil"
 
 #: app/display/gimpstatusbar.c:525
-#, fuzzy
-#| msgid "Soft-Proof Profile"
 msgid "Soft-Proofing Profile"
 msgstr "Softproofing-Profil"
 
 #: app/display/gimpstatusbar.c:534
-#, fuzzy
-#| msgid "_Soft-proofing profile:"
 msgid "_Soft-proofing Profile: "
-msgstr "_Softproofing-Profil:"
+msgstr "_Softproofing-Profil: "
 
 # http://de.wikipedia.org/wiki/Rendering_intent
 #: app/display/gimpstatusbar.c:553
@@ -21099,16 +21073,12 @@ msgid "Scatter brush as you paint"
 msgstr "Pinsel beim Zeichnen streuen"
 
 #: app/paint/gimppaintoptions.c:319
-#, fuzzy
-#| msgid "Linked Layers"
 msgid "Expand Layers"
-msgstr "Verknüpfte Ebenen"
+msgstr "Ebenen erweitern"
 
 #: app/paint/gimppaintoptions.c:320
-#, fuzzy
-#| msgid "Scatter brush as you paint"
 msgid "Expand active layer as you paint"
-msgstr "Pinsel beim Zeichnen streuen"
+msgstr "Die aktive Ebene beim Zeichnen erweitern"
 
 #: app/paint/gimppaintoptions.c:326 app/paint/gimppaintoptions.c:356
 msgid "Amount"
@@ -21116,7 +21086,7 @@ msgstr "Menge"
 
 #: app/paint/gimppaintoptions.c:327
 msgid "Amount of expansion"
-msgstr ""
+msgstr "Stärke der Erweiterung"
 
 #: app/paint/gimppaintoptions.c:334
 msgid "Fill layer with"
@@ -21136,7 +21106,7 @@ msgstr "Zeichendynamik einschalten"
 
 #: app/paint/gimppaintoptions.c:350
 msgid "Apply dynamics curves to paint settings"
-msgstr ""
+msgstr "Dynamikkurven auf Pinseleinstellungen anwenden"
 
 # gemeint ist, auf wieviel Bildschirmfläche gestreut wird
 #: app/paint/gimppaintoptions.c:357
@@ -21876,10 +21846,8 @@ msgid "Close path stroke"
 msgstr "Nachgezogenen Pfad schließen"
 
 #: app/pdb/path-cmds.c:404
-#, fuzzy
-#| msgid "Remove path stroke"
 msgid "Reverse path stroke"
-msgstr "Nachgezogenen Pfad entfernen"
+msgstr "Nachgezogenen Pfad umkehren"
 
 #: app/pdb/path-cmds.c:449
 msgid "Translate path stroke"
@@ -23979,7 +23947,7 @@ msgstr "_Kontrollelemente auf der Leinwand"
 
 #: app/tools/gimpfilteroptions.c:104
 msgid "Show on-canvas filter controls"
-msgstr "Kontrolleelemente zum Filtern auf der Leinwand anzeigen"
+msgstr "Kontrollelemente zum Filtern auf der Leinwand anzeigen"
 
 #: app/tools/gimpfilteroptions.c:122
 msgid "_Merge filter"
@@ -23990,6 +23958,8 @@ msgid ""
 "If enabled, the filter is immediately merged.\n"
 "Otherwise, it becomes an editable non-destructive filter."
 msgstr ""
+"Wenn aktiv, wird das Filter unmittelbar vereint.\n"
+"Anderenfalls wird es ein bearbeitbares, nicht-destruktives Filter."
 
 #: app/tools/gimpfiltertool.c:311 app/tools/gimpselectiontool.c:575
 #, c-format
@@ -24002,13 +23972,8 @@ msgid "A selected layer is not visible."
 msgstr "Eine gewählte Ebene ist nicht sichtbar."
 
 #: app/tools/gimpfiltertool.c:423
-#, fuzzy
-#| msgid ""
-#| "Item '%s' (%d) cannot be used because it is attached to another image"
 msgid "Disabled because this filter depends on another image."
-msgstr ""
-"Objekt »%s« (%d) kann nicht verwendet werden, weil es zu einem anderen Bild "
-"hinzugefügt wurde"
+msgstr "Deaktiviert, da dieses Filter von einem anderen Bild abhängig ist."
 
 #: app/tools/gimpfiltertool.c:717
 msgid "Click to switch the original and filtered sides"
@@ -24056,12 +24021,9 @@ msgstr "Einstellungen für »%s« importieren"
 msgid "Export '%s' Settings"
 msgstr "Einstellungen für »%s« exportieren"
 
-#: app/tools/gimpfiltertool.c:2047
-#, fuzzy
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
+#: app/tools/gimpfiltertool.c:2048
 msgid "Editing filter..."
-msgstr "Palette _bearbeiten …"
+msgstr "Filter bearbeiten …"
 
 #: app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -24586,11 +24548,8 @@ msgstr "Empfindlichkeit"
 
 #: app/tools/gimpinkoptions-gui.c:147 app/tools/gimpmybrushoptions-gui.c:98
 #: app/tools/gimppaintoptions-gui.c:530
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Disable Layer Mask"
 msgid "Fill Layer Mask With"
-msgstr "Ebenenmaske deaktivieren"
+msgstr "Ebenenmaske füllen mit"
 
 #: app/tools/gimpinktool.c:72
 msgid "Ink Tool: Calligraphy-style painting"
@@ -24611,17 +24570,15 @@ msgstr ""
 
 #: app/tools/gimpiscissorstool.c:292
 msgid "Scissors Select"
-msgstr "Schere"
+msgstr "Magnetische Schere"
 
 #: app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr "Magnetische Schere: Eine Form entlang der Kanten auswählen"
 
 #: app/tools/gimpiscissorstool.c:294
-#, fuzzy
-#| msgid "Scissors Select"
 msgid "_Scissors Select"
-msgstr "Schere"
+msgstr "_Magnetische Schere"
 
 #: app/tools/gimpiscissorstool.c:905
 msgid "Click to remove this point"
@@ -25079,14 +25036,10 @@ msgid "Link to brush default"
 msgstr "Mit Pinselstandard koppeln"
 
 #: app/tools/gimppaintselectoptions.c:74
-#, fuzzy
-#| msgid ""
-#| "Paint over areas to mark color values for inclusion or exclusion from "
-#| "selection"
 msgid ""
 "Paint over areas to mark pixels for inclusion or exclusion from selection"
 msgstr ""
-"Über einen Bereich zeichnen, um Farbwerte in die Auswahl einzubeziehen oder "
+"Über einen Bereich zeichnen, um Pixel in die Auswahl einzubeziehen oder "
 "davon auszuschließen"
 
 #: app/tools/gimppaintselectoptions.c:89 app/tools/gimppaintselectoptions.c:90
@@ -25642,16 +25595,12 @@ msgid "Use an external editor window for text entry"
 msgstr "Externes Editorfenster für Texteingabe verwenden"
 
 #: app/tools/gimptextoptions.c:257
-#, fuzzy
-#| msgid "Show on-canvas filter controls"
 msgid "Show on-canvas editor"
-msgstr "Kontrolleelemente zum Filtern auf der Leinwand anzeigen"
+msgstr "Editor auf der Leinwand anzeigen"
 
 #: app/tools/gimptextoptions.c:258
-#, fuzzy
-#| msgid "Show on-canvas filter controls"
 msgid "Show on-canvas text editor"
-msgstr "Kontrolleelemente zum Filtern auf der Leinwand anzeigen"
+msgstr "Texteditor auf der Leinwand anzeigen"
 
 #: app/tools/gimptextoptions.c:300
 #, fuzzy
@@ -26126,16 +26075,12 @@ msgid "There is no layer to transform."
 msgstr "Es gibt keine Ebene, die transformiert werden kann."
 
 #: app/tools/gimptransformtool.c:706
-#, fuzzy
-#| msgid "The active layer's position and size are locked."
 msgid "A selected layer's position and size are locked."
-msgstr "Die Position und Größe der aktiven Ebene sind gesperrt."
+msgstr "Die Position und Größe einer ausgewählten Ebene sind gesperrt."
 
 #: app/tools/gimptransformtool.c:720
-#, fuzzy
-#| msgid "The selection does not intersect with the layer."
 msgid "The selection does not intersect with a selected layer."
-msgstr "Die Auswahl überschneidet sich nicht mit der Ebene."
+msgstr "Die Auswahl überschneidet sich nicht mit einer ausgewählten Ebene."
 
 #: app/tools/gimptransformtool.c:727
 msgid "There is no selection to transform."
@@ -26146,20 +26091,16 @@ msgid "There is no path to transform."
 msgstr "Es gibt keinen Pfad, der transformiert werden kann."
 
 #: app/tools/gimptransformtool.c:749
-#, fuzzy
-#| msgid "The active path's strokes are locked."
 msgid "The selected path's strokes are locked."
-msgstr "Aktive nachgezogene Pfade sind gesperrt."
+msgstr "Die nachgezogenen Linien des ausgewählten Pfads sind gesperrt."
 
 #: app/tools/gimptransformtool.c:751
 msgid "The selected path's position is locked."
-msgstr "Die Position des gewählten Pfads ist gesperrt."
+msgstr "Die Position des ausgewählten Pfads ist gesperrt."
 
 #: app/tools/gimptransformtool.c:753
-#, fuzzy
-#| msgid "The active path has no strokes."
 msgid "The selected path has no strokes."
-msgstr "Der aktive Pfad hat keine Striche."
+msgstr "Der ausgewählte Pfad wurde nicht nachgezogen."
 
 #: app/tools/gimptransformtool.c:833
 msgid "The current transform is invalid"
@@ -26328,10 +26269,12 @@ msgstr "Warpwerkzeug-Strich"
 #: app/tools/gimpwarptool.c:780
 msgid "Cannot warp multiple layers. Select only one layer."
 msgstr ""
+"Der Warp-Effekt kann nicht auf mehrere Ebenen angewendet werden. Wählen Sie "
+"nur eine Ebene aus."
 
 #: app/tools/gimpwarptool.c:799
 msgid "Cannot warp layer groups."
-msgstr "Auf Ebenengruppen kann der Warp-Effekt nicht angewendet werden."
+msgstr "Der Warp-Effekt kann nicht auf Ebenengruppen angewendet werden."
 
 #: app/tools/gimpwarptool.c:836
 msgid "No stroke events selected."
@@ -26667,10 +26610,9 @@ msgid "_Search:"
 msgstr "_Suche:"
 
 #: app/widgets/gimpactiongroup.c:1200
-#, fuzzy, c-format
-#| msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+#, c-format
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
 #: app/widgets/gimpdeviceinfoeditor.c:579
@@ -26992,21 +26934,16 @@ msgid "Edit Colormap Entry"
 msgstr "Paletteneintrag bearbeiten"
 
 #: app/widgets/gimpcolormapeditor.c:468
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Set a color profile on the image"
 msgid "The color is used in this indexed image"
-msgstr "Ein Farbprofil für das Bild festlegen"
+msgstr "Die Farbe wird in diesem indizierten Bild verwendet"
 
 #: app/widgets/gimpcolormapselection.c:238
 msgid "Color index:"
 msgstr "Farbindex:"
 
 #: app/widgets/gimpcolormapselection.c:248
-#, fuzzy
-#| msgid "HTML notation:"
 msgid "HTML notation (sRGB):"
-msgstr "HTML-Notation:"
+msgstr "HTML-Notation (sRGB):"
 
 #: app/widgets/gimpcolormapselection.c:519
 msgid "Only indexed images have a colormap."
@@ -27920,14 +27857,12 @@ msgid "Tool type:"
 msgstr "Werkzeugtyp:"
 
 #: app/widgets/gimpdeviceinfoeditor.c:401
-#, fuzzy
-#| msgid "Tool Preset"
 msgid "Tool serial:"
-msgstr "Werkzeug-Voreinstellungen"
+msgstr "Werkzeug-Seriennummer:"
 
 #: app/widgets/gimpdeviceinfoeditor.c:406
 msgid "Tool hardware ID:"
-msgstr ""
+msgstr "Werkzeug-Hardware-Kennung:"
 
 #: app/widgets/gimpdeviceinfoeditor.c:418
 #: app/widgets/gimpdeviceinfoeditor.c:878
@@ -27993,28 +27928,24 @@ msgid "Save device status"
 msgstr "Gerätestatus speichern"
 
 #: app/widgets/gimpdevicestatus.c:629
-#, fuzzy, c-format
-#| msgid "Foreground: %d, %d, %d"
+#, c-format
 msgid "Foreground: %d, %d, %d (in color space of \"%s\")"
-msgstr "Vordergrund: %d, %d, %d"
+msgstr "Vordergrund: %d, %d, %d (im Farbraum von »%s«)"
 
 #: app/widgets/gimpdevicestatus.c:633
-#, fuzzy, c-format
-#| msgid "Foreground: %d, %d, %d"
+#, c-format
 msgid "Foreground: %d, %d, %d (in sRGB)"
-msgstr "Vordergrund: %d, %d, %d"
+msgstr "Vordergrund: %d, %d, %d (in sRGB)"
 
 #: app/widgets/gimpdevicestatus.c:640
-#, fuzzy, c-format
-#| msgid "Background: %d, %d, %d"
+#, c-format
 msgid "Background: %d, %d, %d (in color space of \"%s\")"
-msgstr "Hintergrund: %d, %d, %d"
+msgstr "Hintergrund: %d, %d, %d (im Farbraum von »%s«)"
 
 #: app/widgets/gimpdevicestatus.c:644
-#, fuzzy, c-format
-#| msgid "Background: %d, %d, %d"
+#, c-format
 msgid "Background: %d, %d, %d (in sRGB)"
-msgstr "Hintergrund: %d, %d, %d"
+msgstr "Hintergrund: %d, %d, %d (in sRGB)"
 
 #: app/widgets/gimpdnd-xds.c:205
 msgid "The given filename does not have any known file extension."
@@ -28578,6 +28509,7 @@ msgstr[1] "%d Objekte ausgewählt"
 #: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
 msgid "Cannot reorder a filter that is being edited."
 msgstr ""
+"Ein Filter, das gerade bearbeitet wird, kann nicht neu angeordnet werden."
 
 #: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
 msgid "Reorder filter"
@@ -28585,7 +28517,7 @@ msgstr "Filter neu anordnen"
 
 #: app/widgets/gimpitemtreeview.c:2810
 msgid "Effects from active tools can not be merged."
-msgstr ""
+msgstr "Effekte von aktiven Werkzeugen können nicht vereint werden."
 
 #: app/widgets/gimpitemtreeview.c:2863
 msgid "Remove filter"
@@ -29023,7 +28955,7 @@ msgstr "Wählen Sie ein Softproofing-Farbprofil"
 
 #: app/widgets/gimptemplateeditor.c:457
 msgid "_Soft-proofing color profile:"
-msgstr "_Softproofing Farbprofil:"
+msgstr "_Softproofing-Farbprofil:"
 
 # http://de.wikipedia.org/wiki/Rendering_intent
 # https://de.wikipedia.org/wiki/Softproof
@@ -29289,10 +29221,8 @@ msgid "Lock path position"
 msgstr "Pfadposition sperren"
 
 #: app/widgets/gimppathtreeview.c:122
-#, fuzzy
-#| msgid "Lock visibility"
 msgid "Lock path visibility"
-msgstr "Sichtbarkeit sperren"
+msgstr "Pfadsichtbarkeit sperren"
 
 #: app/widgets/gimpviewablebox.c:94
 msgid "Open the brush selection dialog"
@@ -29348,16 +29278,14 @@ msgstr "%s (versuchen Sie %s, %s, %s)"
 #. * in some dockable GUI.
 #.
 #: app/widgets/gimpwidgets-utils.c:1476
-#, fuzzy, c-format
-#| msgid "Switches"
+#, c-format
 msgid "Switch \"%s\" ON"
-msgstr "Schalter"
+msgstr "Schalter »%s« AN"
 
 #: app/widgets/gimpwidgets-utils.c:1478
-#, fuzzy, c-format
-#| msgid "Switches"
+#, c-format
 msgid "Switch \"%s\" OFF"
-msgstr "Schalter"
+msgstr "Schalter »%s« AUS"
 
 #. TRANSLATORS: the %s will be replaced
 #. * by the localized label of a
