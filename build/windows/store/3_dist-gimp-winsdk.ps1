@@ -305,6 +305,12 @@ if ($GITLAB_CI)
       {
         Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination build\windows\store\_Output
       }
+    if ($CI_COMMIT_TAG)
+      {
+        Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
+        Get-FileHash build\windows\store\_Output\$MSIX_ARTIFACT -Algorithm SHA256 | Out-File build\windows\store\_Output\$MSIX_ARTIFACT.SHA256SUMS
+        Get-FileHash build\windows\store\_Output\$MSIX_ARTIFACT -Algorithm SHA512 | Out-File build\windows\store\_Output\$MSIX_ARTIFACT.SHA512SUMS
+      }
   }
 
 Remove-Item .gitignore
