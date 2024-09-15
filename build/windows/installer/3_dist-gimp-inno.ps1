@@ -51,7 +51,7 @@ $gimp_version = Get-Content "$CONFIG_PATH"                               | Selec
                 Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
 $APPVER = $gimp_version
 
-if ($GIMP_CI_WIN_INSTALLER -and $GIMP_CI_WIN_INSTALLER -match '[0-9]')
+if ($CI_PIPELINE_SOURCE -ne 'schedule' -and $GIMP_CI_WIN_INSTALLER -and $GIMP_CI_WIN_INSTALLER -match '[0-9]')
   {
     Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
     $revision = $GIMP_CI_WIN_INSTALLER

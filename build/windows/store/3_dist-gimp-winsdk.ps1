@@ -78,7 +78,7 @@ if ($micro -eq '0')
   }
 
 ## Get GIMP revision
-if ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD_*')
+if ($CI_PIPELINE_SOURCE -ne 'schedule' -and $GIMP_CI_MS_STORE -like 'MSIXUPLOAD_*')
   {
     Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
     $revision = $GIMP_CI_MS_STORE -replace 'MSIXUPLOAD_',''
