@@ -383,7 +383,6 @@ channels_duplicate_cmd_callback (GimpAction *action,
   GimpImage   *image  = NULL;
   GList       *channels;
   GimpChannel *parent = GIMP_IMAGE_ACTIVE_PARENT;
-  return_if_no_channels (image, channels, data);
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -391,6 +390,8 @@ channels_duplicate_cmd_callback (GimpAction *action,
       GimpChannel     *new_channel;
       const gchar     *desc;
       gchar           *name;
+
+      return_if_no_image (image, data);
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
@@ -414,6 +415,8 @@ channels_duplicate_cmd_callback (GimpAction *action,
     {
       GList *new_channels = NULL;
       GList *iter;
+
+      return_if_no_channels (image, channels, data);
 
       channels = g_list_copy (channels);
       gimp_image_undo_group_start (image,
