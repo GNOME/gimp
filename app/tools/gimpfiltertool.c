@@ -2009,14 +2009,8 @@ void
 gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
                              GimpConfig     *config)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable = NULL;
-
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
   g_return_if_fail (GIMP_IS_OPERATION_SETTINGS (config));
-
-  tool     = GIMP_TOOL (filter_tool);
-  drawable = tool->drawables->data;
 
   /* if the user didn't change a setting since the last set_config(),
    * this handler is still connected
