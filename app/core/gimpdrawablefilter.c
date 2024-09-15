@@ -788,6 +788,46 @@ gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
     }
 }
 
+void
+gimp_drawable_filter_apply_with_mask (GimpDrawableFilter  *filter,
+                                      GimpChannel         *mask,
+                                      const GeglRectangle *area)
+{
+  GimpImage   *image     = NULL;
+  GimpChannel *selection = NULL;
+  GeglBuffer  *buffer    = NULL;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (mask)
+    {
+      image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      selection =
+        GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
+                                           GIMP_TYPE_CHANNEL));
+      gimp_channel_clear (gimp_image_get_mask (image), NULL, FALSE);
+
+      buffer =
+        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)));
+      gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
+                                FALSE, NULL, buffer);
+
+      g_object_unref (buffer);
+    }
+
+  gimp_drawable_filter_apply (filter, area);
+
+  if (mask)
+    {
+      buffer =
+        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+      gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
+                                FALSE, NULL, buffer);
+      g_object_unref (buffer);
+      g_object_unref (selection);
+    }
+}
+
 gboolean
 gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                              gboolean            non_destructive,
