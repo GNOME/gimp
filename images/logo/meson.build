@@ -374,12 +374,12 @@ gimp_icns = custom_target('gimp.icns',
 gen_gimp_dmg_conf = configuration_data()
 gen_gimp_dmg_conf.set('BUILDDIR', meson.current_build_dir())
 gen_gimp_dmg_conf.set('SRCDIR', meson.current_source_dir())
-gen_gimp_icns_py = configure_file(input : 'gen-gimp-dmg.py.in',
+gen_gimp_dmg_py = configure_file(input : 'gen-gimp-dmg.py.in',
                                   output : 'gen-gimp-dmg.py',
                                   configuration : gen_gimp_dmg_conf)
 
 gimp_dmg = custom_target('gimp-dmg.png',
-                         input : [ gen_gimp_icns_py ],
+                         input : [ gen_gimp_dmg_py ],
                          depend_files: [ 'gimp-logo-shadow.svg', '../macos/gimp-dmg.xcf.xz' ],
                          depends: [ gimp_exe_depends ],
                          output: [ 'gimp-dmg.png' ],
