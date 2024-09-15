@@ -18,6 +18,7 @@ foreach icon : source_icons
                 command: [
                   colorsvg2png, '@INPUT@', '@OUTPUT@', size,
                 ],
+                build_by_default: true,
                 install: outname == icon_name,
                 install_dir: outdir)
   if outname != icon_name
@@ -42,6 +43,7 @@ foreach icon : source_icons
                 command: [
                   gtk_encode_symbolic_svg, '-o', '@OUTDIR@', '@INPUT@', icons_dir
                 ],
+                build_by_default: true,
                 install: outname == icon_name,
                 install_dir: outdir)
   if outname != icon_name
