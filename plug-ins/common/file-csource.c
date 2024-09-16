@@ -225,13 +225,6 @@ csource_export (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  if (run_mode != GIMP_RUN_INTERACTIVE)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CALLING_ERROR,
-                                             NULL);
-
-  gimp_ui_init (PLUG_IN_BINARY);
-
   export = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
@@ -239,8 +232,13 @@ csource_export (GimpProcedure        *procedure,
                 "save-alpha", gimp_drawable_has_alpha (drawables->data),
                 NULL);
 
-  if (! save_dialog (image, procedure, G_OBJECT (config)))
-    status = GIMP_PDB_CANCEL;
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      gimp_ui_init (PLUG_IN_BINARY);
+
+      if (! save_dialog (image, procedure, G_OBJECT (config)))
+        status = GIMP_PDB_CANCEL;
+    }
 
   g_object_get (config,
                 "prefixed-name", &prefixed_name,
