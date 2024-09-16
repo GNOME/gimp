@@ -116,7 +116,7 @@ script_fu_arg_free (SFArg *arg)
     case SF_GRADIENT:
     case SF_PALETTE:
     case SF_PATTERN:
-      /* FUTURE: call method to free resource */
+      sf_resource_arg_free (arg);
       break;
 
     case SF_VALUE:
@@ -188,7 +188,8 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
     case SF_GRADIENT:
     case SF_PALETTE:
     case SF_PATTERN:
-      /* FUTURE call method to reset arg from default. */
+      if (should_reset_ids)
+        sf_resource_arg_reset (arg);
       break;
 
     case SF_COLOR:
@@ -226,6 +227,102 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
       break;
     }
 }
+
+/* The type of a function that declares a formal, resource argument to a PDB procedure. */
+typedef void (*ResourceArgDeclareFunc) (
+  GimpProcedure*, const gchar*, const gchar*, const gchar*,
+  gboolean, GimpResource*, gboolean, GParamFlags);
+
+
+
+static void
+script_fu_add_resource_arg_default_from_context (
+  GimpProcedure          *procedure,
+  const gchar            *name,
+  const gchar            *nick,
+  SFArg                  *arg,
+  ResourceArgDeclareFunc  func)
+{
+  /* Default from context, dynamically: default:NULL, default_from_context:TRUE */
+  (*func) (procedure, name, nick,
+            arg->label,
+            FALSE,  /* none OK */
+            NULL,   /* default */
+            TRUE,   /* default_from_context */
+            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+}
+
+
+static void
+script_fu_add_resource_arg_with_default (
+  GimpProcedure          *procedure,
+  const gchar            *name,
+  const gchar            *nick,
+  SFArg                  *arg,
+  ResourceArgDeclareFunc  func,
+  GimpResource           *default_resource)
+{
+  (*func) (procedure, name, nick,
+            arg->label,
+            FALSE,  /* none OK */
+            default_resource,
+            FALSE,   /* default_from_context */
+            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+}
+
+
+/* Formally declare a resource arg of a PDB procedure.
+ * From the given SFArg.
+ */
+static void
+script_fu_add_resource_arg (
+  GimpProcedure          *procedure,
+  const gchar            *name,
+  const gchar            *nick,
+  SFArg                  *arg,
+  ResourceArgDeclareFunc  func)
+{
+  /* Switch on script author's declared resource name. */
+  gchar *declared_name_of_default = sf_resource_arg_get_name_default (arg);
+
+  if (g_strcmp0 (declared_name_of_default, "from context") == 0 ||
+      g_utf8_strlen (declared_name_of_default, 256) == 0
+     )
+    {
+      /* Author declared default name is empty or the special "from context". */
+      script_fu_add_resource_arg_default_from_context (procedure, name, nick, arg, func);
+    }
+  else
+    {
+      /* Author declared default name should name a resource.
+       * Declare the formal arg to default to the named resource.
+       *
+       * The declared name should be untranslated.
+       * Note that names might not be unique e.g. for fonts.
+       * Note that some resources have translated names e.g. generated gradients.
+       *
+       * The default resource could still be NULL if the declared name does not match.
+       * Warn in that case, to the console, at procedure creation time.
+       * Note we still pass none_OK:FALSE meaning the procedure expects
+       * a non-NULL resource at call time (after GUI.)
+       * In interactive mode, the GUI may default from context when passed a NULL default.
+       */
+      GimpResource *default_resource = sf_resource_arg_get_default (arg);
+
+      if (default_resource == NULL)
+        {
+          g_warning ("%s declared resource name is invalid %s", G_STRFUNC, declared_name_of_default);
+          script_fu_add_resource_arg_default_from_context (procedure, name, nick, arg, func);
+        }
+      else
+        {
+          /* Declared name is valid name of resource. */
+          script_fu_add_resource_arg_with_default (procedure, name, nick, arg, func,
+                                                   default_resource);
+        }
+    }
+}
+
 
 /* Return param spec that describes the arg.
  * Convert instance of SFArg to instance of GParamSpec.
@@ -324,49 +421,30 @@ script_fu_arg_add_argument (SFArg         *arg,
       break;
 
     /* Subclasses of GimpResource.  Special widgets. */
-    /* The name_of_default was declared by the plugin author.
-     *
-     * FIXME: after the param_spec takes a default
-     * each should pass arg sf_resource_get_name_of_default (arg).
-     * For now, a default defined here e.g. "Default"
-     */
     case SF_FONT:
-      gimp_procedure_add_font_argument (procedure, name,
-                                        nick, arg->label,
-                                        FALSE,  /* none OK */
-                                        NULL, TRUE,
-                                        G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      /* Avoid compiler warning: cast a type specific function to a generic function. */
+      script_fu_add_resource_arg (procedure, name, nick, arg,
+          (ResourceArgDeclareFunc) gimp_procedure_add_font_argument);
       break;
+
     case SF_PALETTE:
-      gimp_procedure_add_palette_argument (procedure, name,
-                                           nick, arg->label,
-                                           FALSE,  /* none OK */
-                                           NULL, TRUE,
-                                           G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      script_fu_add_resource_arg (procedure, name, nick, arg,
+          (ResourceArgDeclareFunc) gimp_procedure_add_palette_argument);
       break;
 
     case SF_PATTERN:
-      gimp_procedure_add_pattern_argument (procedure, name,
-                                           nick, arg->label,
-                                           FALSE,  /* none OK */
-                                           NULL, TRUE,
-                                           G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      script_fu_add_resource_arg (procedure, name, nick, arg,
+          (ResourceArgDeclareFunc) gimp_procedure_add_pattern_argument);
       break;
 
     case SF_GRADIENT:
-      gimp_procedure_add_gradient_argument (procedure, name,
-                                            nick, arg->label,
-                                            FALSE,  /* none OK */
-                                            NULL, TRUE,
-                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      script_fu_add_resource_arg (procedure, name, nick, arg,
+          (ResourceArgDeclareFunc) gimp_procedure_add_gradient_argument);
       break;
 
     case SF_BRUSH:
-      gimp_procedure_add_brush_argument (procedure, name,
-                                         nick, arg->label,
-                                         FALSE,  /* none OK */
-                                         NULL, TRUE,
-                                         G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      script_fu_add_resource_arg (procedure, name, nick, arg,
+          (ResourceArgDeclareFunc) gimp_procedure_add_brush_argument);
       break;
 
     case SF_ADJUSTMENT:
@@ -623,14 +701,11 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
     case SF_GRADIENT:
     case SF_PALETTE:
     case SF_PATTERN:
-      g_string_append_printf (result_string, "%d", arg_value->sfa_image);
-    /* FUTURE
       {
-        gchar *repr = sf_resource_get_repr (&arg_value->sfa_resource);
+        gchar *repr = sf_resource_arg_get_repr (arg);
         g_string_append (result_string, repr);
         g_free (repr);
       }
-    */
       break;
 
     case SF_COLOR:
@@ -837,39 +912,6 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
   /* nick is what the script author said describes the arg */
   *returned_nick = arg->label;
 }
-
-/* FUTURE this goes away or moves to script_fu_resource.c */
-/* Init the value of an SFArg that is a resource.
- * In case user does not touch a widget.
- * Cannot be called at registration time.
- * Init to value from context, the same as a widget
- * will do when passed a NULL initial resource.
- */
-void
-script_fu_arg_init_resource (SFArg *arg, GType resource_type)
-{
-  GimpResource *resource;
-
-  if (resource_type == GIMP_TYPE_BRUSH)
-    resource = GIMP_RESOURCE (gimp_context_get_brush ());
-  else if (resource_type == GIMP_TYPE_FONT)
-    resource = GIMP_RESOURCE (gimp_context_get_font ());
-  else if (resource_type == GIMP_TYPE_GRADIENT)
-    resource = GIMP_RESOURCE (gimp_context_get_gradient ());
-  else if (resource_type == GIMP_TYPE_PALETTE)
-    resource = GIMP_RESOURCE (gimp_context_get_palette ());
-  else if (resource_type == GIMP_TYPE_PATTERN)
-    resource = GIMP_RESOURCE (gimp_context_get_pattern ());
-  else
-    {
-      g_warning ("%s: Failed get resource from context", G_STRFUNC);
-      arg->value.sfa_resource = -1;
-      return;
-    }
-
-  arg->value.sfa_resource = gimp_resource_get_id (resource);
-}
-
 
 /* Set the default of a GParamSpec to a GFile for a path string.
  * The GFile is allocated and ownership is transferred to the GParamSpec.

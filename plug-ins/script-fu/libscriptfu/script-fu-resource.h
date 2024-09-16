@@ -19,15 +19,15 @@
 #define __SCRIPT_FU_RESOURCE_H__
 
 
-/* ScriptFu stores Resources as int IDs. */
-typedef guint32 SFResourceType;
+/* ScriptFu internally stores Resources as int IDs.
+ * In binding to and from the PDB, converted to GimpResource *
+ * (which is a proxy object.)
+ */
+typedef struct {
+  gint32  history;  /* The current value.  Can be -1 meaning invalid. */
+  gchar  *declared_name_of_default;
+  GType   resource_type;
+} SFResourceType;
 
-
-/* Methods on SFResourceType. */
-void          sf_resource_set_default (SFResourceType *arg_value,
-                                       gchar          *name_of_default);
-GimpResource* sf_resource_get_default (SFResourceType *arg_value);
-
-gchar*        sf_resource_get_name_of_default (SFResourceType *arg);
 
 #endif /*  __SCRIPT_FU_RESOURCE__  */

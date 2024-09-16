@@ -120,6 +120,28 @@ script_fu_script_new_from_metadata_args (scheme  *sc,
 }
 
 
+ /* GimpResource
+  *
+  * Store the subclass type and the declared default name.
+  *
+  * Default_spec given by author is a name of resource.
+  * It must be an untranslated name.
+  * FIXME some generated Gradients have translated names.
+  */
+static pointer
+script_fu_parse_default_spec_resource (scheme   *sc,
+                                       pointer   default_spec,
+                                       SFArg    *arg,
+                                       GType     resource_type)
+{
+  if (!sc->vptr->is_string (default_spec))
+        return registration_error (sc, "resource defaults must be strings");
+  sf_resource_arg_set_name_default (arg, resource_type, sc->vptr->string_value (default_spec));
+  /* success */
+  return sc->NIL;
+}
+
+
 /* Parse a default spec from registration data.
  *
  * Side effects on arg.
@@ -302,17 +324,21 @@ script_fu_parse_default_spec (scheme   *sc,
 #endif
       break;
 
+    /* For GimpResource subclasses. */
     case SF_FONT:
+      return script_fu_parse_default_spec_resource (sc, default_spec, arg, GIMP_TYPE_FONT);
+      break;
     case SF_PALETTE:
+      return script_fu_parse_default_spec_resource (sc, default_spec, arg, GIMP_TYPE_PALETTE);
+      break;
     case SF_PATTERN:
+      return script_fu_parse_default_spec_resource (sc, default_spec, arg, GIMP_TYPE_PATTERN);
+      break;
     case SF_BRUSH:
+      return script_fu_parse_default_spec_resource (sc, default_spec, arg, GIMP_TYPE_BRUSH);
+      break;
     case SF_GRADIENT:
-      /* Default_spec given by author is a name. */
-      if (!sc->vptr->is_string (default_spec))
-        return registration_error (sc, "resource defaults must be strings");
-
-      sf_resource_set_default (&arg->default_value.sfa_resource,
-                               sc->vptr->string_value (default_spec));
+      return script_fu_parse_default_spec_resource (sc, default_spec, arg, GIMP_TYPE_GRADIENT);
       break;
 
     case SF_OPTION:

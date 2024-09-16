@@ -85,7 +85,7 @@ static void   script_fu_resource_set_handler (gpointer       data,
                                               gboolean       closing);
 
 static GtkWidget * script_fu_resource_widget (const gchar    *title,
-                                              SFResourceType *model,
+                                              SFArg          *arg,
                                               GType           resource_type);
 
 static void   script_fu_flush_events         (void);
@@ -412,44 +412,35 @@ script_fu_interface_dialog (SFScript  *script,
           break;
 
         case SF_FONT:
-          /* FIXME this should be a method of the arg.
-          in script-fu-resource and it should return the default.
-          */
-          script_fu_arg_init_resource (arg, GIMP_TYPE_FONT);
           widget = script_fu_resource_widget (label_text,
-                                              /* FIXME and the call can go here*/
-                                              &arg->value.sfa_resource,
+                                              arg,
                                               GIMP_TYPE_FONT);
           break;
 
         case SF_PALETTE:
-          script_fu_arg_init_resource (arg, GIMP_TYPE_PALETTE);
           widget = script_fu_resource_widget (label_text,
-                                              &arg->value.sfa_resource,
+                                              arg,
                                               GIMP_TYPE_PALETTE);
           break;
 
         case SF_PATTERN:
           left_align = TRUE;
-          script_fu_arg_init_resource (arg, GIMP_TYPE_PATTERN);
           widget = script_fu_resource_widget (label_text,
-                                              &arg->value.sfa_resource,
+                                              arg,
                                               GIMP_TYPE_PATTERN);
           break;
 
         case SF_GRADIENT:
           left_align = TRUE;
-          script_fu_arg_init_resource (arg, GIMP_TYPE_GRADIENT);
           widget = script_fu_resource_widget (label_text,
-                                              &arg->value.sfa_resource,
+                                              arg,
                                               GIMP_TYPE_GRADIENT);
           break;
 
         case SF_BRUSH:
           left_align = TRUE;
-          script_fu_arg_init_resource (arg, GIMP_TYPE_BRUSH);
           widget = script_fu_resource_widget (label_text,
-                                              &arg->value.sfa_resource,
+                                              arg,
                                               GIMP_TYPE_BRUSH);
           break;
 
@@ -531,45 +522,53 @@ script_fu_interface_dialog (SFScript  *script,
 
 /* Return a widget for choosing a resource.
  * Dispatch on resource type.
- * Widget will show initial choice from context.
+ *
+ * On first show, widget will show initial choice : declared by script.
+ * Thereafter, the choice from prior use of filter.
+ *
  * Widget will update model if user touches widget.
  */
 static GtkWidget *
 script_fu_resource_widget (const gchar    *title,
-                           SFResourceType *model,
+                           SFArg          *arg,
                            GType           resource_type)
 {
-  GtkWidget    *result_widget = NULL;
+  GtkWidget *result_widget = NULL;
+  GResource *initial_value;
 
   g_debug ("%s type: %" G_GSIZE_FORMAT, G_STRFUNC, resource_type);
+
+  /* Init the arg's value (ID).
+   * On first run, initialize to default.
+   * On second run, init to prior choice.
+   * Can't do it at registration time, resources are not loaded.
+   */
+  sf_resource_arg_init_current_value (arg);
 
   /* Passing empty string for outer widget label,
    * since this old-style interface makes the label.
    */
+  /* Create a widget with initial value of the arg. */
+  initial_value = sf_resource_arg_get_value (arg);
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result_widget = gimp_font_chooser_new (title, "",
-                                             sf_resource_get_default (model));
+      result_widget = gimp_font_chooser_new (title, "", initial_value);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result_widget = gimp_brush_chooser_new (title, "",
-                                             sf_resource_get_default (model));
+      result_widget = gimp_brush_chooser_new (title, "", initial_value);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result_widget = gimp_gradient_chooser_new (title, "",
-                                             sf_resource_get_default (model));
+      result_widget = gimp_gradient_chooser_new (title, "", initial_value);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result_widget = gimp_palette_chooser_new (title, "",
-                                             sf_resource_get_default (model));
+      result_widget = gimp_palette_chooser_new (title, "", initial_value);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result_widget = gimp_pattern_chooser_new (title, "",
-                                             sf_resource_get_default (model));
+      result_widget = gimp_pattern_chooser_new (title, "", initial_value);
     }
   else
     {
@@ -579,12 +578,13 @@ script_fu_resource_widget (const gchar    *title,
   if (result_widget != NULL)
   {
     /* All resource widgets emit signal resource-set
-     * Connect to our handler which will be passed the id_handle,
+     * Connect to our handler which will be passed
+     * a Resource* and int* to the arg's value,
      * the model of the new choice of resource.
      */
     g_signal_connect_swapped (result_widget, "resource-set",
                               G_CALLBACK (script_fu_resource_set_handler),
-                              model);  /* data */
+                              &arg->value.sfa_resource.history);  /* data */
   }
 
   return result_widget;
@@ -829,7 +829,8 @@ script_fu_reset (SFScript *script)
   /* Reset the view to the model values. */
   for (i = 0; i < script->n_args; i++)
     {
-      SFArgValue *value  = &script->args[i].value;
+      SFArg      *arg    = &script->args[i];
+      SFArgValue *value  = &arg->value;
       GtkWidget  *widget = sf_interface->widgets[i];
 
       switch (script->args[i].type)
@@ -915,8 +916,7 @@ script_fu_reset (SFScript *script)
         case SF_GRADIENT:
         case SF_BRUSH:
           gimp_resource_chooser_set_resource (GIMP_RESOURCE_CHOOSER (widget),
-                                              sf_resource_get_default (
-                                                &value->sfa_resource));
+                                              sf_resource_arg_get_default (arg));
           break;
 
         case SF_OPTION:
