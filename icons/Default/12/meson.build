@@ -3,33 +3,25 @@ icons_dir = size + 'x' + size
 foreach icon : source_icons
   # Install the color variant.
   icon_name = icon + '.png'
-  outname   = icon_name
   outdir    = gimpiconsdir / theme / icons_dir / 'apps'
   if icon == 'gimp-wilber'
     input_path = meson.project_source_root() / 'gimp-data/images/logo/gimp-logo-shadow.svg'
-    outname    = 'gimp-logo-shadow.png'
   else
     input_path = '../scalable/' + icon + '.svg'
   endif
 
   custom_target(icon_name,
                 input : [ input_path ],
-                output: [ outname ],
+                output: [ icon_name ],
                 command: [
                   colorsvg2png, '@INPUT@', '@OUTPUT@', size,
                 ],
                 build_by_default: true,
-                install: outname == icon_name,
+                install: true,
                 install_dir: outdir)
-  if outname != icon_name
-    outdir = '$MESON_INSTALL_DESTDIR_PREFIX/@0@'.format(outdir)
-    meson.add_install_script('sh', '-c',
-                             'mkdir -p "@0@" && cp -f "@1@/@2@" "@0@/@3@"'.format(outdir, meson.current_build_dir(), outname, icon_name))
-  endif
 
   # Install the symbolic variant.
   icon_name = icon + '-symbolic.symbolic.png'
-  outname   = icon_name
   outdir    = gimpiconsdir / theme / icons_dir / 'apps'
   if icon == 'gimp-wilber'
     input_path = meson.project_source_root() / 'gimp-data/images/logo/gimp-wilber-symbolic.svg'
@@ -44,11 +36,6 @@ foreach icon : source_icons
                   gtk_encode_symbolic_svg, '-o', '@OUTDIR@', '@INPUT@', icons_dir
                 ],
                 build_by_default: true,
-                install: outname == icon_name,
+                install: true,
                 install_dir: outdir)
-  if outname != icon_name
-    outdir = '$MESON_INSTALL_DESTDIR_PREFIX/@0@'.format(outdir)
-    meson.add_install_script('sh', '-c',
-                             'mkdir -p "@0@" && cp -f "@1@/@2@" "@0@/@3@"'.format(outdir, meson.current_build_dir(), outname, icon_name))
-  endif
 endforeach
