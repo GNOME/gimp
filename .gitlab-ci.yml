@@ -296,6 +296,8 @@ gimp-debian-x64:
     - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
         ninja dist;
       fi
+    # Check install
+    - ninja install
     - cd ..
     # Make sure that any Debian pipeline is easily testable relocatable on local Debian
     - bash build/linux/appimage/2_bundle-gimp-appimage.sh
