@@ -1,7 +1,9 @@
 # We do not test algorithm correctness but algorithm stability: an old
 # XCF should look the same when loaded with a newer GIMP.
 #
-# Current hashes were made based on renders in GIMP 2.10.
+# Current hashes were made based on renders in GIMP 2.10. To check how
+# they were made, look at the script tools/compute-layer-mode-digests.py
+# in `gimp-2-10` branch.
 #
 # In other words: DO NOT just change a hash to make the test pass. If
 # one of the test starts failing, this is very bad as it will break
@@ -32,8 +34,8 @@
 # 3. Export as data in "Contiguous" configuration.
 # 4. Call sha256sum on the data file.
 # 5. The returned checksum is your reference.
-layer_modes = {
-  'addition-legacy' : {
+legacy_layer_modes = {
+  'addition-legacy': {
     'auto:auto:auto': [ '5294fa2036be51d218a6c980cb9cff149c9b3f6934d1de1fcc2cd0785ce29a05' ]
   },
   'burn-legacy': {
@@ -99,7 +101,7 @@ layer_modes = {
 }
 
 libapplayermodeslegacy_sources = []
-foreach mode, _ : layer_modes
+foreach mode, _ : legacy_layer_modes
   libapplayermodeslegacy_sources += [ 'gimpoperation' + mode.replace('-', '') + '.c' ]
 endforeach
 
@@ -111,3 +113,17 @@ libapplayermodeslegacy = static_library('applayermodeslegacy',
     cairo, gegl, gdk_pixbuf,
   ],
 )
+
+# These modes do not make additional source includes and are only listed
+# for unit testing.
+dup_legacy_layer_modes = {
+  # "Normal (legacy)" is in fact the same as "Normal" in "auto:union:perceptual".
+  # I still test it separately in order not to miss any bug.
+  'normal-legacy': {
+    'auto:auto:auto': [ '298ded67bad7508caf29eb2718712ecbfece87592e6e4b006e460a03070a0ebf' ]
+  },
+  # A.k.a. "Old broken Overlay": this is the same as softlight-legacy and is not visible in the GUI.
+  'overlay-legacy': {
+    'auto:auto:auto': [ '0e2dd784a05cfe23bfcb01098d9a1145ec2163a36b1435bddc58e04a071e3c51' ]
+  },
+}
