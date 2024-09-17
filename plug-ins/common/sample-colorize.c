@@ -665,7 +665,6 @@ smp_adj_lvl_in_min_upd_callback (GObject          *config,
   g_object_get (config,
                 "in-low", &value,
                 NULL);
-  value = CLAMP (value, 0, 254);
 
   if (value != g_values.lvl_in_min)
     {
@@ -690,7 +689,6 @@ smp_text_gamma_upd_callback (GObject          *config,
   g_object_get (config,
                 "gamma", &value,
                 NULL);
-  value = CLAMP (value, 0.1, 10.0);
 
   if (value != g_values.lvl_in_gamma)
     {
@@ -736,7 +734,6 @@ smp_adj_lvl_out_min_upd_callback (GObject          *config,
   g_object_get (config,
                 "out-low", &value,
                 NULL);
-  value = CLAMP (value, 0, 254);
 
   if (value != g_values.lvl_out_min)
     {
@@ -1069,9 +1066,13 @@ levels_update (gint update)
                   "in-low", g_values.lvl_in_min,
                   NULL);
   if (update & GAMMA)
-    g_object_set (g_di.config,
-                  "gamma", g_values.lvl_in_gamma,
-                  NULL);
+    {
+      g_values.lvl_in_gamma = CLAMP (g_values.lvl_in_gamma, 0.1, 10.0);
+
+      g_object_set (g_di.config,
+                    "gamma", g_values.lvl_in_gamma,
+                    NULL);
+    }
   if (update & HIGH_INPUT)
     g_object_set (g_di.config,
                   "in-high", g_values.lvl_in_max,
@@ -1179,9 +1180,14 @@ level_in_events (GtkWidget *widget,
       switch (g_di.active_slider)
         {
         case 0:  /*  low input  */
-          g_values.lvl_in_min = ((double) x / (double) DA_WIDTH) * 255.0;
-          g_values.lvl_in_min = CLAMP (g_values.lvl_in_min,
-                                       0, g_values.lvl_in_max);
+          {
+            gint lvl_in_max = (g_values.lvl_in_max < 255) ?
+                               g_values.lvl_in_max : 254;
+
+            g_values.lvl_in_min = ((double) x / (double) DA_WIDTH) * 255.0;
+            g_values.lvl_in_min = CLAMP (g_values.lvl_in_min,
+                                         0, lvl_in_max);
+          }
           break;
 
         case 1:  /*  gamma  */
@@ -1195,6 +1201,7 @@ level_in_events (GtkWidget *widget,
           /*  round the gamma value to the nearest 1/100th  */
           g_values.lvl_in_gamma =
             floor (g_values.lvl_in_gamma * 100 + 0.5) / 100.0;
+          g_values.lvl_in_gamma = CLAMP (g_values.lvl_in_gamma, 0.1, 10.0);
           break;
 
         case 2:  /*  high input  */
@@ -1318,9 +1325,14 @@ level_out_events (GtkWidget *widget,
       switch (g_di.active_slider)
         {
         case 3:  /*  low output  */
-          g_values.lvl_out_min = ((double) x / (double) DA_WIDTH) * 255.0;
-          g_values.lvl_out_min = CLAMP (g_values.lvl_out_min,
-                                        0, g_values.lvl_out_max);
+          {
+            gint lvl_out_max = (g_values.lvl_out_max < 255) ?
+                                g_values.lvl_out_max : 254;
+
+            g_values.lvl_out_min = ((double) x / (double) DA_WIDTH) * 255.0;
+            g_values.lvl_out_min = CLAMP (g_values.lvl_out_min,
+                                          0, lvl_out_max);
+          }
           break;
 
         case 4:  /*  high output  */
@@ -1381,6 +1393,7 @@ smp_dialog (GimpProcedure       *procedure,
   GtkWidget     *grid;
   GtkWidget     *check_button;
   GtkWidget     *label;
+  GtkWidget     *spin_button;
   GtkWidget     *combo;
   gint           ty;
   gboolean       run;
@@ -1576,10 +1589,9 @@ smp_dialog (GimpProcedure       *procedure,
   g_signal_connect (g_di.in_lvl_drawarea, "event",
                     G_CALLBACK (level_in_events),
                     NULL);
-  /* TODO: Fix crash when editing inputs with this enabled */
-  /* g_signal_connect (g_di.in_lvl_drawarea, "draw",
-                       G_CALLBACK (level_in_draw),
-                       NULL); */
+  g_signal_connect (g_di.in_lvl_drawarea, "draw",
+                    G_CALLBACK (level_in_draw),
+                    NULL);
 
   gtk_widget_show (vbox2);
   gtk_widget_show (frame);
@@ -1627,8 +1639,11 @@ smp_dialog (GimpProcedure       *procedure,
                                    FALSE);
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "in-low",
                                     GIMP_TYPE_SPIN_BUTTON);
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "gamma",
-                                    GIMP_TYPE_SPIN_BUTTON);
+
+  spin_button = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "gamma",
+                                                  GIMP_TYPE_SPIN_BUTTON);
+  gtk_spin_button_set_increments (GTK_SPIN_BUTTON (spin_button), 0.02, 0.2);
+
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "in-high",
                                     GIMP_TYPE_SPIN_BUTTON);
 
@@ -2005,9 +2020,7 @@ calculate_level_transfers (void)
       /*  determine input intensity  */
       inten = (double) i / 255.0;
       if (g_values.lvl_in_gamma != 0.0)
-        {
-          inten = pow (inten, (1.0 / g_values.lvl_in_gamma));
-        }
+        inten = pow (inten, (1.0 / g_values.lvl_in_gamma));
       inten = (double) (inten * (in_max - in_min) + in_min);
       inten = CLAMP (inten, 0.0, 255.0);
       g_lvl_trans_tab[i] = (guchar) (inten + 0.5);
