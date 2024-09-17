@@ -1393,6 +1393,7 @@ smp_dialog (GimpProcedure       *procedure,
   GtkWidget     *grid;
   GtkWidget     *check_button;
   GtkWidget     *label;
+  GtkWidget     *spin_button;
   GtkWidget     *combo;
   gint           ty;
   gboolean       run;
@@ -1638,8 +1639,11 @@ smp_dialog (GimpProcedure       *procedure,
                                    FALSE);
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "in-low",
                                     GIMP_TYPE_SPIN_BUTTON);
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "gamma",
-                                    GIMP_TYPE_SPIN_BUTTON);
+
+  spin_button = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "gamma",
+                                                  GIMP_TYPE_SPIN_BUTTON);
+  gtk_spin_button_set_increments (GTK_SPIN_BUTTON (spin_button), 0.02, 0.2);
+
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "in-high",
                                     GIMP_TYPE_SPIN_BUTTON);
 
