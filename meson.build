@@ -611,11 +611,10 @@ if platform_windows
 endif
 conf.set('HAVE_EXCHNDL', drmingw.found())
 
-
+# See app/core/gimpbacktrace-backend.h for supported platforms.
 detailed_backtraces = (
-  libbacktrace.found() or
-  libunwind.found() or
-  drmingw.found()
+  (platform_linux and (libbacktrace.found() or libunwind.found())) or
+  (platform_windows and have_x86)
 )
 
 ################################################################################
@@ -2090,16 +2089,16 @@ final_message = [
 '''  gimp-console:        @0@'''.format(enable_console_bin),
 '',
 '''Optional Features:''',
-'''  Check updates at startup:  @0@'''.format(check_update),
-'''  Language selection:        @0@'''.format(isocodes.found()),
-'''  Vector icons:              @0@'''.format(have_vector_icons),
-'''  Dr. Mingw (Win32):         @0@'''.format(drmingw.found()),
-'''  Relocatable Bundle:        @0@'''.format(relocatable_bundle),
-'''  Default ICC directory:     @0@'''.format(icc_directory),
-'''  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder')),
-'''  Detailed backtraces:       @0@'''.format(detailed_backtraces),
-'''  Binary symlinks:           @0@'''.format(enable_default_bin),
-'''  OpenMP:                    @0@'''.format(have_openmp),
+'''  Check updates at startup:        @0@'''.format(check_update),
+'''  Language selection:              @0@'''.format(isocodes.found()),
+'''  Vector icons:                    @0@'''.format(have_vector_icons),
+'''  Dr. Mingw (Win32):               @0@'''.format(drmingw.found()),
+'''  Relocatable Bundle:              @0@'''.format(relocatable_bundle),
+'''  Default ICC directory:           @0@'''.format(icc_directory),
+'''  32-bit DLL folder (Win32):       @0@'''.format(get_option('win32-32bits-dll-folder')),
+'''  Detailed backtraces (Dashboard): @0@'''.format(detailed_backtraces),
+'''  Binary symlinks:                 @0@'''.format(enable_default_bin),
+'''  OpenMP:                          @0@'''.format(have_openmp),
 '',
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),
