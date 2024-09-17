@@ -533,8 +533,8 @@ script_fu_resource_widget (const gchar    *title,
                            SFArg          *arg,
                            GType           resource_type)
 {
-  GtkWidget *result_widget = NULL;
-  GResource *initial_value;
+  GtkWidget    *result_widget = NULL;
+  GimpResource *initial_value;
 
   g_debug ("%s type: %" G_GSIZE_FORMAT, G_STRFUNC, resource_type);
 
