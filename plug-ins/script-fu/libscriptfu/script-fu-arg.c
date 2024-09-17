@@ -507,6 +507,19 @@ script_fu_arg_add_argument (SFArg         *arg,
     }
 }
 
+/* Warn of an error in a GFile argument
+ * and append a repr of an unknown file to the result_string,
+ * which is a scheme text being built.
+ * The warning is to the console.
+ * The warning may be innocuous if the script handles the case.
+ */
+static void
+sf_append_file_error_repr (gchar *err_message, GString *result_string )
+{
+  g_warning (err_message);
+  /* Represent unknown file by literal for empty string: "" */
+  g_string_append_printf (result_string, "\"\"");
+}
 
 /* Append a Scheme representation of the arg value from the given gvalue.
  * Append to a Scheme text to be interpreted.
@@ -617,18 +630,21 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
               }
             else
               {
-                gchar *msg = "Invalid GFile in gvalue.";
-                g_warning ("%s", msg);
-                g_string_append_printf (result_string, "\"%s\"", msg);
+                /* This is usually a C NULL.
+                 * Some file chooser widgets may not support a default file
+                 * and/or may return NULL when the user doesn't choose a file.
+                 */
+                sf_append_file_error_repr ("Unknown file in GFile to script.",
+                                           result_string);
               }
           }
         else
           {
-            gchar *msg = "Expecting GFile in gvalue.";
-            g_warning ("%s", msg);
-            g_string_append_printf (result_string, "\"%s\"", msg);
+            /* Programming error: GValue should hold a GFile. */
+            sf_append_file_error_repr ("Expecting GFile in GValue to script.",
+                                       result_string);
           }
-        /* Ensure appended a filepath string OR an error string.*/
+        /* Ensure appended a filepath string OR a string repr of an unknown file. */
       }
       break;
 
@@ -926,6 +942,11 @@ pspec_set_default_file (GParamSpec *pspec, const gchar *filepath)
   g_value_init (&gvalue, G_TYPE_FILE);
   gfile = g_file_new_for_path (filepath);
   g_value_set_object (&gvalue, gfile);
+  /* FIXME this is not correct.
+   * value_set_default sets the value, not the pspec.
+   * Should be something like:
+   * gimp_param_spec_file_set_default (pspec, gfile);
+   */
   g_param_value_set_default (pspec, &gvalue);
 }
 
