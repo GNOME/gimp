@@ -3,8 +3,53 @@
 ;   This script requires a grayscale image containing a single layer.
 ;   This layer is used as the mask for the SOTA chrome effect
 
+
+; An adaptor from the original signature to a new inner signature
+;
+; Adapts env-map, an image file to be opened, to banding-img, an open image.
+; When user doesn't choose a file, banding-img is a copy of the primary mask-img.
+; The effect is something, if not the same as when user chooses a different image
+; than the primary image.
+; Originally, the file chooser had a default, so the user could NOT choose a None file
+; for the env-map file, the secondary image.
+;
+; The UI design for the secondary "banding image":
+; the user must choose a file of an image instead of an open image.
+; FUTURE: require the user to choose an open image for the secondary image.
+;
+; The inner algorithm requires a GRAY image without an alpha.
+; FUTURE: also adapt image type by working on a copy,
+; converting image mode to GRAY, and deleting alpha.
+; For user friendliness, the filter should work on an image of any mode
+; and regardless of any alpha channels.
+;
+; The filter is generating a new image, having alpha channels.
+; Since the result image is new, the filter should not concern itself
+; whether the source image has alpha channels that might be destroyed.
+
 (define (script-fu-sota-chrome-it mask-img mask-drawables chrome-saturation
          chrome-lightness chrome-factor env-map hc cc carve-white)
+
+  ; convert choice of secondary image file to an open image
+  (let ((banding-img  ; secondary, other image
+          ; when user chose no env-map secondary image file
+          (if (= (string-length env-map) 0)
+            ; copy source image
+            (car (gimp-image-duplicate mask-img))
+            ; else open chosen file
+            (car (gimp-file-load RUN-NONINTERACTIVE env-map)))))
+
+    ; call the inner filter with adapted args
+    (chrome-it-inner mask-img mask-drawables chrome-saturation
+          chrome-lightness chrome-factor banding-img hc cc carve-white))
+
+  ; Inner deletes banding-img
+)
+
+
+; The original filter, now taking a image:banding-img instead of file:env-map
+(define (chrome-it-inner mask-img mask-drawables chrome-saturation
+         chrome-lightness chrome-factor banding-img hc cc carve-white)
 
   (define (set-pt a index x y)
     (begin
@@ -75,7 +120,6 @@
   )
 
   (let* (
-        (banding-img (car (gimp-file-load RUN-NONINTERACTIVE env-map)))
         (banding-layer (aref (cadr (gimp-image-get-selected-drawables banding-img)) 0))
         (banding-height (car (gimp-drawable-get-height banding-layer)))
         (banding-width (car (gimp-drawable-get-width banding-layer)))
