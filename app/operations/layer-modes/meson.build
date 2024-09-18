@@ -325,7 +325,9 @@ layer_modes_shared_op = {
     'perceptual:intersection:perceptual': [ '5d1789406f6ebb9ef9c3d1dbddc988dba7b45bef033d11c46a4cc11bef2702fb' ]
   },
   'hsl-color': {
-    'auto:union:linear': [ 'dc4b469481e7f2a13b28c79c665ff2cf6327582b6c4036ed7a0b627e86f09d2b' ],
+    'auto:union:linear': [ 'dc4b469481e7f2a13b28c79c665ff2cf6327582b6c4036ed7a0b627e86f09d2b',
+                           # Non-SSE2 digest.
+                           '1bcc39ddace42fc1bd51a19ced62095d1d31d7d12625eac868b1644eef8ed030' ],
     'auto:union:perceptual': [ 'e82f46d57193ab82ceb243df3783e589939a1d57bb31de9639eed9068e61adea' ],
     'auto:clip-to-backdrop:linear': [ '95d4f7474308197b9a6979225163cc0f0f90e29f2cc931e06803f908626119e7' ],
     'auto:clip-to-backdrop:perceptual': [ '103ed86dedc5992c33fc689e3c9d1c944ec35136b19d0c8b61338ae61d3750a2' ],
@@ -335,7 +337,9 @@ layer_modes_shared_op = {
     'auto:intersection:perceptual': [ '2c365b0a8c69a4924a782684cdc4c783a237df88cc34be028c3456b0c926d1cc' ]
   },
   'hsv-hue': {
-    'auto:union:linear': [ '10dbb0751dbedfe6a5c9ba9c15282373da9be5db3091985ddf97158ff8dd2e73' ],
+    'auto:union:linear': [ '10dbb0751dbedfe6a5c9ba9c15282373da9be5db3091985ddf97158ff8dd2e73',
+                           # Non-SSE2 digest.
+                           '4e79b1b80110a71663e4cc17438da63804ac7217a7b59bd85168799407617c62' ],
     'auto:union:perceptual': [ 'c372878221e3b992c58914d55f9953235c8c32af942f009ca24295eb0aae861b' ],
     'auto:clip-to-backdrop:linear': [ 'ddd0759c73ab8a3a6943e248a6cb3cd35c518a2b112fe265967997ac5b100658' ],
     'auto:clip-to-backdrop:perceptual': [ 'b4d38f8e83487279b7376fea823be6a132ae5a575a70c4c9ddd11a96a3cc060e' ],
@@ -345,7 +349,9 @@ layer_modes_shared_op = {
     'auto:intersection:perceptual': [ 'e97ab4ab6344fdb776a463a52f067a4a0f1a0b8f164c044aee1897b205384a73' ]
   },
   'hsv-saturation': {
-    'auto:union:linear': [ 'e694947cccf3836d488d336c94d7cfb41b6cc671b4a1884609ecdd374c280266' ],
+    'auto:union:linear': [ 'e694947cccf3836d488d336c94d7cfb41b6cc671b4a1884609ecdd374c280266' ,
+                           # Non-SSE2 digest.
+                           'fff8d1d3876a9f1b38d5c90c38018e60f98a4c7576973b5676e0893c1ef1fb4a' ],
     'auto:union:perceptual': [ 'f6d9d77739a595a8a99b2160a42586e24505d1bda52e48b8aec70e9075531e67' ],
     'auto:clip-to-backdrop:linear': [ '3d5202114900bc3ef9b79cd3ff0fbf656a471c4ff14ec4734d5cd3086fe52d86' ],
     'auto:clip-to-backdrop:perceptual': [ '2d61acd031742fad429441ebf4c904305a8e991091c9752d437a410d4507f174' ],
@@ -365,44 +371,76 @@ layer_modes_shared_op = {
     'auto:intersection:perceptual': [ '2993e3c0fc6ae1045f34a187f00fbee02ef32352d88f5b2a2c22a0b1fcb76758' ]
   },
   'lch-chroma': {
-    'auto:union:linear': [ 'e264c514956119cd46825a470c6a7365af1c8a23b107f665c113872eb51480b7' ],
-    'auto:union:perceptual': [ '3c7b7d780c671c0ffb768d22e47b904a601f6ccf139807976217f410a40d0d13' ],
-    'auto:clip-to-backdrop:linear': [ '65a75daad3689e53a7a61535c025aeed546f117a20901e58b439247c7bf7cdc0' ],
-    'auto:clip-to-backdrop:perceptual': [ 'fb0000a80c0bd871c14222dd99b6fe993ed449633a2883694f28765cc32a7fa5' ],
-    'auto:clip-to-layer:linear': [ '11e65e38240e1ba40d689d5665043dcb95d416201e17af60cb24574011e834be' ],
-    'auto:clip-to-layer:perceptual': [ '0a12b36abedd2114de44dc40ce7290bca011509ce8c1bb86c3a5c33713ce1552' ],
-    'auto:intersection:linear': [ '7240d3c3614b64a6d80e18a4309c398b75e7e91655c0cb3a65c326d54bc2187d' ],
-    'auto:intersection:perceptual': [ 'dbb8801625212c6bc40de88bfff1cbb06cac3bce9566b49e4db5fd985f86f177' ]
+    'auto:union:linear': [ 'e264c514956119cd46825a470c6a7365af1c8a23b107f665c113872eb51480b7',
+                           'b1721f29f7ade730667635b6150961720d53f6d737af5a64c2f5313d5d415d8f' ],
+    'auto:union:perceptual': [ '3c7b7d780c671c0ffb768d22e47b904a601f6ccf139807976217f410a40d0d13',
+                               'f7dc7ae56040f8ea8f909348e0887beb10b9e0ebab37095a4e12becf7810ec32' ],
+    'auto:clip-to-backdrop:linear': [ '65a75daad3689e53a7a61535c025aeed546f117a20901e58b439247c7bf7cdc0',
+                                      'c9846f492bca6ff005c730e3d5e1374307344b0798380a099b09b7321ce220b9' ],
+    'auto:clip-to-backdrop:perceptual': [ 'fb0000a80c0bd871c14222dd99b6fe993ed449633a2883694f28765cc32a7fa5',
+                                          '625d375e2bf299a34683d2e2e03340bc19d5d040cd68db363a6616794ce5938d' ],
+    'auto:clip-to-layer:linear': [ '11e65e38240e1ba40d689d5665043dcb95d416201e17af60cb24574011e834be',
+                                   '0da344ff37c715cd3863ec90d995dbd95a4520dc6df07e166bd69d13ec8363bc' ],
+    'auto:clip-to-layer:perceptual': [ '0a12b36abedd2114de44dc40ce7290bca011509ce8c1bb86c3a5c33713ce1552',
+                                       '9db2635081f2f82bf5e598b887ec9133c2b751a1343016638550676a705fa273' ],
+    'auto:intersection:linear': [ '7240d3c3614b64a6d80e18a4309c398b75e7e91655c0cb3a65c326d54bc2187d',
+                                  '3cf83a9e7075ca04287f4de7c8517bd08e26c8facb8a050c542a87e6f9ee03be' ],
+    'auto:intersection:perceptual': [ 'dbb8801625212c6bc40de88bfff1cbb06cac3bce9566b49e4db5fd985f86f177',
+                                      '79314c1fd011515e31effdd6f1540b702479b79d3c9dee7f546fc11902928631' ]
   },
   'lch-color': {
-    'auto:union:linear': [ 'a9b6a939ce0aa02b42428f3e9ada9cadf0dbbaf3adf65226a999f1e1129c9020' ],
-    'auto:union:perceptual': [ 'b21471fa3e0143e930b3a20b794dcd38c069a5217b779998e1c15b41cc651e40' ],
-    'auto:clip-to-backdrop:linear': [ '3aafa9604358a6edeb0c913fb87e8a4a944b9b31647c1b3734657c75b8b627d8' ],
-    'auto:clip-to-backdrop:perceptual': [ 'a8a741b9e6f924b5140f5194158c7b79115b1d1f35cc8f815599edb409d3e2e2' ],
-    'auto:clip-to-layer:linear': [ '74f1939137c90cff1f3060828cc2fed64dcbcaa72a3a53133f48bbf43f6915d6' ],
-    'auto:clip-to-layer:perceptual': [ '202b98a2b6c9172af1a57aec47e20ae0d49958f7dba7051829de47404f2fe03e' ],
-    'auto:intersection:linear': [ '808bad3f6c98d7873fef9f94ea7674c88a1d7dddc7e2df61ae7b21192256651e' ],
-    'auto:intersection:perceptual': [ 'e783556d60128d09f17e06c89f0ebab8e6d452c8065a4927b8eed3f79d837926' ]
+    'auto:union:linear': [ 'a9b6a939ce0aa02b42428f3e9ada9cadf0dbbaf3adf65226a999f1e1129c9020',
+                           'a140645e392a230b22198a9f072a36d6071a5f66b2635dc31914c66a212307dc' ],
+    'auto:union:perceptual': [ 'b21471fa3e0143e930b3a20b794dcd38c069a5217b779998e1c15b41cc651e40',
+                               '07ea184390b9d0bbeb640da882d1439f3d3fd2a9b1303e1603426a16468c7c2d' ],
+    'auto:clip-to-backdrop:linear': [ '3aafa9604358a6edeb0c913fb87e8a4a944b9b31647c1b3734657c75b8b627d8',
+                                      'ce58aa8d94fc5b4b125291920f20854fb1969c68832d4b67fb96f5b5334aa357' ],
+    'auto:clip-to-backdrop:perceptual': [ 'a8a741b9e6f924b5140f5194158c7b79115b1d1f35cc8f815599edb409d3e2e2',
+                                          '3f013306c7d69052cc1ac4faff7a2606976baa30811862553badb9e1425bbf65' ],
+    'auto:clip-to-layer:linear': [ '74f1939137c90cff1f3060828cc2fed64dcbcaa72a3a53133f48bbf43f6915d6',
+                                   '43a49b8d43b8d66a6df6cf77953385e9205aa14d5bf2e9db871a13ace36f01fb' ],
+    'auto:clip-to-layer:perceptual': [ '202b98a2b6c9172af1a57aec47e20ae0d49958f7dba7051829de47404f2fe03e',
+                                       '433bdc153cd8981d3674d08519c471b8a549c4dd75ff93596554a6c91dcc9211' ],
+    'auto:intersection:linear': [ '808bad3f6c98d7873fef9f94ea7674c88a1d7dddc7e2df61ae7b21192256651e',
+                                  'b9f732450f1402b0cff6f22a5524c45222bdb6b27ced5084edd951ec33cee4ab' ],
+    'auto:intersection:perceptual': [ 'e783556d60128d09f17e06c89f0ebab8e6d452c8065a4927b8eed3f79d837926',
+                                      '803c0429b1613c6ed0a600ebabbc59ac6a8d7583dae05d6afec930abf86f7c15' ]
   },
   'lch-hue': {
-    'auto:union:linear': [ 'bde1e02d9389345f20eb36111bde5ee974105a3ebf182567197cd9e7d6a0d61c' ],
-    'auto:union:perceptual': [ '9008bca1babf8cbe42388470a80dc9247905170a58f482e95af17e0bc706a094' ],
-    'auto:clip-to-backdrop:linear': [ '113111624751e164e7f1194830629609eb94fa28747f265e1db0e9bb0d61f03f' ],
-    'auto:clip-to-backdrop:perceptual': [ 'dcae48c98cdb69a5125ebb53c3a4b5ebd7dfa3d59ed67f88af2f12f3c21353a9' ],
-    'auto:clip-to-layer:linear': [ '6db014aa57a7e754541149fcefc77dc8105d25f25077ed3f72b12d872c40169c' ],
-    'auto:clip-to-layer:perceptual': [ '33971acf071e5e6d777a48b1a1a3e8a0de573c4c985a82b727eb2507ba560880' ],
-    'auto:intersection:linear': [ 'f7dfeb2624dc8a6894525d17d017e6e0bf11598545e132fcc0cab06be94af85a' ],
-    'auto:intersection:perceptual': [ '103db86e1442d659424ff1b13d2fd8a36e7b99481fc5470aa2218b4bcc8c638e' ]
+    'auto:union:linear': [ 'bde1e02d9389345f20eb36111bde5ee974105a3ebf182567197cd9e7d6a0d61c',
+                           'd653b1a795206ec72ffd70f10df5801cce55547cb45fa65f8062a97451c6efd0' ],
+    'auto:union:perceptual': [ '9008bca1babf8cbe42388470a80dc9247905170a58f482e95af17e0bc706a094',
+                               'a65dfe476d328a70e480d50c95f75c2bca7ac5667ad69f43b0d7227dbc9aafde' ],
+    'auto:clip-to-backdrop:linear': [ '113111624751e164e7f1194830629609eb94fa28747f265e1db0e9bb0d61f03f',
+                                      '89bc6767eba0b2608d87042f3e2ac6c80f29970229de194c82b23878b0424ba1' ],
+    'auto:clip-to-backdrop:perceptual': [ 'dcae48c98cdb69a5125ebb53c3a4b5ebd7dfa3d59ed67f88af2f12f3c21353a9',
+                                          '3e47701dd20b53c9dfc4767a714cb79c81ff8c042aea121d886364b27fd62053' ],
+    'auto:clip-to-layer:linear': [ '6db014aa57a7e754541149fcefc77dc8105d25f25077ed3f72b12d872c40169c',
+                                   '3008fe9ee6607107f6daf303720c4d92c759642cf4031926bfedebae283a2b68' ],
+    'auto:clip-to-layer:perceptual': [ '33971acf071e5e6d777a48b1a1a3e8a0de573c4c985a82b727eb2507ba560880',
+                                       '3b1eba0fb3648cf0c5d2318b1db4a4e67aeaa5fb377924444d8a942b422d53ad' ],
+    'auto:intersection:linear': [ 'f7dfeb2624dc8a6894525d17d017e6e0bf11598545e132fcc0cab06be94af85a',
+                                  '9f2ce51472e68eabca7ffa35e91e55ce7d4109aa0d182fc624b899c1abc44b00' ],
+    'auto:intersection:perceptual': [ '103db86e1442d659424ff1b13d2fd8a36e7b99481fc5470aa2218b4bcc8c638e',
+                                      'b3ee12658e50968c6415622fa0b44bceca9b196c33b4fa73a21eee7a2eec717a' ]
   },
   'lch-lightness': {
-    'auto:union:linear': [ 'e689b1d2f207067151282a3b9b19d1822aa5def8c25e1705e33ef3e03bfeec49' ],
-    'auto:union:perceptual': [ '6e0578f3c33574428f261d7d2545296ecb2df981a8f1a67b6a1075bf3d4536a2' ],
-    'auto:clip-to-backdrop:linear': [ '87be28379f221ec96a3953bbcc8a03d5e0fa2b517754b3012fe3bf9c624b9ddf' ],
-    'auto:clip-to-backdrop:perceptual': [ 'cd3dccab084822353fc58793eb83e04c7c1c98d3d9dc8486e29ead9b978a0935' ],
-    'auto:clip-to-layer:linear': [ '6de97b167687c502ab126a6a4c34f19a12680dbdd9eabfc98357b901f00ba52a' ],
-    'auto:clip-to-layer:perceptual': [ 'ab13aa1b5a0513cd334bfc64e09d3e144cb2526f49d099046432865e57dd92bf' ],
-    'auto:intersection:linear': [ '8500f93966da5370b943fae0dc7434231ae15943599f7f3bb103554e8127abb1' ],
-    'auto:intersection:perceptual': [ 'dc723c285b7caf3fcf4640de7baf6c86756b097a301e2596123c4c4a3cd847c8' ]
+    'auto:union:linear': [ 'e689b1d2f207067151282a3b9b19d1822aa5def8c25e1705e33ef3e03bfeec49',
+                           '4500a36aa44a4480f7d99e4ab02eef0cda790faecc59be8c96ed00f35715cc98' ],
+    'auto:union:perceptual': [ '6e0578f3c33574428f261d7d2545296ecb2df981a8f1a67b6a1075bf3d4536a2',
+                               '21d9797794e420c97728c5f867b2748b9da8744693af2cb62eca7447d43ffd61' ],
+    'auto:clip-to-backdrop:linear': [ '87be28379f221ec96a3953bbcc8a03d5e0fa2b517754b3012fe3bf9c624b9ddf',
+                                      'e948a572e267fab10cab5c72690e68b181cece2668f16b3144507054ee91334b' ],
+    'auto:clip-to-backdrop:perceptual': [ 'cd3dccab084822353fc58793eb83e04c7c1c98d3d9dc8486e29ead9b978a0935',
+                                          'f2297cef0b03f34e9c6faf29c09bb5d8d0fa886973a74e143c8f01f983f035c0' ],
+    'auto:clip-to-layer:linear': [ '6de97b167687c502ab126a6a4c34f19a12680dbdd9eabfc98357b901f00ba52a',
+                                   'a1dd21b5959e49467342b300d2ba63a4ea6515f35cb833304fefb371fd47117a' ],
+    'auto:clip-to-layer:perceptual': [ 'ab13aa1b5a0513cd334bfc64e09d3e144cb2526f49d099046432865e57dd92bf',
+                                       'e332337afac78cda49115d0a62c16ce6339b81ed92c5690164596a30c42dda4b' ],
+    'auto:intersection:linear': [ '8500f93966da5370b943fae0dc7434231ae15943599f7f3bb103554e8127abb1',
+                                  '93375b18e1231737d5b450711445df90a9a9237cbe5463664e23699c8d979368' ],
+    'auto:intersection:perceptual': [ 'dc723c285b7caf3fcf4640de7baf6c86756b097a301e2596123c4c4a3cd847c8',
+                                      'a552ff43a052d49df8d98d657833fe155b9425c0f280ccc0493a171179e1402a' ]
   },
   'lighten-only': {
     'auto:union:linear': [ 'de4edbd8761838e5e3663eaed4b197956e28dc63eaf9e40b1abd2ceaf8a88bdc' ],
@@ -488,13 +526,21 @@ layer_modes_shared_op = {
   },
   'luminance': {
     'auto:union:linear': [ '2f2ad9a0472f3db755fd4aff7dad8bbfd36cc4dbf65b71e3c1c7c50e088e36dd' ],
-    'auto:union:perceptual': [ '73c63c8489f657113003edbcde98b4838ea1e0048b07cdfb0de21aa7ce4338c1' ],
+    'auto:union:perceptual': [ '73c63c8489f657113003edbcde98b4838ea1e0048b07cdfb0de21aa7ce4338c1' ,
+                               # Non-SSE2 digest.
+                               'dcfca1ae9a18aee8aae284eaf9171257f70860996945aca97cb9eb731d53bb58' ],
     'auto:clip-to-backdrop:linear': [ '9f6f19ceb5d2a56202a9c2a99262e7a437677b37d3e46dbf409d275d3fac6fca' ],
-    'auto:clip-to-backdrop:perceptual': [ '8df997a5646670e2ab8da40413e72262125d0aa2031bf1b96f03142ff49d1c34' ],
+    'auto:clip-to-backdrop:perceptual': [ '8df997a5646670e2ab8da40413e72262125d0aa2031bf1b96f03142ff49d1c34' ,
+                                          # Non-SSE2 digest.
+                                          '088487cb38d58667baae9e83ab831f7aad5e36393ad2a45e405f43bf712d4f94' ],
     'auto:clip-to-layer:linear': [ '4170c59e790babf7f3925d2390ef5a250cc6c5cb3e1d6de027f3dafe5c30a9c5' ],
-    'auto:clip-to-layer:perceptual': [ '584ecbd6a740258bbe2f741be4169c7ce809f4de72f02538868b2a6a16da67ab' ],
+    'auto:clip-to-layer:perceptual': [ '584ecbd6a740258bbe2f741be4169c7ce809f4de72f02538868b2a6a16da67ab' ,
+                                       # Non-SSE2 digest.
+                                       '2f5e66a33befd68a03b9bf63afc66f1ed0cc59d303a9a76eaa456a4bb3120c69' ],
     'auto:intersection:linear': [ '2743c459cf357bb1f4bb2371c30ea82c4dca382b75f5cf07a0d3dbc71c51a2f3' ],
-    'auto:intersection:perceptual': [ '474e2da5f2e2c5d26c5a167db7141f74ad511c3b939494529e76863fcd110f78' ]
+    'auto:intersection:perceptual': [ '474e2da5f2e2c5d26c5a167db7141f74ad511c3b939494529e76863fcd110f78',
+                                      # Non-SSE2 digest.
+                                      '58d89ddb58e25aa662a15edec69661fdc9704204622a5adbed69ec11023cc73b' ]
   },
   'multiply': {
     'linear:union:linear': [ '4a9b964c4f1dbde6ddce2524d83b7095f292fe6cb0afc18b6f750bc44a9b2657' ],
