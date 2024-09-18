@@ -451,7 +451,9 @@ gimp_finalize (GObject *object)
                  G_STRFUNC, g_list_length (gimp->context_list));
 
       for (list = gimp->context_list; list; list = g_list_next (list))
-        g_printerr ("stale context: %s\n", gimp_object_get_name (list->data));
+        g_printerr ("stale context: %s (of type %s)\n",
+                    gimp_object_get_name (list->data),
+                    g_type_name (G_TYPE_FROM_INSTANCE (list->data)));
 
       g_list_free (gimp->context_list);
       gimp->context_list = NULL;
