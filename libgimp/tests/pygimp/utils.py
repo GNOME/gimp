@@ -29,6 +29,12 @@ def gimp_assert(subtest_name, test, image=None, outpath=None, cmp_data_path=None
                      Gio.file_new_for_path(outpath),
                      None)
       sys.stderr.write("       Test file saved as: {}\n".format(outpath))
+      if outpath[-4:] == '.xcf':
+        data_path = outpath[:-4] + '.data'
+        Gimp.file_save(Gimp.RunMode.NONINTERACTIVE, image,
+                       Gio.file_new_for_path(data_path),
+                       None)
+        sys.stderr.write("       Render file saved as: {}\n".format(data_path))
 
       if cmp_data_path is not None:
         cmp_img = None
