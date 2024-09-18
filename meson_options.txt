@@ -65,4 +65,4 @@ option('vector-icons',      type: 'boolean', value: true,   description: 'Use ve
 
 option('vala',              type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
 option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
-option('lua',               type: 'feature', value: 'auto', description: 'Install Lua plug-ins')
+option('lua',               type: 'boolean', value: false,  description: 'Install Lua plug-ins (experimental)')

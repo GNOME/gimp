@@ -1108,11 +1108,11 @@ endif
 
 ## Lua
 
-have_lua = false
+have_lua = get_option('lua')
 have_lua_output = have_lua
 # At time of writing, lua-lgi works with Lua 5.1, 5.2, 5.3 and LuaJIT2, but we
 # support only Lua 5.1 API. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11876
-if get_option('lua').allowed()
+if have_lua
   have_lua_lgi = false
 
   foreach lua_bin : [ 'luajit', 'lua5.1', 'lua-5.1', 'lua' ]
@@ -1165,14 +1165,13 @@ if get_option('lua').allowed()
     endif
   endforeach
 
-  have_lua = get_option('lua').enabled() or have_lua_lgi
-  if have_lua and not have_lua_lgi
+  if not have_lua_lgi
     lua_warning = '''
       Neither Luajit nor Lua 5.1, with lua-lgi support, was found.
       Or you are cross-compiling so we couldn't test lua-lgi support.
-      Lua plug-ins will be installed anyway but you should make sure that
-      luajit or lua and that LGI are available at installation, otherwise
-      installed plug-ins won't be usable.
+      Lua example plug-in (EXPERIMENTAL) will be installed anyway but you
+      should make sure that luajit or lua and that LGI are available at
+      installation, otherwise Lua plug-ins won't be usable.
       '''
     warning(lua_warning)
     warnings += lua_warning
@@ -2115,7 +2114,6 @@ final_message = [
 '''  PDF (export):        @0@'''.format(cairopdf.found()),
 '''  Print:               @0@'''.format(have_print),
 '''  Javascript plug-ins: @0@'''.format(have_javascript),
-'''  Lua plug-ins:        @0@'''.format(have_lua_output),
 '''  Vala plug-ins:       @0@'''.format(have_vala),
 '''  TWAIN (Win32):       @0@'''.format(platform_windows),
 '''  WMF:                 @0@'''.format(wmf.found()),
@@ -2125,6 +2123,9 @@ final_message = [
 '''  Amiga IFF/ILBM:      @0@'''.format(have_ilbm),
 '''  Email:               @0@'''.format(email_message),
 '''  FITS:                @0@'''.format(cfitsio_dep.found()),
+'',
+'''Experimental Plug-Ins (discouraged except for developers):''',
+'''  Lua plug-ins:        @0@'''.format(have_lua_output),
 '',
 '''Unmaintained Plug-Ins (discouraged except for developers):''',
 '''  Help Browser:        @0@'''.format(get_option('webkit-unmaintained')),

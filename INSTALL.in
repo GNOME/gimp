@@ -294,9 +294,17 @@ help in that regard:
      gdb or lldb for our new bug-reporting dialog
      "gegl:matting-levin" GEGL operation for alternative matting engine
      GJS for Javascript plug-ins
-     Lua 5.1 (or LuaJIT) and LGI for Lua plug-ins
      dot for "Show Image Graph" (unstable branches)
      xdg-desktop-portal implemented for your desktop for various D-Bus API (screenshot, color-picking…)
+
+ 24. Summary of experimental or unmaintained dependencies:
+
+     Lua 5.1 (or LuaJIT) and LGI: Lua plug-in example is disabled by
+       default because of stability issues with the Lua binding.
+
+     Webkit-GTK @WEBKITGTK_REQUIRED_VERSION@: the Help Browser and Webpage
+       plug-ins are disabled for lack of maintenance and issues with
+       Webkit-GTK
 
 
 
@@ -397,8 +405,8 @@ These are:
   -Djavascript=false  If for some reason you don't want to install the
      JavaScript plug-ins, you can use -Djavascript=false.
 
-  -Dlua=false  If for some reason you don't want to install the
-     Lua plug-ins, you can use -Dlua=false.
+  -Dlua=true  Lua binding is experimental because of stability issues.
+     You may test the feature by enabling it.
 
   -Dvala-plugins=disabled  If for some reason you don't want to install the
      Vala plug-ins, you can use -Dvala-plugins=disabled.
