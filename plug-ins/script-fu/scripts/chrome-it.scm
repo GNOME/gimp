@@ -42,17 +42,20 @@
 (define (script-fu-sota-chrome-it mask-img mask-drawables chrome-saturation
          chrome-lightness chrome-factor env-map hc cc carve-white)
 
+  ; use v3 binding of return args from PDB
+  (script-fu-use-v3)
+
   (let* (
         ; 1. convert choice of secondary image file to an open image
         (banding-img  ; secondary, other image
           ; when user chose no env-map secondary image file
           (if (= (string-length env-map) 0)
             ; copy source image
-            (car (gimp-image-duplicate mask-img))
+            (gimp-image-duplicate mask-img)
             ; else open chosen file
-            (car (gimp-file-load RUN-NONINTERACTIVE env-map))))
+            (gimp-file-load RUN-NONINTERACTIVE env-map)))
         ; 2. copy source image, flattened
-        (copy-source-img (car (gimp-image-duplicate mask-img)))
+        (copy-source-img (gimp-image-duplicate mask-img))
         ; side effect on image, not use the returned layer
         (flat-source-layer (gimp-image-flatten copy-source-img))
         (copy-source-drawables (cadr (gimp-image-get-layers copy-source-img))))
@@ -77,9 +80,7 @@
   (define (set-pt a index x y)
     (begin
       (aset a (* index 2) x)
-      (aset a (+ (* index 2) 1) y)
-    )
-  )
+      (aset a (+ (* index 2) 1) y)))
 
   (define (spline-chrome-it)
     (let* ((a (cons-array 18 'double)))
@@ -92,40 +93,31 @@
       (set-pt a 6 0.75  00784)
       (set-pt a 7 0.875 0.9412)
       (set-pt a 8 1.0   0.1216)
-      a
-    )
-  )
+      a))
 
 
   (define (shadows val)
-    (/ (* 0.96 val) 2.55)
-  )
+    (/ (* 0.96 val) 2.55))
 
   (define (midtones val)
-    (/ val 2.55)
-  )
+    (/ val 2.55))
 
   (define (highlights val)
     ; The result is used as "gimp-drawable-color-balance" color parameter
     ; and thus must be restricted to -100.0 <= highlights <= 100.0.
-    (min (/ (* 1.108 val) 2.55) 100.0)
-  )
+    (min (/ (* 1.108 val) 2.55) 100.0))
 
   (define (rval col)
-    (car col)
-  )
+    (car col))
 
   (define (gval col)
-    (cadr col)
-  )
+    (cadr col))
 
   (define (bval col)
-    (caddr col)
-  )
+    (caddr col))
 
   (define (sota-scale val scale chrome-factor)
-    (* (sqrt val) (* scale chrome-factor))
-  )
+    (* (sqrt val) (* scale chrome-factor)))
 
   (define (copy-layer-chrome-it dest-image dest-drawable source-image source-drawable)
     (gimp-selection-all dest-image)
@@ -134,23 +126,21 @@
     (gimp-selection-all source-image)
     (gimp-edit-copy 1 (vector source-drawable))
     (let* (
-           (pasted (gimp-edit-paste dest-drawable FALSE))
+           (pasted (gimp-edit-paste dest-drawable #f))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
-     (gimp-floating-sel-anchor floating-sel)
-    )
-  )
+     (gimp-floating-sel-anchor floating-sel)))
 
   (let* (
         (banding-layer (aref (cadr (gimp-image-get-selected-drawables banding-img)) 0))
-        (banding-height (car (gimp-drawable-get-height banding-layer)))
-        (banding-width (car (gimp-drawable-get-width banding-layer)))
-        (banding-type (car (gimp-drawable-type banding-layer)))
+        (banding-height (gimp-drawable-get-height banding-layer))
+        (banding-width (gimp-drawable-get-width banding-layer))
+        (banding-type (gimp-drawable-type banding-layer))
         (mask-drawable (vector-ref mask-drawables 0))
-        (width (car (gimp-drawable-get-width mask-drawable)))
-        (height (car (gimp-drawable-get-height mask-drawable)))
-        (img (car (gimp-image-new width height GRAY)))
+        (width (gimp-drawable-get-width mask-drawable))
+        (height (gimp-drawable-get-height mask-drawable))
+        (img (gimp-image-new width height GRAY))
         (size (min width height))
         (offx1 (sota-scale size 0.33 chrome-factor))
         (offy1 (sota-scale size 0.25 chrome-factor))
@@ -158,15 +148,15 @@
         (offy2 (sota-scale size (- 0.25) chrome-factor))
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
-        (brush (car (gimp-brush-new "Chrome It")))
-        (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
-        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 LAYER-MODE-NORMAL)))
-        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 LAYER-MODE-NORMAL)))
-        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 LAYER-MODE-DIFFERENCE)))
-        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 LAYER-MODE-NORMAL)))
-        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 LAYER-MODE-NORMAL)))
+        (brush (gimp-brush-new "Chrome It"))
+        (mask (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0)))
+        (bg-layer (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 LAYER-MODE-NORMAL))
+        (layer1 (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 LAYER-MODE-NORMAL))
+        (layer2 (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 LAYER-MODE-DIFFERENCE))
+        (layer3 (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 LAYER-MODE-NORMAL))
+        (shadow (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 LAYER-MODE-NORMAL))
         (layer-mask 0)
-        (marble-pattern (car (gimp-pattern-get-by-name "Marble #1")))
+        (marble-pattern (gimp-pattern-get-by-name "Marble #1"))
         )
 
     (gimp-context-push)
@@ -184,16 +174,15 @@
 
     ; Clipboard is copy of mask-drawable.  Paste into mask, a channel, and anchor it.
     (let* (
-           (pasted (gimp-edit-paste mask FALSE))
+           (pasted (gimp-edit-paste mask #f))
            (num-pasted (car pasted))
            (floating-sel (aref (cadr pasted) (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )
 
-    (if (= carve-white FALSE)
-        (gimp-drawable-invert mask FALSE)
-    )
+    (if (not carve-white)
+        (gimp-drawable-invert mask #f))
 
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-none img)
@@ -201,8 +190,8 @@
     (gimp-drawable-edit-fill layer3 FILL-BACKGROUND)
     (gimp-drawable-edit-clear shadow)
 
-    (gimp-item-set-visible bg-layer FALSE)
-    (gimp-item-set-visible shadow FALSE)
+    (gimp-item-set-visible bg-layer #f)
+    (gimp-item-set-visible shadow #f)
 
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(0 0 0))
@@ -212,25 +201,25 @@
     (gimp-selection-translate img (* 2 offx2) (* 2 offy2))
     (gimp-drawable-edit-fill layer3 FILL-BACKGROUND)
     (gimp-selection-none img)
-    (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    (gimp-drawable-invert layer2 FALSE)
+    (set! layer2 (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))
+    (gimp-drawable-invert layer2 #f)
 
     (gimp-image-insert-layer img layer1 0 0)
     (copy-layer-chrome-it img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
-    (gimp-layer-scale layer1 width height FALSE)
-    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 TRUE TRUE)
+    (gimp-layer-scale layer1 width height #f)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 #t #t)
     (gimp-layer-set-opacity layer1 50)
-    (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
+    (set! layer1 (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))
     (gimp-drawable-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
 
-    (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-MASK-BLACK)))
+    (set! layer-mask (gimp-layer-create-mask layer1 ADD-MASK-BLACK))
     (gimp-layer-add-mask layer1 layer-mask)
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-edit-fill layer-mask FILL-BACKGROUND)
 
-    (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
+    (set! layer2 (gimp-layer-copy layer1 #t))
     (gimp-image-insert-layer img layer2 0 0)
 
     (gimp-brush-set-shape brush BRUSH-GENERATED-CIRCLE)
@@ -258,28 +247,28 @@
 
     (gimp-image-convert-rgb img)
 
-    (gimp-drawable-color-balance layer1 TRANSFER-SHADOWS TRUE
+    (gimp-drawable-color-balance layer1 TRANSFER-SHADOWS #t
 				 (shadows (rval hc))
 				 (shadows (gval hc))
 				 (shadows (bval hc)))
-    (gimp-drawable-color-balance layer1 TRANSFER-MIDTONES TRUE
+    (gimp-drawable-color-balance layer1 TRANSFER-MIDTONES #t
 				 (midtones (rval hc))
 				 (midtones (gval hc))
 				 (midtones (bval hc)))
-    (gimp-drawable-color-balance layer1 TRANSFER-HIGHLIGHTS TRUE
+    (gimp-drawable-color-balance layer1 TRANSFER-HIGHLIGHTS #t
 				 (highlights (rval hc))
 				 (highlights (gval hc))
 				 (highlights (bval hc)))
 
-    (gimp-drawable-color-balance layer2 TRANSFER-SHADOWS TRUE
+    (gimp-drawable-color-balance layer2 TRANSFER-SHADOWS #t
 				 (shadows (rval cc))
 				 (shadows (gval cc))
 				 (shadows (bval cc)))
-    (gimp-drawable-color-balance layer2 TRANSFER-MIDTONES TRUE
+    (gimp-drawable-color-balance layer2 TRANSFER-MIDTONES #t
 				 (midtones (rval cc))
 				 (midtones (gval cc))
 				 (midtones (bval cc)))
-    (gimp-drawable-color-balance layer2 TRANSFER-HIGHLIGHTS TRUE
+    (gimp-drawable-color-balance layer2 TRANSFER-HIGHLIGHTS #t
 				 (highlights (rval cc))
 				 (highlights (gval cc))
 				 (highlights (bval cc)))
@@ -289,8 +278,8 @@
 				  chrome-saturation
 				  0.0)
 
-    (gimp-item-set-visible shadow TRUE)
-    (gimp-item-set-visible bg-layer TRUE)
+    (gimp-item-set-visible shadow #t)
+    (gimp-item-set-visible bg-layer #t)
 
     (gimp-item-set-name layer2 _"Chrome")
     (gimp-item-set-name layer1 _"Highlight")
@@ -311,7 +300,7 @@
 ; 2. It is unclear that "specified..stencil" refers to the source image
 ;    and doesn't mean the secondary "Environment map"
 ; 3. The original did not permit an alpha so "(or alpha)" is unclear
-; Suggest: "Renders a new image with a chrome effect on the shapes in the image."
+; Suggest: "Renders a new image having a chrome effect on shapes in the image."
 (script-fu-register-filter "script-fu-sota-chrome-it"
   _"Stencil C_hrome..."
   _"Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
@@ -328,7 +317,7 @@
                               "/scripts/images/beavis.jpg")
   SF-COLOR      _"Highlight balance"  '(211 95 0)
   SF-COLOR      _"Chrome balance"     "black"
-  SF-TOGGLE     _"Chrome white areas" TRUE
+  SF-TOGGLE     _"Chrome white areas" #t
 )
 
 (script-fu-menu-register "script-fu-sota-chrome-it"
