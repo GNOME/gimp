@@ -93,6 +93,8 @@ static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GApplication       *app);
 
+static void       app_quit_on_ctrl_c         (gint                sig_num);
+
 #if 0
 /*  left here as documentation how to do compat enums  */
 GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
@@ -522,6 +524,25 @@ app_activate_callback (GimpCoreApp *app,
       */
       gimp_exit (gimp, TRUE);
     }
+  else
+#ifndef GIMP_CONSOLE_COMPILATION
+    if (gimp->no_interface)
+#endif
+    {
+      /* In console version or GUI version with no interface, we keep
+       * running when --quit was not set. For instance, there could be
+       * an always-ON plug-in (GIMP_PDB_PROC_TYPE_EXTENSION) which is
+       * set up to receive commands for GIMP.
+       */
+      gimp_signal_private (SIGINT, app_quit_on_ctrl_c, 0);
+      g_printf ("\n== %s ==\n%s\n\n%s\n",
+                /* TODO: localize when string freeze is over. */
+                "INFO",
+                "GIMP is now running as a background process. "
+                "You can quit anytime with Ctrl-C (SIGINT).",
+                "If you wanted to quit immediately instead, call GIMP with --quit.");
+      g_application_hold (G_APPLICATION (app));
+    }
 }
 
 static void
@@ -570,4 +591,15 @@ app_exit_after_callback (Gimp         *gimp,
 #endif
 
   return FALSE;
+}
+
+static void
+app_quit_on_ctrl_c (gint sig_num)
+{
+  GApplication *app = g_application_get_default ();
+  Gimp         *gimp;
+
+  g_application_release (app);
+  gimp = gimp_core_app_get_gimp (GIMP_CORE_APP (app));
+  gimp_exit (gimp, TRUE);
 }
