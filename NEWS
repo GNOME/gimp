@@ -47,6 +47,10 @@ Core:
     yet).
   - XCF 22: the GEGL Operation version is now stored for each layer
     filter.
+  - GIMP doesn't quit when running non-interactively (i.e. as
+    gimp-console or with --no-interface) without CLI option `--quit`.
+    The process can be interrupted anytime with SIGINT (Ctrl-C) which
+    will trigger a clean exit.
 
 Tools:
 
@@ -87,6 +91,12 @@ Plug-ins:
   - Plug-ins ported to GimpProcedureDialog: Warp, decompose,
     file-pdf-save-multi, qbist, file-xmc, file-tiff-load, file-icns,
     file-ico, lava.scm.
+  - Script-Fu scripts ported to GimpProcedureDialog: addborder,
+    blend-anim, burn-in-anim, carve-it, chrome-it, circuit, clothify,
+    coffee, difference-clouds, distress-selection, drop-shadow,
+    fuzzyborder, old-photo, perspective-shadow, round-corners,
+    script-fu-set-cmap, selection-round, slide, unsharp-mask,
+    waves-anim, weave, xach-effect.
   - PSD:
     * unsupported layers are not dropped anymore (they will usually show
       empty instead).
@@ -130,6 +140,11 @@ Plug-ins:
   - Metadata Editor: add ability to set itself transient to any other
     window (even across process).
   - file-raw-data can now be run interactively.
+  - The lua binding is now marked experimental because of the too many
+    unstabilities we experienced.
+  - Script-fu: resource argument defaults are set as a string which is
+    the name of a resource, or the empty string or "from context" to
+    default to the context resource.
 
 API:
 
@@ -189,6 +204,11 @@ API:
       export time).
     * New functions:
       - gimp_window_set_transient_for()
+    * Renamed functions:
+      - gimp_path_export_to_file() to gimp_image_export_path_to_file()
+      - gimp_path_export_to_string() to gimp_image_export_path_to_string()
+      - gimp_path_import_from_file() to gimp_image_import_paths_from_file()
+      - gimp_path_import_from_string() to gimp_image_import_paths_from_string()
     * GimpResource:
       - The ParamSpec arguments (including every subtype) may now have a
         default value.
