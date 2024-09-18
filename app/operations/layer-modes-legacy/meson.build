@@ -66,7 +66,8 @@ legacy_layer_modes = {
   'hsl-color-legacy': {
     'auto:auto:auto': [ '5126b7eebbdaa0315f0a94fb6184fef41a95cb79577d5b633c2d1a6dc5680661',
                         '31f182e50286b6088a819c6a81d70f145c0ca7307c15726515cfb6ac51efe2d5',
-                        '70be349d74a1c21b446b67064dde5a620b4181df600ae64e10ecad30b95de1a8' ]
+                        '70be349d74a1c21b446b67064dde5a620b4181df600ae64e10ecad30b95de1a8',
+                        '877860c90b20a83c1a374cc811af60767d0ba78511ed0033f4d25ef9665e24c1' ]
   },
   'hsv-hue-legacy': {
     'auto:auto:auto': [ '07f188536bf2e2da2341424e8a9c54156cfce11af419f806a5d0c63e0c84c8d0',
