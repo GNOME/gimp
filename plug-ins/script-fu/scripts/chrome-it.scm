@@ -1,49 +1,72 @@
 ;  CHROME-IT
-;   State of the art chrome effect for user-specified mask
-;   This script requires a grayscale image containing a single layer.
-;   This layer is used as the mask for the SOTA chrome effect
+
+; The filter generates a new image, having alpha channels.
+; The source image is not touched.
+; It renders, not filters.
+; The source image is flattened and used as mask for the effect.
+
+; Terminology:
+; The effect is commonly known as the "chrome effect".
+; "SOTA" means "state of the art" (but the art may have improved.)
+; The algorithm's origin is not documented.
+; "Stencil" seems to mean that the effect roughly follows the contours
+; of shapes in the image, not the usual meaning.
 
 
-; An adaptor from the original signature to a new inner signature
+
+
+; An adaptor from the original signature and mode requirements
+; to a new inner signature and relaxed outer mode requirements.
 ;
+; 1. Adapt to inner signature taking an image instead of a file.
 ; Adapts env-map, an image file to be opened, to banding-img, an open image.
 ; When user doesn't choose a file, banding-img is a copy of the primary mask-img.
 ; The effect is something, if not the same as when user chooses a different image
 ; than the primary image.
-; Originally, the file chooser had a default, so the user could NOT choose a None file
+; In SFv2 the file chooser had a default, so the user could NOT choose a None file
 ; for the env-map file, the secondary image.
 ;
 ; The UI design for the secondary "banding image":
 ; the user must choose a file of an image instead of an open image.
 ; FUTURE: require the user to choose an open image for the secondary image.
 ;
-; The inner algorithm requires a GRAY image without an alpha.
-; FUTURE: also adapt image type by working on a copy,
-; converting image mode to GRAY, and deleting alpha.
-; For user friendliness, the filter should work on an image of any mode
-; and regardless of any alpha channels.
-;
-; The filter is generating a new image, having alpha channels.
-; Since the result image is new, the filter should not concern itself
-; whether the source image has alpha channels that might be destroyed.
+; 2. Adapt relaxed outer mode requirement to inner flat requirement.
+; Adapt means copy and flatten (delete alpha) before passing to inner.
+; The filter originally required a GRAY image without an alpha.
+; That produces an image that looks like the source image.
+; The inner algorithm also succeeds on any image mode, with or without alpha,
+; but the result is less like the source image, in shape.
+; For user friendliness, relax the requirements but retain the original effect
+; by copying and flattening whatever image is passed.
 
 (define (script-fu-sota-chrome-it mask-img mask-drawables chrome-saturation
          chrome-lightness chrome-factor env-map hc cc carve-white)
 
-  ; convert choice of secondary image file to an open image
-  (let ((banding-img  ; secondary, other image
+  (let* (
+        ; 1. convert choice of secondary image file to an open image
+        (banding-img  ; secondary, other image
           ; when user chose no env-map secondary image file
           (if (= (string-length env-map) 0)
             ; copy source image
             (car (gimp-image-duplicate mask-img))
             ; else open chosen file
-            (car (gimp-file-load RUN-NONINTERACTIVE env-map)))))
+            (car (gimp-file-load RUN-NONINTERACTIVE env-map))))
+        ; 2. copy source image, flattened
+        (copy-source-img (car (gimp-image-duplicate mask-img)))
+        ; side effect on image, not use the returned layer
+        (flat-source-layer (gimp-image-flatten copy-source-img))
+        (copy-source-drawables (cadr (gimp-image-get-layers copy-source-img))))
 
-    ; call the inner filter with adapted args
-    (chrome-it-inner mask-img mask-drawables chrome-saturation
-          chrome-lightness chrome-factor banding-img hc cc carve-white))
+    ; call inner, passing adapted args
+    (chrome-it-inner
+       copy-source-img copy-source-drawables ; adapted
+       chrome-saturation chrome-lightness chrome-factor
+       banding-img ; adapted
+       hc cc carve-white)
 
-  ; Inner deletes banding-img
+    ; Cleanup adapted images
+    ; Inner deletes banding-img
+    (gimp-image-delete copy-source-img))
 )
 
 
@@ -283,13 +306,19 @@
   )
 )
 
+; FIXME the description is confusing:
+; 1. Filter renders a new image and does not "add ... to selected region"
+; 2. It is unclear that "specified..stencil" refers to the source image
+;    and doesn't mean the secondary "Environment map"
+; 3. The original did not permit an alpha so "(or alpha)" is unclear
+; Suggest: "Renders a new image with a chrome effect on the shapes in the image."
 (script-fu-register-filter "script-fu-sota-chrome-it"
   _"Stencil C_hrome..."
   _"Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
   "Spencer Kimball"
   "Spencer Kimball"
   "1997"
-  "GRAY"
+  "*"
   SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Chrome saturation" '(-80 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome lightness"  '(-47 -100 100 1 10 0 0)
