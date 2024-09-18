@@ -25,16 +25,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-14 02:11+0000\n"
-"PO-Revision-Date: 2024-09-14 20:04+0200\n"
-"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"POT-Creation-Date: 2024-09-16 19:20+0000\n"
+"PO-Revision-Date: 2024-09-18 20:37+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Project-Style: gnome\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -1026,7 +1026,7 @@ msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "Die Kanäle unterhalb der gewählten Kanäle auswählen"
 
-#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:711
+#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:714
 msgid "Channel Attributes"
 msgstr "Kanaleigenschaften"
 
@@ -1078,24 +1078,24 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Kanal nach ganz unten absenken"
 msgstr[1] "Kanäle nach ganz unten absenken"
 
-#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:550
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:550
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
 #: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s (Kopie)"
 
-#: app/actions/channels-commands.c:421
+#: app/actions/channels-commands.c:424
 msgid "Duplicate channels"
 msgstr "Kanäle _duplizieren"
 
-#: app/actions/channels-commands.c:464
+#: app/actions/channels-commands.c:467
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "%d Kanäle entfernen"
 
-#: app/actions/channels-commands.c:508
+#: app/actions/channels-commands.c:511
 msgid "Channels to selection"
 msgstr "Auswahl aus Kanälen"
 
@@ -2582,16 +2582,12 @@ msgid "Start _GtkInspector"
 msgstr "_GtkInspector starten"
 
 #: app/actions/debug-actions.c:45
-#, fuzzy
-#| msgid "C_olor Profile"
 msgid "_Memory Profile"
-msgstr "_Farbprofil"
+msgstr "_Speicherprofil"
 
 #: app/actions/debug-actions.c:50
-#, fuzzy
-#| msgid "Panorama Projection: "
 msgid "Benchmark _Projection"
-msgstr "Panoramaabbildung: "
+msgstr "Benchmark-_Projektion"
 
 #: app/actions/debug-actions.c:51
 msgid ""
@@ -2599,6 +2595,9 @@ msgid ""
 "(render) the part that is visible in the active display, and print the "
 "result to stdout."
 msgstr ""
+"Invalidiert die gesamte Projektion, misst die Zeit, die benötigt wird, um "
+"den Teil zu validieren (darzustellen), der in der aktiven Anzeige sichtbar "
+"ist, und gibt das Ergebnis über die Standardausgabe aus."
 
 #: app/actions/debug-actions.c:58
 msgid "Show Image _Graph"
@@ -7183,25 +7182,16 @@ msgid "Set layers opacity"
 msgstr "Ebenendeckkraft festlegen"
 
 #: app/actions/layers-commands.c:1996
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layers' blend space"
-msgstr "Ebenentransparenz ändern"
+msgstr "Ebenen-Mittelungsraum festlegen"
 
 #: app/actions/layers-commands.c:2049
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer Composite Space: Auto"
 msgid "Set layers' composite space"
-msgstr "Ebenen-Kompositionsraum: Automatisch"
+msgstr "Ebenen-Kompositionsraum festlegen"
 
 #: app/actions/layers-commands.c:2102
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layers' composite mode"
-msgstr "Ebenenmodus festlegen"
+msgstr "Ebenen-Kompositionsmodus festlegen"
 
 #: app/actions/layers-commands.c:2186
 msgid "Lock alpha channels"
@@ -9182,15 +9172,12 @@ msgstr "Anker _einfügen"
 #: app/actions/vector-toolpath-actions.c:58
 msgctxt "vector-toolpath-action"
 msgid "Delete _Segment"
-msgstr "Segment _löschen"
+msgstr "_Segment löschen"
 
 #: app/actions/vector-toolpath-actions.c:62
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Render Stroke"
 msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
-msgstr "Nachziehen"
+msgstr "Nachgezogene Linie _umkehren"
 
 #: app/actions/view-actions.c:71
 msgctxt "view-action"
@@ -11088,6 +11075,10 @@ msgid ""
 "tool. If both the brush outline and pointer are disabled, the position will "
 "be indicated as unobtrusively as possibly."
 msgstr ""
+"Wenn diese Option ausgewählt ist, wird der Zeiger über dem Bild angezeigt, "
+"wenn ein Malwerkzeug verwendet wird. Wenn sowohl der Pinselumriss als auch "
+"der Zeiger deaktiviert sind, wird die Position so unauffällig wie möglich "
+"angezeigt."
 
 #: app/config/gimprc-blurbs.h:446
 msgid ""
@@ -11214,10 +11205,8 @@ msgid "Enable the Seamless Clone tool."
 msgstr "»Nahtlos klonen« Werkzeug aktivieren."
 
 #: app/config/gimprc-blurbs.h:513
-#, fuzzy
-#| msgid "Enable the MyPaint Brush tool."
 msgid "Enable the Paint Select tool."
-msgstr "Das MyPaint-Pinselwerkzeug aktivieren."
+msgstr "Das Werkzeug »Malende Auswahl« aktivieren."
 
 #: app/config/gimprc-blurbs.h:516
 msgid "What to do when the space bar is pressed in the image window."
@@ -11287,31 +11276,25 @@ msgstr "Der Name des zu verwendenden Themas."
 
 #: app/config/gimprc-blurbs.h:550
 msgid "Chooses the color scheme variant of the theme."
-msgstr ""
+msgstr "Wählt die Farbschema-Variante des Themas aus."
 
 #: app/config/gimprc-blurbs.h:556
-#, fuzzy
-#| msgid "The name of the theme to use."
 msgid "The name of the icon theme to use."
-msgstr "Der Name des zu verwendenden Themas."
+msgstr "Der Name des zu verwendenden Symbolthemas."
 
 #: app/config/gimprc-blurbs.h:559
 msgid "Override theme-set icon sizes."
-msgstr ""
+msgstr "Vom Thema festgelegte Symbolgrößen überschreiben."
 
 #: app/config/gimprc-blurbs.h:562
-#, fuzzy
-#| msgid "The name of the theme to use."
 msgid "The size of the icons to use."
-msgstr "Der Name des zu verwendenden Themas"
+msgstr "Die Größe der zu verwendenden Symbole."
 
 #: app/config/gimprc-blurbs.h:565
-#, fuzzy
-#| msgid "When enabled, the selected dynamics will be used for all tools."
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird die ausgewählte Zeichendynamik bei "
-"allen Werkzeugen verwendet."
+"Wenn diese Option ausgewählt ist, werden stilisierte Symbole bevorzugt, "
+"falls verfügbar."
 
 #: app/config/gimprc-blurbs.h:571
 msgid "Tweak font size of the graphical interface."
@@ -11506,16 +11489,12 @@ msgstr ""
 "Legt den voreingestellten Ordnerpfad für den Dialog »Pfad exportieren« fest."
 
 #: app/config/gimprc-blurbs.h:671
-#, fuzzy
-#| msgid ""
-#| "Sets the default 'Export the active path' state for the 'Export Path' "
-#| "dialog."
 msgid ""
 "Sets the default 'Export the selected paths' state for the 'Export Path' "
 "dialog."
 msgstr ""
-"Legt den voreingestellten Status für »Aktiven Pfad exportieren« für den "
-"Dialog »Pfad exportieren« fest."
+"Legt den voreingestellten Status für »Nur die ausgewählten Pfade "
+"exportieren« für den Dialog »Pfad exportieren« fest."
 
 #: app/config/gimprc-blurbs.h:674
 msgid "Sets the default folder path for the 'Import Path' dialog."
@@ -11642,12 +11621,16 @@ msgid ""
 "The first color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr ""
+"Die erste Farbe, die im Transparenz-Schachbrett verwendet wird, wenn der "
+"Transparenztyp auf »Benutzerdefinierte Farben« eingestellt ist."
 
 #: app/config/gimprc-blurbs.h:748
 msgid ""
 "The second color to use in the transparency checkerboard, when Transparency "
 "Type is set to Custom colors."
 msgstr ""
+"Die zweite Farbe, die im Transparenz-Schachbrett verwendet wird, wenn der "
+"Transparenztyp auf »Benutzerdefinierte Farben« eingestellt ist."
 
 #: app/config/gimprc-blurbs.h:752
 msgid "Sets the manner in which transparency is displayed in images."
@@ -11739,79 +11722,57 @@ msgstr "Auswahl"
 #: app/core/core-enums.c:27
 msgctxt "align-reference-type"
 msgid "Picked reference object"
-msgstr ""
+msgstr "Gewähltes Referenzobjekt"
 
 #: app/core/core-enums.c:63
-#, fuzzy
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the left"
-msgstr "An der oberen Kante des Ziels ausrichten"
+msgstr "Nach links ausrichten"
 
 #: app/core/core-enums.c:64
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip horizontally"
 msgctxt "alignment-type"
 msgid "Center horizontally"
-msgstr "Horizontal spiegeln"
+msgstr "Horizontal zentrieren"
 
 #: app/core/core-enums.c:65
-#, fuzzy
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the right"
-msgstr "An der oberen Kante des Ziels ausrichten"
+msgstr "Nach rechts ausrichten"
 
 #: app/core/core-enums.c:66
-#, fuzzy
-#| msgid "Align center of target"
 msgctxt "alignment-type"
 msgid "Align to the top"
-msgstr "Am Zentrum des Ziels ausrichten"
+msgstr "Nach oben ausrichten"
 
 #: app/core/core-enums.c:67
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip vertically"
 msgctxt "alignment-type"
 msgid "Center vertically"
-msgstr "Vertikal spiegeln"
+msgstr "Vertikal zentrieren"
 
 #: app/core/core-enums.c:68
-#, fuzzy
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the bottom"
-msgstr "An der oberen Kante des Ziels ausrichten"
+msgstr "Nach unten ausrichten"
 
 #: app/core/core-enums.c:69
-#, fuzzy
-#| msgid "Distribute targets evenly in the horizontal"
 msgctxt "alignment-type"
 msgid "Distribute anchor points horizontally evenly"
-msgstr "Ziele gleichmäßig horizontal aufteilen"
+msgstr "Ankerpunkte gleichmäßig horizontal aufteilen"
 
 #: app/core/core-enums.c:70
-#, fuzzy
-#| msgid "Distribute targets evenly in the vertical"
 msgctxt "alignment-type"
 msgid "Distribute anchor points vertically evenly"
-msgstr "Ziele gleichmäßig vertikal aufteilen"
+msgstr "Ankerpunkte gleichmäßig vertikal aufteilen"
 
 #: app/core/core-enums.c:71
-#, fuzzy
-#| msgid "Distribute horizontal centers of targets"
 msgctxt "alignment-type"
 msgid "Distribute horizontally with even horizontal gaps"
-msgstr "Horizontale Zentren der Ziele verteilen"
+msgstr "Horizontal mit gleichmäßigen horizontalen Lücken verteilen"
 
 #: app/core/core-enums.c:72
-#, fuzzy
-#| msgid "Distribute vertical centers of targets"
 msgctxt "alignment-type"
 msgid "Distribute vertically with even vertical gaps"
-msgstr "Vertikale Zentren der Ziele verteilen"
+msgstr "Vertikal mit gleichmäßigen vertikalen Lücken verteilen"
 
 #: app/core/core-enums.c:101
 msgctxt "bucket-fill-mode"
@@ -11909,12 +11870,11 @@ msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "Zu eingebautem sRGB- oder Graustufen-Profil umwandeln"
 
 #: app/core/core-enums.c:212
-#, fuzzy
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to preferred RGB color profile"
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr "In das bevorzugte RGB-Farbprofil umwandeln"
+msgstr ""
+"In das bevorzugte RGB- oder Graustufenprofil umwandeln (Vorgabe ist "
+"eingebaut)"
 
 #: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
@@ -12601,19 +12561,14 @@ msgid "Change indexed palette"
 msgstr "Indizierte Palette ändern"
 
 #: app/core/core-enums.c:1352
-#, fuzzy
-#| msgid "Set color profile"
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
-msgstr "Farbprofil festlegen"
+msgstr "Farbprofil verbergen/anzeigen"
 
 #: app/core/core-enums.c:1357
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Layer/Channel"
 msgctxt "undo-type"
 msgid "Layer/Channel format"
-msgstr "Ebene/Kanal"
+msgstr "Ebenen-/Kanalformat"
 
 #: app/core/core-enums.c:1360
 msgctxt "undo-type"
@@ -12878,26 +12833,20 @@ msgid "Modules"
 msgstr "Module"
 
 #: app/core/gimp-batch.c:69
-#, fuzzy
-#| msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgid "No batch interpreters are available. Batch mode disabled."
 msgstr ""
-"Der Interpreter »%s« ist nicht verfügbar. Der Stapelverarbeitungsmodus wurde "
-"deaktiviert."
+"Keine Stapelverarbeitungs-Interpreter verfügbar. Der "
+"Stapelverarbeitungsmodus wurde deaktiviert."
 
 #: app/core/gimp-batch.c:86
-#, fuzzy, c-format
-#| msgid "No batch interpreter specified, using the default '%s'.\n"
+#, c-format
 msgid "No batch interpreter specified, using '%s'.\n"
 msgstr ""
-"Kein Interpreter angegeben, es wird der Standardinterpreter »%s« verwendet.\n"
+"Kein Stapelverarbeitungs-Interpreter angegeben, es wird »%s« verwendet.\n"
 
 #: app/core/gimp-batch.c:93
-#, fuzzy
-#| msgid "No batch interpreter specified, using the default '%s'.\n"
 msgid "No batch interpreter specified."
-msgstr ""
-"Kein Interpreter angegeben, es wird der Standardinterpreter »%s« verwendet.\n"
+msgstr "Kein Stapelverarbeitungs-Interpreter angegeben."
 
 #: app/core/gimp-batch.c:94 app/core/gimp-batch.c:132
 msgid "Available interpreters are:"
@@ -12910,10 +12859,9 @@ msgstr ""
 
 #. EX_UNAVAILABLE - service unavailable (sysexits.h)
 #: app/core/gimp-batch.c:128
-#, fuzzy, c-format
-#| msgid "Procedure '%s' not found"
+#, c-format
 msgid "The procedure '%s' is not a valid batch interpreter."
-msgstr "Prozedur »%s« wurde nicht gefunden"
+msgstr "Die Prozedur »%s« ist kein gültiger Stapelverarbeitungs-Interpreter."
 
 #: app/core/gimp-batch.c:131
 msgid "Batch mode disabled."
@@ -12958,20 +12906,13 @@ msgstr[0] "Ebene ausschneiden"
 msgstr[1] "%d Ebenen ausschneiden"
 
 #: app/core/gimp-edit.c:238
-#, fuzzy
-#| msgid "Cannot float selection because the selected region is empty."
 msgid "Cannot cut because the selected region is empty."
 msgstr ""
-"Die Auswahl konnte nicht schwebend gemacht werden, weil der ausgewählte "
-"Bereich leer ist."
+"Es kann nicht geschnitten werden, weil der ausgewählte Bereich leer ist."
 
 #: app/core/gimp-edit.c:241
-#, fuzzy
-#| msgid "Cannot float selection because the selected region is empty."
 msgid "Cannot copy because the selected region is empty."
-msgstr ""
-"Die Auswahl konnte nicht schwebend gemacht werden, weil der ausgewählte "
-"Bereich leer ist."
+msgstr "Es kann nicht kopiert werden, weil der ausgewählte Bereich leer ist."
 
 #: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
 msgid "Pasted Layer"
@@ -12985,21 +12926,25 @@ msgstr "Zwischenablage"
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
+"AppData der Erweiterung muss vom Typ »addon« sein, stattdessen wurde »%s« "
+"gefunden."
 
 #: app/core/gimpextension.c:382
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
-msgstr ""
+msgstr "AppData der Erweiterung muss »org.gimp.GIMP« erweitern."
 
 #: app/core/gimpextension.c:396
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr ""
+"AppData-Kennung (»%s«) und Ordner (»%s«) der Erweiterung müssen gleich sein."
 
 #: app/core/gimpextension.c:411
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr ""
+"AppData der Erweiterung muss eine Version in einem <release>-Tag angeben."
 
 #: app/core/gimpextension.c:445
 #, c-format
@@ -13021,10 +12966,9 @@ msgid "'%s' is not a relative path."
 msgstr "»%s« ist kein relativer Pfad."
 
 #: app/core/gimpextension.c:789
-#, fuzzy, c-format
-#| msgid "'%s:' is not a valid URI scheme"
+#, c-format
 msgid "'%s' is not a child of the extension."
-msgstr "»%s« ist kein gültiges Adressschema"
+msgstr "»%s« ist kein Kind der Erweiterung."
 
 #: app/core/gimpextension.c:803
 #, c-format
@@ -13050,7 +12994,7 @@ msgstr "Erweiterung »%s« wird übersprungen: %s\n"
 #: app/core/gimpextensionmanager.c:1061
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
-msgstr ""
+msgstr "Unbekannte Datei »%s« im Erweiterungsordner wird übersprungen.\n"
 
 #: app/core/gimp-gradients.c:65
 msgid "Custom"
@@ -13165,7 +13109,7 @@ msgstr "Für diese Operation sind keine Muster vorhanden."
 #: app/core/gimp-utils.c:1452
 #, c-format
 msgid "This parser does not support imbricated lists."
-msgstr ""
+msgstr "Dieser Parser unterstützt keine überlappenden Listen."
 
 #: app/core/gimp-utils.c:1475
 #, c-format
@@ -13680,11 +13624,7 @@ msgid "Loading fonts (this may take a while...)"
 msgstr "Schriften werden geladen (dies kann einen Augenblick dauern …)"
 
 #: app/core/gimpdatafactory.c:993
-#, fuzzy, c-format
-#| msgid ""
-#| "You have a writable data folder configured (%s), but this folder does not "
-#| "exist. Please create the folder or fix your configuration in the "
-#| "Preferences dialog's 'Folders' section."
+#, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder could not "
 "be created: \"%s\"\n"
@@ -13693,8 +13633,9 @@ msgid ""
 "section."
 msgstr ""
 "Sie haben einen beschreibbaren Datenordner konfiguriert (%s), aber dieser "
-"Ordner existiert nicht. Bitte legen Sie den Ordner an oder korrigieren Sie "
-"Ihre Konfiguration im Abschnitt »Ordner« im Einstellungen-Dialog."
+"Ordner konnte nicht erstellt werden: »%s«\n"
+"Bitte überprüfen Sie Ihre Konfiguration im Abschnitt »Ordner« im "
+"Einstellungen-Dialog."
 
 #: app/core/gimpdatafactory.c:1002
 #, c-format
@@ -13889,12 +13830,9 @@ msgid "Fill with Background Color"
 msgstr "Mit Hintergrundfarbe füllen"
 
 #: app/core/gimpfilloptions.c:408
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Fill with Solid Color"
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
-msgstr "Mit reiner Farbe füllen"
+msgstr "Mit Mittelgrau-Farbe (CIELAB) füllen"
 
 #: app/core/gimpfilloptions.c:414
 msgctxt "undo-type"
@@ -14089,22 +14027,19 @@ msgid "Masks on layer groups were added in %s"
 msgstr "Masken auf Ebenengruppen wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2906
-#, fuzzy, c-format
-#| msgid "Masks on layer groups were added in %s"
+#, c-format
 msgid "Position locks on layer groups were added in %s"
-msgstr "Masken auf Ebenengruppen wurden in %s hinzugefügt"
+msgstr "Positionssperren auf Ebenengruppen wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2913
-#, fuzzy, c-format
-#| msgid "Masks on layer groups were added in %s"
+#, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
-msgstr "Masken auf Ebenengruppen wurden in %s hinzugefügt"
+msgstr "Alphakanal-Sperren auf Ebenengruppen wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2921 app/core/gimpimage.c:2957
-#, fuzzy, c-format
-#| msgid "Layer groups were added in %s"
+#, c-format
 msgid "Visibility locks were added in %s"
-msgstr "Ebenengruppen wurden in %s hinzugefügt"
+msgstr "Sichtbarkeitssperren wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2932
 #, c-format
@@ -14113,10 +14048,9 @@ msgstr ""
 "Das Format der Schriftinformationen wurde in der Textebene geändert zu %s"
 
 #: app/core/gimpimage.c:2939
-#, fuzzy, c-format
-#| msgid "Layer groups were added in %s"
+#, c-format
 msgid "Layer effects were added in %s"
-msgstr "Ebenengruppen wurden in %s hinzugefügt"
+msgstr "Ebeneneffekte wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2966
 #, c-format
@@ -14124,18 +14058,14 @@ msgid "Multiple path selection was added in %s"
 msgstr "Die Auswahl mehrerer Pfade wurde in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2978
-#, fuzzy, c-format
-#| msgid "Support for image files larger than 4GB was added in %s"
+#, c-format
 msgid "Storing color tags in path was added in %s"
-msgstr ""
-"Unterstützung für Bilddateien, die größer als 4 GB sind, wurde in %s "
-"hinzugefügt"
+msgstr "Das Speichern von Farbmarkierungen in Pfaden wurde in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2985
-#, fuzzy, c-format
-#| msgid "Masks on layer groups were added in %s"
+#, c-format
 msgid "Storing locks in path was added in %s"
-msgstr "Masken auf Ebenengruppen wurden in %s hinzugefügt"
+msgstr "Das Speichern von Sperren in Pfaden wurde in %s hinzugefügt"
 
 #: app/core/gimpimage.c:2999
 #, c-format
@@ -14165,10 +14095,9 @@ msgid "Multiple layer selection was added in %s"
 msgstr "Die Auswahl mehrerer Ebenen wurde in %s hinzugefügt"
 
 #: app/core/gimpimage.c:3056
-#, fuzzy, c-format
-#| msgid "On-canvas gradient editing"
+#, c-format
 msgid "Off-canvas guides added in %s"
-msgstr "Farbverlaufsbearbeitung direkt auf der Leinwand"
+msgstr "Hilfslinien außerhalb der Leinwand wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:3067
 #, c-format
@@ -14758,12 +14687,9 @@ msgid "Delete Layer Masks"
 msgstr "Ebenenmasken löschen"
 
 #: app/core/gimplayer.c:2313
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Enable Layer Mask"
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
-msgstr "Ebenenmaske aktivieren"
+msgstr "Ebenenmasken aktivieren"
 
 #: app/core/gimplayer.c:2314
 msgctxt "undo-type"
@@ -14791,25 +14717,16 @@ msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
 #: app/core/gimplayer.c:2708
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Set layer's blend space"
-msgstr "Ebenentransparenz ändern"
+msgstr "Ebenen-Mittelungsraum festlegen"
 
 #: app/core/gimplayer.c:2755
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer Composite Space: Auto"
 msgid "Set layer's composite space"
-msgstr "Ebenen-Kompositionsraum: Automatisch"
+msgstr "Ebenen-Kompositionsraum festlegen"
 
 #: app/core/gimplayer.c:2802
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer mode"
 msgid "Set layer's composite mode"
-msgstr "Ebenenmodus festlegen"
+msgstr "Ebenen-Kompositionsmodus festlegen"
 
 #: app/core/gimplayermask.c:87
 msgctxt "undo-type"
@@ -14918,12 +14835,11 @@ msgstr ""
 "Der Standardwert wird verwendet."
 
 #: app/core/gimppalette-load.c:203
-#, fuzzy, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
+#, c-format
 msgid "Reading palette file '%s': red component out of range in line %d."
 msgstr ""
-"Fehler beim Laden der Palette »%s«: RGB-Wert in Zeile %d außerhalb des "
-"Wertebereiches."
+"Fehler beim Laden der Palette »%s«: Rot-Komponente in Zeile %d außerhalb des "
+"Wertebereichs."
 
 #: app/core/gimppalette-load.c:211
 #, c-format
@@ -14931,12 +14847,11 @@ msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Fehler beim Laden der Palette »%s«: Keine Rot-Komponente in Zeile %d."
 
 #: app/core/gimppalette-load.c:220
-#, fuzzy, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
+#, c-format
 msgid "Reading palette file '%s': green component out of range in line %d."
 msgstr ""
-"Fehler beim Laden der Palette »%s«: RGB-Wert in Zeile %d außerhalb des "
-"Wertebereiches."
+"Fehler beim Laden der Palette »%s«: Grün-Komponente in Zeile %d außerhalb "
+"des Wertebereichs."
 
 #: app/core/gimppalette-load.c:228
 #, c-format
@@ -14944,12 +14859,11 @@ msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Fehler beim Laden der Palette »%s«: Keine Grün-Komponente in Zeile %d."
 
 #: app/core/gimppalette-load.c:237
-#, fuzzy, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
+#, c-format
 msgid "Reading palette file '%s': blue component out of range in line %d."
 msgstr ""
-"Fehler beim Laden der Palette »%s«: RGB-Wert in Zeile %d außerhalb des "
-"Wertebereiches."
+"Fehler beim Laden der Palette »%s«: Blau-Komponente in Zeile %d außerhalb "
+"des Wertebereichs."
 
 #: app/core/gimppalette-load.c:245
 #, c-format
@@ -15759,18 +15673,12 @@ msgid "Convert the image to the built-in sRGB color profile?"
 msgstr "Soll das Bild in das eingebaute sRGB-Farbprofil umgewandelt werden?"
 
 #: app/dialogs/color-profile-import-dialog.c:107
-#, fuzzy
-#| msgctxt "color-profile-policy"
-#| msgid "Keep embedded profile"
 msgid "Keep the Embedded Working Space?"
-msgstr "Eingebettetes Profil behalten"
+msgstr "Den eingebetteten Arbeitsbereich beibehalten?"
 
 #: app/dialogs/color-profile-import-dialog.c:110
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Remove the image's color profile"
 msgid "Keep the image's color profile"
-msgstr "Das Farbprofil des Bildes entfernen"
+msgstr "Das Farbprofil des Bildes beibehalten"
 
 #: app/dialogs/color-profile-import-dialog.c:115
 msgid "_Keep"
@@ -15786,10 +15694,8 @@ msgid "The image '%s' has an embedded color profile"
 msgstr "Das Bild »%s« enthält ein eingebettetes Farbprofil"
 
 #: app/dialogs/color-profile-import-dialog.c:151
-#, fuzzy
-#| msgid "Simulation profile"
 msgid "Built-in Profile"
-msgstr "Simulationsprofil"
+msgstr "Eingebautes Profil"
 
 #: app/dialogs/color-profile-import-dialog.c:161
 msgid "Convert the image to the preferred grayscale color profile?"
@@ -15812,6 +15718,8 @@ msgstr "_Nicht wieder nachfragen"
 #: app/dialogs/color-profile-import-dialog.c:224
 msgid "Your choice can later be edited in Preferences > Color Management"
 msgstr ""
+"Sie können Ihre Auswahl nachträglich unter Einstellungen > Farbverwaltung "
+"ändern."
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -16006,7 +15914,7 @@ msgstr "Erweiterung suchen:"
 
 #: app/dialogs/extensions-dialog.c:175
 msgid "Search extensions matching these keywords"
-msgstr ""
+msgstr "Erweiterungen mit diesen Schlagwörtern suchen"
 
 #: app/dialogs/file-open-dialog.c:260
 msgid "Open layers"
@@ -16250,17 +16158,14 @@ msgid "Configure Input Devices"
 msgstr "Eingabegeräte konfigurieren"
 
 #: app/dialogs/input-devices-dialog.c:114
-#, fuzzy
-#| msgid "Resource configuration"
 msgid "Reset Input Device Configuration"
-msgstr "Ressourcenkonfiguration"
+msgstr "Eingabegerät-Einstellungen zurücksetzen"
 
 #: app/dialogs/input-devices-dialog.c:132
-#, fuzzy
-#| msgid "Do you really want to reset all filters to default values?"
 msgid "Do you really want to reset all input devices to default configuration?"
 msgstr ""
-"Möchten Sie wirklich alle Filter auf Ihre Standardeinstellungen zurücksetzen?"
+"Möchten Sie wirklich alle Eingabegeräte auf Ihre Standardeinstellungen "
+"zurücksetzen?"
 
 #: app/dialogs/item-options-dialog.c:207
 msgid "Color tag:"
@@ -16436,10 +16341,8 @@ msgid "Rotate Image?"
 msgstr "Soll das Bild gedreht werden?"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:101
-#, fuzzy
-#| msgid "Apply effect during motion"
 msgid "Apply metadata rotation"
-msgstr "Effekt bei Bewegungen anwenden"
+msgstr "Metadaten-Drehung anwenden"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:106
 msgid "_Keep Original"
@@ -16451,10 +16354,9 @@ msgid "_Rotate"
 msgstr "_Drehen"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:124
-#, fuzzy, c-format
-#| msgid "This image contains Exif orientation metadata."
+#, c-format
 msgid "The image '%s' contains Exif orientation metadata"
-msgstr "Dieses Bild enthält Exif-Metadaten zur Ausrichtung."
+msgstr "Das Bild »%s« enthält Exif-Metadaten zur Ausrichtung"
 
 #: app/dialogs/metadata-rotation-import-dialog.c:182
 msgid "Original"
@@ -16586,10 +16488,9 @@ msgid "The selected source contains no colors."
 msgstr "Die ausgewählte Quelle enthält keine Farben."
 
 #: app/dialogs/palette-import-dialog.c:452
-#, fuzzy, c-format
-#| msgid "There is no palette to import."
+#, c-format
 msgid "The palette was not imported: %s"
-msgstr "Es gibt keine Palette zum Importieren."
+msgstr "Die Palette wurden nicht importiert: %s"
 
 #: app/dialogs/palette-import-dialog.c:464
 msgid "There is no palette to import."
@@ -18959,12 +18860,12 @@ msgstr "Eigene Aktion"
 #: app/display/display-enums.c:624
 msgctxt "modifier-action"
 msgid "Change brush size in canvas pixels"
-msgstr ""
+msgstr "Pinselgröße in Leinwandpixeln ändern"
 
 #: app/display/display-enums.c:625
 msgctxt "modifier-action"
 msgid "Change brush radius' size in canvas pixels"
-msgstr ""
+msgstr "Pinselradiusgröße in Leinwandpixeln ändern"
 
 #: app/display/display-enums.c:626
 msgctxt "modifier-action"
@@ -19185,17 +19086,12 @@ msgid "Layer Select"
 msgstr "Ebenenauswahl"
 
 #: app/display/gimpdisplayshell-layer-select.c:276
-#, fuzzy
-#| msgctxt "line-art-source"
-#| msgid "Layer below the active one"
 msgid "Layer Selection Moved Down"
-msgstr "Ebene unterhalb der aktiven Ebene"
+msgstr "Ebenenauswahl nach unten verschoben"
 
 #: app/display/gimpdisplayshell-layer-select.c:277
-#, fuzzy
-#| msgid "Layer Select"
 msgid "Layer Selection Moved Up"
-msgstr "Ebenenauswahl"
+msgstr "Ebenenauswahl nach oben verschoben"
 
 #: app/display/gimpdisplayshell-rotate-dialog.c:115
 msgid "Rotate View"
@@ -19267,10 +19163,9 @@ msgid "pixels"
 msgstr "Pixel"
 
 #: app/display/gimpmodifiersmanager.c:232
-#, fuzzy, c-format
-#| msgid "invalid value '%s' for icon type"
+#, c-format
 msgid "invalid value '%s' for contextual action"
-msgstr "ungültiger Wert »%s« für Symboltyp"
+msgstr "ungültiger Wert »%s« für Kontextaktion"
 
 #: app/display/gimpstatusbar.c:430
 msgid "Cancel"
@@ -19281,6 +19176,10 @@ msgid ""
 "Toggle soft-proofing view when a soft-proofing profile is set\n"
 "Right-click to show the soft-proofing options"
 msgstr ""
+"Softproofing-Ansicht umschalten, wenn ein Softproofing-Profil eingestellt "
+"ist\n"
+"Klicken Sie mit der rechten Maustaste, um die Softproofing-Einstellungen "
+"anzuzeigen"
 
 #: app/display/gimpstatusbar.c:498
 msgid "_Proof Colors"
@@ -19788,12 +19687,12 @@ msgstr "Absolute Pfade sind in der GIMP-Erweiterung »%s« untersagt: %s"
 #: app/file-data/file-data-gex.c:157
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr ""
+msgstr "Datei im Wurzelordner der GIMP-Erweiterung »%s« nicht erlaubt: %s"
 
 #: app/file-data/file-data-gex.c:168
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
-msgstr ""
+msgstr "Datei nicht in GIMP-Erweiterung »%s« Ordner-Kennung »%s«: %s"
 
 #: app/file-data/file-data-gex.c:264 app/file-data/file-data-gex.c:411
 #: app/file-data/file-data-gex.c:429 app/file-data/file-data-gex.c:446
@@ -19807,6 +19706,8 @@ msgstr ""
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr ""
+"GIMP-Erweiterung »%s« Ordner (%s) unterscheidet sich von AppStream-Kennung: "
+"%s"
 
 #: app/file-data/file-data-gex.c:308
 #, c-format
@@ -20526,10 +20427,8 @@ msgid "Preserve Luminosity"
 msgstr "Leuchtstärke erhalten"
 
 #: app/operations/gimpcurvesconfig.c:106 app/operations/gimplevelsconfig.c:111
-#, fuzzy
-#| msgid "Work on linear RGB"
 msgid "Work on linear or perceptual RGB"
-msgstr "Mit linearem RGB arbeiten"
+msgstr "Mit linearem oder wahrnehmungsgemäßen RGB arbeiten"
 
 #: app/operations/gimpcurvesconfig.c:113 app/operations/gimplevelsconfig.c:118
 msgid "Linear"
@@ -20809,6 +20708,8 @@ msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
 "gimp-light.css nor gimp.css."
 msgstr ""
+"Ungültiges Thema: Ordner »%s« enthält weder gimp-dark.css, gimp-gray.css, "
+"gimp-light.css noch gimp.css."
 
 #: app/menus/shortcuts-rc.c:137
 #, c-format
@@ -20816,6 +20717,8 @@ msgid ""
 "Wrong shortcutsrc (%s) file format version: %d (expected: %d). We tried to "
 "load shortcuts as well as possible.\n"
 msgstr ""
+"Falsche shortcutsrc (%s) Dateiformatversion: %d (erwartet: %d). Es wurde "
+"versucht, Tastenkombinationen so gut wie möglich zu laden.\n"
 
 #: app/paint/gimpairbrush.c:80 app/tools/gimpairbrushtool.c:69
 msgid "Airbrush"
@@ -21219,6 +21122,8 @@ msgstr "Bitte wählen Sie zuerst ein Bild als Quelle."
 #: app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr ""
+"Die Ausrichtung »Registriert« kann nicht auf mehreren Zeichenflächen "
+"zeichnen."
 
 #: app/paint/gimpsourceoptions.c:102 app/tools/gimpcloneoptions-gui.c:301
 #: app/tools/gimphealtool.c:106
@@ -21330,7 +21235,7 @@ msgstr "Schwellwert"
 
 #: app/pdb/edit-cmds.c:95 app/pdb/edit-cmds.c:387 app/pdb/edit-cmds.c:472
 msgid "All specified drawables must belong to the same image."
-msgstr ""
+msgstr "Alle angegebenen Zeichenflächen müssen zum selben Bild gehören."
 
 #: app/pdb/floating-sel-cmds.c:71
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -21373,11 +21278,10 @@ msgstr "%s darf nicht leer sein"
 #.
 #: app/pdb/gimppdb-utils.c:154 app/pdb/gimppdb-utils.c:224
 #: app/pdb/gimppdb-utils.c:289
-#, fuzzy, c-format
-#| msgid "Brush '%s' not found"
+#, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
-msgstr "Pinsel »%s« wurde nicht gefunden"
+msgstr "%s »%s« wurde nicht gefunden"
 
 #. TRANSLATOR: the first %s is a data label from the
 #. * PDB-error-data-label context. The second %s is a data
@@ -21385,11 +21289,10 @@ msgstr "Pinsel »%s« wurde nicht gefunden"
 #.
 #: app/pdb/gimppdb-utils.c:169 app/pdb/gimppdb-utils.c:234
 #: app/pdb/gimppdb-utils.c:299
-#, fuzzy, c-format
-#| msgid "Brush '%s' is not editable"
+#, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
-msgstr "Pinsel »%s« ist nicht veränderbar"
+msgstr "%s »%s« ist nicht veränderbar"
 
 #. TRANSLATOR: the first %s is a data label from the
 #. * PDB-error-data-label context. The second %s is a data
@@ -21397,11 +21300,10 @@ msgstr "Pinsel »%s« ist nicht veränderbar"
 #.
 #: app/pdb/gimppdb-utils.c:180 app/pdb/gimppdb-utils.c:245
 #: app/pdb/gimppdb-utils.c:310
-#, fuzzy, c-format
-#| msgid "Brush '%s' is not renamable"
+#, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
-msgstr "Pinsel »%s« lässt sich nicht umbenennen"
+msgstr "%s »%s« lässt sich nicht umbenennen"
 
 #: app/pdb/gimppdb-utils.c:333
 #, c-format
@@ -21541,24 +21443,19 @@ msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Bild »%s« (%d) besitzt keinen Prüfpunkt mit der Kennung %d"
 
 #: app/pdb/gimppdb-utils.c:812
-#, fuzzy, c-format
-#| msgid "Vectors object %d does not contain stroke with ID %d"
+#, c-format
 msgid "Path object %d does not contain stroke with ID %d"
-msgstr "Das Vektorobjekt %d besitzt keine Linie mit der Kennung %d"
+msgstr "Das Pfadobjekt %d besitzt keine Linie mit der Kennung %d"
 
 #: app/pdb/gimppdb-utils.c:828
-#, fuzzy, c-format
-#| msgid "Procedure '%s' not found"
+#, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
-msgstr "Prozedur »%s« wurde nicht gefunden"
+msgstr "Prozedurname »%s« ist keine kanonische Kennung"
 
 #: app/pdb/gimppdb-utils.c:889
-#, fuzzy
-#| msgctxt "brushes-action"
-#| msgid "_Delete Brush"
 msgctxt "PDB-error-data-label"
 msgid "Generated brush"
-msgstr "Pinsel _löschen"
+msgstr "Erzeugter Pinsel"
 
 #: app/pdb/gimppdb-utils.c:891
 msgctxt "PDB-error-data-label"
@@ -21699,7 +21596,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Die Prozedur »%s« wurde mit einer ungültige ID für das Argument »%s«. "
+"Die Prozedur »%s« wurde mit einer ungültigen ID für das Argument »%s«. "
 "aufgerufen. Sehr wahrscheinlich versucht das Plugin eine Ebene zu "
 "bearbeiten, die nicht mehr existiert."
 
@@ -21724,52 +21621,40 @@ msgstr ""
 "welches nicht länger existiert."
 
 #: app/pdb/gimpprocedure.c:961
-#, fuzzy, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
+#, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_pixel()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow pixel unit."
 msgstr ""
-"Die Prozedur »%s« hat »%s« als Rückgabewert »%s« (Nr. %d, Typ %s) "
-"zurückgegeben. Dieser liegt außerhalb des Wertebereiches."
+"Die Prozedur »%s« hat »gimp_unit_pixel()« als GimpUnit-Rückgabewert #%d »%s« "
+"zurückgegeben. Dieser Rückgabewert erlaubt keine Pixeleinheit."
 
 #: app/pdb/gimpprocedure.c:970
-#, fuzzy, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
+#, c-format
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
 msgstr ""
-"Die Prozedur »%s« hat »%s« als Rückgabewert »%s« (Nr. %d, Typ %s) "
-"zurückgegeben. Dieser liegt außerhalb des Wertebereiches."
+"Die Prozedur »%s« hat »gimp_unit_percent()« als GimpUnit-Rückgabewert #%d "
+"»%s« zurückgegeben. Dieser Rückgabewert erlaubt keine prozentuale Einheit."
 
 #: app/pdb/gimpprocedure.c:982
-#, fuzzy, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
+#, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_pixel()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow pixel unit."
 msgstr ""
-"Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, "
-"Typ %s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
+"Die Prozedur »%s« wurde mit »gimp_unit_pixel()« für als GimpUnit-Argument "
+"#%d »%s« aufgerufen. Dieses Argument erlaubt keine Pixeleinheit."
 
 #: app/pdb/gimpprocedure.c:992
-#, fuzzy, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
+#, c-format
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr ""
-"Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, "
-"Typ %s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
+"Die Prozedur »%s« wurde mit »gimp_unit_percent()« für als GimpUnit-Argument "
+"#%d »%s« aufgerufen. Dieses Argument erlaubt keine prozentuale Einheit."
 
 #: app/pdb/gimpprocedure.c:1012
 #, c-format
@@ -21790,22 +21675,20 @@ msgstr ""
 "Typ %s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
 
 #: app/pdb/gimpprocedure.c:1082
-#, fuzzy, c-format
-#| msgid "Procedure '%s' returned no return values"
+#, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr "Prozedur »%s« hat sich ohne Rückgabewerte beendet"
+msgstr ""
+"Die Prozedur »%s« lieferte eine ungültige UTF-8-Zeichenkette für das "
+"Argument »%s«."
 
 #: app/pdb/gimpprocedure.c:1092
-#, fuzzy, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with a wrong value type for argument '%s' "
-#| "(#%d). Expected %s, got %s."
+#, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. "
-"%d) aufgerufen. %s erwartet, %s erhalten."
+"Die Prozedur »%s« wurde mit einer ungültigen UTF-8-Zeichenkette für das "
+"Argument »%s« aufgerufen."
 
 #: app/pdb/image-cmds.c:2670
 msgid ""
@@ -21874,10 +21757,9 @@ msgid "Extend path stroke"
 msgstr "Nachgezogenen Pfad erweitern"
 
 #: app/pdb/pdb-cmds.c:1183 app/pdb/pdb-cmds.c:1225
-#, fuzzy, c-format
-#| msgid "Procedure '%s' not found"
+#, c-format
 msgid "Data label '%s' is not a canonical identifier"
-msgstr "Prozedur »%s« wurde nicht gefunden"
+msgstr "Datenbeschriftung »%s« ist keine kanonische Kennung"
 
 #: app/pdb/plug-in-compat-cmds.c:272
 msgctxt "undo-type"
@@ -22238,10 +22120,9 @@ msgid "Wind"
 msgstr "Wind"
 
 #: app/pdb/resource-cmds.c:467
-#, fuzzy, c-format
-#| msgid "Palette '%s' is not renamable"
+#, c-format
 msgid "Resource '%s' is not renamable"
-msgstr "Palette »%s« lässt sich nicht umbenennen"
+msgstr "Ressource »%s« lässt sich nicht umbenennen"
 
 #: app/pdb/text-layer-cmds.c:98
 #, c-format
@@ -22357,11 +22238,13 @@ msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr ""
+"Potentielles Plugin »%s« wird übersprungen: Plugins müssen in Unterordnern "
+"installiert werden.\n"
 
 #: app/plug-in/gimppluginmanager-restore.c:365
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
-msgstr ""
+msgstr "Unbekannte Datei »%s« im Plugin-Ordner wird übersprungen.\n"
 
 #: app/plug-in/gimppluginmanager-restore.c:412
 msgid "Resource configuration"
@@ -22935,21 +22818,19 @@ msgid "Fixed"
 msgstr "Fest"
 
 #: app/text/text-enums.c:54
-#, fuzzy
-#| msgid "_Fill"
 msgctxt "text-outline"
 msgid "Filled"
-msgstr "_Füllen"
+msgstr "Ausgefüllt"
 
 #: app/text/text-enums.c:55
 msgctxt "text-outline"
 msgid "Outlined"
-msgstr ""
+msgstr "Umrissen"
 
 #: app/text/text-enums.c:56
 msgctxt "text-outline"
 msgid "Outlined and filled"
-msgstr ""
+msgstr "Umrissen und ausgefüllt"
 
 #: app/tools/gimpairbrushtool.c:70
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
@@ -22964,10 +22845,8 @@ msgid "Relative to"
 msgstr "Relativ zu"
 
 #: app/tools/gimpalignoptions.c:151
-#, fuzzy
-#| msgid "Reference image object a layer will be aligned on"
 msgid "Reference object targets will be aligned on"
-msgstr "Referenzbildobjekt, auf dem eine Ebene ausgerichtet wird"
+msgstr "Referenzobjekt, auf das Ziele ausgerichtet werden"
 
 #: app/tools/gimpalignoptions.c:158
 msgid "Selected layers"
@@ -22975,7 +22854,7 @@ msgstr "Gewählte Ebenen"
 
 #: app/tools/gimpalignoptions.c:159
 msgid "Selected layers will be aligned or distributed by the tool"
-msgstr ""
+msgstr "Ausgewählte Ebenen werden vom Werkzeug ausgerichtet oder verteilt"
 
 #: app/tools/gimpalignoptions.c:164
 msgid "Selected paths"
@@ -22983,7 +22862,7 @@ msgstr "Gewählte Pfade"
 
 #: app/tools/gimpalignoptions.c:165
 msgid "Selected paths will be aligned or distributed by the tool"
-msgstr ""
+msgstr "Ausgewählte Pfade werden vom Werkzeug ausgerichtet oder verteilt"
 
 #: app/tools/gimpalignoptions.c:170
 #, fuzzy
@@ -23004,11 +22883,8 @@ msgid "Targets"
 msgstr "Ziele"
 
 #: app/tools/gimpalignoptions.c:409
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Set a color profile on the image"
 msgid "Set anchor point of targets"
-msgstr "Ein Farbprofil für das Bild festlegen"
+msgstr "Ankerpunkte von Zielen festlegen"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:428
@@ -23060,27 +22936,23 @@ msgid "Distribute anchor points of targets evenly in the horizontal"
 msgstr "Ankerpunkte der Ziele gleichmäßig horizontal aufteilen"
 
 #: app/tools/gimpalignoptions.c:533
-#, fuzzy
-#| msgid "Distribute horizontal centers of targets"
 msgid "Distribute horizontally with even horizontal gaps"
-msgstr "Horizontale Zentren der Ziele verteilen"
+msgstr "Horizontal mit gleichmäßigen horizontalen Lücken verteilen"
 
 #: app/tools/gimpalignoptions.c:542
 msgid "Distribute anchor points of targets evenly in the vertical"
 msgstr "Ankerpunkte der Ziele gleichmäßig vertikal aufteilen"
 
 #: app/tools/gimpalignoptions.c:545
-#, fuzzy
-#| msgid "Distribute vertical centers of targets"
 msgid "Distribute vertically with even vertical gaps"
-msgstr "Vertikale Zentren der Ziele verteilen"
+msgstr "Vertikal mit gleichmäßigen vertikalen Lücken verteilen"
 
 #: app/tools/gimpalignoptions.c:796
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 Hilfslinie wird ausgerichtet oder verteilt"
+msgstr[1] "%d Hilfslinien werden ausgerichtet oder verteilt"
 
 #: app/tools/gimpalignoptions.c:822
 #, c-format
@@ -23098,10 +22970,8 @@ msgid "Reference path: %s"
 msgstr "Referenzpfad: %s"
 
 #: app/tools/gimpalignoptions.c:831
-#, fuzzy
-#| msgid "Preferences"
 msgid "Reference guide"
-msgstr "Einstellungen"
+msgstr "Referenzhilfslinie"
 
 #: app/tools/gimpaligntool.c:132
 msgid "Align and Distribute"
@@ -23142,18 +23012,18 @@ msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
 msgstr ""
+"Klicken Sie auf eine Hilfslinie, um sie den auszurichtenden Objekten "
+"hinzuzufügen, klicken Sie auf eine andere Stelle, um alle Hilfslinien "
+"abzuwählen"
 
 #: app/tools/gimpaligntool.c:583
-#, fuzzy
-#| msgid "Click to add this guide to the list"
 msgid "Click to select this guide for alignment"
-msgstr "Klicken Sie, um diese Hilfslinie zur Liste hinzuzufügen"
+msgstr "Klicken Sie, um diese Hilfslinie zur Ausrichtung zu wählen"
 
 #: app/tools/gimpaligntool.c:588
-#, fuzzy
-#| msgid "Click to add this guide to the list"
 msgid "Click to add this guide to the list of objects to align"
-msgstr "Klicken Sie, um diese Hilfslinie zur Liste hinzuzufügen"
+msgstr ""
+"Klicken Sie, um diese Hilfslinie den auszurichtenden Objekten hinzuzufügen"
 
 #: app/tools/gimpbrightnesscontrasttool.c:96
 msgid "Brightness-Contrast"
@@ -23245,17 +23115,15 @@ msgstr "Ränder nachziehen"
 
 #: app/tools/gimpbucketfilloptions.c:254
 msgid "Stroke fill borders with last stroke options"
-msgstr ""
+msgstr "Ränder mit den zuletzt verwendeten Einstellungen nachziehen"
 
 #: app/tools/gimpbucketfilloptions.c:260
-#, fuzzy
-#| msgid "Stroke Path"
 msgid "Stroke tool"
-msgstr "Pfad nachziehen"
+msgstr "Nachziehen-Werkzeug"
 
 #: app/tools/gimpbucketfilloptions.c:261
 msgid "The tool to stroke the fill borders with"
-msgstr ""
+msgstr "Das Werkzeug, mit dem die Ränder nachgezogen werden sollen"
 
 #: app/tools/gimpbucketfilloptions.c:266
 #, fuzzy
@@ -23292,6 +23160,8 @@ msgstr "Kriterium zur Bestimmung der Farbähnlichkeit"
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
 msgstr ""
+"Nicht-transparente Pixel werden als Liniengrafik statt als Pixel mit "
+"niedriger Leuchtkraft betrachtet"
 
 #: app/tools/gimpbucketfilloptions.c:633
 #, fuzzy
@@ -23332,7 +23202,7 @@ msgstr "(wird berechnet …)"
 
 #: app/tools/gimpbucketfilloptions.c:773
 msgid "Detect opacity rather than grayscale"
-msgstr ""
+msgstr "Deckkraft statt Graustufen erkennen"
 
 #. Line Art Closure: frame label
 #: app/tools/gimpbucketfilloptions.c:788
@@ -23372,10 +23242,8 @@ msgstr ""
 #: app/tools/gimpoffsettool.c:190 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
 #: app/tools/gimptransformgridtool.c:351
-#, fuzzy
-#| msgid "Move the selected filter up"
 msgid "No selected drawables."
-msgstr "Den gewählten Filter nach oben verschieben"
+msgstr "Keine ausgewählten Zeichenflächen."
 
 #: app/tools/gimpbucketfilltool.c:618 app/tools/gimpforegroundselecttool.c:307
 #: app/tools/gimppaintselecttool.c:380
@@ -23384,10 +23252,8 @@ msgstr "Die aktive Ebene ist nicht sichtbar."
 
 #: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1310
 #: app/tools/gimpgradienttool.c:283 app/tools/gimpmovetool.c:349
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "The selected layer's pixels are locked."
-msgstr "Die Pixel der aktiven Ebene sind gesperrt."
+msgstr "Die Pixel der ausgewählten Ebene sind gesperrt."
 
 #: app/tools/gimpbucketfilltool.c:634
 msgid "No valid line art source selected."
@@ -23443,19 +23309,17 @@ msgstr "_Käfigtransformation"
 #: app/tools/gimpcagetool.c:229
 msgid "Cannot modify multiple layers. Select only one layer."
 msgstr ""
+"Es können nicht mehrere Ebenen geändert werden. Wählen Sie nur eine Ebene "
+"aus."
 
 #: app/tools/gimpcagetool.c:250 app/tools/gimppainttool.c:337
 #: app/tools/gimpwarptool.c:810
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "The selected item's pixels are locked."
-msgstr "Die Pixel der aktiven Ebene sind gesperrt."
+msgstr "Die Pixel des ausgewählten Objekts sind gesperrt."
 
 #: app/tools/gimpcagetool.c:260
-#, fuzzy
-#| msgid "The active layer is not visible."
 msgid "The active item is not visible."
-msgstr "Die aktive Ebene ist nicht sichtbar."
+msgstr "Das aktive Objekt ist nicht sichtbar."
 
 #: app/tools/gimpcagetool.c:766 app/tools/gimpwarptool.c:397
 msgid "Press ENTER to commit the transform"
@@ -23481,34 +23345,27 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/tools/gimpcloneoptions-gui.c:189
-#, fuzzy
-#| msgctxt "item-set"
-#| msgid "All visible layers"
 msgid "All composited visible layers"
-msgstr "Alle sichtbaren Ebenen"
+msgstr "Alle komponierten sichtbaren Ebenen"
 
 #: app/tools/gimpcloneoptions-gui.c:191
-#, fuzzy, c-format
-#| msgctxt "item-set"
-#| msgid "All visible layers"
+#, c-format
 msgid "All composited visible layers from '%s'"
-msgstr "Alle sichtbaren Ebenen"
+msgstr "Alle komponierten sichtbaren Ebenen von »%s«"
 
 #: app/tools/gimpcloneoptions-gui.c:197
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Scale item"
+#, c-format
 msgid "Source: %d item"
 msgid_plural "Source: %d items"
-msgstr[0] "Bild skalieren"
-msgstr[1] "Bild skalieren"
+msgstr[0] "Quelle: %d Objekt"
+msgstr[1] "Quelle: %d Objekte"
 
 #: app/tools/gimpcloneoptions-gui.c:202
 #, c-format
 msgid "Source: %d item from '%s'"
 msgid_plural "Source: %d items from '%s'"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Quelle: %d Objekt von »%s«"
+msgstr[1] "Quelle: %d Objekte von »%s«"
 
 #: app/tools/gimpclonetool.c:64
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -23756,6 +23613,8 @@ msgstr "_Kurven …"
 #: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
+"Es können nicht mehrere Zeichenflächen geändert werden. Wählen Sie nur eine "
+"aus."
 
 #: app/tools/gimpcurvestool.c:410
 msgid "Click to add a control point"
@@ -24021,7 +23880,7 @@ msgstr "Einstellungen für »%s« importieren"
 msgid "Export '%s' Settings"
 msgstr "Einstellungen für »%s« exportieren"
 
-#: app/tools/gimpfiltertool.c:2048
+#: app/tools/gimpfiltertool.c:2042
 msgid "Editing filter..."
 msgstr "Filter bearbeiten …"
 
@@ -25043,36 +24902,30 @@ msgstr ""
 "davon auszuschließen"
 
 #: app/tools/gimppaintselectoptions.c:89 app/tools/gimppaintselectoptions.c:90
-#, fuzzy
-#| msgid "Show _rulers"
 msgid "Show scribbles"
-msgstr "_Lineale anzeigen"
+msgstr "Kritzeleien anzeigen"
 
 #: app/tools/gimppaintselecttool.c:167
 msgid "Paint Select"
 msgstr "Malende Auswahl"
 
 #: app/tools/gimppaintselecttool.c:168
-#, fuzzy
-#| msgid "Rectangle Select Tool: Select a rectangular region"
 msgid "Paint Select Tool: Select objects by painting roughly"
-msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
+msgstr "Rechteckige Auswahl: Objekte durch grobes Malen auswählen"
 
 #: app/tools/gimppaintselecttool.c:169
 msgid "P_aint Select"
 msgstr "_Malende Auswahl"
 
 #: app/tools/gimppaintselecttool.c:349
-#, fuzzy
-#| msgid "Base selection on all visible layers"
 msgid "Cannot paint select on multiple layers. Select only one layer."
-msgstr "Auswahl auf alle sichtbaren Ebenen stützen"
+msgstr ""
+"Auf mehreren Ebenen kann keine malende Auswahl stattfinden. Wählen Sie nur "
+"eine Ebene aus."
 
 #: app/tools/gimppaintselecttool.c:368
-#, fuzzy
-#| msgid "Cannot paint on layer groups."
 msgid "Cannot paint select on layer groups."
-msgstr "Es kann nicht auf Ebenenmasken gezeichnet werden."
+msgstr "Auf Ebenengruppen kann keine malende Auswahl stattfinden."
 
 #: app/tools/gimppaintselecttool.c:653
 msgctxt "command"
@@ -25107,16 +24960,12 @@ msgid "%s for a straight line"
 msgstr "%s für eine gerade Linie"
 
 #: app/tools/gimppainttool.c:962
-#, fuzzy
-#| msgid "The active layer does not have an alpha channel."
 msgid "The selected drawable does not have an alpha channel."
-msgstr "Die aktive Ebene hat keinen Alphakanal."
+msgstr "Die ausgewählte Zeichenfläche hat keinen Alphakanal."
 
 #: app/tools/gimppainttool.c:973
-#, fuzzy
-#| msgid "The active layer's alpha channel is locked."
 msgid "The selected layer's alpha channel is locked."
-msgstr "Der Alphakanal der aktiven Ebene ist gesperrt."
+msgstr "Der Alphakanal der ausgewählten Ebene ist gesperrt."
 
 #: app/tools/gimppenciltool.c:54
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25603,28 +25452,20 @@ msgid "Show on-canvas text editor"
 msgstr "Texteditor auf der Leinwand anzeigen"
 
 #: app/tools/gimptextoptions.c:300
-#, fuzzy
-#| msgid "Line width"
 msgid "Outline width"
-msgstr "Linienbreite"
+msgstr "Umrissbreite"
 
 #: app/tools/gimptextoptions.c:301
-#, fuzzy
-#| msgid "Adjust line spacing"
 msgid "Adjust outline width"
-msgstr "Zeilenabstand anpassen"
+msgstr "Umrissbreite anpassen"
 
 #: app/tools/gimptextoptions.c:308
-#, fuzzy
-#| msgid "Line width"
 msgid "Outline width unit"
-msgstr "Linienbreite"
+msgstr "Einheit für Umrissbreite"
 
 #: app/tools/gimptextoptions.c:323
-#, fuzzy
-#| msgid "Miter limit"
 msgid "Outline miter limit"
-msgstr "Gehrungslimit"
+msgstr "Umriss-Gehrungslimit"
 
 #: app/tools/gimptextoptions.c:841
 msgid "Hinting:"
@@ -25639,10 +25480,8 @@ msgid "Style:"
 msgstr "Stil:"
 
 #: app/tools/gimptextoptions.c:862
-#, fuzzy
-#| msgid "Other Options"
 msgid "Outline Options"
-msgstr "Weitere Optionen"
+msgstr "Umriss-Einstellungen"
 
 #: app/tools/gimptextoptions.c:883
 msgid "Justify:"
@@ -26084,7 +25923,7 @@ msgstr "Die Auswahl überschneidet sich nicht mit einer ausgewählten Ebene."
 
 #: app/tools/gimptransformtool.c:727
 msgid "There is no selection to transform."
-msgstr "Keine Auswahl zum transformieren vorhanden."
+msgstr "Keine Auswahl zum Transformieren vorhanden."
 
 #: app/tools/gimptransformtool.c:742
 msgid "There is no path to transform."
@@ -28167,7 +28006,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: app/widgets/gimpgradienteditor.c:1339
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Brillianz: %0.1f    Deckkraft: %0.1f"
+msgstr "Leuchtkraft: %0.1f    Deckkraft: %0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1374
 #, c-format
