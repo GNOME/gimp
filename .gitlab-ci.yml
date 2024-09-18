@@ -308,6 +308,8 @@ gimp-debian-x64:
       - _build/meson-dist/
       - _build/config.h
       - _build/devel-docs/
+      - _build/test-gimp-*.xcf
+      - _build/test-gimp-*.data
     reports:
       junit: "_build/meson-logs/testlog.junit.xml"
     expire_in: 2 days
