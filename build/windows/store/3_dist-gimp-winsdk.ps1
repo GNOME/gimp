@@ -208,7 +208,7 @@ foreach ($bundle in $supported_archs)
         ## Copy files into VFS folder (to support external 3P plug-ins)
         Copy-Item "$bundle" "$vfs" -Recurse -Force
 
-        ## Set revision (on GIMP about dialog)
+        ## Set revision on about dialog (this does the same as '-Drevision' build option)
         (Get-Content "$vfs\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
         Set-Content "$vfs\share\gimp\*\gimp-release"
 

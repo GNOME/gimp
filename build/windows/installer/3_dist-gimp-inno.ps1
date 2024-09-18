@@ -148,7 +148,7 @@ fix_msg $INNO_PATH\Languages\Unofficial
 
 # 4. PREPARE GIMP FILES
 
-## GIMP revision on about dialog
+## GIMP revision on about dialog (this does the same as '-Drevision' build option)
 ## FIXME: This should be done with Inno scripting
 if ($GITLAB_CI)
   {
