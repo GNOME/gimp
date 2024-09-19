@@ -328,7 +328,8 @@ layer_modes_shared_op = {
     'auto:union:linear': [ 'dc4b469481e7f2a13b28c79c665ff2cf6327582b6c4036ed7a0b627e86f09d2b',
                            # Non-SSE2 digest.
                            '1bcc39ddace42fc1bd51a19ced62095d1d31d7d12625eac868b1644eef8ed030',
-                           'ecb86eee4546f7b0103509af6bab98b54cc7ddec8aeaa79e2882a0e64a1c677b' ],
+                           'ecb86eee4546f7b0103509af6bab98b54cc7ddec8aeaa79e2882a0e64a1c677b',
+                           '087a66852013cda71f5e16c4d4cb155cf69623cc4f6002bf53e47d11d7c4a097' ],
     'auto:union:perceptual': [ 'e82f46d57193ab82ceb243df3783e589939a1d57bb31de9639eed9068e61adea' ],
     'auto:clip-to-backdrop:linear': [ '95d4f7474308197b9a6979225163cc0f0f90e29f2cc931e06803f908626119e7' ],
     'auto:clip-to-backdrop:perceptual': [ '103ed86dedc5992c33fc689e3c9d1c944ec35136b19d0c8b61338ae61d3750a2' ],
