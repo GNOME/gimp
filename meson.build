@@ -116,6 +116,8 @@ host_cpu_family = host_machine.cpu_family()
 message('Host machine cpu family: ' + host_cpu_family)
 
 host_cpu_family = host_machine.cpu_family()
+have_x86 = false
+have_ppc = false
 if   host_cpu_family == 'x86'
   have_x86 = true
   conf.set10('ARCH_X86',    true)
