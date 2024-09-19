@@ -65,7 +65,7 @@ def gimp_assert(subtest_name, test, image=None, outpath=None, cmp_data_path=None
                 config.set_property('file', Gio.file_new_for_path(tmpfile.name))
                 result = proc.run(config)
                 tmpfile.close()
-          except HTTPError:
+          except urllib.error.HTTPError:
             pass
 
         if result is not None:
