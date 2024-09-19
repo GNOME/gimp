@@ -68,6 +68,7 @@ def gimp_assert(subtest_name, test, image=None, outpath=None, cmp_data_path=None
           except urllib.error.HTTPError:
             pass
 
+        status = None
         if result is not None:
           status = result.index(0)
 
