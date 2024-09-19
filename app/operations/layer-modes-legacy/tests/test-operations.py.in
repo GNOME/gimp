@@ -89,9 +89,9 @@ def compare_with_reference(mode, blend_space, composite_mode, composite_space):
   gimp_assert(test_title, spaces_id in modes[mode])
 
   possible_digests = modes[mode][spaces_id]
-  file_name = 'test-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.xcf'
+  file_name = 'test-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '-{}-{}-{}.xcf'.format(blend_space, composite_mode, composite_space)
   file_path = os.path.join('@OUTDIR@', file_name)
-  ref_name = 'ref-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '.data'
+  ref_name = 'ref-' + re.sub(r'([_:\'"]|\s)+', '-', mode) + '-{}-{}-{}.data'.format(blend_space, composite_mode, composite_space)
   ref_path = os.path.join('@OUTDIR@', ref_name)
   gimp_assert('"{}" ({}) - '.format(mode, blend_space)                       +
               'composite {} ({}) - '.format(composite_mode, composite_space) +
