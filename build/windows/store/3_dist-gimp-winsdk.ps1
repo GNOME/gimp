@@ -2,6 +2,7 @@
 
 # Parameters
 param ($revision = '0',
+       $wack = 'Non-WACK',
        $build_dir = '_build',
        $a64_bundle = 'gimp-a64',
        $x64_bundle = 'gimp-x64')
@@ -82,6 +83,13 @@ if ($CI_PIPELINE_SOURCE -ne 'schedule' -and $GIMP_CI_MS_STORE -like 'MSIXUPLOAD_
   {
     Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
     $revision = $GIMP_CI_MS_STORE -replace 'MSIXUPLOAD_',''
+  }
+
+## (Special case when using WACK locally)
+if ($revision -eq 'WACK')
+  {
+    $revision = "0"
+    $wack = "WACK"
   }
 
 if ($revision -ne '0')
@@ -225,7 +233,7 @@ foreach ($bundle in $supported_archs)
         Get-ChildItem "$vfs" -Recurse -Include ("*.debug", "*.tar") | Remove-Item -Recurse
 
 
-        # 4. MAKE .MSIX AND CORRESPONDING .APPXSYM
+        # 4.A. MAKE .MSIX AND CORRESPONDING .APPXSYM
 
         ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
         $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
@@ -253,7 +261,7 @@ foreach ($bundle in $supported_archs)
   } #END of 'foreach ($msix_arch...'
 
 
-# 5. MAKE .MSIXBUNDLE AND SUBSEQUENT .MSIXUPLOAD
+# 4.B. MAKE .MSIXBUNDLE AND SUBSEQUENT .MSIXUPLOAD
 if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *.msix -Recurse).Count -gt 1)
   {
     ## Make .msixbundle with all archs
@@ -287,14 +295,69 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     #https://gitlab.gnome.org/GNOME/gimp/-/issues/11397
   }
 
+Remove-Item .gitignore
+Rename-Item .gitignore.bak .gitignore
 
-# 5. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY) AND DO OTHER STUFF
+
+# 5. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
+# (Partner Center does the same thing before publishing)
+if (-not $GITLAB_CI -and $wack -eq 'WACK')
+  {
+    ## Prepare file naming
+    ## (appcert CLI does NOT allow relative paths)
+    $fullpath = $PWD
+    ## (appcert CLI does NOT allow more than one dot on xml name)
+    $xml_artifact = "$MSIX_ARTIFACT" -replace '.msix', '-report.xml' -replace 'bundle', ''
+
+    ## Generate detailed report
+    ## (appcert only works with admin rights so let's use sudo, which needs:
+    ## - Windows 24H2 build
+    ## - be configured in normal mode: https://github.com/microsoft/sudo/issues/108
+    ## - run in an admin account: https://github.com/microsoft/sudo/discussions/68)
+    $nt_build = [System.Environment]::OSVersion.Version | Select-Object -ExpandProperty Build
+    if ($nt_build -lt '26052')
+      {
+        Write-Host "(ERROR): Certification from CLI requires 'sudo' (available only for build 10.0.26052.0 and above)" -ForegroundColor Red
+        exit 1
+      }
+    Write-Output "(INFO): certifying $MSIX_ARTIFACT with WACK"
+    if ("$env:Path" -notlike '*App Certification Kit*')
+      {
+        $env:Path = 'C:\Program Files (x86)\Windows Kits\10\App Certification Kit;' + $env:Path
+      }
+    sudo appcert test -appxpackagepath $fullpath\$MSIX_ARTIFACT -reportoutputpath $fullpath\$xml_artifact
+
+    ## Output overall result
+    if (Test-Path $xml_artifact -Type Leaf)
+      {
+        $xmlObject = New-Object XML
+        $xmlObject.Load("$xml_artifact")
+        $result = $xmlObject.REPORT.OVERALL_RESULT
+        if ($result -eq 'FAIL')
+          {
+            Write-Host "(ERROR): $MSIX_ARTIFACT not passed. See: $xml_artifact" -ForegroundColor Red
+            exit 1
+          }
+        elseif ($result -eq 'WARNING')
+          {
+            Write-Host "(WARNING): $MSIX_ARTIFACT passed partially. See: $xml_artifact" -ForegroundColor Yellow
+          }
+        #elseif ($result -eq 'PASS')
+          #{
+            # Output nothing
+          #}
+      }
+  }
+
+
+# 6. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY)
 if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*') -and ($MSIX_ARTIFACT -notlike "*msixupload"))
  {
   Write-Output "(INFO): signing $MSIX_ARTIFACT (for testing purposes)"
   signtool sign /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT | Out-File winsdk.log -Append
   Copy-Item build\windows\store\pseudo-gimp.pfx .\ -Recurse
  }
+
 
 if ($GITLAB_CI)
   {
@@ -305,6 +368,8 @@ if ($GITLAB_CI)
       {
         Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination build\windows\store\_Output
       }
+
+    # Generate checksums
     if ($CI_COMMIT_TAG)
       {
         Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
@@ -312,6 +377,3 @@ if ($GITLAB_CI)
         Get-FileHash build\windows\store\_Output\$MSIX_ARTIFACT -Algorithm SHA512 | Out-File build\windows\store\_Output\$MSIX_ARTIFACT.SHA512SUMS
       }
   }
-
-Remove-Item .gitignore
-Rename-Item .gitignore.bak .gitignore

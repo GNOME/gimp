@@ -20,6 +20,10 @@ Base rule to update the "GIMP (Preview)" entry:
    Only 'Packages' and 'Store listings' sections are needed. On 'Packages' you will
    add the generated .msixupload and on 'Store listings' the brief changelog.
 
+If the .msix* starts to be refused to certification or to signing,
+run `build\windows\store\3_dist-gimp-winsdk.ps1 WACK` locally to see if it
+still complies with the latest Windows policies. Make sure to update WinSDK.
+
 ## Versioning the MSIX
 
 * Every new .msixupload submission (with different content) needs a bumped version.
