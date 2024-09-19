@@ -93,7 +93,11 @@ static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GApplication       *app);
 
+#ifdef G_OS_WIN32
+static BOOL       app_quit_on_ctrl_c         (DWORD               ctrl_type);
+#else
 static void       app_quit_on_ctrl_c         (gint                sig_num);
+#endif
 
 #if 0
 /*  left here as documentation how to do compat enums  */
@@ -534,7 +538,11 @@ app_activate_callback (GimpCoreApp *app,
        * an always-ON plug-in (GIMP_PDB_PROC_TYPE_EXTENSION) which is
        * set up to receive commands for GIMP.
        */
+#ifdef G_OS_WIN32
+      SetConsoleCtrlHandler (app_quit_on_ctrl_c, TRUE);
+#else
       gimp_signal_private (SIGINT, app_quit_on_ctrl_c, 0);
+#endif
       g_printf ("\n== %s ==\n%s\n\n%s\n",
                 /* TODO: localize when string freeze is over. */
                 "INFO",
@@ -593,6 +601,27 @@ app_exit_after_callback (Gimp         *gimp,
   return FALSE;
 }
 
+#ifdef G_OS_WIN32
+static BOOL
+app_quit_on_ctrl_c (DWORD ctrl_type)
+{
+  gboolean handled = FALSE;
+
+  if (ctrl_type == CTRL_C_EVENT)
+    {
+      GApplication *app = g_application_get_default ();
+      Gimp         *gimp;
+
+      g_application_release (app);
+      gimp = gimp_core_app_get_gimp (GIMP_CORE_APP (app));
+      gimp_exit (gimp, TRUE);
+
+      handled = TRUE;
+    }
+
+  return handled;
+}
+#else
 static void
 app_quit_on_ctrl_c (gint sig_num)
 {
@@ -603,3 +632,4 @@ app_quit_on_ctrl_c (gint sig_num)
   gimp = gimp_core_app_get_gimp (GIMP_CORE_APP (app));
   gimp_exit (gimp, TRUE);
 }
+#endif
