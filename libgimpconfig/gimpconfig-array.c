@@ -123,13 +123,7 @@ gimp_config_deserialize_strv (GValue     *value,
           break;
         }
 
-      /* Not an error for scanned string to be empty.*/
-
-      /* Adding string to builder DOES not transfer ownership,
-       * the builder will copy the string.
-       */
-      g_strv_builder_add (builder, scanned_string);
-
+      g_strv_builder_add (builder, scanned_string ? scanned_string : "");
       g_free (scanned_string);
     }
 
