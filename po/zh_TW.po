@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-09-19 23:27+0000\n"
-"PO-Revision-Date: 2024-09-20 22:57+0800\n"
+"PO-Revision-Date: 2024-09-20 23:34+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1828,22 +1828,22 @@ msgstr "工具不透明度：不透明度增加 10%"
 #: app/actions/context-actions.c:671
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "工具繪圖模式：選擇第一個"
+msgstr "工具繪圖模式：選取第一個"
 
 #: app/actions/context-actions.c:675
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "工具繪圖模式：選擇最後一個"
+msgstr "工具繪圖模式：選取最後一個"
 
 #: app/actions/context-actions.c:679
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr "工具繪圖模式：選擇上一個"
+msgstr "工具繪圖模式：選取上一個"
 
 #: app/actions/context-actions.c:683
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr "工具繪圖模式：選擇下一個"
+msgstr "工具繪圖模式：選取下一個"
 
 #: app/actions/context-actions.c:691
 msgctxt "context-action"
@@ -8045,12 +8045,12 @@ msgstr "填充選取範圍輪廓"
 #: app/actions/select-actions.c:123
 msgctxt "select-action"
 msgid "_Fill Selection Outline with last values"
-msgstr "用上次的數值來填充選擇範圍輪廓(_F)"
+msgstr "用上次的數值來填充選取範圍輪廓(_F)"
 
 #: app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
-msgstr "用上次使用的數值來填充選擇範圍輪廓"
+msgstr "用上次使用的數值來填充選取範圍輪廓"
 
 #: app/actions/select-actions.c:129
 msgctxt "select-action"
