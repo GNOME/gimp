@@ -264,6 +264,17 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_take_object ($value, $var)',
 		     headers         => [ qw(<cairo.h> "libgimpcolor/gimpcolor.h") ] },
 
+    format      => { name            => 'FORMAT',
+		     gtype           => 'GIMP_TYPE_BABL_FORMAT',
+		     type            => 'const Babl *',
+		     const_type      => 'const Babl *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_boxed ($value)',
+		     dup_value_func  => '$var = g_value_get_boxed (gimp_value_array_index ($value))',
+		     set_value_func  => 'g_value_set_boxed ($value, $var)',
+		     take_value_func => 'g_value_set_boxed ($value, $var)' },
+
     display     => { name            => 'DISPLAY',
 		     gtype           => 'GIMP_TYPE_DISPLAY',
 		     type            => 'GimpDisplay *',

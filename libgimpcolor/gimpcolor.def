@@ -1,5 +1,6 @@
 EXPORTS
 	gimp_adaptive_supersample_area
+	gimp_babl_format_get_type
 	gimp_bilinear
 	gimp_bilinear_16
 	gimp_bilinear_32

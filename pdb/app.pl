@@ -611,6 +611,15 @@ gimp_param_spec_color ("$name",
                        $flags)
 CODE
     }
+    elsif ($pdbtype eq 'format') {
+	$pspec = <<CODE;
+g_param_spec_boxed ("$name",
+                    "$nick",
+                    "$blurb",
+                    GIMP_TYPE_BABL_FORMAT,
+                    $flags)
+CODE
+    }
     elsif ($pdbtype eq 'parasite') {
 	$pspec = <<CODE;
 gimp_param_spec_parasite ("$name",

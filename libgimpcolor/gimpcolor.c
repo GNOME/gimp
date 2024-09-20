@@ -753,3 +753,39 @@ gimp_color_get_CIE2000_distance (GeglColor *color1,
 
   return dE00;
 }
+
+
+/*
+ * GIMP_TYPE_BABL_FORMAT
+ */
+
+static const Babl * gimp_babl_object_copy (const Babl *object);
+static void         gimp_babl_object_free (const Babl *object);
+
+G_DEFINE_BOXED_TYPE (GimpBablFormat, gimp_babl_format, (GBoxedCopyFunc) gimp_babl_object_copy, (GBoxedFreeFunc) gimp_babl_object_free)
+
+/**
+ * gimp_babl_object_copy: (skip)
+ * @object: a Babl object.
+ *
+ * Bogus function since [struct@Babl.Object] should just be used as
+ * never-ending pointers.
+ *
+ * Returns: (transfer none): the passed @object.
+ **/
+const Babl *
+gimp_babl_object_copy (const Babl *object)
+{
+  return object;
+}
+
+/**
+ * gimp_babl_object_free: (skip)
+ * @object: a Babl object.
+ *
+ * Bogus function since [struct@Babl.Object] must not be freed.
+ **/
+void
+gimp_babl_object_free (const Babl *object)
+{
+}

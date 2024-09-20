@@ -965,10 +965,10 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
               default_val = g_new0 (GPParamColor, 1);
 
               memcpy (default_val->data, data, bpp);
-              default_val->size         = bpp;
-              default_val->encoding     = encoding;
-              default_val->profile_size = profile_size;
-              default_val->profile_data = profile_data;
+              default_val->size                = bpp;
+              default_val->format.encoding     = encoding;
+              default_val->format.profile_size = profile_size;
+              default_val->format.profile_data = profile_data;
             }
           else
             {
@@ -1065,8 +1065,8 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
     case GP_PARAM_DEF_TYPE_GEGL_COLOR:
       if (param_def.meta.m_gegl_color.default_val)
         {
-          g_free (param_def.meta.m_gegl_color.default_val->encoding);
-          g_free (param_def.meta.m_gegl_color.default_val->profile_data);
+          g_free (param_def.meta.m_gegl_color.default_val->format.encoding);
+          g_free (param_def.meta.m_gegl_color.default_val->format.profile_data);
           g_free (param_def.meta.m_gegl_color.default_val);
         }
       break;
@@ -1241,9 +1241,9 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
             {
               bpp          = param_def.meta.m_gegl_color.default_val->size;
               data         = param_def.meta.m_gegl_color.default_val->data;
-              encoding     = param_def.meta.m_gegl_color.default_val->encoding;
-              profile_size = param_def.meta.m_gegl_color.default_val->profile_size;
-              profile_data = param_def.meta.m_gegl_color.default_val->profile_data;
+              encoding     = param_def.meta.m_gegl_color.default_val->format.encoding;
+              profile_size = param_def.meta.m_gegl_color.default_val->format.profile_size;
+              profile_data = param_def.meta.m_gegl_color.default_val->format.profile_data;
 
               gimp_config_writer_printf (writer, "%d", bpp);
               gimp_config_writer_data (writer, bpp, data);

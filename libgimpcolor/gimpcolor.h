@@ -95,6 +95,33 @@ GParamSpec * gimp_param_spec_color_from_string (const gchar *name,
 
 gboolean     gimp_param_spec_color_has_alpha   (GParamSpec  *pspec);
 
+
+/*
+ * GIMP_TYPE_BABL_FORMAT
+ */
+
+/**
+ * GimpBablFormat:
+ *
+ * This type is simply a wrapper around [struct@Babl.Object] when used as
+ * a color format.
+ *
+ * The only reason of this wrapper is to be able to assign a %GType to
+ * Babl formats, e.g. to have typed `GValue`, which is mostly used
+ * internally by our plug-in protocol.
+ *
+ * There is no reason whatsoever to use this type directly.
+ *
+ * Since: 3.0
+ */
+typedef const Babl *                        GimpBablFormat;
+
+#define GIMP_TYPE_BABL_FORMAT               gimp_babl_format_get_type ()
+#define GIMP_VALUE_HOLDS_BABL_FORMAT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_BABL_FORMAT))
+
+GType   gimp_babl_format_get_type           (void) G_GNUC_CONST;
+
+
 G_END_DECLS
 
 #endif  /* __GIMP_COLOR_H__ */
