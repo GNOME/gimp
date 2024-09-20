@@ -623,10 +623,12 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
                  * I.E. not g_file_get_path, which can return NULL.
                  */
                 gchar *filepath = g_file_get_parse_name (file);
+                gchar *esc_path = script_fu_strescape (filepath);
+
                 /* assert filepath not null. */
-                /* Not escape special chars for whitespace or double quote. */
-                g_string_append_printf (result_string, "\"%s\"", filepath);
+                g_string_append_printf (result_string, "\"%s\"", esc_path);
                 g_free (filepath);
+                g_free (esc_path);
               }
             else
               {
