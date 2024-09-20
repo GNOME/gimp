@@ -516,7 +516,7 @@ script_fu_arg_add_argument (SFArg         *arg,
 static void
 sf_append_file_error_repr (gchar *err_message, GString *result_string )
 {
-  g_warning (err_message);
+  g_warning ("%s", err_message);
   /* Represent unknown file by literal for empty string: "" */
   g_string_append_printf (result_string, "\"\"");
 }
