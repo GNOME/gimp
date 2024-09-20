@@ -325,8 +325,8 @@
                                      "1024 x 768"
                                      "1280 x 1024"
                                      "1600 x 1200")
-    SF-FONT    _"Title font"       "Sans Bold Italic"
-    SF-FONT    _"Legend font"      "Sans Bold"
+    SF-FONT    _"Title font"       "Sans-serif Bold Italic"
+    SF-FONT    _"Legend font"      "Sans-serif Bold"
     SF-COLOR   _"Text color"       "white"
     SF-COLOR   _"Background color" "black"
 )

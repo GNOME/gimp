@@ -263,7 +263,7 @@
   SF-PATTERN    "Pattern"            "Maple Leaves"
   SF-GRADIENT   "Gradient"           "Deep Sea"
   SF-TOGGLE     "Gradient reverse"   FALSE
-  SF-FONT       "Font"               "Agate"
+  SF-FONT       "Font"               "Sans-serif"
   SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 1)
   SF-PALETTE    "Palette"            "Default"
   SF-FILENAME   "Environment map"
