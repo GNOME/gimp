@@ -669,6 +669,7 @@ EXPORTS
 	gimp_palette_entry_set_name
 	gimp_palette_get_by_name
 	gimp_palette_get_color_count
+	gimp_palette_get_colormap
 	gimp_palette_get_colors
 	gimp_palette_get_columns
 	gimp_palette_get_type

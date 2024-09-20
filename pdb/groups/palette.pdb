@@ -430,6 +430,50 @@ CODE
     );
 }
 
+sub palette_get_colormap {
+    $blurb = "Returns the palette's colormap";
+
+    $help = <<'HELP';
+This procedure returns an the image's colormap as a bytes array with all
+colors converted to a given Babl @format.
+
+The byte-size of the returned colormap depends on the number of colors
+and on the bytes-per-pixel size of @format. E.g. that the following equality is ensured:
+
+```C
+g_bytes_get_size (colormap) == num_colors * babl_format_get_bytes_per_pixel (format)
+```
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+        { name => 'palette', type => 'palette',
+          desc => 'The palette' },
+        { name => 'format', type => 'format',
+          desc => 'The desired color format' },
+    );
+
+    @outargs = (
+        { name => 'colormap', type => 'bytes',
+          desc => "The image's colormap." },
+        { name => 'num_colors', type => 'int32',
+          desc => 'The number of colors in the palette' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-colormap.h") ],
+        code => <<'CODE'
+{
+  guchar *colormap_data;
+  gint    bpp = babl_format_get_bytes_per_pixel (format);
+
+  colormap_data = gimp_palette_get_colormap (palette, format, &num_colors);
+  colormap = g_bytes_new_take (colormap_data, bpp * num_colors);
+}
+CODE
+    );
+}
 
 @headers = qw(<string.h>
               "core/gimp.h"
@@ -446,7 +490,8 @@ CODE
             palette_get_columns palette_set_columns
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
-            palette_entry_get_name palette_entry_set_name);
+            palette_entry_get_name palette_entry_set_name
+            palette_get_colormap);
 
 %exports = (app => [@procs], lib => [@procs]);
 

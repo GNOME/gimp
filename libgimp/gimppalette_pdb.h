@@ -56,6 +56,9 @@ gboolean     gimp_palette_entry_get_name  (GimpPalette  *palette,
 gboolean     gimp_palette_entry_set_name  (GimpPalette  *palette,
                                            gint          entry_num,
                                            const gchar  *entry_name);
+GBytes*      gimp_palette_get_colormap    (GimpPalette  *palette,
+                                           const Babl   *format,
+                                           gint         *num_colors);
 
 
 G_END_DECLS

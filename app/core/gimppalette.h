@@ -111,5 +111,9 @@ GimpPaletteEntry * gimp_palette_find_entry      (GimpPalette      *palette,
                                                  GeglColor        *color,
                                                  GimpPaletteEntry *start_from);
 
+guchar           * gimp_palette_get_colormap    (GimpPalette      *palette,
+                                                 const Babl       *format,
+                                                 gint             *n_colors);
+
 
 #endif /* __GIMP_PALETTE_H__ */

@@ -453,6 +453,45 @@ palette_entry_set_name_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+palette_get_colormap_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpPalette *palette;
+  const Babl *format;
+  GBytes *colormap = NULL;
+  gint num_colors = 0;
+
+  palette = g_value_get_object (gimp_value_array_index (args, 0));
+  format = g_value_get_boxed (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      guchar *colormap_data;
+      gint    bpp = babl_format_get_bytes_per_pixel (format);
+
+      colormap_data = gimp_palette_get_colormap (palette, format, &num_colors);
+      colormap = g_bytes_new_take (colormap_data, bpp * num_colors);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_take_boxed (gimp_value_array_index (return_vals, 1), colormap);
+      g_value_set_int (gimp_value_array_index (return_vals, 2), num_colors);
+    }
+
+  return return_vals;
+}
+
 void
 register_palette_procs (GimpPDB *pdb)
 {
@@ -872,6 +911,54 @@ register_palette_procs (GimpPDB *pdb)
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-palette-get-colormap
+   */
+  procedure = gimp_procedure_new (palette_get_colormap_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-get-colormap");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the palette's colormap",
+                                  "This procedure returns an the image's colormap as a bytes array with all colors converted to a given Babl @format.\n"
+                                  "The byte-size of the returned colormap depends on the number of colors and on the bytes-per-pixel size of @format. E.g. that the following equality is ensured:\n"
+                                  "\n"
+                                  "```C\n"
+                                  "g_bytes_get_size (colormap) == num_colors * babl_format_get_bytes_per_pixel (format)\n"
+                                  "```",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_palette ("palette",
+                                                        "palette",
+                                                        "The palette",
+                                                        FALSE,
+                                                        NULL,
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("format",
+                                                   "format",
+                                                   "The desired color format",
+                                                   GIMP_TYPE_BABL_FORMAT,
+                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boxed ("colormap",
+                                                       "colormap",
+                                                       "The image's colormap.",
+                                                       G_TYPE_BYTES,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-colors",
+                                                     "num colors",
+                                                     "The number of colors in the palette",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

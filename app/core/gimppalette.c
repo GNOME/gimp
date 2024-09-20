@@ -764,6 +764,41 @@ gimp_palette_find_entry (GimpPalette      *palette,
   return NULL;
 }
 
+guchar *
+gimp_palette_get_colormap (GimpPalette *palette,
+                           const Babl  *format,
+                           gint        *n_colors)
+{
+  guchar *colormap = NULL;
+  gint    bpp;
+
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (n_colors != NULL, NULL);
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  *n_colors = gimp_palette_get_n_colors (palette);
+
+  if (*n_colors > 0)
+    {
+      guchar *p;
+
+      colormap = g_new0 (guchar, bpp * *n_colors);
+      p        = colormap;
+
+      for (gint i = 0; i < *n_colors; i++)
+        {
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
+
+          gegl_color_get_pixel (entry->color, format, p);
+          p += bpp;
+        }
+    }
+
+  return colormap;
+}
+
 
 /*  private functions  */
 

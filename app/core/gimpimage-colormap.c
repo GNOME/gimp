@@ -254,12 +254,11 @@ _gimp_image_get_colormap (GimpImage *image,
                           gint      *n_colors)
 {
   GimpImagePrivate *private;
-  guchar           *colormap = NULL;
   const Babl       *space;
   const Babl       *format;
-  gint              bpp;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (private->palette == NULL)
@@ -267,23 +266,8 @@ _gimp_image_get_colormap (GimpImage *image,
 
   space  = gimp_image_get_layer_space (image);
   format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
-  bpp    = babl_format_get_bytes_per_pixel (format);
 
-  *n_colors = gimp_palette_get_n_colors (private->palette);
-
-  if (*n_colors > 0)
-    {
-      colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
-
-      for (gint i = 0; i < *n_colors; i++)
-        {
-          GimpPaletteEntry *entry = gimp_palette_get_entry (private->palette, i);
-
-          gegl_color_get_pixel (entry->color, format, &colormap[i * bpp]);
-        }
-    }
-
-  return colormap;
+  return gimp_palette_get_colormap (private->palette, format, n_colors);
 }
 
 void

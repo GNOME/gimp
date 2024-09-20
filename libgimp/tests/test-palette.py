@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import struct
+
 GIMP_TEST_PALETTE      = "Bears"
 GIMP_TEST_PALETTE_SIZE = 256
 GIMP_TEST_COLOR_IDX    = 3
@@ -22,13 +24,49 @@ gimp_assert('gimp_palette_get_colors()',
             len(colors) == GIMP_TEST_PALETTE_SIZE and type(colors[0]) == Gegl.Color)
 
 f = colors[GIMP_TEST_COLOR_IDX].get_format()
-gimp_assert ("Checking fourth palette color's format",
-             f == Babl.format (GIMP_TEST_COLOR_FORMAT))
+gimp_assert("Checking fourth palette color's format",
+            f == Babl.format (GIMP_TEST_COLOR_FORMAT))
 
 b = colors[GIMP_TEST_COLOR_IDX].get_bytes(f)
 rgb = b.get_data()
-gimp_assert ("Checking fourth palette color's RGB components",
-             int(rgb[0]) == GIMP_TEST_COLOR_R_U8 and int(rgb[1]) == GIMP_TEST_COLOR_G_U8 and int(rgb[2]) == GIMP_TEST_COLOR_B_U8)
+gimp_assert("Checking fourth palette color's RGB components",
+            int(rgb[0]) == GIMP_TEST_COLOR_R_U8 and int(rgb[1]) == GIMP_TEST_COLOR_G_U8 and int(rgb[2]) == GIMP_TEST_COLOR_B_U8)
+
+colormap, n_colormap_colors = pal.get_colormap (f)
+format_bpp = Babl.format_get_bytes_per_pixel (f);
+gimp_assert("gimp_palette_get_colormap()",
+            colormap is not None and n_colormap_colors == n_colors and
+            n_colormap_colors * format_bpp == colormap.get_size())
+
+u8_data = colormap.get_data ()
+gimp_assert("Comparing fourth palette color's RGB components from colormap",
+            u8_data[format_bpp * GIMP_TEST_COLOR_IDX] == GIMP_TEST_COLOR_R_U8     and
+            u8_data[format_bpp * GIMP_TEST_COLOR_IDX + 1] == GIMP_TEST_COLOR_G_U8 and
+            u8_data[format_bpp * GIMP_TEST_COLOR_IDX + 2]== GIMP_TEST_COLOR_B_U8)
+
+f2 = Babl.format('RGBA float')
+colormap, n_colormap_colors = pal.get_colormap (f2)
+f2_bpp = Babl.format_get_bytes_per_pixel (f2);
+gimp_assert('gimp_palette_get_colormap() in "RGBA float"',
+            colormap is not None and n_colormap_colors == n_colors and
+            n_colormap_colors * f2_bpp == colormap.get_size())
+
+
+u8_data = colormap.get_data ()
+start = f2_bpp * GIMP_TEST_COLOR_IDX
+colormap_r = struct.unpack('f', u8_data[start:start + 4])
+colormap_g = struct.unpack('f', u8_data[start + 4:start + 8])
+colormap_b = struct.unpack('f', u8_data[start + 8:start + 12])
+
+rgb_bytes = colors[GIMP_TEST_COLOR_IDX].get_bytes(f2)
+rgb = rgb_bytes.get_data()
+palette_r = struct.unpack('f', rgb[:4])
+palette_g = struct.unpack('f', rgb[4:8])
+palette_b = struct.unpack('f', rgb[8:12])
+gimp_assert("Comparing fourth palette color's RGB components from colormap in float format",
+            colormap_r == palette_r and
+            colormap_g == palette_g and
+            colormap_b == palette_b)
 
 # Run the same tests through PDB:
 
