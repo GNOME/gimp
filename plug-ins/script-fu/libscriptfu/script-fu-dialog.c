@@ -42,6 +42,22 @@
  * although GIMP app continues responsive, a user choosing a menu item
  * that is also implemented by a script and extension-script-fu
  * will not show a dialog until the first called script finishes.
+ * TODO combine these paragraphs
+ * We don't prevent concurrent dialogs as in script-fu-interface.c.
+ * For extension-script-fu, Gimp is already preventing concurrent dialogs.
+ * For gimp-script-fu-interpreter, each plugin is a separate process
+ * so concurrent dialogs CAN occur.
+ *
+ * There is no progress widget in GimpProcedureDialog.
+ * Also, we don't need to update the progress in Gimp UI,
+ * because Gimp shows progress: the name of all called PDB procedures.
+ *
+ * Run dialog entails: create config, create dialog for config, show dialog, and return a config.
+ * The config has one property for each arg of the script.
+ * The dialog creates a widget for each such property of the config.
+ * Each property has a ParamSpec.
+ * Requires the procedure registered with args having ParamSpecs
+ * corresponding to SFType the author declared in script-fu-register call.
  */
 
 /* FUTURE: delete this after v3 is stable. */
@@ -96,54 +112,54 @@ dump_objects (GimpProcedureConfig *config)
 
 #endif
 
-/* Run a dialog for a procedure, then interpret the script.
+/* Require conditions for running a dialog and interpreting.
+ * Returns false when a dialog cannot be shown.
  *
- * Run dialog: create config, create dialog for config, show dialog, and return a config.
- * Interpret: marshal config into Scheme text for function call, then interpret script.
- *
- * One widget per param of the procedure.
- * Require the procedure registered with params of GTypes
- * corresponding to SFType the author declared in script-fu-register call.
- *
- * Require initial_args is not NULL or empty.
- * A caller must ensure a dialog is needed because args is not empty.
+ * A caller should not call when config has no properties that are args
+ * of the procedure.
  */
-GimpValueArray*
-script_fu_dialog_run (GimpProcedure        *procedure,
+static gboolean
+sf_dialog_can_be_run (GimpProcedure        *procedure,
                       SFScript             *script,
-                      GimpImage            *image,
-                      guint                 n_drawables,
-                      GimpDrawable        **drawables,
                       GimpProcedureConfig  *config)
-
 {
-  GimpValueArray      *result = NULL;
-  GimpProcedureDialog *dialog = NULL;
-  gboolean             not_canceled;
-  guint                n_specs;
+  guint n_specs;
 
-  if ( (! G_IS_OBJECT (procedure)) || script == NULL)
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
+  if ( (! G_IS_OBJECT (procedure)) ||
+       (! GIMP_IS_PROCEDURE_CONFIG (config)) ||
+       script == NULL)
+    return FALSE;
 
+  /* A config always has property "procedure"
+   * It must have at least one more, an arg, else do not need a dialog.
+   *
+   * FUTURE: make a method of config.
+   */
   g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
   if (n_specs < 2)
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
+    return FALSE;
 
-  /* We don't prevent concurrent dialogs as in script-fu-interface.c.
-   * For extension-script-fu, Gimp is already preventing concurrent dialogs.
-   * For gimp-script-fu-interpreter, each plugin is a separate process
-   * so concurrent dialogs CAN occur.
-   */
-  /* There is no progress widget in GimpProcedureDialog.
-   * Also, we don't need to update the progress in Gimp UI,
-   * because Gimp shows progress: the name of all called PDB procedures.
-   */
+  return TRUE;
+}
 
-  /* Requires gimp_ui_init already called. */
+/* Create and run a dialog for a procedure.
+ * Returns true when not canceled.
+ * Side effects on config.
+ *
+ * Procedure may be GimpImageProcedure or ordinary GimpProcedure.
+ *
+ * Requires gimp_ui_init already called.
+ */
+static gboolean
+sf_dialog_run (GimpProcedure        *procedure,
+               SFScript             *script,
+               GimpProcedureConfig  *config)
+{
+  GimpProcedureDialog *dialog = NULL;
+  gboolean            not_canceled;
 
 #if DEBUG_CONFIG_PROPERTIES
   dump_properties (config);
-  g_debug ("Len of initial_args %i", n_specs - 1);
   dump_objects (config);
 #endif
 
@@ -168,24 +184,45 @@ script_fu_dialog_run (GimpProcedure        *procedure,
   gimp_procedure_dialog_fill_list (dialog, NULL);
 
   not_canceled = gimp_procedure_dialog_run (dialog);
-  /* Assert config holds validated arg values from a user interaction. */
 
 #if DEBUG_CONFIG_PROPERTIES
   dump_objects (config);
 #endif
 
-  if (not_canceled)
-    {
-      result = script_fu_interpret_image_proc (procedure, script,
-                                               image, n_drawables, drawables,
-                                               config);
-    }
-  else
-    {
-      result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
-    }
-
   gtk_widget_destroy ((GtkWidget*) dialog);
+  return not_canceled;
+}
+
+
+/* Run a dialog for an ImageProcedure, then interpret the script.
+ *
+ * Interpret: marshal config into Scheme text for function call, then interpret script.
+ */
+GimpValueArray*
+script_fu_dialog_run_image_proc (
+                      GimpProcedure        *procedure,
+                      SFScript             *script,
+                      GimpImage            *image,
+                      guint                 n_drawables,
+                      GimpDrawable        **drawables,
+                      GimpProcedureConfig  *config)
+
+{
+  GimpValueArray *result = NULL;
+  gboolean        not_canceled;
+
+  if (! sf_dialog_can_be_run (procedure, script, config))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
+
+  not_canceled = sf_dialog_run (procedure, script, config);
+  /* Assert config holds validated arg values from a user interaction. */
+
+  if (not_canceled)
+    result = script_fu_interpret_image_proc (procedure, script,
+                                             image, n_drawables, drawables,
+                                             config);
+  else
+    result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
   return result;
 }

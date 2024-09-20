@@ -21,7 +21,8 @@
  #ifndef __SCRIPT_FU_DIALOG_H__
  #define __SCRIPT_FU_DIALOG_H__
 
-GimpValueArray *script_fu_dialog_run (GimpProcedure        *procedure,
+GimpValueArray *script_fu_dialog_run_image_proc (
+                                      GimpProcedure        *procedure,
                                       SFScript             *script,
                                       GimpImage            *image,
                                       guint                 n_drawables,

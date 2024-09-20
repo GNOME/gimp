@@ -99,7 +99,7 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
         if (n_specs > 1)
           {
             /* Let user choose "other" args in a dialog, then interpret. Maintain a config. */
-            result = script_fu_dialog_run (procedure, script, image, n_drawables, drawables, config);
+            result = script_fu_dialog_run_image_proc (procedure, script, image, n_drawables, drawables, config);
           }
         else
           {
