@@ -23,6 +23,7 @@
         (theNumber inNumber)
         (theSize (min theWidth theHeight))
         (theStain 0)
+        (theThreshold 0)
         (theSpread 0)
         )
 
@@ -51,12 +52,36 @@
 				   blobSize blobSize)
       )
 
-      ; clamp the spread value to the 'plug-in-spread' limits
+      ; Clamp spread value to 'plug-in-spread' limits.
+      ; This plugin calls plug-in-spread indirectly via distress-selection.
+      ; plug-in-spread is a compatability plug-in to gegl:noise-spread.
+      ; gegl:noise-spread seems to have a limit of 512.
+      ; Here we limit to 200, for undocumented reasons.
       (set! theSpread (/ theSize 25))
       (if (> theSpread 200) (set! theSpread 200))
 
+      ; Threshold to distress-selection now allows [0, 1.0] including zero.
+      ; Formerly, it allowed [1, 254] (strange, but documented.)
+      ;
+      ; Here we generate a random non-uniform weighted towards center.
+      ; The distribution of the product (or sum) of two random numbers is non-uniform.
+
+      ; rand is a compability function for the SIOD dialect, and basically calls random.
+      ; random seems not standardized in Scheme, our version is MSRG in script-fu-compat.init.
+      ; It yields random uniform integers, except 0.
+      ;
+      ; (+ (rand 15) 1) yields [2, 16] uniform.
+      ; The original formula, a product of random numbers, yields [3, 255] non-uniform.
+      ; To accomodate changes to distress-selection, we use the old formula, and divide by 255.
+      ; When you instead just generate a single random float, stains are smaller.
+      (set! theThreshold (/
+                            (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1) ; original formula
+                            255))
+
+      ; !!! This call is not via the PDB so SF does not range check args.
+      ; The script is in the interpreter state and doesn't require a PDB call.
       (script-fu-distress-selection theImage (vector theStain)
-                                    (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1)
+                                    theThreshold
                                     theSpread 4 2 TRUE TRUE)
 
       (gimp-context-set-gradient inGradient)
