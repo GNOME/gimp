@@ -61,12 +61,13 @@ def run(procedure, config, data):
                  'Pango': gi.repository.Pango }
 
     class GimpConsole(pyconsole.Console):
-        def __init__(self, quit_func=None):
+        def __init__(self, quit_func=None, initial_history=None):
             banner = ('GIMP %s Python Console\nPython %s\n' %
                       (Gimp.version(), sys.version))
             pyconsole.Console.__init__(self,
                                        locals=namespace, banner=banner,
-                                       quit_func=quit_func)
+                                       quit_func=quit_func,
+                                       initial_history=initial_history)
         def _commit(self):
             pyconsole.Console._commit(self)
             Gimp.displays_flush()
@@ -90,7 +91,8 @@ def run(procedure, config, data):
                                                                   RESPONSE_CLEAR,
                                                                   Gtk.ResponseType.OK ])
 
-            self.cons = GimpConsole(quit_func=lambda: Gtk.main_quit())
+            history = config.get_property('history')
+            self.cons = GimpConsole(quit_func=lambda: Gtk.main_quit(), initial_history=history)
 
             self.style_set (None, None)
 
@@ -136,6 +138,8 @@ def run(procedure, config, data):
             elif response_id == Gtk.ResponseType.OK:
                 self.save_dialog()
             else:
+                # Store up to 100 commands.
+                config.set_property('history', self.cons.history.items[-100:])
                 Gtk.main_quit()
 
             self.cons.grab_focus()
@@ -317,6 +321,9 @@ class PythonConsole (Gimp.PlugIn):
                                          _("The run mode"), Gimp.RunMode,
                                          Gimp.RunMode.INTERACTIVE,
                                          GObject.ParamFlags.READWRITE)
+            procedure.add_string_array_aux_argument ("history",
+                                                     "Command history", "Command history",
+                                                     GObject.ParamFlags.READWRITE)
             procedure.add_menu_path ("<Image>/Filters/Development/Python-Fu")
 
             return procedure

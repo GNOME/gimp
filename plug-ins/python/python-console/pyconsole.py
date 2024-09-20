@@ -90,9 +90,13 @@ class _ReadLine(object):
             pass
 
     class History(object):
-        def __init__(self):
+        def __init__(self, initial_history):
             object.__init__(self)
-            self.items = ['']
+            if initial_history is None or len(initial_history) == 0:
+              initial_history = ['']
+            elif initial_history[0] != '':
+              initial_history = [''] + initial_history
+            self.items = initial_history
             self.ptr = 0
             self.edited = {}
 
@@ -122,7 +126,7 @@ class _ReadLine(object):
             except KeyError:
                 return self.items[self.ptr]
 
-    def __init__(self, quit_func=None):
+    def __init__(self, quit_func=None, initial_history=None):
         object.__init__(self)
 
         self.quit_func = quit_func
@@ -161,7 +165,7 @@ class _ReadLine(object):
         self.in_modal_raw_input = False
         self.run_on_raw_input = None
         self.tab_pressed = 0
-        self.history = _ReadLine.History()
+        self.history = _ReadLine.History(initial_history)
         self.nonword_re = re.compile(r"[^\w\._]")
 
     def freeze_undo(self):
@@ -540,8 +544,9 @@ class _ReadLine(object):
 class _Console(_ReadLine, code.InteractiveInterpreter):
     def __init__(self, locals=None, banner=None,
                  completer=None, use_rlcompleter=True,
-                 start_script=None, quit_func=None):
-        _ReadLine.__init__(self, quit_func)
+                 start_script=None, quit_func=None,
+                 initial_history=None):
+        _ReadLine.__init__(self, quit_func, initial_history)
 
         code.InteractiveInterpreter.__init__(self, locals)
         self.locals["__console__"] = self
