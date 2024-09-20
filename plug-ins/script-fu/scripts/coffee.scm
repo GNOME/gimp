@@ -16,10 +16,14 @@
 
 
 (define (script-fu-coffee-stain inImage inLayers inNumber inDark inGradient)
+
+  ; Use v3 binding of return values from PDB calls
+  (script-fu-use-v3)
+
   (let* (
         (theImage inImage)
-        (theHeight (car (gimp-image-get-height theImage)))
-        (theWidth (car (gimp-image-get-width theImage)))
+        (theHeight (gimp-image-get-height theImage))
+        (theWidth  (gimp-image-get-width theImage))
         (theNumber inNumber)
         (theSize (min theWidth theHeight))
         (theStain 0)
@@ -34,10 +38,11 @@
 
     (while (> theNumber 0)
       (set! theNumber (- theNumber 1))
-      (set! theStain (car (gimp-layer-new theImage theSize theSize
-                                          RGBA-IMAGE _"Stain" 100
-                                          (if (= inDark TRUE)
-                                              LAYER-MODE-DARKEN-ONLY LAYER-MODE-NORMAL))))
+      (set! theStain (gimp-layer-new theImage theSize theSize
+                                     RGBA-IMAGE _"Stain" 100
+                                     (if inDark
+                                        LAYER-MODE-DARKEN-ONLY
+                                        LAYER-MODE-NORMAL)))
 
       (gimp-image-insert-layer theImage theStain 0 0)
       (gimp-selection-all theImage)
@@ -80,18 +85,26 @@
 
       ; !!! This call is not via the PDB so SF does not range check args.
       ; The script is in the interpreter state and doesn't require a PDB call.
+      ;
+      ; The called SF plugin is not yet converted to v3 binding, so switch back to v2
+      ; and use TRUE instead of #t
+      (script-fu-use-v2)
       (script-fu-distress-selection theImage (vector theStain)
                                     theThreshold
                                     theSpread 4 2 TRUE TRUE)
+      ; back to v3, this is a loop
+      (script-fu-use-v3)
+
 
       (gimp-context-set-gradient inGradient)
 
       ; only fill if there is a selection
-      (if (> (car (gimp-selection-bounds theImage)) 0)
+      ; First element of returned list is a boolean.
+      (if (car (gimp-selection-bounds theImage))
         (gimp-drawable-edit-gradient-fill theStain
             GRADIENT-SHAPEBURST-DIMPLED 0
-            FALSE 1 0
-            TRUE
+            #f 1 0
+            #t
             0 0 0 0)
       )
 
@@ -125,7 +138,7 @@
   "RGB*"
   SF-ONE-OR-MORE-DRAWABLE
   SF-ADJUSTMENT _"Number of stains to add"      '(3 1 10 1 2 0 0)
-  SF-TOGGLE     _"Darken only" TRUE
+  SF-TOGGLE     _"Darken only" #t
   SF-GRADIENT   _"Gradient to color stains"    "Coffee"
 )
 
