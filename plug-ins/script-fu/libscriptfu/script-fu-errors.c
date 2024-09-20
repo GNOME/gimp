@@ -149,6 +149,44 @@ script_length_error_in_vector (scheme       *sc,
   return script_error (sc, error_message, 0);
 }
 
+/* Arg of type int is out of range in call to PDB. */
+pointer
+script_int_range_error (scheme       *sc,
+                        const guint   arg_index,
+                        const gchar  *proc_name,
+                        const gint    expected_min,
+                        const gint    expected_max,
+                        const gint    value)
+{
+  gchar error_message[1024];
+
+  g_snprintf (error_message, sizeof (error_message),
+              "argument %d in call to %s has value %d out of range: "
+              "%d to %d",
+              arg_index+1, proc_name,
+              value, expected_min, expected_max);
+  return script_error (sc, error_message, 0);
+}
+
+/* Arg of type double is out of range in call to PDB. */
+pointer
+script_float_range_error (scheme       *sc,
+                          const guint   arg_index,
+                          const gchar  *proc_name,
+                          const double  expected_min,
+                          const double  expected_max,
+                          const double  value)
+{
+  gchar error_message[1024];
+
+  g_snprintf (error_message, sizeof (error_message),
+              "argument %d in call to %s has value %f out of range: "
+              "%f to %f",
+              arg_index+1, proc_name,
+              value, expected_min, expected_max);
+  return script_error (sc, error_message, 0);
+}
+
 
 /* Thin wrapper around foreign_error.
  * Does logging.

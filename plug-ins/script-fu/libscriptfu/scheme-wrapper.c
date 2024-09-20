@@ -781,14 +781,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gint           v     = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
               if (v < ispec->minimum || v > ispec->maximum)
-                {
-                  gchar error_message[1024];
-
-                  g_snprintf (error_message, sizeof (error_message),
-                              "Invalid value %d for argument %d: expected value between %d and %d",
-                              v, i, ispec->minimum, ispec->maximum);
-                  return script_error (sc, error_message, 0);
-                }
+                return script_int_range_error (sc, i, proc_name, ispec->minimum, ispec->maximum, v);
 
               g_value_set_int (&value, v);
             }
@@ -805,14 +798,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gint            v     = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
               if (v < ispec->minimum || v > ispec->maximum)
-                {
-                  gchar error_message[1024];
-
-                  g_snprintf (error_message, sizeof (error_message),
-                              "Invalid value %d for argument %d: expected value between %d and %d",
-                              v, i, ispec->minimum, ispec->maximum);
-                  return script_error (sc, error_message, 0);
-                }
+                return script_int_range_error (sc, i, proc_name, ispec->minimum, ispec->maximum, v);
 
               g_value_set_uint (&value, v);
             }
@@ -829,14 +815,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gint             c     = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
               if (c < cspec->minimum || c > cspec->maximum)
-                {
-                  gchar error_message[1024];
-
-                  g_snprintf (error_message, sizeof (error_message),
-                              "Invalid value %d for argument %d: expected value between %d and %d",
-                              c, i, cspec->minimum, cspec->maximum);
-                  return script_error (sc, error_message, 0);
-                }
+                return script_int_range_error (sc, i, proc_name, cspec->minimum, cspec->maximum, c);
 
               g_value_set_uchar (&value, c);
             }
@@ -853,14 +832,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gdouble           d     = sc->vptr->rvalue (sc->vptr->pair_car (a));
 
               if (d < dspec->minimum || d > dspec->maximum)
-                {
-                  gchar error_message[1024];
-
-                  g_snprintf (error_message, sizeof (error_message),
-                              "Invalid value %f for argument %d: expected value between %f and %f",
-                              d, i, dspec->minimum, dspec->maximum);
-                  return script_error (sc, error_message, 0);
-                }
+                return script_float_range_error (sc, i, proc_name, dspec->minimum, dspec->maximum, d);
 
               g_value_set_double (&value, d);
             }

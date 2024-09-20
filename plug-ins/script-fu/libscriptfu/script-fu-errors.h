@@ -43,6 +43,20 @@ pointer script_length_error_in_vector (scheme       *sc,
                                        const guint   expected_length,
                                        const pointer vector);
 
+pointer script_int_range_error        (scheme       *sc,
+                                       const guint   arg_index,
+                                       const gchar  *proc_name,
+                                       const gint    expected_min,
+                                       const gint    expected_max,
+                                       const gint    value);
+
+pointer script_float_range_error      (scheme       *sc,
+                                       const guint   arg_index,
+                                       const gchar  *proc_name,
+                                       const gdouble expected_min,
+                                       const gdouble expected_max,
+                                       const gdouble value);
+
 pointer implementation_error (scheme        *sc,
                               const gchar   *error_message,
                               const pointer  a);
