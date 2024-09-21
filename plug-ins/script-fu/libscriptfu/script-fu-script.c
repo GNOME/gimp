@@ -157,8 +157,7 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
 
   if (script->proc_class == GIMP_TYPE_IMAGE_PROCEDURE)
     {
-      g_debug ("script_fu_script_create_PDB_procedure: %s, plugin type %i, image_proc",
-               script->name, plug_in_type);
+      g_debug ("%s: %s, plugin type %i, image_proc", G_STRFUNC, script->name, plug_in_type);
 
       procedure = gimp_image_procedure_new (plug_in, script->name,
                                             plug_in_type,
@@ -176,34 +175,67 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
        */
       script_fu_script_set_proc_args (procedure, script, 0);
 
+      /* The script declared arity, convey to GIMP. */
       script_fu_script_set_drawable_sensitivity (procedure, script);
     }
   else
     {
+      /* Script declares a GimpProcedure.
+       * Dispatch on which scheme function the script registered with.
+       *
+       * v2 had only script-fu-register.
+       * For compatibility, we still support it,
+       */
       g_assert (script->proc_class == GIMP_TYPE_PROCEDURE);
-      g_debug ("script_fu_script_create_PDB_procedure: %s, plugin type %i, ordinary proc",
-               script->name, plug_in_type);
 
-      procedure = gimp_procedure_new (plug_in, script->name,
-                                      plug_in_type,
-                                      script_fu_run_procedure,
-                                      script, NULL);
+      if (script_fu_script_get_is_old_style (script))
+        {
+          g_debug ("%s: %s, plugin type %i, old-style", G_STRFUNC, script->name, plug_in_type);
 
-      script_fu_script_set_proc_metadata (procedure, script);
+          procedure = gimp_procedure_new (plug_in, script->name,
+                                          plug_in_type,
+                                          script_fu_run_procedure, /* old-style */
+                                          script, NULL);
 
-      gimp_procedure_add_enum_argument (procedure, "run-mode",
-                                        "Run mode", "The run mode",
-                                        GIMP_TYPE_RUN_MODE,
-                                        GIMP_RUN_INTERACTIVE,
-                                        G_PARAM_READWRITE);
+          script_fu_script_set_proc_metadata (procedure, script);
 
-      script_fu_script_set_proc_args (procedure, script, 0);
+          gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                            "Run mode", "The run mode",
+                                            GIMP_TYPE_RUN_MODE,
+                                            GIMP_RUN_INTERACTIVE,
+                                            G_PARAM_READWRITE);
 
-      /* !!! Author did not declare drawable arity, it was inferred. */
-      script_fu_script_set_drawable_sensitivity (procedure, script);
+          script_fu_script_set_proc_args (procedure, script, 0);
+
+          /* !!! Author did not declare drawable arity, it was inferred. */
+          script_fu_script_set_drawable_sensitivity (procedure, script);
+        }
+      else
+        {
+          g_debug ("%s: %s, plugin type %i, old-style", G_STRFUNC, script->name, plug_in_type);
+
+          procedure = gimp_procedure_new (plug_in, script->name,
+                                          plug_in_type,
+                                          script_fu_run_regular_procedure,  /* new-style */
+                                          script, NULL);
+
+          script_fu_script_set_proc_metadata (procedure, script);
+
+          gimp_procedure_add_enum_argument (procedure, "run-mode",
+                                            "Run mode", "The run mode",
+                                            GIMP_TYPE_RUN_MODE,
+                                            GIMP_RUN_INTERACTIVE,
+                                            G_PARAM_READWRITE);
+
+          script_fu_script_set_proc_args (procedure, script, 0);
+
+          /* The script did not declare arity.
+           * new-style regular procedure always arity SF_NO_DRAWABLE.
+           * This conveys to GIMP.
+           */
+          script_fu_script_set_drawable_sensitivity (procedure, script);
+        }
     }
-
-
   return procedure;
 }
 
@@ -458,6 +490,11 @@ script_fu_script_get_command_for_image_proc (SFScript            *script,
   return g_string_free (s, FALSE);
 }
 
+/* The difference between count of config properties and count of script args.
+* config will have 2 extra, leading property: "procedure" and "run_mode".
+*/
+#define SF_ARGS_TO_CONFIG_OFFSET 2
+
 gchar *
 script_fu_script_get_command_for_regular_proc (SFScript            *script,
                                                GimpProcedureConfig *config)
@@ -476,13 +513,12 @@ script_fu_script_get_command_for_regular_proc (SFScript            *script,
   /* The command has no run mode. */
 
   /* config contains the "other" args
-   * Iterate over the GimpValueArray.
+   * Iterate over the GimpValueArray, starting at an offset.
    * But script->args should be the same length, and types should match.
    */
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_pspecs);
 
-  /* config will have 1 additional property: "procedure". */
-  for (i = 1; i < n_pspecs; i++)
+  for (i = SF_ARGS_TO_CONFIG_OFFSET; i < n_pspecs; i++)
     {
       GParamSpec *pspec = pspecs[i];
       GValue      value = G_VALUE_INIT;
@@ -491,7 +527,8 @@ script_fu_script_get_command_for_regular_proc (SFScript            *script,
 
       g_value_init (&value, pspec->value_type);
       g_object_get_property (G_OBJECT (config), pspec->name, &value);
-      script_fu_arg_append_repr_from_gvalue (&script->args[i - 1], s, &value);
+      script_fu_arg_append_repr_from_gvalue (&script->args[i - SF_ARGS_TO_CONFIG_OFFSET],
+                                             s, &value);
       g_value_unset (&value);
     }
 
@@ -685,4 +722,26 @@ script_fu_script_set_drawable_sensitivity (GimpProcedure *procedure, SFScript *s
       /* Fail to set sensitivy mask. */
       g_warning ("Unhandled case for SFDrawableArity");
     }
+}
+
+/* Set drawable arity of script to NONE, meaning a regular procedure,
+ * always enabled (sensitive)
+ */
+void
+script_fu_script_set_drawable_arity_none (SFScript *script)
+{
+  script->drawable_arity = SF_NO_DRAWABLE;
+}
+
+/* Only settable, never cleared, defaults to false. */
+void
+script_fu_script_set_is_old_style (SFScript *script)
+{
+  script->is_old_style = TRUE;
+}
+
+gboolean
+script_fu_script_get_is_old_style (SFScript *script)
+{
+  return script->is_old_style;
 }

@@ -93,6 +93,8 @@ typedef struct
   SFArg        *args;
   SFDrawableArity drawable_arity;
   GType           proc_class; /* GimpProcedure or GimpImageProcedure. */
+  /* is declared using script-fu-register and dialog is old-style. */
+  gboolean       is_old_style;
 } SFScript;
 
 /* ScriptFu keeps array of SFArg, it's private arg specs.

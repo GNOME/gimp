@@ -144,20 +144,23 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
  */
 GimpValueArray *
 script_fu_run_regular_procedure (GimpProcedure        *procedure,
-                                 GimpRunMode           run_mode,
                                  GimpProcedureConfig  *config,
                                  gpointer              data)
 {
 
   GimpValueArray *result = NULL;
   SFScript       *script;
+  GimpRunMode     run_mode;
 
-  g_debug ("script_fu_run_regular_procedure");
+  g_debug ("%s", G_STRFUNC);
+
   script = script_fu_find_script (gimp_procedure_get_name (procedure));
 
   if (! script)
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
 
+  /* Unlike ImageProcedure, run-mode is a prop in the config. */
+  g_object_get (config, "run-mode", &run_mode, NULL);
   ts_set_run_mode (run_mode);
 
   /* Need Gegl.  Also inits ui, needed when mode is interactive. */

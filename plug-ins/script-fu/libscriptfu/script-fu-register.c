@@ -119,6 +119,78 @@ script_fu_script_new_from_metadata_args (scheme  *sc,
   return script;
 }
 
+/* Traverse Scheme argument list
+ * creating a new SFScript with metadata, but empty SFArgs (formal arg specs)
+ *
+ * Takes a handle to a pointer into the argument list.
+ * Advances the pointer past the metadata args.
+ *
+ * Returns new SFScript.
+ *
+ * For a script declaring using script-fu-register-regular,
+ * declared without image_type or drawable_arity.
+ */
+SFScript*
+script_fu_script_new_from_metadata_regular (scheme  *sc,
+                                            pointer *handle)
+{
+  SFScript    *script;
+  const gchar *name;
+  const gchar *menu_label;
+  const gchar *blurb;
+  const gchar *author;
+  const gchar *copyright;
+  const gchar *date;
+  const gchar *image_types;
+  guint        n_args;
+
+  /* dereference handle into local pointer. */
+  pointer a = *handle;
+
+  g_debug ("script_fu_script_new_from_metadata_args");
+
+  /* Require list_length starting at a is >= 5
+   * else strange parsing errors at plugin query time.
+   */
+
+  name = sc->vptr->string_value (sc->vptr->pair_car (a));
+  a = sc->vptr->pair_cdr (a);
+  menu_label = sc->vptr->string_value (sc->vptr->pair_car (a));
+  a = sc->vptr->pair_cdr (a);
+  blurb = sc->vptr->string_value (sc->vptr->pair_car (a));
+  a = sc->vptr->pair_cdr (a);
+  author = sc->vptr->string_value (sc->vptr->pair_car (a));
+  a = sc->vptr->pair_cdr (a);
+  /* Copyright is same as author.
+   * script-fu-register-regular does not require declaring copyright owner
+   * separately from the author.
+   */
+  copyright = author;
+  date = sc->vptr->string_value (sc->vptr->pair_car (a));
+  a = sc->vptr->pair_cdr (a);
+
+  /* Image types not used for regular procedures. */
+  image_types = NULL;
+
+  /* Store local, advanced pointer at handle from caller. */
+  *handle = a;
+
+  /* Calculate supplied number of formal arguments of the PDB procedure,
+   * each takes three actual args from Scheme call.
+   */
+  n_args = sc->vptr->list_length (sc, a) / 3;
+
+  /* This allocates empty array of SFArg. Hereafter, script knows its n_args. */
+  script = script_fu_script_new (name,
+                                 menu_label,
+                                 blurb,
+                                 author,
+                                 copyright,
+                                 date,
+                                 image_types,
+                                 n_args);
+  return script;
+}
 
  /* GimpResource
   *

@@ -61,6 +61,9 @@ GimpProcedure * script_fu_script_create_PDB_procedure (GimpPlugIn         *plug_
                                                        SFScript           *script,
                                                        GimpPDBProcType     plug_in_type);
 
-void            script_fu_script_infer_drawable_arity (SFScript           *script);
+void       script_fu_script_infer_drawable_arity      (SFScript           *script);
+void       script_fu_script_set_drawable_arity_none   (SFScript           *script);
+void       script_fu_script_set_is_old_style          (SFScript           *script);
+gboolean   script_fu_script_get_is_old_style          (SFScript           *script);
 
 #endif /*  __SCRIPT_FU_SCRIPT__  */

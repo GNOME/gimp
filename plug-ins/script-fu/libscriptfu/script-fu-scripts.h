@@ -24,6 +24,8 @@ pointer   script_fu_add_script        (scheme     *sc,
                                        pointer     a);
 pointer   script_fu_add_script_filter (scheme     *sc,
                                        pointer     a);
+pointer  script_fu_add_script_regular (scheme     *sc,
+                                       pointer     a);
 pointer   script_fu_add_menu      (scheme     *sc,
                                    pointer     a);
 

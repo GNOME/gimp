@@ -31,7 +31,6 @@ GimpValueArray *script_fu_run_image_procedure (GimpProcedure        *procedure,
                                                gpointer              data);
 GimpValueArray *script_fu_run_regular_procedure (
                                                GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
                                                GimpProcedureConfig  *config,
                                                gpointer              data);
 

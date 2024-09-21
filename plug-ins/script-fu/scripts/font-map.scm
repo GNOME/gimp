@@ -163,13 +163,11 @@
   )
 )
 
-(script-fu-register "script-fu-font-map"
+(script-fu-register-regular "script-fu-font-map"
   _"Render _Font Map..."
   _"Create an image filled with previews of fonts matching a fontname filter"
   "Spencer Kimball"
-  "Spencer Kimball"
   "1997"
-  ""
   SF-STRING     _"_Text"                  "How quickly daft jumping zebras vex."
   SF-TOGGLE     _"Use font _name as text" FALSE
   SF-TOGGLE     _"_Labels"                TRUE

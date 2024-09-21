@@ -23,6 +23,9 @@ pointer   script_fu_script_create_formal_args       (scheme   *sc,
                                                      SFScript *script);
 SFScript *script_fu_script_new_from_metadata_args   (scheme   *sc,
                                                      pointer  *handle);
+SFScript *script_fu_script_new_from_metadata_regular
+                                                    (scheme   *sc,
+                                                     pointer  *handle);
 pointer   script_fu_script_parse_drawable_arity_arg (scheme   *sc,
                                                      pointer  *handle,
                                                      SFScript *script);

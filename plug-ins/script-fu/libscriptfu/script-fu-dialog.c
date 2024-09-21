@@ -142,9 +142,29 @@ sf_dialog_can_be_run (GimpProcedure        *procedure,
   return TRUE;
 }
 
+/* Omit leading "procedure" and "run-mode" properties.
+ * Caller must free the list.
+ */
+static GList*
+sf_get_suffix_of_config_prop_names (GimpProcedureConfig  *config)
+{
+  guint n_specs;
+  GParamSpec ** pspecs  = g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs);
+  GList *property_names = NULL;
+
+  for (guint i=2; i<n_specs; i++)
+    property_names = g_list_append (property_names, (void*) g_param_spec_get_name (pspecs[i]));
+
+  g_free (pspecs);
+  return property_names;
+}
+
 /* Create and run a dialog for a procedure.
  * Returns true when not canceled.
  * Side effects on config.
+ *
+ * When should_skip_runmode, the config has a run-mode property
+ * the dialog does not show.
  *
  * Procedure may be GimpImageProcedure or ordinary GimpProcedure.
  *
@@ -153,7 +173,8 @@ sf_dialog_can_be_run (GimpProcedure        *procedure,
 static gboolean
 sf_dialog_run (GimpProcedure        *procedure,
                SFScript             *script,
-               GimpProcedureConfig  *config)
+               GimpProcedureConfig  *config,
+               gboolean              should_skip_runmode)
 {
   GimpProcedureDialog *dialog = NULL;
   gboolean            not_canceled;
@@ -178,10 +199,19 @@ sf_dialog_run (GimpProcedure        *procedure,
   /* Create custom widget where the stock widget is not adequate. */
   script_fu_widgets_custom_add (dialog, script);
 
-  /* NULL means create widgets for all properties of the procedure
-   * that we have not already created custom widgets for.
-   */
-  gimp_procedure_dialog_fill_list (dialog, NULL);
+  /* Create widgets for all properties of the procedure not already created. */
+  if (should_skip_runmode)
+    {
+      GList *property_names = sf_get_suffix_of_config_prop_names (config);
+
+      gimp_procedure_dialog_fill_list (dialog, property_names);
+      g_list_free (property_names);
+    }
+  else
+    {
+      /* NULL means: all properties. */
+      gimp_procedure_dialog_fill_list (dialog, NULL);
+    }
 
   not_canceled = gimp_procedure_dialog_run (dialog);
 
@@ -214,7 +244,7 @@ script_fu_dialog_run_image_proc (
   if (! sf_dialog_can_be_run (procedure, script, config))
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
 
-  not_canceled = sf_dialog_run (procedure, script, config);
+  not_canceled = sf_dialog_run (procedure, script, config, FALSE);
   /* Assert config holds validated arg values from a user interaction. */
 
   if (not_canceled)
@@ -227,7 +257,7 @@ script_fu_dialog_run_image_proc (
   return result;
 }
 
-/* Run a dialog for an Procedure, then interpret the script. */
+/* Run a dialog for a generic GimpProcedure, then interpret the script. */
 GimpValueArray*
 script_fu_dialog_run_regular_proc (GimpProcedure        *procedure,
                                    SFScript             *script,
@@ -240,7 +270,8 @@ script_fu_dialog_run_regular_proc (GimpProcedure        *procedure,
   if (! sf_dialog_can_be_run (procedure, script, config))
     return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
 
-  not_canceled = sf_dialog_run (procedure, script, config);
+  not_canceled = sf_dialog_run (procedure, script, config,
+                                TRUE);  /* skip run-mode prop of config. */
   /* Assert config holds validated arg values from a user interaction. */
 
   if (not_canceled)
