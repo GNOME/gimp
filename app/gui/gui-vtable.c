@@ -1001,6 +1001,11 @@ gui_inhibit (Gimp *gimp)
     }
 
   app = GTK_APPLICATION (g_application_get_default ());
+  if (app == NULL)
+    /* This may happen when quitting. The GtkApplication is finalized
+     * faster than the images without display.
+     */
+    return;
 
   if (gimp_displays_dirty (gimp))
     {
