@@ -243,6 +243,7 @@ gimp_data_finalize (GObject *object)
   gimp_id_table_remove (data_id_table, private->ID);
 
   g_clear_object (&private->file);
+  g_clear_weak_pointer (&private->image);
 
   if (private->tags)
     {
@@ -987,7 +988,7 @@ gimp_data_set_image (GimpData  *data,
 
   g_return_if_fail (private->file == NULL);
 
-  g_set_object (&private->image, image);
+  g_set_weak_pointer (&private->image, image);
 
   private->writable  = writable  ? TRUE : FALSE;
   private->deletable = deletable ? TRUE : FALSE;
