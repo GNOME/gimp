@@ -129,70 +129,72 @@ gimp_operation_color_balance_process (GeglOperation       *operation,
   GimpColorBalanceConfig   *config = GIMP_COLOR_BALANCE_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
+  gint                      total;
+  const Babl               *space;
+  const Babl               *format;
+  const Babl               *hsl_format;
+  gfloat                   *hsl;
+  gfloat                   *rgb_n;
+  gint                      i;
 
   if (! config)
     return FALSE;
 
-  while (samples--)
+  total      = samples * 4;
+  format     = gegl_operation_get_format (operation, "input");
+  space      = gegl_operation_get_source_space (operation, "input");
+  hsl_format = babl_format_with_space ("HSLA float", space);
+
+  hsl   = g_new0 (gfloat, sizeof (gfloat) * total);
+  rgb_n = g_new0 (gfloat, sizeof (gfloat) * total);
+
+  /* Create HSL buffer */
+  babl_process (babl_fish (format, hsl_format), src, hsl, samples);
+
+  /* Create normalized RGB buffer */
+  for (i = 0; i < total; i += 4)
     {
-      gfloat r = src[RED];
-      gfloat g = src[GREEN];
-      gfloat b = src[BLUE];
-      gfloat r_n;
-      gfloat g_n;
-      gfloat b_n;
+      rgb_n[i] =
+        gimp_operation_color_balance_map (src[i], hsl[i + 2],
+                                          config->cyan_red[GIMP_TRANSFER_SHADOWS],
+                                          config->cyan_red[GIMP_TRANSFER_MIDTONES],
+                                          config->cyan_red[GIMP_TRANSFER_HIGHLIGHTS]);
 
-      GimpRGB rgb = { r, g, b};
-      GimpHSL hsl;
+      rgb_n[i + 1] =
+        gimp_operation_color_balance_map (src[i + 1], hsl[i + 2],
+                                          config->magenta_green[GIMP_TRANSFER_SHADOWS],
+                                          config->magenta_green[GIMP_TRANSFER_MIDTONES],
+                                          config->magenta_green[GIMP_TRANSFER_HIGHLIGHTS]);
 
-      gimp_rgb_to_hsl (&rgb, &hsl);
+      rgb_n[i + 2] =
+        gimp_operation_color_balance_map (src[i + 2], hsl[i + 2],
+                                          config->yellow_blue[GIMP_TRANSFER_SHADOWS],
+                                          config->yellow_blue[GIMP_TRANSFER_MIDTONES],
+                                          config->yellow_blue[GIMP_TRANSFER_HIGHLIGHTS]);
 
-      r_n = gimp_operation_color_balance_map (r, hsl.l,
-                                              config->cyan_red[GIMP_TRANSFER_SHADOWS],
-                                              config->cyan_red[GIMP_TRANSFER_MIDTONES],
-                                              config->cyan_red[GIMP_TRANSFER_HIGHLIGHTS]);
-
-      g_n = gimp_operation_color_balance_map (g, hsl.l,
-                                              config->magenta_green[GIMP_TRANSFER_SHADOWS],
-                                              config->magenta_green[GIMP_TRANSFER_MIDTONES],
-                                              config->magenta_green[GIMP_TRANSFER_HIGHLIGHTS]);
-
-      b_n = gimp_operation_color_balance_map (b, hsl.l,
-                                              config->yellow_blue[GIMP_TRANSFER_SHADOWS],
-                                              config->yellow_blue[GIMP_TRANSFER_MIDTONES],
-                                              config->yellow_blue[GIMP_TRANSFER_HIGHLIGHTS]);
-
-      if (config->preserve_luminosity)
-        {
-          GimpHSL hsl2;
-
-          rgb.r = r_n;
-          rgb.g = g_n;
-          rgb.b = b_n;
-          gimp_rgb_to_hsl (&rgb, &hsl);
-
-          rgb.r = r;
-          rgb.g = g;
-          rgb.b = b;
-          gimp_rgb_to_hsl (&rgb, &hsl2);
-
-          hsl.l = hsl2.l;
-
-          gimp_hsl_to_rgb (&hsl, &rgb);
-
-          r_n = rgb.r;
-          g_n = rgb.g;
-          b_n = rgb.b;
-        }
-
-      dest[RED]   = r_n;
-      dest[GREEN] = g_n;
-      dest[BLUE]  = b_n;
-      dest[ALPHA] = src[ALPHA];
-
-      src  += 4;
-      dest += 4;
+      rgb_n[i + 3] = src[i + 3];
     }
+
+  if (config->preserve_luminosity)
+    {
+      gfloat *hsl_n = g_new0 (gfloat, sizeof (gfloat) * total);
+
+      babl_process (babl_fish (format, hsl_format), rgb_n, hsl_n, samples);
+
+      /* Copy the original lightness value */
+      for (i = 0; i < total; i += 4)
+        hsl_n[i + 2] = hsl[i + 2];
+
+      babl_process (babl_fish (hsl_format, format), hsl_n, rgb_n, samples);
+      g_free (hsl_n);
+    }
+
+  /* Copy normalized RGB back to destination */
+  for (i = 0; i < total; i++)
+    dest[i] = rgb_n[i];
+
+  g_free (hsl);
+  g_free (rgb_n);
 
   return TRUE;
 }
