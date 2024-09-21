@@ -342,7 +342,6 @@ gimp_palette_view_set_viewable (GimpView     *view,
   GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (view);
 
   pal_view->dnd_entry = NULL;
-  gimp_palette_view_select_entry (pal_view, NULL);
 
   if (old_viewable)
     {
@@ -378,6 +377,8 @@ gimp_palette_view_set_viewable (GimpView     *view,
                                    gimp_palette_view_drop_color,
                                    view);
         }
+
+      gimp_palette_view_select_entry (pal_view, NULL);
     }
 }
 
@@ -484,6 +485,8 @@ gimp_palette_view_expose_entry (GimpPaletteView  *view,
 
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
   palette = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
+
+  g_return_if_fail (GIMP_IS_PALETTE (palette));
 
   gtk_widget_get_allocation (widget, &allocation);
 
