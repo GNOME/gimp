@@ -1458,7 +1458,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
       if (filter_tool->existing_filter)
         {
           GimpChannel *mask = NULL;
-          
+
           mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
           gimp_drawable_filter_apply_with_mask (filter_tool->filter, mask,
                                                 NULL);
