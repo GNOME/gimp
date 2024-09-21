@@ -159,3 +159,18 @@ script_fu_interpret_image_proc (GimpProcedure        *procedure,
   g_free (command);
   return result;
 }
+
+/* Interpret a script that defines a GimpProcedure. */
+GimpValueArray *
+script_fu_interpret_regular_proc (GimpProcedure        *procedure,
+                                  SFScript             *script,
+                                  GimpProcedureConfig  *config)
+{
+  gchar          *command;
+  GimpValueArray *result = NULL;
+
+  command = script_fu_script_get_command_for_regular_proc (script, config);
+  result = sf_wrap_run_command (procedure, script, command);
+  g_free (command);
+  return result;
+}

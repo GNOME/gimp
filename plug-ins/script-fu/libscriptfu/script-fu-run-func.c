@@ -134,8 +134,85 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
   return result;
 }
 
+/* run_func for a GimpProcedure
+ *
+ * Type is GimpRunFunc.
+ *
+ * Uses Gimp's config and gui.
+ *
+ * Since 3.0
+ */
+GimpValueArray *
+script_fu_run_regular_procedure (GimpProcedure        *procedure,
+                                 GimpRunMode           run_mode,
+                                 GimpProcedureConfig  *config,
+                                 gpointer              data)
+{
 
-/* run_func for a GimpProcedure.
+  GimpValueArray *result = NULL;
+  SFScript       *script;
+
+  g_debug ("script_fu_run_regular_procedure");
+  script = script_fu_find_script (gimp_procedure_get_name (procedure));
+
+  if (! script)
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
+
+  ts_set_run_mode (run_mode);
+
+  /* Need Gegl.  Also inits ui, needed when mode is interactive. */
+  gimp_ui_init ("script-fu");
+
+  begin_interpret_default_dialect ();
+
+  script_fu_progress_init ();
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+      {
+        guint n_specs;
+
+        g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
+        if (n_specs > 1)
+          {
+            /* Let user choose "other" args in a dialog, then interpret. Maintain a config. */
+            result = script_fu_dialog_run_regular_proc (procedure, script, config);
+          }
+        else
+          {
+            /* No "other" args for user to choose. No config to maintain. */
+            result = script_fu_interpret_regular_proc (procedure, script, config);
+          }
+        break;
+      }
+    case GIMP_RUN_NONINTERACTIVE:
+      {
+        /* A call from another PDB procedure.
+         * Use the given config, without interacting with user.
+         * Since no user interaction, no config to maintain.
+         */
+        result = script_fu_interpret_regular_proc (procedure, script, config);
+        break;
+      }
+    case GIMP_RUN_WITH_LAST_VALS:
+      {
+        /* User invoked from a menu "Filter>Run with last values".
+         * Do not show dialog. config are already last values.
+         */
+        result = script_fu_interpret_regular_proc (procedure, script, config);
+        break;
+      }
+    default:
+      {
+        result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR, NULL);
+      }
+    }
+
+  return result;
+}
+
+/* run_func for a GimpProcedure registered using Scheme "script-fu-register"
  *
  * Type is GimpRunFunc
  *

@@ -54,7 +54,9 @@ gchar    * script_fu_script_get_command_for_image_proc (
                                                      guint                 n_drawables,
                                                      GimpDrawable        **drawables,
                                                      GimpProcedureConfig  *config);
-
+gchar    * script_fu_script_get_command_for_regular_proc (
+                                                     SFScript             *script,
+                                                     GimpProcedureConfig  *config);
 GimpProcedure * script_fu_script_create_PDB_procedure (GimpPlugIn         *plug_in,
                                                        SFScript           *script,
                                                        GimpPDBProcType     plug_in_type);

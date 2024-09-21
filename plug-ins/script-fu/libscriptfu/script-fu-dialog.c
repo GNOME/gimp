@@ -226,3 +226,28 @@ script_fu_dialog_run_image_proc (
 
   return result;
 }
+
+/* Run a dialog for an Procedure, then interpret the script. */
+GimpValueArray*
+script_fu_dialog_run_regular_proc (GimpProcedure        *procedure,
+                                   SFScript             *script,
+                                   GimpProcedureConfig  *config)
+
+{
+  GimpValueArray *result = NULL;
+  gboolean        not_canceled;
+
+  if (! sf_dialog_can_be_run (procedure, script, config))
+    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, NULL);
+
+  not_canceled = sf_dialog_run (procedure, script, config);
+  /* Assert config holds validated arg values from a user interaction. */
+
+  if (not_canceled)
+    result = script_fu_interpret_regular_proc (procedure, script, config);
+  else
+    result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+
+  return result;
+}
+

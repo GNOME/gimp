@@ -458,6 +458,49 @@ script_fu_script_get_command_for_image_proc (SFScript            *script,
   return g_string_free (s, FALSE);
 }
 
+gchar *
+script_fu_script_get_command_for_regular_proc (SFScript            *script,
+                                               GimpProcedureConfig *config)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+  GString     *s;
+  gint         i;
+
+  g_return_val_if_fail (script != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+
+  s = g_string_new ("(");
+  g_string_append (s, script->name);
+
+  /* The command has no run mode. */
+
+  /* config contains the "other" args
+   * Iterate over the GimpValueArray.
+   * But script->args should be the same length, and types should match.
+   */
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_pspecs);
+
+  /* config will have 1 additional property: "procedure". */
+  for (i = 1; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec = pspecs[i];
+      GValue      value = G_VALUE_INIT;
+
+      g_string_append_c (s, ' ');
+
+      g_value_init (&value, pspec->value_type);
+      g_object_get_property (G_OBJECT (config), pspec->name, &value);
+      script_fu_arg_append_repr_from_gvalue (&script->args[i - 1], s, &value);
+      g_value_unset (&value);
+    }
+
+  g_string_append_c (s, ')');
+  g_free (pspecs);
+
+  return g_string_free (s, FALSE);
+}
+
 /* Infer whether the script, defined using v2 script-fu-register,
  * which does not specify the arity for drawables,
  * is actually a script that takes one and only one drawable.
