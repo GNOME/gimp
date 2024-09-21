@@ -1,4 +1,3 @@
-${MINGW_PACKAGE_PREFIX}-binutils \
 ${MINGW_PACKAGE_PREFIX}-meson \
 ${MINGW_PACKAGE_PREFIX}-ccache \
 ${MINGW_PACKAGE_PREFIX}-aalib \

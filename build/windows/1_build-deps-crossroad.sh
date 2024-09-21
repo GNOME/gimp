@@ -23,16 +23,10 @@ fi
 # Beginning of install code block
 if [ "$GITLAB_CI" ]; then
   apt-get update -y
-  # libjxl uses C++ features that require posix threads so we install
-  # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
-  # Note that we can't install both the -posix and -win32 versions since
-  # update gcc-mingw-w64 (25).
   apt-get install -y --no-install-recommends    \
                      git                        \
                      ccache                     \
                      cpio                       \
-                     g++-mingw-w64-x86-64-posix \
-                     gcc-mingw-w64-x86-64-posix \
                      meson                      \
                      pkg-config                 \
 	                   python3-distutils          \
@@ -40,15 +34,23 @@ if [ "$GITLAB_CI" ]; then
                      python3-zstandard          \
                      rpm                        \
                      wine                       \
-                     wine64
+                     wine64                     \
+                     wget
 fi
+wget https://github.com/mstorsjo/llvm-mingw/releases/download/20240619/llvm-mingw-20240619-ucrt-ubuntu-20.04-x86_64.tar.xz
+tar xf llvm-mingw*
+mv llvm-mingw*/ llvm-mingw
+export PATH="$PWD/llvm-mingw/bin:$PATH"
+export LD_LIBRARY_PATH="$PWD/llvm-mingw/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 # End of install code block
+
 if [ -d 'crossroad' ]; then
   rm -r -f crossroad
 fi
 git clone --depth $GIT_DEPTH https://gitlab.freedesktop.org/crossroad/crossroad
 cd crossroad
 git apply ../${GIMP_DIR}build/windows/patches/0001-platforms-Enable-ccache.patch
+git apply ../${GIMP_DIR}build/windows/patches/0001-platforms-scripts-Add-llvm-mingw.patch
 # Needed because Debian adds by default a local/ folder to the install
 # prefix of setup.py. This environment variable overrides this behavior.
 export DEB_PYTHON_INSTALL_LAYOUT="deb"
@@ -59,7 +61,7 @@ cd ..
 # CROSSROAD ENV
 export PATH="$PWD/.local/bin:$PATH"
 export XDG_DATA_HOME="$PWD/.local/share"
-crossroad w64 gimp --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
+crossroad w64-clang gimp --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
 else
 
 ## Install the required (pre-built) packages for babl, GEGL and GIMP

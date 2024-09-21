@@ -1,0 +1,769 @@
+From 8ab1c3a1608358ced86784578b2e8c8abb774527 Mon Sep 17 00:00:00 2001
+From: Bruno Lopes <brunolopesdsilv@outlook.com>
+Date: Mon, 27 May 2024 10:10:56 -0300
+Subject: [PATCH] platforms, scripts: Add llvm-mingw support
+
+---
+ MANIFEST.in                                   |   4 +-
+ platforms/cmake/toolchain-w64-clang.cmake     |  34 +++
+ platforms/env/w64-clang.conf                  |  25 ++
+ platforms/meson/toolchain-w64-clang.meson     |  14 +
+ platforms/modules/w64-clang.py                | 253 ++++++++++++++++++
+ .../{crossroad-gcc => crossroad-cc}           |  24 +-
+ .../{crossroad-cpp => crossroad-cxx}          |   6 +-
+ scripts/crossroad-mingw-install.py            |  84 +++---
+ scripts/shells/bash/completions/crossroad     |   3 +-
+ scripts/shells/environment.sh                 |   3 +
+ setup.py                                      |  26 +-
+ 11 files changed, 416 insertions(+), 60 deletions(-)
+ create mode 100644 platforms/cmake/toolchain-w64-clang.cmake
+ create mode 100644 platforms/env/w64-clang.conf
+ create mode 100644 platforms/meson/toolchain-w64-clang.meson
+ create mode 100644 platforms/modules/w64-clang.py
+ rename scripts/bin-wrappers/{crossroad-gcc => crossroad-cc} (84%)
+ rename scripts/bin-wrappers/{crossroad-cpp => crossroad-cxx} (88%)
+
+diff --git a/MANIFEST.in b/MANIFEST.in
+index 535a10c..2021924 100644
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -11,8 +11,8 @@ include scripts/shells/bash/bashrc.template
+ include scripts/shells/bash/completions/crossroad
+ include scripts/shells/zsh/zsh*
+ include scripts/shells/*.sh
+-include scripts/bin-wrappers/crossroad-gcc
++include scripts/bin-wrappers/crossroad-cc
+ include scripts/bin-wrappers/crossroad-pkg-config
+-include scripts/bin-wrappers/crossroad-cpp
++include scripts/bin-wrappers/crossroad-cxx
+ 
+ include README.rst COPYING doc/*.rst requirements.txt
+diff --git a/platforms/cmake/toolchain-w64-clang.cmake b/platforms/cmake/toolchain-w64-clang.cmake
+new file mode 100644
+index 0000000..d030f66
+--- /dev/null
++++ b/platforms/cmake/toolchain-w64-clang.cmake
+@@ -0,0 +1,34 @@
++# the name of the target operating system
++SET(CMAKE_SYSTEM_NAME Windows Clang)
++
++# which compilers to use for C and C++
++SET(CMAKE_C_COMPILER x86_64-w64-mingw32-clang)
++SET(CMAKE_CXX_COMPILER x86_64-w64-mingw32-clang++)
++SET(CMAKE_RC_COMPILER x86_64-w64-mingw32-windres)
++
++# This value is not set automatically when cross-compiling with CMake.
++# According to CMake doc, it would usually be set to the value of
++# PROCESSOR_ARCHITECTURE environment variable when natively compiling on
++# win32. Finally according to information I could find, this variable
++# would be "x86" for 32-bit or "AMD64" for 64-bit architecture.
++SET(CMAKE_SYSTEM_PROCESSOR AMD64)
++
++# pkg-config for searching packages for the target.
++SET(PKG_CONFIG_EXECUTABLE x86_64-w64-mingw32-pkg-config)
++
++# here is the target environment located
++SET(CMAKE_FIND_ROOT_PATH $ENV{CROSSROAD_PREFIX} $ENV{CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX} $ENV{CROSSROAD_GUESSED_MINGW_PREFIX} /usr/local/x86_64-w64-mingw32 /usr/x86_64-w64-mingw32)
++
++# adjust the default behaviour of the FIND_XXX() commands:
++# search headers and libraries in the target environment, search
++# programs in the host environment
++SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
++SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
++SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
++
++# If available, Wine will be able for TRY_RUN configuration steps,
++# as well as for tests or other similar cases.
++FIND_PROGRAM(WINE wine)
++if(WINE)
++    SET(CMAKE_CROSSCOMPILING_EMULATOR wine)
++endif(WINE)
+diff --git a/platforms/env/w64-clang.conf b/platforms/env/w64-clang.conf
+new file mode 100644
+index 0000000..42a7ae9
+--- /dev/null
++++ b/platforms/env/w64-clang.conf
+@@ -0,0 +1,25 @@
++[Platform]
++# The short name must correspond to platform specific files.
++# It will also be used as command for a user to start an environment.
++# Ex: w32.py [mandatory]
++shortname: w64-clang
++
++# The nice name is a longer name for human understanding. Ex: Windows 32-bit [mandatory]
++nicename: Windows 64-bit (Clang)
++
++# the host is the prefix used by all crossbuild specific binaries [mandatory]
++host:x86_64-w64-mingw32
++
++# Is it 32 or 64 bit (no other word size supported currently) [mandatory]
++word-size:64
++
++# Optional section where each item:value is transformed into an
++# `export ITEM=value` environment variable.
++# See ConfigParser.items
++[Environment]
++
++# Allowing wine to search dll and binaries in our prefix.
++WINEPATH: $CROSSROAD_PREFIX/bin/
++WINEARCH: win64
++# Installing any wine-installed file in our prefix.
++WINEPREFIX=$CROSSROAD_PREFIX/wine
+diff --git a/platforms/meson/toolchain-w64-clang.meson b/platforms/meson/toolchain-w64-clang.meson
+new file mode 100644
+index 0000000..42f7116
+--- /dev/null
++++ b/platforms/meson/toolchain-w64-clang.meson
+@@ -0,0 +1,14 @@
++[binaries]
++c = 'x86_64-w64-mingw32-clang'
++cpp = 'x86_64-w64-mingw32-clang++'
++ar = 'x86_64-w64-mingw32-ar'
++strip = 'x86_64-w64-mingw32-strip'
++pkgconfig = 'x86_64-w64-mingw32-pkg-config'
++windres = 'x86_64-w64-mingw32-windres'
++#exe_wrapper = 'wine64'
++
++[host_machine]
++system = 'windows'
++cpu_family = 'x86_64'
++cpu = 'x86_64'
++endian = 'little'
+diff --git a/platforms/modules/w64-clang.py b/platforms/modules/w64-clang.py
+new file mode 100644
+index 0000000..7302c75
+--- /dev/null
++++ b/platforms/modules/w64-clang.py
+@@ -0,0 +1,253 @@
++#!/usr/bin/python3
++# -*- coding: utf-8 -*-
++#
++# This file is part of crossroad.
++# Copyright (C) 2013 Jehan <jehan at girinstud.io>
++#
++# crossroad is free software: you can redistribute it and/or modify
++# it under the terms of the GNU Affero General Public License as published by
++# the Free Software Foundation, either version 3 of the License, or
++# (at your option) any later version.
++#
++# crossroad is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU Affero General Public License for more details.
++#
++# You should have received a copy of the GNU Affero General Public License
++# along with crossroad.  If not, see <http://www.gnu.org/licenses/>.
++
++'''
++Setups a cross-compilation environment for Microsoft Windows operating systems (64-bit).
++'''
++
++# Require python 3.3 for shutil.which
++import shutil
++import subprocess
++import glob
++import os.path
++import sys
++
++install_datadir = os.path.join(os.path.abspath('@DATADIR@'), 'share')
++
++name = 'w64-clang'
++
++short_description = 'Windows 64-bit (Clang)'
++
++# Right now, llvm-mingw isn't packaged at all
++mandatory_binaries = {
++    'x86_64-w64-mingw32-clang': '',
++    'x86_64-w64-mingw32-ld': ''
++    }
++
++languages = {
++    'C' : {'x86_64-w64-mingw32-clang': ''},
++    'C++': {'x86_64-w64-mingw32-clang++': ''},
++    }
++
++
++def is_available():
++    '''
++    Is it possible on this computer?
++    '''
++    for bin in mandatory_binaries:
++        if shutil.which(bin) is None:
++            return False
++    return True
++
++def requires():
++    '''
++    Output on standard output necessary packages and what is missing on
++    the current installation.
++    '''
++    requirements = ''
++    for bin in mandatory_binaries:
++        requirements += '- {} [package "{}"]'.format(bin, mandatory_binaries[bin])
++        if shutil.which(bin) is None:
++            requirements += " (missing)\n"
++        else:
++            requirements += " (ok)\n"
++    return requirements
++
++def language_list():
++    '''
++    Return a couple of (installed, uninstalled) language list.
++    '''
++    uninstalled_languages = {}
++    installed_languages = []
++    for name in languages:
++        for bin in languages[name]:
++            if shutil.which(bin) is None:
++                # List of packages to install.
++                uninstalled_languages[name] = [languages[name][f] for f in languages[name]]
++                # Removing duplicate packages.
++                uninstalled_languages[name] = list(set(uninstalled_languages[name]))
++                break
++        else:
++            installed_languages.append(name)
++    return (installed_languages, uninstalled_languages)
++
++def prepare(prefix):
++    '''
++    Prepare the environment.
++    Note that copying these libs is unnecessary for building, since the
++    system can find these at build time. But when moving the prefix to a
++    Windows machine, if ever we linked against these dll and they are
++    absent, the executable won't run.
++    '''
++    try:
++        env_bin = os.path.join(prefix, 'bin')
++        os.makedirs(env_bin, exist_ok = True)
++    except PermissionError:
++        sys.stderr.write('"{}" cannot be created. Please verify your permissions. Aborting.\n'.format(env_path))
++        return False
++
++    clang_libs = subprocess.check_output(['x86_64-w64-mingw32-clang', '-print-file-name='], universal_newlines=True)
++
++    sysroot_dlls = []
++    for dll in glob.glob(clang_libs.strip() + '/*.dll') + sysroot_dlls:
++        try:
++            # I used to symlink, which was enough for doing archive
++            # (which would dereference the symlink for us) or for
++            # virtual machine usage. But when doing a copy or more of
++            # the whole folder, the link could break (typically in a CI
++            # usage where our prefix is the artifacts and the linked
++            # file doesn't exist anymore in subsequent CI jobs).
++            # So let's just copy.
++            shutil.copy(dll,
++                        os.path.join(os.path.join(env_bin, os.path.basename(dll))),
++                        follow_symlinks=True)
++        except OSError:
++            # A failed symlink is not necessarily a no-go. Let's just output a warning.
++            sys.stderr.write('Warning: crossroad failed to symlink {} in {}.\n'.format(dll, env_bin))
++    return True
++
++def crossroad_install(*packages:list, src:bool = False):
++    '''
++    Install the list of packages and all their dependencies.
++    If --src is provided, it installs the source packages, and not the main packages.
++    '''
++    if len(packages) == 0:
++        sys.stderr.write('Please provide at least one package name to install.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--deps']
++    if src:
++        command += ['--src']
++    command += list(packages)
++    return subprocess.call(command, shell=False)
++
++def crossroad_update():
++    '''
++    Update the repository information.
++    '''
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--update']
++    return subprocess.call(command, shell=False)
++
++def crossroad_list_files(*packages, src:bool = False):
++    '''
++    List files provided by packages.
++    '''
++    if len(packages) == 0:
++        sys.stderr.write('Please provide at least one package name.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--list-files']
++    if src:
++        command += ['--src']
++    command += packages
++    return subprocess.call(command, shell=False)
++
++def crossroad_info(*packages, src:bool = False):
++    '''
++    Display package details.
++    '''
++    if len(packages) == 0:
++        sys.stderr.write('Please provide at least one package name.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--info']
++    if src:
++        command += ['--src']
++    command += list(packages)
++    return subprocess.call(command, shell=False)
++
++def crossroad_uninstall(*packages, src:bool = False):
++    '''
++    Uninstall packages.
++    '''
++    if len(packages) == 0:
++        sys.stderr.write('Please provide at least one package name.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--uninstall']
++    if src:
++        command += ['--src']
++    command += list(packages)
++    return subprocess.call(command, shell=False)
++
++def crossroad_search(*keywords, src:bool = False, search_files:bool = False):
++    '''
++    Search keywords in package names.
++    If --search-files is also set, also search in files.
++    '''
++    if len(keywords) == 0:
++        sys.stderr.write('Please provide at least one package name.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--search']
++    if src:
++        command += ['--src']
++    if search_files:
++        command += ['--list-files']
++    command += list(keywords)
++    return subprocess.call(command, shell=False)
++
++def crossroad_mask(*packages, src:bool = False):
++    '''
++    Mask packages.
++    '''
++    if len(packages) == 0:
++        sys.stderr.write('Please provide at least one package name.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--mask']
++    if src:
++        command += ['--src']
++    command += list(packages)
++    return subprocess.call(command, shell=False)
++
++def crossroad_unmask(*packages, src:bool = False):
++    '''
++    Unmask packages.
++    '''
++    if len(packages) == 0:
++        sys.stderr.write('Please provide at least one package name.\n')
++        sys.exit(os.EX_USAGE)
++
++    command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++               '-a', name, '--unmask']
++    if src:
++        command += ['--src']
++    command += list(packages)
++    return subprocess.call(command, shell=False)
++
++def crossroad_source(set:str = None):
++    '''
++    List or set repository sources.
++    '''
++    if set is None:
++      command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++                 '-a', name, '--list-sources']
++      return subprocess.call(command, shell=False)
++    else:
++      command = [os.path.join(install_datadir, 'crossroad/scripts/crossroad-mingw-install.py'),
++                 '-a', name, '--set-source', set]
++      return subprocess.call(command, shell=False)
+diff --git a/scripts/bin-wrappers/crossroad-gcc b/scripts/bin-wrappers/crossroad-cc
+similarity index 84%
+rename from scripts/bin-wrappers/crossroad-gcc
+rename to scripts/bin-wrappers/crossroad-cc
+index ea38cdd..20d8f45 100755
+--- a/scripts/bin-wrappers/crossroad-gcc
++++ b/scripts/bin-wrappers/crossroad-cc
+@@ -31,7 +31,7 @@ fi
+ export CCACHE_PATH="$(echo $CCACHE_PATH | sed -e "s%${SCRIPT_DIR}/\?:\?%%")"
+ 
+ # This way we can support several tools (gcc and g++ for now).
+-TOOL="`echo -n $0 | tail -c 3`"
++TOOL="`echo -n $0`"
+ 
+ # The default -I list of directories.
+ export CPATH="$CROSSROAD_PREFIX/include"
+@@ -45,7 +45,19 @@ export CROSSROAD_LDFLAGS=" $CROSSROAD_LDFLAGS -L$CROSSROAD_PREFIX/lib "
+ 
+ case "$CROSSROAD_HOST" in
+   "x86_64-w64-mingw32")
+-  if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX" ]; then
++  if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX" ]; then
++      if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/include" ]; then
++          export CPATH="$CPATH:$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/include/"
++      fi
++      if [ -n "$CROSSROAD_WORD_SIZE" ]; then
++          if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/lib$CROSSROAD_WORD_SIZE" ]; then
++              export CROSSROAD_LDFLAGS="$CROSSROAD_LDFLAGS -L$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/lib$CROSSROAD_WORD_SIZE "
++          fi
++      fi
++      if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/lib" ]; then
++          export CROSSROAD_LDFLAGS="$CROSSROAD_LDFLAGS -L$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/lib "
++      fi
++  else #[ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX" ]; then
+       if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX/include" ]; then
+           export CPATH="$CPATH:$CROSSROAD_CUSTOM_MINGW_W64_PREFIX/include/"
+       fi
+@@ -132,10 +144,10 @@ if [ -d "/usr/$CROSSROAD_HOST/lib" ]; then
+     export CROSSROAD_LDFLAGS="$CROSSROAD_LDFLAGS -L/usr/$CROSSROAD_HOST/lib "
+ fi
+ 
+-if [ "`which -a ${CROSSROAD_HOST}-${TOOL} | wc -l`" -lt "2" ]; then
+-  echo "** [Crossroad] Error: actual compiler (${CROSSROAD_HOST}-${TOOL}) does not exist in your PATH."
+-  echo "** [Crossroad] Error: please install ${CROSSROAD_HOST}-${TOOL}."
++if [ "`which -a ${TOOL} | wc -l`" -lt "2" ]; then
++  echo "** [Crossroad] Error: actual compiler (${TOOL}) does not exist in your PATH."
++  echo "** [Crossroad] Error: please install ${${TOOL}."
+   exit 1
+ fi
+ 
+-`which -a ${CROSSROAD_HOST}-${TOOL} | grep -v $0 |head -n 1` "$@" $CROSSROAD_LDFLAGS $CROSSROAD_CPPFLAGS
++`which -a ${TOOL} | grep -v $0 |head -n 1` "$@" $CROSSROAD_LDFLAGS $CROSSROAD_CPPFLAGS
+diff --git a/scripts/bin-wrappers/crossroad-cpp b/scripts/bin-wrappers/crossroad-cxx
+similarity index 88%
+rename from scripts/bin-wrappers/crossroad-cpp
+rename to scripts/bin-wrappers/crossroad-cxx
+index bc839e6..c253617 100755
+--- a/scripts/bin-wrappers/crossroad-cpp
++++ b/scripts/bin-wrappers/crossroad-cxx
+@@ -21,7 +21,11 @@ export CPATH="$CROSSROAD_PREFIX/include"
+ 
+ case "$CROSSROAD_HOST" in
+   "x86_64-w64-mingw32")
+-  if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX" ]; then
++  if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX" ]; then
++      if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/include" ]; then
++          export CPATH="$CPATH:$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/include/"
++      fi
++  else #[ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX" ]; then
+       if [ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX/include" ]; then
+           export CPATH="$CPATH:$CROSSROAD_CUSTOM_MINGW_W64_PREFIX/include/"
+       fi
+diff --git a/scripts/crossroad-mingw-install.py b/scripts/crossroad-mingw-install.py
+index fe6bf62..b5e4e54 100755
+--- a/scripts/crossroad-mingw-install.py
++++ b/scripts/crossroad-mingw-install.py
+@@ -124,6 +124,7 @@ def detect_distribution_repo (options):
+   repo = repositories[reponame]
+   # Unlike Fedora which has both 32-bit and 64-bit Windows package in a
+   # same repository, SUSE provides 2 repositories.
++  global REPO_ARCH
+   if reponame == 'suse':
+     if options.arch == 'w32':
+       repo = repo.replace('ARCH', 'win32');
+@@ -131,9 +132,23 @@ def detect_distribution_repo (options):
+       repo = repo.replace('ARCH', 'win64');
+   elif reponame == 'msys2':
+     if options.arch == 'w32':
+-      repo = repo.replace('ARCH', 'i686');
++      repo = repo.replace('ARCH', 'mingw32');
++      REPO_ARCH = 'mingw32';
++    elif options.arch == 'w64':
++      repo = repo.replace('ARCH', 'mingw64');
++      REPO_ARCH = 'mingw64';
+     else:
+-      repo = repo.replace('ARCH', 'x86_64');
++      repo = repo.replace('ARCH', 'clang64');
++      REPO_ARCH = 'clang64';
++
++  # Triplets
++  global ARCH_PKG_PREFIX
++  if options.arch == 'w32':
++    ARCH_PKG_PREFIX = 'mingw-w64-i686-';
++  elif options.arch == 'w64':
++    ARCH_PKG_PREFIX = 'mingw-w64-x86_64-';
++  else:
++    ARCH_PKG_PREFIX = 'mingw-w64-clang-x86_64-';
+ 
+   return reponame, repo
+ 
+@@ -151,12 +166,12 @@ def get_package_files (package, repo, options):
+         real_name = package
+         file_list = filelists[package]
+     except KeyError:
+-        if options.arch == 'w64':
++        if options.arch != 'w32':
+             try:
+                 if repo == 'msys2':
+-                    real_name = 'mingw-w64-x86_64-' + package
++                    real_name = ARCH_PKG_PREFIX + package
+                 else:
+-                    real_name = 'mingw64-' + package
++                    real_name = REPO_ARCH + '-' + package
+                 file_list = filelists[real_name]
+             except KeyError:
+                 real_name = None
+@@ -174,18 +189,12 @@ def get_package_files (package, repo, options):
+                 file_list = None
+     if file_list is not None:
+         if repo == 'msys2':
+-            if options.arch == 'w64':
+-                file_list = [f for f in file_list if re.match(r'^mingw64/', f['path']) is not None]
+-            else:
+-                file_list = [f for f in file_list if re.match(r'^mingw32/', f['path']) is not None]
++            file_list = [f for f in file_list if re.match(r'^' + REPO_ARCH + '/', f['path']) is not None]
+         else:
+             file_list = [f for f in file_list if re.match(r'/usr/[^/]+-mingw32/sys-root/mingw', f['path']) is not None]
+         for f in file_list:
+             if repo == 'msys2':
+-                if options.arch == 'w64':
+-                    f['path'] = re.sub(r'^mingw64', prefix, f['path'])
+-                else:
+-                    f['path'] = re.sub(r'^mingw32', prefix, f['path'])
++                f['path'] = re.sub(r'^' + REPO_ARCH, prefix, f['path'])
+             else:
+                 f['path'] = re.sub(r'/usr/[^/]+-mingw32/sys-root/mingw', prefix, f['path'])
+     return (real_name, file_list)
+@@ -313,8 +322,8 @@ def UpdateArchRepository(repositoryLocation, arch, force=True):
+   # mingw64.db and mingw64.files. It turns out that the *.files contain
+   # also all the information from the *.db. So let's just download the
+   # *.files one.
+-  #db_name = 'ming{}.db'.format(arch)
+-  db_name = 'ming{}.files'.format(arch)
++  #db_name = '{}.db'.format(REPO_ARCH)
++  db_name = '{}.files'.format(REPO_ARCH)
+   db_dir = os.path.join(_repositoryCacheDirectory, 'msys2')
+   os.makedirs(db_dir, exist_ok=True)
+   db_tar = os.path.join(db_dir, db_name)
+@@ -408,8 +417,8 @@ def OpenArchRepository(repositoryLocation, arch):
+   # mingw64.db and mingw64.files. It turns out that the *.files contain
+   # also all the information from the *.db. So let's just download the
+   # *.files one.
+-  #db_name = 'ming{}.db'.format(arch)
+-  db_name = 'ming{}.files'.format(arch)
++  #db_name = '{}.db'.format(REPO_ARCH)
++  db_name = '{}.files'.format(REPO_ARCH)
+   db_dir = os.path.join(_repositoryCacheDirectory, 'msys2')
+   os.makedirs(db_dir, exist_ok=True)
+   db_tar = os.path.join(db_dir, db_name)
+@@ -439,9 +448,7 @@ def crossroad_get_msys2_mirrors(main_repo, arch):
+     else:
+       kv = line.strip().split('=', maxsplit=1)
+       if kv[0].strip() == 'Server':
+-        mirror = kv[1].strip().replace("$repo",
+-                                       "x86_64" if arch == 'w64'
+-                                                else 'i686')
++        mirror = kv[1].strip().replace("$repo", REPO_ARCH)
+         if mirror != main_repo.strip():
+           mirrors += [kv[1].strip()]
+   return mirrors
+@@ -567,7 +574,7 @@ def OpenRPMRepository(repositoryLocation, arch):
+ def search_packages(keyword, arch, srcpkg = False, search_files = False):
+   # Just in case the user was looking for a specific rpm file,
+   # I trim out the filename parts and keep the main naming.
+-  keyword = re.sub('^mingw(32|64)-', '', packageBaseName(keyword.lower()))
++  keyword = re.sub('^{REPO_ARCH}-', '', packageBaseName(keyword.lower()))
+   packages = []
+   if search_files:
+       if srcpkg:
+@@ -579,19 +586,15 @@ def search_packages(keyword, arch, srcpkg = False, search_files = False):
+       packages = sorted([p for p in filelists if filter_func(p)])
+   else:
+       filter_func = lambda p: \
+-         re.sub('^ming' + arch + '-', '', p['name'].lower()).find(keyword) != -1 \
++         re.sub('^{REPO_ARCH}-', '', p['name'].lower()).find(keyword) != -1 \
+          and ((p['arch'] == 'src') if srcpkg else True)
+       packages = sorted([p['name'] for p in _packages if filter_func(p)])
+   return packages
+ 
+ def _findPackage(packageName, arch, srcpkg=False):
+-  if arch == 'w32':
+-    arch_pkg_prefix = 'mingw-w64-i686-'
+-  else:
+-    arch_pkg_prefix = 'mingw-w64-x86_64-'
+   filter_func = lambda p: \
+-    (p['name'] == 'ming' + arch + '-' + packageName          or \
+-     p['name'] == arch_pkg_prefix + packageName              or \
++    (p['name'] == REPO_ARCH + '-' + packageName              or \
++     p['name'] == ARCH_PKG_PREFIX + packageName              or \
+      p['name'] == packageName or p['filename'] == packageName)  \
+     and ((p['arch'] == 'src') if srcpkg else True)
+   sort_func = lambda p: p['buildtime']
+@@ -629,7 +632,7 @@ def packagesDownload(packageNames, arch,
+                      force_install    = False):
+   packageNames_new = {pn for pn in packageNames if pn.endswith('.rpm')}
+   for packageName in packageNames - packageNames_new:
+-    matchedpackages = {p['name'] for p in _packages if fnmatch.fnmatchcase(p['name'].replace('mingw32-', '').replace('mingw64-', '').replace('mingw-w64-x86_64-', '').replace('mingw-w64-i686-', ''), packageName) and ((p['arch'] == 'src') if srcpkg else True)}
++    matchedpackages = {p['name'] for p in _packages if fnmatch.fnmatchcase(p['name'].replace('{REPO_ARCH}-', '').replace('{ARCH_PKG_PREFIX}', ''), packageName) and ((p['arch'] == 'src') if srcpkg else True)}
+     packageNames_new |= matchedpackages if len(matchedpackages) > 0 else {packageName}
+   packageNames = list(packageNames_new)
+   allPackageNames = set(packageNames)
+@@ -651,7 +654,7 @@ def packagesDownload(packageNames, arch,
+       if len(alt_packages) > 0:
+           logging.error('Did you mean:')
+           for alt_pkg in alt_packages:
+-              logging.error('\t- {}'.format(re.sub('^mingw(32|64)-', '', alt_pkg)))
++              logging.error('\t- {}'.format(re.sub('^{REPO_ARCH}-', '', alt_pkg)))
+       logging.error('Exiting without installing.')
+       sys.exit(os.EX_NOINPUT)
+     dependencies = _checkPackageRequirements(package, allPackageNames)
+@@ -750,10 +753,8 @@ def _extractFile(filename, output_dir=_extractedCacheDirectory):
+ 
+ def GetBaseDirectory(repo, arch):
+   if repo == 'msys2':
+-    if arch == 'w32' and os.path.exists(os.path.join(_extractedFilesDirectory, 'mingw32')):
+-      return os.path.join(_extractedFilesDirectory, 'mingw32')
+-    elif arch == 'w64' and os.path.exists(os.path.join(_extractedFilesDirectory, 'mingw64')):
+-      return os.path.join(_extractedFilesDirectory, 'mingw64')
++    if os.path.exists(os.path.join(_extractedFilesDirectory, REPO_ARCH)):
++      return os.path.join(_extractedFilesDirectory, REPO_ARCH)
+   else:
+     if arch == 'w32' and os.path.exists(os.path.join(_extractedFilesDirectory, 'usr/i686-w64-mingw32/sys-root/mingw')):
+       return os.path.join(_extractedFilesDirectory, 'usr/i686-w64-mingw32/sys-root/mingw')
+@@ -833,10 +834,7 @@ def packagesExtractRPM(packageFilename, srcpkg=False):
+ 
+ def move_files(repo, arch, from_file, to_file):
+     if repo == 'msys2':
+-        if arch == 'w64':
+-            regexp = re.compile(b'/mingw64')
+-        else:
+-            regexp = re.compile(b'/mingw32')
++        regexp = re.compile(b'/{REPO_ARCH}')
+     else:
+         regexp = re.compile(b'/usr/[^/]+-mingw32/sys-root/mingw')
+     if os.path.isdir(from_file) and not os.path.islink(from_file):
+@@ -975,7 +973,7 @@ if __name__ == "__main__":
+   packages = set(args)
+   logging.basicConfig(level=(logging.WARNING if options.verbose else logging.ERROR), format='%(message)s', stream=sys.stderr)
+ 
+-  if options.arch != 'w32' and options.arch != 'w64':
++  if options.arch != 'w32' and options.arch != 'w64' and options.arch != 'w64-clang':
+     logging.error('"{}" is not a known mingw arch.\n'.format(options.arch))
+     sys.exit(os.EX_USAGE)
+ 
+@@ -1046,9 +1044,9 @@ if __name__ == "__main__":
+             sys.stdout.write('The following packages were found for the search "{}":\n'.format(keyword))
+             for alt_pkg in alt_packages:
+               if reponame == 'msys2':
+-                sys.stdout.write('\t- {}\n'.format(re.sub('^mingw-w64-(i686|x86_64)-', '', alt_pkg)))
++                sys.stdout.write('\t- {}\n'.format(re.sub('^{ARCH_PKG_PREFIX}', '', alt_pkg)))
+               else:
+-                sys.stdout.write('\t- {}\n'.format(re.sub('^mingw(32|64)-', '', alt_pkg)))
++                sys.stdout.write('\t- {}\n'.format(re.sub('^{REPO_ARCH}-', '', alt_pkg)))
+         else:
+             sys.stdout.write('"{}" not found in any package name.\n'.format(keyword))
+         if options.list_files:
+@@ -1057,9 +1055,9 @@ if __name__ == "__main__":
+                 sys.stdout.write('The following packages have files matching the search "{}":\n'.format(keyword))
+                 for alt_pkg in alt_packages:
+                   if reponame == 'msys2':
+-                    sys.stdout.write('\t- {}\n'.format(re.sub('^mingw-w64-(i686|x86_64)-', '', alt_pkg)))
++                    sys.stdout.write('\t- {}\n'.format(re.sub('^{ARCH_PKG_PREFIX}', '', alt_pkg)))
+                   else:
+-                    sys.stdout.write('\t- {}\n'.format(re.sub('^mingw(32|64)-', '', alt_pkg)))
++                    sys.stdout.write('\t- {}\n'.format(re.sub('^{REPO_ARCH}-', '', alt_pkg)))
+     sys.exit(os.EX_OK)
+ 
+   if options.list_files:
+diff --git a/scripts/shells/bash/completions/crossroad b/scripts/shells/bash/completions/crossroad
+index d780403..221e71e 100644
+--- a/scripts/shells/bash/completions/crossroad
++++ b/scripts/shells/bash/completions/crossroad
+@@ -22,7 +22,8 @@ __crossroad ()
+                     "$command" == "info"       ||
+                     "$command" == "list-files" ||
+                     "$command" == "uninstall"  ]]; then
+-                if [[ x"$CROSSROAD_PLATFORM" == "xw64" ||
++                if [[ x"$CROSSROAD_PLATFORM" == "xw64-clang" || 
++                      x"$CROSSROAD_PLATFORM" == "xw64"       ||
+                       x"$CROSSROAD_PLATFORM" == "xw32" ]]; then
+                     COMPREPLY=( $( compgen -W '$( crossroad -h $command 2>/dev/null |grep --colour=NEVER -o "\--[-a-zA-Z]\+=\?" | sort -u )
+                                                $(cat ${XDG_CACHE_HOME:-$HOME/.cache}/crossroad/repository/${CROSSROAD_PLATFORM}/*primary.xml 2>/dev/null |
+diff --git a/scripts/shells/environment.sh b/scripts/shells/environment.sh
+index 53fe481..dc1850d 100644
+--- a/scripts/shells/environment.sh
++++ b/scripts/shells/environment.sh
+@@ -269,6 +269,9 @@ if [ x"$CROSSROAD_PLATFORM" = x"w32" ] || \
+   if [ x"$CROSSROAD_PLATFORM" = x"w64" ] && [ -d "$CROSSROAD_CUSTOM_MINGW_W64_PREFIX" ]; then
+       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$CROSSROAD_CUSTOM_MINGW_W64_PREFIX/lib64/:$CROSSROAD_CUSTOM_MINGW_W64_PREFIX/lib/"
+   fi
++  if [ x"$CROSSROAD_PLATFORM" = x"w64-clang" ] && [ -d "$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX" ]; then
++      export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/lib64/:$CROSSROAD_CUSTOM_MINGW_W64_CLANG_PREFIX/lib/"
++  fi
+   if [ -d "$CROSSROAD_GUESSED_MINGW_PREFIX" ]; then
+       export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$CROSSROAD_GUESSED_MINGW_PREFIX/lib32/:$CROSSROAD_GUESSED_MINGW_PREFIX/lib/"
+   fi
+diff --git a/setup.py b/setup.py
+index 4d0b679..b9a6a43 100755
+--- a/setup.py
++++ b/setup.py
+@@ -297,11 +297,11 @@ class my_install_data(distutils.command.install_data.install_data):
+                               stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR |
+                               stat.S_IRGRP | stat.S_IXGRP |
+                               stat.S_IROTH | stat.S_IXOTH)
+-        os.chmod(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-gcc'),
++        os.chmod(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cc'),
+                               stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR |
+                               stat.S_IRGRP | stat.S_IXGRP |
+                               stat.S_IROTH | stat.S_IXOTH)
+-        os.chmod(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cpp'),
++        os.chmod(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cxx'),
+                               stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR |
+                               stat.S_IRGRP | stat.S_IXGRP |
+                               stat.S_IROTH | stat.S_IXOTH)
+@@ -333,14 +333,26 @@ class my_install_data(distutils.command.install_data.install_data):
+                         os.unlink(os.path.join(datadir, 'share/crossroad/bin/' + host + '-cpp'))
+                     except OSError:
+                         pass
++                    try:
++                        os.unlink(os.path.join(datadir, 'share/crossroad/bin/' + host + '-clang'))
++                    except OSError:
++                        pass
++                    try:
++                        os.unlink(os.path.join(datadir, 'share/crossroad/bin/' + host + '-clang++'))
++                    except OSError:
++                        pass
+                     os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-pkg-config'),
+                                os.path.join(datadir, 'share/crossroad/bin/' + host + '-pkg-config'))
+-                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-gcc'),
++                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cc'),
+                                os.path.join(datadir, 'share/crossroad/bin/' + host + '-gcc'))
+-                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-gcc'),
++                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cc'),
+                                os.path.join(datadir, 'share/crossroad/bin/' + host + '-g++'))
+-                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cpp'),
++                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cxx'),
+                                os.path.join(datadir, 'share/crossroad/bin/' + host + '-cpp'))
++                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cc'),
++                               os.path.join(datadir, 'share/crossroad/bin/' + host + '-clang'))
++                    os.symlink(os.path.join(datadir, 'share/crossroad/scripts/bin-wrappers/crossroad-cxx'),
++                               os.path.join(datadir, 'share/crossroad/bin/' + host + '-clang++'))
+ 
+ class my_install_scripts(distutils.command.install_scripts.install_scripts):
+     '''
+@@ -413,9 +425,9 @@ setup(
+                                       'build/share/crossroad/scripts/in-crossroad.py',
+                                       ]),
+         ('share/crossroad/scripts/bin-wrappers/',
+-                                     [os.path.join(srcdir, 'scripts/bin-wrappers/crossroad-gcc'),
++                                     [os.path.join(srcdir, 'scripts/bin-wrappers/crossroad-cc'),
+                                       os.path.join(srcdir, 'scripts/bin-wrappers/crossroad-pkg-config'),
+-                                      os.path.join(srcdir, 'scripts/bin-wrappers/crossroad-cpp'),
++                                      os.path.join(srcdir, 'scripts/bin-wrappers/crossroad-cxx'),
+                                       ]),
+         ('share/crossroad/scripts/shells/',
+                                      ['build/share/crossroad/scripts/shells/environment.sh',
+-- 
+2.39.5
+
