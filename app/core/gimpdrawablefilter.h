@@ -116,6 +116,11 @@ const Babl *
 void       gimp_drawable_filter_apply          (GimpDrawableFilter  *filter,
                                                 const GeglRectangle *area);
 
+void       gimp_drawable_filter_apply_with_mask
+                                               (GimpDrawableFilter  *filter,
+                                                GimpChannel         *mask,
+                                                const GeglRectangle *area);
+
 gboolean   gimp_drawable_filter_commit         (GimpDrawableFilter  *filter,
                                                 gboolean             non_destructive,
                                                 GimpProgress        *progress,
