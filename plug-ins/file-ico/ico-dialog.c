@@ -366,14 +366,13 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
 
   if (bpp <= 8)
     {
-      GeglBuffer *buffer;
-      GeglBuffer *tmp;
-      GimpImage  *image;
-      GimpImage  *tmp_image;
-      GimpLayer  *tmp_layer;
-      guchar     *buf;
-      guchar     *cmap;
-      gint        num_colors;
+      GeglBuffer  *buffer;
+      GeglBuffer  *tmp;
+      GimpImage   *image;
+      GimpImage   *tmp_image;
+      GimpLayer   *tmp_layer;
+      guchar      *buf;
+      GimpPalette *palette;
 
       image = gimp_item_get_image (GIMP_ITEM (layer));
 
@@ -381,11 +380,7 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))
-        {
-          cmap = gimp_image_get_colormap (image, NULL, &num_colors);
-          gimp_image_set_colormap (tmp_image, cmap, num_colors);
-          g_free (cmap);
-        }
+        gimp_image_set_palette (tmp_image, gimp_image_get_palette (image));
 
       tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
                                   gimp_drawable_type (layer),
@@ -415,19 +410,17 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
                                   GIMP_CONVERT_PALETTE_GENERATE,
                                   1 << bpp, TRUE, FALSE, "dummy");
 
-      cmap = gimp_image_get_colormap (tmp_image, NULL, &num_colors);
+      palette = gimp_image_get_palette (tmp_image);
 
-      if (num_colors == (1 << bpp) &&
-          ! ico_cmap_contains_black (cmap, num_colors))
+      if (gimp_palette_get_color_count (palette) == (1 << bpp) &&
+          ! ico_cmap_contains_black (palette))
         {
           /* Windows icons with color maps need the color black.
            * We need to eliminate one more color to make room for black.
            */
           if (gimp_drawable_is_indexed (layer))
             {
-              g_free (cmap);
-              cmap = gimp_image_get_colormap (image, NULL, &num_colors);
-              gimp_image_set_colormap (tmp_image, cmap, num_colors);
+              gimp_image_set_palette (tmp_image, gimp_image_get_palette (image));
             }
           else if (gimp_drawable_is_gray (layer))
             {
@@ -454,7 +447,6 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
                                       (1 << bpp) - 1, TRUE, FALSE, "dummy");
         }
 
-      g_free (cmap);
       g_free (buf);
 
       pixbuf = gimp_drawable_get_thumbnail (GIMP_DRAWABLE (tmp_layer),
@@ -479,14 +471,7 @@ ico_dialog_update_icon_preview (GtkWidget    *dialog,
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))
-        {
-          guchar *cmap;
-          gint    num_colors;
-
-          cmap = gimp_image_get_colormap (image, NULL, &num_colors);
-          gimp_image_set_colormap (tmp_image, cmap, num_colors);
-          g_free (cmap);
-        }
+        gimp_image_set_palette (tmp_image, gimp_image_get_palette (image));
 
       tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
                                   gimp_drawable_type (layer),

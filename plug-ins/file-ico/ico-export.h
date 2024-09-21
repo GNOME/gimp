@@ -53,8 +53,7 @@ GimpPDBStatusType ani_export_image        (GFile                *file,
                                            AniSaveInfo          *ani_info,
                                            GError              **error);
 
-gboolean          ico_cmap_contains_black (const guchar         *cmap,
-                                           gint                  num_colors);
+gboolean          ico_cmap_contains_black (GimpPalette          *cmap);
 
 
 #endif /* __ICO_EXPORT_H__ */

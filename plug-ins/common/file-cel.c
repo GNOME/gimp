@@ -789,7 +789,7 @@ export_image (GFile         *file,
   gint           height;
   guchar         header[32];    /* File header */
   gint           bpp;           /* Bit per pixel */
-  gint           colors;        /* Number of colors */
+  gint           colors = 0;    /* Number of colors */
   gint           type;          /* type of layer */
   gint           offx, offy;    /* Layer offsets */
   guchar        *buf  = NULL;   /* Temporary buffer */
@@ -846,7 +846,7 @@ export_image (GFile         *file,
   /* Work out whether to save as 8bit or 4bit */
   if (bpp < 32)
     {
-      g_free (gimp_image_get_colormap (image, NULL, &colors));
+      colors = gimp_palette_get_color_count (gimp_image_get_palette (image));
 
       if (colors > 15)
         {

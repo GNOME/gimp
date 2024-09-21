@@ -297,6 +297,8 @@ save_layer (TIFF        *tif,
   gint              bytesperrow;
   guchar           *src = NULL;
   guchar           *data = NULL;
+  GimpPalette      *palette;
+  GBytes           *cmap_bytes;
   guchar           *cmap;
   gint              num_colors;
   gint              success;
@@ -563,7 +565,10 @@ save_layer (TIFF        *tif,
 
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_image_get_colormap (image, NULL, &num_colors);
+      palette    = gimp_image_get_palette (image);
+      format     = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+      cmap_bytes = gimp_palette_get_colormap (palette, format, &num_colors);
+      cmap       = g_bytes_unref_to_data (cmap_bytes, NULL);
 
       if (num_colors == 2 || num_colors == 1)
         {
@@ -599,7 +604,6 @@ save_layer (TIFF        *tif,
       samplesperpixel = (drawable_type == GIMP_INDEXEDA_IMAGE) ? 2 : 1;
       bytesperrow     = cols;
       alpha           = (drawable_type == GIMP_INDEXEDA_IMAGE);
-      format          = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
 
       g_free (cmap);
       break;

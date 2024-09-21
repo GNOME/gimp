@@ -123,8 +123,6 @@ static  guint             width, height;
 static  gint32            total_frames;
 static  GimpLayer       **layers;
 static  guchar            pixelstep;
-static  guchar           *palette;
-static  gint              ncolors;
 static  operatingMode     opmode;
 
 
@@ -560,10 +558,7 @@ do_optimizations (GimpRunMode  run_mode,
   gimp_image_undo_disable (new_image);
 
   if (imagetype == GIMP_INDEXED)
-    {
-      palette = gimp_image_get_colormap (image, NULL, &ncolors);
-      gimp_image_set_colormap (new_image, palette, ncolors);
-    }
+    gimp_image_set_palette (new_image, gimp_image_get_palette (image));
 
 #if 1
   if (opmode == OPBACKGROUND ||

@@ -387,14 +387,7 @@ tile (GimpImage     *image,
 
       /*  copy the colormap, if necessary  */
       if (image_type == GIMP_INDEXED)
-        {
-          guchar *cmap;
-          gint    ncols;
-
-          cmap = gimp_image_get_colormap (image, NULL, &ncols);
-          gimp_image_set_colormap (*new_image, cmap, ncols);
-          g_free (cmap);
-        }
+        gimp_image_set_palette (*new_image, gimp_image_get_palette (image));
 
       *new_layer = gimp_layer_new (*new_image, _("Background"),
                                    new_width, new_height,

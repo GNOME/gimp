@@ -68,8 +68,7 @@ static gint     ico_get_layer_num_colors  (GimpLayer            *layer,
                                            gboolean             *uses_alpha_levels);
 static void     ico_image_get_reduced_buf (GimpDrawable         *layer,
                                            gint                  bpp,
-                                           gint                 *num_colors,
-                                           guchar              **cmap_out,
+                                           GimpPalette         **cmap_out,
                                            guchar              **buf_out);
 
 static gboolean ico_save_init             (GimpImage            *image,
@@ -441,29 +440,40 @@ ico_set_byte_in_data (guint8 *data,
 
 /* Create a colormap from the given buffer data */
 static guint32 *
-ico_create_palette (const guchar *cmap,
-                    gint          num_colors,
-                    gint          num_colors_used,
-                    gint         *black_slot)
+ico_create_palette (GimpPalette *reduced_cmap,
+                    gint         num_colors,
+                    gint        *black_slot)
 {
-  guchar *palette;
-  gint    i;
+  const Babl *format;
+  guchar     *palette;
+  gint        num_colors_used = 0;
+  gint        i;
 
-  g_return_val_if_fail (cmap != NULL || num_colors_used == 0, NULL);
+  if (reduced_cmap)
+    num_colors_used = gimp_palette_get_color_count (reduced_cmap);
+
   g_return_val_if_fail (num_colors_used <= num_colors, NULL);
 
   palette = g_new0 (guchar, num_colors * 4);
   *black_slot = -1;
 
+  format = babl_format ("R'G'B' u8");
+
   for (i = 0; i < num_colors_used; i++)
     {
-      palette[i * 4 + 2] = cmap[i * 3];
-      palette[i * 4 + 1] = cmap[i * 3 + 1];
-      palette[i * 4]     = cmap[i * 3 + 2];
+      GeglColor *color;
+      guchar     rgb[3];
 
-      if ((cmap[i*3]     == 0) &&
-          (cmap[i*3 + 1] == 0) &&
-          (cmap[i*3 + 2] == 0))
+      color = gimp_palette_entry_get_color (reduced_cmap, i);
+      gegl_color_get_pixel (color, format, rgb);
+
+      palette[i * 4 + 2] = rgb[0];
+      palette[i * 4 + 1] = rgb[1];
+      palette[i * 4]     = rgb[2];
+
+      if ((rgb[0] == 0) &&
+          (rgb[1] == 0) &&
+          (rgb[2] == 0))
         {
           *black_slot = i;
         }
@@ -582,7 +592,7 @@ ico_get_layer_num_colors (GimpLayer *layer,
     case GIMP_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
       /* It is possible to count the colors of indexed image more easily
-       * with gimp_image_get_colormap(), but counting only the colors
+       * with gimp_image_get_palette(), but counting only the colors
        * actually used will allow more efficient bpp if possible. */
       break;
 
@@ -672,38 +682,49 @@ ico_get_layer_num_colors (GimpLayer *layer,
 }
 
 gboolean
-ico_cmap_contains_black (const guchar *cmap,
-                         gint          num_colors)
+ico_cmap_contains_black (GimpPalette *cmap)
 {
-  gint i;
+  const Babl *format;
+  gint        num_colors;
+  gint        i;
+  gboolean    success = FALSE;
+
+  format     = babl_format ("R'G'B' u8");
+  num_colors = gimp_palette_get_color_count (cmap);
 
   for (i = 0; i < num_colors; i++)
     {
-      if ((cmap[3 * i    ] == 0) &&
-          (cmap[3 * i + 1] == 0) &&
-          (cmap[3 * i + 2] == 0))
+      GeglColor *color = gimp_palette_entry_get_color (cmap, i);
+      guchar     rgb[3];
+
+      gegl_color_get_pixel (color, format, rgb);
+      if (rgb[0] == 0 &&
+          rgb[1] == 0 &&
+          rgb[2] == 0)
         {
-          return TRUE;
+          g_object_unref (color);
+          success = TRUE;
+          break;
         }
+      g_object_unref (color);
     }
 
-  return FALSE;
+  return success;
 }
 
 static void
 ico_image_get_reduced_buf (GimpDrawable *layer,
                            gint          bpp,
-                           gint         *num_colors,
-                           guchar      **cmap_out,
+                           GimpPalette **cmap_out,
                            guchar      **buf_out)
 {
-  GimpImage  *tmp_image;
-  GimpLayer  *tmp_layer;
-  gint        w, h;
-  guchar     *buf;
-  guchar     *cmap   = NULL;
-  GeglBuffer *buffer = gimp_drawable_get_buffer (layer);
-  const Babl *format;
+  GimpImage   *tmp_image;
+  GimpLayer   *tmp_layer;
+  gint         w, h;
+  guchar      *buf;
+  GimpPalette *palette = NULL;
+  GeglBuffer  *buffer  = gimp_drawable_get_buffer (layer);
+  const Babl  *format;
 
   w = gegl_buffer_get_width  (buffer);
   h = gegl_buffer_get_height (buffer);
@@ -735,8 +756,6 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
       g_return_if_reached ();
     }
 
-  *num_colors = 0;
-
   buf = g_new (guchar, w * h * 4);
 
   if (bpp <= 8 || bpp == 24 || babl_format_get_bytes_per_pixel (format) != 4)
@@ -748,14 +767,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
       gimp_image_undo_disable (tmp_image);
 
       if (gimp_drawable_is_indexed (layer))
-        {
-          guchar *cmap;
-          gint    num_colors;
-
-          cmap = gimp_image_get_colormap (image, NULL, &num_colors);
-          gimp_image_set_colormap (tmp_image, cmap, num_colors);
-          g_free (cmap);
-        }
+        gimp_image_set_palette (tmp_image, gimp_image_get_palette (image));
 
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
                                   gimp_drawable_type (layer),
@@ -783,10 +795,10 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
                                       GIMP_CONVERT_PALETTE_GENERATE,
                                       1 << bpp, TRUE, FALSE, "dummy");
 
-          cmap = gimp_image_get_colormap (tmp_image, NULL, num_colors);
+          palette = gimp_image_get_palette (tmp_image);
 
-          if (*num_colors == (1 << bpp) &&
-              ! ico_cmap_contains_black (cmap, *num_colors))
+          if (gimp_palette_get_color_count (palette) == (1 << bpp) &&
+              ! ico_cmap_contains_black (palette))
             {
               /* Windows icons with color maps need the color black.
                * We need to eliminate one more color to make room for black.
@@ -794,9 +806,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
               if (gimp_drawable_is_indexed (layer))
                 {
-                  g_free (cmap);
-                  cmap = gimp_image_get_colormap (image, NULL, num_colors);
-                  gimp_image_set_colormap (tmp_image, cmap, *num_colors);
+                  gimp_image_set_palette (tmp_image, gimp_image_get_palette (image));
                 }
               else if (gimp_drawable_is_gray (layer))
                 {
@@ -821,8 +831,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
                                           GIMP_CONVERT_DITHER_FS,
                                           GIMP_CONVERT_PALETTE_GENERATE,
                                           (1<<bpp) - 1, TRUE, FALSE, "dummy");
-              g_free (cmap);
-              cmap = gimp_image_get_colormap (tmp_image, NULL, num_colors);
+              palette = gimp_image_get_palette (tmp_image);
             }
 
           gimp_image_convert_rgb (tmp_image);
@@ -865,7 +874,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
   g_object_unref (buffer);
 
-  *cmap_out = cmap;
+  *cmap_out = palette;
   *buf_out = buf;
 }
 
@@ -874,14 +883,13 @@ ico_write_png (FILE         *fp,
                GimpDrawable *layer,
                gint32        depth)
 {
-  png_structp png_ptr;
-  png_infop   info_ptr;
-  png_byte  **row_pointers;
-  gint        i, rowstride;
-  gint        width, height;
-  gint        num_colors_used;
-  guchar     *palette;
-  guchar     *buf;
+  png_structp   png_ptr;
+  png_infop     info_ptr;
+  png_byte    **row_pointers;
+  gint          i, rowstride;
+  gint          width, height;
+  GimpPalette  *palette;
+  guchar       *buf;
 
   row_pointers = NULL;
   palette = NULL;
@@ -906,15 +914,12 @@ ico_write_png (FILE         *fp,
       png_destroy_write_struct (&png_ptr, &info_ptr);
       if ( row_pointers )
         g_free (row_pointers);
-      if (palette)
-        g_free (palette);
       if (buf)
         g_free (buf);
       return FALSE;
     }
 
-  ico_image_get_reduced_buf (layer, depth, &num_colors_used,
-                             &palette, &buf);
+  ico_image_get_reduced_buf (layer, depth, &palette, &buf);
 
   png_init_io (png_ptr, fp);
   png_set_IHDR (png_ptr, info_ptr, width, height,
@@ -939,7 +944,6 @@ ico_write_png (FILE         *fp,
   png_destroy_write_struct (&png_ptr, &info_ptr);
 
   g_free (row_pointers);
-  g_free (palette);
   g_free (buf);
   return TRUE;
 }
@@ -951,11 +955,11 @@ ico_write_icon (FILE         *fp,
 {
   IcoFileDataHeader  header;
   gint               and_len, xor_len, palette_index, x, y;
-  gint               num_colors = 0, num_colors_used = 0, black_index = 0;
+  gint               num_colors = 0, black_index = 0;
   gint               width, height;
   guchar            *buf = NULL, *pixel;
   guint32           *buf32;
-  guchar            *palette;
+  GimpPalette       *reduced_palette;
   GHashTable        *color_to_slot = NULL;
   guchar            *xor_map, *and_map;
 
@@ -989,21 +993,19 @@ ico_write_icon (FILE         *fp,
      header.bpp));
 
   /* Reduce colors in copy of image */
-  ico_image_get_reduced_buf (layer, header.bpp, &num_colors_used,
-                             &palette, &buf);
+  ico_image_get_reduced_buf (layer, header.bpp, &reduced_palette, &buf);
   buf32 = (guint32 *) buf;
 
   /* Set up colormap and and_map when necessary: */
   if (header.bpp <= 8)
     {
+      gint num_colors_used = gimp_palette_get_color_count (reduced_palette);
+
       /* Create a colormap */
-      palette32 = ico_create_palette (palette,
-                                      num_colors, num_colors_used,
-                                      &black_index);
+      palette32 = ico_create_palette (reduced_palette, num_colors, &black_index);
       palette_len = num_colors * 4;
 
-      color_to_slot = ico_create_color_to_palette_map (palette32,
-                                                       num_colors_used);
+      color_to_slot = ico_create_color_to_palette_map (palette32, num_colors_used);
       D(("  created %i-slot colormap with %i colors, black at slot %i\n",
          num_colors, num_colors_used, black_index));
     }
@@ -1150,7 +1152,6 @@ ico_write_icon (FILE         *fp,
   if (color_to_slot)
     g_hash_table_destroy (color_to_slot);
 
-  g_free (palette);
   g_free (buf);
 
   ico_write_int32 (fp, (guint32*) &header, 3);

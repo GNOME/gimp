@@ -501,29 +501,32 @@ export_edit_options (GimpProcedure        *procedure,
 static gboolean
 image_is_monochrome (GimpImage *image)
 {
-  guchar   *colors;
-  gint      num_colors;
-  gboolean  monochrome = FALSE;
+  GimpPalette *palette;
+  gint         num_colors;
+  gboolean     monochrome = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  colors = gimp_image_get_colormap (image, NULL, &num_colors);
+  palette = gimp_image_get_palette (image);
+  num_colors = gimp_palette_get_color_count (palette);
 
-  if (colors)
+  if (palette && (num_colors == 2 || num_colors == 1))
     {
-      if (num_colors == 2 || num_colors == 1)
-        {
-          const guchar  bw_map[] = { 0, 0, 0, 255, 255, 255 };
-          const guchar  wb_map[] = { 255, 255, 255, 0, 0, 0 };
+      GBytes       *bytes;
+      const guchar *colors;
+      const guchar  bw_map[] = { 0, 0, 0, 255, 255, 255 };
+      const guchar  wb_map[] = { 255, 255, 255, 0, 0, 0 };
 
-          if (memcmp (colors, bw_map, 3 * num_colors) == 0 ||
-              memcmp (colors, wb_map, 3 * num_colors) == 0)
-            {
-              monochrome = TRUE;
-            }
+      bytes  = gimp_palette_get_colormap (palette, babl_format ("R'G'B' u8"), &num_colors);
+      colors = g_bytes_get_data (bytes, NULL);
+
+      if (memcmp (colors, bw_map, 3 * num_colors) == 0 ||
+          memcmp (colors, wb_map, 3 * num_colors) == 0)
+        {
+          monochrome = TRUE;
         }
 
-      g_free (colors);
+      g_bytes_unref (bytes);
     }
 
   return monochrome;

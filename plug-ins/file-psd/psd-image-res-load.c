@@ -1264,9 +1264,7 @@ load_resource_1046 (const PSDimageres  *res_a,
                     GError            **error)
 {
   /* Load indexed color table count */
-  guchar       *cmap;
-  gint32        cmap_count = 0;
-  gint16        index_count = 0;
+  gint16 index_count = 0;
 
   IFDBG(2) g_debug ("Process image resource block: 1046: Indexed Color Table Count");
 
@@ -1281,10 +1279,12 @@ load_resource_1046 (const PSDimageres  *res_a,
   /* FIXME - check that we have indexed image */
   if (index_count && index_count < 256)
     {
-      cmap = gimp_image_get_colormap (image, NULL, &cmap_count);
-      if (cmap && index_count < cmap_count)
-        gimp_image_set_colormap (image, cmap, index_count);
-      g_free (cmap);
+      GimpPalette *palette;
+
+      palette = gimp_image_get_palette (image);
+      if (palette)
+        while (index_count < gimp_palette_get_color_count (palette))
+          gimp_palette_delete_entry (palette, index_count);
     }
   return 0;
 }
