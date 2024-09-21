@@ -578,3 +578,48 @@ gimp_palette_get_colormap (GimpPalette *palette,
 
   return colormap;
 }
+
+/**
+ * gimp_palette_set_colormap:
+ * @palette: The palette.
+ * @format: The desired color format.
+ * @colormap: The new colormap values.
+ *
+ * Sets the entries in the image's colormap.
+ *
+ * This procedure sets the entries in the specified palette in one go.
+ * The number of entries depens on the size of @colormap and the
+ * bytes-per-pixel size of @format.
+ * The procedure will fail if the size of @colormap is not an exact
+ * multiple of the number of bytes per pixel of @format.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_palette_set_colormap (GimpPalette *palette,
+                           const Babl  *format,
+                           GBytes      *colormap)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_PALETTE, palette,
+                                          GIMP_TYPE_BABL_FORMAT, format,
+                                          G_TYPE_BYTES, colormap,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-palette-set-colormap",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}

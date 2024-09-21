@@ -475,6 +475,55 @@ CODE
     );
 }
 
+sub palette_set_colormap {
+    $blurb = "Sets the entries in the image's colormap.";
+
+    $help = <<'HELP';
+This procedure sets the entries in the specified palette in one go. The number
+of entries depens on the size of @colormap and the bytes-per-pixel size of @format.
+
+The procedure will fail if the size of @colormap is not an exact
+multiple of the number of bytes per pixel of @format.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+        { name => 'palette', type => 'palette',
+          desc => 'The palette' },
+        { name => 'format', type => 'format',
+          desc => 'The desired color format' },
+        { name => 'colormap', type => 'bytes',
+          desc => 'The new colormap values' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-colormap.h") ],
+        code => <<'CODE'
+{
+  gint bpp;
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  if (g_bytes_get_size (colormap) % bpp == 0)
+    {
+      const guchar *data;
+      gsize         n_bytes;
+      gint          n_colors;
+
+      data     = g_bytes_get_data (colormap, &n_bytes),
+      n_colors = n_bytes / bpp;
+      gimp_palette_set_colormap (palette, format, (guchar *) data, n_colors, TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 @headers = qw(<string.h>
               "core/gimp.h"
               "core/gimpcontext.h"
@@ -491,7 +540,7 @@ CODE
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
             palette_entry_get_name palette_entry_set_name
-            palette_get_colormap);
+            palette_get_colormap palette_set_colormap);
 
 %exports = (app => [@procs], lib => [@procs]);
 

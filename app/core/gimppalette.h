@@ -43,6 +43,13 @@ struct _GimpPalette
 {
   GimpData  parent_instance;
 
+  /* When set to an image, we store the image we connect to, so that we
+   * can correctly disconnect if parent GimpData's image changes (so the
+   * GimpPalette and GimpData's images may be unsynced for a tiny span of
+   * time).
+   */
+  GimpImage  *image;
+
   /* Palette colors can be restricted to a given format. If NULL, then the
    * palette can be a mix of color models and color spaces.
    */
@@ -114,6 +121,11 @@ GimpPaletteEntry * gimp_palette_find_entry      (GimpPalette      *palette,
 guchar           * gimp_palette_get_colormap    (GimpPalette      *palette,
                                                  const Babl       *format,
                                                  gint             *n_colors);
+void               gimp_palette_set_colormap    (GimpPalette      *palette,
+                                                 const Babl       *format,
+                                                 const guchar     *colormap,
+                                                 gint              n_colors,
+                                                 gboolean          push_undo_if_image);
 
 
 #endif /* __GIMP_PALETTE_H__ */

@@ -88,7 +88,7 @@ gimp_image_colormap_init (GimpImage *image)
   palette_id = g_strdup_printf ("gimp-indexed-image-palette-%d",
                                 gimp_image_get_id (image));
 
-  private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
+  private->palette = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
   gimp_image_colormap_update_formats (image);
 
@@ -254,8 +254,6 @@ _gimp_image_get_colormap (GimpImage *image,
                           gint      *n_colors)
 {
   GimpImagePrivate *private;
-  const Babl       *space;
-  const Babl       *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -264,10 +262,9 @@ _gimp_image_get_colormap (GimpImage *image,
   if (private->palette == NULL)
     return NULL;
 
-  space  = gimp_image_get_layer_space (image);
-  format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
+  g_return_val_if_fail (private->palette->format != NULL, NULL);
 
-  return gimp_palette_get_colormap (private->palette, format, n_colors);
+  return gimp_palette_get_colormap (private->palette, private->palette->format, n_colors);
 }
 
 void
@@ -277,12 +274,8 @@ _gimp_image_set_colormap (GimpImage    *image,
                           gboolean      push_undo)
 {
   GimpImagePrivate *private;
-  GimpPaletteEntry *entry;
   const Babl       *space;
   const Babl       *format;
-  GeglColor        *color;
-  gint              bpp;
-  gint              i;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (colormap != NULL || n_colors == 0);
@@ -290,31 +283,14 @@ _gimp_image_set_colormap (GimpImage    *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (push_undo)
-    gimp_image_undo_push_image_colormap (image, C_("undo-type", "Set Colormap"));
-
-  if (!private->palette)
+  if (private->palette == NULL)
     gimp_image_colormap_init (image);
-
-  gimp_data_freeze (GIMP_DATA (private->palette));
-
-  while ((entry = gimp_palette_get_entry (private->palette, 0)))
-    gimp_palette_delete_entry (private->palette, entry);
 
   space  = gimp_image_get_layer_space (image);
   format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
-  bpp    = babl_format_get_bytes_per_pixel (format);
 
-  color = gegl_color_new (NULL);
-  for (i = 0; i < n_colors; i++)
-    {
-      gegl_color_set_pixel (color, format, &colormap[i * bpp]);
-      gimp_image_colormap_set_palette_entry (image, color, i);
-    }
-  g_object_unref (color);
-
+  gimp_palette_set_colormap (private->palette, format, colormap, n_colors, push_undo);
   gimp_image_colormap_changed (image, -1);
-  gimp_data_thaw (GIMP_DATA (private->palette));
 }
 
 void

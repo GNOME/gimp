@@ -175,6 +175,7 @@ gimp_data_class_init (GimpDataClass *klass)
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
+                                                        G_PARAM_EXPLICIT_NOTIFY |
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WRITABLE,
@@ -992,6 +993,8 @@ gimp_data_set_image (GimpData  *data,
 
   private->writable  = writable  ? TRUE : FALSE;
   private->deletable = deletable ? TRUE : FALSE;
+
+  g_object_notify (G_OBJECT (data), "image");
 }
 
 GimpImage *

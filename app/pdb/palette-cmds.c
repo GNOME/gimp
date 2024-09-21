@@ -492,6 +492,49 @@ palette_get_colormap_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+palette_set_colormap_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpPalette *palette;
+  const Babl *format;
+  GBytes *colormap;
+
+  palette = g_value_get_object (gimp_value_array_index (args, 0));
+  format = g_value_get_boxed (gimp_value_array_index (args, 1));
+  colormap = g_value_get_boxed (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      gint bpp;
+
+      bpp = babl_format_get_bytes_per_pixel (format);
+
+      if (g_bytes_get_size (colormap) % bpp == 0)
+        {
+          const guchar *data;
+          gsize         n_bytes;
+          gint          n_colors;
+
+          data     = g_bytes_get_data (colormap, &n_bytes),
+          n_colors = n_bytes / bpp;
+          gimp_palette_set_colormap (palette, format, (guchar *) data, n_colors, TRUE);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_palette_procs (GimpPDB *pdb)
 {
@@ -959,6 +1002,44 @@ register_palette_procs (GimpPDB *pdb)
                                                      "The number of colors in the palette",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-palette-set-colormap
+   */
+  procedure = gimp_procedure_new (palette_set_colormap_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-set-colormap");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the entries in the image's colormap.",
+                                  "This procedure sets the entries in the specified palette in one go. The number of entries depens on the size of @colormap and the bytes-per-pixel size of @format.\n"
+                                  "The procedure will fail if the size of @colormap is not an exact multiple of the number of bytes per pixel of @format.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_palette ("palette",
+                                                        "palette",
+                                                        "The palette",
+                                                        FALSE,
+                                                        NULL,
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("format",
+                                                   "format",
+                                                   "The desired color format",
+                                                   GIMP_TYPE_BABL_FORMAT,
+                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("colormap",
+                                                   "colormap",
+                                                   "The new colormap values",
+                                                   G_TYPE_BYTES,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

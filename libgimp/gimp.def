@@ -674,6 +674,7 @@ EXPORTS
 	gimp_palette_get_columns
 	gimp_palette_get_type
 	gimp_palette_new
+	gimp_palette_set_colormap
 	gimp_palette_set_columns
 	gimp_palettes_close_popup
 	gimp_palettes_get_list
