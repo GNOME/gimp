@@ -523,6 +523,7 @@ EXPORTS
 	gimp_image_set_component_visible
 	gimp_image_set_file
 	gimp_image_set_metadata
+	gimp_image_set_palette
 	gimp_image_set_resolution
 	gimp_image_set_selected_channels
 	gimp_image_set_selected_layers

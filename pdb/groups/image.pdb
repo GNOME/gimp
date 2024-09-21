@@ -1749,15 +1749,55 @@ HELP
     );
 
     @outargs = (
-        { name => 'colormap', type => 'palette',
-          desc => "The image's colormap." }
+        { name => 'palette', type => 'palette',
+          desc => "The image's colormap palette." }
     );
 
     %invoke = (
         headers => [ qw("core/gimpimage-colormap.h") ],
         code => <<'CODE'
 {
-  colormap = gimp_image_get_colormap_palette (image);
+  palette = gimp_image_get_colormap_palette (image);
+}
+CODE
+    );
+}
+
+sub image_set_palette {
+    $blurb = "Set the image's colormap to a copy of @palette";
+
+    $help = <<'HELP';
+This procedure changes the image's colormap to an exact copy of @palette
+and returns the new palette of @image.
+
+If the image is not in Indexed color mode, nothing happens and %NULL is
+returned.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'new_palette', type => 'palette',
+          desc => "The palette to copy from." }
+    );
+
+    @outargs = (
+        { name => 'palette', type => 'palette',
+          desc => "The image's colormap palette." }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-colormap.h") ],
+        code => <<'CODE'
+{
+  palette = gimp_image_get_colormap_palette (image);
+
+  if (palette == NULL || new_palette == NULL)
+    success = FALSE;
+  else if (new_palette != palette)
+    gimp_image_set_colormap_palette (image, new_palette, TRUE);
 }
 CODE
     );
@@ -3401,7 +3441,7 @@ CODE
             image_reorder_item
             image_flatten image_merge_visible_layers image_merge_down
             image_get_colormap image_set_colormap
-            image_get_palette
+            image_get_palette image_set_palette
             image_get_metadata image_set_metadata
             image_clean_all image_is_dirty
             image_thumbnail

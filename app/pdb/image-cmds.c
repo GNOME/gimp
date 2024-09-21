@@ -1753,20 +1753,56 @@ image_get_palette_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpPalette *colormap = NULL;
+  GimpPalette *palette = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      colormap = gimp_image_get_colormap_palette (image);
+      palette = gimp_image_get_colormap_palette (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), colormap);
+    g_value_set_object (gimp_value_array_index (return_vals, 1), palette);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_set_palette_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  GimpPalette *new_palette;
+  GimpPalette *palette = NULL;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  new_palette = g_value_get_object (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      palette = gimp_image_get_colormap_palette (image);
+
+      if (palette == NULL || new_palette == NULL)
+        success = FALSE;
+      else if (new_palette != palette)
+        gimp_image_set_colormap_palette (image, new_palette, TRUE);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), palette);
 
   return return_vals;
 }
@@ -4719,9 +4755,49 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_palette ("colormap",
-                                                            "colormap",
-                                                            "The image's colormap.",
+                                   gimp_param_spec_palette ("palette",
+                                                            "palette",
+                                                            "The image's colormap palette.",
+                                                            FALSE,
+                                                            NULL,
+                                                            FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-palette
+   */
+  procedure = gimp_procedure_new (image_set_palette_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-palette");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the image's colormap to a copy of",
+                                  "This procedure changes the image's colormap to an exact copy of @palette and returns the new palette of @image.\n"
+                                  "If the image is not in Indexed color mode, nothing happens and %NULL is returned.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_palette ("new-palette",
+                                                        "new palette",
+                                                        "The palette to copy from.",
+                                                        FALSE,
+                                                        NULL,
+                                                        FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_palette ("palette",
+                                                            "palette",
+                                                            "The image's colormap palette.",
                                                             FALSE,
                                                             NULL,
                                                             FALSE,

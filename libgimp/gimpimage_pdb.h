@@ -135,6 +135,8 @@ G_GNUC_INTERNAL GBytes*  _gimp_image_get_colormap              (GimpImage       
 G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage            *image,
                                                                 GBytes               *colormap);
 GimpPalette*             gimp_image_get_palette                (GimpImage            *image);
+GimpPalette*             gimp_image_set_palette                (GimpImage            *image,
+                                                                GimpPalette          *new_palette);
 G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata              (GimpImage            *image);
 G_GNUC_INTERNAL gboolean _gimp_image_set_metadata              (GimpImage            *image,
                                                                 const gchar          *metadata_string);

@@ -1999,7 +1999,7 @@ _gimp_image_set_colormap (GimpImage *image,
  * This procedure returns the image's colormap as a GimpPalette. If the
  * image is not in Indexed color mode, %NULL is returned.
  *
- * Returns: (transfer none): The image's colormap.
+ * Returns: (transfer none): The image's colormap palette.
  *
  * Since: 3.0
  **/
@@ -2008,7 +2008,7 @@ gimp_image_get_palette (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpPalette *colormap = NULL;
+  GimpPalette *palette = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -2020,11 +2020,53 @@ gimp_image_get_palette (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    colormap = GIMP_VALUES_GET_PALETTE (return_vals, 1);
+    palette = GIMP_VALUES_GET_PALETTE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return colormap;
+  return palette;
+}
+
+/**
+ * gimp_image_set_palette:
+ * @image: The image.
+ * @new_palette: The palette to copy from.
+ *
+ * Set the image's colormap to a copy of
+ *
+ * This procedure changes the image's colormap to an exact copy of
+ * @palette and returns the new palette of @image.
+ * If the image is not in Indexed color mode, nothing happens and %NULL
+ * is returned.
+ *
+ * Returns: (transfer none): The image's colormap palette.
+ *
+ * Since: 3.0
+ **/
+GimpPalette *
+gimp_image_set_palette (GimpImage   *image,
+                        GimpPalette *new_palette)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpPalette *palette = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_PALETTE, new_palette,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-set-palette",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    palette = GIMP_VALUES_GET_PALETTE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return palette;
 }
 
 /**
