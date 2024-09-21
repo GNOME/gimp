@@ -539,7 +539,7 @@ app_activate_callback (GimpCoreApp *app,
        * set up to receive commands for GIMP.
        */
 #ifdef G_OS_WIN32
-      SetConsoleCtrlHandler (app_quit_on_ctrl_c, TRUE);
+      SetConsoleCtrlHandler ((PHANDLER_ROUTINE) app_quit_on_ctrl_c, TRUE);
 #else
       gimp_signal_private (SIGINT, app_quit_on_ctrl_c, 0);
 #endif
