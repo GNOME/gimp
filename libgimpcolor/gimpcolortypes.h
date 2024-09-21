@@ -35,43 +35,6 @@ typedef struct _GimpColorTransform GimpColorTransform;
 
 typedef struct _GimpParamSpecColor GimpParamSpecColor;
 
-/*  usually we don't keep the structure definitions in the types file
- *  but GimpRGB appears in too many header files...
- */
-
-typedef struct _GimpRGB  GimpRGB;
-typedef struct _GimpHSL  GimpHSL;
-
-/**
- * GimpRGB:
- * @r: the red component
- * @g: the green component
- * @b: the blue component
- * @a: the alpha component
- *
- * Used to keep RGB and RGBA colors. All components are in a range of
- * [0.0..1.0].
- **/
-struct _GimpRGB
-{
-  gdouble r, g, b, a;
-};
-
-/**
- * GimpHSL:
- * @h: the hue component
- * @s: the saturation component
- * @l: the lightness component
- * @a: the alpha component
- *
- * Used to keep HSL and HSLA colors. All components are in a range of
- * [0.0..1.0].
- **/
-struct _GimpHSL
-{
-  gdouble h, s, l, a;
-};
-
 
 G_END_DECLS
 

@@ -65,10 +65,6 @@ EXPORTS
 	gimp_color_transform_new_proofing
 	gimp_color_transform_process_buffer
 	gimp_color_transform_process_pixels
-	gimp_hsl_get_type
-	gimp_hsl_set
-	gimp_hsl_set_alpha
-	gimp_hsl_to_rgb
 	gimp_param_color_get_type
 	gimp_param_spec_color
 	gimp_param_spec_color_from_string
@@ -76,19 +72,3 @@ EXPORTS
 	gimp_pixbuf_create_buffer
 	gimp_pixbuf_get_format
 	gimp_pixbuf_get_icc_profile
-	gimp_rgb_add
-	gimp_rgb_clamp
-	gimp_rgb_composite
-	gimp_rgb_get_type
-	gimp_rgb_get_uchar
-	gimp_rgb_max
-	gimp_rgb_min
-	gimp_rgb_multiply
-	gimp_rgb_set
-	gimp_rgb_set_alpha
-	gimp_rgb_set_uchar
-	gimp_rgb_to_hsl
-	gimp_rgba_distance
-	gimp_rgba_get_uchar
-	gimp_rgba_set
-	gimp_rgba_set_uchar
