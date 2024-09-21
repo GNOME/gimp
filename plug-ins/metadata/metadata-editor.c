@@ -4883,8 +4883,6 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
       g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "String split into: %s - %s - %s", str1, str2, str3);
     }
 
-  g_free (s);
-
   if (str1 && str2 && str3)
     {
       /* Assuming degrees, minutes, seconds */
@@ -4912,6 +4910,8 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
     }
   else
     remove_val = TRUE;
+
+  g_free (s);
 
   if (!remove_val)
     {
