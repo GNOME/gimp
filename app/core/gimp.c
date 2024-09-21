@@ -1251,6 +1251,10 @@ gimp_exit_idle_cleanup_stray_images (Gimp *gimp)
     {
       GimpImage *image = image_iter->data;
 
+      /* TODO: localize after string freeze. */
+      g_printerr ("INFO: a stray image seems to have been left around by a plug-in: \"%s\"",
+                  gimp_image_get_display_name (image));
+
       g_object_unref (image);
     }
 
