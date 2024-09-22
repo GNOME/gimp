@@ -601,6 +601,36 @@ libunwind = ( get_option('libunwind')
 )
 conf.set('HAVE_LIBUNWIND', libunwind.found())
 
+## Check for backtrace() API
+# In musl, backtrace() is in the libexecinfo library.
+# In glibc, it is internal (there we only need the header).
+# So we look for both cases, so that we are able to link to libexecinfo
+# if it exists. Cf. !455.
+opt_execinfo = cc.find_library('execinfo', has_headers: ['execinfo.h'], required: false)
+have_execinfo_h = opt_execinfo.found() or cc.has_header('execinfo.h')
+conf.set('HAVE_EXECINFO_H', have_execinfo_h ? 1 : false)
+
+# See app/core/gimpbacktrace-backend.h for supported platforms.
+dashboard_backtrace='no (unsupported platform)'
+if platform_windows
+  if have_x86
+    dashboard_backtrace='yes'
+  else
+    dashboard_backtrace='no (x86 only on Windows)'
+  endif
+elif platform_linux
+  if not have_execinfo_h
+    dashboard_backtrace='no (missing: execinfo.h)'
+  elif not libbacktrace.found() and not libunwind.found()
+    dashboard_backtrace='rough (missing: libbacktrace and libunwind)'
+  elif not libbacktrace.found()
+    dashboard_backtrace='partially detailed (missing: libbacktrace)'
+  elif not libunwind.found()
+    dashboard_backtrace='partially detailed (missing: libunwind)'
+  else
+    dashboard_backtrace='detailed'
+  endif
+endif
 
 ## Check for Dr. Mingw
 drmingw = no_dep
@@ -613,11 +643,6 @@ if platform_windows
 endif
 conf.set('HAVE_EXCHNDL', drmingw.found())
 
-# See app/core/gimpbacktrace-backend.h for supported platforms.
-detailed_backtraces = (
-  (platform_linux and (libbacktrace.found() or libunwind.found())) or
-  (platform_windows and have_x86)
-)
 
 ################################################################################
 # Check for x11 support
@@ -1451,13 +1476,6 @@ foreach header : [
   conf.set(header['m'], cc.has_header(header['v']) ? 1 : false)
 endforeach
 
-# In musl, backtrace() is in the libexecinfo library.
-# In glibc, it is internal (there we only need the header).
-# So we look for both cases, so that we are able to link to libexecinfo
-# if it exists. Cf. !455.
-opt_execinfo = cc.find_library('execinfo', has_headers: ['execinfo.h'], required: false)
-conf.set('HAVE_EXECINFO_H', opt_execinfo.found() or cc.has_header('execinfo.h') ? 1 : false)
-
 
 ################################################################################
 # Check for shared memory handling
@@ -2090,16 +2108,16 @@ final_message = [
 '''  gimp-console:        @0@'''.format(enable_console_bin),
 '',
 '''Optional Features:''',
-'''  Check updates at startup:        @0@'''.format(check_update),
-'''  Language selection:              @0@'''.format(isocodes.found()),
-'''  Vector icons:                    @0@'''.format(have_vector_icons),
-'''  Dr. Mingw (Win32):               @0@'''.format(drmingw.found()),
-'''  Relocatable Bundle:              @0@'''.format(relocatable_bundle),
-'''  Default ICC directory:           @0@'''.format(icc_directory),
-'''  32-bit DLL folder (Win32):       @0@'''.format(get_option('win32-32bits-dll-folder')),
-'''  Detailed backtraces (Dashboard): @0@'''.format(detailed_backtraces),
-'''  Binary symlinks:                 @0@'''.format(enable_default_bin),
-'''  OpenMP:                          @0@'''.format(have_openmp),
+'''  Check updates at startup:  @0@'''.format(check_update),
+'''  Language selection:        @0@'''.format(isocodes.found()),
+'''  Vector icons:              @0@'''.format(have_vector_icons),
+'''  Dr. Mingw (Win32):         @0@'''.format(drmingw.found()),
+'''  Relocatable Bundle:        @0@'''.format(relocatable_bundle),
+'''  Default ICC directory:     @0@'''.format(icc_directory),
+'''  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder')),
+'''  Dashboard backtraces:      @0@'''.format(dashboard_backtrace),
+'''  Binary symlinks:           @0@'''.format(enable_default_bin),
+'''  OpenMP:                    @0@'''.format(have_openmp),
 '',
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),

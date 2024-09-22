@@ -22,7 +22,7 @@
 #define __GIMP_BACKTRACE_BACKEND_H__
 
 
-#ifdef __gnu_linux__
+#if defined (__gnu_linux__) && defined (HAVE_EXECINFO_H)
 # define GIMP_BACKTRACE_BACKEND_LINUX
 #elif defined (G_OS_WIN32) && defined (ARCH_X86)
 # define GIMP_BACKTRACE_BACKEND_WINDOWS
