@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-20 04:22+0000\n"
-"PO-Revision-Date: 2024-08-20 12:49+0800\n"
+"POT-Creation-Date: 2024-09-22 15:54+0000\n"
+"PO-Revision-Date: 2024-09-23 01:00+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <http://weblate.steps.tw/projects/gimp/"
 "po-python/zh_Hant/>\n"
@@ -171,7 +171,7 @@ msgstr ""
 msgid "_Gradient to use"
 msgstr "要使用的漸層(_G)"
 
-#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:209
 msgid "_File"
 msgstr "檔案(_F)"
 
@@ -207,11 +207,11 @@ msgstr "色階分佈圖匯出檔案"
 
 #: plug-ins/python/histogram-export.py:227
 msgid "_Bucket Size"
-msgstr "分組藍大小(_B)"
+msgstr "分組籃大小(_B)"
 
 #: plug-ins/python/histogram-export.py:227
 msgid "Bucket Size"
-msgstr "分組藍大小"
+msgstr "分組籃大小"
 
 #: plug-ins/python/histogram-export.py:229
 msgid "Sample _Average"
@@ -255,69 +255,69 @@ msgid "_Palette"
 msgstr "調色盤(_P)"
 
 #: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
-#: plug-ins/python/palette-sort.py:399 plug-ins/python/palette-sort.py:400
+#: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
 #: plug-ins/python/palette-to-gradient.py:148
 msgid "Palette"
 msgstr "調色盤"
 
-#: plug-ins/python/palette-offset.py:62
+#: plug-ins/python/palette-offset.py:63
 msgid "O_ffset"
 msgstr "偏移(_F)"
 
-#: plug-ins/python/palette-offset.py:62
+#: plug-ins/python/palette-offset.py:63
 msgid "Offset"
 msgstr "偏移"
 
-#: plug-ins/python/palette-offset.py:64
+#: plug-ins/python/palette-offset.py:65
 msgid "The edited palette"
 msgstr ""
 
-#: plug-ins/python/palette-offset.py:65
+#: plug-ins/python/palette-offset.py:66
 msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr ""
 
 #. TODO: Re-incorporate LAB and LCHab options with GeglColor
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:463
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
 msgid "Red"
 msgstr "紅"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
 msgid "Green"
 msgstr "綠"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
 msgid "Blue"
 msgstr "藍"
 
-#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:466
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:467
 msgid "Luma (Y)"
 msgstr "光度 (Y)"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:467
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
 msgid "Hue"
 msgstr "色相"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Saturation"
 msgstr "飽和度"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
 msgid "Value"
 msgstr "明度"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:470
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
 msgid "Saturation (HSL)"
 msgstr "飽和度 (HSL)"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Lightness (HSL)"
 msgstr "亮度 (HSL)"
 
-#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:472
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:473
 msgid "Index"
 msgstr "索引"
 
-#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:473
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:474
 msgid "Random"
 msgstr "隨機"
 
@@ -348,105 +348,105 @@ msgstr "調色盤排序(_S)…"
 msgid "Sort the colors in a palette"
 msgstr "排序調色盤中的顏色"
 
-#: plug-ins/python/palette-sort.py:363
+#: plug-ins/python/palette-sort.py:364
 msgid "All"
 msgstr "全選"
 
-#: plug-ins/python/palette-sort.py:364
+#: plug-ins/python/palette-sort.py:365
 msgid "Slice / Array"
 msgstr "切片 / 陣列"
 
-#: plug-ins/python/palette-sort.py:365
+#: plug-ins/python/palette-sort.py:366
 msgid "Autoslice (fg->bg)"
 msgstr "自動切片 (前景→背景)"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:367
 msgid "Partitioned"
 msgstr "已分區"
 
-#: plug-ins/python/palette-sort.py:367
+#: plug-ins/python/palette-sort.py:368
 msgid "Select_ions"
 msgstr "選取(_I)"
 
-#: plug-ins/python/palette-sort.py:367
+#: plug-ins/python/palette-sort.py:368
 msgid "Selections"
 msgstr "選取"
 
 #. TODO: It would be much simpler to replace the slice expression with three
 #. separate parameters: start-index, number-of-rows, row_length
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
 msgstr "切片表達式(_E)"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel _to sort"
 msgstr "要排序的色版(_T)"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel to sort"
 msgstr "要排序的色版"
 
-#: plug-ins/python/palette-sort.py:378
+#: plug-ins/python/palette-sort.py:379
 msgid "_Ascending"
 msgstr "遞增(_A)"
 
-#: plug-ins/python/palette-sort.py:378 plug-ins/python/palette-sort.py:385
+#: plug-ins/python/palette-sort.py:379 plug-ins/python/palette-sort.py:386
 msgid "Ascending"
 msgstr "遞增"
 
-#: plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:383
 msgid "Secondary C_hannel to sort"
 msgstr "要排序的第二色版(_H)"
 
-#: plug-ins/python/palette-sort.py:383
+#: plug-ins/python/palette-sort.py:384
 msgid "Secondary Channel to sort"
 msgstr "要排序的第二色版"
 
-#: plug-ins/python/palette-sort.py:385
+#: plug-ins/python/palette-sort.py:386
 msgid "Ascen_ding"
 msgstr "遞增"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:388
 msgid "_Quantization"
 msgstr "量化(_Q)"
 
-#: plug-ins/python/palette-sort.py:388
+#: plug-ins/python/palette-sort.py:389
 msgid "Quantization"
 msgstr "量化"
 
-#: plug-ins/python/palette-sort.py:392
+#: plug-ins/python/palette-sort.py:393
 msgid "Partitionin_g channel"
 msgstr "分區用的色版(_G)"
 
-#: plug-ins/python/palette-sort.py:393
+#: plug-ins/python/palette-sort.py:394
 msgid "Partitioning channel"
 msgstr "分區用的色版"
 
-#: plug-ins/python/palette-sort.py:395
+#: plug-ins/python/palette-sort.py:396
 msgid "Partition q_uantization"
 msgstr "分區量化(_U)"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:397
 msgid "Partition quantization"
 msgstr "分區量化"
 
-#: plug-ins/python/palette-sort.py:474
+#: plug-ins/python/palette-sort.py:475
 msgid "Lightness (LAB)"
 msgstr "亮度 (LAB)"
 
-#: plug-ins/python/palette-sort.py:475
+#: plug-ins/python/palette-sort.py:476
 msgid "A-color"
 msgstr "A-色彩"
 
-#: plug-ins/python/palette-sort.py:476
+#: plug-ins/python/palette-sort.py:477
 msgid "B-color"
 msgstr "B-色彩"
 
-#: plug-ins/python/palette-sort.py:477
+#: plug-ins/python/palette-sort.py:478
 msgid "Chroma (LCHab)"
 msgstr "色度 (LCHab)"
 
-#: plug-ins/python/palette-sort.py:478
+#: plug-ins/python/palette-sort.py:479
 msgid "Hue (LCHab)"
 msgstr "色相 (LCHab)"
 
@@ -474,8 +474,8 @@ msgstr "用調色盤中的顏色建立重複漸層"
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "用調色盤中的顏色建立新的重複漸層。"
 
-#: plug-ins/python/palette-to-gradient.py:150
 #: plug-ins/python/palette-to-gradient.py:151
+#: plug-ins/python/palette-to-gradient.py:152
 msgid "The newly created gradient"
 msgstr "新建立的漸層"
 
