@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-19 23:27+0000\n"
-"PO-Revision-Date: 2024-09-20 23:34+0800\n"
+"POT-Creation-Date: 2024-09-22 12:44+0000\n"
+"PO-Revision-Date: 2024-09-22 21:53+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -10552,7 +10552,7 @@ msgstr "影像匯出時的預設色彩描述檔。"
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Export the image's comment by default."
-msgstr "影像匯出時的預設評註。"
+msgstr "影像匯出時的預設註言。"
 
 #: app/config/gimprc-blurbs.h:242 app/dialogs/preferences-dialog.c:1579
 msgid "Export the image's thumbnail by default"
@@ -11368,7 +11368,6 @@ msgid "Distribute anchor points vertically evenly"
 msgstr "垂直均勻分佈錨點"
 
 #: app/core/core-enums.c:71
-#| msgid "Distribute horizontal centers of targets"
 msgctxt "alignment-type"
 msgid "Distribute horizontally with even horizontal gaps"
 msgstr "水平分佈，使水平間隔相等"
@@ -11847,7 +11846,6 @@ msgid "Wintab"
 msgstr "Wintab"
 
 #: app/core/core-enums.c:1031
-#| msgid "Windows"
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
@@ -13654,7 +13652,7 @@ msgstr "變更影像的度量單位"
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
-msgstr "'gimp-comment' 附帶資訊驗證失敗：評註包含無效的 UTF-8"
+msgstr "'gimp-comment' 附帶資訊驗證失敗：註言包含無效的 UTF-8"
 
 #: app/core/gimpimage.c:4354
 msgctxt "undo-type"
@@ -14876,7 +14874,7 @@ msgstr "填充類型"
 
 #: app/core/gimptemplate.c:257
 msgid "Comment"
-msgstr "評註"
+msgstr "註言"
 
 #: app/core/gimptemplate.c:264
 msgid "Filename"
@@ -15571,7 +15569,7 @@ msgstr "色彩描述檔(_O)"
 
 #: app/dialogs/image-properties-dialog.c:96
 msgid "Co_mment"
-msgstr "評註(_M)"
+msgstr "註言(_M)"
 
 #: app/dialogs/image-scale-dialog.c:115
 msgctxt "dialog-title"
@@ -16320,7 +16318,7 @@ msgstr "匯出影像的預設色彩描述檔(_M)"
 
 #: app/dialogs/preferences-dialog.c:1576
 msgid "Export the image's comment by default"
-msgstr "匯出影像的預設評註"
+msgstr "匯出影像的預設註言"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -23112,17 +23110,17 @@ msgstr "混色選項"
 msgid "Advanced Color Options"
 msgstr "進階顏色選項"
 
-#: app/tools/gimpfiltertool.c:1802 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1815 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "匯入「%s」設定"
 
-#: app/tools/gimpfiltertool.c:1804 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1817 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "匯出「%s」設定"
 
-#: app/tools/gimpfiltertool.c:2042
+#: app/tools/gimpfiltertool.c:2055
 msgid "Editing filter..."
 msgstr "編輯濾鏡..."
 
@@ -25639,7 +25637,6 @@ msgstr "搜尋(_S)："
 
 #: app/widgets/gimpactiongroup.c:1200
 #, c-format
-#| msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
@@ -27331,14 +27328,14 @@ msgstr "載入圖示影像"
 #. Button
 #: app/widgets/gimpimagecommenteditor.c:107
 msgid "Use _default comment"
-msgstr "使用預設評註(_D)"
+msgstr "使用預設註言(_D)"
 
 #: app/widgets/gimpimagecommenteditor.c:109
 msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
-"將目前的影像評註替換為「編輯 → 偏好設定 → 預設影像」中所設定的預設評註內容。"
+"將目前的影像註言替換為「編輯 → 偏好設定 → 預設影像」中所設定的預設註言內容。"
 
 #: app/widgets/gimpimagepropview.c:112
 msgid "Size in pixels:"
@@ -27908,7 +27905,7 @@ msgstr "使用黑點補償(_U)"
 
 #: app/widgets/gimptemplateeditor.c:499
 msgid "Comme_nt:"
-msgstr "評註(_N)："
+msgstr "註言(_N)："
 
 #: app/widgets/gimptemplateeditor.c:614
 msgid "_Name:"
