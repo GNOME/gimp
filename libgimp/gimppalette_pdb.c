@@ -527,14 +527,14 @@ gimp_palette_entry_set_name (GimpPalette *palette,
 }
 
 /**
- * gimp_palette_get_colormap:
+ * _gimp_palette_get_bytes:
  * @palette: The palette.
  * @format: The desired color format.
  * @num_colors: (out): The number of colors in the palette.
  *
  * Returns the palette's colormap
  *
- * This procedure returns an the image's colormap as a bytes array with
+ * This procedure returns a palette's colormap as a bytes array with
  * all colors converted to a given Babl @format.
  * The byte-size of the returned colormap depends on the number of
  * colors and on the bytes-per-pixel size of @format. E.g. that the
@@ -550,9 +550,9 @@ gimp_palette_entry_set_name (GimpPalette *palette,
  * Since: 3.0
  **/
 GBytes *
-gimp_palette_get_colormap (GimpPalette *palette,
-                           const Babl  *format,
-                           gint        *num_colors)
+_gimp_palette_get_bytes (GimpPalette *palette,
+                         const Babl  *format,
+                         gint        *num_colors)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -564,7 +564,7 @@ gimp_palette_get_colormap (GimpPalette *palette,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-palette-get-colormap",
+                                               "gimp-palette-get-bytes",
                                                args);
   gimp_value_array_unref (args);
 

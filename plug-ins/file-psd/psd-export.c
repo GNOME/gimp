@@ -603,7 +603,6 @@ save_color_mode_data (GOutputStream  *output,
                       GimpImage      *image,
                       gboolean        export_duotone)
 {
-  GBytes       *bytes;
   guchar       *cmap;
   guchar       *cmap_modified;
   gint          i;
@@ -634,8 +633,7 @@ save_color_mode_data (GOutputStream  *output,
     case GIMP_INDEXED:
       IFDBG(1) g_debug ("\tImage type: INDEXED");
 
-      bytes = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &nColors);
-      cmap  = g_bytes_unref_to_data (bytes, NULL);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &nColors, NULL);
       IFDBG(1) g_debug ("\t\tLength of colormap returned by gimp_palette_get_colormap: %d", nColors);
 
       if (nColors == 0)

@@ -19,10 +19,10 @@ gimp_c_test_run (GimpProcedure        *procedure,
   GimpPalette     *palette2;
   GeglColor      **colors;
   gint             n_colors;
-  GBytes          *colormap;
-  const guchar    *u8_data;
-  const gfloat    *float_data;
+  guchar          *colormap;
+  gfloat          *fcolormap;
   gint             n_colormap_colors;
+  gsize            n_bytes;
   const Babl      *format;
   const Babl      *format2;
   gint             format_bpp;
@@ -58,36 +58,34 @@ gimp_c_test_run (GimpProcedure        *procedure,
   GIMP_TEST_END(rgb[0] == GIMP_TEST_COLOR_R_U8 && rgb[1] == GIMP_TEST_COLOR_G_U8 && rgb[2] == GIMP_TEST_COLOR_B_U8)
 
   GIMP_TEST_START("gimp_palette_get_colormap()")
-  colormap = gimp_palette_get_colormap (palette, format, &n_colormap_colors);
+  colormap = gimp_palette_get_colormap (palette, format, &n_colormap_colors, &n_bytes);
   format_bpp = babl_format_get_bytes_per_pixel (format);
   GIMP_TEST_END(colormap != NULL && n_colormap_colors == n_colors &&
-                n_colormap_colors * format_bpp == g_bytes_get_size (colormap))
+                n_colormap_colors * format_bpp == n_bytes)
 
   GIMP_TEST_START("Comparing fourth palette color's RGB components from colormap")
-  u8_data = g_bytes_get_data (colormap, NULL);
-  GIMP_TEST_END(u8_data[format_bpp * GIMP_TEST_COLOR_IDX] == GIMP_TEST_COLOR_R_U8     &&
-                u8_data[format_bpp * GIMP_TEST_COLOR_IDX + 1] == GIMP_TEST_COLOR_G_U8 &&
-                u8_data[format_bpp * GIMP_TEST_COLOR_IDX + 2]== GIMP_TEST_COLOR_B_U8)
+  GIMP_TEST_END(colormap[format_bpp * GIMP_TEST_COLOR_IDX] == GIMP_TEST_COLOR_R_U8     &&
+                colormap[format_bpp * GIMP_TEST_COLOR_IDX + 1] == GIMP_TEST_COLOR_G_U8 &&
+                colormap[format_bpp * GIMP_TEST_COLOR_IDX + 2]== GIMP_TEST_COLOR_B_U8)
 
-  g_bytes_unref (colormap);
+  g_free (colormap);
 
   GIMP_TEST_START("gimp_palette_get_colormap() in \"R'G'B'A float\" format")
   format2     = babl_format ("RGBA float");
   format2_bpp = babl_format_get_bytes_per_pixel (format2);
-  colormap    = gimp_palette_get_colormap (palette, format2, &n_colormap_colors);
-  GIMP_TEST_END(colormap != NULL && n_colormap_colors == n_colors  &&
+  fcolormap   = (gfloat *) gimp_palette_get_colormap (palette, format2, &n_colormap_colors, &n_bytes);
+  GIMP_TEST_END(fcolormap != NULL && n_colormap_colors == n_colors  &&
                 format2 != format                                  &&
                 format2_bpp > format_bpp                           &&
-                n_colormap_colors * format2_bpp == g_bytes_get_size (colormap))
+                n_colormap_colors * format2_bpp == n_bytes)
 
   GIMP_TEST_START("Comparing fourth palette color's RGB components from colormap in float format")
   gegl_color_get_pixel (color, format2, rgba);
-  float_data = g_bytes_get_data (colormap, NULL);
-  GIMP_TEST_END(float_data[4 * GIMP_TEST_COLOR_IDX] == rgba[0]                  &&
-                float_data[4 * GIMP_TEST_COLOR_IDX + 1] == rgba[1] &&
-                float_data[4 * GIMP_TEST_COLOR_IDX + 2]== rgba[2])
+  GIMP_TEST_END(fcolormap[4 * GIMP_TEST_COLOR_IDX] == rgba[0]                  &&
+                fcolormap[4 * GIMP_TEST_COLOR_IDX + 1] == rgba[1] &&
+                fcolormap[4 * GIMP_TEST_COLOR_IDX + 2]== rgba[2])
 
-  g_bytes_unref (colormap);
+  g_free (fcolormap);
 
   /* Run the same tests through PDB. */
 

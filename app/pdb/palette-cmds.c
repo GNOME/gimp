@@ -454,12 +454,12 @@ palette_entry_set_name_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-palette_get_colormap_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+palette_get_bytes_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -958,14 +958,14 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-palette-get-colormap
+   * gimp-palette-get-bytes
    */
-  procedure = gimp_procedure_new (palette_get_colormap_invoker);
+  procedure = gimp_procedure_new (palette_get_bytes_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-get-colormap");
+                               "gimp-palette-get-bytes");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the palette's colormap",
-                                  "This procedure returns an the image's colormap as a bytes array with all colors converted to a given Babl @format.\n"
+                                  "This procedure returns a palette's colormap as a bytes array with all colors converted to a given Babl @format.\n"
                                   "The byte-size of the returned colormap depends on the number of colors and on the bytes-per-pixel size of @format. E.g. that the following equality is ensured:\n"
                                   "\n"
                                   "```C\n"

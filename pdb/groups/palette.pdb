@@ -430,11 +430,11 @@ CODE
     );
 }
 
-sub palette_get_colormap {
+sub palette_get_bytes {
     $blurb = "Returns the palette's colormap";
 
     $help = <<'HELP';
-This procedure returns an the image's colormap as a bytes array with all
+This procedure returns a palette's colormap as a bytes array with all
 colors converted to a given Babl @format.
 
 The byte-size of the returned colormap depends on the number of colors
@@ -447,6 +447,8 @@ HELP
 
     &jehan_pdb_misc('2024', '3.0');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'palette', type => 'palette',
           desc => 'The palette' },
@@ -458,7 +460,7 @@ HELP
         { name => 'colormap', type => 'bytes',
           desc => "The image's colormap." },
         { name => 'num_colors', type => 'int32',
-          desc => 'The number of colors in the palette' }
+          desc => 'The number of colors in the palette', }
     );
 
     %invoke = (
@@ -540,7 +542,7 @@ CODE
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
             palette_entry_get_name palette_entry_set_name
-            palette_get_colormap palette_set_colormap);
+            palette_get_bytes palette_set_colormap);
 
 %exports = (app => [@procs], lib => [@procs]);
 

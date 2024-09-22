@@ -32,36 +32,36 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpPalette* gimp_palette_new             (const gchar  *name);
-GimpPalette* gimp_palette_get_by_name     (const gchar  *name);
-gint         gimp_palette_get_color_count (GimpPalette  *palette);
-GeglColor**  gimp_palette_get_colors      (GimpPalette  *palette);
-gint         gimp_palette_get_columns     (GimpPalette  *palette);
-gboolean     gimp_palette_set_columns     (GimpPalette  *palette,
-                                           gint          columns);
-gboolean     gimp_palette_add_entry       (GimpPalette  *palette,
-                                           const gchar  *entry_name,
-                                           GeglColor    *color,
-                                           gint         *entry_num);
-gboolean     gimp_palette_delete_entry    (GimpPalette  *palette,
-                                           gint          entry_num);
-GeglColor*   gimp_palette_entry_get_color (GimpPalette  *palette,
-                                           gint          entry_num);
-gboolean     gimp_palette_entry_set_color (GimpPalette  *palette,
-                                           gint          entry_num,
-                                           GeglColor    *color);
-gboolean     gimp_palette_entry_get_name  (GimpPalette  *palette,
-                                           gint          entry_num,
-                                           gchar       **entry_name);
-gboolean     gimp_palette_entry_set_name  (GimpPalette  *palette,
-                                           gint          entry_num,
-                                           const gchar  *entry_name);
-GBytes*      gimp_palette_get_colormap    (GimpPalette  *palette,
-                                           const Babl   *format,
-                                           gint         *num_colors);
-gboolean     gimp_palette_set_colormap    (GimpPalette  *palette,
-                                           const Babl   *format,
-                                           GBytes       *colormap);
+GimpPalette*            gimp_palette_new             (const gchar  *name);
+GimpPalette*            gimp_palette_get_by_name     (const gchar  *name);
+gint                    gimp_palette_get_color_count (GimpPalette  *palette);
+GeglColor**             gimp_palette_get_colors      (GimpPalette  *palette);
+gint                    gimp_palette_get_columns     (GimpPalette  *palette);
+gboolean                gimp_palette_set_columns     (GimpPalette  *palette,
+                                                      gint          columns);
+gboolean                gimp_palette_add_entry       (GimpPalette  *palette,
+                                                      const gchar  *entry_name,
+                                                      GeglColor    *color,
+                                                      gint         *entry_num);
+gboolean                gimp_palette_delete_entry    (GimpPalette  *palette,
+                                                      gint          entry_num);
+GeglColor*              gimp_palette_entry_get_color (GimpPalette  *palette,
+                                                      gint          entry_num);
+gboolean                gimp_palette_entry_set_color (GimpPalette  *palette,
+                                                      gint          entry_num,
+                                                      GeglColor    *color);
+gboolean                gimp_palette_entry_get_name  (GimpPalette  *palette,
+                                                      gint          entry_num,
+                                                      gchar       **entry_name);
+gboolean                gimp_palette_entry_set_name  (GimpPalette  *palette,
+                                                      gint          entry_num,
+                                                      const gchar  *entry_name);
+G_GNUC_INTERNAL GBytes* _gimp_palette_get_bytes      (GimpPalette  *palette,
+                                                      const Babl   *format,
+                                                      gint         *num_colors);
+gboolean                gimp_palette_set_colormap    (GimpPalette  *palette,
+                                                      const Babl   *format,
+                                                      GBytes       *colormap);
 
 
 G_END_DECLS
