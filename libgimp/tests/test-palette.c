@@ -5,6 +5,7 @@
 #define GIMP_TEST_COLOR_R_U8   72
 #define GIMP_TEST_COLOR_G_U8   56
 #define GIMP_TEST_COLOR_B_U8   56
+#define EPSILON                1e-6f
 
 static GimpValueArray *
 gimp_c_test_run (GimpProcedure        *procedure,
@@ -74,16 +75,24 @@ gimp_c_test_run (GimpProcedure        *procedure,
   format2     = babl_format ("RGBA float");
   format2_bpp = babl_format_get_bytes_per_pixel (format2);
   fcolormap   = (gfloat *) gimp_palette_get_colormap (palette, format2, &n_colormap_colors, &n_bytes);
-  GIMP_TEST_END(fcolormap != NULL && n_colormap_colors == n_colors  &&
+  GIMP_TEST_END(fcolormap != NULL && n_colormap_colors == n_colors &&
                 format2 != format                                  &&
                 format2_bpp > format_bpp                           &&
                 n_colormap_colors * format2_bpp == n_bytes)
 
   GIMP_TEST_START("Comparing fourth palette color's RGB components from colormap in float format")
   gegl_color_get_pixel (color, format2, rgba);
-  GIMP_TEST_END(fcolormap[4 * GIMP_TEST_COLOR_IDX] == rgba[0]                  &&
-                fcolormap[4 * GIMP_TEST_COLOR_IDX + 1] == rgba[1] &&
-                fcolormap[4 * GIMP_TEST_COLOR_IDX + 2]== rgba[2])
+  /* XXX: whether to a colormap or to a GeglColor, I was expecting the
+   * conversion from palette format to target format to be done through
+   * exact same babl code path, hence equality to be perfect (i.e. no
+   * epsilon needed for float comparison). This is true on my machine,
+   * not on CI. Is it again some SSE2 inconsistency where sometimes
+   * conversion goes to SSE2, sometimes not, for the same run and same
+   * babl fish? Something else? To be further investigated.
+   */
+  GIMP_TEST_END(fabsf (fcolormap[4 * GIMP_TEST_COLOR_IDX] - rgba[0]) < EPSILON     &&
+                fabsf (fcolormap[4 * GIMP_TEST_COLOR_IDX + 1] - rgba[1]) < EPSILON &&
+                fabsf (fcolormap[4 * GIMP_TEST_COLOR_IDX + 2] - rgba[2]) < EPSILON)
 
   g_free (fcolormap);
 

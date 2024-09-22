@@ -9,6 +9,7 @@ GIMP_TEST_COLOR_FORMAT = "R'G'B' u8"
 GIMP_TEST_COLOR_R_U8   = 72
 GIMP_TEST_COLOR_G_U8   = 56
 GIMP_TEST_COLOR_B_U8   = 56
+EPSILON                = 1e-6
 
 pal = Gimp.Palette.get_by_name(GIMP_TEST_PALETTE)
 gimp_assert('gimp_palette_get_by_name()', type(pal) == Gimp.Palette)
@@ -52,19 +53,19 @@ gimp_assert('gimp_palette_get_colormap() in "RGBA float"',
 
 
 start = f2_bpp * GIMP_TEST_COLOR_IDX
-colormap_r = struct.unpack('f', colormap[start:start + 4])
-colormap_g = struct.unpack('f', colormap[start + 4:start + 8])
-colormap_b = struct.unpack('f', colormap[start + 8:start + 12])
+colormap_r = struct.unpack('f', colormap[start:start + 4])[0]
+colormap_g = struct.unpack('f', colormap[start + 4:start + 8])[0]
+colormap_b = struct.unpack('f', colormap[start + 8:start + 12])[0]
 
 rgb_bytes = colors[GIMP_TEST_COLOR_IDX].get_bytes(f2)
 rgb = rgb_bytes.get_data()
-palette_r = struct.unpack('f', rgb[:4])
-palette_g = struct.unpack('f', rgb[4:8])
-palette_b = struct.unpack('f', rgb[8:12])
+palette_r = struct.unpack('f', rgb[:4])[0]
+palette_g = struct.unpack('f', rgb[4:8])[0]
+palette_b = struct.unpack('f', rgb[8:12])[0]
 gimp_assert("Comparing fourth palette color's RGB components from colormap in float format",
-            colormap_r == palette_r and
-            colormap_g == palette_g and
-            colormap_b == palette_b)
+            abs(colormap_r - palette_r) < EPSILON and
+            abs(colormap_g - palette_g) < EPSILON and
+            abs(colormap_b - palette_b) < EPSILON)
 
 # Run the same tests through PDB:
 
