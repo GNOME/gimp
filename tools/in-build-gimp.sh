@@ -59,13 +59,18 @@ if [ -n "$GIMP3_DIRECTORY" ] && [ -d "$GIMP3_DIRECTORY" ] && [ -O "$GIMP3_DIRECT
     echo "       \"$used_dir_prefix\" != \"$tmpl_dir_prefix\""
     exit 1
   fi
-  echo INFO: Running: rm -fr --preserve-root --one-file-system \"$GIMP3_DIRECTORY\"
-  if [ -n "$GIMP_TEMP_UPDATE_RPATH" ]; then
+  RM_OPTIONS=""
+  if [ -z "$GIMP_TEMP_UPDATE_RPATH" ]; then
     # macOS doesn't have the additional security options.
-    rm -fr "$GIMP3_DIRECTORY"
-  else
-    rm -fr --preserve-root --one-file-system "$GIMP3_DIRECTORY"
+    # Testing for other OS or environments (apparently these options are
+    # not on busybox for instance).
+    echo "INFO: Testing if rm supports --preserve-root"
+    rm --help | grep no-preserve-root && RM_OPTIONS="--no-preserve-root"
+    echo "INFO: Testing if rm supports --one-file-system"
+    rm --help | grep one-file-system && RM_OPTIONS="$RM_OPTIONS --one-file-system"
   fi
+  echo INFO: Running: rm -fr $RM_OPTIONS \"$GIMP3_DIRECTORY\"
+  rm -fr $RM_OPTIONS "$GIMP3_DIRECTORY"
 else
   echo "ERROR: \$GIMP3_DIRECTORY ($GIMP3_DIRECTORY) is not a directory or does not belong to the user"
   exit 1
