@@ -26,10 +26,11 @@
 ; Tiny-Fu first successfully ran this script at 2:07am on March 6, 2004.
 
 (define (script-fu-helloworld text font size color)
+  (script-fu-use-v3)
   (let* (
         (width 10)
         (height 10)
-        (img (car (gimp-image-new width height RGB)))
+        (img (gimp-image-new width height RGB))
         (text-layer)
         )
 
@@ -38,9 +39,9 @@
     (gimp-image-undo-disable img)
     (gimp-context-set-foreground color)
 
-    (set! text-layer (car (gimp-text-font img -1 0 0 text 10 TRUE size font)))
-    (set! width (car (gimp-drawable-get-width text-layer)))
-    (set! height (car (gimp-drawable-get-height text-layer)))
+    (set! text-layer (gimp-text-font img -1 0 0 text 10 TRUE size font))
+    (set! width (gimp-drawable-get-width text-layer))
+    (set! height (gimp-drawable-get-height text-layer))
     (gimp-image-resize img width height 0 0)
 
     (gimp-image-undo-enable img)
@@ -50,15 +51,13 @@
   )
 )
 
-(script-fu-register "script-fu-helloworld"
+(script-fu-register-regular "script-fu-helloworld"
     "_Hello World..."
     "Creates an image of a text string."
     "Kevin Cozens <kcozens@interlog.com>"
-    "Kevin Cozens"
     "February 29, 2004"
-    ""
     SF-STRING     "Text string"         "Hello, World!"
-    SF-FONT       "Font"                "Sans"
+    SF-FONT       "Font"                "Sans-serif"
     SF-ADJUSTMENT "Font size (pixels)"  '(100 2 1000 1 10 0 1)
     SF-COLOR      "Color"               '(0 0 0)
 )

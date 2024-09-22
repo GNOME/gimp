@@ -279,13 +279,11 @@
 
 (define (register-palette-exporter
 	        export-type export-name file-type description author copyright date)
-  (script-fu-register (string-append "gimp-palette-export-" export-type)
+  (script-fu-register-regular (string-append "gimp-palette-export-" export-type)
                       export-name
                       description
                       author
-                      copyright
                       date
-                      ""
                       SF-DIRNAME _"Folder for the output file" ""
                       SF-STRING _"The name of the file to create (if a file with this name already exist, it will be replaced)"
                       (string-append "palette." file-type)

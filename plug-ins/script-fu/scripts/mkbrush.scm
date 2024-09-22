@@ -60,13 +60,11 @@
   )
 )
 
-(script-fu-register "script-fu-make-brush-rectangular"
+(script-fu-register-regular "script-fu-make-brush-rectangular"
   _"_Rectangular..."
   _"Create a rectangular brush"
   "Seth Burgess <sjburges@ou.edu>"
-  "Seth Burgess"
   "1997"
-  ""
   SF-STRING     _"Name"    "Rectangle"
   SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
   SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
@@ -130,13 +128,11 @@
   )
 )
 
-(script-fu-register "script-fu-make-brush-rectangular-feathered"
+(script-fu-register-regular "script-fu-make-brush-rectangular-feathered"
   _"Re_ctangular, Feathered..."
   _"Create a rectangular brush with feathered edges"
   "Seth Burgess <sjburges@ou.edu>"
-  "Seth Burgess"
   "1997"
-  ""
   SF-STRING     _"Name"       "Rectangle"
   SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
   SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
@@ -186,13 +182,11 @@
   )
 )
 
-(script-fu-register "script-fu-make-brush-elliptical"
+(script-fu-register-regular "script-fu-make-brush-elliptical"
   _"_Elliptical..."
   _"Create an elliptical brush"
   "Seth Burgess <sjburges@ou.edu>"
-  "Seth Burgess"
   "1997"
-  ""
   SF-STRING     _"Name"    "Ellipse"
   SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
   SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
@@ -255,13 +249,11 @@
   )
 )
 
-(script-fu-register "script-fu-make-brush-elliptical-feathered"
+(script-fu-register-regular "script-fu-make-brush-elliptical-feathered"
   _"Elli_ptical, Feathered..."
   _"Create an elliptical brush with feathered edges"
   "Seth Burgess <sjburges@ou.edu>"
-  "Seth Burgess"
   "1997"
-  ""
   SF-STRING     _"Name"       "Ellipse"
   SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
   SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)

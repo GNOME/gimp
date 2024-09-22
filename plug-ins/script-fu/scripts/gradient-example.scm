@@ -65,13 +65,11 @@
   )
 )
 
-(script-fu-register "script-fu-gradient-example"
+(script-fu-register-regular "script-fu-gradient-example"
     _"Custom _Gradient..."
     _"Create an image filled with an example of the current gradient"
     "Federico Mena Quintero"
-    "Federico Mena Quintero"
     "June 1997"
-    ""
     SF-ADJUSTMENT _"Width"            '(400 1 2000 1 10 0 1)
     SF-ADJUSTMENT _"Height"           '(30 1 2000 1 10 0 1)
     SF-TOGGLE     _"Gradient reverse" FALSE

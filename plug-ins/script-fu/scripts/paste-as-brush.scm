@@ -20,15 +20,16 @@
 
 (define (script-fu-paste-as-brush name filename spacing)
 
-  (let* ((brush-image (car (gimp-edit-paste-as-new-image)))
+  (script-fu-use-v3)
+  (let* ((brush-image (gimp-edit-paste-as-new-image))
          (brush-draw 0)
          (type 0)
          (path 0))
 
-    (if (= TRUE (car (gimp-image-is-valid brush-image)))
+    (if (gimp-image-id-is-valid brush-image)
       (begin
         (set! brush-draw (aref (cadr (gimp-image-get-selected-drawables brush-image)) 0))
-        (set! type (car (gimp-drawable-type brush-draw)))
+        (set! type (gimp-drawable-type brush-draw))
         (set! path (string-append gimp-directory
                                   "/brushes/"
                                   filename
@@ -39,7 +40,7 @@
             (begin
                 (gimp-context-push)
                 (gimp-context-set-background '(255 255 255))
-                (set! brush-draw (car (gimp-image-flatten brush-image)))
+                (set! brush-draw (gimp-image-flatten brush-image))
                 (gimp-context-pop)
             )
         )
@@ -53,20 +54,18 @@
         (gimp-image-delete brush-image)
 
         (gimp-brushes-refresh)
-        (gimp-context-set-brush (car (gimp-brush-get-by-name name)))
+        (gimp-context-set-brush (gimp-brush-get-by-name name))
       )
       (gimp-message _"There is no image data in the clipboard to paste.")
     )
   )
 )
 
-(script-fu-register "script-fu-paste-as-brush"
+(script-fu-register-regular "script-fu-paste-as-brush"
   _"Paste as New _Brush..."
   _"Paste the clipboard contents into a new brush"
   "Michael Natterer <mitch@gimp.org>"
-  "Michael Natterer"
   "2005-09-25"
-  ""
   SF-STRING     _"_Brush name" _"My Brush"
   SF-STRING     _"_File name"  _"mybrush"
   SF-ADJUSTMENT _"_Spacing"    '(25 0 1000 1 2 1 0)

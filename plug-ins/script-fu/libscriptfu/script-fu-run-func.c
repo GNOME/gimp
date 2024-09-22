@@ -134,6 +134,11 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
   return result;
 }
 
+/* The number of pspecs in a config's pspecs to skip, for a regular GimpProcedure.
+ * Skip procedure-name and run-mode.
+ */
+#define SF_ARGS_SKIPPED_REGULAR 2
+
 /* run_func for a GimpProcedure
  *
  * Type is GimpRunFunc.
@@ -177,14 +182,14 @@ script_fu_run_regular_procedure (GimpProcedure        *procedure,
         guint n_specs;
 
         g_free (g_object_class_list_properties (G_OBJECT_GET_CLASS (config), &n_specs));
-        if (n_specs > 1)
+        if (n_specs > SF_ARGS_SKIPPED_REGULAR)
           {
-            /* Let user choose "other" args in a dialog, then interpret. Maintain a config. */
+            /* Let user choose non-skipped args in a dialog, then interpret. Maintain a config. */
             result = script_fu_dialog_run_regular_proc (procedure, script, config);
           }
         else
           {
-            /* No "other" args for user to choose. No config to maintain. */
+            /* No args for user to choose. No config to maintain. */
             result = script_fu_interpret_regular_proc (procedure, script, config);
           }
         break;
