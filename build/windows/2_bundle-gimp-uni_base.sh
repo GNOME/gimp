@@ -178,9 +178,10 @@ if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*/
   bundle "$MSYS_PREFIX" lib/girepository-*/
 
-  bundle "$MSYS_PREFIX" bin/luajit.exe
-  bundle "$MSYS_PREFIX" lib/lua/
-  bundle "$MSYS_PREFIX" share/lua/
+  # https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
+  #bundle "$MSYS_PREFIX" bin/luajit.exe
+  #bundle "$MSYS_PREFIX" lib/lua/
+  #bundle "$MSYS_PREFIX" share/lua/
 
   bundle "$MSYS_PREFIX" bin/python*.exe
   bundle "$MSYS_PREFIX" lib/python*/

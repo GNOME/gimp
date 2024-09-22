@@ -224,7 +224,7 @@ bund_usr "$UNIX_PREFIX" "lib/python*"
 mv "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}python3.11" "$USR_DIR/${LIB_DIR}"
 mv "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}python3" "$USR_DIR/${LIB_DIR}"
 wipe_usr ${LIB_DIR}/*.pyc
-#### FIXME: Lua plug-ins support (NOT WORKING)
+#### Lua plug-ins support (NOT WORKING and buggy)
 #bund_usr "$UNIX_PREFIX" "bin/luajit*"
 #bund_usr "$UNIX_PREFIX" "lib/lua"
 #bund_usr "$UNIX_PREFIX" "share/lua"

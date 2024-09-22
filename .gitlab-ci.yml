@@ -211,8 +211,6 @@ image-debian-x64:
             libwmf-dev
             libxmu-dev
             libxpm-dev
-            luajit
-            lua-lgi
             meson
             mypaint-brushes
             poppler-data

@@ -702,45 +702,6 @@
             ]
         },
         {
-            "name": "luajit",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/LuaJIT/LuaJIT.git",
-                    "commit": "f725e44cda8f359869bf8f92ce71787ddca45618"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "sed -i 's|/usr/local|/app|' ./Makefile"
-                    ]
-                }
-            ],
-            "no-autogen": true,
-            "make-args": [
-                "DEFAULT_CC=ccache clang"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig",
-                "/share"
-            ]
-        },
-        {
-            "name": "lua-lgi",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/lgi-devs/lgi.git",
-                    "commit": "48ff62e5bc63d69c00085909a09cc5c75267e1c6"
-                }
-            ],
-            "buildsystem": "meson",
-            "config-opts": [
-                "-Dtests=false"
-            ]
-        },
-        {
             "name": "xmu",
             "sources": [
                 {

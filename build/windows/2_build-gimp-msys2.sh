@@ -81,13 +81,6 @@ cd ..
 make_cmd ()
 {
   if [ "$4" == "do_wizardry" ]; then
-    interp_lua="(
-                echo lua=$2\bin\luajit.exe
-                echo luajit=$2\bin\luajit.exe
-                echo /usr/bin/lua=$2\bin\luajit.exe
-                echo /usr/bin/luajit=$2\bin\luajit.exe
-                echo :Lua:E::lua::luajit:
-                ) >%cd%\lib\gimp\GIMP_API_VERSION\interpreters\lua.interp"
     interp_pyt="(
                 echo python=$2\bin\python.exe
                 echo python3=$2\bin\python.exe
@@ -112,8 +105,6 @@ make_cmd ()
   echo "@echo off
         echo This is a $1 native build of GIMP$3.
         echo .js   (JavaScript) plug-ins ^|^ NOT supported!
-        $interp_lua
-        echo .lua  (Lua) plug-ins        ^|^ supported.
         $interp_pyt
         echo .py   (Python) plug-ins     ^|^ supported.
         $interp_scm

@@ -49,7 +49,6 @@ export PYTHONDONTWRITEBYTECODE=1
 # RUN MAIN_BIN
 echo "This is a CI build of GIMP compatible with Debian DEBIAN_VERSION. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/7661"
 echo '.js   (JavaScript) plug-ins | supported.'
-echo '.lua  (Lua) plug-ins        | NOT supported!'
 echo '.py   (Python) plug-ins     | supported.'
 echo '.scm  (ScriptFu) plug-ins   | supported.'
 echo '.vala (Vala) plug-ins       | supported.'

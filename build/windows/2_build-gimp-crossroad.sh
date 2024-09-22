@@ -67,8 +67,7 @@ export ARTIFACTS_SUFFIX="-cross"
 if [ ! -f "_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
   mkdir -p _build$ARTIFACTS_SUFFIX && cd _build$ARTIFACTS_SUFFIX
   crossroad meson setup .. -Dgi-docgen=disabled                 \
-                           -Djavascript=disabled -Dlua=disabled \
-                           -Dvala=disabled
+                           -Djavascript=disabled -Dvala=disabled
 else
   cd _build$ARTIFACTS_SUFFIX
 fi
@@ -82,7 +81,6 @@ GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build$ARTIFACTS_SUFFIX/config.h | head
 echo "@echo off
       echo This is a CI crossbuild of GIMP.
       echo .js   (JavaScript) plug-ins ^|^ NOT supported!
-      echo .lua  (Lua) plug-ins        ^|^ NOT supported!
       echo .py   (Python) plug-ins     ^|^ NOT supported!
       echo .scm  (ScriptFu) plug-ins   ^|^ NOT supported!
       echo .vala (Vala) plug-ins       ^|^ NOT supported!
