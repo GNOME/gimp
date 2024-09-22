@@ -1,19 +1,22 @@
-# Chinese (Hong Kong) translation of gimp.
+# Chinese (Taiwan) translation of gimp.
 # Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # 陳英傑 <r5224205@ms.cc.ntu.edu.tw>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # Abel Cheung <abel@oaka.org>, 2001, 03-05.
 # Yi-Shun Wang <dnextstep@gmail.com>, 2008.
+# anenasa <anenasaa@yahoo.com>, 2024.
+# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2024.
+# Cheng-Chia Tseng <zerngjia@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-18 18:42+0000\n"
-"PO-Revision-Date: 2024-09-21 01:15+0800\n"
+"POT-Creation-Date: 2024-09-22 12:40+0000\n"
+"PO-Revision-Date: 2024-09-22 22:08+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
-"Language-Team: Chinese (Traditional) <http://weblate.steps.tw/projects/gimp/"
+"Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>"
 "po/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -76,10 +79,12 @@ msgid ""
 "GIMP 2.10.38 has been the first bug-fix only release for a long time, "
 "correcting various bugs, some more annoying than others."
 msgstr ""
+"GIMP 2.10.38 是發行許久之後推出的第一個只收錄臭蟲修正的發行版，改正許多臭蟲，"
+"其中有的特別惱人。"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "On Windows, the Windows Ink API support has been backported."
-msgstr ""
+msgstr "對於 Windows 平台，Windows Ink API 支援有從開發版提前回植。"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
@@ -87,83 +92,87 @@ msgid ""
 "corrections. It is highly recommended to update. It also provides a few "
 "interesting changes, such as:"
 msgstr ""
+"這個新版的 GIMP 有許多修正，包括漏洞修正，強烈推薦更新。其中也有提供一些有趣"
+"的更動，例如："
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Adobe ACB and ASE palette support"
-msgstr ""
+msgstr "Adobe ACB 和 ASE 調色盤支援"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New gradient: FG to Transparent (Hardedge)"
-msgstr ""
+msgstr "新增漸層：前景色轉透明（硬邊）"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Some text tool algorithm enhancement when replacing formatted text"
-msgstr ""
+msgstr "替換格式化文字時，有一些文字工具演算法的改進"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Better theming of item locks (when hovering them or setting them active)"
-msgstr ""
+msgstr "更好的項目鎖定主題（當滑鼠停放在項目上，或是設定為作用中等情況）"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Improvements in handling a few specific metadata"
-msgstr ""
+msgstr "處理一些特定中介資料時有所改善"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "A new stable releases with a lot of bug fixes and a few enhancements:"
-msgstr ""
+msgstr "有許多臭蟲修正與一些增強的新穩定發行版："
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
-#, fuzzy
-#| msgid "Open the palette selection dialog"
 msgid "New template selector in \"Canvas Size\" dialog"
-msgstr "開啟調色盤選取對話方塊"
+msgstr "「畫布尺寸」對話方塊中提供新增範本選擇器"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "\"Change Color\" dialogs: color scale (0..255/0..100) and models (LCh/HSV) "
 "settings remembered across sessions"
 msgstr ""
+"「改變顏色」對話方塊：顏色比例 (0..255/0..100) 和模型 (LCh/HSV) 設定可以在工"
+"作階段之間記住"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New header with \"visible\" and \"link\" icons in item dockables"
-msgstr ""
+msgstr "在項目的浮動面板中有新的「可見」和「連結」圖示標頭列"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Clipping layers better supported when importing PSD files"
-msgstr ""
+msgstr "在匯入 PSD 檔時對裁剪圖層有更好的支援"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Paths are now exported to PSD"
-msgstr ""
+msgstr "路徑現在已可以匯出到 PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "JPEG XL export added"
-msgstr ""
+msgstr "加入 JPEG XL 匯出支援"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Metadata in JPEG XL import"
-msgstr ""
+msgstr "JPEG XL 可匯入中介資料"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New option \"Show reduced images\" when loading TIFF images"
-msgstr ""
+msgstr "載入 TIFF 影像時，新增選項「顯示減小的影像」"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "16-bit per channel export for raw image data"
-msgstr ""
+msgstr "Raw 原生影像資料可以作各色版16 位元匯出"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, "
 "Dicom and Help"
 msgstr ""
+"更多外掛插件有臭蟲修正：DDS、WebP、Flame、動畫播放控制、HEIF、Dicom 和求助說"
+"明等等"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "Color picking on X11 will ignore the Wayland portal; new implementation for "
 "color picking on Windows"
-msgstr ""
+msgstr "X11 上的顏色挑選會忽略 Wayland 入口；新增 Windows 上的顏色挑選實作"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Check for updates fixed on macOS"
@@ -6856,8 +6865,6 @@ msgid "Converting to '%s'"
 msgstr "正在轉換到「%s」"
 
 #: ../app/actions/image-commands.c:1433
-#, fuzzy
-#| msgid "Set Image Canvas Size"
 msgid "Change Canvas Size"
 msgstr "改變畫布的尺寸"
 
@@ -12403,7 +12410,6 @@ msgid "Wintab"
 msgstr "Wintab"
 
 #: ../app/core/core-enums.c:941
-#| msgid "Windows"
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
@@ -13922,7 +13928,7 @@ msgstr "變更影像的度量單位"
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
-msgstr "'gimp-comment' 附帶資訊驗證失敗：評註包含無效的 UTF-8"
+msgstr "'gimp-comment' 附帶資訊驗證失敗：註言包含無效的 UTF-8"
 
 #: ../app/core/gimpimage.c:3909
 msgctxt "undo-type"
@@ -15130,7 +15136,7 @@ msgstr "填充類型"
 
 #: ../app/core/gimptemplate.c:236
 msgid "Comment"
-msgstr "評註"
+msgstr "註言"
 
 #: ../app/core/gimptemplate.c:243
 msgid "Filename"
@@ -15833,7 +15839,7 @@ msgstr "色彩描述檔(_O)"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Co_mment"
-msgstr "評註(_M)"
+msgstr "註言(_M)"
 
 #: ../app/dialogs/image-scale-dialog.c:115
 msgctxt "dialog-title"
@@ -26744,14 +26750,14 @@ msgstr "巨大"
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
 msgid "Use _default comment"
-msgstr "使用預設評註(_D)"
+msgstr "使用預設註言(_D)"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
-"將目前的影像評註替換為「編輯 → 偏好設定 → 預設影像」中所設定的預設評註內容。"
+"將目前的影像註言替換為「編輯 → 偏好設定 → 預設影像」中所設定的預設註言內容。"
 
 #: ../app/widgets/gimpimagepropview.c:113
 msgid "Size in pixels:"
@@ -27098,7 +27104,7 @@ msgstr "色彩描述檔(_L)："
 
 #: ../app/widgets/gimptemplateeditor.c:476
 msgid "Comme_nt:"
-msgstr "評註(_N)："
+msgstr "註言(_N)："
 
 #: ../app/widgets/gimptemplateeditor.c:591
 msgid "_Name:"
