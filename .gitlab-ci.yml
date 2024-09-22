@@ -375,8 +375,11 @@ gimp-flatpak-x64:
   extends: .default
   rules:
     - <<: *CI_MERGE
+      when: never
     - <<: *CI_COMMIT
+      when: never
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+      when: never
   image: $CI_REGISTRY_IMAGE:build-debian-latest
 
 deps-win-x64-cross:
@@ -409,7 +412,6 @@ gimp-win-x64-cross:
   stage: gimp
   script:
     - bash build/windows/2_build-gimp-crossroad.sh
-  allow_failure: true
   artifacts:
     expose_as: 'Windows zip'
     paths:
