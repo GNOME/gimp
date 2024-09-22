@@ -1208,15 +1208,12 @@ set_bw_color_table (GimpImage *image)
 {
   static guchar  BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
   GimpPalette   *palette         = gimp_image_get_palette (image);
-  GBytes        *bytes;
 
 #ifdef XWD_COL_DEBUG
   g_printf ("Set GIMP b/w-colortable:\n");
 #endif
 
-  bytes = g_bytes_new_static (BWColorMap, 2 * 3);
-  gimp_palette_set_colormap (palette, babl_format ("R'G'B' u8"), bytes);
-  g_bytes_unref (bytes);
+  gimp_palette_set_colormap (palette, babl_format ("R'G'B' u8"), BWColorMap, 2 * 3);
 }
 
 

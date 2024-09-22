@@ -580,7 +580,7 @@ _gimp_palette_get_bytes (GimpPalette *palette,
 }
 
 /**
- * gimp_palette_set_colormap:
+ * _gimp_palette_set_bytes:
  * @palette: The palette.
  * @format: The desired color format.
  * @colormap: The new colormap values.
@@ -598,9 +598,9 @@ _gimp_palette_get_bytes (GimpPalette *palette,
  * Since: 3.0
  **/
 gboolean
-gimp_palette_set_colormap (GimpPalette *palette,
-                           const Babl  *format,
-                           GBytes      *colormap)
+_gimp_palette_set_bytes (GimpPalette *palette,
+                         const Babl  *format,
+                         GBytes      *colormap)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -613,7 +613,7 @@ gimp_palette_set_colormap (GimpPalette *palette,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-palette-set-colormap",
+                                               "gimp-palette-set-bytes",
                                                args);
   gimp_value_array_unref (args);
 

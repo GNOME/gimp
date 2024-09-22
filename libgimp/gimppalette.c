@@ -46,7 +46,7 @@ static void  gimp_palette_init (GimpPalette *palette)
  * @palette: The palette.
  * @format: The desired color format.
  * @num_colors: (out) (nullable): The number of colors in the palette.
- * @num_bytes: (out) (nullable): The number of colors in the palette.
+ * @num_bytes: (out) (nullable): The byte-size of the returned value.
  *
  * This procedure returns a palette's colormap as an array of bytes with
  * all colors converted to a given Babl @format.
@@ -91,4 +91,44 @@ gimp_palette_get_colormap (GimpPalette *palette,
     *num_bytes = n_bytes;
 
   return colormap;
+}
+
+/**
+ * gimp_palette_set_colormap:
+ * @palette: The palette.
+ * @format: The desired color format.
+ * @colormap (array length=num_bytes): The new colormap values.
+ * @num_bytes: The byte-size of @colormap.
+ *
+ * This procedure sets the entries in the specified palette in one go,
+ * though they must all be in the same @format.
+ *
+ * The number of entries depens on the @num_bytes size of @colormap and
+ * the bytes-per-pixel size of @format.
+ * The procedure will fail if @num_bytes is not an exact multiple of the
+ * number of bytes per pixel of @format.
+ *
+ * Returns: %TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_palette_set_colormap (GimpPalette *palette,
+                           const Babl  *format,
+                           guint8      *colormap,
+                           gsize        num_bytes)
+{
+  GBytes   *bytes;
+  gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+  g_return_val_if_fail (format != NULL, FALSE);
+  g_return_val_if_fail (colormap != NULL, FALSE);
+  g_return_val_if_fail (num_bytes % babl_format_get_bytes_per_pixel (format) == 0, FALSE);
+
+  bytes   = g_bytes_new_static (colormap, num_bytes);
+  success = _gimp_palette_set_bytes (palette, format, bytes);
+  g_bytes_unref (bytes);
+
+  return success;
 }

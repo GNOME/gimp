@@ -37,10 +37,16 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_PALETTE (gimp_palette_get_type ())
 G_DECLARE_FINAL_TYPE (GimpPalette, gimp_palette, GIMP, PALETTE, GimpResource)
 
-guint8 * gimp_palette_get_colormap (GimpPalette *palette,
-                                    const Babl  *format,
-                                    gint        *num_colors,
-                                    gsize       *num_bytes);
+
+guint8    * gimp_palette_get_colormap (GimpPalette *palette,
+                                       const Babl  *format,
+                                       gint        *num_colors,
+                                       gsize       *num_bytes);
+
+gboolean    gimp_palette_set_colormap (GimpPalette *palette,
+                                       const Babl  *format,
+                                       guint8      *colormap,
+                                       gsize        num_bytes);
 
 G_END_DECLS
 

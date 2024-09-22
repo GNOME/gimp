@@ -493,12 +493,12 @@ palette_get_bytes_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-palette_set_colormap_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+palette_set_bytes_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpPalette *palette;
@@ -1006,11 +1006,11 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-palette-set-colormap
+   * gimp-palette-set-bytes
    */
-  procedure = gimp_procedure_new (palette_set_colormap_invoker);
+  procedure = gimp_procedure_new (palette_set_bytes_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-set-colormap");
+                               "gimp-palette-set-bytes");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the entries in the image's colormap.",
                                   "This procedure sets the entries in the specified palette in one go. The number of entries depens on the size of @colormap and the bytes-per-pixel size of @format.\n"
