@@ -23,6 +23,8 @@
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gexiv2/gexiv2.h>
+#include <exiv2/exv_conf.h>
 #include <gegl.h>
 
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -281,6 +283,28 @@ gimp_library_versions (gboolean localized)
                                  _("using %s version %s (compiled against version %s)") :
                                  "using %s version %s (compiled against version %s)",
                                  "Cairo", cairo_version_string (), CAIRO_VERSION_STRING);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
+
+  lib_version = gimp_library_version ("gexiv2",
+                                      GEXIV2_MAJOR_VERSION,
+                                      GEXIV2_MINOR_VERSION,
+                                      GEXIV2_MICRO_VERSION,
+                                      gexiv2_get_version () / 100 / 100,
+                                      gexiv2_get_version () / 100 % 100,
+                                      gexiv2_get_version () % 100,
+                                      localized);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
+
+  lib_version = g_strdup_printf (localized ?
+                                 _("using %s version %s") :
+                                 "using %s version %s",
+                                 "exiv2", EXV_PACKAGE_VERSION);
   temp = g_strdup_printf ("%s\n%s\n", lib_versions, lib_version);
   g_free (lib_versions);
   g_free (lib_version);
