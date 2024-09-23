@@ -5131,8 +5131,36 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
                           if (date_time_split[1] != NULL)
                             {
+                              gchar **time_split = NULL;
+                              gchar  *iptc_time  = NULL;
+
+                              /* IPTC TimeCreated can't have fractional parts. */
+                              time_split = g_strsplit (date_time_split[1], ".", 2);
+
+                              /* A timezone adjustment can follow this, which
+                               * we want to keep. */
+                              if (time_split[1] != NULL)
+                                {
+                                  gchar **tz_split = NULL;
+
+                                  tz_split = g_strsplit_set (time_split[1], "+-", 2);
+                                  if (tz_split[1] != NULL)
+                                    iptc_time = g_strconcat (time_split[0],
+                                                             time_split[1] + strlen (tz_split[0]),
+                                                             NULL);
+                                  else
+                                    iptc_time = g_strdup (time_split[0]);
+                                  g_strfreev (tz_split);
+                                }
+                              else
+                                {
+                                  iptc_time = g_strdup (time_split[0]);
+                                }
+
                               set_tag_string (g_metadata, "Iptc.Application2.TimeCreated",
-                                              date_time_split[1], FALSE);
+                                              iptc_time, FALSE);
+                              g_strfreev (time_split);
+                              g_free (iptc_time);
                             }
                           else
                             {
