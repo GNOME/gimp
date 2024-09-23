@@ -552,6 +552,9 @@ gimp_color_dialog_set_color (GimpColorDialog *dialog,
                                   color);
   gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),
                                       color);
+  if (! dialog->user_context_aware)
+    gimp_color_selection_set_format (GIMP_COLOR_SELECTION (dialog->selection),
+                                     gegl_color_get_format (color));
 
   g_signal_handlers_unblock_by_func (dialog->selection,
                                      gimp_color_dialog_color_changed,
