@@ -557,7 +557,7 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
       guchar    *cmap;
       gint       num_colors;
 
-      cmap = gimp_image_get_colormap (image, NULL, &num_colors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &num_colors, NULL);
       gimp_preview_area_set_colormap (GIMP_PREVIEW_AREA (area),
                                       cmap, num_colors);
       g_free (cmap);

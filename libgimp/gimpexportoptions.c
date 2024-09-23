@@ -831,7 +831,7 @@ gimp_export_options_get_image (GimpExportOptions  *options,
             {
               gint n_colors;
 
-              g_free (gimp_image_get_colormap (*image, NULL, &n_colors));
+              n_colors = gimp_palette_get_color_count (gimp_image_get_palette (*image));
 
               if (n_colors > 2)
                 actions = g_slist_prepend (actions,

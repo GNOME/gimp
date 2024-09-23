@@ -58,13 +58,6 @@ gboolean       gimp_image_take_selected_paths     (GimpImage    *image,
 
 GList        * gimp_image_list_selected_drawables (GimpImage    *image);
 
-guchar       * gimp_image_get_colormap            (GimpImage    *image,
-                                                   gint         *colormap_len,
-                                                   gint         *num_colors);
-gboolean       gimp_image_set_colormap            (GimpImage    *image,
-                                                   const guchar *colormap,
-                                                   gint          num_colors);
-
 GBytes       * gimp_image_get_thumbnail_data      (GimpImage    *image,
                                                    gint         *width,
                                                    gint         *height,

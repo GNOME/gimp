@@ -129,9 +129,9 @@ gimp_get_images (gint *num_images)
  * gimp_layer_new() commands. They can be added to an image using the
  * gimp_image_insert_layer() command.
  *
- * If your image's type if INDEXED, a colormap must also be added with
- * gimp_image_set_colormap(). An indexed image without a colormap will
- * output unexpected colors.
+ * If your image's type if INDEXED, a palette must also be set with
+ * [method@Gimp.Image.set_palette]. An indexed image without a palette
+ * will output unexpected colors.
  *
  * Returns: (transfer none): The newly created image.
  **/
@@ -1913,91 +1913,13 @@ gimp_image_merge_down (GimpImage     *image,
 }
 
 /**
- * _gimp_image_get_colormap:
- * @image: The image.
- *
- * Returns the image's colormap
- *
- * This procedure returns an actual pointer to the image's colormap, as
- * well as the number of bytes contained in the colormap. The actual
- * number of colors in the transmitted colormap will be 'num-bytes' /
- * 3. If the image is not in Indexed color mode, no colormap is
- * returned.
- *
- * Returns: (transfer full): The image's colormap.
- **/
-GBytes *
-_gimp_image_get_colormap (GimpImage *image)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GBytes *colormap = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-image-get-colormap",
-                                               args);
-  gimp_value_array_unref (args);
-
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    colormap = GIMP_VALUES_DUP_BYTES (return_vals, 1);
-
-  gimp_value_array_unref (return_vals);
-
-  return colormap;
-}
-
-/**
- * _gimp_image_set_colormap:
- * @image: The image.
- * @colormap: The new colormap values.
- *
- * Sets the entries in the image's colormap.
- *
- * This procedure sets the entries in the specified image's colormap.
- * The number of entries is specified by the 'num-bytes' parameter and
- * corresponds to the number of INT8 triples that must be contained in
- * the 'colormap' array. The actual number of colors in the transmitted
- * colormap is 'num-bytes' / 3.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_image_set_colormap (GimpImage *image,
-                          GBytes    *colormap)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_BYTES, colormap,
-                                          G_TYPE_NONE);
-
-  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-image-set-colormap",
-                                               args);
-  gimp_value_array_unref (args);
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_get_palette:
  * @image: The image.
  *
  * Returns the image's colormap
  *
- * This procedure returns the image's colormap as a GimpPalette. If the
- * image is not in Indexed color mode, %NULL is returned.
+ * This procedure returns the image's colormap as a %GimpPalette. If
+ * the image is not in Indexed color mode, %NULL is returned.
  *
  * Returns: (transfer none): The image's colormap palette.
  *
@@ -2035,7 +1957,7 @@ gimp_image_get_palette (GimpImage *image)
  * Set the image's colormap to a copy of
  *
  * This procedure changes the image's colormap to an exact copy of
- * @palette and returns the new palette of @image.
+ * @palette and returns the palette of @image.
  * If the image is not in Indexed color mode, nothing happens and %NULL
  * is returned.
  *

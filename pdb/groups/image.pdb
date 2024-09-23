@@ -94,8 +94,8 @@ gimp_layer_new() commands. They can be added to an image using the
 gimp_image_insert_layer() command.
 
 
-If your image's type if INDEXED, a colormap must also be added with
-gimp_image_set_colormap(). An indexed image without a colormap will
+If your image's type if INDEXED, a palette must also be set with
+[method@Gimp.Image.set_palette]. An indexed image without a palette will
 output unexpected colors.
 HELP
 
@@ -1658,86 +1658,11 @@ CODE
     );
 }
 
-sub image_get_colormap {
-    $blurb = "Returns the image's colormap";
-
-    $help = <<'HELP';
-This procedure returns an actual pointer to the image's colormap, as well as
-the number of bytes contained in the colormap. The actual number of colors in
-the transmitted colormap will be 'num-bytes' / 3. If the image is not in
-Indexed color mode, no colormap is returned.
-HELP
-
-    &std_pdb_misc;
-
-    $lib_private = 1;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'colormap', type => 'bytes',
-          desc => "The image's colormap." }
-    );
-
-    %invoke = (
-        headers => [ qw("core/gimpimage-colormap.h") ],
-        code => <<'CODE'
-{
-  guchar *colormap_data;
-  gint    n_colors;
-
-  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-    {
-      colormap_data = _gimp_image_get_colormap (image, &n_colors);
-      colormap = g_bytes_new_take (colormap_data, 3 * n_colors);
-    }
-}
-CODE
-    );
-}
-
-sub image_set_colormap {
-    $blurb = "Sets the entries in the image's colormap.";
-
-    $help = <<'HELP';
-This procedure sets the entries in the specified image's colormap. The number
-of entries is specified by the 'num-bytes' parameter and corresponds to the
-number of INT8 triples that must be contained in the 'colormap' array. The
-actual number of colors in the transmitted colormap is 'num-bytes' / 3.
-HELP
-
-    &std_pdb_misc;
-
-    $lib_private = 1;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'colormap', type => 'bytes',
-          desc => 'The new colormap values' }
-    );
-
-    %invoke = (
-        headers => [ qw("core/gimpimage-colormap.h") ],
-        code => <<'CODE'
-{
-  _gimp_image_set_colormap (image,
-                            g_bytes_get_data (colormap, NULL),
-                            g_bytes_get_size (colormap) / 3,
-                            TRUE);
-}
-CODE
-    );
-}
-
 sub image_get_palette {
     $blurb = "Returns the image's colormap";
 
     $help = <<'HELP';
-This procedure returns the image's colormap as a GimpPalette.
+This procedure returns the image's colormap as a %GimpPalette.
 If the image is not in Indexed color mode, %NULL is returned.
 HELP
 
@@ -1768,7 +1693,7 @@ sub image_set_palette {
 
     $help = <<'HELP';
 This procedure changes the image's colormap to an exact copy of @palette
-and returns the new palette of @image.
+and returns the palette of @image.
 
 If the image is not in Indexed color mode, nothing happens and %NULL is
 returned.
@@ -3440,7 +3365,6 @@ CODE
             image_raise_item_to_top image_lower_item_to_bottom
             image_reorder_item
             image_flatten image_merge_visible_layers image_merge_down
-            image_get_colormap image_set_colormap
             image_get_palette image_set_palette
             image_get_metadata image_set_metadata
             image_clean_all image_is_dirty

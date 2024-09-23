@@ -1680,69 +1680,6 @@ image_merge_down_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_get_colormap_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GBytes *colormap = NULL;
-
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      guchar *colormap_data;
-      gint    n_colors;
-
-      if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-        {
-          colormap_data = _gimp_image_get_colormap (image, &n_colors);
-          colormap = g_bytes_new_take (colormap_data, 3 * n_colors);
-        }
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_take_boxed (gimp_value_array_index (return_vals, 1), colormap);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-image_set_colormap_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GBytes *colormap;
-
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  colormap = g_value_get_boxed (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      _gimp_image_set_colormap (image,
-                                g_bytes_get_data (colormap, NULL),
-                                g_bytes_get_size (colormap) / 3,
-                                TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_get_palette_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -3244,7 +3181,7 @@ register_image_procs (GimpPDB *pdb)
                                   "Creates a new image with the specified width, height, and type.",
                                   "Creates a new image, undisplayed, with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-insert-layer' command.\n"
                                   "\n"
-                                  "If your image's type if INDEXED, a colormap must also be added with 'gimp-image-set-colormap'. An indexed image without a colormap will output unexpected colors.",
+                                  "If your image's type if INDEXED, a palette must also be set with [method@Gimp.Image.set_palette]. An indexed image without a palette will output unexpected colors.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -4677,64 +4614,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-colormap
-   */
-  procedure = gimp_procedure_new (image_get_colormap_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-colormap");
-  gimp_procedure_set_static_help (procedure,
-                                  "Returns the image's colormap",
-                                  "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be 'num-bytes' / 3. If the image is not in Indexed color mode, no colormap is returned.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "The image",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boxed ("colormap",
-                                                       "colormap",
-                                                       "The image's colormap.",
-                                                       G_TYPE_BYTES,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-set-colormap
-   */
-  procedure = gimp_procedure_new (image_set_colormap_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-set-colormap");
-  gimp_procedure_set_static_help (procedure,
-                                  "Sets the entries in the image's colormap.",
-                                  "This procedure sets the entries in the specified image's colormap. The number of entries is specified by the 'num-bytes' parameter and corresponds to the number of INT8 triples that must be contained in the 'colormap' array. The actual number of colors in the transmitted colormap is 'num-bytes' / 3.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "The image",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boxed ("colormap",
-                                                   "colormap",
-                                                   "The new colormap values",
-                                                   G_TYPE_BYTES,
-                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-get-palette
    */
   procedure = gimp_procedure_new (image_get_palette_invoker);
@@ -4742,7 +4621,7 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-get-palette");
   gimp_procedure_set_static_help (procedure,
                                   "Returns the image's colormap",
-                                  "This procedure returns the image's colormap as a GimpPalette. If the image is not in Indexed color mode, %NULL is returned.",
+                                  "This procedure returns the image's colormap as a %GimpPalette. If the image is not in Indexed color mode, %NULL is returned.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -4773,7 +4652,7 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-set-palette");
   gimp_procedure_set_static_help (procedure,
                                   "Set the image's colormap to a copy of",
-                                  "This procedure changes the image's colormap to an exact copy of @palette and returns the new palette of @image.\n"
+                                  "This procedure changes the image's colormap to an exact copy of @palette and returns the palette of @image.\n"
                                   "If the image is not in Indexed color mode, nothing happens and %NULL is returned.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,

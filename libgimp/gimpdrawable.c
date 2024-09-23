@@ -378,8 +378,9 @@ gimp_drawable_get_format (GimpDrawable *drawable)
         {
           const Babl *palette;
           const Babl *palette_alpha;
+          const Babl *color_format;
           guchar     *colormap;
-          gint        colormap_len, n_colors;
+          gint        n_colors;
 
           babl_new_palette_with_space (format_str, space,
                                        &palette, &palette_alpha);
@@ -389,14 +390,12 @@ gimp_drawable_get_format (GimpDrawable *drawable)
           else
             format = palette;
 
-          colormap = gimp_image_get_colormap (image, &colormap_len, &n_colors);
+          color_format = babl_format_with_space ("R'G'B' u8", space);
+          colormap     = gimp_palette_get_colormap (gimp_image_get_palette (image), color_format, &n_colors, NULL);
 
           if (colormap)
             {
-              babl_palette_set_palette (format,
-                                        babl_format_with_space ("R'G'B' u8",
-                                                                space),
-                                        colormap, n_colors);
+              babl_palette_set_palette (format, color_format, colormap, n_colors);
               g_free (colormap);
             }
         }
