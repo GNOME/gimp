@@ -51,6 +51,13 @@ Core:
     gimp-console or with --no-interface) without CLI option `--quit`.
     The process can be interrupted anytime with SIGINT (Ctrl-C) which
     will trigger a clean exit.
+  - "Luma Lighten/Darken Only" default blend space is now linear
+    (instead of perceptual).
+  - execinfo.h (backtrace() API) is made non-mandatory on Linux, with
+    proper meson summary showing that the Dashboard backtrace feature
+    (performance logs) will not work.
+  - `gimp -v` and crash debug dialog now contain Exiv2 and GExiv2
+    version information.
 
 Tools:
 
@@ -85,6 +92,7 @@ Graphical User Interface:
   - Dockbook: tab scrolling behavior (using scroll to switch between
     dockable tabs) which was removed from GtkNotebook in GTK+3 got
     reimplemented in our code.
+  - Palette colors are shown in their own space.
 
 Plug-ins:
 
@@ -145,6 +153,7 @@ Plug-ins:
   - Script-fu: resource argument defaults are set as a string which is
     the name of a resource, or the empty string or "from context" to
     default to the context resource.
+  - Python Console: history of commands is saved between runs.
 
 API:
 
@@ -204,11 +213,21 @@ API:
       export time).
     * New functions:
       - gimp_window_set_transient_for()
+      - gimp_palette_get_colormap()
+      - gimp_palette_set_colormap()
+      - gimp_image_set_palette()
     * Renamed functions:
       - gimp_path_export_to_file() to gimp_image_export_path_to_file()
       - gimp_path_export_to_string() to gimp_image_export_path_to_string()
       - gimp_path_import_from_file() to gimp_image_import_paths_from_file()
       - gimp_path_import_from_string() to gimp_image_import_paths_from_string()
+      - gimp_palette_entry_get_color() to gimp_palette_get_entry_color()
+      - gimp_palette_entry_get_name() to gimp_palette_get_entry_name()
+      - gimp_palette_entry_set_color() to gimp_palette_set_entry_color()
+      - gimp_palette_entry_set_name() to gimp_palette_set_entry_name()
+    * Removed functions:
+      - gimp_image_get_colormap()
+      - gimp_image_set_colormap()
     * GimpResource:
       - The ParamSpec arguments (including every subtype) may now have a
         default value.
@@ -255,6 +274,7 @@ API:
       now recognized so that pre-formatted code is kept as-is. E.g.
       indentation is not broken anymore in code samples on the gi-docgen
       API documentation.
+    * New "format" PDB type to pass Babl format arguments.
 
 Build:
 
@@ -269,11 +289,13 @@ Build:
       MSIX and Flatpak. Some benchmarks run by Øyvind show we can gain a bit
       of performance in some situations in babl/GEGL/ctx codepaths, thanks to
       better auto-vectorization support.
-    * x86 (32-bit) cross-build job for Windows removed.
+    * x86 (32-bit) cross-build job for Windows removed for MSIX.
     * "packaging" stage merged back with "build" stage.
     * "gimp-debian-x64" job now also generates an AppImage for every commit.
     * LLD linker now used in all build jobs (except scheduled GCC and legacy
       32-bit Windows jobs).
+    * Windows cross-builds are not triggered anymore until after GIMP
+      3.0 (when we'll handle the issues).
   - New gimp-data repository used as a git submodule:
     * Various data were moved to gimp-data: icons, cursors, patterns, brushes
       and application icon/logo.
@@ -302,6 +324,8 @@ Build:
   - Improved AppStream metadata file validation taking care of the case
     when the release date is not yet known.
   - The last of deprecated gdk_pointer_grab() calls are now removed.
+  - Build made more portables for non-GLibc or non-GNU coreutils
+    environments.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
