@@ -662,19 +662,19 @@ EXPORTS
 	gimp_paintbrush_default
 	gimp_palette_add_entry
 	gimp_palette_delete_entry
-	gimp_palette_entry_get_color
-	gimp_palette_entry_get_name
-	gimp_palette_entry_set_color
-	gimp_palette_entry_set_name
 	gimp_palette_get_by_name
 	gimp_palette_get_color_count
 	gimp_palette_get_colormap
 	gimp_palette_get_colors
 	gimp_palette_get_columns
+	gimp_palette_get_entry_color
+	gimp_palette_get_entry_name
 	gimp_palette_get_type
 	gimp_palette_new
 	gimp_palette_set_colormap
 	gimp_palette_set_columns
+	gimp_palette_set_entry_color
+	gimp_palette_set_entry_name
 	gimp_palettes_close_popup
 	gimp_palettes_get_list
 	gimp_palettes_popup

@@ -464,7 +464,7 @@ ico_create_palette (GimpPalette *reduced_cmap,
       GeglColor *color;
       guchar     rgb[3];
 
-      color = gimp_palette_entry_get_color (reduced_cmap, i);
+      color = gimp_palette_get_entry_color (reduced_cmap, i);
       gegl_color_get_pixel (color, format, rgb);
 
       palette[i * 4 + 2] = rgb[0];
@@ -694,7 +694,7 @@ ico_cmap_contains_black (GimpPalette *cmap)
 
   for (i = 0; i < num_colors; i++)
     {
-      GeglColor *color = gimp_palette_entry_get_color (cmap, i);
+      GeglColor *color = gimp_palette_get_entry_color (cmap, i);
       guchar     rgb[3];
 
       gegl_color_get_pixel (color, format, rgb);

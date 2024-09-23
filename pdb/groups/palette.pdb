@@ -298,7 +298,7 @@ CODE
     );
 }
 
-sub palette_entry_get_color {
+sub palette_get_entry_color {
     $blurb = 'Gets the color of an entry in the palette.';
 
     $help = <<'HELP';
@@ -333,7 +333,7 @@ CODE
     );
 }
 
-sub palette_entry_set_color {
+sub palette_set_entry_color {
     $blurb = 'Sets the color of an entry in the palette.';
 
     $help = <<'HELP';
@@ -364,7 +364,7 @@ CODE
     );
 }
 
-sub palette_entry_get_name {
+sub palette_get_entry_name {
     $blurb = 'Gets the name of an entry in the palette.';
 
     $help = <<'HELP';
@@ -399,7 +399,7 @@ CODE
     );
 }
 
-sub palette_entry_set_name {
+sub palette_set_entry_name {
     $blurb = 'Sets the name of an entry in the palette.';
 
     $help = <<'HELP';
@@ -542,8 +542,8 @@ CODE
             palette_get_colors
             palette_get_columns palette_set_columns
             palette_add_entry palette_delete_entry
-            palette_entry_get_color palette_entry_set_color
-            palette_entry_get_name palette_entry_set_name
+            palette_get_entry_color palette_set_entry_color
+            palette_get_entry_name palette_set_entry_name
             palette_get_bytes palette_set_bytes);
 
 %exports = (app => [@procs], lib => [@procs]);

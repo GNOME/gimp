@@ -355,7 +355,7 @@ gimp_palette_delete_entry (GimpPalette *palette,
 }
 
 /**
- * gimp_palette_entry_get_color:
+ * gimp_palette_get_entry_color:
  * @palette: The palette.
  * @entry_num: The index of the entry to get the color of.
  *
@@ -369,7 +369,7 @@ gimp_palette_delete_entry (GimpPalette *palette,
  * Since: 2.2
  **/
 GeglColor *
-gimp_palette_entry_get_color (GimpPalette *palette,
+gimp_palette_get_entry_color (GimpPalette *palette,
                               gint         entry_num)
 {
   GimpValueArray *args;
@@ -382,7 +382,7 @@ gimp_palette_entry_get_color (GimpPalette *palette,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-palette-entry-get-color",
+                                               "gimp-palette-get-entry-color",
                                                args);
   gimp_value_array_unref (args);
 
@@ -395,7 +395,7 @@ gimp_palette_entry_get_color (GimpPalette *palette,
 }
 
 /**
- * gimp_palette_entry_set_color:
+ * gimp_palette_set_entry_color:
  * @palette: The palette.
  * @entry_num: The entry to get.
  * @color: The new color.
@@ -411,7 +411,7 @@ gimp_palette_entry_get_color (GimpPalette *palette,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_color (GimpPalette *palette,
+gimp_palette_set_entry_color (GimpPalette *palette,
                               gint         entry_num,
                               GeglColor   *color)
 {
@@ -426,7 +426,7 @@ gimp_palette_entry_set_color (GimpPalette *palette,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-palette-entry-set-color",
+                                               "gimp-palette-set-entry-color",
                                                args);
   gimp_value_array_unref (args);
 
@@ -438,7 +438,7 @@ gimp_palette_entry_set_color (GimpPalette *palette,
 }
 
 /**
- * gimp_palette_entry_get_name:
+ * gimp_palette_get_entry_name:
  * @palette: The palette.
  * @entry_num: The entry to get.
  * @entry_name: (out) (transfer full): The name of the entry.
@@ -453,7 +453,7 @@ gimp_palette_entry_set_color (GimpPalette *palette,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_get_name (GimpPalette  *palette,
+gimp_palette_get_entry_name (GimpPalette  *palette,
                              gint          entry_num,
                              gchar       **entry_name)
 {
@@ -467,7 +467,7 @@ gimp_palette_entry_get_name (GimpPalette  *palette,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-palette-entry-get-name",
+                                               "gimp-palette-get-entry-name",
                                                args);
   gimp_value_array_unref (args);
 
@@ -484,7 +484,7 @@ gimp_palette_entry_get_name (GimpPalette  *palette,
 }
 
 /**
- * gimp_palette_entry_set_name:
+ * gimp_palette_set_entry_name:
  * @palette: The palette.
  * @entry_num: The entry to get.
  * @entry_name: The new name.
@@ -500,7 +500,7 @@ gimp_palette_entry_get_name (GimpPalette  *palette,
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_name (GimpPalette *palette,
+gimp_palette_set_entry_name (GimpPalette *palette,
                              gint         entry_num,
                              const gchar *entry_name)
 {
@@ -515,7 +515,7 @@ gimp_palette_entry_set_name (GimpPalette *palette,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-palette-entry-set-name",
+                                               "gimp-palette-set-entry-name",
                                                args);
   gimp_value_array_unref (args);
 

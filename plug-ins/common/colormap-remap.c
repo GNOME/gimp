@@ -721,7 +721,7 @@ real_remap (GimpImage *image)
     {
       gint new_index    = index_map_old_new[i];
       pixmap[new_index] = i;
-      gimp_palette_entry_set_color (palette, i, colors[new_index]);
+      gimp_palette_set_entry_color (palette, i, colors[new_index]);
     }
   gimp_color_array_free (colors);
 

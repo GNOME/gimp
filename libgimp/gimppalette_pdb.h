@@ -45,15 +45,15 @@ gboolean                 gimp_palette_add_entry       (GimpPalette  *palette,
                                                        gint         *entry_num);
 gboolean                 gimp_palette_delete_entry    (GimpPalette  *palette,
                                                        gint          entry_num);
-GeglColor*               gimp_palette_entry_get_color (GimpPalette  *palette,
+GeglColor*               gimp_palette_get_entry_color (GimpPalette  *palette,
                                                        gint          entry_num);
-gboolean                 gimp_palette_entry_set_color (GimpPalette  *palette,
+gboolean                 gimp_palette_set_entry_color (GimpPalette  *palette,
                                                        gint          entry_num,
                                                        GeglColor    *color);
-gboolean                 gimp_palette_entry_get_name  (GimpPalette  *palette,
+gboolean                 gimp_palette_get_entry_name  (GimpPalette  *palette,
                                                        gint          entry_num,
                                                        gchar       **entry_name);
-gboolean                 gimp_palette_entry_set_name  (GimpPalette  *palette,
+gboolean                 gimp_palette_set_entry_name  (GimpPalette  *palette,
                                                        gint          entry_num,
                                                        const gchar  *entry_name);
 G_GNUC_INTERNAL GBytes*  _gimp_palette_get_bytes      (GimpPalette  *palette,

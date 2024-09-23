@@ -324,7 +324,7 @@ palette_delete_entry_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-palette_entry_get_color_invoker (GimpProcedure         *procedure,
+palette_get_entry_color_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -360,7 +360,7 @@ palette_entry_get_color_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-palette_entry_set_color_invoker (GimpProcedure         *procedure,
+palette_set_entry_color_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
                                  GimpProgress          *progress,
@@ -389,7 +389,7 @@ palette_entry_set_color_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-palette_entry_get_name_invoker (GimpProcedure         *procedure,
+palette_get_entry_name_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -425,7 +425,7 @@ palette_entry_get_name_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-palette_entry_set_name_invoker (GimpProcedure         *procedure,
+palette_set_entry_name_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
                                 GimpProgress          *progress,
@@ -806,11 +806,11 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-palette-entry-get-color
+   * gimp-palette-get-entry-color
    */
-  procedure = gimp_procedure_new (palette_entry_get_color_invoker);
+  procedure = gimp_procedure_new (palette_get_entry_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-entry-get-color");
+                               "gimp-palette-get-entry-color");
   gimp_procedure_set_static_help (procedure,
                                   "Gets the color of an entry in the palette.",
                                   "Returns the color of the entry at the given zero-based index into the palette. Returns %NULL when the index is out of range.",
@@ -844,11 +844,11 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-palette-entry-set-color
+   * gimp-palette-set-entry-color
    */
-  procedure = gimp_procedure_new (palette_entry_set_color_invoker);
+  procedure = gimp_procedure_new (palette_set_entry_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-entry-set-color");
+                               "gimp-palette-set-entry-color");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the color of an entry in the palette.",
                                   "Sets the color of the entry at the zero-based index into the palette. Returns an error when the index is out of range. Returns an error when the palette is not editable.",
@@ -882,11 +882,11 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-palette-entry-get-name
+   * gimp-palette-get-entry-name
    */
-  procedure = gimp_procedure_new (palette_entry_get_name_invoker);
+  procedure = gimp_procedure_new (palette_get_entry_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-entry-get-name");
+                               "gimp-palette-get-entry-name");
   gimp_procedure_set_static_help (procedure,
                                   "Gets the name of an entry in the palette.",
                                   "Gets the name of the entry at the zero-based index into the palette. Returns an error when the index is out of range.",
@@ -920,11 +920,11 @@ register_palette_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-palette-entry-set-name
+   * gimp-palette-set-entry-name
    */
-  procedure = gimp_procedure_new (palette_entry_set_name_invoker);
+  procedure = gimp_procedure_new (palette_set_entry_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-palette-entry-set-name");
+                               "gimp-palette-set-entry-name");
   gimp_procedure_set_static_help (procedure,
                                   "Sets the name of an entry in the palette.",
                                   "Sets the name of the entry at the zero-based index into the palette. Returns an error if the index is out or range. Returns an error if the palette is not editable.",

@@ -474,7 +474,7 @@ get_samples_palette (GimpDrawable *drawable)
       d_samp = &d_samples[i * nb_chan];
       pal_entry = CLAMP ((int)(i * factor), 0, num_colors - 1);
 
-      color_sample = gimp_palette_entry_get_color (palette, pal_entry);
+      color_sample = gimp_palette_get_entry_color (palette, pal_entry);
       gegl_color_get_pixel (color_sample, format, d_samp);
     }
 
