@@ -311,7 +311,7 @@ gimp_window_set_transient (GtkWindow *window)
                          G_CONNECT_AFTER);
 
   if (gtk_widget_get_mapped (GTK_WIDGET (window)))
-    gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, NULL);
+    gimp_window_transient_on_mapped (GTK_WIDGET (window), NULL, handle);
 }
 
 

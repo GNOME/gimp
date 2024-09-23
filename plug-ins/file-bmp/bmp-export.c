@@ -97,6 +97,7 @@ warning_dialog (const gchar *primary,
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             "%s", secondary);
 
+  gtk_widget_show (dialog);
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
   ok = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
