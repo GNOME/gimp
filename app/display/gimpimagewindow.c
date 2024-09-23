@@ -273,6 +273,9 @@ static GtkWidget *
                  gimp_image_window_create_tab_label    (GimpImageWindow     *window,
                                                         GimpDisplayShell    *shell);
 static void      gimp_image_window_update_tab_labels   (GimpImageWindow     *window);
+gboolean         gimp_image_window_tab_button_press    (GtkWidget           *widget,
+                                                        GdkEventButton      *event,
+                                                        GimpDisplayShell    *shell);
 
 static void      gimp_image_window_configure_pad       (GimpImageWindow     *window,
                                                         GimpDeviceInfo      *info);
@@ -1334,6 +1337,9 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
   private->shells = g_list_append (private->shells, shell);
 
   tab_label = gimp_image_window_create_tab_label (window, shell);
+  g_signal_connect_object (tab_label, "button-press-event",
+                           G_CALLBACK (gimp_image_window_tab_button_press),
+                           shell, 0);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell), tab_label);
@@ -2583,6 +2589,20 @@ gimp_image_window_update_tab_labels (GimpImageWindow *window)
     }
 
   g_list_free (children);
+}
+
+gboolean
+gimp_image_window_tab_button_press (GtkWidget        *widget,
+                                    GdkEventButton   *event,
+                                    GimpDisplayShell *shell)
+{
+  if (event->type == GDK_BUTTON_PRESS && event->button == 2)
+    {
+      if (shell)
+        gimp_display_shell_close (shell, FALSE);
+    }
+
+  return TRUE;
 }
 
 static void
