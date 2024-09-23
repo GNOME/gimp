@@ -363,11 +363,18 @@ gimp_palette_copy (GimpData *data,
 
   palette->n_colors  = 0;
   palette->n_columns = src_palette->n_columns;
+  palette->format    = src_palette->format;
+  /* Note: we don't copy the image variable on purpose (same as we don't
+   * copy the one from the parent GimpData, nor the file), and we don't
+   * want to keep syncing our format with changes in this image.
+   */
 
   for (list = src_palette->colors; list; list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
 
+      /* Small validity check. */
+      g_return_if_fail (! palette->format || palette->format == gegl_color_get_format (entry->color));
       gimp_palette_add_entry (palette, -1, entry->name, entry->color);
     }
 
@@ -426,7 +433,7 @@ gimp_palette_image_space_updated (GimpImage   *image,
 
   space  = gimp_image_get_layer_space (image);
   format = gimp_babl_format (GIMP_RGB, gimp_image_get_precision (image), FALSE, space);
-  gimp_palette_restrict_format (palette, format);
+  gimp_palette_restrict_format (palette, format, FALSE);
 }
 
 static void
@@ -465,7 +472,7 @@ gimp_palette_notify_image (GimpPalette      *palette,
     }
   else
     {
-      gimp_palette_restrict_format (palette, NULL);
+      gimp_palette_restrict_format (palette, NULL, FALSE);
     }
 }
 
@@ -474,7 +481,8 @@ gimp_palette_notify_image (GimpPalette      *palette,
 
 void
 gimp_palette_restrict_format (GimpPalette *palette,
-                              const Babl  *format)
+                              const Babl  *format,
+                              gboolean     push_undo_if_image)
 {
   gint n_colors;
 
@@ -483,6 +491,13 @@ gimp_palette_restrict_format (GimpPalette *palette,
   if (palette->format == format)
     return;
 
+  if (push_undo_if_image && gimp_data_get_image (GIMP_DATA (palette)))
+    gimp_image_undo_push_image_colormap (gimp_data_get_image (GIMP_DATA (palette)),
+                                         /* TODO: use localized string
+                                          * after string freeze.
+                                          */
+                                         /*C_("undo-type", "Change Colormap format restriction"));*/
+                                         "Change Colormap format restriction");
   palette->format = format;
 
   if (palette->format == NULL)

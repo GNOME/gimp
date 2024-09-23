@@ -253,7 +253,7 @@ gimp_palette_import_make_palette (GHashTable  *table,
   if (! table)
     return palette;
 
-  gimp_palette_restrict_format (palette, format);
+  gimp_palette_restrict_format (palette, format, FALSE);
   g_hash_table_foreach (table, gimp_palette_import_create_list, &list);
   list = g_slist_sort (list, gimp_palette_import_sort_colors);
 
@@ -275,7 +275,7 @@ gimp_palette_import_make_palette (GHashTable  *table,
 
   g_slist_free (list);
 
-  gimp_palette_restrict_format (palette, NULL);
+  gimp_palette_restrict_format (palette, NULL, FALSE);
 
   return palette;
 }

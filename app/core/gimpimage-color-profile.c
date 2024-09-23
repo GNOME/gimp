@@ -1010,7 +1010,7 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
   palette  = gimp_image_get_colormap_palette (image);
   space    = gimp_image_get_layer_space (image);
   format   = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space);
-  gimp_palette_restrict_format (palette, format);
+  gimp_palette_restrict_format (palette, format, TRUE);
 }
 
 static void

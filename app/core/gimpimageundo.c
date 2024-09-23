@@ -39,6 +39,7 @@
 #include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
 #include "gimpimageundo.h"
+#include "gimppalette.h"
 
 
 enum
@@ -182,7 +183,13 @@ gimp_image_undo_constructed (GObject *object)
       break;
 
     case GIMP_UNDO_IMAGE_COLORMAP:
-      image_undo->colormap = _gimp_image_get_colormap (image, &image_undo->num_colors);
+        {
+          GimpPalette *palette;
+
+          palette = gimp_image_get_colormap_palette (image);
+          image_undo->colormap = GIMP_PALETTE (gimp_palette_new (NULL, gimp_object_get_name (palette)));
+          gimp_data_copy (GIMP_DATA (image_undo->colormap), GIMP_DATA (palette));
+        }
       break;
 
     case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
@@ -448,22 +455,26 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
     case GIMP_UNDO_IMAGE_COLORMAP:
       {
-        guchar *colormap;
-        gint    num_colors;
+        GimpPalette *colormap;
 
-        colormap = _gimp_image_get_colormap (image, &num_colors);
+        colormap = gimp_image_get_colormap_palette (image);
+        if (colormap)
+          {
+            GimpPalette *palette = colormap;
+
+            colormap = GIMP_PALETTE (gimp_palette_new (NULL, gimp_object_get_name (palette)));
+            gimp_data_copy (GIMP_DATA (colormap), GIMP_DATA (palette));
+          }
 
         if (image_undo->colormap)
-          _gimp_image_set_colormap (image, image_undo->colormap,
-                                    image_undo->num_colors, FALSE);
+          gimp_image_set_colormap_palette (image, image_undo->colormap, FALSE);
         else
           gimp_image_unset_colormap (image, FALSE);
 
         if (image_undo->colormap)
-          g_free (image_undo->colormap);
+          g_object_unref (image_undo->colormap);
 
-        image_undo->num_colors = num_colors;
-        image_undo->colormap   = colormap;
+        image_undo->colormap = colormap;
       }
       break;
 
@@ -522,7 +533,7 @@ gimp_image_undo_free (GimpUndo     *undo,
   GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (undo);
 
   g_clear_object (&image_undo->grid);
-  g_clear_pointer (&image_undo->colormap, g_free);
+  g_clear_object (&image_undo->colormap);
   g_clear_object (&image_undo->hidden_profile);
   g_clear_object (&image_undo->metadata);
   g_clear_pointer (&image_undo->parasite_name, g_free);

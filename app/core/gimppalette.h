@@ -77,7 +77,8 @@ GimpData         * gimp_palette_new             (GimpContext      *context,
 GimpData         * gimp_palette_get_standard    (GimpContext      *context);
 
 void               gimp_palette_restrict_format (GimpPalette      *palette,
-                                                 const Babl       *format);
+                                                 const Babl       *format,
+                                                 gboolean          push_undo_if_image);
 const Babl       * gimp_palette_get_restriction (GimpPalette      *palette);
 
 GList            * gimp_palette_get_colors      (GimpPalette      *palette);

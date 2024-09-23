@@ -237,6 +237,8 @@ gimp_image_set_colormap_palette (GimpImage   *image,
   while ((entry = gimp_palette_get_entry (private->palette, 0)))
     gimp_palette_delete_entry (private->palette, entry);
 
+  gimp_palette_restrict_format (private->palette, palette->format, FALSE);
+
   for (i = 0; i < n_colors; i++)
     {
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
