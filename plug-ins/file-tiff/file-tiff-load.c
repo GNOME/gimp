@@ -1504,7 +1504,9 @@ load_image (GimpProcedure        *procedure,
                 }
             }
 
-          gimp_image_set_colormap (*image, cmap, (1 << bps));
+          gimp_palette_set_colormap (gimp_image_get_palette (*image),
+                                     babl_format ("R'G'B' u8"),
+                                     cmap, (1 << bps) * 3);
         }
 
       if (extra > 99)

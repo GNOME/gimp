@@ -1012,8 +1012,8 @@ load_image (GFile        *file,
       int num_palette;
 
       png_get_PLTE (pp, info, &palette, &num_palette);
-      gimp_image_set_colormap ((GimpImage *) image, (guchar *) palette,
-                               num_palette);
+      gimp_palette_set_colormap (gimp_image_get_palette ((GimpImage *) image), babl_format ("R'G'B' u8"),
+                                 (guchar *) palette, num_palette * 3);
     }
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
@@ -1594,9 +1594,9 @@ export_image (GFile        *file,
         color_type = PNG_COLOR_TYPE_PALETTE;
         file_format = gimp_drawable_get_format (drawable);
         pngg.has_plte = TRUE;
-        pngg.palette = (png_colorp) gimp_image_get_colormap (image,
-                                                             NULL,
-                                                             &pngg.num_palette);
+        pngg.palette = (png_colorp) gimp_palette_get_colormap (gimp_image_get_palette (image),
+                                                               babl_format ("R'G'B' u8"),
+                                                               &pngg.num_palette, NULL);
         if (optimize_palette)
           bit_depth = get_bit_depth_for_palette (pngg.num_palette);
         break;
@@ -2248,7 +2248,7 @@ respin_cmap (png_structp   pp,
   gint          colors;
   guchar       *before;
 
-  before = gimp_image_get_colormap (image, NULL, &colors);
+  before = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
   buffer = gimp_drawable_get_buffer (drawable);
 
   /* Make sure there is something in the colormap.

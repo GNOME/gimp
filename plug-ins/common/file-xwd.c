@@ -516,7 +516,7 @@ load_image (GFile   *file,
       goto out;
     }
 
-  /* Guard against insanely huge color maps -- gimp_image_set_colormap() only
+  /* Guard against insanely huge color maps -- gimp_palette_set_colormap() only
    * accepts colormaps with 0..256 colors anyway. */
   if (xwdhdr.l_colormap_entries > 256)
     {
@@ -1319,7 +1319,7 @@ set_color_table (GimpImage       *image,
               ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
-  gimp_image_set_colormap (image, ColorMap, 256);
+  gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), ColorMap, 256 * 3);
 }
 
 
@@ -2550,7 +2550,7 @@ save_index (GOutputStream  *output,
   else
     {
       vclass = 3;
-      cmap = gimp_image_get_colormap (image, NULL, &ncolors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &ncolors, NULL);
 
       for (j = 0; j < ncolors; j++)
         {

@@ -1016,7 +1016,7 @@ ReadImage (FILE                 *fd,
   g_free (dest);
 
   if ((! gray) && (bpp <= 8))
-    gimp_image_set_colormap (image, gimp_cmap, ncols);
+    gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, ncols * 3);
 
   gimp_progress_update (1.0);
 

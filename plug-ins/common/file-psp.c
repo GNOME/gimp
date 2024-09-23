@@ -1301,7 +1301,7 @@ read_color_block (FILE      *f,
       memcpy (color_palette, tmpmap, color_palette_entries * 3);
       g_free (tmpmap);
 
-      gimp_image_set_colormap (image, color_palette, color_palette_entries);
+      gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), color_palette, color_palette_entries * 3);
       g_free (color_palette);
     }
 

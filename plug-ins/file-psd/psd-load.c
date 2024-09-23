@@ -1635,8 +1635,9 @@ add_color_map (GimpImage *image,
     {
       if (img_a->color_mode != PSD_DUOTONE)
         {
-          gimp_image_set_colormap (image, img_a->color_map,
-                                   img_a->color_map_entries);
+          gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                     babl_format ("R'G'B' u8"),
+                                     img_a->color_map, img_a->color_map_len);
         }
       else
         {

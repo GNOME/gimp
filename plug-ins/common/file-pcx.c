@@ -777,37 +777,49 @@ load_image (GimpProcedure  *procedure,
                                                 255, 255, 255};
           colormap = bw_colormap;
         }
-      gimp_image_set_colormap (image, colormap, 2);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 (guint8 *) colormap, 6);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 2)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 1, 2, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 4);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 pcx_header.colormap, 4 * 3);
     }
   else if (pcx_header.bpp == 2 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 2, 1, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 4);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 pcx_header.colormap, 4 * 3);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 3)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 1, 3, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 8);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 pcx_header.colormap, 8 * 3);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 4)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_4 (fd, width, height, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 pcx_header.colormap, 16 * 3);
     }
   else if (pcx_header.bpp == 4 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 4, 1, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 pcx_header.colormap, 16 * 3);
     }
   else if (pcx_header.bpp == 8 && pcx_header.planes == 1)
     {
@@ -815,7 +827,9 @@ load_image (GimpProcedure  *procedure,
       load_8 (fd, width, height, dest, bytesperline);
       fseek (fd, -768L, SEEK_END);
       fread (cmap, 768, 1, fd);
-      gimp_image_set_colormap (image, cmap, 256);
+      gimp_palette_set_colormap (gimp_image_get_palette (image),
+                                 babl_format ("R'G'B' u8"),
+                                 cmap, 256 * 3);
     }
   else if (pcx_header.bpp == 8 && (pcx_header.planes == 3 || pcx_header.planes == 4))
     {
@@ -1077,7 +1091,8 @@ export_image (GFile         *file,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (image, NULL, &colors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image),
+                                        babl_format ("R'G'B' u8"), &colors, NULL);
 
       if (colors > 16)
         {

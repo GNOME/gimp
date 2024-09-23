@@ -877,7 +877,7 @@ write_layer (FILE                *fp,
 
   if (basetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_colormap (image, NULL, &colors);
+      palette = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
       if (type == GIMP_INDEXEDA_IMAGE)
         {
@@ -1206,7 +1206,7 @@ write_volume_mipmaps (FILE                *fp,
     format = babl_format ("R'G'B'A u8");
 
   if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-    palette = gimp_image_get_colormap (image, NULL, &colors);
+    palette = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
   offset = 0;
   for (i = 0, list = layers;
@@ -1652,7 +1652,7 @@ write_image (FILE                *fp,
       (compression == DDS_COMPRESS_NONE))
     {
       const guchar zero[4] = {0, 0, 0, 0};
-      cmap = gimp_image_get_colormap (image, NULL, &colors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
       for (i = 0; i < colors; ++i)
         {

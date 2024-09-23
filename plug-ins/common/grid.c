@@ -464,7 +464,7 @@ render_grid (GimpImage           *image,
       break;
 
     case GIMP_INDEXED:
-      cmap = gimp_image_get_colormap (image, NULL, &ncolors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &ncolors, NULL);
 
       hcolor[0] = best_cmap_match (cmap, ncolors, hcolor_gegl);
       vcolor[0] = best_cmap_match (cmap, ncolors, vcolor_gegl);

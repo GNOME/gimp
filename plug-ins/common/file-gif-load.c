@@ -257,8 +257,8 @@ gif_load (GimpProcedure         *procedure,
 #endif
 
   if (! promote_to_rgb)
-    gimp_image_set_colormap (image,
-                             gimp_cmap, highest_used_index);
+    gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"),
+                               gimp_cmap, highest_used_index * 3);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -291,7 +291,7 @@ gif_load_thumb (GimpProcedure       *procedure,
                                              error);
 
   if (! promote_to_rgb)
-    gimp_image_set_colormap (image, gimp_cmap, highest_used_index);
+    gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, highest_used_index * 3);
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -1141,7 +1141,7 @@ ReadImage (FILE        *fd,
           used_cmap[2][i] = gimp_cmap[j++] = cmap[2][i];
         }
 
-      gimp_image_set_colormap (*image, gimp_cmap, ncols);
+      gimp_palette_set_colormap (gimp_image_get_palette (*image), babl_format ("R'G'B' u8"), gimp_cmap, ncols * 3);
 
       if (Gif89.delayTime < 0)
         framename = g_strdup (_("Background"));

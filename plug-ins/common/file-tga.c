@@ -1097,7 +1097,7 @@ ReadImage (FILE     *fp,
   image = gimp_image_new (info->width, info->height, itype);
 
   if (gimp_cmap)
-    gimp_image_set_colormap (image, gimp_cmap, info->colorMapLength);
+    gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, info->colorMapLength * 3);
 
   layer = gimp_layer_new (image,
                           _("Background"),
@@ -1231,7 +1231,7 @@ export_image (GFile         *file,
 
   if (dtype == GIMP_INDEXED_IMAGE)
     {
-      gimp_cmap = gimp_image_get_colormap (image, NULL, &num_colors);
+      gimp_cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &num_colors, NULL);
 
       header[1] = 1; /* cmap type */
       header[2] = rle ? 9 : 1;
@@ -1242,7 +1242,7 @@ export_image (GFile         *file,
     }
   else if (dtype == GIMP_INDEXEDA_IMAGE)
     {
-      gimp_cmap = gimp_image_get_colormap (image, NULL, &num_colors);
+      gimp_cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &num_colors, NULL);
 
       header[1] = 1; /* cmap type */
       header[2] = rle ? 9 : 1;

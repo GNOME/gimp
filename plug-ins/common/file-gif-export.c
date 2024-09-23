@@ -878,7 +878,7 @@ export_image (GFile         *file,
           GeglColor *background;
           guchar     bg[3];
 
-          cmap = gimp_image_get_colormap (image, NULL, &colors);
+          cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
           background = gimp_context_get_background ();
           gegl_color_get_pixel (background, babl_format_with_space ("R'G'B' u8", NULL), bg);

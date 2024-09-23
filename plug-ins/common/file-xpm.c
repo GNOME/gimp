@@ -767,7 +767,7 @@ export_image (GFile         *file,
 
   if (indexed)
     {
-      guchar *cmap = gimp_image_get_colormap (image, NULL, &ncolors);
+      guchar *cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &ncolors, NULL);
       guchar *c;
 
       c = cmap;

@@ -2348,7 +2348,7 @@ load_ps (GFile *file,
     {
       const guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
-      gimp_image_set_colormap (image, BWColorMap, 2);
+      gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), (guint8 *) BWColorMap, 2 * 3);
 
       for (i = 0; i < height; i++)
         {
@@ -2823,9 +2823,8 @@ save_ps_preview (GOutputStream  *output,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      NULL,
-                                      &ncols);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (gimp_item_get_image (GIMP_ITEM (drawable))),
+                                        babl_format ("R'G'B' u8"), &ncols, NULL);
       format = gimp_drawable_get_format (drawable);
       break;
 
@@ -3138,7 +3137,7 @@ save_bw (GOutputStream  *output,
                 "level", &level2,
                 NULL);
 
-  cmap = gimp_image_get_colormap (image, NULL, &ncols);
+  cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &ncols, NULL);
 
   buffer = gimp_drawable_get_buffer (drawable);
   format = gimp_drawable_get_format (drawable);
@@ -3327,7 +3326,7 @@ save_index (GOutputStream  *output,
                 "level", &level2,
                 NULL);
 
-  cmap = cmap_start = gimp_image_get_colormap (image, NULL, &ncols);
+  cmap = cmap_start = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &ncols, NULL);
 
   ct = coltab;
   bw = 1;

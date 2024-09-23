@@ -654,7 +654,7 @@ respin_cmap (png_structp  pp,
   gint           transparent;
   gint           cols, rows;
 
-  before = gimp_image_get_colormap (image, NULL, &colors);
+  before = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
   /* Make sure there is something in the colormap */
   if (colors == 0)
@@ -1033,7 +1033,7 @@ mng_export_image (GFile         *file,
       guchar *palette;
       gint    numcolors;
 
-      palette = gimp_image_get_colormap (image, NULL, &numcolors);
+      palette = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &numcolors, NULL);
 
       if ((numcolors != 0) &&
           (mng_putchunk_plte_wrapper (handle, numcolors,
@@ -1285,7 +1285,7 @@ mng_export_image (GFile         *file,
 
           mngg.has_plte = TRUE;
           mngg.palette  = (png_colorp)
-            gimp_image_get_colormap (image, NULL, &mngg.num_palette);
+            gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &mngg.num_palette, NULL);
 
           bit_depth = get_bit_depth_for_palette (mngg.num_palette);
           break;

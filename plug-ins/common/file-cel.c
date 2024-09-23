@@ -615,7 +615,7 @@ load_image (GFile   *file,
             }
         }
 
-      gimp_image_set_colormap (image, palette + 3, colors - 1);
+      gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), palette + 3, (colors - 1) * 3);
     }
 
   /* Now get everything redrawn and hand back the finished image */

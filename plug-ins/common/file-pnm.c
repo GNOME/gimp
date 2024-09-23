@@ -1790,7 +1790,7 @@ export_image (GFile         *file,
       guchar *cmap;
       gint    num_colors;
 
-      cmap = gimp_image_get_colormap (image, NULL, &num_colors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &num_colors, NULL);
 
       if (file_type == FILE_TYPE_PBM)
         {

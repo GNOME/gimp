@@ -317,7 +317,7 @@ export_image (GFile         *file,
         }
 
       /* save colormap */
-      cmap = gimp_image_get_colormap (image, NULL, &colors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
       if (! print (output, error,
                    "static unsigned char header_data_cmap[256][3] = {") ||

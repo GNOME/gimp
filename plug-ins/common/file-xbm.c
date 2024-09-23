@@ -881,7 +881,7 @@ load_image (GFile   *file,
     }
 
   /* Set a black-and-white colormap. */
-  gimp_image_set_colormap (image, cmap, 2);
+  gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), (guint8 *) cmap, 2 * 3);
 
   layer = gimp_layer_new (image,
                           _("Background"),
@@ -982,7 +982,7 @@ export_image (GFile         *file,
     g_printerr ("%s: save_image '%s'\n", G_STRFUNC, prefix);
 #endif
 
-  cmap = gimp_image_get_colormap (image, NULL, &colors);
+  cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
 
   if (! gimp_drawable_is_indexed (drawable) || colors > 2)
     {

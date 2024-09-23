@@ -1022,7 +1022,7 @@ set_color_table (GimpImage       *image,
             ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
-  gimp_image_set_colormap (image, ColorMap, ncols);
+  gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), ColorMap, ncols * 3);
 }
 
 
@@ -1505,7 +1505,7 @@ save_index (FILE         *ofp,
     }
   else
     {
-      cmap = gimp_image_get_colormap (image, NULL, &ncols);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &ncols, NULL);
 
       for (j = 0; j < ncols; j++)
         {

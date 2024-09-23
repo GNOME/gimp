@@ -146,7 +146,7 @@ read_dds (GFile                *file,
   GimpPrecision      precision = GIMP_PRECISION_U8_NON_LINEAR;
   gboolean           read_mipmaps;
   gboolean           flip_import;
-  gint               i, j;
+  gint               i;
 
   if (interactive)
     {
@@ -516,6 +516,10 @@ read_dds (GFile                *file,
   /* Read palette for indexed DDS */
   if (load_info.fmt_flags & DDPF_PALETTEINDEXED8)
     {
+      const Babl  *format  = babl_format ("R'G'B' u8");
+      GimpPalette *palette = gimp_image_get_palette (image);
+      GeglColor   *color   = gegl_color_new (NULL);
+
       load_info.palette = g_malloc (256 * 4);
       if (fread (load_info.palette, 1, 1024, fp) != 1024)
         {
@@ -525,13 +529,19 @@ read_dds (GFile                *file,
           gimp_image_delete (image);
           return GIMP_PDB_EXECUTION_ERROR;
         }
-      for (i = j = 0; i < 768; i += 3, j += 4)
+      for (i = 0; i < 1024; i += 4)
         {
-          load_info.palette[i + 0] = load_info.palette[j + 0];
-          load_info.palette[i + 1] = load_info.palette[j + 1];
-          load_info.palette[i + 2] = load_info.palette[j + 2];
+          gint entry_num;
+
+          /* Looks like DDS indexed images have an alpha channel (or
+           * what else is this fourth byte?) and we just ignore it since
+           * our own palette colors are opaque?
+           */
+          gegl_color_set_pixel (color, format, &load_info.palette[i]);
+          gimp_palette_add_entry (palette, NULL, color, &entry_num);
         }
-      gimp_image_set_colormap (image, load_info.palette, 256);
+
+      g_object_unref (color);
     }
 
   load_info.tile_height = gimp_tile_height ();

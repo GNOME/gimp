@@ -624,7 +624,7 @@ load_image (GFile    *file,
         gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
-  gimp_image_set_colormap (image, cm, 256);
+  gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), cm, 256 * 3);
 
   fclose (fp);
 
@@ -726,7 +726,7 @@ export_image (GFile      *file,
     case GIMP_INDEXED:
       max = MAXDIFF;
       bg = 0;
-      cmap = gimp_image_get_colormap (image, NULL, &colors);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
       for (i = 0; i < MIN (colors, 256); i++)
         {
           cm[i*3+0] = cmap[i*3+0];

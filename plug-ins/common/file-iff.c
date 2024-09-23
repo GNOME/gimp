@@ -396,7 +396,7 @@ load_image (GFile        *file,
         }
 
       if (pixel_size == 1)
-        gimp_image_set_colormap (image, gimp_cmap, palette_size);
+        gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, palette_size * 3);
 
       g_object_unref (buffer);
     }

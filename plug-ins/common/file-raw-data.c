@@ -1314,7 +1314,7 @@ raw_load_palette (RawGimpData    *data,
         }
     }
 
-  gimp_image_set_colormap (data->image, data->cmap, 256);
+  gimp_palette_set_colormap (gimp_image_get_palette (data->image), babl_format ("R'G'B' u8"), data->cmap, 256 * 3);
 
   return TRUE;
 }
@@ -1357,7 +1357,7 @@ export_image (GFile                *file,
   g_return_val_if_fail (bpc * n_components == bpp, FALSE);
 
   if (gimp_drawable_is_indexed (drawable))
-    cmap = gimp_image_get_colormap (image, NULL, &palsize);
+    cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &palsize, NULL);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
