@@ -289,7 +289,7 @@ Build:
       MSIX and Flatpak. Some benchmarks run by Øyvind show we can gain a bit
       of performance in some situations in babl/GEGL/ctx codepaths, thanks to
       better auto-vectorization support.
-    * x86 (32-bit) cross-build job for Windows removed for MSIX.
+    * x86 (32-bit) cross-build job for Windows removed.
     * "packaging" stage merged back with "build" stage.
     * "gimp-debian-x64" job now also generates an AppImage for every commit.
     * LLD linker now used in all build jobs (except scheduled GCC and legacy
