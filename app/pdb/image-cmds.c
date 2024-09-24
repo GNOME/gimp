@@ -4651,7 +4651,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-palette");
   gimp_procedure_set_static_help (procedure,
-                                  "Set the image's colormap to a copy of",
+                                  "Set the image's colormap to a copy of @palette",
                                   "This procedure changes the image's colormap to an exact copy of @palette and returns the palette of @image.\n"
                                   "If the image is not in Indexed color mode, nothing happens and %NULL is returned.",
                                   NULL);

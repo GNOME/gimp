@@ -1689,7 +1689,7 @@ CODE
 }
 
 sub image_set_palette {
-    $blurb = "Set the image's colormap to a copy of @palette";
+    $blurb = 'Set the image\'s colormap to a copy of @palette';
 
     $help = <<'HELP';
 This procedure changes the image's colormap to an exact copy of @palette

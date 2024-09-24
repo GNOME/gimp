@@ -1954,7 +1954,7 @@ gimp_image_get_palette (GimpImage *image)
  * @image: The image.
  * @new_palette: The palette to copy from.
  *
- * Set the image's colormap to a copy of
+ * Set the image's colormap to a copy of @palette
  *
  * This procedure changes the image's colormap to an exact copy of
  * @palette and returns the palette of @image.
