@@ -230,7 +230,7 @@
     SF-ONE-OR-MORE-DRAWABLE
     SF-COLOR        _"Glow color"           "white"
     SF-TOGGLE       _"Fadeout"              FALSE
-    SF-ADJUSTMENT   _"Fadeout width"        '(100 1 2342 1 10 0 SF-SPINNER)
+    SF-ADJUSTMENT   _"Fadeout width"        '(100 1 3000 1 10 0 SF-SPINNER)
     SF-ADJUSTMENT   _"Corona width"         '(7 1 2342 1 10 0 SF-SPINNER)
     SF-ADJUSTMENT   _"After glow"           '(50 1 1024 1 10 0 SF-SPINNER)
     SF-TOGGLE       _"Add glowing"          TRUE
