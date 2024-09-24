@@ -228,14 +228,14 @@
     "January 2001"
     "RGBA GRAYA INDEXEDA"
     SF-ONE-OR-MORE-DRAWABLE
-    SF-COLOR   _"Glow color"           "white"
-    SF-TOGGLE  _"Fadeout"              FALSE
-    SF-VALUE   _"Fadeout width"        "100"
-    SF-VALUE   _"Corona width"         "7"
-    SF-VALUE   _"After glow"           "50"
-    SF-TOGGLE  _"Add glowing"          TRUE
-    SF-TOGGLE  _"Prepare for GIF"      FALSE
-    SF-VALUE   _"Speed (pixels/frame)" "50"
+    SF-COLOR        _"Glow color"           "white"
+    SF-TOGGLE       _"Fadeout"              FALSE
+    SF-ADJUSTMENT   _"Fadeout width"        '(100 1 3000 1 10 0 SF-SPINNER)
+    SF-ADJUSTMENT   _"Corona width"         '(7 1 2342 1 10 0 SF-SPINNER)
+    SF-ADJUSTMENT   _"After glow"           '(50 1 1024 1 10 0 SF-SPINNER)
+    SF-TOGGLE       _"Add glowing"          TRUE
+    SF-TOGGLE       _"Prepare for GIF"      FALSE
+    SF-ADJUSTMENT   _"Speed (pixels/frame)" '(50 1 1024 1 10 0 SF-SPINNER)
 )
 
 (script-fu-menu-register "script-fu-burn-in-anim"
