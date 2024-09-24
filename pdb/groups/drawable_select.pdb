@@ -109,5 +109,6 @@ CODE
 $desc = 'Drawables UI';
 $doc_title = 'gimpdrawableselect';
 $doc_short_desc = 'Methods of a drawable chooser dialog';
+$doc_long_desc = 'Methods of a drawable chooser dialog';
 
 1;

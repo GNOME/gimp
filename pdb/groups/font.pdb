@@ -109,6 +109,8 @@ sub font_get_lookup_name {
 Retrieve the font lookup name.
 HELP
 
+    &idriss_pdb_misc('2023', '3.0');
+
     $lib_private = 1;
 
     @inargs = (

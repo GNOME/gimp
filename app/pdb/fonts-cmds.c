@@ -178,9 +178,9 @@ register_fonts_procs (GimpPDB *pdb)
                                   "This procedure returns custom FontConfig configs along with the fonts renaming config.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "",
-                                         "",
-                                         "");
+                                         "Idriss Fekir",
+                                         "Idriss Fekir",
+                                         "2023");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("config",
                                                            "config",

@@ -32,7 +32,7 @@
  * @title: gimpdrawableselect
  * @short_description: Methods of a drawable chooser dialog
  *
-
+ * Methods of a drawable chooser dialog
  **/
 
 

@@ -80,6 +80,8 @@ sub fonts_get_custom_configs {
 This procedure returns custom FontConfig configs along with the fonts renaming config.
 HELP
 
+    &idriss_pdb_misc('2023', '3.0');
+
     $lib_private = 1;
 
     @inargs = (

@@ -166,9 +166,9 @@ register_font_procs (GimpPDB *pdb)
                                   "Retrieve the font lookup name.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
-                                         "",
-                                         "",
-                                         "");
+                                         "Idriss Fekir",
+                                         "Idriss Fekir",
+                                         "2023");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_font ("font",
                                                      "font",

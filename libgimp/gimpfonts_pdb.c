@@ -82,6 +82,8 @@ gimp_fonts_refresh (void)
  *
  * Returns: (transfer full): config path.
  *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
  **/
 gchar *
 _gimp_fonts_get_custom_configs (gchar  **sysconfig,

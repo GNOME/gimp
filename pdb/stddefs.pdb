@@ -173,6 +173,10 @@ sub alxsa_pdb_misc {
     contrib_pdb_misc('Alex S.', '', @_);
 }
 
+sub idriss_pdb_misc {
+    contrib_pdb_misc('Idriss Fekir', '', @_);
+}
+
 sub std_pdb_deprecated {
     if (@_) {
         $blurb = $help = '';

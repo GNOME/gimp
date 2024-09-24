@@ -46,6 +46,8 @@
  *
  * Returns: (transfer full): font lookup name.
  *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
  **/
 gchar *
 _gimp_font_get_lookup_name (GimpFont *font)
