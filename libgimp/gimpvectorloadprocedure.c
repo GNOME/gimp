@@ -384,7 +384,7 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
           if (width != 0)
             height = width;
           else if (height != 0)
-            width = width;
+            width = height;
           else
             width = height = 500;
         }
