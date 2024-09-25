@@ -2158,7 +2158,6 @@ xcf_save_effect (XcfInfo     *info,
 
   /* Write out GEGL operation name */
   xcf_write_string_check_error (info, (gchar **) &operation, 1, ;);
-  g_free (operation);
 
   if (info->file_version >= 22)
     {
@@ -2166,6 +2165,7 @@ xcf_save_effect (XcfInfo     *info,
       op_version = gegl_operation_get_op_version (operation);
       xcf_write_string_check_error (info, (gchar **) &op_version, 1, ;);
     }
+  g_free (operation);
 
   /* write out the effect properties */
   xcf_save_effect_props (info, image, filter, error);
