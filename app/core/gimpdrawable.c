@@ -1384,8 +1384,13 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
    * to run for all GimpDrawable child classes */
   if (gimp_drawable_has_filters (drawable))
     {
+      const Babl    *mask_format;
       GList         *filter_list;
       GimpContainer *filters = gimp_drawable_get_filters (drawable);
+      GimpPrecision  new_mask_precision;
+
+      mask_format        = gimp_image_get_mask_format (dest_image);
+      new_mask_precision = gimp_babl_format_get_precision (mask_format);
 
       for (filter_list = GIMP_LIST (filters)->queue->tail;
            filter_list;
@@ -1395,14 +1400,15 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
             {
               GimpDrawableFilter *filter = filter_list->data;
               GimpChannel        *mask;
-              const Babl         *mask_format;
 
               mask = gimp_drawable_filter_get_mask (filter);
-              mask_format = gimp_image_get_mask_format (dest_image);
+
+              if (new_mask_precision == gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
+                /* The only change which may happen for masks is the bit-depth. */
+                break;
 
               gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
-                                          GIMP_GRAY,
-                                          gimp_babl_format_get_precision (mask_format),
+                                          GIMP_GRAY, new_mask_precision,
                                           FALSE,
                                           NULL, NULL,
                                           layer_dither_type, mask_dither_type,
