@@ -64,6 +64,7 @@ setMasksDefault (gushort        biBitCnt,
 {
   switch (biBitCnt)
     {
+    case 64:
     case 32:
       masks[0].mask      = 0x00ff0000;
       masks[0].shiftin   = 16;
@@ -486,6 +487,7 @@ load_image (GFile  *file,
     case 16:
     case 24:
     case 32:
+    case 64:
       break;
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -656,6 +658,7 @@ ReadImage (FILE                 *fd,
   GimpLayer         *layer;
   GeglBuffer        *buffer;
   guchar            *dest, *temp, *row_buf;
+  gushort           *dest16, *temp16;
   guchar             gimp_cmap[768];
   gushort            rgb;
   glong              rowstride, channels;
@@ -663,6 +666,8 @@ ReadImage (FILE                 *fd,
   gint               total_bytes_read;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
+  GimpPrecision      precision_type = GIMP_PRECISION_U8_NON_LINEAR;
+  const Babl        *format         = NULL;
   guint32            px32;
 
   if (! (compression == BI_RGB || compression == BI_BITFIELDS ||
@@ -679,6 +684,7 @@ ReadImage (FILE                 *fd,
 
   switch (bpp)
     {
+    case 64:
     case 32:
     case 24:
     case 16:
@@ -687,11 +693,17 @@ ReadImage (FILE                 *fd,
         {
           image_type = GIMP_RGBA_IMAGE;
           channels = 4;
+
+          if (bpp == 64)
+            format = babl_format ("R'G'B'A u16");
         }
       else
         {
           image_type = GIMP_RGB_IMAGE;
           channels = 3;
+
+          if (bpp == 64)
+            format = babl_format ("R'G'B' u16");
         }
       if (bpp == 24 && compression == BI_BITFIELDS)
         g_printerr ("Loading BMP with invalid combination of 24 bpp and BI_BITFIELDS compression.\n");
@@ -734,7 +746,12 @@ ReadImage (FILE                 *fd,
       return NULL;
     }
 
-  image = gimp_image_new (width, height, base_type);
+  if (bpp == 64)
+    precision_type = GIMP_PRECISION_U16_NON_LINEAR;
+
+  image = gimp_image_new_with_precision (width, height, base_type,
+                                         precision_type);
+
   layer = gimp_layer_new (image, _("Background"),
                           width, height,
                           image_type, 100,
@@ -745,6 +762,7 @@ ReadImage (FILE                 *fd,
      pixels in RLE bitmaps show up as the zeroth element in the palette.
   */
   dest      = g_malloc0 (width * height * channels);
+  dest16    = g_malloc0 (width * height * channels * 2);
   row_buf   = g_malloc (rowbytes);
   rowstride = width * channels;
 
@@ -754,6 +772,41 @@ ReadImage (FILE                 *fd,
 
   switch (bpp)
     {
+    case 64:
+      {
+        while (ReadOK (fd, row_buf, rowbytes))
+          {
+            temp16 = dest16 + (ypos * rowstride);
+
+            for (xpos = 0; xpos < width; ++xpos)
+              {
+                /* Maximum channel value is 2^13, in BGR order */
+                for (gint i = 4; i >= 0; i -= 2)
+                  {
+                    rgb = ToS (&row_buf[(xpos * 8) + i]);
+                    *(temp16++) = (rgb / 8192.0) * G_MAXUINT16;
+                  }
+
+                if (channels > 3)
+                  {
+                    rgb = ToS (&row_buf[(xpos * 8) + 6]);
+                    *(temp16++) = (rgb / 8192.0) * G_MAXUINT16;
+                  }
+              }
+
+            if (ypos == 0)
+              break;
+
+            --ypos; /* next line */
+
+            cur_progress++;
+            if ((cur_progress % 5) == 0)
+              gimp_progress_update ((gdouble) cur_progress /
+                                    (gdouble) max_progress);
+          }
+      }
+      break;
+
     case 32:
       {
         while (ReadOK (fd, row_buf, rowbytes))
@@ -1008,12 +1061,19 @@ ReadImage (FILE                 *fd,
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                   NULL, dest, GEGL_AUTO_ROWSTRIDE);
+  if (bpp != 64)
+    gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                     NULL, dest, GEGL_AUTO_ROWSTRIDE);
+  else
+    gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                     format, dest16, GEGL_AUTO_ROWSTRIDE);
 
   g_object_unref (buffer);
 
-  g_free (dest);
+  if (dest)
+    g_free (dest);
+  if (dest16)
+    g_free (dest16);
 
   if ((! gray) && (bpp <= 8))
     gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, ncols * 3);
