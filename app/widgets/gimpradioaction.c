@@ -537,7 +537,12 @@ gimp_radio_action_set_current_value (GimpRadioAction *action,
           GimpRadioAction  *radio  = slist->data;
 
           if (radio->priv->value == current_value &&
-              ! gimp_toggle_action_get_active (toggle))
+              gimp_toggle_action_get_active (toggle))
+            {
+              /* Value to set is already toggled. */
+              return;
+            }
+          else if (radio->priv->value == current_value)
             {
               /* Change the "active" state but don't notify the property change
                * immediately. We want to notify both "active" properties
