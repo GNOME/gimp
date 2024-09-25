@@ -381,19 +381,21 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  Gimp             *gimp           = action_data_get_gimp (data);
-  GimpImage        *image          = action_data_get_image (data);
-  gboolean          is_indexed     = FALSE;
-  gboolean          is_u8_gamma    = FALSE;
-  gboolean          is_double      = FALSE;
-  gboolean          aux            = FALSE;
-  gboolean          lp             = FALSE;
-  gboolean          sel            = FALSE;
-  gboolean          groups         = FALSE;
-  gboolean          profile_srgb   = FALSE;
-  gboolean          profile_hidden = FALSE;
-  gboolean          profile        = FALSE;
-  gboolean          s_bpc          = FALSE;
+  Gimp              *gimp           = action_data_get_gimp (data);
+  GimpImage         *image          = action_data_get_image (data);
+  GimpComponentType  component_type = GIMP_COMPONENT_TYPE_U8;
+  GimpTRCType        trc            = GIMP_TRC_LINEAR;
+  gboolean           is_indexed     = FALSE;
+  gboolean           is_u8_gamma    = FALSE;
+  gboolean           is_double      = FALSE;
+  gboolean           aux            = FALSE;
+  gboolean           lp             = FALSE;
+  gboolean           sel            = FALSE;
+  gboolean           groups         = FALSE;
+  gboolean           profile_srgb   = FALSE;
+  gboolean           profile_hidden = FALSE;
+  gboolean           profile        = FALSE;
+  gboolean           s_bpc          = FALSE;
 
   if (gimp)
     {
@@ -422,8 +424,6 @@ image_actions_update (GimpActionGroup *group,
       const gchar       *action = NULL;
       GimpImageBaseType  base_type;
       GimpPrecision      precision;
-      GimpComponentType  component_type;
-      GimpTRCType        trc;
 
       base_type      = gimp_image_get_base_type (image);
       precision      = gimp_image_get_precision (image);
@@ -543,17 +543,17 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-softproof-black-point-compensation",     image);
   SET_ACTIVE    ("image-softproof-black-point-compensation",     s_bpc);
 
-  SET_SENSITIVE ("image-convert-u8",     image);
-  SET_SENSITIVE ("image-convert-u16",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-double", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u8",     image && component_type != GIMP_COMPONENT_TYPE_U8);
+  SET_SENSITIVE ("image-convert-u16",    image && !is_indexed && component_type != GIMP_COMPONENT_TYPE_U16);
+  SET_SENSITIVE ("image-convert-u32",    image && !is_indexed && component_type != GIMP_COMPONENT_TYPE_U32);
+  SET_SENSITIVE ("image-convert-half",   image && !is_indexed && component_type != GIMP_COMPONENT_TYPE_HALF);
+  SET_SENSITIVE ("image-convert-float",  image && !is_indexed && component_type != GIMP_COMPONENT_TYPE_FLOAT);
+  SET_SENSITIVE ("image-convert-double", image && !is_indexed && component_type != GIMP_COMPONENT_TYPE_DOUBLE);
   SET_VISIBLE   ("image-convert-double", is_double);
 
-  SET_SENSITIVE ("image-convert-linear",     image && !is_indexed);
-  SET_SENSITIVE ("image-convert-non-linear", image);
-  SET_SENSITIVE ("image-convert-perceptual", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-linear",     image && !is_indexed && trc != GIMP_TRC_LINEAR);
+  SET_SENSITIVE ("image-convert-non-linear", image && trc != GIMP_TRC_NON_LINEAR);
+  SET_SENSITIVE ("image-convert-perceptual", image && !is_indexed && trc != GIMP_TRC_PERCEPTUAL);
 
   SET_SENSITIVE ("image-color-profile-use-srgb", image && (profile || profile_hidden));
   SET_ACTIVE    ("image-color-profile-use-srgb", image && profile_srgb);
