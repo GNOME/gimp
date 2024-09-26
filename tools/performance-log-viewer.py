@@ -1557,7 +1557,7 @@ class SampleGraphList (Gtk.Box):
                 label.show ()
 
                 if marker.description:
-                    label = Gtk.Label (marker.description,
+                    label = Gtk.Label (label  = marker.description,
                                        halign = Gtk.Align.END)
                     grid.attach (label, 1, row, 1, 1)
                     label.show ()
