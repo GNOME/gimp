@@ -399,15 +399,24 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       if ((GIMP_IS_LAYER (drawable) && ! GIMP_IS_GROUP_LAYER (drawable)) &&
           ! filter_tool->existing_filter)
         {
+          gchar *operation_name = NULL;
+
+          gegl_node_get (filter_tool->operation,
+                         "operation", &operation_name,
+                         NULL);
+
           gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
           /* TODO: Once we can serialize GimpDrawable, remove so that filters with
            * aux nodes can be non-destructive */
-          if (gegl_node_has_pad (filter_tool->operation, "aux"))
+          if (gegl_node_has_pad (filter_tool->operation, "aux") ||
+              (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
+               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL))
             {
-              GParamSpec *param_spec;
-              GObject    *obj = G_OBJECT (tool_info->tool_options);
-              gchar      *tooltip;
+              GParamSpec  *param_spec;
+              GObject     *obj = G_OBJECT (tool_info->tool_options);
+              gchar       *tooltip;
+              const gchar *disabled_reason;
 
               param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (obj),
                                                          "merge-filter");
@@ -418,10 +427,14 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
               gtk_widget_set_sensitive (toggle, FALSE);
 
-              tooltip = g_strdup_printf ("%s\n<i>%s</i>",
-                                         g_param_spec_get_blurb (param_spec),
-                                         _("Disabled because this filter "
-                                           "depends on another image."));
+              if (gegl_node_has_pad (filter_tool->operation, "aux"))
+                disabled_reason = _("Disabled because this filter depends on another image.");
+              else
+                /* TODO: localize when string freeze is over. */
+                disabled_reason = "Disabled because GEGL Graph is unsafe.\nFor development purpose, "
+                                  "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.";
+
+              tooltip = g_strdup_printf ("%s\n<i>%s</i>", g_param_spec_get_blurb (param_spec), disabled_reason);
               gimp_help_set_help_data_with_markup (toggle, tooltip, NULL);
               g_free (tooltip);
 
@@ -434,6 +447,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
             }
 
           gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+
+          g_free (operation_name);
         }
       else
         {
@@ -542,7 +557,17 @@ gimp_filter_tool_control (GimpTool       *tool,
 
           /* TODO: Once we can serialize GimpDrawable, remove so that filters with
            * aux nodes can be non-destructive */
-          if (gegl_node_has_pad (filter_tool->operation, "aux"))
+          if (gegl_node_has_pad (filter_tool->operation, "aux") ||
+              /* GEGL graph is dangerous even without using third-party
+               * effects, because it may run any effect. E.g.  it can
+               * run sink effects overwriting any local files with user
+               * rights. We leave a way in through an environment
+               * variable because it is a useful tool for GEGL ops
+               * developers but it should only be set while knowing what
+               * you are doing.
+               */
+              (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
+               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL))
             non_destructive = FALSE;
 
           g_free (operation_name);

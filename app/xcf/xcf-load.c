@@ -3395,6 +3395,20 @@ xcf_load_effect (XcfInfo      *info,
 
       return filter;
     }
+  else if (g_strcmp0 (filter->operation_name, "gegl:gegl") == 0 &&
+           g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL)
+    {
+      filter->unsupported_operation = TRUE;
+
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_WARNING,
+                    /* TODO: localize after string freeze. */
+                    "XCF Warning: the \"%s\" (%s) filter is unsafe. It was discarded.\n"
+                    "For development purpose, set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.",
+                    filter->name, filter->operation_name);
+
+      return filter;
+    }
 
   if (info->file_version >= 22)
     {
