@@ -49,17 +49,19 @@ def expand_simple (element, last_values):
 last_vars      = {}
 last_backtrace = {}
 
-for sample in (log.find ("samples") or empty_element).iterfind ("sample"):
+for sample in (log.find ("samples") if log.find ("samples") is not None else empty_element).iterfind ("sample"):
     # Expand variables
-    vars = sample.find ("vars") or \
-           ElementTree.SubElement (sample, "vars")
+    vars = sample.find ("vars")
+    if vars is None:
+        vars = ElementTree.SubElement (sample, "vars")
 
     expand_simple (vars, last_vars)
 
     # Expand backtrace
     if has_backtrace:
-        backtrace = sample.find ("backtrace") or \
-                    ElementTree.SubElement (sample, "backtrace")
+        backtrace = sample.find ("backtrace")
+        if backtrace is None:
+            backtrace = ElementTree.SubElement (sample, "backtrace")
 
         for thread in backtrace:
             id     = thread.get ("id")
@@ -100,7 +102,7 @@ for sample in (log.find ("samples") or empty_element).iterfind ("sample"):
 # Expand address map
 last_address = {}
 
-for address in (log.find ("address-map") or empty_element).iterfind ("address"):
+for address in (log.find ("address-map") if log.find ("address-map") is not None else empty_element).iterfind ("address"):
     expand_simple (address, last_address)
 
 # Write performance log to STDOUT

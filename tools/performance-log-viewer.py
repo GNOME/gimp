@@ -252,7 +252,7 @@ AddressInfo = namedtuple ("AddressInfo", ("id",
 
 address_map = {}
 
-if log.find ("address-map"):
+if log.find ("address-map") is not None:
     for address in log.find ("address-map").iterfind ("address"):
         value = int (address.get ("value"), 0)
 
@@ -308,7 +308,7 @@ for element in log.find ("samples"):
                 raw   = var.text.strip () if var.text else None
             )
 
-        if element.find ("backtrace"):
+        if element.find ("backtrace") is not None:
             for thread in element.find ("backtrace").iterfind ("thread"):
                 id      = thread.get ("id")
                 name    = thread.get ("name")
@@ -1671,12 +1671,12 @@ class InformationViewer (Gtk.ScrolledWindow):
 
         params = log.find ("params")
 
-        if params:
+        if params is not None:
             add_element (params)
 
         info = log.find ("info")
 
-        if info:
+        if info is not None:
             for element in info:
                 add_element (element)
 

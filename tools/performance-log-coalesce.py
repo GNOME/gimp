@@ -32,7 +32,7 @@ log = ElementTree.fromstring (sys.stdin.buffer.read ())
 
 address_map = log.find ("address-map")
 
-if address_map:
+if address_map is not None:
     addresses = []
 
     # Create base addresses dictionary

@@ -35,8 +35,8 @@ log = ElementTree.fromstring (sys.stdin.buffer.read ())
 # Construct state histogram
 address_states = {}
 
-for sample in (log.find ("samples") or empty_element).iterfind ("sample"):
-    threads = (sample.find ("backtrace") or empty_element).iterfind ("thread")
+for sample in (log.find ("samples") if log.find ("samples") is not None else empty_element).iterfind ("sample"):
+    threads = (sample.find ("backtrace") if sample.find ("backtrace") is not None else empty_element).iterfind ("thread")
 
     for thread in threads:
         running = int (thread.get ("running"))
@@ -73,8 +73,8 @@ for address, states in list (address_states.items ()):
         del address_states[address]
 
 # Replace thread states
-for sample in (log.find ("samples") or empty_element).iterfind ("sample"):
-    threads = (sample.find ("backtrace") or empty_element).iterfind ("thread")
+for sample in (log.find ("samples") if log.find ("samples") is not None else empty_element).iterfind ("sample"):
+    threads = (sample.find ("backtrace") if sample.find ("backtrace") is not None else empty_element).iterfind ("thread")
 
     for thread in threads:
         frame = thread.find ("frame")
