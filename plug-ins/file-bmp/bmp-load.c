@@ -64,7 +64,6 @@ setMasksDefault (gushort        biBitCnt,
 {
   switch (biBitCnt)
     {
-    case 64:
     case 32:
       masks[0].mask      = 0x00ff0000;
       masks[0].shiftin   = 16;
@@ -685,6 +684,12 @@ ReadImage (FILE                 *fd,
   switch (bpp)
     {
     case 64:
+      base_type  = GIMP_RGB;
+      image_type = GIMP_RGBA_IMAGE;
+      channels   = 4;
+      format = babl_format ("R'G'B'A u16");
+      break;
+
     case 32:
     case 24:
     case 16:
@@ -693,17 +698,11 @@ ReadImage (FILE                 *fd,
         {
           image_type = GIMP_RGBA_IMAGE;
           channels = 4;
-
-          if (bpp == 64)
-            format = babl_format ("R'G'B'A u16");
         }
       else
         {
           image_type = GIMP_RGB_IMAGE;
           channels = 3;
-
-          if (bpp == 64)
-            format = babl_format ("R'G'B' u16");
         }
       if (bpp == 24 && compression == BI_BITFIELDS)
         g_printerr ("Loading BMP with invalid combination of 24 bpp and BI_BITFIELDS compression.\n");
@@ -774,24 +773,46 @@ ReadImage (FILE                 *fd,
     {
     case 64:
       {
+        guint16 signed_short;
+        gint    fixed_integer;
+        gdouble fixed_fraction;
+        gdouble converted_fixed_point;
+
         while (ReadOK (fd, row_buf, rowbytes))
           {
             temp16 = dest16 + (ypos * rowstride);
 
             for (xpos = 0; xpos < width; ++xpos)
               {
-                /* Maximum channel value is 2^13, in BGR order */
-                for (gint i = 4; i >= 0; i -= 2)
+                /* Values are stored in fixed point format;
+                 * 1 bit for sign, 2 bits for integer,
+                 * 13 bits for decimal value. Then we multiply
+                 * by 2^13 to get the scaled value */
+                for (i = 4; i >= 0; i -= 2)
                   {
                     rgb = ToS (&row_buf[(xpos * 8) + i]);
-                    *(temp16++) = (rgb / 8192.0) * G_MAXUINT16;
+
+                    signed_short   = rgb & 0x7FFF;
+                    fixed_integer  = signed_short >> 13;
+                    fixed_fraction = signed_short & 0x1FFF;
+
+                    converted_fixed_point = fixed_integer + (fixed_fraction / 0x1FFF);
+                    converted_fixed_point *= 8192;
+
+                    *(temp16++) = (converted_fixed_point / 8192.0) * G_MAXUINT16;
                   }
 
-                if (channels > 3)
-                  {
-                    rgb = ToS (&row_buf[(xpos * 8) + 6]);
-                    *(temp16++) = (rgb / 8192.0) * G_MAXUINT16;
-                  }
+                  /* Alpha Channel */
+                  rgb = ToS (&row_buf[(xpos * 8) + 6]);
+
+                  signed_short   = rgb & 0x7FFF;
+                  fixed_integer  = signed_short >> 13;
+                  fixed_fraction = signed_short & 0x1FFF;
+
+                  converted_fixed_point = fixed_integer + (fixed_fraction / 0x1FFF);
+                  converted_fixed_point *= 8192;
+
+                  *(temp16++) = (converted_fixed_point / 8192.0) * G_MAXUINT16;
               }
 
             if (ypos == 0)
