@@ -22,6 +22,7 @@
 
 #include <cairo.h>
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -3346,6 +3347,9 @@ xcf_load_channel (XcfInfo   *info,
   return NULL;
 }
 
+/* Comes from gegl/operation/gegl-operations.h which is not public. */
+GType gegl_operation_gtype_from_name (const gchar *name);
+
 static FilterData *
 xcf_load_effect (XcfInfo      *info,
                  GimpImage    *image,
@@ -3355,6 +3359,7 @@ xcf_load_effect (XcfInfo      *info,
   GimpChannel *effect_mask = NULL;
   goffset      mask_offset = 0;
   gchar       *string;
+  GType        op_type;
 
   filter = g_new0 (FilterData, 1);
 
@@ -3369,6 +3374,27 @@ xcf_load_effect (XcfInfo      *info,
   /* Effect operation */
   xcf_read_string (info, &string, 1);
   filter->operation_name = string;
+
+  op_type = gegl_operation_gtype_from_name (filter->operation_name);
+  if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
+    {
+      /* Forbid filters which directly write into files. These should
+       * not be creatable through GIMP UI, but just in case someone
+       * builds one such XCF file (maliciously or by mistake/through a
+       * bug), let's prevent this filter to overwrite random files on
+       * load.
+       */
+      filter->unsupported_operation = TRUE;
+
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_WARNING,
+                    /* TODO: localize after string freeze. */
+                    "XCF Warning: the \"%s\" (%s) filter is "
+                    "unsafe. It was discarded.",
+                    filter->name, filter->operation_name);
+
+      return filter;
+    }
 
   if (info->file_version >= 22)
     {
