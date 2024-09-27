@@ -11,9 +11,9 @@
 
 (define testChannel
       (gimp-channel-new
-            testImage    ; image
-            23 24          ; width, height
+            testImage      ; image
             "Test Channel" ; name
+            23 24          ; width, height
             50.0           ; opacity
             "red" ))       ; compositing color
 

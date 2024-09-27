@@ -37,33 +37,37 @@
 
 
 /**
- * _gimp_channel_new:
+ * gimp_channel_new:
  * @image: The image to which to add the channel.
+ * @name: The channel name.
  * @width: The channel width.
  * @height: The channel height.
- * @name: The channel name.
  * @opacity: The channel opacity.
  * @color: The channel compositing color.
  *
  * Create a new channel.
  *
- * This procedure creates a new channel with the specified width,
- * height, name, opacity and color.
- * The new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with gimp_image_insert_channel().
+ * This procedure creates a new channel with the specified @width,
+ * @height, @name, @opacity and @color.
+ *
  * Other attributes, such as channel visibility, should be set with
  * explicit procedure calls.
+ *
+ * The new channel still needs to be added to the image, as this is not
+ * automatic. Add the new channel with
+ * [method@Gimp.Image.insert_channel].
+ *
  * The channel's contents are undefined initially.
  *
  * Returns: (transfer none): The newly created channel.
  **/
 GimpChannel *
-_gimp_channel_new (GimpImage   *image,
-                   gint         width,
-                   gint         height,
-                   const gchar *name,
-                   gdouble      opacity,
-                   GeglColor   *color)
+gimp_channel_new (GimpImage   *image,
+                  const gchar *name,
+                  gint         width,
+                  gint         height,
+                  gdouble      opacity,
+                  GeglColor   *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -71,9 +75,9 @@ _gimp_channel_new (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
-                                          G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
                                           GEGL_TYPE_COLOR, color,
                                           G_TYPE_NONE);

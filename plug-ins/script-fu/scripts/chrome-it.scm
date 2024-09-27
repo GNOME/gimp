@@ -149,7 +149,7 @@
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
         (brush (gimp-brush-new "Chrome It"))
-        (mask (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0)))
+        (mask (gimp-channel-new img "Chrome Stencil" width height 50 '(0 0 0)))
         (bg-layer (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 LAYER-MODE-NORMAL))
         (layer1 (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 LAYER-MODE-NORMAL))
         (layer2 (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 LAYER-MODE-DIFFERENCE))

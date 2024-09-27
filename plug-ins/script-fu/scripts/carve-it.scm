@@ -55,7 +55,7 @@
         (feather (carve-scale size 0.3))
         (brush-size (carve-scale size 0.3))
         (brush (car (gimp-brush-new "Carve It")))
-        (mask (car (gimp-channel-new img width height "Engraving Mask" 50 '(0 0 0))))
+        (mask (car (gimp-channel-new img "Engraving Mask" width height 50 '(0 0 0))))
         (inset-gamma (calculate-inset-gamma (car (gimp-item-get-image src-layer)) src-layer))
         (mask-fat 0)
         (mask-emboss 0)

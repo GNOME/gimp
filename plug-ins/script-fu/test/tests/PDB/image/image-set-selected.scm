@@ -26,9 +26,9 @@
 ; create test channel
 ; The test image has no channels (RGB are not considered channels.)
 (define testChannel (car (gimp-channel-new
-            testImage    ; image
-            23 24          ; width, height
+            testImage      ; image
             "Test Channel" ; name
+            23 24          ; width, height
             50.0           ; opacity
             "red" )))      ; compositing color
 ; a new channel is not in the image until added

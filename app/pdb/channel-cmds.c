@@ -57,17 +57,17 @@ channel_new_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
+  const gchar *name;
   gint width;
   gint height;
-  const gchar *name;
   gdouble opacity;
   GeglColor *color;
   GimpChannel *channel = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  width = g_value_get_int (gimp_value_array_index (args, 1));
-  height = g_value_get_int (gimp_value_array_index (args, 2));
-  name = g_value_get_string (gimp_value_array_index (args, 3));
+  name = g_value_get_string (gimp_value_array_index (args, 1));
+  width = g_value_get_int (gimp_value_array_index (args, 2));
+  height = g_value_get_int (gimp_value_array_index (args, 3));
   opacity = g_value_get_double (gimp_value_array_index (args, 4));
   color = g_value_get_object (gimp_value_array_index (args, 5));
 
@@ -382,8 +382,12 @@ register_channel_procs (GimpPDB *pdb)
                                "gimp-channel-new");
   gimp_procedure_set_static_help (procedure,
                                   "Create a new channel.",
-                                  "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
-                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
+                                  "This procedure creates a new channel with the specified @width, @height, @name, @opacity and @color.\n"
+                                  "\n"
+                                  "Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
+                                  "\n"
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with [method@Gimp.Image.insert_channel].\n"
+                                  "\n"
                                   "The channel's contents are undefined initially.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
@@ -397,6 +401,13 @@ register_channel_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The channel name",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "The channel width",
@@ -408,13 +419,6 @@ register_channel_procs (GimpPDB *pdb)
                                                  "The channel height",
                                                  1, GIMP_MAX_IMAGE_SIZE, 1,
                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The channel name",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",

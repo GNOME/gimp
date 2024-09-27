@@ -54,13 +54,6 @@ struct _GimpChannelClass
 
 GimpChannel * gimp_channel_get_by_id (gint32       channel_id);
 
-GimpChannel * gimp_channel_new       (GimpImage   *image,
-                                      const gchar *name,
-                                      guint        width,
-                                      guint        height,
-                                      gdouble      opacity,
-                                      GeglColor   *color);
-
 
 G_END_DECLS
 
