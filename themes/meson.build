@@ -1,4 +1,5 @@
 subdir('Default')
+subdir('System')
 
 themes = [
   'System',

@@ -1,0 +1,13 @@
+/* GIMP theme CSS file */
+/* Additional rules for light variant System themes */
+
+@import url("gimp.css");
+
+/* Make sure symbolic layer tree icons are visible */
+treeview {
+  color: black;
+}
+
+treeview header {
+  color: rgb (196, 197, 197);
+}
