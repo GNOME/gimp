@@ -33,9 +33,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpPaletteChooser, gimp_palette_chooser, GIMP, PALETTE_CHOOSER, GimpResourceChooser)
 
 
-GtkWidget * gimp_palette_chooser_new (const gchar  *title,
-                                      const gchar  *label,
-                                      GimpResource *resource);
+GtkWidget * gimp_palette_chooser_new (const gchar *title,
+                                      const gchar *label,
+                                      GimpPalette *palette);
 
 
 G_END_DECLS

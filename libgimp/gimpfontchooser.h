@@ -33,9 +33,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpFontChooser, gimp_font_chooser, GIMP, FONT_CHOOSER, GimpResourceChooser)
 
 
-GtkWidget * gimp_font_chooser_new (const gchar  *title,
-                                   const gchar  *label,
-                                   GimpResource *resource);
+GtkWidget * gimp_font_chooser_new (const gchar *title,
+                                   const gchar *label,
+                                   GimpFont    *font);
 
 
 G_END_DECLS

@@ -944,8 +944,7 @@ explorer_dialog (GimpProcedure       *procedure,
   /* Pass NULL to set local gradient data from context. */
   set_grad_data_cache (NULL, n_colors);
 
-  gradient_button = gimp_gradient_chooser_new (_("FractalExplorer Gradient"),
-                                               NULL, GIMP_RESOURCE (gradient));
+  gradient_button = gimp_gradient_chooser_new (_("FractalExplorer Gradient"), NULL, gradient);
   g_signal_connect_swapped (gradient_button, "resource-set",
                             G_CALLBACK (explorer_gradient_select_callback), config);
   gtk_box_pack_start (GTK_BOX (hbox), gradient_button, TRUE, TRUE, 0);

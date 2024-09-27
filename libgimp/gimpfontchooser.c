@@ -115,9 +115,9 @@ gimp_font_chooser_draw_interior (GimpResourceChooser *self)
 
 /**
  * gimp_font_chooser_new:
- * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
- * @label:    (nullable): Button label or %NULL for no label.
- * @resource: (nullable): Initial font.
+ * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @label: (nullable): Button label or %NULL for no label.
+ * @font:  (nullable): Initial font.
  *
  * Creates a new #GtkWidget that lets a user choose a font.
  * You can put this widget in a plug-in dialog.
@@ -131,25 +131,25 @@ gimp_font_chooser_draw_interior (GimpResourceChooser *self)
 GtkWidget *
 gimp_font_chooser_new (const gchar  *title,
                        const gchar  *label,
-                       GimpResource *resource)
+                       GimpFont     *font)
 {
   GtkWidget *chooser;
 
-  g_return_val_if_fail (resource == NULL || GIMP_IS_FONT (resource), NULL);
+  g_return_val_if_fail (font == NULL || GIMP_IS_FONT (font), NULL);
 
-  if (resource == NULL)
-    resource = GIMP_RESOURCE (gimp_context_get_font ());
+  if (font == NULL)
+    font = gimp_context_get_font ();
 
    if (title)
      chooser = g_object_new (GIMP_TYPE_FONT_CHOOSER,
                              "title",     title,
                              "label",     label,
-                             "resource",  resource,
+                             "resource",  font,
                              NULL);
    else
      chooser = g_object_new (GIMP_TYPE_FONT_CHOOSER,
                              "label",     label,
-                             "resource",  resource,
+                             "resource",  font,
                              NULL);
 
   gimp_font_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (chooser));

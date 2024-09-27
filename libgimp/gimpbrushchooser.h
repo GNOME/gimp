@@ -33,9 +33,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpBrushChooser, gimp_brush_chooser, GIMP, BRUSH_CHOOSER, GimpResourceChooser)
 
 
-GtkWidget * gimp_brush_chooser_new (const gchar  *title,
-                                    const gchar  *label,
-                                    GimpResource *resource);
+GtkWidget * gimp_brush_chooser_new (const gchar *title,
+                                    const gchar *label,
+                                    GimpBrush   *brush);
 
 
 G_END_DECLS

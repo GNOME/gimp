@@ -33,9 +33,9 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpPatternChooser, gimp_pattern_chooser, GIMP, PATTERN_CHOOSER, GimpResourceChooser)
 
 
-GtkWidget * gimp_pattern_chooser_new (const gchar  *title,
-                                      const gchar  *label,
-                                      GimpResource *resource);
+GtkWidget * gimp_pattern_chooser_new (const gchar *title,
+                                      const gchar *label,
+                                      GimpPattern *pattern);
 
 
 G_END_DECLS

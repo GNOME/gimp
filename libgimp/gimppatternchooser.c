@@ -138,9 +138,9 @@ gimp_pattern_chooser_init (GimpPatternChooser *self)
 
 /**
  * gimp_pattern_chooser_new:
- * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
- * @label:    (nullable): Button label or %NULL for no label.
- * @resource: (nullable): Initial pattern.
+ * @title:   (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @label:   (nullable): Button label or %NULL for no label.
+ * @pattern: (nullable): Initial pattern.
  *
  * Creates a new #GtkWidget that lets a user choose a pattern.
  * You can put this widget in a table in a plug-in dialog.
@@ -152,26 +152,27 @@ gimp_pattern_chooser_init (GimpPatternChooser *self)
  * Since: 2.4
  */
 GtkWidget *
-gimp_pattern_chooser_new (const gchar  *title,
-                                const gchar  *label,
-                                GimpResource *resource)
+gimp_pattern_chooser_new (const gchar *title,
+                          const gchar *label,
+                          GimpPattern *pattern)
 {
   GtkWidget *self;
 
-  if (resource == NULL)
-    resource = GIMP_RESOURCE (gimp_context_get_pattern ());
-  g_return_val_if_fail (GIMP_IS_PATTERN (resource), NULL);
+  g_return_val_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern), NULL);
+
+  if (pattern == NULL)
+    pattern = gimp_context_get_pattern ();
 
    if (title)
      self = g_object_new (GIMP_TYPE_PATTERN_CHOOSER,
                           "title",     title,
                           "label",     label,
-                          "resource",  resource,
+                          "resource",  pattern,
                           NULL);
    else
      self = g_object_new (GIMP_TYPE_PATTERN_CHOOSER,
                           "label",     label,
-                          "resource",  resource,
+                          "resource",  pattern,
                           NULL);
 
   gimp_pattern_chooser_draw (GIMP_RESOURCE_CHOOSER (self));

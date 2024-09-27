@@ -113,9 +113,9 @@ gimp_palette_chooser_draw_interior (GimpResourceChooser *self)
 
 /**
  * gimp_palette_chooser_new:
- * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
- * @label:    (nullable): Button label or %NULL for no label.
- * @resource: (nullable): Initial palette.
+ * @title:   (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @label:   (nullable): Button label or %NULL for no label.
+ * @palette: (nullable): Initial palette.
  *
  * Creates a new #GtkWidget that lets a user choose a palette.
  * You can put this widget in a table in a plug-in dialog.
@@ -127,25 +127,27 @@ gimp_palette_chooser_draw_interior (GimpResourceChooser *self)
  * Since: 2.4
  */
 GtkWidget *
-gimp_palette_chooser_new (const gchar  *title,
-                          const gchar  *label,
-                          GimpResource *resource)
+gimp_palette_chooser_new (const gchar *title,
+                          const gchar *label,
+                          GimpPalette *palette)
 {
   GtkWidget *self;
 
-  if (resource == NULL)
-    resource = GIMP_RESOURCE (gimp_context_get_palette ());
+  g_return_val_if_fail (palette == NULL || GIMP_IS_PALETTE (palette), NULL);
+
+  if (palette == NULL)
+    palette = gimp_context_get_palette ();
 
    if (title)
      self = g_object_new (GIMP_TYPE_PALETTE_CHOOSER,
                           "title",     title,
                           "label",     label,
-                          "resource",  resource,
+                          "resource",  palette,
                           NULL);
    else
      self = g_object_new (GIMP_TYPE_PALETTE_CHOOSER,
                           "label",     label,
-                          "resource",  resource,
+                          "resource",  palette,
                           NULL);
 
   gimp_palette_chooser_draw_interior (GIMP_RESOURCE_CHOOSER (self));

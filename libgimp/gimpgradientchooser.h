@@ -35,7 +35,7 @@ G_DECLARE_FINAL_TYPE (GimpGradientChooser, gimp_gradient_chooser, GIMP, GRADIENT
 
 GtkWidget * gimp_gradient_chooser_new (const gchar  *title,
                                        const gchar  *label,
-                                       GimpResource *gradient);
+                                       GimpGradient *gradient);
 
 
 G_END_DECLS

@@ -156,9 +156,9 @@ gimp_brush_chooser_finalize (GObject *object)
 
 /**
  * gimp_brush_chooser_new:
- * @title:    (nullable): Title of the dialog to use or %NULL to use the default title.
- * @label:    (nullable): Button label or %NULL for no label.
- * @resource: (nullable): Initial brush.
+ * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
+ * @label: (nullable): Button label or %NULL for no label.
+ * @brush: (nullable): Initial brush.
  *
  * Creates a new #GtkWidget that lets a user choose a brush.
  * You can put this widget in a plug-in dialog.
@@ -170,25 +170,27 @@ gimp_brush_chooser_finalize (GObject *object)
  * Since: 2.4
  */
 GtkWidget *
-gimp_brush_chooser_new (const gchar  *title,
-                        const gchar  *label,
-                        GimpResource *resource)
+gimp_brush_chooser_new (const gchar *title,
+                        const gchar *label,
+                        GimpBrush   *brush)
 {
   GtkWidget *self;
 
-  if (resource == NULL)
-    resource = GIMP_RESOURCE (gimp_context_get_brush ());
+  g_return_val_if_fail (brush == NULL || GIMP_IS_BRUSH (brush), NULL);
+
+  if (brush == NULL)
+    brush = gimp_context_get_brush ();
 
   if (title)
     self = g_object_new (GIMP_TYPE_BRUSH_CHOOSER,
                          "title",     title,
                          "label",     label,
-                         "resource",  resource,
+                         "resource",  brush,
                          NULL);
   else
     self = g_object_new (GIMP_TYPE_BRUSH_CHOOSER,
                          "label",     label,
-                         "resource",  resource,
+                         "resource",  brush,
                          NULL);
 
   return self;

@@ -172,22 +172,24 @@ gimp_gradient_chooser_draw_interior (GimpResourceChooser *self)
 GtkWidget *
 gimp_gradient_chooser_new (const gchar  *title,
                            const gchar  *label,
-                           GimpResource *gradient)
+                           GimpGradient *gradient)
 {
   GtkWidget *self;
 
+  g_return_val_if_fail (gradient == NULL || GIMP_IS_GRADIENT (gradient), NULL);
+
   if (gradient == NULL)
-    gradient = GIMP_RESOURCE (gimp_context_get_gradient ());
+    gradient = gimp_context_get_gradient ();
 
   if (title)
     self = g_object_new (GIMP_TYPE_GRADIENT_CHOOSER,
                          "title",    title,
-                         "label",     label,
+                         "label",    label,
                          "resource", gradient,
                          NULL);
   else
     self = g_object_new (GIMP_TYPE_GRADIENT_CHOOSER,
-                         "label",     label,
+                         "label",    label,
                          "resource", gradient,
                          NULL);
 

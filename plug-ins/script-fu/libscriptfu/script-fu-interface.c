@@ -551,23 +551,23 @@ script_fu_resource_widget (const gchar    *title,
   initial_value = sf_resource_arg_get_value (arg);
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
-      result_widget = gimp_font_chooser_new (title, "", initial_value);
+      result_widget = gimp_font_chooser_new (title, "", GIMP_FONT (initial_value));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {
-      result_widget = gimp_brush_chooser_new (title, "", initial_value);
+      result_widget = gimp_brush_chooser_new (title, "", GIMP_BRUSH (initial_value));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      result_widget = gimp_gradient_chooser_new (title, "", initial_value);
+      result_widget = gimp_gradient_chooser_new (title, "", GIMP_GRADIENT (initial_value));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PALETTE))
     {
-      result_widget = gimp_palette_chooser_new (title, "", initial_value);
+      result_widget = gimp_palette_chooser_new (title, "", GIMP_PALETTE (initial_value));
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_PATTERN))
     {
-      result_widget = gimp_pattern_chooser_new (title, "", initial_value);
+      result_widget = gimp_pattern_chooser_new (title, "", GIMP_PATTERN (initial_value));
     }
   else
     {
