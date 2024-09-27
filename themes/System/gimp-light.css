@@ -8,6 +8,10 @@ treeview {
   color: black;
 }
 
+treeview:selected {
+  color: white;  
+}
+
 treeview header {
   color: rgb (196, 197, 197);
 }
