@@ -163,7 +163,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-font-map"
+(script-fu-register-procedure "script-fu-font-map"
   _"Render _Font Map..."
   _"Create an image filled with previews of fonts matching a fontname filter"
   "Spencer Kimball"

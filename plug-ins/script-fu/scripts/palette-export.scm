@@ -279,7 +279,7 @@
 
 (define (register-palette-exporter
 	        export-type export-name file-type description author copyright date)
-  (script-fu-register-regular (string-append "gimp-palette-export-" export-type)
+  (script-fu-register-procedure (string-append "gimp-palette-export-" export-type)
                       export-name
                       description
                       author

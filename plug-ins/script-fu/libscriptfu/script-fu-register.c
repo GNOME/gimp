@@ -127,7 +127,7 @@ script_fu_script_new_from_metadata_args (scheme  *sc,
  *
  * Returns new SFScript.
  *
- * For a script declaring using script-fu-register-regular,
+ * For a script declaring using script-fu-register-procedure,
  * declared without image_type or drawable_arity.
  */
 SFScript*
@@ -162,7 +162,7 @@ script_fu_script_new_from_metadata_regular (scheme  *sc,
   author = sc->vptr->string_value (sc->vptr->pair_car (a));
   a = sc->vptr->pair_cdr (a);
   /* Copyright is same as author.
-   * script-fu-register-regular does not require declaring copyright owner
+   * script-fu-register-procedure does not require declaring copyright owner
    * separately from the author.
    */
   copyright = author;

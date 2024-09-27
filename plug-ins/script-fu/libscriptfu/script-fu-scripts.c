@@ -251,7 +251,7 @@ script_fu_add_script_filter (scheme  *sc,
   return sc->NIL;
 }
 
-/* For a script's call to script-fu-register-regular.
+/* For a script's call to script-fu-register-procedure.
  * Traverse Scheme argument list creating a new SFScript
  * whose drawable_arity is SF_NO_DRAWABLE
  *

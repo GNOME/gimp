@@ -61,7 +61,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-paste-as-brush"
+(script-fu-register-procedure "script-fu-paste-as-brush"
   _"Paste as New _Brush..."
   _"Paste the clipboard contents into a new brush"
   "Michael Natterer <mitch@gimp.org>"

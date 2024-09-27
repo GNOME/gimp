@@ -65,7 +65,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-gradient-example"
+(script-fu-register-procedure "script-fu-gradient-example"
     _"Custom _Gradient..."
     _"Create an image filled with an example of the current gradient"
     "Federico Mena Quintero"

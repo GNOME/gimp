@@ -59,7 +59,7 @@
 
 
 ; shortcuts to help topics
-(script-fu-register-regular "gimp-help-concepts-paths"
+(script-fu-register-procedure "gimp-help-concepts-paths"
    _"_Using Paths"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -70,7 +70,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-using-web"
+(script-fu-register-procedure "gimp-help-using-web"
    _"_Preparing your Images for the Web"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -81,7 +81,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-using-photography"
+(script-fu-register-procedure "gimp-help-using-photography"
    _"_Working with Digital Camera Photos"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -92,7 +92,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-using-fileformats"
+(script-fu-register-procedure "gimp-help-using-fileformats"
    _"Create, Open and Save _Files"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -103,7 +103,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-concepts-usage"
+(script-fu-register-procedure "gimp-help-concepts-usage"
    _"_Basic Concepts"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -114,7 +114,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-using-docks"
+(script-fu-register-procedure "gimp-help-using-docks"
    _"How to Use _Dialogs"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -125,7 +125,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-using-simpleobjects"
+(script-fu-register-procedure "gimp-help-using-simpleobjects"
    _"Drawing _Simple Objects"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -136,7 +136,7 @@
 			 "<Image>/Help/User Manual")
 
 
-(script-fu-register-regular "gimp-help-using-selections"
+(script-fu-register-procedure "gimp-help-using-selections"
    _"_Create and Use Selections"
    _"Bookmark to the user manual"
     "Roman Joost <romanofski@gimp.org>"
@@ -146,7 +146,7 @@
 (script-fu-menu-register "gimp-help-using-selections"
 			 "<Image>/Help/User Manual")
 
-(script-fu-register-regular "gimp-help-main"
+(script-fu-register-procedure "gimp-help-main"
    _"_Table of Contents"
    _"Bookmark to the user manual"
     "Alx Sa"
@@ -180,7 +180,7 @@
 ; )
 
 
-(script-fu-register-regular "gimp-online-main-web-site"
+(script-fu-register-procedure "gimp-online-main-web-site"
    _"_Main Web Site"
    _"Bookmark to the GIMP web site"
     "Henrik Brix Andersen <brix@gimp.org>"
@@ -191,7 +191,7 @@
                          "<Image>/Help/GIMP Online")
 
 
-(script-fu-register-regular "gimp-online-developer-web-site"
+(script-fu-register-procedure "gimp-online-developer-web-site"
    _"_Developer Web Site"
    _"Bookmark to the GIMP web site"
     "Henrik Brix Andersen <brix@gimp.org>"
@@ -202,7 +202,7 @@
                          "<Image>/Help/GIMP Online")
 
 
-(script-fu-register-regular "gimp-online-roadmap"
+(script-fu-register-procedure "gimp-online-roadmap"
    _"_Roadmaps"
    _"Bookmark to the roadmaps of GIMP"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
@@ -213,7 +213,7 @@
                          "<Image>/Help/GIMP Online")
 
 
-(script-fu-register-regular "gimp-online-bugs-features"
+(script-fu-register-procedure "gimp-online-bugs-features"
    _"_Bug Reports and Feature Requests"
    _"Bookmark to the bug tracker of GIMP"
     "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
@@ -224,7 +224,7 @@
                          "<Image>/Help/GIMP Online")
 
 
-(script-fu-register-regular "gimp-online-docs-web-site"
+(script-fu-register-procedure "gimp-online-docs-web-site"
    _"_User Manual Web Site"
    _"Bookmark to the GIMP web site"
     "Roman Joost <romanofski@gimp.org>"
@@ -235,7 +235,7 @@
                          "<Image>/Help/GIMP Online")
 
 
-; (script-fu-register-regular "gimp-online-plug-in-web-site"
+; (script-fu-register-procedure "gimp-online-plug-in-web-site"
 ;    _"Plug-in _Registry"
 ;    _"Bookmark to the GIMP web site"
 ;     "Henrik Brix Andersen <brix@gimp.org>"

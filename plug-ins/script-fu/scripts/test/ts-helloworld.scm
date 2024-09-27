@@ -51,7 +51,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-helloworld"
+(script-fu-register-procedure "script-fu-helloworld"
     "_Hello World..."
     "Creates an image of a text string."
     "Kevin Cozens <kcozens@interlog.com>"

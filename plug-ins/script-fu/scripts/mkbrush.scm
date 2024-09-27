@@ -60,7 +60,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-make-brush-rectangular"
+(script-fu-register-procedure "script-fu-make-brush-rectangular"
   _"_Rectangular..."
   _"Create a rectangular brush"
   "Seth Burgess <sjburges@ou.edu>"
@@ -128,7 +128,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-make-brush-rectangular-feathered"
+(script-fu-register-procedure "script-fu-make-brush-rectangular-feathered"
   _"Re_ctangular, Feathered..."
   _"Create a rectangular brush with feathered edges"
   "Seth Burgess <sjburges@ou.edu>"
@@ -182,7 +182,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-make-brush-elliptical"
+(script-fu-register-procedure "script-fu-make-brush-elliptical"
   _"_Elliptical..."
   _"Create an elliptical brush"
   "Seth Burgess <sjburges@ou.edu>"
@@ -249,7 +249,7 @@
   )
 )
 
-(script-fu-register-regular "script-fu-make-brush-elliptical-feathered"
+(script-fu-register-procedure "script-fu-make-brush-elliptical-feathered"
   _"Elli_ptical, Feathered..."
   _"Create an elliptical brush with feathered edges"
   "Seth Burgess <sjburges@ou.edu>"

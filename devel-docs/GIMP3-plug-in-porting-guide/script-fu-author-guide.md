@@ -67,9 +67,9 @@ will remain compatible with GIMP 2.
 
 Example:
 
-    SF-VALUE      "Font size (pixels)"  "50"
+    SF-VALUE      "Font size"  "50"
     =>
-    SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 SF-SPINNER)
+    SF-ADJUSTMENT "Font size" '(50 1 1000 1 10 0 SF-SPINNER)
 
 Here, in the seven-tuple, the 0 denotes: no decimal places.
 
@@ -148,7 +148,7 @@ The ScriptFu language is simpler and smaller; TRUE and FALSE duplicated concepts
 
 #### Example changes
 
-Registering a script:
+Declaring a script:
 
     SF-TOGGLE     "Gradient reverse"   FALSE
     =>
@@ -282,9 +282,9 @@ it must not evaluate to #f.
 Most existing plugins won't, since their last evaluated expression
 is usually a call to the PDB yielding a list, which is not equivalent to #f.
 
-*Remember that ScriptFu does not yet let you register PDB procedures
+*Remember that ScriptFu does not yet let you declare PDB procedures
 that return values to the caller.
-That is, you can only register a void procedure, having only side effects.
+That is, you can only declare a void procedure, having only side effects.
 So to yield #f does not mean to return a boolean to the caller.*
 
 *Also, you can define Scheme functions internal to a script
@@ -338,39 +338,46 @@ from the GIMP app, and you should restart GIMP.
 
 ScriptFu defines "registration" functions, letting you declare a plugin PDB procedure.
 
-In ScriptFu v2, there was only *script-fu-register*.
+ScriptFu v2 has only *script-fu-register*.
 It was a generic function used to declare procedures that are either:
 
-    filters/renderers (operating on an image)
-    or regular procedures (operating without an image.)
+* generic procedures (operating without an image.)
+* filters/renderers (operating on an image)
 
 The new registration functions are:
 
-    *script-fu-register-filter*
-    *script-fu-register-regular*
+* *script-fu-register-procedure*
+* *script-fu-register-filter*
 
-### Don't use script-fu-register
+The new registration functions let a plugin have a new look-and-feel
+and improved settings.
 
-The v2 registration function *script-fu-register* is now deprecated.
+Terminology: you *declare* a plugin's attributes and signature using a registration function.
+You *define* a run func with a similar signature.
+ScriptFu *registers* the plugin in the PDB.
+
+### Registration function *script-fu-register* is now deprecated.
 
 **You should not use script-fu-register in new ScriptFu scripts.**
 
 In the future, the GIMP project might obsolete *script-fu-register*.
 
 While deprecated, *script-fu-register* should still work.
-But it will show an old-style dialog with the old look-and-feel.
-And it will be missing some advantages of the new registration functions,
-such as the handling of settings.
+But the plugin dialog will:
 
-Also, for plugins using *script-fu-register*,
-ScriptFu infers, i.e. makes a best guess,
-whether the plugin's menu item should be enabled
-depending on the user's selection of drawables.
-GIMP enables the menu item for such deprecated scripts
-whenever a user selects at least one drawable (layer or other.)
-This works after a fashion because in GIMP v2, plugins only received one drawable.
+* have an old look-and-feel.
+* will be missing some advantages, such as the handling of settings.
 
-### Settings and ScriptFu plugins
+Also, using *script-fu-register*,
+you can only declare a plugin taking one drawable (i.e. layer or mask).
+But GIMP v3 now calls such plugins passing a vector of drawables.
+GIMP v2 called such plugins passing one drawable.
+That is, the declared and actual signatures are incongruous.
+GIMP enables the menu item for such deprecated scripts,
+declared to take an image and drawable,
+whenever a user selects at least one drawable.
+
+### Improved Settings for ScriptFu plugins
 
 GIMP 3 now handles plugin settings better.
 (Using more powerful machinery in GIMP that is common to plugins in all languages,
@@ -380,28 +387,29 @@ Scripts declared with new registration functions have settings that persist
 within and between Gimp sessions.
 That is, the next time a user invokes the script,
 the dialog will show the same settings as the last time they chose the filter.
-This is not true for v2 *script-register*,
+This is not true for v2 *script-fu-register*,
 where settings persist only during a GIMP session.
 
 The dialog for a script declared with the new registration functions
 will also have buttons for resetting to initial or factory values of settings,
 and buttons for saving and restoring a set of settings, by name.
 
-### script-fu-register-regular
+### script-fu-register-procedure
 
-Use *script-fu-register-regular* to register PDB procedures that are not filters
+Use *script-fu-register-procedure* to declare PDB procedures that are not filters
 or renderers.
-("Regular" denotes "more general."
-Such plugins are the general case.
-Plugins that take an image and drawables are specialized.)
+"Procedure" denotes the general case.
+Plugins that are filters or renerers,
+taking an image and drawables, are special
+and you instead declare them using *script-fu-register-filter.*
 
-It lets you declare a script that:
+*Script-fu-register-filter* declares a script that:
 
-    - is always enabled
-    - can save its settings between sessions
+* is always enabled
+* can save its settings between sessions
 
 You don't declare "image types"
-as you do with *script-fu-register* in v2.
+as you do with *script-fu-register*.
 GIMP enables your plugin regardless of the mode of any image a user has selected.
 
 You don't declare "multilayer capability"
@@ -409,11 +417,12 @@ as you do with *script-fu-register-filter*.
 Your plugin doesn't necessarily need an image and drawables.
 (On your behalf, ScriptFu declares to the PDB that it requires no drawables.)
 
-The run func that you define in your script
-only has formal arguments for the arguments you declare
-using the registration function, declared to the PDB.
-
-(As in ScriptFu v2, and unlike plugins in other languages,
+The run func that you define in your script has the same signature
+as you declare in the registration function.
+(The registration functaion also declares the procedure signature in the PDB,
+and it will be similar, but in terms of the C language
+and having an extra argument for run-mode.
+As in ScriptFu v2, and unlike plugins in other languages,
 the run-mode argument is hidden by ScriptFu.)
 
 #### Example
@@ -423,91 +432,86 @@ Here is an abbreviated example:
     (define script-fu-my-plugin (radius)
         body)
 
-    (script-fu-register-regular "script-fu-my-plugin"
+    (script-fu-register-procedure "script-fu-my-plugin"
       "My plugin..."
       "Example plugin."
       "author/copyright holder"
       "copyright dates"
-      SF-ADJUSTMENT "Radius (in pixels)" (list 100 1 5000 1 10 0 SF-SPINNER)
+      SF-ADJUSTMENT "Radius" (list 100 1 5000 1 10 0 SF-SPINNER)
     )
 
 #### Another example: plugins using the context
 
 A plugin may define a menu item appearing in a context menu.
-This is a common use case for *script-fu-register-regular*.
-The context is the set of things in GIMP that are "selected"
-in some sense and affect drawing operations,
-for example, a Brush.
+This is a common use case for *script-fu-register-procedure*.
+The context is the set of choices in GIMP that affect drawing operations,
+for example, the current Brush.
 
-Note that the plugin does *NOT* receive the thing in context
-that the plugin operates on,
-but must get it from the context.
+Note that the plugin does *NOT* receive the choice in context
+but must get it from the context before operating with/on it.
 
 Using the same registration as above:
 
     (define script-fu-my-plugin (radius)
-        ; do something with the current gradient
-        (gimp-context-get-gradient))
+        ; do something with the current brush
+        (gimp-context-get-brush))
 
-    ...same registration as above...
+    (script-fu-register-procedure "script-fu-my-brush-plugin"
+       ...same registration as above...)
 
-    (script-fu-menu-register "script-fu-my-plugin"
-                         "<Gradients>/Gradients Menu")
+    (script-fu-menu-register "script-fu-my-brush-plugin"
+                         "<Brushes>/Brushes Menu")
 
 In this example, the menu item "My plugin..."
 appears in the context menu (pops up with right mouse button)
-in the Gradients dockable window,
+in the *Brushes* dockable window,
 and is always enabled.
-The script gets the current gradient
+The script run func gets the current brush
 and does something to or with it.
 
-#### Another example: plugins using a secondary image
+#### Another example: plugin using an unopened file
 
-A plugin may want to use an image that is *NOT*
-the one the user has currently selected.
+A plugin may want to use a file that is *not open as an image.*
 
-
-    (define script-fu-my-plugin (image, radius)
-        ; do something with the image
+    (define script-fu-my-plugin (filename)
+        ; open and do something with the file
         )
 
-    (script-fu-register-regular "script-fu-my-plugin"
+    (script-fu-register-procedure "script-fu-my-plugin"
       "My plugin..."
       "Example plugin."
       "author/copyright holder"
       "copyright dates"
-      SF-IMAGE "Image to do something with" ""
+      SF-FILENAME "Image to do something with" ""
     )
 
     (script-fu-menu-register "script-fu-my-plugin"
-                         "<Image>/Help")
+                         "<Image>/File")
 
-In this example, the menu item "My plugin..."
-appears in the Help menu on the menubar.
+In this example, the menu item *My plugin...*
+appears in the *File* menu on the menubar.
 It is always enabled.
 
 When a user chooses the menu item,
-a dialog appears that lets a user choose an image
-(that is open but not necessarily on top.)
-When the user chooses an image, the plugin does something with it.
-
-
+a dialog appears that lets a user choose a file.
+When the user clicks *OK*,
+the plugin opens the file and does something with it.
 
 ### script-fu-register-filter
 
-Use *script-fu-register-filter* to register a PDB procedure that take images or drawable components of images.
+Use *script-fu-register-filter* to declare a PDB procedure that take an image and drawable components of images.
 
-It lets you declare a script that:
+*Script-fu-register-filter* declares a script that:
 
-    - is a filter or renderer: taking an image and one or more drawables
-    - is multi-layer capable
-    - can save its settings between sessions
-    - has a menu item that is enabled/sensitized when user selects drawables
+* is a filter or renderer: taking a user selected image and its selected components
+* is multi-layer capable, processing one or more drawables
+* can save its settings between sessions
+* has a menu item that is enabled/sensitized when a user selects image components
 
-You don't specify the first two arguments "image" and "drawable"
+You don't specify the first two arguments "image" and "drawables"
 as you do with *script-fu-register* in v2.
 Those arguments are implicit.
-As a convenience, ScriptFu and GIMP registers those arguments in the PDB for you.
+As a convenience, ScriptFu registers those arguments in the PDB for you.
 
 The run func that you define in your script
 must have those formal arguments.  For example:
@@ -518,21 +522,23 @@ ScriptFu passes a Scheme vector of drawables, not just one,
 to a script
 registering with script-fu-register-filter.
 
-GMIP enables the menu item of your script
-when the user has selected an image of the declared image type
-(aka mode e.g. Grayscale)
+GIMP enables the menu item of your script
+when the user has selected an image of the declared image mode, e.g. *Grayscale*,
 and has selected as many drawables
+(layers/masks/channels)
 as you have declared for multi-layer capability.
 
-#### Multi-layer capabilily
+#### Declaring multi-layer capabilily
 
-script-fu-register-filter has an argument "multilayer-capability".
-Some documents may refer to the argument as "drawable arity."
-The argument follows the "image types" argument
-and precedes the argument triples that declare formally the "other" arguments
-of your plugin.
+*Script-fu-register-filter* has an argument "multilayer-capability".
+(Some documents may refer to the argument as "drawable arity.")
+The argument declares the capability of the plugin
+for processing multiple drawables (usually layers.)
+The argument follows the "image types" argument,
+which declares the capability of the plugin to process
+various image modes.
 
-Here is an abbreviated example:
+Here is an example:
 
     (script-fu-register-filter "script-fu-test-sphere-v3"
       "Sphere v3..."
@@ -540,41 +546,41 @@ Here is an abbreviated example:
       "authors"
       "copyright holders"
       "copyright dates"
-      "*"  ; image types: any
+      "*"  ; image modes: any
       SF-TWO-OR-MORE-DRAWABLE  ; multi-layer capability argument
-      SF-ADJUSTMENT "Radius (in pixels)" (list 100 1 5000 1 10 0 SF-SPINNER)
+      SF-ADJUSTMENT "Radius" (list 100 1 5000 1 10 0 SF-SPINNER)
     )
 
 The "multilayer-capability" argument can have the following values:
 
-    SF_ONE_DRAWABLE           expects exactly one drawable
-    SF_ONE_OR_MORE_DRAWABLE   expects and will process one or more drawables
-    SF_TWO_OR_MORE_DRAWABLE   expects and will process two or more drawables
+    SF-ONE-DRAWABLE           expects exactly one drawable
+    SF-ONE-OR-MORE-DRAWABLE   expects and will process one or more drawables
+    SF-TWO-OR-MORE-DRAWABLE   expects and will process two or more drawables
 
-This is only a declaration; whether your run func does what it promises is another matter.
+This is only a declaration; whether your defined run func does what it promises is another matter.
 
-A script declaring SF_ONE_DRAWABLE still receives a vector of drawables,
+A script declaring SF-ONE-DRAWABLE still receives a vector of drawables,
 but the vector should be of length one.
 
 These do not specify how the script will process the drawables.
-Typically, SF_ONE_OR_MORE_DRAWABLE means a script will filter
+Typically, SF-ONE-OR-MORE-DRAWABLE means a script will filter
 the given drawables independently and sequentially.
-Typically, SF_TWO_OR_MORE_DRAWABLE means a script will
+Typically, SF-TWO-OR-MORE-DRAWABLE means a script will
 combine the given drawables, say into another drawable by a binary operation.
 
 The "multilayer-capability" argument tells GIMP to enable the script's menu item
 when a user has selected the appropriate count of drawables.
 
+#### A well-written script should check how many drawables were passed
 
-#### A script should check how many drawables were passed
-
-A well-written script should throw an error if a caller does not pass the expected number of drawables, either more or fewer than declared.  See below.
+A well-written script should throw an error when it is not passed
+the declared number of drawables, either more or fewer than declared.
 
 Starting with GIMP 3,
 a plugin that takes an image takes a container of possibly many drawables.
 This is the so-called "multi-layer selection" feature.
 Existing plugins that don't are deprecated,
-and may become obsoleted in a future version of GIMP.
+and may become obsolete in a future version of GIMP.
 
 Plugins should declare how many drawables they can process,
 also called the "multi-layer capability" or "drawable arity" of the algorithm.
@@ -584,7 +590,7 @@ only describes how many drawables the algorithm is able to process.
 The declared drawable arity does not denote the signature of the PDB procedure.
 Well-written image procedures always receive a container of drawables.
 
-For calls invoked by a user, the drawable arity describes
+For plugins invoked by a user interactively, the drawable arity describes
 how many drawables the user is expected to select.
 GIMP disables/enables the menu item for a plugin procedure
 according to its declared drawable arity.
@@ -594,11 +600,8 @@ a count of drawables that the plugin can't handle.
 *But PDB procedures are also called from other PDB procedures.*
 A call from another procedure may in fact
 pass more drawables than declared for drawable arity.
-That is a programming error on behalf of the caller.
+That is a programming error in the calling procedure.
 
-A well-written callee plugin that is passed more drawables than declared
+A well-written called plugin that is passed more drawables than declared
 should return an error instead of processing any of the drawables.
 Similarly for fewer than declared.
-
-A ScriptFu plugin can use script-fu-script-abort to declare an error
-when passed an improper count of drawables.
