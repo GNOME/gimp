@@ -300,7 +300,6 @@ script_fu_interface_dialog (SFScript  *script,
                             &arg->value.sfa_toggle);
           break;
 
-        case SF_VALUE:
         case SF_STRING:
           widget = gtk_entry_new ();
           gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
@@ -740,7 +739,6 @@ script_fu_update_models (SFScript *script)
 
       switch (script->args[i].type)
         {
-        case SF_VALUE:
         case SF_STRING:
           g_free (arg_value->sfa_value);
           arg_value->sfa_value =
@@ -857,7 +855,6 @@ script_fu_reset (SFScript *script)
                                         value->sfa_toggle);
           break;
 
-        case SF_VALUE:
         case SF_STRING:
           gtk_entry_set_text (GTK_ENTRY (widget), value->sfa_value);
           break;

@@ -66,12 +66,6 @@
  * While Scheme speakers understand Scheme uses "numeric" for both float and int,
  * this might be confusing to script authors using other programming languages.
  *
- * SF_VALUE probably should be obsoleted.
- * Search ChangeLog for mention of "SF_VALUE"
- * See below, the only difference is that one get string escaped.
- * Otherwise, SF_VALUE is identical to SF_STRING.
- * Probably SF_VALUE still exists just for backward compatibility.
- *
  * SFArgType denotes not only a C type, but also a Scheme type.
  * For example, SF_ADJUSTMENT denotes the C type "float"
  * and the Scheme type "numeric" (which encompasses float and int.)
@@ -119,7 +113,6 @@ script_fu_arg_free (SFArg *arg)
       sf_resource_arg_free (arg);
       break;
 
-    case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
       g_free (arg->default_value.sfa_value);
@@ -201,7 +194,6 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
       value->sfa_toggle = default_value->sfa_toggle;
       break;
 
-    case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
       g_free (value->sfa_value);
@@ -411,7 +403,6 @@ script_fu_arg_add_argument (SFArg         *arg,
     /* FUTURE special widgets for multiline text.
      * script-fu-interface does, but GimpProcedureDialog does not.
      */
-    case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
       gimp_procedure_add_string_argument (procedure, name,
@@ -597,10 +588,6 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
         g_string_append (result_string, (g_value_get_boolean (gvalue) ? "TRUE" : "FALSE"));
       break;
 
-    case SF_VALUE:
-      g_string_append (result_string, g_value_get_string (gvalue));
-      break;
-
     case SF_STRING:
     case SF_TEXT:
       append_scheme_repr_of_c_string (g_value_get_string (gvalue), result_string);
@@ -741,10 +728,6 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
         g_string_append (result_string, arg_value->sfa_toggle ? "TRUE" : "FALSE");
       break;
 
-    case SF_VALUE:
-      g_string_append (result_string, arg_value->sfa_value);
-      break;
-
     case SF_STRING:
     case SF_TEXT:
       append_scheme_repr_of_c_string (arg_value->sfa_value, result_string);
@@ -855,10 +838,6 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
 
     case SF_TOGGLE:
       name = "toggle";
-      break;
-
-    case SF_VALUE:
-      name = "value";
       break;
 
     case SF_STRING:

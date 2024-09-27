@@ -238,14 +238,6 @@ script_fu_parse_default_spec (scheme   *sc,
         return registration_error (sc, "toggle default must yield an integer, #t, or #f");
       break;
 
-    case SF_VALUE:
-      if (!sc->vptr->is_string (default_spec))
-        return registration_error (sc, "value defaults must be strings");
-
-      arg->default_value.sfa_value =
-        g_strdup (sc->vptr->string_value (default_spec));
-      break;
-
     case SF_STRING:
     case SF_TEXT:
       if (!sc->vptr->is_string (default_spec))

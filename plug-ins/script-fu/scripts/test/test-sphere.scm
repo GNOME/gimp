@@ -3,14 +3,19 @@
 ;
 ; ----------------------------------------------------------------------
 ; SF-ADJUSTMENT
-; is only useful in interactive mode, if you call a script from
-; the console, it acts just like a normal SF-VALUE
-; In interactive mode it creates an adjustment widget in the dialog.
+; Creates a GtkAdjustment widget in the dialog.
+; The widget will let the user enter a number, either an integer,
+; or a float, depending on "digits."
+;
+; The argument in Scheme is numeric, an integer or float.
+; The argument in the PDB is an integer or a float.
+; As specified by "digits" meaning digits after a decimal point.
 ;
 ; Usage:
 ; SF-ADJUSTMENT "label" '(value lower upper step_inc page_inc digits type)
 ;
-; type is one of: SF-SLIDER(0), SF-SPINNER(1)
+; The widget will be a Slider or Spinner, depending on
+; "type", which is one of: SF-SLIDER(0), SF-SPINNER(1)
 ;
 ; ----------------------------------------------------------------------
 ; SF-COLOR

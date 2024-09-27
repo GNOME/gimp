@@ -32,7 +32,6 @@ typedef enum
   SF_VECTORS,
   SF_COLOR,
   SF_TOGGLE,
-  SF_VALUE,
   SF_STRING,
   SF_ADJUSTMENT,
   SF_FONT,

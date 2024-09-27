@@ -128,7 +128,6 @@ static const NamedConstant script_constants[] =
   { "SF-VECTORS",     SF_VECTORS    },
   { "SF-COLOR",       SF_COLOR      },
   { "SF-TOGGLE",      SF_TOGGLE     },
-  { "SF-VALUE",       SF_VALUE      },
   { "SF-STRING",      SF_STRING     },
   { "SF-FILENAME",    SF_FILENAME   },
   { "SF-DIRNAME",     SF_DIRNAME    },
