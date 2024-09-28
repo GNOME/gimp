@@ -33,7 +33,7 @@
  * image has no color profile assigned.
  *
  * Returns: (transfer full): The image's color profile. The returned
- *          value must be freed with g_object_unref().
+ *          value must be freed with [method@GObject.Object.unref].
  *
  * Since: 2.10
  **/
@@ -134,7 +134,7 @@ gimp_image_get_simulation_profile (GimpImage *image)
 /**
  * gimp_image_set_simulation_profile:
  * @image:   The image.
- * @profile: A #GimpColorProfile, or %NULL.
+ * @profile: (nullable): A #GimpColorProfile, or %NULL.
  *
  * Sets the image's simulation color profile
  *
@@ -176,13 +176,14 @@ gimp_image_set_simulation_profile (GimpImage        *image,
  *
  * This procedure returns the color profile that is actually used for
  * this image, which is the profile returned by
- * gimp_image_get_color_profile() if the image has a profile assigned,
- * or the default RGB profile from preferences if no profile is
- * assigned to the image. If there is no default RGB profile configured
- * in preferences either, a generated default RGB profile is returned.
+ * [method@Gimp.Image.get_color_profile] if the image has a profile
+ * assigned, or the default profile from preferences, for the given
+ * color space, if no profile is assigned to the image. If there is no
+ * default profile configured in preferences either, a generated default
+ * profile is returned.
  *
  * Returns: (transfer full): The color profile. The returned value must
- *          be freed with g_object_unref().
+ *          be freed with [method@GObject.Object.unref].
  *
  * Since: 2.10
  **/
@@ -218,10 +219,12 @@ gimp_image_get_effective_color_profile (GimpImage *image)
  * Convert the image's layers to a color profile
  *
  * This procedure converts from the image's color profile (or the
- * default RGB profile if none is set) to the given color profile. Only
- * RGB color profiles are accepted.
+ * default profile if none is set) to the given color profile.
  *
- * Returns: TRUE on success.
+ * Only RGB and grayscale color profiles are accepted, according to the
+ * image's type.
+ *
+ * Returns: %TRUE on success.
  *
  * Since: 2.10
  **/
