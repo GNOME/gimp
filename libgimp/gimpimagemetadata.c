@@ -38,38 +38,6 @@ static void        gimp_image_metadata_rotate               (GimpImage         *
 
 /*  public functions  */
 
-/**
- * gimp_image_metadata_load_prepare:
- * @image:     The image
- * @mime_type: The loaded file's mime-type
- * @file:      The file to load the metadata from
- * @error:     Return location for error
- *
- * Loads and returns metadata from @file to be passed into
- * gimp_image_metadata_load_finish().
- *
- * Returns: (transfer full): The file's metadata.
- *
- * Since: 2.10
- */
-GimpMetadata *
-gimp_image_metadata_load_prepare (GimpImage    *image,
-                                  const gchar  *mime_type,
-                                  GFile        *file,
-                                  GError      **error)
-{
-  GimpMetadata *metadata;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (mime_type != NULL, NULL);
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  metadata = gimp_metadata_load_from_file (file, error);
-
-  return metadata;
-}
-
 static gchar *
 gimp_image_metadata_interpret_comment (gchar *comment)
 {
@@ -102,23 +70,96 @@ gimp_image_metadata_interpret_comment (gchar *comment)
 }
 
 /**
- * gimp_image_metadata_load_finish:
+ * gimp_image_metadata_load_thumbnail:
+ * @file:  A #GFile image
+ * @error: Return location for error message
+ *
+ * Retrieves a thumbnail from metadata if present.
+ *
+ * Returns: (transfer none) (nullable): a #GimpImage of the @file thumbnail.
+ *
+ * Since: 2.10
+ */
+GimpImage *
+gimp_image_metadata_load_thumbnail (GFile   *file,
+                                    GError **error)
+{
+  GimpMetadata *metadata;
+  GInputStream *input_stream;
+  GdkPixbuf    *pixbuf;
+  guint8       *thumbnail_buffer;
+  gint          thumbnail_size;
+  GimpImage    *image = NULL;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  metadata = gimp_metadata_load_from_file (file, error);
+  if (! metadata)
+    return NULL;
+
+  if (! gexiv2_metadata_get_exif_thumbnail (GEXIV2_METADATA (metadata),
+                                            &thumbnail_buffer,
+                                            &thumbnail_size))
+    {
+      g_object_unref (metadata);
+      return NULL;
+    }
+
+  input_stream = g_memory_input_stream_new_from_data (thumbnail_buffer,
+                                                      thumbnail_size,
+                                                      (GDestroyNotify) g_free);
+  pixbuf = gdk_pixbuf_new_from_stream (input_stream, NULL, error);
+  g_object_unref (input_stream);
+
+  if (pixbuf)
+    {
+      GimpLayer *layer;
+
+      image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
+                              gdk_pixbuf_get_height (pixbuf),
+                              GIMP_RGB);
+      gimp_image_undo_disable (image);
+
+      layer = gimp_layer_new_from_pixbuf (image, _("Background"),
+                                          pixbuf,
+                                          100.0,
+                                          gimp_image_get_default_new_layer_mode (image),
+                                          0.0, 0.0);
+      g_object_unref (pixbuf);
+
+      gimp_image_insert_layer (image, layer, NULL, 0);
+
+      gimp_image_metadata_rotate (image,
+                                  gexiv2_metadata_try_get_orientation (GEXIV2_METADATA (metadata), NULL));
+    }
+
+  g_object_unref (metadata);
+
+  return image;
+}
+
+
+/*  Internal functions  */
+
+/**
+ * _gimp_image_metadata_load_finish:
  * @image:       The image
  * @mime_type:   The loaded file's mime-type
  * @metadata:    The metadata to set on the image
  * @flags:       Flags to specify what of the metadata to apply to the image
  *
  * Applies the @metadata previously loaded with
- * gimp_image_metadata_load_prepare() to the image, taking into account
+ * gimp_metadata_load_from_file() to the image, taking into account
  * the passed @flags.
  *
  * Since: 3.0
  */
 void
-gimp_image_metadata_load_finish (GimpImage             *image,
-                                 const gchar           *mime_type,
-                                 GimpMetadata          *metadata,
-                                 GimpMetadataLoadFlags  flags)
+_gimp_image_metadata_load_finish (GimpImage             *image,
+                                  const gchar           *mime_type,
+                                  GimpMetadata          *metadata,
+                                  GimpMetadataLoadFlags  flags)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
@@ -272,76 +313,6 @@ gimp_image_metadata_load_finish (GimpImage             *image,
     }
 
   gimp_image_set_metadata (image, metadata);
-}
-
-/**
- * gimp_image_metadata_load_thumbnail:
- * @file:  A #GFile image
- * @error: Return location for error message
- *
- * Retrieves a thumbnail from metadata if present.
- *
- * Returns: (transfer none) (nullable): a #GimpImage of the @file thumbnail.
- *
- * Since: 2.10
- */
-GimpImage *
-gimp_image_metadata_load_thumbnail (GFile   *file,
-                                    GError **error)
-{
-  GimpMetadata *metadata;
-  GInputStream *input_stream;
-  GdkPixbuf    *pixbuf;
-  guint8       *thumbnail_buffer;
-  gint          thumbnail_size;
-  GimpImage    *image = NULL;
-
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  metadata = gimp_metadata_load_from_file (file, error);
-  if (! metadata)
-    return NULL;
-
-  if (! gexiv2_metadata_get_exif_thumbnail (GEXIV2_METADATA (metadata),
-                                            &thumbnail_buffer,
-                                            &thumbnail_size))
-    {
-      g_object_unref (metadata);
-      return NULL;
-    }
-
-  input_stream = g_memory_input_stream_new_from_data (thumbnail_buffer,
-                                                      thumbnail_size,
-                                                      (GDestroyNotify) g_free);
-  pixbuf = gdk_pixbuf_new_from_stream (input_stream, NULL, error);
-  g_object_unref (input_stream);
-
-  if (pixbuf)
-    {
-      GimpLayer *layer;
-
-      image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
-                              gdk_pixbuf_get_height (pixbuf),
-                              GIMP_RGB);
-      gimp_image_undo_disable (image);
-
-      layer = gimp_layer_new_from_pixbuf (image, _("Background"),
-                                          pixbuf,
-                                          100.0,
-                                          gimp_image_get_default_new_layer_mode (image),
-                                          0.0, 0.0);
-      g_object_unref (pixbuf);
-
-      gimp_image_insert_layer (image, layer, NULL, 0);
-
-      gimp_image_metadata_rotate (image,
-                                  gexiv2_metadata_try_get_orientation (GEXIV2_METADATA (metadata), NULL));
-    }
-
-  g_object_unref (metadata);
-
-  return image;
 }
 
 

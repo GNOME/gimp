@@ -367,16 +367,16 @@ gimp_procedure_config_set_parasite (GimpProcedureConfig *config,
  * @exported_image: the image that was actually exported
  * @file:           the file @exported_image was written to
  *
- * Note: There is normally no need to call this function because it's
- * already called by [class@ExportProcedure] at the end of the `run()` callback.
+ * *Note: There is normally no need to call this function because it's
+ * already called by [class@ExportProcedure] after the `run()` callback.*
  *
- * Only use this function if the [class@Metadata] passed as argument of a
+ * *Only use this function if the [class@Metadata] passed as argument of a
  * [class@ExportProcedure]'s run() method needs to be written at a specific
- * point of the export, other than its end.
+ * point of the export, other than its end.*
  *
  * This function syncs back @config's export properties to the
- * metadata's [flags@MetadataSaveFlags] and writes the metadata to @file
- * using [method@Image.metadata_save_finish].
+ * metadata's [flags@MetadataSaveFlags] and writes the metadata to
+ * @file.
  *
  * The metadata is only ever written once. If this function has been
  * called explicitly, it will do nothing when called a second time at the end of
@@ -426,11 +426,11 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
             }
         }
 
-      if (! gimp_image_metadata_save_finish (exported_image,
-                                             priv->mime_type,
-                                             priv->metadata,
-                                             priv->metadata_flags,
-                                             file, &error))
+      if (! _gimp_image_metadata_save_finish (exported_image,
+                                              priv->mime_type,
+                                              priv->metadata,
+                                              priv->metadata_flags,
+                                              file, &error))
         {
           if (error)
             {
@@ -871,7 +871,7 @@ _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
            *  and never enable them, so we don't override the user's
            *  saved default values that are passed to us via "args"
            */
-          if (! (metadata_flags &  metadata_properties[i].flag))
+          if (! (metadata_flags & metadata_properties[i].flag))
             {
               const gchar *prop_name = metadata_properties[i].name;
               GParamSpec  *pspec;

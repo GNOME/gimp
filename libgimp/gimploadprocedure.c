@@ -280,7 +280,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
     }
 
   if (image != NULL && metadata != NULL && flags != GIMP_METADATA_LOAD_NONE)
-    gimp_image_metadata_load_finish (image, NULL, metadata, flags);
+    _gimp_image_metadata_load_finish (image, NULL, metadata, flags);
 
   /* This is debug printing to help plug-in developers figure out best
    * practices.

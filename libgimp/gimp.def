@@ -484,11 +484,8 @@ EXPORTS
 	gimp_image_lower_item_to_bottom
 	gimp_image_merge_down
 	gimp_image_merge_visible_layers
-	gimp_image_metadata_load_finish
-	gimp_image_metadata_load_prepare
 	gimp_image_metadata_load_thumbnail
 	gimp_image_metadata_save_filter
-	gimp_image_metadata_save_finish
 	gimp_image_metadata_save_prepare
 	gimp_image_new
 	gimp_image_new_with_precision

@@ -31,15 +31,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpMetadata * gimp_image_metadata_load_prepare   (GimpImage             *image,
-                                                   const gchar           *mime_type,
-                                                   GFile                 *file,
-                                                   GError               **error);
-void           gimp_image_metadata_load_finish    (GimpImage             *image,
-                                                   const gchar           *mime_type,
-                                                   GimpMetadata          *metadata,
-                                                   GimpMetadataLoadFlags  flags);
-
 GimpMetadata * gimp_image_metadata_save_prepare   (GimpImage             *image,
                                                    const gchar           *mime_type,
                                                    GimpMetadataSaveFlags *suggested_flags);
@@ -49,15 +40,24 @@ GimpMetadata * gimp_image_metadata_save_filter    (GimpImage             *image,
                                                    GimpMetadataSaveFlags  flags,
                                                    GFile                 *file,
                                                    GError               **error);
-gboolean       gimp_image_metadata_save_finish    (GimpImage             *image,
-                                                   const gchar           *mime_type,
-                                                   GimpMetadata          *metadata,
-                                                   GimpMetadataSaveFlags  flags,
-                                                   GFile                 *file,
-                                                   GError               **error);
 
 GimpImage    * gimp_image_metadata_load_thumbnail (GFile                 *file,
                                                    GError               **error);
+
+
+/*  for internal use only  */
+
+G_GNUC_INTERNAL void     _gimp_image_metadata_load_finish  (GimpImage             *image,
+                                                            const gchar           *mime_type,
+                                                            GimpMetadata          *metadata,
+                                                            GimpMetadataLoadFlags  flags);
+
+G_GNUC_INTERNAL gboolean _gimp_image_metadata_save_finish  (GimpImage             *image,
+                                                            const gchar           *mime_type,
+                                                            GimpMetadata          *metadata,
+                                                            GimpMetadataSaveFlags  flags,
+                                                            GFile                 *file,
+                                                            GError               **error);
 
 
 G_END_DECLS

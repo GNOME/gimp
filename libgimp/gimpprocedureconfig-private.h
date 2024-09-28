@@ -25,26 +25,25 @@
 G_BEGIN_DECLS
 
 
-void       _gimp_procedure_config_get_values   (GimpProcedureConfig  *config,
-                                                GimpValueArray       *values);
+G_GNUC_INTERNAL void           _gimp_procedure_config_get_values   (GimpProcedureConfig  *config,
+                                                                    GimpValueArray       *values);
 
-void       _gimp_procedure_config_begin_run    (GimpProcedureConfig  *config,
-                                                GimpImage            *image,
-                                                GimpRunMode           run_mode,
-                                                const GimpValueArray *args);
-void       _gimp_procedure_config_end_run      (GimpProcedureConfig  *config,
-                                                GimpPDBStatusType     status);
+G_GNUC_INTERNAL void           _gimp_procedure_config_begin_run    (GimpProcedureConfig  *config,
+                                                                    GimpImage            *image,
+                                                                    GimpRunMode           run_mode,
+                                                                    const GimpValueArray *args);
+G_GNUC_INTERNAL void           _gimp_procedure_config_end_run      (GimpProcedureConfig  *config,
+                                                                    GimpPDBStatusType     status);
 
-GimpMetadata *
-           _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
-                                                GimpImage            *original_image,
-                                                GimpRunMode           run_mode,
-                                                const GimpValueArray *args,
-                                                const gchar          *mime_type);
-void       _gimp_procedure_config_end_export   (GimpProcedureConfig  *config,
-                                                GimpImage            *exported_image,
-                                                GFile                *file,
-                                                GimpPDBStatusType     status);
+G_GNUC_INTERNAL GimpMetadata * _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
+                                                                    GimpImage            *original_image,
+                                                                    GimpRunMode           run_mode,
+                                                                    const GimpValueArray *args,
+                                                                    const gchar          *mime_type);
+G_GNUC_INTERNAL void           _gimp_procedure_config_end_export   (GimpProcedureConfig  *config,
+                                                                    GimpImage            *exported_image,
+                                                                    GFile                *file,
+                                                                    GimpPDBStatusType     status);
 
 
 /* These 3 functions are not marked internal because they are used in libgimpui.
