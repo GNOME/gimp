@@ -32,22 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_DRAWABLE_PREVIEW (gimp_drawable_preview_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpDrawablePreview, gimp_drawable_preview, GIMP, DRAWABLE_PREVIEW, GimpScrolledPreview)
-
-struct _GimpDrawablePreviewClass
-{
-  GimpScrolledPreviewClass parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpDrawablePreview, gimp_drawable_preview, GIMP, DRAWABLE_PREVIEW, GimpScrolledPreview)
 
 
 GtkWidget    * gimp_drawable_preview_new_from_drawable (GimpDrawable        *drawable);
