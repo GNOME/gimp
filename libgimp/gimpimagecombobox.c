@@ -48,8 +48,6 @@
 #define WIDTH_REQUEST   200
 
 
-typedef struct _GimpImageComboBoxClass GimpImageComboBoxClass;
-
 struct _GimpImageComboBox
 {
   GimpIntComboBox          parent_instance;
@@ -57,11 +55,6 @@ struct _GimpImageComboBox
   GimpImageConstraintFunc  constraint;
   gpointer                 data;
   GDestroyNotify           data_destroy;
-};
-
-struct _GimpImageComboBoxClass
-{
-  GimpIntComboBoxClass  parent_class;
 };
 
 
@@ -87,8 +80,7 @@ static void  gimp_image_combo_box_changed   (GimpImageComboBox *combo_box);
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
 
 
-G_DEFINE_TYPE (GimpImageComboBox, gimp_image_combo_box,
-               GIMP_TYPE_INT_COMBO_BOX)
+G_DEFINE_TYPE (GimpImageComboBox, gimp_image_combo_box, GIMP_TYPE_INT_COMBO_BOX)
 
 #define parent_class gimp_image_combo_box_parent_class
 
