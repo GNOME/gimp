@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-25 19:25+0000\n"
-"PO-Revision-Date: 2024-08-26 13:48+0200\n"
+"POT-Creation-Date: 2024-09-27 14:21+0000\n"
+"PO-Revision-Date: 2024-09-28 18:16+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: plug-ins/python/colorxhtml.py:78
 msgid "Save as colored HTML text..."
@@ -39,7 +39,7 @@ msgstr "_Les teikn frå fil"
 
 #: plug-ins/python/colorxhtml.py:223
 msgid "Read characters from file, if true, or use text entry"
-msgstr "Les teikna frå fil, viss sann, eller bruk tekstinnskriving"
+msgstr "Les teikna frå fil, viss sann, eller bruk tekstoppføringa"
 
 #: plug-ins/python/colorxhtml.py:225
 msgid "Charac_ters"
@@ -59,11 +59,11 @@ msgstr "Skriftstorleik i pikslar"
 
 #: plug-ins/python/colorxhtml.py:231
 msgid "_Write a separate CSS file"
-msgstr "Lag ei eiga _CSS-fil"
+msgstr "Skriv ei eiga _CSS-fil"
 
 #: plug-ins/python/colorxhtml.py:232
 msgid "Write a separate CSS file"
-msgstr "Lag ei eiga CSS-fil"
+msgstr "Skriv ei eiga CSS-fil"
 
 #. GUI only, used to create a widget to open a file if source-file is enabled
 #: plug-ins/python/colorxhtml.py:235
@@ -131,7 +131,7 @@ msgid "Save as CSS file..."
 msgstr "Lagra som CSS-fil …"
 
 #: plug-ins/python/gradients-save-as-css.py:113
-#: plug-ins/python/python-console/python-console.py:272
+#: plug-ins/python/python-console/python-console.py:276
 #: plug-ins/python/spyro-plus.py:1735
 msgid "_Cancel"
 msgstr "_Avbryt"
@@ -153,14 +153,14 @@ msgstr "Lagra fargeovergangen som CSS …"
 #: plug-ins/python/gradients-save-as-css.py:201
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
 #: plug-ins/python/palette-to-gradient.py:143
-#: plug-ins/python/python-console/python-console.py:316
+#: plug-ins/python/python-console/python-console.py:320
 msgid "Run mode"
 msgstr "Køyremodus"
 
 #: plug-ins/python/gradients-save-as-css.py:202
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
 #: plug-ins/python/palette-to-gradient.py:144
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:321
 msgid "The run mode"
 msgstr "Køyremodusen"
 
@@ -168,7 +168,7 @@ msgstr "Køyremodusen"
 msgid "_Gradient to use"
 msgstr "_Fargeovergang som skal brukast"
 
-#: plug-ins/python/gradients-save-as-css.py:207
+#: plug-ins/python/gradients-save-as-css.py:209
 msgid "_File"
 msgstr "_Fil"
 
@@ -196,7 +196,7 @@ msgstr "_Eksporter histogram …"
 #. (here we likely want to create a new file).
 #: plug-ins/python/histogram-export.py:225
 msgid "Histogram File"
-msgstr "Histogramfila"
+msgstr "Histogramfil"
 
 #: plug-ins/python/histogram-export.py:226
 msgid "Histogram export file"
@@ -212,11 +212,11 @@ msgstr "Bøttestorleik"
 
 #: plug-ins/python/histogram-export.py:229
 msgid "Sample _Average"
-msgstr "_Gjennomsnitt"
+msgstr "_Prøvegjennomsnitt"
 
 #: plug-ins/python/histogram-export.py:229
 msgid "Sample Average"
-msgstr "Enkelt gjennomsnitt"
+msgstr "Prøvegjennomsnitt"
 
 #: plug-ins/python/histogram-export.py:232
 msgid "Pixel Count"
@@ -252,69 +252,69 @@ msgid "_Palette"
 msgstr "_Palett"
 
 #: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
-#: plug-ins/python/palette-sort.py:399 plug-ins/python/palette-sort.py:400
+#: plug-ins/python/palette-sort.py:400 plug-ins/python/palette-sort.py:401
 #: plug-ins/python/palette-to-gradient.py:148
 msgid "Palette"
 msgstr "Palett"
 
-#: plug-ins/python/palette-offset.py:62
+#: plug-ins/python/palette-offset.py:63
 msgid "O_ffset"
 msgstr "_Forskyving"
 
-#: plug-ins/python/palette-offset.py:62
+#: plug-ins/python/palette-offset.py:63
 msgid "Offset"
 msgstr "Forskyving"
 
-#: plug-ins/python/palette-offset.py:64
+#: plug-ins/python/palette-offset.py:65
 msgid "The edited palette"
 msgstr "Den redigerte paletten"
 
-#: plug-ins/python/palette-offset.py:65
+#: plug-ins/python/palette-offset.py:66
 msgid "The newly created palette when read-only, otherwise the input palette"
 msgstr "Den nyleg laga paletten viss skriveverna, elles inndata-paletten"
 
 #. TODO: Re-incorporate LAB and LCHab options with GeglColor
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:463
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
 msgid "Red"
 msgstr "Raud"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
 msgid "Green"
 msgstr "Grøn"
 
-#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:466
 msgid "Blue"
 msgstr "Blå"
 
-#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:466
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:467
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:467
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
 msgid "Hue"
 msgstr "Kulør"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
 msgid "Saturation"
 msgstr "Metning"
 
-#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:470
 msgid "Value"
 msgstr "Lysverdi"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:470
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
 msgid "Saturation (HSL)"
 msgstr "Metning (HSL)"
 
-#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:472
 msgid "Lightness (HSL)"
 msgstr "Lysverdi (HSL)"
 
-#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:472
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:473
 msgid "Index"
 msgstr "Indeks"
 
-#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:473
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:474
 msgid "Random"
 msgstr "Tilfeldig"
 
@@ -360,105 +360,105 @@ msgstr "_Sorter paletten …"
 msgid "Sort the colors in a palette"
 msgstr "Sorter fargane i paletten"
 
-#: plug-ins/python/palette-sort.py:363
+#: plug-ins/python/palette-sort.py:364
 msgid "All"
 msgstr "Alle"
 
-#: plug-ins/python/palette-sort.py:364
+#: plug-ins/python/palette-sort.py:365
 msgid "Slice / Array"
 msgstr "Oppskore / Matrise"
 
-#: plug-ins/python/palette-sort.py:365
+#: plug-ins/python/palette-sort.py:366
 msgid "Autoslice (fg->bg)"
 msgstr "Auto-oppskjering (fg → bg)"
 
-#: plug-ins/python/palette-sort.py:366
+#: plug-ins/python/palette-sort.py:367
 msgid "Partitioned"
 msgstr "Partisjonert"
 
-#: plug-ins/python/palette-sort.py:367
+#: plug-ins/python/palette-sort.py:368
 msgid "Select_ions"
 msgstr "Utvals_ikon"
 
-#: plug-ins/python/palette-sort.py:367
+#: plug-ins/python/palette-sort.py:368
 msgid "Selections"
 msgstr "Utval"
 
 #. TODO: It would be much simpler to replace the slice expression with three
 #. separate parameters: start-index, number-of-rows, row_length
-#: plug-ins/python/palette-sort.py:371
+#: plug-ins/python/palette-sort.py:372
 msgid "Slice _expression"
-msgstr "Del opp _uttrykk"
+msgstr "Skjer opp _uttrykk"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel _to sort"
 msgstr "Kanal som skal _sorterast"
 
-#: plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:377
 msgid "Channel to sort"
 msgstr "Kanal som skal sorterast"
 
-#: plug-ins/python/palette-sort.py:378
+#: plug-ins/python/palette-sort.py:379
 msgid "_Ascending"
 msgstr "_Aukande"
 
-#: plug-ins/python/palette-sort.py:378 plug-ins/python/palette-sort.py:385
+#: plug-ins/python/palette-sort.py:379 plug-ins/python/palette-sort.py:386
 msgid "Ascending"
 msgstr "Aukande"
 
-#: plug-ins/python/palette-sort.py:382
+#: plug-ins/python/palette-sort.py:383
 msgid "Secondary C_hannel to sort"
 msgstr "Sekundærkanal som skal s_orterast"
 
-#: plug-ins/python/palette-sort.py:383
+#: plug-ins/python/palette-sort.py:384
 msgid "Secondary Channel to sort"
 msgstr "Sekundærkanal som skal sorterast"
 
-#: plug-ins/python/palette-sort.py:385
+#: plug-ins/python/palette-sort.py:386
 msgid "Ascen_ding"
 msgstr "_Aukande"
 
-#: plug-ins/python/palette-sort.py:387
+#: plug-ins/python/palette-sort.py:388
 msgid "_Quantization"
 msgstr "Kvantisering"
 
-#: plug-ins/python/palette-sort.py:388
+#: plug-ins/python/palette-sort.py:389
 msgid "Quantization"
 msgstr "Kvantisering"
 
-#: plug-ins/python/palette-sort.py:392
-msgid "Partitionin_g channel"
-msgstr "Partisjoneringskanal"
-
 #: plug-ins/python/palette-sort.py:393
+msgid "Partitionin_g channel"
+msgstr "_Partisjoneringskanal"
+
+#: plug-ins/python/palette-sort.py:394
 msgid "Partitioning channel"
 msgstr "Partisjoneringskanal"
 
-#: plug-ins/python/palette-sort.py:395
+#: plug-ins/python/palette-sort.py:396
 msgid "Partition q_uantization"
 msgstr "Partisjons_kvantisering"
 
-#: plug-ins/python/palette-sort.py:396
+#: plug-ins/python/palette-sort.py:397
 msgid "Partition quantization"
 msgstr "Partisjonskvantisering"
 
-#: plug-ins/python/palette-sort.py:474
+#: plug-ins/python/palette-sort.py:475
 msgid "Lightness (LAB)"
 msgstr "Lysverdi (LAB)"
 
-#: plug-ins/python/palette-sort.py:475
+#: plug-ins/python/palette-sort.py:476
 msgid "A-color"
 msgstr "A-farge"
 
-#: plug-ins/python/palette-sort.py:476
+#: plug-ins/python/palette-sort.py:477
 msgid "B-color"
 msgstr "B-farge"
 
-#: plug-ins/python/palette-sort.py:477
+#: plug-ins/python/palette-sort.py:478
 msgid "Chroma (LCHab)"
 msgstr "Kroma (LCHab)"
 
-#: plug-ins/python/palette-sort.py:478
+#: plug-ins/python/palette-sort.py:479
 msgid "Hue (LCHab)"
 msgstr "Kulør (LCHab)"
 
@@ -476,7 +476,7 @@ msgstr "Opprett ein ny fargeovergang med fargar frå paletten."
 
 #: plug-ins/python/palette-to-gradient.py:132
 msgid "Palette to _Repeating Gradient"
-msgstr "Palett til _repeterande overgang"
+msgstr "Palett til _repeterande fargeovergang"
 
 #: plug-ins/python/palette-to-gradient.py:133
 msgid "Create a repeating gradient using colors from the palette"
@@ -486,64 +486,64 @@ msgstr "Opprett ein repeterande fargeovergang med fargar frå paletten"
 msgid "Create a new repeating gradient using colors from the palette."
 msgstr "Opprett ein ny repeterande fargeovergang med fargar frå paletten."
 
-#: plug-ins/python/palette-to-gradient.py:150
 #: plug-ins/python/palette-to-gradient.py:151
+#: plug-ins/python/palette-to-gradient.py:152
 msgid "The newly created gradient"
 msgstr "Den nyleg laga fargeovergangen"
 
-#: plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/python-console/python-console.py:80
 msgid "Python Console"
-msgstr "Python konsoll"
+msgstr "Python-konsoll"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:273
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:277
 msgid "_Save"
 msgstr "_Lagra"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "_Slett"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:221
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:225
 msgid "_Close"
 msgstr "_Lukk"
 
-#: plug-ins/python/python-console/python-console.py:218
+#: plug-ins/python/python-console/python-console.py:222
 msgid "Python Procedure Browser"
-msgstr "Python Procedure Browser"
+msgstr "Python prosedyrelesar"
 
-#: plug-ins/python/python-console/python-console.py:220
+#: plug-ins/python/python-console/python-console.py:224
 msgid "_Apply"
 msgstr "_Bruk"
 
-#: plug-ins/python/python-console/python-console.py:246
+#: plug-ins/python/python-console/python-console.py:250
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kan ikkje opna «%s» for skriving: %s"
+msgstr "Kunne ikkje opna «%s» for skriving: %s"
 
-#: plug-ins/python/python-console/python-console.py:261
+#: plug-ins/python/python-console/python-console.py:265
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Klarte ikkje skrive til «%s»: %s"
+msgstr "Klarte ikkje skriva til «%s»: %s"
 
-#: plug-ins/python/python-console/python-console.py:270
+#: plug-ins/python/python-console/python-console.py:274
 msgid "Save Python-Fu Console Output"
 msgstr "Lagra utdata frå Python-Fu-konsollen"
 
-#: plug-ins/python/python-console/python-console.py:309
+#: plug-ins/python/python-console/python-console.py:313
 msgid "Python _Console"
 msgstr "_Python-konsoll"
 
-#: plug-ins/python/python-console/python-console.py:310
+#: plug-ins/python/python-console/python-console.py:314
 msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktiv Gimp-Python tolkar"
+msgstr "Interaktiv Gimp Python-fortolkar"
 
-#: plug-ins/python/python-console/python-console.py:311
+#: plug-ins/python/python-console/python-console.py:315
 msgid "Type in commands and see results"
 msgstr "Skriv inn kommandoar og sjå resultata"
 
@@ -561,7 +561,7 @@ msgstr "Som nytt lag"
 
 #: plug-ins/python/spyro-plus.py:63
 msgid "Redraw on last active layer"
-msgstr "Teikna på nytt på sist brukte lag"
+msgstr "Teikna sist brukte lag på nytt"
 
 #: plug-ins/python/spyro-plus.py:64
 msgid "As Path"
@@ -573,7 +573,7 @@ msgstr "Sirkel"
 
 #: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2259
 msgid "Polygon-Star"
-msgstr "Mangekant - Stjerne"
+msgstr "Mangekant – Stjerne"
 
 #. Sine wave on a circle ring.
 #: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:996
@@ -616,7 +616,7 @@ msgstr "Strok"
 
 #: plug-ins/python/spyro-plus.py:661 plug-ins/python/spyro-plus.py:2294
 msgid "PaintBrush"
-msgstr "Pensel"
+msgstr "Målarpensel"
 
 #: plug-ins/python/spyro-plus.py:665 plug-ins/python/spyro-plus.py:2298
 msgid "Ink"
@@ -624,7 +624,7 @@ msgstr "Blekk"
 
 #: plug-ins/python/spyro-plus.py:666 plug-ins/python/spyro-plus.py:2299
 msgid "MyPaintBrush"
-msgstr "MyPaintBrush"
+msgstr "MyPaint-pensel"
 
 #: plug-ins/python/spyro-plus.py:982 plug-ins/python/spyro-plus.py:2248
 msgid "Spyrograph"
@@ -679,7 +679,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1506
 msgid "Specify pattern using one of the following tabs:"
-msgstr "Spesifiser mønsteret ut frå desse fanene:"
+msgstr "Spesifiser mønsteret ut frå ein av desse fanene:"
 
 #: plug-ins/python/spyro-plus.py:1508
 msgid ""
@@ -690,7 +690,7 @@ msgid ""
 msgstr ""
 "Mønsteret vert spesifisert berre av den gjeldande fana. «Toy Kit» liknar på "
 "Gears, men brukar tannhjul og hollnummer som finst i Toy Kit. Viss du føljer "
-"instruksjonane frå handboka for Toy Kit, bør resultata væra like."
+"instruksjonane frå handboka for Toy Kit, bør resultata verta like."
 
 #: plug-ins/python/spyro-plus.py:1532
 msgid ""
@@ -730,7 +730,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1573
 msgid "Hole Number"
-msgstr "Kor mange hol"
+msgstr "Holnummer"
 
 #: plug-ins/python/spyro-plus.py:1574
 msgid ""
@@ -742,7 +742,7 @@ msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1585
 msgid "Flower Petals"
-msgstr "Blomeblad"
+msgstr "Kronblad"
 
 #: plug-ins/python/spyro-plus.py:1586
 msgid "The number of petals in the pattern."
@@ -877,8 +877,8 @@ msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
-"Viss du endrar innstillingane for eit verktøy eller endrar utvalet, trykk "
-"denne for å førehandsvisa mønsteret."
+"Viss du endrar innstillingane for eit verktøy, endrar farge eller endrar "
+"utvalet, trykk denne for å førehandsvisa mønsteret."
 
 #: plug-ins/python/spyro-plus.py:1742
 msgid "_Reset"
@@ -918,11 +918,11 @@ msgstr "Storleik"
 
 #: plug-ins/python/spyro-plus.py:2149
 msgid "Rendering Pattern"
-msgstr "Teiknar mønster"
+msgstr "Gjengjevingsmønster"
 
 #: plug-ins/python/spyro-plus.py:2161
 msgid "Please wait : Rendering Pattern"
-msgstr "Vent: Teiknar mønster"
+msgstr "Vent: Gjengjev mønsteret"
 
 #: plug-ins/python/spyro-plus.py:2238
 msgid ""
@@ -930,7 +930,7 @@ msgid ""
 "location of the pattern is based on the current selection."
 msgstr ""
 "Bruk dei gjeldande verktøyinnstillingane for å teikna spyrografmønstera. "
-"Storleiken og plasseringa av mønsteret er avhengig av det gjeldande utvalet."
+"Storleiken og plasseringa av mønsteret er basert på det gjeldande utvalet."
 
 #: plug-ins/python/spyro-plus.py:2241
 msgid "Spyrogimp..."
