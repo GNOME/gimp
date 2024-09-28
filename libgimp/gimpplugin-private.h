@@ -25,38 +25,38 @@
 G_BEGIN_DECLS
 
 
-void            _gimp_plug_in_query                  (GimpPlugIn      *plug_in);
-void            _gimp_plug_in_init                   (GimpPlugIn      *plug_in);
-void            _gimp_plug_in_run                    (GimpPlugIn      *plug_in);
-void            _gimp_plug_in_quit                   (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL void            _gimp_plug_in_query                  (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL void            _gimp_plug_in_init                   (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL void            _gimp_plug_in_run                    (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL void            _gimp_plug_in_quit                   (GimpPlugIn      *plug_in);
 
-GIOChannel    * _gimp_plug_in_get_read_channel       (GimpPlugIn      *plug_in);
-GIOChannel    * _gimp_plug_in_get_write_channel      (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL GIOChannel    * _gimp_plug_in_get_read_channel       (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL GIOChannel    * _gimp_plug_in_get_write_channel      (GimpPlugIn      *plug_in);
 
-void            _gimp_plug_in_read_expect_msg        (GimpPlugIn      *plug_in,
-                                                      GimpWireMessage *msg,
-                                                      gint             type);
+G_GNUC_INTERNAL void            _gimp_plug_in_read_expect_msg        (GimpPlugIn      *plug_in,
+                                                                      GimpWireMessage *msg,
+                                                                      gint             type);
 
-gboolean        _gimp_plug_in_set_i18n               (GimpPlugIn      *plug_in,
-                                                      const gchar     *procedure_name,
-                                                      gchar          **gettext_domain,
-                                                      gchar          **catalog_dir);
+G_GNUC_INTERNAL gboolean        _gimp_plug_in_set_i18n               (GimpPlugIn      *plug_in,
+                                                                      const gchar     *procedure_name,
+                                                                      gchar          **gettext_domain,
+                                                                      gchar          **catalog_dir);
 
-GimpProcedure * _gimp_plug_in_create_procedure       (GimpPlugIn      *plug_in,
-                                                      const gchar     *procedure_name);
+G_GNUC_INTERNAL GimpProcedure * _gimp_plug_in_create_procedure       (GimpPlugIn      *plug_in,
+                                                                      const gchar     *procedure_name);
 
-GimpProcedure * _gimp_plug_in_get_procedure          (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL GimpProcedure * _gimp_plug_in_get_procedure          (GimpPlugIn      *plug_in);
 
-GimpDisplay   * _gimp_plug_in_get_display            (GimpPlugIn      *plug_in,
-                                                      gint32           display_id);
-GimpImage     * _gimp_plug_in_get_image              (GimpPlugIn      *plug_in,
-                                                      gint32           image_id);
-GimpItem      * _gimp_plug_in_get_item               (GimpPlugIn      *plug_in,
-                                                      gint32           item_id);
-GimpResource  * _gimp_plug_in_get_resource           (GimpPlugIn      *plug_in,
-                                                      gint32           resource_id);
+G_GNUC_INTERNAL GimpDisplay   * _gimp_plug_in_get_display            (GimpPlugIn      *plug_in,
+                                                                      gint32           display_id);
+G_GNUC_INTERNAL GimpImage     * _gimp_plug_in_get_image              (GimpPlugIn      *plug_in,
+                                                                      gint32           image_id);
+G_GNUC_INTERNAL GimpItem      * _gimp_plug_in_get_item               (GimpPlugIn      *plug_in,
+                                                                      gint32           item_id);
+G_GNUC_INTERNAL GimpResource  * _gimp_plug_in_get_resource           (GimpPlugIn      *plug_in,
+                                                                      gint32           resource_id);
 
-gboolean        _gimp_plug_in_manage_memory_manually (GimpPlugIn      *plug_in);
+G_GNUC_INTERNAL gboolean        _gimp_plug_in_manage_memory_manually (GimpPlugIn      *plug_in);
 
 
 G_END_DECLS

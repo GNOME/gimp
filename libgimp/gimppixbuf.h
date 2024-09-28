@@ -31,11 +31,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GdkPixbuf * _gimp_pixbuf_from_data (guchar                 *data,
-                                    gint                    width,
-                                    gint                    height,
-                                    gint                    bpp,
-                                    GimpPixbufTransparency  alpha);
+G_GNUC_INTERNAL GdkPixbuf * _gimp_pixbuf_from_data (guchar                 *data,
+                                                    gint                    width,
+                                                    gint                    height,
+                                                    gint                    bpp,
+                                                    GimpPixbufTransparency  alpha);
 
 
 G_END_DECLS

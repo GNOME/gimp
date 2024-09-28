@@ -41,14 +41,15 @@ typedef enum
 GQuark _gimp_pdb_error_quark (void) G_GNUC_CONST;
 
 
-GimpPDB    * _gimp_pdb_new         (GimpPlugIn   *plug_in);
+G_GNUC_INTERNAL GimpPDB        * _gimp_pdb_new                 (GimpPlugIn            *plug_in);
 
-GimpPlugIn * _gimp_pdb_get_plug_in (GimpPDB      *pdb);
+G_GNUC_INTERNAL GimpPlugIn     * _gimp_pdb_get_plug_in         (GimpPDB               *pdb);
 
-gboolean     gimp_pdb_get_data     (const gchar  *identifier,
-                                    GBytes      **data);
-gboolean     gimp_pdb_set_data     (const gchar  *identifier,
-                                    GBytes       *data);
+gboolean                         gimp_pdb_get_data             (const gchar           *identifier,
+                                                                GBytes               **data);
+gboolean                         gimp_pdb_set_data             (const gchar           *identifier,
+                                                                GBytes                *data);
+
 
 G_END_DECLS
 
