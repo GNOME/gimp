@@ -91,9 +91,9 @@ gimp_palette_chooser_init (GimpPaletteChooser *self)
 
   gtk_widget_show_all (GTK_WIDGET (self));
 
-  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
+  _gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
                                          hbox, &drag_target);
-  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), self->button);
+  _gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), self->button);
 }
 
 static void

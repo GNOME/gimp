@@ -134,11 +134,11 @@ gimp_brush_chooser_init (GimpBrushChooser *chooser)
   widget = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (chooser), widget, FALSE, FALSE, 0);
 
-  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (chooser),
+  _gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (chooser),
                                                chooser->preview,
                                                &drag_target);
 
-  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (chooser),
+  _gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (chooser),
                                              widget);
   gtk_widget_show (widget);
 }

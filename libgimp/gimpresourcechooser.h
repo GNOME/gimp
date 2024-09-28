@@ -54,11 +54,11 @@ GtkWidget    * gimp_resource_chooser_get_label        (GimpResourceChooser  *wid
 
 /* API from below, used by subclasses e.g. GimpBrushChooser */
 
-void           gimp_resource_chooser_set_drag_target  (GimpResourceChooser  *chooser,
-                                                       GtkWidget            *drag_region_widget,
-                                                       const GtkTargetEntry *drag_target);
-void           gimp_resource_chooser_set_clickable    (GimpResourceChooser  *chooser,
-                                                       GtkWidget            *widget);
+G_GNUC_INTERNAL void  _gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
+                                                              GtkWidget            *drag_region_widget,
+                                                              const GtkTargetEntry *drag_target);
+G_GNUC_INTERNAL void  _gimp_resource_chooser_set_clickable   (GimpResourceChooser  *chooser,
+                                                              GtkWidget            *widget);
 
 G_END_DECLS
 

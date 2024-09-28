@@ -88,8 +88,6 @@ EXPORTS
 	gimp_resource_chooser_get_label
 	gimp_resource_chooser_get_resource
 	gimp_resource_chooser_get_type
-	gimp_resource_chooser_set_clickable
-	gimp_resource_chooser_set_drag_target
 	gimp_resource_chooser_set_resource
 	gimp_ui_init
 	gimp_vector_load_procedure_dialog_get_type

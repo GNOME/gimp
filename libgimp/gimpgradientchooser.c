@@ -128,10 +128,10 @@ gimp_gradient_chooser_init (GimpGradientChooser *self)
 
   gtk_widget_show_all (GTK_WIDGET (self));
 
-  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
+  _gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
                                          self->preview, &drag_target);
 
-  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
+  _gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
 }
 
 /* Called when dialog is closed and owning ResourceSelect button is disposed. */

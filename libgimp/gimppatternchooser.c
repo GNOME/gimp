@@ -129,10 +129,10 @@ gimp_pattern_chooser_init (GimpPatternChooser *self)
   button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (self), button, FALSE, FALSE, 0);
 
-  gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
+  _gimp_resource_chooser_set_drag_target (GIMP_RESOURCE_CHOOSER (self),
                                          self->preview, &drag_target);
 
-  gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
+  _gimp_resource_chooser_set_clickable (GIMP_RESOURCE_CHOOSER (self), button);
   gtk_widget_show (button);
 }
 

@@ -299,7 +299,7 @@ gimp_resource_chooser_finalize (GObject *object)
 }
 
 /**
- * gimp_resource_chooser_set_drag_target:
+ * _gimp_resource_chooser_set_drag_target:
  * @chooser:            A [class@ResourceChooser]
  * @drag_region_widget: An interior widget to be a droppable region
  *                      and emit "drag-data-received" signal
@@ -314,9 +314,9 @@ gimp_resource_chooser_finalize (GObject *object)
  * Since: 3.0
  **/
 void
-gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
-                                       GtkWidget            *drag_region_widget,
-                                       const GtkTargetEntry *drag_target)
+_gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
+                                        GtkWidget            *drag_region_widget,
+                                        const GtkTargetEntry *drag_target)
 {
   g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (drag_target != NULL);
@@ -336,7 +336,7 @@ gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
 }
 
 /**
- * gimp_resource_chooser_set_clickable:
+ * _gimp_resource_chooser_set_clickable:
  * @chooser: A [class@ResourceChooser]
  * @widget:  An interior widget that emits "clicked" signal
  *
@@ -349,8 +349,8 @@ gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
  * Since: 3.0
  **/
 void
-gimp_resource_chooser_set_clickable (GimpResourceChooser *chooser,
-                                     GtkWidget           *widget)
+_gimp_resource_chooser_set_clickable (GimpResourceChooser *chooser,
+                                      GtkWidget           *widget)
 {
   g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (widget != NULL);
