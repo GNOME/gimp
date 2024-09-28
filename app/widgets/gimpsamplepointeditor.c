@@ -119,6 +119,8 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpSamplePointEditor");
 }
 
 static void

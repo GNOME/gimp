@@ -309,8 +309,7 @@ scrollbar slider {
   border: 2px solid @border-color;
 }
 
-scrolledwindow
-{
+scrolledwindow {
   border-color: @edge-border-color;
 }
 
@@ -327,6 +326,11 @@ scrolledwindow viewport grid, scrolledwindow viewport box {
 
 GimpRuler {
   background-color: @ruler-color;
+}
+
+/* Make sure the sample point numbers are visible */
+GimpSamplePointEditor box.vertical {
+  background-color: transparent;
 }
 
 entry {
