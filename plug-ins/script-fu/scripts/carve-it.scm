@@ -227,7 +227,7 @@
     "GRAY"
     SF-ONE-OR-MORE-DRAWABLE
     SF-IMAGE     "Mask image"        0
-    SF-DRAWABLE  "Mask drawable"     0
+    SF-DRAWABLE _"Mask drawable"     0
     SF-TOGGLE   _"Carve white areas" TRUE
 )
 
