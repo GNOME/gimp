@@ -34,6 +34,8 @@
 
 (testing:load-test "no-memory.scm")
 
+(testing:load-test "numeric.scm")
+
 ; report the result
 (testing:report)
 

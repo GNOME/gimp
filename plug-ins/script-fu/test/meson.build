@@ -96,6 +96,7 @@ if not stable
     'tests' / 'TS' / 'testing.scm',
     'tests' / 'TS' / 'vector.scm',
     'tests' / 'TS' / 'no-memory.scm',
+    'tests' / 'TS' / 'numeric.scm',
     # comprehensive, total test
     'tests' / 'TS' / 'tinyscheme.scm',
   ]
