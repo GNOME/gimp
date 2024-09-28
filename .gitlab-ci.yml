@@ -426,7 +426,11 @@ gimp-win-x64-cross:
   rules:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Windows Installer.*/'
       interruptible: true
+      variables:
+        INSTALLER_OPTION: '-Dwindows-installer=true'
     - if: '$GIMP_CI_WIN_INSTALLER != null'
+      variables:
+        INSTALLER_OPTION: '-Dwindows-installer=true'
     - <<: *CI_RELEASE
   variables:
     CHERE_INVOKING: "yes"
@@ -440,7 +444,11 @@ gimp-win-x64-cross:
     - !reference [.win, rules]
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
+      variables:
+        STORE_OPTION: '-Dms-store=true'
     - if: '$GIMP_CI_MS_STORE != null'
+      variables:
+        STORE_OPTION: '-Dms-store=true'
     - if: '$GIMP_CI_MSYS2_WIN_AARCH64 != null'
   tags:
     - windows-aarch64
@@ -497,7 +505,11 @@ gimp-win-a64:
     - !reference [.win, rules]
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. Microsoft Store.*/'
       interruptible: true
+      variables:
+        STORE_OPTION: '-Dms-store=true'
     - if: '$GIMP_CI_MS_STORE != null'
+      variables:
+        STORE_OPTION: '-Dms-store=true'
     - if: '$GIMP_CI_MSYS2_WIN64 != null'
   tags:
     - win32-ps
