@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-16 19:20+0000\n"
-"PO-Revision-Date: 2024-09-18 20:37+0200\n"
+"POT-Creation-Date: 2024-09-27 14:18+0000\n"
+"PO-Revision-Date: 2024-09-28 14:06+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -159,15 +159,21 @@ msgstr ""
 "Eine neue Version von GIMP (%s) wurde veröffentlicht.\n"
 "Es wird eine Aktualisierung empfohlen."
 
-#: app/gimp-version.c:70
+#: app/gimp-version.c:72
 #, c-format
 msgid "%s version %s"
 msgstr "%s Version %s"
 
-#: app/gimp-version.c:162 app/gimp-version.c:281
+#: app/gimp-version.c:164 app/gimp-version.c:283
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "verwendet %s Version %s (gebaut gegen Version %s)"
+
+#: app/gimp-version.c:305
+#, fuzzy, c-format
+#| msgid "%s version %s"
+msgid "using %s version %s"
+msgstr "%s Version %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
@@ -523,7 +529,7 @@ msgid "Select"
 msgstr "Auswählen"
 
 #. initialize the template list
-#: app/actions/actions.c:224 app/core/gimp.c:854 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:224 app/core/gimp.c:856 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Vorlagen"
 
@@ -2566,7 +2572,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2389
-#: app/core/gimppalette.c:500 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -12809,26 +12815,26 @@ msgid "Selection by glob pattern search"
 msgstr "Pfad aus Auswahl"
 
 #. initialize babl fishes
-#: app/core/gimp.c:537 app/core/gimp.c:567
+#: app/core/gimp.c:539 app/core/gimp.c:569
 msgid "Initialization"
 msgstr "Startvorgang"
 
 #. register all internal procedures
-#: app/core/gimp.c:547
+#: app/core/gimp.c:549
 msgid "Internal Procedures"
 msgstr "Interne Prozeduren"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:847
+#: app/core/gimp.c:849
 msgid "Looking for data files"
 msgstr "Es wird nach Arbeitsdaten gesucht"
 
-#: app/core/gimp.c:847
+#: app/core/gimp.c:849
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the module list
-#: app/core/gimp.c:858 app/dialogs/preferences-dialog.c:3582
+#: app/core/gimp.c:860 app/dialogs/preferences-dialog.c:3582
 msgid "Modules"
 msgstr "Module"
 
@@ -13034,12 +13040,12 @@ msgid "Please wait: %s\n"
 msgstr "Bitte warten Sie: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:650 app/core/gimpdata.c:663
+#: app/core/gimpdata.c:652 app/core/gimpdata.c:665
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Fehler beim Speichern von »%s«: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:669
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:671
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Fehler beim Speichern von »%s«"
@@ -14253,27 +14259,27 @@ msgstr "Farbprofilumwandlung"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Farbpalette von Bild #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:230 app/core/gimpimage-colormap.c:310
+#: app/core/gimpimage-colormap.c:230 app/core/gimppalette.c:904
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Farbpalette festlegen"
 
-#: app/core/gimpimage-colormap.c:348
+#: app/core/gimpimage-colormap.c:310
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Farbpalette zurückstellen"
 
-#: app/core/gimpimage-colormap.c:440 app/core/gimppalette.c:612
+#: app/core/gimpimage-colormap.c:402 app/core/gimppalette.c:695
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Paletteneintrag ändern"
 
-#: app/core/gimpimage-colormap.c:462
+#: app/core/gimpimage-colormap.c:424
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Farbe zur Palette hinzufügen"
 
-#: app/core/gimpimage-colormap.c:487
+#: app/core/gimpimage-colormap.c:449
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "Paletteneintrag löschen"
@@ -15893,7 +15899,7 @@ msgstr "VG/HG-Farbe"
 
 #: app/dialogs/extensions-dialog.c:76 app/widgets/gimpfileprocview.c:210
 msgid "Extensions"
-msgstr "Endungen"
+msgstr "Erweiterungen"
 
 #. "gimp-extensions-installed",
 #: app/dialogs/extensions-dialog.c:109 app/dialogs/extensions-dialog.c:110
@@ -20578,7 +20584,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Farben in Graustufen umwandeln"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1357
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1382
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20617,7 +20623,7 @@ msgstr "Teiltransparenz mit einer Farbe ersetzen"
 msgid "The color"
 msgstr "Die Farbe"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1320
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1345
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -21690,7 +21696,7 @@ msgstr ""
 "Die Prozedur »%s« wurde mit einer ungültigen UTF-8-Zeichenkette für das "
 "Argument »%s« aufgerufen."
 
-#: app/pdb/image-cmds.c:2670
+#: app/pdb/image-cmds.c:2643
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -23830,57 +23836,57 @@ msgstr "Die Pixel eines gewählten Objekts sind gesperrt."
 msgid "A selected layer is not visible."
 msgstr "Eine gewählte Ebene ist nicht sichtbar."
 
-#: app/tools/gimpfiltertool.c:423
+#: app/tools/gimpfiltertool.c:431
 msgid "Disabled because this filter depends on another image."
 msgstr "Deaktiviert, da dieses Filter von einem anderen Bild abhängig ist."
 
-#: app/tools/gimpfiltertool.c:717
+#: app/tools/gimpfiltertool.c:742
 msgid "Click to switch the original and filtered sides"
 msgstr "Klicken Sie, um zwischen originaler und gefilterter Seite zu wechseln"
 
-#: app/tools/gimpfiltertool.c:721
+#: app/tools/gimpfiltertool.c:746
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klicken Sie, um zwischen vertikal und horizontal zu wechseln"
 
-#: app/tools/gimpfiltertool.c:725
+#: app/tools/gimpfiltertool.c:750
 msgid "Click to move the split guide"
 msgstr "Zum Verschieben der Teilungsführung klicken"
 
-#: app/tools/gimpfiltertool.c:727
+#: app/tools/gimpfiltertool.c:752
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: original und gefiltert tauschen"
 
-#: app/tools/gimpfiltertool.c:728
+#: app/tools/gimpfiltertool.c:753
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: horizontal und vertikal tauschen"
 
-#: app/tools/gimpfiltertool.c:1241
+#: app/tools/gimpfiltertool.c:1266
 msgid "Add filter"
 msgstr "Filter hinzufügen"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1333
+#: app/tools/gimpfiltertool.c:1358
 msgid "Blending Options"
 msgstr "Mittelung-Einstellungen"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1372
+#: app/tools/gimpfiltertool.c:1397
 msgid "Advanced Color Options"
 msgstr "Erweiterte Farbeinstellungen"
 
-#: app/tools/gimpfiltertool.c:1802 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1840 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Einstellungen für »%s« importieren"
 
-#: app/tools/gimpfiltertool.c:1804 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1842 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Einstellungen für »%s« exportieren"
 
-#: app/tools/gimpfiltertool.c:2042
+#: app/tools/gimpfiltertool.c:2080
 msgid "Editing filter..."
 msgstr "Filter bearbeiten …"
 
@@ -29292,11 +29298,11 @@ msgstr "Fehler beim Schreiben von »%s«: "
 msgid "Error creating '%s': "
 msgstr "Fehler beim Erstellen von »%s«: "
 
-#: app/xcf/xcf-load.c:295
+#: app/xcf/xcf-load.c:296
 msgid "Invalid image mode and precision combination."
 msgstr "Ungültige Kombination aus Bildmodus und Genauigkeit."
 
-#: app/xcf/xcf-load.c:502
+#: app/xcf/xcf-load.c:503
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -29305,7 +29311,7 @@ msgstr ""
 "Beschädigter »exif-data«-Parasit entdeckt.\n"
 "Fehler beim Übertragen der Exif-Daten: %s"
 
-#: app/xcf/xcf-load.c:541
+#: app/xcf/xcf-load.c:542
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -29313,7 +29319,7 @@ msgstr ""
 "Beschädigter »gimp-metadata«-Parasit entdeckt.\n"
 "XMP-Daten konnten nicht migriert werden."
 
-#: app/xcf/xcf-load.c:565
+#: app/xcf/xcf-load.c:566
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -29326,19 +29332,19 @@ msgstr ""
 "Falls Ihnen der Begriff »XMP« nicht geläufig ist, ist das für Sie "
 "wahrscheinlich nicht von Bedeutung. Fehlermeldung: %s."
 
-#: app/xcf/xcf-load.c:905
+#: app/xcf/xcf-load.c:906
 msgid "Linked Layers"
 msgstr "Verknüpfte Ebenen"
 
-#: app/xcf/xcf-load.c:915
+#: app/xcf/xcf-load.c:916
 msgid "Linked Channels"
 msgstr "Verknüpfte Kanäle"
 
-#: app/xcf/xcf-load.c:940
+#: app/xcf/xcf-load.c:941
 msgid "Linked Paths"
 msgstr "Verknüpfte Pfade"
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:988
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -29346,7 +29352,7 @@ msgstr ""
 "Diese XCF-Datei ist beschädigt. Es wurden soviele Daten wie möglich geladen, "
 "jedoch sind diese unvollständig."
 
-#: app/xcf/xcf-load.c:1007
+#: app/xcf/xcf-load.c:1008
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -29354,7 +29360,7 @@ msgstr ""
 "Diese XCF-Datei ist beschädigt. Es konnten keinerlei Bilddaten geladen "
 "werden."
 
-#: app/xcf/xcf-load.c:1164
+#: app/xcf/xcf-load.c:1165
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29364,7 +29370,7 @@ msgstr ""
 "hat indizierte Farbtabellen falsch gespeichert.\n"
 "Die Farben wurden deshalb durch Graustufen ersetzt."
 
-#: app/xcf/xcf-load.c:2523
+#: app/xcf/xcf-load.c:2524
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29378,7 +29384,7 @@ msgstr ""
 "Dies sollte nicht passieren. Sie sollten das Problem an die Entwickler des "
 "Filters melden."
 
-#: app/xcf/xcf-load.c:3408
+#: app/xcf/xcf-load.c:3448
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
