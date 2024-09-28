@@ -165,7 +165,7 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
     }
 
   config = _gimp_procedure_create_run_config (procedure);
-  _gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_NONINTERACTIVE, remaining);
+  _gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_NONINTERACTIVE, remaining, NULL);
   gimp_value_array_unref (remaining);
 
   return_values = thumbnail_proc->run_func (procedure, file, size,

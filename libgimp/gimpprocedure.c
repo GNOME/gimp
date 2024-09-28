@@ -517,7 +517,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
     }
 
   config = _gimp_procedure_create_run_config (procedure);
-  _gimp_procedure_config_begin_run (config, image, run_mode, args);
+  _gimp_procedure_config_begin_run (config, image, run_mode, args, NULL);
 
   retvals = priv->run_func (procedure, config, priv->run_data);
 

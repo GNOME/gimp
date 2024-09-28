@@ -553,6 +553,8 @@ _gimp_procedure_config_get_values (GimpProcedureConfig  *config,
  * @image: (nullable): a #GimpImage or %NULL
  * @run_mode: the #GimpRunMode passed to a [class@Procedure]'s run()
  * @args:     the #GimpValueArray passed to a [class@Procedure]'s run()
+ * @editable_properties: whether you may tweak the properties for
+ *                       metadata export.
  *
  * Populates @config with values for a [class@Procedure]'s run(),
  * depending on @run_mode.
@@ -579,7 +581,15 @@ _gimp_procedure_config_get_values (GimpProcedureConfig  *config,
  * [func@get_default_comment] if there is no "gimp-comment" parasite.
  *
  * After calling this function, the @args passed to run() should be
- * left alone and @config be treated as the procedure's arguments.
+ * left alone and @config be treated as the procedure's arguments, with
+ * some exception, such as metadata export properties (which may be
+ * overwritten for safety measure), and only if @editable_properties is
+ * returned as %TRUE, which should only happen in interactive @run_mode
+ * when this is the first run with @image in particular (i.e. there is
+ * no config parasite on @image stored for this procedure). In
+ * particular, in non-interactive, we will use exactly @args; and in
+ * last-vals run, or if a config parasite was found on image, we will
+ * use exactly the last-run arguments.
  *
  * It is possible to get @config's resulting values back into @args by
  * calling [method@ProcedureConfig.get_values], as long as modified
@@ -596,7 +606,8 @@ void
 _gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
                                   GimpImage            *image,
                                   GimpRunMode           run_mode,
-                                  const GimpValueArray *args)
+                                  const GimpValueArray *args,
+                                  gboolean             *editable_properties)
 {
   GimpProcedureConfigPrivate  *priv;
   GParamSpec                  *run_mode_pspec;
@@ -614,6 +625,9 @@ _gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
 
   priv->image    = image;
   priv->run_mode = run_mode;
+
+  if (editable_properties)
+    *editable_properties = FALSE;
 
   gimp_procedure_config_set_values (config, args);
 
@@ -633,12 +647,20 @@ _gimp_procedure_config_begin_run (GimpProcedureConfig  *config,
             }
         }
 
-      if (! loaded &&
-          ! gimp_procedure_config_load_last (config, &error) && error)
+      if (! loaded)
         {
-          g_printerr ("Loading last used values from disk failed: %s\n",
-                      error->message);
-          g_clear_error (&error);
+          if (! gimp_procedure_config_load_last (config, &error) && error)
+            {
+              g_printerr ("Loading last used values from disk failed: %s\n",
+                          error->message);
+              g_clear_error (&error);
+
+              if (editable_properties)
+                *editable_properties = TRUE;
+            }
+
+          if (run_mode == GIMP_RUN_INTERACTIVE && editable_properties)
+            *editable_properties = TRUE;
         }
       break;
 
@@ -840,6 +862,7 @@ _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
 {
   GimpProcedureConfigPrivate *priv;
   GObjectClass               *object_class;
+  gboolean                    editable_properties;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (original_image), NULL);
@@ -848,6 +871,13 @@ _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
   priv = GET_PRIVATE (config);
 
   object_class = G_OBJECT_GET_CLASS (config);
+
+  /* This must be run before we process the metadata, because we may
+   * overwrite various metadata export properties when they are globally
+   * disabled in Preferences, for security reasons.
+   */
+  _gimp_procedure_config_begin_run (config, original_image, run_mode, args,
+                                    &editable_properties);
 
   if (mime_type)
     {
@@ -865,27 +895,26 @@ _gimp_procedure_config_begin_export (GimpProcedureConfig  *config,
           priv->metadata_flags = metadata_flags;
         }
 
-      for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
-        {
-          /*  we only disable properties based on metadata flags here
-           *  and never enable them, so we don't override the user's
-           *  saved default values that are passed to us via "args"
-           */
-          if (! (metadata_flags & metadata_properties[i].flag))
-            {
-              const gchar *prop_name = metadata_properties[i].name;
-              GParamSpec  *pspec;
+      if (editable_properties)
+        for (i = 0; i < G_N_ELEMENTS (metadata_properties); i++)
+          {
+            /*  we only disable properties based on metadata flags here
+             *  and never enable them, so we don't override the user's
+             *  saved default values that are passed to us via "args"
+             */
+            if (! (metadata_flags & metadata_properties[i].flag))
+              {
+                const gchar *prop_name = metadata_properties[i].name;
+                GParamSpec  *pspec;
 
-              pspec = g_object_class_find_property (object_class, prop_name);
-              if (pspec)
-                g_object_set (config,
-                              prop_name, FALSE,
-                              NULL);
-            }
-        }
+                pspec = g_object_class_find_property (object_class, prop_name);
+                if (pspec)
+                  g_object_set (config,
+                                prop_name, FALSE,
+                                NULL);
+              }
+          }
     }
-
-  _gimp_procedure_config_begin_run (config, original_image, run_mode, args);
 
   return priv->metadata;
 }

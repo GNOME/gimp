@@ -175,7 +175,7 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
     }
 
   config = _gimp_procedure_create_run_config (procedure);
-  _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
+  _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
   return_values = image_proc->run_func (procedure, run_mode,
                                         image, n_drawables, drawables,

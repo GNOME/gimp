@@ -31,7 +31,8 @@ G_GNUC_INTERNAL void           _gimp_procedure_config_get_values   (GimpProcedur
 G_GNUC_INTERNAL void           _gimp_procedure_config_begin_run    (GimpProcedureConfig  *config,
                                                                     GimpImage            *image,
                                                                     GimpRunMode           run_mode,
-                                                                    const GimpValueArray *args);
+                                                                    const GimpValueArray *args,
+                                                                    gboolean             *editable_properties);
 G_GNUC_INTERNAL void           _gimp_procedure_config_end_run      (GimpProcedureConfig  *config,
                                                                     GimpPDBStatusType     status);
 

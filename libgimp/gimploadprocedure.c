@@ -246,7 +246,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
 
-  _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
+  _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
   return_values = priv->run_func (procedure, run_mode,
                                   file, metadata, &flags,

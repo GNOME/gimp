@@ -243,7 +243,7 @@ gimp_vector_load_procedure_run (GimpProcedure        *procedure,
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
 
-  _gimp_procedure_config_begin_run (config, image, run_mode, remaining);
+  _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
   g_object_get (config, "pixel-density", &resolution, NULL);
 
