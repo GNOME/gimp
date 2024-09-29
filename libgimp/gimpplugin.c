@@ -138,7 +138,7 @@ typedef struct _GimpPlugInPrivate
   gchar       write_buffer[WRITE_BUFFER_SIZE];
   gulong      write_buffer_index;
 
-  guint       extension_source_id;
+  guint       persistent_source_id;
 
   gchar      *translation_domain_name;
   GFile      *translation_domain_path;
@@ -204,7 +204,7 @@ static void       gimp_plug_in_proc_run_internal (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run,
                                                   GimpProcedure   *procedure,
                                                   GPProcReturn    *proc_return);
-static gboolean   gimp_plug_in_extension_read    (GIOChannel      *channel,
+static gboolean   gimp_plug_in_persistent_read   (GIOChannel      *channel,
                                                   GIOCondition     condition,
                                                   gpointer         data);
 
@@ -329,10 +329,10 @@ gimp_plug_in_dispose (GObject *object)
 
   priv = gimp_plug_in_get_instance_private (plug_in);
 
-  if (priv->extension_source_id)
+  if (priv->persistent_source_id)
     {
-      g_source_remove (priv->extension_source_id);
-      priv->extension_source_id = 0;
+      g_source_remove (priv->persistent_source_id);
+      priv->persistent_source_id = 0;
     }
 
   if (priv->temp_procedures)
@@ -554,9 +554,9 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * NOTE: Normally, plug-in communication is triggered by the plug-in
  * and the GIMP core only responds to the plug-in's requests. You must
  * explicitly enable receiving of temporary procedure run requests
- * using either [method@PlugIn.extension_enable] or
- * [method@PlugIn.extension_process]. See their respective documentation
- * for details.
+ * using either [method@PlugIn.persistent_enable] or
+ * [method@PlugIn.persistent_process]. See their respective
+ * documentation for details.
  *
  * Since: 3.0
  **/
@@ -675,7 +675,7 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
 }
 
 /**
- * gimp_plug_in_extension_enable:
+ * gimp_plug_in_persistent_enable:
  * @plug_in: A plug-in
  *
  * Enables asynchronous processing of messages from the main GIMP
@@ -689,11 +689,11 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * If the plug-in however registered temporary procedures using
  * [method@PlugIn.add_temp_procedure], it needs to be able to receive
  * requests to execute them. Usually this will be done by running
- * [method@PlugIn.extension_process] in an endless loop.
+ * [method@PlugIn.persistent_process] in an endless loop.
  *
- * If the plug-in cannot use [method@PlugIn.extension_process], i.e. if
+ * If the plug-in cannot use [method@PlugIn.persistent_process], i.e. if
  * it has a GUI and is hanging around in a [struct@GLib.MainLoop], it
- * must call [method@PlugIn.extension_enable].
+ * must call [method@PlugIn.persistent_enable].
  *
  * Note that the plug-in does not need to be a
  * [enum@Gimp.PDBProcType.PERSISTENT] to register temporary procedures.
@@ -703,7 +703,7 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * Since: 3.0
  **/
 void
-gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
+gimp_plug_in_persistent_enable (GimpPlugIn *plug_in)
 {
   GimpPlugInPrivate *priv;
 
@@ -711,27 +711,27 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
 
   priv = gimp_plug_in_get_instance_private (plug_in);
 
-  if (! priv->extension_source_id)
+  if (! priv->persistent_source_id)
     {
-      priv->extension_source_id =
+      priv->persistent_source_id =
         g_io_add_watch (priv->read_channel, G_IO_IN | G_IO_PRI,
-                        gimp_plug_in_extension_read,
+                        gimp_plug_in_persistent_read,
                         plug_in);
     }
 }
 
 /**
- * gimp_plug_in_extension_process:
+ * gimp_plug_in_persistent_process:
  * @plug_in: A plug-in.
  * @timeout: The timeout (in ms) to use for the select() call.
  *
  * Processes one message sent by GIMP and returns.
  *
  * Call this function in an endless loop after calling
- * gimp_procedure_extension_ready() to process requests for running
- * temporary procedures.
+ * [method@Gimp.Procedure.persistent_ready] to process requests for
+ * running temporary procedures.
  *
- * See [method@PlugIn.extension_enable] for an asynchronous way of
+ * See [method@PlugIn.persistent_enable] for an asynchronous way of
  * doing the same if running an endless loop is not an option.
  *
  * See also: [method@PlugIn.add_temp_procedure].
@@ -739,8 +739,8 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
  * Since: 3.0
  **/
 void
-gimp_plug_in_extension_process (GimpPlugIn *plug_in,
-                                guint       timeout)
+gimp_plug_in_persistent_process (GimpPlugIn *plug_in,
+                                 guint       timeout)
 {
   GimpPlugInPrivate *priv;
 #ifndef G_OS_WIN32
@@ -783,7 +783,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
         }
       else if (select_val == -1 && errno != EINTR)
         {
-          perror ("gimp_plug_in_extension_process");
+          perror ("gimp_plug_in_persistent_process");
           gimp_quit ();
         }
     }
@@ -1546,9 +1546,9 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
 }
 
 static gboolean
-gimp_plug_in_extension_read (GIOChannel  *channel,
-                             GIOCondition condition,
-                             gpointer     data)
+gimp_plug_in_persistent_read (GIOChannel  *channel,
+                              GIOCondition condition,
+                              gpointer     data)
 {
   GimpPlugIn *plug_in = data;
 
@@ -1619,28 +1619,28 @@ gimp_plug_in_main_run_cleanup (GimpPlugIn *plug_in)
 /* After a run of a temp proc, cleanup.
  * We are about to return to another calling proc.
  *
- * When the just-run temp proc is returning to top proc on stack and it is an extension,
- * cleanup is destroy the plugin's proxies.
- * The proc stack is never empty for an extension: the top is e.g. extension-script-fu,
- * which must not reference proxies.
+ * When the just-run temp proc is returning to top proc on stack and it
+ * is a persistent plug-in, cleanup is destroy the plugin's proxies.
+ * The proc stack is never empty for a persistent plug-in: the top is
+ * e.g. extension-script-fu, which must not reference proxies.
  */
 static void
 gimp_plug_in_temp_run_cleanup (GimpPlugIn *plug_in)
 {
   GimpPlugInPrivate *priv = gimp_plug_in_get_instance_private (plug_in);
 
-  /* When at top of proc stack and top is an extension, destroy proxies. */
+  /* When at top of proc stack and top is a persistent plug-in, destroy proxies. */
   if ((g_list_length (priv->procedure_stack) == 1) &&
       (gimp_procedure_get_proc_type (priv->procedure_stack->data) == GIMP_PDB_PROC_TYPE_PERSISTENT))
     {
-      g_debug ("%s top of proc stack is extension, destroy proxies.", G_STRFUNC);
+      g_debug ("%s top of proc stack is a persistent plug-in, destroy proxies.", G_STRFUNC);
       gimp_plug_in_destroy_all_proxies (plug_in);
       gimp_plug_in_destroy_hashes (plug_in);
     }
   else
     {
       /* Normal.  The temp proc just run was called by a calling proc
-       * which is not a main proc of an extension plugin.
+       * which is not a main proc of a persistent plug-in.
        * We can't destroy proxies because the calling proc may retain a reference.
        */
       g_debug ("%s Not destroy proxies for temp proc.", G_STRFUNC);

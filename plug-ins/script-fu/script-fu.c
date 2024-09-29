@@ -207,11 +207,11 @@ script_fu_run (GimpProcedure        *procedure,
        */
 
       /*  Acknowledge that the extension is properly initialized  */
-      gimp_procedure_extension_ready (procedure);
+      gimp_procedure_persistent_ready (procedure);
 
       /*  Go into an endless loop  */
       while (TRUE)
-        gimp_plug_in_extension_process (plug_in, 0);
+        gimp_plug_in_persistent_process (plug_in, 0);
     }
   else if (strcmp (name, "plug-in-script-fu-text-console") == 0)
     {

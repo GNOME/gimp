@@ -309,7 +309,7 @@ print_image (GimpImage *image,
 #ifndef EMBED_PAGE_SETUP
   print_operation = operation;
   temp_proc = print_temp_proc_install (image);
-  gimp_plug_in_extension_enable (gimp_get_plug_in ());
+  gimp_plug_in_persistent_enable (gimp_get_plug_in ());
 #endif
 
   if (interactive)

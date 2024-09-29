@@ -616,16 +616,16 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
  * overwrite an already existing procedure (overwrite procedures only
  * if you know what you're doing).
  *
- * @proc_type should be %GIMP_PDB_PROC_TYPE_PLUGIN for "normal" plug-ins.
+ * @proc_type should be [enum@Gimp.PDBProcType.PLUGIN] for "normal" plug-ins.
  *
- * Using %GIMP_PDB_PROC_TYPE_PERSISTENT means that the plug-in will add
- * temporary procedures. Therefore, the GIMP core will wait until the
- * %GIMP_PDB_PROC_TYPE_PERSISTENT procedure has called
- * [method@Procedure.extension_ready], which means that the procedure
+ * Using [enum@Gimp.PDBProcType.PERSISTENT] means that the plug-in will
+ * add temporary procedures. Therefore, the GIMP core will wait until
+ * the %GIMP_PDB_PROC_TYPE_PERSISTENT procedure has called
+ * [method@Procedure.persistent_ready], which means that the procedure
  * has done its initialization, installed its temporary procedures and
  * is ready to run.
  *
- * *Not calling [method@Procedure.extension_ready] from a
+ * *Not calling [method@Procedure.persistent_ready] from a
  * %GIMP_PDB_PROC_TYPE_PERSISTENT procedure will cause the GIMP core to
  * lock up.*
  *
@@ -633,7 +633,7 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
  * arguments added is an "automatic" extension that will be
  * automatically started on each GIMP startup.
  *
- * %GIMP_PDB_PROC_TYPE_TEMPORARY must be used for temporary procedures
+ * [enum@Gimp.PDBProcType.TEMPORARY] must be used for temporary procedures
  * that are created during a plug-ins lifetime. They must be added to
  * the #GimpPlugIn using [method@PlugIn.add_temp_procedure].
  *
@@ -2167,25 +2167,25 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
 }
 
 /**
- * gimp_procedure_extension_ready:
+ * gimp_procedure_persistent_ready:
  * @procedure: A #GimpProcedure
  *
- * Notify the main GIMP application that the extension has been
- * properly initialized and is ready to run.
+ * Notify the main GIMP application that the persistent procedure has
+ * been properly initialized and is ready to run.
  *
  * This function _must_ be called from every procedure's [callback@RunFunc]
- * that was created as #GIMP_PDB_PROC_TYPE_PERSISTENT.
+ * that was created as [enum@Gimp.PDBProcType.PERSISTENT].
  *
  * Subsequently, extensions can process temporary procedure run
- * requests using either [method@PlugIn.extension_enable] or
- * [method@PlugIn.extension_process].
+ * requests using either [method@PlugIn.persistent_enable] or
+ * [method@PlugIn.persistent_process].
  *
  * See also: [ctor@Procedure.new].
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_extension_ready (GimpProcedure *procedure)
+gimp_procedure_persistent_ready (GimpProcedure *procedure)
 {
   GimpProcedurePrivate *priv;
   GimpPlugIn           *plug_in;

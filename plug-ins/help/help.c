@@ -179,8 +179,8 @@ help_run (GimpProcedure        *procedure,
 
       help_temp_proc_install (plug_in);
 
-      gimp_procedure_extension_ready (procedure);
-      gimp_plug_in_extension_enable (plug_in);
+      gimp_procedure_persistent_ready (procedure);
+      gimp_plug_in_persistent_enable (plug_in);
 
       g_main_loop_run (main_loop);
 

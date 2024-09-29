@@ -759,12 +759,12 @@ EXPORTS
 	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_temp_procedure
 	gimp_plug_in_error_quark
-	gimp_plug_in_extension_enable
-	gimp_plug_in_extension_process
 	gimp_plug_in_get_pdb_error_handler
 	gimp_plug_in_get_temp_procedure
 	gimp_plug_in_get_temp_procedures
 	gimp_plug_in_get_type
+	gimp_plug_in_persistent_enable
+	gimp_plug_in_persistent_process
 	gimp_plug_in_remove_temp_procedure
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_pdb_error_handler
@@ -882,7 +882,6 @@ EXPORTS
 	gimp_procedure_config_save_default
 	gimp_procedure_config_save_metadata
 	gimp_procedure_create_config
-	gimp_procedure_extension_ready
 	gimp_procedure_find_argument
 	gimp_procedure_find_aux_argument
 	gimp_procedure_find_return_value
@@ -910,6 +909,7 @@ EXPORTS
 	gimp_procedure_get_type
 	gimp_procedure_new
 	gimp_procedure_new_return_values
+	gimp_procedure_persistent_ready
 	gimp_procedure_run
 	gimp_procedure_run_config
 	gimp_procedure_run_valist

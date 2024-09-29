@@ -305,7 +305,7 @@ _gimp_resource_select_new (const gchar                 *title,
   if (popup_remote_chooser (title, parent_handle, resource, gimp_procedure_get_name (procedure), resource_type))
     {
       /* Allow callbacks to be watched */
-      gimp_plug_in_extension_enable (plug_in);
+      gimp_plug_in_persistent_enable (plug_in);
 
       return gimp_procedure_get_name (procedure);
     }

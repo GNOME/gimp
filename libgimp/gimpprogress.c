@@ -138,7 +138,7 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
   if (_gimp_progress_install (progress_callback))
     {
       /* Allow callbacks to be watched */
-      gimp_plug_in_extension_enable (plug_in);
+      gimp_plug_in_persistent_enable (plug_in);
 
       return progress_callback;
     }

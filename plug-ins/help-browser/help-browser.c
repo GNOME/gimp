@@ -182,8 +182,8 @@ help_browser_run (GimpProcedure        *procedure,
 
   temp_proc_install (gimp_procedure_get_plug_in (procedure));
 
-  gimp_procedure_extension_ready (procedure);
-  gimp_plug_in_extension_enable (gimp_procedure_get_plug_in (procedure));
+  gimp_procedure_persistent_ready (procedure);
+  gimp_plug_in_persistent_enable (gimp_procedure_get_plug_in (procedure));
 
 #if GLIB_CHECK_VERSION(2,74,0)
   browser->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);

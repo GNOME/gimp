@@ -205,7 +205,7 @@ GimpValueArray * gimp_procedure_run_valist         (GimpProcedure        *proced
 GimpValueArray * gimp_procedure_run_config         (GimpProcedure        *procedure,
                                                     GimpProcedureConfig  *config);
 
-void             gimp_procedure_extension_ready    (GimpProcedure        *procedure);
+void             gimp_procedure_persistent_ready   (GimpProcedure        *procedure);
 
 GimpProcedureConfig *
                  gimp_procedure_create_config      (GimpProcedure        *procedure);

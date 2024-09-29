@@ -203,8 +203,8 @@ GList         * gimp_plug_in_get_temp_procedures    (GimpPlugIn    *plug_in);
 GimpProcedure * gimp_plug_in_get_temp_procedure     (GimpPlugIn    *plug_in,
                                                      const gchar   *procedure_name);
 
-void            gimp_plug_in_extension_enable       (GimpPlugIn    *plug_in);
-void            gimp_plug_in_extension_process      (GimpPlugIn    *plug_in,
+void            gimp_plug_in_persistent_enable      (GimpPlugIn    *plug_in);
+void            gimp_plug_in_persistent_process     (GimpPlugIn    *plug_in,
                                                      guint          timeout);
 
 void            gimp_plug_in_set_pdb_error_handler  (GimpPlugIn    *plug_in,

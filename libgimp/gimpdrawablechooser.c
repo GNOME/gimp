@@ -528,7 +528,7 @@ gimp_drawable_chooser_clicked (GimpDrawableChooser *chooser)
                                 g_type_name (chooser->drawable_type), chooser->drawable, handle))
         {
           /* Allow callbacks to be watched */
-          gimp_plug_in_extension_enable (plug_in);
+          gimp_plug_in_persistent_enable (plug_in);
 
           chooser->callback = g_strdup (gimp_procedure_get_name (callback_procedure));
         }
