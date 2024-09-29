@@ -84,7 +84,7 @@ plug_in_run_cmd_callback (GimpAction *action,
 
   switch (procedure->proc_type)
     {
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_PERSISTENT:
       args = procedure_commands_get_run_mode_arg (procedure);
       break;
 

@@ -618,18 +618,18 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
  *
  * @proc_type should be %GIMP_PDB_PROC_TYPE_PLUGIN for "normal" plug-ins.
  *
- * Using %GIMP_PDB_PROC_TYPE_EXTENSION means that the plug-in will add
+ * Using %GIMP_PDB_PROC_TYPE_PERSISTENT means that the plug-in will add
  * temporary procedures. Therefore, the GIMP core will wait until the
- * %GIMP_PDB_PROC_TYPE_EXTENSION procedure has called
+ * %GIMP_PDB_PROC_TYPE_PERSISTENT procedure has called
  * [method@Procedure.extension_ready], which means that the procedure
  * has done its initialization, installed its temporary procedures and
  * is ready to run.
  *
  * *Not calling [method@Procedure.extension_ready] from a
- * %GIMP_PDB_PROC_TYPE_EXTENSION procedure will cause the GIMP core to
+ * %GIMP_PDB_PROC_TYPE_PERSISTENT procedure will cause the GIMP core to
  * lock up.*
  *
- * Additionally, a %GIMP_PDB_PROC_TYPE_EXTENSION procedure with no
+ * Additionally, a %GIMP_PDB_PROC_TYPE_PERSISTENT procedure with no
  * arguments added is an "automatic" extension that will be
  * automatically started on each GIMP startup.
  *
@@ -639,7 +639,7 @@ gimp_procedure_create_config_with_prefix (GimpProcedure  *procedure,
  *
  * @run_func is called via [method@Procedure.run].
  *
- * For %GIMP_PDB_PROC_TYPE_PLUGIN and %GIMP_PDB_PROC_TYPE_EXTENSION
+ * For %GIMP_PDB_PROC_TYPE_PLUGIN and %GIMP_PDB_PROC_TYPE_PERSISTENT
  * procedures the call of @run_func is basically the lifetime of the
  * plug-in.
  *
@@ -2174,7 +2174,7 @@ _gimp_procedure_run_array (GimpProcedure  *procedure,
  * properly initialized and is ready to run.
  *
  * This function _must_ be called from every procedure's [callback@RunFunc]
- * that was created as #GIMP_PDB_PROC_TYPE_EXTENSION.
+ * that was created as #GIMP_PDB_PROC_TYPE_PERSISTENT.
  *
  * Subsequently, extensions can process temporary procedure run
  * requests using either [method@PlugIn.extension_enable] or
@@ -2194,7 +2194,7 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
 
   priv = gimp_procedure_get_instance_private (procedure);
 
-  g_return_if_fail (priv->proc_type == GIMP_PDB_PROC_TYPE_EXTENSION);
+  g_return_if_fail (priv->proc_type == GIMP_PDB_PROC_TYPE_PERSISTENT);
 
   plug_in = gimp_procedure_get_plug_in (procedure);
 

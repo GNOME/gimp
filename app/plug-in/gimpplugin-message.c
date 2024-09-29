@@ -810,7 +810,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   switch (proc_install->type)
     {
     case GIMP_PDB_PROC_TYPE_PLUGIN:
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_PERSISTENT:
       procedure = gimp_plug_in_procedure_new (proc_install->type,
                                               plug_in->file);
       break;
@@ -850,7 +850,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   switch (proc_install->type)
     {
     case GIMP_PDB_PROC_TYPE_PLUGIN:
-    case GIMP_PDB_PROC_TYPE_EXTENSION:
+    case GIMP_PDB_PROC_TYPE_PERSISTENT:
       gimp_plug_in_def_add_procedure (plug_in->plug_in_def, proc);
       break;
 

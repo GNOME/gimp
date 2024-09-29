@@ -97,7 +97,7 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
   if (! strcmp (name, "extension-script-fu"))
     {
       procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
+                                      GIMP_PDB_PROC_TYPE_PERSISTENT,
                                       script_fu_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,

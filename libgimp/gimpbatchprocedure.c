@@ -250,7 +250,7 @@ gimp_batch_procedure_new (GimpPlugIn       *plug_in,
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
   g_return_val_if_fail (interpreter_name != NULL && g_utf8_validate (interpreter_name, -1, NULL), NULL);
   g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
-  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
+  g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_PERSISTENT, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
   procedure = g_object_new (GIMP_TYPE_BATCH_PROCEDURE,

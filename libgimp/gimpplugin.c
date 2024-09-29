@@ -542,7 +542,7 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * @procedure: A #GimpProcedure of type %GIMP_PDB_PROC_TYPE_TEMPORARY.
  *
  * This function adds a temporary procedure to @plug_in. It is usually
- * called from a %GIMP_PDB_PROC_TYPE_EXTENSION procedure's
+ * called from a %GIMP_PDB_PROC_TYPE_PERSISTENT procedure's
  * [vfunc@Procedure.run].
  *
  * A temporary procedure is a procedure which is only available while
@@ -696,7 +696,7 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * must call [method@PlugIn.extension_enable].
  *
  * Note that the plug-in does not need to be a
- * [enum@Gimp.PDBProcType.EXTENSION] to register temporary procedures.
+ * [enum@Gimp.PDBProcType.PERSISTENT] to register temporary procedures.
  *
  * See also: [method@PlugIn.add_temp_procedure].
  *
@@ -1631,7 +1631,7 @@ gimp_plug_in_temp_run_cleanup (GimpPlugIn *plug_in)
 
   /* When at top of proc stack and top is an extension, destroy proxies. */
   if ((g_list_length (priv->procedure_stack) == 1) &&
-      (gimp_procedure_get_proc_type (priv->procedure_stack->data) == GIMP_PDB_PROC_TYPE_EXTENSION))
+      (gimp_procedure_get_proc_type (priv->procedure_stack->data) == GIMP_PDB_PROC_TYPE_PERSISTENT))
     {
       g_debug ("%s top of proc stack is extension, destroy proxies.", G_STRFUNC);
       gimp_plug_in_destroy_all_proxies (plug_in);

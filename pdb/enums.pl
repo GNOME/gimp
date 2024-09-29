@@ -391,11 +391,11 @@ package Gimp::CodeGen::enums;
 	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_PDB_PROC_TYPE_INTERNAL
 			  GIMP_PDB_PROC_TYPE_PLUGIN
-			  GIMP_PDB_PROC_TYPE_EXTENSION
+			  GIMP_PDB_PROC_TYPE_PERSISTENT
 			  GIMP_PDB_PROC_TYPE_TEMPORARY) ],
 	  mapping => { GIMP_PDB_PROC_TYPE_INTERNAL => '0',
 		       GIMP_PDB_PROC_TYPE_PLUGIN => '1',
-		       GIMP_PDB_PROC_TYPE_EXTENSION => '2',
+		       GIMP_PDB_PROC_TYPE_PERSISTENT => '2',
 		       GIMP_PDB_PROC_TYPE_TEMPORARY => '3' }
 	},
     GimpPDBStatusType =>

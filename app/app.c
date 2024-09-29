@@ -535,7 +535,7 @@ app_activate_callback (GimpCoreApp *app,
     {
       /* In console version or GUI version with no interface, we keep
        * running when --quit was not set. For instance, there could be
-       * an always-ON plug-in (GIMP_PDB_PROC_TYPE_EXTENSION) which is
+       * an always-ON plug-in (GIMP_PDB_PROC_TYPE_PERSISTENT) which is
        * set up to receive commands for GIMP.
        */
 #ifdef G_OS_WIN32

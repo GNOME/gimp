@@ -517,7 +517,7 @@ gimp_plug_in_procedure_new (GimpPDBProcType  proc_type,
   GimpPlugInProcedure *proc;
 
   g_return_val_if_fail (proc_type == GIMP_PDB_PROC_TYPE_PLUGIN ||
-                        proc_type == GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
+                        proc_type == GIMP_PDB_PROC_TYPE_PERSISTENT, NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   proc = g_object_new (GIMP_TYPE_PLUG_IN_PROCEDURE, NULL);

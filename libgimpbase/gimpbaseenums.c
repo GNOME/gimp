@@ -1246,7 +1246,7 @@ gimp_pdb_proc_type_get_type (void)
   {
     { GIMP_PDB_PROC_TYPE_INTERNAL, "GIMP_PDB_PROC_TYPE_INTERNAL", "internal" },
     { GIMP_PDB_PROC_TYPE_PLUGIN, "GIMP_PDB_PROC_TYPE_PLUGIN", "plugin" },
-    { GIMP_PDB_PROC_TYPE_EXTENSION, "GIMP_PDB_PROC_TYPE_EXTENSION", "extension" },
+    { GIMP_PDB_PROC_TYPE_PERSISTENT, "GIMP_PDB_PROC_TYPE_PERSISTENT", "persistent" },
     { GIMP_PDB_PROC_TYPE_TEMPORARY, "GIMP_PDB_PROC_TYPE_TEMPORARY", "temporary" },
     { 0, NULL, NULL }
   };
@@ -1255,7 +1255,7 @@ gimp_pdb_proc_type_get_type (void)
   {
     { GIMP_PDB_PROC_TYPE_INTERNAL, NC_("pdb-proc-type", "Internal GIMP procedure"), NULL },
     { GIMP_PDB_PROC_TYPE_PLUGIN, NC_("pdb-proc-type", "GIMP Plug-In"), NULL },
-    { GIMP_PDB_PROC_TYPE_EXTENSION, NC_("pdb-proc-type", "GIMP Extension"), NULL },
+    { GIMP_PDB_PROC_TYPE_PERSISTENT, NC_("pdb-proc-type", "GIMP Persistent Plug-In"), NULL },
     { GIMP_PDB_PROC_TYPE_TEMPORARY, NC_("pdb-proc-type", "Temporary Procedure"), NULL },
     { 0, NULL, NULL }
   };
