@@ -37,16 +37,16 @@ typedef void (* GimpResourceChoosedCallback) (GimpResource *resource,
                                               gboolean      is_dialog_closing,
                                               gpointer      owner_data);
 
-const gchar * gimp_resource_select_new       (const gchar                 *title,
-                                              GBytes                      *parent_handle,
-                                              GimpResource                *resource,
-                                              GType                        resource_type,
-                                              GimpResourceChoosedCallback  callback,
-                                              gpointer                     owner_data,
-                                              GDestroyNotify               data_destroy);
+const gchar * _gimp_resource_select_new       (const gchar                 *title,
+                                               GBytes                      *parent_handle,
+                                               GimpResource                *resource,
+                                               GType                        resource_type,
+                                               GimpResourceChoosedCallback  callback,
+                                               gpointer                     owner_data,
+                                               GDestroyNotify               data_destroy);
 
-void          gimp_resource_select_set       (const gchar                 *callback_name,
-                                              GimpResource                *resource);
+void          _gimp_resource_select_set       (const gchar                 *callback_name,
+                                               GimpResource                *resource);
 
 G_END_DECLS
 

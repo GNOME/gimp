@@ -71,9 +71,6 @@
 #include <libgimp/gimpthumbnailprocedure.h>
 #include <libgimp/gimpvectorloadprocedure.h>
 
-/* Resources and their widgets. Order important. */
-#include <libgimp/gimpresourceselect.h>
-
 #include <libgimp/gimp_pdb_headers.h>
 
 #undef __GIMP_H_INSIDE__

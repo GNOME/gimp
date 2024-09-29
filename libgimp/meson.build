@@ -205,7 +205,6 @@ libgimp_sources_introspectable = [
   'gimpprocedureconfig.c',
   'gimpprogress.c',
   'gimpresource.c',
-  'gimpresourceselect.c',
   'gimpexportprocedure.c',
   'gimpselection.c',
   'gimptextlayer.c',
@@ -225,6 +224,7 @@ libgimp_sources = [
   'gimppdbprocedure.c',
   'gimppixbuf.c',
   'gimpplugin_pdb.c',
+  'gimpresourceselect.c',
   'gimptilebackendplugin.c',
 ]
 
@@ -265,7 +265,6 @@ libgimp_headers_introspectable = [
   'gimpprocedureconfig.h',
   'gimpprogress.h',
   'gimpresource.h',
-  'gimpresourceselect.h',
   'gimpexportprocedure.h',
   'gimpselection.h',
   'gimptextlayer.h',
