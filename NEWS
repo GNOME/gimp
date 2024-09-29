@@ -58,6 +58,11 @@ Core:
     (performance logs) will not work.
   - `gimp -v` and crash debug dialog now contain Exiv2 and GExiv2
     version information.
+  - XCF will now refuse to load some types of GEGL ops as
+    non-destructive layer filters:
+    * GeglOperationSink operations;
+    * GEGL Graph ("gegl:gegl") except if the environment variable
+      GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT is set.
 
 Tools:
 
@@ -116,6 +121,14 @@ Plug-ins:
       was broken and anyway not an ideal design choice.
     * New call-with-output-string, call-with-input-string and any->string
       functions.
+    * SF-VALUE type was removed.
+    * script-fu-register-procedure scheme function was added to create
+      procedures which are not image procedure. These Scheme plug-ins
+      will use GimpProcedureDialog. The legacy script-fu-register
+      function still works but is considered deprecated.
+    * Various plug-ins ported to script-fu-register-procedure:
+      gimp-online, gradient-example, mkbrush, palette-export,
+      paste-as-brush, paste-as-pattern, ts-helloworld.
   - All "file-*-save" (and "file-*-save-internal) plug-in procedures have been
     renamed to "file-*-export" (respectively "file-*-export-internal").
   - Ported to GimpVectorLoadProcedure: file-pdf-load, file-ps, file-svg
@@ -228,6 +241,13 @@ API:
     * Removed functions:
       - gimp_image_get_colormap()
       - gimp_image_set_colormap()
+      - gimp_image_metadata_load_prepare()
+      - gimp_image_metadata_load_finish()
+      - gimp_image_metadata_save_finish()
+      - gimp_resource_chooser_set_clickable()
+      - gimp_resource_chooser_set_drag_target()
+      - gimp_resource_select_new()
+      - gimp_resource_select_set()
     * GimpResource:
       - The ParamSpec arguments (including every subtype) may now have a
         default value.
@@ -296,6 +316,8 @@ Build:
       32-bit Windows jobs).
     * Windows cross-builds are not triggered anymore until after GIMP
       3.0 (when we'll handle the issues).
+    * Lua-related files are not shipped anymore with any of the official
+      builds.
   - New gimp-data repository used as a git submodule:
     * Various data were moved to gimp-data: icons, cursors, patterns, brushes
       and application icon/logo.
