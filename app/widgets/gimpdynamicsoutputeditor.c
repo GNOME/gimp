@@ -423,7 +423,8 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       if (input == i)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                     input_curve, color);
+                                     input_curve,
+                                     (INPUT_COLOR (i) != NULL) ? color : NULL);
           private->active_curve = input_curve;
 
           gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
@@ -432,7 +433,8 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       else if (use_input)
         {
           gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                          input_curve, color);
+                                          input_curve,
+                                          (INPUT_COLOR (i) != NULL) ? color : NULL);
         }
 
       g_object_unref (input_curve);
@@ -478,7 +480,8 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
                     gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), INPUT_COLOR (i));
 
                   gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                                  input_curve, color);
+                                                  input_curve,
+                                                  (INPUT_COLOR (i) != NULL) ? color : NULL);
                   g_object_unref (color);
                 }
               else
