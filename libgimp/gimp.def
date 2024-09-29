@@ -941,19 +941,19 @@ EXPORTS
 	gimp_resource_get_id
 	gimp_resource_get_name
 	gimp_resource_get_type
-    gimp_resource_id_is_brush
-    gimp_resource_id_is_font
-    gimp_resource_id_is_gradient
-    gimp_resource_id_is_palette
-    gimp_resource_id_is_pattern
-    gimp_resource_id_is_valid
-    gimp_resource_is_brush
+	gimp_resource_id_is_brush
+	gimp_resource_id_is_font
+	gimp_resource_id_is_gradient
+	gimp_resource_id_is_palette
+	gimp_resource_id_is_pattern
+	gimp_resource_id_is_valid
+	gimp_resource_is_brush
 	gimp_resource_is_editable
-   	gimp_resource_is_font
+	gimp_resource_is_font
 	gimp_resource_is_gradient
 	gimp_resource_is_palette
 	gimp_resource_is_pattern
- 	gimp_resource_is_valid
+	gimp_resource_is_valid
 	gimp_resource_rename
 	gimp_selection_all
 	gimp_selection_border
