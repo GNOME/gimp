@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-17 11:42+0000\n"
-"PO-Revision-Date: 2024-09-17 17:14+0200\n"
+"POT-Creation-Date: 2024-09-29 15:04+0000\n"
+"PO-Revision-Date: 2024-09-29 20:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -200,21 +200,21 @@ msgstr "%s:"
 msgid "Script-Fu Color Selection"
 msgstr "Izbor barv Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu File Selection"
 msgstr "Izbor datoteke Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:401
 msgid "Script-Fu Folder Selection"
 msgstr "Izbor mape Script-Fu"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:804
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:398
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Napaka pri nalaganju %s:"
@@ -393,44 +393,48 @@ msgid ""
 msgstr ""
 "Uporabi navedeni risani predmet kot nožek za izrezovanje iz navedene slike."
 
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask drawable"
+msgstr "Maska risanega predmeta"
+
 #: plug-ins/script-fu/scripts/carve-it.scm:231
 msgid "Carve white areas"
 msgstr "Ureži bela območja"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:96
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
 msgid "Background"
 msgstr "Ozadje"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:97
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
 msgid "Layer 1"
 msgstr "Plast 1"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:98
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
 msgid "Layer 2"
 msgstr "Plast 2"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:99
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
 msgid "Layer 3"
 msgstr "Plast 3"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:100
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
 msgid "Drop Shadow"
 msgstr "Vrzi senco"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:228
+#: plug-ins/script-fu/scripts/chrome-it.scm:284
 msgid "Chrome"
 msgstr "Krom"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:229
+#: plug-ins/script-fu/scripts/chrome-it.scm:285
 #: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "Posvetli"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:243
+#: plug-ins/script-fu/scripts/chrome-it.scm:305
 msgid "Stencil C_hrome..."
 msgstr "Kromiraj po _šabloni …"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:244
+#: plug-ins/script-fu/scripts/chrome-it.scm:306
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -438,31 +442,31 @@ msgstr ""
 "Izbranemu področju (ali alfi) dodaj učinek kromiranja z uporabo navedene "
 "(sivinske) šablone"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:250
+#: plug-ins/script-fu/scripts/chrome-it.scm:312
 msgid "Chrome saturation"
 msgstr "Nasičenost kroma"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:251
+#: plug-ins/script-fu/scripts/chrome-it.scm:313
 msgid "Chrome lightness"
 msgstr "Svetlost kroma"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:252
+#: plug-ins/script-fu/scripts/chrome-it.scm:314
 msgid "Chrome factor"
 msgstr "Faktor kromiranja"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:253
+#: plug-ins/script-fu/scripts/chrome-it.scm:315
 msgid "Environment map"
 msgstr "Zemljevid okolja"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:256
+#: plug-ins/script-fu/scripts/chrome-it.scm:318
 msgid "Highlight balance"
 msgstr "Ravnovesje svetlih področij"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:257
+#: plug-ins/script-fu/scripts/chrome-it.scm:319
 msgid "Chrome balance"
 msgstr "Ravnovesje kromiranja"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:258
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Chrome white areas"
 msgstr "Kromiraj bela področja"
 
@@ -531,27 +535,27 @@ msgstr "Dvignjenost"
 msgid "Depth"
 msgstr "Globina"
 
-#: plug-ins/script-fu/scripts/coffee.scm:37
+#: plug-ins/script-fu/scripts/coffee.scm:42
 msgid "Stain"
 msgstr "Madež"
 
-#: plug-ins/script-fu/scripts/coffee.scm:95
+#: plug-ins/script-fu/scripts/coffee.scm:133
 msgid "_Stain..."
 msgstr "_Madež …"
 
-#: plug-ins/script-fu/scripts/coffee.scm:96
+#: plug-ins/script-fu/scripts/coffee.scm:134
 msgid "Add layers of stain or blotch marks"
 msgstr "Dodajte plasti madežev ali pack"
 
-#: plug-ins/script-fu/scripts/coffee.scm:102
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Number of stains to add"
 msgstr "Število dodanih madežev"
 
-#: plug-ins/script-fu/scripts/coffee.scm:103
+#: plug-ins/script-fu/scripts/coffee.scm:141
 msgid "Darken only"
 msgstr "Samo potemni"
 
-#: plug-ins/script-fu/scripts/coffee.scm:104
+#: plug-ins/script-fu/scripts/coffee.scm:142
 msgid "Gradient to color stains"
 msgstr "Preliv v barvne madeže"
 
@@ -639,39 +643,39 @@ msgstr ""
 "Ustvari sliko, zapolnjeno s predogledi pisav, ki se ujemajo s filtrom imen "
 "pisav"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Text"
 msgstr "_Besedilo"
 
-#: plug-ins/script-fu/scripts/font-map.scm:174
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "Use font _name as text"
 msgstr "Uporabi _ime pisave kot besedilo"
 
-#: plug-ins/script-fu/scripts/font-map.scm:175
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Labels"
 msgstr "_Nalepke"
 
-#: plug-ins/script-fu/scripts/font-map.scm:176
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:177
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Font _size (pixels)"
 msgstr "_Velikost pisave (slikovne pike)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:178
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Border (pixels)"
 msgstr "_Rob (slikovne točke)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "_Color scheme"
 msgstr "_Barvna shema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Black on white"
 msgstr "Črno na belem"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Active colors"
 msgstr "Aktivne barve"
 
@@ -721,80 +725,80 @@ msgid "_Using Paths"
 msgstr "Uporaba _poti"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:77
-#: plug-ins/script-fu/scripts/gimp-online.scm:90
-#: plug-ins/script-fu/scripts/gimp-online.scm:103
-#: plug-ins/script-fu/scripts/gimp-online.scm:116
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
-#: plug-ins/script-fu/scripts/gimp-online.scm:142
-#: plug-ins/script-fu/scripts/gimp-online.scm:155
-#: plug-ins/script-fu/scripts/gimp-online.scm:167
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Zaznamuj v uporabniškem priročniku"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:76
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
 msgid "_Preparing your Images for the Web"
 msgstr "_Priprava slik za splet"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:89
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Delo s fotografijami digitalnega fotoaparata"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:102
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
 msgid "Create, Open and Save _Files"
 msgstr "Ustvarjanje, odpiranje in shranjevanje _datotek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
 msgid "_Basic Concepts"
 msgstr "_Osnovni koncepti"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:128
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
 msgid "How to Use _Dialogs"
 msgstr "Kako uporabljamo _pogovorna okna"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
 msgid "Drawing _Simple Objects"
 msgstr "Risanje _enostavnih predmetov"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:154
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
 msgid "_Create and Use Selections"
 msgstr "_Ustvari in uporabi izbore"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:166
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "_Table of Contents"
 msgstr "_Kazalo vsebine"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:202
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
 msgid "_Main Web Site"
 msgstr "_Glavna spletna stran"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the GIMP web site"
 msgstr "Zaznamek spletne strani GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:215
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
 msgid "_Developer Web Site"
 msgstr "_Spletna stran za razvijalce"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Roadmaps"
 msgstr "_Razvojni načrti"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Zaznamek razvojnih načrtov za GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:241
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Poročila o hroščih in predlogih funkcij"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Zaznamek sledilnika hroščev programa GIMP"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:254
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_User Manual Web Site"
 msgstr "Spletna stran _uporabniškega priročnika"
 
@@ -806,23 +810,23 @@ msgstr "_Preliv po meri …"
 msgid "Create an image filled with an example of the current gradient"
 msgstr "Ustvari sliko, zapolnjeno s primerom trenutnega preliva"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:75
-#: plug-ins/script-fu/scripts/mkbrush.scm:71
-#: plug-ins/script-fu/scripts/mkbrush.scm:141
-#: plug-ins/script-fu/scripts/mkbrush.scm:197
-#: plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "Širina"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:76
-#: plug-ins/script-fu/scripts/mkbrush.scm:72
-#: plug-ins/script-fu/scripts/mkbrush.scm:142
-#: plug-ins/script-fu/scripts/mkbrush.scm:198
-#: plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "Višina"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
 msgid "Gradient reverse"
 msgstr "Obratni preliv"
 
@@ -950,46 +954,46 @@ msgstr "_Pravokotno …"
 msgid "Create a rectangular brush"
 msgstr "Ustvari pravokotni čopič"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:70
-#: plug-ins/script-fu/scripts/mkbrush.scm:140
-#: plug-ins/script-fu/scripts/mkbrush.scm:196
-#: plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "Ime"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:73
-#: plug-ins/script-fu/scripts/mkbrush.scm:144
-#: plug-ins/script-fu/scripts/mkbrush.scm:199
-#: plug-ins/script-fu/scripts/mkbrush.scm:269
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
 msgstr "Razmik"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
 msgstr "Pravo_kotno, operjeno …"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:135
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
 msgstr "Ustvari pravokoten čopič z operjenimi robovi"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:143
-#: plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
 msgstr "Operjeno"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "_Eliptično …"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
 msgstr "Ustvari eliptični čopič"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
 msgstr "Eli_ptično, operjeno …"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:260
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Ustvari eliptičen čopič z operjenimi robovi"
 
@@ -1035,11 +1039,11 @@ msgstr ""
 msgid "Exported palette to file: "
 msgstr "Izvožena paleta v datoteko: "
 
-#: plug-ins/script-fu/scripts/palette-export.scm:289
+#: plug-ins/script-fu/scripts/palette-export.scm:287
 msgid "Folder for the output file"
 msgstr "Mapa za izhodno datoteko"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:288
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
@@ -1047,11 +1051,11 @@ msgstr ""
 "Ime datoteke, ki naj bo ustvarjena (če datoteka s tem imenom že obstaja, bo "
 "zamenjana)."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:319
+#: plug-ins/script-fu/scripts/palette-export.scm:317
 msgid "_CSS stylesheet..."
 msgstr "Slogovna predloga _CSS …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:320
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1059,27 +1063,27 @@ msgstr ""
 "Izvozi aktivno paleto kot slogovno predlogo CSS z vnosom imena barve kot ime "
 "razreda ter s samo barvo kot barvnim atributom"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:340
+#: plug-ins/script-fu/scripts/palette-export.scm:338
 msgid "P_HP dictionary..."
 msgstr "Slovar P_HP ..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:341
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Izvozi aktivno paleto kot slovar PHP (ime => barva)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:365
+#: plug-ins/script-fu/scripts/palette-export.scm:363
 msgid "_Python dictionary..."
 msgstr "Slovar _Python ..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:366
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Izvozi aktivno paleto kot slovar Python (ime: barva)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:387
+#: plug-ins/script-fu/scripts/palette-export.scm:385
 msgid "_Text file..."
 msgstr "_Besedilna datoteka …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:388
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1087,65 +1091,65 @@ msgstr ""
 "Zapiši vse barve palete v besedilno datoteko, z eno šestnajstiško vrednostjo "
 "na vrstico (brez imen)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:427
+#: plug-ins/script-fu/scripts/palette-export.scm:425
 msgid "J_ava map..."
 msgstr "Zemljevid J_ava ..."
 
-#: plug-ins/script-fu/scripts/palette-export.scm:428
+#: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr "Izvozi aktivno paleto kot java.util.Hashtable&lt;Niz, Barva&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
 msgstr "Na odložišču ni nikakršnih slikovnih podatkov za lepljenje."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste as New _Brush..."
 msgstr "Prilepi kot nov _čopič …"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Prilepi vsebino odložišča v nov čopič"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "Ime _čopiča"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Moj čopič"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "Ime _datoteke"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "mojčopič"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "_Razmik"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste as New _Pattern..."
 msgstr "Prilepi kot _nov vzorec …"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Prilepi vsebino odložišča v nov vzorec"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "Ime _vzorca"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Moj vzorec"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "mojvzorec"
 
