@@ -341,8 +341,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10031/ghostscript-10.03.1.tar.gz",
-                    "sha512": "c1eec6550ce2d9c8fe78c2e9c91eaa40e1ae3d8625b510e712c0e0ab39ad00d4fa493af5f798a06c21a4acd72a0b503758a0d8f79cc37d5cc1a23ac7f3ba41e2",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostscript-10.04.0.tar.gz",
+                    "sha512": "75e49a1778b7cc4fdfb5d871355cbd653458250cddc9075d70df8e4200ccd0a49de22f101450c1d0790a7ee3475b94835265ff295498495eb0dcfd04efee2e8d",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
@@ -415,8 +415,8 @@
                         {
                             "type": "git",
                             "url": "https://github.com/json-c/json-c.git",
-                            "tag": "json-c-0.17-20230812",
-                            "commit": "b4c371fa0cbc4dcbaccc359ce9e957a22988fb34",
+                            "tag": "json-c-0.18-20240915",
+                            "commit": "41a55cfcedb54d9c1874f2f0eb07b504091d7e37",
                             "x-checker-data": {
                                 "type": "git",
                                 "tag-pattern": "^json-c-([\\d.]+)-[\\d]+$"
@@ -882,8 +882,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.1.1/graphviz-12.1.1.tar.gz",
-                            "sha256": "8fea54ab3ae6f2456df2f1ee8060f0262f2f4434c5b6ece2216777a2505a88e3",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.1.1/graphviz-12.1.2.tar.gz",
+                            "sha256": "4190c51c434c13f718101fbba9e83702d668e20d4eb123c5f4fe059db10d6444",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
