@@ -461,7 +461,7 @@ gimp_resource_chooser_set_remote_dialog (GimpResourceChooser *self,
   g_return_if_fail (klass->resource_type != G_TYPE_INVALID);
   g_return_if_fail (klass->resource_type == G_TYPE_FROM_INSTANCE (resource));
 
-  _gimp_resource_select_set (priv->callback, resource);
+  gimp_resource_select_set (priv->callback, resource);
 }
 
 static void
@@ -569,13 +569,13 @@ gimp_resource_chooser_clicked (GimpResourceChooser *self)
       if (GIMP_IS_DIALOG (toplevel))
         handle = gimp_dialog_get_native_handle (GIMP_DIALOG (toplevel));
 
-      priv->callback = g_strdup (_gimp_resource_select_new (priv->title,
-                                                            handle,
-                                                            priv->resource,
-                                                            klass->resource_type,
-                                                            gimp_resource_chooser_callback,
-                                                            self,
-                                                            NULL));
+      priv->callback = g_strdup (gimp_resource_select_new (priv->title,
+                                                           handle,
+                                                           priv->resource,
+                                                           klass->resource_type,
+                                                           gimp_resource_chooser_callback,
+                                                           self,
+                                                           NULL));
       gimp_resource_chooser_set_remote_dialog (self, priv->resource);
     }
 }

@@ -245,7 +245,7 @@ popup_remote_chooser (const gchar   *title,
 }
 
 /**
- * _gimp_resource_select_new:
+ * gimp_resource_select_new:
  * @title:                          Title of the resource selection dialog.
  * @resource:                       The resource to set as the initial choice.
  * @resource_type:                  The type of the subclass of [class@Resource].
@@ -258,18 +258,21 @@ popup_remote_chooser (const gchar   *title,
  *
  * A proxy to a remote dialog in core, which knows the installed resources.
  *
+ * Note: this function is private and must not be used in plug-ins or
+ * considered part of the API.
+ *
  * Returns: (transfer none): the name of a temporary PDB procedure. The
  *          string belongs to the resource selection dialog and will be
  *          freed automatically when the dialog is closed.
  **/
 const gchar *
-_gimp_resource_select_new (const gchar                 *title,
-                           GBytes                      *parent_handle,
-                           GimpResource                *resource,
-                           GType                        resource_type,
-                           GimpResourceChoosedCallback  callback,
-                           gpointer                     owner_data,
-                           GDestroyNotify               data_destroy)
+gimp_resource_select_new (const gchar                 *title,
+                          GBytes                      *parent_handle,
+                          GimpResource                *resource,
+                          GType                        resource_type,
+                          GimpResourceChoosedCallback  callback,
+                          gpointer                     owner_data,
+                          GDestroyNotify               data_destroy)
 {
   GimpPlugIn    *plug_in = gimp_get_plug_in ();
   GimpProcedure *procedure;
@@ -318,15 +321,18 @@ _gimp_resource_select_new (const gchar                 *title,
 }
 
 
-/* _gimp_resource_select_set:
+/* gimp_resource_select_set:
  * @callback_name: a callback name as returned by [func@resource_select_new].
  * @resource:      a [class@Resource] of type @resource_type.
  *
  * Set currently selected resource in remote chooser.
+ *
+ * Note: this function is private and must not be used in plug-ins or
+ * considered part of the API.
  */
 void
-_gimp_resource_select_set (const gchar  *callback_name,
-                           GimpResource *resource)
+gimp_resource_select_set (const gchar  *callback_name,
+                          GimpResource *resource)
 {
   GType resource_type;
 
