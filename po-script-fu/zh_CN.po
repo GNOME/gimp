@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-17 11:42+0000\n"
-"PO-Revision-Date: 2024-09-18 09:53+0800\n"
+"POT-Creation-Date: 2024-09-29 15:04+0000\n"
+"PO-Revision-Date: 2024-09-30 20:46+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -199,21 +199,21 @@ msgstr "%s："
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:401
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件夹选择"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:804
 #, c-format
 msgid "Error while executing %s:"
 msgstr "执行 %s 时出错："
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:398
 #, c-format
 msgid "Error while loading %s:"
 msgstr "载入 %s 时出错："
@@ -385,74 +385,78 @@ msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr "以指定的可绘区为模板从指定图像中雕刻。"
 
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask drawable"
+msgstr "遮罩可绘区"
+
 #: plug-ins/script-fu/scripts/carve-it.scm:231
 msgid "Carve white areas"
 msgstr "雕刻白色区域"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:96
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
 msgid "Background"
 msgstr "背景"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:97
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
 msgid "Layer 1"
 msgstr "图层 1"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:98
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
 msgid "Layer 2"
 msgstr "图层 2"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:99
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
 msgid "Layer 3"
 msgstr "图层 3"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:100
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
 msgid "Drop Shadow"
 msgstr "投影"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:228
+#: plug-ins/script-fu/scripts/chrome-it.scm:284
 msgid "Chrome"
 msgstr "镀铬"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:229
+#: plug-ins/script-fu/scripts/chrome-it.scm:285
 #: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "高光"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:243
+#: plug-ins/script-fu/scripts/chrome-it.scm:305
 msgid "Stencil C_hrome..."
 msgstr "模板镀铬(_H)…"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:244
+#: plug-ins/script-fu/scripts/chrome-it.scm:306
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr "用指定的（灰阶）模板给选中区域（或透明）添加镀铬效果"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:250
+#: plug-ins/script-fu/scripts/chrome-it.scm:312
 msgid "Chrome saturation"
 msgstr "镀铬饱合度"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:251
+#: plug-ins/script-fu/scripts/chrome-it.scm:313
 msgid "Chrome lightness"
 msgstr "镀铬亮度"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:252
+#: plug-ins/script-fu/scripts/chrome-it.scm:314
 msgid "Chrome factor"
 msgstr "镀铬系数"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:253
+#: plug-ins/script-fu/scripts/chrome-it.scm:315
 msgid "Environment map"
 msgstr "环境贴图"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:256
+#: plug-ins/script-fu/scripts/chrome-it.scm:318
 msgid "Highlight balance"
 msgstr "高光平衡"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:257
+#: plug-ins/script-fu/scripts/chrome-it.scm:319
 msgid "Chrome balance"
 msgstr "镀铬平衡"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:258
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Chrome white areas"
 msgstr "白色区域镀铬"
 
@@ -520,27 +524,27 @@ msgstr "海拔"
 msgid "Depth"
 msgstr "深度"
 
-#: plug-ins/script-fu/scripts/coffee.scm:37
+#: plug-ins/script-fu/scripts/coffee.scm:42
 msgid "Stain"
 msgstr "污渍"
 
-#: plug-ins/script-fu/scripts/coffee.scm:95
+#: plug-ins/script-fu/scripts/coffee.scm:133
 msgid "_Stain..."
 msgstr "污渍(_S)…"
 
-#: plug-ins/script-fu/scripts/coffee.scm:96
+#: plug-ins/script-fu/scripts/coffee.scm:134
 msgid "Add layers of stain or blotch marks"
 msgstr "添加污渍或斑点痕迹的图层"
 
-#: plug-ins/script-fu/scripts/coffee.scm:102
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Number of stains to add"
 msgstr "添加的污渍数量"
 
-#: plug-ins/script-fu/scripts/coffee.scm:103
+#: plug-ins/script-fu/scripts/coffee.scm:141
 msgid "Darken only"
 msgstr "仅变暗"
 
-#: plug-ins/script-fu/scripts/coffee.scm:104
+#: plug-ins/script-fu/scripts/coffee.scm:142
 msgid "Gradient to color stains"
 msgstr "渐变彩色污渍"
 
@@ -626,39 +630,39 @@ msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr "创建一幅以匹配字体名过滤器的字体预览所填充的图像"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Text"
 msgstr "文字(_T)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:174
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "Use font _name as text"
 msgstr "使用字体名字作为文字(_N)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:175
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Labels"
 msgstr "标签(_L)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:176
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Filter (regexp)"
 msgstr "过滤器（正则表达式）(_F)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:177
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Font _size (pixels)"
 msgstr "字体大小（像素）(_S)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:178
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Border (pixels)"
 msgstr "边框（像素）(_B)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "_Color scheme"
 msgstr "颜色方案(_C)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Black on white"
 msgstr "白底黑字"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Active colors"
 msgstr "活动颜色"
 
@@ -708,80 +712,80 @@ msgid "_Using Paths"
 msgstr "使用路径(_U)"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:77
-#: plug-ins/script-fu/scripts/gimp-online.scm:90
-#: plug-ins/script-fu/scripts/gimp-online.scm:103
-#: plug-ins/script-fu/scripts/gimp-online.scm:116
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
-#: plug-ins/script-fu/scripts/gimp-online.scm:142
-#: plug-ins/script-fu/scripts/gimp-online.scm:155
-#: plug-ins/script-fu/scripts/gimp-online.scm:167
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "到用户手册的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:76
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
 msgid "_Preparing your Images for the Web"
 msgstr "为 Web 准备图像(_P)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:89
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "使用数码相机照片(_W)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:102
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
 msgid "Create, Open and Save _Files"
 msgstr "创建、打开及保存文件(_F)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
 msgid "_Basic Concepts"
 msgstr "基本概念(_B)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:128
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
 msgid "How to Use _Dialogs"
 msgstr "如何使用对话框(_D)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
 msgid "Drawing _Simple Objects"
 msgstr "绘制简单对象(_S)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:154
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
 msgid "_Create and Use Selections"
 msgstr "创建并使用选区(_C)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:166
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "_Table of Contents"
 msgstr "目录(_T)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:202
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
 msgid "_Main Web Site"
 msgstr "主站(_M)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the GIMP web site"
 msgstr "到 GIMP 网站的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:215
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
 msgid "_Developer Web Site"
 msgstr "开发者网站(_D)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Roadmaps"
 msgstr "路线图(_R)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "到 GIMP 开发路线的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:241
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "_Bug Reports and Feature Requests"
 msgstr "缺陷报告和特性需求(_B)"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "到 GIMP 缺陷追踪系统的书签"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:254
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_User Manual Web Site"
 msgstr "用户手册网站(_U)"
 
@@ -793,23 +797,23 @@ msgstr "自定义渐变(_G)…"
 msgid "Create an image filled with an example of the current gradient"
 msgstr "创建一幅以当前渐变的样本填充的图像"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:75
-#: plug-ins/script-fu/scripts/mkbrush.scm:71
-#: plug-ins/script-fu/scripts/mkbrush.scm:141
-#: plug-ins/script-fu/scripts/mkbrush.scm:197
-#: plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "宽度"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:76
-#: plug-ins/script-fu/scripts/mkbrush.scm:72
-#: plug-ins/script-fu/scripts/mkbrush.scm:142
-#: plug-ins/script-fu/scripts/mkbrush.scm:198
-#: plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "高度"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
 msgid "Gradient reverse"
 msgstr "反向渐变"
 
@@ -936,46 +940,46 @@ msgstr "矩形(_R)…"
 msgid "Create a rectangular brush"
 msgstr "创建一个矩形画笔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:70
-#: plug-ins/script-fu/scripts/mkbrush.scm:140
-#: plug-ins/script-fu/scripts/mkbrush.scm:196
-#: plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "名字"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:73
-#: plug-ins/script-fu/scripts/mkbrush.scm:144
-#: plug-ins/script-fu/scripts/mkbrush.scm:199
-#: plug-ins/script-fu/scripts/mkbrush.scm:269
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
 msgstr "间距"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
 msgstr "羽化的矩形(_C)…"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:135
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
 msgstr "创建一个带羽化边缘的矩形画笔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:143
-#: plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
 msgstr "羽化"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "椭圆(_E)…"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
 msgstr "创建一个椭圆形画笔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
 msgstr "羽化的椭圆(_P)…"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:260
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
 msgstr "创建一个带羽化边缘的椭圆形画笔"
 
@@ -1019,112 +1023,112 @@ msgstr "命名中的所有字符都是空白字符或不能在文件名中出现
 msgid "Exported palette to file: "
 msgstr "导出色板至文件："
 
-#: plug-ins/script-fu/scripts/palette-export.scm:289
+#: plug-ins/script-fu/scripts/palette-export.scm:287
 msgid "Folder for the output file"
 msgstr "用于输出文件的文件夹"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:288
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr "要创建的文件的名称（如果以此命名的文件已经存在，它将被替换）"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:319
+#: plug-ins/script-fu/scripts/palette-export.scm:317
 msgid "_CSS stylesheet..."
 msgstr "CSS 样式表(_C)…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:320
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
 "导出当前调色板为以颜色条目名称作为类名的 css 样式表，并以颜色本身作为颜色属性"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:340
+#: plug-ins/script-fu/scripts/palette-export.scm:338
 msgid "P_HP dictionary..."
 msgstr "PHP 字典(_H)…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:341
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "导出当前调色板为 PHP 字典 (name => color)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:365
+#: plug-ins/script-fu/scripts/palette-export.scm:363
 msgid "_Python dictionary..."
 msgstr "Python 字典(_P)…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:366
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "导出当前调色板为 Python 字典 (name: color)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:387
+#: plug-ins/script-fu/scripts/palette-export.scm:385
 msgid "_Text file..."
 msgstr "文本文件(_T)…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:388
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr "将调色板内的所有颜色写入到一个文本文件，每行一个十六进制值（无名称）"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:427
+#: plug-ins/script-fu/scripts/palette-export.scm:425
 msgid "J_ava map..."
 msgstr "Java 映射(_A)…"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:428
+#: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr "导出激活调色板为 java.util.Hashtable&lt;String,Color&gt;"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
 msgstr "剪贴板中没有可以粘贴的图像数据。"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste as New _Brush..."
 msgstr "粘贴为新笔刷(_B)…"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "将剪贴板中的内容粘贴到新笔刷"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "笔刷名字(_B)"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "我的笔刷"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "文件名(_F)"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "我的笔刷"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "间距(_S)"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste as New _Pattern..."
 msgstr "粘贴为新图案(_P)…"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "将剪贴板中的内容粘贴到新图案"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "图案名字(_P)"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "我的图案"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "我的图案"
 
