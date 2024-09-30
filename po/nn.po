@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-25 20:48+0000\n"
-"PO-Revision-Date: 2024-08-26 15:34+0200\n"
+"POT-Creation-Date: 2024-09-29 15:00+0000\n"
+"PO-Revision-Date: 2024-09-30 15:09+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -138,15 +138,20 @@ msgstr ""
 "Ein ny versjon (%s) av GIMP er tilgjengeleg.\n"
 "Du bør oppdatera."
 
-#: app/gimp-version.c:70
+#: app/gimp-version.c:72
 #, c-format
 msgid "%s version %s"
 msgstr "%s versjon %s"
 
-#: app/gimp-version.c:162 app/gimp-version.c:281
+#: app/gimp-version.c:164 app/gimp-version.c:283
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "brukar %s versjon %s (kompilert mot versjon %s)"
+
+#: app/gimp-version.c:305
+#, c-format
+msgid "using %s version %s"
+msgstr "brukar %s versjon %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
@@ -494,7 +499,7 @@ msgid "Select"
 msgstr "Utval"
 
 #. initialize the template list
-#: app/actions/actions.c:224 app/core/gimp.c:852 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:224 app/core/gimp.c:856 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Malar"
 
@@ -990,7 +995,7 @@ msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "Vel kanalane under dei merkte kanalane"
 
-#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:711
+#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:714
 msgid "Channel Attributes"
 msgstr "Kanalattributta"
 
@@ -1042,24 +1047,24 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Senk kanalen til botnen"
 msgstr[1] "Senk kanal til botnen"
 
-#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:550
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:550
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
 #: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s-kanalkopi"
 
-#: app/actions/channels-commands.c:421
+#: app/actions/channels-commands.c:424
 msgid "Duplicate channels"
 msgstr "Dupliser kanalane"
 
-#: app/actions/channels-commands.c:464
+#: app/actions/channels-commands.c:467
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "Fjern %d kanalar"
 
-#: app/actions/channels-commands.c:508
+#: app/actions/channels-commands.c:511
 msgid "Channels to selection"
 msgstr "Kanal til utval"
 
@@ -2439,10 +2444,10 @@ msgstr "240 sekund"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:358 app/tools/gimpforegroundselecttool.c:331
+#: app/tools/gimpfiltertool.c:359 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
+#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:662
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -2524,7 +2529,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2389
-#: app/core/gimppalette.c:500 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Utan namn"
@@ -5745,7 +5750,7 @@ msgctxt "image-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Bruk svartpunktkompensering for utskriftssimuleringa"
 
-#: app/actions/image-actions.c:185 app/actions/image-actions.c:516
+#: app/actions/image-actions.c:185 app/actions/image-actions.c:529
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
@@ -5755,7 +5760,7 @@ msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Konverter biletet til RGB-fargemodell"
 
-#: app/actions/image-actions.c:190 app/actions/image-actions.c:518
+#: app/actions/image-actions.c:190 app/actions/image-actions.c:531
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "_Gråtone"
@@ -5955,12 +5960,12 @@ msgctxt "image-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "_Fargetilpassinga for utskriftssimuleringa er absolutt kolormetrisk"
 
-#: app/actions/image-actions.c:509
+#: app/actions/image-actions.c:522
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB …"
 
-#: app/actions/image-actions.c:511
+#: app/actions/image-actions.c:524
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Gråtone …"
@@ -7897,8 +7902,8 @@ msgstr "Tilbakestill alle filtera"
 #: app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:357 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:482 app/widgets/gimpcolordisplayeditor.c:332
+#: app/tools/gimpfiltertool.c:358 app/tools/gimptransformgridtool.c:1261
+#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
@@ -8262,85 +8267,80 @@ msgstr "Er du sikker på at du vil slette malen «%s» frå lista og frå disken
 
 #: app/actions/text-editor-actions.c:40
 msgctxt "text-editor-action"
-msgid "Text Editor Toolbar"
-msgstr "Verktøylinja for teksthandsaming"
-
-#: app/actions/text-editor-actions.c:45
-msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Opna"
 
-#: app/actions/text-editor-actions.c:46
+#: app/actions/text-editor-actions.c:41
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Hent tekst frå fil"
 
-#: app/actions/text-editor-actions.c:51
+#: app/actions/text-editor-actions.c:46
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Tøm"
 
-#: app/actions/text-editor-actions.c:52
+#: app/actions/text-editor-actions.c:47
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Fjern all tekst"
 
-#: app/actions/text-editor-actions.c:60
+#: app/actions/text-editor-actions.c:55
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "VTH"
 
-#: app/actions/text-editor-actions.c:61
+#: app/actions/text-editor-actions.c:56
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Får venstre til høgre"
 
-#: app/actions/text-editor-actions.c:66
+#: app/actions/text-editor-actions.c:61
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "HTV"
 
-#: app/actions/text-editor-actions.c:67
+#: app/actions/text-editor-actions.c:62
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Frå høgre til venstre"
 
-#: app/actions/text-editor-actions.c:72
+#: app/actions/text-editor-actions.c:67
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
 msgstr "TTB-HTV"
 
-#: app/actions/text-editor-actions.c:73
+#: app/actions/text-editor-actions.c:68
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Loddrett, høgre til venstre (blanda retning)"
 
-#: app/actions/text-editor-actions.c:78
+#: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
 msgstr "TTB-HTV-STÅANDE"
 
-#: app/actions/text-editor-actions.c:79
+#: app/actions/text-editor-actions.c:74
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Loddrett, høgre til venstre (ståande retning)"
 
-#: app/actions/text-editor-actions.c:84
+#: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
 msgstr "TTB-VTH"
 
-#: app/actions/text-editor-actions.c:85
+#: app/actions/text-editor-actions.c:80
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Loddrett, venstre til høgre (blanda retning)"
 
-#: app/actions/text-editor-actions.c:90
+#: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
 msgstr "TTB-VTH-STÅANDE"
 
-#: app/actions/text-editor-actions.c:91
+#: app/actions/text-editor-actions.c:86
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Loddrett, venstre til høgre (ståande retning)"
@@ -9987,7 +9987,7 @@ msgstr "Opna visinga"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:484
+#: app/tools/gimpfiltertool.c:360 app/widgets/gimpcolordialog.c:486
 #: app/widgets/gimpcontrollereditor.c:663
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
@@ -12279,7 +12279,7 @@ msgctxt "undo-type"
 msgid "Paste"
 msgstr "Lim inn"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1224
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1251
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klipp ut"
@@ -12595,26 +12595,26 @@ msgid "Selection by glob pattern search"
 msgstr "Søk på utval med glob-mønster"
 
 #. initialize babl fishes
-#: app/core/gimp.c:535 app/core/gimp.c:565
+#: app/core/gimp.c:539 app/core/gimp.c:569
 msgid "Initialization"
 msgstr "Oppstart"
 
 #. register all internal procedures
-#: app/core/gimp.c:545
+#: app/core/gimp.c:549
 msgid "Internal Procedures"
 msgstr "Interne prosedyrar"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:845
+#: app/core/gimp.c:849
 msgid "Looking for data files"
 msgstr "Ser etter datafiler"
 
-#: app/core/gimp.c:845
+#: app/core/gimp.c:849
 msgid "Parasites"
 msgstr "Parasitter"
 
 #. initialize the module list
-#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3582
+#: app/core/gimp.c:860 app/dialogs/preferences-dialog.c:3582
 msgid "Modules"
 msgstr "Modular"
 
@@ -12697,7 +12697,7 @@ msgstr "Kan ikkje kopiera fordi det valde området er tomt."
 msgid "Pasted Layer"
 msgstr "Innlimt lag"
 
-#: app/core/gimp-edit.c:1241
+#: app/core/gimp-edit.c:1268
 msgid "Global Buffer"
 msgstr "Global buffer"
 
@@ -12808,12 +12808,12 @@ msgid "Please wait: %s\n"
 msgstr "Vent litt: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:650 app/core/gimpdata.c:663
+#: app/core/gimpdata.c:652 app/core/gimpdata.c:665
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Feil ved lagring av «%s»: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:669
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:671
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Feil ved lagring av «%s»"
@@ -13294,7 +13294,7 @@ msgid "Background color"
 msgstr "Bakgrunnsfarge"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
-#: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
+#: app/operations/gimpoperationsettings.c:100
 #: app/widgets/gimplayertreeview.c:295
 msgid "Opacity"
 msgstr "Dekkevne"
@@ -13734,7 +13734,7 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformer laggruppa"
 
-#: app/core/gimpimage.c:685 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:685 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Symmetri"
 
@@ -13985,27 +13985,27 @@ msgstr "Fargeprofilkonvertering"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Fargekart for biletet #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:230 app/core/gimpimage-colormap.c:310
+#: app/core/gimpimage-colormap.c:230 app/core/gimppalette.c:904
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Set fargekart"
 
-#: app/core/gimpimage-colormap.c:348
+#: app/core/gimpimage-colormap.c:310
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Set tilbake fargekartet"
 
-#: app/core/gimpimage-colormap.c:440 app/core/gimppalette.c:612
+#: app/core/gimpimage-colormap.c:402 app/core/gimppalette.c:695
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Endra fargekartinnslag"
 
-#: app/core/gimpimage-colormap.c:462
+#: app/core/gimpimage-colormap.c:424
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Legg farge til fargekartet"
 
-#: app/core/gimpimage-colormap.c:487
+#: app/core/gimpimage-colormap.c:449
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "Slett fargekartoppføringa"
@@ -14027,15 +14027,15 @@ msgstr "Konverterer til indekserte fargar (steg 2)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konverterer til indekserte fargar (steg 3)"
 
-#: app/core/gimpimage-convert-precision.c:79
+#: app/core/gimpimage-convert-precision.c:76
 #, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Konverter biletet til %s"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:249
-#: app/core/gimpimage-convert-precision.c:270
+#: app/core/gimpimage-convert-precision.c:198
+#: app/core/gimpimage-convert-precision.c:219
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:129
@@ -14274,12 +14274,12 @@ msgstr "Fjern parasitt frå element"
 msgid "Set Item Exclusive Visibility"
 msgstr "Set elementet eksklusiv visingslås"
 
-#: app/core/gimplayer-floating-selection.c:126
+#: app/core/gimplayer-floating-selection.c:127
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Forankra det flytande utvalet"
 
-#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1047
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1047
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14287,7 +14287,7 @@ msgstr ""
 "Kan ikkje oppretta nytt lag frå det flytande utvalet fordi dette høyrer til "
 "ei lagmaske eller ein kanal."
 
-#: app/core/gimplayer-floating-selection.c:189
+#: app/core/gimplayer-floating-selection.c:190
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Flytande utval til lag"
@@ -14355,7 +14355,7 @@ msgstr "Laget kan ikkje lyftast høgare."
 msgid "Layer cannot be lowered more."
 msgstr "Laget kan ikkje senkast lågare."
 
-#: app/core/gimplayer.c:733 app/core/gimplayer.c:2005
+#: app/core/gimplayer.c:733 app/core/gimplayer.c:2000
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
@@ -14382,75 +14382,75 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1906
+#: app/core/gimplayer.c:1901
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan ikkje legga til ei lagmaske fordi laget har ei slik maske frå før."
 
-#: app/core/gimplayer.c:1917
+#: app/core/gimplayer.c:1912
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan ikkje legga til lagmaske med andre dimensjonar enn det som det "
 "spesifiserte laget har."
 
-#: app/core/gimplayer.c:1923
+#: app/core/gimplayer.c:1918
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Legg til lagmasker"
 
-#: app/core/gimplayer.c:2047
+#: app/core/gimplayer.c:2042
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Overfør alfa til maske"
 
-#: app/core/gimplayer.c:2210
+#: app/core/gimplayer.c:2205
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Bruk lagmasker"
 
-#: app/core/gimplayer.c:2211
+#: app/core/gimplayer.c:2206
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Slett lagmasker"
 
-#: app/core/gimplayer.c:2318
+#: app/core/gimplayer.c:2313
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Slå på lagmaskene"
 
-#: app/core/gimplayer.c:2319
+#: app/core/gimplayer.c:2314
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Slå av lagmaskene"
 
-#: app/core/gimplayer.c:2400
+#: app/core/gimplayer.c:2395
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Vis lagmaskene"
 
-#: app/core/gimplayer.c:2479
+#: app/core/gimplayer.c:2474
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Legg til alfakanal"
 
-#: app/core/gimplayer.c:2509
+#: app/core/gimplayer.c:2504
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Fjern alfakanal"
 
-#: app/core/gimplayer.c:2530
+#: app/core/gimplayer.c:2525
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laget til biletstorleik"
 
-#: app/core/gimplayer.c:2713
+#: app/core/gimplayer.c:2708
 msgid "Set layer's blend space"
 msgstr "Set blandeområdet for laget"
 
-#: app/core/gimplayer.c:2760
+#: app/core/gimplayer.c:2755
 msgid "Set layer's composite space"
 msgstr "Set den samanslåtte plassen for laget"
 
-#: app/core/gimplayer.c:2807
+#: app/core/gimplayer.c:2802
 msgid "Set layer's composite mode"
 msgstr "Set samansetjingsmodus for laget"
 
@@ -14896,7 +14896,7 @@ msgstr "Etterlikner penseldynamikk"
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:512
 #: app/display/gimpstatusbar.c:2146 app/widgets/gimpimagepropview.c:407
-#: app/widgets/gimpsymmetryeditor.c:166 app/widgets/gimpsymmetryeditor.c:176
+#: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
 msgstr "Ingen"
 
@@ -15679,11 +15679,11 @@ msgstr "Den gjevne filutvidinga passar ikkje med den valde filtypen."
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Vil du likevel lagra biletet med dette namnet?"
 
-#: app/dialogs/file-save-dialog.c:838
+#: app/dialogs/file-save-dialog.c:845
 msgid "Saving canceled"
 msgstr "Lagringa avbrote"
 
-#: app/dialogs/file-save-dialog.c:844 app/widgets/gimpdnd-xds.c:190
+#: app/dialogs/file-save-dialog.c:852 app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -15694,7 +15694,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/dialogs/file-save-dialog.c:846
+#: app/dialogs/file-save-dialog.c:854
 msgid "Unknown error"
 msgstr "Ukjent feil"
 
@@ -18572,23 +18572,23 @@ msgstr "H"
 msgid "_Sample Merged"
 msgstr "_Flett synlege"
 
-#: app/display/gimpdisplayshell.c:539
+#: app/display/gimpdisplayshell.c:547
 msgid "Access the image menu"
 msgstr "Opna biletmenyen"
 
-#: app/display/gimpdisplayshell.c:702
+#: app/display/gimpdisplayshell.c:710
 msgid "Zoom image when window size changes"
 msgstr "Forstørr eller forminsk biletet når vindaugeformatet vert endra"
 
-#: app/display/gimpdisplayshell.c:731
+#: app/display/gimpdisplayshell.c:739
 msgid "Toggle Quick Mask"
 msgstr "Slå av/på snarmaske"
 
-#: app/display/gimpdisplayshell.c:746
+#: app/display/gimpdisplayshell.c:754
 msgid "Navigate the image display"
 msgstr "Naviger i biletvisinga"
 
-#: app/display/gimpdisplayshell.c:799 app/display/gimpdisplayshell.c:1551
+#: app/display/gimpdisplayshell.c:807 app/display/gimpdisplayshell.c:1577
 #: app/widgets/gimptoolbox.c:269
 msgid "Drop image files here to open them"
 msgstr "Slepp biletfilene her for å opna dei"
@@ -18803,7 +18803,7 @@ msgstr "(tomt)"
 msgid "(none)"
 msgstr "(ingen)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1742
+#: app/display/gimpdisplayshell-tool-events.c:1752
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Lag henta: «%s»"
@@ -20213,7 +20213,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Omformar fargane til gråtoner"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1350
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1382
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20252,7 +20252,7 @@ msgstr "Byt ut delvis gjennomsikt med ein farge"
 msgid "The color"
 msgstr "Fargen"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1313
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1345
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -21192,8 +21192,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
 "Prosedyren «%s» er kalla opp med feil verditype for argumentet «%s» (nr. "
 "%d). Venta %s, fekk %s."
@@ -21245,9 +21245,6 @@ msgstr ""
 
 #: app/pdb/gimpprocedure.c:970
 #, c-format
-#| msgid ""
-#| "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
-#| "value is out of range."
 msgid ""
 "Procedure '%s' returned `gimp_unit_percent()` as GimpUnit return value #%d "
 "'%s'. This return value does not allow percent unit."
@@ -21266,9 +21263,6 @@ msgstr ""
 
 #: app/pdb/gimpprocedure.c:992
 #, c-format
-#| msgid ""
-#| "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
-#| "type %s). This value is out of range."
 msgid ""
 "Procedure '%s' has been called with `gimp_unit_percent()` for GimpUnit "
 "argument #%d '%s'. This argument does not allow percent unit."
@@ -21309,7 +21303,7 @@ msgstr ""
 "Prosedyren «%s» vart kalla opp med ein ugyldig UTF-8-streng for argumentet "
 "«%s»."
 
-#: app/pdb/image-cmds.c:2462
+#: app/pdb/image-cmds.c:2643
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -21337,39 +21331,39 @@ msgstr "2D-transformering"
 msgid "2D Transforming"
 msgstr "2D-transformering"
 
-#: app/pdb/path-cmds.c:330
+#: app/pdb/path-cmds.c:328
 msgid "Remove path stroke"
 msgstr "Fjern oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:367
+#: app/pdb/path-cmds.c:365
 msgid "Close path stroke"
 msgstr "Lukk oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:406
+#: app/pdb/path-cmds.c:404
 msgid "Reverse path stroke"
 msgstr "Reverser oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:451
+#: app/pdb/path-cmds.c:449
 msgid "Translate path stroke"
 msgstr "Tilpass oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:496
+#: app/pdb/path-cmds.c:494
 msgid "Scale path stroke"
 msgstr "Skaler oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:543
+#: app/pdb/path-cmds.c:541
 msgid "Rotate path stroke"
 msgstr "Roter oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:588 app/pdb/path-cmds.c:637
+#: app/pdb/path-cmds.c:586 app/pdb/path-cmds.c:635
 msgid "Flip path stroke"
 msgstr "Spegelvend oppstrekinga av banen"
 
-#: app/pdb/path-cmds.c:768 app/pdb/path-cmds.c:892 app/pdb/path-cmds.c:1122
+#: app/pdb/path-cmds.c:766 app/pdb/path-cmds.c:890 app/pdb/path-cmds.c:1120
 msgid "Add path stroke"
 msgstr "Legg til strok"
 
-#: app/pdb/path-cmds.c:946 app/pdb/path-cmds.c:1002 app/pdb/path-cmds.c:1066
+#: app/pdb/path-cmds.c:944 app/pdb/path-cmds.c:1000 app/pdb/path-cmds.c:1064
 msgid "Extend path stroke"
 msgstr "Utvid oppstrekinga av banen"
 
@@ -22835,7 +22829,7 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Kan ikkje fylle fleire lag. Vel berre eitt lag."
 
 #: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:219 app/tools/gimpfiltertool.c:300
+#: app/tools/gimpcurvestool.c:219 app/tools/gimpfiltertool.c:301
 #: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
 #: app/tools/gimpoffsettool.c:190 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
@@ -23200,7 +23194,7 @@ msgstr "Kurver"
 msgid "_Curves..."
 msgstr "_Kurver …"
 
-#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
+#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:299
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
 #: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23412,67 +23406,67 @@ msgstr ""
 "Viss slått på, vert filteret straks slått saman.\n"
 "Elles vert det eit redigerbart ikkje-destruktivt filter."
 
-#: app/tools/gimpfiltertool.c:310 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:311 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "Pikslane i det merkte elementet er låst."
 
-#: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
+#: app/tools/gimpfiltertool.c:323 app/tools/gimppainttool.c:371
 #: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
 msgid "A selected layer is not visible."
 msgstr "Eit merkt lag er ikkje synleg."
 
-#: app/tools/gimpfiltertool.c:420
+#: app/tools/gimpfiltertool.c:431
 msgid "Disabled because this filter depends on another image."
 msgstr "Slått av fordi dette filteret avhenger av eit anna bilete."
 
-#: app/tools/gimpfiltertool.c:710
+#: app/tools/gimpfiltertool.c:742
 msgid "Click to switch the original and filtered sides"
 msgstr "Klikk for å byta mellom opphavlege og filtrerte sider"
 
-#: app/tools/gimpfiltertool.c:714
+#: app/tools/gimpfiltertool.c:746
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klikk for å byta mellom vassrett og loddrett"
 
-#: app/tools/gimpfiltertool.c:718
+#: app/tools/gimpfiltertool.c:750
 msgid "Click to move the split guide"
 msgstr "Klikk for å flytta delelinja"
 
-#: app/tools/gimpfiltertool.c:720
+#: app/tools/gimpfiltertool.c:752
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: byt mellom original og filtrert"
 
-#: app/tools/gimpfiltertool.c:721
+#: app/tools/gimpfiltertool.c:753
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: Byt mellom vassrett og loddrett"
 
-#: app/tools/gimpfiltertool.c:1234
+#: app/tools/gimpfiltertool.c:1266
 msgid "Add filter"
 msgstr "Legg til filter"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1326
+#: app/tools/gimpfiltertool.c:1358
 msgid "Blending Options"
 msgstr "Blandeinnstillingar"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1365
+#: app/tools/gimpfiltertool.c:1397
 msgid "Advanced Color Options"
 msgstr "Avanserte fargeval"
 
-#: app/tools/gimpfiltertool.c:1795 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1840 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importer «%s»-innstillingane"
 
-#: app/tools/gimpfiltertool.c:1797 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1842 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksporter «%s»-innstillingane"
 
-#: app/tools/gimpfiltertool.c:2040
+#: app/tools/gimpfiltertool.c:2080
 msgid "Editing filter..."
 msgstr "Redigera filteret …"
 
@@ -24831,7 +24825,7 @@ msgstr "Klonar forgrunnsobjektet"
 msgid "Enable feathering of selection edges"
 msgstr "Slå på utglatting av utvalskantane"
 
-#: app/tools/gimpselectionoptions.c:235 app/widgets/gimpbrushselect.c:190
+#: app/tools/gimpselectionoptions.c:235
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -26352,7 +26346,7 @@ msgstr "Fargeindeks:"
 msgid "HTML notation (sRGB):"
 msgstr "HTML-notasjon (sRGB):"
 
-#: app/widgets/gimpcolormapselection.c:517
+#: app/widgets/gimpcolormapselection.c:519
 msgid "Only indexed images have a colormap."
 msgstr "Berre indekserte bilete har fargekart."
 
@@ -28059,7 +28053,7 @@ msgstr "Programtillegg"
 msgid "Progress"
 msgstr "Framgang"
 
-#: app/widgets/gimpsamplepointeditor.c:161
+#: app/widgets/gimpsamplepointeditor.c:163
 msgid ""
 "This image\n"
 "has no\n"
@@ -28786,11 +28780,11 @@ msgstr "Feil ved skriving til «%s»: "
 msgid "Error creating '%s': "
 msgstr "Feil ved laging av «%s»: "
 
-#: app/xcf/xcf-load.c:295
+#: app/xcf/xcf-load.c:296
 msgid "Invalid image mode and precision combination."
 msgstr "Ugyldig biletmodus og presisjonskombinasjon."
 
-#: app/xcf/xcf-load.c:502
+#: app/xcf/xcf-load.c:503
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28799,7 +28793,7 @@ msgstr ""
 "Øydelagde «exif-data»-parasitt oppdaga\n"
 "Klarte ikkje overføra exif-data: %s"
 
-#: app/xcf/xcf-load.c:541
+#: app/xcf/xcf-load.c:542
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28807,7 +28801,7 @@ msgstr ""
 "Øydelagd «gimp-metadata»-parasitt oppdaga\n"
 "Klarte ikkje overføra XMP-data."
 
-#: app/xcf/xcf-load.c:565
+#: app/xcf/xcf-load.c:566
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28820,19 +28814,19 @@ msgstr ""
 "Viss du ikkje veit kva XNP er, har du truleg ikkje bruk for det. Rapportert "
 "feil: %s."
 
-#: app/xcf/xcf-load.c:905
+#: app/xcf/xcf-load.c:906
 msgid "Linked Layers"
 msgstr "Lenkja lag"
 
-#: app/xcf/xcf-load.c:915
+#: app/xcf/xcf-load.c:916
 msgid "Linked Channels"
 msgstr "Lenkja kanalar"
 
-#: app/xcf/xcf-load.c:940
+#: app/xcf/xcf-load.c:941
 msgid "Linked Paths"
 msgstr "Lenkja banar"
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:988
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28840,14 +28834,14 @@ msgstr ""
 "Denne XCF-fila er øydelagt. Eg har lasta inn så mykje eg kunne, men fekk "
 "ikkje med alt."
 
-#: app/xcf/xcf-load.c:1007
+#: app/xcf/xcf-load.c:1008
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Denne XCF-fila er øydelagt. Det er ikkje råd å lasta inn noko som helst."
 
-#: app/xcf/xcf-load.c:1164
+#: app/xcf/xcf-load.c:1165
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28857,7 +28851,7 @@ msgstr ""
 "lagrar indekserte fargekart feil.\n"
 "Støtter derimot gråtonekart."
 
-#: app/xcf/xcf-load.c:2523
+#: app/xcf/xcf-load.c:2524
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28870,7 +28864,7 @@ msgstr ""
 "Dette bør ikkje skje. Du bør rapportera problemet til utviklarane av "
 "filteret."
 
-#: app/xcf/xcf-load.c:3408
+#: app/xcf/xcf-load.c:3448
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -29464,6 +29458,10 @@ msgstr "Meny for verktøyinnstillingane"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Angre angreloggen"
+
+#~ msgctxt "text-editor-action"
+#~ msgid "Text Editor Toolbar"
+#~ msgstr "Verktøylinja for teksthandsaming"
 
 #~ msgctxt "vectors-action"
 #~ msgid "None"
