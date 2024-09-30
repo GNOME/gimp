@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-10 16:14+0000\n"
-"PO-Revision-Date: 2024-08-18 20:06+0200\n"
+"POT-Creation-Date: 2024-09-27 14:20+0000\n"
+"PO-Revision-Date: 2024-09-30 14:58+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,98 +16,101 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
-msgstr "_Bla gjennom  … "
+msgstr "_Bla gjennom …"
 
 #: libgimp/gimpdrawablechooser.c:238
 msgid "Browse..."
 msgstr "Bla gjennom …"
 
-#: libgimp/gimpexport.c:363 libgimp/gimpexport.c:399
+#: libgimp/gimpexportoptions.c:341 libgimp/gimpexportoptions.c:377
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Programtillegget %s kan ikkje handsama lag"
 
-#: libgimp/gimpexport.c:364 libgimp/gimpexport.c:373 libgimp/gimpexport.c:382
-#: libgimp/gimpexport.c:400
+#: libgimp/gimpexportoptions.c:342 libgimp/gimpexportoptions.c:351
+#: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:378
 msgid "Merge Visible Layers"
 msgstr "Flett saman synlege lag"
 
-#: libgimp/gimpexport.c:372
+#: libgimp/gimpexportoptions.c:350
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Programtillegget %s kan ikkje handsama lagforskyving, storleik og dekkevne"
 
-#: libgimp/gimpexport.c:381 libgimp/gimpexport.c:390
+#: libgimp/gimpexportoptions.c:359 libgimp/gimpexportoptions.c:368
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Programtillegget %s kan berre handsama lag som animasjonsrammer"
 
-#: libgimp/gimpexport.c:382 libgimp/gimpexport.c:391
+#: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:369
 msgid "Save as Animation"
 msgstr "Lagra som animasjon"
 
-#: libgimp/gimpexport.c:391 libgimp/gimpexport.c:400 libgimp/gimpexport.c:409
-#: libgimp/gimpexport.c:427
+#: libgimp/gimpexportoptions.c:369 libgimp/gimpexportoptions.c:378
+#: libgimp/gimpexportoptions.c:387 libgimp/gimpexportoptions.c:405
 msgid "Flatten Image"
 msgstr "Flat ut biletet"
 
-#: libgimp/gimpexport.c:408
+#: libgimp/gimpexportoptions.c:386
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Programtillegget %s kan ikkje handsama gjennomsikt"
 
-#: libgimp/gimpexport.c:417
+#: libgimp/gimpexportoptions.c:395
 #, c-format
 msgid "%s plug-in can't handle layer effects"
 msgstr "Programtillegget %s kan ikkje handsama lageffektar"
 
-#: libgimp/gimpexport.c:418
+#: libgimp/gimpexportoptions.c:396
 msgid "Merge Layer Effects"
 msgstr "Flett saman lageffektar"
 
-#: libgimp/gimpexport.c:426
+#: libgimp/gimpexportoptions.c:404
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Programtillegget %s kan ikkje handsama gjennomsiktige lag"
 
-#: libgimp/gimpexport.c:435
+#: libgimp/gimpexportoptions.c:413
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Programtillegget %s kan ikkje handsama lagmasker"
 
-#: libgimp/gimpexport.c:436
+#: libgimp/gimpexportoptions.c:414
 msgid "Apply Layer Masks"
 msgstr "Legg til lagmasker"
 
-#: libgimp/gimpexport.c:444
+#: libgimp/gimpexportoptions.c:422
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Programtillegget %s kan berre handsama RGB-bilete"
 
-#: libgimp/gimpexport.c:445 libgimp/gimpexport.c:483 libgimp/gimpexport.c:492
+#: libgimp/gimpexportoptions.c:423 libgimp/gimpexportoptions.c:461
+#: libgimp/gimpexportoptions.c:470
 msgid "Convert to RGB"
 msgstr "Konverter til RGB"
 
-#: libgimp/gimpexport.c:453
+#: libgimp/gimpexportoptions.c:431
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Programtillegget %s kan berre handsama gråtonebilete"
 
-#: libgimp/gimpexport.c:454 libgimp/gimpexport.c:483 libgimp/gimpexport.c:504
+#: libgimp/gimpexportoptions.c:432 libgimp/gimpexportoptions.c:461
+#: libgimp/gimpexportoptions.c:482
 msgid "Convert to Grayscale"
 msgstr "Konverter til gråtoner"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexportoptions.c:440
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Programtillegget %s kan berre handsama indekserte bilete"
 
-#: libgimp/gimpexport.c:463 libgimp/gimpexport.c:492 libgimp/gimpexport.c:502
+#: libgimp/gimpexportoptions.c:441 libgimp/gimpexportoptions.c:470
+#: libgimp/gimpexportoptions.c:480
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -115,13 +118,13 @@ msgstr ""
 "Konverter til indeksert ved å nytta standardinnstillingane.\n"
 "(Gjer det manuelt for å finjustera resultatet)"
 
-#: libgimp/gimpexport.c:472
+#: libgimp/gimpexportoptions.c:450
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Programtillegget %s kan berre handsama indekserte punktbilet (to fargar)"
 
-#: libgimp/gimpexport.c:473
+#: libgimp/gimpexportoptions.c:451
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -129,132 +132,116 @@ msgstr ""
 "Konverter til indeksert ved å nytta standardinnstillingane.\n"
 "(Gjer det manuelt for å finjustera resultatet)"
 
-#: libgimp/gimpexport.c:482
+#: libgimp/gimpexportoptions.c:460
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Programtillegget %s kan berre handsama RGB- og gråskalabilete"
 
-#: libgimp/gimpexport.c:491
+#: libgimp/gimpexportoptions.c:469
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Programtillegget %s kan berre handsama RGB og indekserte bilete"
 
-#: libgimp/gimpexport.c:501
+#: libgimp/gimpexportoptions.c:479
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "Programtillegget %s kan berre handsama gråskala og indekserte bilete"
 
-#: libgimp/gimpexport.c:512
+#: libgimp/gimpexportoptions.c:490
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Programtillegget %s treng ein alfakanal"
 
-#: libgimp/gimpexport.c:513
+#: libgimp/gimpexportoptions.c:491
 msgid "Add Alpha Channel"
 msgstr "Legg til alfakanal"
 
-#: libgimp/gimpexport.c:521
+#: libgimp/gimpexportoptions.c:499
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "Programtillegget %s må klippa laga slik at dei passar innføre biletet"
 
-#: libgimp/gimpexport.c:522
+#: libgimp/gimpexportoptions.c:500
 msgid "Crop Layers"
 msgstr "Klipp lag"
 
-#: libgimp/gimpexport.c:522
+#: libgimp/gimpexportoptions.c:500
 msgid "Resize Image to Layers"
 msgstr "Endra biletstorleiken for å passa laga"
 
-#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:923 libgimp/gimpexportproceduredialog.c:416
-#, c-format
-msgid "Export Image as %s"
-msgstr "Eksporter biletet som %s"
-
-#: libgimp/gimpexport.c:929 libgimp/gimpproceduredialog.c:344
-#: libgimpwidgets/gimpcolorbutton.c:552
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
-#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
-#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
-#: libgimpwidgets/gimpquerybox.c:479
-msgid "_Cancel"
-msgstr "_Avbryt"
-
-#: libgimp/gimpexport.c:930 libgimp/gimpproceduredialog.c:316
-#: libgimp/gimpproceduredialog.c:615
-msgid "_Export"
-msgstr "_Eksporter"
-
-#: libgimp/gimpexportprocedure.c:461
+#: libgimp/gimpexportprocedure.c:529
 msgid "Save _Exif"
 msgstr "Lagra _Exif"
 
-#: libgimp/gimpexportprocedure.c:462
+#: libgimp/gimpexportprocedure.c:530
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Lagra Exif (Exchangeable image file format) metadata"
 
-#: libgimp/gimpexportprocedure.c:467
+#: libgimp/gimpexportprocedure.c:535
 msgid "Save _IPTC"
 msgstr "Lagra _IPTC"
 
-#: libgimp/gimpexportprocedure.c:468
+#: libgimp/gimpexportprocedure.c:536
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr "Lagra IPTC (International Press Telecommunications Council) metadata"
 
-#: libgimp/gimpexportprocedure.c:473
+#: libgimp/gimpexportprocedure.c:541
 msgid "Save _XMP"
 msgstr "Lagra _XMP"
 
-#: libgimp/gimpexportprocedure.c:474
+#: libgimp/gimpexportprocedure.c:542
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "Lagra XMP (Extensible Metadata Platform) metadata"
 
-#: libgimp/gimpexportprocedure.c:479
+#: libgimp/gimpexportprocedure.c:547
 msgid "Save color _profile"
 msgstr "Lagra _fargeprofilen"
 
-#: libgimp/gimpexportprocedure.c:480
+#: libgimp/gimpexportprocedure.c:548
 msgid "Save the ICC color profile as metadata"
 msgstr "Lagra ICC-fargeprofilen som metadata"
 
-#: libgimp/gimpexportprocedure.c:485
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _thumbnail"
 msgstr "Lagra _miniatyren"
 
-#: libgimp/gimpexportprocedure.c:486
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Lagra ein mindre representasjon av biletet som metadata"
 
-#: libgimp/gimpexportprocedure.c:492
+#: libgimp/gimpexportprocedure.c:560
 msgid "Save c_omment"
 msgstr "Lagra _merknad"
 
-#: libgimp/gimpexportprocedure.c:493
+#: libgimp/gimpexportprocedure.c:561
 msgid "Save a comment as metadata"
 msgstr "Lagra ein merknad som metadata"
 
-#: libgimp/gimpexportprocedure.c:497
+#: libgimp/gimpexportprocedure.c:565
 msgid "Comment"
 msgstr "Merknad"
 
-#: libgimp/gimpexportprocedure.c:498
+#: libgimp/gimpexportprocedure.c:566
 msgid "Image comment"
 msgstr "Biletmerknad"
 
-#: libgimp/gimpexportproceduredialog.c:141
+#: libgimp/gimpexportproceduredialog.c:150
 msgid "Metadata"
 msgstr "Metadata"
 
-#: libgimp/gimpexportproceduredialog.c:150
+#: libgimp/gimpexportproceduredialog.c:159
 msgid "Edit Metadata"
 msgstr "Rediger metadata"
 
-#: libgimp/gimpexportproceduredialog.c:150
+#: libgimp/gimpexportproceduredialog.c:159
 msgid "(edit)"
 msgstr "(rediger)"
+
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpexportproceduredialog.c:436
+#, c-format
+msgid "Export Image as %s"
+msgstr "Eksporter biletet som %s"
 
 #: libgimp/gimpimagemetadata.c:329
 msgid "Background"
@@ -385,12 +372,12 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "1 prosedyre passa til spørjinga"
 msgstr[1] "%d prosedyrar passa til spørringa"
 
-#: libgimp/gimpprocedure.c:2169
+#: libgimp/gimpprocedure.c:2158
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Prosedyren «%s» returnerte ingen verdiar"
 
-#: libgimp/gimpprocedure.c:2309
+#: libgimp/gimpprocedure.c:2335
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -399,16 +386,16 @@ msgstr ""
 "Prosedyren «%s» returnerte feil verditype for verdien «%s» (#%d). Venta %s, "
 "fekk %s."
 
-#: libgimp/gimpprocedure.c:2321
+#: libgimp/gimpprocedure.c:2347
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
-"Prosedyren «%s» vart kalla opp med ein feil verditype for argumentet "
-"«%s» (#%d). Venta %s, fekk %s."
+"Prosedyren «%s» vart kalla opp med ein feil verditype for argumentet «%s» "
+"(#%d). Venta %s, fekk %s."
 
-#: libgimp/gimpprocedure.c:2356
+#: libgimp/gimpprocedure.c:2382
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -417,7 +404,7 @@ msgstr ""
 "Prosedyren «%s» returnerte «%s» som returverdi «%s» (#%d, type %s). Denne "
 "verdien er utanfor området."
 
-#: libgimp/gimpprocedure.c:2370
+#: libgimp/gimpprocedure.c:2396
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -426,13 +413,13 @@ msgstr ""
 "Prosedyren «%s» vart kalla opp med verdien «%s» for argumentet «%s» (#%d, "
 "type %s). Denne verdien er utføre området."
 
-#: libgimp/gimpprocedure.c:2414
+#: libgimp/gimpprocedure.c:2440
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Prosedyren «%s» returnerte ein ugyldig UTF-8-streng for argumentet «%s»."
 
-#: libgimp/gimpprocedure.c:2424
+#: libgimp/gimpprocedure.c:2450
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -446,6 +433,10 @@ msgstr ""
 msgid "_Open"
 msgstr "_Opna"
 
+#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+msgid "_Export"
+msgstr "_Eksporter"
+
 #: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:493
 #: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
@@ -456,6 +447,15 @@ msgstr "_OK"
 #: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_Tilbakestill"
+
+#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfileentry.c:492 libgimpwidgets/gimpquerybox.c:274
+#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
+#: libgimpwidgets/gimpquerybox.c:479
+msgid "_Cancel"
+msgstr "_Avbryt"
 
 #: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
@@ -1695,32 +1695,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskjer med sideforhold"
 
-#: libgimpbase/gimpmetadata.c:1217
+#: libgimpbase/gimpmetadata.c:1219
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan lasta inn metadata berre frå lokale filer"
 
-#: libgimpbase/gimpmetadata.c:1273
+#: libgimpbase/gimpmetadata.c:1275
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan lagra metadata berre i lokale filer"
 
-#: libgimpbase/gimpmetadata.c:1322
+#: libgimpbase/gimpmetadata.c:1324
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ugyldig storleik på Exif-data."
 
-#: libgimpbase/gimpmetadata.c:1367
+#: libgimpbase/gimpmetadata.c:1369
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Analyseringa av Exif-data mislukka."
 
-#: libgimpbase/gimpmetadata.c:1419
+#: libgimpbase/gimpmetadata.c:1421
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Analyseringa av IPTC-data mislukka."
 
-#: libgimpbase/gimpmetadata.c:1467
+#: libgimpbase/gimpmetadata.c:1469
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Analyseringa av XMP-data mislukka."
@@ -2065,28 +2065,28 @@ msgstr "Fargeprofilen «%s» er ikkje for gråskala fargeprofil."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Fargeprofilen «%s» er ikkje for CMYK fargeprofil."
 
-#: libgimpconfig/gimpconfig-deserialize.c:124
+#: libgimpconfig/gimpconfig-deserialize.c:121
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "verdien for teiknet %s er ikkje ein gyldig UTF-8-streng"
 
 #. please don't translate 'yes' and 'no'
-#: libgimpconfig/gimpconfig-deserialize.c:503
+#: libgimpconfig/gimpconfig-deserialize.c:497
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "venta «ja» eller «nei» for bolsk teikn %s, men fekk «%s»"
 
-#: libgimpconfig/gimpconfig-deserialize.c:618
+#: libgimpconfig/gimpconfig-deserialize.c:612
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ugyldig verdi «%s» for teiknet %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:633
+#: libgimpconfig/gimpconfig-deserialize.c:627
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ugyldig verdi «%ld» for teiknet %s"
 
-#: libgimpconfig/gimpconfig-deserialize.c:702
+#: libgimpconfig/gimpconfig-deserialize.c:696
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "under tolking av «%s»: %s"
@@ -2366,7 +2366,7 @@ msgstr "Vel mappe"
 msgid "Select File"
 msgstr "Vel fil"
 
-#: libgimpwidgets/gimphelpui.c:379
+#: libgimpwidgets/gimphelpui.c:387
 msgid "Press F1 for more help"
 msgstr "Trykk F1 for meir hjelp"
 
