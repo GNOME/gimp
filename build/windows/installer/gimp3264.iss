@@ -146,7 +146,7 @@ UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
 UninstallFilesDir={app}\uninst
 
 MinVersion=6.1
-ArchitecturesInstallIn64BitMode=x64 arm64
+ArchitecturesInstallIn64BitMode=x64compatible arm64
 
 #ifdef NOCOMPRESSION
 ;UseSetupLdr=no
@@ -298,7 +298,7 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: g
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp or depsARM64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\10.02.1\lib\*.*"; DestDir: "{app}\share\ghostscript\10.02.1\lib"; Components: gs and (gimp32 or gimp64 or gimpARM64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\ghostscript\10.03.1\lib\*.*"; DestDir: "{app}\share\ghostscript\10.02.1\lib"; Components: gs and (gimp32 or gimp64 or gimpARM64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 #ifdef PYTHON
 ;*.py files are the same on 32 and 64-bit
@@ -682,7 +682,7 @@ begin
 	else if pWhich = '32' then
 		Result := (not Is64BitInstallMode()) or Force32bitInstall
 	else if pWhich = 'x64' then
-		Result := Is64BitInstallMode() and IsX64 and (not Force32bitInstall)
+		Result := Is64BitInstallMode() and IsX64Compatible and (not Force32bitInstall)
 	else if pWhich = 'arm64' then
 		Result := Is64BitInstallMode() and IsARM64 and (not Force32bitInstall)
 	else
