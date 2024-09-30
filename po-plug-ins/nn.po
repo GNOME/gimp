@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-10 15:47+0000\n"
-"PO-Revision-Date: 2024-08-18 18:23+0200\n"
+"POT-Creation-Date: 2024-09-29 14:58+0000\n"
+"PO-Revision-Date: 2024-09-30 15:22+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -3613,8 +3613,8 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Trykk på denne for å skalera sluttbiletet for å passa i den gjevne storleiken "
-"utan å endra forholdet mellom sidene."
+"Trykk på denne for å skalera sluttbiletet for å passa i den gjevne "
+"storleiken utan å endra forholdet mellom sidene."
 
 #. Unit
 #: ../plug-ins/common/file-ps.c:3785
@@ -11569,11 +11569,8 @@ msgstr "Lag n_ytt bilete"
 
 #: ../plug-ins/lighting/lighting-ui.c:337
 #: ../plug-ins/map-object/map-object-ui.c:507
-#, fuzzy
 msgid "Create a new image when applying filter"
-msgstr ""
-"Lagar eit nytt bilete og brukar filteret på dette. Det opphavlege biletet er "
-"uendra"
+msgstr "Lag eit nytt bilete når filteret vert lagt til"
 
 #: ../plug-ins/lighting/lighting-ui.c:339
 msgid "High _quality preview"
