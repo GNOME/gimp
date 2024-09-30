@@ -259,7 +259,7 @@ Name: gimp32on64\py; Description: "{cm:ComponentsPython}"; Types: full custom; C
 Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('64')
 
 [Tasks]
-Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Icons]
 #define ICON_VERSION=MAJOR + "." + MINOR + "." + MICRO
