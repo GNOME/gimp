@@ -586,6 +586,8 @@ Type: filesandordirs; Name: "{app}\32\lib\python2.7"
 ;remove old babl and gegl plugins
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
+;pycairo-1.18.2-py2.7.egg-info changed from directory to file, this confuses Inno
+Type: filesandordirs; Name: "{app}\lib\python2.7\site-packages\pycairo-1.18.2-py2.7.egg-info"
 
 [Registry]
 ;remove LIBTHAI_DICTDIR variable set by original 2.10.8 installer
@@ -846,7 +848,7 @@ begin
 	if IsComponentSelected('py') then
 		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10
 	else if IsComponentSelected('gimp32on64\py') then
-		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python;${gimp_plug_in_dir}\32\plug-ins\python-console' + #10;
+		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10;
 
 	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
 
