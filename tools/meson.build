@@ -31,16 +31,17 @@ gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
 )
 
 if isocodes.found()
+  native_gio    = dependency('gio-2.0', native: true)
   gen_languages = executable('gen-languages',
                              'gen-languages.c',
                              '../app/config/gimpxmlparser.c',
                              include_directories: [ rootInclude, appInclude ],
-                             dependencies: [ gio, gegl ],
-                             link_with: [ libgimpbase ],
+                             dependencies: [ native_gio ],
                              c_args: [
                                '-DSRCDIR="@0@"'.format(meson.project_source_root()),
                                '-DISOCODES_LOCALEDIR="@0@"'.format(isocodes_localedir),
                              ],
+                             native: true,
                              install: false)
 endif
 

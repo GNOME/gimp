@@ -21,18 +21,12 @@
 
 #include "config.h"
 
-#include <locale.h>
-#include <string.h>
-
 #include <gio/gio.h>
-#include <glib.h>
-
-#include "libgimpbase/gimpbase.h"
 
 #include "config/config-types.h"
 #include "config/gimpxmlparser.h"
 
-#include "gimp-intl.h"
+#include <glib/gi18n.h>
 
 #define PRINT(...) if (! g_output_stream_printf (output, NULL, NULL, &error, __VA_ARGS__))\
                      {\
@@ -82,13 +76,17 @@ static void     iso_codes_parser_start_unknown  (IsoCodesParser       *parser);
 static void     iso_codes_parser_end_unknown    (IsoCodesParser       *parser);
 #endif /* HAVE_ISO_CODES */
 
+static void     gimp_bind_text_domain           (const gchar          *domain_name,
+                                                 const gchar          *dir_name);
+
+
 /*
  * Language lists that we want to generate only once at program startup:
  * @l10n_lang_list: all available localizations self-localized;
  * @all_lang_list: all known languages, in the user-selected language.
  */
 static GHashTable *l10n_lang_list = NULL;
-static GHashTable *all_lang_list = NULL;
+static GHashTable *all_lang_list  = NULL;
 
 /********************\
  * Public Functions *
@@ -196,8 +194,6 @@ gimp_language_store_parser_init (GError **error)
   GHashTableIter    lang_iter;
   gpointer          key;
   gchar            *locale;
-  gint              n_locales = 0;
-  gint              n_mo      = 0;
   gboolean          success = TRUE;
 
   if (l10n_lang_list != NULL)
@@ -259,21 +255,16 @@ gimp_language_store_parser_init (GError **error)
           g_hash_table_insert (l10n_lang_list, g_strdup (locale), NULL);
           /* Save the base language code. */
           g_hash_table_insert (base_lang_list, base_code, NULL);
-
-          n_mo++;
         }
-
-      n_locales++;
 
       g_free (locale);
     }
 
-  if (n_mo == 0)
+  if (g_hash_table_size (l10n_lang_list) == 0)
     {
       g_set_error (error, G_IO_ERROR, 0,
-                   "No \"%s\" files were found in %s in %d locales",
-                   GETTEXT_PACKAGE ".mo", gimp_locale_directory (),
-                   n_locales);
+                   "No languages were found in %s",
+                   g_file_peek_path (linguas));
       success = FALSE;
       goto cleanup;
     }
@@ -478,12 +469,7 @@ iso_codes_parser_init (void)
   if (initialized)
     return;
 
-#ifdef G_OS_WIN32
-  /*  on Win32, assume iso-codes is installed in the same location as GIMP  */
-  gimp_bind_text_domain ("iso_639_3", gimp_locale_directory ());
-#else
   gimp_bind_text_domain ("iso_639_3", ISO_CODES_LOCALEDIR);
-#endif
 
   bind_textdomain_codeset ("iso_639_3", "UTF-8");
 
@@ -631,3 +617,29 @@ iso_codes_parser_end_unknown (IsoCodesParser *parser)
     parser->state = parser->last_known_state;
 }
 #endif /* HAVE_ISO_CODES */
+
+/*
+ * Copied from libgimpbase: libgimpbase/gimputils.c
+ * Just avoiding having to link libgimpbase, which in cross-builds mean
+ * compiling libgimpbase twice (natively and cross).
+ */
+static void
+gimp_bind_text_domain (const gchar *domain_name,
+                       const gchar *dir_name)
+{
+#if defined (_WIN32) && !defined (__CYGWIN__)
+  wchar_t *dir_name_utf16 = g_utf8_to_utf16 (dir_name, -1, NULL, NULL, NULL);
+
+  if G_UNLIKELY (!dir_name_utf16)
+    {
+      g_printerr ("[%s] Cannot translate the catalog directory to UTF-16\n", __func__);
+    }
+  else
+    {
+      wbindtextdomain (domain_name, dir_name_utf16);
+      g_free (dir_name_utf16);
+    }
+#else
+  bindtextdomain (domain_name, dir_name);
+#endif
+}
