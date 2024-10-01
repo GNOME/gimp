@@ -943,18 +943,21 @@ void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
           if (gimp_gegl_param_spec_has_key (gegl_pspec_width,
                                             "role",
                                             "output-extent"))
-            gegl_node_set (filter->operation, "width", rect->width, NULL);
+            {
+              gegl_node_set (filter->operation, "width", rect->width, NULL);
+              filter->filter_area.width  = rect->width;
+            }
         }
       if (gegl_pspec_height != NULL)
         {
           if (gimp_gegl_param_spec_has_key (gegl_pspec_height,
                                             "role",
                                             "output-extent"))
-            gegl_node_set (filter->operation, "height", rect->height, NULL);
+            {
+              gegl_node_set (filter->operation, "height", rect->height, NULL);
+              filter->filter_area.height = rect->height;
+            }
         }
-
-      filter->filter_area.width  = rect->width;
-      filter->filter_area.height = rect->height;
 
       gimp_drawable_filter_set_clip (filter, TRUE);
       gimp_drawable_filter_set_clip (filter, FALSE);
