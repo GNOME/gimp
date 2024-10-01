@@ -672,7 +672,7 @@ main_dialog (GimpProcedure       *procedure,
                                     "intensity-box");
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
-                                   "reflexivity-label", _("Intensity Levels"),
+                                   "reflexivity-label", _("Reflectivity"),
                                    FALSE, FALSE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
                                   "reflexivity-box",
