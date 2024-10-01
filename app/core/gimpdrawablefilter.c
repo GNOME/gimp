@@ -929,6 +929,36 @@ void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
 
   if (rect)
     {
+      /* Some filters have built-in width/height properties that limit
+       * the buffer size. If they have one in those roles, we can update
+       * their size here. */
+      GParamSpec *gegl_pspec_width  = NULL;
+      GParamSpec *gegl_pspec_height = NULL;
+
+      gegl_pspec_width  = gegl_node_find_property (filter->operation, "width");
+      gegl_pspec_height = gegl_node_find_property (filter->operation, "height");
+
+      if (gegl_pspec_width != NULL)
+        {
+          if (gimp_gegl_param_spec_has_key (gegl_pspec_width,
+                                            "role",
+                                            "output-extent"))
+            {
+              gegl_node_set (filter->operation, "width", rect->width, NULL);
+              filter->filter_area.width  = rect->width;
+            }
+        }
+      if (gegl_pspec_height != NULL)
+        {
+          if (gimp_gegl_param_spec_has_key (gegl_pspec_height,
+                                            "role",
+                                            "output-extent"))
+            {
+              gegl_node_set (filter->operation, "height", rect->height, NULL);
+              filter->filter_area.height = rect->height;
+            }
+        }
+
       gimp_drawable_filter_set_clip (filter, TRUE);
       gimp_drawable_filter_set_clip (filter, FALSE);
       gimp_drawable_filter_set_region (filter, GIMP_FILTER_REGION_SELECTION);
