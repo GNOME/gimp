@@ -656,8 +656,10 @@ ReadImage (FILE                 *fd,
   GimpImage         *image;
   GimpLayer         *layer;
   GeglBuffer        *buffer;
-  guchar            *dest, *temp, *row_buf;
-  gushort           *dest16, *temp16;
+  guchar            *dest = NULL;
+  guchar            *temp, *row_buf;
+  gushort           *dest16 = NULL;
+  gushort           *temp16;
   guchar             gimp_cmap[768];
   gushort            rgb;
   glong              rowstride, channels;
@@ -684,10 +686,11 @@ ReadImage (FILE                 *fd,
   switch (bpp)
     {
     case 64:
-      base_type  = GIMP_RGB;
-      image_type = GIMP_RGBA_IMAGE;
-      channels   = 4;
-      format = babl_format ("R'G'B'A u16");
+      base_type      = GIMP_RGB;
+      image_type     = GIMP_RGBA_IMAGE;
+      channels       = 4;
+      format         = babl_format ("R'G'B'A u16");
+      precision_type = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
     case 32:
@@ -745,9 +748,6 @@ ReadImage (FILE                 *fd,
       return NULL;
     }
 
-  if (bpp == 64)
-    precision_type = GIMP_PRECISION_U16_NON_LINEAR;
-
   image = gimp_image_new_with_precision (width, height, base_type,
                                          precision_type);
 
@@ -760,8 +760,11 @@ ReadImage (FILE                 *fd,
   /* use g_malloc0 to initialize the dest buffer so that unspecified
      pixels in RLE bitmaps show up as the zeroth element in the palette.
   */
-  dest      = g_malloc0 (width * height * channels);
-  dest16    = g_malloc0 (width * height * channels * 2);
+  if (bpp != 64)
+    dest   = g_malloc0 (width * height * channels);
+  else
+    dest16 = g_malloc0 (width * height * channels * 2);
+
   row_buf   = g_malloc (rowbytes);
   rowstride = width * channels;
 
@@ -1091,10 +1094,8 @@ ReadImage (FILE                 *fd,
 
   g_object_unref (buffer);
 
-  if (dest)
-    g_free (dest);
-  if (dest16)
-    g_free (dest16);
+  g_free (dest);
+  g_free (dest16);
 
   if ((! gray) && (bpp <= 8))
     gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, ncols * 3);
