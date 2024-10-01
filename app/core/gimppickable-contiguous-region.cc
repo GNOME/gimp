@@ -599,7 +599,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
 
       g_object_get (line_art,
                     "max-grow", &line_art_max_grow,
-                    NULL);
+                    (void *) NULL);
       while (! g_queue_is_empty (queue))
         {
           BorderPixel *c = (BorderPixel *) g_queue_pop_head (queue);
