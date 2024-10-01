@@ -682,7 +682,7 @@ begin
 	else if pWhich = '32' then
 		Result := (not Is64BitInstallMode()) or Force32bitInstall
 	else if pWhich = 'x64' then
-		Result := Is64BitInstallMode() and IsX64Compatible and (not Force32bitInstall)
+		Result := Is64BitInstallMode() and IsX64Compatible and (not Force32bitInstall) and (not IsARM64)
 	else if pWhich = 'arm64' then
 		Result := Is64BitInstallMode() and IsARM64 and (not Force32bitInstall)
 	else
