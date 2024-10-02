@@ -1547,10 +1547,13 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
           return TRUE;
         }
 
+      /* Hack to handle percent within the loop */
+      if (unit == gimp_unit_percent ())
+        break;
+
       unit = gimp_unit_get_by_id (i++);
 
-      /* Hack to handle percent within the loop */
-      if (unit == NULL && unit != gimp_unit_percent ())
+      if (unit == NULL)
         unit = gimp_unit_percent ();
     }
 
