@@ -1498,7 +1498,7 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
 
   *offset = 0.0;
 
-  while (unit != NULL)
+  while (GIMP_IS_UNIT (unit))
     {
       if ((resolve_default_unit && unit == priv->unit) ||
           (identifier &&
@@ -1550,8 +1550,11 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
       unit = gimp_unit_get_by_id (i++);
 
       /* Hack to handle percent within the loop */
-      if (unit == NULL && unit != gimp_unit_percent ())
-        unit = gimp_unit_percent ();
+      if (! GIMP_IS_UNIT (unit) && i < GIMP_UNIT_PERCENT)
+        {
+          unit = gimp_unit_percent ();
+          i = GIMP_UNIT_PERCENT;
+        }
     }
 
   return FALSE;
