@@ -486,6 +486,7 @@ load_image (GFile  *file,
     case 16:
     case 24:
     case 32:
+    case 64:
       break;
     default:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -655,7 +656,10 @@ ReadImage (FILE                 *fd,
   GimpImage         *image;
   GimpLayer         *layer;
   GeglBuffer        *buffer;
-  guchar            *dest, *temp, *row_buf;
+  guchar            *dest   = NULL;
+  gushort           *dest16 = NULL;
+  guchar            *temp, *row_buf;
+  gushort           *temp16;
   guchar             gimp_cmap[768];
   gushort            rgb;
   glong              rowstride, channels;
@@ -663,6 +667,8 @@ ReadImage (FILE                 *fd,
   gint               total_bytes_read;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
+  GimpPrecision      precision_type = GIMP_PRECISION_U8_NON_LINEAR;
+  const Babl        *format         = NULL;
   guint32            px32;
 
   if (! (compression == BI_RGB || compression == BI_BITFIELDS ||
@@ -679,6 +685,14 @@ ReadImage (FILE                 *fd,
 
   switch (bpp)
     {
+    case 64:
+      base_type      = GIMP_RGB;
+      image_type     = GIMP_RGBA_IMAGE;
+      channels       = 4;
+      format         = babl_format ("R'G'B'A u16");
+      precision_type = GIMP_PRECISION_U16_NON_LINEAR;
+      break;
+
     case 32:
     case 24:
     case 16:
@@ -734,7 +748,9 @@ ReadImage (FILE                 *fd,
       return NULL;
     }
 
-  image = gimp_image_new (width, height, base_type);
+  image = gimp_image_new_with_precision (width, height, base_type,
+                                         precision_type);
+
   layer = gimp_layer_new (image, _("Background"),
                           width, height,
                           image_type, 100,
@@ -744,7 +760,11 @@ ReadImage (FILE                 *fd,
   /* use g_malloc0 to initialize the dest buffer so that unspecified
      pixels in RLE bitmaps show up as the zeroth element in the palette.
   */
-  dest      = g_malloc0 (width * height * channels);
+  if (bpp != 64)
+    dest   = g_malloc0 (width * height * channels);
+  else
+    dest16 = g_malloc0 (width * height * channels * 2);
+
   row_buf   = g_malloc (rowbytes);
   rowstride = width * channels;
 
@@ -754,6 +774,63 @@ ReadImage (FILE                 *fd,
 
   switch (bpp)
     {
+    case 64:
+      {
+        guint16 signed_short;
+        gint    fixed_integer;
+        gdouble fixed_fraction;
+        gdouble converted_fixed_point;
+
+        while (ReadOK (fd, row_buf, rowbytes))
+          {
+            temp16 = dest16 + (ypos * rowstride);
+
+            for (xpos = 0; xpos < width; ++xpos)
+              {
+                /* Values are stored in fixed point format;
+                 * 1 bit for sign, 2 bits for integer,
+                 * 13 bits for decimal value. Then we multiply
+                 * by 2^13 to get the scaled value */
+                for (i = 4; i >= 0; i -= 2)
+                  {
+                    rgb = ToS (&row_buf[(xpos * 8) + i]);
+
+                    signed_short   = rgb & 0x7FFF;
+                    fixed_integer  = signed_short >> 13;
+                    fixed_fraction = signed_short & 0x1FFF;
+
+                    converted_fixed_point = fixed_integer + (fixed_fraction / 0x1FFF);
+                    converted_fixed_point *= 8192;
+
+                    *(temp16++) = (converted_fixed_point / 8192.0) * G_MAXUINT16;
+                  }
+
+                  /* Alpha Channel */
+                  rgb = ToS (&row_buf[(xpos * 8) + 6]);
+
+                  signed_short   = rgb & 0x7FFF;
+                  fixed_integer  = signed_short >> 13;
+                  fixed_fraction = signed_short & 0x1FFF;
+
+                  converted_fixed_point = fixed_integer + (fixed_fraction / 0x1FFF);
+                  converted_fixed_point *= 8192;
+
+                  *(temp16++) = (converted_fixed_point / 8192.0) * G_MAXUINT16;
+              }
+
+            if (ypos == 0)
+              break;
+
+            --ypos; /* next line */
+
+            cur_progress++;
+            if ((cur_progress % 5) == 0)
+              gimp_progress_update ((gdouble) cur_progress /
+                                    (gdouble) max_progress);
+          }
+      }
+      break;
+
     case 32:
       {
         while (ReadOK (fd, row_buf, rowbytes))
@@ -1008,12 +1085,17 @@ ReadImage (FILE                 *fd,
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                   NULL, dest, GEGL_AUTO_ROWSTRIDE);
+  if (bpp != 64)
+    gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                     NULL, dest, GEGL_AUTO_ROWSTRIDE);
+  else
+    gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                     format, dest16, GEGL_AUTO_ROWSTRIDE);
 
   g_object_unref (buffer);
 
   g_free (dest);
+  g_free (dest16);
 
   if ((! gray) && (bpp <= 8))
     gimp_palette_set_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), gimp_cmap, ncols * 3);
