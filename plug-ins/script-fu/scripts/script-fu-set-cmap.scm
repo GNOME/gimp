@@ -45,8 +45,7 @@
 )
 
 (define (script-fu-set-cmap img drawables palette)
-  (gimp-image-set-colormap img
-                           (script-fu-make-cmap-array palette))
+  (gimp-image-set-palette img palette)
   (gimp-displays-flush)
 )
 
