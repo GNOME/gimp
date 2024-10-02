@@ -656,9 +656,9 @@ ReadImage (FILE                 *fd,
   GimpImage         *image;
   GimpLayer         *layer;
   GeglBuffer        *buffer;
-  guchar            *dest = NULL;
-  guchar            *temp, *row_buf;
+  guchar            *dest   = NULL;
   gushort           *dest16 = NULL;
+  guchar            *temp, *row_buf;
   gushort           *temp16;
   guchar             gimp_cmap[768];
   gushort            rgb;
