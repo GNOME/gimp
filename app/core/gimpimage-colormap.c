@@ -145,6 +145,7 @@ gimp_image_colormap_update_formats (GimpImage *image)
 {
   GimpImagePrivate *private;
   const Babl       *space;
+  const Babl       *format;
   gchar            *format_name;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -160,6 +161,9 @@ gimp_image_colormap_update_formats (GimpImage *image)
                                &private->babl_palette_rgb,
                                &private->babl_palette_rgba);
 
+  format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space),
+  gimp_palette_restrict_format (private->palette, format, FALSE);
+
   g_free (format_name);
 
   if (private->palette && gimp_palette_get_n_colors (private->palette) > 0)
@@ -168,19 +172,12 @@ gimp_image_colormap_update_formats (GimpImage *image)
       gint    n_colors;
 
       colormap = _gimp_image_get_colormap (image, &n_colors);
+      g_return_if_fail (colormap != NULL);
 
       babl_palette_set_palette (private->babl_palette_rgb,
-                                gimp_babl_format (GIMP_RGB,
-                                                  private->precision, FALSE,
-                                                  space),
-                                colormap,
-                                n_colors);
+                                format, colormap, n_colors);
       babl_palette_set_palette (private->babl_palette_rgba,
-                                gimp_babl_format (GIMP_RGB,
-                                                  private->precision, FALSE,
-                                                  space),
-                                colormap,
-                                n_colors);
+                                format, colormap, n_colors);
 
       g_free (colormap);
     }
@@ -236,8 +233,6 @@ gimp_image_set_colormap_palette (GimpImage   *image,
 
   while ((entry = gimp_palette_get_entry (private->palette, 0)))
     gimp_palette_delete_entry (private->palette, entry);
-
-  gimp_palette_restrict_format (private->palette, palette->format, FALSE);
 
   for (i = 0; i < n_colors; i++)
     {
