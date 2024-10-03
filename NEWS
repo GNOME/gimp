@@ -167,6 +167,9 @@ Plug-ins:
     the name of a resource, or the empty string or "from context" to
     default to the context resource.
   - Python Console: history of commands is saved between runs.
+  - BMP: new support for loading 64bpp BMPs. Each channel uses 13 bits
+    (2^13 max value), so it's scaled to fit our 16 bit integer image
+    mode.
 
 API:
 
@@ -238,6 +241,9 @@ API:
       - gimp_palette_entry_get_name() to gimp_palette_get_entry_name()
       - gimp_palette_entry_set_color() to gimp_palette_set_entry_color()
       - gimp_palette_entry_set_name() to gimp_palette_set_entry_name()
+      - gimp_plug_in_extension_enable() to gimp_plug_in_persistent_enable()
+      - gimp_plug_in_extension_process() to gimp_plug_in_persistent_process()
+      - gimp_procedure_extension_ready() to gimp_procedure_persistent_ready()
     * Removed functions:
       - gimp_image_get_colormap()
       - gimp_image_set_colormap()
@@ -284,6 +290,7 @@ API:
       GParamSpecObject with a default value. It is now used as parent
       type for GimpParamSpecColor, GimpParamSpecUnit and all
       GimpParamSpecResource subtypes.
+    * GIMP_PDB_PROC_TYPE_EXTENSION renamed GIMP_PDB_PROC_TYPE_PERSISTENT.
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
@@ -295,6 +302,10 @@ API:
       indentation is not broken anymore in code samples on the gi-docgen
       API documentation.
     * New "format" PDB type to pass Babl format arguments.
+
+Translations:
+
+  - New Bengali language support.
 
 Build:
 
