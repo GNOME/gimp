@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-22 14:16+0000\n"
-"PO-Revision-Date: 2024-09-27 22:12+0800\n"
+"POT-Creation-Date: 2024-10-04 17:49+0000\n"
+"PO-Revision-Date: 2024-10-05 01:56+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1322,7 +1322,7 @@ msgstr "_L"
 
 #: ../plug-ins/common/compose.c:176
 msgid "_C"
-msgstr "青(_C)"
+msgstr "_C"
 
 #: ../plug-ins/common/compose.c:177
 msgid "_H"
@@ -3477,7 +3477,6 @@ msgid "_Raw"
 msgstr "原生 _Raw"
 
 #: ../plug-ins/common/file-pnm.c:1622
-#| msgid "ASCII"
 msgid "_ASCII"
 msgstr "_ASCII"
 
@@ -3835,7 +3834,7 @@ msgstr "不支援檔案格式版本：%d"
 
 #: ../plug-ins/common/file-psp.c:2289
 msgid "invalid block size"
-msgstr ""
+msgstr "無效的區塊大小"
 
 #: ../plug-ins/common/file-psp.c:2298
 #, c-format
@@ -6717,10 +6716,8 @@ msgid "_Mipmaps:"
 msgstr ""
 
 #: ../plug-ins/file-dds/ddswrite.c:2098
-#, fuzzy
-#| msgid "Transparent"
 msgid "Transparent index:"
-msgstr "透明"
+msgstr "透明索引："
 
 #: ../plug-ins/file-dds/ddswrite.c:2142
 #, fuzzy
@@ -11824,7 +11821,7 @@ msgstr "球體"
 
 #: ../plug-ins/map-object/map-object-ui.c:456
 msgid "Box"
-msgstr "方框"
+msgstr "方體"
 
 #: ../plug-ins/map-object/map-object-ui.c:467
 msgid "Type of object to map to"
@@ -12101,10 +12098,9 @@ msgid "Unrated"
 msgstr "未評等"
 
 #: ../plug-ins/metadata/metadata-editor.c:3782
-#, fuzzy, c-format
-#| msgid "Failed to decompress data"
+#, c-format
 msgid "Failed to set metadata tag %s"
-msgstr "解壓資料失敗"
+msgstr "中介資料標記 %s 設定失敗"
 
 #: ../plug-ins/metadata/metadata-editor.c:4623
 msgid "Import Metadata File"
@@ -12139,19 +12135,19 @@ msgstr "從不透明媒體的印刷數位化"
 
 #: ../plug-ins/metadata/metadata-tags.c:185
 msgid "Original media with minor human edits"
-msgstr ""
+msgstr "原始媒體附帶小的人類修改"
 
 #: ../plug-ins/metadata/metadata-tags.c:186
 msgid "Composite of captured elements"
-msgstr ""
+msgstr "擷取元素的合成"
 
 #: ../plug-ins/metadata/metadata-tags.c:187
 msgid "Algorithmically-enhanced media"
-msgstr ""
+msgstr "演算法強化過的媒體"
 
 #: ../plug-ins/metadata/metadata-tags.c:188
 msgid "Data-driven media"
-msgstr ""
+msgstr "數據驅動式媒體"
 
 #: ../plug-ins/metadata/metadata-tags.c:189
 msgid "Digital art"
@@ -12159,21 +12155,19 @@ msgstr "數位藝術"
 
 #: ../plug-ins/metadata/metadata-tags.c:190
 msgid "Virtual recording"
-msgstr ""
+msgstr "虛擬錄製品"
 
 #: ../plug-ins/metadata/metadata-tags.c:191
 msgid "Composite including synthetic elements"
-msgstr ""
+msgstr "合成品包含合成元素"
 
 #: ../plug-ins/metadata/metadata-tags.c:192
 msgid "Trained algorithmic media"
-msgstr ""
+msgstr "訓練過的演算法媒體"
 
 #: ../plug-ins/metadata/metadata-tags.c:193
-#, fuzzy
-#| msgid "Prim's algorithm"
 msgid "Pure algorithmic media"
-msgstr "Prim 演算法"
+msgstr "純演算法媒體"
 
 #: ../plug-ins/metadata/metadata-tags.c:194
 msgid "Created by software"
