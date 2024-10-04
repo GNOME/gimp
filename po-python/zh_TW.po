@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-22 15:54+0000\n"
-"PO-Revision-Date: 2024-09-23 01:00+0800\n"
+"POT-Creation-Date: 2024-10-01 10:49+0000\n"
+"PO-Revision-Date: 2024-10-05 02:01+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <http://weblate.steps.tw/projects/gimp/"
 "po-python/zh_Hant/>\n"
@@ -42,7 +42,7 @@ msgstr "從檔案讀取字元(_D)"
 
 #: plug-ins/python/colorxhtml.py:223
 msgid "Read characters from file, if true, or use text entry"
-msgstr ""
+msgstr "若為真時，從檔案讀取字元，或使用文字條目"
 
 #: plug-ins/python/colorxhtml.py:225
 msgid "Charac_ters"
@@ -50,7 +50,7 @@ msgstr "字元(_T)"
 
 #: plug-ins/python/colorxhtml.py:226
 msgid "Characters that will be used as colored pixels."
-msgstr ""
+msgstr "用作色彩像素的字元。"
 
 #: plug-ins/python/colorxhtml.py:228
 msgid "Fo_nt size in pixels"
@@ -127,14 +127,14 @@ msgstr "檔案(_F)..."
 
 #: plug-ins/python/gradients-save-as-css.py:102
 msgid "Choose CSS file..."
-msgstr ""
+msgstr "選擇 CSS 檔案..."
 
 #: plug-ins/python/gradients-save-as-css.py:111
 msgid "Save as CSS file..."
-msgstr ""
+msgstr "儲存 CSS 檔案..."
 
 #: plug-ins/python/gradients-save-as-css.py:113
-#: plug-ins/python/python-console/python-console.py:272
+#: plug-ins/python/python-console/python-console.py:276
 #: plug-ins/python/spyro-plus.py:1735
 msgid "_Cancel"
 msgstr "取消(_C)"
@@ -147,25 +147,25 @@ msgstr "確定(_O)"
 #: plug-ins/python/gradients-save-as-css.py:192
 #: plug-ins/python/gradients-save-as-css.py:193
 msgid "Creates a new palette from a given gradient"
-msgstr ""
+msgstr "從給定的漸層建立新調色盤"
 
 #: plug-ins/python/gradients-save-as-css.py:195
 msgid "Save Gradient as CSS..."
-msgstr ""
+msgstr "將漸層儲存為 CSS..."
 
 #: plug-ins/python/gradients-save-as-css.py:201
 #: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
 #: plug-ins/python/palette-to-gradient.py:143
-#: plug-ins/python/python-console/python-console.py:316
+#: plug-ins/python/python-console/python-console.py:320
 msgid "Run mode"
 msgstr "執行模式"
 
 #: plug-ins/python/gradients-save-as-css.py:202
 #: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
 #: plug-ins/python/palette-to-gradient.py:144
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:321
 msgid "The run mode"
-msgstr ""
+msgstr "執行模式"
 
 #: plug-ins/python/gradients-save-as-css.py:205
 msgid "_Gradient to use"
@@ -177,7 +177,7 @@ msgstr "檔案(_F)"
 
 #: plug-ins/python/histogram-export.py:153
 msgid "File is either a directory or file name is empty."
-msgstr ""
+msgstr "檔案可能是目錄，或者是檔名空白。"
 
 #: plug-ins/python/histogram-export.py:156
 msgid "Directory not found."
@@ -270,11 +270,11 @@ msgstr "偏移"
 
 #: plug-ins/python/palette-offset.py:65
 msgid "The edited palette"
-msgstr ""
+msgstr "編輯的調色盤"
 
 #: plug-ins/python/palette-offset.py:66
 msgid "The newly created palette when read-only, otherwise the input palette"
-msgstr ""
+msgstr "當唯讀時，新建調色盤，否則為輸入調色盤"
 
 #. TODO: Re-incorporate LAB and LCHab options with GeglColor
 #: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
@@ -339,6 +339,19 @@ msgid ""
 "2.\n"
 "    '4' is illegal (ambiguous)\n"
 msgstr ""
+"\n"
+"    格式為 ‘start:nrows,length’。所有項目都屬選填。\n"
+"\n"
+"    空白字串會選取所有項目，例如 ‘:’\n"
+"    ‘:4,’ 會在所有顏色中選取 4 列的選取範圍（自動判定長度）\n"
+"    ‘:4’ 也是。\n"
+"    ‘:1,4’ 會選取前 4 個顏色\n"
+"    ‘:,4’ 會選取 4 個顏色的列（自動判定各有 n 列）\n"
+"    ‘:3,4’ 會選取 4 個顏色的 3 列\n"
+"    ‘4:’ 會選取 4 以後單一列的所有顏色，採內括性。\n"
+"    ‘3:,4’ 會選取 4 個言色的列，從 3 開始（自動判斷有 n 列）\n"
+"    ‘2:3,4’ 會選取 4 個顏色的 3 列（計 12 個顏色），從索引 2 開始。\n"
+"    ‘4’ 則不合規（語意模糊）\n"
 
 #: plug-ins/python/palette-sort.py:343
 msgid "_Sort Palette..."
@@ -479,61 +492,61 @@ msgstr "用調色盤中的顏色建立新的重複漸層。"
 msgid "The newly created gradient"
 msgstr "新建立的漸層"
 
-#: plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/python-console/python-console.py:80
 msgid "Python Console"
 msgstr "Python 主控台"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:273
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:277
 msgid "_Save"
 msgstr "儲存(_S)"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "清除(_E)"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:221
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:225
 msgid "_Close"
 msgstr "關閉(_C)"
 
-#: plug-ins/python/python-console/python-console.py:218
+#: plug-ins/python/python-console/python-console.py:222
 msgid "Python Procedure Browser"
 msgstr "Python 處理程序瀏覽器"
 
-#: plug-ins/python/python-console/python-console.py:220
+#: plug-ins/python/python-console/python-console.py:224
 msgid "_Apply"
 msgstr "套用(_A)"
 
-#: plug-ins/python/python-console/python-console.py:246
+#: plug-ins/python/python-console/python-console.py:250
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "無法開啟「%s」以寫入：%s"
 
-#: plug-ins/python/python-console/python-console.py:261
+#: plug-ins/python/python-console/python-console.py:265
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "無法寫入「%s」：%s"
 
-#: plug-ins/python/python-console/python-console.py:270
+#: plug-ins/python/python-console/python-console.py:274
 msgid "Save Python-Fu Console Output"
 msgstr "儲存 Python-Fu 主控台輸出"
 
-#: plug-ins/python/python-console/python-console.py:309
+#: plug-ins/python/python-console/python-console.py:313
 msgid "Python _Console"
 msgstr "Python 主控台(_C)"
 
-#: plug-ins/python/python-console/python-console.py:310
+#: plug-ins/python/python-console/python-console.py:314
 msgid "Interactive GIMP Python interpreter"
 msgstr "互動式 GIMP Python 直譯器"
 
-#: plug-ins/python/python-console/python-console.py:311
+#: plug-ins/python/python-console/python-console.py:315
 msgid "Type in commands and see results"
-msgstr ""
+msgstr "輸入命令並查看結果"
 
 #: plug-ins/python/spyro-plus.py:51
 msgid "Spyro Layer"
@@ -853,7 +866,7 @@ msgstr "重設(_R)"
 
 #: plug-ins/python/spyro-plus.py:1750
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: plug-ins/python/spyro-plus.py:1751
 msgid ""
@@ -894,6 +907,7 @@ msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
 msgstr ""
+"使用目前的工具設定描繪旋輪圖樣。圖樣的大小與位置根據目前的選取內容而來。"
 
 #: plug-ins/python/spyro-plus.py:2241
 msgid "Spyrogimp..."
@@ -944,6 +958,7 @@ msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
 msgstr ""
+"齒洞在動齒輪中的位置百分比，100 代表齒洞位於齒輪的邊緣，0 則代表位於正中心。"
 
 #: plug-ins/python/spyro-plus.py:2280
 msgid "Margin (_px)"
@@ -959,7 +974,7 @@ msgstr "旋轉(_R)"
 
 #: plug-ins/python/spyro-plus.py:2287
 msgid "Pattern rotation, in degrees"
-msgstr ""
+msgstr "圖樣旋轉，單位為度"
 
 #: plug-ins/python/spyro-plus.py:2290
 msgid "Shape rotation of fixed gear, in degrees"
@@ -973,7 +988,7 @@ msgstr "長漸層(_G)"
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
-msgstr ""
+msgstr "是否要套用長漸層以符合圖樣的長度。僅部分工具可以使用。"
 
 #~ msgid "Missing exception information"
 #~ msgstr "缺乏例外資訊"
