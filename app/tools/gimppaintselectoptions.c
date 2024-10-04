@@ -168,7 +168,11 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *frame;
+  GList     *children;
+  GList     *radio_children;
+  GList     *list;
   GtkWidget *scale;
+  gint       i;
 
   frame = gimp_prop_enum_radio_frame_new (config, "mode", NULL,
                                           0, 0);
@@ -176,7 +180,39 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  /* add modifier to tooltips */
+  children = gtk_container_get_children (GTK_CONTAINER (frame));
+  radio_children = gtk_container_get_children (GTK_CONTAINER (children->data));
+  for (list = radio_children, i = 0; list; list = list->next, i++)
+    {
+      GtkWidget   *button   = list->data;
+      const gchar *modifier = NULL;
+      const gchar *label    = NULL;
+
+      if (i == 0)
+        modifier = gimp_get_mod_string (gimp_get_extend_selection_mask ());
+      else if (i == 1)
+        modifier = gimp_get_mod_string (gimp_get_modify_selection_mask ());
+
+      if (! modifier)
+        continue;
+
+      label = gtk_button_get_label (GTK_BUTTON (button));
+
+      if (label)
+        {
+          gchar *tip = g_strdup_printf ("%s  <b>%s</b>", label, modifier);
+
+          gimp_help_set_help_data_with_markup (button, tip, NULL);
+
+          g_free (tip);
+        }
+    }
+  g_list_free (children);
+  g_list_free (radio_children);
+  g_list_free (list);
 
   /* stroke width */
   scale = gimp_prop_spin_scale_new (config, "stroke-width",
@@ -190,7 +226,7 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
                                 GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_paint_select_options_reset_stroke_width),
@@ -202,7 +238,7 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
   /* show scribbles */
   button = gimp_prop_check_button_new (config, "show-scribbles", "Show scribbles");
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_widget_set_visible (button, TRUE);
 
   return vbox;
 }

@@ -420,13 +420,68 @@ gimp_paint_select_tool_key_press (GimpTool    *tool,
   return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
 }
 
+/* Based on gimp_selection_tool_modifier_key () */
 static void
 gimp_paint_select_tool_modifier_key (GimpTool        *tool,
-                                          GdkModifierType  key,
-                                          gboolean         press,
-                                          GdkModifierType  state,
-                                          GimpDisplay     *display)
+                                     GdkModifierType  key,
+                                     gboolean         press,
+                                     GdkModifierType  state,
+                                     GimpDisplay     *display)
 {
+  GimpPaintSelectTool    *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
+  GimpPaintSelectOptions *options = GIMP_PAINT_SELECT_TOOL_GET_OPTIONS (ps_tool);
+  GdkModifierType         extend_mask;
+  GdkModifierType         modify_mask;
+
+  extend_mask = gimp_get_extend_selection_mask ();
+  modify_mask = gimp_get_modify_selection_mask ();
+
+    if (key == extend_mask ||
+        key == modify_mask ||
+        key == GDK_MOD1_MASK)
+      {
+        GimpPaintSelectMode button_mode = options->mode;
+
+        state &= extend_mask | modify_mask | GDK_MOD1_MASK;
+
+        if (press)
+          {
+            if (key == state || ! state)
+              ps_tool->saved_mode = options->mode;
+          }
+        else
+          {
+            if (! state)
+              button_mode = ps_tool->saved_mode;
+          }
+
+        if (state & GDK_MOD1_MASK)
+          {
+            button_mode = ps_tool->saved_mode;
+          }
+        else if (state & (extend_mask | modify_mask))
+          {
+            GimpChannelOps op = gimp_modifiers_to_channel_op (state);
+
+            switch (op)
+              {
+              case GIMP_CHANNEL_OP_ADD:
+                button_mode = GIMP_PAINT_SELECT_MODE_ADD;
+                break;
+
+              case GIMP_CHANNEL_OP_SUBTRACT:
+                button_mode = GIMP_PAINT_SELECT_MODE_SUBTRACT;
+                break;
+
+              default:
+                break;
+              }
+          }
+
+        if (button_mode != options->mode)
+          g_object_set (options, "mode", button_mode, NULL);
+      }
+
 }
 
 static void
@@ -809,7 +864,6 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
   GeglNode  *d;         /* drawable */
   GeglNode  *crop;
   GeglNode  *translate = NULL;
-  
 
   ps_tool->graph = gegl_node_new ();
 
@@ -858,7 +912,6 @@ gimp_paint_select_tool_create_graph (GimpPaintSelectTool  *ps_tool)
                                             "operation", "gegl:buffer-sink",
                                              NULL);
 
-  
   gegl_node_link_many (m, ps_tool->threshold_node, crop, NULL);
 
   if (translate)
