@@ -656,9 +656,9 @@ ReadImage (FILE                 *fd,
   GimpImage         *image;
   GimpLayer         *layer;
   GeglBuffer        *buffer;
-  guchar            *dest   = NULL;
-  gushort           *dest16 = NULL;
+  guchar            *dest = NULL;
   guchar            *temp, *row_buf;
+  gushort           *dest16 = NULL;
   gushort           *temp16;
   guchar             gimp_cmap[768];
   gushort            rgb;
@@ -689,7 +689,7 @@ ReadImage (FILE                 *fd,
       base_type      = GIMP_RGB;
       image_type     = GIMP_RGBA_IMAGE;
       channels       = 4;
-      format         = babl_format ("R'G'B'A u16");
+      format         = babl_format ("RGBA u16");
       precision_type = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
@@ -776,10 +776,7 @@ ReadImage (FILE                 *fd,
     {
     case 64:
       {
-        guint16 signed_short;
-        gint    fixed_integer;
-        gdouble fixed_fraction;
-        gdouble converted_fixed_point;
+        gint32 temp_int;
 
         while (ReadOK (fd, row_buf, rowbytes))
           {
@@ -787,35 +784,37 @@ ReadImage (FILE                 *fd,
 
             for (xpos = 0; xpos < width; ++xpos)
               {
-                /* Values are stored in fixed point format;
-                 * 1 bit for sign, 2 bits for integer,
-                 * 13 bits for decimal value. Then we multiply
-                 * by 2^13 to get the scaled value */
+                /* Values are stored in s2.13 fixed point format;
+                 * 13 bits for fractional value.
+                 * s2.13 has a range of -4.0 to 3.999...
+                 * we clip to 0.0 to 1.0 */
                 for (i = 4; i >= 0; i -= 2)
                   {
                     rgb = ToS (&row_buf[(xpos * 8) + i]);
 
-                    signed_short   = rgb & 0x7FFF;
-                    fixed_integer  = signed_short >> 13;
-                    fixed_fraction = signed_short & 0x1FFF;
+                    if (rgb & 0x8000)       /* < 0.0 */
+                      rgb = 0;
+                    else if (rgb > 0x2000)  /* > 1.0 */
+                      rgb = 0x2000;
 
-                    converted_fixed_point = fixed_integer + (fixed_fraction / 0x1FFF);
-                    converted_fixed_point *= 8192;
+                    temp_int = (gint) rgb * 0xffff;
+                    temp_int >>= 13;
 
-                    *(temp16++) = (converted_fixed_point / 8192.0) * G_MAXUINT16;
+                    *(temp16++) = (guint16) temp_int;
                   }
 
                   /* Alpha Channel */
                   rgb = ToS (&row_buf[(xpos * 8) + 6]);
 
-                  signed_short   = rgb & 0x7FFF;
-                  fixed_integer  = signed_short >> 13;
-                  fixed_fraction = signed_short & 0x1FFF;
+                  if (rgb & 0x8000)
+                    rgb = 0;
+                  else if (rgb > 0x2000)
+                    rgb = 0x2000;
 
-                  converted_fixed_point = fixed_integer + (fixed_fraction / 0x1FFF);
-                  converted_fixed_point *= 8192;
+                  temp_int = (gint) rgb * 0xffff;
+                  temp_int >>= 13;
 
-                  *(temp16++) = (converted_fixed_point / 8192.0) * G_MAXUINT16;
+                  *(temp16++) = (guint16) temp_int;
               }
 
             if (ypos == 0)
