@@ -79,30 +79,50 @@ prep_pkg ()
 
 bund_usr ()
 {
-  if [ -z "$3" ]; then
+  if [ "$3" != '--go' ]; then
     cd $APP_DIR
     case $2 in
       bin*)
-        mkdir -p $USR_DIR/bin
-        find $1/bin -name ${2##*/} -execdir cp -r '{}' $USR_DIR/bin \;
-        find /bin -name ${2##*/} -execdir cp -r '{}' $USR_DIR/bin \;
+        search_path=("$1/bin" "/usr/sbin" "/usr/libexec")
         ;;
 
       lib*)
-        mkdir -p $USR_DIR/${LIB_DIR}/${LIB_SUBDIR}
-        find $1/${LIB_DIR}/${LIB_SUBDIR} -maxdepth 1 -name ${2##*/} -execdir cp -r '{}' $USR_DIR/${LIB_DIR}/${LIB_SUBDIR} \;
-        find /usr/${LIB_DIR} -maxdepth 1 -name ${2##*/} -execdir cp -r '{}' $USR_DIR/${LIB_DIR}/${LIB_SUBDIR} \;
+        search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
+                     "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
         ;;
 
-      libexec|share*|etc*)
-        dat_path=$(echo $1/$2 | sed "s|$1/||g")
-        dat_path_parent=$(echo $dat_path | sed "s|${dat_path##*/}||g")
-        if [ -d "$1/$dat_path" ] || [ -f "$1/$dat_path" ]; then
-          mkdir -p $USR_DIR/$dat_path_parent
-          cp -r $1/$dat_path $USR_DIR/$dat_path_parent
-        fi
+      share*|etc*)
+        search_path=("$(dirname $(echo $1/$2 | sed "s|*|no_scape|g"))")
         ;;
     esac
+
+    for path in "${search_path[@]}"; do
+      if [ ! -d "$path" ]; then
+        break
+      fi
+      target_array=($(find $path -maxdepth 1 -name ${2##*/}))
+      for target_path in "${target_array[@]}"; do
+        dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
+        mkdir -p $dest_path
+        if [ -d "$target_path" ] || [ -f "$target_path" ]; then
+          cp -r $target_path $dest_path
+        fi
+
+        if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
+          if [ "$3" = '--dest' ]; then
+            mkdir -p ${USR_DIR}/$4
+          elif [ "$3" = '--rename' ]; then
+            mkdir -p $(dirname ${USR_DIR}/$4)
+          fi
+          mv $dest_path/${2##*/} ${USR_DIR}/$4
+          if [ -d "$USR_DIR/sbin" ]; then
+            rm -r "$USR_DIR/sbin"
+          elif [ -d "$USR_DIR/libexec" ]; then
+            rm -r "$USR_DIR/libexec"
+          fi
+        fi
+      done
+    done
     cd ..
   fi
 }
@@ -144,6 +164,7 @@ bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 prep_pkg "gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs*"
+bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "lib/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gio*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio"
 ### GTK needed files (to be able to load icons)
@@ -201,9 +222,11 @@ bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### FIXME: file-wmf (NOT WORKING for exporting)
 #bund_usr "$UNIX_PREFIX" "share/libwmf"
-### FIXME: Image graph support (NOT WORKING)
-#bund_usr "$UNIX_PREFIX" "bin/dot"
-#bund_usr "$UNIX_PREFIX" "lib/graphviz"
+### Image graph support
+bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
+bund_usr "$UNIX_PREFIX" "lib/graphviz/config*"
+bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_dot*"
+bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
 ### Needed for GTK inspector
 bund_usr "$UNIX_PREFIX" "lib/libEGL*"
 bund_usr "$UNIX_PREFIX" "lib/libGL*"
@@ -221,8 +244,6 @@ bund_usr "$UNIX_PREFIX" "bin/gjs"
 #### Python plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
-mv "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}python3.11" "$USR_DIR/${LIB_DIR}"
-mv "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}python3" "$USR_DIR/${LIB_DIR}"
 wipe_usr ${LIB_DIR}/*.pyc
 #### Lua plug-ins support (NOT WORKING and buggy)
 #bund_usr "$UNIX_PREFIX" "bin/luajit*"
