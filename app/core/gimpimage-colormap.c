@@ -162,14 +162,14 @@ gimp_image_colormap_update_formats (GimpImage *image)
                                &private->babl_palette_rgba);
 
   format = gimp_babl_format (GIMP_RGB, private->precision, FALSE, space),
-  gimp_palette_restrict_format (private->palette, format, FALSE);
-
   g_free (format_name);
 
   if (private->palette && gimp_palette_get_n_colors (private->palette) > 0)
     {
       guchar *colormap;
       gint    n_colors;
+
+      gimp_palette_restrict_format (private->palette, format, FALSE);
 
       colormap = _gimp_image_get_colormap (image, &n_colors);
       g_return_if_fail (colormap != NULL);
