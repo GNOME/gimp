@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-22 12:44+0000\n"
-"PO-Revision-Date: 2024-09-22 21:53+0800\n"
+"POT-Creation-Date: 2024-10-04 18:03+0000\n"
+"PO-Revision-Date: 2024-10-05 19:09+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -139,15 +139,20 @@ msgstr ""
 "有新版本的 GIMP (%s) 已發行。\n"
 "建議更新。"
 
-#: app/gimp-version.c:70
+#: app/gimp-version.c:72
 #, c-format
 msgid "%s version %s"
 msgstr "%s 版本 %s"
 
-#: app/gimp-version.c:162 app/gimp-version.c:281
+#: app/gimp-version.c:164 app/gimp-version.c:283
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "正在使用 %s 版本 %s（對版本 %s 編譯）"
+
+#: app/gimp-version.c:305
+#, c-format
+msgid "using %s version %s"
+msgstr "使用 %s 版本 %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
@@ -1302,72 +1307,72 @@ msgstr "背景：跳過顏色映射表的下一個顏色"
 #: app/actions/context-actions.c:191
 msgctxt "context-action"
 msgid "Foreground: Set Color From Swatch"
-msgstr "前景：設定來自色塊的顏色"
+msgstr "前景：設定來自色票的顏色"
 
 #: app/actions/context-actions.c:195
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Swatch"
-msgstr "前景：使用色塊中的第一個顏色"
+msgstr "前景：使用色票中的第一個顏色"
 
 #: app/actions/context-actions.c:199
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Swatch"
-msgstr "前景：使用色塊中的最後一個顏色"
+msgstr "前景：使用色票中的最後一個顏色"
 
 #: app/actions/context-actions.c:203
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Swatch"
-msgstr "前景：使用色塊中的上一個顏色"
+msgstr "前景：使用色票中的上一個顏色"
 
 #: app/actions/context-actions.c:207
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Swatch"
-msgstr "前景：使用色塊中的下一個顏色"
+msgstr "前景：使用色票中的下一個顏色"
 
 #: app/actions/context-actions.c:211
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "前景：跳過色塊的上一個顏色"
+msgstr "前景：跳過色票的上一個顏色"
 
 #: app/actions/context-actions.c:215
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr "前景：跳過色塊的下一個顏色"
+msgstr "前景：跳過色票的下一個顏色"
 
 #: app/actions/context-actions.c:223
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "背景：設定來自色塊的顏色"
+msgstr "背景：設定來自色票的顏色"
 
 #: app/actions/context-actions.c:227
 msgctxt "context-action"
 msgid "Background: Use First Color From Swatch"
-msgstr "背景：使用色塊中的第一個顏色"
+msgstr "背景：使用色票中的第一個顏色"
 
 #: app/actions/context-actions.c:231
 msgctxt "context-action"
 msgid "Background: Use Last Color From Swatch"
-msgstr "背景：使用色塊中的最後一個顏色"
+msgstr "背景：使用色票中的最後一個顏色"
 
 #: app/actions/context-actions.c:235
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Swatch"
-msgstr "背景：使用色塊中的上一個顏色"
+msgstr "背景：使用色票中的上一個顏色"
 
 #: app/actions/context-actions.c:239
 msgctxt "context-action"
 msgid "Background: Use Next Color From Swatch"
-msgstr "背景：使用色塊中的下一個顏色"
+msgstr "背景：使用色票中的下一個顏色"
 
 #: app/actions/context-actions.c:243
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr "背景：跳過色塊的上一個顏色"
+msgstr "背景：跳過色票的上一個顏色"
 
 #: app/actions/context-actions.c:247
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr "背景：跳過色塊的下一個顏色"
+msgstr "背景：跳過色票的下一個顏色"
 
 #: app/actions/context-actions.c:255
 msgctxt "context-action"
@@ -2521,7 +2526,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2389
-#: app/core/gimppalette.c:500 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "未命名"
@@ -12612,12 +12617,12 @@ msgid "Please wait: %s\n"
 msgstr "請稍候：%s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:650 app/core/gimpdata.c:663
+#: app/core/gimpdata.c:652 app/core/gimpdata.c:665
 #, c-format
 msgid "Error saving '%s': "
 msgstr "儲存「%s」時發生錯誤："
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:669
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:671
 #, c-format
 msgid "Error saving '%s'"
 msgstr "儲存「%s」時發生錯誤"
@@ -13770,27 +13775,27 @@ msgstr "色彩描述檔轉換"
 msgid "Colormap of Image #%d (%s)"
 msgstr "影像 #%d 的顏色映射表 (%s)"
 
-#: app/core/gimpimage-colormap.c:230 app/core/gimpimage-colormap.c:310
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "設定顏色映射表"
 
-#: app/core/gimpimage-colormap.c:348
+#: app/core/gimpimage-colormap.c:305
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "取消顏色映射表設定"
 
-#: app/core/gimpimage-colormap.c:440 app/core/gimppalette.c:612
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:695
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "變更顏色映射表項目"
 
-#: app/core/gimpimage-colormap.c:462
+#: app/core/gimpimage-colormap.c:419
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "加入顏色至顏色映射表"
 
-#: app/core/gimpimage-colormap.c:487
+#: app/core/gimpimage-colormap.c:444
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "刪除顏色映射表項目"
@@ -15002,7 +15007,7 @@ msgid ""
 "commit %s"
 msgstr ""
 "這是不穩定的開發中發行版\n"
-"送交版號 %s"
+"送交版次 %s"
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -19927,7 +19932,7 @@ msgid "Turn colors into shades of gray"
 msgstr "將顏色轉成灰色"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1357
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1382
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -19966,7 +19971,7 @@ msgstr "用顏色替換部分透明度"
 msgid "The color"
 msgstr "顏色"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1320
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1345
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -20992,7 +20997,7 @@ msgid ""
 "'%s'."
 msgstr "處理程序「%s」呼叫時給予了無效的 UTF-8 字串為引數「%s」。"
 
-#: app/pdb/image-cmds.c:2670
+#: app/pdb/image-cmds.c:2643
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "影像的解析度超出邊界，改使用預設的解析度代替。"
@@ -23070,57 +23075,57 @@ msgstr "所選的項目像素已鎖定。"
 msgid "A selected layer is not visible."
 msgstr "所選的圖層不可見。"
 
-#: app/tools/gimpfiltertool.c:423
+#: app/tools/gimpfiltertool.c:431
 msgid "Disabled because this filter depends on another image."
 msgstr "因為這個濾鏡依賴另一張影像而停用。"
 
-#: app/tools/gimpfiltertool.c:717
+#: app/tools/gimpfiltertool.c:742
 msgid "Click to switch the original and filtered sides"
 msgstr "點按以切換原始的和濾鏡後的一面"
 
-#: app/tools/gimpfiltertool.c:721
+#: app/tools/gimpfiltertool.c:746
 msgid "Click to switch between vertical and horizontal"
 msgstr "點按以切換垂直和水平"
 
-#: app/tools/gimpfiltertool.c:725
+#: app/tools/gimpfiltertool.c:750
 msgid "Click to move the split guide"
 msgstr "點按以移動分割參考線"
 
-#: app/tools/gimpfiltertool.c:727
+#: app/tools/gimpfiltertool.c:752
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s：切換原始的與濾鏡後的"
 
-#: app/tools/gimpfiltertool.c:728
+#: app/tools/gimpfiltertool.c:753
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切換水平與垂直"
 
-#: app/tools/gimpfiltertool.c:1241
+#: app/tools/gimpfiltertool.c:1266
 msgid "Add filter"
 msgstr "加入濾鏡"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1333
+#: app/tools/gimpfiltertool.c:1358
 msgid "Blending Options"
 msgstr "混色選項"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1372
+#: app/tools/gimpfiltertool.c:1397
 msgid "Advanced Color Options"
 msgstr "進階顏色選項"
 
-#: app/tools/gimpfiltertool.c:1815 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1840 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "匯入「%s」設定"
 
-#: app/tools/gimpfiltertool.c:1817 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1842 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "匯出「%s」設定"
 
-#: app/tools/gimpfiltertool.c:2055
+#: app/tools/gimpfiltertool.c:2080
 msgid "Editing filter..."
 msgstr "編輯濾鏡..."
 
@@ -23691,11 +23696,11 @@ msgstr "點按以在此區段中加入點"
 
 #: app/tools/gimpiscissorstool.c:953
 msgid "Click or press Enter to convert to a selection"
-msgstr "點選或按 Enter 來轉換為擇選區域"
+msgstr "點選或按 Enter 來轉換為選取區域"
 
 #: app/tools/gimpiscissorstool.c:963
 msgid "Press Enter to convert to a selection"
-msgstr "按 Enter 來轉換為擇選區域"
+msgstr "按 Enter 來轉換為選取區域"
 
 #: app/tools/gimpiscissorstool.c:979
 msgid "Click or Click-Drag to add a point"
@@ -27662,7 +27667,7 @@ msgstr "外掛插件"
 msgid "Progress"
 msgstr "進度"
 
-#: app/widgets/gimpsamplepointeditor.c:161
+#: app/widgets/gimpsamplepointeditor.c:163
 msgid ""
 "This image\n"
 "has no\n"
@@ -28386,11 +28391,11 @@ msgstr "寫入「%s」時發生錯誤："
 msgid "Error creating '%s': "
 msgstr "建立「%s」時發生錯誤："
 
-#: app/xcf/xcf-load.c:295
+#: app/xcf/xcf-load.c:296
 msgid "Invalid image mode and precision combination."
 msgstr "無效的影像模式與精準度組合。"
 
-#: app/xcf/xcf-load.c:502
+#: app/xcf/xcf-load.c:503
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28399,7 +28404,7 @@ msgstr ""
 "找到損毀的「exif-data」附帶資訊。\n"
 "Exif 資料無法移轉：%s"
 
-#: app/xcf/xcf-load.c:541
+#: app/xcf/xcf-load.c:542
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28407,7 +28412,7 @@ msgstr ""
 "找到損毀的「gimp-metadata」附帶資訊。\n"
 "XMP 資料無法移轉。"
 
-#: app/xcf/xcf-load.c:565
+#: app/xcf/xcf-load.c:566
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28418,31 +28423,31 @@ msgstr ""
 "舊版 GIMP 所儲存的 XMP 中介資料毀損無法轉換，將忽略。\n"
 "如果您不知道 XMP 是什麼，那麼您應該不需要。已回報的錯誤：%s。"
 
-#: app/xcf/xcf-load.c:905
+#: app/xcf/xcf-load.c:906
 msgid "Linked Layers"
 msgstr "連結的圖層"
 
-#: app/xcf/xcf-load.c:915
+#: app/xcf/xcf-load.c:916
 msgid "Linked Channels"
 msgstr "連結的色版"
 
-#: app/xcf/xcf-load.c:940
+#: app/xcf/xcf-load.c:941
 msgid "Linked Paths"
 msgstr "連結的路徑"
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:988
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "這個 XCF 檔已損毀！我已盡可能載入內容，但是並不完整。"
 
-#: app/xcf/xcf-load.c:1007
+#: app/xcf/xcf-load.c:1008
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "這個 XCF 檔已損毀！我連想救出部分的影像資料都做不到。"
 
-#: app/xcf/xcf-load.c:1164
+#: app/xcf/xcf-load.c:1165
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28452,7 +28457,7 @@ msgstr ""
 "無法正確儲存索引色的顏色映射表。\n"
 "改以灰階圖代替。"
 
-#: app/xcf/xcf-load.c:2523
+#: app/xcf/xcf-load.c:2524
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28464,7 +28469,7 @@ msgstr ""
 "算繪。\n"
 "這不應該發生。您應該將這個議題回報給濾鏡的開發者。"
 
-#: app/xcf/xcf-load.c:3408
+#: app/xcf/xcf-load.c:3448
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
