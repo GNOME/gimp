@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-04 17:49+0000\n"
-"PO-Revision-Date: 2024-10-05 01:56+0800\n"
+"POT-Creation-Date: 2024-10-04 18:00+0000\n"
+"PO-Revision-Date: 2024-10-05 20:14+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1320,6 +1320,7 @@ msgstr "_B："
 msgid "_L"
 msgstr "_L"
 
+# 這裡是 LCH 的 Chroma 縮寫，是彩度的「C」而非印刷青色的 C。
 #: ../plug-ins/common/compose.c:176
 msgid "_C"
 msgstr "_C"
@@ -11819,6 +11820,7 @@ msgstr "平面"
 msgid "Sphere"
 msgstr "球體"
 
+# 這裡是「方體」，和方框不同。
 #: ../plug-ins/map-object/map-object-ui.c:456
 msgid "Box"
 msgstr "方體"
