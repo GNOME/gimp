@@ -45,6 +45,7 @@
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpdrawablefilterundo.h"
+#include "core/gimpfilterstack.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
@@ -2683,7 +2684,8 @@ static void
 gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
                                             GimpItemTreeView *view)
 {
-  GimpImage *image = view->priv->image;
+  GimpImage    *image    = view->priv->image;
+  GimpDrawable *drawable = NULL;
 
   if (! view->priv->effects_filter ||
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
@@ -2696,12 +2698,13 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
       return;
     }
 
-  if (view->priv->effects_drawable)
+  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
+  if (drawable)
     {
       GimpContainer *filters;
       gint           index;
 
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
+      filters = gimp_drawable_get_filters (drawable);
 
       index = gimp_container_get_child_index (filters,
                                               GIMP_OBJECT (view->priv->effects_filter));
@@ -2709,8 +2712,11 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
 
       if (index >= 0)
         {
+          GimpChannel   *mask = NULL;
+          GeglRectangle  rect;
+
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
-                                               view->priv->effects_drawable,
+                                               drawable,
                                                view->priv->effects_filter);
 
           gimp_container_reorder (filters, GIMP_OBJECT (view->priv->effects_filter),
@@ -2723,10 +2729,18 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
                 gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
             }
 
+          mask = gimp_drawable_filter_get_mask (view->priv->effects_filter);
+          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
+                                              &rect);
+
+          if (gimp_channel_is_empty (mask))
+            gimp_drawable_filter_refresh_crop (view->priv->effects_filter,
+                                               &rect);
+
           /* Hack to make the effects visibly change */
-          gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
+          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
           gimp_image_flush (image);
-          gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
+          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
           gimp_image_flush (image);
         }
     }
@@ -2736,7 +2750,8 @@ static void
 gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
                                              GimpItemTreeView *view)
 {
-  GimpImage *image = view->priv->image;
+  GimpImage    *image    = view->priv->image;
+  GimpDrawable *drawable = NULL;
 
   if (! view->priv->effects_filter ||
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
@@ -2749,12 +2764,13 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
       return;
     }
 
-  if (view->priv->effects_drawable)
+  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
+  if (drawable)
     {
       GimpContainer *filters;
       gint           index;
 
-      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (view->priv->effects_drawable));
+      filters = gimp_drawable_get_filters (drawable);
 
       index = gimp_container_get_child_index (filters,
                                               GIMP_OBJECT (view->priv->effects_filter));
@@ -2762,8 +2778,12 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
 
       if (index < gimp_container_get_n_children (filters))
         {
+          GimpDrawableFilter *moved_filter = NULL;
+          GimpChannel        *mask         = NULL;
+          GeglRectangle       rect;
+
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
-                                               view->priv->effects_drawable,
+                                               drawable,
                                                view->priv->effects_filter);
 
           gimp_container_reorder (filters, GIMP_OBJECT (view->priv->effects_filter),
@@ -2776,10 +2796,21 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
                 gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
             }
 
+          moved_filter = (GimpDrawableFilter *)
+            gimp_container_get_child_by_index (filters, index - 1);
+
+          mask = gimp_drawable_filter_get_mask (moved_filter);
+          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
+                                              &rect);
+
+          if (gimp_channel_is_empty (mask))
+            gimp_drawable_filter_refresh_crop (moved_filter, &rect);
+
+
           /* Hack to make the effects visibly change */
-          gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), FALSE, FALSE);
+          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
           gimp_image_flush (image);
-          gimp_item_set_visible (GIMP_ITEM (view->priv->effects_drawable), TRUE, FALSE);
+          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
           gimp_image_flush (image);
         }
     }

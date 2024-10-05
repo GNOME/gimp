@@ -43,6 +43,7 @@
 #include "gimpchannel.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
+#include "gimpfilterstack.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimpprogress.h"
@@ -1021,14 +1022,28 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
     {
       if (filter->has_input)
         {
+          GeglRectangle  rect;
+          GimpContainer *filters;
+
+          rect.x      = filter->filter_area.x;
+          rect.y      = filter->filter_area.y;
+          rect.width  = filter->filter_area.width;
+          rect.height = filter->filter_area.height;
+
+          filters = gimp_drawable_get_filters (filter->drawable);
+          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
+                                              &rect);
+
           gegl_node_set (filter->translate,
                          "x", (gdouble) -filter->filter_area.x,
                          "y", (gdouble) -filter->filter_area.y,
                          NULL);
 
           gegl_node_set (filter->crop_before,
-                         "width",  (gdouble) filter->filter_area.width,
-                         "height", (gdouble) filter->filter_area.height,
+                         "x",      (gdouble) rect.x,
+                         "y",      (gdouble) rect.y,
+                         "width",  (gdouble) rect.width,
+                         "height", (gdouble) rect.height,
                          NULL);
         }
 
@@ -1061,14 +1076,23 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
 
       if (filter->has_input)
         {
+          GeglRectangle   rect = { 0, 0, width, height };
+          GimpContainer  *filters;
+
+          filters = gimp_drawable_get_filters (filter->drawable);
+          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
+                                              &rect);
+
           gegl_node_set (filter->translate,
                          "x", (gdouble) 0.0,
                          "y", (gdouble) 0.0,
                          NULL);
 
           gegl_node_set (filter->crop_before,
-                         "width",  width,
-                         "height", height,
+                         "x",      (gdouble) rect.x,
+                         "y",      (gdouble) rect.y,
+                         "width",  (gdouble) rect.width,
+                         "height", (gdouble) rect.height,
                          NULL);
         }
 
