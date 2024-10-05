@@ -13,11 +13,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-22 12:40+0000\n"
-"PO-Revision-Date: 2024-09-22 22:08+0800\n"
+"POT-Creation-Date: 2024-10-04 17:57+0000\n"
+"PO-Revision-Date: 2024-10-05 20:07+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
-"Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>"
-"po/zh_Hant/>\n"
+"Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -10648,28 +10647,31 @@ msgstr "其他 (%s)(_Z)..."
 msgid "_Zoom (%s)"
 msgstr "遠近縮放 (%s)(_Z)"
 
+# 這三個會填入「翻轉%s與旋轉 (%s)」。填入的字串不能有空格，因為第一個%s可能是空白的（沒有翻轉），所以要在這三個字串前後加空格。
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
 #: ../app/actions/view-actions.c:1175
 msgid "(H+V) "
-msgstr "(H+V) "
+msgstr " (横+直) "
 
+# 這三個會填入「翻轉%s與旋轉 (%s)」。填入的字串不能有空格，因為第一個%s可能是空白的（沒有翻轉），所以要在這三個字串前後加空格。
 #. please preserve the trailing space
 #. H: Horizontal
 #: ../app/actions/view-actions.c:1181
 msgid "(H) "
-msgstr "(H) "
+msgstr " (横) "
 
+# 這三個會填入「翻轉%s與旋轉 (%s)」。填入的字串不能有空格，因為第一個%s可能是空白的（沒有翻轉），所以要在這三個字串前後加空格。
 #. please preserve the trailing space
 #. V: Vertical
 #: ../app/actions/view-actions.c:1187
 msgid "(V) "
-msgstr "(V) "
+msgstr " (直) "
 
 #: ../app/actions/view-actions.c:1194
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "翻轉 %s 與旋轉 (%d)(_F)"
+msgstr "翻轉%s 與旋轉 (%d°)(_F)"
 
 #: ../app/actions/view-commands.c:1122
 msgid "Set Canvas Padding Color"
@@ -19810,9 +19812,10 @@ msgid ""
 "value"
 msgstr "將 Alpha 色版依閾值二元分化成完全透明或完全不透明"
 
+# 這裡是指數值，而非明度。
 #: ../app/operations/gimpoperationthresholdalpha.c:90
 msgid "Value"
-msgstr "明度"
+msgstr "數值"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
