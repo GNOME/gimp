@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-01 10:49+0000\n"
-"PO-Revision-Date: 2024-10-05 02:01+0800\n"
+"POT-Creation-Date: 2024-10-05 12:16+0000\n"
+"PO-Revision-Date: 2024-10-05 20:20+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <http://weblate.steps.tw/projects/gimp/"
 "po-python/zh_Hant/>\n"
@@ -576,6 +576,7 @@ msgstr "圓形"
 msgid "Polygon-Star"
 msgstr "多邊形-星形"
 
+# 這裡是用正弦畫的圓，為「正弦圓」。
 #. Sine wave on a circle ring.
 #: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:996
 #: plug-ins/python/spyro-plus.py:2250 plug-ins/python/spyro-plus.py:2260
@@ -591,6 +592,7 @@ msgstr "花邊圓"
 msgid "Rack"
 msgstr "齒條"
 
+# 這裡是指「外框」，而非動畫影像的畫格。
 #: plug-ins/python/spyro-plus.py:323
 msgid "Frame"
 msgstr "外框"
