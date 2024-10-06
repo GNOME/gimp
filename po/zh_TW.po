@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-04 18:03+0000\n"
-"PO-Revision-Date: 2024-10-05 20:07+0800\n"
+"POT-Creation-Date: 2024-10-05 12:34+0000\n"
+"PO-Revision-Date: 2024-10-06 18:37+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -530,7 +530,7 @@ msgstr "路徑"
 
 #: app/actions/actions.c:245
 msgid "View"
-msgstr "顯示"
+msgstr "檢視"
 
 #: app/actions/actions.c:248
 msgid "Windows"
@@ -3348,7 +3348,7 @@ msgstr "移除所選的項目"
 #: app/actions/documents-actions.c:78
 msgctxt "documents-action"
 msgid "_Clear History"
-msgstr "清除歷史記錄(_C)"
+msgstr "清除記錄(_C)"
 
 #: app/actions/documents-actions.c:79
 msgctxt "documents-action"
@@ -8389,7 +8389,7 @@ msgstr "垂直，右到左（混合方向）"
 #: app/actions/text-tool-actions.c:113
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "垂直，右到左(直立方向)"
+msgstr "垂直，右到左（直書方向）"
 
 #: app/actions/text-tool-actions.c:118
 msgctxt "text-tool-action"
