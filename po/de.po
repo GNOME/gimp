@@ -25,16 +25,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-27 14:18+0000\n"
-"PO-Revision-Date: 2024-09-28 14:06+0200\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2024-10-04 18:03+0000\n"
+"PO-Revision-Date: 2024-10-04 23:14+0200\n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Project-Style: gnome\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -57,7 +57,7 @@ msgid ""
 "and image authoring."
 msgstr ""
 "GIMP ist ein Akronym für »GNU Image Manipulation Program«. Es ist ein frei "
-"veröffentlichtes Programm z.B. zum  Retuschieren von Fotos, zur "
+"veröffentlichtes Programm z. B. zum Retuschieren von Fotos, zur "
 "Bildkomposition und Bilderstellung."
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:24
@@ -170,10 +170,9 @@ msgid "using %s version %s (compiled against version %s)"
 msgstr "verwendet %s Version %s (gebaut gegen Version %s)"
 
 #: app/gimp-version.c:305
-#, fuzzy, c-format
-#| msgid "%s version %s"
+#, c-format
 msgid "using %s version %s"
-msgstr "%s Version %s"
+msgstr "verwendet %s Version %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
@@ -1183,7 +1182,7 @@ msgstr "Schnittmenge mit Auswahl _bilden"
 #: app/actions/colormap-actions.c:96
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Alle Bildpunkte mit dieser Farbe  zur aktuellen Auswahl hinzufügen"
+msgstr "Alle Bildpunkte mit dieser Farbe zur aktuellen Auswahl hinzufügen"
 
 #: app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -4116,7 +4115,7 @@ msgstr "Fehlerkonsole bei Meldungen hervorheben"
 
 #: app/actions/error-console-commands.c:89
 msgid "Cannot save. Nothing is selected."
-msgstr "Es kann nicht gespeichert werden,  weil nichts ausgewählt wurde."
+msgstr "Es kann nicht gespeichert werden, weil nichts ausgewählt wurde."
 
 #: app/actions/error-console-commands.c:98
 msgid "Save Error Log to File"
@@ -4301,7 +4300,7 @@ msgstr "E_xportieren nach …"
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr ""
-"Das Bild nach verschiedensten Dateiformaten wie z.B. PNG oder JPEG "
+"Das Bild nach verschiedensten Dateiformaten wie z. B. PNG oder JPEG "
 "exportieren"
 
 #: app/actions/file-actions.c:307
@@ -9503,37 +9502,29 @@ msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Werkzeugaktionen am aktiven Pfad einrasten"
 
-# Es geht um das Standardverhalten, ob beim Zeichnen der Pinsel automatisch an Hilfslinien einrasten soll oder nicht. Aus Konsistenzgründen hab ich mich hier gegen die Variante mit »magnetisch« entschieden.
+# https://de.wikipedia.org/wiki/Minimal_umgebendes_Rechteck
 #: app/actions/view-actions.c:281
-#, fuzzy
-#| msgid "Snap to _Guides"
 msgctxt "view-action"
 msgid "Snap to _Bounding Boxes"
-msgstr "An _Hilfslinien einrasten"
+msgstr "Am _Begrenzungsrahmen einrasten"
 
 #: app/actions/view-actions.c:282
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Tool operations snap to the canvas edges"
 msgctxt "view-action"
 msgid "Tool operations snap to the bounding boxes"
-msgstr "Werkzeugaktionen an den Kanten der Leinwand einrasten"
+msgstr "Werkzeugaktionen an dem Begrenzungsrahmen (»Bounding Box«) einrasten"
 
 # Es geht um das Standardverhalten, ob beim Zeichnen der Pinsel automatisch an Hilfslinien einrasten soll oder nicht. Aus Konsistenzgründen hab ich mich hier gegen die Variante mit »magnetisch« entschieden.
 #: app/actions/view-actions.c:288
-#, fuzzy
-#| msgid "Snap to _Guides"
 msgctxt "view-action"
 msgid "Snap to _Equidistance"
-msgstr "An _Hilfslinien einrasten"
+msgstr "Bei Ä_quidistanz einrasten"
 
 #: app/actions/view-actions.c:289
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Tool operations snap to the canvas edges"
 msgctxt "view-action"
 msgid "Tool operations snap to the equidistance between three bounding boxes"
-msgstr "Werkzeugaktionen an den Kanten der Leinwand einrasten"
+msgstr ""
+"Werkzeugaktionen bei gleichem Abstand zwischen drei umgebenden Rechtecken "
+"einrasten"
 
 #: app/actions/view-actions.c:295
 msgctxt "view-action"
@@ -9796,12 +9787,9 @@ msgid "Flip the view vertically"
 msgstr "Die Ansicht vertikal spiegeln"
 
 #: app/actions/view-actions.c:473
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Display information about this image"
 msgctxt "view-action"
 msgid "Display Rotation Absolute Angle Set"
-msgstr "Bildinformationen anzeigen"
+msgstr "Absoluten Drehungswinkel festlegen"
 
 #: app/actions/view-actions.c:479
 msgctxt "view-action"
@@ -10170,7 +10158,7 @@ msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"Bei Aktivierung werden Docks und andere Dialoge verborgen, so dass nur "
+"Bei Aktivierung werden Docks und andere Dialoge verborgen, sodass nur "
 "Bildfenster übrig bleiben."
 
 #: app/actions/windows-actions.c:127
@@ -10509,7 +10497,7 @@ msgstr ""
 
 #: app/config/gimpcoreconfig.c:821 app/dialogs/preferences-dialog.c:1922
 msgid "Pattern syntax for searching and selecting items:"
-msgstr ""
+msgstr "Mustersyntax für die Suche und Auswahl von Elementen:"
 
 #: app/config/gimpdialogconfig.c:318 app/core/gimplayer.c:427
 msgid "Layer"
@@ -10653,18 +10641,18 @@ msgid "Snap to the active path by default in new image windows."
 msgstr "Standardmäßig in neuen Bildfenstern am aktiven Pfad einrasten."
 
 #: app/config/gimprc-blurbs.h:128
-#, fuzzy
-#| msgid "Snap to the canvas edges by default in new image windows."
 msgid "Snap to the layers bounding boxes by default in new image windows."
-msgstr "Standardmäßig in neuen Bildfenstern an Leinwandkanten einrasten."
+msgstr ""
+"Standardmäßig in neuen Bildfenstern an umgebenden Rechtecken der Ebenen "
+"einrasten."
 
 #: app/config/gimprc-blurbs.h:131
-#, fuzzy
-#| msgid "Snap to the canvas edges by default in new image windows."
 msgid ""
 "Snap to the equidistance between three bounding boxes by default in new "
 "image windows."
-msgstr "Standardmäßig in neuen Bildfenstern an Leinwandkanten einrasten."
+msgstr ""
+"Standardmäßig in neuen Bildfenstern an der Äquidistanz zwischen drei "
+"umgebenden Rechtecken einrasten."
 
 #: app/config/gimprc-blurbs.h:134
 msgid ""
@@ -10674,11 +10662,11 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Werkzeuge wie die unscharfe Auswahl und das Ausfüllen erkennen Regionen mit "
-"Hilfe eines Ähnlichkeitsalgorithmus. Die Erkennung beginnt am ausgewählten "
-"Pixel und setzt sich nach allen Seiten solange fort, bis der Farbunterschied "
-"eines Pixels vom Ausgangspixel größer ist, als ein zuvor festgelegter Wert. "
-"Dieser Wert repräsentiert den Standardschwellwert."
+"Werkzeuge wie die unscharfe Auswahl und das Ausfüllen erkennen Regionen "
+"mithilfe eines Ähnlichkeitsalgorithmus. Die Erkennung beginnt am "
+"ausgewählten Pixel und setzt sich nach allen Seiten solange fort, bis der "
+"Farbunterschied eines Pixels vom Ausgangspixel größer ist, als ein zuvor "
+"festgelegter Wert. Dieser Wert repräsentiert den Standardschwellwert."
 
 #: app/config/gimprc-blurbs.h:147
 msgid ""
@@ -10715,14 +10703,12 @@ msgstr ""
 "Werkzeugen verwendet."
 
 #: app/config/gimprc-blurbs.h:185
-#, fuzzy
-#| msgid "When enabled, the selected pattern will be used for all tools."
 msgid ""
 "When enabled, the selected auto expand layer settings will be used for all "
 "tools."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird das ausgewählte Muster bei allen "
-"Werkzeugen verwendet."
+"Wenn diese Option ausgewählt ist, werden die ausgewählten Einstellungen für "
+"die automatische Erweiterung von Ebenen bei allen Werkzeugen verwendet."
 
 #: app/config/gimprc-blurbs.h:196
 msgid "Sets the browser used by the help system."
@@ -11092,7 +11078,7 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "Legt fest, ob die Menüleiste standardmäßig angezeigt werden soll. Dies kann "
-"auch mit Hilfe des Befehls »Ansicht->Menüleiste anzeigen« beeinflusst werden."
+"auch mithilfe des Befehls »Ansicht->Menüleiste anzeigen« beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:450
 msgid ""
@@ -11100,7 +11086,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Legt fest, ob die Lineale standardmäßig angezeigt werden sollen. Dies kann "
-"auch mit Hilfe des Befehls »Ansicht->Lineale anzeigen« beeinflusst werden."
+"auch mithilfe des Befehls »Ansicht->Lineale anzeigen« beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:454
 msgid ""
@@ -11108,7 +11094,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Legt fest, ob die Bildlaufleisten standardmäßig angezeigt werden sollen. "
-"Dies kann auch mit Hilfe des Befehls »Ansicht->Bildlaufleisten anzeigen« "
+"Dies kann auch mithilfe des Befehls »Ansicht->Bildlaufleisten anzeigen« "
 "beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:458
@@ -11117,7 +11103,7 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "Legt fest, ob die Statusleiste standardmäßig angezeigt werden soll. Dies "
-"kann auch mit Hilfe des Befehls »Ansicht->Statusleiste anzeigen« beeinflusst "
+"kann auch mithilfe des Befehls »Ansicht->Statusleiste anzeigen« beeinflusst "
 "werden."
 
 #: app/config/gimprc-blurbs.h:462
@@ -11126,7 +11112,7 @@ msgid ""
 "with the \"View->Show Selection\" command."
 msgstr ""
 "Legt fest, ob die Auswahl standardmäßig angezeigt werden soll. Dies kann "
-"auch mit Hilfe des Befehls »Ansicht->Auswahl anzeigen« beeinflusst werden."
+"auch mithilfe des Befehls »Ansicht->Auswahl anzeigen« beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:466
 msgid ""
@@ -11134,7 +11120,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Legt fest, ob der Ebenenrahmen standardmäßig angezeigt werden soll. Dies "
-"kann auch mit Hilfe des Befehls »Ansicht->Ebenenrahmen anzeigen« beeinflusst "
+"kann auch mithilfe des Befehls »Ansicht->Ebenenrahmen anzeigen« beeinflusst "
 "werden."
 
 #: app/config/gimprc-blurbs.h:470
@@ -11143,7 +11129,7 @@ msgid ""
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
 "Legt fest, ob die Leinwandgrenzen standardmäßig angezeigt werden sollen. "
-"Dies kann auch mit Hilfe des Befehls »Ansicht->Leinwandgrenzen anzeigen« "
+"Dies kann auch mithilfe des Befehls »Ansicht->Leinwandgrenzen anzeigen« "
 "beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:474
@@ -11152,7 +11138,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Legt fest, ob die Hilfslinien standardmäßig angezeigt werden sollen. Dies "
-"kann auch mit Hilfe des Befehls »Ansicht->Hilfslinien anzeigen« beeinflusst "
+"kann auch mithilfe des Befehls »Ansicht->Hilfslinien anzeigen« beeinflusst "
 "werden."
 
 #: app/config/gimprc-blurbs.h:478
@@ -11161,7 +11147,7 @@ msgid ""
 "the \"View->Show Grid\" command."
 msgstr ""
 "Legt fest, ob das Raster standardmäßig angezeigt werden soll. Dies kann auch "
-"mit Hilfe des Befehls »Ansicht->Raster anzeigen« beeinflusst werden."
+"mithilfe des Befehls »Ansicht->Raster anzeigen« beeinflusst werden."
 
 #: app/config/gimprc-blurbs.h:482
 msgid ""
@@ -11169,7 +11155,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Legt fest, ob die Prüfpunkte standardmäßig angezeigt werden sollen. Dies "
-"kann auch mit Hilfe des Befehls »Ansicht->Prüfpunkte anzeigen« beeinflusst "
+"kann auch mithilfe des Befehls »Ansicht->Prüfpunkte anzeigen« beeinflusst "
 "werden."
 
 #: app/config/gimprc-blurbs.h:486
@@ -11183,8 +11169,7 @@ msgstr "GIMP im Einzelfenster-Modus verwenden."
 #: app/config/gimprc-blurbs.h:492
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
-"Docks und andere Fenster werden verborgen, so dass nur Bildfenster "
-"verbleiben."
+"Docks und andere Fenster werden verborgen, sodass nur Bildfenster verbleiben."
 
 #: app/config/gimprc-blurbs.h:495
 msgid "Show the image tabs bar in single window mode."
@@ -11406,6 +11391,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:617
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
+"Legt fest, wie Elemente aus einem Textmuster gesucht und ausgewählt werden."
 
 #: app/config/gimprc-blurbs.h:620
 msgid "Sets the default layer name for the 'New Layer' dialog."
@@ -12359,12 +12345,9 @@ msgid "Grid"
 msgstr "Raster"
 
 #: app/core/core-enums.c:1310
-#, fuzzy
-#| msgctxt "colormap-action"
-#| msgid "Colormap Menu"
 msgctxt "undo-type"
 msgid "Colormap remapping"
-msgstr "Farbtabellenmenü"
+msgstr "Farbtabelle umsortieren"
 
 #: app/core/core-enums.c:1311 app/core/core-enums.c:1353
 msgctxt "undo-type"
@@ -12806,13 +12789,11 @@ msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Auswahl nach Suche mit regulärem Ausdruck"
 
+# https://en.wikipedia.org/wiki/Glob_(programming) - ts
 #: app/core/core-enums.c:1505
-#, fuzzy
-#| msgctxt "paths-action"
-#| msgid "Selection to path"
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
-msgstr "Pfad aus Auswahl"
+msgstr "Auswahl nach Suche mit Glob-Muster"
 
 #. initialize babl fishes
 #: app/core/gimp.c:539 app/core/gimp.c:569
@@ -14109,6 +14090,8 @@ msgstr "Hilfslinien außerhalb der Leinwand wurden in %s hinzugefügt"
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
+"Das Festlegen von Elementen und eine musterbasierte Suche im Elementnamen "
+"wurden in %s hinzugefügt"
 
 #: app/core/gimpimage.c:3073
 #, c-format
@@ -14211,10 +14194,8 @@ msgid "ICC profile validation failed: "
 msgstr "Prüfen des ICC-Farbprofils fehlgeschlagen: "
 
 #: app/core/gimpimage-color-profile.c:278
-#, fuzzy
-#| msgid "ICC profile validation failed: "
 msgid "Simulation ICC profile validation failed: "
-msgstr "Prüfen des ICC-Farbprofils fehlgeschlagen: "
+msgstr "Prüfen des Simulation-ICC-Farbprofils fehlgeschlagen: "
 
 #: app/core/gimpimage-color-profile.c:548
 msgid ""
@@ -14259,27 +14240,27 @@ msgstr "Farbprofilumwandlung"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Farbpalette von Bild #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:230 app/core/gimppalette.c:904
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Farbpalette festlegen"
 
-#: app/core/gimpimage-colormap.c:310
+#: app/core/gimpimage-colormap.c:305
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Farbpalette zurückstellen"
 
-#: app/core/gimpimage-colormap.c:402 app/core/gimppalette.c:695
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:695
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Paletteneintrag ändern"
 
-#: app/core/gimpimage-colormap.c:424
+#: app/core/gimpimage-colormap.c:419
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Farbe zur Palette hinzufügen"
 
-#: app/core/gimpimage-colormap.c:449
+#: app/core/gimpimage-colormap.c:444
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "Paletteneintrag löschen"
@@ -14547,10 +14528,8 @@ msgid "Remove Parasite from Item"
 msgstr "Parasit von Objekt entfernen"
 
 #: app/core/gimpitem-exclusive.c:65
-#, fuzzy
-#| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Visibility"
-msgstr "Objekt exklusiv anzeigen"
+msgstr "Element exklusiv anzeigen"
 
 #: app/core/gimplayer-floating-selection.c:127
 msgctxt "undo-type"
@@ -14772,7 +14751,7 @@ msgstr "Maximale Anzahl an Pixeln, die auf die Liniengrafik wachsen"
 
 #: app/core/gimplineart.c:363 app/core/gimplineart.c:364
 msgid "Whether or not we should perform the closing step"
-msgstr ""
+msgstr "Legt fest, ob ein Abschluss-Schritt durchgeführt werden soll"
 
 #: app/core/gimplineart.c:370
 msgid "Maximum curved closing length"
@@ -15946,9 +15925,8 @@ msgid ""
 "format or enter no file extension at all."
 msgstr ""
 "Das Dateiformat entfernter Dateien kann beim Abspeichern nur über die "
-"Dateinamenserweiterung erkannt werden. Bitte geben Sie eine Erweiterung, die "
-"dem Typ der gewählten Datei entspricht oder geben Sie gar keine Erweiterung "
-"an."
+"Dateiendung erkannt werden. Bitte geben Sie eine Dateiendung an, die dem Typ "
+"der gewählten Datei entspricht oder geben Sie gar keine Dateiendung an."
 
 #: app/dialogs/file-save-dialog.c:662
 msgid "The given filename cannot be used for exporting"
@@ -15985,23 +15963,22 @@ msgstr "Den Export-Dialog anzeigen"
 
 #: app/dialogs/file-save-dialog.c:676 app/dialogs/file-save-dialog.c:753
 msgid "Extension Mismatch"
-msgstr "Falsche Erweiterung"
+msgstr "Falsche Endung"
 
 #: app/dialogs/file-save-dialog.c:737
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
-"Der von Ihnen angegebene Dateiname besitzt keine bekannte "
-"Dateinamenserweiterung. Bitte geben Sie eine der bekannten Erweiterungen ein "
-"(z.B. .xcf oder .png) oder wählen Sie ein Dateiformat aus der gleichnamigen "
-"Liste."
+"Der von Ihnen angegebene Dateiname besitzt keine bekannte Dateiendung. Bitte "
+"geben Sie eine der bekannten Endungen an (z. B. .xcf oder .png) oder wählen "
+"Sie ein Dateiformat aus der gleichnamigen Liste."
 
 #: app/dialogs/file-save-dialog.c:769
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
-"Die von Ihnen angegebene Dateinamenserweiterung stimmt nicht mit dem "
-"gewählten Dateityp überein."
+"Die von Ihnen angegebene Dateiendung stimmt nicht mit dem gewählten Dateityp "
+"überein."
 
 #: app/dialogs/file-save-dialog.c:773
 msgid "Do you want to save the image using this name anyway?"
@@ -16639,16 +16616,12 @@ msgid "Snap to _Active Path"
 msgstr "Am _aktiven Pfad einrasten"
 
 #: app/dialogs/preferences-dialog.c:1118
-#, fuzzy
-#| msgid "Snap to _Guides"
 msgid "Snap to _Bounding Box"
-msgstr "An _Hilfslinien einrasten"
+msgstr "Am _Begrenzungsrahmen einrasten"
 
 #: app/dialogs/preferences-dialog.c:1121
-#, fuzzy
-#| msgid "Snap to _Guides"
 msgid "Snap to _Equidistance"
-msgstr "An _Hilfslinien einrasten"
+msgstr "Bei Ä_quidistanz einrasten"
 
 #: app/dialogs/preferences-dialog.c:1175
 msgid "Preferences"
@@ -19548,11 +19521,10 @@ msgstr ""
 msgid "Delete Anchors"
 msgstr "Anker löschen"
 
+# Nach meinem Verständnis kann hierdurch der Startpunkt eines Pfades geändert werden - ts
 #: app/display/gimptoolpath.c:2039
-#, fuzzy
-#| msgid "Shift"
 msgid "Shift start"
-msgstr "Verschieben"
+msgstr "Start verschieben"
 
 #: app/display/gimptoolpolygon.c:890
 msgid "Click to close shape"
@@ -22735,7 +22707,7 @@ msgstr "Textebene hinzufügen"
 
 #: app/text/gimptext-parasite.c:168
 msgid "Invalid markup format in text parasite"
-msgstr ""
+msgstr "Ungültiges Markup-Format im Textparasiten"
 
 #: app/text/gimptext-parasite.c:192
 msgid "Empty text parasite"
@@ -22871,17 +22843,16 @@ msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Ausgewählte Pfade werden vom Werkzeug ausgerichtet oder verteilt"
 
 #: app/tools/gimpalignoptions.c:170
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Change the size of the layer content"
 msgid "Use extents of layer contents"
-msgstr "Die Größe des Ebeneninhaltes ändern"
+msgstr "Ausmaße der Ebeneninhalte verwenden"
 
 #: app/tools/gimpalignoptions.c:171
 msgid ""
 "Instead of aligning or distributing on layer borders, use its content "
 "bounding box"
 msgstr ""
+"Anstatt sich an den Ebenenrändern auszurichten oder zu verteilen, den "
+"Begrenzungsrahmen des Inhalts verwenden"
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:387
@@ -23107,13 +23078,15 @@ msgstr "Ursprungsbild für die Generierung von Liniengrafik"
 
 #: app/tools/gimpbucketfilloptions.c:225
 msgid "Manual closure in fill layer"
-msgstr ""
+msgstr "Manuell in der Füllebene abschließen"
 
 #: app/tools/gimpbucketfilloptions.c:226
 msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
 msgstr ""
+"Pixel der ausgewählten Ebene mit der Füllfarbe als Abschluss der "
+"Liniengrafik betrachten"
 
 #: app/tools/gimpbucketfilloptions.c:253
 msgid "Stroke borders"
@@ -23132,17 +23105,16 @@ msgid "The tool to stroke the fill borders with"
 msgstr "Das Werkzeug, mit dem die Ränder nachgezogen werden sollen"
 
 #: app/tools/gimpbucketfilloptions.c:266
-#, fuzzy
-#| msgctxt "tab-style"
-#| msgid "Automatic"
 msgid "Automatic closure"
-msgstr "Automatisch"
+msgstr "Automatisch abschließen"
 
 #: app/tools/gimpbucketfilloptions.c:267
 msgid ""
 "Geometric analysis of the stroke contours to close line arts by splines/"
 "segments"
 msgstr ""
+"Geometrische Analyse der Strichkonturen zum Schließen von Liniengrafiken "
+"durch Splines/Segmente"
 
 #: app/tools/gimpbucketfilloptions.c:273
 msgid "Maximum gap length"
@@ -23170,16 +23142,12 @@ msgstr ""
 "niedriger Leuchtkraft betrachtet"
 
 #: app/tools/gimpbucketfilloptions.c:633
-#, fuzzy
-#| msgid "No valid line art source selected."
 msgid "No valid source drawable selected"
-msgstr "Keine gültige Liniengrafik-Quelle ausgewählt."
+msgstr "Keine gültige Quell-Zeichenfläche ausgewählt"
 
 #: app/tools/gimpbucketfilloptions.c:635
-#, fuzzy
-#| msgid "The active layer does not have an alpha channel."
 msgid "The source drawable has no alpha channel"
-msgstr "Die aktive Ebene hat keinen Alphakanal."
+msgstr "Die Quell-Zeichenfläche hat keinen Alphakanal"
 
 #. fill type
 #: app/tools/gimpbucketfilloptions.c:677
@@ -23212,10 +23180,8 @@ msgstr "Deckkraft statt Graustufen erkennen"
 
 #. Line Art Closure: frame label
 #: app/tools/gimpbucketfilloptions.c:788
-#, fuzzy
-#| msgid "Line style"
 msgid "Line Art Closure"
-msgstr "Linienstil"
+msgstr "Liniengrafik abschließen"
 
 #. Line Art Borders: frame label
 #: app/tools/gimpbucketfilloptions.c:819
@@ -23241,6 +23207,7 @@ msgstr "Füllen"
 #: app/tools/gimpbucketfilltool.c:596
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr ""
+"Es können nicht mehrere Ebenen gefüllt werden. Wählen Sie nur eine Ebene aus."
 
 #: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:219 app/tools/gimpfiltertool.c:301
@@ -23347,8 +23314,8 @@ msgstr "Keine Quelle ausgewählt"
 #, c-format
 msgid "Source: %d item to itself"
 msgid_plural "Source: %d items to themselves"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Quelle: %d Element zu sich selbst"
+msgstr[1] "Quelle: %d Elemente zu sich selbst"
 
 #: app/tools/gimpcloneoptions-gui.c:189
 msgid "All composited visible layers"
@@ -23363,15 +23330,15 @@ msgstr "Alle komponierten sichtbaren Ebenen von »%s«"
 #, c-format
 msgid "Source: %d item"
 msgid_plural "Source: %d items"
-msgstr[0] "Quelle: %d Objekt"
-msgstr[1] "Quelle: %d Objekte"
+msgstr[0] "Quelle: %d Element"
+msgstr[1] "Quelle: %d Elemente"
 
 #: app/tools/gimpcloneoptions-gui.c:202
 #, c-format
 msgid "Source: %d item from '%s'"
 msgid_plural "Source: %d items from '%s'"
-msgstr[0] "Quelle: %d Objekt von »%s«"
-msgstr[1] "Quelle: %d Objekte von »%s«"
+msgstr[0] "Quelle: %d Element von »%s«"
+msgstr[1] "Quelle: %d Elemente von »%s«"
 
 #: app/tools/gimpclonetool.c:64
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -24708,16 +24675,12 @@ msgid "_Move"
 msgstr "_Verschieben"
 
 #: app/tools/gimpmovetool.c:306
-#, fuzzy
-#| msgid "The active layer's position and size are locked."
 msgid "All selected path's position are locked."
-msgstr "Die Position und Größe der aktiven Ebene sind gesperrt."
+msgstr "Die Position aller gewählten Pfade ist gesperrt."
 
 #: app/tools/gimpmovetool.c:358
-#, fuzzy
-#| msgid "The active channel's pixels are locked."
 msgid "A selected channel's position or pixels are locked."
-msgstr "Die Pixel des aktiven Kanals sind gesperrt."
+msgstr "Die Position oder Pixel eines gewählten Kanals ist gesperrt."
 
 #: app/tools/gimpmybrushtool.c:76
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25032,7 +24995,7 @@ msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 #: app/tools/gimprectangleoptions.c:102
 #: app/tools/gimptransformgridoptions.c:140
 msgid "Composition guides such as rule of thirds"
-msgstr "Gestaltungsregeln wie z.B. die Drittelregel"
+msgstr "Gestaltungsregeln wie z. B. die Drittelregel"
 
 #: app/tools/gimprectangleoptions.c:111
 msgid "X coordinate of top left corner"
@@ -27209,8 +27172,7 @@ msgstr "Die angegebene DLL wurde nicht gefunden."
 
 #: app/widgets/gimpcriticaldialog.c:392
 msgid "There is no application associated with the given file name extension."
-msgstr ""
-"Es ist keine Anwendung mit der gegebenen Dateinamenserweiterung verknüpft."
+msgstr "Es ist keine Anwendung mit der gegebenen Dateiendung verknüpft."
 
 #: app/widgets/gimpcriticaldialog.c:395
 msgid "There was not enough memory to complete the operation."
@@ -27666,11 +27628,8 @@ msgid "Pressure curve"
 msgstr "Druckkurve"
 
 #: app/widgets/gimpdeviceinfo.c:261
-#, fuzzy
-#| msgctxt "space-bar-action"
-#| msgid "No action"
 msgid "Pad actions"
-msgstr "Keine Aktion"
+msgstr "Tablett-Aktionen"
 
 #: app/widgets/gimpdeviceinfo.c:1133 app/widgets/gimpdeviceinfo.c:1158
 msgid "(Device not present)"
@@ -27731,20 +27690,16 @@ msgid "The axis '%s' has no curve"
 msgstr "Die Achse »%s« hat keine Kurve"
 
 #: app/widgets/gimpdeviceinfoeditor.c:546
-#, fuzzy
-#| msgid "Search Actions"
 msgid "Pad Actions"
-msgstr "Aktionen suchen"
+msgstr "Tablett-Aktionen"
 
 #: app/widgets/gimpdeviceinfoeditor.c:633
-#, fuzzy
-#| msgid "Select the next event arriving from the controller"
 msgid "Select the next event arriving from the pad"
-msgstr "Das nächste Ereignis welches von der Steuerung kommt auswählen"
+msgstr "Das nächste Ereignis, das vom Grafiktablett kommt, auswählen"
 
 #: app/widgets/gimpdeviceinfoeditor.c:677
 msgid "Pad Actions are not supported on your platform yet"
-msgstr ""
+msgstr "Tablett-Aktionen werden auf Ihrer Plattform noch nicht unterstützt"
 
 #: app/widgets/gimpdeviceinfoeditor.c:900
 #, c-format
@@ -27757,16 +27712,13 @@ msgid "Ring %d"
 msgstr "Ring %d"
 
 #: app/widgets/gimpdeviceinfoeditor.c:906
-#, fuzzy, c-format
-#| msgid "Stop %d"
+#, c-format
 msgid "Strip %d"
-msgstr "Stopp %d"
+msgstr "Streifen %d"
 
 #: app/widgets/gimpdeviceinfoeditor.c:1152
-#, fuzzy
-#| msgid "Select Controller Event Action"
 msgid "Select Pad Event Action"
-msgstr "Aktion für Steuerungsereignis auswählen"
+msgstr "Aktion für Tablett-Ereignis auswählen"
 
 #: app/widgets/gimpdevicestatus.c:161
 msgid "Save device status"
@@ -27794,8 +27746,7 @@ msgstr "Hintergrund: %d, %d, %d (in sRGB)"
 
 #: app/widgets/gimpdnd-xds.c:205
 msgid "The given filename does not have any known file extension."
-msgstr ""
-"Der von Ihnen angegebene Dateiname besitzt keinerlei Dateinamenserweiterung."
+msgstr "Der von Ihnen angegebene Dateiname besitzt keine bekannte Dateiendung."
 
 #: app/widgets/gimpdnd-xds.c:223
 msgid "File Exists"
@@ -27861,12 +27812,10 @@ msgid "Lock position and size"
 msgstr "Position und Größe sperren"
 
 #: app/widgets/gimpdrawabletreeview.c:192
-#, fuzzy
-#| msgid "Cannot select item while a floating selection is active."
 msgid "Cannot select items while a floating selection is active."
 msgstr ""
-"Objekt kann nicht ausgewählt werden, solange eine schwebende Auswahl aktiv "
-"ist."
+"Elemente können nicht ausgewählt werden, solange eine schwebende Auswahl "
+"aktiv ist."
 
 #: app/widgets/gimpdynamicseditor.c:162
 #: app/widgets/gimpdynamicsoutputeditor.c:71
@@ -28288,26 +28237,20 @@ msgstr[0] "Indizierte Farbe (monochrom)"
 msgstr[1] "Indizierte Farbe (%d Farben)"
 
 #: app/widgets/gimpitemtreeview.c:721
-#, fuzzy
-#| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Content Lock"
-msgstr "Objekt exklusiv verknüpfen"
+msgstr "Inhalt des Elements exklusiv sperren"
 
 #: app/widgets/gimpitemtreeview.c:737
-#, fuzzy
-#| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Position Lock"
-msgstr "Objekt exklusiv verknüpfen"
+msgstr "Position des Elements exklusiv sperren"
 
 #: app/widgets/gimpitemtreeview.c:752
 msgid "Unlock visibility"
 msgstr "Sichtbarkeit entsperren"
 
 #: app/widgets/gimpitemtreeview.c:753
-#, fuzzy
-#| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Visibility Lock"
-msgstr "Objekt exklusiv anzeigen"
+msgstr "Sichtbarkeit des Elements exklusiv sperren"
 
 #: app/widgets/gimpitemtreeview.c:782
 msgid "Toggle the visibility of all filters."
@@ -28338,18 +28281,15 @@ msgid "Layer Effects"
 msgstr "Ebeneneffekte"
 
 #: app/widgets/gimpitemtreeview.c:892
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select the layer below the current layer"
 msgid "Select items by patterns and store item sets"
-msgstr "Die Ebene unterhalb der aktiven Ebene auswählen"
+msgstr "Elemente nach Mustern auswählen und Elementsammlungen speichern"
 
 #: app/widgets/gimpitemtreeview.c:1784
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
-msgstr[0] "%d Objekt ausgewählt"
-msgstr[1] "%d Objekte ausgewählt"
+msgstr[0] "%d Element ausgewählt"
+msgstr[1] "%d Elemente ausgewählt"
 
 #: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
 msgid "Cannot reorder a filter that is being edited."
@@ -28369,17 +28309,12 @@ msgid "Remove filter"
 msgstr "Filter entfernen"
 
 #: app/widgets/gimpitemtreeview.c:3389
-#, fuzzy
-#| msgid "No filter selected"
 msgid "No layer set stored"
-msgstr "Kein Filter ausgewählt"
+msgstr "Keine Ebenensammlung gespeichert"
 
 #: app/widgets/gimpitemtreeview.c:3411
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Edit the layer's name"
 msgid "New layer set's name"
-msgstr "Ebenenname bearbeiten"
+msgstr "Name der neuen Ebenensammlung"
 
 #: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
 msgid "Select layers by text search"
@@ -28390,18 +28325,12 @@ msgid "Text search"
 msgstr "Textsuche"
 
 #: app/widgets/gimpitemtreeview.c:3474
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Set layer opacity"
 msgid "Select layers by glob patterns"
-msgstr "Ebenentransparenz ändern"
+msgstr "Ebenen anhand von Glob-Muster auswählen"
 
-# CHECK
 #: app/widgets/gimpitemtreeview.c:3476
-#, fuzzy
-#| msgid "_Lock patterns"
 msgid "Glob pattern search"
-msgstr "_Schema sperren"
+msgstr "Suche mit Glob-Muster"
 
 #: app/widgets/gimpitemtreeview.c:3480
 msgid "Select layers by regular expressions"
@@ -28441,10 +28370,8 @@ msgid "Unlock alpha channel"
 msgstr "Alphakanal entsperren"
 
 #: app/widgets/gimplayertreeview.c:421
-#, fuzzy
-#| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Alpha Channel lock"
-msgstr "Objekt exklusiv verknüpfen"
+msgstr "Alphakanal des Elements exklusiv sperren"
 
 #: app/widgets/gimplayertreeview.c:1058
 msgid "Set layers mode"
@@ -28561,7 +28488,7 @@ msgstr "Plugin"
 msgid "Progress"
 msgstr "Fortschritt"
 
-#: app/widgets/gimpsamplepointeditor.c:161
+#: app/widgets/gimpsamplepointeditor.c:163
 msgid ""
 "This image\n"
 "has no\n"
