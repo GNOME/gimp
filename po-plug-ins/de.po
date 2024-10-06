@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-28 16:34+0000\n"
-"PO-Revision-Date: 2024-09-29 10:20+0200\n"
+"POT-Creation-Date: 2024-10-04 12:09+0000\n"
+"PO-Revision-Date: 2024-10-04 15:45+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -88,8 +88,8 @@ msgstr "Plugin-Beispiel in C"
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1517
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1555
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1392
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:777
@@ -635,7 +635,7 @@ msgstr "Jalousie"
 #: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:867
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:392
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
+#: plug-ins/file-bmp/bmp-load.c:754 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:676
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -1055,7 +1055,7 @@ msgstr "Zufällige Anfangszahl"
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1519
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 #: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1071,7 +1071,7 @@ msgstr "Ö_ffnen"
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1250
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:803
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1557
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2604 plug-ins/imagemap/imap_file.c:129
@@ -1264,7 +1264,7 @@ msgstr "CML-Explorer-Parameter speichern"
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2220
 #: plug-ins/file-tiff/file-tiff-export.c:1086
 #: plug-ins/file-tiff/file-tiff-export.c:1175 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1419
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2463
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -1691,6 +1691,9 @@ msgid ""
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
 "the result."
 msgstr ""
+"Diese Funktion fasst die von »Zerlegen« erzeugten Graustufenebenen zu einer "
+"einzigen RGB- oder RGBA-Ebene zusammen und ersetzt die ursprünglich zerlegte "
+"Ebene durch das Ergebnis."
 
 #: plug-ins/common/compose.c:604
 msgid ""
@@ -1769,6 +1772,7 @@ msgstr "_Retinex …"
 msgid "Enhance contrast using the Retinex method"
 msgstr "Mittels der Retinex-Methode den Kontrast erhöhen"
 
+# Farbverstärkung etwas freier, aber konsistent mit bisheriger Übersetzung. - ts
 #: plug-ins/common/contrast-retinex.c:184
 msgid ""
 "The Retinex Image Enhancement Algorithm is an automatic image enhancement "
@@ -1776,6 +1780,11 @@ msgid ""
 "color independence from the spectral distribution of the scene illuminant, "
 "and color/lightness rendition."
 msgstr ""
+"Der Retinex-Farbverstärkungsalgorithmus ist eine automatische Methode zur "
+"Farbverstärkung, die ein digitales Bild in Bezug auf die Komprimierung des "
+"Dynamikbereichs, die Unabhängigkeit der Farben von der spektralen Verteilung "
+"der Szenen-Lichtquelle und die Wiedergabe von Farbe und Helligkeit "
+"verbessert."
 
 #: plug-ins/common/contrast-retinex.c:199
 msgid "Scal_e"
@@ -1796,11 +1805,11 @@ msgstr "Anzahl an Skalen"
 
 #: plug-ins/common/contrast-retinex.c:211
 msgid "Le_vel"
-msgstr ""
+msgstr "St_ufe"
 
 #: plug-ins/common/contrast-retinex.c:212
 msgid "Retinex distribution through scales"
-msgstr ""
+msgstr "Retinex-Verteilung über Skalen"
 
 #: plug-ins/common/contrast-retinex.c:213
 msgid "Uniform"
@@ -1874,6 +1883,19 @@ msgid ""
 "handled layer. This plug-in sets the offsets of the handled layer to keep "
 "its center at the same position."
 msgstr ""
+"Dieses Plugin biegt die aktive Ebene. Wenn es eine aktuelle Auswahl gibt, "
+"wird diese in eine schwebende Auswahl kopiert und die curve_bend-Verzerrung "
+"wird an der schwebenden Auswahl durchgeführt. Wenn der Parameter "
+"»work_on_copy« WAHR ist, wird die curve_bend-Verzerrung an einer Kopie der "
+"aktiven Ebene (oder der schwebenden Auswahl) durchgeführt. Die oberen und "
+"unteren Kanten werden in Form von 2 Spline-Kurven gebogen. Beide (obere und "
+"untere) Kurven werden durch bis zu 17 Punkte oder durch 256 Y-Werte "
+"bestimmt, wenn curve_type == 1 (Freihandmodus). Wenn Rotation ungleich 0 "
+"ist, wird die Ebene vor dem Biegevorgang gedreht und nach dem Biegevorgang "
+"zurückgedreht. Dies ermöglicht das Biegen in andere Richtungen als vertikal. "
+"Durch das Biegen ändert sich normalerweise die Größe der bearbeiteten Ebene. "
+"Dieses Plugin setzt die Versätze der verarbeiteten Ebene, um ihren "
+"Mittelpunkt an der gleichen Position zu halten."
 
 #: plug-ins/common/curve-bend.c:426
 msgid "Rotat_e"
@@ -1881,7 +1903,7 @@ msgstr "_Drehen"
 
 #: plug-ins/common/curve-bend.c:427
 msgid "Direction {angle 0 to 360 degree } of the bend effect"
-msgstr ""
+msgstr "Richtung {Winkel 0 bis 360 Grad } des Biegeeffekts"
 
 #: plug-ins/common/curve-bend.c:433
 msgid "Smoo_thing"
@@ -1905,7 +1927,7 @@ msgstr "Mit Ko_pie arbeiten"
 
 #: plug-ins/common/curve-bend.c:446
 msgid "Copy the drawable and bend the copy"
-msgstr ""
+msgstr "Zeichenfläche kopieren und die Kopie biegen"
 
 #: plug-ins/common/curve-bend.c:451
 msgid "Cur_ve Type"
@@ -1915,6 +1937,8 @@ msgstr "_Kurventyp"
 msgid ""
 "Whether to use Smooth (17 points) or Freehand (256 points) to draw the curve"
 msgstr ""
+"Legt fest, ob die Kurve mit Glatt (17 Punkte) oder Freihand (256 Punkte) "
+"gezeichnet werden soll"
 
 #: plug-ins/common/curve-bend.c:454
 msgid "Smooth"
@@ -1930,89 +1954,78 @@ msgstr "Kurve für _Rand"
 
 #: plug-ins/common/curve-bend.c:462
 msgid "Choose the active border line to edit"
-msgstr ""
+msgstr "Die zu bearbeitende aktive Randlinie wählen"
 
 # Oberer Rand
 #: plug-ins/common/curve-bend.c:463
 msgid "Upper"
 msgstr "Oben"
 
+# Unterer Rand
 #: plug-ins/common/curve-bend.c:464
-#, fuzzy
-#| msgid "Lower"
 msgctxt "adjective"
 msgid "Lower"
-msgstr "Absenken"
+msgstr "Unten"
 
 #: plug-ins/common/curve-bend.c:470 plug-ins/common/curve-bend.c:471
 msgid "Argc upper point X"
-msgstr ""
+msgstr "Argc oberer Punkt X"
 
 #: plug-ins/common/curve-bend.c:476
-#, fuzzy
-#| msgid "Upper right"
 msgid "Upper point X"
-msgstr "Oben rechts"
+msgstr "Oberer Punkt X"
 
 #: plug-ins/common/curve-bend.c:477 plug-ins/common/curve-bend.c:501
 msgid "Array of 17 x point coords { 0.0 <= x <= 1.0 or -1 for unused point }"
 msgstr ""
+"Array mit 17 X-Punktkoordinaten { 0.0 <= x <= 1.0 oder -1 für nicht "
+"verwendeten Punkt }"
 
 #: plug-ins/common/curve-bend.c:482 plug-ins/common/curve-bend.c:483
 msgid "Argc upper point Y"
-msgstr ""
+msgstr "Argc oberer Punkt Y"
 
 #: plug-ins/common/curve-bend.c:488
-#, fuzzy
-#| msgid "Upper right"
 msgid "Upper point Y"
-msgstr "Oben rechts"
+msgstr "Oberer Punkt Y"
 
 #: plug-ins/common/curve-bend.c:489 plug-ins/common/curve-bend.c:513
 msgid "Array of 17 y point coords { 0.0 <= y <= 1.0 or -1 for unused point }"
 msgstr ""
+"Array mit 17 Y-Punktkoordinaten { 0.0 <= x <= 1.0 oder -1 für nicht "
+"verwendeten Punkt }"
 
 #: plug-ins/common/curve-bend.c:494 plug-ins/common/curve-bend.c:495
 msgid "Argc lower point X"
-msgstr ""
+msgstr "Argc unterer Punkt X"
 
 #: plug-ins/common/curve-bend.c:500
-#, fuzzy
-#| msgid "Lower right"
 msgid "Lower point X"
-msgstr "Unten rechts"
+msgstr "Unterer Punkt X"
 
 #: plug-ins/common/curve-bend.c:506 plug-ins/common/curve-bend.c:507
 msgid "Argc lower point Y"
-msgstr ""
+msgstr "Argc unterer Punkt Y"
 
 #: plug-ins/common/curve-bend.c:512
-#, fuzzy
-#| msgid "Lower right"
 msgid "Lower point Y"
-msgstr "Unten rechts"
+msgstr "Unterer Punkt Y"
 
 #: plug-ins/common/curve-bend.c:518
-#, fuzzy
-#| msgid "Upper left"
 msgid "Upper val Y"
-msgstr "Oben links"
+msgstr "Oberer Wert Y"
 
 #: plug-ins/common/curve-bend.c:519 plug-ins/common/curve-bend.c:525
 msgid "Array of 256 y freehand coords { 0 <= y <= 255 }"
-msgstr ""
+msgstr "Array mit 256 Y-Freihand-Koordinaten { 0 <= y <= 255 }"
 
 #: plug-ins/common/curve-bend.c:524
-#, fuzzy
-#| msgid "Lower left"
 msgid "Lower val Y"
-msgstr "Unten links"
+msgstr "Unterer Wert Y"
 
 #: plug-ins/common/curve-bend.c:530
-#, fuzzy
-#| msgid "Selected layer"
 msgid "Bent layer"
-msgstr "Gewählte Ebene"
+msgstr "Gebogene Ebene"
 
 #: plug-ins/common/curve-bend.c:531
 msgid "The transformed layer"
@@ -2055,7 +2068,7 @@ msgstr "Es kann nicht auf einer leeren Auswahl gearbeitet werden."
 #: plug-ins/file-psd/psd-export.c:2225 plug-ins/file-psd/psd-load.c:180
 #: plug-ins/file-psd/psd-load.c:185 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1780
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1779
 #: plug-ins/fractal-explorer/fractal-explorer.c:1161 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
@@ -2323,10 +2336,8 @@ msgid "Decompose an image into separate colorspace components"
 msgstr "Zerlegt ein Bild in die einzelnen Farbraumkomponenten"
 
 #: plug-ins/common/decompose.c:299
-#, fuzzy
-#| msgid "Wavelet decompose"
 msgid "The model to decompose to"
-msgstr "Wavelet-Zerlegung"
+msgstr "Das zu zerlegende Modell"
 
 #: plug-ins/common/decompose.c:317
 msgid "_Decompose to layers"
@@ -2419,10 +2430,8 @@ msgid "O_ffset"
 msgstr "_Versatz"
 
 #: plug-ins/common/depth-merge.c:254
-#, fuzzy
-#| msgid "Save layer o_ffset"
 msgid "Depth relative offset"
-msgstr "Ebenen_versatz speichern"
+msgstr "Relativer Tiefenversatz"
 
 #: plug-ins/common/depth-merge.c:259
 msgid "Sc_ale 1"
@@ -2430,7 +2439,7 @@ msgstr "Sk_alierung 1"
 
 #: plug-ins/common/depth-merge.c:260
 msgid "Depth relative scale 1"
-msgstr ""
+msgstr "Relative Tiefenskala 1"
 
 #: plug-ins/common/depth-merge.c:265
 msgid "Scal_e 2"
@@ -2438,13 +2447,12 @@ msgstr "Skalieru_ng 2"
 
 #: plug-ins/common/depth-merge.c:266
 msgid "Depth relative scale 2"
-msgstr ""
+msgstr "Relative Tiefenskala 2"
 
 #: plug-ins/common/depth-merge.c:313
-#, fuzzy
-#| msgid "The selection does not intersect the active layer or mask."
 msgid "The selection does not intersect with the input drawable."
-msgstr "Die Auswahl überschneidet nicht die aktive Ebene oder Maske."
+msgstr ""
+"Die Auswahl überschneidet sich nicht mit der eingegebenen Zeichenfläche."
 
 #: plug-ins/common/depth-merge.c:366
 msgid "Depth-merging"
@@ -2467,16 +2475,16 @@ msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
+"Dieses Plugin führt selektiv einen Median- oder anpassenden Box-Filter auf "
+"ein Bild aus."
 
 #: plug-ins/common/despeckle.c:185
 msgid "R_adius"
 msgstr "R_adius"
 
 #: plug-ins/common/despeckle.c:186
-#, fuzzy
-#| msgid "Cylinder radius"
 msgid "Filter box radius"
-msgstr "Zylinderradius"
+msgstr "Radius der Filterbox"
 
 #: plug-ins/common/despeckle.c:191
 msgid "_Filter Type"
@@ -2496,16 +2504,12 @@ msgid "Adaptive"
 msgstr "Anpassend"
 
 #: plug-ins/common/despeckle.c:195
-#, fuzzy
-#| msgid "R_ecursive"
 msgid "Recursive-Median"
-msgstr "Re_kursiv"
+msgstr "Rekursiv-Median"
 
 #: plug-ins/common/despeckle.c:196
-#, fuzzy
-#| msgid "R_ecursive"
 msgid "Recursive-Adaptive"
-msgstr "Re_kursiv"
+msgstr "Rekursiv-Anpassend"
 
 #: plug-ins/common/despeckle.c:202
 msgid "_Black level"
@@ -2548,17 +2552,15 @@ msgstr "_Breite"
 
 #: plug-ins/common/destripe.c:142
 msgid "Averaging filter width"
-msgstr ""
+msgstr "Mittelwertbildende Filterbreite"
 
 #: plug-ins/common/destripe.c:148
 msgid "Create _histogram"
 msgstr "_Histogramm erstellen"
 
 #: plug-ins/common/destripe.c:149
-#, fuzzy
-#| msgid "Create _histogram"
 msgid "Output a histogram"
-msgstr "_Histogramm erstellen"
+msgstr "Ein Histogramm ausgeben"
 
 #: plug-ins/common/destripe.c:239
 msgid "Destriping"
@@ -2574,13 +2576,15 @@ msgstr "ASCII-Kunst"
 
 #: plug-ins/common/file-aa.c:136
 msgid "Saves grayscale image in various text formats"
-msgstr ""
+msgstr "Speichert Graustufenbilder in verschiedenen Textformaten"
 
 #: plug-ins/common/file-aa.c:138
 msgid ""
 "This plug-in uses aalib to save grayscale image as ascii art into a variety "
 "of text formats"
 msgstr ""
+"Dieses Plugin verwendet »aalib«, um Graustufenbilder als ASCII-Grafiken in "
+"einer Vielzahl von Textformaten zu speichern"
 
 #: plug-ins/common/file-aa.c:162 plug-ins/file-dds/dds.c:220
 msgid "_Format"
@@ -2746,11 +2750,11 @@ msgstr "C-Quelltext"
 
 #: plug-ins/common/file-csource.c:125
 msgid "Dump image data in RGB(A) format for C source"
-msgstr ""
+msgstr "Bilddaten im RGB(A)-Format für C-Quellcode ausgeben"
 
 #: plug-ins/common/file-csource.c:127
 msgid "CSource cannot be run non-interactively."
-msgstr "CSource kann nur interaktiv ausgeführt werden."
+msgstr "C-Quellcode kann nur interaktiv ausgeführt werden."
 
 #: plug-ins/common/file-csource.c:135
 msgid "C-Source"
@@ -2967,16 +2971,12 @@ msgid "Exports files in the GIMP brush file format"
 msgstr "Exportiert Dateien im GIMP-Pinsel-Dateiformat"
 
 #: plug-ins/common/file-gbr.c:158
-#, fuzzy
-#| msgid "Spacing:"
 msgid "Sp_acing"
-msgstr "Abstand:"
+msgstr "_Abstand"
 
 #: plug-ins/common/file-gbr.c:159 plug-ins/common/file-gih.c:193
-#, fuzzy
-#| msgid "Specifies the aspect ratio of the brush"
 msgid "Spacing of the brush"
-msgstr "Legt das Seitenverhältnis für den Pinsel fest"
+msgstr "Abstand des Pinsels"
 
 #: plug-ins/common/file-gbr.c:164 plug-ins/common/file-gih.c:198
 #: plug-ins/common/file-pat.c:143
@@ -3026,6 +3026,12 @@ msgid ""
 "transparent. When run non-interactively, the value for the comment is taken "
 "from the 'gimp-comment' parasite."
 msgstr ""
+"Eine Datei im GIF-Format, möglicherweise mit Animation, Transparenz und "
+"Kommentar exportieren. Um eine Animation zu exportieren, arbeiten Sie mit "
+"einer Datei mit mehreren Ebenen und setzen Sie den Parameter »as-animation« "
+"auf WAHR. Das Plugin interpretiert <50% Alpha als transparent. Wenn es nicht "
+"interaktiv ausgeführt wird, wird der Wert für den Kommentar aus dem "
+"Parasiten »gimp-comment« übernommen."
 
 #: plug-ins/common/file-gif-export.c:195 plug-ins/common/file-mng.c:285
 msgid "_Interlace"
@@ -3033,7 +3039,7 @@ msgstr "_Interlace"
 
 #: plug-ins/common/file-gif-export.c:196
 msgid "Try to export as interlaced"
-msgstr ""
+msgstr "Versuchen, als Interlacing zu exportieren"
 
 #: plug-ins/common/file-gif-export.c:201
 msgid "Loop _Forever"
@@ -3200,21 +3206,18 @@ msgstr ""
 "Das Bild, welches Sie versuchen zu exportieren, hat nur eine Ebene."
 
 #: plug-ins/common/file-gif-load.c:423
-#, fuzzy
-#| msgid "GIF image"
 msgid "GIF magic code"
-msgstr "GIF-Bild"
+msgstr "GIF Magische Zahl"
 
 #: plug-ins/common/file-gif-load.c:431
-#, fuzzy, c-format
-#| msgid "This is not a GIF file"
+#, c-format
 msgid "This is not a GIF file: incorrect magic code"
-msgstr "Dies ist keine GIF-Datei"
+msgstr "Dies ist keine GIF-Datei: Ungültige magische Zahl"
 
 #: plug-ins/common/file-gif-load.c:439
 #, c-format
 msgid "Incorrect GIF version: not '87a' or '89a'"
-msgstr "Ungültige GIF-Version: Nicht »87a« sondern »89a«"
+msgstr "Ungültige GIF-Version: Weder »87a« noch »89a«"
 
 #: plug-ins/common/file-gif-load.c:446
 #, fuzzy
@@ -4364,13 +4367,13 @@ msgid "'%s' is not a PCX file"
 msgstr "»%s« ist keine PCX-Datei"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:263
-#: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
+#: plug-ins/file-bmp/bmp-load.c:741 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nicht unterstützte oder ungültige Bildbreite: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:269
-#: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
+#: plug-ins/file-bmp/bmp-load.c:747 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
@@ -4653,10 +4656,8 @@ msgid "Number of pages to load (0 for all)"
 msgstr ""
 
 #: plug-ins/common/file-pdf-load.c:257
-#, fuzzy
-#| msgid "%s-pages"
 msgid "N pages"
-msgstr "%s-Seiten"
+msgstr "N Seiten"
 
 #: plug-ins/common/file-pdf-load.c:270
 msgid "Pages"
@@ -5917,10 +5918,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-raw-data.c:467
-#, fuzzy
-#| msgid "_Sample Spacing:"
 msgid "Sa_mple spacing"
-msgstr "Ab_stand der Messpunkte:"
+msgstr "Abstand der _Messpunkte"
 
 #: plug-ins/common/file-raw-data.c:468
 msgid "The sample spacing of the data."
@@ -6543,8 +6542,6 @@ msgstr ""
 "Hotspot beizubehalten)"
 
 #: plug-ins/common/file-xmc.c:390
-#, fuzzy
-#| msgid "_Auto-Crop all frames"
 msgid "_Auto Crop all frames"
 msgstr "Alle Einzelbilder _automatisch zuschneiden"
 
@@ -7049,10 +7046,8 @@ msgid "The spacing between 2 images, as fraction of the strip height"
 msgstr "Alle Werte sind relativ zur Höhe des Streifens"
 
 #: plug-ins/common/film.c:264
-#, fuzzy
-#| msgid "_Hole offset:"
 msgid "Hole offse_t"
-msgstr "_Lochversatz:"
+msgstr "Lochversa_tz"
 
 #: plug-ins/common/film.c:265
 #, fuzzy
@@ -7087,10 +7082,8 @@ msgid "The height of the holes, as fraction of the strip height"
 msgstr "Alle Werte sind relativ zur Höhe des Streifens"
 
 #: plug-ins/common/film.c:282
-#, fuzzy
-#| msgid "Distance:"
 msgid "Hole _distance"
-msgstr "Abstand:"
+msgstr "Loch_abstand"
 
 #: plug-ins/common/film.c:283
 #, fuzzy
@@ -9017,10 +9010,10 @@ msgstr "Fehlerhafte Palette"
 
 #: plug-ins/file-bmp/bmp-load.c:242 plug-ins/file-bmp/bmp-load.c:252
 #: plug-ins/file-bmp/bmp-load.c:260 plug-ins/file-bmp/bmp-load.c:269
-#: plug-ins/file-bmp/bmp-load.c:284 plug-ins/file-bmp/bmp-load.c:492
-#: plug-ins/file-bmp/bmp-load.c:517 plug-ins/file-bmp/bmp-load.c:528
-#: plug-ins/file-bmp/bmp-load.c:536 plug-ins/file-bmp/bmp-load.c:545
-#: plug-ins/file-bmp/bmp-load.c:557
+#: plug-ins/file-bmp/bmp-load.c:284 plug-ins/file-bmp/bmp-load.c:493
+#: plug-ins/file-bmp/bmp-load.c:518 plug-ins/file-bmp/bmp-load.c:529
+#: plug-ins/file-bmp/bmp-load.c:537 plug-ins/file-bmp/bmp-load.c:546
+#: plug-ins/file-bmp/bmp-load.c:558
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "»%s« ist keine gültige BMP-Datei"
@@ -9037,16 +9030,16 @@ msgstr "Fehler beim Lesen des BMP-Dateikopfes aus »%s«"
 msgid "Unsupported compression (%u) in BMP file from '%s'"
 msgstr "Nicht unterstützte Komprimierung (%u) in BMP-Datei aus »%s«"
 
-#: plug-ins/file-bmp/bmp-load.c:674
+#: plug-ins/file-bmp/bmp-load.c:680
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Unbekanntes oder ungültiges BMP-Komprimierungsformat."
 
-#: plug-ins/file-bmp/bmp-load.c:721
+#: plug-ins/file-bmp/bmp-load.c:735
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nicht unterstützte oder ungültige Farbtiefe."
 
-#: plug-ins/file-bmp/bmp-load.c:886 plug-ins/file-bmp/bmp-load.c:929
-#: plug-ins/file-bmp/bmp-load.c:983
+#: plug-ins/file-bmp/bmp-load.c:962 plug-ins/file-bmp/bmp-load.c:1005
+#: plug-ins/file-bmp/bmp-load.c:1059
 msgid "The bitmap ends unexpectedly."
 msgstr "Die Bitmap endet unerwartet."
 
@@ -10198,10 +10191,8 @@ msgid "Quality of exported image"
 msgstr "Qualität des Bildes"
 
 #: plug-ins/file-jpeg/jpeg.c:216
-#, fuzzy
-#| msgid "S_moothing:"
 msgid "S_moothing"
-msgstr "_Glättung:"
+msgstr "_Glättung"
 
 #: plug-ins/file-jpeg/jpeg.c:217
 #, fuzzy
@@ -10228,10 +10219,8 @@ msgid "Create progressive JPEG images"
 msgstr "Progressive JPEG-Bilder erstellen"
 
 #: plug-ins/file-jpeg/jpeg.c:234
-#, fuzzy
-#| msgid "Export as _CMYK"
 msgid "Export as CM_YK"
-msgstr "Als _CMYK-Datei exportieren"
+msgstr "Als CM_YK-Datei exportieren"
 
 #: plug-ins/file-jpeg/jpeg.c:235
 #, fuzzy
@@ -10926,10 +10915,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/file-tiff/file-tiff.c:245
-#, fuzzy
-#| msgid "_Compression:"
 msgid "Co_mpression"
-msgstr "K_ompression:"
+msgstr "Ko_mpression"
 
 #: plug-ins/file-tiff/file-tiff.c:246
 msgid "Compression type"
@@ -11849,29 +11836,29 @@ msgstr "Farbfunktion"
 msgid "FractalExplorer Gradient"
 msgstr "Fraktal-Explorer-Farbverlauf"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1008
 msgid "Presets"
 msgstr "Voreinstellungen"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1434
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1433
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "»%s« konnte nicht geschrieben werden: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 msgid "Load Fractal Parameters"
 msgstr "Fraktalparameter laden"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
 msgid "Save Fractal Parameters"
 msgstr "Fraktalparameter speichern"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1788
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1787
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "»%s« ist keine Fraktal-Explorer-Datei"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1795
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1794
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Die Datei »%s« ist beschädigt. Die Option in Zeile %d ist nicht gültig"
@@ -11990,10 +11977,8 @@ msgid "cx value"
 msgstr "Wert"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-#, fuzzy
-#| msgid "C_MYK"
 msgid "C_Y"
-msgstr "C_MYK"
+msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:310
 #, fuzzy
@@ -12076,10 +12061,8 @@ msgid "Blue application mode"
 msgstr "Blauer Anwendungsmodus"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:372
-#, fuzzy
-#| msgid "Inversion"
 msgid "In_version"
-msgstr "Inversion"
+msgstr "In_version"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:373
 #, fuzzy
@@ -12088,20 +12071,16 @@ msgid "Red inversion mode"
 msgstr "In umgekehrter Reihenfolge laden"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:378
-#, fuzzy
-#| msgid "Inversion"
 msgid "I_nversion"
-msgstr "Inversion"
+msgstr "I_nversion"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:379
 msgid "Green inversion mode"
 msgstr ""
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:384
-#, fuzzy
-#| msgid "Inversion"
 msgid "_Inversion"
-msgstr "Inversion"
+msgstr "_Inversion"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:385
 msgid "Blue inversion mode"
@@ -14879,10 +14858,8 @@ msgid "Light 6"
 msgstr "Licht 6"
 
 #: plug-ins/lighting/lighting-main.c:205
-#, fuzzy
-#| msgid "I_solate"
 msgid "Isolate"
-msgstr "I_solieren"
+msgstr "Isolieren"
 
 #: plug-ins/lighting/lighting-main.c:206
 msgid "Only show the active lighting in the preview"
@@ -14891,10 +14868,8 @@ msgstr ""
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#, fuzzy
-#| msgid "Type of light source to apply"
 msgid "Type of light source"
-msgstr "Anzuwendender Lichtquellentyp"
+msgstr "Lichtquellentyp"
 
 #: plug-ins/lighting/lighting-main.c:215 plug-ins/lighting/lighting-main.c:338
 #: plug-ins/lighting/lighting-main.c:397 plug-ins/lighting/lighting-main.c:456
@@ -15070,20 +15045,16 @@ msgid "Material specular reflectivity"
 msgstr ""
 
 #: plug-ins/lighting/lighting-main.c:297
-#, fuzzy
-#| msgid "Highlight:"
 msgid "Highlight"
-msgstr "Glanzlicht:"
+msgstr "Glanzlicht"
 
 #: plug-ins/lighting/lighting-main.c:298
 msgid "Material highlight (note, it's exponential) (Polished)"
 msgstr ""
 
 #: plug-ins/lighting/lighting-main.c:304
-#, fuzzy
-#| msgid "_Metallic"
 msgid "Metallic"
-msgstr "_Metallisch"
+msgstr "Metallisch"
 
 #: plug-ins/lighting/lighting-main.c:305
 msgid "Make surfaces look metallic"
@@ -15116,10 +15087,8 @@ msgid "Make background transparent"
 msgstr "Hintergrundfarbe speichern"
 
 #: plug-ins/lighting/lighting-main.c:328
-#, fuzzy
-#| msgid "Distance:"
 msgid "_Distance"
-msgstr "Abstand:"
+msgstr "_Abstand"
 
 #: plug-ins/lighting/lighting-main.c:329
 msgid "Distance of observer from surface"
@@ -15222,10 +15191,8 @@ msgid "Map the image to an object (plane, sphere, box or cylinder)"
 msgstr "Das Bild auf ein Objekt abbilden (Fläche, Kugel, Quader oder Zylinder)"
 
 #: plug-ins/map-object/map-object-main.c:139
-#, fuzzy
-#| msgid "Map to:"
 msgid "Map _to"
-msgstr "Abbilden auf:"
+msgstr "Abbilden _auf"
 
 #: plug-ins/map-object/map-object-main.c:141
 msgid "Plane"
@@ -15337,10 +15304,8 @@ msgid "Light source type"
 msgstr "Lichtquellentyp:"
 
 #: plug-ins/map-object/map-object-main.c:231
-#, fuzzy
-#| msgid "Type of light source to apply"
 msgid "Type of lightsource"
-msgstr "Anzuwendender Lichtquellentyp"
+msgstr "Lichtquellentyp"
 
 #: plug-ins/map-object/map-object-main.c:232
 #, fuzzy
@@ -15403,10 +15368,8 @@ msgid "Spec_ular"
 msgstr "Spiegel:"
 
 #: plug-ins/map-object/map-object-main.c:303
-#, fuzzy
-#| msgid "Highlight:"
 msgid "Highligh_t"
-msgstr "Glanzlicht:"
+msgstr "Glanzlich_t"
 
 #: plug-ins/map-object/map-object-main.c:304
 msgid "Material highlight (note, it's exponential)"
@@ -15657,9 +15620,14 @@ msgid "Second Axis"
 msgstr "Sekunden"
 
 #: plug-ins/map-object/map-object-ui.c:661
-#: plug-ins/map-object/map-object-ui.c:675
 msgid "Intensity Levels"
 msgstr "Intensitätsstufen"
+
+#: plug-ins/map-object/map-object-ui.c:675
+#, fuzzy
+#| msgid "Reflectivity"
+msgid "Reflectivity"
+msgstr "Reflexivität"
 
 #: plug-ins/map-object/map-object-ui.c:778
 #: plug-ins/map-object/map-object-ui.c:873
@@ -15800,10 +15768,8 @@ msgid "IPTC Subject Code"
 msgstr "IPTC-Subjektcode"
 
 #: plug-ins/metadata/metadata-editor.c:530
-#, fuzzy
-#| msgid "Job Identifier\t"
 msgid "Job Identifier"
-msgstr "Jobkennung\t"
+msgstr "Jobkennung"
 
 #: plug-ins/metadata/metadata-editor.c:531
 msgid "Instructions"
@@ -16138,10 +16104,8 @@ msgid "Export metadata"
 msgstr "Metadaten exportieren"
 
 #: plug-ins/metadata/metadata-editor.c:1686
-#, fuzzy
-#| msgid "Set Date"
 msgid "Choose Date"
-msgstr "Datum festlegen"
+msgstr "Datum wählen"
 
 #: plug-ins/metadata/metadata-editor.c:1690
 msgid "Set Date"
