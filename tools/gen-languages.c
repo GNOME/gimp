@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <locale.h>
+
 #include <gio/gio.h>
 
 #include "config/config-types.h"
