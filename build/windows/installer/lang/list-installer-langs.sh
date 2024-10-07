@@ -1,9 +1,13 @@
 #!/bin/bash
 
+BUILD_ROOT="`pwd`"
+SOURCE_ROOT="$2"
+
 if [ "$1" = 'cmp' ]; then
+  cd "$SOURCE_ROOT"
   ## Get list of GIMP supported languages
-  PO_ARRAY=($(echo $(ls ../po/*.po |
-              sed -e 's|../po/||g' -e 's|.po||g' | sort) |
+  PO_ARRAY=($(echo $(ls po/*.po |
+              sed -e 's|po/||g' -e 's|.po||g' | sort) |
               tr '\n\r' ' '))
 
   ## Create list of lang [Components]
@@ -14,21 +18,23 @@ if [ "$1" = 'cmp' ]; then
     CMP_LINE=$(sed "s/PO_CLEAN/$PO_CLEAN/g" <<< $CMP_LINE)
     # Change desc
     DESC=$(echo "cat //iso_639_entries/iso_639_entry[@dl_code=\"$PO\"]/@name" |
-           xmllint --shell ../build/windows/installer/lang/iso_639_custom.xml |
+           xmllint --shell build/windows/installer/lang/iso_639_custom.xml |
            awk -F'[="]' '!/>/{print $(NF-1)}')
     CMP_LINE=$(sed "s/DESC/$DESC/g" <<< $CMP_LINE)
     # Create line
     NL=$'\n'
     CMP_LIST+="${CMP_LINE}${NL}"
   done
+  cd "$BUILD_ROOT"
   echo "$CMP_LIST" > build/windows/installer/base_po-cmp.list
 fi
 
 
 if [ "$1" = 'files' ]; then
+  cd "$SOURCE_ROOT"
   ## Get list of GIMP supported languages
-  PO_ARRAY=($(echo $(ls ../po/*.po |
-              sed -e 's|../po/||g' -e 's|.po||g' | sort) |
+  PO_ARRAY=($(echo $(ls po/*.po |
+              sed -e 's|po/||g' -e 's|.po||g' | sort) |
               tr '\n\r' ' '))
 
   ## Create list of lang [Files]
@@ -42,25 +48,29 @@ if [ "$1" = 'files' ]; then
     NL=$'\n'
     FILES_LIST+="${FILES_LINE}${NL}"
   done
+  cd "$BUILD_ROOT"
   echo "$FILES_LIST" > build/windows/installer/base_po-files.list
 fi
 
 
 if [ "$1" = 'msg' ]; then
   ## Get list of Inno supported languages
-  PO_INNO_ARRAY=($(echo $(ls ../po-windows-installer/*.po |
-                  sed -e 's|../po-windows-installer/||g' -e 's|.po||g' | sort) |
+  cd "$SOURCE_ROOT"
+  PO_INNO_ARRAY=($(echo $(ls po-windows-installer/*.po |
+                  sed -e 's|po-windows-installer/||g' -e 's|.po||g' | sort) |
                   tr '\n\r' ' '))
+  cd "$BUILD_ROOT"
 
   ## Create list of lang [Languages]
   if [ "$1" = 'msg' ]; then
+    cd "$SOURCE_ROOT"
     for PO in "${PO_INNO_ARRAY[@]}"; do
       MSG_LINE='Name: "PO"; MessagesFile: "compiler:INNO_CODE,{#ASSETS_DIR}\lang\PO.setup.isl"'
       # Change po
       MSG_LINE=$(sed "s/PO/$PO/g" <<< $MSG_LINE)
       # Change isl
       INNO_CODE=$(echo "cat //iso_639_entries/iso_639_entry[@dl_code=\"$PO\"]/@inno_code" |
-                  xmllint --shell ../build/windows/installer/lang/iso_639_custom.xml |
+                  xmllint --shell build/windows/installer/lang/iso_639_custom.xml |
                   awk -F'[="]' '!/>/{print $(NF-1)}')
       MSG_LINE=$(sed "s/INNO_CODE/$INNO_CODE/g" <<< $MSG_LINE)
       # Create line
@@ -69,6 +79,7 @@ if [ "$1" = 'msg' ]; then
         MSG_LIST+="${MSG_LINE}${NL}"
       fi
     done
+    cd "$BUILD_ROOT"
     echo "$MSG_LIST" > build/windows/installer/base_po-msg.list
   fi
 fi

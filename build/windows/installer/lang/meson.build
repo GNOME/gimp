@@ -106,7 +106,7 @@ custom_target('base_po-cmp',
   input : [ 'iso_639_custom.xml' ],
   output: [ 'base_po-cmp.list', ],
   command: [
-    gen_list, 'cmp',
+    gen_list, 'cmp', '@SOURCE_ROOT@'
   ],
   build_by_default: true,
 )
@@ -115,7 +115,7 @@ custom_target('base_po-files',
   input : [ 'iso_639_custom.xml' ],
   output: [ 'base_po-files.list', ],
   command: [
-    gen_list, 'files',
+    gen_list, 'files', '@SOURCE_ROOT@'
   ],
   build_by_default: true,
 )
@@ -124,7 +124,7 @@ custom_target('base_po-msg',
   input : [ 'iso_639_custom.xml' ],
   output: [ 'base_po-msg.list', ],
   command: [
-    gen_list, 'msg',
+    gen_list, 'msg', '@SOURCE_ROOT@'
   ],
   build_by_default: true,
 )
