@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-05 12:34+0000\n"
-"PO-Revision-Date: 2024-10-06 18:37+0800\n"
+"POT-Creation-Date: 2024-10-06 10:43+0000\n"
+"PO-Revision-Date: 2024-10-07 22:41+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -14960,6 +14960,7 @@ msgstr ""
 "Chun-Chung Chen (陳俊仲)\n"
 "林佳宏\n"
 "陳英傑\n"
+"Tommy Jiang\n"
 "Kisaragi Hiu\n"
 "anenasa\n"
 "Cheng-Chia Tseng (曾政嘉)"
@@ -23247,7 +23248,7 @@ msgid "Number of iterations to perform"
 msgstr "要執行的迭代次數"
 
 #: app/tools/gimpforegroundselectoptions.c:332
-#: app/tools/gimppaintselectoptions.c:200
+#: app/tools/gimppaintselectoptions.c:236
 msgid "Reset stroke width native size"
 msgstr "重設筆畫寬度為原生大小"
 
@@ -24152,7 +24153,7 @@ msgstr "無法在多個圖層上繪圖選取。請只選取一個圖層。"
 msgid "Cannot paint select on layer groups."
 msgstr "無法在圖層群組上繪圖選取。"
 
-#: app/tools/gimppaintselecttool.c:653
+#: app/tools/gimppaintselecttool.c:708
 msgctxt "command"
 msgid "Paint Select"
 msgstr "繪圖選取"
