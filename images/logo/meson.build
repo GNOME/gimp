@@ -147,8 +147,14 @@ if build_ico_files
 
 
   # Inno installer: setup .exe icon
+  gen_setup_ico_conf = configuration_data()
+  gen_setup_ico_conf.set('BUILDDIR', meson.current_build_dir())
+  gen_setup_ico_conf.set('SRCDIR', meson.current_source_dir())
+  gen_setup_ico = configure_file(input : 'gen-setup-ico.py.in',
+                                 output : 'gen-setup-ico.py',
+                                 configuration : gen_setup_ico_conf)
   setup_ico = custom_target('setup.ico',
-                            input : [ 'gen-setup-ico.py' ],
+                            input : [ gen_setup_ico ],
                             depend_files: [ 'setup-base.svg', 'gimp-logo-shadow.svg', 'setup-hover.svg' ],
                             depends: [ gimp_exe_depends ],
                             output: [ 'setup.ico', ],
@@ -161,8 +167,14 @@ if build_ico_files
 
 
   ## Inno installer: right-top icon (Windows) ##
+  gen_gimp_bmp_conf = configuration_data()
+  gen_gimp_bmp_conf.set('BUILDDIR', meson.current_build_dir())
+  gen_gimp_bmp_conf.set('SRCDIR', meson.current_source_dir())
+  gen_gimp_bmp = configure_file(input : 'gen-gimp-bmp.py.in',
+                                output : 'gen-gimp-bmp.py',
+                                configuration : gen_setup_ico_conf)
   installicon = custom_target('installicon.bmp',
-                               input : [ 'gen-gimp-bmp.py' ],
+                               input : [ gen_gimp_bmp ],
                                output: [ 'stamp-installicon.bmp', ],
                                depends: [ gimp_exe_depends ],
                                command: [ gimp_exe, '-nidfs',

@@ -4,9 +4,9 @@ import sys
 gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 
-input1_path = '../gimp-data/images/logo/setup-base.svg'
-input2_path = '../gimp-data/images/logo/gimp-logo-shadow.svg'
-input3_path = '../gimp-data/images/logo/setup-hover.svg'
+input1_path = '@SRCDIR@/setup-base.svg'
+input2_path = '@SRCDIR@/gimp-logo-shadow.svg'
+input3_path = '@SRCDIR@/setup-hover.svg'
 output_path = 'build/windows/installer/setup.ico'
 # List of sizes come from these links:
 # https://learn.microsoft.com/en-us/windows/apps/design/style/iconography/app-icon-construction
