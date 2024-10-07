@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-29 14:20+0000\n"
-"PO-Revision-Date: 2024-09-30 00:12+0900\n"
+"POT-Creation-Date: 2024-10-05 12:36+0000\n"
+"PO-Revision-Date: 2024-10-06 17:48+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -390,8 +390,8 @@ msgstr ""
 #: libgimp/gimpprocedure.c:2347
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' "
-"(#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "對「%2$s」引數 (#%3$d) 使用錯誤的數值類型來呼叫處理程序「%1$s」。預期為 "
 "%4$s，卻收到 %5$s。"
@@ -678,7 +678,7 @@ msgstr "選取區域(_S)"
 #: libgimpbase/gimpbaseenums.c:36
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
-msgstr "圖層的灰階複本(_G)"
+msgstr "圖層的灰階副本(_G)"
 
 #: libgimpbase/gimpbaseenums.c:37
 msgctxt "add-mask-type"
@@ -1362,9 +1362,12 @@ msgid "GIMP Plug-In"
 msgstr "GIMP 外掛插件"
 
 #: libgimpbase/gimpbaseenums.c:1258
+#, fuzzy
+#| msgctxt "pdb-proc-type"
+#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "GIMP 擴充套件"
+msgid "GIMP Persistent Plug-In"
+msgstr "GIMP 外掛插件"
 
 #: libgimpbase/gimpbaseenums.c:1259
 msgctxt "pdb-proc-type"
@@ -3179,6 +3182,10 @@ msgstr "對比循環數"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "對比"
+
+#~ msgctxt "pdb-proc-type"
+#~ msgid "GIMP Extension"
+#~ msgstr "GIMP 擴充套件"
 
 #~ msgid "Brush Selection"
 #~ msgstr "筆刷選取"
