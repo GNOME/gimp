@@ -818,7 +818,8 @@ layers_duplicate_cmd_callback (GimpAction *action,
                                _("Duplicate layers"));
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *new_layer;
+      GimpLayer     *new_layer;
+      GimpContainer *filters;
 
       new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (iter->data),
                                                    G_TYPE_FROM_INSTANCE (iter->data)));
@@ -834,7 +835,8 @@ layers_duplicate_cmd_callback (GimpAction *action,
       new_layers = g_list_prepend (new_layers, new_layer);
 
       /* Import any attached layer effects */
-      if (gimp_drawable_has_filters (GIMP_DRAWABLE (iter->data)))
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+      if (gimp_container_get_n_children (filters) > 0)
         {
           GList         *filter_list;
           GimpContainer *filters;

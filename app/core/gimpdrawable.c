@@ -1330,10 +1330,11 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             gboolean           push_undo,
                             GimpProgress      *progress)
 {
-  const Babl *old_format;
-  const Babl *new_format;
-  gint        old_bits;
-  gint        new_bits;
+  const Babl    *old_format;
+  const Babl    *new_format;
+  gint           old_bits;
+  gint           new_bits;
+  GimpContainer *filters;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
@@ -1382,11 +1383,11 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   /* Update the masks of any filters */
   /* TODO: Move to gimp_drawable_real_convert_type () once it's updated
    * to run for all GimpDrawable child classes */
-  if (gimp_drawable_has_filters (drawable))
+  filters = gimp_drawable_get_filters (drawable);
+  if (gimp_container_get_n_children (filters) > 0)
     {
       const Babl    *mask_format;
       GList         *filter_list;
-      GimpContainer *filters = gimp_drawable_get_filters (drawable);
       GimpPrecision  new_mask_precision;
 
       mask_format        = gimp_image_get_mask_format (dest_image);

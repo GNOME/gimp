@@ -493,15 +493,15 @@ gimp_edit_paste_get_tagged_layers (GimpImage         *image,
                                                                 "gimp-image-copied-layer"));
       if (copied)
         {
+          GimpContainer *filters;
+
           layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
                                                  image, layer_type));
 
-          if (gimp_drawable_has_filters (GIMP_DRAWABLE (iter->data)))
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+          if (gimp_container_get_n_children (filters) > 0)
             {
-              GList         *filter_list;
-              GimpContainer *filters;
-
-              filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+              GList *filter_list;
 
               for (filter_list = GIMP_LIST (filters)->queue->tail;
                    filter_list;

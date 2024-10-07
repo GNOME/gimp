@@ -591,6 +591,7 @@ gimp_group_layer_duplicate (GimpItem *item,
           GimpItem      *child = list->data;
           GimpItem      *new_child;
           GimpLayerMask *mask;
+          GimpContainer *filters;
 
           new_child = gimp_item_duplicate (child, G_TYPE_FROM_INSTANCE (child));
 
@@ -617,12 +618,10 @@ gimp_group_layer_duplicate (GimpItem *item,
                                  position++);
 
           /* Copy any attached layer effects */
-          if (gimp_drawable_has_filters (GIMP_DRAWABLE (child)))
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (child));
+          if (gimp_container_get_n_children (filters) > 0)
             {
-              GList         *filter_list;
-              GimpContainer *filters;
-
-              filters = gimp_drawable_get_filters (GIMP_DRAWABLE (child));
+              GList *filter_list;
 
               for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
                    filter_list = g_list_previous (filter_list))

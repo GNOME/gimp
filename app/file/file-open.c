@@ -778,19 +778,20 @@ file_open_convert_items (GimpImage   *dest_image,
 
   for (list = items; list; list = g_list_next (list))
     {
-      GimpItem *src = list->data;
-      GimpItem *item;
+      GimpItem      *src     = list->data;
+      GimpContainer *filters = NULL;
+      GimpItem      *item;
 
       item = gimp_item_convert (src, dest_image, G_TYPE_FROM_INSTANCE (src));
 
       /* Import any attached layer effects */
-      if (GIMP_IS_DRAWABLE (item) &&
-          gimp_drawable_has_filters (GIMP_DRAWABLE (src)))
-        {
-          GList         *filter_list;
-          GimpContainer *filters;
+      if (GIMP_IS_DRAWABLE (item))
+        filters = gimp_drawable_get_filters (GIMP_DRAWABLE (src));
 
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (src));
+      if (filters != NULL &&
+          gimp_container_get_n_children (filters) > 0)
+        {
+          GList *filter_list;
 
           for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
                filter_list = g_list_previous (filter_list))

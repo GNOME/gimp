@@ -243,8 +243,9 @@ gimp_image_duplicate_layers (GimpImage *image,
        list;
        list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
-      GimpLayer *new_layer;
+      GimpLayer     *layer = list->data;
+      GimpLayer     *new_layer;
+      GimpContainer *filters;
 
       if (gimp_layer_is_floating_sel (layer))
         continue;
@@ -263,12 +264,10 @@ gimp_image_duplicate_layers (GimpImage *image,
                             NULL, count++, FALSE);
 
       /* Import any attached layer effects */
-      if (gimp_drawable_has_filters (GIMP_DRAWABLE (layer)))
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+      if (gimp_container_get_n_children (filters) > 0)
         {
-          GList         *filter_list;
-          GimpContainer *filters;
-
-          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+          GList *filter_list;
 
           for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
                filter_list = g_list_previous (filter_list))

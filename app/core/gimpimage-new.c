@@ -341,10 +341,11 @@ gimp_image_new_copy_drawables (GimpImage *image,
     {
       if (g_list_find (copied_drawables, iter->data))
         {
-          GimpLayer *new_layer;
-          GType      new_type;
-          gboolean   is_group;
-          gboolean   is_tagged;
+          GimpLayer     *new_layer;
+          GimpContainer *filters;
+          GType          new_type;
+          gboolean       is_group;
+          gboolean       is_tagged;
 
           if (GIMP_IS_LAYER (iter->data))
             new_type = G_TYPE_FROM_INSTANCE (iter->data);
@@ -388,12 +389,10 @@ gimp_image_new_copy_drawables (GimpImage *image,
           if (gimp_layer_can_lock_alpha (new_layer))
             gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
 
-          if (gimp_drawable_has_filters (GIMP_DRAWABLE (iter->data)))
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+          if (gimp_container_get_n_children (filters) > 0)
             {
-              GList         *filter_list;
-              GimpContainer *filters;
-
-              filters = gimp_drawable_get_filters (GIMP_DRAWABLE (iter->data));
+              GList *filter_list;
 
               for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
                    filter_list = g_list_previous (filter_list))
