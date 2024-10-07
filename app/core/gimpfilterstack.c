@@ -248,11 +248,11 @@ gimp_filter_stack_get_bounding_box (GimpFilterStack *stack,
           if (rect->y > current_rect.y)
             rect->y = current_rect.y;
 
-          if (rect->width < (current_rect.width - current_rect.x))
-            rect->width = (current_rect.width - current_rect.x);
+          if (rect->x + rect->width < current_rect.x + current_rect.width)
+            rect->width = (current_rect.x + current_rect.width - rect->x);
 
-          if (rect->height < (current_rect.height - current_rect.y))
-            rect->height = (current_rect.height - current_rect.y);
+          if (rect->y + rect->height < current_rect.y + current_rect.height)
+            rect->height = (current_rect.y + current_rect.height - rect->y);
         }
     }
 }

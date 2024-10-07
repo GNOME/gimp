@@ -990,14 +990,6 @@ gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
 
   if (! clip)
     {
-      GimpChannel *mask = GIMP_CHANNEL (filter->mask);
-
-      if (mask && ! gimp_channel_is_empty (mask))
-        clip = TRUE;
-    }
-
-  if (! clip)
-    {
       GeglRectangle bounding_box;
 
       bounding_box = gegl_node_get_bounding_box (filter->operation);
@@ -1040,8 +1032,8 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                          NULL);
 
           gegl_node_set (filter->crop_before,
-                         "x",      (gdouble) rect.x,
-                         "y",      (gdouble) rect.y,
+                         "x",      0.0,
+                         "y",      0.0,
                          "width",  (gdouble) rect.width,
                          "height", (gdouble) rect.height,
                          NULL);
