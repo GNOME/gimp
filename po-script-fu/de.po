@@ -15,16 +15,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-18 21:31+0000\n"
-"PO-Revision-Date: 2024-09-19 15:31+0200\n"
-"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"POT-Creation-Date: 2024-10-07 16:34+0000\n"
+"PO-Revision-Date: 2024-10-07 21:48+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -206,21 +206,21 @@ msgstr "%s:"
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu-Farbauswahl"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu-Dateiauswahl"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:402
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:401
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu-Ordnerauswahl"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:806
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:804
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fehler beim Ausführen von %s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:398
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fehler beim Laden von %s:"
@@ -400,6 +400,10 @@ msgstr ""
 "Die angegebene Zeichenfläche als Schablone verwenden, um das angegebene Bild "
 "einzuritzen."
 
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask drawable"
+msgstr "Herauszuarbeitende Zeichenfläche"
+
 #: plug-ins/script-fu/scripts/carve-it.scm:231
 msgid "Carve white areas"
 msgstr "Weiße Flächen herausarbeiten"
@@ -541,28 +545,28 @@ msgstr "Höhenwinkel"
 msgid "Depth"
 msgstr "Tiefe"
 
-#: plug-ins/script-fu/scripts/coffee.scm:37
+#: plug-ins/script-fu/scripts/coffee.scm:42
 msgid "Stain"
 msgstr "Flecken"
 
-#: plug-ins/script-fu/scripts/coffee.scm:95
+#: plug-ins/script-fu/scripts/coffee.scm:133
 msgid "_Stain..."
 msgstr "_Flecken …"
 
 # stain und blotch scheinen quasi identische Bedeutung zu haben?
-#: plug-ins/script-fu/scripts/coffee.scm:96
+#: plug-ins/script-fu/scripts/coffee.scm:134
 msgid "Add layers of stain or blotch marks"
 msgstr "Ebenen an Fleckenspuren hinzufügen"
 
-#: plug-ins/script-fu/scripts/coffee.scm:102
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Number of stains to add"
 msgstr "Anzahl der hinzuzufügenden Flecken"
 
-#: plug-ins/script-fu/scripts/coffee.scm:103
+#: plug-ins/script-fu/scripts/coffee.scm:141
 msgid "Darken only"
 msgstr "Nur Abdunkeln"
 
-#: plug-ins/script-fu/scripts/coffee.scm:104
+#: plug-ins/script-fu/scripts/coffee.scm:142
 msgid "Gradient to color stains"
 msgstr "Farbverlauf zu Farbflecken"
 
@@ -652,39 +656,39 @@ msgstr ""
 "Ein Bild erzeugen, das Vorschaubilder von Schriften inklusive der "
 "Schriftnamen enthält"
 
-#: plug-ins/script-fu/scripts/font-map.scm:173
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Text"
 msgstr "_Text"
 
-#: plug-ins/script-fu/scripts/font-map.scm:174
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "Use font _name as text"
 msgstr "Schriftname als Text _benutzen"
 
-#: plug-ins/script-fu/scripts/font-map.scm:175
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Labels"
 msgstr "_Namen"
 
-#: plug-ins/script-fu/scripts/font-map.scm:176
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Filter (regexp)"
 msgstr "_Filter (regexp)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:177
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Font _size (pixels)"
 msgstr "_Schriftgröße (Pixel)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:178
+#: plug-ins/script-fu/scripts/font-map.scm:176
 msgid "_Border (pixels)"
 msgstr "_Zellengröße (Pixel)"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "_Color scheme"
 msgstr "_Farbschema"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Black on white"
 msgstr "Schwarz auf Weiß"
 
-#: plug-ins/script-fu/scripts/font-map.scm:179
+#: plug-ins/script-fu/scripts/font-map.scm:177
 msgid "Active colors"
 msgstr "Aktive Farben"
 
@@ -735,80 +739,80 @@ msgid "_Using Paths"
 msgstr "Pfade _verwenden"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:77
-#: plug-ins/script-fu/scripts/gimp-online.scm:90
-#: plug-ins/script-fu/scripts/gimp-online.scm:103
-#: plug-ins/script-fu/scripts/gimp-online.scm:116
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
-#: plug-ins/script-fu/scripts/gimp-online.scm:142
-#: plug-ins/script-fu/scripts/gimp-online.scm:155
-#: plug-ins/script-fu/scripts/gimp-online.scm:167
+#: plug-ins/script-fu/scripts/gimp-online.scm:75
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:97
+#: plug-ins/script-fu/scripts/gimp-online.scm:108
+#: plug-ins/script-fu/scripts/gimp-online.scm:119
+#: plug-ins/script-fu/scripts/gimp-online.scm:130
+#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Lesezeichen zum Benutzerhandbuch"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:76
+#: plug-ins/script-fu/scripts/gimp-online.scm:74
 msgid "_Preparing your Images for the Web"
 msgstr "_Bilder für das Internet optimieren"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:89
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Arbeiten mit digitalen Photos"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:102
+#: plug-ins/script-fu/scripts/gimp-online.scm:96
 msgid "Create, Open and Save _Files"
 msgstr "_Bilder erstellen, öffnen und speichern"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:107
 msgid "_Basic Concepts"
 msgstr "_Grundlegende Konzepte"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:128
+#: plug-ins/script-fu/scripts/gimp-online.scm:118
 msgid "How to Use _Dialogs"
 msgstr "_Verwenden der Dialoge"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
+#: plug-ins/script-fu/scripts/gimp-online.scm:129
 msgid "Drawing _Simple Objects"
 msgstr "Einfache _Objekte zeichnen"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:154
+#: plug-ins/script-fu/scripts/gimp-online.scm:140
 msgid "_Create and Use Selections"
 msgstr "Auswahlen _erstellen und benutzen"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:166
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "_Table of Contents"
 msgstr "_Inhaltsverzeichnis"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:202
+#: plug-ins/script-fu/scripts/gimp-online.scm:184
 msgid "_Main Web Site"
 msgstr "_Hauptseite im Internet"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:185
+#: plug-ins/script-fu/scripts/gimp-online.scm:196
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "Bookmark to the GIMP web site"
 msgstr "Lesezeichen zur GIMP-Internet-Seite"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:215
+#: plug-ins/script-fu/scripts/gimp-online.scm:195
 msgid "_Developer Web Site"
 msgstr "_Entwickler-Internetseite"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
+#: plug-ins/script-fu/scripts/gimp-online.scm:206
 msgid "_Roadmaps"
 msgstr "Entwicklungs_pläne"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/gimp-online.scm:207
 msgid "Bookmark to the roadmaps of GIMP"
 msgstr "Lesezeichen zu den GIMP-Entwicklungsplänen"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:241
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Fehlerberichte und Funktionsanfragen"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Lesezeichen zur GIMP-Fehlerberichtliste"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:254
+#: plug-ins/script-fu/scripts/gimp-online.scm:228
 msgid "_User Manual Web Site"
 msgstr "_Benutzerhandbuch im Internet"
 
@@ -820,23 +824,23 @@ msgstr "_Eigener Farbverlauf …"
 msgid "Create an image filled with an example of the current gradient"
 msgstr "Ein Bild erzeugen, welches mit dem aktuellen Farbverlauf gefüllt ist"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:75
-#: plug-ins/script-fu/scripts/mkbrush.scm:71
-#: plug-ins/script-fu/scripts/mkbrush.scm:141
-#: plug-ins/script-fu/scripts/mkbrush.scm:197
-#: plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "Breite"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:76
-#: plug-ins/script-fu/scripts/mkbrush.scm:72
-#: plug-ins/script-fu/scripts/mkbrush.scm:142
-#: plug-ins/script-fu/scripts/mkbrush.scm:198
-#: plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "Höhe"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
 msgid "Gradient reverse"
 msgstr "Farbverlauf umgekehrt"
 
@@ -969,46 +973,46 @@ msgstr "R_echteckig …"
 msgid "Create a rectangular brush"
 msgstr "Einen rechteckigen Pinsel erstellen"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:70
-#: plug-ins/script-fu/scripts/mkbrush.scm:140
-#: plug-ins/script-fu/scripts/mkbrush.scm:196
-#: plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "Name"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:73
-#: plug-ins/script-fu/scripts/mkbrush.scm:144
-#: plug-ins/script-fu/scripts/mkbrush.scm:199
-#: plug-ins/script-fu/scripts/mkbrush.scm:269
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
 msgstr "Abstand"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
 msgstr "Rechteckig, weich …"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:135
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
 msgstr "Einen rechteckigen Pinsel mit weichen Kanten erstellen"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:143
-#: plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
 msgstr "Weich"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "_Elliptisch …"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
 msgstr "Einen elliptischen Pinsel erstellen"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
 msgstr "Elli_ptisch, weich …"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:260
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Einen elliptischen Pinsel mit weichen Kanten erstellen"
 
@@ -1055,11 +1059,11 @@ msgstr ""
 msgid "Exported palette to file: "
 msgstr "Palette wurde in Datei exportiert: "
 
-#: plug-ins/script-fu/scripts/palette-export.scm:289
+#: plug-ins/script-fu/scripts/palette-export.scm:287
 msgid "Folder for the output file"
 msgstr "Ordner für die Ausgabedatei"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:290
+#: plug-ins/script-fu/scripts/palette-export.scm:288
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
@@ -1067,11 +1071,11 @@ msgstr ""
 "Der Name der zu erstellenden Datei (falls eine Datei dieses Namens "
 "existiert, wird diese ersetzt)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:319
+#: plug-ins/script-fu/scripts/palette-export.scm:317
 msgid "_CSS stylesheet..."
 msgstr "_CSS-Stilvorlage …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:320
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1079,27 +1083,27 @@ msgstr ""
 "Die aktive Palette als CSS-Stilvorlage exportieren, mit dem Namen des "
 "Farbobjekts als Klassenname und der Farbe selbst als Farbattribut"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:340
+#: plug-ins/script-fu/scripts/palette-export.scm:338
 msgid "P_HP dictionary..."
 msgstr "P_HP-Dictionary …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:341
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Die aktive Palette als PHP-Dictionary exportieren (Name => Farbe)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:365
+#: plug-ins/script-fu/scripts/palette-export.scm:363
 msgid "_Python dictionary..."
 msgstr "_Python-Dictionary …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:366
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Die aktive Palette als Python-Dictionary exportieren (Name => Farbe)"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:387
+#: plug-ins/script-fu/scripts/palette-export.scm:385
 msgid "_Text file..."
 msgstr "_Textdatei …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:388
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1108,67 +1112,67 @@ msgstr ""
 "Wert pro Zeile (keine Namen)"
 
 # Map = Java-Datentyp
-#: plug-ins/script-fu/scripts/palette-export.scm:427
+#: plug-ins/script-fu/scripts/palette-export.scm:425
 msgid "J_ava map..."
 msgstr "J_ava-Map …"
 
-#: plug-ins/script-fu/scripts/palette-export.scm:428
+#: plug-ins/script-fu/scripts/palette-export.scm:426
 msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
 "Die aktive Palette als java.util.Hashtable&lt;String,Color&gt; exportieren"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
 msgstr ""
 "Es sind keine Bilddaten in der Zwischenablage, die eingefügt werden könnten."
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste as New _Brush..."
 msgstr "Neuer _Pinsel …"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Den Zwischenablageinhalt als neuen Pinsel einfügen"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "_Pinselname"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "My Brush"
 msgstr "Mein Pinsel"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "_Dateiname"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
 msgid "mybrush"
 msgstr "MeinPinsel"
 
-#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "_Abstand"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste as New _Pattern..."
 msgstr "Als neues _Muster einfügen …"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Den Inhalt der Zwischenablage als neues Muster einfügen"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "_Mustername"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "My Pattern"
 msgstr "Mein Muster"
 
-#: plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "mypattern"
 msgstr "MeinMuster"
 
@@ -1271,17 +1275,17 @@ msgstr "Schattenversatz Y"
 msgid "Add background"
 msgstr "Hintergrund hinzufügen"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
 msgstr "Farbtabelle setzen …"
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:55
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
 "Die Farbtabelle eines Bildes auf die Farben einer vorgegebenen Tabelle "
 "ändern."
 
-#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:60
 msgid "Palette"
 msgstr "Palette"
 
