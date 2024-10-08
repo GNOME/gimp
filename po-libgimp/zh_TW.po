@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-08 13:43+0000\n"
-"PO-Revision-Date: 2024-10-08 21:54+0800\n"
+"PO-Revision-Date: 2024-10-09 00:12+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -161,11 +161,11 @@ msgstr "加入 Alpha 色版"
 #: libgimp/gimpexportoptions.c:499
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr "%s 外掛插件需要將圖層剪裁至影像邊界"
+msgstr "%s 外掛插件需要將圖層裁切至影像邊界"
 
 #: libgimp/gimpexportoptions.c:500
 msgid "Crop Layers"
-msgstr "裁剪圖層"
+msgstr "裁切圖層"
 
 #: libgimp/gimpexportoptions.c:500
 msgid "Resize Image to Layers"
@@ -1677,17 +1677,17 @@ msgstr "調整尺寸"
 #: libgimpbase/gimpbaseenums.c:1881
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "裁切界外"
+msgstr "裁剪界外"
 
 #: libgimpbase/gimpbaseenums.c:1882
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "裁剪成結果尺寸"
+msgstr "裁切成結果尺寸"
 
 #: libgimpbase/gimpbaseenums.c:1883
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "裁剪維持寬高比"
+msgstr "裁切維持寬高比"
 
 #: libgimpbase/gimpmetadata.c:1215
 #, c-format
@@ -3065,7 +3065,7 @@ msgstr "Aces RRT"
 #. * Shown as a label description.
 #: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
-msgstr "顯色裁切警告濾色片"
+msgstr "顯色裁剪警告濾色片"
 
 #: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
@@ -3133,7 +3133,7 @@ msgstr "在警告中包含完全透明的像素"
 
 #: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
-msgstr "顯色裁切警告"
+msgstr "顯色裁剪警告"
 
 #: modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
