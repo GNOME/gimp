@@ -915,19 +915,19 @@ gimp_color_select_update_values (GimpColorSelect *select)
       values_float[0] = select->pos[2] * 100.0;
       values_float[1] = select->pos[1] * 200.0;
       values_float[2] = select->pos[0] * 360.0;
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values);
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values_float);
       break;
     case COLOR_SELECT_LCH_CHROMA:
       values_float[0] = select->pos[1] * 100.0;
       values_float[1] = select->pos[2] * 200.0;
       values_float[2] = select->pos[0] * 360.0;
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values);
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values_float);
       break;
     case COLOR_SELECT_LCH_HUE:
       values_float[0] = select->pos[1] * 100.0;
       values_float[1] = select->pos[0] * 200.0;
       values_float[2] = select->pos[2] * 360.0;
-      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values);
+      gegl_color_set_pixel (color, babl_format ("CIE LCH(ab) float"), values_float);
       break;
 
     default:
