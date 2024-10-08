@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-07 16:30+0000\n"
-"PO-Revision-Date: 2024-10-08 21:46+0800\n"
+"POT-Creation-Date: 2024-10-08 14:06+0000\n"
+"PO-Revision-Date: 2024-10-08 23:37+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1043,7 +1043,7 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "將色版降低到最下層"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:550
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:549
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
 #: app/widgets/gimplayertreeview.c:862
 #, c-format
@@ -5644,24 +5644,24 @@ msgstr "變更影像內容的尺寸"
 #: app/actions/image-actions.c:127
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "裁剪到選取範圍(_C)"
+msgstr "裁切到選取範圍(_C)"
 
 #: app/actions/image-actions.c:128
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "將影像裁剪到選取範圍的尺寸"
+msgstr "將影像裁切到選取範圍的尺寸"
 
 #: app/actions/image-actions.c:133
 msgctxt "image-action"
 msgid "Crop to C_ontent"
-msgstr "裁剪到只剩內容(_O)"
+msgstr "裁切到只剩內容(_O)"
 
 #: app/actions/image-actions.c:134
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
 "image)"
-msgstr "將影像裁剪到只剩內容的範圍（從影像中移除空白的邊框）"
+msgstr "將影像裁切到只剩內容的範圍（從影像中移除空白的邊框）"
 
 #: app/actions/image-actions.c:139
 msgctxt "image-action"
@@ -5980,17 +5980,17 @@ msgstr "翻轉中"
 msgid "Rotating"
 msgstr "旋轉中"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1305
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1307
 msgid "Cannot crop because the current selection is empty."
-msgstr "無法裁剪，因為目前的選取範圍空白。"
+msgstr "無法裁切，因為目前的選取範圍空白。"
 
 #: app/actions/image-commands.c:919
 msgid "Cannot crop because the image has no content."
-msgstr "無法裁剪，因為影像沒有內容。"
+msgstr "無法裁切，因為影像沒有內容。"
 
 #: app/actions/image-commands.c:925
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "無法裁剪，因為影像已經裁剪到只剩內容範圍。"
+msgstr "無法裁切，因為影像已經裁切到只剩內容範圍。"
 
 #: app/actions/image-commands.c:1091
 #, c-format
@@ -6029,7 +6029,7 @@ msgid "Scale Image"
 msgstr "縮放影像"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2535
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2537
 #: app/dialogs/preferences-dialog.c:1757 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6358,14 +6358,14 @@ msgstr "調整圖層尺寸以符合選取範圍的尺寸"
 #: app/actions/layers-actions.c:219
 msgctxt "layers-action"
 msgid "Crop Layers to C_ontent"
-msgstr "將圖層裁剪到只剩內容(_O)"
+msgstr "將圖層裁切到只剩內容(_O)"
 
 #: app/actions/layers-actions.c:220
 msgctxt "layers-action"
 msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
 "the layer)"
-msgstr "將圖層裁剪到只剩內容的尺寸（從圖層移除空白邊框）"
+msgstr "將圖層裁切到只剩內容的尺寸（從圖層移除空白邊框）"
 
 #: app/actions/layers-actions.c:225 app/actions/layers-actions.c:235
 msgctxt "layers-action"
@@ -6878,7 +6878,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "到新增圖層(_N)"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2377
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2379
 msgid "Layer Attributes"
 msgstr "圖層特性"
 
@@ -6898,7 +6898,7 @@ msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "建立 %d 個新圖層"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2262
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2264
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "新增圖層"
@@ -6936,151 +6936,151 @@ msgstr[0] "降低圖層至最下層"
 msgid "Duplicate layers"
 msgstr "再製圖層"
 
-#: app/actions/layers-commands.c:960
+#: app/actions/layers-commands.c:962
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "合併 %d 個圖層群組"
 
-#: app/actions/layers-commands.c:1020
+#: app/actions/layers-commands.c:1022
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "移除 %d 個圖層"
 
-#: app/actions/layers-commands.c:1047 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1049 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "捨棄文字資訊"
 
-#: app/actions/layers-commands.c:1066
+#: app/actions/layers-commands.c:1068
 msgid "Add Paths"
 msgstr "加入路徑"
 
-#: app/actions/layers-commands.c:1190
+#: app/actions/layers-commands.c:1192
 msgid "Set Layer Boundary Size"
 msgstr "設定圖層邊界尺寸"
 
-#: app/actions/layers-commands.c:1220
+#: app/actions/layers-commands.c:1222
 msgid "Layers to Image Size"
 msgstr "讓圖層符合影像尺寸"
 
-#: app/actions/layers-commands.c:1271
+#: app/actions/layers-commands.c:1273
 msgid "Scale Layer"
 msgstr "縮放圖層"
 
-#: app/actions/layers-commands.c:1310
+#: app/actions/layers-commands.c:1312
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
-msgstr[0] "將 %d 個圖層裁剪到選取範圍"
+msgstr[0] "將 %d 個圖層裁切到選取範圍"
 
-#: app/actions/layers-commands.c:1375
+#: app/actions/layers-commands.c:1377
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
-msgstr "無法裁剪，因為所選的圖層沒有內容，或是已經裁剪到只剩內容範圍。"
+msgstr "無法裁切，因為所選的圖層沒有內容，或是已經裁切到只剩內容範圍。"
 
-#: app/actions/layers-commands.c:1381
+#: app/actions/layers-commands.c:1383
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
-msgstr[0] "將 %d 個圖層裁剪到只剩內容"
+msgstr[0] "將 %d 個圖層裁切到只剩內容"
 
-#: app/actions/layers-commands.c:1518 app/actions/layers-commands.c:2470
+#: app/actions/layers-commands.c:1520 app/actions/layers-commands.c:2472
 msgid "Add Layer Masks"
 msgstr "加入圖層遮罩"
 
-#: app/actions/layers-commands.c:1570
+#: app/actions/layers-commands.c:1572
 msgid "Apply Layer Masks"
 msgstr "套用圖層遮罩"
 
-#: app/actions/layers-commands.c:1574
+#: app/actions/layers-commands.c:1576
 msgid "Delete Layer Masks"
 msgstr "刪除圖層遮罩"
 
-#: app/actions/layers-commands.c:1661
+#: app/actions/layers-commands.c:1663
 msgid "Show Layer Masks"
 msgstr "顯示圖層遮罩"
 
-#: app/actions/layers-commands.c:1708
+#: app/actions/layers-commands.c:1710
 msgid "Disable Layer Masks"
 msgstr "停用圖層遮罩"
 
-#: app/actions/layers-commands.c:1747
+#: app/actions/layers-commands.c:1749
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "遮罩轉為選取範圍"
 
-#: app/actions/layers-commands.c:1751
+#: app/actions/layers-commands.c:1753
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "將遮罩加入選取範圍"
 
-#: app/actions/layers-commands.c:1755
+#: app/actions/layers-commands.c:1757
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "從選取範圍刪去遮罩"
 
-#: app/actions/layers-commands.c:1759
+#: app/actions/layers-commands.c:1761
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "遮罩和選取範圍交集"
 
-#: app/actions/layers-commands.c:1780
+#: app/actions/layers-commands.c:1782
 msgid "Add Alpha Channel"
 msgstr "加入 Alpha 色版"
 
-#: app/actions/layers-commands.c:1801
+#: app/actions/layers-commands.c:1803
 msgid "Remove Alpha Channel"
 msgstr "移除 Alpha 色版"
 
-#: app/actions/layers-commands.c:1829 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1831 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "透明度轉選取範圍"
 
-#: app/actions/layers-commands.c:1833 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1835 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "將 Alpha 加入選取範圍"
 
-#: app/actions/layers-commands.c:1837 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1839 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "從選取範圍去除 Alpha"
 
-#: app/actions/layers-commands.c:1841 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1843 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Alpha 和選取範圍的交集"
 
-#: app/actions/layers-commands.c:1852
+#: app/actions/layers-commands.c:1854
 msgid "Empty Selection"
 msgstr "空白選取範圍"
 
-#: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
+#: app/actions/layers-commands.c:1884 app/actions/layers-commands.c:1928
 #: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "設定圖層不透明度"
 
-#: app/actions/layers-commands.c:1996
+#: app/actions/layers-commands.c:1998
 msgid "Set layers' blend space"
 msgstr "設定圖層的混合空間"
 
-#: app/actions/layers-commands.c:2049
+#: app/actions/layers-commands.c:2051
 msgid "Set layers' composite space"
 msgstr "設定圖層的合成空間"
 
-#: app/actions/layers-commands.c:2102
+#: app/actions/layers-commands.c:2104
 msgid "Set layers' composite mode"
 msgstr "設定圖層的合成模式"
 
-#: app/actions/layers-commands.c:2186
+#: app/actions/layers-commands.c:2188
 msgid "Lock alpha channels"
 msgstr "鎖定 Alpha 色版"
 
-#: app/actions/layers-commands.c:2186
+#: app/actions/layers-commands.c:2188
 msgid "Unlock alpha channels"
 msgstr "解除 Alpha 色版鎖定"
 
@@ -11921,7 +11921,7 @@ msgstr "變形影像"
 #: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Crop image"
-msgstr "裁剪影像"
+msgstr "裁切影像"
 
 #: app/core/core-enums.c:1303
 msgctxt "undo-type"
@@ -12507,7 +12507,7 @@ msgstr "因為所選範圍空白，所以無法剪下。"
 msgid "Cannot copy because the selected region is empty."
 msgstr "因為所選範圍空白，所以無法複製。"
 
-#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
+#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:596
 msgid "Pasted Layer"
 msgstr "貼上的圖層"
 
@@ -13848,7 +13848,7 @@ msgstr "將影像轉換到灰階"
 #: app/core/gimpimage-crop.c:72
 msgctxt "undo-type"
 msgid "Crop Image"
-msgstr "裁剪影像"
+msgstr "裁切影像"
 
 #: app/core/gimpimage-crop.c:75 app/core/gimpimage-resize.c:91
 msgctxt "undo-type"
@@ -21107,11 +21107,11 @@ msgstr "套用鏡頭"
 
 #: app/pdb/plug-in-compat-cmds.c:672
 msgid "Autocrop image"
-msgstr "自動裁剪影像"
+msgstr "自動裁切影像"
 
 #: app/pdb/plug-in-compat-cmds.c:735
 msgid "Autocrop layer"
-msgstr "自動裁剪圖層"
+msgstr "自動裁切圖層"
 
 #: app/pdb/plug-in-compat-cmds.c:789
 msgctxt "undo-type"
@@ -22787,15 +22787,15 @@ msgstr "只有所選的像素"
 
 #: app/tools/gimpcropoptions.c:96
 msgid "Crop only currently selected layers"
-msgstr "僅裁剪目前所選的圖層"
+msgstr "僅裁切目前所選的圖層"
 
 #: app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
-msgstr "刪除裁剪的像素"
+msgstr "刪除裁切的像素"
 
 #: app/tools/gimpcropoptions.c:103
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr "捨棄落於裁剪範圍外的未鎖定圖層資料"
+msgstr "捨棄落於裁切範圍外的未鎖定圖層資料"
 
 #: app/tools/gimpcropoptions.c:109
 msgid "Allow growing"
@@ -22803,7 +22803,7 @@ msgstr "允許增大"
 
 #: app/tools/gimpcropoptions.c:110
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
-msgstr "允許拖曳影像邊界外的裁剪框來調整畫布大小"
+msgstr "允許拖曳影像邊界外的裁切框來調整畫布大小"
 
 #: app/tools/gimpcropoptions.c:117 app/tools/gimpcropoptions.c:226
 msgid "Fill with"
@@ -22815,31 +22815,31 @@ msgstr "如何填滿由「允許增大」功能產生的新區域"
 
 #: app/tools/gimpcroptool.c:122
 msgid "Crop"
-msgstr "裁剪"
+msgstr "裁切"
 
 #: app/tools/gimpcroptool.c:123
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr "裁剪工具：自影像或圖層移除邊緣區域"
+msgstr "裁切工具：自影像或圖層移除邊緣區域"
 
 #: app/tools/gimpcroptool.c:124
 msgid "_Crop"
-msgstr "裁剪(_C)"
+msgstr "裁切(_C)"
 
 #: app/tools/gimpcroptool.c:162
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "點按並拖曳來繪製裁剪用的矩形"
+msgstr "點按並拖曳來繪製裁切用的矩形"
 
 #: app/tools/gimpcroptool.c:282
 msgid "Click or press Enter to crop"
-msgstr "點按或按下 Enter 鍵作裁剪"
+msgstr "點按或按下 Enter 鍵作裁切"
 
 #: app/tools/gimpcroptool.c:389
 msgid "Crop to: "
-msgstr "裁剪到："
+msgstr "裁切到："
 
 #: app/tools/gimpcroptool.c:459
 msgid "There are no selected layers to crop."
-msgstr "沒有所選的圖層可以裁剪。"
+msgstr "沒有所選的圖層可以裁切。"
 
 #: app/tools/gimpcroptool.c:470
 msgid "All selected layers' pixels are locked."
