@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-05 11:10+0000\n"
-"PO-Revision-Date: 2024-10-05 20:14+0800\n"
+"POT-Creation-Date: 2024-10-08 13:44+0000\n"
+"PO-Revision-Date: 2024-10-08 21:57+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -669,17 +669,14 @@ msgid "8"
 msgstr "8"
 
 #: plug-ins/common/border-average.c:157
-#| msgid "6"
 msgid "16"
 msgstr "16"
 
 #: plug-ins/common/border-average.c:158
-#| msgid "2"
 msgid "32"
 msgstr "32"
 
 #: plug-ins/common/border-average.c:159
-#| msgid "4"
 msgid "64"
 msgstr "64"
 
@@ -1459,7 +1456,7 @@ msgstr "_H"
 
 #: plug-ins/common/compose.c:232
 msgid "_Luma y470:"
-msgstr "y470 光度(_L)："
+msgstr "y470 視亮度(_L)："
 
 #: plug-ins/common/compose.c:233
 msgid "_Blueness cb470:"
@@ -1471,7 +1468,7 @@ msgstr "cr470 紅色度(_R)："
 
 #: plug-ins/common/compose.c:236
 msgid "_Luma y709:"
-msgstr "y709 光度(_L)："
+msgstr "y709 視亮度(_L)："
 
 #: plug-ins/common/compose.c:237
 msgid "_Blueness cb709:"
@@ -1603,25 +1600,21 @@ msgstr "色彩模型(_M)"
 
 #: plug-ins/common/compose.c:445 plug-ins/common/compose.c:508
 #: plug-ins/common/decompose.c:308
-#| msgid "YCbCr_ITU_R470"
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
 #: plug-ins/common/compose.c:446 plug-ins/common/compose.c:509
 #: plug-ins/common/decompose.c:309
-#| msgid "YCbCr_ITU_R709"
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
 #: plug-ins/common/compose.c:447 plug-ins/common/compose.c:510
 #: plug-ins/common/decompose.c:310
-#| msgid "YCbCr_ITU_R470_256"
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
 #: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
 #: plug-ins/common/decompose.c:311
-#| msgid "YCbCr_ITU_R709_256"
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
@@ -2218,7 +2211,7 @@ msgstr "高"
 
 #: plug-ins/common/decompose.c:182
 msgid "luma-y470"
-msgstr "光度-y470"
+msgstr "視亮度-y470"
 
 #: plug-ins/common/decompose.c:183
 msgid "blueness-cb470"
@@ -2230,7 +2223,7 @@ msgstr "紅色程度-cr470"
 
 #: plug-ins/common/decompose.c:186
 msgid "luma-y709"
-msgstr "光度-y709"
+msgstr "視亮度-y709"
 
 #: plug-ins/common/decompose.c:187
 msgid "blueness-cb709"
@@ -2290,22 +2283,18 @@ msgid "Black"
 msgstr "黑色"
 
 #: plug-ins/common/decompose.c:221
-#| msgid "YCbCr"
 msgid "YCbCr470"
 msgstr "YCbCr470"
 
 #: plug-ins/common/decompose.c:222
-#| msgid "YCbCr"
 msgid "YCbCr470f"
 msgstr "YCbCr470f"
 
 #: plug-ins/common/decompose.c:224
-#| msgid "YCbCr"
 msgid "YCbCr709"
 msgstr "YCbCr709"
 
 #: plug-ins/common/decompose.c:225
-#| msgid "YCbCr"
 msgid "YCbCr709f"
 msgstr "YCbCr709f"
 
@@ -5649,7 +5638,6 @@ msgid "none"
 msgstr "無"
 
 #: plug-ins/common/file-psp.c:729
-#| msgid "red"
 msgid "rle"
 msgstr "rle"
 
@@ -6424,7 +6412,6 @@ msgid "SVG image"
 msgstr "SVG 影像"
 
 #: plug-ins/common/file-svg.c:180
-#| msgid "HSV"
 msgid "SVG"
 msgstr "SVG"
 
@@ -7525,18 +7512,16 @@ msgid "_Mode"
 msgstr "模式(_M)"
 
 #: plug-ins/common/hot.c:271
-#, fuzzy
-#| msgid "Paint mode:"
 msgid "Signal mode"
-msgstr "繪製模式："
+msgstr "訊號模式"
 
 #: plug-ins/common/hot.c:272
 msgid "NTSC"
-msgstr ""
+msgstr "NTSC"
 
 #: plug-ins/common/hot.c:273
 msgid "PAL"
-msgstr ""
+msgstr "PAL"
 
 #: plug-ins/common/hot.c:279
 msgid "_Action"
@@ -7548,7 +7533,7 @@ msgstr "動作"
 
 #: plug-ins/common/hot.c:281
 msgid "Reduce Luminance"
-msgstr "減低光度"
+msgstr "減低輝度"
 
 #: plug-ins/common/hot.c:282
 msgid "Reduce Saturation"
@@ -8177,10 +8162,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/sparkle.c:196
-#, fuzzy
-#| msgid "Luminosity _threshold:"
 msgid "Lu_minosity threshold"
-msgstr "光度閾值(_T)："
+msgstr "光度閾值(_M)"
 
 #: plug-ins/common/sparkle.c:197
 msgid "Adjust the luminosity threshold"
@@ -8269,10 +8252,8 @@ msgid "Adjust how much the saturation should be changed randomly"
 msgstr "調整多少範圍的飽和度可以隨機改變"
 
 #: plug-ins/common/sparkle.c:253
-#, fuzzy
-#| msgid "_Preserve luminosity"
 msgid "Preserve l_uminosity"
-msgstr "保留光度(_P)"
+msgstr "保留光度(_U)"
 
 #: plug-ins/common/sparkle.c:254
 msgid "Should the luminosity be preserved?"
