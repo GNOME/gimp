@@ -665,7 +665,8 @@ gimp_color_select_set_model_visible (GimpColorSelector      *selector,
 {
   GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
 
-  gtk_widget_set_visible (select->toggle_box[model], visible);
+  if (! visible || gimp_color_selector_get_toggles_visible (selector))
+    gtk_widget_set_visible (select->toggle_box[model], visible);
 }
 
 static void
