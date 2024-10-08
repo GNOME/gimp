@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-08 13:37+0000\n"
-"PO-Revision-Date: 2024-10-08 21:50+0800\n"
+"POT-Creation-Date: 2024-10-08 14:10+0000\n"
+"PO-Revision-Date: 2024-10-08 22:45+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -438,7 +438,7 @@ msgstr "檢視選單：新增「顯示全部」選項，能顯示畫布邊界外
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
-msgstr "濾鏡：新增「裁切」選項，讓使用者能適當調整圖層大小"
+msgstr "濾鏡：新增「裁剪」選項，讓使用者能適當調整圖層大小"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
@@ -7427,22 +7427,22 @@ msgstr "圖層合成模式：聯集"
 #: ../app/actions/layers-actions.c:410
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr "限制於背景內"
+msgstr "裁剪到剩背景"
 
 #: ../app/actions/layers-actions.c:411
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
-msgstr "圖層合成模式：限制於背景內"
+msgstr "圖層合成模式：裁剪到剩背景"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
 msgid "Clip to Layer"
-msgstr "限制於圖層內"
+msgstr "裁剪到剩圖層"
 
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
-msgstr "圖層合成模式：限制於圖層內"
+msgstr "圖層合成模式：裁剪到剩圖層"
 
 #: ../app/actions/layers-actions.c:422
 msgctxt "layers-action"
@@ -19034,12 +19034,12 @@ msgstr "聯集"
 #: ../app/operations/operations-enums.c:61
 msgctxt "layer-composite-mode"
 msgid "Clip to backdrop"
-msgstr "限制於背景內"
+msgstr "裁剪到剩背景"
 
 #: ../app/operations/operations-enums.c:62
 msgctxt "layer-composite-mode"
 msgid "Clip to layer"
-msgstr "限制於圖層內"
+msgstr "裁剪到剩圖層"
 
 #: ../app/operations/operations-enums.c:63
 msgctxt "layer-composite-mode"
@@ -19783,12 +19783,12 @@ msgstr "顏色"
 #: ../app/tools/gimptransformoptions.c:108
 #: ../app/tools/gimptransformoptions.c:264
 msgid "Clipping"
-msgstr "裁切"
+msgstr "裁剪"
 
 #: ../app/operations/gimpoperationsettings.c:79
 #: ../app/tools/gimptransformoptions.c:109
 msgid "How to clip"
-msgstr "如何裁切"
+msgstr "如何裁剪"
 
 #: ../app/operations/gimpoperationsettings.c:112
 msgid "Color _managed"
