@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-29 14:16+0000\n"
-"PO-Revision-Date: 2024-09-29 23:53+0900\n"
+"POT-Creation-Date: 2024-10-08 13:54+0000\n"
+"PO-Revision-Date: 2024-10-08 21:59+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -746,7 +746,7 @@ msgstr "亮度 (HSL)"
 #: ../libgimpbase/gimpbaseenums.c:515
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr "光度"
+msgstr "視亮度"
 
 #: ../libgimpbase/gimpbaseenums.c:516
 msgctxt "desaturate-mode"
@@ -756,7 +756,7 @@ msgstr "平均 (HSI 強度)"
 #: ../libgimpbase/gimpbaseenums.c:517
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr "光度"
+msgstr "輝度"
 
 #: ../libgimpbase/gimpbaseenums.c:518
 msgctxt "desaturate-mode"
@@ -2007,7 +2007,6 @@ msgid "LCh"
 msgstr "LCh"
 
 #: ../libgimpwidgets/gimpcolorscales.c:475
-#| msgid "HSV Hue"
 msgid "HSV"
 msgstr "HSV"
 
@@ -2375,8 +2374,6 @@ msgid "LCh Hue"
 msgstr "LCh 色相"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
-#| msgctxt "gradient-segment-color"
-#| msgid "RGB"
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
@@ -2386,7 +2383,6 @@ msgid "RGB color model"
 msgstr "RGB 色彩模型"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
-#| msgid "LCH Hue"
 msgctxt "color-selector-model"
 msgid "LCH"
 msgstr "LCH"
@@ -2396,7 +2392,6 @@ msgid "CIE LCh color model"
 msgstr "CIE LCh 色彩模型"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
-#| msgid "HSV Hue"
 msgctxt "color-selector-model"
 msgid "HSV"
 msgstr "HSV"
