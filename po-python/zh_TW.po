@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-05 12:11+0000\n"
-"PO-Revision-Date: 2024-10-05 20:20+0800\n"
+"POT-Creation-Date: 2024-10-07 14:48+0000\n"
+"PO-Revision-Date: 2024-10-08 21:14+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -597,7 +597,7 @@ msgid ""
 "similar."
 msgstr ""
 "圖樣只有作用中的分頁能指定。「玩具組」的圖樣類似「齒輪」，但改用玩具組中設定"
-"的齒輪與洞數。若您依照玩具組說明操作的話，應該會得到類似的成品。"
+"的齒輪與孔數。若您依照玩具組說明操作的話，應該會得到類似的成品。"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
@@ -623,24 +623,24 @@ msgstr "動齒輪齒數"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
-msgstr "齒洞百分比"
+msgstr "齒孔百分比"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
-msgstr "動齒輪的洞與中心有多遠。100% 代表洞在齒輪的邊緣。"
+msgstr "動齒輪的孔與中心有多遠。100% 代表孔在齒輪的邊緣。"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
-msgstr "洞數"
+msgstr "孔數"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
-"第 1 個洞會在齒輪的邊緣。最後一個洞會接近中心。最大洞數對於每個齒輪是不同的。"
+"第 1 個孔會在齒輪的邊緣。最後一個孔會接近中心。最大孔數對於每個齒輪是不同的。"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
@@ -660,7 +660,7 @@ msgstr "在繪製下一個花瓣前，要跳過多少次花瓣。"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
-msgstr "中洞半徑 (%)"
+msgstr "中孔半徑 (%)"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
 msgid ""
@@ -668,8 +668,8 @@ msgid ""
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
 "produce no hole. A Value of 99 will produce a thin line on the edge."
 msgstr ""
-"圖樣中間洞的半徑，當中不會繪製任何東西。單位為圖樣大小的百分比。0 代表沒有開"
-"洞，99 代表剩下邊緣上的細線。"
+"圖樣中間孔的半徑，當中不會繪製任何東西。單位為圖樣大小的百分比。0 代表沒有開"
+"孔，99 代表剩下邊緣上的細線。"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
