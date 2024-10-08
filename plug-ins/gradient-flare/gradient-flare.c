@@ -3475,7 +3475,7 @@ ed_run (GtkWindow            *parent,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
                       hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /*
    *    Preview
@@ -3485,7 +3485,7 @@ ed_run (GtkWindow            *parent,
   gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   ed->preview = preview_new (ED_PREVIEW_WIDTH, ED_PREVIEW_HEIGHT,
                              ed_preview_init_func, calldata,
@@ -3493,9 +3493,6 @@ ed_run (GtkWindow            *parent,
                              ed_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (ed->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget);
-  g_signal_connect (ed->preview->widget, "event",
-                    G_CALLBACK (dlg_preview_handle_event),
-                    calldata);
   ed_preview_calc_window ();
 
   /*
@@ -3504,14 +3501,14 @@ ed_run (GtkWindow            *parent,
   notebook = ed->notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
-  gtk_widget_show (notebook);
+  gtk_widget_set_visible (notebook, TRUE);
 
   ed_make_page_general (ed, notebook);
   ed_make_page_glow (ed, notebook);
   ed_make_page_rays (ed, notebook);
   ed_make_page_sflare (ed, notebook);
 
-  gtk_widget_show (shell);
+  gtk_widget_set_visible (shell, TRUE);
 
   ed->init = FALSE;
   ed_preview_update ();
