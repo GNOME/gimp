@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-04 18:00+0000\n"
-"PO-Revision-Date: 2024-10-05 20:14+0800\n"
+"POT-Creation-Date: 2024-10-08 13:55+0000\n"
+"PO-Revision-Date: 2024-10-08 22:08+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1331,7 +1331,7 @@ msgstr "_H"
 
 #: ../plug-ins/common/compose.c:179
 msgid "_Luma y470:"
-msgstr "y470 光度(_L)："
+msgstr "y470 視亮度(_L)："
 
 #: ../plug-ins/common/compose.c:180
 msgid "_Blueness cb470:"
@@ -1343,7 +1343,7 @@ msgstr "cr470 紅色度(_R)："
 
 #: ../plug-ins/common/compose.c:183
 msgid "_Luma y709:"
-msgstr "y709 光度(_L)："
+msgstr "y709 視亮度(_L)："
 
 #: ../plug-ins/common/compose.c:184
 msgid "_Blueness cb709:"
@@ -1775,7 +1775,7 @@ msgstr "高"
 
 #: ../plug-ins/common/decompose.c:159
 msgid "luma-y470"
-msgstr "光度-y470"
+msgstr "視亮度-y470"
 
 #: ../plug-ins/common/decompose.c:160
 msgid "blueness-cb470"
@@ -1787,7 +1787,7 @@ msgstr "紅色程度-cr470"
 
 #: ../plug-ins/common/decompose.c:163
 msgid "luma-y709"
-msgstr "光度-y709"
+msgstr "視亮度-y709"
 
 #: ../plug-ins/common/decompose.c:164
 msgid "blueness-cb709"
@@ -2592,38 +2592,36 @@ msgstr ""
 
 #: ../plug-ins/common/file-heif.c:776 ../plug-ins/common/file-heif.c:809
 #: ../plug-ins/common/file-heif.c:848 ../plug-ins/common/file-heif.c:914
-#, fuzzy, c-format
+#, c-format
 msgid "Loading HEIF image failed: %s"
-msgstr "正在上傳圖片 (%d%%)"
+msgstr "HEIF 影像載入失敗：%s"
 
 #: ../plug-ins/common/file-heif.c:798
 msgid "Loading HEIF image failed: Input file contains no readable images"
-msgstr ""
+msgstr "HEIF 影像載入失敗：輸入檔包含無法讀取的影像"
 
 #: ../plug-ins/common/file-heif.c:1041
 msgid "image content"
 msgstr "影像內容"
 
 #: ../plug-ins/common/file-heif.c:1361
-#, fuzzy, c-format
-#| msgid "Exporting '%s'"
+#, c-format
 msgid "Exporting '%s' using %s encoder"
-msgstr "正在匯出「%s」"
+msgstr "正在使用 %2$s 編碼器匯出「%1$s」"
 
 #: ../plug-ins/common/file-heif.c:1412 ../plug-ins/common/file-heif.c:1652
 #, c-format
 msgid "Encoding HEIF image failed: %s"
-msgstr ""
+msgstr "編碼 HEIF 影像失敗：%s"
 
 #: ../plug-ins/common/file-heif.c:1689
-#, fuzzy, c-format
-#| msgid "Writing to file '%s' failed: %s"
+#, c-format
 msgid "Writing HEIF image failed: %s"
-msgstr "寫入檔案「%s」時發生錯誤：%s"
+msgstr "寫入 HEIF 影像失敗：%s"
 
 #: ../plug-ins/common/file-heif.c:1778
 msgid "primary"
-msgstr ""
+msgstr "原初"
 
 #: ../plug-ins/common/file-heif.c:1923
 msgid "Load HEIF Image"
@@ -2647,15 +2645,15 @@ msgstr "位元深度："
 
 #: ../plug-ins/common/file-heif.c:2156
 msgid "8 bit/channel"
-msgstr ""
+msgstr "8 位元/色版"
 
 #: ../plug-ins/common/file-heif.c:2157
 msgid "10 bit/channel"
-msgstr ""
+msgstr "10 位元/色版"
 
 #: ../plug-ins/common/file-heif.c:2158
 msgid "12 bit/channel"
-msgstr ""
+msgstr "12 位元/色版"
 
 #. Color profile
 #: ../plug-ins/common/file-heif.c:2167 ../plug-ins/file-jpeg/jpeg-save.c:974
@@ -3182,7 +3180,7 @@ msgstr "使用防鋸齒(_A)"
 #. White Background
 #: ../plug-ins/common/file-pdf-load.c:1476
 msgid "_Fill transparent areas with white"
-msgstr ""
+msgstr "用白色填充透明區域(_F)"
 
 #: ../plug-ins/common/file-pdf-load.c:1762
 #: ../plug-ins/common/file-pdf-load.c:1763 ../plug-ins/common/file-svg.c:852
@@ -3214,10 +3212,8 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:899
 #: ../plug-ins/common/file-pdf-save.c:1067
-#, fuzzy
-#| msgid "Replace partial transparency with the current background color"
 msgid "_Fill transparent areas with background color"
-msgstr "用當前的背景顏色替換部分的透明度"
+msgstr "用背景顏色填充透明區域(_F)"
 
 #: ../plug-ins/common/file-pdf-save.c:904
 #: ../plug-ins/common/file-pdf-save.c:1072
@@ -3247,14 +3243,12 @@ msgstr "圖層作為頁面(_L) (%s)"
 #: ../plug-ins/common/file-pdf-save.c:926
 #: ../plug-ins/common/file-pdf-save.c:1135
 msgid "top layers first"
-msgstr ""
+msgstr "上層優先"
 
 #: ../plug-ins/common/file-pdf-save.c:926
 #: ../plug-ins/common/file-pdf-save.c:1135
-#, fuzzy
-#| msgid "Bottom left"
 msgid "bottom layers first"
-msgstr "左下角"
+msgstr "下層優先"
 
 #: ../plug-ins/common/file-pdf-save.c:934
 msgid "_Reverse the pages order"
@@ -5169,7 +5163,7 @@ msgstr "動作"
 
 #: ../plug-ins/common/hot.c:661
 msgid "Reduce _Luminance"
-msgstr "減低光度(_L)"
+msgstr "減低輝度(_L)"
 
 #: ../plug-ins/common/hot.c:662
 msgid "Reduce _Saturation"
@@ -6681,7 +6675,7 @@ msgstr "載入 DDS"
 
 #: ../plug-ins/file-dds/ddsread.c:1418
 msgid "_Load mipmaps"
-msgstr ""
+msgstr "載入 Mipmap(_L)"
 
 #: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
@@ -6714,24 +6708,21 @@ msgstr ""
 
 #: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
-msgstr ""
+msgstr "_Mipmap："
 
 #: ../plug-ins/file-dds/ddswrite.c:2098
 msgid "Transparent index:"
 msgstr "透明索引："
 
 #: ../plug-ins/file-dds/ddswrite.c:2142
-#, fuzzy
-#| msgid "Main Options"
 msgid "Mipmap Options"
-msgstr "主要選項"
+msgstr "Mipmap 選項"
 
 #: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "F_ilter:"
 msgstr "濾鏡(_I)："
 
 #: ../plug-ins/file-dds/ddswrite.c:2168
-#, fuzzy
 msgid "_Wrap mode:"
 msgstr "循環包繞模式(_W)："
 
@@ -6749,7 +6740,7 @@ msgstr "_Gamma："
 
 #: ../plug-ins/file-dds/ddswrite.c:2221
 msgid "Preserve alpha _test coverage"
-msgstr ""
+msgstr "保留 Alpha 測試覆蓋(_T)"
 
 #: ../plug-ins/file-dds/ddswrite.c:2240
 msgid "_Alpha test threshold:"
@@ -6785,15 +6776,14 @@ msgid "G3 fax image"
 msgstr "G3 傳真影像"
 
 #: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
-#, fuzzy, c-format
-#| msgid "Could not get layers for image %d"
+#, c-format
 msgid "Could not create buffer to process image data."
-msgstr "無法從影像 %d 取得圖層"
+msgstr "無法建立緩衝區以處理影像資料。"
 
 #: ../plug-ins/file-faxg3/faxg3.c:540
 #, c-format
 msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr ""
+msgstr "無效的影像尺寸 (%d x %d)。影像可能毀損。"
 
 #: ../plug-ins/file-faxg3/faxg3.c:550
 #, c-format
@@ -7410,7 +7400,7 @@ msgstr "TIFF 影像"
 #: ../plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
-msgstr ""
+msgstr "不是 TIFF 影像，或影像毀損。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:338
 #, c-format
@@ -7429,7 +7419,7 @@ msgstr[0] ""
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Extra channels with unspecified data."
-msgstr ""
+msgstr "帶有未指定資料的額外色版。"
 
 #. ExtraSamples field not set, yet we have more channels than
 #. * the PhotometricInterpretation field suggests.
@@ -7601,10 +7591,8 @@ msgid "Import from TIFF"
 msgstr "從 TIFF 匯入"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2681
-#, fuzzy
-#| msgid "Show image"
 msgid "_Show reduced images"
-msgstr "顯示影像"
+msgstr "顯示減小的影像(_S)"
 
 #. Option to shrink the loaded image to its bounding box
 #. or keep as much empty space as possible.
@@ -7612,13 +7600,11 @@ msgstr "顯示影像"
 #. space on the right and bottom.
 #: ../plug-ins/file-tiff/file-tiff-load.c:2715
 msgid "_Keep empty space around imported layers"
-msgstr ""
+msgstr "保留匯入圖層周圍的空白空間(_K)"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2732
-#, fuzzy
-#| msgid "Source channel:"
 msgid "Process extra channel as:"
-msgstr "來源色版："
+msgstr "處理額外色版作為："
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
