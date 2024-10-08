@@ -282,6 +282,8 @@ static void       gimp_color_select_notify_config          (GimpColorConfig  *co
 static gfloat     gimp_color_select_get_z_value            (GimpColorSelect *select,
                                                             GeglColor       *color);
 
+static void       gimp_color_select_set_label              (GimpColorSelect *select);
+
 
 G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR)
 
@@ -515,7 +517,7 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_widget_set_halign (select->label, GTK_ALIGN_START);
   gtk_widget_set_vexpand (select->label, FALSE);
   gtk_label_set_justify (GTK_LABEL (select->label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_text (GTK_LABEL (select->label), _("Profile: sRGB"));
+  gimp_color_select_set_label (select);
   gtk_box_pack_start (GTK_BOX (select), select->label, FALSE, FALSE, 0);
   gtk_widget_show (select->label);
 
@@ -656,6 +658,8 @@ gimp_color_select_set_channel (GimpColorSelector        *selector,
 
   gimp_color_select_update (select,
                             UPDATE_POS | UPDATE_Z_COLOR | UPDATE_XY_COLOR);
+
+  gimp_color_select_set_label (select);
 }
 
 static void
@@ -687,39 +691,7 @@ gimp_color_select_set_format (GimpColorSelector *selector,
       fish_lch_to_rgb_u8 = babl_fish (babl_format ("CIE LCH(ab) float"),
                                       babl_format_with_space ("R'G'B' u8", format));
 
-      if (format == NULL || babl_format_get_space (format) == babl_space ("sRGB"))
-        {
-          gtk_label_set_text (GTK_LABEL (select->label), _("Profile: sRGB"));
-          gimp_help_set_help_data (select->label, NULL, NULL);
-        }
-      else
-        {
-          GimpColorProfile *profile = NULL;
-          const gchar      *icc;
-          gint              icc_len;
-
-          icc = babl_space_get_icc (babl_format_get_space (format), &icc_len);
-          profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc, icc_len, NULL);
-
-          if (profile != NULL)
-            {
-              gchar *text;
-
-              text = g_strdup_printf (_("Profile: %s"), gimp_color_profile_get_label (profile));
-              gtk_label_set_text (GTK_LABEL (select->label), text);
-              gimp_help_set_help_data (select->label,
-                                       gimp_color_profile_get_summary (profile),
-                                       NULL);
-              g_free (text);
-            }
-          else
-            {
-              gtk_label_set_markup (GTK_LABEL (select->label), _("Profile: <i>unknown</i>"));
-              gimp_help_set_help_data (select->label, NULL, NULL);
-            }
-
-          g_clear_object (&profile);
-        }
+      gimp_color_select_set_label (select);
 
       select->xy_needs_render = TRUE;
       select->z_needs_render  = TRUE;
@@ -2059,4 +2031,105 @@ gimp_color_select_get_z_value (GimpColorSelect *select,
     }
 
   return channels[z_channel];
+}
+
+static void
+gimp_color_select_set_label (GimpColorSelect *select)
+{
+  GEnumClass               *enum_class;
+  const GimpEnumDesc       *enum_desc;
+  const gchar              *model_help;
+  gchar                    *model_label;
+  GimpColorSelectorChannel  channel;
+  GimpColorSelectorModel    model      = GIMP_COLOR_SELECTOR_MODEL_RGB;
+  gboolean                  with_space = TRUE;
+
+  channel = gimp_color_selector_get_channel (GIMP_COLOR_SELECTOR (select));
+  switch (channel)
+    {
+    case GIMP_COLOR_SELECTOR_HUE:
+    case GIMP_COLOR_SELECTOR_SATURATION:
+    case GIMP_COLOR_SELECTOR_VALUE:
+      model = GIMP_COLOR_SELECTOR_MODEL_HSV;
+      break;
+    case GIMP_COLOR_SELECTOR_RED:
+    case GIMP_COLOR_SELECTOR_GREEN:
+    case GIMP_COLOR_SELECTOR_BLUE:
+      model = GIMP_COLOR_SELECTOR_MODEL_RGB;
+      break;
+    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
+    case GIMP_COLOR_SELECTOR_LCH_CHROMA:
+    case GIMP_COLOR_SELECTOR_LCH_HUE:
+      model = GIMP_COLOR_SELECTOR_MODEL_LCH;
+      with_space = FALSE;
+      break;
+    case GIMP_COLOR_SELECTOR_ALPHA:
+      /* Let's ignore label change when alpha is selected (it can be
+       * used with any model).
+       */
+      return;
+    }
+
+  enum_class  = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_MODEL);
+  enum_desc   = gimp_enum_get_desc (enum_class, model);
+  model_help  = gettext (enum_desc->value_help);
+  model_label = g_strdup_printf (_("Model: %s"), gettext (enum_desc->value_desc));
+
+  if (with_space)
+    {
+      if (select->format == NULL || babl_format_get_space (select->format) == babl_space ("sRGB"))
+        {
+          gchar *label;
+
+          /* TODO: in future, this could be a better thought localized
+           * string, but for now, I had to preserve string freeze.
+           */
+          label = g_strdup_printf ("%s - %s", model_label, _("Profile: sRGB"));
+          gtk_label_set_text (GTK_LABEL (select->label), label);
+          gimp_help_set_help_data (select->label, model_help, NULL);
+          g_free (label);
+        }
+      else
+        {
+          GimpColorProfile *profile = NULL;
+          const gchar      *icc;
+          gint              icc_len;
+
+          icc = babl_space_get_icc (babl_format_get_space (select->format), &icc_len);
+          profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc, icc_len, NULL);
+
+          if (profile != NULL)
+            {
+              gchar *label;
+              gchar *text;
+
+              text  = g_strdup_printf (_("Profile: %s"), gimp_color_profile_get_label (profile));
+              label = g_strdup_printf ("%s - %s", model_label, text);
+              gtk_label_set_text (GTK_LABEL (select->label), label);
+              gimp_help_set_help_data (select->label,
+                                       gimp_color_profile_get_summary (profile),
+                                       NULL);
+              g_free (text);
+              g_free (label);
+            }
+          else
+            {
+              gchar *label;
+
+              label = g_strdup_printf ("%s - %s", model_label, _("Profile: <i>unknown</i>"));
+              gtk_label_set_markup (GTK_LABEL (select->label), label);
+              gimp_help_set_help_data (select->label, model_help, NULL);
+              g_free (label);
+            }
+
+          g_clear_object (&profile);
+        }
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (select->label), model_label);
+      gimp_help_set_help_data (select->label, model_help, NULL);
+    }
+
+  g_free (model_label);
 }
