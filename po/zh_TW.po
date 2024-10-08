@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-06 10:43+0000\n"
-"PO-Revision-Date: 2024-10-07 22:41+0800\n"
+"POT-Creation-Date: 2024-10-07 16:30+0000\n"
+"PO-Revision-Date: 2024-10-08 21:46+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -11771,7 +11771,7 @@ msgstr "Alpha"
 #: app/core/core-enums.c:828
 msgctxt "histogram-channel"
 msgid "Luminance"
-msgstr "光度"
+msgstr "輝度"
 
 #: app/core/core-enums.c:829
 msgctxt "histogram-channel"
@@ -19676,31 +19676,31 @@ msgstr "線性曝深"
 #: app/operations/operations-enums.c:274
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
-msgstr "光度/明度僅變暗"
+msgstr "視亮度/輝度僅變暗"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance darken only".
 #. Keep it short.
 #: app/operations/operations-enums.c:277
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "光度僅變暗"
+msgstr "視亮度僅變暗"
 
 #: app/operations/operations-enums.c:278
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
-msgstr "光度/明度僅變亮"
+msgstr "視亮度/輝度僅變亮"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
 #: app/operations/operations-enums.c:281
 msgctxt "layer-mode"
 msgid "Luma lighten only"
-msgstr "光度僅變亮"
+msgstr "視亮度僅變亮"
 
 #: app/operations/operations-enums.c:282
 msgctxt "layer-mode"
 msgid "Luminance"
-msgstr "光度"
+msgstr "輝度"
 
 #: app/operations/operations-enums.c:283
 msgctxt "layer-mode"
@@ -21346,7 +21346,7 @@ msgstr "選擇性高斯模糊"
 #: app/pdb/plug-in-compat-cmds.c:3963
 msgctxt "undo-type"
 msgid "Semi-Flatten"
-msgstr "半平整"
+msgstr "半整平"
 
 #: app/pdb/plug-in-compat-cmds.c:4006
 msgctxt "undo-type"
@@ -22435,7 +22435,7 @@ msgstr "判斷色彩相似度的準則"
 #: app/tools/gimpbucketfilloptions.c:581
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
-msgstr "不透明的像素會被視為線稿而不是低明度的像素"
+msgstr "不透明的像素會被視為線稿而不是低輝度的像素"
 
 #: app/tools/gimpbucketfilloptions.c:633
 msgid "No valid source drawable selected"
@@ -27155,7 +27155,7 @@ msgstr "HSV (%0.1f，%0.1f，%0.1f)"
 #: app/widgets/gimpgradienteditor.c:1339
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "光度：%0.1f     不透明度：%0.1f"
+msgstr "輝度：%0.1f     不透明度：%0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1374
 #, c-format
