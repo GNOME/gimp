@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-06 10:39+0000\n"
-"PO-Revision-Date: 2024-10-07 22:44+0800\n"
+"POT-Creation-Date: 2024-10-08 13:37+0000\n"
+"PO-Revision-Date: 2024-10-08 21:50+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -12339,7 +12339,7 @@ msgstr "Alpha"
 #: ../app/core/core-enums.c:775
 msgctxt "histogram-channel"
 msgid "Luminance"
-msgstr "光度"
+msgstr "輝度"
 
 #: ../app/core/core-enums.c:776
 msgctxt "histogram-channel"
@@ -19473,31 +19473,31 @@ msgstr "線性曝深"
 #: ../app/operations/operations-enums.c:273
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
-msgstr "光度/明度僅變暗"
+msgstr "視亮度/輝度僅變暗"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance darken only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:276
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "光度僅變暗"
+msgstr "視亮度僅變暗"
 
 #: ../app/operations/operations-enums.c:277
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
-msgstr "光度/明度僅變亮"
+msgstr "視亮度/輝度僅變亮"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:280
 msgctxt "layer-mode"
 msgid "Luma lighten only"
-msgstr "光度僅變亮"
+msgstr "視亮度僅變亮"
 
 #: ../app/operations/operations-enums.c:281
 msgctxt "layer-mode"
 msgid "Luminance"
-msgstr "明度"
+msgstr "輝度"
 
 #: ../app/operations/operations-enums.c:282
 msgctxt "layer-mode"
@@ -21050,7 +21050,7 @@ msgstr "選擇性高斯模糊"
 #: ../app/pdb/plug-in-compat-cmds.c:4031
 msgctxt "undo-type"
 msgid "Semi-Flatten"
-msgstr "半平整"
+msgstr "半整平"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4074
 msgctxt "undo-type"
@@ -26525,7 +26525,7 @@ msgstr "HSV (%0.1f，%0.1f，%0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:1245
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "光度：%0.1f     不透明度：%0.1f"
+msgstr "輝度：%0.1f     不透明度：%0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1277
 #, c-format
