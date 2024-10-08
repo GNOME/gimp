@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-08 13:44+0000\n"
-"PO-Revision-Date: 2024-10-08 21:57+0800\n"
+"PO-Revision-Date: 2024-10-08 23:43+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1829,7 +1829,7 @@ msgstr "積極裁切(_Z)"
 
 #: plug-ins/common/crop-zealous.c:118
 msgid "Autocrop unused space from edges and middle"
-msgstr "從邊緣和中間自動裁剪未使用的空間"
+msgstr "從邊緣和中間自動裁切未使用的空間"
 
 #: plug-ins/common/crop-zealous.c:144
 msgid "Zealous cropping"
@@ -11382,10 +11382,8 @@ msgid "Crop L_ayers"
 msgstr "捲曲圖層"
 
 #: plug-ins/file-tiff/file-tiff.c:278
-#, fuzzy
-#| msgid "Curl Layer"
 msgid "Crop Layers"
-msgstr "裁剪圖層"
+msgstr "裁切圖層"
 
 #: plug-ins/file-tiff/file-tiff.c:283
 msgid "Save _GeoTIFF data"
