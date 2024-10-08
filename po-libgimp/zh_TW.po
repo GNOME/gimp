@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-08 13:54+0000\n"
-"PO-Revision-Date: 2024-10-08 21:59+0800\n"
+"PO-Revision-Date: 2024-10-09 00:08+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1447,17 +1447,17 @@ msgstr "調整尺寸"
 #: ../libgimpbase/gimpbaseenums.c:1954
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "裁切界外"
+msgstr "裁剪界外"
 
 #: ../libgimpbase/gimpbaseenums.c:1955
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "裁剪成結果尺寸"
+msgstr "裁切成結果尺寸"
 
 #: ../libgimpbase/gimpbaseenums.c:1956
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "裁剪維持寬高比"
+msgstr "裁切維持寬高比"
 
 #: ../libgimpbase/gimpmetadata.c:986
 #, c-format
@@ -2834,7 +2834,7 @@ msgstr "GIMP MIDI 輸入控制器"
 #. * Shown as a label description.
 #: ../modules/display-filter-clip-warning.c:123
 msgid "Clip warning color display filter"
-msgstr "顯色裁切警告濾色片"
+msgstr "顯色裁剪警告濾色片"
 
 #: ../modules/display-filter-clip-warning.c:160
 msgid "Show shadows"
@@ -2902,7 +2902,7 @@ msgstr "在警告中包含完全透明的像素"
 
 #: ../modules/display-filter-clip-warning.c:232
 msgid "Clip Warning"
-msgstr "顯色裁切警告"
+msgstr "顯色裁剪警告"
 
 #: ../modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
