@@ -238,6 +238,58 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
   return stroke;
 }
 
+/* Returns the EndPoint (ANCHOR) that a given Handle (CONTROL) controls.
+ *
+ * GimpAnchors are in a list.
+ * GimpAnchors of type ANCHOR are surrounded by two GimpAnchors
+ * of type CONTROL (Handle) in the pattern HEH HEH....
+ * E denotes a GimpAnchor of type ANCHOR,  aka EndPoint.
+ * H denotes a GimpAnchor of type CONTROL, aka Handle.
+ */
+static GimpAnchor*
+gimp_bezier_stroke_find_endpoint_for_handle (GimpStroke *stroke,
+                                             GimpAnchor *anchor)
+{
+  GList *anchor_element;
+  GList *prior_anchor_element;
+  GList *result_element;
+
+  /* Require given anchor is CONTROL i.e. Handle. */
+  g_return_val_if_fail (anchor->type == GIMP_ANCHOR_CONTROL, NULL);
+
+  anchor_element = g_queue_find (stroke->anchors, anchor);
+  prior_anchor_element  = g_list_previous (anchor_element);
+
+  if (prior_anchor_element == NULL)
+    {
+      /* No prior element. Given handle is very first GimpAnchor in the list: thisH E...
+       * The desired ANCHOR endpoint trails it.
+       */
+      result_element = g_list_next (anchor_element);
+    }
+  else if (((GimpAnchor *)prior_anchor_element->data)->type == GIMP_ANCHOR_ANCHOR)
+    {
+      /* Prior element is-a ANCHOR i.e. EndPoint.
+       * Given handle is the trailing handle for the desired endpoint:   ...E thisH ...
+       */
+      result_element = prior_anchor_element;
+    }
+  else
+    {
+      /* Prior element is another CONTROL i.e. handle.
+       * Given handle is leading the desired endpoint  ...H thisH E...
+       */
+      result_element = g_list_next (anchor_element);
+    }
+
+  /* Ensure the list of anchors is not corrupt by missing next anchors. */
+  g_return_val_if_fail (result_element != NULL, NULL);
+  /* Ensure result_element type is ANCHOR i.e. EndPoint. */
+  g_return_val_if_fail (((GimpAnchor*)result_element->data)->type == GIMP_ANCHOR_ANCHOR, NULL);
+
+  return result_element->data;
+}
+
 static void
 gimp_bezier_stroke_anchor_delete (GimpStroke *stroke,
                                   GimpAnchor *anchor)
@@ -1358,12 +1410,29 @@ gimp_bezier_stroke_shift_start (GimpStroke *stroke,
                                 GimpAnchor *new_start)
 {
   GList *link;
+  GimpAnchor *real_new_start = NULL;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
   g_return_val_if_fail (new_start != NULL, FALSE);
-  g_return_val_if_fail (new_start->type == GIMP_ANCHOR_ANCHOR, FALSE);
 
-  link = g_queue_find (stroke->anchors, new_start);
+  /* Action "shift-start" is enabled for either Handle (CONTROL) or EndPoint (ANCHOR)
+   * but operates only on an EndPoint.
+   * When user chose a Handle, get the Handle's EndPoint to operate on.
+   */
+  if (new_start->type == GIMP_ANCHOR_CONTROL)
+    {
+      real_new_start = gimp_bezier_stroke_find_endpoint_for_handle (stroke, new_start);
+    }
+  else if (new_start->type == GIMP_ANCHOR_ANCHOR)
+    {
+      real_new_start = new_start;
+    }
+  /* Else type is corrupt and real_new_start is NULL. */
+
+  g_return_val_if_fail (real_new_start != NULL, FALSE);
+  g_return_val_if_fail (real_new_start->type == GIMP_ANCHOR_ANCHOR, FALSE);
+
+  link = g_queue_find (stroke->anchors, real_new_start);
   if (!link)
     return FALSE;
 
