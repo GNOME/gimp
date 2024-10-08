@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-05 12:36+0000\n"
-"PO-Revision-Date: 2024-10-06 17:48+0800\n"
+"POT-Creation-Date: 2024-10-08 13:43+0000\n"
+"PO-Revision-Date: 2024-10-08 21:54+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -938,7 +938,7 @@ msgstr "亮度 (HSL)"
 #: libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr "光度"
+msgstr "視亮度"
 
 #: libgimpbase/gimpbaseenums.c:455
 msgctxt "desaturate-mode"
@@ -948,7 +948,7 @@ msgstr "平均 (HSI 強度)"
 #: libgimpbase/gimpbaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr "光度"
+msgstr "輝度"
 
 #: libgimpbase/gimpbaseenums.c:457
 msgctxt "desaturate-mode"
