@@ -2576,13 +2576,12 @@ dlg_run (GimpProcedure       *procedure,
   dlg->init = FALSE;
   dlg_preview_update ();
 
-  if (gimp_dialog_run (GIMP_DIALOG (shell)) == GTK_RESPONSE_OK)
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (shell));
+  if (run)
     {
       g_object_set (config,
                     "gflare-name", dlg->gflare->name,
                     NULL);
-
-      run = TRUE;
     }
 
   g_object_unref (src_buffer);
@@ -3455,10 +3454,10 @@ ed_run (GtkWindow            *parent,
                              NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell),
-                                           RESPONSE_RESCAN,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            RESPONSE_RESCAN,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   g_signal_connect (shell, "response",
                     G_CALLBACK (ed_response),
