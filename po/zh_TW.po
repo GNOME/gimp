@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-08 14:10+0000\n"
-"PO-Revision-Date: 2024-10-08 22:45+0800\n"
+"PO-Revision-Date: 2024-10-08 23:34+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -6544,24 +6544,24 @@ msgstr "改變影像內容的尺寸"
 #: ../app/actions/image-actions.c:145
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "裁剪至選取範圍(_C)"
+msgstr "裁切到選取範圍(_C)"
 
 #: ../app/actions/image-actions.c:146
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "將影像裁剪至選取範圍的尺寸"
+msgstr "將影像裁切到選取範圍的尺寸"
 
 #: ../app/actions/image-actions.c:151
 msgctxt "image-action"
 msgid "Crop to C_ontent"
-msgstr "裁剪至內容(_O)"
+msgstr "裁切到只剩內容(_O)"
 
 #: ../app/actions/image-actions.c:152
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
 "image)"
-msgstr "將影像裁剪至其內容的範圍（從影像中移除空白的邊框）"
+msgstr "將影像裁切到只剩內容的範圍（從影像中移除空白的邊框）"
 
 #: ../app/actions/image-actions.c:157
 msgctxt "image-action"
@@ -6825,15 +6825,15 @@ msgstr "旋轉中"
 
 #: ../app/actions/image-commands.c:873 ../app/actions/layers-commands.c:862
 msgid "Cannot crop because the current selection is empty."
-msgstr "無法裁剪，因為目前的選取範圍空白。"
+msgstr "無法裁切，因為目前的選取範圍空白。"
 
 #: ../app/actions/image-commands.c:912
 msgid "Cannot crop because the image has no content."
-msgstr "無法裁剪，因為影像沒有內容。"
+msgstr "無法裁切，因為影像沒有內容。"
 
 #: ../app/actions/image-commands.c:918
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "無法裁剪，因為影像已經裁剪到內容範圍。"
+msgstr "無法裁切，因為影像已經裁切到內容範圍。"
 
 #: ../app/actions/image-commands.c:1084
 #, c-format
@@ -7248,24 +7248,24 @@ msgstr "改變圖層內容的尺寸"
 #: ../app/actions/layers-actions.c:250
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "裁剪至選取範圍(_C)"
+msgstr "裁切到選取範圍(_C)"
 
 #: ../app/actions/layers-actions.c:251
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "將圖層裁剪至選取範圍的尺寸"
+msgstr "將圖層裁切至選取範圍的尺寸"
 
 #: ../app/actions/layers-actions.c:256
 msgctxt "layers-action"
 msgid "Crop to C_ontent"
-msgstr "裁剪至內容(_O)"
+msgstr "裁切到只剩內容(_O)"
 
 #: ../app/actions/layers-actions.c:257
 msgctxt "layers-action"
 msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
 "layer)"
-msgstr "將圖層裁剪至其內容尺寸（從圖層移除空白邊框）"
+msgstr "將圖層裁切至其內容尺寸（從圖層移除空白邊框）"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
 msgctxt "layers-action"
@@ -7780,19 +7780,19 @@ msgstr "縮放圖層"
 
 #: ../app/actions/layers-commands.c:872
 msgid "Crop Layer to Selection"
-msgstr "將圖層裁剪至選取範圍"
+msgstr "將圖層裁切至選取範圍"
 
 #: ../app/actions/layers-commands.c:903
 msgid "Crop Layer to Content"
-msgstr "將圖層裁剪至內容"
+msgstr "將圖層裁切到只剩內容"
 
 #: ../app/actions/layers-commands.c:916
 msgid "Cannot crop because the active layer has no content."
-msgstr "無法裁剪，因為作用中的圖層沒有內容。"
+msgstr "無法裁切，因為作用中的圖層沒有內容。"
 
 #: ../app/actions/layers-commands.c:923
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "無法裁剪，因為作用中的圖層已經裁剪至其內容範圍。"
+msgstr "無法裁切，因為作用中的圖層已經裁切至其內容範圍。"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -12464,7 +12464,7 @@ msgstr "變形影像"
 #: ../app/core/core-enums.c:1168
 msgctxt "undo-type"
 msgid "Crop image"
-msgstr "裁剪影像"
+msgstr "裁切影像"
 
 #: ../app/core/core-enums.c:1169
 msgctxt "undo-type"
@@ -14138,7 +14138,7 @@ msgstr "將影像轉換到灰階"
 #: ../app/core/gimpimage-crop.c:72
 msgctxt "undo-type"
 msgid "Crop Image"
-msgstr "裁剪影像"
+msgstr "裁切影像"
 
 #: ../app/core/gimpimage-crop.c:75 ../app/core/gimpimage-resize.c:91
 msgctxt "undo-type"
@@ -20832,11 +20832,11 @@ msgstr "套用鏡頭"
 
 #: ../app/pdb/plug-in-compat-cmds.c:668
 msgid "Autocrop image"
-msgstr "自動裁剪影像"
+msgstr "自動裁切影像"
 
 #: ../app/pdb/plug-in-compat-cmds.c:730
 msgid "Autocrop layer"
-msgstr "自動裁剪圖層"
+msgstr "自動裁切圖層"
 
 #: ../app/pdb/plug-in-compat-cmds.c:777
 msgctxt "undo-type"
@@ -22310,15 +22310,15 @@ msgstr "僅適用於目前的圖層"
 
 #: ../app/tools/gimpcropoptions.c:95
 msgid "Crop only currently selected layer"
-msgstr "僅裁剪目前所選的圖層"
+msgstr "僅裁切目前所選的圖層"
 
 #: ../app/tools/gimpcropoptions.c:101
 msgid "Delete cropped pixels"
-msgstr "刪除裁剪的像素"
+msgstr "刪除裁切的像素"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr "捨棄落於裁剪範圍外的未鎖定圖層資料"
+msgstr "捨棄落於裁切範圍外的未鎖定圖層資料"
 
 #: ../app/tools/gimpcropoptions.c:108
 msgid "Allow growing"
@@ -22326,7 +22326,7 @@ msgstr "允許增大"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
-msgstr "允許拖曳影像邊界外的裁剪框來調整畫布大小"
+msgstr "允許拖曳影像邊界外的裁切框來調整畫布大小"
 
 #: ../app/tools/gimpcropoptions.c:116 ../app/tools/gimpcropoptions.c:226
 msgid "Fill with"
@@ -22338,31 +22338,31 @@ msgstr "如何填滿由「允許增大」功能產生的新區域"
 
 #: ../app/tools/gimpcroptool.c:121
 msgid "Crop"
-msgstr "裁剪"
+msgstr "裁切"
 
 #: ../app/tools/gimpcroptool.c:122
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr "裁剪工具：自影像或圖層移除邊緣區域"
+msgstr "裁切工具：自影像或圖層移除邊緣區域"
 
 #: ../app/tools/gimpcroptool.c:123
 msgid "_Crop"
-msgstr "裁剪(_C)"
+msgstr "裁切(_C)"
 
 #: ../app/tools/gimpcroptool.c:161
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "點按並拖曳來繪製裁剪用的矩形"
+msgstr "點按並拖曳來繪製裁切用的矩形"
 
 #: ../app/tools/gimpcroptool.c:281
 msgid "Click or press Enter to crop"
-msgstr "點按或按下 Enter 鍵作裁剪"
+msgstr "點按或按下 Enter 鍵作裁切"
 
 #: ../app/tools/gimpcroptool.c:388
 msgid "Crop to: "
-msgstr "裁剪到："
+msgstr "裁切到："
 
 #: ../app/tools/gimpcroptool.c:456
 msgid "There is no active layer to crop."
-msgstr "沒有作用中的圖層可以裁剪。"
+msgstr "沒有作用中的圖層可以裁切。"
 
 #: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
