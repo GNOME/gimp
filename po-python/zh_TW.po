@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-05 12:16+0000\n"
-"PO-Revision-Date: 2024-10-05 20:20+0800\n"
+"POT-Creation-Date: 2024-10-07 16:34+0000\n"
+"PO-Revision-Date: 2024-10-08 21:05+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <http://weblate.steps.tw/projects/gimp/"
 "po-python/zh_Hant/>\n"
@@ -710,7 +710,7 @@ msgstr "動齒輪齒數"
 
 #: plug-ins/python/spyro-plus.py:1551
 msgid "Hole percent"
-msgstr "齒洞百分比"
+msgstr "齒孔百分比"
 
 #: plug-ins/python/spyro-plus.py:1552
 msgid ""
@@ -960,7 +960,7 @@ msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
 msgstr ""
-"齒洞在動齒輪中的位置百分比，100 代表齒洞位於齒輪的邊緣，0 則代表位於正中心。"
+"齒孔在動齒輪中的位置百分比，100 代表齒孔位於齒輪的邊緣，0 則代表位於正中心。"
 
 #: plug-ins/python/spyro-plus.py:2280
 msgid "Margin (_px)"
