@@ -530,6 +530,11 @@ gimp_color_select_init (GimpColorSelect *select)
 
   g_type_class_unref (model_class);
   g_type_class_unref (channel_class);
+
+  /* See z_color_fill and xy_color_fill values at top of the init()
+   * function. Make sure the GimpColorSelector code is not out-of-sync.
+   */
+  gimp_color_selector_set_channel (selector, GIMP_COLOR_SELECTOR_HUE);
 }
 
 static void
