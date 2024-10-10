@@ -298,7 +298,7 @@ gimp-debian-x64:
     - ninja install
     - cd ..
     # Make sure that any Debian pipeline is easily testable relocatable on local Debian
-    - bash build/linux/appimage/2_bundle-gimp-appimage.sh
+    - bash -x build/linux/appimage/2_bundle-gimp-appimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:

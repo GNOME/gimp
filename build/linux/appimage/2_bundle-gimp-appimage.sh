@@ -203,9 +203,10 @@ lang_array=($(echo $(ls po/*.po |
               tr '\n\r' ' '))
 for lang in "${lang_array[@]}"; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
-  #bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
+  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
   # For language list in text tool options
   bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639_3.mo
+  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639_3.mo --rename share/locale/$lang/LC_MESSAGES/iso_639.mo
 done
 conf_app GIMP3_LOCALEDIR "share/locale"
 bund_usr "$GIMP_PREFIX" "etc/gimp"
