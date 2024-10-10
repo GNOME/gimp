@@ -79,6 +79,9 @@ Tools:
     * Filters with aux nodes can only be merged (no non-destructive
       workflow possible for such filters yet).
     * Auxiliary nodes now have their nicer name printed in the GUI.
+  - Paint Select tool now handles the standard Shift/Ctrl modifier for
+    adding or subtracting to selection. The tool is still experimental
+    and disabled by default though.
 
 Graphical User Interface:
 
@@ -98,6 +101,10 @@ Graphical User Interface:
     dockable tabs) which was removed from GtkNotebook in GTK+3 got
     reimplemented in our code.
   - Palette colors are shown in their own space.
+  - GimpColorSelect widget (the default color selection tab on the left
+    of the color selection dialog) now displays the selected color model
+    (RGB, HSV or LCh) and not only the space/profile (the latter is not
+    even displayed anymore in LCh which is CIELAB-based).
 
 Plug-ins:
 
