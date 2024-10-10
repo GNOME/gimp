@@ -407,27 +407,21 @@ gimp_color_selector_set_color (GimpColorSelector *selector,
 {
   GimpColorSelectorClass   *selector_class;
   GimpColorSelectorPrivate *priv;
-  GeglColor                *old_color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
   priv = gimp_color_selector_get_instance_private (selector);
 
-  old_color = priv->color;
+  g_object_unref (priv->color);
   priv->color = gegl_color_duplicate (color);
 
   selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
 
-  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
-    {
-      if (selector_class->set_color)
-        selector_class->set_color (selector, priv->color);
+  if (selector_class->set_color)
+    selector_class->set_color (selector, priv->color);
 
-      gimp_color_selector_emit_color_changed (selector);
-    }
-
-  g_object_unref (old_color);
+  gimp_color_selector_emit_color_changed (selector);
 }
 
 /**

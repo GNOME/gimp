@@ -753,21 +753,15 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
                                      GimpColorSelection *selection)
 {
   GimpColorSelectionPrivate *priv;
-  GeglColor                 *old_color;
 
   priv = gimp_color_selection_get_instance_private (selection);
 
-  old_color = priv->color;
+  g_object_unref (priv->color);
   priv->color = gegl_color_duplicate (color);
 
-  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
-    {
-      gimp_color_selection_update (selection,
-                                   UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
-      gimp_color_selection_color_changed (selection);
-    }
-
-  g_object_unref (old_color);
+  gimp_color_selection_update (selection,
+                               UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
+  gimp_color_selection_color_changed (selection);
 }
 
 static void

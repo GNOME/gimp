@@ -62,6 +62,8 @@ typedef struct _GimpLabelSpinPrivate
   GtkAdjustment *spin_adjustment;
 
   gint           digits;
+
+  gdouble        value;
 } GimpLabelSpinPrivate;
 
 static void        gimp_label_spin_constructed       (GObject       *object);
@@ -216,13 +218,11 @@ gimp_label_spin_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VALUE:
-      /* Avoid looping forever since we have bound this widget's
-       * "value" property with the spin button "value" property.
-       */
-      if (gtk_adjustment_get_value (priv->spin_adjustment) != g_value_get_double (value))
-        gtk_adjustment_set_value (priv->spin_adjustment, g_value_get_double (value));
-
-      g_signal_emit (object, gimp_label_spin_signals[VALUE_CHANGED], 0);
+      if (priv->value != g_value_get_double (value))
+        {
+          priv->value = g_value_get_double (value);
+          g_signal_emit (object, gimp_label_spin_signals[VALUE_CHANGED], 0);
+        }
       break;
     case PROP_LOWER:
       gtk_adjustment_set_lower (priv->spin_adjustment,
@@ -267,7 +267,7 @@ gimp_label_spin_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_VALUE:
-      g_value_set_double (value, gtk_adjustment_get_value (priv->spin_adjustment));
+      g_value_set_double (value, priv->value);
       break;
     case PROP_LOWER:
       g_value_set_double (value, gtk_adjustment_get_lower (priv->spin_adjustment));
