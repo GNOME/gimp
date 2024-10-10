@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-08 14:06+0000\n"
-"PO-Revision-Date: 2024-10-08 23:37+0800\n"
+"POT-Creation-Date: 2024-10-08 16:16+0000\n"
+"PO-Revision-Date: 2024-10-10 11:29+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -4810,7 +4810,7 @@ msgstr "色調分離(_P)..."
 #: app/actions/filters-actions.c:566
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "遞迴變形(_R)…"
+msgstr "遞迴變換(_R)…"
 
 #: app/actions/filters-actions.c:571
 msgctxt "filters-action"
@@ -6066,19 +6066,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "刪除這個影像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:719
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:720
 msgid "Lock content"
 msgstr "鎖定內容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:720
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:721
 msgid "Unlock content"
 msgstr "解除內容鎖定"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:735
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:736
 msgid "Lock position"
 msgstr "鎖定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:736
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:737
 msgid "Unlock position"
 msgstr "解除位置鎖定"
 
@@ -10618,7 +10618,7 @@ msgstr "調整拖曳滑鼠作畫布遠近縮放的速率，以百分比為單位
 #: app/config/gimprc-blurbs.h:281
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
-msgstr "設定用於縮放和其他變形的內插法等級。"
+msgstr "設定用於縮放和其他變換的內插法等級。"
 
 #: app/config/gimprc-blurbs.h:288
 msgid "Specifies the language to use for the user interface."
@@ -10901,7 +10901,7 @@ msgstr "啟用 N 點變形工具。"
 
 #: app/config/gimprc-blurbs.h:501
 msgid "Enable the Handle Transform tool."
-msgstr "啟用控制柄變形工具。"
+msgstr "啟用控制柄變換工具。"
 
 #: app/config/gimprc-blurbs.h:504
 msgid "Enable symmetry on painting."
@@ -11916,7 +11916,7 @@ msgstr "旋轉影像"
 #: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Transform image"
-msgstr "變形影像"
+msgstr "變換影像"
 
 #: app/core/core-enums.c:1302
 msgctxt "undo-type"
@@ -12107,7 +12107,7 @@ msgstr "文字"
 #: app/core/core-enums.c:1339 app/core/gimpdrawable-transform.c:717
 msgctxt "undo-type"
 msgid "Transform"
-msgstr "變形"
+msgstr "變換"
 
 #: app/core/core-enums.c:1340 app/core/core-enums.c:1394
 msgctxt "undo-type"
@@ -12237,12 +12237,12 @@ msgstr "恢復圖層群組遮罩"
 #: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Start transforming group layer"
-msgstr "將群組的圖層變形"
+msgstr "將群組的圖層變換"
 
 #: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "End transforming group layer"
-msgstr "群組的圖層結束變形"
+msgstr "群組的圖層結束變換"
 
 #: app/core/core-enums.c:1378
 msgctxt "undo-type"
@@ -12307,7 +12307,7 @@ msgstr "路徑修改"
 #: app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Transform grid"
-msgstr "變形格線"
+msgstr "變換格線"
 
 #: app/core/core-enums.c:1395
 msgctxt "undo-type"
@@ -13320,11 +13320,11 @@ msgstr "旋轉"
 #: app/core/gimpdrawable-transform.c:1043 app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Transform Layer"
-msgstr "變形圖層"
+msgstr "變換圖層"
 
 #: app/core/gimpdrawable-transform.c:1056
 msgid "Transformation"
-msgstr "變形"
+msgstr "變換"
 
 #: app/core/gimpdynamicsoutput.c:136
 msgid "Output type"
@@ -13532,7 +13532,7 @@ msgstr "旋轉圖層群組"
 #: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Transform Layer Group"
-msgstr "變形圖層群組"
+msgstr "變換圖層群組"
 
 #: app/core/gimpimage.c:685 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
@@ -13893,7 +13893,7 @@ msgstr "旋轉項目"
 #: app/core/gimpimage-item-list.c:261
 msgctxt "undo-type"
 msgid "Transform Items"
-msgstr "變形項目"
+msgstr "變換項目"
 
 #: app/core/gimpimage-merge.c:77
 msgctxt "undo-type"
@@ -13921,7 +13921,7 @@ msgstr "無法將不可見圖層向下合併。"
 msgid "Cannot merge down to a layer group."
 msgstr "無法向下合併到圖層群組。"
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2826
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2857
 msgid "The layer to merge down to is locked."
 msgstr "圖層向下合併的功能被鎖住。"
 
@@ -14042,7 +14042,7 @@ msgstr "無法開啟縮圖「%s」：%s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2620
+#: app/widgets/gimpitemtreeview.c:2621
 msgid "A selected layer's pixels are locked."
 msgstr "所選的圖層像素已鎖定。"
 
@@ -14710,7 +14710,7 @@ msgstr "點數"
 
 #: app/core/gimpsymmetry-mandala.c:154 app/core/gimpsymmetry-mirror.c:152
 msgid "Disable brush transform"
-msgstr "停用筆刷變形"
+msgstr "停用筆刷變換"
 
 #: app/core/gimpsymmetry-mandala.c:155
 msgid "Disable brush rotation"
@@ -15033,7 +15033,7 @@ msgstr "鎖定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:751
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:752
 msgid "Lock visibility"
 msgstr "鎖定可見性"
 
@@ -18190,7 +18190,7 @@ msgstr "大小"
 #: app/display/display-enums.c:513
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
-msgstr "加入 / 變形"
+msgstr "加入 / 變換"
 
 #: app/display/display-enums.c:514
 msgctxt "transform-handle-mode"
@@ -18436,7 +18436,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "拖放顏色到圖層"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1934
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1935
 #: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "拖放圖層"
@@ -20867,11 +20867,11 @@ msgstr "內插法"
 
 #: app/pdb/gimppdbcontext.c:173
 msgid "Transform direction"
-msgstr "變形方向"
+msgstr "變換方向"
 
 #: app/pdb/gimppdbcontext.c:181
 msgid "Transform resize"
-msgstr "變形調整大小"
+msgstr "變換調整大小"
 
 #: app/pdb/gimppdbcontext.c:196
 msgid "Distance metric"
@@ -20894,8 +20894,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
 "處理程序「%s」呼叫時為引數「%s」(#%d) 傳遞了錯誤的數值型態。預期的是 %s，卻收"
 "到 %s。"
@@ -21023,11 +21023,11 @@ msgstr "正在偏斜"
 
 #: app/pdb/item-transform-cmds.c:788
 msgid "2D Transform"
-msgstr "2D 變形"
+msgstr "2D 變換"
 
 #: app/pdb/item-transform-cmds.c:898
 msgid "2D Transforming"
-msgstr "2D 變形中"
+msgstr "2D 變換中"
 
 #: app/pdb/path-cmds.c:328
 msgid "Remove path stroke"
@@ -21873,19 +21873,19 @@ msgstr "全景投影："
 
 #: app/propgui/gimppropgui-recursive-transform.c:259
 msgid "Add transform"
-msgstr "加入變形"
+msgstr "加入變換"
 
 #: app/propgui/gimppropgui-recursive-transform.c:277
 msgid "Duplicate transform"
-msgstr "再製變形"
+msgstr "再製變換"
 
 #: app/propgui/gimppropgui-recursive-transform.c:295
 msgid "Remove transform"
-msgstr "移除變形"
+msgstr "移除變換"
 
 #: app/propgui/gimppropgui-recursive-transform.c:315
 msgid "Recursive Transform: "
-msgstr "遞迴變形："
+msgstr "遞迴變換："
 
 #: app/propgui/gimppropgui-shadows-highlights.c:62
 msgid "Shadows"
@@ -22064,7 +22064,7 @@ msgstr "旋轉文字圖層"
 
 #: app/text/gimptextlayer.c:164
 msgid "Transform Text Layer"
-msgstr "變形文字圖層"
+msgstr "變換文字圖層"
 
 #: app/text/gimptextlayer.c:720
 msgid "Due to lack of any fonts, text functionality is not available."
@@ -22564,15 +22564,15 @@ msgstr ""
 
 #: app/tools/gimpcagetool.c:164 app/tools/gimpcagetool.c:1258
 msgid "Cage Transform"
-msgstr "籠套變形"
+msgstr "籠套變換"
 
 #: app/tools/gimpcagetool.c:165
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr "籠套變形：用籠套來變形選取範圍"
+msgstr "籠套變換：用籠套來變形選取範圍"
 
 #: app/tools/gimpcagetool.c:166
 msgid "_Cage Transform"
-msgstr "籠套變形(_C)"
+msgstr "籠套變換(_C)"
 
 #: app/tools/gimpcagetool.c:229
 msgid "Cannot modify multiple layers. Select only one layer."
@@ -22589,7 +22589,7 @@ msgstr "作用中的項目不可見。"
 
 #: app/tools/gimpcagetool.c:766 app/tools/gimpwarptool.c:397
 msgid "Press ENTER to commit the transform"
-msgstr "按下 Enter 鍵來送出變形"
+msgstr "按下 Enter 鍵來送出變換"
 
 #: app/tools/gimpcagetool.c:1172
 msgid "Computing Cage Coefficients"
@@ -22597,7 +22597,7 @@ msgstr "運算籠套係數"
 
 #: app/tools/gimpcagetool.c:1301
 msgid "Cage transform"
-msgstr "籠套變形"
+msgstr "籠套變換"
 
 #: app/tools/gimpcloneoptions-gui.c:159 app/tools/gimpcloneoptions-gui.c:267
 msgid "No source selected"
@@ -22861,7 +22861,7 @@ msgstr "曲線(_C)..."
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:299
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2600
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "無法修改多個可繪物件。請只選取一個。"
 
@@ -23076,7 +23076,7 @@ msgid "A selected item's pixels are locked."
 msgstr "所選的項目像素已鎖定。"
 
 #: app/tools/gimpfiltertool.c:323 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2612
 msgid "A selected layer is not visible."
 msgstr "所選的圖層不可見。"
 
@@ -23364,11 +23364,11 @@ msgstr "從上面的清單中選取一項操作"
 
 #: app/tools/gimpgenerictransformtool.c:99
 msgid "Transform Matrix"
-msgstr "變形矩陣"
+msgstr "變換矩陣"
 
 #: app/tools/gimpgenerictransformtool.c:117
 msgid "Invalid transform"
-msgstr "無效的變形"
+msgstr "無效的變換"
 
 #: app/tools/gimpgradientoptions.c:102 app/tools/gimpgradientoptions.c:296
 msgid "Metric"
@@ -23577,36 +23577,36 @@ msgstr "控制柄模式"
 
 #: app/tools/gimphandletransformoptions.c:166
 msgid "Add handles and transform the image"
-msgstr "加入控制柄，並變形影像"
+msgstr "加入控制柄，並變換影像"
 
 #: app/tools/gimphandletransformoptions.c:171
 msgid "Move transform handles"
-msgstr "移動變形控制柄"
+msgstr "移動變換控制柄"
 
 #: app/tools/gimphandletransformoptions.c:176
 msgid "Remove transform handles"
-msgstr "移除變形控制柄"
+msgstr "移除變換控制柄"
 
 #: app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
-msgstr "控制柄變形"
+msgstr "控制柄變換"
 
 #: app/tools/gimphandletransformtool.c:112
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
-msgstr "控制柄變形工具：用控制柄將圖層、選取範圍或路徑變形"
+msgstr "控制柄變換工具：用控制柄將圖層、選取範圍或路徑變形"
 
 #: app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
-msgstr "控制柄變形(_H)"
+msgstr "控制柄變換(_H)"
 
 #: app/tools/gimphandletransformtool.c:138
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "控制柄變形"
+msgstr "控制柄變換"
 
 #: app/tools/gimphandletransformtool.c:139
 msgid "Handle transformation"
-msgstr "控制柄變形工具"
+msgstr "控制柄變換工具"
 
 #: app/tools/gimphealtool.c:56
 msgid "Healing Tool: Heal image irregularities"
@@ -24004,7 +24004,7 @@ msgstr "N 點變形"
 
 #: app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
-msgstr "N 點變形工具：利用控點作出橡膠感的變形"
+msgstr "N 點變形工具：利用控點作出橡膠感的變換"
 
 #: app/tools/gimpnpointdeformationtool.c:161
 msgid "_N-Point Deformation"
@@ -24204,7 +24204,7 @@ msgstr "鉛筆(_N)"
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
-msgstr "透視法仿製工具：從影像來源套用透視法變形後作仿製"
+msgstr "透視法仿製工具：從影像來源套用透視法變換後作仿製"
 
 #: app/tools/gimpperspectiveclonetool.c:152
 msgid "_Perspective Clone"
@@ -24229,7 +24229,7 @@ msgstr "透視法"
 
 #: app/tools/gimpperspectivetool.c:111
 msgid "Perspective transformation"
-msgstr "透視法變形"
+msgstr "透視法變換"
 
 #: app/tools/gimprectangleoptions.c:84
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
@@ -24811,7 +24811,7 @@ msgstr "顯示影像預覽"
 
 #: app/tools/gimptransformgridoptions.c:112
 msgid "Show a preview of the transformed image"
-msgstr "顯示變形後影像的預覽"
+msgstr "顯示變換後影像的預覽"
 
 #: app/tools/gimptransformgridoptions.c:118
 msgid "Composited preview"
@@ -24886,7 +24886,7 @@ msgstr "限制控制柄沿邊緣和對角線移動 (%s)"
 
 #: app/tools/gimptransformgridoptions.c:549
 msgid "Transform around the center point"
-msgstr "以中心點為原點來變形"
+msgstr "以中心點為原點來變換"
 
 #: app/tools/gimptransformgridoptions.c:565
 #, c-format
@@ -24966,11 +24966,11 @@ msgstr "將支點位置鎖定畫布"
 
 #: app/tools/gimptransformgridtool.c:290 app/tools/gimptransformtool.c:429
 msgid "_Transform"
-msgstr "變形(_T)"
+msgstr "變換(_T)"
 
 #: app/tools/gimptransformgridtool.c:580 app/tools/gimptransformgridtool.c:592
 msgid "Transform Step"
-msgstr "變形步驟"
+msgstr "變換步驟"
 
 #: app/tools/gimptransformgridtool.c:992
 #, c-format
@@ -24983,11 +24983,11 @@ msgstr "重新調整(_A)"
 
 #: app/tools/gimptransformgridtool.c:1516
 msgid "Cannot readjust the transformation"
-msgstr "無法重新調整變形"
+msgstr "無法重新調整變換"
 
 #: app/tools/gimptransform3doptions.c:78
 msgid "Transform mode"
-msgstr "變形模式"
+msgstr "變換模式"
 
 #: app/tools/gimptransform3doptions.c:85
 msgid "Unified interaction"
@@ -24999,15 +24999,15 @@ msgstr "結合所有互動模式"
 
 #: app/tools/gimptransform3doptions.c:93
 msgid "Constrain transformation to a single axis"
-msgstr "將變形限制於單一軸向"
+msgstr "將變換限制於單一軸向"
 
 #: app/tools/gimptransform3doptions.c:100
 msgid "Transform along the Z axis"
-msgstr "沿 Z 軸變形"
+msgstr "沿 Z 軸變換"
 
 #: app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
-msgstr "以本圖層參考座標系作變形"
+msgstr "以本圖層參考座標系作變換"
 
 #: app/tools/gimptransform3doptions.c:197
 #, c-format
@@ -25026,25 +25026,25 @@ msgstr "本圖層座標系 (%s)"
 
 #: app/tools/gimptransform3dtool.c:114
 msgid "3D Transform"
-msgstr "3D 變形"
+msgstr "3D 變換"
 
 #: app/tools/gimptransform3dtool.c:115
 msgid ""
 "3D Transform Tool: Apply a 3D transformation to the layer, selection or path"
-msgstr "3D 變形工具：套用 3D 變形到圖層、選取範圍或路徑"
+msgstr "3D 變換工具：套用 3D 變換到圖層、選取範圍或路徑"
 
 #: app/tools/gimptransform3dtool.c:116
 msgid "_3D Transform"
-msgstr "_3D 變形"
+msgstr "_3D 變換"
 
 #: app/tools/gimptransform3dtool.c:139
 msgctxt "undo-type"
 msgid "3D Transform"
-msgstr "3D 變形"
+msgstr "3D 變換"
 
 #: app/tools/gimptransform3dtool.c:140
 msgid "3D transformation"
-msgstr "3D 變形"
+msgstr "3D 變換"
 
 #: app/tools/gimptransform3dtool.c:236
 msgid "Camera"
@@ -25069,7 +25069,7 @@ msgstr "旋轉軸順序"
 
 #: app/tools/gimptransformoptions.c:94
 msgid "Direction of transformation"
-msgstr "變形的方向"
+msgstr "變換的方向"
 
 #: app/tools/gimptransformoptions.c:102 app/tools/gimpwarpoptions.c:121
 msgid "Interpolation method"
@@ -25077,43 +25077,43 @@ msgstr "內插法"
 
 #: app/tools/gimptransformoptions.c:233
 msgid "Transform:"
-msgstr "變形："
+msgstr "變換："
 
 #: app/tools/gimptransformtool.c:108
 msgid "Transform"
-msgstr "變形"
+msgstr "變換"
 
 #: app/tools/gimptransformtool.c:109
 msgid "Transforming"
-msgstr "正在變形"
+msgstr "正在變換"
 
 #: app/tools/gimptransformtool.c:421
 msgid "Confirm Transformation"
-msgstr "變形確認"
+msgstr "變換確認"
 
 #: app/tools/gimptransformtool.c:441
 msgid "Transformation creates a very large item."
-msgstr "該變形會產生極大的項目。"
+msgstr "該變換會產生極大的項目。"
 
 #: app/tools/gimptransformtool.c:446
 #, c-format
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
-msgstr "套用該變形會產生出比影像大超過 %g 倍的項目。"
+msgstr "套用該變換會產生出比影像大超過 %g 倍的項目。"
 
 #: app/tools/gimptransformtool.c:454
 msgid "Transformation creates a very large image."
-msgstr "該變形會產生極大的影像。"
+msgstr "該變換會產生極大的影像。"
 
 #: app/tools/gimptransformtool.c:459
 #, c-format
 msgid "Applying the transformation will enlarge the image by a factor of %g."
-msgstr "套用該變形會使影像變大 %g 倍。"
+msgstr "套用該變換會使影像變大 %g 倍。"
 
 #: app/tools/gimptransformtool.c:697
 msgid "There is no layer to transform."
-msgstr "沒有圖層可以變形。"
+msgstr "沒有圖層可以變換。"
 
 #: app/tools/gimptransformtool.c:706
 msgid "A selected layer's position and size are locked."
@@ -25125,11 +25125,11 @@ msgstr "選取範圍與所選圖層沒有交集。"
 
 #: app/tools/gimptransformtool.c:727
 msgid "There is no selection to transform."
-msgstr "沒有選取範圍可以變形。"
+msgstr "沒有選取範圍可以變換。"
 
 #: app/tools/gimptransformtool.c:742
 msgid "There is no path to transform."
-msgstr "沒有路徑可以變形。"
+msgstr "沒有路徑可以變換。"
 
 #: app/tools/gimptransformtool.c:749
 msgid "The selected path's strokes are locked."
@@ -25145,28 +25145,28 @@ msgstr "所選的路徑沒有筆畫。"
 
 #: app/tools/gimptransformtool.c:833
 msgid "The current transform is invalid"
-msgstr "目前的變形操作無效"
+msgstr "目前的變換操作無效"
 
 #: app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
-msgstr "統合變形"
+msgstr "統合變換"
 
 #: app/tools/gimpunifiedtransformtool.c:90
 msgid "Unified Transform Tool: Transform the layer, selection or path"
-msgstr "統合變形工具：圖層、選取範圍或路徑變形"
+msgstr "統合變換工具：圖層、選取範圍或路徑變換"
 
 #: app/tools/gimpunifiedtransformtool.c:92
 msgid "_Unified Transform"
-msgstr "統合變形(_T)"
+msgstr "統合變換(_T)"
 
 #: app/tools/gimpunifiedtransformtool.c:115
 msgctxt "undo-type"
 msgid "Unified Transform"
-msgstr "統合變形"
+msgstr "統合變換"
 
 #: app/tools/gimpunifiedtransformtool.c:116
 msgid "Unified transform"
-msgstr "統合變形"
+msgstr "統合變換"
 
 #: app/tools/gimpvectoroptions.c:180
 #, c-format
@@ -25290,15 +25290,15 @@ msgstr "製作成動畫"
 
 #: app/tools/gimpwarptool.c:178
 msgid "Warp Transform"
-msgstr "彎曲變形"
+msgstr "彎曲變換"
 
 #: app/tools/gimpwarptool.c:179
 msgid "Warp Transform: Deform with different tools"
-msgstr "彎曲變形：用不同的工具變形"
+msgstr "彎曲變換：用不同的工具變形"
 
 #: app/tools/gimpwarptool.c:180
 msgid "_Warp Transform"
-msgstr "彎曲變形(_W)"
+msgstr "彎曲變換(_W)"
 
 #: app/tools/gimpwarptool.c:606 app/tools/gimpwarptool.c:618
 msgid "Warp Tool Stroke"
@@ -25326,7 +25326,7 @@ msgstr "沒有能平滑化的彎曲。"
 
 #: app/tools/gimpwarptool.c:1091
 msgid "Warp transform"
-msgstr "彎曲變形"
+msgstr "彎曲變換"
 
 #: app/tools/gimpwarptool.c:1446
 msgid "Please add some warp strokes first."
@@ -25548,7 +25548,7 @@ msgstr "旋轉路徑"
 #: app/vectors/gimppath.c:231
 msgctxt "undo-type"
 msgid "Transform Path"
-msgstr "變形路徑"
+msgstr "變換路徑"
 
 #: app/vectors/gimppath.c:232
 msgctxt "undo-type"
@@ -25612,7 +25612,7 @@ msgstr "旋轉路徑"
 
 #: app/vectors/gimppath.c:617
 msgid "Transform Path"
-msgstr "變形路徑"
+msgstr "變換路徑"
 
 #: app/vectors/gimppath-export.c:95
 #, c-format
@@ -27423,121 +27423,121 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引色轉換（%d 個顏色）"
 
-#: app/widgets/gimpitemtreeview.c:721
+#: app/widgets/gimpitemtreeview.c:722
 msgid "Set Item Exclusive Content Lock"
 msgstr "設定項目唯獨內容鎖定"
 
-#: app/widgets/gimpitemtreeview.c:737
+#: app/widgets/gimpitemtreeview.c:738
 msgid "Set Item Exclusive Position Lock"
 msgstr "設定項目唯獨位置鎖定"
 
-#: app/widgets/gimpitemtreeview.c:752
+#: app/widgets/gimpitemtreeview.c:753
 msgid "Unlock visibility"
 msgstr "解除可見性鎖定"
 
-#: app/widgets/gimpitemtreeview.c:753
+#: app/widgets/gimpitemtreeview.c:754
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "設定項目唯獨可見性鎖定"
 
-#: app/widgets/gimpitemtreeview.c:782
+#: app/widgets/gimpitemtreeview.c:783
 msgid "Toggle the visibility of all filters."
 msgstr "切換所有濾色片的可見性。"
 
-#: app/widgets/gimpitemtreeview.c:796
+#: app/widgets/gimpitemtreeview.c:797
 msgid "Edit the selected filter."
 msgstr "編輯所選的濾色片。"
 
-#: app/widgets/gimpitemtreeview.c:809
+#: app/widgets/gimpitemtreeview.c:810
 msgid "Raise filter one step up in the stack."
 msgstr "讓濾色片在堆疊中提升一階。"
 
-#: app/widgets/gimpitemtreeview.c:822
+#: app/widgets/gimpitemtreeview.c:823
 msgid "Lower filter one step down in the stack."
 msgstr "讓濾色片在堆疊中降低一階。"
 
-#: app/widgets/gimpitemtreeview.c:835
+#: app/widgets/gimpitemtreeview.c:836
 msgid "Merge all active filters down."
 msgstr "向下合併所有使用中濾色片。"
 
-#: app/widgets/gimpitemtreeview.c:848
+#: app/widgets/gimpitemtreeview.c:849
 msgid "Remove the selected filter."
 msgstr "移除所選的濾色片。"
 
-#: app/widgets/gimpitemtreeview.c:859
+#: app/widgets/gimpitemtreeview.c:860
 msgid "Layer Effects"
 msgstr "圖層特效"
 
-#: app/widgets/gimpitemtreeview.c:892
+#: app/widgets/gimpitemtreeview.c:893
 msgid "Select items by patterns and store item sets"
 msgstr "依樣式選取項目並儲存項目集"
 
-#: app/widgets/gimpitemtreeview.c:1784
+#: app/widgets/gimpitemtreeview.c:1785
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "已選取 %d 個項目"
 
-#: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
+#: app/widgets/gimpitemtreeview.c:2697 app/widgets/gimpitemtreeview.c:2763
 msgid "Cannot reorder a filter that is being edited."
 msgstr "無法重新編排正在編輯的濾鏡。"
 
-#: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
+#: app/widgets/gimpitemtreeview.c:2718 app/widgets/gimpitemtreeview.c:2785
 msgid "Reorder filter"
 msgstr "重新編排濾鏡次序"
 
-#: app/widgets/gimpitemtreeview.c:2810
+#: app/widgets/gimpitemtreeview.c:2841
 msgid "Effects from active tools can not be merged."
 msgstr "無法合併作用中工具的效果。"
 
-#: app/widgets/gimpitemtreeview.c:2863
+#: app/widgets/gimpitemtreeview.c:2894
 msgid "Remove filter"
 msgstr "移除濾鏡"
 
-#: app/widgets/gimpitemtreeview.c:3389
+#: app/widgets/gimpitemtreeview.c:3420
 msgid "No layer set stored"
 msgstr "未儲存圖層集"
 
-#: app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3442
 msgid "New layer set's name"
 msgstr "新的圖層集名稱"
 
-#: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
+#: app/widgets/gimpitemtreeview.c:3484 app/widgets/gimpitemtreeview.c:3499
 msgid "Select layers by text search"
 msgstr "依文字搜尋選取圖層"
 
-#: app/widgets/gimpitemtreeview.c:3455 app/widgets/gimpitemtreeview.c:3470
+#: app/widgets/gimpitemtreeview.c:3486 app/widgets/gimpitemtreeview.c:3501
 msgid "Text search"
 msgstr "文字搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3474
+#: app/widgets/gimpitemtreeview.c:3505
 msgid "Select layers by glob patterns"
 msgstr "以 glob 胚騰樣式選取圖層"
 
-#: app/widgets/gimpitemtreeview.c:3476
+#: app/widgets/gimpitemtreeview.c:3507
 msgid "Glob pattern search"
 msgstr "Glob 胚騰搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3480
+#: app/widgets/gimpitemtreeview.c:3511
 msgid "Select layers by regular expressions"
 msgstr "以常規表達式選取圖層"
 
-#: app/widgets/gimpitemtreeview.c:3482
+#: app/widgets/gimpitemtreeview.c:3513
 msgid "Regular Expression search"
 msgstr "常規表達式搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3568
 msgid "search"
 msgstr "搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3538
+#: app/widgets/gimpitemtreeview.c:3569
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3538
+#: app/widgets/gimpitemtreeview.c:3569
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3707
+#: app/widgets/gimpitemtreeview.c:3738
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "無效的常規表達式：%s\n"
@@ -28719,7 +28719,7 @@ msgstr "軟校樣顯色對應目標(_N)"
 #: menus/image-menu.ui.in.in:368
 msgctxt "image-action"
 msgid "_Transform"
-msgstr "變形(_T)"
+msgstr "變換(_T)"
 
 #: menus/image-menu.ui.in.in:401
 msgctxt "image-action"
@@ -28809,7 +28809,7 @@ msgstr "繪圖工具(_P)"
 #: menus/image-menu.ui.in.in:636
 msgctxt "tools-action"
 msgid "_Transform Tools"
-msgstr "變形工具(_T)"
+msgstr "變換工具(_T)"
 
 #: menus/image-menu.ui.in.in:675
 msgctxt "filters-action"
