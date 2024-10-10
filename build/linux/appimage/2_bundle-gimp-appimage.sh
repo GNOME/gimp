@@ -92,15 +92,16 @@ bund_usr ()
         ;;
 
       share*|etc*)
-        search_path=("$(dirname $(echo $1/$2 | sed "s|*|no_scape|g"))")
+        search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
         ;;
     esac
 
     for path in "${search_path[@]}"; do
-      if [ ! -d "$path" ]; then
+      expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
+      if [ ! -d "$expanded_path" ]; then
         break
       fi
-      target_array=($(find $path -maxdepth 1 -name ${2##*/}))
+      target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
       for target_path in "${target_array[@]}"; do
         dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
         mkdir -p $dest_path
@@ -203,9 +204,9 @@ lang_array=($(echo $(ls po/*.po |
               tr '\n\r' ' '))
 for lang in "${lang_array[@]}"; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
-  #bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk*.mo
+  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
   # For language list in text tool options
-  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639_3.mo
+  bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
 done
 conf_app GIMP3_LOCALEDIR "share/locale"
 bund_usr "$GIMP_PREFIX" "etc/gimp"
