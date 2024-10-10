@@ -3,6 +3,16 @@
 <!--
 This file gives a list of some languages in the ISO 639
 standard, and is used to generate lists to our .iss script
+
+To fill data for a new entry:
+
+1. dl_code is just the ISO code used as file name (i.e. the .po file's basename).
+2. name is the localized name. On your system, lookup the English name in: share/xml/iso-codes/iso_639-2.xml
+   Then run the following command:
+   $ LANGUAGE=$DL_CODE gettext iso_639_3 "$ENGLISH_NAME"
+   E.g. for Bengali, you would run:
+   $ LANGUAGE=bn gettext iso_639_3 "Bengali"
+3. Finally for inno_code, check: https://github.com/jrsoftware/issrc/tree/main/Files/Languages/
 -->
 
 <!DOCTYPE iso_639_entries [
@@ -40,6 +50,10 @@ standard, and is used to generate lists to our .iss script
 		dl_code="bg"
 		inno_code="Languages\\Bulgarian.isl"
 		name="български език" />
+	<iso_639_entry
+		dl_code="bn"
+		inno_code="Languages\\Unofficial\\Bengali.islu"
+		name="বাংলা" />
 	<iso_639_entry
 		dl_code="br"
 		inno_code=""
