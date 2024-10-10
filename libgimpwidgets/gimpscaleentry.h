@@ -39,9 +39,6 @@ struct _GimpScaleEntryClass
 {
   GimpLabelSpinClass parent_class;
 
-  /*  Signals        */
-  void            (* value_changed)    (GimpScaleEntry *entry);
-
   /*  Class methods  */
   GtkWidget     * (* new_range_widget) (GtkAdjustment  *adjustment);
 
