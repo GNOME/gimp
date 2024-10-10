@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-08 16:16+0000\n"
-"PO-Revision-Date: 2024-10-10 11:29+0800\n"
+"PO-Revision-Date: 2024-10-10 11:38+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -24004,7 +24004,7 @@ msgstr "N 點變形"
 
 #: app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
-msgstr "N 點變形工具：利用控點作出橡膠感的變換"
+msgstr "N 點變形工具：利用控點作出橡膠感的變形"
 
 #: app/tools/gimpnpointdeformationtool.c:161
 msgid "_N-Point Deformation"
