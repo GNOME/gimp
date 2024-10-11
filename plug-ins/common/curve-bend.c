@@ -1091,12 +1091,21 @@ bender_new_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (cd->shell),
                                   "options-hbox", "rotation", "smoothing",
                                   "antialias", "work-on-copy", NULL);
-  g_signal_connect (config, "notify::rotation",
-                    G_CALLBACK (bender_global_notify), cd);
-  g_signal_connect (config, "notify::smoothing",
-                    G_CALLBACK (bender_global_notify), cd);
-  g_signal_connect (config, "notify::antialias",
-                    G_CALLBACK (bender_global_notify), cd);
+  toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (cd->shell),
+                                             "rotation", G_TYPE_NONE);
+  g_signal_connect (toggle, "value-changed",
+                    G_CALLBACK (bender_global_notify),
+                    cd);
+  toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (cd->shell),
+                                             "smoothing", G_TYPE_NONE);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (bender_global_notify),
+                    cd);
+  toggle = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (cd->shell),
+                                             "antialias", G_TYPE_NONE);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (bender_global_notify),
+                    cd);
 
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (cd->shell),
                                     "option-frame", "option-label", FALSE,
@@ -1162,9 +1171,8 @@ bender_new_dialog (GimpProcedure       *procedure,
                     G_CALLBACK (bender_type_callback), cd);
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (cd->shell),
-                                    "curve-border", GIMP_TYPE_INT_RADIO_FRAME);
-  g_signal_connect (config, "notify::curve-border",
-                    G_CALLBACK (bender_global_notify), cd);
+                                    "curve-border",
+                                    GIMP_TYPE_INT_RADIO_FRAME);
 
   hbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (cd->shell),
                                          "curve-hbox", "curve-border",
@@ -1549,7 +1557,8 @@ bender_global_notify (GtkWidget *widget,
 {
   BenderDialog *cd;
 
-  cd = g_object_get_data (G_OBJECT (widget), "cd");
+  cd = (BenderDialog *) data;
+
   if (! cd)
     return;
 
