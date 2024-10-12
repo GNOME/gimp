@@ -29,15 +29,14 @@
 #ifndef __GIMP_COLOR_SCALES_H__
 #define __GIMP_COLOR_SCALES_H__
 
+#include <libgimpwidgets/gimpcolorselector.h>
+
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_SCALES            (gimp_color_scales_get_type ())
-#define GIMP_COLOR_SCALES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SCALES, GimpColorScales))
-#define GIMP_IS_COLOR_SCALES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SCALES))
+#define GIMP_TYPE_COLOR_SCALES (gimp_color_scales_get_type ())
+G_DECLARE_FINAL_TYPE (GimpColorScales, gimp_color_scales, GIMP, COLOR_SCALES, GimpColorSelector)
 
-
-GType      gimp_color_scales_get_type        (void) G_GNUC_CONST;
 
 void       gimp_color_scales_set_show_rgb_u8 (GimpColorScales *scales,
                                               gboolean         show_rgb_u8);

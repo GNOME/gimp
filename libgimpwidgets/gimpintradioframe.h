@@ -31,20 +31,9 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_INT_RADIO_FRAME            (gimp_int_radio_frame_get_type ())
-#define GIMP_INT_RADIO_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INT_RADIO_FRAME, GimpIntRadioFrame))
-#define GIMP_INT_RADIO_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INT_RADIO_FRAME, GimpIntRadioFrameClass))
-#define GIMP_IS_INT_RADIO_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INT_RADIO_FRAME))
-#define GIMP_IS_INT_RADIO_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INT_RADIO_FRAME))
-#define GIMP_INT_RADIO_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INT_RADIO_FRAME, GimpIntRadioFrameClass))
+#define GIMP_TYPE_INT_RADIO_FRAME (gimp_int_radio_frame_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP, INT_RADIO_FRAME, GimpFrame)
 
-
-typedef struct _GimpIntRadioFrameClass   GimpIntRadioFrameClass;
-
-struct _GimpIntRadioFrame
-{
-  GimpFrame       parent_instance;
-};
 
 struct _GimpIntRadioFrameClass
 {
@@ -87,8 +76,6 @@ typedef  gboolean (* GimpIntRadioFrameSensitivityFunc) (gint      value,
                                                         gpointer  data);
 
 
-
-GType         gimp_int_radio_frame_get_type        (void) G_GNUC_CONST;
 
 GtkWidget   * gimp_int_radio_frame_new_from_store  (const gchar       *title,
                                                     GimpIntStore      *store);

@@ -52,9 +52,7 @@ enum
 };
 
 
-typedef struct _GimpIntRadioFramePrivate GimpIntRadioFramePrivate;
-
-struct _GimpIntRadioFramePrivate
+typedef struct _GimpIntRadioFramePrivate
 {
   gchar                            *label;
   GimpIntStore                     *store;
@@ -66,7 +64,7 @@ struct _GimpIntRadioFramePrivate
   GimpIntRadioFrameSensitivityFunc  sensitivity_func;
   gpointer                          sensitivity_data;
   GDestroyNotify                    sensitivity_destroy;
-};
+} GimpIntRadioFramePrivate;
 
 #define GET_PRIVATE(obj) ((GimpIntRadioFramePrivate *) gimp_int_radio_frame_get_instance_private ((GimpIntRadioFrame *) obj))
 

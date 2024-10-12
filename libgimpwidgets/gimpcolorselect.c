@@ -117,13 +117,6 @@ struct _GimpLCH
 };
 
 
-#define GIMP_COLOR_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SELECT, GimpColorSelectClass))
-#define GIMP_IS_COLOR_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SELECT))
-#define GIMP_COLOR_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECT, GimpColorSelectClass))
-
-
-typedef struct _GimpColorSelectClass GimpColorSelectClass;
-
 struct _GimpColorSelect
 {
   GimpColorSelector    parent_instance;
