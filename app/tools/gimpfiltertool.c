@@ -1180,6 +1180,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
   /* Copy over filter info back to existing filter */
   if (filter_tool->existing_filter)
     {
+      GeglNode                *node;
       GeglNode                *existing_node;
       gdouble                  opacity;
       GimpLayerMode            paint_mode;
@@ -1189,7 +1190,8 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
       GimpFilterRegion         region;
       GParamSpec             **pspecs;
       guint                    n_pspecs;
-      gchar                   *name          = NULL;
+      gchar                   *operation_name = NULL;
+      gchar                   *name           = NULL;
 
       opacity         = gimp_drawable_filter_get_opacity (filter_tool->filter);
       paint_mode      = gimp_drawable_filter_get_paint_mode (filter_tool->filter);
@@ -1198,13 +1200,38 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
       composite_mode  = gimp_drawable_filter_get_composite_mode (filter_tool->filter);
       region          = gimp_drawable_filter_get_region (filter_tool->filter);
 
+      node          = gimp_drawable_filter_get_operation (filter_tool->filter);
       existing_node = gimp_drawable_filter_get_operation (filter_tool->existing_filter);
-      gegl_node_get (existing_node,
-                     "operation", &name,
-                     NULL);
 
-      pspecs = gegl_operation_list_properties (name, &n_pspecs);
+      gegl_node_get (node, "operation", &operation_name, NULL);
+      gegl_node_get (existing_node, "operation", &name, NULL);
+
+      /* If the filter was changed, we need to update the original filter's
+       * operation */
+      if (g_strcmp0 (operation_name, name) != 0)
+        {
+          gchar *filter_name = NULL;
+          gchar *filter_icon = NULL;
+
+          gegl_node_set (existing_node, "operation", operation_name, NULL);
+
+          g_object_get (filter_tool->filter,
+                        "name",      &filter_name,
+                        "icon-name", &filter_icon,
+                        NULL);
+          g_object_set (filter_tool->existing_filter,
+                        "name",      filter_name,
+                        "icon-name", filter_icon,
+                        NULL);
+
+          g_free (filter_name);
+          g_free (filter_icon);
+        }
+
       g_free (name);
+
+      pspecs = gegl_operation_list_properties (operation_name, &n_pspecs);
+      g_free (operation_name);
 
       for (gint i = 0; i < n_pspecs; i++)
         {
@@ -2114,14 +2141,18 @@ gimp_filter_tool_edit_as (GimpFilterTool *filter_tool,
                           const gchar    *new_tool_id,
                           GimpConfig     *config)
 {
-  GimpDisplay  *display;
-  GimpContext  *user_context;
-  GimpToolInfo *tool_info;
-  GimpTool     *new_tool;
+  GimpDisplay        *display;
+  GimpContext        *user_context;
+  GimpToolInfo       *tool_info;
+  GimpTool           *new_tool;
+  GimpDrawableFilter *existing_filter = NULL;
 
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
   g_return_if_fail (new_tool_id != NULL);
   g_return_if_fail (GIMP_IS_CONFIG (config));
+
+  if (filter_tool->existing_filter)
+    existing_filter = filter_tool->existing_filter;
 
   display = GIMP_TOOL (filter_tool)->display;
 
@@ -2140,6 +2171,40 @@ gimp_filter_tool_edit_as (GimpFilterTool *filter_tool,
   GIMP_FILTER_TOOL (new_tool)->default_config = g_object_ref (G_OBJECT (config));
 
   gimp_filter_tool_reset (GIMP_FILTER_TOOL (new_tool));
+
+  /* If we're converting an existing filter, set it to inactive and
+   * move the new filter to the right spot as usual */
+  if (filter_tool->existing_filter)
+    {
+      GimpDrawable  *drawable = NULL;
+      GimpContainer *filters  = NULL;
+
+      GIMP_FILTER_TOOL (new_tool)->existing_filter = existing_filter;
+
+      gimp_filter_set_active (GIMP_FILTER (existing_filter), FALSE);
+
+      drawable = gimp_drawable_filter_get_drawable (existing_filter);
+      filters  = gimp_drawable_get_filters (drawable);
+
+      if (filters)
+        {
+          gint index;
+          gint existing_index;
+
+          index =
+            gimp_container_get_child_index (filters,
+                                            GIMP_OBJECT (existing_filter));
+
+          existing_index =
+            gimp_container_get_child_index (filters,
+                                            GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter));
+
+          if (existing_index > -1)
+            gimp_container_reorder (filters,
+                                    GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter),
+                                    index);
+        }
+    }
 }
 
 gboolean
