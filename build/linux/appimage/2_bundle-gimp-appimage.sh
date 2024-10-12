@@ -82,16 +82,16 @@ bund_usr ()
   if [ "$3" != '--go' ]; then
     cd $APP_DIR
     case $2 in
-      bin*)
+      bin/*)
         search_path=("$1/bin" "/usr/sbin" "/usr/libexec")
         ;;
 
-      lib*)
+      lib/*)
         search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
                      "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
         ;;
 
-      share*|etc*)
+      libexec/*|share/*|etc/*)
         search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
         ;;
     esac
@@ -99,7 +99,7 @@ bund_usr ()
     for path in "${search_path[@]}"; do
       expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
       if [ ! -d "$expanded_path" ]; then
-        break
+        continue
       fi
       target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
       for target_path in "${target_array[@]}"; do
@@ -165,7 +165,7 @@ bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 prep_pkg "gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs*"
-bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "lib/gvfs"
+bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gio*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio"
 ### GTK needed files (to be able to load icons)
@@ -234,8 +234,10 @@ bund_usr "$UNIX_PREFIX" "lib/libGL*"
 bund_usr "$UNIX_PREFIX" "lib/dri*"
 conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
 ### FIXME: Debug dialog (NOT WORKING)
-#bund_usr "$UNIX_PREFIX" "bin/lldb*"
-#bund_usr "$GIMP_PREFIX" "libexec/gimp-debug-tool*"
+prep_pkg "lldb"
+bund_usr "$UNIX_PREFIX" "lib/llvm-*/bin/lldb" --dest "bin"
+bund_usr "$UNIX_PREFIX" "lib/llvm-*/lib/python*" --dest "${LIB_DIR}"
+bund_usr "$GIMP_PREFIX" "libexec/gimp-debug-tool*"
 ### Introspected plug-ins
 bund_usr "$GIMP_PREFIX" "lib/girepository-*"
 bund_usr "$UNIX_PREFIX" "lib/girepository-*"
