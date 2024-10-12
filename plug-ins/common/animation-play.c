@@ -725,7 +725,7 @@ refresh_dialog (gchar *imagename)
                                    MIN (expected_drawing_area_height + 90,
                                         workarea.height - 60));
 
-      gtk_widget_show (window);
+      gtk_widget_set_visible (window, TRUE);
     }
 }
 
@@ -739,6 +739,7 @@ build_dialog (GimpPlay *play,
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *abox;
   GdkVisual *rgba;
   GAction   *action;
   gint       index;
@@ -764,7 +765,7 @@ build_dialog (GimpPlay *play,
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
-  gtk_widget_show (main_vbox);
+  gtk_widget_set_visible (main_vbox, TRUE);
 
   toolbar = gtk_toolbar_new ();
   play->play_button = add_tool_button (toolbar, "win.play", "media-playback-start",
@@ -785,11 +786,11 @@ build_dialog (GimpPlay *play,
                    NULL, NULL);
 
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+  gtk_widget_set_visible (toolbar, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_set_visible (vbox, TRUE);
 
   frame = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_hexpand (frame, TRUE);
@@ -797,17 +798,23 @@ build_dialog (GimpPlay *play,
   gtk_container_add (GTK_CONTAINER (vbox), frame);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (frame),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_widget_show (frame);
+  gtk_widget_set_visible (frame, TRUE);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (frame), viewport);
-  gtk_widget_show (viewport);
+  gtk_widget_set_visible (viewport, TRUE);
+
+  abox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_widget_set_halign (abox, GTK_ALIGN_CENTER);
+  gtk_widget_set_halign (abox, GTK_ALIGN_CENTER);
+  gtk_container_add (GTK_CONTAINER (viewport), abox);
+  gtk_widget_set_visible (abox, TRUE);
 
   /* Build a drawing area, with a default size same as the image */
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_add_events (drawing_area, GDK_BUTTON_PRESS_MASK);
-  gtk_container_add (GTK_CONTAINER (viewport), drawing_area);
-  gtk_widget_show (drawing_area);
+  gtk_container_add (GTK_CONTAINER (abox), drawing_area);
+  gtk_widget_set_visible (drawing_area, TRUE);
 
   g_signal_connect (drawing_area, "size-allocate",
                     G_CALLBACK(da_size_callback),
@@ -820,18 +827,18 @@ build_dialog (GimpPlay *play,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_widget_set_visible (hbox, TRUE);
 
   /* Progress bar. */
 
   progress = gtk_progress_bar_new ();
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
-  gtk_widget_show (progress);
+  gtk_widget_set_visible (progress, TRUE);
 
   /* Zoom */
   zoomcombo = gtk_combo_box_text_new_with_entry ();
   gtk_box_pack_end (GTK_BOX (hbox), zoomcombo, FALSE, FALSE, 0);
-  gtk_widget_show (zoomcombo);
+  gtk_widget_set_visible (zoomcombo, TRUE);
   for (index = 0; index < 5; index++)
     {
       /* list is given in "fps" - frames per second */
@@ -855,7 +862,7 @@ build_dialog (GimpPlay *play,
   /* fps combo */
   fpscombo = gtk_combo_box_text_new ();
   gtk_box_pack_end (GTK_BOX (hbox), fpscombo, FALSE, FALSE, 0);
-  gtk_widget_show (fpscombo);
+  gtk_widget_set_visible (fpscombo, TRUE);
 
   for (index = 0; index < 9; index++)
     {
@@ -876,7 +883,7 @@ build_dialog (GimpPlay *play,
   /* Speed Combo */
   speedcombo = gtk_combo_box_text_new ();
   gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
-  gtk_widget_show (speedcombo);
+  gtk_widget_set_visible (speedcombo, TRUE);
 
   for (index = 0; index < 7; index++)
     {
@@ -920,11 +927,11 @@ build_dialog (GimpPlay *play,
                     play);
 
   gtk_box_pack_end (GTK_BOX (hbox), frame_disposal_combo, FALSE, FALSE, 0);
-  gtk_widget_show (frame_disposal_combo);
+  gtk_widget_set_visible (frame_disposal_combo, TRUE);
 
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (window), width + 20, height + 90);
-  gtk_widget_show (window);
+  gtk_widget_set_visible (window, TRUE);
 
   /* shape_drawing_area for detached feature. */
   shape_window = gtk_window_new (GTK_WINDOW_POPUP);
@@ -1413,7 +1420,7 @@ detach_change_state (GSimpleAction *action,
       gtk_window_set_screen (GTK_WINDOW (shape_window),
                              gtk_widget_get_screen (drawing_area));
 
-      gtk_widget_show (shape_window);
+      gtk_widget_set_visible (shape_window, TRUE);
 
       if (! gtk_widget_get_realized (drawing_area))
         gtk_widget_realize (drawing_area);
@@ -1610,7 +1617,7 @@ update_scale (gdouble scale)
 
       gdk_window_get_origin (gtk_widget_get_window (shape_window), &x, &y);
       gtk_window_move (GTK_WINDOW (shape_window), x, y);
-      gtk_widget_show (shape_window);
+      gtk_widget_set_visible (shape_window, TRUE);
     }
 }
 
@@ -1788,9 +1795,9 @@ add_tool_button (GtkWidget  *toolbar,
   GtkToolItem *tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (GTK_WIDGET (tool_icon));
+  gtk_widget_set_visible (GTK_WIDGET (tool_icon), TRUE);
   tool_button = gtk_tool_button_new (tool_icon, label);
-  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_widget_set_visible (GTK_WIDGET (tool_button), TRUE);
   gtk_tool_item_set_tooltip_text (tool_button, tooltip);
   gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
 
@@ -1809,5 +1816,5 @@ add_tool_separator (GtkWidget *toolbar,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, expand);
-  gtk_widget_show (GTK_WIDGET (item));
+  gtk_widget_set_visible (GTK_WIDGET (item), TRUE);
 }
