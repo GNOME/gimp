@@ -2200,9 +2200,9 @@ gimp_filter_tool_edit_as (GimpFilterTool *filter_tool,
                                             GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter));
 
           if (existing_index > -1)
-            gimp_container_reorder (filters, GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter),
+            gimp_container_reorder (filters,
+                                    GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter),
                                     index);
-
         }
     }
 }
