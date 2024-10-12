@@ -2172,9 +2172,39 @@ gimp_filter_tool_edit_as (GimpFilterTool *filter_tool,
 
   gimp_filter_tool_reset (GIMP_FILTER_TOOL (new_tool));
 
-  if (existing_filter)
-    gimp_filter_tool_get_operation (GIMP_FILTER_TOOL (new_tool),
-                                    existing_filter);
+  /* If we're converting an existing filter, set it to inactive and
+   * move the new filter to the right spot as usual */
+  if (filter_tool->existing_filter)
+    {
+      GimpDrawable  *drawable = NULL;
+      GimpContainer *filters  = NULL;
+
+      GIMP_FILTER_TOOL (new_tool)->existing_filter = existing_filter;
+
+      gimp_filter_set_active (GIMP_FILTER (existing_filter), FALSE);
+
+      drawable = gimp_drawable_filter_get_drawable (existing_filter);
+      filters  = gimp_drawable_get_filters (drawable);
+
+      if (filters)
+        {
+          gint index;
+          gint existing_index;
+
+          index =
+            gimp_container_get_child_index (filters,
+                                            GIMP_OBJECT (existing_filter));
+
+          existing_index =
+            gimp_container_get_child_index (filters,
+                                            GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter));
+
+          if (existing_index > -1)
+            gimp_container_reorder (filters, GIMP_OBJECT (GIMP_FILTER_TOOL (new_tool)->filter),
+                                    index);
+
+        }
+    }
 }
 
 gboolean
