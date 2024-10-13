@@ -110,6 +110,18 @@ if (-not (Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
     Write-Host "(ERROR): No bundle found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' on some MSYS2 shell to make one." -ForegroundColor red
     exit 1
   }
+elseif ((Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
+  {
+    Write-Output "(INFO): Arch: arm64"
+  }
+elseif (-not (Test-Path "$a64_bundle") -and (Test-Path "$x64_bundle"))
+  {
+    Write-Output "(INFO): Arch: x64"
+  }
+elseif ((Test-Path "$a64_bundle") -and (Test-Path "$x64_bundle"))
+  {
+    Write-Output "(INFO): Arch: arm64 and x64"
+  }
 $supported_archs = "$a64_bundle","$x64_bundle"
 foreach ($bundle in $supported_archs)
   {
@@ -123,7 +135,6 @@ foreach ($bundle in $supported_archs)
           {
             $msix_arch = 'x64'
           }
-        Write-Output "(INFO): Arch: $msix_arch"
 
         ## Prevent Git going crazy
         if (-not (Test-Path .gitignore.bak -Type Leaf))
