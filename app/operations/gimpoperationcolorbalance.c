@@ -35,6 +35,7 @@
 #include "gimp-intl.h"
 
 
+static void     gimp_operation_color_balance_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_color_balance_process (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *out_buf,
@@ -65,7 +66,9 @@ gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass *klass)
                                  "description", _("Adjust color distribution"),
                                  NULL);
 
-  point_class->process = gimp_operation_color_balance_process;
+  operation_class->prepare = gimp_operation_color_balance_prepare;
+
+  point_class->process     = gimp_operation_color_balance_process;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
@@ -83,11 +86,11 @@ gimp_operation_color_balance_init (GimpOperationColorBalance *self)
 }
 
 static inline gfloat
-gimp_operation_color_balance_map (gfloat  value,
-                                  gdouble lightness,
-                                  gdouble shadows,
-                                  gdouble midtones,
-                                  gdouble highlights)
+gimp_operation_color_balance_map (gfloat value,
+                                  gfloat lightness,
+                                  gfloat shadows,
+                                  gfloat midtones,
+                                  gfloat highlights)
 {
   /* Apply masks to the corrections for shadows, midtones and
    * highlights so that each correction affects only one range.
@@ -102,19 +105,39 @@ gimp_operation_color_balance_map (gfloat  value,
    * to applying this correction on a virtual shadows_and_midtones
    * range.
    */
-  static const gdouble a = 0.25, b = 0.333, scale = 0.7;
+  static const gfloat a = 0.25f, b = 0.333f, scale = 0.7f;
 
-  shadows    *= CLAMP ((lightness - b) / -a + 0.5, 0, 1) * scale;
-  midtones   *= CLAMP ((lightness - b) /  a + 0.5, 0, 1) *
-                CLAMP ((lightness + b - 1) / -a + 0.5, 0, 1) * scale;
-  highlights *= CLAMP ((lightness + b - 1) /  a + 0.5, 0, 1) * scale;
+  shadows    *= CLAMP ((lightness - b) / -a + 0.5f, 0.f, 1.f) * scale;
+  midtones   *= CLAMP ((lightness - b) /  a + 0.5f, 0.f, 1.f) *
+                CLAMP ((lightness + b - 1.f) / -a + 0.5f, 0.f, 1.f) * scale;
+  highlights *= CLAMP ((lightness + b - 1.f) /  a + 0.5f, 0.f, 1.f) * scale;
 
   value += shadows;
   value += midtones;
   value += highlights;
-  value = CLAMP (value, 0.0, 1.0);
+  /* We are working in sRGB while the image may have a bigger space so
+   * this CLAMPing will reduce the target space. I'm not sure if
+   * removing it would be right either.
+   * This is something to verify and improve in a further version of
+   * this operation. TODO.
+   */
+  value = CLAMP (value, 0.0f, 1.0f);
 
   return value;
+}
+
+static void
+gimp_operation_color_balance_prepare (GeglOperation *operation)
+{
+  /* HSV conversion is much faster from sRGB. This version of the
+   * algorithm will work on sRGB to its respective HSL space.
+   * TODO: in the future, when babl will have fast conversion for other
+   * HSV spaces, let's study if we should work in the source space.
+   */
+  const Babl *format = babl_format_with_space ("R'G'B'A float", NULL);
+
+  gegl_operation_set_format (operation, "input", format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -130,71 +153,96 @@ gimp_operation_color_balance_process (GeglOperation       *operation,
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
   gint                      total;
-  const Babl               *space;
   const Babl               *format;
   const Babl               *hsl_format;
   gfloat                   *hsl;
-  gfloat                   *rgb_n;
+  gfloat                   *hsl_p;
+  gfloat                    cyan_red_shadows;
+  gfloat                    cyan_red_midtones;
+  gfloat                    cyan_red_highlights;
+  gfloat                    magenta_green_shadows;
+  gfloat                    magenta_green_midtones;
+  gfloat                    magenta_green_highlights;
+  gfloat                    yellow_blue_shadows;
+  gfloat                    yellow_blue_midtones;
+  gfloat                    yellow_blue_highlights;
   gint                      i;
 
   if (! config)
     return FALSE;
 
+  cyan_red_shadows         = (gfloat) config->cyan_red[GIMP_TRANSFER_SHADOWS];
+  cyan_red_midtones        = (gfloat) config->cyan_red[GIMP_TRANSFER_MIDTONES];
+  cyan_red_highlights      = (gfloat) config->cyan_red[GIMP_TRANSFER_HIGHLIGHTS];
+  magenta_green_shadows    = (gfloat) config->magenta_green[GIMP_TRANSFER_SHADOWS];
+  magenta_green_midtones   = (gfloat) config->magenta_green[GIMP_TRANSFER_MIDTONES];
+  magenta_green_highlights = (gfloat) config->magenta_green[GIMP_TRANSFER_HIGHLIGHTS];
+  yellow_blue_shadows      = (gfloat) config->yellow_blue[GIMP_TRANSFER_SHADOWS];
+  yellow_blue_midtones     = (gfloat) config->yellow_blue[GIMP_TRANSFER_MIDTONES];
+  yellow_blue_highlights   = (gfloat) config->yellow_blue[GIMP_TRANSFER_HIGHLIGHTS];
+
   total      = samples * 4;
   format     = gegl_operation_get_format (operation, "input");
-  space      = gegl_operation_get_source_space (operation, "input");
-  hsl_format = babl_format_with_space ("HSLA float", space);
+  hsl_format = babl_format_with_space ("HSLA float", NULL);
 
-  hsl   = g_new0 (gfloat, sizeof (gfloat) * total);
-  rgb_n = g_new0 (gfloat, sizeof (gfloat) * total);
+  hsl = g_new0 (gfloat, total);
 
   /* Create HSL buffer */
-  babl_process (babl_fish (format, hsl_format), src, hsl, samples);
+  babl_process (babl_fish (format, hsl_format), in_buf, hsl, samples);
 
   /* Create normalized RGB buffer */
-  for (i = 0; i < total; i += 4)
+  hsl_p = hsl;
+  for (i = 0; i < samples; i++)
     {
-      rgb_n[i] =
-        gimp_operation_color_balance_map (src[i], hsl[i + 2],
-                                          config->cyan_red[GIMP_TRANSFER_SHADOWS],
-                                          config->cyan_red[GIMP_TRANSFER_MIDTONES],
-                                          config->cyan_red[GIMP_TRANSFER_HIGHLIGHTS]);
+      gfloat lightness = *(hsl_p + 2);
 
-      rgb_n[i + 1] =
-        gimp_operation_color_balance_map (src[i + 1], hsl[i + 2],
-                                          config->magenta_green[GIMP_TRANSFER_SHADOWS],
-                                          config->magenta_green[GIMP_TRANSFER_MIDTONES],
-                                          config->magenta_green[GIMP_TRANSFER_HIGHLIGHTS]);
+      *dest =
+        gimp_operation_color_balance_map (*src, lightness,
+                                          cyan_red_shadows,
+                                          cyan_red_midtones,
+                                          cyan_red_highlights);
+      *(dest + 1) =
+        gimp_operation_color_balance_map (*(src + 1), lightness,
+                                          magenta_green_shadows,
+                                          magenta_green_midtones,
+                                          magenta_green_highlights);
 
-      rgb_n[i + 2] =
-        gimp_operation_color_balance_map (src[i + 2], hsl[i + 2],
-                                          config->yellow_blue[GIMP_TRANSFER_SHADOWS],
-                                          config->yellow_blue[GIMP_TRANSFER_MIDTONES],
-                                          config->yellow_blue[GIMP_TRANSFER_HIGHLIGHTS]);
+      *(dest + 2) =
+        gimp_operation_color_balance_map (*(src + 2), lightness,
+                                          yellow_blue_shadows,
+                                          yellow_blue_midtones,
+                                          yellow_blue_highlights);
 
-      rgb_n[i + 3] = src[i + 3];
+      *(dest + 3) = *(src + 3);
+
+      src   += 4;
+      dest  += 4;
+      hsl_p += 4;
     }
 
   if (config->preserve_luminosity)
     {
-      gfloat *hsl_n = g_new0 (gfloat, sizeof (gfloat) * total);
+      gfloat *hsl2 = g_new0 (gfloat, total);
+      gfloat *hsl2_p;
 
-      babl_process (babl_fish (format, hsl_format), rgb_n, hsl_n, samples);
+      babl_process (babl_fish (format, hsl_format), out_buf, hsl2, samples);
 
       /* Copy the original lightness value */
-      for (i = 0; i < total; i += 4)
-        hsl_n[i + 2] = hsl[i + 2];
+      hsl_p  = hsl;
+      hsl2_p = hsl2;
+      for (i = 0; i < samples; i++)
+        {
+          *(hsl2_p + 2) = *(hsl_p + 2);
 
-      babl_process (babl_fish (hsl_format, format), hsl_n, rgb_n, samples);
-      g_free (hsl_n);
+          hsl_p  += 4;
+          hsl2_p += 4;
+        }
+
+      babl_process (babl_fish (hsl_format, format), hsl2, out_buf, samples);
+      g_free (hsl2);
     }
 
-  /* Copy normalized RGB back to destination */
-  for (i = 0; i < total; i++)
-    dest[i] = rgb_n[i];
-
   g_free (hsl);
-  g_free (rgb_n);
 
   return TRUE;
 }
