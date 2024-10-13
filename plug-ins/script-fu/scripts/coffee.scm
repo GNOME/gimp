@@ -40,7 +40,8 @@
       (set! theNumber (- theNumber 1))
       (set! theStain (gimp-layer-new theImage theSize theSize
                                      RGBA-IMAGE _"Stain" 100
-                                     (if inDark
+                                     ; inDark is [0, 1] not [#f, #t]
+                                     (if (= inDark TRUE)
                                         LAYER-MODE-DARKEN-ONLY
                                         LAYER-MODE-NORMAL)))
 

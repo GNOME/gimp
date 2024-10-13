@@ -80,8 +80,8 @@
     (if (and
          (or (and (>= light 45) (<= light 75))
              (and (<= light 135) (>= light 105)))
-         ; v3 >>> conditional doesn't need (= shadow TRUE)
-         shadow )
+         ; v3 >>> a SF-TOGGLE arg is still [0, 1], not [#f, #t]
+        (= shadow TRUE))
         (let ((shadow-w (* (* radius 2.5) (cos (+ *pi* radians))))
               (shadow-h (* radius 0.5))
               (shadow-x cx)

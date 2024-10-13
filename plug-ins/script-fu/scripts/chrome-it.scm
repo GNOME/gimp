@@ -181,7 +181,8 @@
      (gimp-floating-sel-anchor floating-sel)
     )
 
-    (if (not carve-white)
+    ; carve-white is 0 or 1, not #f or #t
+    (if (= carve-white TRUE)
         (gimp-drawable-invert mask #f))
 
     (gimp-context-set-background '(255 255 255))
