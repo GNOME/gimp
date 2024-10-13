@@ -1,11 +1,13 @@
-# The version 3 dialect of the ScriptFu language
+# Version 3 of the ScriptFu language
 
 ## About
 
-This describes a new dialect of ScriptFu,
-used when a script calls: (script-fu-use-v3).
+This describes a new dialect of the ScriptFu language.
+ScriptFu interprets the dialect after a script calls: (script-fu-use-v3).
 The new dialect is more like Scheme and makes scripts shorter.
 The dialect only affects calls to the PDB.
+ScriptFu inteprets the old version 2 by default,
+unless a script calls script-fu-use-v3.
 
 The audience is script authors and other developers.
 
@@ -14,13 +16,20 @@ This describes the new dialect and how to port old scripts to the new dialect.
 
 ## Quick Start
 
+ScriptFu inteprets the old version 2 by default,
+unless a script calls script-fu-use-v3.
+After a call to script-fu-use-v3,
+ScriptFu interprets the new dialect until the script finishes,
+or until the script calls script-fu-use-v2.
+A script can switch back and forth between dialects at runtime.
+
 A script that calls:
 ```
 (script-fu-use-v3)
 ```
 binds to certain PDB calls differently:
 
-1. PDB procedures that return single values return just that single value,
+1. PDB procedures that return single values (atoms) return just that single value,
 *not wrapped in a list.*
 Formerly, every PDB call returned a list (possibly nesting more lists.)
 
@@ -39,12 +48,13 @@ until you call *script-fu-use-v2.*
 
 ## Where to call *script-fu-use-v3* in scripts
 
-Call *script-fu-use-v3* early.
-This sets the dialect version for the remaining interpretation of the script.
 Call *script-fu-use-v3* at the beginning of the run function.
+This sets the dialect version for the remaining interpretation
+of the script.
 
 !!! Do not call *script-fu-use-v3* at the top level of a script.
-This has no effect, since it is only executed in the query phase.
+This has no effect, since it is only executed in the query phase
+of a plugin.
 The interpreter starts at the run function during the run phase.
 
 *The interpreter always starts interpreting each script in the v2 dialect.
@@ -60,24 +70,26 @@ Example:
   (let* (
         ...
 ```
-### Technically speaking
+### Scope
 
 The dialect version has "execution scope" versus "lexical scope."
 Setting the dialect version is effective even for
 other functions defined in the same script but lexically
 outside the function where the dialect is set.
+You only need to call script-fu-use-v3 once,
+not in every defined function.
 
 
 ## Don't call v2 scripts from v3 scripts
 
 When using the v3 dialect,
-you can't call plugin scripts or other library scripts that depend on the v2 dialect.
+you cannot call plugin Scheme scripts or other library scripts that are in the v2 dialect.
 And vice versa.
-(When a script calls a PDB procedure that is a script,
+(When a script calls a PDB procedure that is a Scheme script,
 a new interpreter process is *NOT* started.)
 
 For example, a new plugin script should not call the PDB procedure
-script-fu-add-bevel because it is implemented in ScriptFu Scheme
+script-fu-add-bevel because it is a Scheme script in v2 dialect
 and for example has:
 
 ```
@@ -121,6 +133,30 @@ In the ScriptFu Console:
 
 TRUE and FALSE symbols may become obsolete in the future.
 
+## An argument of type SF-TOGGLE is FALSE or TRUE, not #f or #t
+
+The v3 dialect does not affect the binding of arguments to a script.
+So the value of an argument of type SF-TOGGLE is zero or one,
+not #f or #t.
+
+You must continue to check boolean arguments to a script like this:
+
+```
+(define script-fu-my-plugin (should-invert)
+     (if (= should-invert TRUE)
+         (
+               ; do invert
+         )))
+
+(script-fu-register-procedure "script-fu-my-plugin"
+     "My plugin..."
+     ...
+     SF-TOGGLE "Invert?" FALSE
+)
+```
+This may change when in the future we obsolete v2 dialect
+and the symbols TRUE and FALSE.
+
 ## Plans for the future
 
 This dialect is shorter and more natural for Scheme programmers.
@@ -133,9 +169,51 @@ You should write any new scripts in the v3 dialect,
 and call *script-fu-use-v3*.
 
 You should plan on porting existing scripts to the v3 dialect,
-since eventually ScriptFu might not support v2 dialect.
+since eventually ScriptFu may obolete the  v2 dialect.
 
-## Example conversions from v2 to v3
+## Example conversions from v2 to v3 dialects
+
+### An example script using v3 dialect
+
+```
+; !!! Usually not call (script-fu-use-v3) here in global scope
+
+(define script-fu-my-plugin (should-invert)
+     ; the body switches to the v3 dialect
+     (script-fu-use-v3)
+
+     (let* (
+          ; don't need a car, unlike v2
+          (angle gimp-context-get-brush-angle)))
+
+     ; call PDB returning boolean
+     ; don't need (= (car (gimp-context-get-feather)) TRUE)
+     (if (gimp-context-get-feather)
+          ; do feather
+          )
+
+     ; boolean arg to script is still C notion of truth
+     (if (= should-invert TRUE)
+         (
+               ; do invert
+         ))
+
+     ; calling a v2 plugin, temporarily switch to v2 dialect
+     (script-fu-use-v2)
+     (script-fu-add-bevel ...)
+
+     ; rest of script in v3 dialect
+     (script-fu-use-v3)
+     ...
+)
+
+(script-fu-register-procedure "script-fu-my-plugin"
+     "My plugin..."
+     ...
+     SF-TOGGLE "Invert?" FALSE
+)
+```
+
 
 ### A call to a PDB procedure returning a single value
 
@@ -211,7 +289,7 @@ and you must eliminate the first call to *car*.
 ## Knowing what constructs need conversion
 
 You *should* (but are not required to)
-eliminate all uses of symbols TRUE and FALSE from a script
+eliminate most uses of symbols TRUE and FALSE from a script
 using v3 dialect.
 
 You should eliminate many, *but not all*, uses of the *car* function wrapping a call to the PDB,
@@ -234,7 +312,7 @@ Return Values
 Additional Information
 ```
 This also returns a single value.
-The single value is a list i.e. container.
+But the single value is a list i.e. container, of strings.
 In the v2 dialect, this returned a list wrapped in a list,
 for example (("foo" "bar")).
 
@@ -247,7 +325,7 @@ You should not need to change scripts on calls to PDB procedures returning C voi
 Some scripts might examine the result of a call to a void PDB procedure, thinking that (#t) is the success of the call,
 but that is a misconception and should be fixed.
 
-Calls to PDB procedures that return C void return (#t) in v2 and  the empty list (), sometimes called nil, in v3 dialect.
+Calls to PDB procedures that return C void return (#t) in v2 and the empty list () i.e. nil in v3 dialect.
 
 ## Details of the implementation
 
