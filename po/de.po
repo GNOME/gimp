@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-04 18:03+0000\n"
-"PO-Revision-Date: 2024-10-04 23:14+0200\n"
+"POT-Creation-Date: 2024-10-08 15:33+0000\n"
+"PO-Revision-Date: 2024-10-08 20:33+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -549,11 +549,8 @@ msgid "Tools"
 msgstr "Werkzeuge"
 
 #: app/actions/actions.c:239
-#, fuzzy
-#| msgctxt "tools-action"
-#| msgid "_Paint Tools"
 msgid "Path Toolpath"
-msgstr "_Malwerkzeuge"
+msgstr "Pfad-Werkzeugpfad"
 
 #: app/actions/actions.c:242 app/dialogs/dialogs.c:384
 #: app/tools/gimpvectortool.c:167
@@ -1083,7 +1080,7 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Kanal nach ganz unten absenken"
 msgstr[1] "Kanäle nach ganz unten absenken"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:550
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:549
 #: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
 #: app/widgets/gimplayertreeview.c:862
 #, c-format
@@ -6070,7 +6067,7 @@ msgid "Rotating"
 msgstr "Wird gedreht"
 
 # word wrap should be task of the underlying text box …
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1305
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1307
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Es konnte nicht ausgeschnitten oder kopiert werden, da der ausgewählte "
@@ -6123,7 +6120,7 @@ msgid "Scale Image"
 msgstr "Bild skalieren"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2535
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2537
 #: app/dialogs/preferences-dialog.c:1757 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6160,20 +6157,20 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Dieses Bild löschen"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:719
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:720
 msgid "Lock content"
 msgstr "Inhalt sperren"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:720
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:721
 msgid "Unlock content"
 msgstr "Inhalt entsperren"
 
 # CHECK
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:735
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:736
 msgid "Lock position"
 msgstr "Position sperren"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:736
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:737
 msgid "Unlock position"
 msgstr "Position entsperren"
 
@@ -6988,7 +6985,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Zur _neuen Ebene"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2377
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2379
 msgid "Layer Attributes"
 msgstr "Ebeneneigenschaften"
 
@@ -7010,7 +7007,7 @@ msgid_plural "Create %d New Layers"
 msgstr[0] "Eine neue Ebene erstellen"
 msgstr[1] "%d neue Ebenen erstellen"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2262
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2264
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Neue Ebene"
@@ -7054,46 +7051,46 @@ msgstr[1] "Ebene nach ganz unten"
 msgid "Duplicate layers"
 msgstr "Ebenen duplizieren"
 
-#: app/actions/layers-commands.c:960
+#: app/actions/layers-commands.c:962
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "%d Ebenengruppen vereinen"
 
-#: app/actions/layers-commands.c:1020
+#: app/actions/layers-commands.c:1022
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "%d Ebenen entfernen"
 
-#: app/actions/layers-commands.c:1047 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1049 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Textinformationen verwerfen"
 
-#: app/actions/layers-commands.c:1066
+#: app/actions/layers-commands.c:1068
 msgid "Add Paths"
 msgstr "Pfade hinzufügen"
 
-#: app/actions/layers-commands.c:1190
+#: app/actions/layers-commands.c:1192
 msgid "Set Layer Boundary Size"
 msgstr "Ebenengröße festlegen"
 
-#: app/actions/layers-commands.c:1220
+#: app/actions/layers-commands.c:1222
 msgid "Layers to Image Size"
 msgstr "Ebenen auf Bildgröße skalieren"
 
-#: app/actions/layers-commands.c:1271
+#: app/actions/layers-commands.c:1273
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
-#: app/actions/layers-commands.c:1310
+#: app/actions/layers-commands.c:1312
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Ebene auf Auswahl zuschneiden"
 msgstr[1] "%d Ebenen auf Auswahl zuschneiden"
 
-#: app/actions/layers-commands.c:1375
+#: app/actions/layers-commands.c:1377
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7101,108 +7098,108 @@ msgstr ""
 "Es kann nicht zugeschnitten werden, weil keine der aktiven Ebenen Inhalt hat "
 "oder bereits auf den Inhalt zugeschnitten ist."
 
-#: app/actions/layers-commands.c:1381
+#: app/actions/layers-commands.c:1383
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Ebene auf Inhalt zuschneiden"
 msgstr[1] "%d Ebenen auf Inhalt zuschneiden"
 
-#: app/actions/layers-commands.c:1518 app/actions/layers-commands.c:2470
+#: app/actions/layers-commands.c:1520 app/actions/layers-commands.c:2472
 msgid "Add Layer Masks"
 msgstr "Ebenenmaske hinzufügen"
 
-#: app/actions/layers-commands.c:1570
+#: app/actions/layers-commands.c:1572
 msgid "Apply Layer Masks"
 msgstr "Ebenenmasken anwenden"
 
-#: app/actions/layers-commands.c:1574
+#: app/actions/layers-commands.c:1576
 msgid "Delete Layer Masks"
 msgstr "Ebenenmasken löschen"
 
-#: app/actions/layers-commands.c:1661
+#: app/actions/layers-commands.c:1663
 msgid "Show Layer Masks"
 msgstr "Ebenenmasken anzeigen"
 
-#: app/actions/layers-commands.c:1708
+#: app/actions/layers-commands.c:1710
 msgid "Disable Layer Masks"
 msgstr "Ebenenmasken deaktivieren"
 
-#: app/actions/layers-commands.c:1747
+#: app/actions/layers-commands.c:1749
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Masken zur Auswahl"
 
-#: app/actions/layers-commands.c:1751
+#: app/actions/layers-commands.c:1753
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Masken der Auswahl hinzufügen"
 
-#: app/actions/layers-commands.c:1755
+#: app/actions/layers-commands.c:1757
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Masken von Auswahl abziehen"
 
-#: app/actions/layers-commands.c:1759
+#: app/actions/layers-commands.c:1761
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Schnittmenge zwischen Masken und Auswahl bilden"
 
-#: app/actions/layers-commands.c:1780
+#: app/actions/layers-commands.c:1782
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: app/actions/layers-commands.c:1801
+#: app/actions/layers-commands.c:1803
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: app/actions/layers-commands.c:1829 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1831 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Auswahl aus Alphakanal"
 
-#: app/actions/layers-commands.c:1833 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1835 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Alphakanal der Auswahl hinzufügen"
 
-#: app/actions/layers-commands.c:1837 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1839 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Alphakanal von Auswahl abziehen"
 
-#: app/actions/layers-commands.c:1841 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1843 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Schnittmenge zwischen Alphakanal und Auswahl bilden"
 
-#: app/actions/layers-commands.c:1852
+#: app/actions/layers-commands.c:1854
 msgid "Empty Selection"
 msgstr "Leere Auswahl"
 
-#: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
+#: app/actions/layers-commands.c:1884 app/actions/layers-commands.c:1928
 #: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Ebenendeckkraft festlegen"
 
-#: app/actions/layers-commands.c:1996
+#: app/actions/layers-commands.c:1998
 msgid "Set layers' blend space"
 msgstr "Ebenen-Mittelungsraum festlegen"
 
-#: app/actions/layers-commands.c:2049
+#: app/actions/layers-commands.c:2051
 msgid "Set layers' composite space"
 msgstr "Ebenen-Kompositionsraum festlegen"
 
-#: app/actions/layers-commands.c:2102
+#: app/actions/layers-commands.c:2104
 msgid "Set layers' composite mode"
 msgstr "Ebenen-Kompositionsmodus festlegen"
 
-#: app/actions/layers-commands.c:2186
+#: app/actions/layers-commands.c:2188
 msgid "Lock alpha channels"
 msgstr "Alphakanal sperren"
 
-#: app/actions/layers-commands.c:2186
+#: app/actions/layers-commands.c:2188
 msgid "Unlock alpha channels"
 msgstr "Alphakanal entsperren"
 
@@ -11177,7 +11174,7 @@ msgstr "Bildreiter-Leiste im Einzelfenster-Modus anzeigen."
 
 #: app/config/gimprc-blurbs.h:498
 msgid "Enable the N-Point Deformation tool."
-msgstr "Das N-Punkt Verformungswerkzeug aktivieren."
+msgstr "Das N-Punkt-Verformungswerkzeug aktivieren."
 
 #: app/config/gimprc-blurbs.h:501
 msgid "Enable the Handle Transform tool."
@@ -12901,7 +12898,7 @@ msgstr ""
 msgid "Cannot copy because the selected region is empty."
 msgstr "Es kann nicht kopiert werden, weil der ausgewählte Bereich leer ist."
 
-#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
+#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:596
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
@@ -13719,10 +13716,8 @@ msgid "Render Stroke"
 msgstr "Nachziehen"
 
 #: app/core/gimpdrawable-filters.c:138
-#, fuzzy
-#| msgid "Posterize levels"
 msgid "Rasterize filters"
-msgstr "Posterisierungsstufen"
+msgstr "Filter rastern"
 
 #: app/core/gimpdrawable-filters.c:147
 msgid "Merge filter"
@@ -14383,7 +14378,7 @@ msgstr "Eine unsichtbare Ebene kann nicht nach unten vereint werden."
 msgid "Cannot merge down to a layer group."
 msgstr "Ebenengruppe kann nicht nach unten vereint werden."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2826
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2857
 msgid "The layer to merge down to is locked."
 msgstr "Die Ebene zum Vereinen nach unten ist gesperrt."
 
@@ -14508,7 +14503,7 @@ msgstr "Vorschaudatei »%s« konnte nicht geöffnet werden: %s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2620
+#: app/widgets/gimpitemtreeview.c:2621
 msgid "A selected layer's pixels are locked."
 msgstr "Die Pixel einer ausgewählten Ebene sind gesperrt."
 
@@ -15538,7 +15533,7 @@ msgstr "Position und Größe _sperren"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:751
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:752
 msgid "Lock visibility"
 msgstr "Sichtbarkeit sperren"
 
@@ -16969,16 +16964,15 @@ msgstr "Experimentell"
 
 #: app/dialogs/preferences-dialog.c:1691
 msgid "_N-Point Deformation tool"
-msgstr "_N-Punkt Verformungs Werkzeug"
+msgstr "Werkzeug »_N-Punkt-Verformung«"
 
 #: app/dialogs/preferences-dialog.c:1694
 msgid "_Seamless Clone tool"
-msgstr "»_Nahtlos klonen« Werkzeug"
+msgstr "Werkzeug »Nahtlos _klonen«"
 
 #: app/dialogs/preferences-dialog.c:1697
-#, fuzzy
 msgid "_Paint Select tool"
-msgstr "_Malwerkzeug"
+msgstr "Werkzeug »_Malende Auswahl«"
 
 #: app/dialogs/preferences-dialog.c:1719 app/dialogs/preferences-dialog.c:1720
 msgctxt "preferences"
@@ -19031,7 +19025,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Farbe in Ebenen ablegen"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1934
+#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1935
 #: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "Ebenen ablegen"
@@ -22118,10 +22112,8 @@ msgid "Set text layer attribute"
 msgstr "Eigenschaften der Textebene setzen"
 
 #: app/pdb/text-layer-cmds.c:231
-#, fuzzy
-#| msgid "Set text layer attribute"
 msgid "Set text layer markup"
-msgstr "Eigenschaften der Textebene setzen"
+msgstr "Markup der Textebene setzen"
 
 #: app/plug-in/gimpenvirontable.c:329
 #, c-format
@@ -22201,10 +22193,8 @@ msgid "Unknown file type"
 msgstr "Unbekannter Dateityp"
 
 #: app/plug-in/gimppluginmanager-restore.c:213
-#, fuzzy
-#| msgid "Starting Extensions"
 msgid "Loading extension plug-ins"
-msgstr "Erweiterungen werden gestartet"
+msgstr "Erweiterungen für Dateiendungen werden geladen"
 
 #: app/plug-in/gimppluginmanager-restore.c:233
 msgid "Searching plug-ins"
@@ -22867,7 +22857,7 @@ msgstr "Ankerpunkte von Zielen festlegen"
 #: app/tools/gimpalignoptions.c:428
 #, c-format
 msgid "%s-pick target guides (%s-%s to add more)"
-msgstr ""
+msgstr "%s-Klick auf Zielhilfslinien (%s-%s, um weitere hinzuzufügen)"
 
 #. Align frame
 #: app/tools/gimpalignoptions.c:445
@@ -23583,7 +23573,7 @@ msgstr "_Kurven …"
 
 #: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:299
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2600
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr ""
 "Es können nicht mehrere Zeichenflächen geändert werden. Wählen Sie nur eine "
@@ -23799,7 +23789,7 @@ msgid "A selected item's pixels are locked."
 msgstr "Die Pixel eines gewählten Objekts sind gesperrt."
 
 #: app/tools/gimpfiltertool.c:323 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2612
 msgid "A selected layer is not visible."
 msgstr "Eine gewählte Ebene ist nicht sichtbar."
 
@@ -23973,7 +23963,7 @@ msgid "Number of iterations to perform"
 msgstr "Anzahl durchzuführender Wiederholungen"
 
 #: app/tools/gimpforegroundselectoptions.c:332
-#: app/tools/gimppaintselectoptions.c:200
+#: app/tools/gimppaintselectoptions.c:236
 msgid "Reset stroke width native size"
 msgstr "Native Breite des Pinsels zurücksetzen"
 
@@ -24742,7 +24732,7 @@ msgstr "N-Punkt-Verformung"
 #: app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
-"N-Punkt-Verformung-Werkzeug: Gummiartige Verformung eines Bildes durch "
+"N-Punkt-Verformungswerkzeug: Gummiartige Verformung eines Bildes durch "
 "Punktverschiebungen"
 
 #: app/tools/gimpnpointdeformationtool.c:161
@@ -24896,7 +24886,7 @@ msgstr ""
 msgid "Cannot paint select on layer groups."
 msgstr "Auf Ebenengruppen kann keine malende Auswahl stattfinden."
 
-#: app/tools/gimppaintselecttool.c:653
+#: app/tools/gimppaintselecttool.c:708
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Malende Auswahl"
@@ -25331,7 +25321,7 @@ msgstr "Versch_mieren"
 
 #: app/tools/gimpsmudgetool.c:81
 msgid "Click to smudge"
-msgstr "Klicken Sie um zu Verschmieren"
+msgstr "Klicken Sie, um zu verschmieren"
 
 #: app/tools/gimpsmudgetool.c:82
 msgid "Click to smudge the line"
@@ -28236,123 +28226,123 @@ msgid_plural "Indexed color (%d colors)"
 msgstr[0] "Indizierte Farbe (monochrom)"
 msgstr[1] "Indizierte Farbe (%d Farben)"
 
-#: app/widgets/gimpitemtreeview.c:721
+#: app/widgets/gimpitemtreeview.c:722
 msgid "Set Item Exclusive Content Lock"
 msgstr "Inhalt des Elements exklusiv sperren"
 
-#: app/widgets/gimpitemtreeview.c:737
+#: app/widgets/gimpitemtreeview.c:738
 msgid "Set Item Exclusive Position Lock"
 msgstr "Position des Elements exklusiv sperren"
 
-#: app/widgets/gimpitemtreeview.c:752
+#: app/widgets/gimpitemtreeview.c:753
 msgid "Unlock visibility"
 msgstr "Sichtbarkeit entsperren"
 
-#: app/widgets/gimpitemtreeview.c:753
+#: app/widgets/gimpitemtreeview.c:754
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Sichtbarkeit des Elements exklusiv sperren"
 
-#: app/widgets/gimpitemtreeview.c:782
+#: app/widgets/gimpitemtreeview.c:783
 msgid "Toggle the visibility of all filters."
 msgstr "Die Sichtbarkeit aller Filter umschalten."
 
-#: app/widgets/gimpitemtreeview.c:796
+#: app/widgets/gimpitemtreeview.c:797
 msgid "Edit the selected filter."
 msgstr "Den gewählten Filter bearbeiten."
 
-#: app/widgets/gimpitemtreeview.c:809
+#: app/widgets/gimpitemtreeview.c:810
 msgid "Raise filter one step up in the stack."
 msgstr "Den Filter um einen Schritt im Stapel anheben."
 
-#: app/widgets/gimpitemtreeview.c:822
+#: app/widgets/gimpitemtreeview.c:823
 msgid "Lower filter one step down in the stack."
 msgstr "Den Filter um einen Schritt im Stapel absenken."
 
-#: app/widgets/gimpitemtreeview.c:835
+#: app/widgets/gimpitemtreeview.c:836
 msgid "Merge all active filters down."
 msgstr "Alle gewählten Filter nach unten vereinen."
 
-#: app/widgets/gimpitemtreeview.c:848
+#: app/widgets/gimpitemtreeview.c:849
 msgid "Remove the selected filter."
 msgstr "Den gewählten Filter entfernen."
 
-#: app/widgets/gimpitemtreeview.c:859
+#: app/widgets/gimpitemtreeview.c:860
 msgid "Layer Effects"
 msgstr "Ebeneneffekte"
 
-#: app/widgets/gimpitemtreeview.c:892
+#: app/widgets/gimpitemtreeview.c:893
 msgid "Select items by patterns and store item sets"
 msgstr "Elemente nach Mustern auswählen und Elementsammlungen speichern"
 
-#: app/widgets/gimpitemtreeview.c:1784
+#: app/widgets/gimpitemtreeview.c:1785
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d Element ausgewählt"
 msgstr[1] "%d Elemente ausgewählt"
 
-#: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
+#: app/widgets/gimpitemtreeview.c:2697 app/widgets/gimpitemtreeview.c:2763
 msgid "Cannot reorder a filter that is being edited."
 msgstr ""
 "Ein Filter, das gerade bearbeitet wird, kann nicht neu angeordnet werden."
 
-#: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
+#: app/widgets/gimpitemtreeview.c:2718 app/widgets/gimpitemtreeview.c:2785
 msgid "Reorder filter"
 msgstr "Filter neu anordnen"
 
-#: app/widgets/gimpitemtreeview.c:2810
+#: app/widgets/gimpitemtreeview.c:2841
 msgid "Effects from active tools can not be merged."
 msgstr "Effekte von aktiven Werkzeugen können nicht vereint werden."
 
-#: app/widgets/gimpitemtreeview.c:2863
+#: app/widgets/gimpitemtreeview.c:2894
 msgid "Remove filter"
 msgstr "Filter entfernen"
 
-#: app/widgets/gimpitemtreeview.c:3389
+#: app/widgets/gimpitemtreeview.c:3420
 msgid "No layer set stored"
 msgstr "Keine Ebenensammlung gespeichert"
 
-#: app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3442
 msgid "New layer set's name"
 msgstr "Name der neuen Ebenensammlung"
 
-#: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
+#: app/widgets/gimpitemtreeview.c:3484 app/widgets/gimpitemtreeview.c:3499
 msgid "Select layers by text search"
 msgstr "Ebenen durch Textsuche auswählen"
 
-#: app/widgets/gimpitemtreeview.c:3455 app/widgets/gimpitemtreeview.c:3470
+#: app/widgets/gimpitemtreeview.c:3486 app/widgets/gimpitemtreeview.c:3501
 msgid "Text search"
 msgstr "Textsuche"
 
-#: app/widgets/gimpitemtreeview.c:3474
+#: app/widgets/gimpitemtreeview.c:3505
 msgid "Select layers by glob patterns"
 msgstr "Ebenen anhand von Glob-Muster auswählen"
 
-#: app/widgets/gimpitemtreeview.c:3476
+#: app/widgets/gimpitemtreeview.c:3507
 msgid "Glob pattern search"
 msgstr "Suche mit Glob-Muster"
 
-#: app/widgets/gimpitemtreeview.c:3480
+#: app/widgets/gimpitemtreeview.c:3511
 msgid "Select layers by regular expressions"
 msgstr "Ebenen anhand von regulärem Ausdruck auswählen"
 
-#: app/widgets/gimpitemtreeview.c:3482
+#: app/widgets/gimpitemtreeview.c:3513
 msgid "Regular Expression search"
 msgstr "Suche mit regulärem Ausdruck"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3568
 msgid "search"
 msgstr "Suche"
 
-#: app/widgets/gimpitemtreeview.c:3538
+#: app/widgets/gimpitemtreeview.c:3569
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3538
+#: app/widgets/gimpitemtreeview.c:3569
 msgid "regexp"
 msgstr "Regulärer Ausdruck"
 
-#: app/widgets/gimpitemtreeview.c:3707
+#: app/widgets/gimpitemtreeview.c:3738
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Ungültiger regulärer Ausdruck: %s\n"
