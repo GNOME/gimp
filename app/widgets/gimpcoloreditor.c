@@ -198,7 +198,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   color = gegl_color_new ("black");
   editor->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK, color,
-                                              GIMP_COLOR_SELECTOR_RED);
+                                              GIMP_COLOR_SELECTOR_HUE);
   g_object_unref (color);
   gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (editor->notebook),
                                       FALSE);

@@ -187,7 +187,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
                                   GTK_ORIENTATION_VERTICAL);
 
   priv->color   = gegl_color_new ("black");
-  priv->channel = GIMP_COLOR_SELECTOR_RED;
+  priv->channel = GIMP_COLOR_SELECTOR_HUE;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selection), main_hbox, TRUE, TRUE, 0);
