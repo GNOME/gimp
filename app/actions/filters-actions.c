@@ -954,7 +954,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-bayer-matrix",            writable);
   SET_SENSITIVE ("filters-bloom",                   writable);
   SET_SENSITIVE ("filters-brightness-contrast",     writable);
-  SET_SENSITIVE ("filters-bump-map",                writable);
+  SET_SENSITIVE ("filters-bump-map",                writable && !is_group);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-channel-mixer",           writable);
@@ -976,7 +976,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-diffraction-patterns",    writable);
   SET_SENSITIVE ("filters-dilate",                  writable && !is_group);
-  SET_SENSITIVE ("filters-displace",                writable);
+  SET_SENSITIVE ("filters-displace",                writable && !is_group);
   SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
   SET_SENSITIVE ("filters-edge",                    writable && !is_group);
@@ -991,8 +991,8 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-focus-blur",              writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
-  SET_SENSITIVE ("filters-gaussian-blur-selective", writable);
-  SET_SENSITIVE ("filters-gegl-graph",              writable);
+  SET_SENSITIVE ("filters-gaussian-blur-selective", writable && !is_group);
+  SET_SENSITIVE ("filters-gegl-graph",              writable && !is_group);
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-high-pass",               writable);
   SET_SENSITIVE ("filters-hue-chroma",              writable);
@@ -1003,7 +1003,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-invert-value",            writable && !is_group);
   SET_SENSITIVE ("filters-image-gradient",          writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
-  SET_SENSITIVE ("filters-lens-blur",               writable);
+  SET_SENSITIVE ("filters-lens-blur",               writable && !is_group);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
   SET_SENSITIVE ("filters-levels",                  writable);
@@ -1034,7 +1034,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-spread",            writable);
   SET_SENSITIVE ("filters-normal-map",              writable);
   SET_SENSITIVE ("filters-offset",                  writable);
-  SET_SENSITIVE ("filters-oilify",                  writable);
+  SET_SENSITIVE ("filters-oilify",                  writable && !is_group);
   SET_SENSITIVE ("filters-panorama-projection",     writable);
   SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);
@@ -1068,7 +1068,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-value-propagate",         writable);
-  SET_SENSITIVE ("filters-variable-blur",           writable);
+  SET_SENSITIVE ("filters-variable-blur",           writable && !is_group);
   SET_SENSITIVE ("filters-video-degradation",       writable);
   SET_SENSITIVE ("filters-vignette",                writable);
   SET_SENSITIVE ("filters-waterpixels",             writable);
