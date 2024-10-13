@@ -741,7 +741,7 @@ dev-docs:
       - gimp-api-docs-*.tar.xz.SHA512SUMS
     expire_in: 2 days
 
-include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+include: 'https://raw.githubusercontent.com/GNOME/citemplates/master/flatpak/flatpak_ci_initiative.yml'
 dist-flatpak-weekly:
   extends:
     - .default
