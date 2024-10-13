@@ -178,8 +178,14 @@ map_lightness_achromatic (GimpHueSaturationConfig *config, gfloat value)
 static void
 gimp_operation_hue_saturation_prepare (GeglOperation *operation)
 {
-  const Babl *format = babl_format_with_space ("HSLA float",
-                                               gegl_operation_get_format (operation, "input"));
+  /* We work in HSLA within sRGB space which is much faster to convert
+   * to than with specific spaces. Eventually though, I'm not sure if we
+   * may not want to work in the source space. So it would be wise to
+   * study this possible enhancement once babl got faster conversion
+   * from "R'G'B'" with space to HSL. TODO.
+   * See: https://gitlab.gnome.org/GNOME/babl/-/issues/103
+   */
+  const Babl *format = babl_format_with_space ("HSLA float", NULL);
 
   gegl_operation_set_format (operation, "input", format);
   gegl_operation_set_format (operation, "output", format);
