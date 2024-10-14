@@ -221,7 +221,7 @@ sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" $USR_DIR/share/metainfo/org
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
-### FIXME: file-wmf (NOT WORKING for exporting)
+### file-wmf support (not portable, depends on how the distro deals with PS fonts)
 #bund_usr "$UNIX_PREFIX" "share/libwmf"
 ### Image graph support
 bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
