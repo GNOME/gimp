@@ -241,7 +241,7 @@ bund_usr "$GIMP_PREFIX" "lib/girepository-*"
 bund_usr "$UNIX_PREFIX" "lib/girepository-*"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
 #### JavaScript plug-ins support
-bund_usr "$UNIX_PREFIX" "bin/gjs"
+bund_usr "$UNIX_PREFIX" "bin/gjs*"
 #### Python plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
