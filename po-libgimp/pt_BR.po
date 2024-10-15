@@ -1,5 +1,5 @@
 # Brazilian Portuguese translation for gimp-libgimp
-# Copyright (C) 2000-2013 Free Software Foundation, Inc.
+# Copyright (C) 2000-2024 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-libgimp package.
 # Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2003.
@@ -7,23 +7,23 @@
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2007, 2008, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2018.
 # Rodrigo Costa <rodrigo.costa@outlook.it>, 2021.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2018-2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp master\n"
+"Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-05 13:45+0000\n"
-"PO-Revision-Date: 2021-02-04 16:43-0300\n"
-"Last-Translator: Rodrigo Costa <rodrigo.costa@outlook.it>\n"
-"Language-Team: Português <ciampix at libero dot it>\n"
-"Language: pt\n"
+"POT-Creation-Date: 2024-10-10 03:37+0000\n"
+"PO-Revision-Date: 2024-10-15 00:10-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.30.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Gtranslator 47.0\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -92,7 +92,6 @@ msgstr "O plug-in %s não pode tratar transparência"
 
 #: ../libgimp/gimpexport.c:349
 #, c-format
-#| msgid "%s plug-in can't handle transparency"
 msgid "%s plug-in can't handle transparent layers"
 msgstr "O plug-in %s não suporta camadas transparentes"
 
@@ -182,8 +181,6 @@ msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "O plug-in %s precisa cortar as camadas até os limites da imagem"
 
 #: ../libgimp/gimpexport.c:445
-#| msgctxt "page-selector-target"
-#| msgid "Layers"
 msgid "Crop Layers"
 msgstr "Cortar Camadas"
 
@@ -257,7 +254,6 @@ msgstr ""
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #: ../libgimp/gimpexport.c:1119
 #, c-format
-#| msgid "Export Image as "
 msgid "Export Image as %s"
 msgstr "Exportar imagem como %s"
 
@@ -269,45 +265,45 @@ msgstr "Seleção de fonte"
 msgid "Gradient Selection"
 msgstr "Seleção de degradê"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:685
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:881
 msgid "Background"
 msgstr "Plano de fundo"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1070
 #, c-format
 msgid "Rotate %s?"
 msgstr "Rotacionar %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1076
 msgid "_Keep Original"
 msgstr "_Manter original"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1077 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotacionar"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1118
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1134
 msgid "Rotated"
 msgstr "Rotacionado"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1152
 msgid "This image contains Exif orientation metadata."
 msgstr ""
 "Esta imagem contém metadados Exif com informações sobre sua orientação."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1170
 msgid "Would you like to rotate the image?"
 msgstr "Você deseja rotacionar a imagem?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1182
 msgid "_Don't ask me again"
 msgstr "_Não me pergunte novamente"
 
@@ -1476,38 +1472,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Cortar com proporção"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:986
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Só é possível carregar metadados de arquivos locais"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr ""
-"A conversão do nome de arquivo para a página de código do sistema falhou."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1042
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Só é possível salvar metadados em arquivos locais"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1090
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Tamanho dos dados Exif inválido."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1119
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "A análise dos dados Exif falhou."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1169
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "A análise dos dados do IPTC falhou."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1217
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "A análise dos dados XMP falhou."
@@ -1730,84 +1720,106 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "A cor para usar ao marcar cores que ficarem fora de gama."
 
-#: ../libgimpconfig/gimpcolorconfig.c:198
+#: ../libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"Quando habilitado, define as escalas de cor para exibirem 0...255 em vez de "
+"porcentagens"
+
+#: ../libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"Quando habilitado, define as escalas de cor para exibirem modo de mistura de "
+"cores por HSV em vez de LCh"
+
+#: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
 msgstr "Modo de operação"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: ../libgimpconfig/gimpcolorconfig.c:218
 msgid "Preferred RGB profile"
 msgstr "Perfil RGB preferido"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: ../libgimpconfig/gimpcolorconfig.c:225
 msgid "Preferred grayscale profile"
 msgstr "Perfil preto e branco preferido"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
+#: ../libgimpconfig/gimpcolorconfig.c:232
 msgid "CMYK profile"
 msgstr "Perfil CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: ../libgimpconfig/gimpcolorconfig.c:239
 msgid "Monitor profile"
 msgstr "Perfil do monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:234
+#: ../libgimpconfig/gimpcolorconfig.c:246
 msgid "Use the system monitor profile"
 msgstr "Usar o perfil do sistema para monitor"
 
 # "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
-#: ../libgimpconfig/gimpcolorconfig.c:242
+#: ../libgimpconfig/gimpcolorconfig.c:254
 msgid "Simulation profile for soft-proofing"
 msgstr "Perfil de simulação para pré-visualização"
 
-#: ../libgimpconfig/gimpcolorconfig.c:249
+#: ../libgimpconfig/gimpcolorconfig.c:261
 msgid "Display rendering intent"
 msgstr "Exibir intenção de renderização"
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libgimpconfig/gimpcolorconfig.c:269
 msgid "Use black point compensation for the display"
 msgstr "Usar compensação de ponto negro para a exibição"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: ../libgimpconfig/gimpcolorconfig.c:276
 msgid "Optimize display color transformations"
 msgstr "Otimizar as transformações de cor na exibição"
 
 # "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
-#: ../libgimpconfig/gimpcolorconfig.c:271
+#: ../libgimpconfig/gimpcolorconfig.c:283
 msgid "Soft-proofing rendering intent"
 msgstr "Pré-visualização de intenção da renderização"
 
 # "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
-#: ../libgimpconfig/gimpcolorconfig.c:279
+#: ../libgimpconfig/gimpcolorconfig.c:291
 msgid "Use black point compensation for soft-proofing"
 msgstr "Usar compensação de ponto negro para pré-visualização"
 
 # "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
-#: ../libgimpconfig/gimpcolorconfig.c:286
+#: ../libgimpconfig/gimpcolorconfig.c:298
 msgid "Optimize soft-proofing color transformations"
 msgstr "Otimizar pré-visualização de transformações de cor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:293
+#: ../libgimpconfig/gimpcolorconfig.c:305
 msgid "Mark out of gamut colors"
 msgstr "Marcar cores fora de gama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:300
+#: ../libgimpconfig/gimpcolorconfig.c:312
 msgid "Out of gamut warning color"
 msgstr "Cor do aviso ao estar fora de gama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:657
-#: ../libgimpconfig/gimpcolorconfig.c:841
+#: ../libgimpconfig/gimpcolorconfig.c:320
+msgid "Show RGB 0..255 scales"
+msgstr "Mostrar escalas RGB 0...255"
+
+#: ../libgimpconfig/gimpcolorconfig.c:327
+msgid "Show HSV instead of LCH"
+msgstr "Mostrar HSV em vez de LCH"
+
+#: ../libgimpconfig/gimpcolorconfig.c:695
+#: ../libgimpconfig/gimpcolorconfig.c:879
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Perfil de cores \"%s\" não é do espaço de cores RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:699
-#: ../libgimpconfig/gimpcolorconfig.c:891
+#: ../libgimpconfig/gimpcolorconfig.c:737
+#: ../libgimpconfig/gimpcolorconfig.c:929
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Perfil de cores \"%s\" não é do espaço de cores em tons de cinza."
 
-#: ../libgimpconfig/gimpcolorconfig.c:741
-#: ../libgimpconfig/gimpcolorconfig.c:941
+#: ../libgimpconfig/gimpcolorconfig.c:779
+#: ../libgimpconfig/gimpcolorconfig.c:979
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Perfil de cores \"%s\" não é do espaço de cores CMYK."
@@ -2021,23 +2033,23 @@ msgstr "Fabricante: "
 msgid "Copyright: "
 msgstr "Direitos autorais: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: ../libgimpwidgets/gimpcolorscales.c:208
 msgid "Scales"
 msgstr "Escalas"
 
-#: ../libgimpwidgets/gimpcolorscales.c:437
+#: ../libgimpwidgets/gimpcolorscales.c:450
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:452
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:460
+#: ../libgimpwidgets/gimpcolorscales.c:473
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:475
 msgid "HSV"
 msgstr "HSV"
 
@@ -2159,17 +2171,14 @@ msgid "_Shear"
 msgstr "_Inclinar"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:256
-#| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "Kilobytes"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:257
-#| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "Megabytes"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:258
-#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Gigabytes"
 
@@ -2229,7 +2238,7 @@ msgstr "Remover pasta selecionada da lista"
 msgid "Writable"
 msgstr "Gravável"
 
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:120
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2871,75 +2880,78 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador de entrada MIDI do GIMP"
 
-#: ../modules/display-filter-clip-warning.c:120
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: ../modules/display-filter-clip-warning.c:123
 msgid "Clip warning color display filter"
 msgstr "Filtro de exibição de cores de aviso de corte"
 
-#: ../modules/display-filter-clip-warning.c:157
+#: ../modules/display-filter-clip-warning.c:160
 msgid "Show shadows"
 msgstr "Mostrar sombras"
 
-#: ../modules/display-filter-clip-warning.c:158
+#: ../modules/display-filter-clip-warning.c:161
 msgid "Show warning for pixels with a negative component"
 msgstr "Mostra aviso para pixels com um componente negativo"
 
-#: ../modules/display-filter-clip-warning.c:164
+#: ../modules/display-filter-clip-warning.c:167
 msgid "Shadows color"
 msgstr "Cor das sombras"
 
-#: ../modules/display-filter-clip-warning.c:165
+#: ../modules/display-filter-clip-warning.c:168
 msgid "Shadows warning color"
 msgstr "Cor de aviso de sombras"
 
-#: ../modules/display-filter-clip-warning.c:177
+#: ../modules/display-filter-clip-warning.c:180
 msgid "Show highlights"
 msgstr "Mostrar tons claros"
 
-#: ../modules/display-filter-clip-warning.c:178
+#: ../modules/display-filter-clip-warning.c:181
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Mostra avisos para pixels com um componente maior que um"
 
-#: ../modules/display-filter-clip-warning.c:184
+#: ../modules/display-filter-clip-warning.c:187
 msgid "Highlights color"
 msgstr "Cor de tons claros"
 
-#: ../modules/display-filter-clip-warning.c:185
+#: ../modules/display-filter-clip-warning.c:188
 msgid "Highlights warning color"
 msgstr "Cor de aviso de tons claros"
 
-#: ../modules/display-filter-clip-warning.c:197
+#: ../modules/display-filter-clip-warning.c:200
 msgid "Show bogus"
 msgstr "Mostrar inválido"
 
-#: ../modules/display-filter-clip-warning.c:198
+#: ../modules/display-filter-clip-warning.c:201
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Mostra aviso para pixels com um componente infinito ou NaN"
 
-#: ../modules/display-filter-clip-warning.c:204
+#: ../modules/display-filter-clip-warning.c:207
 msgid "Bogus color"
 msgstr "Cor de inválido"
 
-#: ../modules/display-filter-clip-warning.c:205
+#: ../modules/display-filter-clip-warning.c:208
 msgid "Bogus warning color"
 msgstr "Cor de aviso de inválido"
 
-#: ../modules/display-filter-clip-warning.c:217
+#: ../modules/display-filter-clip-warning.c:220
 msgid "Include alpha component"
 msgstr "Incluir componente alfa"
 
-#: ../modules/display-filter-clip-warning.c:218
+#: ../modules/display-filter-clip-warning.c:221
 msgid "Include alpha component in the warning"
 msgstr "Inclui componente alfa no aviso"
 
-#: ../modules/display-filter-clip-warning.c:224
+#: ../modules/display-filter-clip-warning.c:227
 msgid "Include transparent pixels"
 msgstr "Incluir pixels transparentes"
 
-#: ../modules/display-filter-clip-warning.c:225
+#: ../modules/display-filter-clip-warning.c:228
 msgid "Include fully transparent pixels in the warning"
 msgstr "Inclui pixels totalmente transparentes no aviso"
 
-#: ../modules/display-filter-clip-warning.c:229
+#: ../modules/display-filter-clip-warning.c:232
 msgid "Clip Warning"
 msgstr "Aviso de corte"
 
@@ -2991,6 +3003,11 @@ msgstr "Ciclos de contraste"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contraste"
+
+#, c-format
+#~ msgid "Conversion of the filename to system codepage failed."
+#~ msgstr ""
+#~ "A conversão do nome de arquivo para a página de código do sistema falhou."
 
 #~ msgid "Sans"
 #~ msgstr "Sans"
