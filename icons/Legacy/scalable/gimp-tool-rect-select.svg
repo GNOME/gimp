@@ -1,0 +1,73 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_239_151)">
+<ellipse cx="12.5" cy="17" rx="8.5" ry="2" fill="black" fill-opacity="0.5"/>
+</g>
+<rect x="5.5" y="6.5" width="14" height="10" fill="url(#paint0_linear_239_151)" stroke="white"/>
+<path d="M5 5H6V6H5V5Z" fill="#BABDB6"/>
+<path d="M5 17H6V18H5V17Z" fill="#BABDB6"/>
+<path d="M7 5H8V6H7V5Z" fill="#BABDB6"/>
+<path d="M7 17H8V18H7V17Z" fill="#BABDB6"/>
+<path d="M9 5H10V6H9V5Z" fill="#BABDB6"/>
+<path d="M9 17H10V18H9V17Z" fill="#BABDB6"/>
+<path d="M11 5H12V6H11V5Z" fill="#BABDB6"/>
+<path d="M11 17H12V18H11V17Z" fill="#BABDB6"/>
+<path d="M13 5H14V6H13V5Z" fill="#BABDB6"/>
+<path d="M13 17H14V18H13V17Z" fill="#BABDB6"/>
+<path d="M15 5H16V6H15V5Z" fill="#BABDB6"/>
+<path d="M15 17H16V18H15V17Z" fill="#BABDB6"/>
+<path d="M17 5H18V6H17V5Z" fill="#BABDB6"/>
+<path d="M17 17H18V18H17V17Z" fill="#BABDB6"/>
+<path d="M19 5H20V6H19V5Z" fill="#BABDB6"/>
+<path d="M19 17H20V18H19V17Z" fill="#BABDB6"/>
+<path d="M20 6H21V7H20V6Z" fill="#BABDB6"/>
+<path d="M4 6H5V7H4V6Z" fill="#BABDB6"/>
+<path d="M20 8H21V9H20V8Z" fill="#BABDB6"/>
+<path d="M4 8H5V9H4V8Z" fill="#BABDB6"/>
+<path d="M20 10H21V11H20V10Z" fill="#BABDB6"/>
+<path d="M4 10H5V11H4V10Z" fill="#BABDB6"/>
+<path d="M20 12H21V13H20V12Z" fill="#BABDB6"/>
+<path d="M4 12H5V13H4V12Z" fill="#BABDB6"/>
+<path d="M20 14H21V15H20V14Z" fill="#BABDB6"/>
+<path d="M4 14H5V15H4V14Z" fill="#BABDB6"/>
+<path d="M20 16H21V17H20V16Z" fill="#BABDB6"/>
+<path d="M4 16H5V17H4V16Z" fill="#BABDB6"/>
+<path d="M8 5H9V6H8V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M8 17H9V18H8V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M10 5H11V6H10V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M10 17H11V18H10V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M12 5H13V6H12V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M12 17H13V18H12V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M14 5H15V6H14V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M14 17H15V18H14V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M16 5H17V6H16V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M16 17H17V18H16V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M18 5H19V6H18V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M18 17H19V18H18V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 9H21V10H20V9Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 9H5V10H4V9Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 11H21V12H20V11Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 11H5V12H4V11Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 13H21V14H20V13Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 13H5V14H4V13Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 15H21V16H20V15Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 15H5V16H4V15Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 7H5V8H4V7Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 5H5V6H4V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M4 17H5V18H4V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M6 17H7V18H6V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 17H21V18H20V17Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 7H21V8H20V7Z" fill="black" fill-opacity="0.8"/>
+<path d="M20 5H21V6H20V5Z" fill="black" fill-opacity="0.8"/>
+<path d="M6 5H7V6H6V5Z" fill="black" fill-opacity="0.8"/>
+<defs>
+<filter id="filter0_f_239_151" x="1" y="12" width="23" height="10" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="1.5" result="effect1_foregroundBlur_239_151"/>
+</filter>
+<linearGradient id="paint0_linear_239_151" x1="6" y1="7" x2="19" y2="16" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D4D6D1"/>
+<stop offset="1" stop-color="#C4C6C1"/>
+</linearGradient>
+</defs>
+</svg>

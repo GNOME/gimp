@@ -1,0 +1,30 @@
+<svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_548_143)">
+<ellipse cx="16.5" cy="18.5" rx="4.5" ry="1.5" fill="black" fill-opacity="0.15"/>
+</g>
+<path d="M18.158 18H18.1287C17.9497 18 17.7771 17.9335 17.6444 17.8134L7.35059 8.5L8.35059 7.5L18.6227 16.7938C18.7678 16.9251 18.8506 17.1117 18.8506 17.3074C18.8506 17.6899 18.5405 18 18.158 18Z" fill="url(#paint0_linear_548_143)"/>
+<path d="M6.99703 8.14645L6.62536 8.51812L7.01513 8.87077L17.3089 18.1842C17.5336 18.3874 17.8257 18.5 18.1287 18.5H18.158C18.8166 18.5 19.3506 17.966 19.3506 17.3074C19.3506 16.9704 19.208 16.6491 18.9581 16.423L8.68604 7.12923L8.33335 6.81013L7.99703 7.14645L6.99703 8.14645Z" stroke="url(#paint1_linear_548_143)" stroke-opacity="0.8"/>
+<circle cx="7.85059" cy="8" r="6" fill="url(#paint2_radial_548_143)"/>
+<defs>
+<filter id="filter0_f_548_143" x="10" y="15" width="13" height="7" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur_548_143"/>
+</filter>
+<linearGradient id="paint0_linear_548_143" x1="14.3072" y1="11.9584" x2="12.394" y2="14.0416" gradientUnits="userSpaceOnUse">
+<stop stop-color="#A6AE9D"/>
+<stop offset="1" stop-color="#8C9583"/>
+</linearGradient>
+<linearGradient id="paint1_linear_548_143" x1="19.8506" y1="18.849" x2="6.85059" y2="7.15096" gradientUnits="userSpaceOnUse">
+<stop stop-color="#343631"/>
+<stop offset="0.705" stop-color="#343631" stop-opacity="0.7"/>
+<stop offset="1" stop-color="#343631" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="paint2_radial_548_143" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(7.85059 8) rotate(90) scale(6)">
+<stop offset="0.15" stop-color="#FDFDFA"/>
+<stop offset="0.3" stop-color="#FFF175" stop-opacity="0.9"/>
+<stop offset="0.55" stop-color="#FFF175" stop-opacity="0.45"/>
+<stop offset="0.95" stop-color="#FFF175" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

@@ -1,0 +1,33 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_339_46)">
+<g filter="url(#filter0_f_339_46)">
+<ellipse cx="12" cy="23" rx="10" ry="1" fill="black" fill-opacity="0.65"/>
+</g>
+<rect x="2.5" y="1.5" width="19" height="20" rx="0.5" fill="#F2F2F2" stroke="#555753"/>
+<rect x="7.5" y="4.5" width="11" height="12" fill="#E9EAE9" stroke="#C1C1C1"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8 14H9V16H10V14H14V16H15V9H18V8H15V5H14V8H10V5H9V8H8V9H9V13H8V14ZM10 13V9H14V13H10Z" fill="#D2D2D2"/>
+<path d="M8 15.5C11 15.5 17.5 8 17.5 5" stroke="#6B6B6A"/>
+<rect x="5" y="4" width="1" height="13" rx="0.5" fill="url(#paint0_linear_339_46)"/>
+<rect x="7" y="18" width="12" height="1" rx="0.5" fill="url(#paint1_linear_339_46)"/>
+<circle cx="15" cy="10" r="1" fill="#6B6B6A"/>
+<path d="M19 14L15 10V15L16.5 14L18 17H19L17.5 14H19Z" fill="black"/>
+</g>
+<defs>
+<filter id="filter0_f_339_46" x="-2" y="18" width="28" height="10" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_339_46"/>
+</filter>
+<linearGradient id="paint0_linear_339_46" x1="5.5" y1="4" x2="5.5" y2="17" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#303030"/>
+</linearGradient>
+<linearGradient id="paint1_linear_339_46" x1="7" y1="18.5" x2="19" y2="18.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2E2E2E"/>
+<stop offset="1" stop-color="#F6F6F6"/>
+</linearGradient>
+<clipPath id="clip0_339_46">
+<rect width="22" height="22" fill="white" transform="translate(1 1)"/>
+</clipPath>
+</defs>
+</svg>

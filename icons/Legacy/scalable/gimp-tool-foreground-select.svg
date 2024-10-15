@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg21"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <mask
+     id="path-1-inside-1_458_48"
+     fill="#ffffff">
+    <path
+       d="M 20.7897,14.0318 C 20.1963,13.557 20,12.7599 20,12 20,9.79086 18.2091,8 16,8 c -2.2091,0 -4,1.79086 -4,4 0,0.8829 -0.2432,1.8288 -0.9778,2.3185 l -0.1316,0.0878 C 10.3342,14.7772 10,15.4017 10,16.0704 V 19 c 0,1.1046 0.8954,2 2,2 h 8 c 1.1046,0 2,-0.8954 2,-2 v -3.0388 c 0,-0.6075 -0.2762,-1.1821 -0.7506,-1.5617 z"
+       id="path1" />
+  </mask>
+  <path
+     d="M 20.7897,14.0318 C 20.1963,13.557 20,12.7599 20,12 20,9.79086 18.2091,8 16,8 c -2.2091,0 -4,1.79086 -4,4 0,0.8829 -0.2432,1.8288 -0.9778,2.3185 l -0.1316,0.0878 C 10.3342,14.7772 10,15.4017 10,16.0704 V 19 c 0,1.1046 0.8954,2 2,2 h 8 c 1.1046,0 2,-0.8954 2,-2 v -3.0388 c 0,-0.6075 -0.2762,-1.1821 -0.7506,-1.5617 z"
+     fill="url(#paint0_linear_458_48)"
+     stroke="url(#paint1_linear_458_48)"
+     stroke-width="2"
+     mask="url(#path-1-inside-1_458_48)"
+     id="path2"
+     style="fill:url(#paint0_linear_458_48);stroke:url(#paint1_linear_458_48)" />
+  <mask
+     id="path-2-inside-2_458_48"
+     fill="#ffffff">
+    <path
+       d="M 13.547,9.08252 C 13.8379,8.44852 14,7.7432 14,7 14,4.23858 11.7614,2 9,2 6.23858,2 4,4.23858 4,7 4,7.7432 4.16215,8.44852 4.453,9.08252 4.37218,9.11756 4.29581,9.16335 4.22609,9.21913 L 2.37531,10.6998 C 2.13809,10.8895 2,11.1768 2,11.4806 V 16 c 0,1.1046 0.89543,2 2,2 h 10 c 1.1046,0 2,-0.8954 2,-2 v -4.5194 c 0,-0.3038 -0.1381,-0.5911 -0.3753,-0.7808 L 13.7739,9.21913 C 13.7042,9.16335 13.6278,9.11756 13.547,9.08252 Z"
+       id="path3" />
+  </mask>
+  <path
+     d="M 13.547,9.08252 C 13.8379,8.44852 14,7.7432 14,7 14,4.23858 11.7614,2 9,2 6.23858,2 4,4.23858 4,7 4,7.7432 4.16215,8.44852 4.453,9.08252 4.37218,9.11756 4.29581,9.16335 4.22609,9.21913 L 2.37531,10.6998 C 2.13809,10.8895 2,11.1768 2,11.4806 V 16 c 0,1.1046 0.89543,2 2,2 h 10 c 1.1046,0 2,-0.8954 2,-2 v -4.5194 c 0,-0.3038 -0.1381,-0.5911 -0.3753,-0.7808 L 13.7739,9.21913 C 13.7042,9.16335 13.6278,9.11756 13.547,9.08252 Z"
+     fill="#DCDCDC"
+     stroke="#1F1F1F"
+     stroke-opacity="0.5"
+     stroke-width="2"
+     stroke-dasharray="2 2"
+     mask="url(#path-2-inside-2_458_48)"
+     id="path4"
+     style="fill:#ffffff;fill-opacity:0.5;stroke:#000000;stroke-dasharray:1.6, 1.1;stroke-dashoffset:1.58;stroke-opacity:0.5" />
+  <path
+     d="M 3.4453,10.7031 5.74808,9.16795 C 5.91234,9.05844 6.10535,9 6.30278,9 h 5.39442 c 0.1974,0 0.3905,0.05844 0.5547,0.16795 l 2.3028,1.53515 C 14.8329,10.8886 15,11.2008 15,11.5352 V 16 c 0,0.5523 -0.4477,1 -1,1 H 4 C 3.44772,17 3,16.5523 3,16 v -4.4648 c 0,-0.3344 0.1671,-0.6466 0.4453,-0.8321 z"
+     fill="#5c3566"
+     id="path5" />
+  <mask
+     id="path-4-inside-3_458_48"
+     fill="#ffffff">
+    <path
+       d="m 4,11.5 3,-2 h 4 l 3,2 V 16 H 4 Z"
+       id="path6" />
+  </mask>
+  <path
+     d="m 4,11.5 3,-2 h 4 l 3,2 V 16 H 4 Z"
+     fill="url(#paint2_radial_458_48)"
+     stroke="#ffffff"
+     stroke-opacity="0.15"
+     stroke-width="2"
+     mask="url(#path-4-inside-3_458_48)"
+     id="path7"
+     style="fill:url(#paint2_radial_458_48)" />
+  <path
+     d="M 8.5,16 7,10.5 h 4 z"
+     fill="url(#paint3_linear_458_48)"
+     id="path8"
+     style="fill:url(#paint3_linear_458_48)" />
+  <path
+     d="M 8.5,12.5 8,10.5 h 2 z"
+     fill="url(#paint4_linear_458_48)"
+     id="path9"
+     style="fill:url(#paint4_linear_458_48)" />
+  <circle
+     cx="9"
+     cy="7"
+     r="3.5"
+     fill="url(#paint5_radial_458_48)"
+     stroke="#CC5E04"
+     id="circle9"
+     style="fill:url(#paint5_radial_458_48);stroke:#c16404;stroke-opacity:1" />
+  <defs
+     id="defs21">
+    <linearGradient
+       id="paint0_linear_458_48"
+       x1="16"
+       y1="9"
+       x2="16"
+       y2="20"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#C7C7C7"
+         id="stop9" />
+      <stop
+         offset="1"
+         stop-color="white"
+         id="stop10" />
+    </linearGradient>
+    <linearGradient
+       id="paint1_linear_458_48"
+       x1="16"
+       y1="8"
+       x2="16"
+       y2="21"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#838383"
+         id="stop11" />
+      <stop
+         offset="1"
+         stop-color="#B4B4B3"
+         id="stop12" />
+    </linearGradient>
+    <radialGradient
+       id="paint2_radial_458_48"
+       cx="0"
+       cy="0"
+       r="1"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,4.5,-6.92308,0,9,11.5)">
+      <stop
+         stop-color="#386DB1"
+         id="stop13" />
+      <stop
+         offset="1"
+         stop-color="#32629F"
+         id="stop14" />
+    </radialGradient>
+    <linearGradient
+       id="paint3_linear_458_48"
+       x1="9"
+       y1="10.5"
+       x2="9"
+       y2="14"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#A9A3B9"
+         id="stop15" />
+      <stop
+         offset="0.5"
+         stop-color="#D6DBE3"
+         id="stop16" />
+      <stop
+         offset="1"
+         stop-color="#6B8BB4"
+         id="stop17" />
+    </linearGradient>
+    <linearGradient
+       id="paint4_linear_458_48"
+       x1="9.5"
+       y1="11"
+       x2="9.5"
+       y2="13.3333"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#614D7E"
+         id="stop18" />
+      <stop
+         offset="1"
+         stop-color="#5A85B9"
+         id="stop19" />
+    </linearGradient>
+    <radialGradient
+       id="paint5_radial_458_48"
+       cx="0"
+       cy="0"
+       r="1"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,3.5,-3.5,0,8,6)">
+      <stop
+         stop-color="#F0CE99"
+         id="stop20" />
+      <stop
+         offset="1"
+         stop-color="#E3A256"
+         id="stop21" />
+    </radialGradient>
+  </defs>
+</svg>
