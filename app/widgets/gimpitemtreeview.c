@@ -2595,8 +2595,9 @@ static void
 gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
                                             GimpItemTreeView *view)
 {
-  GimpImage *image     = view->priv->image;
-  GList     *drawables = gimp_image_get_selected_drawables (image);
+  GimpImage    *image     = view->priv->image;
+  GimpDrawable *drawable  = NULL;
+  GList        *drawables = gimp_image_get_selected_drawables (image);
 
   /* TODO: Revisit when we can apply filters to multiple layers */
   if (g_list_length (drawables) != 1)
@@ -2635,7 +2636,8 @@ gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
-  if (view->priv->effects_drawable)
+  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
+  if (drawable)
     {
       GeglNode *op =
         gimp_drawable_filter_get_operation (view->priv->effects_filter);
@@ -2718,7 +2720,7 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
       if (index >= 0)
         {
           GimpChannel   *mask = NULL;
-          GeglRectangle  rect;
+          GeglRectangle  rect = { 0, 0, 0, 0 };
 
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
                                                drawable,
@@ -2785,7 +2787,7 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
         {
           GimpDrawableFilter *moved_filter = NULL;
           GimpChannel        *mask         = NULL;
-          GeglRectangle       rect;
+          GeglRectangle       rect         = { 0, 0, 0, 0 };
 
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
                                                drawable,

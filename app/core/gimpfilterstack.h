@@ -35,9 +35,10 @@ typedef struct _GimpFilterStackClass GimpFilterStackClass;
 
 struct _GimpFilterStack
 {
-  GimpList  parent_instance;
+  GimpList       parent_instance;
 
-  GeglNode *graph;
+  GeglNode      *graph;
+  GeglRectangle  bounding_box;
 };
 
 struct _GimpFilterStackClass

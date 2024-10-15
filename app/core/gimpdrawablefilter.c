@@ -868,7 +868,15 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
         }
       else
         {
-          GeglRectangle rect;
+          GimpContainer *filters;
+          GeglRectangle  rect;
+
+          /* Update filter stack crop */
+          rect    = gegl_node_get_bounding_box (filter->operation);
+          filters = gimp_drawable_get_filters (filter->drawable);
+
+          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
+                                              &rect);
 
           if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (filter->drawable)))
             gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
@@ -926,6 +934,8 @@ gimp_drawable_filter_layer_mask_freeze (GimpDrawableFilter *filter)
 void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
                                         GeglRectangle      *rect)
 {
+  GimpContainer *filters;
+
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
   if (rect)
@@ -941,8 +951,7 @@ void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
 
       if (gegl_pspec_width != NULL)
         {
-          if (gimp_gegl_param_spec_has_key (gegl_pspec_width,
-                                            "role",
+          if (gimp_gegl_param_spec_has_key (gegl_pspec_width, "role",
                                             "output-extent"))
             {
               gegl_node_set (filter->operation, "width", rect->width, NULL);
@@ -951,14 +960,17 @@ void gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
         }
       if (gegl_pspec_height != NULL)
         {
-          if (gimp_gegl_param_spec_has_key (gegl_pspec_height,
-                                            "role",
+          if (gimp_gegl_param_spec_has_key (gegl_pspec_height, "role",
                                             "output-extent"))
             {
               gegl_node_set (filter->operation, "height", rect->height, NULL);
               filter->filter_area.height = rect->height;
             }
         }
+
+      /* Update filter stack crop */
+      filters = gimp_drawable_get_filters (filter->drawable);
+      gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters), rect);
 
       gimp_drawable_filter_set_clip (filter, TRUE);
       gimp_drawable_filter_set_clip (filter, FALSE);

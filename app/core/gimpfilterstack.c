@@ -75,6 +75,10 @@ gimp_filter_stack_class_init (GimpFilterStackClass *klass)
 static void
 gimp_filter_stack_init (GimpFilterStack *stack)
 {
+  stack->bounding_box.x      = 0;
+  stack->bounding_box.y      = 0;
+  stack->bounding_box.width  = 0;
+  stack->bounding_box.height = 0;
 }
 
 static void
@@ -228,33 +232,27 @@ void
 gimp_filter_stack_get_bounding_box (GimpFilterStack *stack,
                                     GeglRectangle   *rect)
 {
-  GList         *list;
-  GeglRectangle  current_rect;
-
   g_return_if_fail (GIMP_IS_FILTER_STACK (stack));
 
-  for (list = GIMP_LIST (stack)->queue->tail;
-       list; list = g_list_previous (list))
-    {
-      if (GIMP_IS_DRAWABLE_FILTER (list->data))
-        {
-          GimpFilter *filter = GIMP_FILTER (list->data);
+  if (rect->x > stack->bounding_box.x)
+    rect->x = stack->bounding_box.x;
+  else
+    stack->bounding_box.x = rect->x;
 
-          current_rect = gegl_node_get_bounding_box (gimp_filter_get_node (filter));
+  if (rect->y > stack->bounding_box.y)
+    rect->y = stack->bounding_box.y;
+  else
+    stack->bounding_box.y = rect->y;
 
-          if (rect->x > current_rect.x)
-            rect->x = current_rect.x;
+  if (rect->x + rect->width < stack->bounding_box.x + stack->bounding_box.width)
+    rect->width = (stack->bounding_box.x + stack->bounding_box.width - rect->x);
+  else
+    stack->bounding_box.width = (rect->x + rect->width - stack->bounding_box.x);
 
-          if (rect->y > current_rect.y)
-            rect->y = current_rect.y;
-
-          if (rect->x + rect->width < current_rect.x + current_rect.width)
-            rect->width = (current_rect.x + current_rect.width - rect->x);
-
-          if (rect->y + rect->height < current_rect.y + current_rect.height)
-            rect->height = (current_rect.y + current_rect.height - rect->y);
-        }
-    }
+  if (rect->y + rect->height < stack->bounding_box.y + stack->bounding_box.height)
+    rect->height = (stack->bounding_box.y + stack->bounding_box.height - rect->y);
+  else
+    stack->bounding_box.height = (rect->y + rect->height - stack->bounding_box.y);
 }
 
 
