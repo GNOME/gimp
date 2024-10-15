@@ -55,13 +55,14 @@ fi
 patch_app_id '-R'
 
 
-# INSTALL GO-APPIMAGETOOL
+# INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
 echo '(INFO): downloading go-appimagetool'
 if [ -f "*appimagetool*.AppImage" ]; then
   rm *appimagetool*.AppImage
 fi
 if [ "$GITLAB_CI" ]; then
   apt-get install -y --no-install-recommends wget >/dev/null 2>&1
+  apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
 fi
 arch=$(uname -m)
 
@@ -161,6 +162,7 @@ conf_app ()
   esac
   var_path=$(echo $prefix/$2 | sed "s|${prefix}/||g")
   sed -i "s|${1}_WILD|usr/${var_path}|" build/linux/appimage/AppRun
+  eval $1="usr/$var_path"
 }
 
 wipe_usr ()
@@ -281,10 +283,18 @@ bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/org.gimp.GIMP.desktop"
 "./$go_appimagetool" --appimage-extract-and-run -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop &> appimagetool.log
 
-## Manual adjustments (go-appimagetool don't handle these things gracefully)
-### Undo the mess that go-appimagetool makes on the prefix which breaks babl and gegl)
+## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully)
+### Ensure that LD is in right dir
 cp -r $APP_DIR/lib64 $USR_DIR
 rm -r $APP_DIR/lib64
+chmod +x "$APP_DIR/$LD_LINUX"
+exec_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
+for exec in "${exec_array[@]}"; do
+  if [[ ! "$exec" =~ 'ELF' ]]; then
+    patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
+  fi
+done
+### Undo the mess that go-appimagetool makes on the prefix which breaks babl and GEGL
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
 ### Remove unnecessary files bunbled by go-appimagetool
@@ -301,7 +311,6 @@ rm -r $APP_DIR/etc
 echo '(INFO): configuring AppRun'
 GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 sed -i "s|GIMP_APP_VERSION|${GIMP_APP_VERSION}|" build/linux/appimage/AppRun
-sed -i "s|DEBIAN_VERSION|$(cat /etc/debian_version)|" build/linux/appimage/AppRun
 mv build/linux/appimage/AppRun $APP_DIR
 chmod +x $APP_DIR/AppRun
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun

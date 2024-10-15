@@ -14,9 +14,8 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 
 ## Minimum runtime paths
 export PATH="$HERE"/usr/bin/:"$PATH"
-export LD_LIBRARY_PATH="$HERE"/usr/lib/:"$HERE"/usr/lib/x86_64-linux-gnu/:"$HERE"/usr/lib64/:"$LD_LIBRARY_PATH"
 export XDG_DATA_DIRS="$HERE"/usr/share/:"$XDG_DATA_DIRS"
-LD_LINUX="$HERE/LD_LINUX_WILD --inhibit-cache"
+LD_LINUX="$HERE/LD_LINUX_WILD"
 
 ## GTK-related paths
 export GIO_MODULE_DIR="$HERE"/GIO_MODULE_DIR_WILD/modules
@@ -42,10 +41,6 @@ export PYTHONDONTWRITEBYTECODE=1
 
 
 # RUN MAIN_BIN
-echo "This is a CI build of GIMP compatible with Debian DEBIAN_VERSION. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/7661"
-echo '.js   (JavaScript) plug-ins | supported.'
-echo '.py   (Python) plug-ins     | supported.'
-echo '.scm  (ScriptFu) plug-ins   | supported.'
-echo '.vala (Vala) plug-ins       | supported.'
-
-LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libc.so.6 "$HERE"/usr/bin/gimp-GIMP_APP_VERSION "$@"
+# FIXME: We need to run on squash-fs dir since LD is hardlinked into executables
+cd "$HERE"
+exec "${LD_LINUX}" --inhibit-cache "$HERE"/usr/bin/gimp-GIMP_APP_VERSION "$@"
