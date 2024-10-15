@@ -541,15 +541,15 @@ gimp_color_area_set_color (GimpColorArea *area,
 
   priv = gimp_color_area_get_instance_private (area);
 
-  if (gimp_color_is_perceptually_identical (priv->color, color))
-    return;
+  if (! gimp_color_is_perceptually_identical (priv->color, color))
+    {
+      priv->needs_render = TRUE;
+      gtk_widget_queue_draw (GTK_WIDGET (area));
+    }
 
   color = gegl_color_duplicate (color);
   g_clear_object (&priv->color);
   priv->color = color;
-
-  priv->needs_render = TRUE;
-  gtk_widget_queue_draw (GTK_WIDGET (area));
 
   g_object_notify (G_OBJECT (area), "color");
 

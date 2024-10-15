@@ -457,6 +457,7 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
 {
   GimpColorSelectionPrivate *priv;
   GeglColor                 *old_color;
+  UpdateType                 update;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (GEGL_IS_COLOR (color));
@@ -466,11 +467,12 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
   old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
 
-  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
-    {
-      gimp_color_selection_update (selection, UPDATE_ALL);
-      gimp_color_selection_color_changed (selection);
-    }
+  update = UPDATE_ALL;
+  if (gimp_color_is_perceptually_identical (color, old_color))
+    update &= ~UPDATE_COLOR;
+
+  gimp_color_selection_update (selection, update);
+  gimp_color_selection_color_changed (selection);
 
   g_object_unref (old_color);
 }
@@ -731,18 +733,19 @@ gimp_color_selection_notebook_changed (GimpColorSelector  *selector,
 {
   GimpColorSelectionPrivate *priv;
   GeglColor                 *old_color;
+  UpdateType                 update;
 
   priv = gimp_color_selection_get_instance_private (selection);
 
   old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
 
-  if (! gimp_color_is_perceptually_identical (priv->color, old_color))
-    {
-      gimp_color_selection_update (selection,
-                                   UPDATE_SCALES | UPDATE_ENTRY | UPDATE_COLOR);
-      gimp_color_selection_color_changed (selection);
-    }
+  update = UPDATE_SCALES | UPDATE_ENTRY;
+  if (! gimp_color_is_perceptually_identical (color, old_color))
+    update |= UPDATE_COLOR;
+
+  gimp_color_selection_update (selection, update);
+  gimp_color_selection_color_changed (selection);
 
   g_object_unref (old_color);
 }
@@ -753,15 +756,23 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
                                      GimpColorSelection *selection)
 {
   GimpColorSelectionPrivate *priv;
+  UpdateType                 update;
+  GeglColor                 *old_color;
 
   priv = gimp_color_selection_get_instance_private (selection);
 
-  g_object_unref (priv->color);
+  old_color = priv->color;
   priv->color = gegl_color_duplicate (color);
 
-  gimp_color_selection_update (selection,
-                               UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
+  update = UPDATE_ENTRY | UPDATE_NOTEBOOK;
+  if (! gimp_color_is_perceptually_identical (color, old_color))
+    update |= UPDATE_COLOR;
+
+  gimp_color_selection_update (selection, update);
+
   gimp_color_selection_color_changed (selection);
+
+  g_object_unref (old_color);
 }
 
 static void

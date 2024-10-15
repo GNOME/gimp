@@ -227,30 +227,26 @@ gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
                                 GeglColor         *color)
 {
   GimpColorHexEntryPrivate *private;
+  gchar                     buffer[8];
+  guchar                    rgb[3];
 
   g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
   g_return_if_fail (GEGL_IS_COLOR (color));
 
   private = gimp_color_hex_entry_get_instance_private (entry);
 
-  if (! gimp_color_is_perceptually_identical (private->color, color))
-    {
-      gchar  buffer[8];
-      guchar rgb[3];
+  g_object_unref (private->color);
+  private->color = gegl_color_duplicate (color);
 
-      g_object_unref (private->color);
-      private->color = gegl_color_duplicate (color);
+  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
+  g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", rgb[0], rgb[1], rgb[2]);
 
-      gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
-      g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", rgb[0], rgb[1], rgb[2]);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
 
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  /* move cursor to the end */
+  gtk_editable_set_position (GTK_EDITABLE (entry), -1);
 
-      /* move cursor to the end */
-      gtk_editable_set_position (GTK_EDITABLE (entry), -1);
-
-     g_signal_emit (entry, entry_signals[COLOR_CHANGED], 0);
-    }
+  g_signal_emit (entry, entry_signals[COLOR_CHANGED], 0);
 }
 
 /**
