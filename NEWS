@@ -82,6 +82,7 @@ Tools:
   - Paint Select tool now handles the standard Shift/Ctrl modifier for
     adding or subtracting to selection. The tool is still experimental
     and disabled by default though.
+  - Color Balance and Hue-Saturation effects work in sRGB space.
 
 Graphical User Interface:
 
@@ -301,8 +302,8 @@ API:
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
-    * GimpCMYK type and all usage was removed.
-    * GimpHSV type and all usage was removed.
+    * GimpRGB, GimpCMYK, GimpHSV, GimpHSL type and all usage was
+      removed. Related API were deleted too.
   - PDB:
     * Triple-backtick blocks in PDB-generated functions' descriptions is
       now recognized so that pre-formatted code is kept as-is. E.g.
