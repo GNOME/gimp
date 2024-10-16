@@ -38,24 +38,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_CHAIN_BUTTON (gimp_chain_button_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpChainButton, gimp_chain_button, GIMP, CHAIN_BUTTON, GtkGrid)
-
-struct _GimpChainButtonClass
-{
-  GtkGridClass  parent_class;
-
-  void (* toggled)  (GimpChainButton *button);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpChainButton, gimp_chain_button, GIMP, CHAIN_BUTTON, GtkGrid)
 
 
 GtkWidget   * gimp_chain_button_new           (GimpChainPosition  position);
