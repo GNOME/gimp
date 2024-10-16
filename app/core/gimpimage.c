@@ -2783,7 +2783,8 @@ gimp_image_get_xcf_version (GimpImage    *image,
   items = gimp_image_get_layer_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpLayer *layer = GIMP_LAYER (list->data);
+      GimpLayer     *layer = GIMP_LAYER (list->data);
+      GimpContainer *filters;
 
       switch (gimp_layer_get_mode (layer))
         {
@@ -2934,7 +2935,8 @@ gimp_image_get_xcf_version (GimpImage    *image,
           version = MAX (19, version);
         }
 
-      if (gimp_drawable_has_filters (GIMP_DRAWABLE (layer)))
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+      if (gimp_container_get_n_children (filters) > 0)
         {
           ADD_REASON (g_strdup_printf (_("Layer effects were added in %s"),
                                        "GIMP 3.0"));
