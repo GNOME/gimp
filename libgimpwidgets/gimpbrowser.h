@@ -32,26 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_BROWSER (gimp_browser_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpBrowser, gimp_browser, GIMP, BROWSER, GtkPaned)
-
-struct _GimpBrowserClass
-{
-  GtkPanedClass  parent_class;
-
-  void (* search) (GimpBrowser *browser,
-                   const gchar *search_string,
-                   gint         search_type);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpBrowser, gimp_browser, GIMP, BROWSER, GtkPaned)
 
 
 GtkWidget * gimp_browser_new                (void);
