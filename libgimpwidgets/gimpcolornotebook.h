@@ -35,22 +35,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_NOTEBOOK (gimp_color_notebook_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorNotebook, gimp_color_notebook, GIMP, COLOR_NOTEBOOK, GimpColorSelector)
-
-struct _GimpColorNotebookClass
-{
-  GimpColorSelectorClass  parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpColorNotebook, gimp_color_notebook, GIMP, COLOR_NOTEBOOK, GimpColorSelector)
 
 
 GtkWidget         * gimp_color_notebook_set_has_page         (GimpColorNotebook *notebook,
