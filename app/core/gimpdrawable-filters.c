@@ -58,7 +58,7 @@ gimp_drawable_get_filters (GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_has_filters (GimpDrawable *drawable)
+gimp_drawable_has_visible_filters (GimpDrawable *drawable)
 {
   GList *list;
 

@@ -1548,7 +1548,7 @@ gimp_drawable_get_buffer_with_effects (GimpDrawable *drawable)
 
   if (drawable->private->paint_count == 0)
     {
-      if (gimp_drawable_has_filters (drawable))
+      if (gimp_drawable_has_visible_filters (drawable))
         {
           GeglNode                *source = NULL;
           GeglBuffer              *buffer;
@@ -2076,7 +2076,7 @@ gimp_drawable_end_paint (GimpDrawable *drawable)
   drawable->private->paint_count--;
 
   /* Refresh filters after painting */
-  if (gimp_drawable_has_filters (drawable) &&
+  if (gimp_drawable_has_visible_filters (drawable) &&
       drawable->private->paint_count == 0)
     {
       gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);

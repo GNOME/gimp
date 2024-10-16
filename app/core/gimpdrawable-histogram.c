@@ -122,7 +122,7 @@ gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
       GeglBuffer      *buffer      = gimp_drawable_get_buffer (drawable);
       GimpProjectable *projectable = NULL;
 
-      if (with_filters && gimp_drawable_has_filters (drawable))
+      if (with_filters && gimp_drawable_has_visible_filters (drawable))
         {
           GimpTileHandlerValidate *validate;
           GeglNode                *node;

@@ -2359,7 +2359,7 @@ gimp_group_layer_proj_update (GimpProjection *proj,
        * negatively impacts the performance of the warp tool, which does perform
        * accurate drawable updates while using a filter.
        */
-      if (gimp_drawable_has_filters (GIMP_DRAWABLE (group)))
+      if (gimp_drawable_has_visible_filters (GIMP_DRAWABLE (group)))
         {
           width  = -1;
           height = -1;
