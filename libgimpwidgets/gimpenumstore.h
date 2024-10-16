@@ -32,21 +32,7 @@
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_STORE (gimp_enum_store_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpEnumStore, gimp_enum_store, GIMP, ENUM_STORE, GimpIntStore)
-
-struct _GimpEnumStoreClass
-{
-  GimpIntStoreClass  parent_class;
-
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpEnumStore, gimp_enum_store, GIMP, ENUM_STORE, GimpIntStore)
 
 
 GtkListStore * gimp_enum_store_new                    (GType    enum_type);
