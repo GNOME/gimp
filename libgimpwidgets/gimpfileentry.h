@@ -34,24 +34,8 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_FILE_ENTRY (gimp_file_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpFileEntry, gimp_file_entry, GIMP, FILE_ENTRY, GtkBox)
+G_DECLARE_FINAL_TYPE (GimpFileEntry, gimp_file_entry, GIMP, FILE_ENTRY, GtkBox)
 
-struct _GimpFileEntryClass
-{
-  GtkBoxClass  parent_class;
-
-  void (* filename_changed) (GimpFileEntry *entry);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
 
 GtkWidget * gimp_file_entry_new          (const gchar   *title,
                                           const gchar   *filename,

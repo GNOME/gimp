@@ -70,8 +70,10 @@ enum
   LAST_SIGNAL
 };
 
-typedef struct _GimpFileEntryPrivate
+struct _GimpFileEntry
 {
+  GtkBox     parent_instance;
+
   GtkWidget *file_exists;
   GtkWidget *entry;
   GtkWidget *browse_button;
@@ -81,7 +83,7 @@ typedef struct _GimpFileEntryPrivate
   gchar     *title;
   gboolean   dir_only;
   gboolean   check_valid;
-} GimpFileEntryPrivate;
+};
 
 
 static void   gimp_file_entry_dispose              (GObject       *object);
@@ -100,7 +102,7 @@ static void   gimp_file_entry_browse_clicked       (GtkWidget     *widget,
 static void   gimp_file_entry_check_filename       (GimpFileEntry *entry);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpFileEntry, gimp_file_entry, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_BOX)
 
 #define parent_class gimp_file_entry_parent_class
 
@@ -121,27 +123,23 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
     g_signal_new ("filename-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFileEntryClass, filename_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->dispose   = gimp_file_entry_dispose;
-
-  klass->filename_changed = NULL;
 }
 
 static void
 gimp_file_entry_init (GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-  GtkWidget            *image;
-  GtkWidget            *button;
+  GtkWidget *image;
+  GtkWidget *button;
 
-  priv              = gimp_file_entry_get_instance_private (entry);
-  priv->title       = NULL;
-  priv->file_dialog = NULL;
-  priv->check_valid = FALSE;
-  priv->file_exists = NULL;
+  entry->title       = NULL;
+  entry->file_dialog = NULL;
+  entry->check_valid = FALSE;
+  entry->file_exists = NULL;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (entry),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -168,30 +166,30 @@ gimp_file_entry_init (GimpFileEntry *entry)
                            _("Show file location in the file manager"),
                            NULL);
 
-  priv->browse_button = gtk_button_new ();
-  gtk_box_pack_end (GTK_BOX (entry), priv->browse_button, FALSE, FALSE, 0);
-  gtk_widget_show (priv->browse_button);
+  entry->browse_button = gtk_button_new ();
+  gtk_box_pack_end (GTK_BOX (entry), entry->browse_button, FALSE, FALSE, 0);
+  gtk_widget_show (entry->browse_button);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_OPEN,
                                         GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (priv->browse_button), image);
+  gtk_container_add (GTK_CONTAINER (entry->browse_button), image);
   gtk_widget_show (image);
 
-  g_signal_connect (priv->browse_button, "clicked",
+  g_signal_connect (entry->browse_button, "clicked",
                     G_CALLBACK (gimp_file_entry_browse_clicked),
                     entry);
 
-  priv->entry = gtk_entry_new ();
-  gtk_box_pack_end (GTK_BOX (entry), priv->entry, TRUE, TRUE, 0);
-  gtk_widget_show (priv->entry);
+  entry->entry = gtk_entry_new ();
+  gtk_box_pack_end (GTK_BOX (entry), entry->entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry->entry);
 
-  g_signal_connect (priv->entry, "changed",
+  g_signal_connect (entry->entry, "changed",
                     G_CALLBACK (gimp_file_entry_entry_changed),
                     button);
-  g_signal_connect (priv->entry, "activate",
+  g_signal_connect (entry->entry, "activate",
                     G_CALLBACK (gimp_file_entry_entry_activate),
                     entry);
-  g_signal_connect (priv->entry, "focus-out-event",
+  g_signal_connect (entry->entry, "focus-out-event",
                     G_CALLBACK (gimp_file_entry_entry_focus_out),
                     entry);
 }
@@ -199,14 +197,11 @@ gimp_file_entry_init (GimpFileEntry *entry)
 static void
 gimp_file_entry_dispose (GObject *object)
 {
-  GimpFileEntry        *entry = GIMP_FILE_ENTRY (object);
-  GimpFileEntryPrivate *priv;
+  GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
 
-  priv = gimp_file_entry_get_instance_private (entry);
+  g_clear_pointer (&entry->file_dialog, gtk_widget_destroy);
 
-  g_clear_pointer (&priv->file_dialog, gtk_widget_destroy);
-
-  g_clear_pointer (&priv->title, g_free);
+  g_clear_pointer (&entry->title, g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -229,32 +224,29 @@ gimp_file_entry_new (const gchar *title,
                      gboolean     dir_only,
                      gboolean     check_valid)
 {
-  GimpFileEntry        *entry;
-  GimpFileEntryPrivate *priv;
+  GimpFileEntry *entry;
 
   entry = g_object_new (GIMP_TYPE_FILE_ENTRY, NULL);
 
-  priv = gimp_file_entry_get_instance_private (entry);
+  entry->title       = g_strdup (title);
+  entry->dir_only    = dir_only;
+  entry->check_valid = check_valid;
 
-  priv->title       = g_strdup (title);
-  priv->dir_only    = dir_only;
-  priv->check_valid = check_valid;
-
-  gimp_help_set_help_data (priv->browse_button,
-                           priv->dir_only ?
+  gimp_help_set_help_data (entry->browse_button,
+                           entry->dir_only ?
                            _("Open a file selector to browse your folders") :
                            _("Open a file selector to browse your files"),
                            NULL);
 
   if (check_valid)
     {
-      priv->file_exists = gtk_image_new_from_icon_name ("gtk-no",
+      entry->file_exists = gtk_image_new_from_icon_name ("gtk-no",
                                                          GTK_ICON_SIZE_BUTTON);
-      gtk_box_pack_start (GTK_BOX (entry), priv->file_exists, FALSE, FALSE, 0);
-      gtk_widget_show (priv->file_exists);
+      gtk_box_pack_start (GTK_BOX (entry), entry->file_exists, FALSE, FALSE, 0);
+      gtk_widget_show (entry->file_exists);
 
-      gimp_help_set_help_data (priv->file_exists,
-                               priv->dir_only ?
+      gimp_help_set_help_data (entry->file_exists,
+                               entry->dir_only ?
                                _("Indicates whether or not the folder exists") :
                                _("Indicates whether or not the file exists"),
                                NULL);
@@ -276,15 +268,12 @@ gimp_file_entry_new (const gchar *title,
 gchar *
 gimp_file_entry_get_filename (GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-  gchar                *utf8;
-  gchar                *filename;
+  gchar *utf8;
+  gchar *filename;
 
   g_return_val_if_fail (GIMP_IS_FILE_ENTRY (entry), NULL);
 
-  priv = gimp_file_entry_get_instance_private (entry);
-
-  utf8 = gtk_editable_get_chars (GTK_EDITABLE (priv->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
 
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
 
@@ -306,24 +295,21 @@ void
 gimp_file_entry_set_filename (GimpFileEntry *entry,
                               const gchar   *filename)
 {
-  GimpFileEntryPrivate *priv;
-  gchar                *utf8;
+  gchar *utf8;
 
   g_return_if_fail (GIMP_IS_FILE_ENTRY (entry));
-
-  priv = gimp_file_entry_get_instance_private (entry);
 
   if (filename)
     utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
   else
     utf8 = g_strdup ("");
 
-  gtk_entry_set_text (GTK_ENTRY (priv->entry), utf8);
+  gtk_entry_set_text (GTK_ENTRY (entry->entry), utf8);
   g_free (utf8);
 
   /*  update everything
    */
-  gimp_file_entry_entry_activate (priv->entry, entry);
+  gimp_file_entry_entry_activate (entry->entry, entry);
 }
 
 /**
@@ -337,11 +323,7 @@ gimp_file_entry_set_filename (GimpFileEntry *entry,
 GtkWidget *
 gimp_file_entry_get_entry (GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-
-  priv = gimp_file_entry_get_instance_private (entry);
-
-  return priv->entry;
+  return entry->entry;
 }
 
 /* Private Functions */
@@ -362,12 +344,9 @@ static void
 gimp_file_entry_entry_activate (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-  gchar                *utf8;
-  gchar                *filename;
-  gint                  len;
-
-  priv = gimp_file_entry_get_instance_private (entry);
+  gchar *utf8;
+  gchar *filename;
+  gint   len;
 
   /*  filenames still need more sanity checking
    *  (erase double G_DIR_SEPARATORS, ...)
@@ -381,16 +360,16 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
 
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
 
-  g_signal_handlers_block_by_func (priv->entry,
+  g_signal_handlers_block_by_func (entry->entry,
                                    gimp_file_entry_entry_activate,
                                    entry);
-  gtk_entry_set_text (GTK_ENTRY (priv->entry), utf8);
-  g_signal_handlers_unblock_by_func (priv->entry,
+  gtk_entry_set_text (GTK_ENTRY (entry->entry), utf8);
+  g_signal_handlers_unblock_by_func (entry->entry,
                                      gimp_file_entry_entry_activate,
                                      entry);
 
-  if (priv->file_dialog)
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (priv->file_dialog),
+  if (entry->file_dialog)
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (entry->file_dialog),
                                    filename);
 
   g_free (filename);
@@ -398,7 +377,7 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
 
   gimp_file_entry_check_filename (entry);
 
-  gtk_editable_set_position (GTK_EDITABLE (priv->entry), -1);
+  gtk_editable_set_position (GTK_EDITABLE (entry->entry), -1);
 
   g_signal_emit (entry, gimp_file_entry_signals[FILENAME_CHANGED], 0);
 }
@@ -435,14 +414,11 @@ static void
 gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
                                       GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-  gchar                *utf8;
-  GFile                *file;
-  GError               *error = NULL;
+  gchar  *utf8;
+  GFile  *file;
+  GError *error = NULL;
 
-  priv = gimp_file_entry_get_instance_private (entry);
-
-  utf8 = gtk_editable_get_chars (GTK_EDITABLE (priv->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
   file = g_file_parse_name (utf8);
   g_free (utf8);
 
@@ -460,32 +436,29 @@ static void
 gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-  GtkFileChooser       *chooser;
-  gchar                *utf8;
-  gchar                *filename;
+  GtkFileChooser *chooser;
+  gchar          *utf8;
+  gchar          *filename;
 
-  priv = gimp_file_entry_get_instance_private (entry);
-
-  utf8 = gtk_editable_get_chars (GTK_EDITABLE (priv->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
   g_free (utf8);
 
-  if (! priv->file_dialog)
+  if (! entry->file_dialog)
     {
-      const gchar *title = priv->title;
+      const gchar *title = entry->title;
 
       if (! title)
         {
-          if (priv->dir_only)
+          if (entry->dir_only)
             title = _("Select Folder");
           else
             title = _("Select File");
         }
 
-      priv->file_dialog =
+      entry->file_dialog =
         gtk_file_chooser_dialog_new (title, NULL,
-                                     priv->dir_only ?
+                                     entry->dir_only ?
                                      GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER :
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
@@ -494,12 +467,12 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
                                      NULL);
 
-        gimp_dialog_set_alternative_button_order (GTK_DIALOG (priv->file_dialog),
+        gimp_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
                                                   GTK_RESPONSE_OK,
                                                   GTK_RESPONSE_CANCEL,
                                                   -1);
 
-      chooser = GTK_FILE_CHOOSER (priv->file_dialog);
+      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
 
       gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
       gtk_window_set_role (GTK_WINDOW (chooser),
@@ -518,7 +491,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
     }
   else
     {
-      chooser = GTK_FILE_CHOOSER (priv->file_dialog);
+      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
     }
 
   gtk_file_chooser_set_filename (chooser, filename);
@@ -532,28 +505,25 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 static void
 gimp_file_entry_check_filename (GimpFileEntry *entry)
 {
-  GimpFileEntryPrivate *priv;
-  gchar                *utf8;
-  gchar                *filename;
-  gboolean              exists;
+  gchar    *utf8;
+  gchar    *filename;
+  gboolean  exists;
 
-  priv = gimp_file_entry_get_instance_private (entry);
-
-  if (! priv->check_valid || ! priv->file_exists)
+  if (! entry->check_valid || ! entry->file_exists)
     return;
 
-  utf8 = gtk_editable_get_chars (GTK_EDITABLE (priv->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
   g_free (utf8);
 
-  if (priv->dir_only)
+  if (entry->dir_only)
     exists = g_file_test (filename, G_FILE_TEST_IS_DIR);
   else
     exists = g_file_test (filename, G_FILE_TEST_IS_REGULAR);
 
   g_free (filename);
 
-  gtk_image_set_from_icon_name (GTK_IMAGE (priv->file_exists),
+  gtk_image_set_from_icon_name (GTK_IMAGE (entry->file_exists),
                                 exists ? "gtk-yes" : "gtk-no",
                                 GTK_ICON_SIZE_BUTTON);
 }
