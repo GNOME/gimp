@@ -32,33 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_DISPLAY_STACK (gimp_color_display_stack_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, GIMP, COLOR_DISPLAY_STACK, GObject)
-
-struct _GimpColorDisplayStackClass
-{
-  GObjectClass  parent_class;
-
-  void (* changed)   (GimpColorDisplayStack *stack);
-
-  void (* added)     (GimpColorDisplayStack *stack,
-                      GimpColorDisplay      *display,
-                      gint                   position);
-  void (* removed)   (GimpColorDisplayStack *stack,
-                      GimpColorDisplay      *display);
-  void (* reordered) (GimpColorDisplayStack *stack,
-                      GimpColorDisplay      *display,
-                      gint                   position);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpColorDisplayStack, gimp_color_display_stack, GIMP, COLOR_DISPLAY_STACK, GObject)
 
 
 GimpColorDisplayStack * gimp_color_display_stack_new      (void);
