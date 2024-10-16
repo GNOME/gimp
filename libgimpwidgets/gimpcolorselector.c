@@ -85,8 +85,7 @@ static void   gimp_color_selector_emit_model_visible_changed (GimpColorSelector 
                                                               GimpColorSelectorModel model);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorSelector, gimp_color_selector,
-                            GTK_TYPE_BOX)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpColorSelector, gimp_color_selector, GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selector_parent_class
 
@@ -200,7 +199,7 @@ gimp_color_selector_dispose (GObject *object)
 /*  public functions  */
 
 /**
- * gimp_color_selector_new:
+ * gimp_color_selector_new: (skip)
  * @selector_type: The #GType of the selector to create.
  * @color:         The initial color to be edited.
  * @channel:       The selector's initial channel.
@@ -212,7 +211,7 @@ gimp_color_selector_dispose (GObject *object)
  * Please use gimp_color_selection_new() for the "GIMP-typical" color
  * selection widget. Also see gimp_color_button_new().
  *
- * Retunn value: the new #GimpColorSelector widget.
+ * Returns: the new #GimpColorSelector widget.
  **/
 GtkWidget *
 gimp_color_selector_new (GType                     selector_type,

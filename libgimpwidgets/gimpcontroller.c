@@ -81,9 +81,9 @@ static void   gimp_controller_get_property (GObject      *object,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpController, gimp_controller, G_TYPE_OBJECT,
-                         G_ADD_PRIVATE (GimpController)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_ABSTRACT_TYPE_WITH_CODE (GimpController, gimp_controller, G_TYPE_OBJECT,
+                                  G_ADD_PRIVATE (GimpController)
+                                  G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_controller_parent_class
 
