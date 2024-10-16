@@ -1470,11 +1470,11 @@ update_values (void)
 
   ifsD->current_vals = elements[ifsD->current_element]->v;
   ifsD->current_vals.theta       *= 180/G_PI;
-  ifsD->current_vals.red_color    = gegl_color_duplicate (ifsD->current_vals.red_color);
-  ifsD->current_vals.green_color  = gegl_color_duplicate (ifsD->current_vals.green_color);
-  ifsD->current_vals.blue_color   = gegl_color_duplicate (ifsD->current_vals.blue_color);
-  ifsD->current_vals.black_color  = gegl_color_duplicate (ifsD->current_vals.black_color);
-  ifsD->current_vals.target_color = gegl_color_duplicate (ifsD->current_vals.target_color);
+  ifsD->current_vals.red_color    = gegl_color_duplicate (ifsD->red_cmap->color);
+  ifsD->current_vals.green_color  = gegl_color_duplicate (ifsD->green_cmap->color);
+  ifsD->current_vals.blue_color   = gegl_color_duplicate (ifsD->blue_cmap->color);
+  ifsD->current_vals.black_color  = gegl_color_duplicate (ifsD->black_cmap->color);
+  ifsD->current_vals.target_color = gegl_color_duplicate (ifsD->target_cmap->color);
 
   value_pair_update (ifsD->prob_pair);
   value_pair_update (ifsD->x_pair);
@@ -1896,7 +1896,14 @@ undo_update (gint el)
       = elem = g_new (AffElement, 1);
 
   *elem = *elements[el];
-  elem->draw_boundary = NULL;
+
+  elem->v.red_color    = gegl_color_duplicate (ifsD->red_cmap->color);
+  elem->v.blue_color   = gegl_color_duplicate (ifsD->blue_cmap->color);
+  elem->v.green_color  = gegl_color_duplicate (ifsD->green_cmap->color);
+  elem->v.black_color  = gegl_color_duplicate (ifsD->black_cmap->color);
+  elem->v.target_color = gegl_color_duplicate (ifsD->target_cmap->color);
+
+  elem->draw_boundary  = NULL;
   elem->click_boundary = NULL;
 }
 

@@ -671,7 +671,9 @@ aff_element_compute_click_boundary (AffElement *elem,
       points[3].y = yc + axis1 * sth - axis2 * cth;
     }
   else
-    elem->click_boundary = elem->draw_boundary;
+    {
+      elem->click_boundary = elem->draw_boundary;
+    }
 }
 
 void
@@ -813,7 +815,7 @@ aff_element_new (gdouble    x,
 void
 aff_element_free (AffElement *elem)
 {
-  if (elem->click_boundary != elem->draw_boundary)
+  if (elem->click_boundary && elem->click_boundary != elem->draw_boundary)
     g_free (elem->click_boundary);
 
   g_clear_object (&elem->v.red_color);
