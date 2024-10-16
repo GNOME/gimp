@@ -32,24 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_COLOR_SELECTION (gimp_color_selection_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorSelection, gimp_color_selection, GIMP, COLOR_SELECTION, GtkBox)
-
-struct _GimpColorSelectionClass
-{
-  GtkBoxClass  parent_class;
-
-  void (* color_changed) (GimpColorSelection *selection);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpColorSelection, gimp_color_selection, GIMP, COLOR_SELECTION, GtkBox)
 
 
 GtkWidget * gimp_color_selection_new            (void);
