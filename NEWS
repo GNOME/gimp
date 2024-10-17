@@ -137,6 +137,8 @@ Plug-ins:
     * Various plug-ins ported to script-fu-register-procedure:
       gimp-online, gradient-example, mkbrush, palette-export,
       paste-as-brush, paste-as-pattern, ts-helloworld.
+    * Colors can now be represented as grayscale with a list of 1 or 2
+      numerical values.
   - All "file-*-save" (and "file-*-save-internal) plug-in procedures have been
     renamed to "file-*-export" (respectively "file-*-export-internal").
   - Ported to GimpVectorLoadProcedure: file-pdf-load, file-ps, file-svg
@@ -291,6 +293,9 @@ API:
     * Removed functions:
       - gimp_unit_get_singular()
       - gimp_unit_get_plural()
+      - gimp_env_init()
+      - gimp_cpu_accel_set_use()
+      - gimp_signal_private()
     * Modified functions:
       - gimp_unit_get_identifier() renamed gimp_unit_get_name()
     * New argument flag GIMP_PARAM_DONT_SERIALIZE.
@@ -304,6 +309,10 @@ API:
       (GeglColor based rather than GimpRGB).
     * GimpRGB, GimpCMYK, GimpHSV, GimpHSL type and all usage was
       removed. Related API were deleted too.
+  - Changes in libgimpconfig:
+    * Removed functions:
+      - gimp_config_serialize_strv()
+      - gimp_config_deserialize_strv()
   - PDB:
     * Triple-backtick blocks in PDB-generated functions' descriptions is
       now recognized so that pre-formatted code is kept as-is. E.g.
