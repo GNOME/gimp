@@ -147,7 +147,7 @@ def copy_dlls(dll_list, srcdirs, destdir):
       for srcdir in srcdirs:
         full_file_name = os.path.join(srcdir, bindir, dll)
         if os.path.isfile(full_file_name):
-          sys.stdout.write("(INFO): copying {} to {}\n".format(full_file_name, destbin))
+          sys.stdout.write("Bundling {} to {}\n".format(full_file_name, destbin))
           shutil.copy(full_file_name, destbin)
           break
       else:

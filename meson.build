@@ -1929,6 +1929,9 @@ if meson.can_run_host_binaries() and have_gobject_introspection
   gimp_run_env.append('GIMP_TESTING_INTERPRETER_DIRS', meson.global_build_root() / 'extensions/')
   gimp_run_env.set('GIMP_TESTING_ENVIRON_DIRS', meson.global_source_root() / 'data/environ/')
 
+  # Makes build errors output way less polluted, making easier to debug
+  gimp_run_env.set('GIMP3_LOCALEDIR', meson.global_build_root() / 'po-plug-ins')
+
   gimp_run_env.prepend('GI_TYPELIB_PATH', prefix / 'lib/girepository-1.0/')
   if platform_osx
     gimp_run_env.prepend('GI_TYPELIB_PATH', meson.global_build_root() / 'libgimp/tmp')
@@ -2076,6 +2079,12 @@ pkgconfig.generate(libgimpui,
 #  install_win_debug_script = find_program('./meson_install_win_debug.sh')
 #  meson.add_install_script(install_win_debug_script)
 #endif
+
+# On Windows, install deps making a bundle in the prefix
+if platform_windows and relocatable_bundle
+  install_win_bundling_script = find_program('build/windows/2_bundle-gimp-uni_base.sh')
+  meson.add_install_script(install_win_bundling_script)
+endif
 
 ################################################################################
 # Subdir installations
