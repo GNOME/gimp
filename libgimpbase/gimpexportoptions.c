@@ -151,3 +151,86 @@ gimp_export_options_get_property (GObject    *object,
       break;
     }
 }
+
+
+/*
+ * GIMP_TYPE_PARAM_EXPORT_OPTIONS
+ */
+
+static void       gimp_param_export_options_class_init        (GParamSpecClass *klass);
+static void       gimp_param_export_options_init              (GParamSpec      *pspec);
+
+GType
+gimp_param_export_options_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_export_options_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecExportOptions),
+        0,
+        (GInstanceInitFunc) gimp_param_export_options_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                     "GimpParamExportOptions", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_export_options_class_init (GParamSpecClass *klass)
+{
+  klass->value_type = GIMP_TYPE_EXPORT_OPTIONS;
+}
+
+static void
+gimp_param_export_options_init (GParamSpec *pspec)
+{
+  GimpParamSpecExportOptions *options = GIMP_PARAM_SPEC_EXPORT_OPTIONS (pspec);
+
+  options->capabilities = 0;
+}
+
+/**
+ * gimp_param_spec_export_options:
+ * @name:         Canonical name of the property specified.
+ * @nick:         Nick name of the property specified.
+ * @blurb:        Description of the property specified.
+ * @capabilities: Int representing the image export capabilities
+ * @flags:        Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecExportOptions specifying a
+ * #G_TYPE_INT property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer floating): The newly created #GimpParamSpecExportOptions.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_param_spec_export_options (const gchar *name,
+                                const gchar *nick,
+                                const gchar *blurb,
+                                gint         capabilities,
+                                GParamFlags  flags)
+{
+  GimpParamSpecExportOptions *options_spec;
+
+  options_spec = g_param_spec_internal (GIMP_TYPE_PARAM_EXPORT_OPTIONS,
+                                        name, nick, blurb, flags);
+
+  g_return_val_if_fail (options_spec, NULL);
+
+  options_spec->capabilities = capabilities;
+
+  return G_PARAM_SPEC (options_spec);
+}

@@ -91,34 +91,6 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_PARAM_CHOICE
- */
-
-#define GIMP_TYPE_PARAM_CHOICE           (gimp_param_choice_get_type ())
-#define GIMP_PARAM_SPEC_CHOICE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CHOICE, GimpParamSpecChoice))
-#define GIMP_IS_PARAM_SPEC_CHOICE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CHOICE))
-
-typedef struct _GimpParamSpecChoice GimpParamSpecChoice;
-
-struct _GimpParamSpecChoice
-{
-  GParamSpecBoxed parent_instance;
-
-  gchar          *default_value;
-  GimpChoice     *choice;
-};
-
-GType        gimp_param_choice_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_choice     (const gchar  *name,
-                                         const gchar  *nick,
-                                         const gchar  *blurb,
-                                         GimpChoice   *choice,
-                                         const gchar  *default_value,
-                                         GParamFlags   flags);
-
-
-/*
  * GIMP_TYPE_PARAM_OBJECT
  */
 
@@ -447,31 +419,6 @@ void          gimp_value_take_object_array       (GValue        *value,
                                                   GObject      **data,
                                                   gsize          length);
 
-
-/*
- * GIMP_TYPE_PARAM_EXPORT_OPTIONS
- */
-
-#define GIMP_TYPE_PARAM_EXPORT_OPTIONS           (gimp_param_export_options_get_type ())
-#define GIMP_PARAM_SPEC_EXPORT_OPTIONS(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_EXPORT_OPTIONS, GimpParamSpecExportOptions))
-#define GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_EXPORT_OPTIONS))
-
-typedef struct _GimpParamSpecExportOptions GimpParamSpecExportOptions;
-
-struct _GimpParamSpecExportOptions
-{
-  GParamSpecBoxed parent_instance;
-
-  gint            capabilities;
-};
-
-GType        gimp_param_export_options_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_export_options     (const gchar  *name,
-                                                 const gchar  *nick,
-                                                 const gchar  *blurb,
-                                                 gint          capabilities,
-                                                 GParamFlags   flags);
 
 G_END_DECLS
 
