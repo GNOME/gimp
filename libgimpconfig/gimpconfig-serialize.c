@@ -32,7 +32,6 @@
 #include "gimpconfigtypes.h"
 
 #include "gimpconfigwriter.h"
-#include "gimpconfig-array.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-path.h"
@@ -47,6 +46,10 @@
  *
  * Serializing interface for libgimpconfig.
  **/
+
+
+static gboolean gimp_config_serialize_strv (const GValue *value,
+                                            GString      *str);
 
 
 /**
@@ -425,14 +428,7 @@ gimp_config_serialize_property (GimpConfig       *config,
         {
           GString *str = g_string_new (NULL);
 
-          if (G_VALUE_TYPE (&value) == G_TYPE_STRV)
-            {
-              success = gimp_config_serialize_strv (&value, str);
-            }
-          else
-            {
-              success = gimp_config_serialize_value (&value, str, TRUE);
-            }
+          success = gimp_config_serialize_value (&value, str, TRUE);
 
           if (success)
             {
@@ -511,6 +507,11 @@ gimp_config_serialize_value (const GValue *value,
                              GString      *str,
                              gboolean      escaped)
 {
+  if (G_VALUE_TYPE (value) == G_TYPE_STRV)
+    {
+      return gimp_config_serialize_strv (value, str);
+    }
+
   if (G_VALUE_HOLDS_BOOLEAN (value))
     {
       gboolean bool;
@@ -678,4 +679,53 @@ gimp_config_serialize_value (const GValue *value,
     }
 
   return FALSE;
+}
+
+
+/* Private functions */
+
+/**
+ * gimp_config_serialize_strv:
+ * @value: source #GValue holding a #GStrv
+ * @str:   destination string
+ *
+ * Appends a string repr of the #GStrv value of #GValue to @str.
+ * Repr is an integer literal greater than or equal to zero,
+ * followed by a possibly empty sequence
+ * of quoted and escaped string literals.
+ *
+ * Returns: %TRUE always
+ *
+ * Since: 3.0
+ **/
+static gboolean
+gimp_config_serialize_strv (const GValue *value,
+                            GString      *str)
+{
+  GStrv gstrv;
+
+  gstrv = g_value_get_boxed (value);
+
+  if (gstrv)
+    {
+      gint length = g_strv_length (gstrv);
+
+      /* Write length */
+      g_string_append_printf (str, "%d", length);
+
+      for (gint i = 0; i < length; i++)
+        {
+          g_string_append (str, " "); /* separator */
+          gimp_config_string_append_escaped (str, gstrv[i]);
+        }
+    }
+  else
+    {
+      /* GValue has NULL value. Not quite the same as an empty GStrv.
+       * But handle it quietly as an empty GStrv: write a length of zero.
+       */
+      g_string_append (str, "0");
+    }
+
+  return TRUE;
 }

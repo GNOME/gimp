@@ -32,7 +32,6 @@
 #include "gimpconfigtypes.h"
 
 #include "gimpconfigwriter.h"
-#include "gimpconfig-array.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
@@ -85,6 +84,8 @@ static GTokenType  gimp_config_deserialize_object         (GValue     *value,
 static GTokenType  gimp_config_deserialize_value_array    (GValue     *value,
                                                            GimpConfig *config,
                                                            GParamSpec *prop_spec,
+                                                           GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_strv           (GValue     *value,
                                                            GScanner   *scanner);
 static GimpUnit  * gimp_config_get_unit_from_identifier   (const gchar *identifier);
 static GTokenType  gimp_config_deserialize_unit           (GValue     *value,
@@ -854,6 +855,75 @@ gimp_config_deserialize_value_array (GValue     *value,
   g_value_take_boxed (value, array);
 
   return G_TOKEN_RIGHT_PAREN;
+}
+
+/**
+ * gimp_config_deserialize_strv:
+ * @value:   destination #GValue to hold a #GStrv
+ * @scanner: #GScanner positioned in serialization stream
+ *
+ * Sets @value to new #GStrv.
+ * Scans i.e. consumes serialization to fill the GStrv.
+ *
+ * Requires @value to be initialized to hold type #G_TYPE_BOXED.
+ *
+ * Returns:
+ * G_TOKEN_RIGHT_PAREN on success.
+ * G_TOKEN_INT on failure to scan length.
+ * G_TOKEN_STRING on failure to scan enough quoted strings.
+ *
+ * On failure, the value in @value is not touched and could be NULL.
+ *
+ * Since: 3.0
+ **/
+static GTokenType
+gimp_config_deserialize_strv (GValue     *value,
+                              GScanner   *scanner)
+{
+  gint          n_values;
+  GTokenType    result_token = G_TOKEN_RIGHT_PAREN;
+  GStrvBuilder *builder;
+
+  /* Scan length of array. */
+  if (! gimp_scanner_parse_int (scanner, &n_values))
+    return G_TOKEN_INT;
+
+  builder = g_strv_builder_new ();
+
+  for (gint i = 0; i < n_values; i++)
+    {
+      gchar *scanned_string;
+
+      if (! gimp_scanner_parse_string (scanner, &scanned_string))
+        {
+          /* Error, missing a string. */
+          result_token = G_TOKEN_STRING;
+          break;
+        }
+
+      g_strv_builder_add (builder, scanned_string ? scanned_string : "");
+      g_free (scanned_string);
+    }
+
+  /* assert result_token is G_TOKEN_RIGHT_PAREN OR G_TOKEN_STRING */
+  if (result_token == G_TOKEN_RIGHT_PAREN)
+    {
+      GStrv   gstrv;
+
+      /* Allocate new GStrv. */
+      gstrv = g_strv_builder_end (builder);
+      /* Transfer ownership of the array and all strings it points to. */
+      g_value_take_boxed (value, gstrv);
+    }
+  else
+    {
+      /* No GStrv to unref. */
+      g_scanner_error (scanner, "Missing string.");
+    }
+
+  g_strv_builder_unref (builder);
+
+  return result_token;
 }
 
 static GimpUnit *
