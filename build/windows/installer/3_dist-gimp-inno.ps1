@@ -9,7 +9,7 @@ param ($revision = '0',
        $GIMPA64 = 'gimp-a64')
 
 # This script needs a bit of MSYS2 to work
-$Env:CHERE_INVOKING = "yes"
+Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,17) -replace '> ','')
 
 
 # 1. GET INNO
@@ -42,7 +42,7 @@ Set-Alias iscc "$INNO_PATH\iscc.exe"
 $CONFIG_PATH = "$BUILD_DIR\config.h"
 if (-not (Test-Path "$CONFIG_PATH"))
   {
-    Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' or configure GIMP with 'meson setup' on some MSYS2 shell to generate it.'" -ForegroundColor red
+    Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP to generate it.'" -ForegroundColor red
     exit 1
   }
 
@@ -88,7 +88,7 @@ Write-Output "(INFO): Arch: universal (x86, x64 and arm64)"
 # 3. PREPARE INSTALLER "SOURCE"
 if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
   {
-    Write-Host "(ERROR): Installer assets not found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' or configure GIMP with '-Dwindows-installer=true' on some MSYS2 shell to build them." -ForegroundColor red
+    Write-Host "(ERROR): Installer assets not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dwindows-installer=true' to build them." -ForegroundColor red
     exit 1
   }
 
@@ -123,7 +123,7 @@ function fix_msg ([string]$langsdir)
   Set-Location $langsdir
   (Get-Content fix_msg.sh) | Foreach-Object {$_ -replace "AppVer","$APPVER"} |
   Set-Content fix_msg.sh
-  C:\msys64\usr\bin\bash -lc "bash fix_msg.sh"
+  bash fix_msg.sh
   Remove-Item fix_msg.sh
   Set-Location $GIMP_BASE
 
@@ -160,24 +160,9 @@ if ($GITLAB_CI)
       }
   }
 
-## FIXME: We can't do this on CI
-if (-not $GITLAB_CI)
-  {
-    Write-Output "(INFO): extracting .debug symbols from bundles"
-
-    #$Env:MSYSTEM = "MINGW32"
-    #C:\msys64\usr\bin\bash -lc 'bash build/windows/installer/3_dist-gimp-inno_sym.sh' | Out-Null
-
-    if ($Env:PROCESSOR_ARCHITECTURE -eq 'ARM64')
-      {
-        $Env:MSYSTEM = "CLANGARM64"
-      }
-    else
-      {
-        $Env:MSYSTEM = "CLANG64"
-      }
-    C:\msys64\usr\bin\bash -lc 'bash build/windows/installer/3_dist-gimp-inno_sym.sh' | Out-Null
-  }
+## Split .debug symbols
+Write-Output "(INFO): extracting .debug symbols from bundles"
+bash build/windows/installer/3_dist-gimp-inno_sym.sh | Out-Null
 
 
 # 5. CONSTRUCT .EXE INSTALLER

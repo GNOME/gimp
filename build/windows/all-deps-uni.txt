@@ -47,5 +47,4 @@ ${MINGW_PACKAGE_PREFIX}-python-gobject \
 ${MINGW_PACKAGE_PREFIX}-qoi \
 ${MINGW_PACKAGE_PREFIX}-shared-mime-info \
 ${MINGW_PACKAGE_PREFIX}-suitesparse \
-${MINGW_PACKAGE_PREFIX}-vala \
 ${MINGW_PACKAGE_PREFIX}-xpm-nox
