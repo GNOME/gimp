@@ -52,26 +52,7 @@ typedef enum
 
 
 #define GIMP_TYPE_COLOR_TRANSFORM (gimp_color_transform_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorTransform, gimp_color_transform, GIMP, COLOR_TRANSFORM, GObject)
-
-struct _GimpColorTransformClass
-{
-  GObjectClass  parent_class;
-
-  /* signals */
-  void (* progress) (GimpColorTransform *transform,
-                     gdouble             fraction);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpColorTransform, gimp_color_transform, GIMP, COLOR_TRANSFORM, GObject)
 
 
 GimpColorTransform *
