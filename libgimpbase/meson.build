@@ -61,7 +61,6 @@ libgimpbase_sources_introspectable = files(
   'gimpparasite.c',
   'gimpparasiteio.c',
   'gimprectangle.c',
-  'gimpsignal.c',
   'gimpunit.c',
   'gimputils.c',
   'gimpvaluearray.c',
@@ -72,6 +71,7 @@ libgimpbase_sources = [
   'gimpbase-private.c',
   'gimpprotocol.c',
   'gimpreloc.c',
+  'gimpsignal.c',
   'gimpwire.c',
 
   'gimpbaseenums.c',
@@ -96,7 +96,6 @@ libgimpbase_headers_introspectable = files(
   'gimpparasite.h',
   'gimpparasiteio.h',
   'gimprectangle.h',
-  'gimpsignal.h',
   'gimpunit.h',
   'gimputils.h',
   'gimpvaluearray.h',

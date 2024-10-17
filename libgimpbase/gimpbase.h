@@ -41,10 +41,6 @@
 #include <libgimpbase/gimpversion.h>
 #include <libgimpbase/gimpvaluearray.h>
 
-#ifndef G_OS_WIN32
-#include <libgimpbase/gimpsignal.h>
-#endif
-
 #undef __GIMP_BASE_H_INSIDE__
 
 #endif  /* __GIMP_BASE_H__ */
