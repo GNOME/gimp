@@ -44,6 +44,7 @@
 #undef GIMP_DISABLE_DEPRECATED /* for compat enums */
 #include "libgimpbase/gimpbase.h"
 #define GIMP_DISABLE_DEPRECATED
+#include "libgimpbase/gimpbase-private.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"

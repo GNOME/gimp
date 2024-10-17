@@ -23,6 +23,7 @@
 #define __GIMP_BASE_PRIVATE_H__
 
 
+#include <libgimpbase/gimpcpuaccel-private.h>
 #include <libgimpbase/gimpenv-private.h>
 
 

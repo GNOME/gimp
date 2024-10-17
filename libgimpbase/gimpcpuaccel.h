@@ -67,10 +67,6 @@ typedef enum
 GimpCpuAccelFlags  gimp_cpu_accel_get_support (void);
 
 
-/* for internal use only */
-void               gimp_cpu_accel_set_use     (gboolean use);
-
-
 G_END_DECLS
 
 #endif  /* __GIMP_CPU_ACCEL_H__ */

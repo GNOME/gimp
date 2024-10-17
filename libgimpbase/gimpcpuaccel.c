@@ -36,6 +36,7 @@
 #include <glib.h>
 
 #include "gimpcpuaccel.h"
+#include "gimpcpuaccel-private.h"
 
 
 /**
