@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$MSYSTEM_CARCH" != 'i686' ]; then
+if [ "$MSYSTEM_PREFIX" != 'mingw32' ]; then
   archsArray=('-a64'
               '-x64')
 else

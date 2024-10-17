@@ -415,7 +415,7 @@ gimp-win-x64-cross:
     paths:
       - gimp-x64/
       - _build-cross/meson-logs/meson-log.txt
-      - done-dll.list
+      - _build-cross/done-dll.list
     expire_in: 2 days
 
 ## WINDOWS pipelines (native MSYS2) ##
@@ -448,10 +448,18 @@ gimp-win-x64-cross:
       variables:
         STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
-  variables:
-    CHERE_INVOKING: "yes"
-  # We use the same universal variables but not directly from PS
-  before_script: []
+  # We don't use the universal variables since we use PS
+  before_script:
+    # MSYS2 config
+    - $MSYS2_PREFIX = 'C:/msys64'
+    - $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
+    # Build-time vars
+    # FIXME:'gimpenv' have buggy code about Windows paths
+    - $GIMP_PREFIX = "$PWD\_install".Replace('\', '/')
+    - $env:Path = $env:Path + ";$GIMP_PREFIX/bin"
+    - $env:PKG_CONFIG_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS2_PREFIX/$MSYSTEM_PREFIX/share/pkgconfig;$GIMP_PREFIX/lib/pkgconfig"
+    - $env:XDG_DATA_DIRS = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/share;$GIMP_PREFIX/share"
+    - $env:GI_TYPELIB_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/girepository-1.0;$GIMP_PREFIX/lib/girepository-1.0"
 
 ## WINDOWS Aarch64 CI (native MSYS2) ##
 .win-a64:
@@ -462,15 +470,7 @@ gimp-win-x64-cross:
   tags:
     - windows-aarch64
   variables:
-    MSYSTEM: "CLANGARM64"
-  before_script:
-    # Verification to prevent the job from failing because stuck pacman (ARM only)
-    - $stuck = Test-Path -Path "C:\msys64\var\lib\pacman\db.lck" -PathType Leaf
-    - if ($stuck -eq "True") {
-        Remove-Item -Force -Path "C:\msys64\var\lib\pacman\db.lck";
-        Write-Output "Cleaned previous stuck pacman" }
-    - taskkill /F /FI "MODULES eq msys-2.0.dll"
-    - Start-Job -ScriptBlock{sleep 90; taskkill /t /F /IM "pacman.exe"}
+    MSYSTEM_PREFIX: clangarm64
 
 deps-win-a64:
   extends: .win-a64
@@ -479,7 +479,7 @@ deps-win-a64:
   needs: []
   stage: dependencies
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
+    - build/windows/1_build-deps-msys2.ps1
   artifacts:
     paths:
       - _install/
@@ -494,12 +494,12 @@ gimp-win-a64:
   needs: ["deps-win-a64"]
   stage: gimp
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
+    - build/windows/2_build-gimp-msys2.ps1
   artifacts:
     paths:
       - gimp-a64/
       - _build/meson-logs/meson-log.txt
-      - done-dll.list
+      - _build/done-dll.list
       # Needed by dist-installer-weekly and dist-store-weekly
       - _build/config.h
       - _build/build/windows/installer/
@@ -516,7 +516,7 @@ gimp-win-a64:
   tags:
     - win32-ps
   variables:
-    MSYSTEM: "CLANG64"
+    MSYSTEM_PREFIX: clang64
 
 deps-win-x64:
   extends: .win-x64
@@ -525,7 +525,7 @@ deps-win-x64:
   needs: []
   stage: dependencies
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
+    - build/windows/1_build-deps-msys2.ps1
   artifacts:
     paths:
       - _install/
@@ -538,11 +538,11 @@ gimp-win-x64:
   needs: ["deps-win-x64"]
   stage: gimp
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
+    - build/windows/2_build-gimp-msys2.ps1
   artifacts:
     paths:
       - gimp-x64/
-      - done-dll.list
+      - _build/done-dll.list
     expire_in: 2 days
 
 ## WINDOWS x86 CI (native MSYS2) ##
@@ -555,9 +555,10 @@ gimp-win-x64:
   tags:
     - win32-ps
   variables:
-    MSYSTEM: "MINGW32"
-    CC: "ccache cc"
-    CXX: "ccache c++"
+    MSYSTEM_PREFIX: mingw32
+    MINGW_PACKAGE_PREFIX: mingw-w64-i686
+    CC: cc
+    CXX: c++
     CC_LD: bfd
     CXX_LD: bfd
 
@@ -568,7 +569,7 @@ deps-win-x86:
   needs: []
   stage: dependencies
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/1_build-deps-msys2.sh"
+    - build/windows/1_build-deps-msys2.ps1
   artifacts:
     paths:
       - _install/
@@ -581,13 +582,13 @@ gimp-win-x86:
   needs: ["deps-win-x86"]
   stage: gimp
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/2_build-gimp-msys2.sh"
+    - build/windows/2_build-gimp-msys2.ps1
     # We split 32-bit DWARF symbols here because LLVM-objcopy do NOT support them
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/installer/3_dist-gimp-inno_sym.sh"
+    - bash build/windows/installer/3_dist-gimp-inno_sym.sh
   artifacts:
     paths:
       - gimp-x86/
-      - done-dll.list
+      - _build/done-dll.list
     expire_in: 2 days
 
 
@@ -783,11 +784,8 @@ dist-installer-weekly:
   stage: distribution
   tags:
     - windows-aarch64
-  variables:
-    MSYSTEM: "CLANGARM64"
   cache: []
   script:
-    - C:\msys64\usr\bin\bash -lc "bash build/windows/installer/3_dist-gimp-inno_sym.sh"
     - build/windows/installer/3_dist-gimp-inno.ps1
   artifacts:
     expose_as: 'Windows exe'

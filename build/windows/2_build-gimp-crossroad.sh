@@ -75,24 +75,4 @@ ninja
 ninja install
 ccache --show-stats
 cd ..
-
-## Wrapper just for easier GIMP running (to not look at the huge bin/ folder with many .DLLs)
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build$ARTIFACTS_SUFFIX/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-echo "@echo off
-      echo This is a CI crossbuild of GIMP.
-      echo .js   (JavaScript) plug-ins ^|^ NOT supported!
-      echo .py   (Python) plug-ins     ^|^ NOT supported!
-      echo .scm  (ScriptFu) plug-ins   ^|^ NOT supported!
-      echo .vala (Vala) plug-ins       ^|^ NOT supported!
-      echo.
-      bin\gimp-$GIMP_APP_VERSION.exe" > ${CROSSROAD_PREFIX}/gimp.cmd
-
-if [ "$GITLAB_CI" ]; then
-  # Copy GIMP and all its deps to improvised GIMP_PREFIX
-  cp -fr $CROSSROAD_PREFIX/ _install$ARTIFACTS_SUFFIX
-
-  # Bundle GIMP
-  bash build/windows/2_bundle-gimp-uni_base.sh --authorized
-fi
-
 fi # END OF CROSSROAD ENV

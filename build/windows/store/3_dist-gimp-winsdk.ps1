@@ -30,7 +30,7 @@ Set-Alias 'signtool' "$win_sdk_path\signtool.exe"
 $config_path = "$build_dir\config.h"
 if (-not (Test-Path "$config_path"))
   {
-    Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' or configure GIMP with 'meson setup' on some MSYS2 shell to generate it." -ForegroundColor red
+    Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP to generate it." -ForegroundColor red
     exit 1
   }
 
@@ -107,7 +107,7 @@ Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (
 # Autodetects what arch bundles will be packaged
 if (-not (Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
   {
-    Write-Host "(ERROR): No bundle found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' on some MSYS2 shell to make one." -ForegroundColor red
+    Write-Host "(ERROR): No bundle found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to make one." -ForegroundColor red
     exit 1
   }
 elseif ((Test-Path "$a64_bundle") -and -not (Test-Path "$x64_bundle"))
@@ -203,7 +203,7 @@ foreach ($bundle in $supported_archs)
         $icons_path = "$build_dir\build\windows\store\Assets"
         if (-not (Test-Path "$icons_path"))
           {
-            Write-Host "(ERROR): MS Store icons not found. You can run 'build/windows/2_build-gimp-msys2.sh --relocatable' or configure GIMP with '-Dms-store=true' on some MSYS2 shell to build them." -ForegroundColor red
+            Write-Host "(ERROR): MS Store icons not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dms-store=true' to build them." -ForegroundColor red
             exit 1
           }
         Write-Output "(INFO): generating resources.pri from $icons_path"
