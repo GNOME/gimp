@@ -28,21 +28,7 @@
 
 
 #define GIMP_TYPE_COLOR_CONFIG (gimp_color_config_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpColorConfig, gimp_color_config, GIMP, COLOR_CONFIG, GObject)
-
-struct _GimpColorConfigClass
-{
-  GObjectClass  parent_class;
-
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpColorConfig, gimp_color_config, GIMP, COLOR_CONFIG, GObject)
 
 
 GimpColorManagementMode
