@@ -37,10 +37,11 @@
  *    and default values, only the declarations of defaults etc.
  *    Since a GimpProcedureConfig carries the values
  *    and GParamSpec carries the defaults.
- *  - ScriptFu might not support RGB triplet repr
+ *  - ScriptFu might support other formats
  *
  * Complex:
- * PDB and widgets traffic in GeglColor but SF dumbs it down to a Scheme list (r g b)
+ * PDB and widgets traffic in GeglColor but SF dumbs it down to a Scheme list
+ * e.g. (r g b) (r g b a) or (y) or (y a)
  *
  * More SF code deals with GeglColor:
  * see scheme_marshall.c we marshall from GeglColor to/from Scheme lists of numbers.
@@ -49,19 +50,17 @@
 
 /* Return the Scheme representation.
  * Caller owns returned string.
+ *
+ * An alias: knows SFColorType is GeglColor
  */
 gchar*
 sf_color_get_repr (SFColorType arg_value)
 {
-  guchar rgb[3] = { 0 };
-
-  if (arg_value)
-    gegl_color_get_pixel (arg_value, babl_format ("R'G'B' u8"), rgb);
-
-  return g_strdup_printf ("'(%d %d %d)", (gint) rgb[0], (gint) rgb[1], (gint) rgb[2]);
+  return sf_color_get_repr_from_gegl_color (arg_value);
 }
 
-/* Returns GeglColor from SFColorType.
+/* Returns GeglColor from arg of type SFColorType.
+ * When arg is NULL, returns GeglColor transparent.
  *
  * Returned GeglColor is owned by caller.
  */
@@ -78,19 +77,25 @@ void
 sf_color_set_from_gegl_color (SFColorType *arg_value,
                               GeglColor   *color)
 {
-  const Babl *format = gegl_color_get_format (color);
-  guint8      pixel[48];
-
-  gegl_color_get_pixel (color, format, pixel);
   if (*arg_value)
-    gegl_color_set_pixel (*arg_value, format, pixel);
+    {
+      /* Arg is already a GeglColor, change its color. */
+      const Babl *format = gegl_color_get_format (color);
+      guint8      pixel[48];
+
+      gegl_color_get_pixel (color, format, pixel);
+      gegl_color_set_pixel (*arg_value, format, pixel);
+    }
   else
-    *arg_value = gegl_color_duplicate (color);
+    {
+      /* Arg is NULL.  Duplicate given color. */
+      *arg_value = gegl_color_duplicate (color);
+    }
 }
 
 /* Set the default for an arg of type SFColorType from a string name.
  *
- * Keep default value to put in default of param spec when creating procedure.
+ * The default value is later put in default of param spec when creating procedure.
  *
  * Also, the old-style dialog resets from the kept default value.
  * Versus new-style dialog, using ProcedureConfig, which resets from a paramspec.
@@ -115,12 +120,20 @@ sf_color_arg_set_default_by_name (SFArg *arg,
     }
   else
     {
-      /* ScriptFu does not let an author specify RGBA, only RGB. */
-      gimp_color_set_alpha (color, 1.0);
+      /* css named colors are in sRGB.
+       * You cannot name a grayscale color.
+       * However, "transparent" is also a css named color.
+       */
+      /* We don't override alpha:
+       * Not calling: gimp_color_set_alpha (color, 1.0);
+       */
 
-      /* Copying a struct that is not allocated, not setting a pointer. */
-      g_clear_object (&arg->default_value.sfa_color);
-      arg->default_value.sfa_color = color;
+      /* Expect the default is NULL, but call the setter anyway,
+       * which sets it when not already NULL.
+       */
+      sf_color_set_from_gegl_color (&arg->default_value.sfa_color, color);
+
+      g_object_unref (color);
     }
   return result;
 }
@@ -146,7 +159,7 @@ GeglColor*
 sf_color_arg_get_default_color (SFArg *arg)
 {
   /* require the default was set earlier.
-   * No easy way to assert it was set,
+   * No easy way to assert it was set.
    */
   return sf_color_get_gegl_color (arg->default_value.sfa_color);
 }
@@ -154,22 +167,53 @@ sf_color_arg_get_default_color (SFArg *arg)
 
 /* Methods for conversion GeglColor to/from Scheme representation. */
 
-/* Caller owns returned string.*/
+/* Convert GeglColor to scheme representation as list of numeric.
+ * List is length in [0,4].
+ * Caller owns returned string.
+ * Length depends on format: GRAY, GRAYA, RGB, or RGBA.
+ * Returns literal for empty list when color is NULL.
+ */
 gchar*
 sf_color_get_repr_from_gegl_color (GeglColor *color)
 {
-  guchar rgb[3] = { 0 };
+  gchar *result;
 
-  /* Warn when color has different count of components than
-   * the 3 of the pixel we are converting to.
-   */
-  if (babl_format_get_n_components (gegl_color_get_format (color)) != 3)
+  if (color == NULL)
     {
-      g_warning ("%s converting to pixel with loss/gain of components", G_STRFUNC);
+      result = g_strdup_printf ("'()");
+    }
+  else
+    {
+      guint  count_components = babl_format_get_n_components (gegl_color_get_format (color));
+      guchar rgba[4] = { 0 };
+
+      /* Dispatch on count of components. */
+      switch (count_components)
+      {
+      case 1:
+        gegl_color_get_pixel (color, babl_format ("Y' u8"), rgba);
+        result = g_strdup_printf ("'(%d)", (gint) rgba[0]);
+        break;
+      case 2:
+        gegl_color_get_pixel (color, babl_format ("Y'A u8"), rgba);
+        result = g_strdup_printf ("'(%d %d)", (gint) rgba[0], (gint) rgba[1]);
+        break;
+      case 3:
+        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgba);
+        result = g_strdup_printf ("'(%d %d %d)", (gint) rgba[0], (gint) rgba[1], (gint) rgba[2]);
+        break;
+      case 4:
+        gegl_color_get_pixel (color, babl_format ("R'G'B'A u8"), rgba);
+        result = g_strdup_printf ("'(%d %d %d %d)",
+                                  (gint) rgba[0], (gint) rgba[1], (gint) rgba[2], (gint) rgba[3]);
+        break;
+      default:
+          g_warning ("%s unhandled count of color components", G_STRFUNC);
+          result = g_strdup_printf ("'()");
+      }
     }
 
-  gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
-  return g_strdup_printf ("'(%d %d %d)", (gint) rgb[0], (gint) rgb[1], (gint) rgb[2]);
+  return result;
 }
 
 /* Caller owns the returned GeglColor.

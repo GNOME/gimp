@@ -260,9 +260,65 @@ get_item_from_ID_in_script (scheme   *sc,
   return NULL;  /* no error */
 }
 
-/* Caller owns the returned GeglColor.
+/* Walk a Scheme list of numerics, clamping into a C array of bytes.
+ * Expects one to four numerics.
+ * Returns length of list, in range [0,4]
+ * Length zero denotes an error: not a numeric, or list is empty.
+ * A list longer than expected (>4) is not an error, but extra list is not used.
+ */
+static void
+marshal_list_of_numeric_to_rgba (scheme  *sc,
+                                 pointer  color_list,
+                                 guchar   (*rgba)[4],  /* OUT */
+                                 guint   *length)      /* OUT */
+{
+  *length = 0;
+  for (guint i=0; i<4; i++)
+    {
+      if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+        {
+          (*rgba)[i] = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                              0, 255);
+          *length = *length + 1;
+          color_list = sc->vptr->pair_cdr (color_list);
+        }
+      else
+        {
+          /* Reached end of list or non-numeric. */
+          return;
+        }
+    }
+  /* *length is in [0,4] and *rgba is filled in with same count. */
+}
+
+/* Walk a C array of bytes (rgba) creating Scheme list of numeric.
+ * Returns list whose length is in range [0,4].
+ * The list is memory managed by scheme.
+ */
+static pointer
+marshal_rgba_to_list_of_numeric (scheme   *sc,
+                                 guchar   rgba[4],
+                                 guint    length)
+{
+  pointer result_list = sc->NIL;
+
+  /* Walk rgba in reverse. */
+  for (gint i=length-1; i>=0; i--)
+    {
+      /* Prepend to list, returning new list. */
+      result_list = sc->vptr->cons (sc,
+                      sc->vptr->mk_integer (sc, rgba[i]),
+                      result_list);
+    }
+
+  /* list is numerics from rgba and length (list) == length. */
+  return result_list;
+}
+
+/* Returns a GeglColor from a scheme list.
+ * Caller owns the returned GeglColor.
  * Returns NULL on failure:
- *  - list wrong length
+ *  - list wrong length, not >1
  *  - list elements not numbers.
  */
 GeglColor *
@@ -270,73 +326,109 @@ marshal_component_list_to_color (scheme  *sc,
                                  pointer  color_list)
 {
   GeglColor *color_result;
-  guchar     r = 0, g = 0, b = 0;
+  guchar     rgba[4];
+  guint      list_length;
 
-  /* FIXME dispatch on list length and create different format colors */
 
-  if (sc->vptr->list_length (sc, color_list) != 3)
-    return NULL;
 
-  if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
-    r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                0, 255);
+  marshal_list_of_numeric_to_rgba (sc, color_list, &rgba, &list_length);
+  /* list_length is the count of numerics used. */
+
+  /* Dispatch on list length and create different format colors */
+  if (list_length == 3 || list_length == 4)
+    {
+      /* RGBA */
+      if (list_length == 3)
+        {
+          /* gegl has no three byte rgb. * ScriptFu sets alpha to 1.0 */
+          rgba[3] = 255;
+        }
+      /* Assert rgba is full */
+      color_result = gegl_color_new ("black");
+      gegl_color_set_rgba_with_space (color_result,
+                                  (gdouble) rgba[0] / 255.0,
+                                  (gdouble) rgba[1] / 255.0,
+                                  (gdouble) rgba[2] / 255.0,
+                                  (gdouble) rgba[3] / 255.0,
+                                  NULL);  /* NULL defaults to sRGB */
+    }
+  else if (list_length == 1)
+    {
+      /* GRAY */
+      GBytes *bytes = g_bytes_new (rgba, 1);
+
+      color_result = gegl_color_new ("black");
+      gegl_color_set_bytes (color_result, babl_format ("Y' u8"), bytes);
+      g_free (bytes);
+    }
+  else if (list_length == 2)
+    {
+      /* GRAYA */
+      GBytes *bytes = g_bytes_new (rgba, 2);
+
+      color_result = gegl_color_new ("black");
+      gegl_color_set_bytes (color_result, babl_format ("Y'A u8"), bytes);
+      g_free (bytes);
+    }
   else
-    return NULL;
+    {
+      color_result = NULL;
+    }
 
-  color_list = sc->vptr->pair_cdr (color_list);
-  if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
-    g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                0, 255);
-  else
-    return NULL;
-
-  color_list = sc->vptr->pair_cdr (color_list);
-  if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
-    b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
-                0, 255);
-  else
-    return NULL;
-
-  color_result = gegl_color_new ("black");
-  gegl_color_set_rgba_with_space (color_result,
-                                  (gdouble) r / 255.0,
-                                  (gdouble) g / 255.0,
-                                  (gdouble) b / 255.0,
-                                  1.0, NULL);
   return color_result;
 }
 
-/* Returns (0 0 0) if color is NULL. */
-/* FIXME this should return a list
+/* Returns a Scheme list of integers or empty list,
  * the same length as the count of components in the color.
- * E.G. gimp-drawable-get-pixel may return indexed, rgb, or rgba.
+ * List is length:
+ *   1 GRAY
+ *   2 GRAYA
+ *   3 RGB
+ *   4 RGBA
+ * Returns NIL when color is NULL.
  */
 pointer
 marshal_color_to_component_list (scheme    *sc,
                                  GeglColor *color)
 {
-  guchar rgb[3] = { 0 };
+  pointer result;
+  guint   count_components;
+  guchar  rgba[4] = { 0 };
 
-  /* Warn when color has different count of components than
-   * the 3 of the pixel we are converting to.
-   */
-  if (babl_format_get_n_components (gegl_color_get_format (color)) != 3)
+  if (color == NULL)
     {
-      g_warning ("%s converting to pixel with loss/gain of components", G_STRFUNC);
+      result = sc->NIL;
+    }
+  else
+    {
+      count_components = babl_format_get_n_components (gegl_color_get_format (color));
+      switch (count_components)
+      {
+      case 3:
+        gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgba);
+        result = marshal_rgba_to_list_of_numeric (sc, rgba, 3);
+        break;
+      case 4:
+        gegl_color_get_pixel (color, babl_format ("R'G'B'A u8"), rgba);
+        result = marshal_rgba_to_list_of_numeric (sc, rgba, 4);
+        break;
+      case 1:
+        /* Grayscale with TRC from space */
+        gegl_color_get_pixel (color, babl_format ("Y' u8"), rgba);
+        result = marshal_rgba_to_list_of_numeric (sc, rgba, 1);
+        break;
+      case 2:
+          /* Grayscale with TRC from space, separate alpha. */
+          gegl_color_get_pixel (color, babl_format ("Y'A u8"), rgba);
+          result = marshal_rgba_to_list_of_numeric (sc, rgba, 2);
+          break;
+      default:
+          g_warning ("%s unhandled count of color components: %d", G_STRFUNC, count_components);
+          result = sc->NIL;
+      }
     }
 
-  if (color)
-    gegl_color_get_pixel (color, babl_format ("R'G'B' u8"), rgb);
-  /* else will return (0 0 0) */
-
-  return sc->vptr->cons (
-      sc,
-      sc->vptr->mk_integer (sc, rgb[0]),
-      sc->vptr->cons (sc,
-                      sc->vptr->mk_integer (sc, rgb[1]),
-                      sc->vptr->cons (sc,
-                                      sc->vptr->mk_integer (sc, rgb[2]),
-                                      sc->NIL)));
+  return result;
 }
 
 /* ColorArray */
