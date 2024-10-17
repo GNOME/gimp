@@ -152,13 +152,20 @@ static GimpStackTraceMode  stack_trace_mode      = GIMP_STACK_TRACE_NEVER;
  * @argv:         (array length=argc): the arguments
  *
  * The main plug-in function that must be called with the plug-in's
- * #GimpPlugIn subclass #GType and the 'argc' and 'argv' that are passed
- * to the platform's main().
+ * [class@Gimp.PlugIn] subclass #GType and the 'argc' and 'argv' that are passed
+ * to the platform's `main()`.
  *
- * See also: GIMP_MAIN(), #GimpPlugIn.
+ * For instance, in Python, you will want to end your plug-in with this
+ * call:
+ *
+ * ```py
+ * Gimp.main(MyPlugIn.__gtype__, sys.argv)
+ * ```
+ *
+ * For C plug-ins, use instead the [func@Gimp.MAIN] macro
  *
  * Returns: an exit status as defined by the C library,
- *          on success EXIT_SUCCESS.
+ *          on success `EXIT_SUCCESS`.
  *
  * Since: 3.0
  **/

@@ -78,10 +78,6 @@ void          gimp_path_free                   (GList        *path);
 gchar       * gimp_path_get_user_writable_dir  (GList        *path) G_GNUC_MALLOC;
 
 
-/*  should be considered private, don't use!  */
-void          gimp_env_init                    (gboolean      plug_in);
-
-
 G_END_DECLS
 
 #endif  /*  __GIMP_ENV_H__  */

@@ -89,9 +89,11 @@ G_BEGIN_DECLS
  * A macro that expands to the appropriate main() function for the
  * platform being compiled for.
  *
- * To use this macro, simply place a line that contains just the code
+ * To use this macro, simply place a line that contains just the code:
  *
+ * ```C
  * GIMP_MAIN (MY_TYPE_PLUG_IN)
+ * ```
  *
  * at the toplevel of your file. No semicolon should be used.
  *

@@ -40,6 +40,7 @@
 
 #define __GIMP_ENV_C__
 #include "gimpenv.h"
+#include "gimpenv-private.h"
 #include "gimpversion.h"
 #include "gimpreloc.h"
 
@@ -99,8 +100,9 @@ const guint gimp_micro_version = GIMP_MICRO_VERSION;
  * @plug_in: must be %TRUE if this function is called from a plug-in
  *
  * You don't need to care about this function. It is being called for
- * you automatically (by means of the MAIN() macro that every plug-in
- * runs). Calling it again will cause a fatal error.
+ * you automatically (by means of the [func@Gimp.MAIN] macro that every
+ * C plug-in runs or directly with [func@Gimp.main] in binding). Calling
+ * it again will cause a fatal error.
  *
  * Since: 2.4
  */

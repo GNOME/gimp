@@ -53,6 +53,7 @@
 #include <babl/babl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpbase-private.h"
 
 #include "pdb/pdb-types.h"
 
