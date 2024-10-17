@@ -43,6 +43,8 @@
 (testing:load-test "channel-ops.scm")
 ; TODO channels to selection
 
+(testing:load-test "color.scm")
+
 ; Test superclass methods.
 ; Drawable and Item are superclasses
 

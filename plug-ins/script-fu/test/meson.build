@@ -41,6 +41,8 @@ if not stable
     'tests' / 'PDB' / 'channel' / 'channel-attributes.scm',
     'tests' / 'PDB' / 'channel' / 'channel-ops.scm',
 
+    'tests' / 'PDB' / 'color' / 'color.scm',
+
     'tests' / 'PDB' / 'vectors' / 'vectors-new.scm',
     'tests' / 'PDB' / 'vectors' / 'vectors-stroke.scm',
 
