@@ -2077,6 +2077,12 @@ pkgconfig.generate(libgimpui,
 #  meson.add_install_script(install_win_debug_script)
 #endif
 
+# On Windows, install deps making a bundle in the prefix
+if platform_windows and relocatable_bundle
+  install_win_bundling_script = find_program('build/windows/2_bundle-gimp-uni_base.sh')
+  meson.add_install_script(install_win_bundling_script)
+endif
+
 ################################################################################
 # Subdir installations
 
