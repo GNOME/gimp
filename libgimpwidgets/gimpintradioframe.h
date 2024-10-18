@@ -32,23 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_INT_RADIO_FRAME (gimp_int_radio_frame_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP, INT_RADIO_FRAME, GimpFrame)
-
-
-struct _GimpIntRadioFrameClass
-{
-  GimpFrameClass  parent_class;
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP, INT_RADIO_FRAME, GimpFrame)
 
 
 /**

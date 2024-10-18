@@ -52,8 +52,10 @@ enum
 };
 
 
-typedef struct _GimpIntRadioFramePrivate
+struct _GimpIntRadioFrame
 {
+  GimpFrame                         parent_instance;
+
   gchar                            *label;
   GimpIntStore                     *store;
   GSList                           *group;
@@ -64,9 +66,7 @@ typedef struct _GimpIntRadioFramePrivate
   GimpIntRadioFrameSensitivityFunc  sensitivity_func;
   gpointer                          sensitivity_data;
   GDestroyNotify                    sensitivity_destroy;
-} GimpIntRadioFramePrivate;
-
-#define GET_PRIVATE(obj) ((GimpIntRadioFramePrivate *) gimp_int_radio_frame_get_instance_private ((GimpIntRadioFrame *) obj))
+};
 
 
 static void  gimp_int_radio_frame_constructed        (GObject           *object);
@@ -93,8 +93,7 @@ static void  gimp_int_radio_frame_button_toggled     (GtkToggleButton   *button,
                                                      GimpIntRadioFrame *frame);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpIntRadioFrame, gimp_int_radio_frame,
-                            GIMP_TYPE_FRAME)
+G_DEFINE_TYPE (GimpIntRadioFrame, gimp_int_radio_frame, GIMP_TYPE_FRAME)
 
 #define parent_class gimp_int_radio_frame_parent_class
 
@@ -145,11 +144,9 @@ gimp_int_radio_frame_class_init (GimpIntRadioFrameClass *klass)
 static void
 gimp_int_radio_frame_init (GimpIntRadioFrame *radio_frame)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (radio_frame);
-
-  priv->box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), priv->box);
-  gtk_widget_show (GTK_WIDGET (priv->box));
+  radio_frame->box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (radio_frame), radio_frame->box);
+  gtk_widget_show (GTK_WIDGET (radio_frame->box));
 }
 
 static void
@@ -165,18 +162,18 @@ gimp_int_radio_frame_constructed (GObject *object)
 static void
 gimp_int_radio_frame_finalize (GObject *object)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (object);
+  GimpIntRadioFrame *frame = GIMP_INT_RADIO_FRAME (object);
 
-  g_clear_pointer (&priv->label, g_free);
-  g_clear_object (&priv->store);
-  g_clear_pointer (&priv->group, g_slist_free);
+  g_clear_pointer (&frame->label, g_free);
+  g_clear_object (&frame->store);
+  g_clear_pointer (&frame->group, g_slist_free);
 
-  if (priv->sensitivity_destroy)
+  if (frame->sensitivity_destroy)
     {
-      GDestroyNotify d = priv->sensitivity_destroy;
+      GDestroyNotify d = frame->sensitivity_destroy;
 
-      priv->sensitivity_destroy = NULL;
-      d (priv->sensitivity_data);
+      frame->sensitivity_destroy = NULL;
+      d (frame->sensitivity_data);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -212,15 +209,15 @@ gimp_int_radio_frame_get_property (GObject    *object,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (object);
+  GimpIntRadioFrame *frame = GIMP_INT_RADIO_FRAME (object);
 
   switch (property_id)
     {
     case PROP_VALUE:
-      g_value_set_int (value, priv->value);
+      g_value_set_int (value, frame->value);
     break;
       case PROP_STORE:
-        g_value_set_object (value, priv->store);
+        g_value_set_object (value, frame->store);
         break;
 
 
@@ -342,16 +339,14 @@ gimp_int_radio_frame_new_valist (const gchar *first_label,
 GtkWidget *
 gimp_int_radio_frame_new_array (const gchar *labels[])
 {
-  GtkWidget                *frame;
-  GimpIntRadioFramePrivate *priv;
-  GtkListStore             *store;
-  gint                      i;
+  GtkWidget    *frame;
+  GtkListStore *store;
+  gint          i;
 
   g_return_val_if_fail (labels != NULL, NULL);
 
   frame = g_object_new (GIMP_TYPE_INT_RADIO_FRAME, NULL);
-  priv  = GET_PRIVATE (frame);
-  store = GTK_LIST_STORE (priv->store);
+  store = GTK_LIST_STORE (GIMP_INT_RADIO_FRAME (frame)->store);
 
   for (i = 0; labels[i] != NULL; i++)
     {
@@ -388,14 +383,12 @@ gimp_int_radio_frame_prepend (GimpIntRadioFrame *radio_frame,
                             ...)
 {
   GtkListStore             *store;
-  GimpIntRadioFramePrivate *priv;
   GtkTreeIter               iter;
   va_list                   args;
 
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (radio_frame));
 
-  priv  = GET_PRIVATE (radio_frame);
-  store = GTK_LIST_STORE (priv->store);
+  store = GTK_LIST_STORE (radio_frame->store);
 
   va_start (args, radio_frame);
 
@@ -422,15 +415,13 @@ void
 gimp_int_radio_frame_append (GimpIntRadioFrame *radio_frame,
                              ...)
 {
-  GtkListStore             *store;
-  GimpIntRadioFramePrivate *priv;
-  GtkTreeIter               iter;
-  va_list                   args;
+  GtkListStore *store;
+  GtkTreeIter   iter;
+  va_list       args;
 
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (radio_frame));
 
-  priv  = GET_PRIVATE (radio_frame);
-  store = GTK_LIST_STORE (priv->store);
+  store = GTK_LIST_STORE (radio_frame->store);
 
   va_start (args, radio_frame);
 
@@ -455,8 +446,6 @@ gimp_int_radio_frame_set_title (GimpIntRadioFrame *frame,
                                 const gchar       *title,
                                 gboolean           with_mnemonic)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (frame);
-
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (frame));
 
   gtk_frame_set_label (GTK_FRAME (frame), NULL);
@@ -470,7 +459,7 @@ gimp_int_radio_frame_set_title (GimpIntRadioFrame *frame,
       gtk_frame_set_label_widget (GTK_FRAME (frame), label);
       gtk_widget_show (label);
 
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), priv->group->data);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), frame->group->data);
     }
   else
     {
@@ -495,9 +484,8 @@ gboolean
 gimp_int_radio_frame_set_active (GimpIntRadioFrame *frame,
                                  gint               value)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (frame);
-  GtkWidget                *button;
-  GSList                   *iter = priv->group;
+  GtkWidget *button;
+  GSList    *iter = frame->group;
 
   g_return_val_if_fail (GIMP_IS_INT_RADIO_FRAME (frame), FALSE);
 
@@ -529,11 +517,9 @@ gimp_int_radio_frame_set_active (GimpIntRadioFrame *frame,
 gint
 gimp_int_radio_frame_get_active (GimpIntRadioFrame *frame)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (frame);
-
   g_return_val_if_fail (GIMP_IS_INT_RADIO_FRAME (frame), FALSE);
 
-  return priv->value;
+  return frame->value;
 }
 
 /**
@@ -553,19 +539,17 @@ gboolean
 gimp_int_radio_frame_set_active_by_user_data (GimpIntRadioFrame *radio_frame,
                                               gpointer           user_data)
 {
-  GimpIntRadioFramePrivate *priv;
-  GtkTreeIter               iter;
+  GtkTreeIter iter;
 
   g_return_val_if_fail (GIMP_IS_INT_RADIO_FRAME (radio_frame), FALSE);
 
-  priv = GET_PRIVATE (radio_frame);
-
-  if (gimp_int_store_lookup_by_user_data (GTK_TREE_MODEL (priv->store), user_data, &iter))
+  if (gimp_int_store_lookup_by_user_data (GTK_TREE_MODEL (radio_frame->store),
+                                          user_data, &iter))
     {
       gint value;
 
-      gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &iter,
-                          GIMP_INT_STORE_VALUE, &value,
+      gtk_tree_model_get (GTK_TREE_MODEL (radio_frame->store), &iter,
+                          GIMP_INT_STORE_VALUE,                &value,
                           -1);
       gimp_int_radio_frame_set_active (radio_frame, value);
 
@@ -591,18 +575,16 @@ gboolean
 gimp_int_radio_frame_get_active_user_data (GimpIntRadioFrame *radio_frame,
                                            gpointer          *user_data)
 {
-  GimpIntRadioFramePrivate *priv;
-  GtkTreeIter               iter;
+  GtkTreeIter iter;
 
   g_return_val_if_fail (GIMP_IS_INT_RADIO_FRAME (radio_frame), FALSE);
   g_return_val_if_fail (user_data != NULL, FALSE);
 
-  priv = GET_PRIVATE (radio_frame);
-
-  if (gimp_int_store_lookup_by_value (GTK_TREE_MODEL (priv->store), priv->value, &iter))
+  if (gimp_int_store_lookup_by_value (GTK_TREE_MODEL (radio_frame->store),
+                                      radio_frame->value, &iter))
     {
-      gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &iter,
-                          GIMP_INT_STORE_USER_DATA,      user_data,
+      gtk_tree_model_get (GTK_TREE_MODEL (radio_frame->store), &iter,
+                          GIMP_INT_STORE_USER_DATA,             user_data,
                           -1);
       return TRUE;
     }
@@ -632,23 +614,19 @@ gimp_int_radio_frame_set_sensitivity (GimpIntRadioFrame      *radio_frame,
                                       gpointer                data,
                                       GDestroyNotify          destroy)
 {
-  GimpIntRadioFramePrivate *priv;
-
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (radio_frame));
 
-  priv = GET_PRIVATE (radio_frame);
-
-  if (priv->sensitivity_destroy)
+  if (radio_frame->sensitivity_destroy)
     {
-      GDestroyNotify destroy = priv->sensitivity_destroy;
+      GDestroyNotify destroy = radio_frame->sensitivity_destroy;
 
-      priv->sensitivity_destroy = NULL;
-      destroy (priv->sensitivity_data);
+      radio_frame->sensitivity_destroy = NULL;
+      destroy (radio_frame->sensitivity_data);
     }
 
-  priv->sensitivity_func    = func;
-  priv->sensitivity_data    = data;
-  priv->sensitivity_destroy = destroy;
+  radio_frame->sensitivity_func    = func;
+  radio_frame->sensitivity_data    = data;
+  radio_frame->sensitivity_destroy = destroy;
 }
 
 
@@ -667,24 +645,20 @@ gimp_int_radio_frame_draw (GtkWidget *widget,
 static void
 gimp_int_radio_frame_fill (GimpIntRadioFrame *frame)
 {
-  GimpIntRadioFramePrivate *priv;
-
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (frame));
 
-  priv = GET_PRIVATE (frame);
-
-  g_clear_pointer (&priv->group, g_slist_free);
-  gtk_container_foreach (GTK_CONTAINER (priv->box),
+  g_clear_pointer (&frame->group, g_slist_free);
+  gtk_container_foreach (GTK_CONTAINER (frame->box),
                          (GtkCallback) gtk_widget_destroy, NULL);
 
-  if (priv->store)
+  if (frame->store)
     {
       GtkTreeModel *model;
       GSList       *group = NULL;
       GtkTreeIter   iter;
       gboolean      iter_valid;
 
-      model = GTK_TREE_MODEL (priv->store);
+      model = GTK_TREE_MODEL (frame->store);
 
       for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
            iter_valid;
@@ -700,7 +674,7 @@ gimp_int_radio_frame_fill (GimpIntRadioFrame *frame)
                               -1);
 
           button = gtk_radio_button_new_with_mnemonic (group, label);
-          gtk_box_pack_start (GTK_BOX (priv->box), button, FALSE, FALSE, 0);
+          gtk_box_pack_start (GTK_BOX (frame->box), button, FALSE, FALSE, 0);
           gtk_widget_show (button);
 
           g_free (label);
@@ -714,9 +688,9 @@ gimp_int_radio_frame_fill (GimpIntRadioFrame *frame)
                             G_CALLBACK (gimp_int_radio_frame_button_toggled),
                             frame);
         }
-      priv->group = g_slist_copy (group);
+      frame->group = g_slist_copy (group);
 
-      gimp_int_radio_frame_set_active (frame, priv->value);
+      gimp_int_radio_frame_set_active (frame, frame->value);
     }
 }
 
@@ -724,38 +698,34 @@ static void
 gimp_int_radio_frame_set_store (GimpIntRadioFrame *frame,
                                 GimpIntStore      *store)
 {
-  GimpIntRadioFramePrivate *priv;
-
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (frame));
   g_return_if_fail (GIMP_IS_INT_STORE (store));
 
-  priv = GET_PRIVATE (frame);
-
-  if (priv->store == store)
+  if (frame->store == store)
     return;
 
-  if (priv->store)
+  if (frame->store)
     {
-      g_signal_handlers_disconnect_by_func (priv->store,
+      g_signal_handlers_disconnect_by_func (frame->store,
                                             (GCallback) gimp_int_radio_frame_fill,
                                             NULL);
-      g_object_unref (priv->store);
+      g_object_unref (frame->store);
     }
 
-  priv->store = g_object_ref (store);
+  frame->store = g_object_ref (store);
 
-  if (priv->store)
+  if (frame->store)
     {
-      g_signal_connect_object (priv->store, "row-changed",
+      g_signal_connect_object (frame->store, "row-changed",
                                (GCallback) gimp_int_radio_frame_fill,
                                frame, G_CONNECT_SWAPPED);
-      g_signal_connect_object (priv->store, "row-deleted",
+      g_signal_connect_object (frame->store, "row-deleted",
                                (GCallback) gimp_int_radio_frame_fill,
                                frame, G_CONNECT_SWAPPED);
-      g_signal_connect_object (priv->store, "row-inserted",
+      g_signal_connect_object (frame->store, "row-inserted",
                                (GCallback) gimp_int_radio_frame_fill,
                                frame, G_CONNECT_SWAPPED);
-      g_signal_connect_object (priv->store, "rows-reordered",
+      g_signal_connect_object (frame->store, "rows-reordered",
                                (GCallback) gimp_int_radio_frame_fill,
                                frame, G_CONNECT_SWAPPED);
     }
@@ -768,12 +738,11 @@ gimp_int_radio_frame_set_store (GimpIntRadioFrame *frame,
 static void
 gimp_int_radio_frame_update_sensitivity (GimpIntRadioFrame *frame)
 {
-  GimpIntRadioFramePrivate *priv = GET_PRIVATE (frame);
-  GSList                   *iter = priv->group;
+  GSList *iter = frame->group;
 
   g_return_if_fail (GIMP_IS_INT_RADIO_FRAME (frame));
 
-  if (! priv->sensitivity_func)
+  if (! frame->sensitivity_func)
     return;
 
   for (; iter; iter = g_slist_next (iter))
@@ -785,16 +754,16 @@ gimp_int_radio_frame_update_sensitivity (GimpIntRadioFrame *frame)
       value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "gimp-radio-frame-value"));
 
       gtk_widget_set_sensitive (button, TRUE);
-      if (gimp_int_store_lookup_by_value (GTK_TREE_MODEL (priv->store), value, &tree_iter))
+      if (gimp_int_store_lookup_by_value (GTK_TREE_MODEL (frame->store), value, &tree_iter))
         {
           gpointer user_data;
           gint     new_value = value;
 
-          gtk_tree_model_get (GTK_TREE_MODEL (priv->store), &tree_iter,
+          gtk_tree_model_get (GTK_TREE_MODEL (frame->store), &tree_iter,
                               GIMP_INT_STORE_USER_DATA,     &user_data,
                               -1);
-          if (! priv->sensitivity_func (value, user_data, &new_value,
-                                        priv->sensitivity_data))
+          if (! frame->sensitivity_func (value, user_data, &new_value,
+                                         frame->sensitivity_data))
             {
               if (new_value != value)
                 gimp_int_radio_frame_set_active (frame, new_value);
@@ -814,14 +783,13 @@ gimp_int_radio_frame_button_toggled (GtkToggleButton   *button,
 
   if (gtk_toggle_button_get_active (button))
     {
-      GimpIntRadioFramePrivate *priv = GET_PRIVATE (frame);
-      gint                      value;
+      gint value;
 
       value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "gimp-radio-frame-value"));
 
-      if (priv->value != value)
+      if (frame->value != value)
         {
-          priv->value = value;
+          frame->value = value;
           g_object_notify (G_OBJECT (frame), "value");
         }
     }
