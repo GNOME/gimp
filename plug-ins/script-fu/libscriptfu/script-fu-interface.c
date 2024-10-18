@@ -349,6 +349,13 @@ script_fu_interface_dialog (SFScript  *script,
                                                  arg->default_value.sfa_adjustment.lower,
                                                  arg->default_value.sfa_adjustment.upper,
                                                  arg->default_value.sfa_adjustment.digits);
+
+                  /* #12157 We should not need to set value, since we just passed it.
+                   * But seems to be a flaw in the widget.
+                   * The comments in gimp_label_spin_init, says it inits to bogus.
+                   */
+                  gimp_label_spin_set_value ((GimpLabelSpin*)widget, arg->value.sfa_adjustment.value);
+
                   gimp_label_spin_set_increments (GIMP_LABEL_SPIN (widget),
                                                   arg->default_value.sfa_adjustment.step,
                                                   arg->default_value.sfa_adjustment.page);
