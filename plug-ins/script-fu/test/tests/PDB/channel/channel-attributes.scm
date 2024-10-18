@@ -34,7 +34,7 @@
 ; effective, getter returns same color: red
 (assert `(equal?
             (gimp-channel-get-color ,testChannel)
-            '(255 0 0)))
+            '(255 0 0 255)))
 
 ; opacity
 (assert `(gimp-channel-set-opacity ,testChannel 0.7))

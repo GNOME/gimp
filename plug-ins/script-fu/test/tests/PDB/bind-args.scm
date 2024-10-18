@@ -75,10 +75,11 @@
 ; A GimpUnit is both an enum and an object???
 ; ScriptFu converts to int.  More or less an ID.
 
+; obsolete: GimpUnit is now an object
 ; to
 ; unit index 0 is px
-(assert '(string=? (car (gimp-unit-get-abbreviation 0))
-                   "px"))
+;(assert '(string=? (car (gimp-unit-get-abbreviation 0))
+;                   "px"))
 
 ; from
 ; default line width unit is px

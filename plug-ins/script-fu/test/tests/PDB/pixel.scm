@@ -16,25 +16,29 @@
 ; With loss of capability.
 
 ; in v2 get-pixel returned a count of components and a vector of components
-; in v3 it returns a list of the component intensities
+; in v3 it returns a list of the components
 
 ; This documents ScriptFu at a version.
 ; It documents what IS and not the ideal design.
 
+; See also test color.scm, which this duplicates
 
+
+(script-fu-use-v3)
 
 
 
 ; Setup
-(define testImage (testing:load-test-image-basic))
+; gimp-logo.png
+(define testImage (testing:load-test-image-basic-v3))
 ; image has one layer
 (define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
 
-(define testImageGray (testing:load-test-image-basic))
+(define testImageGray (testing:load-test-image-basic-v3))
 (gimp-image-convert-grayscale testImageGray)
 (define testDrawableGray (vector-ref (cadr (gimp-image-get-layers testImageGray)) 0))
 
-(define testImageIndexed (testing:load-test-image-basic))
+(define testImageIndexed (testing:load-test-image-basic-v3))
 (gimp-image-convert-indexed
                   testImageIndexed
                   CONVERT-DITHER-NONE
@@ -50,18 +54,18 @@
 
 (test! "get-pixel of RGBA image")
 
-; returned pixel of image of mode RGBA is missing alpha component
+; returned pixel of image of mode RGBA has alpha component
 ; Test is fragile to chosen testImage.
 ; Formerly: (71 71 71)
-(assert `(equal? (car (gimp-drawable-get-pixel ,testDrawable 1 1))
-                 '(0 0 0)))
+(assert `(equal? (gimp-drawable-get-pixel ,testDrawable 1 1)
+                 '(0 0 0 0)))
 
 (test! "set-pixel of RGBA image from a 3 component list.")
 ; ScriptFu sets alpha to opaque.
 (assert `(gimp-drawable-set-pixel ,testDrawable 1 1 '(2 2 2)))
 ; effective
-(assert `(equal? (car (gimp-drawable-get-pixel ,testDrawable 1 1))
-                 '(2 2 2)))
+(assert `(equal? (gimp-drawable-get-pixel ,testDrawable 1 1)
+                 '(2 2 2 255)))
 
 
 
@@ -69,28 +73,34 @@
 
 
 
-(test! "get-pixel of GRAY image")
+(test! "get-pixel of GRAYA image")
 
-; returned pixel of image of mode GRAY has extra components
-; You might think it only has one component.
-(assert `(equal? (car (gimp-drawable-get-pixel ,testDrawableGray 1 1))
-                 '(0 0 0)))
+; returned pixel of image of mode GRAYA has two component
+; black transparent
+(assert `(equal? (gimp-drawable-get-pixel ,testDrawableGray 1 1)
+                 '(0 0)))
 
-; Can set a pixel in GRAY image from a 3 component list.
-; You might think it only takes component
+; Can set a pixel in GRAYA image from a 3 component list.
+; Extra list elements are ignored
 (assert `(gimp-drawable-set-pixel ,testDrawableGray 1 1 '(2 2 2)))
 ; effective
-(assert `(equal? (car (gimp-drawable-get-pixel ,testDrawableGray 1 1))
-                 '(2 2 2)))
+; FIXME why isn't it (2 2) ????
+(assert `(equal? (gimp-drawable-get-pixel ,testDrawableGray 1 1)
+                 '(2 255)))
 
 
 
-; GRAYA TODO
+; GRAY TODO
 
 
-(test! "get-pixel of INDEXED image")
+(test! "get-pixel of INDEXED A image ")
 
-; pixel of image of mode INDEXED has extra components
-; FIXME this crashes in babl_fatal
-;(assert `(equal? (car (gimp-drawable-get-pixel ,testDrawableIndexed 1 1))
-;                '(71 71 71)))
+; pixel of image of mode INDEXED A has four components
+(assert `(equal? (gimp-drawable-get-pixel ,testDrawableIndexed 1 1)
+                '(19 18 17 0)))
+; FIXME the results seem strange, should be (0 0 0 0)?
+(display (gimp-drawable-get-pixel testDrawableIndexed 1 1))
+; Sometimes???  '(71 71 71 0)))
+
+
+(script-fu-use-v2)

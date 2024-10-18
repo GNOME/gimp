@@ -102,7 +102,7 @@
 
 (test! "colors from indexed image")
 
-; a color from an indexed image is a list of three
+; a color from an indexed image is a list of four
 ; The color is not represented in SF as an index, i.e. a single numeric.
 ; Note the rgb is black 0,0,0 , same as before conversion to indexed.
 ; Note the image still has an alpha and pixel 1,1 is transparent

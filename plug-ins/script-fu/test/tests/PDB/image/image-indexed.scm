@@ -1,26 +1,37 @@
 ; test Image of mode indexed methods of PDB
 
-; Now independent of image ID
+; In v2 "palette" was named "colormap"
+; and get-colormap returned a vector.
+; num-bytes was returned, obsolete since GBytes.
+;
+; In v3 Palette is first class object.
+
+; See also tests in palette.scm
 
 
-;              Basic indexed tests
 
+(script-fu-use-v3)
+
+
+; setup
 
 ; an empty image for testing
-(define newTestImage (car (gimp-image-new 21 22 RGB)))
+(define newTestImage (gimp-image-new 21 22 RGB))
 
 ; Load test image that already has drawable
-(define testImage (testing:load-test-image "gimp-logo.png"))
+; "gimp-logo.png"
+(define testImage (testing:load-test-image-basic-v3 ))
 
 
 
 
 
 ; testImage is mode RGB
-(assert `(=
-            (car (gimp-image-get-base-type ,testImage))
+(assert `(= (gimp-image-get-base-type ,testImage)
             RGB))
 
+
+(test! "convert-indexed")
 
 ; method gimp-image-convert-indexed yields truthy (now yields (#t) )
 (assert `(gimp-image-convert-indexed
@@ -28,8 +39,8 @@
                   CONVERT-DITHER-NONE
                   CONVERT-PALETTE-GENERATE
                   2  ; color count
-                  1  ; alpha-dither.  FUTURE: #t
-                  1  ; remove-unused. FUTURE: #t
+                  #t  ; alpha-dither.
+                  #t  ; remove-unused.
                   "myPalette" ; ignored
                   ))
 
@@ -39,90 +50,78 @@
                   CONVERT-DITHER-NONE
                   CONVERT-PALETTE-GENERATE
                   25  ; color count
-                  1  ; alpha-dither.  FUTURE: #t
-                  1  ; remove-unused. FUTURE: #t
+                  #t  ; alpha-dither.
+                  #t  ; remove-unused.
                   "myPalette" ; ignored
                   ))
 
 ; conversion was effective:
 ; basetype of indexed image is INDEXED
-(assert `(=
-            (car (gimp-image-get-base-type ,testImage))
+(assert `(= (gimp-image-get-base-type ,testImage)
             INDEXED))
 
 ; conversion was effective:
 ; basetype of indexed image is INDEXED
-(assert `(=
-            (car (gimp-image-get-base-type ,newTestImage))
+(assert `(= (gimp-image-get-base-type ,newTestImage)
             INDEXED))
 
 
 ; testImage has a layer named same as file "gimp-logo.png"
 ; TODO Why does "Background" work but app shows "gimp-logo.png"
 
-; drawable of indexed image is also indexed
-(assert `(= (car (gimp-drawable-is-indexed
-                    ; unwrap the drawable ID
-                    (car (gimp-image-get-layer-by-name ,testImage "Background"))))
-            1)) ; FUTURE #t
+(test! "drawable of indexed image is also indexed")
+(assert `(gimp-drawable-is-indexed
+            (gimp-image-get-layer-by-name ,testImage "Background")))
 
 
 
-;                     colormaps of indexed images
+(test! "palettes of indexed images")
 
 ; conversion was effective:
-; indexed image has-a colormap
+; indexed image has-a palette
 
-; colormap is-a vector of length zero, when image has no drawable.
-; get-colormap returns (#( <bytes of color>))
-; FIXME doc says num-bytes is returned, obsolete since GBytes
-(assert `(=
-            (vector-length
-              (car (gimp-image-get-colormap ,newTestImage)))
-            0))
+; v3 palette is first class object, an ID in SF
+; Here only test it does not fail.
+; Use testImage since newTestImage has no palette until has drawable?
+(assert `(gimp-image-get-palette ,testImage))
 
-; colormap is-a vector of length 3*<color count given during conversion>,
-; when image has a drawable.
-; 3*2=6
-; FIXME doc says num-bytes is returned, obsolete since GBytes
-(assert `(=
-            (vector-length
-              (car (gimp-image-get-colormap ,testImage)))
-            (* 3 2)))
+; Now get the palette
+(define testPalette (gimp-image-get-palette testImage))
 
-; set-colormap succeeds
-; This tests marshalling of GBytes to PDB
-(assert `(gimp-image-set-colormap ,testImage #(1 1 1 9 9 9)))
+; And test its count of colors, same as given during conversion
+;  when image has a drawable.
+(assert `(= (gimp-palette-get-color-count ,testPalette)
+            2))
+(display (gimp-palette-get-color-count testPalette))
 
-; TODO set-colormap effective
-; colormap vector is same as given
-(assert `(equal?
-              (car (gimp-image-get-colormap ,testImage))
-              #(1 1 1 9 9 9)))
+
+(define bearsPalette (gimp-palette-get-by-name "Bears"))
+; set-palette succeeds
+(assert `(gimp-image-set-palette ,testImage ,bearsPalette))
+
+; effective: palette vector is same as given
+; ID is same ID
 
 
 
 
 
-;                  precision of indexed images
+(test! "precision of indexed images")
 
 ; indexed images have precision PRECISION-U8-NON-LINEAR
 ; FIXME annotation of PDB procedure says GIMP_PRECISION_U8
 (assert `(=
-           (car (gimp-image-get-precision ,testImage))
+           (gimp-image-get-precision ,testImage)
            PRECISION-U8-NON-LINEAR ))
 
 
-
-
-; !!! This depends on ID 4 for image
-
 ; convert precision of indexed images yields error
-(assert-error `(car (gimp-image-convert-precision
+(assert-error `(gimp-image-convert-precision
                   ,newTestImage
-                  PRECISION-DOUBLE-GAMMA))
+                  PRECISION-DOUBLE-GAMMA)
                "Procedure execution of gimp-image-convert-precision failed on invalid input arguments: ")
                ; "Image '[Untitled]' (4) must not be of type 'indexed'"
 
 
+(script-fu-use-v2)
 

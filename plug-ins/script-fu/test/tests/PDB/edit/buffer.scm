@@ -10,6 +10,8 @@
 ; The API has no method to determine if the clipboard is empty
 ; buffers-get-list only gets the named buffers
 
+; Many calls take a regex string
+
 
 
 ; Prereq:  no buffer exists yet.
@@ -79,6 +81,7 @@
 ; Renaming does not add another buffer
 (assert `(= (length (gimp-buffers-get-list ""))
             1))
+(display (gimp-buffers-get-list ""))
 
 
 (test! "buffer-delete")

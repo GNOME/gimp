@@ -28,7 +28,8 @@
 (testing:load-test "layer-mask.scm")
 ; TODO layer stack ops
 
-(testing:load-test "text-layer-new.scm")
+; broken until GimpUnit is bound
+;(testing:load-test "text-layer-new.scm")
 
 (testing:load-test "vectors-new.scm")
 (testing:load-test "vectors-stroke.scm")

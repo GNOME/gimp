@@ -1,10 +1,12 @@
 ; Test methods of Channel class of the PDB
 
 
+(script-fu-use-v3)
+
 
 ; setup
 ; new, empty image
-(define testImage (car (gimp-image-new 21 22 RGB)))
+(define testImage (gimp-image-new 21 22 RGB))
 
 
 ; new image has no custom channels
@@ -13,37 +15,41 @@
 
 ; setup (not in an assert and not quoted)
 ; vectors-new succeeds
-(define testChannel (car (gimp-channel-new
+(define testChannel (gimp-channel-new
             testImage      ; image
             "Test Channel" ; name
             23 24          ; width, height
             50.0           ; opacity
-            "red" )))      ; compositing color
+            "red" ))      ; compositing color
 
-; new channel is not in image until inserted
+
+
+
+
+(test! "new channel is not in image until inserted")
 ; get-channels yields (0 #())
 (assert `(= (car (gimp-image-get-channels ,testImage))
             0))
 
 ; channel ID is valid
-(assert-PDB-true `(gimp-item-id-is-channel ,testChannel))
+(assert `(gimp-item-id-is-channel ,testChannel))
 
 
-;               attributes
+(test! "new channel attributes")
 
 ; color attribute is as given during creation
 (assert `(equal?
-            (car (gimp-channel-get-color ,testChannel))
-            '(255 0 0)))  ; red
+            (gimp-channel-get-color ,testChannel)
+            '(255 0 0 255)))  ; red
 ; gimp-channel-get-name is deprecated
 (assert `(string=?
-            (car (gimp-item-get-name ,testChannel))
+            (gimp-item-get-name ,testChannel)
             "Test Channel"))
 
 
 
 
-;               insert
+(test! "insert-channel")
 
 ; insert succeeds
 (assert `(gimp-image-insert-channel
@@ -59,13 +65,13 @@
 ; insert was effective: image now knows by name
 ; capture the ID of channel we just newed
 (assert `(=
-           (car (gimp-image-get-channel-by-name
+           (gimp-image-get-channel-by-name
                 ,testImage
-                "Test Channel"))
+                "Test Channel")
            ,testChannel))
 
 
-;              remove
+(test! "remove-channel")
 
 ; Note the difference between remove and delete:
 ; Docs say that delete is only useful for a channel not added to the image.
@@ -78,7 +84,7 @@
             0))
 
 ; After remove, channel ID is NOT valid
-(assert-PDB-false `(gimp-item-id-is-channel ,testChannel))
+(assert `(not (gimp-item-id-is-channel ,testChannel)))
 
 ; Delete throws error when channel already removed
 ; gimp-channel-delete is deprecated
@@ -86,21 +92,22 @@
               "runtime: invalid item ID"  )
 
 
-;               delete
+(test! "item-delete on channel")
 
 ; Can delete a new channel not yet added to image
 
-(define testChannel2 (car (gimp-channel-new
+(define testChannel2 (gimp-channel-new
             testImage      ; image
             "Test Channel" ; name
             23 24          ; width, height
             50.0           ; opacity
-            "red" )))      ; compositing color
+            "red" ))      ; compositing color
 
 ; Does not throw
 (assert `(gimp-item-delete ,testChannel2))
 
 ; Effective: ID is not valid
-(assert-PDB-false `(gimp-item-id-is-channel ,testChannel))
+(assert `(not (gimp-item-id-is-channel ,testChannel)))
 
 
+(script-fu-use-v2)

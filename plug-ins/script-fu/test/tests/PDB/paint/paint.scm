@@ -192,7 +192,7 @@
                   50.0 ; pressure
                   1        ; num-strokes
                   #(4.0))  ; float array
-                "Invalid value 1 for argument 2: expected value between 2 and 2147483647")
+                "argument 3 in call to gimp-airbrush has value 1 out of range:")
 
 ; The binding requires a Scheme vector for C float array,
 ; not a list, here a literal i.e. quoted.

@@ -3,52 +3,41 @@
 ; !!! Note inconsistent use in GIMP of GRAY versus GRAYSCALE
 
 
-
-;              Basic grayscale tests
+(script-fu-use-v3)
 
 
 ;              setup
 
-(define testImage (car (gimp-image-new 21 22 RGB)))
+(define testImage (testing:load-test-image-basic-v3))
 
 
 
-
-; method gimp-image-convert-grayscale does not error
+(test! "gimp-image-convert-grayscale")
 (assert `(gimp-image-convert-grayscale ,testImage))
 
 ; conversion was effective:
 ; basetype of grayscale is GRAY
-(assert `(=
-            (car (gimp-image-get-base-type ,testImage))
+(assert `(= (gimp-image-get-base-type ,testImage)
             GRAY))
 
 ; conversion was effective:
 ; grayscale image has-a colormap
-; colormap is-a vector of length zero, when image has no drawable.
-; FIXME doc says num-bytes is returned, obsolete since GBytes
-(assert `(=
-            (vector-length
-              (car (gimp-image-get-colormap ,testImage)))
-            0))
+(assert `(gimp-image-get-palette ,testImage))
 
-; grayscale images have precision PRECISION-U8-NON-LINEAR
+(test! "grayscale images have precision PRECISION-U8-NON-LINEAR")
 ; FIXME annotation of PDB procedure says GIMP_PRECISION_U8
-(assert `(=
-           (car (gimp-image-get-precision ,testImage))
-           PRECISION-U8-NON-LINEAR ))
+(assert `(= (gimp-image-get-precision ,testImage)
+            PRECISION-U8-NON-LINEAR ))
 
-; TODO
-; drawable of grayscale image is also grayscale
-;(assert `(car (gimp-drawable-is-grayscale
-;                 ()
-;               ,testImage)
+(test! "drawable of grayscale image is also grayscale")
+(assert `(gimp-drawable-is-gray
+           (gimp-image-get-layer-by-name ,testImage "Background")))
 
 ; convert precision of grayscale image succeeds
 (assert `(gimp-image-convert-precision
             ,testImage
             PRECISION-DOUBLE-GAMMA))
 
-
+(script-fu-use-v2)
 
 

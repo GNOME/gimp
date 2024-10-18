@@ -117,11 +117,13 @@
 
 ; was effective: color is as given when entry created
 ; v3 returns (255 0 0)
-(assert `(equal? (gimp-palette-entry-get-color ,testNewPalette 0)
-                  (list 255 0 0)))  ; red
+; renamed gimp-palette-entry-get-color=>gimp-palette-get-entry-color
+(assert `(equal? (gimp-palette-get-entry-color ,testNewPalette 0)
+                  (list 255 0 0 255)))  ; red
+(display (gimp-palette-get-entry-color testNewPalette 0))
 
 ; was effective on name
-(assert `(string=? (gimp-palette-entry-get-name ,testNewPalette 0)
+(assert `(string=? (gimp-palette-get-entry-name ,testNewPalette 0)
                   "fooEntryName"))
 
 

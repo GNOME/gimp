@@ -18,7 +18,7 @@
 ; TODO enum still named "VECTORS" => PATH
 (gimp-path-stroke-new-from-points
             testPath
-            VECTORS-STROKE-TYPE-BEZIER
+            PATH-STROKE-TYPE-BEZIER
             12 ; count control points, 2*2
             (vector 1 2 83 84 5 6 7 8 9 10 11 12)
             FALSE) ; not closed

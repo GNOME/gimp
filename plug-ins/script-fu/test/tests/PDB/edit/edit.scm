@@ -156,7 +156,7 @@
 
 
 (test! "edit-named-cut when selection")
-(assert `(gimp-edit-named-cut 1 (make-vector 1 (vector-ref ,testLayers 0)) "testbufferName2"))
+(assert `(gimp-edit-named-cut 1 (make-vector 1 (vector-ref ,testLayers 0)) "testBufferName2"))
 ; There are still two layers
 (assert `(= (car (gimp-image-get-layers ,testImage)) 2))
 ; There is two named buffer
@@ -190,6 +190,10 @@
 ; do not intersect bounds of selection.
 ; TODO
 
+; cleanup
+; delete buffers, other tests may expect no buffers
+(gimp-buffer-delete "testBufferName")
+(gimp-buffer-delete "testBufferName2")
 
 ; for debugging individual test file
 (testing:show testImage)
