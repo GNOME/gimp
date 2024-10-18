@@ -64,6 +64,10 @@
  * Note SF-OPTION does not create symbols in the interpreter.
  * The script itself, and all other plugins, must use integer literals
  * to denote values.
+ *
+ * SF-ADJUSTMENT:SF-SLIDER is custom.
+ * Default widget for propety of type DOUBLE is an entry w/ spinner.
+ * Override with a slider w/ spinner.
  */
 
 /* Does SFArg type need custom widget? */
@@ -71,14 +75,22 @@ static gboolean
 sf_arg_type_is_custom (SFScript *script,
                        guint     arg_index)
 {
+  gboolean result=FALSE;
+
   switch (script->args[arg_index].type)
     {
     case SF_DIRNAME:
     case SF_OPTION:
-      return TRUE;
+      result = TRUE;
+      break;
+    case SF_ADJUSTMENT:
+      if (script->args[arg_index].default_value.sfa_adjustment.type == SF_SLIDER)
+        result = TRUE;
+      break;
     default:
-      return FALSE;
+      result = FALSE;
     }
+  return result;
 }
 
 /* Returns new GtkListStore from SFArg declaration.
@@ -159,6 +171,19 @@ sf_widget_custom_dirname (GimpProcedureDialog *dialog,
                                           GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
 }
 
+/* Adds widget for arg of type SF-ADJUSTMENT:SF_SLIDER to the dialog.
+ * Specializes the widget: slider instead of entry, and a spinner
+ */
+static void
+sf_widget_custom_slider (GimpProcedureDialog *dialog,
+                         SFArg               *arg)
+{
+  /* Widget belongs to dialog, discard the returned ref. */
+  (void) gimp_procedure_dialog_get_widget (dialog,
+                                           arg->property_name,
+                                           GIMP_TYPE_SCALE_ENTRY);
+}
+
 /* Add a custom widget for a script's arg to the script's dialog.
  * Does nothing when the type of the arg does not need a custom widget.
  *
@@ -179,7 +204,12 @@ sf_widget_custom_add_to_dialog (GimpProcedureDialog *dialog,
     case SF_DIRNAME:
       sf_widget_custom_dirname (dialog, arg);
       break;
+    case SF_ADJUSTMENT:
+      /* We already know sfa_adjustment.type == SF_SLIDER. */
+      sf_widget_custom_slider (dialog, arg);
+      break;
     default:
+      g_warning ("%s Unhandled custom widget type.", G_STRFUNC);
       break;
     }
 }
