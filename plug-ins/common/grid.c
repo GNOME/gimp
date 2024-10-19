@@ -445,9 +445,9 @@ render_grid (GimpImage           *image,
       else
         format = babl_format ("R'G'B' u8");
 
-      gegl_color_get_pixel (hcolor_gegl, format, hcolor);
-      gegl_color_get_pixel (vcolor_gegl, format, vcolor);
-      gegl_color_get_pixel (icolor_gegl, format, icolor);
+      gegl_color_get_pixel (hcolor_gegl, babl_format ("R'G'B'A u8"), hcolor);
+      gegl_color_get_pixel (vcolor_gegl, babl_format ("R'G'B'A u8"), vcolor);
+      gegl_color_get_pixel (icolor_gegl, babl_format ("R'G'B'A u8"), icolor);
       break;
 
     case GIMP_GRAY:
@@ -458,9 +458,9 @@ render_grid (GimpImage           *image,
       else
         format = babl_format ("Y' u8");
 
-      gegl_color_get_pixel (hcolor_gegl, format, hcolor);
-      gegl_color_get_pixel (vcolor_gegl, format, vcolor);
-      gegl_color_get_pixel (icolor_gegl, format, icolor);
+      gegl_color_get_pixel (hcolor_gegl, babl_format ("Y'A u8"), hcolor);
+      gegl_color_get_pixel (vcolor_gegl, babl_format ("Y'A u8"), vcolor);
+      gegl_color_get_pixel (icolor_gegl, babl_format ("Y'A u8"), icolor);
       break;
 
     case GIMP_INDEXED:
