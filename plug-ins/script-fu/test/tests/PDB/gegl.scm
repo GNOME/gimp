@@ -1,6 +1,8 @@
 
 ; Test the PDB procedures that wrap GEGL plugins
 
+; This can also be stress test for GIMP itself: opens hundreds of images
+
 ; The procedures defined in /pdb/groups/plug_in_compat.pdb
 ; Not all GEGL filters are wrapped.
 ; Some GEGL filters appear in the GUI (apart from Gegl Ops menu.)
@@ -18,13 +20,12 @@
 ; are at least as restrictive in range as declared by GEGL.
 ; Otherwise, throws CRITICAL: ...out of range...
 
-; When defaulting args, it is not intuitive to see in the image whether tests are effective:
+; When defaulting args, you can't see in the displayed image that tests are effective:
 ; default args may produce all black, or all transparent, etc.
 ; IOW, the defaults are not always sane.
 
-; FIXME: color args should default also.
-; Possibly a flaw in GeglParamColor,
-; not implementing the reset method of the Config interface?
+; FIXME: color args should default also?
+; Possibly a flaw in GeglParamColor.
 
 ; If you add tests for effectiveness, leave the defaulted tests.
 ; Since they have a testing purpose: test PDB declared defaults.
@@ -35,29 +36,115 @@
 ; tests in alphabetic order
 
 
-; global setup: each test creates a new image, but occasionally we need testLayer
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
+
+(script-fu-use-v3)
 
 
-; This script is not v3, load-test-image is not compatible, yet
-; (script-fu-use-v3)
+; setup
+
+; global variables
+; Each test is on a new testImage, occasionally we need testLayer.
+; testImageCreator is a function called by every test case.
+; We set testImageCreator before various rounds of testing.
+(define testImage '())
+(define testLayer '())
+(define testImageCreator '())
+
+
+
+; Functions to create new test image and set the global variables.
+; Sets global variables. The prior image still exists in GIMP.
+
+; Create an average RGBA image
+(define (createRGBATestImage)
+  ; "gimp-logo.png"
+  (set! testImage (testing:load-test-image-basic-v3))
+  (set! testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
+
+  ; Optional stressing: change selection
+  ; select everything (but I think a filter does that anyway, when no selection exists)
+  ;(gimp-selection-all testImage)
+  ;(gimp-selection-feather testImage  10)
+  )
+
+; Create a smallish image, with alpha.
+; You can also test with 1 1
+; !!! Note the size is in two places
+(define (createSmallTestImage)
+  (set! testImage (gimp-image-new 4 4 RGB)) ; base type RBG
+  (set! testLayer
+    (gimp-layer-new
+            testImage
+            4
+            4
+            RGB-IMAGE
+            "LayerNew"
+            50.0
+            LAYER-MODE-MULTIPLY)) ; NORMAL
+  ; must insert layer in image
+  (gimp-image-insert-layer
+            testImage
+            testLayer
+            0  ; parent
+            0  )  ; position within parent
+  (gimp-layer-add-alpha testLayer)
+)
+
+; Create a small GRAY image, with alpha
+(define (createSmallGrayTestImage)
+  (set! testImage (gimp-image-new 4 4 GRAY)) ; base type
+  (set! testLayer
+    (gimp-layer-new
+            testImage
+            4
+            4
+            GRAY-IMAGE  ; GRAY
+            "LayerNew"
+            50.0
+            LAYER-MODE-NORMAL))
+  ; must insert layer in image
+  (gimp-image-insert-layer
+            testImage
+            testLayer
+            0  ; parent
+            0  )  ; position within parent
+  (gimp-layer-add-alpha testLayer)
+)
+
+; Create an INDEXED image, with alpha
+(define (createIndexedImage)
+  (set! testImage (testing:load-test-image-basic-v3))
+  (set! testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
+  (gimp-image-convert-indexed
+                  testImage
+                  CONVERT-DITHER-NONE
+                  CONVERT-PALETTE-GENERATE
+                  255  ; color count
+                  #f  ; alpha-dither
+                  #t ; remove-unused
+                  "myPalette" ; ignored
+                  )
+)
+
+
+
 
 
 ; Define test harness functions
 
 ; Function to call gegl wrapper plugin with "usual" arguments
-; Omitting most arguments.
+; Omitting most arguments, which are defaulted.
 (define (testGeglWrapper name-suffix)
   (test! name-suffix)
+
   ; new image for each test
-  (define testImage (testing:load-test-image "gimp-logo.png"))
-  (define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
-                              0))
+  (testImageCreator)
+
   (assert `(
       ; form the full name of the plugin, as a symbol
      ,(string->symbol (string-append "plug-in-" name-suffix))
      RUN-NONINTERACTIVE ,testImage ,testLayer))
+
   ; not essential, but nice, to display result images
   (gimp-display-new testImage)
   (gimp-displays-flush)
@@ -67,9 +154,7 @@
 ; Omitting trailing arguments.
 (define (testGeglWrapper2 name-suffix other-arg)
   (test! name-suffix)
-  (define testImage (testing:load-test-image "gimp-logo.png"))
-  (define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
-                              0))
+  (testImageCreator)
   (assert `(
      ,(string->symbol (string-append "plug-in-" name-suffix))
      RUN-NONINTERACTIVE ,testImage ,testLayer
@@ -78,197 +163,255 @@
   (gimp-displays-flush)
   )
 
-
-
-
-(test! "GEGL wrappers")
-
-; This is a typical, more elaborate test using sensical, not default, values.
-; Note that freq 0 produces little effect
-(assert
-  `(plug-in-alienmap2
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      1 0 ; red freq, angle
-      1 0 ; green
-      1 0 ; blue
-      0 ; TODO what is the enum symbol RGB-MODEL ; color model
-      1 1 1 ;  RGB application modes
-      ; when script-fu-use-v3 #t #t #t
-      ))
-
-; This tests the same as above using defaulted args.
-(testGeglWrapper "alienmap2")
-(testGeglWrapper "antialias")
-(testGeglWrapper "apply-canvas")
-(testGeglWrapper "applylens")
-(testGeglWrapper "autocrop")
 ; !!! autocrop layer is not a GEGL wrapper
-(testGeglWrapper "autostretch-hsv")
 
-; These require a non-defaultable arg: bump map
-; TODO using the testLayer as bump map produces little visible effect?
-(testGeglWrapper2 "bump-map" testLayer)
-(testGeglWrapper2 "bump-map-tiled" testLayer)
+; list of names of all gegl wrappers that take no args, or args that properly default
+; in alphabetical order.
+(define gegl-wrapper-names
+  (list
+    "alienmap2"
+    "antialias"
+    "apply-canvas"
+    "applylens"
+    "autocrop"
+    "autostretch-hsv"
+    "c-astretch"
+    "cartoon"
+    "colors-channel-mixer"
+    "cubism"
+    "deinterlace"
+    "diffraction"
+    "dog"
+    "edge"
+    "emboss"
+    "engrave"
+    "exchange"
+    "flarefx"
+    "fractal-trace"
+    "gauss"
+    "gauss-iir"
+    "gauss-iir2"
+    "gauss-rle"
+    "gauss-rle2"
+    "glasstile"
+    "hsv-noise"
+    "illusion"
+    "laplace"
+    "lens-distortion"
+    "make-seamless"
+    "maze"
+    "mblur"
+    "mblur-inward"
+    "median-blur"
+    "mosaic"
+    "neon"
+    ; nova requires color arg that does not default
+    "newsprint"
+    "normalize"
+    "oilify"
+    "oilify-enhanced"
+    "photocopy"
+    "pixelize"
+    "pixelize2"
+    "plasma"
+    "polar-coords"
+    "randomize-hurl"
+    "randomize-pick"
+    "randomize-slur"
+    "red-eye-removal"
+    "rgb-noise"
+    "ripple"
+    "rotate"
+    "noisify"
+    "sel-gauss"
+    "semiflatten" ; requires alpha and returns error otherwise
+    "shift"
+    "sobel"
+    "softglow"
+    "solid-noise"
+    "spread"
+    "threshold-alpha"  ; requires alpha
+    "unsharp-mask"
+    "video"
+    "vinvert"
+    "vpropagate"
+    "dilate"
+    "erode"
+    "waves"
+    "whirl-pinch"
+    "wind"))
 
-(testGeglWrapper "c-astretch")
-(testGeglWrapper "cartoon")
-(testGeglWrapper "colors-channel-mixer")
 
-; Requires an explicit color arg, until we fix defaulting colors in the PDB machinery
-(testGeglWrapper2 "colortoalpha" "red")
+(define (testGeglWrappersTakingNoArg)
+  (map testGeglWrapper gegl-wrapper-names))
 
-; Requires non-defaultable convolution matrix
-(test! "convmatrix")
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-(assert `(plug-in-convmatrix
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     25 ; count elements, must be 25
-     #(1 2 3 4 5   1 2 3 4 5  1 2 3 4 5  1 2 3 4 5  1 2 3 4 5) ; conv matrix
-     0 0 0
-     5
-     #(1 0 1 0 1) ; channel mask
-     0 ; border mode
-     ))
-(gimp-display-new testImage)
-(gimp-displays-flush)
+; tests Gegl wrappers with one other arg
+(define (testGeglWrappersTakingOneArg)
+  ; These require a non-defaultable arg: bump map
+  ; TODO using the testLayer as bump map produces little visible effect?
+  (testGeglWrapper2 "bump-map" testLayer)
+  (testGeglWrapper2 "bump-map-tiled" testLayer)
 
-(testGeglWrapper "cubism")
-(testGeglWrapper "deinterlace")
-(testGeglWrapper "diffraction")
+  ; Requires an explicit color arg, until we fix defaulting colors in the PDB machinery
+  (testGeglWrapper2 "colortoalpha" "red")
+  )
 
-; Requires non-defaultable maps.
-; We can never add test auto-defaulting the args.
-; These are NOT the declared defaults.
-(test! "displace")
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-(assert `(plug-in-displace
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     0 0 ; x, y  default is -500
-     0 0 ; do displace x, y booleans
-     ,testLayer ,testLayer ; x, y maps
-     1 ; edge behaviour
-     ))
-(gimp-display-new testImage)
-(gimp-displays-flush)
+(define (testGeglWrappers)
+  (testGeglWrappersTakingNoArg)
+  (testGeglWrappersTakingOneArg)
+  (testSpecialGeglWrappers))
 
-; Requires non-defaultable maps
-(test! "displace-polar")
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-(assert `(plug-in-displace-polar
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     0 0 ; multiplier radial, tangent  default is -500
-     0 0 ; do displace x, y booleans
-     ,testLayer ,testLayer ; x, y maps
-     1 ; edge behaviour
-     ))
-(gimp-display-new testImage)
-(gimp-displays-flush)
 
-(testGeglWrapper "dog")
-(testGeglWrapper "edge")
-(testGeglWrapper "emboss")
-(testGeglWrapper "engrave")
-(testGeglWrapper "exchange")
-(testGeglWrapper "flarefx")
-(testGeglWrapper "fractal-trace")
-(testGeglWrapper "gauss")
-(testGeglWrapper "gauss-iir")
-(testGeglWrapper "gauss-iir2")
-(testGeglWrapper "gauss-rle")
-(testGeglWrapper "gauss-rle2")
-(testGeglWrapper "glasstile")
-(testGeglWrapper "hsv-noise")
-(testGeglWrapper "illusion")
-(testGeglWrapper "laplace")
-(testGeglWrapper "lens-distortion")
-(testGeglWrapper "make-seamless")
-(testGeglWrapper "maze")
-(testGeglWrapper "mblur")
-(testGeglWrapper "mblur-inward")
-(testGeglWrapper "median-blur")
-(testGeglWrapper "mosaic")
-(testGeglWrapper "neon")
-(testGeglWrapper "newsprint")
-(testGeglWrapper "normalize")
 
-; Requires non-defaultable color
-; (testGeglWrapper "nova")
-(test! "nova")
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-(assert `(plug-in-nova
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     0 0 "red" ; other args defaulted
-     ))
-(gimp-display-new testImage)
-(gimp-displays-flush)
+; Tests of gegl wrappers by image modes
+; Note you can't just redefine testImageCreator,
+; it is not in scope, you must set a global.
+(define (testGeglWrappersRGBA)
+  (test! "Test GEGL wrappers on RGBA")
+  (set! testImageCreator createRGBATestImage)
+  (testGeglWrappers))
 
-(testGeglWrapper "oilify")
-(testGeglWrapper "oilify-enhanced")
+(define (testGeglWrappersSmallRGBA)
+  (test! "Test GEGL wrappers on small image")
+  (set! testImageCreator createSmallTestImage)
+  (testGeglWrappers))
 
-; Requires non-defaultable color
-(test! "papertile")
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-(assert `(plug-in-papertile
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     1 ; tile size (width, height as one arg)
-     1.0 ; move rate
-     0 ; fractional type enum
-     0 0 ; wrap around, centering boolean
-     5  ; background type enum
-     "red" ; color when background type==5
-     ; other args defaulted
-     ))
-(gimp-display-new testImage)
-(gimp-displays-flush)
+(define (testGeglWrappersSmallGRAY)
+  (test! "Test GEGL wrappers on small gray image")
+  (set! testImageCreator createSmallGrayTestImage)
+  (testGeglWrappers))
 
-(testGeglWrapper "photocopy")
-(testGeglWrapper "pixelize")
-(testGeglWrapper "pixelize2")
-(testGeglWrapper "plasma")
-(testGeglWrapper "polar-coords")
-(testGeglWrapper "randomize-hurl")
-(testGeglWrapper "randomize-pick")
-(testGeglWrapper "randomize-slur")
-(testGeglWrapper "red-eye-removal")
-(testGeglWrapper "rgb-noise")
-(testGeglWrapper "ripple")
-(testGeglWrapper "rotate")
-(testGeglWrapper "noisify")
-(testGeglWrapper "sel-gauss")
-(testGeglWrapper "semiflatten")
-(testGeglWrapper "shift")
+(define (testGeglWrappersINDEXED)
+  (test! "Test GEGL wrappers on INDEXED image")
+  (set! testImageCreator createIndexedImage)
+  (testGeglWrappers))
 
-; Requires non-defaultable color
-;(testGeglWrapper "sinus")
-(test! "sinus")
-(define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
-(assert `(plug-in-sinus
-     RUN-NONINTERACTIVE ,testImage ,testLayer
-     0.1 0.1 ; x, y scale
-     0 0 0 0 0 "red" "green"
-     ; other args defaulted
-     ))
-(gimp-display-new testImage)
-(gimp-displays-flush)
 
-(testGeglWrapper "sobel")
-(testGeglWrapper "softglow")
-(testGeglWrapper "solid-noise")
-(testGeglWrapper "spread")
-(testGeglWrapper "threshold-alpha")
-(testGeglWrapper "unsharp-mask")
-(testGeglWrapper "video")
-(testGeglWrapper "vinvert")
-(testGeglWrapper "vpropagate")
-(testGeglWrapper "dilate")
-(testGeglWrapper "erode")
-(testGeglWrapper "waves")
-(testGeglWrapper "whirl-pinch")
-(testGeglWrapper "wind")
 
+
+
+; test GEGL wrappers having args that don't default
+(define (testSpecialGeglWrappers)
+  (test! "Special test GEGL wrappers")
+
+  ; This is a typical, more elaborate test using sensical, not default, values.
+  ; Note that freq 0 produces little effect
+  (test! "alienmap2")
+  (testImageCreator)
+  (assert
+    `(plug-in-alienmap2
+        RUN-NONINTERACTIVE ,testImage ,testLayer
+        1 0 ; red freq, angle
+        1 0 ; green
+        1 0 ; blue
+        0 ; TODO what is the enum symbol RGB-MODEL ; color model
+        1 1 1 ;  RGB application modes
+        ; when script-fu-use-v3 #t #t #t
+        ))
+
+  ; Requires non-defaultable convolution matrix
+  (test! "convmatrix")
+  (testImageCreator)
+  (assert `(plug-in-convmatrix
+      RUN-NONINTERACTIVE ,testImage ,testLayer
+      25 ; count elements, must be 25
+      #(1 2 3 4 5   1 2 3 4 5  1 2 3 4 5  1 2 3 4 5  1 2 3 4 5) ; conv matrix
+      0 0 0
+      5
+      #(1 0 1 0 1) ; channel mask
+      0 ; border mode
+      ))
+  (gimp-display-new testImage)
+  (gimp-displays-flush)
+
+  ; Requires non-defaultable maps.
+  ; We can never add test auto-defaulting the args.
+  ; These are NOT the declared defaults.
+  (test! "displace")
+  (testImageCreator)
+  (assert `(plug-in-displace
+      RUN-NONINTERACTIVE ,testImage ,testLayer
+      0 0 ; x, y  default is -500
+      0 0 ; do displace x, y booleans
+      ,testLayer ,testLayer ; x, y maps
+      1 ; edge behaviour
+      ))
+  (gimp-display-new testImage)
+  (gimp-displays-flush)
+
+  ; Requires non-defaultable maps
+  (test! "displace-polar")
+  (testImageCreator)
+  (assert `(plug-in-displace-polar
+      RUN-NONINTERACTIVE ,testImage ,testLayer
+      0 0 ; multiplier radial, tangent  default is -500
+      0 0 ; do displace x, y booleans
+      ,testLayer ,testLayer ; x, y maps
+      1 ; edge behaviour
+      ))
+  (gimp-display-new testImage)
+  (gimp-displays-flush)
+
+  ; Requires non-defaultable color
+  (test! "nova")
+  (testImageCreator)
+  (assert `(plug-in-nova
+      RUN-NONINTERACTIVE ,testImage ,testLayer
+      0 0 "red" ; other args defaulted
+      ))
+  (gimp-display-new testImage)
+  (gimp-displays-flush)
+
+  ; Requires non-defaultable color
+  (test! "papertile")
+  (testImageCreator)
+  (assert `(plug-in-papertile
+      RUN-NONINTERACTIVE ,testImage ,testLayer
+      1 ; tile size (width, height as one arg)
+      1.0 ; move rate
+      0 ; fractional type enum
+      0 0 ; wrap around, centering boolean
+      5  ; background type enum
+      "red" ; color when background type==5
+      ; other args defaulted
+      ))
+  (gimp-display-new testImage)
+  (gimp-displays-flush)
+
+  ; Requires non-defaultable color
+  (test! "sinus")
+  (testImageCreator)
+  (assert `(plug-in-sinus
+      RUN-NONINTERACTIVE ,testImage ,testLayer
+      0.1 0.1 ; x, y scale
+      0 0 0 0 0 "red" "green"
+      ; other args defaulted
+      ))
+  (gimp-display-new testImage)
+  (gimp-displays-flush)
+)
+
+
+; Testing begins here.
+
+; You can comment them out.
+; Testing them all creates about 300 images
+
+; tests on RGBA
+(testGeglWrappersRGBA)
+
+; tests of small images is an edge test
+; and don't seem to reveal any bugs, even for a 1x1 image
+(testGeglWrappersSmallRGBA)
+
+; tests of other image modes tests conversions i.e babl
+(testGeglWrappersSmallGRAY)
+
+; FIXME some throw CRITICAL
+(testGeglWrappersINDEXED)
+
+; Not testing image without alpha.
+; It only shows that semiflatten and thresholdalpha return errors,
+; because they require alpha.
+
+; Not testing other image precisions and color profiles.
