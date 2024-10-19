@@ -1447,6 +1447,57 @@ context_enable_dynamics_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_get_emulate_brush_dynamics_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  GimpValueArray *return_vals;
+  gboolean emulate_dynamics = FALSE;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "emulate-brush-dynamics", &emulate_dynamics,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (gimp_value_array_index (return_vals, 1), emulate_dynamics);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_emulate_brush_dynamics_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  gboolean emulate_dynamics;
+
+  emulate_dynamics = g_value_get_boolean (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "emulate-brush-dynamics", emulate_dynamics,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_mypaint_brush_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
@@ -4291,6 +4342,52 @@ register_context_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("enable",
                                                      "enable",
                                                      "Whether to enable or disable dynamics",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-emulate-brush-dynamics
+   */
+  procedure = gimp_procedure_new (context_get_emulate_brush_dynamics_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-emulate-brush-dynamics");
+  gimp_procedure_set_static_help (procedure,
+                                  "Retrieve the currently active stroke option's emulate brush dynamics setting.",
+                                  "This procedure returns the emulate brush dynamics property of the currently active stroke options.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Massimo Valentini",
+                                         "Massimo Valentini",
+                                         "2018");
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("emulate-dynamics",
+                                                         "emulate dynamics",
+                                                         "The emulate brush dynamics setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-emulate-brush-dynamics
+   */
+  procedure = gimp_procedure_new (context_set_emulate_brush_dynamics_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-emulate-brush-dynamics");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the stroke option's emulate brush dynamics setting.",
+                                  "This procedure sets the specified emulate brush dynamics setting. The new method will be used in all subsequent stroke operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Massimo Valentini",
+                                         "Massimo Valentini",
+                                         "2018");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("emulate-dynamics",
+                                                     "emulate dynamics",
+                                                     "The new emulate brush dynamics setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -87,6 +87,8 @@ gchar*                        gimp_context_get_dynamics                   (void)
 gboolean                      gimp_context_set_dynamics                   (const gchar                   *name);
 gboolean                      gimp_context_are_dynamics_enabled           (void);
 gboolean                      gimp_context_enable_dynamics                (gboolean                       enable);
+gboolean                      gimp_context_get_emulate_brush_dynamics     (void);
+gboolean                      gimp_context_set_emulate_brush_dynamics     (gboolean                       emulate_dynamics);
 gchar*                        gimp_context_get_mypaint_brush              (void);
 gboolean                      gimp_context_set_mypaint_brush              (const gchar                   *name);
 GimpPattern*                  gimp_context_get_pattern                    (void);

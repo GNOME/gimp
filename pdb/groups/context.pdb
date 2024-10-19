@@ -1566,6 +1566,71 @@ CODE
     );
 }
 
+sub context_get_emulate_brush_dynamics {
+    $blurb = 'Retrieve the currently active stroke option\'s emulate brush dynamics setting.';
+
+    $help = <<'HELP';
+    This procedure returns the emulate brush dynamics property of the currently active stroke options.
+HELP
+
+    $author = 'Massimo Valentini';
+    $copyright = 'Massimo Valentini';
+    $date = '2018';
+    $since = '3.0';
+
+    @outargs = (
+	{ name  => 'emulate_dynamics', type  => 'boolean',
+	  desc  => 'The emulate brush dynamics setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "emulate-brush-dynamics", &emulate_dynamics,
+		NULL);
+}
+CODE
+    );
+}
+
+sub context_set_emulate_brush_dynamics {
+    $blurb = 'Set the stroke option\'s emulate brush dynamics setting.';
+
+    $help = <<'HELP';
+This procedure sets the specified emulate brush dynamics setting.
+The new method will be used in all subsequent stroke
+operations.
+HELP
+
+    $author = 'Massimo Valentini';
+    $copyright = 'Massimo Valentini';
+    $date = '2018';
+    $since = '3.0';
+
+    @inargs = (
+        { name => 'emulate_dynamics', type => 'boolean',
+          desc => 'The new emulate brush dynamics setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "emulate-brush-dynamics", emulate_dynamics,
+		NULL);
+}
+CODE
+    );
+}
+
+
 sub context_get_mypaint_brush {
     $blurb = 'Get the currently active MyPaint brush.';
 
@@ -3458,13 +3523,14 @@ CODE
             context_set_brush_force
             context_get_dynamics context_set_dynamics
             context_are_dynamics_enabled context_enable_dynamics
+            context_get_emulate_brush_dynamics context_set_emulate_brush_dynamics
             context_get_mypaint_brush context_set_mypaint_brush
             context_get_pattern context_set_pattern
             context_get_gradient context_set_gradient
-	    context_set_gradient_fg_bg_rgb
-	    context_set_gradient_fg_bg_hsv_cw
-	    context_set_gradient_fg_bg_hsv_ccw
-	    context_set_gradient_fg_transparent
+            context_set_gradient_fg_bg_rgb
+            context_set_gradient_fg_bg_hsv_cw
+            context_set_gradient_fg_bg_hsv_ccw
+            context_set_gradient_fg_transparent
             context_get_gradient_blend_color_space context_set_gradient_blend_color_space
             context_get_gradient_repeat_mode context_set_gradient_repeat_mode
             context_get_gradient_reverse context_set_gradient_reverse

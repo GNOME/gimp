@@ -1956,6 +1956,78 @@ gimp_context_enable_dynamics (gboolean enable)
 }
 
 /**
+ * gimp_context_get_emulate_brush_dynamics:
+ *
+ * Retrieve the currently active stroke option's emulate brush dynamics
+ * setting.
+ *
+ * This procedure returns the emulate brush dynamics property of the
+ * currently active stroke options.
+ *
+ * Returns: The emulate brush dynamics setting.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_context_get_emulate_brush_dynamics (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean emulate_dynamics = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-get-emulate-brush-dynamics",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    emulate_dynamics = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return emulate_dynamics;
+}
+
+/**
+ * gimp_context_set_emulate_brush_dynamics:
+ * @emulate_dynamics: The new emulate brush dynamics setting.
+ *
+ * Set the stroke option's emulate brush dynamics setting.
+ *
+ * This procedure sets the specified emulate brush dynamics setting.
+ * The new method will be used in all subsequent stroke operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_context_set_emulate_brush_dynamics (gboolean emulate_dynamics)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_BOOLEAN, emulate_dynamics,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-set-emulate-brush-dynamics",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_mypaint_brush:
  *
  * Get the currently active MyPaint brush.
