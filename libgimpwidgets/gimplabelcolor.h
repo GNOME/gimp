@@ -31,25 +31,8 @@
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_LABEL_COLOR (gimp_label_color_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabelColor, gimp_label_color, GIMP, LABEL_COLOR, GimpLabeled)
+G_DECLARE_FINAL_TYPE (GimpLabelColor, gimp_label_color, GIMP, LABEL_COLOR, GimpLabeled)
 
-struct _GimpLabelColorClass
-{
-  GimpLabeledClass   parent_class;
-
-  /*  Signals */
-  void (* value_changed)   (GimpLabelColor *color);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
 
 GtkWidget * gimp_label_color_new              (const gchar       *label,
                                                GeglColor         *color,

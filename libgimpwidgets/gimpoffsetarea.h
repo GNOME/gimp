@@ -32,26 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 #define GIMP_TYPE_OFFSET_AREA (gimp_offset_area_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpOffsetArea, gimp_offset_area, GIMP, OFFSET_AREA, GtkDrawingArea)
-
-struct _GimpOffsetAreaClass
-{
-  GtkDrawingAreaClass  parent_class;
-
-  void (* offsets_changed) (GimpOffsetArea *offset_area,
-                            gint            offset_x,
-                            gint            offset_y);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpOffsetArea, gimp_offset_area, GIMP, OFFSET_AREA, GtkDrawingArea)
 
 
 GtkWidget * gimp_offset_area_new         (gint            orig_width,

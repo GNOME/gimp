@@ -51,10 +51,12 @@ enum
   PROP_VALUE,
 };
 
-typedef struct _GimpLabelEntryPrivate
+struct _GimpLabelEntry
 {
-  GtkWidget *entry;
-} GimpLabelEntryPrivate;
+  GimpLabeled   parent_class;
+
+  GtkWidget    *entry;
+};
 
 static void        gimp_label_entry_constructed       (GObject       *object);
 static void        gimp_label_entry_set_property      (GObject       *object,
@@ -72,7 +74,7 @@ static GtkWidget * gimp_label_entry_populate          (GimpLabeled   *entry,
                                                        gint          *width,
                                                        gint          *height);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelEntry, gimp_label_entry, GIMP_TYPE_LABELED)
+G_DEFINE_TYPE (GimpLabelEntry, gimp_label_entry, GIMP_TYPE_LABELED)
 
 #define parent_class gimp_label_entry_parent_class
 
@@ -88,7 +90,7 @@ gimp_label_entry_class_init (GimpLabelEntryClass *klass)
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLabelEntryClass, value_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -116,17 +118,14 @@ gimp_label_entry_class_init (GimpLabelEntryClass *klass)
 static void
 gimp_label_entry_init (GimpLabelEntry *entry)
 {
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
-
-  priv->entry = gtk_entry_new ();
+  entry->entry = gtk_entry_new ();
 }
 
 static void
 gimp_label_entry_constructed (GObject *object)
 {
-  GimpLabelEntry        *entry  = GIMP_LABEL_ENTRY (object);
-  GimpLabelEntryPrivate *priv   = gimp_label_entry_get_instance_private (entry);
-  GtkEntryBuffer        *buffer = gtk_entry_get_buffer (GTK_ENTRY (priv->entry));
+  GimpLabelEntry *entry  = GIMP_LABEL_ENTRY (object);
+  GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY (entry->entry));
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -145,14 +144,13 @@ gimp_label_entry_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpLabelEntry        *entry = GIMP_LABEL_ENTRY (object);
-  GimpLabelEntryPrivate *priv  = gimp_label_entry_get_instance_private (entry);
+  GimpLabelEntry *entry = GIMP_LABEL_ENTRY (object);
 
   switch (property_id)
     {
     case PROP_VALUE:
         {
-          GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY (priv->entry));
+          GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY (entry->entry));
 
           /* Avoid looping forever since we have bound this widget's
            * "value" property with the entry button "value" property.
@@ -177,14 +175,13 @@ gimp_label_entry_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpLabelEntry        *entry = GIMP_LABEL_ENTRY (object);
-  GimpLabelEntryPrivate *priv  = gimp_label_entry_get_instance_private (entry);
+  GimpLabelEntry *entry = GIMP_LABEL_ENTRY (object);
 
   switch (property_id)
     {
     case PROP_VALUE:
         {
-          GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY (priv->entry));
+          GtkEntryBuffer *buffer = gtk_entry_get_buffer (GTK_ENTRY (entry->entry));
 
           g_value_set_string (value, gtk_entry_buffer_get_text (buffer));
         }
@@ -203,16 +200,15 @@ gimp_label_entry_populate (GimpLabeled *labeled,
                            gint        *width,
                            gint        *height)
 {
-  GimpLabelEntry        *entry = GIMP_LABEL_ENTRY (labeled);
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
+  GimpLabelEntry *entry = GIMP_LABEL_ENTRY (labeled);
 
-  gtk_grid_attach (GTK_GRID (entry), priv->entry, 1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (entry), entry->entry, 1, 0, 1, 1);
   /* Make sure the label and entry won't be glued next to each other's. */
   gtk_grid_set_column_spacing (GTK_GRID (entry),
                                4 * gtk_widget_get_scale_factor (GTK_WIDGET (entry)));
-  gtk_widget_show (priv->entry);
+  gtk_widget_show (entry->entry);
 
-  return priv->entry;
+  return entry->entry;
 }
 
 
@@ -267,12 +263,11 @@ gimp_label_entry_set_value (GimpLabelEntry *entry,
 const gchar *
 gimp_label_entry_get_value (GimpLabelEntry *entry)
 {
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
-  GtkEntryBuffer        *buffer;
+  GtkEntryBuffer *buffer;
 
   g_return_val_if_fail (GIMP_IS_LABEL_ENTRY (entry), NULL);
 
-  buffer = gtk_entry_get_buffer (GTK_ENTRY (priv->entry));
+  buffer = gtk_entry_get_buffer (GTK_ENTRY (entry->entry));
 
   return gtk_entry_buffer_get_text (buffer);
 }
@@ -288,9 +283,7 @@ gimp_label_entry_get_value (GimpLabelEntry *entry)
 GtkWidget *
 gimp_label_entry_get_entry (GimpLabelEntry *entry)
 {
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
-
   g_return_val_if_fail (GIMP_IS_LABEL_ENTRY (entry), NULL);
 
-  return priv->entry;
+  return entry->entry;
 }

@@ -53,13 +53,13 @@ enum
   PROP_WIDGET,
 };
 
-typedef struct _GimpLabelIntWidgetPrivate
+struct _GimpLabelIntWidget
 {
   GimpLabeled    parent_instance;
 
   GtkWidget     *widget;
   gint           value;
-} GimpLabelIntWidgetPrivate;
+};
 
 static void        gimp_label_int_widget_constructed       (GObject       *object);
 static void        gimp_label_int_widget_set_property      (GObject       *object,
@@ -77,7 +77,7 @@ static GtkWidget * gimp_label_int_widget_populate          (GimpLabeled   *widge
                                                             gint          *width,
                                                             gint          *height);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelIntWidget, gimp_label_int_widget, GIMP_TYPE_LABELED)
+G_DEFINE_TYPE (GimpLabelIntWidget, gimp_label_int_widget, GIMP_TYPE_LABELED)
 
 #define parent_class gimp_label_int_widget_parent_class
 
@@ -93,7 +93,7 @@ gimp_label_int_widget_class_init (GimpLabelIntWidgetClass *klass)
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLabelIntWidgetClass, value_changed),
+                 0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -139,8 +139,7 @@ gimp_label_int_widget_init (GimpLabelIntWidget *widget)
 static void
 gimp_label_int_widget_constructed (GObject *object)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (object);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  GimpLabelIntWidget *widget = GIMP_LABEL_INT_WIDGET (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -151,8 +150,8 @@ gimp_label_int_widget_constructed (GObject *object)
    * will allow config object to bind the "value" property of this
    * widget, and therefore be updated automatically.
    */
-  g_object_bind_property (G_OBJECT (priv->widget), "value",
-                          object,                  "value",
+  g_object_bind_property (G_OBJECT (widget->widget), "value",
+                          object,                    "value",
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 }
@@ -164,16 +163,15 @@ gimp_label_int_widget_set_property (GObject      *object,
                                     GParamSpec   *pspec)
 {
   GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (object);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
 
   switch (property_id)
     {
     case PROP_VALUE:
-      priv->value = g_value_get_int (value);
+      widget->value = g_value_get_int (value);
       g_signal_emit (object, gimp_label_int_widget_signals[VALUE_CHANGED], 0);
       break;
     case PROP_WIDGET:
-      priv->widget = g_value_get_object (value);
+      widget->widget = g_value_get_object (value);
       break;
 
     default:
@@ -188,16 +186,15 @@ gimp_label_int_widget_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (object);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  GimpLabelIntWidget *widget = GIMP_LABEL_INT_WIDGET (object);
 
   switch (property_id)
     {
     case PROP_VALUE:
-      g_value_set_int (value, priv->value);
+      g_value_set_int (value, widget->value);
       break;
     case PROP_WIDGET:
-      g_value_set_object (value, priv->widget);
+      g_value_set_object (value, widget->widget);
       break;
 
     default:
@@ -213,13 +210,12 @@ gimp_label_int_widget_populate (GimpLabeled *labeled,
                                 gint        *width,
                                 gint        *height)
 {
-  GimpLabelIntWidget        *widget = GIMP_LABEL_INT_WIDGET (labeled);
-  GimpLabelIntWidgetPrivate *priv   = gimp_label_int_widget_get_instance_private (widget);
+  GimpLabelIntWidget *widget = GIMP_LABEL_INT_WIDGET (labeled);
 
-  gtk_grid_attach (GTK_GRID (widget), priv->widget, 1, 0, 1, 1);
-  gtk_widget_show (priv->widget);
+  gtk_grid_attach (GTK_GRID (widget), widget->widget, 1, 0, 1, 1);
+  gtk_widget_show (widget->widget);
 
-  return priv->widget;
+  return widget->widget;
 }
 
 /* Public Functions */
@@ -263,11 +259,7 @@ gimp_label_int_widget_new (const gchar *text,
 GtkWidget *
 gimp_label_int_widget_get_widget (GimpLabelIntWidget *widget)
 {
-  GimpLabelIntWidgetPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_LABEL_INT_WIDGET (widget), NULL);
 
-  priv = gimp_label_int_widget_get_instance_private (widget);
-
-  return priv->widget;
+  return widget->widget;
 }

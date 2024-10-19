@@ -30,24 +30,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_MEMSIZE_ENTRY (gimp_memsize_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GIMP, MEMSIZE_ENTRY, GtkBox)
-
-struct _GimpMemsizeEntryClass
-{
-  GtkBoxClass  parent_class;
-
-  void (* value_changed)  (GimpMemsizeEntry *entry);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GIMP, MEMSIZE_ENTRY, GtkBox)
 
 
 GtkWidget * gimp_memsize_entry_new            (guint64           value,

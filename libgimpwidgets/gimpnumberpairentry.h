@@ -32,25 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_NUMBER_PAIR_ENTRY (gimp_number_pair_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GIMP, NUMBER_PAIR_ENTRY, GtkEntry)
-
-struct _GimpNumberPairEntryClass
-{
-  GtkEntryClass  parent_class;
-
-  void (* numbers_changed) (GimpNumberPairEntry *entry);
-  void (* ratio_changed)   (GimpNumberPairEntry *entry);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GIMP, NUMBER_PAIR_ENTRY, GtkEntry)
 
 
 GtkWidget *    gimp_number_pair_entry_new                (const gchar         *separators,

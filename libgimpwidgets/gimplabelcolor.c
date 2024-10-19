@@ -56,11 +56,13 @@ enum
 static GParamSpec *object_props[N_PROPS] = { NULL, };
 
 
-typedef struct _GimpLabelColorPrivate
+struct _GimpLabelColor
 {
-  GtkWidget *area;
-  gboolean   editable;
-} GimpLabelColorPrivate;
+  GimpLabeled  parent_instance;
+
+  GtkWidget   *area;
+  gboolean     editable;
+};
 
 static void        gimp_label_color_constructed       (GObject       *object);
 static void        gimp_label_color_set_property      (GObject       *object,
@@ -79,7 +81,7 @@ static GtkWidget * gimp_label_color_populate          (GimpLabeled   *color,
                                                        gint          *height);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelColor, gimp_label_color, GIMP_TYPE_LABELED)
+G_DEFINE_TYPE (GimpLabelColor, gimp_label_color, GIMP_TYPE_LABELED)
 
 #define parent_class gimp_label_color_parent_class
 
@@ -95,7 +97,7 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLabelColorClass, value_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -139,17 +141,16 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
 static void
 gimp_label_color_init (GimpLabelColor *color)
 {
-  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (color);
-  GeglColor             *black = gegl_color_new ("black");
+  GeglColor *black = gegl_color_new ("black");
 
-  priv->editable = FALSE;
-  priv->area = gimp_color_area_new (black, GIMP_COLOR_AREA_SMALL_CHECKS,
+  color->editable = FALSE;
+  color->area = gimp_color_area_new (black, GIMP_COLOR_AREA_SMALL_CHECKS,
                                     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
 
   /* Typically for a labelled color area, a small square next to your
    * label is probably what you want to display.
    */
-  gtk_widget_set_size_request (priv->area, 20, 20);
+  gtk_widget_set_size_request (color->area, 20, 20);
 
   g_object_unref (black);
 }
@@ -157,8 +158,7 @@ gimp_label_color_init (GimpLabelColor *color)
 static void
 gimp_label_color_constructed (GObject *object)
 {
-  GimpLabelColor        *color = GIMP_LABEL_COLOR (object);
-  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (color);
+  GimpLabelColor *color = GIMP_LABEL_COLOR (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -166,8 +166,8 @@ gimp_label_color_constructed (GObject *object)
    * will allow config object to bind the "value" property of this
    * widget, and therefore be updated automatically.
    */
-  g_object_bind_property (G_OBJECT (priv->area), "color",
-                          G_OBJECT (color),      "value",
+  g_object_bind_property (G_OBJECT (color->area), "color",
+                          G_OBJECT (color),       "value",
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 }
 
@@ -177,8 +177,7 @@ gimp_label_color_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpLabelColor        *lcolor = GIMP_LABEL_COLOR (object);
-  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (lcolor);
+  GimpLabelColor *lcolor = GIMP_LABEL_COLOR (object);
 
   switch (property_id)
     {
@@ -189,7 +188,7 @@ gimp_label_color_set_property (GObject      *object,
 
           new_color = g_value_get_object (value);
 
-          g_object_get (priv->area,
+          g_object_get (lcolor->area,
                         "color", &color,
                         NULL);
 
@@ -198,14 +197,14 @@ gimp_label_color_set_property (GObject      *object,
            */
           if (! gimp_color_is_perceptually_identical (color, new_color))
             {
-              g_object_set (priv->area, "color", new_color, NULL);
+              g_object_set (lcolor->area, "color", new_color, NULL);
               g_signal_emit (object, gimp_label_color_signals[VALUE_CHANGED], 0);
             }
           g_object_unref (color);
         }
       break;
     case PROP_EDITABLE:
-      if (priv->editable != g_value_get_boolean (value))
+      if (lcolor->editable != g_value_get_boolean (value))
         {
           const gchar       *dialog_title;
           GimpLabeled       *labeled;
@@ -220,34 +219,34 @@ gimp_label_color_set_property (GObject      *object,
            */
           dialog_title = gtk_label_get_text (GTK_LABEL (gimp_labeled_get_label (labeled)));
 
-          attached = (gtk_widget_get_parent (priv->area) != NULL);
-          g_object_get (priv->area,
+          attached = (gtk_widget_get_parent (lcolor->area) != NULL);
+          g_object_get (lcolor->area,
                         "type",  &type,
                         "color", &color,
                         NULL);
 
-          gtk_widget_destroy (priv->area);
+          gtk_widget_destroy (lcolor->area);
 
-          priv->editable = g_value_get_boolean (value);
+          lcolor->editable = g_value_get_boolean (value);
 
-          if (priv->editable)
-            priv->area = gimp_color_button_new (dialog_title,
+          if (lcolor->editable)
+            lcolor->area = gimp_color_button_new (dialog_title,
                                                 20, 20, color, type);
           else
-            priv->area = gimp_color_area_new (color, type,
+            lcolor->area = gimp_color_area_new (color, type,
                                               GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
           g_object_unref (color);
 
-          gtk_widget_set_size_request (priv->area, 20, 20);
-          g_object_bind_property (G_OBJECT (priv->area), "color",
+          gtk_widget_set_size_request (lcolor->area, 20, 20);
+          g_object_bind_property (G_OBJECT (lcolor->area), "color",
                                   G_OBJECT (lcolor),     "value",
                                   G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
           if (attached)
             {
-              gtk_grid_attach (GTK_GRID (lcolor), priv->area, 1, 0, 1, 1);
-              gtk_widget_show (priv->area);
-              g_signal_emit_by_name (object, "mnemonic-widget-changed", priv->area);
+              gtk_grid_attach (GTK_GRID (lcolor), lcolor->area, 1, 0, 1, 1);
+              gtk_widget_show (lcolor->area);
+              g_signal_emit_by_name (object, "mnemonic-widget-changed", lcolor->area);
             }
         }
       break;
@@ -264,8 +263,7 @@ gimp_label_color_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpLabelColor        *color = GIMP_LABEL_COLOR (object);
-  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (color);
+  GimpLabelColor *lcolor = GIMP_LABEL_COLOR (object);
 
   switch (property_id)
     {
@@ -273,14 +271,14 @@ gimp_label_color_get_property (GObject    *object,
       {
         GeglColor *color;
 
-        g_object_get (priv->area,
+        g_object_get (lcolor->area,
                       "color", &color,
                       NULL);
         g_value_take_object (value, color);
       }
       break;
     case PROP_EDITABLE:
-      g_value_set_boolean (value, priv->editable);
+      g_value_set_boolean (value, lcolor->editable);
       break;
 
 
@@ -297,16 +295,15 @@ gimp_label_color_populate (GimpLabeled *labeled,
                            gint        *width,
                            gint        *height)
 {
-  GimpLabelColor        *color = GIMP_LABEL_COLOR (labeled);
-  GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
+  GimpLabelColor *color = GIMP_LABEL_COLOR (labeled);
 
-  gtk_grid_attach (GTK_GRID (color), priv->area, 1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (color), color->area, 1, 0, 1, 1);
   /* Make sure the label and color won't be glued next to each other's. */
   gtk_grid_set_column_spacing (GTK_GRID (color),
                                4 * gtk_widget_get_scale_factor (GTK_WIDGET (color)));
-  gtk_widget_show (priv->area);
+  gtk_widget_show (color->area);
 
-  return priv->area;
+  return color->area;
 }
 
 
@@ -379,13 +376,12 @@ gimp_label_color_set_value (GimpLabelColor *color,
 GeglColor *
 gimp_label_color_get_value (GimpLabelColor *color)
 {
-  GimpLabelColorPrivate *priv  = gimp_label_color_get_instance_private (color);
-  GeglColor             *value = NULL;
-  GeglColor             *retval;
+  GeglColor *value = NULL;
+  GeglColor *retval;
 
   g_return_val_if_fail (GIMP_IS_LABEL_COLOR (color), NULL);
 
-  g_object_get (priv->area,
+  g_object_get (color->area,
                 "color", &value,
                 NULL);
   retval = gegl_color_duplicate (value);
@@ -421,13 +417,9 @@ gimp_label_color_set_editable (GimpLabelColor *color,
 gboolean
 gimp_label_color_is_editable (GimpLabelColor *color)
 {
-  GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
-
   g_return_val_if_fail (GIMP_IS_LABEL_COLOR (color), FALSE);
 
-  priv = gimp_label_color_get_instance_private (color);
-
-  return GIMP_IS_COLOR_SELECT (priv->area);
+  return GIMP_IS_COLOR_SELECT (color->area);
 }
 
 /**
@@ -443,9 +435,7 @@ gimp_label_color_is_editable (GimpLabelColor *color)
 GtkWidget *
 gimp_label_color_get_color_widget (GimpLabelColor *color)
 {
-  GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
-
   g_return_val_if_fail (GIMP_IS_LABEL_COLOR (color), NULL);
 
-  return priv->area;
+  return color->area;
 }

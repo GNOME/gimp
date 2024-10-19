@@ -103,8 +103,10 @@ typedef struct _GimpSizeEntryField
 } GimpSizeEntryField;
 
 
-typedef struct _GimpSizeEntryPrivate
+struct _GimpSizeEntry
 {
+  GtkGrid                    parent_instance;
+
   GSList                    *fields;
   gint                       number_of_fields;
 
@@ -115,7 +117,7 @@ typedef struct _GimpSizeEntryPrivate
 
   gboolean                   show_refval;
   GimpSizeEntryUpdatePolicy  update_policy;
-} GimpSizeEntryPrivate;
+};
 
 
 static void      gimp_size_entry_finalize            (GObject            *object);
@@ -142,7 +144,7 @@ static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
                                                       gpointer            data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
+G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
 
 #define parent_class gimp_size_entry_parent_class
 
@@ -158,7 +160,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, value_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -166,7 +168,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
     g_signal_new ("refval-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, refval_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -174,48 +176,37 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
     g_signal_new ("unit-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSizeEntryClass, unit_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->finalize = gimp_size_entry_finalize;
-
-  klass->value_changed   = NULL;
-  klass->refval_changed  = NULL;
-  klass->unit_changed    = NULL;
 }
 
 static void
 gimp_size_entry_init (GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  priv->unit              = gimp_unit_pixel ();
-  priv->menu_show_pixels  = TRUE;
-  priv->menu_show_percent = TRUE;
-  priv->show_refval       = FALSE;
-  priv->update_policy     = GIMP_SIZE_ENTRY_UPDATE_NONE;
+  gse->unit              = gimp_unit_pixel ();
+  gse->menu_show_pixels  = TRUE;
+  gse->menu_show_percent = TRUE;
+  gse->show_refval       = FALSE;
+  gse->update_policy     = GIMP_SIZE_ENTRY_UPDATE_NONE;
 }
 
 static void
 gimp_size_entry_finalize (GObject *object)
 {
-  GimpSizeEntry        *gse = GIMP_SIZE_ENTRY (object);
-  GimpSizeEntryPrivate *priv;
+  GimpSizeEntry *gse = GIMP_SIZE_ENTRY (object);
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  if (priv->fields)
+  if (gse->fields)
     {
       GSList *list;
 
-      for (list = priv->fields; list; list = list->next)
+      for (list = gse->fields; list; list = list->next)
         g_slice_free (GimpSizeEntryField, list->data);
 
-      g_slist_free (priv->fields);
-      priv->fields = NULL;
+      g_slist_free (gse->fields);
+      gse->fields = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -277,10 +268,9 @@ gimp_size_entry_new (gint                       number_of_fields,
                      gint                       spinbutton_width,
                      GimpSizeEntryUpdatePolicy  update_policy)
 {
-  GimpSizeEntry        *gse;
-  GimpSizeEntryPrivate *priv;
-  GimpUnitStore        *store;
-  gint                  i;
+  GimpSizeEntry *gse;
+  GimpUnitStore *store;
+  gint           i;
 
   g_return_val_if_fail (GIMP_IS_UNIT (unit), NULL);
   g_return_val_if_fail ((number_of_fields >= 0) && (number_of_fields <= 16),
@@ -288,35 +278,33 @@ gimp_size_entry_new (gint                       number_of_fields,
 
   gse = g_object_new (GIMP_TYPE_SIZE_ENTRY, NULL);
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  priv->number_of_fields = number_of_fields;
-  priv->unit             = unit;
-  priv->show_refval      = show_refval;
-  priv->update_policy    = update_policy;
+  gse->number_of_fields = number_of_fields;
+  gse->unit             = unit;
+  gse->show_refval      = show_refval;
+  gse->update_policy    = update_policy;
 
   /*  show the 'pixels' menu entry only if we are a 'size' sizeentry and
    *  don't have the reference value spinbutton
    */
   if ((update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) ||
       (show_refval == TRUE))
-    priv->menu_show_pixels = FALSE;
+    gse->menu_show_pixels = FALSE;
   else
-    priv->menu_show_pixels = menu_show_pixels;
+    gse->menu_show_pixels = menu_show_pixels;
 
   /*  show the 'percent' menu entry only if we are a 'size' sizeentry
    */
   if (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
-    priv->menu_show_percent = FALSE;
+    gse->menu_show_percent = FALSE;
   else
-    priv->menu_show_percent = menu_show_percent;
+    gse->menu_show_percent = menu_show_percent;
 
   for (i = 0; i < number_of_fields; i++)
     {
       GimpSizeEntryField *gsef = g_slice_new0 (GimpSizeEntryField);
       gint                digits;
 
-      priv->fields = g_slist_append (priv->fields, gsef);
+      gse->fields = g_slist_append (gse->fields, gsef);
 
       gsef->gse               = gse;
       gsef->resolution        = 1.0; /*  just to avoid division by zero  */
@@ -361,14 +349,14 @@ gimp_size_entry_new (gint                       number_of_fields,
         }
 
       gtk_grid_attach (GTK_GRID (gse), gsef->value_spinbutton,
-                       i+1, priv->show_refval+1, 1, 1);
+                       i+1, gse->show_refval+1, 1, 1);
       g_signal_connect (gsef->value_adjustment, "value-changed",
                         G_CALLBACK (gimp_size_entry_value_callback),
                         gsef);
 
       gtk_widget_show (gsef->value_spinbutton);
 
-      if (priv->show_refval)
+      if (gse->show_refval)
         {
           gsef->refval_adjustment = gtk_adjustment_new (gsef->refval,
                                                         gsef->min_refval,
@@ -392,15 +380,15 @@ gimp_size_entry_new (gint                       number_of_fields,
           gtk_widget_show (gsef->refval_spinbutton);
         }
 
-      if (priv->menu_show_pixels && (unit == gimp_unit_pixel ()) &&
-          ! priv->show_refval)
+      if (gse->menu_show_pixels && (unit == gimp_unit_pixel ()) &&
+          ! gse->show_refval)
         gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                     gsef->refval_digits);
     }
 
-  store = gimp_unit_store_new (priv->number_of_fields);
-  gimp_unit_store_set_has_pixels (store, priv->menu_show_pixels);
-  gimp_unit_store_set_has_percent (store, priv->menu_show_percent);
+  store = gimp_unit_store_new (gse->number_of_fields);
+  gimp_unit_store_set_has_pixels (store, gse->menu_show_pixels);
+  gimp_unit_store_set_has_percent (store, gse->menu_show_percent);
 
   if (unit_format)
     {
@@ -418,17 +406,17 @@ gimp_size_entry_new (gint                       number_of_fields,
       g_free (short_format);
     }
 
-  priv->unit_combo = gimp_unit_combo_box_new_with_model (store);
+  gse->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (priv->unit_combo), unit);
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gse->unit_combo), unit);
 
-  gtk_grid_attach (GTK_GRID (gse), priv->unit_combo,
-                    i+2, priv->show_refval+1, 1, 1);
-  g_signal_connect (priv->unit_combo, "changed",
+  gtk_grid_attach (GTK_GRID (gse), gse->unit_combo,
+                    i+2, gse->show_refval+1, 1, 1);
+  g_signal_connect (gse->unit_combo, "changed",
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
-  gtk_widget_show (priv->unit_combo);
+  gtk_widget_show (gse->unit_combo);
 
   return GTK_WIDGET (gse);
 }
@@ -452,24 +440,21 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
                             GtkSpinButton *value_spinbutton,
                             GtkSpinButton *refval_spinbutton)
 {
-  GimpSizeEntryPrivate *priv;
   GimpSizeEntryField   *gsef;
   gint                  digits;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail (GTK_IS_SPIN_BUTTON (value_spinbutton));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  if (priv->show_refval)
+  if (gse->show_refval)
     {
       g_return_if_fail (GTK_IS_SPIN_BUTTON (refval_spinbutton));
     }
 
   gsef = g_slice_new0 (GimpSizeEntryField);
 
-  priv->fields = g_slist_prepend (priv->fields, gsef);
-  priv->number_of_fields++;
+  gse->fields = g_slist_prepend (gse->fields, gsef);
+  gse->number_of_fields++;
 
   gsef->gse            = gse;
   gsef->resolution     = 1.0; /*  just to avoid division by zero  */
@@ -482,7 +467,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   gsef->min_refval     = 0;
   gsef->max_refval     = SIZE_MAX_VALUE;
   gsef->refval_digits  =
-    (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
+    (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
   gsef->stop_recursion = 0;
 
   gsef->value_adjustment = gtk_spin_button_get_adjustment (value_spinbutton);
@@ -494,7 +479,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   gimp_size_entry_attach_eevl (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                gsef);
 
-  if (priv->show_refval)
+  if (gse->show_refval)
     {
       gsef->refval_adjustment = gtk_spin_button_get_adjustment (refval_spinbutton);
       gsef->refval_spinbutton = GTK_WIDGET (refval_spinbutton);
@@ -503,15 +488,15 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
                         gsef);
     }
 
-  digits = ((priv->unit == gimp_unit_pixel ()) ? gsef->refval_digits :
-            (priv->unit == gimp_unit_percent ()) ? 2 :
-            GIMP_SIZE_ENTRY_DIGITS (priv->unit));
+  digits = ((gse->unit == gimp_unit_pixel ()) ? gsef->refval_digits :
+            (gse->unit == gimp_unit_percent ()) ? 2 :
+            GIMP_SIZE_ENTRY_DIGITS (gse->unit));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (value_spinbutton), digits);
 
-  if (priv->menu_show_pixels &&
-      !priv->show_refval &&
-      (priv->unit == gimp_unit_pixel ()))
+  if (gse->menu_show_pixels &&
+      !gse->show_refval &&
+      (gse->unit == gimp_unit_pixel ()))
     {
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                   gsef->refval_digits);
@@ -521,25 +506,17 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
 GimpSizeEntryUpdatePolicy
 gimp_size_entry_get_update_policy (GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  return priv->update_policy;
+  return gse->update_policy;
 }
 
 gint
 gimp_size_entry_get_n_fields (GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), 0);
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  return priv->number_of_fields;
+  return gse->number_of_fields;
 }
 
 /**
@@ -551,13 +528,9 @@ gimp_size_entry_get_n_fields (GimpSizeEntry *gse)
 GtkWidget *
 gimp_size_entry_get_unit_combo (GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  return priv->unit_combo;
+  return gse->unit_combo;
 }
 
 /**
@@ -645,19 +618,16 @@ gimp_size_entry_set_resolution (GimpSizeEntry *gse,
                                 gdouble        resolution,
                                 gboolean       keep_size)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
-  gfloat                val;
+  GimpSizeEntryField *gsef;
+  gfloat              val;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
 
   resolution = CLAMP (resolution, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->resolution = resolution;
 
   val = gsef->value;
@@ -694,17 +664,14 @@ gimp_size_entry_set_size (GimpSizeEntry *gse,
                           gdouble        lower,
                           gdouble        upper)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
   g_return_if_fail (lower <= upper);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->lower = lower;
   gsef->upper = upper;
 
@@ -737,17 +704,14 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
                                       gdouble        lower,
                                       gdouble        upper)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
   g_return_if_fail (lower <= upper);
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->min_value        = lower;
   gsef->max_value        = upper;
 
@@ -763,17 +727,17 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
     }
 
   gsef->stop_recursion++;
-  switch (priv->update_policy)
+  switch (gse->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_NONE:
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (priv->unit == gimp_unit_pixel ())
+      if (gse->unit == gimp_unit_pixel ())
         gimp_size_entry_set_refval_boundaries (gse, field,
                                                gsef->min_value,
                                                gsef->max_value);
-      else if (priv->unit == gimp_unit_percent ())
+      else if (gse->unit == gimp_unit_percent ())
         gimp_size_entry_set_refval_boundaries (gse, field,
                                                gsef->lower +
                                                (gsef->upper - gsef->lower) *
@@ -785,18 +749,18 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
         gimp_size_entry_set_refval_boundaries (gse, field,
                                                gsef->min_value *
                                                gsef->resolution /
-                                               gimp_unit_get_factor (priv->unit),
+                                               gimp_unit_get_factor (gse->unit),
                                                gsef->max_value *
                                                gsef->resolution /
-                                               gimp_unit_get_factor (priv->unit));
+                                               gimp_unit_get_factor (gse->unit));
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_refval_boundaries (gse, field,
                                              gsef->min_value *
-                                             gimp_unit_get_factor (priv->unit),
+                                             gimp_unit_get_factor (gse->unit),
                                              gsef->max_value *
-                                             gimp_unit_get_factor (priv->unit));
+                                             gimp_unit_get_factor (gse->unit));
       break;
 
     default:
@@ -830,16 +794,13 @@ gdouble
 gimp_size_entry_get_value (GimpSizeEntry *gse,
                            gint           field)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), 0);
 
-  priv = gimp_size_entry_get_instance_private (gse);
+  g_return_val_if_fail ((field >= 0) && (field < gse->number_of_fields), 0);
 
-  g_return_val_if_fail ((field >= 0) && (field < priv->number_of_fields), 0);
-
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, field);
 
   return gsef->value;
 }
@@ -848,38 +809,36 @@ static void
 gimp_size_entry_update_value (GimpSizeEntryField *gsef,
                               gdouble             value)
 {
-  GimpSizeEntryPrivate *priv = gimp_size_entry_get_instance_private (gsef->gse);
-
   if (gsef->stop_recursion > 1)
     return;
 
   gsef->value = value;
 
-  switch (priv->update_policy)
+  switch (gsef->gse->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_NONE:
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (priv->unit == gimp_unit_pixel ())
+      if (gsef->gse->unit == gimp_unit_pixel ())
         gsef->refval = value;
-      else if (priv->unit == gimp_unit_percent ())
+      else if (gsef->gse->unit == gimp_unit_percent ())
         gsef->refval = CLAMP (gsef->lower + (gsef->upper - gsef->lower) * value / 100,
                               gsef->min_refval, gsef->max_refval);
       else
         gsef->refval = CLAMP (value * gsef->resolution /
-                              gimp_unit_get_factor (priv->unit),
+                              gimp_unit_get_factor (gsef->gse->unit),
                               gsef->min_refval, gsef->max_refval);
 
-      if (priv->show_refval)
+      if (gsef->gse->show_refval)
         gtk_adjustment_set_value (gsef->refval_adjustment, gsef->refval);
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->refval =
-        CLAMP (value * gimp_unit_get_factor (priv->unit),
+        CLAMP (value * gimp_unit_get_factor (gsef->gse->unit),
                gsef->min_refval, gsef->max_refval);
-      if (priv->show_refval)
+      if (gsef->gse->show_refval)
         gtk_adjustment_set_value (gsef->refval_adjustment, gsef->refval);
       break;
 
@@ -911,16 +870,13 @@ gimp_size_entry_set_value (GimpSizeEntry *gse,
                            gint           field,
                            gdouble        value)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
 
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
-
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, field);
 
   value = CLAMP (value, gsef->min_value, gsef->max_value);
   gtk_adjustment_set_value (gsef->value_adjustment, value);
@@ -964,21 +920,18 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
                                        gdouble        lower,
                                        gdouble        upper)
 {
-  GimpSizeEntryPrivate *priv;
   GimpSizeEntryField   *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
   g_return_if_fail (lower <= upper);
 
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, field);
   gsef->min_refval = lower;
   gsef->max_refval = upper;
 
-  if (priv->show_refval)
+  if (gse->show_refval)
     {
       g_object_freeze_notify (G_OBJECT (gsef->refval_adjustment));
 
@@ -988,24 +941,24 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
 
   if (gsef->stop_recursion) /* this is a hack (but useful ;-) */
     {
-      if (priv->show_refval)
+      if (gse->show_refval)
         g_object_thaw_notify (G_OBJECT (gsef->refval_adjustment));
 
       return;
     }
 
   gsef->stop_recursion++;
-  switch (priv->update_policy)
+  switch (gse->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_NONE:
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (priv->unit == gimp_unit_pixel ())
+      if (gse->unit == gimp_unit_pixel ())
         gimp_size_entry_set_value_boundaries (gse, field,
                                               gsef->min_refval,
                                               gsef->max_refval);
-      else if (priv->unit == gimp_unit_percent ())
+      else if (gse->unit == gimp_unit_percent ())
         gimp_size_entry_set_value_boundaries (gse, field,
                                               100 * (gsef->min_refval -
                                                      gsef->lower) /
@@ -1016,19 +969,19 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
       else
         gimp_size_entry_set_value_boundaries (gse, field,
                                               gsef->min_refval *
-                                              gimp_unit_get_factor (priv->unit) /
+                                              gimp_unit_get_factor (gse->unit) /
                                               gsef->resolution,
                                               gsef->max_refval *
-                                              gimp_unit_get_factor (priv->unit) /
+                                              gimp_unit_get_factor (gse->unit) /
                                               gsef->resolution);
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_value_boundaries (gse, field,
                                             gsef->min_refval /
-                                            gimp_unit_get_factor (priv->unit),
+                                            gimp_unit_get_factor (gse->unit),
                                             gsef->max_refval /
-                                            gimp_unit_get_factor (priv->unit));
+                                            gimp_unit_get_factor (gse->unit));
       break;
 
     default:
@@ -1038,7 +991,7 @@ gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
 
   gimp_size_entry_set_refval (gse, field, gsef->refval);
 
-  if (priv->show_refval)
+  if (gse->show_refval)
     g_object_thaw_notify (G_OBJECT (gsef->refval_adjustment));
 }
 
@@ -1061,25 +1014,22 @@ gimp_size_entry_set_refval_digits (GimpSizeEntry *gse,
                                    gint           field,
                                    gint           digits)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
   g_return_if_fail ((digits >= 0) && (digits <= 6));
 
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->refval_digits = digits;
 
-  if (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
+  if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
     {
-      if (priv->show_refval)
+      if (gse->show_refval)
         gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
                                     gsef->refval_digits);
-      else if (priv->unit == gimp_unit_pixel ())
+      else if (gse->unit == gimp_unit_pixel ())
         gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                     gsef->refval_digits);
     }
@@ -1102,17 +1052,14 @@ gdouble
 gimp_size_entry_get_refval (GimpSizeEntry *gse,
                             gint           field)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   /*  return 1.0 to avoid division by zero  */
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), 1.0);
 
-  priv = gimp_size_entry_get_instance_private (gse);
+  g_return_val_if_fail ((field >= 0) && (field < gse->number_of_fields), 1.0);
 
-  g_return_val_if_fail ((field >= 0) && (field < priv->number_of_fields), 1.0);
-
-  gsef = (GimpSizeEntryField*) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
 
   return gsef->refval;
 }
@@ -1121,26 +1068,24 @@ static void
 gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
                                gdouble             refval)
 {
-  GimpSizeEntryPrivate *priv = gimp_size_entry_get_instance_private (gsef->gse);
-
   if (gsef->stop_recursion > 1)
     return;
 
   gsef->refval = refval;
 
-  switch (priv->update_policy)
+  switch (gsef->gse->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_NONE:
       break;
 
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      if (priv->unit == gimp_unit_pixel ())
+      if (gsef->gse->unit == gimp_unit_pixel ())
         gsef->value = refval;
-      else if (priv->unit == gimp_unit_percent ())
+      else if (gsef->gse->unit == gimp_unit_percent ())
         gsef->value = CLAMP (100 * (refval - gsef->lower) / (gsef->upper - gsef->lower),
                              gsef->min_value, gsef->max_value);
       else
-        gsef->value = CLAMP (refval * gimp_unit_get_factor (priv->unit) /
+        gsef->value = CLAMP (refval * gimp_unit_get_factor (gsef->gse->unit) /
                              gsef->resolution,
                              gsef->min_value, gsef->max_value);
 
@@ -1149,7 +1094,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->value =
-        CLAMP (refval / gimp_unit_get_factor (priv->unit),
+        CLAMP (refval / gimp_unit_get_factor (gsef->gse->unit),
                gsef->min_value, gsef->max_value);
       gtk_adjustment_set_value (gsef->value_adjustment, gsef->value);
       break;
@@ -1178,20 +1123,17 @@ gimp_size_entry_set_refval (GimpSizeEntry *gse,
                             gint           field,
                             gdouble        refval)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
+  g_return_if_fail ((field >= 0) && (field < gse->number_of_fields));
 
-  g_return_if_fail ((field >= 0) && (field < priv->number_of_fields));
-
-  gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, field);
+  gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, field);
 
   refval = CLAMP (refval, gsef->min_refval, gsef->max_refval);
 
-  if (priv->show_refval)
+  if (gse->show_refval)
     gtk_adjustment_set_value (gsef->refval_adjustment, refval);
 
   gimp_size_entry_update_refval (gsef, refval);
@@ -1225,34 +1167,29 @@ gimp_size_entry_refval_callback (GtkAdjustment *adjustment,
 GimpUnit *
 gimp_size_entry_get_unit (GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), gimp_unit_inch ());
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  return priv->unit;
+  return gse->unit;
 }
 
 static void
 gimp_size_entry_update_unit (GimpSizeEntry *gse,
                              GimpUnit      *unit)
 {
-  GimpSizeEntryPrivate *priv = gimp_size_entry_get_instance_private (gse);
-  GimpSizeEntryField   *gsef;
-  gint                  i;
-  gint                  digits;
+  GimpSizeEntryField *gsef;
+  gint                i;
+  gint                digits;
 
-  priv->unit = unit;
+  gse->unit = unit;
 
   digits = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (gse),
                                                "gimp-pixel-digits"));
 
-  for (i = 0; i < priv->number_of_fields; i++)
+  for (i = 0; i < gse->number_of_fields; i++)
     {
-      gsef = (GimpSizeEntryField *) g_slist_nth_data (priv->fields, i);
+      gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, i);
 
-      if (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
+      if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
         {
           if (unit == gimp_unit_pixel ())
             gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
@@ -1264,7 +1201,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
             gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                         GIMP_SIZE_ENTRY_DIGITS (unit) + digits);
         }
-      else if (priv->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
+      else if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
         {
           digits = (gimp_unit_get_digits (gimp_unit_inch ()) - gimp_unit_get_digits (unit));
           gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
@@ -1296,16 +1233,12 @@ void
 gimp_size_entry_set_unit (GimpSizeEntry *gse,
                           GimpUnit      *unit)
 {
-  GimpSizeEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
+  g_return_if_fail (gse->menu_show_pixels || (unit != gimp_unit_pixel ()));
+  g_return_if_fail (gse->menu_show_percent || (unit != gimp_unit_percent ()));
 
-  g_return_if_fail (priv->menu_show_pixels || (unit != gimp_unit_pixel ()));
-  g_return_if_fail (priv->menu_show_percent || (unit != gimp_unit_percent ()));
-
-  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (priv->unit_combo), unit);
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gse->unit_combo), unit);
   gimp_size_entry_update_unit (gse, unit);
 }
 
@@ -1313,14 +1246,11 @@ static void
 gimp_size_entry_unit_callback (GtkWidget     *widget,
                                GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpUnit             *new_unit;
+  GimpUnit *new_unit;
 
   new_unit = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (widget));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  if (priv->unit != new_unit)
+  if (gse->unit != new_unit)
     gimp_size_entry_update_unit (gse, new_unit);
 }
 
@@ -1349,24 +1279,21 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
                                      gdouble       *return_val,
                                      gpointer      *data)
 {
-  GimpSizeEntryField   *gsef      = (GimpSizeEntryField *) data;
-  GimpSizeEntryPrivate *priv;
-  GimpEevlOptions       options   = GIMP_EEVL_OPTIONS_INIT;
-  gboolean              success   = FALSE;
-  const gchar          *error_pos = NULL;
-  GError               *error     = NULL;
-  GimpEevlQuantity      result;
+  GimpSizeEntryField *gsef      = (GimpSizeEntryField *) data;
+  GimpEevlOptions     options   = GIMP_EEVL_OPTIONS_INIT;
+  gboolean            success   = FALSE;
+  const gchar        *error_pos = NULL;
+  GError             *error     = NULL;
+  GimpEevlQuantity    result;
 
   g_return_val_if_fail (GTK_IS_SPIN_BUTTON (spinner), FALSE);
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
-
-  priv = gimp_size_entry_get_instance_private (gsef->gse);
 
   options.unit_resolver_proc = gimp_size_entry_eevl_unit_resolver;
   options.data               = data;
 
   /* enable ratio expressions when there are two fields */
-  if (priv->number_of_fields == 2)
+  if (gsef->gse->number_of_fields == 2)
     {
       GimpSizeEntryField *other_gsef;
       GimpEevlQuantity    default_unit_factor;
@@ -1374,15 +1301,15 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
 
       options.ratio_expressions = TRUE;
 
-      if (gsef == priv->fields->data)
+      if (gsef == gsef->gse->fields->data)
         {
-          other_gsef = priv->fields->next->data;
+          other_gsef = gsef->gse->fields->next->data;
 
           options.ratio_invert = FALSE;
         }
       else
         {
-          other_gsef = priv->fields->data;
+          other_gsef = gsef->gse->fields->data;
 
           options.ratio_invert = TRUE;
         }
@@ -1418,14 +1345,14 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
       gtk_widget_error_bell (GTK_WIDGET (spinner));
       return GTK_INPUT_ERROR;
     }
-  else if (result.dimension != 1 && priv->unit != gimp_unit_percent ())
+  else if (result.dimension != 1 && gsef->gse->unit != gimp_unit_percent ())
     {
       g_printerr ("ERROR: result has wrong dimension (expected 1, got %d)\n", result.dimension);
 
       gtk_widget_error_bell (GTK_WIDGET (spinner));
       return GTK_INPUT_ERROR;
     }
-  else if (result.dimension != 0 && priv->unit == gimp_unit_percent ())
+  else if (result.dimension != 0 && gsef->gse->unit == gimp_unit_percent ())
     {
       g_printerr ("ERROR: result has wrong dimension (expected 0, got %d)\n", result.dimension);
 
@@ -1439,19 +1366,19 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
       GtkAdjustment    *adj;
       gdouble           val;
 
-      if (priv->unit == gimp_unit_pixel ())
+      if (gsef->gse->unit == gimp_unit_pixel ())
         {
           ui_unit.value     = gsef->resolution;
           ui_unit.dimension = 1;
         }
-      else if (priv->unit == gimp_unit_percent ())
+      else if (gsef->gse->unit == gimp_unit_percent ())
         {
           ui_unit.value     = 1.0;
           ui_unit.dimension = 0;
         }
       else
         {
-          ui_unit.value     = gimp_unit_get_factor(priv->unit);
+          ui_unit.value     = gimp_unit_get_factor(gsef->gse->unit);
           ui_unit.dimension = 1;
         }
 
@@ -1483,31 +1410,28 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
                                     gdouble          *offset,
                                     gpointer          data)
 {
-  GimpSizeEntryField   *gsef                 = (GimpSizeEntryField *) data;
-  GimpSizeEntryPrivate *priv;
-  gboolean              resolve_default_unit = (identifier == NULL);
-  GimpUnit             *unit                 = gimp_unit_pixel ();
-  gint                  i                    = 1;
+  GimpSizeEntryField *gsef                 = (GimpSizeEntryField *) data;
+  gboolean            resolve_default_unit = (identifier == NULL);
+  GimpUnit           *unit                 = gimp_unit_pixel ();
+  gint                i                    = 1;
 
   g_return_val_if_fail (gsef, FALSE);
   g_return_val_if_fail (factor != NULL, FALSE);
   g_return_val_if_fail (offset != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gsef->gse), FALSE);
 
-  priv = gimp_size_entry_get_instance_private (gsef->gse);
-
   *offset = 0.0;
 
   while (unit != NULL)
     {
-      if ((resolve_default_unit && unit == priv->unit) ||
+      if ((resolve_default_unit && unit == gsef->gse->unit) ||
           (identifier &&
            (strcmp (gimp_unit_get_symbol (unit),       identifier) == 0 ||
             strcmp (gimp_unit_get_abbreviation (unit), identifier) == 0)))
         {
           if (unit == gimp_unit_percent ())
             {
-              if (priv->unit == gimp_unit_percent ())
+              if (gsef->gse->unit == gimp_unit_percent ())
                 {
                   factor->value = 1;
                   factor->dimension = 0;
@@ -1532,7 +1456,7 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
               factor->value = gimp_unit_get_factor (unit);
             }
 
-          if (priv->unit == gimp_unit_percent ())
+          if (gsef->gse->unit == gimp_unit_percent ())
             {
               /* map non-percentages onto percent */
               factor->value = gsef->upper/(100*gsef->resolution);
@@ -1574,13 +1498,9 @@ void
 gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
                                 gboolean       show)
 {
-  GimpSizeEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  gtk_widget_set_visible (priv->unit_combo, show);
+  gtk_widget_set_visible (gse->unit_combo, show);
 }
 
 
@@ -1596,13 +1516,11 @@ void
 gimp_size_entry_set_pixel_digits (GimpSizeEntry *gse,
                                   gint           digits)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpUnitComboBox     *combo;
+  GimpUnitComboBox *combo;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv  = gimp_size_entry_get_instance_private (gse);
-  combo = GIMP_UNIT_COMBO_BOX (priv->unit_combo);
+  combo = GIMP_UNIT_COMBO_BOX (gse->unit_combo);
 
   g_object_set_data (G_OBJECT (gse), "gimp-pixel-digits",
                      GINT_TO_POINTER (digits));
@@ -1620,16 +1538,13 @@ gimp_size_entry_set_pixel_digits (GimpSizeEntry *gse,
 void
 gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 {
-  GimpSizeEntryPrivate *priv;
   GimpSizeEntryField   *gsef;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  gsef = priv->fields->data;
+  gsef = gse->fields->data;
   if (gsef)
-    gtk_widget_grab_focus (priv->show_refval ?
+    gtk_widget_grab_focus (gse->show_refval ?
                            gsef->refval_spinbutton : gsef->value_spinbutton);
 }
 
@@ -1647,14 +1562,11 @@ void
 gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
                                        gboolean       setting)
 {
-  GimpSizeEntryPrivate *priv;
-  GSList               *list;
+  GSList *list;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  priv = gimp_size_entry_get_instance_private (gse);
-
-  for (list = priv->fields; list; list = g_slist_next (list))
+  for (list = gse->fields; list; list = g_slist_next (list))
     {
       GimpSizeEntryField *gsef = list->data;
 
@@ -1683,16 +1595,13 @@ GtkWidget *
 gimp_size_entry_get_help_widget (GimpSizeEntry *gse,
                                  gint           field)
 {
-  GimpSizeEntryPrivate *priv;
-  GimpSizeEntryField   *gsef;
+  GimpSizeEntryField *gsef;
 
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (gse), NULL);
 
-  priv = gimp_size_entry_get_instance_private (gse);
+  g_return_val_if_fail ((field >= 0) && (field < gse->number_of_fields), NULL);
 
-  g_return_val_if_fail ((field >= 0) && (field < priv->number_of_fields), NULL);
-
-  gsef = g_slist_nth_data (priv->fields, field);
+  gsef = g_slist_nth_data (gse->fields, field);
   if (!gsef)
     return NULL;
 

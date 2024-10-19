@@ -82,8 +82,10 @@ typedef enum
 } ParseResult;
 
 
-typedef struct _GimpNumberPairEntryPrivate
+struct _GimpNumberPairEntry
 {
+  GtkEntry     parent_instance;
+
   /* The current number pair displayed in the widget. */
   gdouble      left_number;
   gdouble      right_number;
@@ -119,7 +121,7 @@ typedef struct _GimpNumberPairEntryPrivate
   /* What range of values considered valid. */
   gdouble      min_valid_value;
   gdouble      max_valid_value;
-} GimpNumberPairEntryPrivate;
+};
 
 
 static void         gimp_number_pair_entry_finalize          (GObject             *entry);
@@ -160,8 +162,7 @@ static gchar *      gimp_number_pair_entry_strdup_number_pair_string
 
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpNumberPairEntry, gimp_number_pair_entry,
-                            GTK_TYPE_ENTRY)
+G_DEFINE_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GTK_TYPE_ENTRY)
 
 
 #define parent_class gimp_number_pair_entry_parent_class
@@ -184,7 +185,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
     g_signal_new ("numbers-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNumberPairEntryClass, numbers_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -192,16 +193,13 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
     g_signal_new ("ratio-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpNumberPairEntryClass, ratio_changed),
+                  0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->set_property = gimp_number_pair_entry_set_property;
   object_class->get_property = gimp_number_pair_entry_get_property;
   object_class->finalize     = gimp_number_pair_entry_finalize;
-
-  klass->numbers_changed = NULL;
-  klass->ratio_changed   = NULL;
 
   g_object_class_install_property (object_class, PROP_LEFT_NUMBER,
                                    g_param_spec_double ("left-number",
@@ -300,22 +298,18 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
 static void
 gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
-
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  priv->left_number          = 1.0;
-  priv->right_number         = 1.0;
-  priv->default_left_number  = 1.0;
-  priv->default_right_number = 1.0;
-  priv->user_override        = FALSE;
-  priv->font_italic          = FALSE;
-  priv->separators           = NULL;
-  priv->default_text         = NULL;
-  priv->num_separators       = 0;
-  priv->allow_simplification = FALSE;
-  priv->min_valid_value      = G_MINDOUBLE;
-  priv->max_valid_value      = G_MAXDOUBLE;
+  entry->left_number          = 1.0;
+  entry->right_number         = 1.0;
+  entry->default_left_number  = 1.0;
+  entry->default_right_number = 1.0;
+  entry->user_override        = FALSE;
+  entry->font_italic          = FALSE;
+  entry->separators           = NULL;
+  entry->default_text         = NULL;
+  entry->num_separators       = 0;
+  entry->allow_simplification = FALSE;
+  entry->min_valid_value      = G_MINDOUBLE;
+  entry->max_valid_value      = G_MAXDOUBLE;
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_number_pair_entry_changed),
@@ -340,15 +334,12 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
 static void
 gimp_number_pair_entry_finalize (GObject *object)
 {
-  GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (object);
-  GimpNumberPairEntryPrivate *priv;
+  GimpNumberPairEntry *entry = GIMP_NUMBER_PAIR_ENTRY (object);
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);  
+  g_clear_pointer (&entry->separators, g_free);
+  entry->num_separators = 0;
 
-  g_clear_pointer (&priv->separators, g_free);
-  priv->num_separators = 0;
-
-  g_clear_pointer (&priv->default_text, g_free);
+  g_clear_pointer (&entry->default_text, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -487,13 +478,9 @@ gimp_number_pair_entry_set_ratio (GimpNumberPairEntry *entry,
 gdouble
 gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), 1.0);
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  return priv->left_number / priv->right_number;
+  return entry->left_number / entry->right_number;
 }
 
 /**
@@ -513,22 +500,19 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
                                    gdouble              left,
                                    gdouble              right)
 {
-  GimpNumberPairEntryPrivate *priv;
-  GimpAspectType              old_aspect;
-  gdouble                     old_ratio;
-  gdouble                     old_left_number;
-  gdouble                     old_right_number;
-  gboolean                    numbers_changed = FALSE;
-  gboolean                    ratio_changed   = FALSE;
+  GimpAspectType old_aspect;
+  gdouble        old_ratio;
+  gdouble        old_left_number;
+  gdouble        old_right_number;
+  gboolean       numbers_changed = FALSE;
+  gboolean       ratio_changed   = FALSE;
 
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
   /* Store current values */
 
-  old_left_number  = priv->left_number;
-  old_right_number = priv->right_number;
+  old_left_number  = entry->left_number;
+  old_right_number = entry->right_number;
   old_ratio        = gimp_number_pair_entry_get_ratio (entry);
   old_aspect       = gimp_number_pair_entry_get_aspect (entry);
 
@@ -540,8 +524,8 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
 
   /* Set the new numbers and update the entry */
 
-  priv->left_number  = left;
-  priv->right_number = right;
+  entry->left_number  = left;
+  entry->right_number = right;
 
   g_object_notify (G_OBJECT (entry), "left-number");
   g_object_notify (G_OBJECT (entry), "right-number");
@@ -561,8 +545,8 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
         g_object_notify (G_OBJECT (entry), "aspect");
     }
 
-  if (old_left_number  != priv->left_number ||
-      old_right_number != priv->right_number)
+  if (old_left_number  != entry->left_number ||
+      old_right_number != entry->right_number)
     {
       numbers_changed = TRUE;
     }
@@ -597,17 +581,13 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
                                    gdouble             *left,
                                    gdouble             *right)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
   if (left != NULL)
-    *left  = priv->left_number;
+    *left  = entry->left_number;
 
   if (right != NULL)
-    *right = priv->right_number;
+    *right = entry->right_number;
 }
 
 /**
@@ -629,14 +609,10 @@ void
 gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
                                          const gchar         *string)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  g_free (priv->default_text);
-  priv->default_text = g_strdup (string);
+  g_free (entry->default_text);
+  entry->default_text = g_strdup (string);
 
   gimp_number_pair_entry_update_text (entry);
 
@@ -655,13 +631,9 @@ gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
 const gchar *
 gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), NULL);
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  return priv->default_text;
+  return entry->default_text;
 }
 
 /**
@@ -679,28 +651,24 @@ void
 gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
                                    GimpAspectType       aspect)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
   if (gimp_number_pair_entry_get_aspect (entry) == aspect)
     return;
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
   switch (aspect)
     {
     case GIMP_ASPECT_SQUARE:
       gimp_number_pair_entry_set_values (entry,
-                                         priv->left_number,
-                                         priv->left_number);
+                                         entry->left_number,
+                                         entry->left_number);
       break;
 
     case GIMP_ASPECT_LANDSCAPE:
     case GIMP_ASPECT_PORTRAIT:
       gimp_number_pair_entry_set_values (entry,
-                                         priv->right_number,
-                                         priv->left_number);
+                                         entry->right_number,
+                                         entry->left_number);
       break;
     }
 }
@@ -718,17 +686,13 @@ gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
 GimpAspectType
 gimp_number_pair_entry_get_aspect (GimpNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), GIMP_ASPECT_SQUARE);
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  if (priv->left_number > priv->right_number)
+  if (entry->left_number > entry->right_number)
     {
       return GIMP_ASPECT_LANDSCAPE;
     }
-  else if (priv->left_number < priv->right_number)
+  else if (entry->left_number < entry->right_number)
     {
       return GIMP_ASPECT_PORTRAIT;
     }
@@ -742,12 +706,9 @@ static void
 gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
                                     gboolean             italic)
 {
-  GimpNumberPairEntryPrivate *priv;
-  GtkStyleContext            *style;
+  GtkStyleContext *style;
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  if (priv->font_italic == italic)
+  if (entry->font_italic == italic)
     return;
 
   style = gtk_widget_get_style_context (GTK_WIDGET (entry));
@@ -761,7 +722,7 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
                                 GTK_ENTRY_ICON_SECONDARY,
                                 ! italic);
 
-  priv->font_italic = italic;
+  entry->font_italic = italic;
 }
 
 
@@ -781,19 +742,15 @@ void
 gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
                                           gboolean             user_override)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  priv->user_override = user_override;
+  entry->user_override = user_override;
 
   if (! user_override)
     {
       gimp_number_pair_entry_set_default_values (entry,
-                                                 priv->default_left_number,
-                                                 priv->default_right_number);
+                                                 entry->default_left_number,
+                                                 entry->default_right_number);
     }
 
   gimp_number_pair_entry_modify_font (entry, ! user_override);
@@ -812,13 +769,9 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
 gboolean
 gimp_number_pair_entry_get_user_override (GimpNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), FALSE);
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  return priv->user_override;
+  return entry->user_override;
 }
 
 static void
@@ -839,11 +792,9 @@ static gboolean
 gimp_number_pair_entry_events (GtkWidget *widget,
                                GdkEvent  *event)
 {
-  GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (widget);
-  GimpNumberPairEntryPrivate *priv;
-  gboolean                    force_user_override;
+  GimpNumberPairEntry *entry = GIMP_NUMBER_PAIR_ENTRY (widget);
+  gboolean             force_user_override;
 
-  priv                = gimp_number_pair_entry_get_instance_private (entry);
   force_user_override = FALSE;
 
   switch (event->type)
@@ -882,8 +833,8 @@ gimp_number_pair_entry_events (GtkWidget *widget,
           {
           case PARSE_VALID:
             {
-              if (priv->left_number  != left_value  ||
-                  priv->right_number != right_value ||
+              if (entry->left_number  != left_value  ||
+                  entry->right_number != right_value ||
                   force_user_override)
                 {
                   gimp_number_pair_entry_set_values (entry,
@@ -931,14 +882,11 @@ gimp_number_pair_entry_strdup_number_pair_string (GimpNumberPairEntry *entry,
                                                   gdouble              left_number,
                                                   gdouble              right_number)
 {
-  GimpNumberPairEntryPrivate *priv;
-  gchar                       sep[8];
-  gint                        len;
+  gchar sep[8];
+  gint  len;
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  if (priv->num_separators > 0)
-    len = g_unichar_to_utf8 (priv->separators[0], sep);
+  if (entry->num_separators > 0)
+    len = g_unichar_to_utf8 (entry->separators[0], sep);
   else
     len = g_unichar_to_utf8 (DEFAULT_SEPARATOR, sep);
 
@@ -950,24 +898,21 @@ gimp_number_pair_entry_strdup_number_pair_string (GimpNumberPairEntry *entry,
 static void
 gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
 {
-  GimpNumberPairEntryPrivate *priv;
-  gchar                      *buffer;
+  gchar *buffer;
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  if (! priv->user_override &&
-      priv->default_text != NULL)
+  if (! entry->user_override &&
+      entry->default_text != NULL)
     {
       /* Instead of the numbers, show the string explicitly set by a
        * client to show when in automatic mode.
        */
-      buffer = g_strdup (priv->default_text);
+      buffer = g_strdup (entry->default_text);
     }
   else
     {
       buffer = gimp_number_pair_entry_strdup_number_pair_string (entry,
-                                                                 priv->left_number,
-                                                                 priv->right_number);
+                                                                 entry->left_number,
+                                                                 entry->right_number);
     }
 
   g_signal_handlers_block_by_func (entry,
@@ -979,23 +924,19 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_number_pair_entry_changed, NULL);
 
-  gimp_number_pair_entry_modify_font (entry, ! priv->user_override);
+  gimp_number_pair_entry_modify_font (entry, ! entry->user_override);
 }
 
 static gboolean
 gimp_number_pair_entry_valid_separator (GimpNumberPairEntry *entry,
                                         gunichar             candidate)
 {
-  GimpNumberPairEntryPrivate *priv;
-  
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  if (priv->num_separators > 0)
+  if (entry->num_separators > 0)
     {
       gint i;
 
-      for (i = 0; i < priv->num_separators; i++)
-        if (priv->separators[i] == candidate)
+      for (i = 0; i < entry->num_separators; i++)
+        if (entry->separators[i] == candidate)
           return TRUE;
     }
   else if (candidate == DEFAULT_SEPARATOR)
@@ -1012,13 +953,10 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
                                    gdouble             *left_value,
                                    gdouble             *right_value)
 {
-  GimpNumberPairEntryPrivate *priv;
-  gdouble                     new_left_number;
-  gdouble                     new_right_number;
-  gboolean                    simplify = FALSE;
-  gchar                      *end;
-  
-  priv = gimp_number_pair_entry_get_instance_private (entry);
+  gdouble   new_left_number;
+  gdouble   new_right_number;
+  gboolean  simplify = FALSE;
+  gchar    *end;
 
   /* skip over whitespace */
   while (g_unichar_isspace (g_utf8_get_char (text)))
@@ -1061,7 +999,7 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
   /* check for the simplification char */
   if (g_utf8_get_char (text) == SIMPLIFICATION_CHAR)
     {
-      simplify = priv->allow_simplification;
+      simplify = entry->allow_simplification;
       text = g_utf8_next_char (text);
     }
 
@@ -1101,30 +1039,27 @@ gimp_number_pair_entry_set_property (GObject      *object,
                                      GParamSpec   *pspec)
 {
   GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (object);
-  GimpNumberPairEntryPrivate *priv;
-  
-  priv = gimp_number_pair_entry_get_instance_private (entry);
 
   switch (property_id)
     {
     case PROP_LEFT_NUMBER:
       gimp_number_pair_entry_set_values (entry,
                                          g_value_get_double (value),
-                                         priv->right_number);
+                                         entry->right_number);
       break;
     case PROP_RIGHT_NUMBER:
       gimp_number_pair_entry_set_values (entry,
-                                         priv->left_number,
+                                         entry->left_number,
                                          g_value_get_double (value));
       break;
     case PROP_DEFAULT_LEFT_NUMBER:
       gimp_number_pair_entry_set_default_values (entry,
                                                  g_value_get_double (value),
-                                                 priv->default_right_number);
+                                                 entry->default_right_number);
       break;
     case PROP_DEFAULT_RIGHT_NUMBER:
       gimp_number_pair_entry_set_default_values (entry,
-                                                 priv->default_left_number,
+                                                 entry->default_left_number,
                                                  g_value_get_double (value));
       break;
     case PROP_USER_OVERRIDE:
@@ -1132,26 +1067,26 @@ gimp_number_pair_entry_set_property (GObject      *object,
                                                 g_value_get_boolean (value));
       break;
     case PROP_SEPARATORS:
-      g_free (priv->separators);
-      priv->num_separators = 0;
+      g_free (entry->separators);
+      entry->num_separators = 0;
       if (g_value_get_string (value))
-        priv->separators = g_utf8_to_ucs4 (g_value_get_string (value), -1,
-                                           NULL, &priv->num_separators, NULL);
+        entry->separators = g_utf8_to_ucs4 (g_value_get_string (value), -1,
+                                           NULL, &entry->num_separators, NULL);
       else
-        priv->separators = NULL;
+        entry->separators = NULL;
       break;
     case PROP_DEFAULT_TEXT:
       gimp_number_pair_entry_set_default_text (entry,
                                                g_value_get_string (value));
       break;
     case PROP_ALLOW_SIMPLIFICATION:
-      priv->allow_simplification = g_value_get_boolean (value);
+      entry->allow_simplification = g_value_get_boolean (value);
       break;
     case PROP_MIN_VALID_VALUE:
-      priv->min_valid_value = g_value_get_double (value);
+      entry->min_valid_value = g_value_get_double (value);
       break;
     case PROP_MAX_VALID_VALUE:
-      priv->max_valid_value = g_value_get_double (value);
+      entry->max_valid_value = g_value_get_double (value);
       break;
     case PROP_RATIO:
       gimp_number_pair_entry_set_ratio (entry, g_value_get_double (value));
@@ -1171,45 +1106,42 @@ gimp_number_pair_entry_get_property (GObject    *object,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-  GimpNumberPairEntry        *entry = GIMP_NUMBER_PAIR_ENTRY (object);
-  GimpNumberPairEntryPrivate *priv;
-
-  priv = gimp_number_pair_entry_get_instance_private (entry);
+  GimpNumberPairEntry *entry = GIMP_NUMBER_PAIR_ENTRY (object);
 
   switch (property_id)
     {
     case PROP_LEFT_NUMBER:
-      g_value_set_double (value, priv->left_number);
+      g_value_set_double (value, entry->left_number);
       break;
     case PROP_RIGHT_NUMBER:
-      g_value_set_double (value, priv->right_number);
+      g_value_set_double (value, entry->right_number);
       break;
     case PROP_DEFAULT_LEFT_NUMBER:
-      g_value_set_double (value, priv->default_left_number);
+      g_value_set_double (value, entry->default_left_number);
       break;
     case PROP_DEFAULT_RIGHT_NUMBER:
-      g_value_set_double (value, priv->default_right_number);
+      g_value_set_double (value, entry->default_right_number);
       break;
     case PROP_USER_OVERRIDE:
-      g_value_set_boolean (value, priv->user_override);
+      g_value_set_boolean (value, entry->user_override);
       break;
     case PROP_SEPARATORS:
       g_value_take_string (value,
-                           g_ucs4_to_utf8 (priv->separators,
-                                           priv->num_separators,
+                           g_ucs4_to_utf8 (entry->separators,
+                                           entry->num_separators,
                                            NULL, NULL, NULL));
       break;
     case PROP_ALLOW_SIMPLIFICATION:
-      g_value_set_boolean (value, priv->allow_simplification);
+      g_value_set_boolean (value, entry->allow_simplification);
       break;
     case PROP_DEFAULT_TEXT:
-      g_value_set_string (value, priv->default_text);
+      g_value_set_string (value, entry->default_text);
       break;
     case PROP_MIN_VALID_VALUE:
-      g_value_set_double (value, priv->min_valid_value);
+      g_value_set_double (value, entry->min_valid_value);
       break;
     case PROP_MAX_VALID_VALUE:
-      g_value_set_double (value, priv->max_valid_value);
+      g_value_set_double (value, entry->max_valid_value);
       break;
     case PROP_RATIO:
       g_value_set_double (value, gimp_number_pair_entry_get_ratio (entry));
@@ -1236,20 +1168,16 @@ gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
                                            gdouble              left,
                                            gdouble              right)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
+  entry->default_left_number  = left;
+  entry->default_right_number = right;
 
-  priv->default_left_number  = left;
-  priv->default_right_number = right;
-
-  if (! priv->user_override)
+  if (! entry->user_override)
     {
       gimp_number_pair_entry_set_values (entry,
-                                         priv->default_left_number,
-                                         priv->default_right_number);
+                                         entry->default_left_number,
+                                         entry->default_right_number);
     }
 }
 
@@ -1266,17 +1194,13 @@ gimp_number_pair_entry_get_default_values (GimpNumberPairEntry *entry,
                                            gdouble             *left,
                                            gdouble             *right)
 {
-  GimpNumberPairEntryPrivate *priv;
-
   g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
 
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
   if (left != NULL)
-    *left = priv->default_left_number;
+    *left = entry->default_left_number;
 
   if (right != NULL)
-    *right = priv->default_right_number;
+    *right = entry->default_right_number;
 }
 
 static gboolean
@@ -1284,12 +1208,8 @@ gimp_number_pair_entry_numbers_in_range (GimpNumberPairEntry *entry,
                                          gdouble              left_number,
                                          gdouble              right_number)
 {
-  GimpNumberPairEntryPrivate *priv;
-  
-  priv = gimp_number_pair_entry_get_instance_private (entry);
-
-  return (left_number  >= priv->min_valid_value &&
-          left_number  <= priv->max_valid_value &&
-          right_number >= priv->min_valid_value &&
-          right_number <= priv->max_valid_value);
+  return (left_number  >= entry->min_valid_value &&
+          left_number  <= entry->max_valid_value &&
+          right_number >= entry->min_valid_value &&
+          right_number <= entry->max_valid_value);
 }

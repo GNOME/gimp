@@ -32,25 +32,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_PATH_EDITOR (gimp_path_editor_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpPathEditor, gimp_path_editor, GIMP, PATH_EDITOR, GtkBox)
-
-struct _GimpPathEditorClass
-{
-  GtkBoxClass  parent_class;
-
-  void (* path_changed)     (GimpPathEditor *editor);
-  void (* writable_changed) (GimpPathEditor *editor);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpPathEditor, gimp_path_editor, GIMP, PATH_EDITOR, GtkBox)
 
 
 /* For information look into the C source or the html documentation */

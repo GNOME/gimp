@@ -33,26 +33,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_SIZE_ENTRY (gimp_size_entry_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpSizeEntry, gimp_size_entry, GIMP, SIZE_ENTRY, GtkGrid)
-
-struct _GimpSizeEntryClass
-{
-  GtkGridClass  parent_class;
-
-  void (* value_changed)  (GimpSizeEntry *gse);
-  void (* refval_changed) (GimpSizeEntry *gse);
-  void (* unit_changed)   (GimpSizeEntry *gse);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpSizeEntry, gimp_size_entry, GIMP, SIZE_ENTRY, GtkGrid)
 
 
 /* For information look into the C source or the html documentation */
