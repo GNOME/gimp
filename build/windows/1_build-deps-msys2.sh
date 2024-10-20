@@ -20,6 +20,9 @@ if [ "$MSYSTEM_CARCH" = "i686" ]; then
 fi
 
 
+uname -m
+exit 0
+
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 if [ "$MSYSTEM_CARCH" != "aarch64" ]; then
   # https://gitlab.gnome.org/GNOME/gimp/-/issues/10782
