@@ -1,37 +1,13 @@
-; The Scheme code in this file provides some compatibility with
-; scripts that were originally written for use with older versions of
-; GIMP.
+; This file provides compatibility for older ScriptFu scripts.
 ;
-; It provides PDB procedures that used to be provided by plug-ins that
-; were since then removed from the GIMP distribution. You should not
-; use these in newly written scripts as the functions defined here may
-; be removed at some later date.
+; It provides Scheme functions that call PDB procedures formerly in GIMP.
+; You should not use them in new code.
+; GIMP maintainers may remove deprecated functions in the future.
 
+; These comments show signatures of functions removed at GIMP 3.0
+; Left as comments to aid in debugging old scripts.
+;(define (plug-in-color-map run-mode img layer
+;(define (gimp-image-get-active-layer img)
 
-(define (plug-in-color-map run-mode img layer
-			   src-color-1 src-color-2 dest-color-1 dest-color-2
-			   map-mode)
-  (gimp-levels layer HISTOGRAM-RED
-	       (car src-color-1) (car src-color-2) 1.0
-	       (- 255 (car dest-color-1)) (- 255 (car dest-color-2)))
-  (gimp-levels layer  HISTOGRAM-GREEN
-	       (cadr 	src-color-1) (cadr src-color-2) 1.0
-	       (- 255 (cadr dest-color-1)) (- 255 (cadr dest-color-2)))
-  (gimp-levels layer HISTOGRAM-BLUE
-	       (caddr src-color-1) (caddr src-color-2) 1.0
-	       (- 255 (caddr dest-color-1)) (- 255 (caddr dest-color-2)))
-  (gimp-levels layer HISTOGRAM-VALUE 0 255 1.0 255 0)
-)
+; INTENDED TO BE EMPTY FOR GIMP 3.0
 
-; since 3.0 a layer selection can be many,
-; so PDB methods to get selections return an int and a GObjectArray,
-; which in Scheme is a list containing a numeric and a vector.
-; and the word "active" changed to "selected".
-; Formerly, such PDB methods returned a list of one element, the ID of a layer.
-
-; A compatible replacement for gimp-image-get-active-layer.
-; This should be used only when you know the image has only one layer.
-; In other situations, you may break a contract to process all selected layers.
-(define (gimp-image-get-active-layer img)
-  (list (aref (cadr (gimp-image-get-selected-layers img)) 0))
-)
