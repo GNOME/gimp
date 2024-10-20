@@ -202,6 +202,7 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gdouble            xres;
   gdouble            yres;
   GimpColorProfile  *profile;
+  GimpContainer     *filters;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -251,6 +252,36 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_layer_set_opacity (new_layer, GIMP_OPACITY_OPAQUE, FALSE);
   if (gimp_layer_can_lock_alpha (new_layer))
     gimp_layer_set_lock_alpha (new_layer, FALSE, FALSE);
+
+  filters = gimp_drawable_get_filters (GIMP_DRAWABLE (drawable));
+  if (gimp_container_get_n_children (filters) > 0)
+    {
+      GList *filter_list;
+
+      for (filter_list = GIMP_LIST (filters)->queue->tail;
+           filter_list;
+           filter_list = g_list_previous (filter_list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+            {
+              GimpDrawableFilter *old_filter = filter_list->data;
+              GimpDrawableFilter *filter;
+
+              filter =
+                gimp_drawable_filter_duplicate (GIMP_DRAWABLE (new_layer),
+                                                old_filter);
+
+              if (filter != NULL)
+                {
+                  gimp_drawable_filter_apply (filter, NULL);
+                  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+                  gimp_drawable_filter_layer_mask_freeze (filter);
+                  g_object_unref (filter);
+                }
+            }
+        }
+    }
 
   gimp_image_add_layer (new_image, new_layer, NULL, 0, TRUE);
 
