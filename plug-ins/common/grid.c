@@ -349,6 +349,9 @@ pix_composite (guchar   *p1,
                gboolean  alpha)
 {
   gint b;
+  gint alpha_index;
+
+  alpha_index = alpha ? (bytes - 1) : bytes;
 
   if (blend)
     {
@@ -357,7 +360,8 @@ pix_composite (guchar   *p1,
 
       for (b = 0; b < bytes; b++)
         {
-          *p1 = *p1 * (1.0 - p2[3]/255.0) + p2[b] * p2[3]/255.0;
+          *p1 = *p1 * (1.0 - p2[alpha_index] / 255.0) +
+                p2[b] * p2[alpha_index] / 255.0;
           p1++;
         }
     }
@@ -369,7 +373,7 @@ pix_composite (guchar   *p1,
 
   if (alpha && *p1 < 255)
     {
-      b = *p1 + 255.0 * ((gdouble) p2[3] / (255.0 - *p1));
+      b = *p1 + 255.0 * ((gdouble) p2[alpha_index] / (255.0 - *p1));
 
       *p1 = b > 255 ? 255 : b;
     }
@@ -445,9 +449,9 @@ render_grid (GimpImage           *image,
       else
         format = babl_format ("R'G'B' u8");
 
-      gegl_color_get_pixel (hcolor_gegl, format, hcolor);
-      gegl_color_get_pixel (vcolor_gegl, format, vcolor);
-      gegl_color_get_pixel (icolor_gegl, format, icolor);
+      gegl_color_get_pixel (hcolor_gegl, babl_format ("R'G'B'A u8"), hcolor);
+      gegl_color_get_pixel (vcolor_gegl, babl_format ("R'G'B'A u8"), vcolor);
+      gegl_color_get_pixel (icolor_gegl, babl_format ("R'G'B'A u8"), icolor);
       break;
 
     case GIMP_GRAY:
@@ -458,9 +462,9 @@ render_grid (GimpImage           *image,
       else
         format = babl_format ("Y' u8");
 
-      gegl_color_get_pixel (hcolor_gegl, format, hcolor);
-      gegl_color_get_pixel (vcolor_gegl, format, vcolor);
-      gegl_color_get_pixel (icolor_gegl, format, icolor);
+      gegl_color_get_pixel (hcolor_gegl, babl_format ("Y'A u8"), hcolor);
+      gegl_color_get_pixel (vcolor_gegl, babl_format ("Y'A u8"), vcolor);
+      gegl_color_get_pixel (icolor_gegl, babl_format ("Y'A u8"), icolor);
       break;
 
     case GIMP_INDEXED:
