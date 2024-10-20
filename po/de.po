@@ -25,16 +25,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-08 15:33+0000\n"
-"PO-Revision-Date: 2024-10-08 20:33+0200\n"
-"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
+"POT-Creation-Date: 2024-10-15 05:49+0000\n"
+"PO-Revision-Date: 2024-10-19 12:44+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Project-Style: gnome\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -19891,26 +19891,26 @@ msgstr "Dahinter (v)"
 #: app/operations/operations-enums.c:163
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
-msgstr "Multiplikation (veraltet)"
+msgstr "Multiplizieren (veraltet)"
 
 #. Translators: this is an abbreviated version of "Multiply (legacy)".
 #. Keep it short.
 #: app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Multiply (l)"
-msgstr "Multiplikation (v)"
+msgstr "Multiplizieren (v)"
 
 #: app/operations/operations-enums.c:167
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr "Bildschirm (veraltet)"
+msgstr "Negativ Multiplizieren (veraltet)"
 
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
 #: app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "Bildschirm (v)"
+msgstr "Negativ Multiplizieren (v)"
 
 #: app/operations/operations-enums.c:171
 msgctxt "layer-mode"
@@ -20166,12 +20166,12 @@ msgstr "Hinter"
 #: app/operations/operations-enums.c:250
 msgctxt "layer-mode"
 msgid "Multiply"
-msgstr "Multiplikation"
+msgstr "Multiplizieren"
 
 #: app/operations/operations-enums.c:251
 msgctxt "layer-mode"
 msgid "Screen"
-msgstr "Bildschirm"
+msgstr "Negativ Multiplizieren"
 
 #: app/operations/operations-enums.c:252
 msgctxt "layer-mode"
@@ -20527,7 +20527,7 @@ msgstr "Mit reiner Farbe füllen"
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Originalposition des Käfigs mit einer reinen Farbe füllen"
 
-#: app/operations/gimpoperationcolorbalance.c:65
+#: app/operations/gimpoperationcolorbalance.c:66
 msgid "Adjust color distribution"
 msgstr "Farbverteilung korrigieren"
 
@@ -20550,7 +20550,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Farben in Graustufen umwandeln"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1382
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1437
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20589,7 +20589,7 @@ msgstr "Teiltransparenz mit einer Farbe ersetzen"
 msgid "The color"
 msgstr "Die Farbe"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1345
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1400
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -23797,53 +23797,53 @@ msgstr "Eine gewählte Ebene ist nicht sichtbar."
 msgid "Disabled because this filter depends on another image."
 msgstr "Deaktiviert, da dieses Filter von einem anderen Bild abhängig ist."
 
-#: app/tools/gimpfiltertool.c:742
+#: app/tools/gimpfiltertool.c:749
 msgid "Click to switch the original and filtered sides"
 msgstr "Klicken Sie, um zwischen originaler und gefilterter Seite zu wechseln"
 
-#: app/tools/gimpfiltertool.c:746
+#: app/tools/gimpfiltertool.c:753
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klicken Sie, um zwischen vertikal und horizontal zu wechseln"
 
-#: app/tools/gimpfiltertool.c:750
+#: app/tools/gimpfiltertool.c:757
 msgid "Click to move the split guide"
 msgstr "Zum Verschieben der Teilungsführung klicken"
 
-#: app/tools/gimpfiltertool.c:752
+#: app/tools/gimpfiltertool.c:759
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: original und gefiltert tauschen"
 
-#: app/tools/gimpfiltertool.c:753
+#: app/tools/gimpfiltertool.c:760
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: horizontal und vertikal tauschen"
 
-#: app/tools/gimpfiltertool.c:1266
+#: app/tools/gimpfiltertool.c:1321
 msgid "Add filter"
 msgstr "Filter hinzufügen"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1358
+#: app/tools/gimpfiltertool.c:1413
 msgid "Blending Options"
 msgstr "Mittelung-Einstellungen"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1397
+#: app/tools/gimpfiltertool.c:1452
 msgid "Advanced Color Options"
 msgstr "Erweiterte Farbeinstellungen"
 
-#: app/tools/gimpfiltertool.c:1840 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1932 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Einstellungen für »%s« importieren"
 
-#: app/tools/gimpfiltertool.c:1842 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1934 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Einstellungen für »%s« exportieren"
 
-#: app/tools/gimpfiltertool.c:2080
+#: app/tools/gimpfiltertool.c:2172
 msgid "Editing filter..."
 msgstr "Filter bearbeiten …"
 
