@@ -944,11 +944,13 @@ save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget *dialog;
-  gint       n_frames;
-  gboolean   run;
+  GtkWidget  *dialog;
+  GimpLayer **layers;
+  gint        n_frames;
+  gboolean    run;
 
-  g_free (gimp_image_get_layers (image, &n_frames));
+  layers   = gimp_image_get_layers (image);
+  n_frames = gimp_core_object_array_get_length ((GObject **) layers);
 
   g_object_set (config,
                 "from-frame", 1,

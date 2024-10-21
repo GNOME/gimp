@@ -261,27 +261,22 @@ HELP
 
     @outargs = (
         { name => 'layers', type => 'layerarray',
-          desc => 'The list of layers contained in the image.',
-          array => { name => 'num_layers',
-                     desc => 'The number of root layers contained in the image' } }
+          desc => 'The list of layers contained in the image.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   GList *list = gimp_image_get_layer_iter (image);
+  gsize  num_layers;
+  gint   i;
 
   num_layers = g_list_length (list);
 
-  if (num_layers)
-    {
-      gint i;
+  layers = g_new0 (GimpLayer *, num_layers + 1);
 
-      layers = g_new (GimpLayer *, num_layers);
-
-      for (i = 0; i < num_layers; i++, list = g_list_next (list))
-        layers[i] = g_object_ref (list->data);
-    }
+  for (i = 0; i < num_layers; i++, list = g_list_next (list))
+    layers[i] = list->data;
 }
 CODE
     );
@@ -1979,27 +1974,21 @@ HELP
 
     @outargs = (
         { name => 'layers', type => 'layerarray',
-          desc => 'The list of selected layers in the image.',
-          array => { name => 'num_layers',
-                     desc => 'The number of selected layers in the image' } }
+          desc => 'The list of selected layers in the image.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   GList *list = gimp_image_get_selected_layers (image);
+  gsize  num_layers;
+  gint   i;
 
   num_layers = g_list_length (list);
+  layers = g_new0 (GimpLayer *, num_layers + 1);
 
-  if (num_layers)
-    {
-      gint i;
-
-      layers = g_new (GimpLayer *, num_layers);
-
-      for (i = 0; i < num_layers; i++, list = g_list_next (list))
-        layers[i] = g_object_ref (list->data);
-    }
+  for (i = 0; i < num_layers; i++, list = g_list_next (list))
+    layers[i] = list->data;
 }
 CODE
     );
@@ -2021,11 +2010,7 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'layers', type => 'layerarray',
-          desc => 'The list of layers to select',
-          no_validate => 1,
-          array => { name => 'num_layers',
-                     type => '0 <= int32',
-                     desc => 'The number of layers to select' } }
+          desc => 'The list of layers to select' }
     );
 
     %invoke = (
@@ -2034,9 +2019,9 @@ HELP
   GList *selected_layers = NULL;
   gint   i;
 
-  for (i = 0; i < num_layers; i++)
-    selected_layers = g_list_prepend (selected_layers,
-                                      GIMP_LAYER (layers[i]));
+  if (layers)
+    for (i = 0; layers[i] != NULL; i++)
+      selected_layers = g_list_prepend (selected_layers, (gpointer) layers[i]);
 
   gimp_image_set_selected_layers (image, selected_layers);
   g_list_free (selected_layers);
@@ -2236,18 +2221,13 @@ HELP
 {
   GList *list = gimp_image_get_selected_drawables (image);
   gsize  num_drawables;
+  gint   i;
 
   num_drawables = g_list_length (list);
+  drawables     = g_new0 (GimpDrawable *, num_drawables + 1);
 
-  if (num_drawables)
-    {
-      gint i;
-
-      drawables = g_new0 (GimpDrawable *, num_drawables + 1);
-
-      for (i = 0; i < num_drawables; i++, list = g_list_next (list))
-        drawables[i] = list->data;
-    }
+  for (i = 0; i < num_drawables; i++, list = g_list_next (list))
+    drawables[i] = list->data;
 }
 CODE
     );

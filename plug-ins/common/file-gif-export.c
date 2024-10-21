@@ -1248,11 +1248,14 @@ save_dialog (GimpImage     *image,
   GtkWidget     *vbox;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
+  GimpLayer    **layers;
   gint32         n_layers;
   gboolean       animation_supported;
   gboolean       run;
 
-  g_free (gimp_image_get_layers (image, &n_layers));
+  layers   = gimp_image_get_layers (image);
+  n_layers = gimp_core_object_array_get_length ((GObject **) layers);
+  g_free (layers);
 
   animation_supported = n_layers > 1;
 

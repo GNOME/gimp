@@ -709,11 +709,11 @@ CODE
     }
     elsif ($pdbtype eq 'layerarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_LAYER,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_LAYER,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'channelarray') {

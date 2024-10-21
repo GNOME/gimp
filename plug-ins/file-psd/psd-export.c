@@ -2669,11 +2669,11 @@ save_dialog (GimpImage     *image,
 /* Multi-layer Indexed Image Warning */
   if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
-      gint32 n_layers = 0;
+      GimpLayer **layers;
 
-      g_free (gimp_image_get_layers (image, &n_layers));
+      layers = gimp_image_get_layers (image);
 
-      if (n_layers > 1)
+      if (gimp_core_object_array_get_length ((GObject **) layers) > 1)
         {
             text = g_strdup_printf ("\n<b>%s</b>: %s",
                           _("Indexed Image Warning"),
@@ -2693,6 +2693,7 @@ save_dialog (GimpImage     *image,
                                         "indexed-notice", NULL);
             g_free (text);
         }
+      g_free (layers);
     }
 
   /* Compatibility Notice */

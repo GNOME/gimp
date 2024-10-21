@@ -169,7 +169,6 @@ file_load_layers_invoker (GimpProcedure         *procedure,
   gint run_mode;
   GimpImage *image;
   GFile *file;
-  gint num_layers = 0;
   GimpLayer **layers = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
@@ -188,33 +187,33 @@ file_load_layers_invoker (GimpProcedure         *procedure,
       if (layer_list)
         {
           GList *list;
-          gint i;
+          gsize  num_layers;
+          gint   i;
 
           num_layers = g_list_length (layer_list);
 
-          layers = g_new (GimpLayer *, num_layers);
+          layers = g_new0 (GimpLayer *, num_layers + 1);
 
           for (i = 0, list = layer_list;
                i < num_layers;
                i++, list = g_list_next (list))
             {
-              layers[i] = g_object_ref (list->data);
+              layers[i] = list->data;
             }
 
           g_list_free (layer_list);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), layers);
 
   return return_vals;
 }
@@ -476,17 +475,11 @@ register_file_procs (GimpPDB *pdb)
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-layers",
-                                                     "num layers",
-                                                     "The number of loaded layers",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("layers",
-                                                                 "layers",
-                                                                 "The list of loaded layers",
-                                                                 GIMP_TYPE_LAYER,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("layers",
+                                                                      "layers",
+                                                                      "The list of loaded layers",
+                                                                      GIMP_TYPE_LAYER,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

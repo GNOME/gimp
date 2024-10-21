@@ -923,20 +923,20 @@ ani_load_image (GFile   *file,
                    GimpImage    *temp_image = NULL;
                    GimpLayer   **layers;
                    GimpLayer    *new_layer;
-                   gint          nlayers;
 
                    temp_image = ico_load_image (file, &file_offset, frame + 1,
                                                 error);
-                   layers = gimp_image_get_layers (temp_image, &nlayers);
+                   layers = gimp_image_get_layers (temp_image);
                    if (layers)
                      {
-                       for (gint i = 0; i < nlayers; i++)
+                       for (gint i = 0; layers[i]; i++)
                          {
                            new_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layers[i]),
                                                                      image);
                            gimp_image_insert_layer (image, new_layer, NULL, frame);
                            frame++;
                          }
+                       g_free (layers);
                      }
                    gimp_image_delete (temp_image);
                  }
