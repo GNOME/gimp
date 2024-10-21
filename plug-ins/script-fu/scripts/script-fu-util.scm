@@ -44,6 +44,8 @@
   )
 )
 
+
+
 ; Allow command line usage of GIMP such as:
 ;
 ;     gimp -i -b '(with-files "*.png" <body>)'
@@ -69,6 +71,17 @@
 ;                 (gimp-file-save 1 image layer \
 ;                  (string-append basename ".jpg") ))'
 
+; butlast is needed below.
+; Not in R5RS but in simply-scheme and chicken dialects.
+; aka drop-right.
+; Returns new list with right element deleted.
+(define (butlast x)
+  (if (= (length x) 1)
+    '()
+    (reverse (cdr (reverse x)))
+  )
+)
+
 (define-macro (with-files pattern . body)
   (let ((loop (gensym))
         (filenames (gensym))
@@ -79,7 +92,7 @@
            (let* ((filename (car ,filenames))
                   (image (catch #f (car (gimp-file-load RUN-NONINTERACTIVE
                                                         filename))))
-                  (layer (if image (aref (cadr (gimp-image-get-selected-layers image)) 0) #f))
+                  (layer (if image (vector-ref (cadr (gimp-image-get-selected-layers image)) 0) #f))
                   (basename (unbreakupstr (butlast (strbreakup filename ".")) ".")))
              (when image
                ,@body

@@ -331,6 +331,26 @@
   )
 )
 
+; Functions said to be deprecated in GIMP 2 and left still in GIMP 3.
+; Infrequently used, but not a one-word substitution.
+
+; symbol pi is not in TinyScheme
+(define *pi*
+  (* 4 (atan 1.0))
+)
+
+; unknown provenance for this function: SIOD?
+(define (cons-array count type)
+  (case type
+    ((long)   (make-vector count 0))
+    ((short)  (make-vector count 0))
+    ((byte)   (make-vector count 0))
+    ((double) (make-vector count 0.0))
+    ((string) (vector->list (make-vector count "")))
+    (else type)
+  )
+)
+
 
 ; Functions obsolete as of GIMP v3.0.
 ; Generally speaking, from the SIOD dialect of Scheme.
@@ -351,9 +371,6 @@
 ;(define string-lessp string<?)
 ;(define symbol-bound? defined?)
 ;(define the-environment current-environment)
-;(define *pi*
-;(define (butlast x)
-;(define (cons-array count type)
 ;(define (fmod a b)
 ;(define (fread arg1 file)
 ;(define (fread-get-chars count file)
