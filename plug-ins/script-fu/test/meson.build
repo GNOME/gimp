@@ -76,7 +76,6 @@ if not stable
     'tests' / 'PDB' / 'enums.scm',
     'tests' / 'PDB' / 'bind-args.scm',
     'tests' / 'PDB' / 'pixel.scm',
-    'tests' / 'PDB' / 'gegl.scm',
 
     # comprehensive, total test
     'tests' / 'PDB' / 'pdb.scm',
@@ -101,6 +100,11 @@ if not stable
     'tests' / 'TS' / 'numeric.scm',
     # comprehensive, total test
     'tests' / 'TS' / 'tinyscheme.scm',
+
+    # test PDB procedures that are plugins themselves
+
+    'tests' / 'Plugins' / 'gegl.scm',
+    'tests' / 'Plugins' / 'noninteractive.scm',
   ]
 
 endif

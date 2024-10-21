@@ -3,6 +3,19 @@
 ;;; Author: Narazaki Shuji <narazaki@gimp.org>
 ;;; Version 0.8
 
+; This script-fu-unsharp-mask is not in the menus.
+; There is an equivalent GEGL filter at Filters>Enhance>Sharpen (Unsharp)
+; and a GEGL wrapper in the PDB, plug-in-unsharp-mask.
+; This might be kept for compatibility and used by third party scripts.
+
+; Seems not used by any script in the repo.
+; FUTURE move to gimp-data-extras or to scripts/test
+; and maintain it with low priorty.
+
+; unsharp-mask is a filter AND renderer, creating a new, visible, dirty image
+; from the given image.
+
+
 (define (script-fu-unsharp-mask img drws mask-size mask-opacity)
   (let* (
         (drw (vector-ref drws 0))
