@@ -30,8 +30,14 @@
 #define BitSet(byte, bit)        (((byte) & (bit)) == (bit))
 
 #define ReadOK(file,buffer,len)  (fread(buffer, len, 1, file) != 0)
-#define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
-#define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
+
+#if !defined(WIN32) || defined(__MINGW32__)
+#define BI_RGB            0
+#define BI_RLE8           1
+#define BI_RLE4           2
+#define BI_BITFIELDS      3
+#define BI_ALPHABITFIELDS 4
+#endif
 
 
 typedef struct
@@ -41,11 +47,11 @@ typedef struct
   guint16  zzHotX;      /* 06 */
   guint16  zzHotY;      /* 08 */
   guint32  bfOffs;      /* 0A */
-  guint32  biSize;      /* 0E */
 } BitmapFileHead;
 
 typedef struct
 {
+  guint32  biSize;      /* 0E */
   gint32   biWidth;     /* 12 */
   gint32   biHeight;    /* 16 */
   guint16  biPlanes;    /* 1A */

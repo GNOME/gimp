@@ -42,7 +42,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static  void      write_image     (FILE          *f,
+static  gboolean  write_image     (FILE          *f,
                                    guchar        *src,
                                    gint           width,
                                    gint           height,
@@ -62,7 +62,7 @@ static  gboolean  save_dialog     (GimpProcedure *procedure,
                                    gint           bpp);
 
 
-static void
+static gboolean
 write_color_map (FILE *f,
                  gint  red[MAXCOLORS],
                  gint  green[MAXCOLORS],
@@ -79,8 +79,10 @@ write_color_map (FILE *f,
       trgb[0] = (guchar) blue[i];
       trgb[1] = (guchar) green[i];
       trgb[2] = (guchar) red[i];
-      Write (f, trgb, 4);
+      if (fwrite (trgb, 1, 4, f) != 4)
+        return FALSE;
     }
+  return TRUE;
 }
 
 static gboolean
@@ -116,17 +118,18 @@ export_image (GFile         *file,
               GObject       *config,
               GError       **error)
 {
-  FILE           *outfile;
+  FILE           *outfile = NULL;
   BitmapFileHead  bitmap_file_head;
   BitmapHead      bitmap_head;
   gint            Red[MAXCOLORS];
   gint            Green[MAXCOLORS];
   gint            Blue[MAXCOLORS];
   guchar         *cmap;
-  gint            rows, cols, Spcols, channels, MapSize, SpZeile;
+  gint            rows, cols, channels, MapSize;
+  gint            bytes_per_row;
   glong           BitsPerPixel;
   gint            colors;
-  guchar         *pixels;
+  guchar         *pixels = NULL;
   GeglBuffer     *buffer;
   const Babl     *format;
   GimpImageType   drawable_type;
@@ -336,7 +339,7 @@ export_image (GFile         *file,
     }
 
   /* fetch the image */
-  pixels = g_new (guchar, drawable_width * drawable_height * channels);
+  pixels = g_new (guchar, (gsize) drawable_width * drawable_height * channels);
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, drawable_width, drawable_height), 1.0,
@@ -350,20 +353,16 @@ export_image (GFile         *file,
   rows = drawable_height;
 
   /* ... that we write to our headers. */
-  if ((BitsPerPixel <= 8) && (cols % (8 / BitsPerPixel)))
-    Spcols = (((cols / (8 / BitsPerPixel)) + 1) * (8 / BitsPerPixel));
-  else
-    Spcols = cols;
+  /* We should consider rejecting any width > (INT32_MAX - 31) / BitsPerPixel, as
+   * the resulting BMP will likely cause integer overflow in other readers.
+   * TODO: Revisit as soon as we can add strings again !!! */
 
-  if ((((Spcols * BitsPerPixel) / 8) % 4) == 0)
-    SpZeile = ((Spcols * BitsPerPixel) / 8);
-  else
-    SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
+  bytes_per_row = (( (guint64) cols * BitsPerPixel + 31) / 32) * 4;
 
   if (write_color_space)
     {
       /* Always include color mask for BITMAPV5HEADER, see #4155. */
-      mask_info_size = 16;
+      mask_info_size   = 16;
       color_space_size = 68;
     }
   else
@@ -371,14 +370,14 @@ export_image (GFile         *file,
       color_space_size = 0;
     }
 
-  bitmap_file_head.bfSize    = (0x36 + MapSize + (rows * SpZeile) +
+  bitmap_file_head.bfSize    = (54 + MapSize + (rows * bytes_per_row) +
                                 mask_info_size + color_space_size);
   bitmap_file_head.zzHotX    =  0;
   bitmap_file_head.zzHotY    =  0;
-  bitmap_file_head.bfOffs    = (0x36 + MapSize +
+  bitmap_file_head.bfOffs    = (54 + MapSize +
                                 mask_info_size + color_space_size);
-  bitmap_file_head.biSize    =  40 + mask_info_size + color_space_size;
 
+  bitmap_head.biSize   = 40 + mask_info_size + color_space_size;
   bitmap_head.biWidth  = cols;
   bitmap_head.biHeight = rows;
   bitmap_head.biPlanes = 1;
@@ -391,24 +390,24 @@ export_image (GFile         *file,
        * Since it doesn't mention 24 bpp or other numbers
        * use BI_RGB for that. See issue #6114. */
       if (mask_info_size > 0 && (BitsPerPixel == 16 || BitsPerPixel == 32))
-        bitmap_head.biCompr = 3; /* BI_BITFIELDS */
+        bitmap_head.biCompr = BI_BITFIELDS;
       else
-        bitmap_head.biCompr = 0; /* BI_RGB */
+        bitmap_head.biCompr = BI_RGB;
     }
   else if (BitsPerPixel == 8)
     {
-      bitmap_head.biCompr = 1;
+      bitmap_head.biCompr = BI_RLE8;
     }
   else if (BitsPerPixel == 4)
     {
-      bitmap_head.biCompr = 2;
+      bitmap_head.biCompr = BI_RLE4;
     }
   else
     {
-      bitmap_head.biCompr = 0;
+      bitmap_head.biCompr = BI_RGB;
     }
 
-  bitmap_head.biSizeIm = SpZeile * rows;
+  bitmap_head.biSizeIm = bytes_per_row * rows;
 
   {
     gdouble xresolution;
@@ -444,26 +443,28 @@ export_image (GFile         *file,
 
 #ifdef DEBUG
   printf ("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
-          (int)bitmap_file_head.bfSize,
-          (int)bitmap_head.biClrUsed,
+          (gint) bitmap_file_head.bfSize,
+          (gint) bitmap_head.biClrUsed,
           bitmap_head.biBitCnt,
-          (int)bitmap_head.biWidth,
-          (int)bitmap_head.biHeight,
-          (int)bitmap_head.biCompr,SpZeile);
+          (gint) bitmap_head.biWidth,
+          (gint) bitmap_head.biHeight,
+          (gint) bitmap_head.biCompr,bytes_per_row);
 #endif
 
   /* And now write the header and the colormap (if any) to disk */
 
-  Write (outfile, "BM", 2);
+  if (fwrite ("BM", 2, 1, outfile) != 1)
+    goto abort;
 
   bitmap_file_head.bfSize = GUINT32_TO_LE (bitmap_file_head.bfSize);
   bitmap_file_head.zzHotX = GUINT16_TO_LE (bitmap_file_head.zzHotX);
   bitmap_file_head.zzHotY = GUINT16_TO_LE (bitmap_file_head.zzHotY);
   bitmap_file_head.bfOffs = GUINT32_TO_LE (bitmap_file_head.bfOffs);
-  bitmap_file_head.biSize = GUINT32_TO_LE (bitmap_file_head.biSize);
 
-  Write (outfile, &bitmap_file_head.bfSize, 16);
+  if (fwrite (&bitmap_file_head.bfSize, 12, 1, outfile) != 1)
+    goto abort;
 
+  bitmap_head.biSize    = GUINT32_TO_LE (bitmap_head.biSize);
   bitmap_head.biWidth   = GINT32_TO_LE  (bitmap_head.biWidth);
   bitmap_head.biHeight  = GINT32_TO_LE  (bitmap_head.biHeight);
   bitmap_head.biPlanes  = GUINT16_TO_LE (bitmap_head.biPlanes);
@@ -475,7 +476,8 @@ export_image (GFile         *file,
   bitmap_head.biClrUsed = GUINT32_TO_LE (bitmap_head.biClrUsed);
   bitmap_head.biClrImp  = GUINT32_TO_LE (bitmap_head.biClrImp);
 
-  Write (outfile, &bitmap_head, 36);
+  if (fwrite (&bitmap_head, 40, 1, outfile) != 1)
+    goto abort;
 
   if (mask_info_size > 0)
     {
@@ -524,7 +526,8 @@ export_image (GFile         *file,
       Mask[2] = GUINT32_TO_LE (Mask[2]);
       Mask[3] = GUINT32_TO_LE (Mask[3]);
 
-      Write (outfile, &Mask, mask_info_size);
+      if (fwrite (&Mask, mask_info_size, 1, outfile) != 1)
+        goto abort;
     }
 
   if (write_color_space)
@@ -561,19 +564,22 @@ export_image (GFile         *file,
       /* bV5Reserved = 0 */
       buf[0x10] = GUINT32_TO_LE (0x0);
 
-      Write (outfile, buf, color_space_size);
+      if (fwrite (buf, color_space_size, 1, outfile) != 1)
+        goto abort;
     }
 
-  write_color_map (outfile, Red, Green, Blue, MapSize);
+  if (! write_color_map (outfile, Red, Green, Blue, MapSize))
+    goto abort;
 
   /* After that is done, we write the image ... */
 
-  write_image (outfile,
-               pixels, cols, rows,
-               use_rle,
-               channels, BitsPerPixel, SpZeile,
-               MapSize, rgb_format,
-               mask_info_size, color_space_size);
+  if (! write_image (outfile,
+                     pixels, cols, rows,
+                     use_rle,
+                     channels, BitsPerPixel, bytes_per_row,
+                     MapSize, rgb_format,
+                     mask_info_size, color_space_size))
+    goto abort;
 
   /* ... and exit normally */
 
@@ -581,6 +587,17 @@ export_image (GFile         *file,
   g_free (pixels);
 
   return GIMP_PDB_SUCCESS;
+
+abort:
+  if (outfile)
+    fclose (outfile);
+  if (pixels)
+    g_free(pixels);
+
+  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+               _("Error writing to file."));
+
+  return GIMP_PDB_EXECUTION_ERROR;
 }
 
 static inline void
@@ -617,7 +634,7 @@ Make5551 (guchar  r,
   buf[1] = (guchar) (p >> 8);
 }
 
-static void
+static gboolean
 write_image (FILE     *f,
              guchar   *src,
              gint      width,
@@ -625,21 +642,23 @@ write_image (FILE     *f,
              gboolean  use_run_length_encoding,
              gint      channels,
              gint      bpp,
-             gint      spzeile,
+             gint      bytes_per_row,
              gint      MapSize,
              RGBMode   rgb_format,
              gint      mask_info_size,
              gint      color_space_size)
 {
-  guchar  buf[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0 };
+  guchar  buf[16];
   guint32 uint32buf;
   guchar *temp, v;
-  guchar *row, *ketten;
+  guchar *row    = NULL;
+  guchar *chains = NULL;
   gint    xpos, ypos, i, j, rowstride, length, thiswidth;
   gint    breite, k;
   guchar  n, r, g, b, a;
   gint    cur_progress;
   gint    max_progress;
+  gint    padding;
 
   xpos = 0;
   rowstride = width * channels;
@@ -651,6 +670,7 @@ write_image (FILE     *f,
 
   if (bpp > 8)
     {
+      padding = bytes_per_row - (width * (bpp/8));
       for (ypos = height - 1; ypos >= 0; ypos--)  /* for each row   */
         {
           for (i = 0; i < width; i++)  /* for each pixel */
@@ -666,7 +686,9 @@ write_image (FILE     *f,
                   xpos++;
                   if (channels > 3 && (guchar) *temp == 0)
                     buf[0] = buf[1] = buf[2] = 0xff;
-                  Write (f, buf, 3);
+
+                  if (fwrite (buf, 1, 3 ,f) != 3)
+                    goto abort;
                   break;
                 case RGBX_8888:
                   buf[2] = *temp++;
@@ -676,7 +698,9 @@ write_image (FILE     *f,
                   xpos++;
                   if (channels > 3 && (guchar) *temp == 0)
                     buf[0] = buf[1] = buf[2] = 0xff;
-                  Write (f, buf, 4);
+
+                  if (fwrite (buf, 1, 4 ,f) != 4)
+                    goto abort;
                   break;
                 case RGBA_8888:
                   buf[2] = *temp++;
@@ -684,7 +708,9 @@ write_image (FILE     *f,
                   buf[0] = *temp++;
                   buf[3] = *temp;
                   xpos++;
-                  Write (f, buf, 4);
+
+                  if (fwrite (buf, 1, 4 ,f) != 4)
+                    goto abort;
                   break;
                 case RGB_565:
                   r = *temp++;
@@ -694,7 +720,9 @@ write_image (FILE     *f,
                     r = g = b = 0xff;
                   Make565 (r, g, b, buf);
                   xpos++;
-                  Write (f, buf, 2);
+
+                  if (fwrite (buf, 1, 2 ,f) != 2)
+                    goto abort;
                   break;
                 case RGB_555:
                   r = *temp++;
@@ -704,7 +732,9 @@ write_image (FILE     *f,
                     r = g = b = 0xff;
                   Make5551 (r, g, b, 0x0, buf);
                   xpos++;
-                  Write (f, buf, 2);
+
+                  if (fwrite (buf, 1, 2 ,f) != 2)
+                    goto abort;
                   break;
                 case RGBA_5551:
                   r = *temp++;
@@ -713,12 +743,18 @@ write_image (FILE     *f,
                   a = *temp;
                   Make5551 (r, g, b, a, buf);
                   xpos++;
-                  Write (f, buf, 2);
+
+                  if (fwrite (buf, 1, 2 ,f) != 2)
+                    goto abort;
                   break;
                 }
             }
 
-          Write (f, &buf[4], spzeile - (width * (bpp/8)));
+          for (int j = 0; j < padding; j++)
+            {
+              if (EOF == putc(0, f))
+                goto abort;
+            }
 
           cur_progress++;
           if ((cur_progress % 5) == 0)
@@ -735,9 +771,8 @@ write_image (FILE     *f,
         {
           /* uncompressed 1,4 and 8 bit */
 
-          thiswidth = (width / (8 / bpp));
-          if (width % (8 / bpp))
-            thiswidth++;
+          thiswidth = (width * bpp + 7) / 8;
+          padding = bytes_per_row - thiswidth;
 
           for (ypos = height - 1; ypos >= 0; ypos--) /* for each row */
             {
@@ -752,10 +787,17 @@ write_image (FILE     *f,
                       if (channels > 1 && *(temp+1) == 0) *temp = 0x0;
                       v=v | ((guchar) *temp << (8 - (i * bpp)));
                     }
-                  Write (f, &v, 1);
+
+                  if (fwrite (&v, 1, 1, f) != 1)
+                    goto abort;
                 }
 
-              Write (f, &buf[3], spzeile - thiswidth);
+              for (int j = 0; j < padding; j++)
+                {
+                  if (EOF == putc(0, f))
+                    goto abort;
+                }
+
               xpos = 0;
 
               cur_progress++;
@@ -769,13 +811,9 @@ write_image (FILE     *f,
           /* Save RLE encoded file, quite difficult */
 
           length = 0;
-          buf[12] = 0;
-          buf[13] = 1;
-          buf[14] = 0;
-          buf[15] = 0;
 
           row    = g_new (guchar, width / (8 / bpp) + 10);
-          ketten = g_new (guchar, width / (8 / bpp) + 10);
+          chains = g_new (guchar, width / (8 / bpp) + 10);
 
           for (ypos = height - 1; ypos >= 0; ypos--)
             {
@@ -817,13 +855,13 @@ write_image (FILE     *f,
                          (row[i + j] == row[i]))
                     j++;
 
-                  ketten[i] = j;
+                  chains[i] = j;
                 }
 
               /* then write the strings and the other pixels to the file */
               for (i = 0; i < breite;)
                 {
-                  if (ketten[i] < 3)
+                  if (chains[i] < 3)
                     {
                       /* strings of different pixels ... */
 
@@ -831,11 +869,11 @@ write_image (FILE     *f,
 
                       while ((i + j < breite) &&
                              (j < (255 / (8 / bpp))) &&
-                             (ketten[i + j] < 3))
-                        j += ketten[i + j];
+                             (chains[i + j] < 3))
+                        j += chains[i + j];
 
                       /* this can only happen if j jumps over the end
-                       * with a 2 in ketten[i+j]
+                       * with a 2 in chains[i+j]
                        */
                       if (j > (255 / (8 / bpp)))
                         j -= 2;
@@ -843,17 +881,23 @@ write_image (FILE     *f,
                       /* 00 01 and 00 02 are reserved */
                       if (j > 2)
                         {
-                          Write (f, &buf[12], 1);
                           n = j * (8 / bpp);
                           if (n + i * (8 / bpp) > width)
                             n--;
-                          Write (f, &n, 1);
+
+                          if (EOF == putc(0, f) || EOF == putc(n, f))
+                            goto abort;
+
                           length += 2;
-                          Write (f, &row[i], j);
+
+                          if (fwrite (&row[i], 1, j, f) != j)
+                            goto abort;
+
                           length += j;
                           if ((j) % 2)
                             {
-                              Write (f, &buf[12], 1);
+                              if (EOF == putc(0, f))
+                                goto abort;
                               length++;
                             }
                         }
@@ -864,9 +908,9 @@ write_image (FILE     *f,
                               n = (8 / bpp);
                               if (n + i * (8 / bpp) > width)
                                 n--;
-                              Write (f, &n, 1);
-                              Write (f, &row[k], 1);
-                              /*printf("%i.#|",n); */
+
+                              if (EOF == putc(n, f) || EOF == putc(row[k], f))
+                                goto abort;
                               length += 2;
                             }
                         }
@@ -877,17 +921,20 @@ write_image (FILE     *f,
                     {
                       /* strings of equal pixels */
 
-                      n = ketten[i] * (8 / bpp);
+                      n = chains[i] * (8 / bpp);
                       if (n + i * (8 / bpp) > width)
                         n--;
-                      Write (f, &n, 1);
-                      Write (f, &row[i], 1);
-                      i += ketten[i];
+
+                      if (EOF == putc(n, f) || EOF == putc(row[i], f))
+                        goto abort;
+
+                      i += chains[i];
                       length += 2;
                     }
                 }
 
-              Write (f, &buf[14], 2);          /* End of row */
+              if (EOF == putc(0, f) || EOF == putc(0, f))  /* End of row */
+                goto abort;
               length += 2;
 
               cur_progress++;
@@ -896,24 +943,39 @@ write_image (FILE     *f,
                                       (gdouble) max_progress);
             }
 
-          fseek (f, -2, SEEK_CUR);     /* Overwrite last End of row ... */
-          Write (f, &buf[12], 2);      /* ... with End of file */
+          if (fseek (f, -2, SEEK_CUR))                  /* Overwrite last End of row ... */
+            goto abort;
+          if (EOF == putc(0, f) || EOF == putc(1, f))   /* ... with End of file */
+            goto abort;
 
-          fseek (f, 0x22, SEEK_SET);            /* Write length of image */
+          if (fseek (f, 0x22, SEEK_SET))                /* Write length of image */
+            goto abort;
           uint32buf = GUINT32_TO_LE (length);
-          Write (f, &uint32buf, 4);
+          if (fwrite (&uint32buf, 4, 1, f) != 1)
+            goto abort;
 
-          fseek (f, 0x02, SEEK_SET);            /* Write length of file */
+          if (fseek (f, 0x02, SEEK_SET))                /* Write length of file */
+            goto abort;
           length += (0x36 + MapSize + mask_info_size + color_space_size);
           uint32buf = GUINT32_TO_LE (length);
-          Write (f, &uint32buf, 4);
+          if (fwrite (&uint32buf, 4, 1, f) != 1)
+            goto abort;
 
-          g_free (ketten);
+          g_free (chains);
           g_free (row);
         }
     }
 
   gimp_progress_update (1.0);
+  return TRUE;
+
+abort:
+  if (chains)
+    g_free (chains);
+  if (row)
+    g_free (row);
+
+  return FALSE;
 }
 
 static gboolean

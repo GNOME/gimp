@@ -22,12 +22,12 @@
 
 typedef enum
 {
-  RGB_565,
-  RGBA_5551,
-  RGB_555,
-  RGB_888,
-  RGBA_8888,
-  RGBX_8888
+  RGB_565,      /* 16bit BI_BITFIELDS */
+  RGBA_5551,    /* 16bit BI_BITFIELDS */
+  RGB_555,      /* 16bit BI_RGB       */
+  RGB_888,      /* 24bit BI_RGB       */
+  RGBA_8888,    /* 32bit BI_BITFIELDS */
+  RGBX_8888,    /* 32bit BI_BITFIELDS */
 } RGBMode;
 
 

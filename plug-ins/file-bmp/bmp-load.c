@@ -35,15 +35,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#if !defined(WIN32) || defined(__MINGW32__)
-#define BI_RGB            0
-#define BI_RLE8           1
-#define BI_RLE4           2
-#define BI_BITFIELDS      3
-#define BI_ALPHABITFIELDS 4
-#endif
-
-
 static GimpImage * ReadImage (FILE                 *fd,
                               GFile                *file,
                               gint                  width,
@@ -286,11 +277,11 @@ load_image (GFile  *file,
       goto out;
     }
 
-  bitmap_file_head.biSize = ToL (&buffer[0x00]);
+  bitmap_head.biSize = ToL (&buffer[0x00]);
 
   /* What kind of bitmap is it? */
 
-  if (bitmap_file_head.biSize == 12) /* OS/2 1.x ? */
+  if (bitmap_head.biSize == 12) /* OS/2 1.x ? */
     {
       if (! ReadOK (fd, buffer, 8))
         {
@@ -317,7 +308,7 @@ load_image (GFile  *file,
       memset (masks, 0, sizeof (masks));
       Maps = 3;
     }
-  else if (bitmap_file_head.biSize == 40) /* Windows 3.x */
+  else if (bitmap_head.biSize == 40) /* Windows 3.x */
     {
       if (! ReadOK (fd, buffer, 36))
         {
@@ -388,12 +379,12 @@ load_image (GFile  *file,
       g_print ("Got BI_RLE4 or BI_RLE8 compression\n");
 #endif
     }
-  else if (bitmap_file_head.biSize >= 56 &&
-           bitmap_file_head.biSize <= 64)
+  else if (bitmap_head.biSize >= 56 &&
+           bitmap_head.biSize <= 64)
     {
       /* enhanced Windows format with bit masks */
 
-      if (! ReadOK (fd, buffer, bitmap_file_head.biSize - 4))
+      if (! ReadOK (fd, buffer, bitmap_head.biSize - 4))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
@@ -419,12 +410,12 @@ load_image (GFile  *file,
       Maps = 4;
       ReadChannelMasks (&bitmap_head.masks[0], masks, 4);
     }
-  else if (bitmap_file_head.biSize == 108 ||
-           bitmap_file_head.biSize == 124)
+  else if (bitmap_head.biSize == 108 ||
+           bitmap_head.biSize == 124)
     {
       /* BMP Version 4 or 5 */
 
-      if (! ReadOK (fd, buffer, bitmap_file_head.biSize - 4))
+      if (! ReadOK (fd, buffer, bitmap_head.biSize - 4))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error reading BMP file header from '%s'"),
@@ -498,7 +489,7 @@ load_image (GFile  *file,
   /* There should be some colors used! */
 
   ColormapSize =
-    (bitmap_file_head.bfOffs - bitmap_file_head.biSize - 14) / Maps;
+    (bitmap_file_head.bfOffs - bitmap_head.biSize - 14) / Maps;
 
   if ((bitmap_head.biClrUsed == 0) &&
       (bitmap_head.biBitCnt  <= 8))
