@@ -60,12 +60,10 @@ edit_cut_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint num_drawables;
-  const GimpItem **drawables;
+  const GimpDrawable **drawables;
   gboolean non_empty = FALSE;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -73,7 +71,7 @@ edit_cut_invoker (GimpProcedure         *procedure,
       GList     *drawable_list = NULL;
       gint       i;
 
-      for (i = 0; i < num_drawables; i++)
+      for (i = 0; drawables[i] != NULL; i++)
         {
           if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                            GIMP_PDB_ITEM_CONTENT, error) ||
@@ -139,12 +137,10 @@ edit_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint num_drawables;
-  const GimpItem **drawables;
+  const GimpDrawable **drawables;
   gboolean non_empty = FALSE;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
+  drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
 
   if (success)
     {
@@ -152,7 +148,7 @@ edit_copy_invoker (GimpProcedure         *procedure,
       GList     *drawables_list = NULL;
       gint       i;
 
-      for (i = 0; i < num_drawables; i++)
+      for (i = 0; drawables[i] != NULL; i++)
         {
           if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL, 0, error))
             {
@@ -171,7 +167,7 @@ edit_copy_invoker (GimpProcedure         *procedure,
           drawables_list = g_list_prepend (drawables_list, (gpointer) drawables[i]);
         }
 
-      if (success && num_drawables > 0)
+      if (success && g_list_length (drawables_list) > 0)
         {
           GError *my_error = NULL;
 
@@ -251,8 +247,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpDrawable *drawable;
   gboolean paste_into;
-  gint num_layers = 0;
-  GimpLayer **layers = NULL;
+  GimpDrawable **new_drawables = NULL;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   paste_into = g_value_get_boolean (gimp_value_array_index (args, 1));
@@ -268,6 +263,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
         {
           GList *drawables = NULL;
           GList *list;
+          gint   num_drawables;
           gint   i;
 
           if (drawable != NULL)
@@ -285,11 +281,11 @@ edit_paste_invoker (GimpProcedure         *procedure,
           if (! list)
             success = FALSE;
 
-          num_layers = g_list_length (list);
-          layers = g_new (GimpLayer *, num_layers);
+          num_drawables = g_list_length (list);
+          new_drawables = g_new0 (GimpDrawable *, num_drawables + 1);
 
-          for (i = 0; i < num_layers; i++, list = g_list_next (list))
-            layers[i] = g_object_ref (list->data);
+          for (i = 0; i < num_drawables; i++, list = g_list_next (list))
+            new_drawables[i] = g_object_ref (list->data);
 
           g_list_free (list);
         }
@@ -301,10 +297,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), new_drawables);
 
   return return_vals;
 }
@@ -350,14 +343,12 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint num_drawables;
-  const GimpItem **drawables;
+  const GimpDrawable **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 2));
+  drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -365,7 +356,7 @@ edit_named_cut_invoker (GimpProcedure         *procedure,
       GList     *drawable_list = NULL;
       gint       i;
 
-      for (i = 0; i < num_drawables; i++)
+      for (i = 0; drawables[i] != NULL; i++)
         {
           if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                            GIMP_PDB_ITEM_CONTENT, error) ||
@@ -436,14 +427,12 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint num_drawables;
-  const GimpItem **drawables;
+  const GimpDrawable **drawables;
   const gchar *buffer_name;
   gchar *real_name = NULL;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
-  buffer_name = g_value_get_string (gimp_value_array_index (args, 2));
+  drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
+  buffer_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -451,7 +440,7 @@ edit_named_copy_invoker (GimpProcedure         *procedure,
       GList     *drawable_list = NULL;
       gint       i;
 
-      for (i = 0; i < num_drawables; i++)
+      for (i = 0; drawables[i] != NULL; i++)
         {
           if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                            0, error))
@@ -680,17 +669,11 @@ register_edit_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "The drawables to cut from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "drawables",
+                                                                  "The drawables to cut from",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
@@ -717,17 +700,11 @@ register_edit_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables to save",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "Drawables to copy from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "drawables",
+                                                                  "Drawables to copy from",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
@@ -774,8 +751,8 @@ register_edit_procs (GimpPDB *pdb)
                                "gimp-edit-paste");
   gimp_procedure_set_static_help (procedure,
                                   "Paste buffer to the specified drawable.",
-                                  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted data may be a floating selection when relevant, layers otherwise. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added.\n"
-                                  "This procedure returns the new layers (floating or not). If the result is a floating selection, it will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
+                                  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either [func@Gimp.edit_cut] or [func@Gimp.edit_copy]. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted data may be a floating selection when relevant, layers otherwise. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added.\n"
+                                  "This procedure returns the new drawables (floating or not). If the result is a floating selection, it will already be attached to the specified drawable, and a subsequent call to [func@Gimp.floating_sel_attach] is not needed.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -794,17 +771,11 @@ register_edit_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-layers",
-                                                     "num layers",
-                                                     "The newly pasted layers",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("layers",
-                                                                 "layers",
-                                                                 "The list of pasted layers.",
-                                                                 GIMP_TYPE_LAYER,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("new-drawables",
+                                                                      "new drawables",
+                                                                      "The list of pasted layers.",
+                                                                      GIMP_TYPE_DRAWABLE,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -846,17 +817,11 @@ register_edit_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "The drawables to cut from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "drawables",
+                                                                  "The drawables to cut from",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
@@ -889,17 +854,11 @@ register_edit_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "2005");
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "The drawables to copy from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "drawables",
+                                                                  "The drawables to copy from",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",

@@ -698,6 +698,15 @@ gimp_param_spec_object_array ("$name",
                               $flags)
 CODE
     }
+    elsif ($pdbtype eq 'drawablearray') {
+	$pspec = <<CODE;
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_DRAWABLE,
+                                   $flags)
+CODE
+    }
     elsif ($pdbtype eq 'layerarray') {
 	$pspec = <<CODE;
 gimp_param_spec_object_array ("$name",

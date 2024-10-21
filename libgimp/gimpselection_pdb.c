@@ -222,8 +222,7 @@ gimp_selection_translate (GimpImage *image,
 
 /**
  * _gimp_selection_float:
- * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables from which to float selection.
+ * @drawables: (element-type GimpDrawable) (array zero-terminated=1): The drawables from which to float selection.
  * @offx: x offset for translation.
  * @offy: y offset for translation.
  *
@@ -239,22 +238,19 @@ gimp_selection_translate (GimpImage *image,
  * Returns: (transfer none): The floated layer.
  **/
 GimpLayer *
-_gimp_selection_float (gint             num_drawables,
-                       const GimpItem **drawables,
-                       gint             offx,
-                       gint             offy)
+_gimp_selection_float (const GimpDrawable **drawables,
+                       gint                 offx,
+                       gint                 offy)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, drawables,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-selection-float",

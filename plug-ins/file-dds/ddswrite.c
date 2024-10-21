@@ -570,12 +570,11 @@ write_dds (GFile               *file,
    */
   if (! is_duplicate_image)
     {
-      GimpImage  *duplicate_image = gimp_image_duplicate (image);
-      GimpItem  **drawables;
-      gint        n_drawables;
+      GimpImage     *duplicate_image = gimp_image_duplicate (image);
+      GimpDrawable **drawables;
 
-      drawables = gimp_image_get_selected_drawables (duplicate_image, &n_drawables);
-      rc = write_image (fp, duplicate_image, GIMP_DRAWABLE (drawables[0]), config);
+      drawables = gimp_image_get_selected_drawables (duplicate_image);
+      rc = write_image (fp, duplicate_image, drawables[0], config);
       gimp_image_delete (duplicate_image);
       g_free (drawables);
     }

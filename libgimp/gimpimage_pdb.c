@@ -716,8 +716,7 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
 /**
  * gimp_image_pick_color:
  * @image: The image.
- * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to pick from.
+ * @drawables: (element-type GimpDrawable) (array zero-terminated=1): The drawables to pick from.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @sample_merged: Use the composite image, not the drawables.
@@ -746,15 +745,14 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_pick_color (GimpImage       *image,
-                       gint             num_drawables,
-                       const GimpItem **drawables,
-                       gdouble          x,
-                       gdouble          y,
-                       gboolean         sample_merged,
-                       gboolean         sample_average,
-                       gdouble          average_radius,
-                       GeglColor      **color)
+gimp_image_pick_color (GimpImage           *image,
+                       const GimpDrawable **drawables,
+                       gdouble              x,
+                       gdouble              y,
+                       gboolean             sample_merged,
+                       gboolean             sample_average,
+                       gdouble              average_radius,
+                       GeglColor          **color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -762,15 +760,13 @@ gimp_image_pick_color (GimpImage       *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, drawables,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_BOOLEAN, sample_merged,
                                           G_TYPE_BOOLEAN, sample_average,
                                           G_TYPE_DOUBLE, average_radius,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-image-pick-color",
@@ -2473,7 +2469,6 @@ gimp_image_set_selected_paths (GimpImage       *image,
 /**
  * gimp_image_get_selected_drawables:
  * @image: The image.
- * @num_drawables: (out): The number of selected drawables in the image.
  *
  * Get the image's selected drawables
  *
@@ -2485,19 +2480,17 @@ gimp_image_set_selected_paths (GimpImage       *image,
  * has a layer mask and the layer mask is in edit mode, then the layer
  * mask is the active drawable.
  *
- * Returns: (array length=num_drawables) (element-type GimpItem) (transfer container):
+ * Returns: (element-type GimpDrawable) (array zero-terminated=1) (transfer container):
  *          The list of selected drawables in the image.
- *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
-GimpItem **
-gimp_image_get_selected_drawables (GimpImage *image,
-                                   gint      *num_drawables)
+GimpDrawable **
+gimp_image_get_selected_drawables (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpItem **drawables = NULL;
+  GimpDrawable **drawables = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -2508,13 +2501,8 @@ gimp_image_get_selected_drawables (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_drawables = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_drawables = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) drawables = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    drawables = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

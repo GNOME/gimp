@@ -38,6 +38,7 @@ EXPORTS
 	gimp_component_type_get_type
 	gimp_convert_palette_type_get_type
 	gimp_convolve_type_get_type
+	gimp_core_object_array_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
 	gimp_data_directory
@@ -125,6 +126,7 @@ EXPORTS
 	gimp_paint_application_mode_get_type
 	gimp_param_array_get_type
 	gimp_param_choice_get_type
+	gimp_param_core_object_array_get_type
 	gimp_param_export_options_get_type
 	gimp_param_float_array_get_type
 	gimp_param_int32_array_get_type
@@ -134,6 +136,7 @@ EXPORTS
 	gimp_param_parasite_get_type
 	gimp_param_spec_array
 	gimp_param_spec_choice
+	gimp_param_spec_core_object_array
 	gimp_param_spec_export_options
 	gimp_param_spec_float_array
 	gimp_param_spec_int32_array

@@ -41,17 +41,17 @@ gimp_c_test_run (GimpProcedure        *procedure,
 
   /* 1. Fail with no selection */
   GIMP_TEST_START("Gimp.Selection.float - no selection")
-  GIMP_TEST_END(gimp_selection_float (img, 1, &layer1, 10, 10) == NULL)
+  GIMP_TEST_END(gimp_selection_float (img, (GimpDrawable *[2]) { layer1, NULL }, 10, 10) == NULL)
 
   /* 2. Fail on a group layer */
   GIMP_TEST_START("Gimp.Selection.float - group layer")
-  GIMP_TEST_END(gimp_selection_float (img, 1, &group1, 10, 10) == NULL)
+  GIMP_TEST_END(gimp_selection_float (img, (GimpDrawable *[2]) { group1, NULL }, 10, 10) == NULL)
 
   /* 3. Succeed on a normal layer */
   gimp_image_select_rectangle (img, GIMP_CHANNEL_OP_REPLACE, 5, 5, 20, 20);
 
   GIMP_TEST_START("gimp_selection_float - normal layer")
-  float_layer = gimp_selection_float (img, 1, &layer1, 10, 10);
+  float_layer = gimp_selection_float (img, (GimpDrawable *[2]) { layer1, NULL }, 10, 10);
   GIMP_TEST_END(GIMP_IS_LAYER (float_layer))
 
   GIMP_TEST_START("gimp_floating_sel_remove")
@@ -61,7 +61,7 @@ gimp_c_test_run (GimpProcedure        *procedure,
   gimp_image_select_rectangle (img, GIMP_CHANNEL_OP_REPLACE, 5, 5, 20, 20);
 
   GIMP_TEST_START("gimp_selection_float - layer inside group")
-  float_layer = gimp_selection_float (img, 1, &layer2, 10, 10);
+  float_layer = gimp_selection_float (img, (GimpDrawable *[2]) { layer2, NULL }, 10, 10);
   GIMP_TEST_END(GIMP_IS_LAYER (float_layer))
 
   GIMP_TEST_START("gimp_floating_sel_remove")

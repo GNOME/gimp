@@ -866,6 +866,223 @@ gimp_color_array_get_length (GimpColorArray array)
 
 
 /*
+ * GIMP_TYPE_CORE_OBJECT_ARRAY
+ */
+
+static GimpCoreObjectArray gimp_core_object_array_copy       (GimpCoreObjectArray array);
+static gsize               gimp_core_object_array_get_length (GimpCoreObjectArray  array);
+
+GType
+gimp_core_object_array_get_type (void)
+{
+  static gsize static_g_define_type_id = 0;
+
+  if (g_once_init_enter (&static_g_define_type_id))
+    {
+      GType g_define_type_id =
+        g_boxed_type_register_static (g_intern_static_string ("GimpCoreObjectArray"),
+                                      (GBoxedCopyFunc) gimp_core_object_array_copy,
+                                      (GBoxedFreeFunc) g_free);
+
+      g_once_init_leave (&static_g_define_type_id, g_define_type_id);
+    }
+
+  return static_g_define_type_id;
+}
+
+/**
+ * gimp_core_object_array_copy:
+ * @array: an array of core_objects.
+ *
+ * Duplicate a new #GimpCoreObjectArray, which is basically simply a
+ * %NULL-terminated array of [class@GObject.Object]. Note that you
+ * should only use this alias type for arrays of core type objects
+ * internally hold by `libgimp`, such as layers, channels, paths, images
+ * and so on, because no reference is hold to the element objects.
+ *
+ * As a consequence, the copy also makes a shallow copy of the elements.
+ *
+ * Returns: (transfer container) (array zero-terminated=1): a new #GimpCoreObjectArray.
+ **/
+static GimpCoreObjectArray
+gimp_core_object_array_copy (GimpCoreObjectArray array)
+{
+  GObject **copy;
+  gsize     length = gimp_core_object_array_get_length (array);
+
+  copy = g_malloc0 (sizeof (GObject *) * (length + 1));
+
+  for (gint i = 0; i < length; i++)
+    copy[i] = array[i];
+
+  return copy;
+}
+
+/**
+ * gimp_core_object_array_get_length:
+ * @array: an array of core_objects.
+ *
+ * Returns: the number of [class@GObject.Object] in @array.
+ **/
+static gsize
+gimp_core_object_array_get_length (GimpCoreObjectArray array)
+{
+  gsize length = 0;
+
+  while (array && array[length] != NULL)
+    length++;
+
+  return length;
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY
+ */
+
+static void       gimp_param_core_object_array_class_init  (GParamSpecClass *klass);
+static void       gimp_param_core_object_array_init        (GParamSpec      *pspec);
+static gboolean   gimp_param_core_object_array_validate    (GParamSpec      *pspec,
+                                                            GValue          *value);
+static gint       gimp_param_core_object_array_values_cmp  (GParamSpec      *pspec,
+                                                            const GValue    *value1,
+                                                            const GValue    *value2);
+
+GType
+gimp_param_core_object_array_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_core_object_array_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecCoreObjectArray),
+        0,
+        (GInstanceInitFunc) gimp_param_core_object_array_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                     "GimpParamCoreObjectArray", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_core_object_array_class_init (GParamSpecClass *klass)
+{
+  klass->value_type     = GIMP_TYPE_CORE_OBJECT_ARRAY;
+  klass->value_validate = gimp_param_core_object_array_validate;
+  klass->values_cmp     = gimp_param_core_object_array_values_cmp;
+}
+
+static void
+gimp_param_core_object_array_init (GParamSpec *pspec)
+{
+}
+
+static gboolean
+gimp_param_core_object_array_validate (GParamSpec *pspec,
+                                       GValue     *value)
+{
+  GimpParamSpecCoreObjectArray  *array_spec = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec);
+  GObject                      **array      = value->data[0].v_pointer;
+
+  if (array)
+    {
+      gsize length = gimp_core_object_array_get_length (array);
+      gsize i;
+
+      if (length == 0)
+        {
+          g_value_set_boxed (value, NULL);
+          return FALSE;
+        }
+
+      for (i = 0; i < length; i++)
+        {
+          if (array[i] && ! g_type_is_a (G_OBJECT_TYPE (array[i]), array_spec->object_type))
+            {
+              g_value_set_boxed (value, NULL);
+              return TRUE;
+            }
+        }
+    }
+
+  return FALSE;
+}
+
+static gint
+gimp_param_core_object_array_values_cmp (GParamSpec   *pspec,
+                                         const GValue *value1,
+                                         const GValue *value2)
+{
+  GObject **array1 = value1->data[0].v_pointer;
+  GObject **array2 = value2->data[0].v_pointer;
+
+  /*  try to return at least *something*, it's useless anyway...  */
+
+  if (! array1)
+    return array2 != NULL ? -1 : 0;
+  else if (! array2)
+    return array1 != NULL ? 1 : 0;
+  else if (gimp_core_object_array_get_length (array1) < gimp_core_object_array_get_length (array2))
+    return -1;
+  else if (gimp_core_object_array_get_length (array1) > gimp_core_object_array_get_length (array2))
+    return 1;
+
+  for (gsize i = 0; i < gimp_core_object_array_get_length (array1); i++)
+    if (array1[0] != array2[0])
+      return 1;
+
+  return 0;
+}
+
+/**
+ * gimp_param_spec_core_object_array:
+ * @name:        Canonical name of the property specified.
+ * @nick:        Nick name of the property specified.
+ * @blurb:       Description of the property specified.
+ * @object_type: GType of the array's elements.
+ * @flags:       Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecCoreObjectArray specifying a
+ * [type@CoreObjectArray] property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer floating): The newly created #GimpParamSpecCoreObjectArray.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_param_spec_core_object_array (const gchar *name,
+                                   const gchar *nick,
+                                   const gchar *blurb,
+                                   GType        object_type,
+                                   GParamFlags  flags)
+{
+  GimpParamSpecCoreObjectArray *array_spec;
+
+  g_return_val_if_fail (g_type_is_a (object_type, G_TYPE_OBJECT), NULL);
+
+  array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY,
+                                      name, nick, blurb, flags);
+
+  g_return_val_if_fail (array_spec, NULL);
+
+  array_spec->object_type = object_type;
+
+  return G_PARAM_SPEC (array_spec);
+}
+
+
+/*
  * GIMP_TYPE_OBJECT_ARRAY
  */
 

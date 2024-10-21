@@ -1289,10 +1289,9 @@ load_image (GFile                *file,
             {
               GimpLayer     *current_layer;
               gchar         *name;
-              GimpItem     **tmp_drawables;
-              gint           n_drawables;
+              GimpDrawable **tmp_drawables;
 
-              tmp_drawables = gimp_image_get_selected_drawables (image_list[k], &n_drawables);
+              tmp_drawables = gimp_image_get_selected_drawables (image_list[k]);
 
               name = gimp_item_get_name (GIMP_ITEM (tmp_drawables[0]));
 

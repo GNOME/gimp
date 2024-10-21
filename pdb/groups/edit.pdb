@@ -35,12 +35,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        { name => 'drawables', type => 'itemarray',
-         desc => 'The drawables to cut from',
-          no_validate => 1,
-          array => { name => 'num_drawables',
-                     type => '1 <= int32',
-                     desc => "The number of drawables" } }
+        { name => 'drawables', type => 'drawablearray',
+         desc => 'The drawables to cut from' }
     );
 
     @outargs = (
@@ -56,7 +52,7 @@ HELP
   GList     *drawable_list = NULL;
   gint       i;
 
-  for (i = 0; i < num_drawables; i++)
+  for (i = 0; drawables[i] != NULL; i++)
     {
       if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                        GIMP_PDB_ITEM_CONTENT, error) ||
@@ -127,12 +123,8 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'drawables', type => 'itemarray',
-          desc => 'Drawables to copy from',
-          no_validate => 1,
-	  array => { name => 'num_drawables',
-                     type => '1 <= int32',
-		     desc => "The number of drawables to save" } },
+	{ name => 'drawables', type => 'drawablearray',
+          desc => 'Drawables to copy from' }
     );
 
     @outargs = (
@@ -148,7 +140,7 @@ HELP
   GList     *drawables_list = NULL;
   gint       i;
 
-  for (i = 0; i < num_drawables; i++)
+  for (i = 0; drawables[i] != NULL; i++)
     {
       if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL, 0, error))
         {
@@ -167,7 +159,7 @@ HELP
       drawables_list = g_list_prepend (drawables_list, (gpointer) drawables[i]);
     }
 
-  if (success && num_drawables > 0)
+  if (success && g_list_length (drawables_list) > 0)
     {
       GError *my_error = NULL;
 
@@ -238,8 +230,8 @@ sub edit_paste {
     $help = <<'HELP';
 This procedure pastes a copy of the internal GIMP edit buffer to the
 specified drawable. The GIMP edit buffer will be empty unless a call
-was previously made to either gimp_edit_cut() or gimp_edit_copy(). The
-"paste_into" option specifies whether to clear the current image
+was previously made to either [func@Gimp.edit_cut] or [func@Gimp.edit_copy].
+The "paste_into" option specifies whether to clear the current image
 selection, or to paste the buffer "behind" the selection. This allows
 the selection to act as a mask for the pasted buffer. Anywhere that
 the selection mask is non-zero, the pasted buffer will show
@@ -249,9 +241,9 @@ If the image has a floating selection at the time of pasting, the old
 floating selection will be anchored to its drawable before the new
 floating selection is added.
 
-This procedure returns the new layers (floating or not). If the result
+This procedure returns the new drawables (floating or not). If the result
 is a floating selection, it will already be attached to the specified
-drawable, and a subsequent call to floating_sel_attach is not needed.
+drawable, and a subsequent call to [func@Gimp.floating_sel_attach] is not needed.
 HELP
 
     &std_pdb_misc;
@@ -264,10 +256,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'layers', type => 'layerarray',
-          desc => 'The list of pasted layers.',
-          array => { name => 'num_layers',
-                     desc => 'The newly pasted layers' } }
+        { name => 'new_drawables', type => 'drawablearray',
+          desc => 'The list of pasted layers.' }
     );
 
     %invoke = (
@@ -282,6 +272,7 @@ HELP
     {
       GList *drawables = NULL;
       GList *list;
+      gint   num_drawables;
       gint   i;
 
       if (drawable != NULL)
@@ -299,11 +290,11 @@ HELP
       if (! list)
         success = FALSE;
 
-      num_layers = g_list_length (list);
-      layers = g_new (GimpLayer *, num_layers);
+      num_drawables = g_list_length (list);
+      new_drawables = g_new0 (GimpDrawable *, num_drawables + 1);
 
-      for (i = 0; i < num_layers; i++, list = g_list_next (list))
-        layers[i] = g_object_ref (list->data);
+      for (i = 0; i < num_drawables; i++, list = g_list_next (list))
+        new_drawables[i] = g_object_ref (list->data);
 
       g_list_free (list);
     }
@@ -359,12 +350,8 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'drawables', type => 'itemarray',
-         desc => 'The drawables to cut from',
-          no_validate => 1,
-          array => { name => 'num_drawables',
-                     type => '1 <= int32',
-                     desc => "The number of drawables" } },
+        { name => 'drawables', type => 'drawablearray',
+         desc => 'The drawables to cut from' },
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
@@ -382,7 +369,7 @@ HELP
   GList     *drawable_list = NULL;
   gint       i;
 
-  for (i = 0; i < num_drawables; i++)
+  for (i = 0; drawables[i] != NULL; i++)
     {
       if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                        GIMP_PDB_ITEM_CONTENT, error) ||
@@ -449,12 +436,8 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'drawables', type => 'itemarray',
-         desc => 'The drawables to copy from',
-          no_validate => 1,
-          array => { name => 'num_drawables',
-                     type => '1 <= int32',
-                     desc => "The number of drawables" } },
+        { name => 'drawables', type => 'drawablearray',
+         desc => 'The drawables to copy from' },
         { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
@@ -472,7 +455,7 @@ HELP
   GList     *drawable_list = NULL;
   gint       i;
 
-  for (i = 0; i < num_drawables; i++)
+  for (i = 0; drawables[i] != NULL; i++)
     {
       if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                        0, error))
