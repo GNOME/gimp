@@ -359,7 +359,8 @@ gint             gimp_color_array_get_length          (GimpColorArray  array);
  * The reason of existence for this alias is to have common arrays of
  * objects as a boxed type easy to use as plug-in's procedure argument.
  *
- * You should never have to interact with this type directly.
+ * You should never have to interact with this type directly, though
+ * [func@Gimp.core_object_array_get_length] might be convenient.
  *
  * Since: 3.0
  */
@@ -368,7 +369,8 @@ typedef GObject**                                 GimpCoreObjectArray;
 #define GIMP_TYPE_CORE_OBJECT_ARRAY               (gimp_core_object_array_get_type ())
 #define GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_CORE_OBJECT_ARRAY))
 
-GType gimp_core_object_array_get_type (void) G_GNUC_CONST;
+GType gimp_core_object_array_get_type   (void) G_GNUC_CONST;
+gsize gimp_core_object_array_get_length (GObject **array);
 
 
 /*

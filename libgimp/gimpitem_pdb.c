@@ -560,22 +560,19 @@ gimp_item_get_parent (GimpItem *item)
 /**
  * gimp_item_get_children:
  * @item: The item.
- * @num_children: (out): The item's number of children.
  *
  * Returns the item's list of children.
  *
  * This procedure returns the list of items which are children of the
  * specified item. The order is topmost to bottommost.
  *
- * Returns: (array length=num_children) (element-type GimpItem) (transfer container):
+ * Returns: (element-type GimpItem) (array zero-terminated=1) (transfer container):
  *          The item's list of children.
- *          The returned value must be freed with g_free().
  *
  * Since: 2.8
  **/
 GimpItem **
-gimp_item_get_children (GimpItem *item,
-                        gint     *num_children)
+gimp_item_get_children (GimpItem *item)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -590,13 +587,8 @@ gimp_item_get_children (GimpItem *item,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_children = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_children = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) children = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    children = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

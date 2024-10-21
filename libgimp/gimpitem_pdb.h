@@ -45,8 +45,7 @@ GimpImage*    gimp_item_get_image           (GimpItem           *item);
 gboolean      gimp_item_delete              (GimpItem           *item);
 gboolean      gimp_item_is_group            (GimpItem           *item);
 GimpItem*     gimp_item_get_parent          (GimpItem           *item);
-GimpItem**    gimp_item_get_children        (GimpItem           *item,
-                                             gint               *num_children);
+GimpItem**    gimp_item_get_children        (GimpItem           *item);
 gboolean      gimp_item_get_expanded        (GimpItem           *item);
 gboolean      gimp_item_set_expanded        (GimpItem           *item,
                                              gboolean            expanded);

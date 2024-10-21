@@ -373,14 +373,14 @@ GList *
 gimp_item_list_children (GimpItem *item)
 {
   GimpItem **children;
-  gint       num_children;
   GList     *list = NULL;
   gint       i;
 
-  children = gimp_item_get_children (item, &num_children);
+  children = gimp_item_get_children (item);
 
-  for (i = 0; i < num_children; i++)
-    list = g_list_prepend (list, children[i]);
+  if (children)
+    for (i = 0; children[i] != NULL; i++)
+      list = g_list_prepend (list, children[i]);
 
   g_free (children);
 

@@ -464,7 +464,6 @@ item_get_children_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint num_children = 0;
   GimpItem **children = NULL;
 
   item = g_value_get_object (gimp_value_array_index (args, 0));
@@ -475,36 +474,29 @@ item_get_children_invoker (GimpProcedure         *procedure,
 
       if (container)
         {
-          num_children = gimp_container_get_n_children (container);
+          gsize  num_children = gimp_container_get_n_children (container);
+          GList *list;
+          gint   i;
 
-          if (num_children)
+          children = g_new0 (GimpItem *, num_children + 1);
+
+          for (list = GIMP_LIST (container)->queue->head, i = 0;
+               list; list = g_list_next (list), i++)
             {
-              GList *list;
-              gint   i;
-
-              children = g_new (GimpItem *, num_children);
-
-              for (list = GIMP_LIST (container)->queue->head, i = 0;
-                   list;
-                   list = g_list_next (list), i++)
-                {
-                  children[i] = g_object_ref (list->data);
-                }
+              children[i] = list->data;
             }
         }
       else
-        success = FALSE;
-
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_children);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_ITEM, (GObject **) children, num_children);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), children);
 
   return return_vals;
 }
@@ -1485,17 +1477,11 @@ register_item_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-children",
-                                                     "num children",
-                                                     "The item's number of children",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("children",
-                                                                 "children",
-                                                                 "The item's list of children",
-                                                                 GIMP_TYPE_ITEM,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("children",
+                                                                      "children",
+                                                                      "The item's list of children",
+                                                                      GIMP_TYPE_ITEM,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

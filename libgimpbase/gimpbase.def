@@ -38,6 +38,7 @@ EXPORTS
 	gimp_component_type_get_type
 	gimp_convert_palette_type_get_type
 	gimp_convolve_type_get_type
+	gimp_core_object_array_get_length
 	gimp_core_object_array_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
