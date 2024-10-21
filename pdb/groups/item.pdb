@@ -491,9 +491,7 @@ HELP
 
     @outargs = (
 	{ name => 'children', type => 'itemarray',
-	  desc => "The item's list of children",
-	  array => { name => 'num_children',
-		     desc => "The item's number of children" } }
+	  desc => "The item's list of children" }
     );
 
     %invoke = (
@@ -503,26 +501,22 @@ HELP
 
   if (container)
     {
-      num_children = gimp_container_get_n_children (container);
+      gsize  num_children = gimp_container_get_n_children (container);
+      GList *list;
+      gint   i;
 
-      if (num_children)
+      children = g_new0 (GimpItem *, num_children + 1);
+
+      for (list = GIMP_LIST (container)->queue->head, i = 0;
+           list; list = g_list_next (list), i++)
         {
-          GList *list;
-          gint   i;
-
-          children = g_new (GimpItem *, num_children);
-
-          for (list = GIMP_LIST (container)->queue->head, i = 0;
-               list;
-               list = g_list_next (list), i++)
-            {
-              children[i] = g_object_ref (list->data);
-            }
+          children[i] = list->data;
         }
     }
   else
-    success = FALSE;
-
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

@@ -869,8 +869,7 @@ gimp_color_array_get_length (GimpColorArray array)
  * GIMP_TYPE_CORE_OBJECT_ARRAY
  */
 
-static GimpCoreObjectArray gimp_core_object_array_copy       (GimpCoreObjectArray array);
-static gsize               gimp_core_object_array_get_length (GimpCoreObjectArray  array);
+static GimpCoreObjectArray gimp_core_object_array_copy (GimpCoreObjectArray array);
 
 GType
 gimp_core_object_array_get_type (void)
@@ -888,6 +887,23 @@ gimp_core_object_array_get_type (void)
     }
 
   return static_g_define_type_id;
+}
+
+/**
+ * gimp_core_object_array_get_length:
+ * @array: a %NULL-terminated array of objects.
+ *
+ * Returns: the number of [class@GObject.Object] in @array.
+ **/
+gsize
+gimp_core_object_array_get_length (GObject **array)
+{
+  gsize length = 0;
+
+  while (array && array[length] != NULL)
+    length++;
+
+  return length;
 }
 
 /**
@@ -916,23 +932,6 @@ gimp_core_object_array_copy (GimpCoreObjectArray array)
     copy[i] = array[i];
 
   return copy;
-}
-
-/**
- * gimp_core_object_array_get_length:
- * @array: an array of core_objects.
- *
- * Returns: the number of [class@GObject.Object] in @array.
- **/
-static gsize
-gimp_core_object_array_get_length (GimpCoreObjectArray array)
-{
-  gsize length = 0;
-
-  while (array && array[length] != NULL)
-    length++;
-
-  return length;
 }
 
 

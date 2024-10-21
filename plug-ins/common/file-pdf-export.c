@@ -944,8 +944,15 @@ gui_single (GimpProcedure       *procedure,
   /* Enable "layers-as-pages" if more than one layer, or there's a single
    * layer group has more than one layer */
   layers = gimp_image_get_layers (multi_page.images[0], &n_layers);
+
   if (n_layers == 1 && gimp_item_is_group (GIMP_ITEM (layers[0])))
-    g_free (gimp_item_get_children (GIMP_ITEM (layers[0]), &n_layers));
+    {
+      GimpItem **children;
+
+      children = gimp_item_get_children (GIMP_ITEM (layers[0]));
+      n_layers = gimp_core_object_array_get_length ((GObject **) children);
+      g_free (children);
+    }
   g_free (layers);
 
   gtk_widget_set_sensitive (widget, n_layers > 1);
@@ -1853,11 +1860,13 @@ draw_layer (GimpLayer           **layers,
   if (gimp_item_is_group (GIMP_ITEM (layer)))
     {
       GimpItem **children;
-      gint       children_num;
+      gint       children_num = 0;
       gint       i;
 
-      children = gimp_item_get_children (GIMP_ITEM (layer), &children_num);
-      for (i = 0; i < children_num; i++)
+      children     = gimp_item_get_children (GIMP_ITEM (layer));
+      children_num = gimp_core_object_array_get_length ((GObject **) children);
+
+      for (i = 0; children[i] != NULL; i++)
         {
           if (! draw_layer ((GimpLayer **) children, children_num,
                             config, single_image, i,

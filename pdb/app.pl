@@ -691,11 +691,11 @@ CODE
     }
     elsif ($pdbtype eq 'itemarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_ITEM,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_ITEM,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'drawablearray') {
