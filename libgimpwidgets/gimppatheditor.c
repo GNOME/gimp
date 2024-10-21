@@ -78,6 +78,8 @@ enum
 
 struct _GimpPathEditor
 {
+  GtkBox             parent_instance;
+
   GtkWidget         *upper_hbox;
 
   GtkWidget         *new_button;
