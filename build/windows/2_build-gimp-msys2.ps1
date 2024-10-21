@@ -32,10 +32,11 @@ if (-not $GITLAB_CI -and -not $GIMP_PREFIX)
     $GIMP_PREFIX = "$PWD\..\_install".Replace('\', '/')
   }
 
-$env:Path = $env:Path + ";$GIMP_PREFIX/bin"
-$env:PKG_CONFIG_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS2_PREFIX/$MSYSTEM_PREFIX/share/pkgconfig;$GIMP_PREFIX/lib/pkgconfig"
-$env:XDG_DATA_DIRS = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/share;$GIMP_PREFIX/share"
-$env:GI_TYPELIB_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/girepository-1.0;$GIMP_PREFIX/lib/girepository-1.0"
+if (-not $GITLAB_CI)
+  {
+    # We take the build-time env vars from '.gitlab-ci.yml'
+    Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'env:Path \+' -Context 0,3) -replace '> ','' -replace '- ','')
+  }
 
 
 # Build GIMP
