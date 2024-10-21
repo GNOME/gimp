@@ -48,8 +48,7 @@ GimpPrecision            gimp_image_get_precision              (GimpImage       
 GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage            *image);
 gint                     gimp_image_get_width                  (GimpImage            *image);
 gint                     gimp_image_get_height                 (GimpImage            *image);
-GimpLayer**              gimp_image_get_layers                 (GimpImage            *image,
-                                                                gint                 *num_layers);
+GimpLayer**              gimp_image_get_layers                 (GimpImage            *image);
 GimpChannel**            gimp_image_get_channels               (GimpImage            *image,
                                                                 gint                 *num_channels);
 GimpPath**               gimp_image_get_paths                  (GimpImage            *image,
@@ -145,10 +144,8 @@ G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage       
                                                                 gint                 *actual_height,
                                                                 gint                 *bpp,
                                                                 GBytes              **thumbnail_data);
-GimpLayer**              gimp_image_get_selected_layers        (GimpImage            *image,
-                                                                gint                 *num_layers);
+GimpLayer**              gimp_image_get_selected_layers        (GimpImage            *image);
 gboolean                 gimp_image_set_selected_layers        (GimpImage            *image,
-                                                                gint                  num_layers,
                                                                 const GimpLayer     **layers);
 GimpChannel**            gimp_image_get_selected_channels      (GimpImage            *image,
                                                                 gint                 *num_channels);

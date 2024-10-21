@@ -431,7 +431,6 @@ image_get_layers_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_layers = 0;
   GimpLayer **layers = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -439,28 +438,22 @@ image_get_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list = gimp_image_get_layer_iter (image);
+      gsize  num_layers;
+      gint   i;
 
       num_layers = g_list_length (list);
 
-      if (num_layers)
-        {
-          gint i;
+      layers = g_new0 (GimpLayer *, num_layers + 1);
 
-          layers = g_new (GimpLayer *, num_layers);
-
-          for (i = 0; i < num_layers; i++, list = g_list_next (list))
-            layers[i] = g_object_ref (list->data);
-        }
+      for (i = 0; i < num_layers; i++, list = g_list_next (list))
+        layers[i] = list->data;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), layers);
 
   return return_vals;
 }
@@ -1936,7 +1929,6 @@ image_get_selected_layers_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_layers = 0;
   GimpLayer **layers = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -1944,28 +1936,21 @@ image_get_selected_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list = gimp_image_get_selected_layers (image);
+      gsize  num_layers;
+      gint   i;
 
       num_layers = g_list_length (list);
+      layers = g_new0 (GimpLayer *, num_layers + 1);
 
-      if (num_layers)
-        {
-          gint i;
-
-          layers = g_new (GimpLayer *, num_layers);
-
-          for (i = 0; i < num_layers; i++, list = g_list_next (list))
-            layers[i] = g_object_ref (list->data);
-        }
+      for (i = 0; i < num_layers; i++, list = g_list_next (list))
+        layers[i] = list->data;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), layers);
 
   return return_vals;
 }
@@ -1980,21 +1965,19 @@ image_set_selected_layers_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint num_layers;
   const GimpLayer **layers;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  num_layers = g_value_get_int (gimp_value_array_index (args, 1));
-  layers = (const GimpLayer **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  layers = g_value_get_boxed (gimp_value_array_index (args, 1));
 
   if (success)
     {
       GList *selected_layers = NULL;
       gint   i;
 
-      for (i = 0; i < num_layers; i++)
-        selected_layers = g_list_prepend (selected_layers,
-                                          GIMP_LAYER (layers[i]));
+      if (layers)
+        for (i = 0; layers[i] != NULL; i++)
+          selected_layers = g_list_prepend (selected_layers, (gpointer) layers[i]);
 
       gimp_image_set_selected_layers (image, selected_layers);
       g_list_free (selected_layers);
@@ -2181,18 +2164,13 @@ image_get_selected_drawables_invoker (GimpProcedure         *procedure,
     {
       GList *list = gimp_image_get_selected_drawables (image);
       gsize  num_drawables;
+      gint   i;
 
       num_drawables = g_list_length (list);
+      drawables     = g_new0 (GimpDrawable *, num_drawables + 1);
 
-      if (num_drawables)
-        {
-          gint i;
-
-          drawables = g_new0 (GimpDrawable *, num_drawables + 1);
-
-          for (i = 0; i < num_drawables; i++, list = g_list_next (list))
-            drawables[i] = list->data;
-        }
+      for (i = 0; i < num_drawables; i++, list = g_list_next (list))
+        drawables[i] = list->data;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -3481,17 +3459,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-layers",
-                                                     "num layers",
-                                                     "The number of root layers contained in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("layers",
-                                                                 "layers",
-                                                                 "The list of layers contained in the image.",
-                                                                 GIMP_TYPE_LAYER,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("layers",
+                                                                      "layers",
+                                                                      "The list of layers contained in the image.",
+                                                                      GIMP_TYPE_LAYER,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4865,17 +4837,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-layers",
-                                                     "num layers",
-                                                     "The number of selected layers in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("layers",
-                                                                 "layers",
-                                                                 "The list of selected layers in the image.",
-                                                                 GIMP_TYPE_LAYER,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("layers",
+                                                                      "layers",
+                                                                      "The list of selected layers in the image.",
+                                                                      GIMP_TYPE_LAYER,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4900,17 +4866,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-layers",
-                                                 "num layers",
-                                                 "The number of layers to select",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("layers",
-                                                             "layers",
-                                                             "The list of layers to select",
-                                                             GIMP_TYPE_LAYER,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("layers",
+                                                                  "layers",
+                                                                  "The list of layers to select",
+                                                                  GIMP_TYPE_LAYER,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

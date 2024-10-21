@@ -235,13 +235,12 @@ GList *
 gimp_image_list_layers (GimpImage *image)
 {
   GimpLayer **layers;
-  gint        num_layers;
   GList      *list = NULL;
   gint        i;
 
-  layers = gimp_image_get_layers (image, &num_layers);
+  layers = gimp_image_get_layers (image);
 
-  for (i = 0; i < num_layers; i++)
+  for (i = 0; layers[i] != NULL; i++)
     list = g_list_prepend (list, layers[i]);
 
   g_free (layers);
@@ -269,13 +268,12 @@ GList *
 gimp_image_list_selected_layers (GimpImage *image)
 {
   GimpLayer **layers;
-  gint        num_layers;
   GList      *list = NULL;
   gint        i;
 
-  layers = gimp_image_get_selected_layers (image, &num_layers);
+  layers = gimp_image_get_selected_layers (image);
 
-  for (i = 0; i < num_layers; i++)
+  for (i = 0; layers[i] != NULL; i++)
     list = g_list_prepend (list, layers[i]);
 
   g_free (layers);
@@ -306,12 +304,11 @@ gimp_image_take_selected_layers (GimpImage *image,
   gboolean    success;
   gint        i;
 
-  sel_layers = g_new0 (GimpLayer *, g_list_length (layers));
+  sel_layers = g_new0 (GimpLayer *, g_list_length (layers) + 1);
   for (list = layers, i = 0; list; list = list->next, i++)
     sel_layers[i] = list->data;
 
-  success = gimp_image_set_selected_layers (image, g_list_length (layers),
-                                            (const GimpLayer **) sel_layers);
+  success = gimp_image_set_selected_layers (image, (const GimpLayer **) sel_layers);
   g_list_free (layers);
   g_free (sel_layers);
 

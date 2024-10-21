@@ -398,7 +398,6 @@ icns_attach_image (GimpImage    *image,
       GimpValueArray *return_vals    = NULL;
       GimpLayer     **layers;
       GimpLayer      *new_layer;
-      gint            n_layers;
       gchar          *temp_file_type = NULL;
       gchar          *procedure_name = NULL;
 
@@ -452,7 +451,7 @@ icns_attach_image (GimpImage    *image,
         {
           temp_image = g_value_get_object (gimp_value_array_index (return_vals, 1));
 
-          layers = gimp_image_get_layers (temp_image, &n_layers);
+          layers = gimp_image_get_layers (temp_image);
           new_layer = gimp_layer_new_from_drawable (GIMP_DRAWABLE (layers[0]), image);
           gimp_item_set_name (GIMP_ITEM (new_layer), layer_name);
           gimp_image_insert_layer (image, new_layer, NULL, 0);

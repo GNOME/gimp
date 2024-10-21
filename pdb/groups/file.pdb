@@ -176,9 +176,7 @@ HELP
 
     @outargs = (
         { name => 'layers', type => 'layerarray',
-          desc => 'The list of loaded layers',
-          array => { name => 'num_layers',
-                     desc => 'The number of loaded layers' } }
+          desc => 'The list of loaded layers' }
     );
 
     %invoke = (
@@ -194,23 +192,26 @@ HELP
   if (layer_list)
     {
       GList *list;
-      gint i;
+      gsize  num_layers;
+      gint   i;
 
       num_layers = g_list_length (layer_list);
 
-      layers = g_new (GimpLayer *, num_layers);
+      layers = g_new0 (GimpLayer *, num_layers + 1);
 
       for (i = 0, list = layer_list;
            i < num_layers;
            i++, list = g_list_next (list))
         {
-          layers[i] = g_object_ref (list->data);
+          layers[i] = list->data;
         }
 
       g_list_free (layer_list);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );

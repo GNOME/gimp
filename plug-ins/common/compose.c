@@ -691,9 +691,8 @@ compose_run (GimpProcedure        *procedure,
           if (! strcmp (name, COMPOSE_PROC))
             {
               GimpLayer **layers;
-              gint        nlayers;
 
-              layers = gimp_image_get_layers (image, &nlayers);
+              layers = gimp_image_get_layers (image);
 
               if (! layers)
                 {
@@ -987,7 +986,6 @@ compose (const gchar         *compose_type,
   gint           width, height;
   gint           num_images, compose_idx;
   gint           i, j;
-  gint           num_layers;
   GimpLayer     *layer_dst;
   GimpImage     *image_dst;
   gint           first_object;
@@ -1088,7 +1086,7 @@ compose (const gchar         *compose_type,
               GimpLayer **layers;
 
               /* Get first layer of image */
-              layers = gimp_image_get_layers (inputs[j].comp.object, &num_layers);
+              layers = gimp_image_get_layers (inputs[j].comp.object);
 
               if (! layers)
                 {
@@ -1220,8 +1218,8 @@ compose_dialog (GimpProcedure       *procedure,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  layer_list = gimp_image_get_layers (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                      &nlayers);
+  layer_list = gimp_image_get_layers (gimp_item_get_image (GIMP_ITEM (drawable)));
+  nlayers    = gimp_core_object_array_get_length ((GObject **) layer_list);
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),

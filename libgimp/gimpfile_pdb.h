@@ -39,8 +39,7 @@ GimpLayer*  gimp_file_load_layer     (GimpRunMode        run_mode,
                                       GFile             *file);
 GimpLayer** gimp_file_load_layers    (GimpRunMode        run_mode,
                                       GimpImage         *image,
-                                      GFile             *file,
-                                      gint              *num_layers);
+                                      GFile             *file);
 gboolean    gimp_file_save           (GimpRunMode        run_mode,
                                       GimpImage         *image,
                                       GFile             *file,

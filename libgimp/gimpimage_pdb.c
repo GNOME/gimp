@@ -465,7 +465,6 @@ gimp_image_get_height (GimpImage *image)
 /**
  * gimp_image_get_layers:
  * @image: The image.
- * @num_layers: (out): The number of root layers contained in the image.
  *
  * Returns the list of root layers contained in the specified image.
  *
@@ -478,13 +477,11 @@ gimp_image_get_height (GimpImage *image)
  * with gimp_item_get_children() (possibly recursively checking if
  * these have children too).
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (element-type GimpLayer) (array zero-terminated=1) (transfer container):
  *          The list of layers contained in the image.
- *          The returned value must be freed with g_free().
  **/
 GimpLayer **
-gimp_image_get_layers (GimpImage *image,
-                       gint      *num_layers)
+gimp_image_get_layers (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -499,13 +496,8 @@ gimp_image_get_layers (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_layers = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    layers = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -2199,22 +2191,19 @@ _gimp_image_thumbnail (GimpImage  *image,
 /**
  * gimp_image_get_selected_layers:
  * @image: The image.
- * @num_layers: (out): The number of selected layers in the image.
  *
  * Returns the specified image's selected layers.
  *
  * This procedure returns the list of selected layers in the specified
  * image.
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (element-type GimpLayer) (array zero-terminated=1) (transfer container):
  *          The list of selected layers in the image.
- *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
 GimpLayer **
-gimp_image_get_selected_layers (GimpImage *image,
-                                gint      *num_layers)
+gimp_image_get_selected_layers (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -2229,13 +2218,8 @@ gimp_image_get_selected_layers (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_layers = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    layers = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -2245,8 +2229,7 @@ gimp_image_get_selected_layers (GimpImage *image,
 /**
  * gimp_image_set_selected_layers:
  * @image: The image.
- * @num_layers: The number of layers to select.
- * @layers: (array length=num_layers) (element-type GimpLayer): The list of layers to select.
+ * @layers: (element-type GimpLayer) (array zero-terminated=1): The list of layers to select.
  *
  * Sets the specified image's selected layers.
  *
@@ -2261,7 +2244,6 @@ gimp_image_get_selected_layers (GimpImage *image,
  **/
 gboolean
 gimp_image_set_selected_layers (GimpImage        *image,
-                                gint              num_layers,
                                 const GimpLayer **layers)
 {
   GimpValueArray *args;
@@ -2270,10 +2252,8 @@ gimp_image_set_selected_layers (GimpImage        *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_layers,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, layers,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-image-set-selected-layers",

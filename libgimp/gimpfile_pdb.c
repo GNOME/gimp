@@ -125,7 +125,6 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * @run_mode: The run mode.
  * @image: Destination image.
  * @file: The file to load.
- * @num_layers: (out): The number of loaded layers.
  *
  * Loads an image file as layers for an existing image.
  *
@@ -134,17 +133,15 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * needs to be added to the existing image with
  * gimp_image_insert_layer().
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (element-type GimpLayer) (array zero-terminated=1) (transfer container):
  *          The list of loaded layers.
- *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
 GimpLayer **
 gimp_file_load_layers (GimpRunMode  run_mode,
                        GimpImage   *image,
-                       GFile       *file,
-                       gint        *num_layers)
+                       GFile       *file)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -161,13 +158,8 @@ gimp_file_load_layers (GimpRunMode  run_mode,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_layers = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    layers = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

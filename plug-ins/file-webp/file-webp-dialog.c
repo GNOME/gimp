@@ -62,12 +62,15 @@ save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget *dialog;
-  gint32     nlayers;
-  gboolean   animation_supported = FALSE;
-  gboolean   run;
+  GtkWidget  *dialog;
+  GimpLayer **layers;
+  gint32      nlayers;
+  gboolean    animation_supported = FALSE;
+  gboolean    run;
 
-  g_free (gimp_image_get_layers (image, &nlayers));
+  layers  = gimp_image_get_layers (image);
+  nlayers = gimp_core_object_array_get_length ((GObject **) layers);
+  g_free (layers);
 
   animation_supported = nlayers > 1;
 

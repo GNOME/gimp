@@ -534,7 +534,8 @@ do_optimizations (GimpRunMode  run_mode,
 
   width     = gimp_image_get_width (image);
   height    = gimp_image_get_height (image);
-  layers    = gimp_image_get_layers (image, &total_frames);
+  layers    = gimp_image_get_layers (image);
+  total_frames = gimp_core_object_array_get_length ((GObject **) layers);
   imagetype = gimp_image_get_base_type (image);
   pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
 

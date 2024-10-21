@@ -537,9 +537,12 @@ image_is_monochrome (GimpImage *image)
 static gboolean
 image_is_multi_layer (GimpImage *image)
 {
-  gint32 n_layers;
+  GimpLayer **layers;
+  gint32      n_layers;
 
-  g_free (gimp_image_get_layers (image, &n_layers));
+  layers   = gimp_image_get_layers (image);
+  n_layers = gimp_core_object_array_get_length ((GObject **) layers);
+  g_free (layers);
 
   return (n_layers > 1);
 }

@@ -765,7 +765,8 @@ pdf_export_image (GimpProcedure        *procedure,
        */
       cairo_scale (cr, x_scale, y_scale);
 
-      layers = gimp_image_get_layers (image, &n_layers);
+      layers   = gimp_image_get_layers (image);
+      n_layers = gimp_core_object_array_get_length ((GObject **) layers);
 
       /* Fill image with background color if transparent and
        * user chose that option.
@@ -943,7 +944,8 @@ gui_single (GimpProcedure       *procedure,
                                             "pages-box");
   /* Enable "layers-as-pages" if more than one layer, or there's a single
    * layer group has more than one layer */
-  layers = gimp_image_get_layers (multi_page.images[0], &n_layers);
+  layers   = gimp_image_get_layers (multi_page.images[0]);
+  n_layers = gimp_core_object_array_get_length ((GObject **) layers);
 
   if (n_layers == 1 && gimp_item_is_group (GIMP_ITEM (layers[0])))
     {

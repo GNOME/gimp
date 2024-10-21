@@ -824,7 +824,8 @@ mng_export_image (GFile         *file,
     gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                          "default-chunks");
 
-  layers = gimp_image_get_layers (image, &num_layers);
+  layers = gimp_image_get_layers (image);
+  num_layers = gimp_core_object_array_get_length ((GObject **) layers);
 
   if (num_layers < 1)
     return FALSE;
@@ -1575,14 +1576,15 @@ mng_save_dialog (GimpImage     *image,
                  GimpProcedure *procedure,
                  GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *combo;
-  GtkWidget *label;
-  GtkWidget *scale;
-  gint       num_layers;
-  gboolean   run;
+  GtkWidget  *dialog;
+  GtkWidget  *frame;
+  GtkWidget  *hbox;
+  GtkWidget  *combo;
+  GtkWidget  *label;
+  GtkWidget  *scale;
+  GimpLayer **layers;
+  gint        num_layers;
+  gboolean    run;
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
@@ -1599,7 +1601,9 @@ mng_save_dialog (GimpImage     *image,
                                     "options-frame", "options-label",
                                     FALSE, "options-vbox");
 
-  g_free (gimp_image_get_layers (image, &num_layers));
+  layers = gimp_image_get_layers (image);
+  num_layers = gimp_core_object_array_get_length ((GObject **) layers);
+  g_free (layers);
 
   if (num_layers == 1)
     {
