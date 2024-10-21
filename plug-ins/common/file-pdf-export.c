@@ -713,16 +713,16 @@ pdf_export_image (GimpProcedure        *procedure,
       gint32         n_layers;
       gdouble        x_res, y_res;
       gdouble        x_scale, y_scale;
-      GimpItem     **drawables;
-      gint           n_drawables;
+      GimpDrawable **drawables;
       gint           j;
 
-      drawables = gimp_image_get_selected_drawables (image, &n_drawables);
-      if (n_drawables == 0)
+      drawables = gimp_image_get_selected_drawables (image);
+      if (drawables[0] == NULL)
         {
           g_free (drawables);
           continue;
         }
+      g_free (drawables);
 
       /* Save the state of the surface before any changes, so that
        * settings from one page won't affect all the others
@@ -1597,9 +1597,9 @@ drawText (GimpLayer *layer,
   if (type == GIMP_RGBA_IMAGE)
     color = gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer));
   else
-    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
-                           (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
-                           &color);
+    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)),
+                           (const GimpDrawable*[2]) { GIMP_DRAWABLE (layer), NULL },
+                           x, y, FALSE, FALSE, 0, &color);
 
   /* TODO: this export plug-in is not space-aware yet, so we draw everything as
    * sRGB for the time being.

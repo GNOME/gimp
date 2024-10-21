@@ -651,8 +651,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_drawables;
-  const GimpItem **drawables;
+  const GimpDrawable **drawables;
   gdouble x;
   gdouble y;
   gboolean sample_merged;
@@ -661,13 +660,12 @@ image_pick_color_invoker (GimpProcedure         *procedure,
   GeglColor *color = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 1));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
-  x = g_value_get_double (gimp_value_array_index (args, 3));
-  y = g_value_get_double (gimp_value_array_index (args, 4));
-  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 5));
-  sample_average = g_value_get_boolean (gimp_value_array_index (args, 6));
-  average_radius = g_value_get_double (gimp_value_array_index (args, 7));
+  drawables = g_value_get_boxed (gimp_value_array_index (args, 1));
+  x = g_value_get_double (gimp_value_array_index (args, 2));
+  y = g_value_get_double (gimp_value_array_index (args, 3));
+  sample_merged = g_value_get_boolean (gimp_value_array_index (args, 4));
+  sample_average = g_value_get_boolean (gimp_value_array_index (args, 5));
+  average_radius = g_value_get_double (gimp_value_array_index (args, 6));
 
   if (success)
     {
@@ -675,13 +673,13 @@ image_pick_color_invoker (GimpProcedure         *procedure,
 
       if (! sample_merged)
         {
-          if (num_drawables == 0)
+          if (drawables == NULL || drawables[0] == NULL)
             {
               success = FALSE;
             }
           else
             {
-              for (i = 0; i < num_drawables; i++)
+              for (i = 0; drawables[i] != NULL; i++)
                 if (gimp_item_get_image (GIMP_ITEM (drawables[i])) != image)
                   {
                     success = FALSE;
@@ -700,7 +698,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
         {
           GList *drawable_list = NULL;
 
-          for (i = 0; i < num_drawables; i++)
+          for (i = 0; drawables[i] != NULL; i++)
             {
               GimpPickable *pickable = (GimpPickable *) drawables[i];
 
@@ -2175,14 +2173,14 @@ image_get_selected_drawables_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_drawables = 0;
-  GimpItem **drawables = NULL;
+  GimpDrawable **drawables = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
       GList *list = gimp_image_get_selected_drawables (image);
+      gsize  num_drawables;
 
       num_drawables = g_list_length (list);
 
@@ -2190,10 +2188,10 @@ image_get_selected_drawables_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          drawables = g_new (GimpItem *, num_drawables);
+          drawables = g_new0 (GimpDrawable *, num_drawables + 1);
 
           for (i = 0; i < num_drawables; i++, list = g_list_next (list))
-            drawables[i] = g_object_ref (list->data);
+            drawables[i] = list->data;
         }
     }
 
@@ -2201,10 +2199,7 @@ image_get_selected_drawables_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_drawables);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), drawables);
 
   return return_vals;
 }
@@ -3674,17 +3669,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "The drawables to pick from",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "drawables",
+                                                                  "The drawables to pick from",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -5087,17 +5076,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-drawables",
-                                                     "num drawables",
-                                                     "The number of selected drawables in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("drawables",
-                                                                 "drawables",
-                                                                 "The list of selected drawables in the image.",
-                                                                 GIMP_TYPE_ITEM,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("drawables",
+                                                                      "drawables",
+                                                                      "The list of selected drawables in the image.",
+                                                                      GIMP_TYPE_DRAWABLE,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

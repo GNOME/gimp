@@ -135,6 +135,18 @@ package Gimp::CodeGen::pdb;
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_ITEM, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_ITEM, (GObject **) $var, $var_len)' },
 
+    drawablearray  => { name            => 'DRAWABLEARRAY',
+		     gtype           => 'GIMP_TYPE_CORE_OBJECT_ARRAY',
+		     type            => 'GimpDrawable **',
+		     const_type      => 'const GimpDrawable **',
+		     init_value      => 'NULL',
+		     in_annotate     => '(element-type GimpDrawable) (array zero-terminated=1)',
+		     out_annotate    => '(element-type GimpDrawable) (array zero-terminated=1) (transfer container)',
+		     get_value_func  => '$var = g_value_get_boxed ($value)',
+		     dup_value_func  => '$var = g_value_dup_boxed (gimp_value_array_index ($value))',
+		     set_value_func  => 'g_value_set_boxed ($value, $var)',
+		     take_value_func => 'g_value_take_boxed ($value, $var)' },
+
     layerarray  => { name            => 'LAYERARRAY',
 		     gtype           => 'GIMP_TYPE_OBJECT_ARRAY',
 		     type            => 'GimpLayer **',

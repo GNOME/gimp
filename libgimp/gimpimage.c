@@ -546,14 +546,13 @@ gimp_image_list_paths (GimpImage *image)
 GList *
 gimp_image_list_selected_drawables (GimpImage *image)
 {
-  GimpItem **drawables;
-  gint       num_drawables;
-  GList     *list = NULL;
-  gint       i;
+  GimpDrawable **drawables;
+  GList         *list = NULL;
+  gint           i;
 
-  drawables = gimp_image_get_selected_drawables (image, &num_drawables);
+  drawables = gimp_image_get_selected_drawables (image);
 
-  for (i = 0; i < num_drawables; i++)
+  for (i = 0; drawables[i] != NULL; i++)
     list = g_list_prepend (list, drawables[i]);
 
   g_free (drawables);

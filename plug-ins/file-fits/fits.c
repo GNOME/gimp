@@ -292,11 +292,10 @@ fits_export (GimpProcedure        *procedure,
              gpointer              run_data)
 {
   GimpImage          *duplicate_image;
-  GimpItem          **flipped_drawables;
+  GimpDrawable      **flipped_drawables;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   GimpExportReturn    export = GIMP_EXPORT_IGNORE;
   GList             *drawables;
-  gint               n_drawables;
   GError             *error  = NULL;
 
   gegl_init (NULL, NULL);
@@ -306,17 +305,14 @@ fits_export (GimpProcedure        *procedure,
 
   export = gimp_export_options_get_image (options, &image);
 
-  drawables   = gimp_image_list_layers (image);
-  n_drawables = g_list_length (drawables);
+  drawables = gimp_image_list_layers (image);
 
   /* Flip image vertical since FITS writes from bottom to top */
   duplicate_image = gimp_image_duplicate (image);
   gimp_image_flip (duplicate_image, GIMP_ORIENTATION_VERTICAL);
-  flipped_drawables =
-    gimp_image_get_selected_drawables (duplicate_image, &n_drawables);
+  flipped_drawables = gimp_image_get_selected_drawables (duplicate_image);
 
-  if (! export_image (file, image, GIMP_DRAWABLE (flipped_drawables[0]),
-                      &error))
+  if (! export_image (file, image, flipped_drawables[0], &error))
     status = GIMP_PDB_EXECUTION_ERROR;
 
   gimp_image_delete (duplicate_image);

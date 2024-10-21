@@ -197,29 +197,27 @@ selection_float_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint num_drawables;
-  const GimpItem **drawables;
+  const GimpDrawable **drawables;
   gint offx;
   gint offy;
   GimpLayer *layer = NULL;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
-  offx = g_value_get_int (gimp_value_array_index (args, 2));
-  offy = g_value_get_int (gimp_value_array_index (args, 3));
+  drawables = g_value_get_boxed (gimp_value_array_index (args, 0));
+  offx = g_value_get_int (gimp_value_array_index (args, 1));
+  offy = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
       GimpImage *image = NULL;
       gint       i;
 
-      if (num_drawables < 1)
+      if (drawables == NULL || drawables[0] == NULL)
         {
           success = FALSE;
         }
       else
         {
-          for (i = 0; i < num_drawables; i++)
+          for (i = 0; drawables[i] != NULL; i++)
             {
               if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
                                                GIMP_PDB_ITEM_CONTENT, error)     ||
@@ -240,7 +238,7 @@ selection_float_invoker (GimpProcedure         *procedure,
         {
           GList *drawable_list = NULL;
 
-          for (i = 0; i < num_drawables; i++)
+          for (i = 0; drawables[i] != NULL; i++)
             drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
 
           layer = gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
@@ -694,17 +692,11 @@ register_selection_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "num drawables",
-                                                 "The number of drawables",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "drawables",
-                                                             "The drawables from which to float selection",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "drawables",
+                                                                  "The drawables from which to float selection",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",

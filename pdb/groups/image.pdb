@@ -429,12 +429,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'drawables', type => 'itemarray',
-          desc => 'The drawables to pick from',
-          no_validate => 1,
-          array => { name => 'num_drawables',
-                     type => '1 <= int32',
-                     desc => "The number of drawables" } },
+        { name => 'drawables', type => 'drawablearray',
+          desc => 'The drawables to pick from' },
         { name => 'x', type => 'float',
           desc => 'x coordinate of upper-left corner of rectangle' },
         { name => 'y', type => 'float',
@@ -461,13 +457,13 @@ HELP
 
   if (! sample_merged)
     {
-      if (num_drawables == 0)
+      if (drawables == NULL || drawables[0] == NULL)
         {
           success = FALSE;
         }
       else
         {
-          for (i = 0; i < num_drawables; i++)
+          for (i = 0; drawables[i] != NULL; i++)
             if (gimp_item_get_image (GIMP_ITEM (drawables[i])) != image)
               {
                 success = FALSE;
@@ -486,7 +482,7 @@ HELP
     {
       GList *drawable_list = NULL;
 
-      for (i = 0; i < num_drawables; i++)
+      for (i = 0; drawables[i] != NULL; i++)
         {
           GimpPickable *pickable = (GimpPickable *) drawables[i];
 
@@ -2231,16 +2227,15 @@ HELP
     );
 
     @outargs = (
-        { name => 'drawables', type => 'itemarray',
-          desc => 'The list of selected drawables in the image.',
-          array => { name => 'num_drawables',
-                     desc => 'The number of selected drawables in the image' } }
+        { name => 'drawables', type => 'drawablearray',
+          desc => 'The list of selected drawables in the image.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   GList *list = gimp_image_get_selected_drawables (image);
+  gsize  num_drawables;
 
   num_drawables = g_list_length (list);
 
@@ -2248,10 +2243,10 @@ HELP
     {
       gint i;
 
-      drawables = g_new (GimpItem *, num_drawables);
+      drawables = g_new0 (GimpDrawable *, num_drawables + 1);
 
       for (i = 0; i < num_drawables; i++, list = g_list_next (list))
-        drawables[i] = g_object_ref (list->data);
+        drawables[i] = list->data;
     }
 }
 CODE

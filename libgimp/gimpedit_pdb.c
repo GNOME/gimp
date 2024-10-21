@@ -38,8 +38,7 @@
 
 /**
  * gimp_edit_cut:
- * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to cut from.
+ * @drawables: (element-type GimpDrawable) (array zero-terminated=1): The drawables to cut from.
  *
  * Cut from the specified drawables.
  *
@@ -56,18 +55,15 @@
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_cut (gint             num_drawables,
-               const GimpItem **drawables)
+gimp_edit_cut (const GimpDrawable **drawables)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, drawables,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-edit-cut",
@@ -84,8 +80,7 @@ gimp_edit_cut (gint             num_drawables,
 
 /**
  * gimp_edit_copy:
- * @num_drawables: The number of drawables to save.
- * @drawables: (array length=num_drawables) (element-type GimpItem): Drawables to copy from.
+ * @drawables: (element-type GimpDrawable) (array zero-terminated=1): Drawables to copy from.
  *
  * Copy from the specified drawables.
  *
@@ -103,18 +98,15 @@ gimp_edit_cut (gint             num_drawables,
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_copy (gint             num_drawables,
-                const GimpItem **drawables)
+gimp_edit_copy (const GimpDrawable **drawables)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, drawables,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-edit-copy",
@@ -174,38 +166,36 @@ gimp_edit_copy_visible (GimpImage *image)
  * gimp_edit_paste:
  * @drawable: The drawable to paste to.
  * @paste_into: Clear selection, or paste behind it?
- * @num_layers: (out): The newly pasted layers.
  *
  * Paste buffer to the specified drawable.
  *
  * This procedure pastes a copy of the internal GIMP edit buffer to the
  * specified drawable. The GIMP edit buffer will be empty unless a call
- * was previously made to either gimp_edit_cut() or gimp_edit_copy().
- * The \"paste_into\" option specifies whether to clear the current
- * image selection, or to paste the buffer \"behind\" the selection.
- * This allows the selection to act as a mask for the pasted buffer.
- * Anywhere that the selection mask is non-zero, the pasted buffer will
- * show through. The pasted data may be a floating selection when
- * relevant, layers otherwise. If the image has a floating selection at
- * the time of pasting, the old floating selection will be anchored to
- * its drawable before the new floating selection is added.
- * This procedure returns the new layers (floating or not). If the
+ * was previously made to either [func@Gimp.edit_cut] or
+ * [func@Gimp.edit_copy]. The \"paste_into\" option specifies whether
+ * to clear the current image selection, or to paste the buffer
+ * \"behind\" the selection. This allows the selection to act as a mask
+ * for the pasted buffer. Anywhere that the selection mask is non-zero,
+ * the pasted buffer will show through. The pasted data may be a
+ * floating selection when relevant, layers otherwise. If the image has
+ * a floating selection at the time of pasting, the old floating
+ * selection will be anchored to its drawable before the new floating
+ * selection is added.
+ * This procedure returns the new drawables (floating or not). If the
  * result is a floating selection, it will already be attached to the
- * specified drawable, and a subsequent call to floating_sel_attach is
- * not needed.
+ * specified drawable, and a subsequent call to
+ * [func@Gimp.floating_sel_attach] is not needed.
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (element-type GimpDrawable) (array zero-terminated=1) (transfer container):
  *          The list of pasted layers.
- *          The returned value must be freed with g_free().
  **/
-GimpLayer **
+GimpDrawable **
 gimp_edit_paste (GimpDrawable *drawable,
-                 gboolean      paste_into,
-                 gint         *num_layers)
+                 gboolean      paste_into)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpLayer **layers = NULL;
+  GimpDrawable **new_drawables = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
@@ -217,17 +207,12 @@ gimp_edit_paste (GimpDrawable *drawable,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_layers = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    new_drawables = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return layers;
+  return new_drawables;
 }
 
 /**
@@ -269,8 +254,7 @@ gimp_edit_paste_as_new_image (void)
 
 /**
  * gimp_edit_named_cut:
- * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to cut from.
+ * @drawables: (element-type GimpDrawable) (array zero-terminated=1): The drawables to cut from.
  * @buffer_name: The name of the buffer to create.
  *
  * Cut into a named buffer.
@@ -287,20 +271,17 @@ gimp_edit_paste_as_new_image (void)
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_cut (gint             num_drawables,
-                     const GimpItem **drawables,
-                     const gchar     *buffer_name)
+gimp_edit_named_cut (const GimpDrawable **drawables,
+                     const gchar         *buffer_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, drawables,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-edit-named-cut",
@@ -317,8 +298,7 @@ gimp_edit_named_cut (gint             num_drawables,
 
 /**
  * gimp_edit_named_copy:
- * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to copy from.
+ * @drawables: (element-type GimpDrawable) (array zero-terminated=1): The drawables to copy from.
  * @buffer_name: The name of the buffer to create.
  *
  * Copy into a named buffer.
@@ -335,20 +315,17 @@ gimp_edit_named_cut (gint             num_drawables,
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_copy (gint             num_drawables,
-                      const GimpItem **drawables,
-                      const gchar     *buffer_name)
+gimp_edit_named_copy (const GimpDrawable **drawables,
+                      const gchar         *buffer_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, drawables,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-edit-named-copy",

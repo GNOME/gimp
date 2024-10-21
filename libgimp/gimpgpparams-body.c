@@ -513,6 +513,13 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       else
         param_def->meta.m_resource.default_resource_id = 0;
     }
+  else if (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec))
+    {
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID_ARRAY;
+
+      param_def->meta.m_id_array.type_name =
+        (gchar *) g_type_name (GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec)->object_type);
+    }
   else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
     {
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID_ARRAY;
@@ -902,6 +909,59 @@ gimp_gp_param_to_value (gpointer        gimp,
         }
 
       g_value_take_boxed (value, colors);
+    }
+  else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
+    {
+      GType     object_type = G_TYPE_INVALID;
+      GObject **objects;
+      gint      i;
+
+      if (param->data.d_id_array.type_name != NULL)
+        {
+          /* An empty array from a NULL has an arbitrary type_name set earlier. */
+          object_type = g_type_from_name (param->data.d_id_array.type_name);
+        }
+      else if (pspec != NULL)
+        {
+          object_type = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec)->object_type;
+        }
+
+      if (param->data.d_id_array.size > 1 && ! g_type_is_a (object_type, G_TYPE_OBJECT))
+        {
+          g_warning ("%s: GimpCoreObjectArray of unknown type.", G_STRFUNC);
+          return;
+        }
+
+      /* size might be zero. */
+
+      objects = g_new0 (GObject *, param->data.d_id_array.size + 1);
+
+      for (i = 0; i < param->data.d_id_array.size; i++)
+        {
+          gint id = param->data.d_id_array.data[i];
+
+          if (object_type == GIMP_TYPE_IMAGE)
+            {
+              objects[i] = (GObject *) get_image_by_id (gimp, id);
+            }
+          else if (g_type_is_a (object_type, GIMP_TYPE_ITEM))
+            {
+              objects[i] = (GObject *) get_item_by_id (gimp, id);
+            }
+          else if (g_type_is_a (object_type, GIMP_TYPE_DISPLAY))
+            {
+              objects[i] = (GObject *) get_display_by_id (gimp, id);
+            }
+          else if (g_type_is_a (object_type, GIMP_TYPE_RESOURCE))
+            {
+              objects[i] = (GObject *) get_resource_by_id (id);
+            }
+        }
+
+      /* Even when size is zero, set gvalue to an empty GimpObjectArray object,
+       * having a valid but possibly arbitrary type of its elements.
+       */
+      g_value_set_boxed (value, objects);
     }
   else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
     {
@@ -1368,6 +1428,105 @@ gimp_value_to_gp_param (const GValue *value,
         param->data.d_strv = g_strdupv (array);
       else
         param->data.d_strv = array;
+    }
+  else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
+    {
+      GObject **array = g_value_get_boxed (value);
+
+      param->param_type = GP_PARAM_TYPE_ID_ARRAY;
+      param->data.d_id_array.type_name = NULL;
+
+      if (array && array[0])
+        {
+          GType element_type = G_TYPE_NONE;
+          gsize array_length;
+          gint  i;
+
+          for (i = 0; array[i] != NULL; i++)
+            {
+              if (element_type != G_TYPE_NONE)
+                {
+                  if (! g_type_is_a (G_TYPE_FROM_INSTANCE (array[i]), element_type))
+                    {
+                      g_warning ("%s: GimpCoreObjectArray with element type %s holds unsupported element of type '%s'", G_STRFUNC,
+                                 g_type_name (element_type), g_type_name (G_TYPE_FROM_INSTANCE (array[i])));
+                      break;
+                    }
+                  continue;
+                }
+
+              if (GIMP_IS_IMAGE (array[i]))
+                {
+                  element_type = GIMP_TYPE_IMAGE;
+                }
+              else if (GIMP_IS_ITEM (array[i]))
+                {
+                  element_type = GIMP_TYPE_ITEM;
+                }
+              else if (GIMP_IS_DISPLAY (array[i]))
+                {
+                  element_type = GIMP_TYPE_DISPLAY;
+                }
+              else if (GIMP_IS_RESOURCE (array[i]))
+                {
+                  element_type = GIMP_TYPE_RESOURCE;
+                }
+              else
+                {
+                  g_warning ("%s: GimpCoreObjectArray holds unsupported type '%s'", G_STRFUNC,
+                             g_type_name (G_TYPE_FROM_INSTANCE (array[i])));
+                  break;
+                }
+            }
+          array_length = i;
+          param->data.d_id_array.size = array_length;
+
+          if (array_length > 0)
+            {
+              if (full_copy)
+                param->data.d_id_array.type_name = g_strdup (g_type_name (element_type));
+              else
+                param->data.d_id_array.type_name = (gchar *) g_type_name (element_type);
+
+              /* must be free'd also for full_copy == FALSE */
+              param->data.d_id_array.data = g_new (gint32, array_length);
+            }
+
+          for (i = 0; i < array_length; i++)
+            {
+              if (GIMP_IS_IMAGE (array[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_image_get_id (GIMP_IMAGE (array[i]));
+                }
+              else if (GIMP_IS_ITEM (array[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_item_get_id (GIMP_ITEM (array[i]));
+                }
+              else if (GIMP_IS_DISPLAY (array[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_display_get_id (GIMP_DISPLAY (array[i]));
+                }
+              else if (GIMP_IS_RESOURCE (array[i]))
+                {
+                  param->data.d_id_array.data[i] = get_resource_id (array[i]);
+                }
+              else
+                {
+                  param->data.d_id_array.data[i] = -1;
+                }
+            }
+        }
+      else
+        {
+          /* GValue intended to hold an array of objects is NULL.
+           * For convenience, we allow this, meaning empty.
+           */
+          param->data.d_id_array.size = 0;
+          param->data.d_id_array.data = NULL;
+        }
     }
   else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
     {

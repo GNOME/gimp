@@ -40,7 +40,6 @@ G_DECLARE_FINAL_TYPE (GimpSelection, gimp_selection, GIMP, SELECTION, GimpChanne
 GimpSelection * gimp_selection_get_by_id (gint32        selection_id);
 
 GimpLayer     * gimp_selection_float     (GimpImage    *image,
-                                          gint           n_drawables,
                                           GimpDrawable **drawables,
                                           gint          offx,
                                           gint          offy);

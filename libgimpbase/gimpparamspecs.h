@@ -346,6 +346,58 @@ gint             gimp_color_array_get_length          (GimpColorArray  array);
 
 
 /*
+ * GIMP_TYPE_CORE_OBJECT_ARRAY
+ */
+
+/**
+ * GimpCoreObjectArray:
+ *
+ * A boxed type which is nothing more than an alias to a %NULL-terminated array
+ * of [class@GObject.Object]. No reference is being hold on contents
+ * because core objects are owned by `libgimp`.
+ *
+ * The reason of existence for this alias is to have common arrays of
+ * objects as a boxed type easy to use as plug-in's procedure argument.
+ *
+ * You should never have to interact with this type directly.
+ *
+ * Since: 3.0
+ */
+typedef GObject**                                 GimpCoreObjectArray;
+
+#define GIMP_TYPE_CORE_OBJECT_ARRAY               (gimp_core_object_array_get_type ())
+#define GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_CORE_OBJECT_ARRAY))
+
+GType gimp_core_object_array_get_type (void) G_GNUC_CONST;
+
+
+/*
+ * GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY
+ */
+
+#define GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY           (gimp_param_core_object_array_get_type ())
+#define GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY, GimpParamSpecCoreObjectArray))
+#define GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
+
+typedef struct _GimpParamSpecCoreObjectArray GimpParamSpecCoreObjectArray;
+
+struct _GimpParamSpecCoreObjectArray
+{
+  GParamSpecBoxed parent_instance;
+
+  GType           object_type;
+};
+
+GType         gimp_param_core_object_array_get_type   (void) G_GNUC_CONST;
+
+GParamSpec  * gimp_param_spec_core_object_array       (const gchar   *name,
+                                                       const gchar   *nick,
+                                                       const gchar   *blurb,
+                                                       GType          object_type,
+                                                       GParamFlags    flags);
+
+
+/*
  * GIMP_TYPE_OBJECT_ARRAY
  */
 

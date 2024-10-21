@@ -58,8 +58,7 @@ gboolean                 gimp_image_unset_active_channel       (GimpImage       
 GimpLayer*               gimp_image_get_floating_sel           (GimpImage            *image);
 GimpDrawable*            gimp_image_floating_sel_attached_to   (GimpImage            *image);
 gboolean                 gimp_image_pick_color                 (GimpImage            *image,
-                                                                gint                  num_drawables,
-                                                                const GimpItem      **drawables,
+                                                                const GimpDrawable  **drawables,
                                                                 gdouble               x,
                                                                 gdouble               y,
                                                                 gboolean              sample_merged,
@@ -161,8 +160,7 @@ GimpPath**               gimp_image_get_selected_paths         (GimpImage       
 gboolean                 gimp_image_set_selected_paths         (GimpImage            *image,
                                                                 gint                  num_paths,
                                                                 const GimpPath      **paths);
-GimpItem**               gimp_image_get_selected_drawables     (GimpImage            *image,
-                                                                gint                 *num_drawables);
+GimpDrawable**           gimp_image_get_selected_drawables     (GimpImage            *image);
 GimpSelection*           gimp_image_get_selection              (GimpImage            *image);
 gboolean                 gimp_image_get_component_active       (GimpImage            *image,
                                                                 GimpChannelType       component);
