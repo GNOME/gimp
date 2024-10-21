@@ -33,6 +33,10 @@
 ; full ownership of this script belongs to Sven Neumann.
 
 (define (script-fu-selection-rounded-rectangle image drawable radius concave)
+
+  (define (trunc n)
+    (inexact->exact (truncate n)))
+
   (gimp-image-undo-group-start image)
 
   (if (= (car (gimp-selection-is-empty image)) TRUE) (gimp-selection-all image))

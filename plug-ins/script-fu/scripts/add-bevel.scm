@@ -62,7 +62,7 @@
         (greyness 0)
         (thickness (abs thickness))
         (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
-        (pic-layer (aref (cadr (gimp-image-get-selected-drawables image)) 0))
+        (pic-layer (vector-ref (cadr (gimp-image-get-selected-drawables image)) 0))
         (offsets (gimp-drawable-get-offsets pic-layer))
         (width (car (gimp-drawable-get-width pic-layer)))
         (height (car (gimp-drawable-get-height pic-layer)))

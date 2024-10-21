@@ -44,7 +44,7 @@
     (gimp-image-flatten img)
     ; Note the inner call returns (<numeric length> <vector>)
     ; We still need cadr even in v3 language
-    (set! bump-layer (aref (cadr (gimp-image-get-selected-layers img)) 0))
+    (set! bump-layer (vector-ref (cadr (gimp-image-get-selected-layers img)) 0))
 
     (plug-in-c-astretch RUN-NONINTERACTIVE img bump-layer)
     (plug-in-noisify RUN-NONINTERACTIVE img bump-layer FALSE 0.2 0.2 0.2 0.2)

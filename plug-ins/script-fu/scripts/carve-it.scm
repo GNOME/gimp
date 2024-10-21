@@ -29,7 +29,7 @@
   (let* (
          (pasted (gimp-edit-paste dest-drawable FALSE))
          (num-pasted (car pasted))
-         (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+         (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
         )
         (gimp-floating-sel-anchor floating-sel)
   )
@@ -93,7 +93,7 @@
     (let* (
            (pasted (gimp-edit-paste mask FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
           (gimp-floating-sel-anchor floating-sel)
     )
@@ -148,7 +148,7 @@
     (let* (
            (pasted (gimp-edit-paste layer1 FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
           (set! shadow-layer floating-sel)
           (gimp-floating-sel-to-layer shadow-layer)
@@ -159,7 +159,7 @@
     (let* (
            (pasted (gimp-edit-paste shadow-layer FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
           (set! highlight-layer floating-sel)
           (gimp-floating-sel-to-layer highlight-layer)
@@ -170,7 +170,7 @@
     (let* (
            (pasted (gimp-edit-paste highlight-layer FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
           (set! cast-shadow-layer floating-sel)
           (gimp-floating-sel-to-layer cast-shadow-layer)

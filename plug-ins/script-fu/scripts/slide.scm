@@ -77,7 +77,7 @@
         (hole-space (/ width 8))
         (hole-height (/ width 12))
         (hole-radius (/ hole-width 4))
-        (hole-start (- (/ (rand 1000) 1000) 0.5))
+        (hole-start (- (/ (random 1000) 1000) 0.5))
         (film-layer (car (gimp-layer-new image
                                          width
                                          height
@@ -92,7 +92,7 @@
                                        "Background"
                                        100
                                        LAYER-MODE-NORMAL)))
-        (pic-layer (aref (cadr (gimp-image-get-selected-drawables image)) 0))
+        (pic-layer (vector-ref (cadr (gimp-image-get-selected-drawables image)) 0))
         (numbera (string-append number "A"))
         )
 

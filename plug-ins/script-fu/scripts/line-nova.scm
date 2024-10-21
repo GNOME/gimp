@@ -4,6 +4,16 @@
 ;;; Version 0.7
 
 (define (script-fu-line-nova img drw num-of-lines corn-deg offset variation)
+
+  ; fmod and nth were globally defined before GIMP 3
+
+  ; floating point remainder
+  (define (fmod a b)
+    (- a (* (truncate (/ a b)) b)))
+
+  (define (nth k list)
+    (list-ref list k))
+
   (let* (
         (*points* (cons-array (* 3 2) 'double))
         (modulo fmod)                        ; in R4RS way
@@ -16,7 +26,7 @@
         (2pi (* 2 *pi*))
         (rad/deg (/ 2pi 360))
         (variation/2 (/ variation 2))
-        (drw (aref (cadr (gimp-image-get-selected-drawables img)) 0))
+        (drw (vector-ref (cadr (gimp-image-get-selected-drawables img)) 0))
         (drw-width (car (gimp-drawable-get-width drw)))
         (drw-height (car (gimp-drawable-get-height drw)))
         (drw-offsets (gimp-drawable-get-offsets drw))
@@ -33,8 +43,8 @@
     (define (draw-vector beg-x beg-y direction)
 
       (define (set-point! index x y)
-            (aset *points* (* 2 index) x)
-            (aset *points* (+ (* 2 index) 1) y)
+            (vector-set! *points* (* 2 index) x)
+            (vector-set! *points* (+ (* 2 index) 1) y)
       )
       (define (deg->rad rad)
             (* (modulo rad 360) rad/deg)
@@ -58,7 +68,7 @@
 
       (let (
            (dir0 (deg->rad direction))
-           (off (+ offset (- (modulo (rand) variation) variation/2)))
+           (off (+ offset (- (modulo (msrg-rand) variation) variation/2)))
            )
 
         (set-point! 0

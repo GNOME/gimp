@@ -28,7 +28,7 @@
 
     (if (gimp-image-id-is-valid brush-image)
       (begin
-        (set! brush-draw (aref (cadr (gimp-image-get-selected-drawables brush-image)) 0))
+        (set! brush-draw (vector-ref (cadr (gimp-image-get-selected-drawables brush-image)) 0))
         (set! type (gimp-drawable-type brush-draw))
         (set! path (string-append gimp-directory
                                   "/brushes/"

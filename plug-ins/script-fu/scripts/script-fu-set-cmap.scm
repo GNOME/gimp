@@ -34,9 +34,9 @@
 
     (while (< i num-colors)
       (set! color (car (gimp-palette-entry-get-color palette i)))
-      (aset cmap (* i 3) (car color))
-      (aset cmap (+ (* i 3) 1) (cadr color))
-      (aset cmap (+ (* i 3) 2) (caddr color))
+      (vector-set! cmap (* i 3) (car color))
+      (vector-set! cmap (+ (* i 3) 1) (cadr color))
+      (vector-set! cmap (+ (* i 3) 2) (caddr color))
       (set! i (+ i 1))
     )
 

@@ -57,7 +57,7 @@
                       ((= work-on-copy FALSE)
                        img)))
          ; active drawable is not necessarily the active layer
-         (pic-layer (aref (cadr (gimp-image-get-selected-layers image)) 0))
+         (pic-layer (vector-ref (cadr (gimp-image-get-selected-layers image)) 0))
          (type (car (gimp-drawable-type-with-alpha pic-layer)))
         )
 

@@ -79,8 +79,8 @@
 
   (define (set-pt a index x y)
     (begin
-      (aset a (* index 2) x)
-      (aset a (+ (* index 2) 1) y)))
+      (vector-set! a (* index 2) x)
+      (vector-set! a (+ (* index 2) 1) y)))
 
   (define (spline-chrome-it)
     (let* ((a (cons-array 18 'double)))
@@ -128,12 +128,12 @@
     (let* (
            (pasted (gimp-edit-paste dest-drawable #f))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)))
 
   (let* (
-        (banding-layer (aref (cadr (gimp-image-get-selected-drawables banding-img)) 0))
+        (banding-layer (vector-ref (cadr (gimp-image-get-selected-drawables banding-img)) 0))
         (banding-height (gimp-drawable-get-height banding-layer))
         (banding-width (gimp-drawable-get-width banding-layer))
         (banding-type (gimp-drawable-type banding-layer))
@@ -176,7 +176,7 @@
     (let* (
            (pasted (gimp-edit-paste mask #f))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )

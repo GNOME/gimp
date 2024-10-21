@@ -232,11 +232,11 @@
 
   (define (write-color-line index)
     (display name-pre)
-    (display (name-convertor (gimp-palette-entry-get-name palette index)))
+    (display (name-convertor (gimp-palette-get-entry-name palette index)))
     (display name-after)
     (display name-color-seperator)
     (display color-pre)
-    (display (color-convertor (gimp-palette-entry-get-color palette index)))
+    (display (color-convertor (gimp-palette-get-entry-color palette index)))
     (display color-after)
     )
 

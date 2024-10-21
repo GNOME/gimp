@@ -35,7 +35,7 @@
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-one bx TRUE FALSE)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-two by FALSE TRUE)
     (gimp-image-flatten img)
-    (set! bump-layer (aref (cadr (gimp-image-get-selected-layers img)) 0))
+    (set! bump-layer (vector-ref (cadr (gimp-image-get-selected-layers img)) 0))
 
     (plug-in-c-astretch RUN-NONINTERACTIVE img bump-layer)
     (plug-in-noisify RUN-NONINTERACTIVE img bump-layer FALSE 0.2 0.2 0.2 0.2)

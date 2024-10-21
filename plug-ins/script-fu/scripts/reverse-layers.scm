@@ -25,7 +25,7 @@
     (gimp-image-undo-group-start img)
 
     (while (>= i 0)
-           (let ((layer (aref layer-array i)))
+           (let ((layer (vector-ref layer-array i)))
              (if (= (car (gimp-layer-is-floating-sel layer)) FALSE)
                  (gimp-image-lower-item-to-bottom img layer))
            )

@@ -8,7 +8,7 @@
 ;
 
 (define (script-fu-ripply-anim image drawables displacement num-frames edge-type)
-  (let* ((drawable (aref (cadr (gimp-image-get-selected-drawables image)) 0))
+  (let* ((drawable (vector-ref (cadr (gimp-image-get-selected-drawables image)) 0))
          (width (car (gimp-drawable-get-width drawable)))
          (height (car (gimp-drawable-get-height drawable)))
          (work-image (car (gimp-image-new width

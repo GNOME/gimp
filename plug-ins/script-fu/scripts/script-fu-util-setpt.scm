@@ -15,6 +15,6 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 (define (script-fu-set-pt a index x y)
-  (aset a (* index 2) x)
-  (aset a (+ (* index 2) 1) y)
+  (vector-set! a (* index 2) x)
+  (vector-set! a (+ (* index 2) 1) y)
 )

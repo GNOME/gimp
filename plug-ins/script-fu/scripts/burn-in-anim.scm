@@ -61,8 +61,8 @@
           (gimp-image-undo-disable img)
           (if (> (car (gimp-drawable-type (vector-ref org-layers 0))) 1 )
               (gimp-image-convert-rgb img))
-          (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
-          (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
+          (set! source-layer    (vector-ref (cadr (gimp-image-get-layers img)) 0 ))
+          (set! bg-source-layer (vector-ref (cadr (gimp-image-get-layers img)) 1 ))
           (set! source-layer-width (car (gimp-drawable-get-width  source-layer)))
 
           ;--- hide layers, cause we want to "merge visible layers" later
@@ -202,7 +202,7 @@
               )
           )
 
-          (gimp-item-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
+          (gimp-item-set-visible (vector-ref (cadr (gimp-image-get-layers img)) 0)
                                   TRUE)
           (gimp-image-undo-enable img)
           (gimp-image-clean-all img)

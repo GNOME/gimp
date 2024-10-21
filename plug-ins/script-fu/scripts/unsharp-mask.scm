@@ -31,7 +31,7 @@
     (let* (
            (pasted (gimp-edit-paste original-layer FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )

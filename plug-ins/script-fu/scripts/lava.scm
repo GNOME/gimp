@@ -95,7 +95,7 @@
             (set! selected-layers (gimp-image-get-selected-layers image))
             (set! num-selected-layers (car selected-layers))
             (set! selected-layers-array (cadr selected-layers))
-            (set! active-layer (aref selected-layers-array (- num-selected-layers 1)))
+            (set! active-layer (vector-ref selected-layers-array (- num-selected-layers 1)))
 
             (if (= current-grad FALSE)
                 (gimp-context-set-gradient gradient)

@@ -9,7 +9,7 @@
 
 (define (script-fu-clothify-v3 timg drawables bx by azimuth elevation depth)
   (let* (
-        (tdrawable (aref drawables 0))  v3>>> only the first drawable
+        (tdrawable (vector-ref drawables 0))  v3>>> only the first drawable
         (width (car (gimp-drawable-get-width tdrawable)))
         (height (car (gimp-drawable-get-height tdrawable)))
         (img (car (gimp-image-new width height RGB)))
@@ -38,7 +38,7 @@
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-one bx TRUE FALSE)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-two by FALSE TRUE)
     (gimp-image-flatten img)
-    (set! bump-layer (car (gimp-image-get-active-layer img)))
+    (set! bump-layer (car (list (vector-ref (cadr (gimp-image-get-selected-layers img)) 0))))
 
     (plug-in-c-astretch RUN-NONINTERACTIVE img bump-layer)
     (plug-in-noisify RUN-NONINTERACTIVE img bump-layer FALSE 0.2 0.2 0.2 0.2)

@@ -34,7 +34,7 @@
   (let* (
          (pasted (gimp-edit-paste drawable FALSE))
          (num-pasted (car pasted))
-         (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+         (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
         )
    (gimp-layer-set-offsets floating-sel dest-x dest-y)
    (gimp-floating-sel-anchor floating-sel)
@@ -330,7 +330,7 @@
     (let* (
            (pasted (gimp-edit-paste h-mask FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )
@@ -344,7 +344,7 @@
     (let* (
            (pasted (gimp-edit-paste v-mask FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )
@@ -401,7 +401,7 @@
     (let* (
            (pasted (gimp-edit-paste drawable FALSE))
            (num-pasted (car pasted))
-           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
           )
           (gimp-layer-set-offsets floating-sel
                                   (car d-offsets)

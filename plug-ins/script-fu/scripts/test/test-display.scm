@@ -22,9 +22,8 @@
   ; display shows repr of any atom or list
   (display '(1 2 "bar"))
 
-  ; print is same as display but adds newline
-  ; shows repr of a function #<CLOSURE>
-  (print gimp-message)
+  ; print is not defined in R5RS
+  ; same as display but adds newline
 
   (gimp-message "Called display: expect foo(1 2 bar)#<CLOSURE> in terminal")
 

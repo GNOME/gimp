@@ -49,7 +49,7 @@
       (gimp-selection-all theImage)
       (gimp-drawable-edit-clear theStain)
 
-      (let ((blobSize (/ (rand (- theSize 40)) (+ (rand 3) 1))))
+      (let ((blobSize (/ (random (- theSize 40)) (+ (random 3) 1))))
         (if (< blobSize 32) (set! blobSize 32))
         (gimp-image-select-ellipse theImage
 				   CHANNEL-OP-REPLACE
@@ -72,16 +72,15 @@
       ; Here we generate a random non-uniform weighted towards center.
       ; The distribution of the product (or sum) of two random numbers is non-uniform.
 
-      ; rand is a compability function for the SIOD dialect, and basically calls random.
       ; random seems not standardized in Scheme, our version is MSRG in script-fu-compat.init.
       ; It yields random uniform integers, except 0.
       ;
-      ; (+ (rand 15) 1) yields [2, 16] uniform.
+      ; (+ (random 15) 1) yields [2, 16] uniform.
       ; The original formula, a product of random numbers, yields [3, 255] non-uniform.
       ; To accomodate changes to distress-selection, we use the old formula, and divide by 255.
       ; When you instead just generate a single random float, stains are smaller.
       (set! theThreshold (/
-                            (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1) ; original formula
+                            (- (* (+ (random 15) 1) (+ (random 15) 1)) 1) ; original formula
                             255))
 
       ; !!! This call is not via the PDB so SF does not range check args.
@@ -110,8 +109,8 @@
       )
 
       (gimp-layer-set-offsets theStain
-                              (- (rand theWidth) (/ theSize 2))
-                              (- (rand theHeight) (/ theSize 2)))
+                              (- (random theWidth) (/ theSize 2))
+                              (- (random theHeight) (/ theSize 2)))
     )
 
     (gimp-selection-none theImage)

@@ -52,7 +52,7 @@
     (set! offset-y (+ draw-offset-y sel-offset-y))
 
     ; Offset the clouds layer
-    (if (gimp-item-is-layer layer)
+    (if (gimp-item-id-is-layer layer)
       (gimp-item-transform-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
