@@ -34,9 +34,11 @@ static const struct
   const gchar *old_name;
   const gchar *new_name;
 }
-compat_procs[] =
-{
-  /*
+
+
+  /* Keep this until we get the porting doc complete for 3.0,
+   * as something to cross-check against.
+
    * deprecations since 2.99
    *
    * With respect to ScriptFu,
@@ -49,7 +51,7 @@ compat_procs[] =
    * I.E. Gimp.Image.is_valid() exists but takes a GObject *, not an int ID.
    *
    * Original data was constructed more or less by hand, partially automated.
-   */
+
    { "gimp-brightness-contrast"               , "gimp-drawable-brightness-contrast"      },
    { "gimp-brushes-get-brush"                 , "gimp-context-get-brush"                 },
    { "gimp-drawable-is-channel"               , "gimp-item-id-is-channel"                },
@@ -82,8 +84,8 @@ compat_procs[] =
    { "gimp-item-is-valid"                     , "gimp-item-id-is-valid"                  },
    { "gimp-item-is-vectors"                   , "gimp-item-id-is-path"                   },
    { "gimp-item-id-is-vectors"                , "gimp-item-id-is-path"                   },
-   /* TODO more -vectors- => -path- or -paths- */
-   /* TODO more layer-group => group-layer */
+   TODO more -vectors- => -path- or -paths-
+   TODO more layer-group => group-layer
    { "gimp-layer-group-new"                   , "gimp-group-layer-new"                   },
    { "gimp-procedural-db-dump"                , "gimp-pdb-dump"                          },
    { "gimp-procedural-db-get-data"            , "gimp-pdb-get-data"                      },
@@ -109,6 +111,16 @@ compat_procs[] =
    { "file-gtm-save"                          , "file-html-table-export"                 },
    { "python-fu-histogram-export"             , "histogram-export"                       },
    { "python-fu-gradient-save-as-css"         , "gradient-save-as-css"                   }
+  */
+
+compat_procs[] =
+{
+  /*  deprecations since 3.0  */
+  /* Intended to be empty, for major release. */
+
+  /* Template:
+  { "gimp-brightness-contrast"               , "gimp-drawable-brightness-contrast"      },
+  */
 };
 
 static gchar *empty_string = "";

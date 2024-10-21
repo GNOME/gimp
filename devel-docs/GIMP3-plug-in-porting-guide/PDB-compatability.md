@@ -92,8 +92,15 @@ or obsolete a deprecated procedure.
 
 ### Aliased deprecated procedures
 
+The GIMP core implementation of the PDB has an aliasing mechanism.
 Declared in app/pdb/gimp-pdb-compat.c.
 The code enters an alias name in the hash table of PDB procedure names, pointing to the same procedure as another name.
+The name usually starts with "gimp-".
+
+ScriptFu has its own aliasing mechanism.
+ScriptFu has its own mechanism so its can deprecate even after
+the core PDB has obsoleted a name.
+Declared in plug-ins/script-fu/libscriptfu/script-fu-compat.c.
 The name usually starts with "gimp-".
 
 ### True deprecated procedures
