@@ -79,20 +79,19 @@ marshal_ID_to_item (scheme   *sc,
  * Requires ID's of instances of GimpItem
  */
 pointer
-marshal_vector_to_item_array (scheme   *sc,
-                                pointer   vector,
-                                GValue   *value)
+marshal_vector_to_item_array (scheme  *sc,
+                              pointer  vector,
+                              GValue  *value)
 {
-  GObject      **object_array;
-  gint           id;
-  pointer        error;
-  GType          actual_type = GIMP_TYPE_ITEM;
+  GObject **object_array;
+  gint      id;
+  pointer   error;
 
   guint num_elements = sc->vptr->vector_length (vector);
   g_debug ("vector has %d elements", num_elements);
   /* empty vector will produce empty GimpObjectArray */
 
-  object_array = g_new0 (GObject*, num_elements);
+  object_array = g_new0 (GObject *, num_elements + 1);
 
   for (int j = 0; j < num_elements; ++j)
     {
@@ -114,13 +113,6 @@ marshal_vector_to_item_array (scheme   *sc,
           g_free (object_array);
           return error;
         }
-
-      /* Parameters are validated based on the actual type in the object array.
-       * So remember the type here, from the first element.
-       * Expect all elements are instance of GIMP Item and same type, i.e. homogeneous.
-       */
-      if (j == 0)
-        actual_type = G_OBJECT_TYPE (object_array[j]);
     }
 
   /* Shallow copy.
@@ -129,7 +121,7 @@ marshal_vector_to_item_array (scheme   *sc,
    * !!! Seems like validation checks the contained type of empty arrays,
    * and fails if we default to G_TYPE_INVALID but passes if ITEM.
    */
-  gimp_value_set_object_array (value, actual_type, (GObject**)object_array, num_elements);
+  g_value_set_boxed (value, (gpointer) object_array);
 
   g_free (object_array);
 
@@ -196,16 +188,15 @@ marshal_path_string_to_gfile (scheme     *sc,
  * to get the length of the vector.
  */
 pointer
-marshal_returned_object_array_to_vector (scheme   *sc,
-                                         GValue   *value)
+marshal_returned_object_array_to_vector (scheme *sc,
+                                         GValue *value)
 {
   GObject **object_array;
   gint32    n;
   pointer   vector;
 
-  object_array = gimp_value_get_object_array (value);
-  /* array knows own length, ignore length in preceding return value */
-  n = ((GimpObjectArray*)g_value_get_boxed (value))->length;
+  object_array = g_value_get_boxed (value);
+  n = gimp_core_object_array_get_length (object_array);
 
   vector = sc->vptr->mk_vector (sc, n);
 
