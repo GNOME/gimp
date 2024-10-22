@@ -1288,7 +1288,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_boxed (&value, &parasite);
             }
         }
-      else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (&value))
+      else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (&value))
         {
           /* Now PDB procedures take arrays of Item (Drawable, Vectors, etc.).
            * When future PDB procedures take arrays of Image, Display, Resource, etc.

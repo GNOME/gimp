@@ -576,7 +576,7 @@ marshal_returned_PDB_value    (scheme        *sc,
           g_debug ("data '%.*s'", v->size, (gchar *) v->data);
         }
     }
-  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+  else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
     {
       result = marshal_returned_object_array_to_vector (sc, value);
     }
