@@ -147,15 +147,21 @@ static gboolean
 gimp_handle_bar_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-  GimpHandleBar *bar = GIMP_HANDLE_BAR (widget);
-  GtkAllocation  allocation;
-  gint           x, y;
-  gint           width, height;
-  gint           i;
+  GimpHandleBar   *bar = GIMP_HANDLE_BAR (widget);
+  GtkStyleContext *style;
+  GdkRGBA          outline_color;
+  GtkAllocation    allocation;
+  gint             x, y;
+  gint             width, height;
+  gint             i;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   x = y = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
+  style = gtk_widget_get_style_context (widget);
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &outline_color);
 
   width  = allocation.width  - 2 * x;
   height = allocation.height - 2 * y;
@@ -193,10 +199,7 @@ gimp_handle_bar_draw (GtkWidget *widget,
           /* Make all sliders well visible even on similar colored
            * backgrounds.
            */
-          if (i == 0)
-            cairo_set_source_rgb (cr, 0.6, 0.6, 0.6);
-          else
-            cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          gdk_cairo_set_source_rgba (cr, &outline_color);
 
           cairo_stroke (cr);
         }
