@@ -50,8 +50,7 @@ gint                     gimp_image_get_width                  (GimpImage       
 gint                     gimp_image_get_height                 (GimpImage            *image);
 GimpLayer**              gimp_image_get_layers                 (GimpImage            *image);
 GimpChannel**            gimp_image_get_channels               (GimpImage            *image);
-GimpPath**               gimp_image_get_paths                  (GimpImage            *image,
-                                                                gint                 *num_paths);
+GimpPath**               gimp_image_get_paths                  (GimpImage            *image);
 gboolean                 gimp_image_unset_active_channel       (GimpImage            *image);
 GimpLayer*               gimp_image_get_floating_sel           (GimpImage            *image);
 GimpDrawable*            gimp_image_floating_sel_attached_to   (GimpImage            *image);
@@ -92,15 +91,13 @@ gboolean                 gimp_image_import_paths_from_file     (GimpImage       
                                                                 GFile                *file,
                                                                 gboolean              merge,
                                                                 gboolean              scale,
-                                                                gint                 *num_paths,
-                                                                GimpPath           ***path);
+                                                                GimpPath           ***paths);
 gboolean                 gimp_image_import_paths_from_string   (GimpImage            *image,
                                                                 const gchar          *string,
                                                                 gint                  length,
                                                                 gboolean              merge,
                                                                 gboolean              scale,
-                                                                gint                 *num_paths,
-                                                                GimpPath           ***path);
+                                                                GimpPath           ***paths);
 gboolean                 gimp_image_export_path_to_file        (GimpImage            *image,
                                                                 GFile                *file,
                                                                 GimpPath             *path);
@@ -149,10 +146,8 @@ gboolean                 gimp_image_set_selected_layers        (GimpImage       
 GimpChannel**            gimp_image_get_selected_channels      (GimpImage            *image);
 gboolean                 gimp_image_set_selected_channels      (GimpImage            *image,
                                                                 const GimpChannel   **channels);
-GimpPath**               gimp_image_get_selected_paths         (GimpImage            *image,
-                                                                gint                 *num_paths);
+GimpPath**               gimp_image_get_selected_paths         (GimpImage            *image);
 gboolean                 gimp_image_set_selected_paths         (GimpImage            *image,
-                                                                gint                  num_paths,
                                                                 const GimpPath      **paths);
 GimpDrawable**           gimp_image_get_selected_drawables     (GimpImage            *image);
 GimpSelection*           gimp_image_get_selection              (GimpImage            *image);

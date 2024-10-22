@@ -546,22 +546,19 @@ gimp_image_get_channels (GimpImage *image)
 /**
  * gimp_image_get_paths:
  * @image: The image.
- * @num_paths: (out): The number of paths contained in the image.
  *
  * Returns the list of paths contained in the specified image.
  *
  * This procedure returns the list of paths contained in the specified
  * image.
  *
- * Returns: (array length=num_paths) (element-type GimpPath) (transfer container):
+ * Returns: (element-type GimpPath) (array zero-terminated=1) (transfer container):
  *          The list of paths contained in the image.
- *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
 GimpPath **
-gimp_image_get_paths (GimpImage *image,
-                      gint      *num_paths)
+gimp_image_get_paths (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -576,13 +573,8 @@ gimp_image_get_paths (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_paths = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) paths = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    paths = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1242,8 +1234,7 @@ gimp_image_remove_path (GimpImage *image,
  * @file: The SVG file to import.
  * @merge: Merge paths into a single path object.
  * @scale: Scale the SVG to image dimensions.
- * @num_paths: (out): The number of newly created path.
- * @path: (out) (array length=num_paths) (element-type GimpPath) (transfer container): The list of newly created path.
+ * @paths: (out) (element-type GimpPath) (array zero-terminated=1) (transfer container): The list of newly created paths.
  *
  * Import paths from an SVG file.
  *
@@ -1259,8 +1250,7 @@ gimp_image_import_paths_from_file (GimpImage   *image,
                                    GFile       *file,
                                    gboolean     merge,
                                    gboolean     scale,
-                                   gint        *num_paths,
-                                   GimpPath  ***path)
+                                   GimpPath  ***paths)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1278,16 +1268,12 @@ gimp_image_import_paths_from_file (GimpImage   *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_paths = 0;
-  *path = NULL;
+  *paths = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *path = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    *paths = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -1301,8 +1287,7 @@ gimp_image_import_paths_from_file (GimpImage   *image,
  * @length: Number of bytes in string or -1 if the string is NULL terminated.
  * @merge: Merge paths into a single path object.
  * @scale: Scale the SVG to image dimensions.
- * @num_paths: (out): The number of newly created path.
- * @path: (out) (array length=num_paths) (element-type GimpPath) (transfer container): The list of newly created path.
+ * @paths: (out) (element-type GimpPath) (array zero-terminated=1) (transfer container): The list of newly created paths.
  *
  * Import paths from an SVG string.
  *
@@ -1320,8 +1305,7 @@ gimp_image_import_paths_from_string (GimpImage     *image,
                                      gint           length,
                                      gboolean       merge,
                                      gboolean       scale,
-                                     gint          *num_paths,
-                                     GimpPath    ***path)
+                                     GimpPath    ***paths)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1340,16 +1324,12 @@ gimp_image_import_paths_from_string (GimpImage     *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_paths = 0;
-  *path = NULL;
+  *paths = NULL;
 
   success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) *path = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    *paths = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -2341,22 +2321,19 @@ gimp_image_set_selected_channels (GimpImage          *image,
 /**
  * gimp_image_get_selected_paths:
  * @image: The image.
- * @num_paths: (out): The number of selected paths in the image.
  *
  * Returns the specified image's selected paths.
  *
  * This procedure returns the list of selected paths in the specified
  * image.
  *
- * Returns: (array length=num_paths) (element-type GimpPath) (transfer container):
+ * Returns: (element-type GimpPath) (array zero-terminated=1) (transfer container):
  *          The list of selected paths in the image.
- *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
 GimpPath **
-gimp_image_get_selected_paths (GimpImage *image,
-                               gint      *num_paths)
+gimp_image_get_selected_paths (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -2371,13 +2348,8 @@ gimp_image_get_selected_paths (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_paths = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_paths = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) paths = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    paths = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -2387,8 +2359,7 @@ gimp_image_get_selected_paths (GimpImage *image,
 /**
  * gimp_image_set_selected_paths:
  * @image: The image.
- * @num_paths: The number of paths to select.
- * @paths: (array length=num_paths) (element-type GimpPath): The list of paths to select.
+ * @paths: (element-type GimpPath) (array zero-terminated=1): The list of paths to select.
  *
  * Sets the specified image's selected paths.
  *
@@ -2400,7 +2371,6 @@ gimp_image_get_selected_paths (GimpImage *image,
  **/
 gboolean
 gimp_image_set_selected_paths (GimpImage       *image,
-                               gint             num_paths,
                                const GimpPath **paths)
 {
   GimpValueArray *args;
@@ -2409,10 +2379,8 @@ gimp_image_set_selected_paths (GimpImage       *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_paths,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, paths,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_PATH, (GObject **) paths, num_paths);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-image-set-selected-paths",
