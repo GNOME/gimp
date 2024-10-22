@@ -30,26 +30,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_ZOOM_MODEL (gimp_zoom_model_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpZoomModel, gimp_zoom_model, GIMP, ZOOM_MODEL, GtkGrid)
-
-struct _GimpZoomModelClass
-{
-  GObjectClass  parent_class;
-
-  void (* zoomed) (GimpZoomModel *model,
-                   gdouble        old_factor,
-                   gdouble        new_factor);
-
-  /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpZoomModel, gimp_zoom_model, GIMP, ZOOM_MODEL, GObject)
 
 
 GimpZoomModel * gimp_zoom_model_new          (void);

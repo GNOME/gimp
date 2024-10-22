@@ -30,21 +30,7 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_UNIT_COMBO_BOX (gimp_unit_combo_box_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GIMP, UNIT_COMBO_BOX, GtkComboBox)
-struct _GimpUnitComboBoxClass
-{
-  GtkComboBoxClass  parent_class;
-
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
-};
+G_DECLARE_FINAL_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GIMP, UNIT_COMBO_BOX, GtkComboBox)
 
 
 GtkWidget * gimp_unit_combo_box_new            (void);

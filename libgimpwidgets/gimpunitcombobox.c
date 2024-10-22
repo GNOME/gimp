@@ -39,6 +39,12 @@
  **/
 
 
+struct _GimpUnitComboBox
+{
+  GtkComboBox  parent_instance;
+};
+
+
 static void gimp_unit_combo_box_popup_shown (GimpUnitComboBox *widget);
 static void gimp_unit_combo_box_constructed (GObject          *object);
 
