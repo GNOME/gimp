@@ -736,56 +736,56 @@ CODE
     }
     elsif ($pdbtype eq 'resourcearray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_RESOURCE,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_RESOURCE,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'brusharray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_BRUSH,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_BRUSH,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'fontarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_FONT,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_FONT,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'gradientarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_GRADIENT,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_GRADIENT,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'palettearray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_PALETTE,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_PALETTE,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'patternarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_PATTERN,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_PATTERN,
+                                   $flags)
 CODE
     }
     else {

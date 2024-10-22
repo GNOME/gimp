@@ -32,15 +32,15 @@ sub fonts_get_by_name {
 
     @outargs = (
       { name => 'fonts', type => 'fontarray', non_empty => 0,
-        desc => 'The fonts with the given name',
-        array => { name => 'num_fonts',
-                   desc => 'The number of fonts with the given name' } }
+        desc => 'The fonts with the given name' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   GList *list;
+  gsize  num_fonts;
+  gint   i = 0;
 
   list = gimp_pdb_get_resources (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
@@ -48,16 +48,11 @@ sub fonts_get_by_name {
     success = FALSE;
 
   num_fonts = g_list_length (list);
+  fonts     = g_new0 (GimpFont *, num_fonts + 1);
 
-  if (num_fonts > 0)
-    {
-      gint i = 0;
+  for (GList *iter = list; i < num_fonts; i++, iter = g_list_next (iter))
+    fonts[i] = iter->data;
 
-      fonts = g_new (GimpFont *, num_fonts);
-
-      for (GList *iter = list; i < num_fonts; i++, iter = g_list_next (iter))
-        fonts[i] = g_object_ref (iter->data);
-    }
   g_list_free (list);
 }
 CODE
