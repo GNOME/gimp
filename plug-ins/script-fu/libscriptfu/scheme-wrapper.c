@@ -62,6 +62,8 @@ static void     ts_define_procedure                         (scheme       *sc,
                                                              TsWrapperFunc func);
 static void     ts_init_procedures                          (scheme    *sc,
                                                              gboolean   register_scipts);
+static void     ts_load_init_and_compatibility_scripts      (GList *paths);
+
 static pointer  script_fu_marshal_procedure_call            (scheme    *sc,
                                                              pointer    a,
                                                              gboolean   permissive,
@@ -192,7 +194,6 @@ static scheme sc;
 static TsCallbackFunc post_command_callback = NULL;
 static TsCallbackFunc quit_callback         = NULL;
 
-
 void
 tinyscheme_init (GList    *path,
                  gboolean  register_scripts)
@@ -230,41 +231,7 @@ tinyscheme_init (GList    *path,
   ts_init_constants (&sc, repo);
   ts_init_procedures (&sc, register_scripts);
 
-  if (path)
-    {
-      GList *list;
-
-      g_debug ("Loading init and compat scripts.");
-
-      for (list = path; list; list = g_list_next (list))
-        {
-          gchar *dir = g_file_get_path (list->data);
-
-          if (ts_load_file (dir, "script-fu.init"))
-            {
-              /*  To improve compatibility with older Script-Fu scripts,
-               *  load script-fu-compat.init from the same directory.
-               */
-              ts_load_file (dir, "script-fu-compat.init");
-
-              /*  To improve compatibility with older GIMP version,
-               *  load plug-in-compat.init from the same directory.
-               */
-              ts_load_file (dir, "plug-in-compat.init");
-
-              g_free (dir);
-
-              break;
-            }
-
-          g_free (dir);
-        }
-
-      if (list == NULL)
-        g_warning ("Unable to read initialization file script-fu.init\n");
-    }
-  else
-    g_warning ("Not loading initialization or compatibility scripts.");
+  ts_load_init_and_compatibility_scripts (path);
 }
 
 /* Create an SF-RUN-MODE constant for use in scripts.
@@ -602,6 +569,62 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
    * This can overwrite earlier scheme func definitions.
    */
   define_compat_procs (sc);
+}
+
+static void
+ts_load_init_and_compatibility_scripts (GList *paths)
+{
+  gboolean did_find_main_init_script = FALSE;
+
+  g_debug ("%s", G_STRFUNC);
+
+  if (paths == NULL)
+    {
+      g_warning ("Missing paths to load init scripts.");
+      return;
+    }
+
+  /* paths is a list of dirs of ScriptFu scripts, system and user specific.
+   * The order is unspecified.
+   * We recommend a user not install their own init scripts, especially init.scm.
+   * When they do, this loads only the init scripts
+   * accompanying the earliest found main init script
+   */
+  for (GList *list = paths; list; list = g_list_next (list))
+    {
+      gchar *dir = g_file_get_path (list->data);
+
+      /* Load conventional script defining much of Scheme in Scheme language. */
+      if (ts_load_file (dir, "script-fu.init"))
+        {
+          did_find_main_init_script = TRUE;
+
+          /* Load other init scripts ONLY if found the main one. */
+
+          /* Improve compatibility with older Script-Fu scripts,
+           * load definitions for old dialects of Lisp (SIOD) or older ScriptFu.
+           */
+          ts_load_file (dir, "script-fu-compat.init");
+
+          /*  Improve compatibility with older GIMP version,
+           *  load definition aliasing/adapting older PDB procedures or plugins.
+           */
+          ts_load_file (dir, "plug-in-compat.init");
+
+          g_free (dir);
+
+          /* We only load init scripts from the first dir found. */
+          break;
+        }
+
+      g_free (dir);
+    }
+
+  if (!did_find_main_init_script)
+    {
+      /* We continue, but the interpreter will be crippled. */
+      g_warning ("Failed to load initialization file script-fu.init\n");
+    }
 }
 
 static gboolean
