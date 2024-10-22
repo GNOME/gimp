@@ -507,7 +507,6 @@ gimp_image_get_layers (GimpImage *image)
 /**
  * gimp_image_get_channels:
  * @image: The image.
- * @num_channels: (out): The number of channels contained in the image.
  *
  * Returns the list of channels contained in the specified image.
  *
@@ -517,13 +516,11 @@ gimp_image_get_layers (GimpImage *image)
  * \"channels\" are custom channels and do not include the image's
  * color components.
  *
- * Returns: (array length=num_channels) (element-type GimpChannel) (transfer container):
+ * Returns: (element-type GimpChannel) (array zero-terminated=1) (transfer container):
  *          The list of channels contained in the image.
- *          The returned value must be freed with g_free().
  **/
 GimpChannel **
-gimp_image_get_channels (GimpImage *image,
-                         gint      *num_channels)
+gimp_image_get_channels (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -538,13 +535,8 @@ gimp_image_get_channels (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_channels = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) channels = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    channels = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -2270,22 +2262,19 @@ gimp_image_set_selected_layers (GimpImage        *image,
 /**
  * gimp_image_get_selected_channels:
  * @image: The image.
- * @num_channels: (out): The number of selected channels in the image.
  *
  * Returns the specified image's selected channels.
  *
  * This procedure returns the list of selected channels in the
  * specified image.
  *
- * Returns: (array length=num_channels) (element-type GimpChannel) (transfer container):
+ * Returns: (element-type GimpChannel) (array zero-terminated=1) (transfer container):
  *          The list of selected channels in the image.
- *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
 GimpChannel **
-gimp_image_get_selected_channels (GimpImage *image,
-                                  gint      *num_channels)
+gimp_image_get_selected_channels (GimpImage *image)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -2300,13 +2289,8 @@ gimp_image_get_selected_channels (GimpImage *image,
                                                args);
   gimp_value_array_unref (args);
 
-  *num_channels = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) channels = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    channels = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
@@ -2316,8 +2300,7 @@ gimp_image_get_selected_channels (GimpImage *image,
 /**
  * gimp_image_set_selected_channels:
  * @image: The image.
- * @num_channels: The number of channels to select.
- * @channels: (array length=num_channels) (element-type GimpChannel): The list of channels to select.
+ * @channels: (element-type GimpChannel) (array zero-terminated=1): The list of channels to select.
  *
  * Sets the specified image's selected channels.
  *
@@ -2332,7 +2315,6 @@ gimp_image_get_selected_channels (GimpImage *image,
  **/
 gboolean
 gimp_image_set_selected_channels (GimpImage          *image,
-                                  gint                num_channels,
                                   const GimpChannel **channels)
 {
   GimpValueArray *args;
@@ -2341,10 +2323,8 @@ gimp_image_set_selected_channels (GimpImage          *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
-                                          G_TYPE_INT, num_channels,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, channels,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_CHANNEL, (GObject **) channels, num_channels);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-image-set-selected-channels",

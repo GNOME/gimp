@@ -469,7 +469,6 @@ image_get_channels_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_channels = 0;
   GimpChannel **channels = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -477,28 +476,21 @@ image_get_channels_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list = gimp_image_get_channel_iter (image);
+      gsize  num_channels;
+      gint   i;
 
       num_channels = g_list_length (list);
+      channels = g_new0 (GimpChannel *, num_channels + 1);
 
-      if (num_channels)
-        {
-          gint i;
-
-          channels = g_new (GimpChannel *, num_channels);
-
-          for (i = 0; i < num_channels; i++, list = g_list_next (list))
-            channels[i] = g_object_ref (list->data);
-        }
+      for (i = 0; i < num_channels; i++, list = g_list_next (list))
+        channels[i] = list->data;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_CHANNEL, (GObject **) channels, num_channels);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), channels);
 
   return return_vals;
 }
@@ -1998,7 +1990,6 @@ image_get_selected_channels_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_channels = 0;
   GimpChannel **channels = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -2006,28 +1997,21 @@ image_get_selected_channels_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list = gimp_image_get_selected_channels (image);
+      gsize  num_channels;
+      gint   i;
 
       num_channels = g_list_length (list);
+      channels = g_new0 (GimpChannel *, num_channels + 1);
 
-      if (num_channels)
-        {
-          gint i;
-
-          channels = g_new (GimpChannel *, num_channels);
-
-          for (i = 0; i < num_channels; i++, list = g_list_next (list))
-            channels[i] = g_object_ref (list->data);
-        }
+      for (i = 0; i < num_channels; i++, list = g_list_next (list))
+        channels[i] = list->data;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_CHANNEL, (GObject **) channels, num_channels);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), channels);
 
   return return_vals;
 }
@@ -2042,21 +2026,19 @@ image_set_selected_channels_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint num_channels;
   const GimpChannel **channels;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  num_channels = g_value_get_int (gimp_value_array_index (args, 1));
-  channels = (const GimpChannel **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  channels = g_value_get_boxed (gimp_value_array_index (args, 1));
 
   if (success)
     {
       GList *selected_channels = NULL;
       gint   i;
 
-      for (i = 0; i < num_channels; i++)
-        selected_channels = g_list_prepend (selected_channels,
-                                            GIMP_CHANNEL (channels[i]));
+      if (channels)
+        for (i = 0; channels[i] != NULL; i++)
+          selected_channels = g_list_prepend (selected_channels, (gpointer) channels[i]);
 
       gimp_image_set_selected_channels (image, selected_channels);
       g_list_free (selected_channels);
@@ -3488,17 +3470,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-channels",
-                                                     "num channels",
-                                                     "The number of channels contained in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("channels",
-                                                                 "channels",
-                                                                 "The list of channels contained in the image.",
-                                                                 GIMP_TYPE_CHANNEL,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("channels",
+                                                                      "channels",
+                                                                      "The list of channels contained in the image.",
+                                                                      GIMP_TYPE_CHANNEL,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4895,17 +4871,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-channels",
-                                                     "num channels",
-                                                     "The number of selected channels in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("channels",
-                                                                 "channels",
-                                                                 "The list of selected channels in the image.",
-                                                                 GIMP_TYPE_CHANNEL,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("channels",
+                                                                      "channels",
+                                                                      "The list of selected channels in the image.",
+                                                                      GIMP_TYPE_CHANNEL,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4930,17 +4900,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-channels",
-                                                 "num channels",
-                                                 "The number of channels to select",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("channels",
-                                                             "channels",
-                                                             "The list of channels to select",
-                                                             GIMP_TYPE_CHANNEL,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("channels",
+                                                                  "channels",
+                                                                  "The list of channels to select",
+                                                                  GIMP_TYPE_CHANNEL,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

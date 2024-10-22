@@ -335,14 +335,13 @@ GList *
 gimp_image_list_selected_channels (GimpImage *image)
 {
   GimpChannel **channels;
-  gint          num_channels;
   GList        *list = NULL;
   gint          i;
 
-  channels = gimp_image_get_selected_channels (image, &num_channels);
+  channels = gimp_image_get_selected_channels (image);
 
-  for (i = 0; i < num_channels; i++)
-    list = g_list_prepend (list, channels[i]);
+  for (i = 0; channels[i] != NULL; i++)
+    list = g_list_prepend (list, (gpointer) channels[i]);
 
   g_free (channels);
 
@@ -372,12 +371,11 @@ gimp_image_take_selected_channels (GimpImage *image,
   gboolean      success;
   gint          i;
 
-  sel_channels = g_new0 (GimpChannel *, g_list_length (channels));
+  sel_channels = g_new0 (GimpChannel *, g_list_length (channels) + 1);
   for (list = channels, i = 0; list; list = list->next, i++)
     sel_channels[i] = list->data;
 
-  success = gimp_image_set_selected_channels (image, g_list_length (channels),
-                                              (const GimpChannel **) sel_channels);
+  success = gimp_image_set_selected_channels (image, (const GimpChannel **) sel_channels);
   g_list_free (channels);
 
   return success;
@@ -472,14 +470,13 @@ GList *
 gimp_image_list_channels (GimpImage *image)
 {
   GimpChannel **channels;
-  gint          num_channels;
   GList        *list = NULL;
   gint          i;
 
-  channels = gimp_image_get_channels (image, &num_channels);
+  channels = gimp_image_get_channels (image);
 
-  for (i = 0; i < num_channels; i++)
-    list = g_list_prepend (list, channels[i]);
+  for (i = 0; channels[i] != NULL; i++)
+    list = g_list_prepend (list, (gpointer) channels[i]);
 
   g_free (channels);
 

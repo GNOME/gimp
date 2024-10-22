@@ -718,11 +718,11 @@ CODE
     }
     elsif ($pdbtype eq 'channelarray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_CHANNEL,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_CHANNEL,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'patharray') {
