@@ -34,8 +34,7 @@ G_BEGIN_DECLS
 
 G_GNUC_INTERNAL gchar* _gimp_font_get_lookup_name (GimpFont    *font);
 GimpFont*              gimp_font_get_by_name      (const gchar *name);
-GimpFont**             gimp_fonts_get_by_name     (const gchar *name,
-                                                   gint        *num_fonts);
+GimpFont**             gimp_fonts_get_by_name     (const gchar *name);
 
 
 G_END_DECLS

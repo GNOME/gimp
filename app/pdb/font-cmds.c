@@ -110,7 +110,6 @@ fonts_get_by_name_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint num_fonts = 0;
   GimpFont **fonts = NULL;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -118,6 +117,8 @@ fonts_get_by_name_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list;
+      gsize  num_fonts;
+      gint   i = 0;
 
       list = gimp_pdb_get_resources (gimp, GIMP_TYPE_FONT, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
@@ -125,16 +126,11 @@ fonts_get_by_name_invoker (GimpProcedure         *procedure,
         success = FALSE;
 
       num_fonts = g_list_length (list);
+      fonts     = g_new0 (GimpFont *, num_fonts + 1);
 
-      if (num_fonts > 0)
-        {
-          gint i = 0;
+      for (GList *iter = list; i < num_fonts; i++, iter = g_list_next (iter))
+        fonts[i] = iter->data;
 
-          fonts = g_new (GimpFont *, num_fonts);
-
-          for (GList *iter = list; i < num_fonts; i++, iter = g_list_next (iter))
-            fonts[i] = g_object_ref (iter->data);
-        }
       g_list_free (list);
     }
 
@@ -142,10 +138,7 @@ fonts_get_by_name_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_fonts);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_FONT, (GObject **) fonts, num_fonts);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), fonts);
 
   return return_vals;
 }
@@ -243,17 +236,11 @@ register_font_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-fonts",
-                                                     "num fonts",
-                                                     "The number of fonts with the given name",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("fonts",
-                                                                 "fonts",
-                                                                 "The fonts with the given name",
-                                                                 GIMP_TYPE_FONT,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("fonts",
+                                                                      "fonts",
+                                                                      "The fonts with the given name",
+                                                                      GIMP_TYPE_FONT,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
