@@ -471,11 +471,10 @@ gimp_eek (const gchar *reason,
                                               gimp_get_user_context (the_errors_gimp),
                                               NULL, NULL,
                                               "gimp-xcf-save",
-                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,        image,
-                                              G_TYPE_INT,             0,
-                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
-                                              G_TYPE_FILE,            backup_file,
+                                              GIMP_TYPE_RUN_MODE,          GIMP_RUN_NONINTERACTIVE,
+                                              GIMP_TYPE_IMAGE,             image,
+                                              GIMP_TYPE_CORE_OBJECT_ARRAY, NULL,
+                                              G_TYPE_FILE,                 backup_file,
                                               G_TYPE_NONE);
           g_rename (g_file_peek_path (backup_file), backup_path);
           i++;

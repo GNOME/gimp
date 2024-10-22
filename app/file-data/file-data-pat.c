@@ -134,10 +134,10 @@ file_pat_save_invoker (GimpProcedure         *procedure,
   gimp_set_busy (gimp);
 
   image       = g_value_get_object (gimp_value_array_index (args, 1));
-  n_drawables = g_value_get_int (gimp_value_array_index (args, 2));
-  drawables   = (GimpDrawable **) gimp_value_get_object_array (gimp_value_array_index (args, 3));
-  file        = g_value_get_object (gimp_value_array_index (args, 4));
-  name        = g_value_get_string (gimp_value_array_index (args, 5));
+  drawables   = (GimpDrawable **) g_value_get_boxed (gimp_value_array_index (args, 2));
+  n_drawables = gimp_core_object_array_get_length ((GObject **) drawables);
+  file        = g_value_get_object (gimp_value_array_index (args, 3));
+  name        = g_value_get_string (gimp_value_array_index (args, 4));
 
   pattern = file_pat_image_to_pattern (image, context, n_drawables, drawables, name);
 
