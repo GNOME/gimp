@@ -436,22 +436,6 @@ ts_init_constants (scheme       *sc,
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
                            sc->vptr->mk_string (sc, G_SEARCHPATH_SEPARATOR_S));
   sc->vptr->setimmutable (symbol);
-
-  /* These constants are deprecated and will be removed at a later date. */
-  symbol = sc->vptr->mk_symbol (sc, "gimp-dir");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_directory ()));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-data-dir");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_data_directory ()));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-plugin-dir");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
-  sc->vptr->setimmutable (symbol);
 }
 
 static void
