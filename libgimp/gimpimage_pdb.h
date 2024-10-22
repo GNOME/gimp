@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 
 gboolean                 gimp_image_id_is_valid                (gint                  image_id);
-GimpImage**              gimp_get_images                       (gint                 *num_images);
+GimpImage**              gimp_get_images                       (void);
 GimpImage*               gimp_image_new                        (gint                  width,
                                                                 gint                  height,
                                                                 GimpImageBaseType     type);

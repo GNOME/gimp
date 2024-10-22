@@ -56,27 +56,21 @@ HELP
 
     @outargs = (
         { name => 'images', type => 'imagearray',
-          desc => 'The list of images currently open.',
-          array => { name => 'num_images',
-                     desc => 'The number of images currently open' } }
+          desc => 'The list of images currently open.' }
     );
 
     %invoke = (
         code => <<CODE
 {
   GList *list = gimp_get_image_iter (gimp);
+  gsize  num_images;
+  gint   i;
 
   num_images = g_list_length (list);
+  images     = g_new0 (GimpImage *, num_images + 1);
 
-  if (num_images)
-    {
-      gint i;
-
-      images = g_new (GimpImage *, num_images);
-
-      for (i = 0; i < num_images; i++, list = g_list_next (list))
-        images[i] = g_object_ref (list->data);
-    }
+  for (i = 0; i < num_images; i++, list = g_list_next (list))
+    images[i] = list->data;
 }
 CODE
     );

@@ -682,11 +682,11 @@ CODE
     }
     elsif ($pdbtype eq 'imagearray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_IMAGE,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_IMAGE,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'itemarray') {

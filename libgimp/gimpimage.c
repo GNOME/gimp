@@ -201,13 +201,12 @@ GList *
 gimp_list_images (void)
 {
   GimpImage **images;
-  gint        num_images;
   GList      *list = NULL;
   gint        i;
 
-  images = gimp_get_images (&num_images);
+  images = gimp_get_images ();
 
-  for (i = 0; i < num_images; i++)
+  for (i = 0; images[i] != NULL; i++)
     list = g_list_prepend (list, images[i]);
 
   g_free (images);

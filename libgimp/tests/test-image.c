@@ -16,15 +16,14 @@ gimp_c_test_run (GimpProcedure        *procedure,
   GimpImage     **images;
   GimpImage      *new_image;
   GimpTextLayer  *text_layer;
-  gint            n_images;
 
   GIMP_TEST_START("gimp_image_new()");
   new_image = gimp_image_new (NEW_IMAGE_WIDTH, NEW_IMAGE_HEIGHT, GIMP_RGB);
   GIMP_TEST_END(GIMP_IS_IMAGE (new_image));
 
   GIMP_TEST_START("gimp_get_images()");
-  images = gimp_get_images (&n_images);
-  GIMP_TEST_END(n_images == 1 && images[0] == new_image);
+  images = gimp_get_images ();
+  GIMP_TEST_END(gimp_core_object_array_get_length ((GObject **) images) == 1 && images[0] == new_image);
   g_free (images);
 
   GIMP_TEST_START("gimp_text_layer_new() with point unit");

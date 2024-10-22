@@ -76,18 +76,16 @@ gimp_image_id_is_valid (gint image_id)
 
 /**
  * gimp_get_images:
- * @num_images: (out): The number of images currently open.
  *
  * Returns the list of images currently open.
  *
  * This procedure returns the list of images currently open in GIMP.
  *
- * Returns: (array length=num_images) (element-type GimpImage) (transfer container):
+ * Returns: (element-type GimpImage) (array zero-terminated=1) (transfer container):
  *          The list of images currently open.
- *          The returned value must be freed with g_free().
  **/
 GimpImage **
-gimp_get_images (gint *num_images)
+gimp_get_images (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -101,13 +99,8 @@ gimp_get_images (gint *num_images)
                                                args);
   gimp_value_array_unref (args);
 
-  *num_images = 0;
-
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    {
-      *num_images = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) images = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
-    }
+    images = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
