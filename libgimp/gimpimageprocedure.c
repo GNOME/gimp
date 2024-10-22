@@ -118,17 +118,11 @@ gimp_image_procedure_constructed (GObject *object)
                                      FALSE,
                                      G_PARAM_READWRITE);
 
-  gimp_procedure_add_int_argument (procedure, "num-drawables",
-                                   "Number of drawables",
-                                   "Number of input drawables",
-                                   0, G_MAXINT, 1,
-                                   G_PARAM_READWRITE);
-
-  gimp_procedure_add_object_array_argument (procedure, "drawables",
-                                            "Drawables",
-                                            "The input drawables",
-                                            GIMP_TYPE_DRAWABLE,
-                                            G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+  gimp_procedure_add_core_object_array_argument (procedure, "drawables",
+                                                 "Drawables",
+                                                 "The input drawables",
+                                                 GIMP_TYPE_DRAWABLE,
+                                                 G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
 }
 
 static void
@@ -142,7 +136,7 @@ gimp_image_procedure_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-#define ARG_OFFSET 4
+#define ARG_OFFSET 3
 
 static GimpValueArray *
 gimp_image_procedure_run (GimpProcedure        *procedure,
@@ -160,12 +154,12 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   gint                 n_drawables;
   gint                 i;
 
-  run_mode    = GIMP_VALUES_GET_ENUM         (args, 0);
-  image       = GIMP_VALUES_GET_IMAGE        (args, 1);
-  n_drawables = GIMP_VALUES_GET_INT          (args, 2);
-  drawables   = GIMP_VALUES_GET_OBJECT_ARRAY (args, 3);
+  run_mode    = GIMP_VALUES_GET_ENUM              (args, 0);
+  image       = GIMP_VALUES_GET_IMAGE             (args, 1);
+  drawables   = GIMP_VALUES_GET_CORE_OBJECT_ARRAY (args, 2);
 
-  remaining = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
+  n_drawables = gimp_core_object_array_get_length ((GObject **) drawables);
+  remaining   = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
   for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
     {

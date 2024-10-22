@@ -193,31 +193,20 @@ procedure_commands_get_items_args (GimpProcedure *procedure,
                   return NULL;
                 }
             }
-          else if (gimp_value_array_length (args) > n_args + 1        &&
-                   G_IS_PARAM_SPEC_INT (procedure->args[n_args])      &&
-                   GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (procedure->args[n_args + 1]))
+          else if (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[n_args]))
             {
               GimpItem **items   = NULL;
               gint       n_items;
+              GList     *iter;
+              gint       i;
+
 
               n_items = g_list_length (items_list);
+              items   = g_new0 (GimpItem *, n_items + 1);
+              for (iter = items_list, i = 0; iter; iter = iter->next, i++)
+                items[i] = iter->data;
 
-              g_value_set_int (gimp_value_array_index (args, n_args++),
-                               n_items);
-
-              if (items_list)
-                {
-                  GList *iter;
-                  gint   i;
-
-                  items = g_new (GimpItem *, n_items);
-                  for (iter = items_list, i = 0; iter; iter = iter->next, i++)
-                    items[i] = iter->data;
-                }
-
-              gimp_value_set_object_array (gimp_value_array_index (args, n_args++),
-                                           GIMP_TYPE_ITEM,
-                                           (GObject **) items, n_items);
+              g_value_set_boxed (gimp_value_array_index (args, n_args++), (GObject **) items);
 
               g_free (items);
             }
@@ -298,31 +287,21 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
                   return NULL;
                 }
             }
-          else if (gimp_value_array_length (args) > n_args + 1        &&
-                   G_IS_PARAM_SPEC_INT (procedure->args[n_args])      &&
-                   GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (procedure->args[n_args + 1]))
+          else if (GIMP_IS_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[n_args]))
             {
               GimpDrawable **drawables   = NULL;
               gint           n_drawables;
+              GList         *iter;
+              gint           i;
+
 
               n_drawables = g_list_length (drawables_list);
 
-              g_value_set_int (gimp_value_array_index (args, n_args++),
-                               n_drawables);
+              drawables = g_new0 (GimpDrawable *, n_drawables + 1);
+              for (iter = drawables_list, i = 0; iter; iter = iter->next, i++)
+                drawables[i] = iter->data;
 
-              if (drawables_list)
-                {
-                  GList *iter;
-                  gint   i;
-
-                  drawables = g_new (GimpDrawable *, n_drawables);
-                  for (iter = drawables_list, i = 0; iter; iter = iter->next, i++)
-                    drawables[i] = iter->data;
-                }
-
-              gimp_value_set_object_array (gimp_value_array_index (args, n_args++),
-                                           GIMP_TYPE_DRAWABLE,
-                                           (GObject **) drawables, n_drawables);
+              g_value_set_boxed (gimp_value_array_index (args, n_args++), (GObject **) drawables);
 
               g_free (drawables);
             }

@@ -672,21 +672,20 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       if ((procedure->num_args < 4)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
-          ! (G_TYPE_FROM_INSTANCE       (procedure->args[3])
-                           == GIMP_TYPE_PARAM_OBJECT_ARRAY))
+          ! (G_TYPE_FROM_INSTANCE       (procedure->args[2]) == GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
         {
-          required = "GimpRunMode, GimpImage, length, array of (GimpLayer | GimpDrawable)";
+          required = "GimpRunMode, GimpImage, NULL-terminated array of (GimpLayer | GimpDrawable)";
           goto failure;
         }
       else
         {
-          GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (procedure->args[3]);
-          const gchar *type_name  = g_type_name (spec->object_type);
+          GimpParamSpecCoreObjectArray *spec      = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[2]);
+          const gchar                  *type_name = g_type_name (spec->object_type);
 
           if (g_strcmp0 (type_name, "GimpDrawable") != 0 &&
               g_strcmp0 (type_name, "GimpLayer")    != 0)
             {
-              required = "GimpRunMode, GimpImage, length, array of (GimpLayer | GimpDrawable)";
+              required = "GimpRunMode, GimpImage, NULL-terminated array of (GimpLayer | GimpDrawable)";
               goto failure;
             }
         }
@@ -696,21 +695,20 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       if ((procedure->num_args < 4)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
-          ! (G_TYPE_FROM_INSTANCE       (procedure->args[3])
-                           == GIMP_TYPE_PARAM_OBJECT_ARRAY))
+          ! (G_TYPE_FROM_INSTANCE       (procedure->args[2]) == GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
         {
-          required = "GimpRunMode, GimpImage, length, array of (GimpChannel | GimpDrawable)";
+          required = "GimpRunMode, GimpImage, NULL-terminated array of (GimpChannel | GimpDrawable)";
           goto failure;
         }
       else
         {
-          GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (procedure->args[3]);
-          const gchar *type_name  = g_type_name (spec->object_type);
+          GimpParamSpecCoreObjectArray *spec      = GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (procedure->args[2]);
+          const gchar                  *type_name = g_type_name (spec->object_type);
 
           if (g_strcmp0 (type_name, "GimpDrawable") != 0 &&
               g_strcmp0 (type_name, "GimpChannel")  != 0)
             {
-              required = "GimpRunMode, GimpImage, length, array of (GimpChannel | GimpDrawable)";
+              required = "GimpRunMode, GimpImage, NULL-terminated array of (GimpChannel | GimpDrawable)";
               goto failure;
             }
         }

@@ -210,10 +210,11 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
   GObject   **drawables;
   GObject    *config;
 
-  image       = g_value_get_object          (gimp_value_array_index (args, 1));
-  n_drawables = g_value_get_int             (gimp_value_array_index (args, 2));
-  drawables   = gimp_value_get_object_array (gimp_value_array_index (args, 3));
-  config      = g_value_get_object          (gimp_value_array_index (args, 4));
+  image       = g_value_get_object (gimp_value_array_index (args, 1));
+  drawables   = g_value_get_boxed  (gimp_value_array_index (args, 2));
+  config      = g_value_get_object (gimp_value_array_index (args, 3));
+
+  n_drawables = gimp_core_object_array_get_length ((GObject **) drawables);
 
   if (n_drawables == 1)
     {
@@ -254,7 +255,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   const gchar       *tool_name;
 
   run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
-  settings = g_value_get_object (gimp_value_array_index (args, 4));
+  settings = g_value_get_object (gimp_value_array_index (args, 3));
 
   if (! settings &&
       (run_mode != GIMP_RUN_INTERACTIVE ||
@@ -292,7 +293,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
         {
           GimpValueArray *return_vals;
 
-          g_value_set_object (gimp_value_array_index (args, 4), settings);
+          g_value_set_object (gimp_value_array_index (args, 3), settings);
           return_vals = gimp_procedure_execute (procedure, gimp, context, progress,
                                                 args, NULL);
           gimp_value_array_unref (return_vals);
@@ -514,17 +515,11 @@ gimp_gegl_procedure_new (Gimp               *gimp,
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-drawables",
-                                                 "N drawables",
-                                                 "The number of drawables",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
-                                                             "Drawables",
-                                                             "Input drawables",
-                                                             GIMP_TYPE_DRAWABLE,
-                                                             GIMP_PARAM_READWRITE));
+                               gimp_param_spec_core_object_array ("drawables",
+                                                                  "Drawables",
+                                                                  "Input drawables",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_object ("settings",
                                                     "Settings",

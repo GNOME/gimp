@@ -182,8 +182,7 @@ gbr_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_IGNORE;
-  GList             *drawables;
-  gint               n_drawables;
+  GimpLayer        **layers;
   gchar             *description;
   GError            *error  = NULL;
 
@@ -217,14 +216,12 @@ gbr_export (GimpProcedure        *procedure,
     }
 
   export = gimp_export_options_get_image (options, &image);
-  drawables   = gimp_image_list_layers (image);
-  n_drawables = g_list_length (drawables);
+  layers = gimp_image_get_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpProcedure   *procedure;
       GimpValueArray  *save_retvals;
-      GimpObjectArray *drawables_array;
       gint             spacing;
 
       g_object_get (config,
@@ -232,20 +229,16 @@ gbr_export (GimpProcedure        *procedure,
                     "spacing",     &spacing,
                     NULL);
 
-      drawables_array = gimp_object_array_new (GIMP_TYPE_DRAWABLE, (GObject **) drawables,
-                                               n_drawables, FALSE);
       procedure    = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                                 "file-gbr-export-internal");
       save_retvals = gimp_procedure_run (procedure,
-                                         "image",         image,
-                                         "num-drawables", n_drawables,
-                                         "drawables",     drawables_array,
-                                         "file",          file,
-                                         "spacing",       spacing,
-                                         "name",          description,
+                                         "image",     image,
+                                         "drawables", (GimpDrawable **) layers,
+                                         "file",      file,
+                                         "spacing",   spacing,
+                                         "name",      description,
                                          NULL);
 
-      gimp_object_array_free (drawables_array);
       g_free (description);
 
       if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
@@ -264,7 +257,7 @@ gbr_export (GimpProcedure        *procedure,
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image);
 
-  g_list_free (drawables);
+  g_free (layers);
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 

@@ -240,11 +240,11 @@ film_create_procedure (GimpPlugIn  *plug_in,
 
       /* Arguments ignored in interactive mode. */
 
-      gimp_procedure_add_object_array_argument (procedure, "images",
-                                                "Images",
-                                                "Images to be used for film",
-                                                GIMP_TYPE_IMAGE,
-                                                G_PARAM_READWRITE);
+      gimp_procedure_add_core_object_array_argument (procedure, "images",
+                                                     "Images",
+                                                     "Images to be used for film",
+                                                     GIMP_TYPE_IMAGE,
+                                                     G_PARAM_READWRITE);
 
       /* The more specific settings. */
 
@@ -405,43 +405,43 @@ film_run (GimpProcedure        *procedure,
 static GimpImage *
 film (GimpProcedureConfig *config)
 {
-  GimpObjectArray *images;
-  gint             width, height;
-  guchar          *hole;
-  gint             film_height;
-  gint             film_width;
-  gint             picture_width;
-  gdouble          picture_height;
-  gdouble          picture_space;
-  gint             picture_x0;
-  gint             picture_y0;
-  gdouble          hole_offset;
-  gdouble          hole_width;
-  gdouble          hole_height;
-  gdouble          hole_space;
-  gint             hole_x;
-  gdouble          number_height;
-  gint             num_pictures;
-  gint             number_start;
-  gboolean         at_top;
-  gboolean         at_bottom;
-  gint             picture_count;
-  GeglColor       *number_color = NULL;
-  GeglColor       *film_color   = NULL;
-  gboolean         keep_height;
-  gdouble          f;
-  GimpImage       *image_dst;
-  GimpImage       *image_tmp;
-  GimpLayer       *layer_src;
-  GimpLayer       *layer_dst;
-  GimpLayer       *new_layer;
-  GimpLayer       *floating_sel;
+  GimpImage **images;
+  gint        width, height;
+  guchar     *hole;
+  gint        film_height;
+  gint        film_width;
+  gint        picture_width;
+  gdouble     picture_height;
+  gdouble     picture_space;
+  gint        picture_x0;
+  gint        picture_y0;
+  gdouble     hole_offset;
+  gdouble     hole_width;
+  gdouble     hole_height;
+  gdouble     hole_space;
+  gint        hole_x;
+  gdouble     number_height;
+  gint        num_pictures;
+  gint        number_start;
+  gboolean    at_top;
+  gboolean    at_bottom;
+  gint        picture_count;
+  GeglColor  *number_color = NULL;
+  GeglColor  *film_color   = NULL;
+  gboolean    keep_height;
+  gdouble     f;
+  GimpImage  *image_dst;
+  GimpImage  *image_tmp;
+  GimpLayer  *layer_src;
+  GimpLayer  *layer_dst;
+  GimpLayer  *new_layer;
+  GimpLayer  *floating_sel;
 
-  GimpFont        *number_font;
+  GimpFont   *number_font;
 
-  GList           *layers     = NULL;
-  GList           *iter2;
-  gint             i;
+  GList      *layers     = NULL;
+  GList      *iter2;
+  gint        i;
 
   g_object_get (config,
                 "images",          &images,
@@ -462,7 +462,7 @@ film (GimpProcedureConfig *config)
                 "at-bottom",       &at_bottom,
                 NULL);
 
-  if (images->length <= 0)
+  if (images[0] == NULL)
     return NULL;
 
   if (film_color == NULL)
@@ -484,9 +484,9 @@ film (GimpProcedureConfig *config)
     {
       gdouble max_height = 0;
 
-      for (i = 0; i < images->length; i++)
+      for (i = 0; images[i] != NULL; i++)
         {
-          GimpImage *image = GIMP_IMAGE (images->data[i]);
+          GimpImage *image = images[i];
 
           height = gimp_image_get_height (image);
           if ((gdouble) height > max_height)
@@ -505,9 +505,9 @@ film (GimpProcedureConfig *config)
   /* Calculate total film width */
   film_width = 0;
   num_pictures = 0;
-  for (i = 0; i < images->length; i++)
+  for (i = 0; images[i] != NULL; i++)
     {
-      GimpImage *image = GIMP_IMAGE (images->data[i]);
+      GimpImage *image = images[i];
 
       layers = gimp_image_list_layers (image);
 
@@ -592,9 +592,9 @@ film (GimpProcedureConfig *config)
   /* Compose all images and layers */
   picture_x0 = 0;
   picture_count = 0;
-  for (i = 0; i < images->length; i++)
+  for (i = 0; images[i] != NULL; i++)
     {
-      GimpImage *image = GIMP_IMAGE (images->data[i]);
+      GimpImage *image = images[i];
 
       image_tmp = gimp_image_duplicate (image);
       width = gimp_image_get_width (image_tmp);
@@ -663,7 +663,7 @@ film (GimpProcedureConfig *config)
 
   gimp_context_pop ();
 
-  gimp_object_array_free (images);
+  g_free (images);
   g_clear_object (&number_color);
   g_clear_object (&film_color);
   g_clear_object (&number_font);
@@ -677,11 +677,11 @@ static gboolean
 check_filmvals (GimpProcedureConfig  *config,
                 GError              **error)
 {
-  GimpFont        *font = NULL;
-  GimpObjectArray *images;
-  gint             film_height;
-  gint             i, j;
-  gboolean         success = FALSE;
+  GimpFont   *font = NULL;
+  GimpImage **images;
+  gint        film_height;
+  gint        i, j;
+  gboolean    success = FALSE;
 
   g_object_get (config,
                 "images",      &images,
@@ -698,20 +698,20 @@ check_filmvals (GimpProcedureConfig  *config,
       g_object_set (config, "number-font", gimp_context_get_font (), NULL);
     }
 
-  if (images != NULL)
+  if (images != NULL && images[0] != NULL)
     {
-      for (i = 0, j = 0; i < images->length; i++)
+      for (i = 0, j = 0; images[i] != NULL; i++)
         {
-          if (gimp_image_is_valid (GIMP_IMAGE (images->data[i])))
+          if (gimp_image_is_valid (images[i]))
             {
-              images->data[j] = images->data[i];
+              images[j] = images[i];
               j++;
             }
         }
 
       if (j > 0)
         {
-          images->length = j;
+          images[j] = NULL;
           g_object_set (config,
                         "images", images,
                         NULL);
@@ -719,11 +719,11 @@ check_filmvals (GimpProcedureConfig  *config,
         }
     }
 
-  if (images == NULL || images->length == 0)
+  if (images == NULL || images[0] == NULL)
     g_set_error_literal (error, GIMP_PLUG_IN_ERROR, 0,
                          _("\"Filmstrip\" cannot be run without any input images"));
 
-  gimp_object_array_free (images);
+  g_free (images);
   g_clear_object (&font);
 
   return success;
@@ -1176,11 +1176,10 @@ film_dialog (GimpImage           *image,
 
   if (run)
     {
-      GimpObjectArray *images_array;
-      GimpImage       *images[MAX_FILM_PICTURES];
-      gint             num_images = 0;
-      gboolean         iter_valid;
-      GtkTreeIter      iter;
+      GimpImage    *images[MAX_FILM_PICTURES + 1];
+      gint          num_images = 0;
+      gboolean      iter_valid;
+      GtkTreeIter   iter;
 
       for (iter_valid = gtk_tree_model_get_iter_first (filmint.image_list_film,
                                                        &iter);
@@ -1200,14 +1199,11 @@ film_dialog (GimpImage           *image,
               num_images++;
             }
         }
-
-      images_array = gimp_object_array_new (GIMP_TYPE_IMAGE, (GObject **) images, num_images, TRUE);
+      images[num_images] = NULL;
 
       g_object_set (config,
-                    "images", images_array,
+                    "images", images,
                     NULL);
-
-      gimp_object_array_free (images_array);
     }
 
   gtk_widget_destroy (dialog);

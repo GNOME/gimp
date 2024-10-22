@@ -447,7 +447,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
 
       if (GIMP_VALUE_HOLDS_INT32_ARRAY (value)  ||
           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)  ||
-          GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+          GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
         {
           /* Array arguments don't have their size information when they
            * are set by core code, in C array form.
@@ -464,10 +464,8 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
             gimp_value_set_float_array (value,
                                         (const gdouble *) va_arg (va_args, gpointer),
                                         prev_int_value);
-          else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
-            gimp_value_set_object_array (value, GIMP_TYPE_ITEM,
-                                         va_arg (va_args, gpointer),
-                                         prev_int_value);
+          else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
+            g_value_set_boxed (value, va_arg (va_args, gpointer));
         }
       else
         {

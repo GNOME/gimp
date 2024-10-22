@@ -216,17 +216,11 @@ twain_create_procedure (GimpPlugIn  *plug_in,
                                       PLUG_IN_COPYRIGHT,
                                       PLUG_IN_VERSION);
 
-      gimp_procedure_add_int_return_value (procedure, "image-count",
-                                           "Number of acquired images",
-                                           "Number of acquired images",
-                                           0, G_MAXINT, 0,
-                                           G_PARAM_READWRITE);
-
-      gimp_procedure_add_object_array_return_value (procedure, "images",
-                                                    "Array of acquired images",
-                                                    "Array of acquired images",
-                                                    GIMP_TYPE_IMAGE,
-                                                    G_PARAM_READWRITE);
+      gimp_procedure_add_core_object_array_return_value (procedure, "images",
+                                                         "Array of acquired images",
+                                                         "Array of acquired images",
+                                                         GIMP_TYPE_IMAGE,
+                                                         G_PARAM_READWRITE);
      }
 
   return procedure;
@@ -443,22 +437,20 @@ twain_run (GimpProcedure        *procedure,
        */
 
       num_images = g_list_length (image_list);
-      images     = g_new (GimpImage *, num_images);
+      images     = g_new0 (GimpImage *, num_images + 1);
 
       for (list = image_list, i = 0;
            list;
            list = g_list_next (list), i++)
         {
-          images[i] = g_object_ref (list->data);
+          images[i] = list->data;
         }
 
       g_list_free (image_list);
 
       /* Set return values */
-      return_vals = gimp_procedure_new_return_values (procedure, status,
-                                                      NULL);
-      GIMP_VALUES_SET_INT           (return_vals, 1, num_images);
-      GIMP_VALUES_TAKE_OBJECT_ARRAY (return_vals, 2, GIMP_TYPE_IMAGE, images, num_images);
+      return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
+      GIMP_VALUES_TAKE_CORE_OBJECT_ARRAY (return_vals, 1, images);
 
       return return_vals;
     }
