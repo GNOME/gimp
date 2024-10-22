@@ -301,27 +301,21 @@ HELP
 
     @outargs = (
         { name => 'channels', type => 'channelarray',
-          desc => 'The list of channels contained in the image.',
-          array => { name => 'num_channels',
-                     desc => 'The number of channels contained in the image' } }
+          desc => 'The list of channels contained in the image.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   GList *list = gimp_image_get_channel_iter (image);
+  gsize  num_channels;
+  gint   i;
 
   num_channels = g_list_length (list);
+  channels = g_new0 (GimpChannel *, num_channels + 1);
 
-  if (num_channels)
-    {
-      gint i;
-
-      channels = g_new (GimpChannel *, num_channels);
-
-      for (i = 0; i < num_channels; i++, list = g_list_next (list))
-        channels[i] = g_object_ref (list->data);
-    }
+  for (i = 0; i < num_channels; i++, list = g_list_next (list))
+    channels[i] = list->data;
 }
 CODE
     );
@@ -2046,27 +2040,21 @@ HELP
 
     @outargs = (
         { name => 'channels', type => 'channelarray',
-          desc => 'The list of selected channels in the image.',
-          array => { name => 'num_channels',
-                     desc => 'The number of selected channels in the image' } }
+          desc => 'The list of selected channels in the image.' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   GList *list = gimp_image_get_selected_channels (image);
+  gsize  num_channels;
+  gint   i;
 
   num_channels = g_list_length (list);
+  channels = g_new0 (GimpChannel *, num_channels + 1);
 
-  if (num_channels)
-    {
-      gint i;
-
-      channels = g_new (GimpChannel *, num_channels);
-
-      for (i = 0; i < num_channels; i++, list = g_list_next (list))
-        channels[i] = g_object_ref (list->data);
-    }
+  for (i = 0; i < num_channels; i++, list = g_list_next (list))
+    channels[i] = list->data;
 }
 CODE
     );
@@ -2088,11 +2076,7 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'channels', type => 'channelarray',
-          desc => 'The list of channels to select',
-          no_validate => 1,
-          array => { name => 'num_channels',
-                     type => '0 <= int32',
-                     desc => 'The number of channels to select' } }
+          desc => 'The list of channels to select' }
     );
 
     %invoke = (
@@ -2101,9 +2085,9 @@ HELP
   GList *selected_channels = NULL;
   gint   i;
 
-  for (i = 0; i < num_channels; i++)
-    selected_channels = g_list_prepend (selected_channels,
-                                        GIMP_CHANNEL (channels[i]));
+  if (channels)
+    for (i = 0; channels[i] != NULL; i++)
+      selected_channels = g_list_prepend (selected_channels, (gpointer) channels[i]);
 
   gimp_image_set_selected_channels (image, selected_channels);
   g_list_free (selected_channels);

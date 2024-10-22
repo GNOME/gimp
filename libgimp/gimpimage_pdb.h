@@ -49,8 +49,7 @@ GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage       
 gint                     gimp_image_get_width                  (GimpImage            *image);
 gint                     gimp_image_get_height                 (GimpImage            *image);
 GimpLayer**              gimp_image_get_layers                 (GimpImage            *image);
-GimpChannel**            gimp_image_get_channels               (GimpImage            *image,
-                                                                gint                 *num_channels);
+GimpChannel**            gimp_image_get_channels               (GimpImage            *image);
 GimpPath**               gimp_image_get_paths                  (GimpImage            *image,
                                                                 gint                 *num_paths);
 gboolean                 gimp_image_unset_active_channel       (GimpImage            *image);
@@ -147,10 +146,8 @@ G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage       
 GimpLayer**              gimp_image_get_selected_layers        (GimpImage            *image);
 gboolean                 gimp_image_set_selected_layers        (GimpImage            *image,
                                                                 const GimpLayer     **layers);
-GimpChannel**            gimp_image_get_selected_channels      (GimpImage            *image,
-                                                                gint                 *num_channels);
+GimpChannel**            gimp_image_get_selected_channels      (GimpImage            *image);
 gboolean                 gimp_image_set_selected_channels      (GimpImage            *image,
-                                                                gint                  num_channels,
                                                                 const GimpChannel   **channels);
 GimpPath**               gimp_image_get_selected_paths         (GimpImage            *image,
                                                                 gint                 *num_paths);
