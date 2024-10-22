@@ -506,7 +506,6 @@ image_get_paths_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_paths = 0;
   GimpPath **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -514,28 +513,21 @@ image_get_paths_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list = gimp_image_get_path_iter (image);
+      gsize  num_paths;
+      gint   i;
 
       num_paths = g_list_length (list);
+      paths     = g_new0 (GimpPath *, num_paths + 1);
 
-      if (num_paths)
-        {
-          gint i;
-
-          paths = g_new (GimpPath *, num_paths);
-
-          for (i = 0; i < num_paths; i++, list = g_list_next (list))
-            paths[i] = g_object_ref (list->data);
-        }
+      for (i = 0; i < num_paths; i++, list = g_list_next (list))
+        paths[i] = g_object_ref (list->data);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) paths, num_paths);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), paths);
 
   return return_vals;
 }
@@ -1103,8 +1095,7 @@ image_import_paths_from_file_invoker (GimpProcedure         *procedure,
   GFile *file;
   gboolean merge;
   gboolean scale;
-  gint num_paths = 0;
-  GimpPath **path = NULL;
+  GimpPath **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   file = g_value_get_object (gimp_value_array_index (args, 1));
@@ -1122,24 +1113,20 @@ image_import_paths_from_file_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
-          num_paths = g_list_length (path_list);
+          gsize  num_paths = g_list_length (path_list);
+          GList *list;
+          gint   i;
 
-          if (num_paths)
+          paths = g_new0 (GimpPath *, num_paths + 1);
+
+          for (i = 0, list = path_list;
+               i < num_paths;
+               i++, list = g_list_next (list))
             {
-              GList *list;
-              gint   i;
-
-              path = g_new (GimpPath *, num_paths);
-
-              for (i = 0, list = path_list;
-                   i < num_paths;
-                   i++, list = g_list_next (list))
-                {
-                  path[i] = g_object_ref (list->data);
-                }
-
-              g_list_free (path_list);
+              paths[i] = list->data;
             }
+
+          g_list_free (path_list);
         }
     }
 
@@ -1147,10 +1134,7 @@ image_import_paths_from_file_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) path, num_paths);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), paths);
 
   return return_vals;
 }
@@ -1170,8 +1154,7 @@ image_import_paths_from_string_invoker (GimpProcedure         *procedure,
   gint length;
   gboolean merge;
   gboolean scale;
-  gint num_paths = 0;
-  GimpPath **path = NULL;
+  GimpPath **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   string = g_value_get_string (gimp_value_array_index (args, 1));
@@ -1190,24 +1173,20 @@ image_import_paths_from_string_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
-          num_paths = g_list_length (path_list);
+          GList *list;
+          gsize  num_paths = g_list_length (path_list);
+          gint   i;
 
-          if (num_paths)
+          paths = g_new0 (GimpPath *, num_paths + 1);
+
+          for (i = 0, list = path_list;
+               i < num_paths;
+               i++, list = g_list_next (list))
             {
-              GList *list;
-              gint   i;
-
-              path = g_new (GimpPath *, num_paths);
-
-              for (i = 0, list = path_list;
-                   i < num_paths;
-                   i++, list = g_list_next (list))
-                {
-                  path[i] = g_object_ref (list->data);
-                }
-
-              g_list_free (path_list);
+              paths[i] = list->data;
             }
+
+          g_list_free (path_list);
         }
     }
 
@@ -1215,10 +1194,7 @@ image_import_paths_from_string_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) path, num_paths);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), paths);
 
   return return_vals;
 }
@@ -2059,7 +2035,6 @@ image_get_selected_paths_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint num_paths = 0;
   GimpPath **paths = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
@@ -2067,28 +2042,21 @@ image_get_selected_paths_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GList *list = gimp_image_get_selected_paths (image);
+      gsize  num_paths;
+      gint   i;
 
       num_paths = g_list_length (list);
+      paths     = g_new0 (GimpPath *, num_paths + 1);
 
-      if (num_paths)
-        {
-          gint i;
-
-          paths = g_new (GimpPath *, num_paths);
-
-          for (i = 0; i < num_paths; i++, list = g_list_next (list))
-            paths[i] = g_object_ref (list->data);
-        }
+      for (i = 0; i < num_paths; i++, list = g_list_next (list))
+        paths[i] = g_object_ref (list->data);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_paths);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_PATH, (GObject **) paths, num_paths);
-    }
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), paths);
 
   return return_vals;
 }
@@ -2103,21 +2071,18 @@ image_set_selected_paths_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint num_paths;
   const GimpPath **paths;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
-  num_paths = g_value_get_int (gimp_value_array_index (args, 1));
-  paths = (const GimpPath **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  paths = g_value_get_boxed (gimp_value_array_index (args, 1));
 
   if (success)
     {
       GList *selected_paths = NULL;
       gint   i;
 
-      for (i = 0; i < num_paths; i++)
-        selected_paths = g_list_prepend (selected_paths,
-                                           GIMP_LAYER (paths[i]));
+      for (i = 0; paths[i] != NULL; i++)
+        selected_paths = g_list_prepend (selected_paths, (gpointer) paths[i]);
 
       gimp_image_set_selected_paths (image, selected_paths);
       g_list_free (selected_paths);
@@ -3499,17 +3464,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-paths",
-                                                     "num paths",
-                                                     "The number of paths contained in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("paths",
-                                                                 "paths",
-                                                                 "The list of paths contained in the image.",
-                                                                 GIMP_TYPE_PATH,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("paths",
+                                                                      "paths",
+                                                                      "The list of paths contained in the image.",
+                                                                      GIMP_TYPE_PATH,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4052,17 +4011,11 @@ register_image_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-paths",
-                                                     "num paths",
-                                                     "The number of newly created path",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("path",
-                                                                 "path",
-                                                                 "The list of newly created path",
-                                                                 GIMP_TYPE_PATH,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("paths",
+                                                                      "paths",
+                                                                      "The list of newly created paths",
+                                                                      GIMP_TYPE_PATH,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4112,17 +4065,11 @@ register_image_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-paths",
-                                                     "num paths",
-                                                     "The number of newly created path",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("path",
-                                                                 "path",
-                                                                 "The list of newly created path",
-                                                                 GIMP_TYPE_PATH,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("paths",
+                                                                      "paths",
+                                                                      "The list of newly created paths",
+                                                                      GIMP_TYPE_PATH,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4929,17 +4876,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-paths",
-                                                     "num paths",
-                                                     "The number of selected paths in the image",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("paths",
-                                                                 "paths",
-                                                                 "The list of selected paths in the image.",
-                                                                 GIMP_TYPE_PATH,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("paths",
+                                                                      "paths",
+                                                                      "The list of selected paths in the image.",
+                                                                      GIMP_TYPE_PATH,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4964,17 +4905,11 @@ register_image_procs (GimpPDB *pdb)
                                                       FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-paths",
-                                                 "num paths",
-                                                 "The number of paths to select",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("paths",
-                                                             "paths",
-                                                             "The list of paths to select",
-                                                             GIMP_TYPE_PATH,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               gimp_param_spec_core_object_array ("paths",
+                                                                  "paths",
+                                                                  "The list of paths to select",
+                                                                  GIMP_TYPE_PATH,
+                                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

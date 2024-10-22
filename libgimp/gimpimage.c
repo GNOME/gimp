@@ -401,14 +401,13 @@ GList *
 gimp_image_list_selected_paths (GimpImage *image)
 {
   GimpPath **paths;
-  gint       num_paths;
   GList     *list = NULL;
   gint       i;
 
-  paths = gimp_image_get_selected_paths (image, &num_paths);
+  paths = gimp_image_get_selected_paths (image);
 
-  for (i = 0; i < num_paths; i++)
-    list = g_list_prepend (list, paths[i]);
+  for (i = 0; paths[i] != NULL; i++)
+    list = g_list_prepend (list, (gpointer) paths[i]);
 
   g_free (paths);
 
@@ -436,13 +435,13 @@ gimp_image_take_selected_paths (GimpImage *image,
   gboolean   success;
   gint       i;
 
-  sel_paths = g_new0 (GimpPath *, g_list_length (paths));
+  sel_paths = g_new0 (GimpPath *, g_list_length (paths) + 1);
   for (list = paths, i = 0; list; list = list->next, i++)
     sel_paths[i] = list->data;
 
-  success = gimp_image_set_selected_paths (image, g_list_length (paths),
-                                           (const GimpPath **) sel_paths);
+  success = gimp_image_set_selected_paths (image, (const GimpPath **) sel_paths);
   g_list_free (paths);
+  g_free (sel_paths);
 
   return success;
 }
@@ -503,14 +502,13 @@ GList *
 gimp_image_list_paths (GimpImage *image)
 {
   GimpPath **paths;
-  gint       num_paths;
   GList     *list = NULL;
   gint       i;
 
-  paths = gimp_image_get_paths (image, &num_paths);
+  paths = gimp_image_get_paths (image);
 
-  for (i = 0; i < num_paths; i++)
-    list = g_list_prepend (list, paths[i]);
+  for (i = 0; paths[i] != NULL; i++)
+    list = g_list_prepend (list, (gpointer) paths[i]);
 
   g_free (paths);
 

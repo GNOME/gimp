@@ -727,11 +727,11 @@ CODE
     }
     elsif ($pdbtype eq 'patharray') {
 	$pspec = <<CODE;
-gimp_param_spec_object_array ("$name",
-                              "$nick",
-                              "$blurb",
-                              GIMP_TYPE_PATH,
-                              $flags)
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_PATH,
+                                   $flags)
 CODE
     }
     elsif ($pdbtype eq 'resourcearray') {
