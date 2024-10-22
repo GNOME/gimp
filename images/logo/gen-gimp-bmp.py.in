@@ -24,8 +24,6 @@ def export_scaled_img(img_width, img_height, scale):
   procedure = Gimp.get_pdb().lookup_procedure("file-bmp-export")
   config    = procedure.create_config()
   drawables = image.get_selected_drawables()
-  # Needed otherwise it doesn't save the proper size because of bug #8855.
-  drawables[0].resize_to_image_size()
   config.set_property("image", image)
   config.set_property("file", Gio.file_new_for_path('build/windows/installer/gimp.scale-' + scale + '.bmp'))
   Gimp.Procedure.run(procedure, config)

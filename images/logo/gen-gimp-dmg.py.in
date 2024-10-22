@@ -46,8 +46,6 @@ image.merge_down(layer2, Gimp.MergeType.CLIP_TO_IMAGE)
 procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
 config    = procedure.create_config()
 drawables = image.get_selected_drawables()
-# Needed otherwise it doesn't save the proper size because of bug #8855.
-drawables[0].resize_to_image_size()
 config.set_property("image", image)
 config.set_property("file", Gio.file_new_for_path(output_path))
 Gimp.Procedure.run(procedure, config)

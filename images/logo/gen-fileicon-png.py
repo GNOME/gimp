@@ -48,8 +48,6 @@ def export_relative_img(scale):
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
     drawables = image.get_selected_drawables()
-    # Needed otherwise it doesn't save the proper size because of bug #8855.
-    drawables[0].resize_to_image_size()
     config.set_property("image", image)
     config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.png'))
     Gimp.Procedure.run(procedure, config)
@@ -57,8 +55,6 @@ def export_relative_img(scale):
   procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
   config    = procedure.create_config()
   drawables = image.get_selected_drawables()
-  # Needed otherwise it doesn't save the proper size because of bug #8855.
-  drawables[0].resize_to_image_size()
   config.set_property("image", image)
   scale_str = str(scale)
   config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.scale-' + scale_str + '.png'))
@@ -105,8 +101,6 @@ def export_absolute_img(size):
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
     drawables = image.get_selected_drawables()
-    # Needed otherwise it doesn't save the proper size because of bug #8855.
-    drawables[0].resize_to_image_size()
     config.set_property("image", image)
     config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.png'))
     Gimp.Procedure.run(procedure, config)
@@ -115,8 +109,6 @@ def export_absolute_img(size):
     procedure = Gimp.get_pdb().lookup_procedure("file-png-export")
     config    = procedure.create_config()
     drawables = image.get_selected_drawables()
-    # Needed otherwise it doesn't save the proper size because of bug #8855.
-    drawables[0].resize_to_image_size()
     config.set_property("image", image)
     size_str = str(size)
     config.set_property("file", Gio.file_new_for_path(export_dir + 'fileicon.targetsize-' + size_str + '.png'))
