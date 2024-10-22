@@ -113,27 +113,20 @@ get_images_invoker (GimpProcedure         *procedure,
                     GError               **error)
 {
   GimpValueArray *return_vals;
-  gint num_images = 0;
   GimpImage **images = NULL;
 
   GList *list = gimp_get_image_iter (gimp);
+  gsize  num_images;
+  gint   i;
 
   num_images = g_list_length (list);
+  images     = g_new0 (GimpImage *, num_images + 1);
 
-  if (num_images)
-    {
-      gint i;
-
-      images = g_new (GimpImage *, num_images);
-
-      for (i = 0; i < num_images; i++, list = g_list_next (list))
-        images[i] = g_object_ref (list->data);
-    }
+  for (i = 0; i < num_images; i++, list = g_list_next (list))
+    images[i] = list->data;
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-
-  g_value_set_int (gimp_value_array_index (return_vals, 1), num_images);
-  gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_IMAGE, (GObject **) images, num_images);
+  g_value_take_boxed (gimp_value_array_index (return_vals, 1), images);
 
   return return_vals;
 }
@@ -3077,17 +3070,11 @@ register_image_procs (GimpPDB *pdb)
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-images",
-                                                     "num images",
-                                                     "The number of images currently open",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("images",
-                                                                 "images",
-                                                                 "The list of images currently open.",
-                                                                 GIMP_TYPE_IMAGE,
-                                                                 GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("images",
+                                                                      "images",
+                                                                      "The list of images currently open.",
+                                                                      GIMP_TYPE_IMAGE,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

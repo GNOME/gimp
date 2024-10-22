@@ -26,7 +26,6 @@ gimp_c_test_run (GimpProcedure        *procedure,
   GimpLayer          *export_layer;
   GimpExportOptions  *options;
   GimpExportReturn    delete;
-  gint                n_images;
   gboolean            identical_buffers;
 
   new_image = gimp_image_new (NEW_IMAGE_WIDTH, NEW_IMAGE_HEIGHT, GIMP_RGB);
@@ -42,8 +41,8 @@ gimp_c_test_run (GimpProcedure        *procedure,
                           NULL);
 
   GIMP_TEST_START("Verify start state (1)");
-  images = gimp_get_images (&n_images);
-  GIMP_TEST_END(n_images == 1 && images[0] == new_image);
+  images = gimp_get_images ();
+  GIMP_TEST_END(gimp_core_object_array_get_length ((GObject **) images) == 1 && images[0] == new_image);
   g_free (images);
 
   GIMP_TEST_START("Verify start state (2)");
@@ -55,8 +54,8 @@ gimp_c_test_run (GimpProcedure        *procedure,
 
   GIMP_TEST_START("gimp_export_options_get_image() created a new image");
   delete = gimp_export_options_get_image (options, &new_image);
-  images = gimp_get_images (&n_images);
-  GIMP_TEST_END(delete == GIMP_EXPORT_EXPORT && n_images == 2 && new_image != original_image);
+  images = gimp_get_images ();
+  GIMP_TEST_END(delete == GIMP_EXPORT_EXPORT && gimp_core_object_array_get_length ((GObject **) images) == 2 && new_image != original_image);
   g_free (images);
 
   GIMP_TEST_START("The new image has a single layer");
