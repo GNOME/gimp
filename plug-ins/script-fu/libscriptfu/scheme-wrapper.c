@@ -380,44 +380,38 @@ ts_register_post_command_callback (TsCallbackFunc callback)
  * Below can be found the functions responsible for registering the
  * gimp functions and types against the scheme interpreter.
  */
+
+/* Define a symbol into interpreter state, bound to a string, immutable. */
+static void
+ts_define_constant_string (scheme       *sc,
+                           const gchar  *symbol_name,
+                           const gchar  *symbol_value)
+{
+  pointer symbol = sc->vptr->mk_symbol (sc, symbol_name);
+
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, symbol_value));
+  sc->vptr->setimmutable (symbol);
+}
+
 static void
 ts_init_constants (scheme       *sc,
                    GIRepository *repo)
 {
-  int     i;
-  pointer symbol;
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-directory");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_directory ()));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-data-directory");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_data_directory ()));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-plug-in-directory");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-locale-directory");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_locale_directory ()));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "gimp-sysconf-directory");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_sysconf_directory ()));
-  sc->vptr->setimmutable (symbol);
+  ts_define_constant_string (sc, "gimp-directory",         gimp_directory ());
+  ts_define_constant_string (sc, "gimp-data-directory",    gimp_data_directory ());
+  ts_define_constant_string (sc, "gimp-plug-in-directory", gimp_plug_in_directory ());
+  ts_define_constant_string (sc, "gimp-locale-directory",  gimp_locale_directory ());
+  ts_define_constant_string (sc, "gimp-sysconf-directory", gimp_sysconf_directory ());
 
   ts_init_enums (sc, repo, "Gimp");
   ts_init_enums (sc, repo, "Gegl");
 
-  /* Constants used in the register block of scripts */
-  for (i = 0; script_constants[i].name != NULL; ++i)
+  /* Constants used in the register block of scripts e.g. SF-ADJUSTMENT */
+  for (int i = 0; script_constants[i].name != NULL; ++i)
     {
+      pointer symbol;
+
       symbol = sc->vptr->mk_symbol (sc, script_constants[i].name);
       sc->vptr->scheme_define (sc, sc->global_env, symbol,
                                sc->vptr->mk_integer (sc,
@@ -425,17 +419,10 @@ ts_init_constants (scheme       *sc,
       sc->vptr->setimmutable (symbol);
     }
 
-  /* Define string constant for use in building paths to files/directories */
-  symbol = sc->vptr->mk_symbol (sc, "DIR-SEPARATOR");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, G_DIR_SEPARATOR_S));
-  sc->vptr->setimmutable (symbol);
-
-  /* Define string constant for use in building search paths */
-  symbol = sc->vptr->mk_symbol (sc, "SEARCHPATH-SEPARATOR");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, G_SEARCHPATH_SEPARATOR_S));
-  sc->vptr->setimmutable (symbol);
+  /* use to build paths to files/directories */
+  ts_define_constant_string (sc, "DIR-SEPARATOR",        G_DIR_SEPARATOR_S);
+  /* use to build search paths */
+  ts_define_constant_string (sc, "SEARCHPATH-SEPARATOR", G_SEARCHPATH_SEPARATOR_S);
 }
 
 static void
