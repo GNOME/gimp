@@ -148,8 +148,8 @@ if build_ico_files
 
   # Inno installer: setup .exe icon
   gen_setup_ico_conf = configuration_data()
-  gen_setup_ico_conf.set('BUILDDIR', meson.current_build_dir())
-  gen_setup_ico_conf.set('SRCDIR', meson.current_source_dir())
+  gen_setup_ico_conf.set('BUILDDIR', meson.current_build_dir().replace('\\', '/'))
+  gen_setup_ico_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_setup_ico = configure_file(input : 'gen-setup-ico.py.in',
                                  output : 'gen-setup-ico.py',
                                  configuration : gen_setup_ico_conf)
@@ -168,8 +168,8 @@ if build_ico_files
 
   ## Inno installer: right-top icon (Windows) ##
   gen_gimp_bmp_conf = configuration_data()
-  gen_gimp_bmp_conf.set('BUILDDIR', meson.current_build_dir())
-  gen_gimp_bmp_conf.set('SRCDIR', meson.current_source_dir())
+  gen_gimp_bmp_conf.set('BUILDDIR', meson.current_build_dir().replace('\\', '/'))
+  gen_gimp_bmp_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_gimp_bmp = configure_file(input : 'gen-gimp-bmp.py.in',
                                 output : 'gen-gimp-bmp.py',
                                 configuration : gen_setup_ico_conf)
@@ -191,6 +191,7 @@ if get_option('ms-store')
   icon_name = 'AppList'
 
   gen_icon_conf = configuration_data()
+  gen_icon_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_icon_conf.set('NAME',     icon_name)
   gen_icon_conf.set('TILE_WIDTH',  'none')
   gen_icon_conf.set('TILE_HEIGHT', 'none')
@@ -217,6 +218,7 @@ if get_option('ms-store')
   icon_name = 'StoreLogo'
 
   gen_icon_conf = configuration_data()
+  gen_icon_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_icon_conf.set('NAME',     icon_name)
   gen_icon_conf.set('TILE_WIDTH',  'none')
   gen_icon_conf.set('TILE_HEIGHT', 'none')
@@ -242,6 +244,7 @@ if get_option('ms-store')
   icon_name = 'MedTile'
 
   gen_tile_conf = configuration_data()
+  gen_tile_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_tile_conf.set('NAME',  icon_name)
   gen_tile_conf.set('TILE_WIDTH',  150)
   gen_tile_conf.set('TILE_HEIGHT', 150)
@@ -268,6 +271,7 @@ if get_option('ms-store')
   icon_name = 'SmallTile'
 
   gen_tile_conf = configuration_data()
+  gen_tile_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_tile_conf.set('NAME', icon_name)
   gen_tile_conf.set('TILE_WIDTH',  71)
   gen_tile_conf.set('TILE_HEIGHT', 71)
@@ -294,6 +298,7 @@ if get_option('ms-store')
   icon_name = 'WideTile'
 
   gen_tile_conf = configuration_data()
+  gen_tile_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_tile_conf.set('NAME',  icon_name)
   gen_tile_conf.set('TILE_WIDTH',  310)
   gen_tile_conf.set('TILE_HEIGHT', 150)
@@ -320,6 +325,7 @@ if get_option('ms-store')
   icon_name = 'LargeTile'
 
   gen_tile_conf = configuration_data()
+  gen_tile_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
   gen_tile_conf.set('NAME',  icon_name)
   gen_tile_conf.set('TILE_WIDTH',  310)
   gen_tile_conf.set('TILE_HEIGHT', 310)
@@ -363,8 +369,8 @@ endif
 ## gimp.icns (macOS) ##
 
 gen_gimp_icns_conf = configuration_data()
-gen_gimp_icns_conf.set('BUILDDIR', meson.current_build_dir())
-gen_gimp_icns_conf.set('SRCDIR', meson.current_source_dir())
+gen_gimp_icns_conf.set('BUILDDIR', meson.current_build_dir().replace('\\', '/'))
+gen_gimp_icns_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
 gen_gimp_icns_py = configure_file(input : 'gen-gimp-icns.py.in',
                                  output : 'gen-gimp-icns.py',
                                  configuration : gen_gimp_icns_conf)
@@ -384,8 +390,8 @@ gimp_icns = custom_target('gimp.icns',
 ## gimp-dmg.png (macOS) ##
 
 gen_gimp_dmg_conf = configuration_data()
-gen_gimp_dmg_conf.set('BUILDDIR', meson.current_build_dir())
-gen_gimp_dmg_conf.set('SRCDIR', meson.current_source_dir())
+gen_gimp_dmg_conf.set('BUILDDIR', meson.current_build_dir().replace('\\', '/'))
+gen_gimp_dmg_conf.set('SRCDIR', meson.current_source_dir().replace('\\', '/'))
 gen_gimp_dmg_py = configure_file(input : 'gen-gimp-dmg.py.in',
                                   output : 'gen-gimp-dmg.py',
                                   configuration : gen_gimp_dmg_conf)

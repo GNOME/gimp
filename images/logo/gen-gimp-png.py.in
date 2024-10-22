@@ -4,10 +4,10 @@ import sys
 
 # It's just a icon
 if '@TILE_WIDTH@' == 'none':
-  wilber_path = '../gimp-data/images/logo/gimp-logo.svg'
+  wilber_path = '@SRCDIR@/gimp-logo.svg'
 # It's a tile
 else:
-  wilber_path = '../gimp-data/images/logo/gimp-logo-shadow.svg'
+  wilber_path = '@SRCDIR@/gimp-logo-shadow.svg'
 
 export_dir = 'build/windows/store/Assets/'
 # We need to manually create Assets folder
@@ -57,7 +57,7 @@ def export_relative_img(scale):
 def export_absolute_img(size):
   procedure   = Gimp.get_pdb().lookup_procedure("file-svg-load")
   config      = procedure.create_config()
-  config.set_property("file", Gio.file_new_for_path('../gimp-data/images/logo/gimp-logo.svg'))
+  config.set_property("file", Gio.file_new_for_path('@SRCDIR@/gimp-logo.svg'))
   config.set_property("width",  size)
   config.set_property("height", size)
   Gimp.Procedure.run(procedure, config)
