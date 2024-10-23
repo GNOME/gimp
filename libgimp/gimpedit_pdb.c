@@ -188,6 +188,7 @@ gimp_edit_copy_visible (GimpImage *image)
  *
  * Returns: (element-type GimpDrawable) (array zero-terminated=1) (transfer container):
  *          The list of pasted layers.
+ *          The returned value must be freed with g_free().
  **/
 GimpDrawable **
 gimp_edit_paste (GimpDrawable *drawable,

@@ -159,6 +159,7 @@ gimp_palette_get_color_count (GimpPalette *palette)
  *
  * Returns: (array zero-terminated=1) (transfer full):
  *          The colors in the palette.
+ *          The returned value must be freed with gimp_color_array_free().
  *
  * Since: 2.6
  **/

@@ -135,6 +135,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  *
  * Returns: (element-type GimpLayer) (array zero-terminated=1) (transfer container):
  *          The list of loaded layers.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
