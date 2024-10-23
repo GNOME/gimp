@@ -118,10 +118,6 @@ EXPORTS
 	gimp_metadata_set_resolution
 	gimp_micro_version
 	gimp_minor_version
-	gimp_object_array_copy
-	gimp_object_array_free
-	gimp_object_array_get_type
-	gimp_object_array_new
 	gimp_offset_type_get_type
 	gimp_orientation_type_get_type
 	gimp_paint_application_mode_get_type
@@ -132,7 +128,6 @@ EXPORTS
 	gimp_param_float_array_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
-	gimp_param_object_array_get_type
 	gimp_param_object_get_type
 	gimp_param_parasite_get_type
 	gimp_param_spec_array
@@ -142,7 +137,6 @@ EXPORTS
 	gimp_param_spec_float_array
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
-	gimp_param_spec_object_array
 	gimp_param_spec_object_duplicate
 	gimp_param_spec_object_get_default
 	gimp_param_spec_object_has_default
@@ -251,19 +245,14 @@ EXPORTS
 	gimp_value_array_unref
 	gimp_value_dup_float_array
 	gimp_value_dup_int32_array
-	gimp_value_dup_object_array
 	gimp_value_get_float_array
 	gimp_value_get_int32_array
-	gimp_value_get_object_array
 	gimp_value_set_float_array
 	gimp_value_set_int32_array
-	gimp_value_set_object_array
 	gimp_value_set_static_float_array
 	gimp_value_set_static_int32_array
-	gimp_value_set_static_object_array
 	gimp_value_take_float_array
 	gimp_value_take_int32_array
-	gimp_value_take_object_array
 	gimp_wire_clear_error
 	gimp_wire_destroy
 	gimp_wire_error

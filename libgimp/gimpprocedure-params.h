@@ -241,21 +241,6 @@ G_BEGIN_DECLS
   g_value_take_boxed (gimp_value_array_index (args, n), (gconstpointer) value)
 
 
-#define GIMP_VALUES_GET_OBJECT_ARRAY(args, n) \
-  (gpointer) gimp_value_get_object_array (gimp_value_array_index (args, n))
-
-#define GIMP_VALUES_DUP_OBJECT_ARRAY(args, n) \
-  (gpointer) gimp_value_dup_object_array (gimp_value_array_index (args, n))
-
-#define GIMP_VALUES_SET_OBJECT_ARRAY(args, n, object_type, value, length) \
-  gimp_value_set_object_array (gimp_value_array_index (args, n),\
-                               object_type, (gpointer) value, length)
-
-#define GIMP_VALUES_TAKE_OBJECT_ARRAY(args, n, object_type, value, length) \
-  gimp_value_take_object_array (gimp_value_array_index (args, n),\
-                                object_type, (gpointer) value, length)
-
-
 /*  display  */
 
 #define GIMP_VALUES_GET_DISPLAY(args, n) \
@@ -782,25 +767,6 @@ void gimp_procedure_add_core_object_array_aux_argument (GimpProcedure *procedure
                                                         GType          object_type,
                                                         GParamFlags    flags);
 void gimp_procedure_add_core_object_array_return_value (GimpProcedure *procedure,
-                                                        const gchar   *name,
-                                                        const gchar   *nick,
-                                                        const gchar   *blurb,
-                                                        GType          object_type,
-                                                        GParamFlags    flags);
-
-void gimp_procedure_add_object_array_argument          (GimpProcedure *procedure,
-                                                        const gchar   *name,
-                                                        const gchar   *nick,
-                                                        const gchar   *blurb,
-                                                        GType          object_type,
-                                                        GParamFlags    flags);
-void gimp_procedure_add_object_array_aux_argument      (GimpProcedure *procedure,
-                                                        const gchar   *name,
-                                                        const gchar   *nick,
-                                                        const gchar   *blurb,
-                                                        GType          object_type,
-                                                        GParamFlags    flags);
-void gimp_procedure_add_object_array_return_value      (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
