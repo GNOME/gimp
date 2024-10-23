@@ -281,10 +281,10 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
-      if (! strcmp (param_def->type_name, "GimpParamObjectArray"))
-        return gimp_param_spec_object_array (name, nick, blurb,
-                                             g_type_from_name (param_def->meta.m_id_array.type_name),
-                                             flags);
+      if (! strcmp (param_def->type_name, "GimpParamCoreObjectArray"))
+        return gimp_param_spec_core_object_array (name, nick, blurb,
+                                                  g_type_from_name (param_def->meta.m_id_array.type_name),
+                                                  flags);
       break;
 
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
@@ -519,13 +519,6 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_id_array.type_name =
         (gchar *) g_type_name (GIMP_PARAM_SPEC_CORE_OBJECT_ARRAY (pspec)->object_type);
-    }
-  else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
-    {
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID_ARRAY;
-
-      param_def->meta.m_id_array.type_name =
-        (gchar *) g_type_name (GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type);
     }
   else if (pspec_type == GIMP_TYPE_PARAM_EXPORT_OPTIONS)
     {
@@ -962,70 +955,6 @@ gimp_gp_param_to_value (gpointer        gimp,
        * having a valid but possibly arbitrary type of its elements.
        */
       g_value_set_boxed (value, objects);
-    }
-  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
-    {
-      GType     object_type = G_TYPE_INVALID;
-      GObject **objects;
-      gint      i;
-
-      /* Get type of the array elements. */
-      if (param->data.d_id_array.type_name != NULL)
-        {
-          /* An empty array from a NULL has an arbitrary type_name set earlier. */
-          object_type = g_type_from_name (param->data.d_id_array.type_name);
-        }
-      else if (pspec != NULL)
-        {
-          object_type = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec)->object_type;
-        }
-      /* Else object-type is G_TYPE_INVALID*/
-
-      /* GimpObjectArray requires declared element type derived from GObject.
-       * Even when empty.
-       * When not, return without setting the gvalue.
-       * Not necessarily an error, when the plugin does not use the gvalue.
-       */
-      if (!g_type_is_a (object_type, G_TYPE_OBJECT))
-        {
-          g_warning ("%s returning NULL for GimpObjectArray", G_STRFUNC);
-          return;
-        }
-
-      /* size might be zero. */
-
-      objects = g_new (GObject *, param->data.d_id_array.size);
-
-      for (i = 0; i < param->data.d_id_array.size; i++)
-        {
-          gint id = param->data.d_id_array.data[i];
-
-          if (object_type == GIMP_TYPE_IMAGE)
-            {
-              objects[i] = (GObject *) get_image_by_id (gimp, id);
-            }
-          else if (g_type_is_a (object_type, GIMP_TYPE_ITEM))
-            {
-              objects[i] = (GObject *) get_item_by_id (gimp, id);
-            }
-          else if (g_type_is_a (object_type, GIMP_TYPE_DISPLAY))
-            {
-              objects[i] = (GObject *) get_display_by_id (gimp, id);
-            }
-          else if (g_type_is_a (object_type, GIMP_TYPE_RESOURCE))
-            {
-              objects[i] = (GObject *) get_resource_by_id (id);
-            }
-
-          if (objects[i])
-            g_object_ref (objects[i]);
-        }
-
-      /* Even when size is zero, set gvalue to an empty GimpObjectArray object,
-       * having a valid but possibly arbitrary type of its elements.
-       */
-      gimp_value_take_object_array (value, object_type, objects,
-                                    param->data.d_id_array.size);
     }
   else if (GIMP_VALUE_HOLDS_IMAGE (value))
     {
@@ -1526,71 +1455,6 @@ gimp_value_to_gp_param (const GValue *value,
            */
           param->data.d_id_array.size = 0;
           param->data.d_id_array.data = NULL;
-        }
-    }
-  else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
-    {
-      GimpObjectArray *array = g_value_get_boxed (value);
-
-      param->param_type = GP_PARAM_TYPE_ID_ARRAY;
-
-      if (array)
-        {
-          gint i;
-
-          if (full_copy)
-            param->data.d_id_array.type_name =
-              g_strdup (g_type_name (array->object_type));
-          else
-            param->data.d_id_array.type_name =
-              (gchar *) g_type_name (array->object_type);
-
-          param->data.d_id_array.size = array->length;
-
-          /* must be free'd also for full_copy == FALSE */
-          param->data.d_id_array.data = g_new (gint32, array->length);
-
-          for (i = 0; i < array->length; i++)
-            {
-              if (GIMP_IS_IMAGE (array->data[i]))
-                {
-                  param->data.d_id_array.data[i] =
-                    gimp_image_get_id (GIMP_IMAGE (array->data[i]));
-                }
-              else if (GIMP_IS_ITEM (array->data[i]))
-                {
-                  param->data.d_id_array.data[i] =
-                    gimp_item_get_id (GIMP_ITEM (array->data[i]));
-                }
-              else if (GIMP_IS_DISPLAY (array->data[i]))
-                {
-                  param->data.d_id_array.data[i] =
-                    gimp_display_get_id (GIMP_DISPLAY (array->data[i]));
-                }
-              else if (GIMP_IS_RESOURCE (array->data[i]))
-                {
-                  param->data.d_id_array.data[i] = get_resource_id (array->data[i]);
-                }
-              else
-                {
-                  param->data.d_id_array.data[i] = -1;
-                }
-            }
-        }
-      else
-        {
-          /* GValue intended to hold GimpObjectArray is NULL.
-           * For convenience, we allow this, meaning empty.
-           */
-          param->data.d_id_array.size = 0;
-          param->data.d_id_array.data = NULL;
-          /* Arbitrarily say elements are type Drawable.
-           * We must have a type to create an empty GimpObjectArray.
-           */
-          if (full_copy)
-            param->data.d_id_array.type_name = g_strdup ("GimpDrawable");
-          else
-            param->data.d_id_array.type_name = "GimpDrawable";
         }
     }
   else if (GIMP_VALUE_HOLDS_IMAGE (value))
