@@ -38,6 +38,7 @@
 
 #include "script-fu-types.h"
 
+#include "script-fu-lib.h"
 #include "script-fu-regex.h"
 #include "script-fu-scripts.h"
 #include "script-fu-errors.h"
@@ -371,6 +372,17 @@ ts_init_constants (scheme       *sc,
   ts_define_constant_string (sc, "gimp-locale-directory",  gimp_locale_directory ());
   ts_define_constant_string (sc, "gimp-sysconf-directory", gimp_sysconf_directory ());
 
+  {
+    gchar *path;
+
+    path = script_fu_sys_init_directory ();
+    ts_define_constant_string (sc, "script-fu-sys-init-directory", path);
+    g_free (path);
+    path = script_fu_user_init_directory ();
+    ts_define_constant_string (sc, "script-fu-user-init-directory", path);
+    g_free (path);
+  }
+
   ts_init_enums (sc, repo, "Gimp");
   ts_init_enums (sc, repo, "Gegl");
 
@@ -571,6 +583,18 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
   define_compat_procs (sc);
 }
 
+/* Load script defining much of Scheme in Scheme language.
+ * This hides the actual name.
+ * By convention in Scheme, the name is init.scm.
+ *
+ * Returns TRUE on successful load.
+ */
+static gboolean
+ts_load_main_init_script (gchar *dir)
+{
+  return ts_load_file (dir, "script-fu.init");
+}
+
 static void
 ts_load_init_and_compatibility_scripts (GList *paths)
 {
@@ -580,50 +604,52 @@ ts_load_init_and_compatibility_scripts (GList *paths)
 
   if (paths == NULL)
     {
-      g_warning ("Missing paths to load init scripts.");
+      g_warning ("%s Missing paths.", G_STRFUNC);
       return;
     }
 
-  /* paths is a list of dirs of ScriptFu scripts, system and user specific.
-   * The order is unspecified.
-   * We recommend a user not install their own init scripts, especially init.scm.
-   * When they do, this loads only the init scripts
-   * accompanying the earliest found main init script
+  /* paths is a list of dirs of ScriptFu scripts, user specific and system wide.
+   * The order is important, and this first searches user specific directories.
+   * Also this only loads the first set of init scripts found.
+   * We recommend a user not shadow the sys init scripts, especially init.scm.
    */
   for (GList *list = paths; list; list = g_list_next (list))
     {
       gchar *dir = g_file_get_path (list->data);
 
-      /* Load conventional script defining much of Scheme in Scheme language. */
-      if (ts_load_file (dir, "script-fu.init"))
+      if (ts_load_main_init_script (dir))
         {
           did_find_main_init_script = TRUE;
 
-          /* Load other init scripts ONLY if found the main one. */
+          /* Load small set of named other init scripts.
+           * Only from same dir as the main init script!
+           *
+           * We don't warn when they are missing.
+           */
 
           /* Improve compatibility with older Script-Fu scripts,
            * load definitions for old dialects of Lisp (SIOD) or older ScriptFu.
            */
-          ts_load_file (dir, "script-fu-compat.init");
+          (void) ts_load_file (dir, "script-fu-compat.init");
 
-          /*  Improve compatibility with older GIMP version,
-           *  load definition aliasing/adapting older PDB procedures or plugins.
+          /* Improve compatibility with older GIMP version,
+           * load definitions that alias/adapt older PDB procedures or plugins.
            */
-          ts_load_file (dir, "plug-in-compat.init");
+          (void) ts_load_file (dir, "plug-in-compat.init");
 
           g_free (dir);
 
-          /* We only load init scripts from the first dir found. */
+          /* !!! Only load init scripts from the first dir found. */
           break;
         }
 
       g_free (dir);
     }
 
-  if (!did_find_main_init_script)
+  if (! did_find_main_init_script)
     {
-      /* We continue, but the interpreter will be crippled. */
-      g_warning ("Failed to load initialization file script-fu.init\n");
+      /* Continue, but the interpreter will be crippled. */
+      g_warning ("Failed to load main initialization file");
     }
 }
 

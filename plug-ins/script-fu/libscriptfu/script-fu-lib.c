@@ -206,10 +206,13 @@ script_fu_register_post_command_callback (void (*func) (void))
 
 /*
  * Return list of paths to directories containing .scm and .init scripts.
- * Usually at least GIMP's directory named like "/scripts."
- * List can also contain dirs custom or private to a user.
- " The GIMP dir often contain: plugins, init scripts, and utility scripts.
  *
+ * List has two elements, in this order:
+ *    directory for user scripts
+ *    directory for system-wide scripts, distributed with GIMP
+ * The dirs usually contain: plugins, init scripts, and utility scripts.
+ *
+ * The returned type is GList of GFile.
  * Caller must free the returned list.
  */
 GList *
@@ -236,6 +239,69 @@ script_fu_search_path (void)
   return path;
 }
 
+/* Returns path to a subdirectory of the given path,
+ * the subdirectory containing init scripts.
+ *
+ * SF keeps init scripts segregated in a subdirectory, since 3.0.
+ * This lets them have the proper suffix ".scm"
+ * without being confused with plugin scripts.
+ * Also lets other scripts in that directory not be loaded at startup.
+ *
+ * This hides the name "init".
+ *
+ * Caller must free the result.
+ */
+gchar *
+script_fu_get_init_subdirectory (GFile *dir)
+{
+  GFile *subdirectory = g_file_get_child (dir, "init");
+  gchar *result_path  = g_file_get_path (subdirectory);
+
+  g_object_unref (subdirectory);
+
+  /* result is a string path to a directory which might not exist. */
+  return result_path;
+}
+
+/* The directory containing init scripts installed with GIMP.
+ * Caller must free the result string.
+ */
+gchar *
+script_fu_sys_init_directory (void)
+{
+  GList *paths = script_fu_search_path ();
+  GList *list_element;
+  gchar *result_path;
+
+  /* The second list element is the sys scripts dir. */
+  list_element = g_list_next (paths);
+
+  result_path = script_fu_get_init_subdirectory (list_element->data);
+
+  g_list_free_full (paths, (GDestroyNotify) g_object_unref);
+
+  return result_path;
+}
+
+/* The directory containing user init scripts.
+ * Caller must free the result string.
+ */
+gchar *
+script_fu_user_init_directory (void)
+{
+  GList *paths = script_fu_search_path ();
+  GList *list_element;
+  gchar *result_path;
+
+  /* The first list element is the user scripts dir. */
+  list_element = paths;
+
+  result_path = script_fu_get_init_subdirectory (list_element->data);
+
+  g_list_free_full (paths, (GDestroyNotify) g_object_unref);
+
+  return result_path;
+}
 
 GimpProcedure *
 script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
