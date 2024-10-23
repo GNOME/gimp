@@ -162,8 +162,10 @@ sub generate_fun {
 
         unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
 
-        if ($retarg->{type} eq 'string') {
-            $retdesc .= "\n *          The returned value must be freed with g_free().";
+        my $array_test = $retarg->{type};
+        $array_test =~ s/array$//g;
+        if ($retarg->{type} eq 'colorarray') {
+            $retdesc .= "\n *          The returned value must be freed with gimp_color_array_free().";
         }
         elsif ($retarg->{type} eq 'strv') {
             $retdesc .= "\n *          The returned value must be freed with g_strfreev().";
@@ -171,7 +173,7 @@ sub generate_fun {
         elsif ($retarg->{type} eq 'param') {
             $retdesc .= "\n *          The returned value must be freed with g_param_spec_unref().";
         }
-        elsif (exists $argtype->{array}) {
+        elsif ($retarg->{type} eq 'string' || $retarg->{type} ne $array_test) {
             $retdesc .= "\n *          The returned value must be freed with g_free().";
         }
     }

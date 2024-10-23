@@ -125,6 +125,7 @@ gimp_font_get_by_name (const gchar *name)
  *
  * Returns: (element-type GimpFont) (array zero-terminated=1) (transfer container):
  *          The fonts with the given name.
+ *          The returned value must be freed with g_free().
  *
  * Since: 3.0
  **/

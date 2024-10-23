@@ -83,6 +83,7 @@ gimp_image_id_is_valid (gint image_id)
  *
  * Returns: (element-type GimpImage) (array zero-terminated=1) (transfer container):
  *          The list of images currently open.
+ *          The returned value must be freed with g_free().
  **/
 GimpImage **
 gimp_get_images (void)
@@ -472,6 +473,7 @@ gimp_image_get_height (GimpImage *image)
  *
  * Returns: (element-type GimpLayer) (array zero-terminated=1) (transfer container):
  *          The list of layers contained in the image.
+ *          The returned value must be freed with g_free().
  **/
 GimpLayer **
 gimp_image_get_layers (GimpImage *image)
@@ -511,6 +513,7 @@ gimp_image_get_layers (GimpImage *image)
  *
  * Returns: (element-type GimpChannel) (array zero-terminated=1) (transfer container):
  *          The list of channels contained in the image.
+ *          The returned value must be freed with g_free().
  **/
 GimpChannel **
 gimp_image_get_channels (GimpImage *image)
@@ -547,6 +550,7 @@ gimp_image_get_channels (GimpImage *image)
  *
  * Returns: (element-type GimpPath) (array zero-terminated=1) (transfer container):
  *          The list of paths contained in the image.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -2164,6 +2168,7 @@ _gimp_image_thumbnail (GimpImage  *image,
  *
  * Returns: (element-type GimpLayer) (array zero-terminated=1) (transfer container):
  *          The list of selected layers in the image.
+ *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
@@ -2243,6 +2248,7 @@ gimp_image_set_selected_layers (GimpImage        *image,
  *
  * Returns: (element-type GimpChannel) (array zero-terminated=1) (transfer container):
  *          The list of selected channels in the image.
+ *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
@@ -2322,6 +2328,7 @@ gimp_image_set_selected_channels (GimpImage          *image,
  *
  * Returns: (element-type GimpPath) (array zero-terminated=1) (transfer container):
  *          The list of selected paths in the image.
+ *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
@@ -2403,6 +2410,7 @@ gimp_image_set_selected_paths (GimpImage       *image,
  *
  * Returns: (element-type GimpDrawable) (array zero-terminated=1) (transfer container):
  *          The list of selected drawables in the image.
+ *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/

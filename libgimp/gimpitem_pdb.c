@@ -568,6 +568,7 @@ gimp_item_get_parent (GimpItem *item)
  *
  * Returns: (element-type GimpItem) (array zero-terminated=1) (transfer container):
  *          The item's list of children.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.8
  **/
