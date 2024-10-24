@@ -265,10 +265,17 @@ void           gimp_value_take_int32_array       (GValue       *value,
  * GIMP_TYPE_FLOAT_ARRAY
  */
 
-#define GIMP_TYPE_FLOAT_ARRAY               (gimp_float_array_get_type ())
-#define GIMP_VALUE_HOLDS_FLOAT_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_FLOAT_ARRAY))
+#define         GIMP_TYPE_FLOAT_ARRAY               (gimp_float_array_get_type ())
+#define         GIMP_VALUE_HOLDS_FLOAT_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_FLOAT_ARRAY))
 
-GType   gimp_float_array_get_type           (void) G_GNUC_CONST;
+GType           gimp_float_array_get_type           (void) G_GNUC_CONST;
+
+const gdouble * gimp_float_array_get_values         (GimpArray     *array,
+                                                     gsize         *length);
+void            gimp_float_array_set_values         (GimpArray     *array,
+                                                     const gdouble *values,
+                                                     gsize         length,
+                                                     gboolean      static_data);
 
 
 /*
@@ -293,8 +300,10 @@ GParamSpec    * gimp_param_spec_float_array       (const gchar  *name,
                                                    const gchar  *blurb,
                                                    GParamFlags   flags);
 
-const gdouble * gimp_value_get_float_array        (const GValue  *value);
-gdouble       * gimp_value_dup_float_array        (const GValue  *value);
+const gdouble * gimp_value_get_float_array        (const GValue  *value,
+                                                   gsize         *length);
+gdouble       * gimp_value_dup_float_array        (const GValue  *value,
+                                                   gsize         *length);
 void            gimp_value_set_float_array        (GValue        *value,
                                                    const gdouble *data,
                                                    gsize         length);

@@ -36,7 +36,6 @@ static pointer marshal_returned_PDB_values  (scheme         *sc,
 
 static pointer marshal_returned_PDB_value   (scheme        *sc,
                                              GValue        *value,
-                                             guint          array_length,
                                              pointer       *error);
 
 
@@ -220,7 +219,7 @@ marshal_PDB_return_by_arity (scheme         *sc,
         {
           /* Marshal to single value not wrapped in list. */
           /* The value is second in the GVA, beyond the PDB status value. */
-          result = marshal_returned_PDB_value (sc, gimp_value_array_index (values, 1), 2, &marshalling_error);
+          result = marshal_returned_PDB_value (sc, gimp_value_array_index (values, 1), &marshalling_error);
         }
       else
         {
@@ -278,27 +277,16 @@ marshal_returned_PDB_values (scheme         *sc,
 
   *error = NULL;
 
-  /* Counting down, i.e. traversing in reverse.
-  * i+1 is the current index.  i is the preceding value.
-  * When at the current index is an array, preceding value (at i) is array length.
-  */
-  for (gint i = gimp_value_array_length (values) - 2; i >= 0; --i)
+  /* Counting down, i.e. traversing in reverse. */
+  for (gint i = gimp_value_array_length (values) - 1; i > 0; --i)
     {
-      GValue *value = gimp_value_array_index (values, i + 1);
+      GValue *value = gimp_value_array_index (values, i);
       pointer scheme_value;
       pointer single_error = NULL;
-      gint32  array_length = 0;
 
-      g_debug ("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
+      g_debug ("Return value %d is type %s", i, G_VALUE_TYPE_NAME (value));
 
-      /* In some cases previous value is array_length. */
-      if (   GIMP_VALUE_HOLDS_INT32_ARRAY (value)
-          || GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
-        {
-          array_length = GIMP_VALUES_GET_INT (values, i);
-        }
-
-      scheme_value = marshal_returned_PDB_value (sc, value, array_length, &single_error);
+      scheme_value = marshal_returned_PDB_value (sc, value, &single_error);
 
       if (single_error == NULL)
         {
@@ -337,10 +325,6 @@ marshal_returned_PDB_values (scheme         *sc,
  *
  * Returns a scheme "pointer" type referencing the scheme value.
  *
- * When the value has C type an array type,
- * array_length must be its length,
- * otherwise array_length is not used.
- *
  * Either returns a non-null scheme value and sets error to null,
  * or sets error and returns a null scheme value.
  * IOW, error is an OUT argument.
@@ -356,10 +340,9 @@ marshal_returned_PDB_values (scheme         *sc,
  *   - v3 returns atom #f or #t.
  */
 static pointer
-marshal_returned_PDB_value    (scheme        *sc,
-                               GValue        *value,
-                               guint          array_length,
-                               pointer       *error)
+marshal_returned_PDB_value (scheme  *sc,
+                            GValue  *value,
+                            pointer *error)
 {
   pointer  result = sc->NIL;
   gint     j;
@@ -469,6 +452,7 @@ marshal_returned_PDB_value    (scheme        *sc,
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
     {
+      guint         array_length;
       const gint32 *v      = gimp_value_get_int32_array (value, (gsize *) &array_length);
       pointer       vector = sc->vptr->mk_vector (sc, array_length);
 
@@ -497,7 +481,8 @@ marshal_returned_PDB_value    (scheme        *sc,
     }
   else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
     {
-      const gdouble *v      = gimp_value_get_float_array (value);
+      guint          array_length;
+      const gdouble *v      = gimp_value_get_float_array (value, (gsize *) &array_length);
       pointer        vector = sc->vptr->mk_vector (sc, array_length);
 
       for (j = 0; j < array_length; j++)

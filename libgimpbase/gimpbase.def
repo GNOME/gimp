@@ -71,6 +71,8 @@ EXPORTS
 	gimp_flags_value_get_desc
 	gimp_flags_value_get_help
 	gimp_float_array_get_type
+	gimp_float_array_get_values
+	gimp_float_array_set_values
 	gimp_foreground_extract_mode_get_type
 	gimp_gradient_blend_color_space_get_type
 	gimp_gradient_segment_color_get_type

@@ -687,6 +687,49 @@ gimp_value_take_int32_array (GValue *value,
 typedef GimpArray GimpFloatArray;
 G_DEFINE_BOXED_TYPE (GimpFloatArray, gimp_float_array, gimp_array_copy, gimp_array_free)
 
+/**
+ * gimp_float_array_get_values:
+ * @array: the #GimpArray representing #float values.
+ * @length: the number of #float values in the returned array.
+ *
+ * Returns: (array length=length) (transfer none): a C-array of #gdouble.
+ */
+const gdouble *
+gimp_float_array_get_values (GimpArray *array,
+                             gsize     *length)
+{
+  g_return_val_if_fail (array->length % sizeof (gdouble) == 0, NULL);
+
+  if (length)
+    *length = array->length / sizeof (gdouble);
+
+  return (const gdouble *) array->data;
+}
+
+/**
+ * gimp_float_array_set_values:
+ * @array: the array to modify.
+ * @values: (array length=length): the C-array.
+ * @length: the number of #float values in @data.
+ * @static_data: whether @data is a static rather than allocated array.
+ */
+void
+gimp_float_array_set_values (GimpArray     *array,
+                             const gdouble *values,
+                             gsize          length,
+                             gboolean       static_data)
+{
+  g_return_if_fail ((values == NULL && length == 0) || (values != NULL && length  > 0));
+
+  if (! array->static_data)
+    g_free (array->data);
+
+  array->length      = length * sizeof (gdouble);
+  array->data        = static_data ? (guint8 *) values : g_memdup2 (values, array->length);
+  array->static_data = static_data;
+}
+
+
 /*
  * GIMP_TYPE_PARAM_FLOAT_ARRAY
  */
@@ -763,15 +806,26 @@ gimp_param_spec_float_array (const gchar *name,
 /**
  * gimp_value_get_float_array:
  * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * @length: the number of returned #double elements.
  *
  * Gets the contents of a %GIMP_TYPE_FLOAT_ARRAY #GValue
  *
- * Returns: (transfer none) (array): The contents of @value
+ * Returns: (transfer none) (array length=length): The contents of @value
  */
 const gdouble *
-gimp_value_get_float_array (const GValue *value)
+gimp_value_get_float_array (const GValue *value,
+                            gsize        *length)
 {
+  GimpArray *array;
+
   g_return_val_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), NULL);
+
+  array = value->data[0].v_pointer;
+
+  g_return_val_if_fail (array->length % sizeof (gdouble) == 0, NULL);
+
+  if (length)
+    *length = array->length / sizeof (gdouble);
 
   return (const gdouble *) gimp_value_get_array (value);
 }
@@ -779,15 +833,26 @@ gimp_value_get_float_array (const GValue *value)
 /**
  * gimp_value_dup_float_array:
  * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * @length: the number of returned #double elements.
  *
  * Gets the contents of a %GIMP_TYPE_FLOAT_ARRAY #GValue
  *
- * Returns: (transfer full) (array): The contents of @value
+ * Returns: (transfer full) (array length=length): The contents of @value
  */
 gdouble *
-gimp_value_dup_float_array (const GValue *value)
+gimp_value_dup_float_array (const GValue *value,
+                            gsize        *length)
 {
+  GimpArray *array;
+
   g_return_val_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), NULL);
+
+  array = value->data[0].v_pointer;
+
+  g_return_val_if_fail (array->length % sizeof (gdouble) == 0, NULL);
+
+  if (length)
+    *length = array->length / sizeof (gdouble);
 
   return (gdouble *) gimp_value_dup_array (value);
 }

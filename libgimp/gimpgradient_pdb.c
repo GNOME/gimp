@@ -196,7 +196,7 @@ gimp_gradient_get_uniform_samples (GimpGradient  *gradient,
   if (success)
     {
       *num_color_samples = GIMP_VALUES_GET_INT (return_vals, 1);
-      *color_samples = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
+      *color_samples = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, (gsize *) num_color_samples);
     }
 
   gimp_value_array_unref (return_vals);
@@ -257,7 +257,7 @@ gimp_gradient_get_custom_samples (GimpGradient   *gradient,
   if (success)
     {
       *num_color_samples = GIMP_VALUES_GET_INT (return_vals, 1);
-      *color_samples = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2);
+      *color_samples = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, (gsize *) num_color_samples);
     }
 
   gimp_value_array_unref (return_vals);

@@ -384,7 +384,8 @@ gimp_config_deserialize_value (GValue     *value,
     {
       return gimp_config_deserialize_strv (value, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_INT32_ARRAY)
+  else if (prop_spec->value_type == GIMP_TYPE_INT32_ARRAY ||
+           prop_spec->value_type == GIMP_TYPE_FLOAT_ARRAY)
     {
       return gimp_config_deserialize_array (value, scanner);
     }
@@ -943,24 +944,45 @@ gimp_config_deserialize_array (GValue     *value,
   if (! gimp_scanner_parse_int (scanner, &n_values))
     return G_TOKEN_INT;
 
-  values = g_new0 (gint32, n_values);
+  if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+    values = g_new0 (gint32, n_values);
+  else /* GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) */
+    values = (gint32 *) g_new0 (gdouble, n_values);
 
   for (gint i = 0; i < n_values; i++)
     {
-      gint value;
-
-      if (! gimp_scanner_parse_int (scanner, &value))
+      if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
         {
-          result_token = G_TOKEN_INT;
-          break;
-        }
+          gint value;
 
-      values[i] = value;
+          if (! gimp_scanner_parse_int (scanner, &value))
+            {
+              result_token = G_TOKEN_INT;
+              break;
+            }
+
+          values[i] = value;
+        }
+      else
+        {
+          gdouble value;
+
+          if (! gimp_scanner_parse_float (scanner, &value))
+            {
+              result_token = G_TOKEN_FLOAT;
+              break;
+            }
+
+          ((gdouble *) values)[i] = value;
+        }
     }
 
   if (result_token == G_TOKEN_RIGHT_PAREN)
     {
-      gimp_value_take_int32_array (value, values, n_values);
+      if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+        gimp_value_take_int32_array (value, values, n_values);
+      else
+        gimp_value_take_float_array (value, (gdouble *) values, n_values);
     }
   else
     {

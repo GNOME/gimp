@@ -514,7 +514,8 @@ gimp_config_serialize_value (const GValue *value,
       return gimp_config_serialize_strv (value, str);
     }
 
-  if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+  if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
+      GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
     {
       return gimp_config_serialize_array (value, str);
     }
@@ -743,25 +744,42 @@ gimp_config_serialize_array (const GValue *value,
 {
   GimpArray *array;
 
-  g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value), FALSE);
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
+                        GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), FALSE);
 
   array = g_value_get_boxed (value);
 
   if (array)
     {
       gint32 *values = (gint32 *) array->data;
-      gint    length = array->length / sizeof (gint32);
+      gint    length;
+
+      if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+        length = array->length / sizeof (gint32);
+      else
+        length = array->length / sizeof (gdouble);
 
       /* Write length */
       g_string_append_printf (str, "%d", length);
 
       for (gint i = 0; i < length; i++)
         {
-          gchar *istr;
+          gchar *num_str;
 
-          istr = g_strdup_printf (" %d", values[i]);
-          g_string_append (str, istr);
-          g_free (istr);
+          if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+            {
+              num_str = g_strdup_printf (" %d", values[i]);
+            }
+          else
+            {
+              gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+
+              g_ascii_dtostr (buf, sizeof (buf), ((gdouble *) values)[i]);
+              num_str = g_strdup_printf (" %s", buf);
+            }
+
+          g_string_append (str, num_str);
+          g_free (num_str);
         }
     }
   else

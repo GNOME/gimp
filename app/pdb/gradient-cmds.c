@@ -236,7 +236,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   num_samples = g_value_get_int (gimp_value_array_index (args, 1));
-  positions = gimp_value_get_float_array (gimp_value_array_index (args, 2));
+  positions = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_samples);
   reverse = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)
