@@ -199,29 +199,34 @@ sub generate_fun {
         my $var_len;
         my $value;
 
-        # This gets passed to gimp_value_array_new_with_types()
-        if ($type eq 'enum') {
-            $enum_type = $typeinfo[0];
-            $enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
-            $enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
-            $enum_type =~ tr/[a-z]/[A-Z]/;
-            $enum_type =~ s/^GIMP/GIMP_TYPE/;
-            $enum_type =~ s/^GEGL/GEGL_TYPE/;
-
-            $value_array .= "$enum_type, ";
+        if (exists $_->{nopdb}) {
+            $argc--;
         }
         else {
-            $value_array .= "$arg->{gtype}, ";
-        }
+            # This gets passed to gimp_value_array_new_with_types()
+            if ($type eq 'enum') {
+                $enum_type = $typeinfo[0];
+                $enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
+                $enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
+                $enum_type =~ tr/[a-z]/[A-Z]/;
+                $enum_type =~ s/^GIMP/GIMP_TYPE/;
+                $enum_type =~ s/^GEGL/GEGL_TYPE/;
 
-        if (exists $_->{array}) {
-            $value_array .= "NULL";
-        }
-        else {
-            $value_array .= "$var";
-        }
+                $value_array .= "$enum_type, ";
+            }
+            else {
+                $value_array .= "$arg->{gtype}, ";
+            }
 
-        $value_array .= ",\n" . " " x 42;
+            if (exists $_->{array}) {
+                $value_array .= "NULL";
+            }
+            else {
+                $value_array .= "$var";
+            }
+
+            $value_array .= ",\n" . " " x 42;
+        }
 
         if (exists $_->{array}) {
             my $arrayarg = $_->{array};
@@ -249,7 +254,7 @@ sub generate_fun {
         $argdesc .= ":";
 
         if (exists $arg->{array}) {
-            $argdesc .= " (array length=$inargs[$argc - 1]->{name})";
+            $argdesc .= " (array length=$var_len)";
         }
 
         if (exists $arg->{in_annotate}) {
@@ -389,7 +394,13 @@ CODE
                 }
 
                 if (exists $arg->{array}) {
-                    $var_len  = $outargs[$argc - 2]->{name};
+                    my $arrayarg = $_->{array};
+                    if (exists $arrayarg->{name}) {
+                        $var_len = $arrayarg->{name};
+                    }
+                    else {
+                        $var_len = 'num_' . $_->{libname};
+                    }
                     $argdesc .= " (array length=$var_len)";
                 }
 
@@ -403,10 +414,16 @@ CODE
             $var = exists $_->{retval} ? "" : '*';
             $var .= $_->{libname};
 
+            if (exists $_->{nopdb}) {
+                $argc--;
+            }
+
             $value = "return_vals, $argc";
 
-            $return_marshal .= ' ' x 2 if $#outargs;
-            $return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
+            if (! exists $_->{nopdb}) {
+                $return_marshal .= ' ' x 2 if $#outargs;
+                $return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
+            }
 
             if ($argdesc) {
                 unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }

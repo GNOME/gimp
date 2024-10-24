@@ -191,8 +191,7 @@ gimp_path_get_strokes (GimpPath *path,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_strokes = GIMP_VALUES_GET_INT (return_vals, 1);
-      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2, (gsize *) num_strokes);
+      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 1, (gsize *) num_strokes);
     }
 
   gimp_value_array_unref (return_vals);
@@ -702,9 +701,8 @@ gimp_path_stroke_get_points (GimpPath  *path,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       type = GIMP_VALUES_GET_ENUM (return_vals, 1);
-      *num_points = GIMP_VALUES_GET_INT (return_vals, 2);
-      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 3, (gsize *) num_points);
-      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 4);
+      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, (gsize *) num_points);
+      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 3);
     }
 
   gimp_value_array_unref (return_vals);
@@ -748,11 +746,10 @@ gimp_path_stroke_new_from_points (GimpPath           *path,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PATH, path,
                                           GIMP_TYPE_PATH_STROKE_TYPE, type,
-                                          G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, closed,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), controlpoints, num_points);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), controlpoints, num_points);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-path-stroke-new-from-points",
@@ -811,9 +808,8 @@ gimp_path_stroke_interpolate (GimpPath *path,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      *num_coords = GIMP_VALUES_GET_INT (return_vals, 1);
-      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, (gsize *) num_coords);
-      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 3);
+      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, (gsize *) num_coords);
+      *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 2);
     }
 
   gimp_value_array_unref (return_vals);

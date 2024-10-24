@@ -295,8 +295,7 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  num_segs = g_value_get_int (gimp_value_array_index (args, 2));
-  segs = gimp_value_get_float_array (gimp_value_array_index (args, 3), (gsize *) &num_segs);
+  segs = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_segs);
 
   if (success)
     {
@@ -668,12 +667,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-segs",
-                                                 "num segs",
-                                                 "Number of points (count 1 coordinate as two points)",
-                                                 2, G_MAXINT32, 2,
-                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("segs",
                                                             "segs",

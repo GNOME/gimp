@@ -1136,14 +1136,12 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
   gint bmode;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  argc_matrix = g_value_get_int (gimp_value_array_index (args, 3));
-  matrix = gimp_value_get_float_array (gimp_value_array_index (args, 4), (gsize *) &argc_matrix);
-  alpha_alg = g_value_get_boolean (gimp_value_array_index (args, 5));
-  divisor = g_value_get_double (gimp_value_array_index (args, 6));
-  offset = g_value_get_double (gimp_value_array_index (args, 7));
-  argc_channels = g_value_get_int (gimp_value_array_index (args, 8));
-  channels = gimp_value_get_int32_array (gimp_value_array_index (args, 9), (gsize *) &argc_channels);
-  bmode = g_value_get_int (gimp_value_array_index (args, 10));
+  matrix = gimp_value_get_float_array (gimp_value_array_index (args, 3), (gsize *) &argc_matrix);
+  alpha_alg = g_value_get_boolean (gimp_value_array_index (args, 4));
+  divisor = g_value_get_double (gimp_value_array_index (args, 5));
+  offset = g_value_get_double (gimp_value_array_index (args, 6));
+  channels = gimp_value_get_int32_array (gimp_value_array_index (args, 7), (gsize *) &argc_channels);
+  bmode = g_value_get_int (gimp_value_array_index (args, 8));
 
   if (success)
     {
@@ -5664,12 +5662,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("argc-matrix",
-                                                 "argc matrix",
-                                                 "The number of elements in the following array, must always be 25",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("matrix",
                                                             "matrix",
                                                             "The 5x5 convolution matrix",
@@ -5692,12 +5684,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Offset",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("argc-channels",
-                                                 "argc channels",
-                                                 "The number of elements in following array, must always be 5",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32_array ("channels",
                                                             "channels",

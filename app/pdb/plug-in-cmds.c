@@ -79,8 +79,7 @@ plug_ins_query_invoker (GimpProcedure         *procedure,
   g_value_take_boxed (gimp_value_array_index (return_vals, 1), procedures);
   g_value_take_boxed (gimp_value_array_index (return_vals, 2), accelerators);
   g_value_take_boxed (gimp_value_array_index (return_vals, 3), locations);
-  g_value_set_int (gimp_value_array_index (return_vals, 4), num_install_times);
-  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 5), install_times, num_install_times);
+  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 4), install_times, num_install_times);
 
   return return_vals;
 }
@@ -256,12 +255,6 @@ register_plug_in_procs (GimpPDB *pdb)
                                                        "Location of the plug-in program",
                                                        G_TYPE_STRV,
                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-install-times",
-                                                     "num install times",
-                                                     "The number of matching procedures",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("install-times",
                                                                 "install times",
