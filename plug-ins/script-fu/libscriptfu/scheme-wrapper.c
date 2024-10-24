@@ -585,14 +585,19 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
 
 /* Load script defining much of Scheme in Scheme language.
  * This hides the actual name.
+
  * By convention in Scheme, the name is init.scm.
+ * Other Schemes use a same named file for the same purpose.
+ * The contents are more or less same as upstream TinyScheme.
+ * The contents only define a Lisp dialect,
+ * and not ScriptFu's additional bindings to the PDB.
  *
  * Returns TRUE on successful load.
  */
 static gboolean
 ts_load_main_init_script (gchar *dir)
 {
-  return ts_load_file (dir, "script-fu.init");
+  return ts_load_file (dir, "init.scm");
 }
 
 /* Load certain Scheme init scripts from certain directories.
@@ -644,12 +649,12 @@ ts_load_init_and_compatibility_scripts (GList *paths)
           /* Improve compatibility with older Script-Fu scripts,
            * load definitions for old dialects of Lisp (SIOD) or older ScriptFu.
            */
-          (void) ts_load_file (dir, "script-fu-compat.init");
+          (void) ts_load_file (dir, "script-fu-compat.scm");
 
           /* Improve compatibility with older GIMP version,
            * load definitions that alias/adapt older PDB procedures or plugins.
            */
-          (void) ts_load_file (dir, "plug-in-compat.init");
+          (void) ts_load_file (dir, "plug-in-compat.scm");
 
           g_free (dir);
 

@@ -1,9 +1,9 @@
 
 # scripts loaded by ScriptFu to initialize the embedded interpreter
 init_scripts = [
-  'plug-in-compat.init',
-  'script-fu.init',
-  'script-fu-compat.init',
+  'plug-in-compat.scm',
+  'init.scm',
+  'script-fu-compat.scm',
 ]
 
 install_data(
