@@ -336,7 +336,7 @@ gimp_displays_accept_focus_events (Gimp *gimp)
     {
       GimpDisplayShell *shell = gimp_image_window_get_active_shell (iter->data);
 
-      if (! gimp_display_shell_is_drawn (shell))
+      if (shell && ! gimp_display_shell_is_drawn (shell))
         {
           accept = FALSE;
           break;
