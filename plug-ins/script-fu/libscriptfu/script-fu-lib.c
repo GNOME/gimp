@@ -254,7 +254,7 @@ script_fu_search_path (void)
 gchar *
 script_fu_get_init_subdirectory (GFile *dir)
 {
-  GFile *subdirectory = g_file_get_child (dir, "init");
+  GFile *subdirectory = g_file_get_child (dir, "scriptfu-init");
   gchar *result_path  = g_file_get_path (subdirectory);
 
   g_object_unref (subdirectory);
@@ -301,6 +301,25 @@ script_fu_user_init_directory (void)
   g_list_free_full (paths, (GDestroyNotify) g_object_unref);
 
   return result_path;
+}
+
+gboolean
+
+/* Is the given dir named like an init dir for SF?
+ *
+ * This is lax, and doesn't check the dir is in one of
+ * the two locations for SF's init directories.
+ * Users should not use the name in their own directories
+ * in the tree of script directories.
+ */
+script_fu_is_init_directory (GFile *dir)
+{
+  char    *basename = g_file_get_basename (dir);
+  gboolean result;
+
+  result = g_strcmp0 (basename, "scriptfu-init") == 0;
+  g_free (basename);
+  return result;
 }
 
 GimpProcedure *

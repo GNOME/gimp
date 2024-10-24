@@ -1,4 +1,5 @@
 subdir('images')
+subdir('init')
 subdir('test')
 
 # scripts interpreted by extension-script-fu, installed to /scripts
@@ -31,14 +32,11 @@ scripts = [
   'paste-as-brush.scm',
   'paste-as-pattern.scm',
   'perspective-shadow.scm',
-  'plug-in-compat.init',
   'reverse-layers.scm',
   'ripply-anim.scm',
   'round-corners.scm',
-  'script-fu-compat.init',
   'script-fu-set-cmap.scm',
   'script-fu-util.scm',
-  'script-fu.init',
   'selection-round.scm',
   'slide.scm',
   'spinning-globe.scm',

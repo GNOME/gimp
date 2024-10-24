@@ -29,6 +29,7 @@
 
 #include "tinyscheme/scheme-private.h"
 
+#include "script-fu-lib.h"
 #include "script-fu-types.h"
 #include "script-fu-script.h"
 #include "script-fu-scripts.h"
@@ -337,6 +338,14 @@ script_fu_add_menu (scheme  *sc,
 
 /*  private functions  */
 
+/* Load scripts from a directory tree.
+ * Recursively, descending into subdirectories.
+ * Only loads terminal files with suffix .scm.
+ * Not all such files need be plugin scripts.
+ * Does not load or traverse hidden files and directories
+ * and directories named like an init directory.
+ * ScriptFu separately loads certain files in init directories.
+ */
 static void
 script_fu_load_directory (GFile *directory)
 {
@@ -366,9 +375,19 @@ script_fu_load_directory (GFile *directory)
               GFile *child = g_file_enumerator_get_child (enumerator, info);
 
               if (file_type == G_FILE_TYPE_DIRECTORY)
-                script_fu_load_directory (child);
+                {
+                  /* Skip any init subdirectory.
+                   * It has scripts already loaded, and scripts we don't want loaded.
+                   */
+                  if (! script_fu_is_init_directory (child))
+                    /* Recursive! */
+                    script_fu_load_directory (child);
+                }
               else
-                script_fu_load_script (child);
+                {
+                  /* This will only load a .scm file. */
+                  script_fu_load_script (child);
+                }
 
               g_object_unref (child);
             }

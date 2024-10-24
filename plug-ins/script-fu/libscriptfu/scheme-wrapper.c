@@ -595,6 +595,19 @@ ts_load_main_init_script (gchar *dir)
   return ts_load_file (dir, "script-fu.init");
 }
 
+/* Load certain Scheme init scripts from certain directories.
+ * Loads from two directories, user and sys, in that order.
+ * Only loads from directories named "scriptfu-init.""
+ * Only loads a small set of named files, not all .scm files in the directory.
+ * Only loads the first set of init scripts found,
+ * from the first directory where the main init script is found.
+ * Does not recursively descend into the directories.
+ *
+ * We recommend a user not shadow the sys init scripts,
+ * especially the main one: init.scm.
+ * Should not shadow in the user init script directory,
+ * or in any other script directory.
+ */
 static void
 ts_load_init_and_compatibility_scripts (GList *paths)
 {
@@ -608,14 +621,15 @@ ts_load_init_and_compatibility_scripts (GList *paths)
       return;
     }
 
-  /* paths is a list of dirs of ScriptFu scripts, user specific and system wide.
+  /* paths is a list of dirs known by ScriptFu, user specific and system wide.
    * The order is important, and this first searches user specific directories.
-   * Also this only loads the first set of init scripts found.
-   * We recommend a user not shadow the sys init scripts, especially init.scm.
    */
   for (GList *list = paths; list; list = g_list_next (list))
     {
-      gchar *dir = g_file_get_path (list->data);
+      /* Load from a designated init subdirectory.
+       * Subsequent loading of ordinary scripts skips this subdir.
+       */
+      gchar *dir = script_fu_get_init_subdirectory (list->data);
 
       if (ts_load_main_init_script (dir))
         {

@@ -24,6 +24,7 @@ GList *      script_fu_search_path               (void);
 gchar *      script_fu_sys_init_directory        (void);
 gchar *      script_fu_user_init_directory       (void);
 gchar *      script_fu_get_init_subdirectory     (GFile *dir);
+gboolean     script_fu_is_init_directory         (GFile *dir);
 
 void         script_fu_find_and_register_scripts (GimpPlugIn     *plugin,
                                                   GList          *paths);
