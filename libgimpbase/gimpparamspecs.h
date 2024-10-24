@@ -239,8 +239,10 @@ GParamSpec   * gimp_param_spec_int32_array       (const gchar  *name,
                                                   const gchar  *blurb,
                                                   GParamFlags   flags);
 
-const gint32 * gimp_value_get_int32_array        (const GValue *value);
-gint32       * gimp_value_dup_int32_array        (const GValue *value);
+const gint32 * gimp_value_get_int32_array        (const GValue *value,
+                                                  gsize        *length);
+gint32       * gimp_value_dup_int32_array        (const GValue *value,
+                                                  gsize        *length);
 void           gimp_value_set_int32_array        (GValue       *value,
                                                   const gint32 *data,
                                                   gsize         length);

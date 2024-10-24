@@ -1142,7 +1142,7 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
   divisor = g_value_get_double (gimp_value_array_index (args, 6));
   offset = g_value_get_double (gimp_value_array_index (args, 7));
   argc_channels = g_value_get_int (gimp_value_array_index (args, 8));
-  channels = gimp_value_get_int32_array (gimp_value_array_index (args, 9));
+  channels = gimp_value_get_int32_array (gimp_value_array_index (args, 9), (gsize *) &argc_channels);
   bmode = g_value_get_int (gimp_value_array_index (args, 10));
 
   if (success)

@@ -79,8 +79,8 @@ package Gimp::CodeGen::pdb;
 		     init_value      => 'NULL',
 		     in_annotate     => '(element-type gint32)',
 		     out_annotate    => '(element-type gint32) (transfer full)',
-		     get_value_func  => '$var = gimp_value_get_int32_array ($value)',
-		     dup_value_func  => '$var = GIMP_VALUES_DUP_INT32_ARRAY ($value)',
+		     get_value_func  => '$var = gimp_value_get_int32_array ($value, (gsize *) &$var_len)',
+		     dup_value_func  => '$var = GIMP_VALUES_DUP_INT32_ARRAY ($value, (gsize *) $var_len)',
 		     set_value_func  => 'gimp_value_set_int32_array ($value, $var, $var_len)',
 		     take_value_func => 'gimp_value_take_int32_array ($value, $var, $var_len)' },
 

@@ -469,7 +469,7 @@ marshal_returned_PDB_value    (scheme        *sc,
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
     {
-      const gint32 *v      = gimp_value_get_int32_array (value);
+      const gint32 *v      = gimp_value_get_int32_array (value, (gsize *) &array_length);
       pointer       vector = sc->vptr->mk_vector (sc, array_length);
 
       for (j = 0; j < array_length; j++)
