@@ -1,14 +1,14 @@
 # Greek translations for PACKAGE package.
 # Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
-#
+# Automatically generated
+# Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2022-2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-01-16 10:29+0000\n"
-"PO-Revision-Date: 2024-01-21 01:37+0200\n"
+"POT-Creation-Date: 2024-10-15 05:53+0000\n"
+"PO-Revision-Date: 2024-10-24 20:16+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: none\n"
 "Language: el\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.5\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -154,91 +154,75 @@ msgstr ""
 "Να συμπεριληφθούν πληροφορίες που θα βοηθήσουν την αποσφαλμάτωση του GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK"
-msgstr "Μηχανή MS-Windows για GTK"
-
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Εμφάνιση εγγενών Windows για GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:121
-msgid "Support for old plug-ins"
-msgstr "Υποστήριξη για παλιά πρόσθετα"
-
-#: build/windows/installer/lang/setup.isl.xml.in:125
-msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Εγκατάσταση των βιβλιοθηκών που απαιτούνται από παλιά πρόσθετα τρίτων"
-
-#: build/windows/installer/lang/setup.isl.xml.in:129
-#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "Μεταφράσεις"
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Python scripting"
 msgstr "Δέσμη ενεργειών Python"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
 "Σας επιτρέπει να χρησιμοποιείτε πρόσθετα GIMP γραμμένα σε γλώσσα "
 "προγραμματισμού Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:129
 msgid "Lua scripting"
 msgstr "Προγραμματισμός Lua"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
 "Σας επιτρέπει να χρησιμοποιείτε πρόσθετα GIMP γραμμένα σε γλώσσα "
 "προγραμματισμού Lua."
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "MyPaint brushes"
 msgstr "Πινέλα MyPaint (ΒαφήΜου)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Install the default set of MyPaint brushes"
 msgstr "Εγκατάσταση του προεπιλεγμένου συνόλου πινέλων MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "PostScript support"
 msgstr "Υποστήριξη PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allow GIMP to load PostScript files"
 msgstr "Να επιτρέπεται στο GIMP να φορτώσει αρχεία PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "Support for 32-bit plug-ins"
 msgstr "Υποστήριξη για πρόσθετα 32 δυαδικών"
 
-#: build/windows/installer/lang/setup.isl.xml.in:173
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
 "support."
 msgstr ""
 "Να συμπεριλαμβάνονται αρχεία που είναι απαραίτητα για τη χρήση προσθέτων 32-"
-"bit.%nΑπαιτείται για υποστήριξη Python."
+"bit.%nΑπαιτείται για υποστήριξη TWAIN."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
 msgstr "Πρόσθετα εικονίδια:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid "Create a &desktop icon"
 msgstr "Δημιουργία εικονιδίου στην επι&φάνεια εργασίας"
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Create a &Quick Launch icon"
 msgstr "Δημιουργία εικονιδίου για &γρήγορη εκκίνηση"
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Remove previous GIMP version"
 msgstr "Αφαίρεση προηγούμενης έκδοσης GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:179
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -247,44 +231,44 @@ msgstr ""
 "Εάν λάβετε σφάλματα κατά τη φόρτωση των προσθέτων, δοκιμάστε να "
 "απεγκαταστήσετε και να επανεγκαταστήσετε το GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:183
 msgid "Error extracting temporary data."
 msgstr "Σφάλμα κατά την εξαγωγή προσωρινών δεδομένων."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Error updating Python interpreter info."
 msgstr "Σφάλμα κατά την ενημέρωση των πληροφοριών διερμηνέα Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:207
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "Error updating MyPaint brushes info."
 msgstr "Σφάλμα κατά την ενημέρωση των πληροφοριών πινέλων MyPaint."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "There was an error updating %1."
 msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση του %1."
 
-#: build/windows/installer/lang/setup.isl.xml.in:215
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr ""
 "Παρουσιάστηκε σφάλμα κατά την ενημέρωση του αρχείου διαμόρφωσης %1 του GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:220
+#: build/windows/installer/lang/setup.isl.xml.in:204
 msgid "Edit with GIMP"
 msgstr "Επεξεργασία με το GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:209
 msgid "Select file associations"
 msgstr "Επιλέξτε συσχετίσεις αρχείων"
 
-#: build/windows/installer/lang/setup.isl.xml.in:229
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid "Extensions:"
 msgstr "Επεκτάσεις:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:233
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Επιλέξτε τους τύπους αρχείων που θέλετε να συσχετίσετε με το GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:237
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -292,27 +276,27 @@ msgstr ""
 "Αυτό θα κάνει τα επιλεγμένα αρχεία ανοιχτά στο GIMP όταν διπλοπατάτε σε αυτά "
 "στον Explorer."
 
-#: build/windows/installer/lang/setup.isl.xml.in:241
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select &All"
 msgstr "Επιλογή ό&λων"
 
-#: build/windows/installer/lang/setup.isl.xml.in:245
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Unselect &All"
 msgstr "Αποεπιλογή ό&λων"
 
-#: build/windows/installer/lang/setup.isl.xml.in:249
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select &Unused"
 msgstr "Επιλογή α&χρησιμοποίητων"
 
-#: build/windows/installer/lang/setup.isl.xml.in:254
+#: build/windows/installer/lang/setup.isl.xml.in:238
 msgid "File types to associate with GIMP:"
 msgstr "Τύποι αρχείων για συσχέτιση με το GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:258
+#: build/windows/installer/lang/setup.isl.xml.in:242
 msgid "Removing previous version of GIMP:"
 msgstr "Αφαίρεση της προηγούμενης έκδοσης του GIMP:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:262
+#: build/windows/installer/lang/setup.isl.xml.in:246
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -321,19 +305,19 @@ msgid ""
 "Setup will now exit."
 msgstr ""
 "Το GIMP %1 δεν μπορεί να εγκατασταθεί μέσω της τρέχουσας εγκατεστημένης "
-"έκδοσης GIMP και η αυτόματη απεγκατάσταση της παλιάς έκδοσης απέτυχε."
-"n%nΚαταργήστε την προηγούμενη έκδοση του GIMP μόνοι σας πριν εγκαταστήσετε "
+"έκδοσης GIMP και η αυτόματη απεγκατάσταση της παλιάς έκδοσης απέτυχε.n"
+"%nΚαταργήστε την προηγούμενη έκδοση του GIMP μόνοι σας πριν εγκαταστήσετε "
 "αυτήν την έκδοση στο %2, ή επιλέξτε μια προσαρμοσμένη εγκατάσταση και "
 "επιλέξτε ένα διαφορετικό φάκελο εγκατάστασης.%n%nΗ εγκατάσταση θα "
 "τερματιστεί τώρα."
 
-#: build/windows/installer/lang/setup.isl.xml.in:266
+#: build/windows/installer/lang/setup.isl.xml.in:250
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically."
-"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
-"before installing this version in %2, or choose a Custom install, and select "
-"a different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "Το GIMP %1 δεν μπορεί να εγκατασταθεί μέσω της τρέχουσας εγκατεστημένης "
 "έκδοσης GIMP και το πρόγραμμα Εγκατάστασης δεν μπόρεσε να προσδιορίσει πώς "
@@ -343,7 +327,7 @@ msgstr ""
 "διαφορετικό φάκελο εγκατάστασης.%n%nΤο πρόγραμμα Εγκατάστασης θα τερματιστεί "
 "τώρα."
 
-#: build/windows/installer/lang/setup.isl.xml.in:270
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
@@ -354,61 +338,74 @@ msgstr ""
 "υπολογιστή σας, η εγκατάσταση θα συνεχιστεί την επόμενη φορά που θα συνδεθεί "
 "ένας διαχειριστής."
 
-#: build/windows/installer/lang/setup.isl.xml.in:275
+#: build/windows/installer/lang/setup.isl.xml.in:259
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Παρουσιάστηκε σφάλμα κατά την επανεκκίνηση της εγκατάστασης. (% 1)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:263
 msgid "Cleaning up old files..."
 msgstr "Καθαρισμός των παλιών αρχείων..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:284
+#: build/windows/installer/lang/setup.isl.xml.in:268
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Θυμηθείτε: Το GIMP είναι Ελεύθερο Λογισμικό.%n%nΕπισκεφτείτε το"
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
+#: build/windows/installer/lang/setup.isl.xml.in:272
 msgid "for free updates."
 msgstr "για ελεύθερες ενημερώσεις."
 
-#: build/windows/installer/lang/setup.isl.xml.in:292
+#: build/windows/installer/lang/setup.isl.xml.in:276
 msgid "Setting up file associations..."
 msgstr "Ρύθμιση συσχετίσεων αρχείων..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:295
+#: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Ρύθμιση περιβάλλοντος για την επέκταση GIMP Python..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:282
 msgid "Setting up MyPaint brushes..."
 msgstr "Ρύθμιση για τα πινέλα MyPaint..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:301
+#: build/windows/installer/lang/setup.isl.xml.in:285
 msgid "Setting up GIMP environment..."
 msgstr "Ρύθμιση περιβάλλοντος του GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:304
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Ρύθμιση διαμόρφωσης του GIMP για υποστήριξη προσθέτων 32-bit..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:309
+#: build/windows/installer/lang/setup.isl.xml.in:293
 msgid "Launch GIMP"
 msgstr "Εκκίνηση του GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:314
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Removing add-on"
 msgstr "Αφαίρεση προσθέτου"
 
-#: build/windows/installer/lang/setup.isl.xml.in:318
+#: build/windows/installer/lang/setup.isl.xml.in:302
 msgid "Internal error (%1)."
 msgstr "Εσωτερικό σφάλμα (%1)."
 
-#: build/windows/installer/lang/setup.isl.xml.in:323
+#: build/windows/installer/lang/setup.isl.xml.in:307
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
 "Το GIMP δεν φαίνεται να είναι εγκατεστημένο στον επιλεγμένο κατάλογο. Να "
 "συνεχίσω πάντως;"
+
+#~ msgid "MS-Windows engine for GTK"
+#~ msgstr "Μηχανή MS-Windows για GTK"
+
+#~ msgid "Native Windows look for GIMP"
+#~ msgstr "Εμφάνιση εγγενών Windows για GIMP"
+
+#~ msgid "Support for old plug-ins"
+#~ msgstr "Υποστήριξη για παλιά πρόσθετα"
+
+#~ msgid "Install libraries needed by old third-party plug-ins"
+#~ msgstr ""
+#~ "Εγκατάσταση των βιβλιοθηκών που απαιτούνται από παλιά πρόσθετα τρίτων"
 
 #~ msgid ""
 #~ "Parameter /INSTALL requires parameters /DIR and /ALLUSERS or /CURRENTUSER."
