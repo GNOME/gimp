@@ -340,21 +340,10 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cur");
 
-      gimp_procedure_add_int_argument (procedure, "n-hot-spot-x",
-                                       "Number of hot spot's X coordinates",
-                                       "Number of hot spot's X coordinates",
-                                       0, G_MAXINT, 0,
-                                       G_PARAM_READWRITE);
       gimp_procedure_add_int32_array_argument (procedure, "hot-spot-x",
                                                "Hot spot X",
                                                "X coordinates of hot spot (one per layer)",
                                                G_PARAM_READWRITE);
-
-      gimp_procedure_add_int_argument (procedure, "n-hot-spot-y",
-                                       "Number of hot spot's Y coordinates",
-                                       "Number of hot spot's Y coordinates",
-                                       0, G_MAXINT, 0,
-                                       G_PARAM_READWRITE);
       gimp_procedure_add_int32_array_argument (procedure, "hot-spot-y",
                                                "Hot spot Y",
                                                "Y coordinates of hot spot (one per layer)",
@@ -408,21 +397,10 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                        0, G_MAXINT, 8,
                                        G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "n-hot-spot-x",
-                                       "Number of hot spot's X coordinates",
-                                       "Number of hot spot's X coordinates",
-                                       0, G_MAXINT, 0,
-                                       G_PARAM_READWRITE);
       gimp_procedure_add_int32_array_argument (procedure, "hot-spot-x",
                                                "Hot spot X",
                                                "X coordinates of hot spot (one per layer)",
                                                G_PARAM_READWRITE);
-
-      gimp_procedure_add_int_argument (procedure, "n-hot-spot-y",
-                                       "Number of hot spot's Y coordinates",
-                                       "Number of hot spot's Y coordinates",
-                                       0, G_MAXINT, 0,
-                                       G_PARAM_READWRITE);
       gimp_procedure_add_int32_array_argument (procedure, "hot-spot-y",
                                                "Hot spot Y",
                                                "Y coordinates of hot spot (one per layer)",
@@ -605,39 +583,40 @@ cur_export (GimpProcedure        *procedure,
 {
   GimpPDBStatusType  status;
   GError            *error        = NULL;
-  gint32            *hot_spot_x   = NULL;
-  gint32            *hot_spot_y   = NULL;
-  gint               n_hot_spot_x = 0;
-  gint               n_hot_spot_y = 0;
+  GimpArray         *x_array      = NULL;
+  GimpArray         *y_array      = NULL;
+  const gint32      *hot_spot_x   = NULL;
+  const gint32      *hot_spot_y   = NULL;
+  gint32            *new_hot_spot_x   = NULL;
+  gint32            *new_hot_spot_y   = NULL;
+  gsize              n_hot_spot_x = 0;
+  gsize              n_hot_spot_y = 0;
 
   gegl_init (NULL, NULL);
 
   g_object_get (config,
-                "n-hot-spot-x", &n_hot_spot_x,
-                "n-hot-spot-y", &n_hot_spot_y,
-                "hot-spot-x",   &hot_spot_x,
-                "hot-spot-y",   &hot_spot_y,
+                "hot-spot-x", &x_array,
+                "hot-spot-y", &y_array,
                 NULL);
 
+  hot_spot_x = gimp_int32_array_get_values (x_array, &n_hot_spot_x);
+  hot_spot_y = gimp_int32_array_get_values (y_array, &n_hot_spot_y);
+
   status = cur_export_image (file, image, procedure, config, run_mode,
-                             &n_hot_spot_x, &hot_spot_x,
-                             &n_hot_spot_y, &hot_spot_y,
+                             &n_hot_spot_x, hot_spot_x, &new_hot_spot_x,
+                             &n_hot_spot_y, hot_spot_y, &new_hot_spot_y,
                              &error);
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /* XXX: seems libgimpconfig is not able to serialize
-       * GimpInt32Array args yet anyway. Still leave this here for now,
-       * as reminder of missing feature when we see the warnings.
-       */
+      gimp_int32_array_set_values (x_array, new_hot_spot_x, n_hot_spot_x, FALSE);
+      gimp_int32_array_set_values (y_array, new_hot_spot_y, n_hot_spot_y, FALSE);
       g_object_set (config,
-                    "n-hot-spot-x", n_hot_spot_x,
-                    "n-hot-spot-y", n_hot_spot_y,
-                    /*"hot-spot-x",   hot_spot_x,*/
-                    /*"hot-spot-y",   hot_spot_y,*/
+                    "hot-spot-x", x_array,
+                    "hot-spot-y", y_array,
                     NULL);
-      g_free (hot_spot_x);
-      g_free (hot_spot_y);
+      g_free (new_hot_spot_x);
+      g_free (new_hot_spot_y);
     }
 
   return gimp_procedure_new_return_values (procedure, status, error);
@@ -654,14 +633,18 @@ ani_export (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpPDBStatusType  status;
-  GError            *error        = NULL;
-  gchar             *inam         = NULL;
-  gchar             *iart         = NULL;
-  gint               jif_rate     = 0;
-  gint32            *hot_spot_x   = NULL;
-  gint32            *hot_spot_y   = NULL;
-  gint               n_hot_spot_x = 0;
-  gint               n_hot_spot_y = 0;
+  GError            *error          = NULL;
+  gchar             *inam           = NULL;
+  gchar             *iart           = NULL;
+  gint               jif_rate       = 0;
+  GimpArray         *x_array        = NULL;
+  GimpArray         *y_array        = NULL;
+  const gint32      *hot_spot_x     = NULL;
+  const gint32      *hot_spot_y     = NULL;
+  gint32            *new_hot_spot_x = NULL;
+  gint32            *new_hot_spot_y = NULL;
+  gsize              n_hot_spot_x   = 0;
+  gsize              n_hot_spot_y   = 0;
   AniFileHeader      header;
   AniSaveInfo        ani_info;
 
@@ -671,10 +654,8 @@ ani_export (GimpProcedure        *procedure,
                 "cursor-name",   &inam,
                 "author-name",   &iart,
                 "default-delay", &jif_rate,
-                "n-hot-spot-x",  &n_hot_spot_x,
-                "n-hot-spot-y",  &n_hot_spot_y,
-                "hot-spot-x",    &hot_spot_x,
-                "hot-spot-y",    &hot_spot_y,
+                "hot-spot-x",    &x_array,
+                "hot-spot-y",    &y_array,
                 NULL);
 
   /* Jiffies (1/60th of a second) used if rate chunk not present. */
@@ -682,28 +663,27 @@ ani_export (GimpProcedure        *procedure,
   ani_info.inam = inam;
   ani_info.iart = iart;
 
+  hot_spot_x = gimp_int32_array_get_values (x_array, &n_hot_spot_x);
+  hot_spot_y = gimp_int32_array_get_values (y_array, &n_hot_spot_y);
+
   status = ani_export_image (file, image, procedure, config, run_mode,
-                             &n_hot_spot_x, &hot_spot_x,
-                             &n_hot_spot_y, &hot_spot_y,
+                             &n_hot_spot_x, hot_spot_x, &new_hot_spot_x,
+                             &n_hot_spot_y, hot_spot_y, &new_hot_spot_y,
                              &header, &ani_info, &error);
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /* XXX: seems libgimpconfig is not able to serialize
-       * GimpInt32Array args yet anyway. Still leave this here for now,
-       * as reminder of missing feature when we see the warnings.
-       */
+      gimp_int32_array_set_values (x_array, new_hot_spot_x, n_hot_spot_x, FALSE);
+      gimp_int32_array_set_values (y_array, new_hot_spot_y, n_hot_spot_y, FALSE);
       g_object_set (config,
                     "cursor-name",   NULL,
                     "author-name",   NULL,
                     "default-delay", header.jif_rate,
-                    "n-hot-spot-x",  n_hot_spot_x,
-                    "n-hot-spot-y",  n_hot_spot_y,
-                    /*"hot-spot-x",   hot_spot_x,*/
-                    /*"hot-spot-y",   hot_spot_y,*/
+                    "hot-spot-x",   x_array,
+                    "hot-spot-y",   y_array,
                     NULL);
-      g_free (hot_spot_x);
-      g_free (hot_spot_y);
+      g_free (new_hot_spot_x);
+      g_free (new_hot_spot_y);
 
       g_free (inam);
       g_free (iart);

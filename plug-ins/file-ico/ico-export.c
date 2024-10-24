@@ -75,9 +75,9 @@ static gboolean ico_save_init             (GimpImage            *image,
                                            gint32                run_mode,
                                            IcoSaveInfo          *info,
                                            gint                  n_hot_spot_x,
-                                           gint32               *hot_spot_x,
+                                           const gint32         *hot_spot_x,
                                            gint                  n_hot_spot_y,
-                                           gint32               *hot_spot_y,
+                                           const gint32         *hot_spot_y,
                                            GError              **error);
 static GimpPDBStatusType
                 shared_save_image         (GFile                *file,
@@ -86,10 +86,12 @@ static GimpPDBStatusType
                                            GimpProcedure        *procedure,
                                            GimpProcedureConfig  *config,
                                            gint32                run_mode,
-                                           gint                 *n_hot_spot_x,
-                                           gint32              **hot_spot_x,
-                                           gint                 *n_hot_spot_y,
-                                           gint32              **hot_spot_y,
+                                           gsize                *n_hot_spot_x,
+                                           const gint32         *hot_spot_x,
+                                           gint32              **new_hot_spot_x,
+                                           gsize                *n_hot_spot_y,
+                                           const gint32         *hot_spot_y,
+                                           gint32              **new_hot_spot_y,
                                            gint32                file_offset,
                                            gint                  icon_index,
                                            GError              **error,
@@ -179,14 +181,14 @@ ico_write_int8 (FILE     *fp,
 
 
 static gboolean
-ico_save_init (GimpImage   *image,
-               gint32       run_mode,
-               IcoSaveInfo *info,
-               gint         n_hot_spot_x,
-               gint32      *hot_spot_x,
-               gint         n_hot_spot_y,
-               gint32      *hot_spot_y,
-               GError     **error)
+ico_save_init (GimpImage     *image,
+               gint32         run_mode,
+               IcoSaveInfo   *info,
+               gint           n_hot_spot_x,
+               const gint32  *hot_spot_x,
+               gint           n_hot_spot_y,
+               const gint32  *hot_spot_y,
+               GError       **error)
 {
   GList     *iter;
   gint       num_colors;
@@ -1200,7 +1202,7 @@ ico_export_image (GFile                *file,
 
   return shared_save_image (file, NULL, image, procedure,
                             config, run_mode,
-                            0, NULL, 0, NULL,
+                            0, NULL, NULL, 0, NULL, NULL,
                             0, 0, error, &info);
 }
 
@@ -1210,10 +1212,12 @@ cur_export_image (GFile                *file,
                   GimpProcedure        *procedure,
                   GimpProcedureConfig  *config,
                   gint32                run_mode,
-                  gint                 *n_hot_spot_x,
-                  gint32              **hot_spot_x,
-                  gint                 *n_hot_spot_y,
-                  gint32              **hot_spot_y,
+                  gsize                *n_hot_spot_x,
+                  const gint32         *hot_spot_x,
+                  gint32              **new_hot_spot_x,
+                  gsize                *n_hot_spot_y,
+                  const gint32         *hot_spot_y,
+                  gint32              **new_hot_spot_y,
                   GError              **error)
 {
   IcoSaveInfo info;
@@ -1225,8 +1229,8 @@ cur_export_image (GFile                *file,
 
   return shared_save_image (file, NULL, image, procedure,
                             config, run_mode,
-                            n_hot_spot_x, hot_spot_x,
-                            n_hot_spot_y, hot_spot_y,
+                            n_hot_spot_x, hot_spot_x, new_hot_spot_x,
+                            n_hot_spot_y, hot_spot_y, new_hot_spot_y,
                             0, 0, error, &info);
 }
 
@@ -1237,10 +1241,12 @@ ani_export_image (GFile                *file,
                   GimpProcedure        *procedure,
                   GimpProcedureConfig  *config,
                   gint32                run_mode,
-                  gint                 *n_hot_spot_x,
-                  gint32              **hot_spot_x,
-                  gint                 *n_hot_spot_y,
-                  gint32              **hot_spot_y,
+                  gsize                *n_hot_spot_x,
+                  const gint32         *hot_spot_x,
+                  gint32              **new_hot_spot_x,
+                  gsize                *n_hot_spot_y,
+                  const gint32         *hot_spot_y,
+                  gint32              **new_hot_spot_y,
                   AniFileHeader        *header,
                   AniSaveInfo          *ani_info,
                   GError              **error)
@@ -1258,9 +1264,9 @@ ani_export_image (GFile                *file,
   IcoSaveInfo   info;
 
   if (! ico_save_init (image, run_mode, &info,
-                        *n_hot_spot_x, *hot_spot_x,
-                        *n_hot_spot_y, *hot_spot_y,
-                        error))
+                       *n_hot_spot_x, hot_spot_x,
+                       *n_hot_spot_y, hot_spot_y,
+                       error))
     {
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -1439,8 +1445,8 @@ ani_export_image (GFile                *file,
       offset = ftell (fp);
       status = shared_save_image (file, fp, image, procedure,
                                   config, run_mode,
-                                  n_hot_spot_x, hot_spot_x,
-                                  n_hot_spot_y, hot_spot_y,
+                                  n_hot_spot_x, hot_spot_x, new_hot_spot_x,
+                                  n_hot_spot_y, hot_spot_y, new_hot_spot_y,
                                   offset, i, error, &info);
 
       if (status != GIMP_PDB_SUCCESS)
@@ -1515,10 +1521,12 @@ shared_save_image (GFile                *file,
                    GimpProcedure        *procedure,
                    GimpProcedureConfig  *config,
                    gint32                run_mode,
-                   gint                 *n_hot_spot_x,
-                   gint32              **hot_spot_x,
-                   gint                 *n_hot_spot_y,
-                   gint32              **hot_spot_y,
+                   gsize                *n_hot_spot_x,
+                   const gint32         *hot_spot_x,
+                   gint32              **new_hot_spot_x,
+                   gsize                *n_hot_spot_y,
+                   const gint32         *hot_spot_y,
+                   gint32              **new_hot_spot_y,
                    gint32                file_offset,
                    gint                  icon_index,
                    GError              **error,
@@ -1539,9 +1547,9 @@ shared_save_image (GFile                *file,
   if (! fp_ani &&
       ! ico_save_init (image, run_mode, info,
                        n_hot_spot_x ? *n_hot_spot_x : 0,
-                       hot_spot_x   ? *hot_spot_x   : NULL,
+                       hot_spot_x,
                        n_hot_spot_y ? *n_hot_spot_y : 0,
-                       hot_spot_y   ? *hot_spot_y   : NULL,
+                       hot_spot_y,
                        error))
     {
       return GIMP_PDB_EXECUTION_ERROR;
@@ -1698,20 +1706,20 @@ shared_save_image (GFile                *file,
 
   if (! fp_ani)
     {
-      if (hot_spot_x)
+      if (new_hot_spot_x)
         {
-          *hot_spot_x = info->hot_spot_x;
+          *new_hot_spot_x  = info->hot_spot_x;
           info->hot_spot_x = NULL;
+
+          *n_hot_spot_x    = num_icons;
         }
-      if (hot_spot_y)
+      if (new_hot_spot_y)
         {
-          *hot_spot_y = info->hot_spot_y;
+          *new_hot_spot_y  = info->hot_spot_y;
           info->hot_spot_y = NULL;
+
+          *n_hot_spot_y    = num_icons;
         }
-      if (n_hot_spot_x)
-        *n_hot_spot_x = num_icons;
-      if (n_hot_spot_y)
-        *n_hot_spot_y = num_icons;
     }
 
   /* If saving .ani file, don't clear until

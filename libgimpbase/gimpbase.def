@@ -85,6 +85,8 @@ EXPORTS
 	gimp_installation_directory
 	gimp_installation_directory_file
 	gimp_int32_array_get_type
+	gimp_int32_array_get_values
+	gimp_int32_array_set_values
 	gimp_interpolation_type_get_type
 	gimp_is_canonical_identifier
 	gimp_join_style_get_type

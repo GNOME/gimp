@@ -211,10 +211,17 @@ GParamSpec * gimp_param_spec_array     (const gchar  *name,
  * GIMP_TYPE_INT32_ARRAY
  */
 
-#define GIMP_TYPE_INT32_ARRAY               (gimp_int32_array_get_type ())
-#define GIMP_VALUE_HOLDS_INT32_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_INT32_ARRAY))
+#define        GIMP_TYPE_INT32_ARRAY               (gimp_int32_array_get_type ())
+#define        GIMP_VALUE_HOLDS_INT32_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_INT32_ARRAY))
 
-GType   gimp_int32_array_get_type           (void) G_GNUC_CONST;
+GType          gimp_int32_array_get_type           (void) G_GNUC_CONST;
+
+const gint32 * gimp_int32_array_get_values         (GimpArray    *array,
+                                                    gsize        *length);
+void           gimp_int32_array_set_values         (GimpArray    *array,
+                                                    const gint32 *values,
+                                                    gsize         length,
+                                                    gboolean      static_data);
 
 
 /*

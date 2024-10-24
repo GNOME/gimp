@@ -85,6 +85,8 @@ static GTokenType  gimp_config_deserialize_value_array    (GValue     *value,
                                                            GimpConfig *config,
                                                            GParamSpec *prop_spec,
                                                            GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_array          (GValue     *value,
+                                                           GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_strv           (GValue     *value,
                                                            GScanner   *scanner);
 static GimpUnit  * gimp_config_get_unit_from_identifier   (const gchar *identifier);
@@ -381,6 +383,10 @@ gimp_config_deserialize_value (GValue     *value,
   else if (prop_spec->value_type == G_TYPE_STRV)
     {
       return gimp_config_deserialize_strv (value, scanner);
+    }
+  else if (prop_spec->value_type == GIMP_TYPE_INT32_ARRAY)
+    {
+      return gimp_config_deserialize_array (value, scanner);
     }
   else if (prop_spec->value_type == GIMP_TYPE_UNIT)
     {
@@ -922,6 +928,44 @@ gimp_config_deserialize_strv (GValue     *value,
     }
 
   g_strv_builder_unref (builder);
+
+  return result_token;
+}
+
+static GTokenType
+gimp_config_deserialize_array (GValue     *value,
+                               GScanner   *scanner)
+{
+  gint32     *values;
+  gint        n_values;
+  GTokenType  result_token = G_TOKEN_RIGHT_PAREN;
+
+  if (! gimp_scanner_parse_int (scanner, &n_values))
+    return G_TOKEN_INT;
+
+  values = g_new0 (gint32, n_values);
+
+  for (gint i = 0; i < n_values; i++)
+    {
+      gint value;
+
+      if (! gimp_scanner_parse_int (scanner, &value))
+        {
+          result_token = G_TOKEN_INT;
+          break;
+        }
+
+      values[i] = value;
+    }
+
+  if (result_token == G_TOKEN_RIGHT_PAREN)
+    {
+      gimp_value_take_int32_array (value, values, n_values);
+    }
+  else
+    {
+      g_scanner_error (scanner, "Missing value.");
+    }
 
   return result_token;
 }

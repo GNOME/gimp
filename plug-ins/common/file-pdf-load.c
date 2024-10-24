@@ -51,8 +51,8 @@ gimp_plugin_pdf_load_error_quark (void)
 
 typedef struct
 {
-  gint  n_pages;
-  gint *pages;
+  gsize  n_pages;
+  gint  *pages;
 } PdfSelectedPages;
 
 
@@ -253,15 +253,9 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PAGE_SELECTOR_TARGET_LAYERS,
                                            G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "n-pages",
-                                       _("N pages"),
-                                       _("Number of pages to load (0 for all)"),
-                                       0, G_MAXINT, 0,
-                                       G_PARAM_READWRITE);
-
       /* FIXME: shouldn't the whole selector be considered as one argument
-       * containing properties "target", "n-pages" and "pages" as a single
-       * object?
+       * containing properties "target" and "pages" as a single object?
+       *
        * Or actually should we store pages at all? While it makes sense to store
        * some settings generally, not sure that the list of page makes sense
        * from one PDF document loaded to another (different) one.
@@ -381,10 +375,14 @@ pdf_load (GimpProcedure         *procedure,
 
       if (test_page)
         {
-          gint i;
-          gint doc_n_pages;
+          GimpArray    *pages_array;
+          const gint32 *page_numbers;
+          gint          i;
+          gint          doc_n_pages;
 
-          g_object_get (config, "n-pages", &pages.n_pages, NULL);
+          g_object_get (config, "pages", &pages_array, NULL);
+          page_numbers = gimp_int32_array_get_values (pages_array, &pages.n_pages);
+
           doc_n_pages = poppler_document_get_n_pages (doc);
           /* The number of imported pages may be bigger than
            * the number of pages from the original document.
@@ -402,15 +400,11 @@ pdf_load (GimpProcedure         *procedure,
             }
           else
             {
-              const gint32 *p;
-
-              g_object_get (config, "pages", &p, NULL);
-
               pages.pages = g_new (gint, pages.n_pages);
 
               for (i = 0; i < pages.n_pages; i++)
                 {
-                  if (p[i] >= doc_n_pages)
+                  if (page_numbers[i] >= doc_n_pages)
                     {
                       status = GIMP_PDB_EXECUTION_ERROR;
                       g_set_error (&error, GIMP_PLUGIN_PDF_LOAD_ERROR, 0,
@@ -423,13 +417,13 @@ pdf_load (GimpProcedure         *procedure,
                                              "PDF document '%1$s' has %3$d pages. Page %2$d is out of range.",
                                              doc_n_pages),
                                    gimp_file_get_utf8_name (file),
-                                   p[i],
+                                   page_numbers[i],
                                    doc_n_pages);
                       break;
                     }
                   else
                     {
-                      pages.pages[i] = p[i];
+                      pages.pages[i] = page_numbers[i];
                     }
                 }
             }
@@ -1148,12 +1142,12 @@ load_dialog (PopplerDocument     *doc,
 
   target = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
   g_object_set (config,
-                "target",     target,
+                "target", target,
                 NULL);
 
   pages->pages =
     gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
-                                           &pages->n_pages);
+                                           (gint *) &pages->n_pages);
 
   /* select all if none selected */
   if (pages->n_pages == 0)
@@ -1162,7 +1156,7 @@ load_dialog (PopplerDocument     *doc,
 
       pages->pages =
         gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
-                                               &pages->n_pages);
+                                               (gint *) &pages->n_pages);
     }
 
   /* cleanup */
