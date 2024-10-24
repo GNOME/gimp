@@ -358,8 +358,6 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
   GimpValueArray *args;
   GimpValueArray *return_vals;
   va_list         va_args;
-  GType           prev_value_type = G_TYPE_NONE;
-  gint            prev_int_value  = 0;
   gint            i;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
@@ -449,23 +447,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)  ||
           GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
         {
-          if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
-            {
-              /* Array arguments don't have their size information when they
-               * are set by core code, in C array form.
-               * By convention, the previous argument has to be the array
-               * size argument.
-               */
-              g_return_val_if_fail (prev_value_type == G_TYPE_INT && prev_int_value >= 0, NULL);
-              gimp_value_set_float_array (value,
-                                          (const gdouble *) va_arg (va_args, gpointer),
-                                          prev_int_value);
-            }
-          else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value) ||
-                   GIMP_VALUE_HOLDS_INT32_ARRAY (value))
-            {
-              g_value_set_boxed (value, va_arg (va_args, gpointer));
-            }
+          g_value_set_boxed (value, va_arg (va_args, gpointer));
         }
       else
         {
@@ -490,10 +472,6 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
 
           return return_vals;
         }
-
-      prev_value_type = value_type;
-      if (prev_value_type == G_TYPE_INT)
-        prev_int_value = g_value_get_int (value);
     }
 
   va_end (va_args);

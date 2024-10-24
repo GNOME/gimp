@@ -466,23 +466,11 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                           "upper",
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "argc-upper-point-x",
-                                       _("Argc upper point X"),
-                                       _("Argc upper point X"),
-                                       2, 17, 2,
-                                       G_PARAM_READWRITE);
-
       gimp_procedure_add_float_array_argument (procedure, "upper-point-x",
                                                _("Upper point X"),
                                                _("Array of 17 x point coords "
                                                  "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
                                                G_PARAM_READWRITE);
-
-      gimp_procedure_add_int_argument (procedure, "argc-upper-point-y",
-                                       _("Argc upper point Y"),
-                                       _("Argc upper point Y"),
-                                       2, 17, 2,
-                                       G_PARAM_READWRITE);
 
       gimp_procedure_add_float_array_argument (procedure, "upper-point-y",
                                                _("Upper point Y"),
@@ -490,23 +478,11 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                                  "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
                                                G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "argc-lower-point-x",
-                                       _("Argc lower point X"),
-                                       _("Argc lower point X"),
-                                       2, 17, 2,
-                                       G_PARAM_READWRITE);
-
       gimp_procedure_add_float_array_argument (procedure, "lower-point-x",
                                                _("Lower point X"),
                                                _("Array of 17 x point coords "
                                                  "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
                                                G_PARAM_READWRITE);
-
-      gimp_procedure_add_int_argument (procedure, "argc-lower-point-y",
-                                       _("Argc lower point Y"),
-                                       _("Argc lower point Y"),
-                                       2, 17, 2,
-                                       G_PARAM_READWRITE);
 
       gimp_procedure_add_float_array_argument (procedure, "lower-point-y",
                                                _("Lower point Y"),

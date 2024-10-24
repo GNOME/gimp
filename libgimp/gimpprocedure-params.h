@@ -198,11 +198,11 @@ G_BEGIN_DECLS
 
 /*  float array  */
 
-#define GIMP_VALUES_GET_FLOAT_ARRAY(args, n) \
-  gimp_value_get_float_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_GET_FLOAT_ARRAY(args, n, length) \
+  gimp_value_get_float_array (gimp_value_array_index (args, n), length)
 
-#define GIMP_VALUES_DUP_FLOAT_ARRAY(args, n) \
-  gimp_value_dup_float_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_DUP_FLOAT_ARRAY(args, n, length) \
+  gimp_value_dup_float_array (gimp_value_array_index (args, n), length)
 
 #define GIMP_VALUES_SET_FLOAT_ARRAY(args, n, value, length) \
   gimp_value_set_float_array (gimp_value_array_index (args, n), value, length)

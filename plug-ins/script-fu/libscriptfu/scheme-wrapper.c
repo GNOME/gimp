@@ -1084,7 +1084,9 @@ script_fu_marshal_procedure_call (scheme   *sc,
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
-            return script_type_error (sc, "vector", i, proc_name);
+            {
+              return script_type_error (sc, "vector", i, proc_name);
+            }
           else
             {
               /* !!! Comments applying to all array args.
@@ -1108,16 +1110,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                */
               gint32 *array;
 
-              if (i == 0)
-                return script_error (sc, "The first argument cannot be an array", a);
-              else if (! g_type_is_a (arg_specs[i - 1]->value_type, G_TYPE_INT))
-                return script_error (sc, "Array arguments must be preceded by an int argument (number of items)", a);
-
-              g_object_get (config, arg_specs[i - 1]->name, &n_elements, NULL);
-
-              if (n_elements > sc->vptr->vector_length (vector))
-                return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
-
+              n_elements = sc->vptr->vector_length (vector);
               array = g_new0 (gint32, n_elements);
 
               for (j = 0; j < n_elements; j++)
@@ -1179,16 +1172,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gdouble *array;
 
-              if (i == 0)
-                return script_error (sc, "The first argument cannot be an array", a);
-              else if (! g_type_is_a (arg_specs[i - 1]->value_type, G_TYPE_INT))
-                return script_error (sc, "Array arguments must be preceded by an int argument (number of items)", a);
-
-              g_object_get (config, arg_specs[i - 1]->name, &n_elements, NULL);
-
-              if (n_elements > sc->vptr->vector_length (vector))
-                return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
-
+              n_elements = sc->vptr->vector_length (vector);
               array = g_new0 (gdouble, n_elements);
 
               for (j = 0; j < n_elements; j++)
@@ -1201,7 +1185,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                       return script_type_error_in_container (sc, "numeric", i, j, proc_name, vector);
                     }
 
-                  array[j] = (gfloat) sc->vptr->rvalue (v_element);
+                  array[j] = (gdouble) sc->vptr->rvalue (v_element);
                 }
 
               gimp_value_take_float_array (&value, array, n_elements);

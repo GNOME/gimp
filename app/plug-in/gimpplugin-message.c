@@ -722,28 +722,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       return;
     }
 
-  /*  Sanity check for array arguments  */
-
-  for (i = 1; i < proc_install->n_params; i++)
-    {
-      GPParamDef *param_def      = &proc_install->params[i];
-      GPParamDef *prev_param_def = &proc_install->params[i - 1];
-
-      if (! strcmp (param_def->type_name, "GimpParamFloatArray") &&
-          strcmp (prev_param_def->type_name, "GParamInt"))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-in \"%s\"\n(%s)\n\n"
-                        "attempted to install procedure \"%s\" "
-                        "which fails to comply with the array parameter "
-                        "passing standard.  Argument %d is noncompliant.",
-                        gimp_object_get_name (plug_in),
-                        gimp_file_get_utf8_name (plug_in->file),
-                        proc_install->name, i);
-          return;
-        }
-    }
-
   /*  Sanity check strings for UTF-8 validity  */
 
 #define VALIDATE(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
