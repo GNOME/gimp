@@ -528,15 +528,26 @@ gimp_param_spec_int32_array (const gchar *name,
 /**
  * gimp_value_get_int32_array:
  * @value: A valid value of type %GIMP_TYPE_INT32_ARRAY
+ * @length: the number of returned #int32 elements.
  *
  * Gets the contents of a %GIMP_TYPE_INT32_ARRAY #GValue
  *
- * Returns: (transfer none) (array): The contents of @value
+ * Returns: (transfer none) (array length=length): The contents of @value
  */
 const gint32 *
-gimp_value_get_int32_array (const GValue *value)
+gimp_value_get_int32_array (const GValue *value,
+                            gsize        *length)
 {
+  GimpArray *array;
+
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value), NULL);
+
+  array = value->data[0].v_pointer;
+
+  g_return_val_if_fail (array->length % sizeof (gint32) == 0, NULL);
+
+  if (length)
+    *length = array->length / sizeof (gint32);
 
   return (const gint32 *) gimp_value_get_array (value);
 }
@@ -544,15 +555,26 @@ gimp_value_get_int32_array (const GValue *value)
 /**
  * gimp_value_dup_int32_array:
  * @value: A valid value of type %GIMP_TYPE_INT32_ARRAY
+ * @length: the number of returned #int32 elements.
  *
  * Gets the contents of a %GIMP_TYPE_INT32_ARRAY #GValue
  *
- * Returns: (transfer full) (array): The contents of @value
+ * Returns: (transfer full) (array length=length): The contents of @value
  */
 gint32 *
-gimp_value_dup_int32_array (const GValue *value)
+gimp_value_dup_int32_array (const GValue *value,
+                            gsize        *length)
 {
+  GimpArray *array;
+
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value), NULL);
+
+  array = value->data[0].v_pointer;
+
+  g_return_val_if_fail (array->length % sizeof (gint32) == 0, NULL);
+
+  if (length)
+    *length = array->length / sizeof (gint32);
 
   return (gint32 *) gimp_value_dup_array (value);
 }

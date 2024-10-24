@@ -192,7 +192,7 @@ gimp_path_get_strokes (GimpPath *path,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       *num_strokes = GIMP_VALUES_GET_INT (return_vals, 1);
-      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2);
+      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 2, (gsize *) num_strokes);
     }
 
   gimp_value_array_unref (return_vals);

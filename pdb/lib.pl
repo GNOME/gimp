@@ -107,6 +107,7 @@ sub generate_fun {
     # Find the return argument (defaults to the first arg if not
     # explicitly set
     my $retarg  = undef;
+    my $retarg_len  = undef;
     $retvoid = 0;
     foreach (@outargs) {
         $retarg = $_, last if exists $_->{retval};
@@ -135,7 +136,8 @@ sub generate_fun {
         $retarg->{retval} = 1;
 
         if (exists $argtype->{array}) {
-            $annotate = " (array length=$retarg->{array}->{name})";
+            $retarg_len = $retarg->{array}->{name};
+            $annotate   = " (array length=$retarg_len)";
         }
         if (exists $retarg->{none_ok}) {
             $annotate .= " (nullable)";
@@ -367,7 +369,8 @@ CODE
             my $var;
 
             # The return value variable
-            $var = "";
+            $var     = "";
+            $var_len = $retarg_len;
 
             unless (exists $_->{retval}) {
                 $var .= '*';
@@ -386,7 +389,8 @@ CODE
                 }
 
                 if (exists $arg->{array}) {
-                    $argdesc .= " (array length=$outargs[$argc - 2]->{name})";
+                    $var_len  = $outargs[$argc - 2]->{name};
+                    $argdesc .= " (array length=$var_len)";
                 }
 
                 if (exists $arg->{out_annotate}) {

@@ -183,11 +183,11 @@ G_BEGIN_DECLS
 
 /*  int32 array  */
 
-#define GIMP_VALUES_GET_INT32_ARRAY(args, n) \
-  gimp_value_get_int32_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_GET_INT32_ARRAY(args, n, length) \
+  gimp_value_get_int32_array (gimp_value_array_index (args, n), length)
 
-#define GIMP_VALUES_DUP_INT32_ARRAY(args, n) \
-  gimp_value_dup_int32_array (gimp_value_array_index (args, n))
+#define GIMP_VALUES_DUP_INT32_ARRAY(args, n, length) \
+  gimp_value_dup_int32_array (gimp_value_array_index (args, n), length)
 
 #define GIMP_VALUES_SET_INT32_ARRAY(args, n, value, length) \
   gimp_value_set_int32_array (gimp_value_array_index (args, n), value, length)

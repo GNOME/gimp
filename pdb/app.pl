@@ -127,6 +127,18 @@ sub marshal_inargs {
 
 	$value = "gimp_value_array_index (args, $argc)";
 	if (!exists $_->{dead}) {
+	    my $var_len;
+
+	    if (exists $_->{array}) {
+		my $arrayarg = $_->{array};
+
+		if (exists $arrayarg->{name}) {
+		    $var_len = $arrayarg->{name};
+		}
+		else {
+		    $var_len = 'num_' . $_->{name};
+		}
+	    }
 	    $result .= eval qq/"  $arg->{get_value_func};\n"/;
 	}
 
