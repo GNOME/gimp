@@ -212,8 +212,7 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  num_values = g_value_get_int (gimp_value_array_index (args, 2));
-  values = gimp_value_get_float_array (gimp_value_array_index (args, 3), (gsize *) &num_values);
+  values = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_values);
 
   if (success)
     {
@@ -261,8 +260,7 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  num_points = g_value_get_int (gimp_value_array_index (args, 2));
-  points = gimp_value_get_float_array (gimp_value_array_index (args, 3), (gsize *) &num_points);
+  points = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_points);
 
   if (success)
     {
@@ -995,12 +993,6 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-values",
-                                                 "num values",
-                                                 "The number of values in the new curve",
-                                                 256, 2096, 256,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("values",
                                                             "values",
                                                             "The explicit curve",
@@ -1035,12 +1027,6 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-points",
-                                                 "num points",
-                                                 "The number of values in the control point array",
-                                                 4, 2048, 4,
-                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("points",
                                                             "points",

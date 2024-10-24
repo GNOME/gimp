@@ -382,10 +382,9 @@ gimp_image_select_polygon (GimpImage      *image,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          G_TYPE_INT, num_segs,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), segs, num_segs);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), segs, num_segs);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-image-select-polygon",

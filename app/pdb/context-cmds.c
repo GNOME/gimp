@@ -764,9 +764,7 @@ context_get_line_dash_pattern_invoker (GimpProcedure         *procedure,
   dashes = gimp_dash_pattern_to_double_array (pattern, &num_dashes);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-
-  g_value_set_int (gimp_value_array_index (return_vals, 1), num_dashes);
-  gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), dashes, num_dashes);
+  gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), dashes, num_dashes);
 
   return return_vals;
 }
@@ -783,8 +781,7 @@ context_set_line_dash_pattern_invoker (GimpProcedure         *procedure,
   gint num_dashes;
   const gdouble *dashes;
 
-  num_dashes = g_value_get_int (gimp_value_array_index (args, 0));
-  dashes = gimp_value_get_float_array (gimp_value_array_index (args, 1), (gsize *) &num_dashes);
+  dashes = gimp_value_get_float_array (gimp_value_array_index (args, 0), (gsize *) &num_dashes);
 
   if (success)
     {
@@ -3830,12 +3827,6 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer",
                                          "2015");
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-dashes",
-                                                     "num dashes",
-                                                     "The number of dashes in the dash_pattern array",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("dashes",
                                                                 "dashes",
                                                                 "The line dash pattern setting",
@@ -3861,12 +3852,6 @@ register_context_procs (GimpPDB *pdb)
                                          "Michael Natterer <mitch@gimp.org>",
                                          "Michael Natterer",
                                          "2015");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-dashes",
-                                                 "num dashes",
-                                                 "The number of dashes in the dash_pattern array",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("dashes",
                                                             "dashes",

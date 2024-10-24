@@ -200,10 +200,7 @@ path_get_strokes_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_strokes);
-      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), stroke_ids, num_strokes);
-    }
+    gimp_value_take_int32_array (gimp_value_array_index (return_vals, 1), stroke_ids, num_strokes);
 
   return return_vals;
 }
@@ -707,9 +704,8 @@ path_stroke_get_points_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_enum (gimp_value_array_index (return_vals, 1), type);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), num_points);
-      gimp_value_take_float_array (gimp_value_array_index (return_vals, 3), controlpoints, num_points);
-      g_value_set_boolean (gimp_value_array_index (return_vals, 4), closed);
+      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), controlpoints, num_points);
+      g_value_set_boolean (gimp_value_array_index (return_vals, 3), closed);
     }
 
   return return_vals;
@@ -734,9 +730,8 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
   type = g_value_get_enum (gimp_value_array_index (args, 1));
-  num_points = g_value_get_int (gimp_value_array_index (args, 2));
-  controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 3), (gsize *) &num_points);
-  closed = g_value_get_boolean (gimp_value_array_index (args, 4));
+  controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_points);
+  closed = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -844,9 +839,8 @@ path_stroke_interpolate_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_coords);
-      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), coords, num_coords);
-      g_value_set_boolean (gimp_value_array_index (return_vals, 3), closed);
+      gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), coords, num_coords);
+      g_value_set_boolean (gimp_value_array_index (return_vals, 2), closed);
     }
 
   return return_vals;
@@ -1262,12 +1256,6 @@ register_path_procs (GimpPDB *pdb)
                                                      "path",
                                                      "The path object",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-strokes",
-                                                     "num strokes",
-                                                     "The number of strokes returned.",
-                                                     0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("stroke-ids",
@@ -1730,12 +1718,6 @@ register_path_procs (GimpPDB *pdb)
                                                       GIMP_PATH_STROKE_TYPE_BEZIER,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-points",
-                                                     "num points",
-                                                     "The number of floats returned.",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("controlpoints",
                                                                 "controlpoints",
                                                                 "List of the control points for the stroke (x0, y0, x1, y1, ...).",
@@ -1776,12 +1758,6 @@ register_path_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_PATH_STROKE_TYPE,
                                                   GIMP_PATH_STROKE_TYPE_BEZIER,
                                                   GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-points",
-                                                 "num points",
-                                                 "The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).",
-                                                 0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("controlpoints",
                                                             "controlpoints",
@@ -1834,12 +1810,6 @@ register_path_procs (GimpPDB *pdb)
                                                     "The precision used for the approximation",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-coords",
-                                                     "num coords",
-                                                     "The number of floats returned.",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("coords",
                                                                 "coords",

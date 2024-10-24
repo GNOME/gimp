@@ -209,10 +209,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
-      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
-    }
+    gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
 
   return return_vals;
 }
@@ -235,9 +232,8 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
   gdouble *color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
-  num_samples = g_value_get_int (gimp_value_array_index (args, 1));
-  positions = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_samples);
-  reverse = g_value_get_boolean (gimp_value_array_index (args, 3));
+  positions = gimp_value_get_float_array (gimp_value_array_index (args, 1), (gsize *) &num_samples);
+  reverse = g_value_get_boolean (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -277,10 +273,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
-      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
-    }
+    gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
 
   return return_vals;
 }
@@ -1388,12 +1381,6 @@ register_gradient_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-color-samples",
-                                                     "num color samples",
-                                                     "Length of the color_samples array (4 * num_samples)",
-                                                     0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("color-samples",
                                                                 "color samples",
                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
@@ -1424,12 +1411,6 @@ register_gradient_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-samples",
-                                                 "num samples",
-                                                 "The number of samples to take",
-                                                 1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("positions",
                                                             "positions",
                                                             "The list of positions to sample along the gradient",
@@ -1439,12 +1420,6 @@ register_gradient_procs (GimpPDB *pdb)
                                                      "reverse",
                                                      "Use the reverse gradient",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_int ("num-color-samples",
-                                                     "num color samples",
-                                                     "Length of the color_samples array (4 * num_samples)",
-                                                     0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("color-samples",

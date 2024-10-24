@@ -126,7 +126,10 @@ sub marshal_inargs {
 	my $value;
 
 	$value = "gimp_value_array_index (args, $argc)";
-	if (!exists $_->{dead}) {
+        if (exists $_->{nopdb}) {
+            $argc--;
+        }
+        elsif (!exists $_->{dead}) {
 	    my $var_len;
 
 	    if (exists $_->{array}) {
@@ -182,20 +185,25 @@ CODE
 
 	    $argc++;
 
-	    $value = "gimp_value_array_index (return_vals, $argc)";
+            if (exists $_->{nopdb}) {
+                $argc--;
+            }
+            else {
+                $value = "gimp_value_array_index (return_vals, $argc)";
 
-	    if (exists $_->{array}) {
-		my $arrayarg = $_->{array};
+                if (exists $_->{array}) {
+                    my $arrayarg = $_->{array};
 
-		if (exists $arrayarg->{name}) {
-		    $var_len = $arrayarg->{name};
-		}
-		else {
-		    $var_len = 'num_' . $_->{name};
-		}
-	    }
+                    if (exists $arrayarg->{name}) {
+                        $var_len = $arrayarg->{name};
+                    }
+                    else {
+                        $var_len = 'num_' . $_->{name};
+                    }
+                }
 
-	    $outargs .= eval qq/"  $arg->{take_value_func};\n"/;
+                $outargs .= eval qq/"  $arg->{take_value_func};\n"/;
+            }
 	}
 
 	$outargs =~ s/^/' ' x 2/meg if $success;
@@ -895,18 +903,23 @@ CODE
         foreach $arg (@inargs) {
 	    my ($pspec, $postproc) = &generate_pspec($arg);
 
-	    $pspec =~ s/^/' ' x length("  gimp_procedure_add_argument (")/meg;
+            if (exists $arg->{nopdb}) {
+                $argc--;
+            }
+            else {
+                $pspec =~ s/^/' ' x length("  gimp_procedure_add_argument (")/meg;
 
-	    $out->{register} .= <<CODE;
+                $out->{register} .= <<CODE;
   gimp_procedure_add_argument (procedure,
 ${pspec});
 CODE
 
-            if ($postproc ne '') {
-		$pspec = "procedure->args[$argc]";
-		$postproc =~ s/^/'  '/meg;
-		$out->{register} .= eval qq/"$postproc"/;
-	    }
+                if ($postproc ne '') {
+                    $pspec = "procedure->args[$argc]";
+                    $postproc =~ s/^/'  '/meg;
+                    $out->{register} .= eval qq/"$postproc"/;
+                }
+            }
 
 	    $argc++;
 	}
@@ -917,18 +930,23 @@ CODE
 	    my ($pspec, $postproc) = &generate_pspec($arg);
 	    my $argc = 0;
 
-	    $pspec =~ s/^/' ' x length("  gimp_procedure_add_return_value (")/meg;
+            if (exists $arg->{nopdb}) {
+                $argc--;
+            }
+            else {
+                $pspec =~ s/^/' ' x length("  gimp_procedure_add_return_value (")/meg;
 
-	    $out->{register} .= <<CODE;
+                $out->{register} .= <<CODE;
   gimp_procedure_add_return_value (procedure,
 ${pspec});
 CODE
 
-            if ($postproc ne '') {
-		$pspec = "procedure->values[$argc]";
-		$postproc =~ s/^/'  '/meg;
-		$out->{register} .= eval qq/"$postproc"/;
-	    }
+                if ($postproc ne '') {
+                    $pspec = "procedure->values[$argc]";
+                    $postproc =~ s/^/'  '/meg;
+                    $out->{register} .= eval qq/"$postproc"/;
+                }
+            }
 
 	    $argc++;
 	}

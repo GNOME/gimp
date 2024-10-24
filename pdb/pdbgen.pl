@@ -233,6 +233,7 @@ sub arrayexpand {
 	    $arg->{void_ret} = 1 if exists $_->{void_ret};
 
 	    $arg->{num} = 1;
+	    $arg->{nopdb} = 1;
 
 	    push @$newargs, $arg;
  	}

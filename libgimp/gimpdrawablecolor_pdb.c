@@ -217,10 +217,9 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_INT, num_values,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), values, num_values);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), values, num_values);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-drawable-curves-explicit",
@@ -268,10 +267,9 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), points, num_points);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), points, num_points);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-drawable-curves-spline",
