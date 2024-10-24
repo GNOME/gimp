@@ -36,82 +36,29 @@ static const struct
 }
 
 
-  /* Keep this until we get the porting doc complete for 3.0,
-   * as something to cross-check against.
-
-   * deprecations since 2.99
-   *
-   * With respect to ScriptFu,
-   * the old names are *obsolete in the PDB* (as of this writing.)
-   * That is, they don't exist in the PDB with the same signature.
-   * There is no "compatibility" procedure in the PDB.
-   *
-   * With respect to Python using GI, some old names are *NOT* obsolete.
-   * (Where "some" means those dealing with ID.)
-   * I.E. Gimp.Image.is_valid() exists but takes a GObject *, not an int ID.
-   *
-   * Original data was constructed more or less by hand, partially automated.
-
-   { "gimp-brightness-contrast"               , "gimp-drawable-brightness-contrast"      },
-   { "gimp-brushes-get-brush"                 , "gimp-context-get-brush"                 },
-   { "gimp-drawable-is-channel"               , "gimp-item-id-is-channel"                },
-   { "gimp-drawable-is-layer"                 , "gimp-item-id-is-layer"                  },
-   { "gimp-drawable-is-layer-mask"            , "gimp-item-id-is-layer-mask"             },
-   { "gimp-drawable-is-text-layer"            , "gimp-item-id-is-text-layer"             },
-   { "gimp-drawable-is-valid"                 , "gimp-item-id-is-valid"                  },
-   { "gimp-drawable-transform-2d"             , "gimp-item-transform-2d"                 },
-   { "gimp-drawable-transform-flip"           , "gimp-item-transform-flip"               },
-   { "gimp-drawable-transform-flip-simple"    , "gimp-item-transform-flip-simple"        },
-   { "gimp-drawable-transform-matrix"         , "gimp-item-transform-matrix"             },
-   { "gimp-drawable-transform-perspective"    , "gimp-item-transform-perspective"        },
-   { "gimp-drawable-transform-rotate"         , "gimp-item-transform-rotate"             },
-   { "gimp-drawable-transform-rotate-simple"  , "gimp-item-transform-rotate-simple"      },
-   { "gimp-drawable-transform-scale"          , "gimp-item-transform-scale"              },
-   { "gimp-drawable-transform-shear"          , "gimp-item-transform-shear"              },
-   { "gimp-display-is-valid"                  , "gimp-display-id-is-valid"               },
-   { "gimp-image-is-valid"                    , "gimp-image-id-is-valid"                 },
-   { "gimp-image-freeze-vectors"              , "gimp-image-freeze-paths"                },
-   { "gimp-image-get-vectors"                 , "gimp-image-get-paths"                   },
-   { "gimp-image-get-selected-vectors"        , "gimp-image-get-selected-paths"          },
-   { "gimp-image-set-selected-vectors"        , "gimp-image-set-selected-paths"          },
-   { "gimp-image-thaw-vectors"                , "gimp-image-thaw-paths"                  },
-   { "gimp-item-is-channel"                   , "gimp-item-id-is-channel"                },
-   { "gimp-item-is-drawable"                  , "gimp-item-id-is-drawable"               },
-   { "gimp-item-is-layer"                     , "gimp-item-id-is-layer"                  },
-   { "gimp-item-is-layer-mask"                , "gimp-item-id-is-layer-mask"             },
-   { "gimp-item-is-selection"                 , "gimp-item-id-is-selection"              },
-   { "gimp-item-is-text-layer"                , "gimp-item-id-is-text-layer"             },
-   { "gimp-item-is-valid"                     , "gimp-item-id-is-valid"                  },
-   { "gimp-item-is-vectors"                   , "gimp-item-id-is-path"                   },
-   { "gimp-item-id-is-vectors"                , "gimp-item-id-is-path"                   },
-   TODO more -vectors- => -path- or -paths-
-   TODO more layer-group => group-layer
-   { "gimp-layer-group-new"                   , "gimp-group-layer-new"                   },
-   { "gimp-procedural-db-dump"                , "gimp-pdb-dump"                          },
-   { "gimp-procedural-db-get-data"            , "gimp-pdb-get-data"                      },
-   { "gimp-procedural-db-set-data"            , "gimp-pdb-set-data"                      },
-   { "gimp-procedural-db-get-data-size"       , "gimp-pdb-get-data-size"                 },
-   { "gimp-procedural-db-proc-arg"            , "gimp-pdb-get-proc-argument"             },
-   { "gimp-procedural-db-proc-info"           , "gimp-pdb-get-proc-info"                 },
-   { "gimp-procedural-db-proc-val"            , "gimp-pdb-get-proc-return-value"         },
-   { "gimp-procedural-db-proc-exists"         , "gimp-pdb-proc-exists"                   },
-   { "gimp-procedural-db-query"               , "gimp-pdb-query"                         },
-   { "gimp-procedural-db-temp-name"           , "gimp-pdb-temp-name"                     },
-   { "gimp-image-get-exported-uri"            , "gimp-image-get-exported-file"           },
-   { "gimp-image-get-imported-uri"            , "gimp-image-get-imported-file"           },
-   { "gimp-image-get-xcf-uri"                 , "gimp-image-get-xcf-file"                },
-   { "gimp-image-get-filename"                , "gimp-image-get-file"                    },
-   { "gimp-image-set-filename"                , "gimp-image-set-file"                    },
-   { "gimp-plugin-menu-register"              , "gimp-pdb-add-proc-menu-path"            },
-   { "gimp-plugin-get-pdb-error-handler"      , "gimp-plug-in-get-pdb-error-handler"     },
-   { "gimp-plugin-help-register"              , "gimp-plug-in-help-register"             },
-   { "gimp-plugin-menu-branch-register"       , "gimp-plug-in-menu-branch-register"      },
-   { "gimp-plugin-set-pdb-error-handler"      , "gimp-plug-in-set-pdb-error-handler"     },
-   { "gimp-plugins-query"                     , "gimp-plug-ins-query"                    },
-   { "file-gtm-save"                          , "file-html-table-export"                 },
-   { "python-fu-histogram-export"             , "histogram-export"                       },
-   { "python-fu-gradient-save-as-css"         , "gradient-save-as-css"                   }
-  */
+/* About deprecation mechanisms.
+ *
+ * The mechanism here is only for ScriptFu.
+ * This prints a warning to the console, but redirects the call
+ * to the new name of a PDB procedure.
+ *
+ * Another mechanism is to define a compatibility procedure in the PDB.
+ *
+ * Another mechanism is in Gimp core PDB, which also aliases.
+ * When a procedure is aliased there, it does not need to be aliased here.
+ * The mechanism here lets ScriptFu alias PDB procedures that core PDB does not
+ * (when script maintenance lags core development.)
+ *
+ * Another mechanism defines an alias in pure Scheme rather than in C as here.
+ * See for example PDB-compat-v2.scm.
+ * That script must be explicitly loaded by a script.
+ *
+ * In this mechanism, aliases are always loaded by the interpreter, not a script.
+ * This mechanism also gives a warning that the name is deprecated.
+ * This mechanism also is more independent of definition time.
+ * The aliases here could be done in a Scheme script,
+ * but only if loaded after PDB procedures were defined into the interpreter.
+ */
 
 compat_procs[] =
 {
