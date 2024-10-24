@@ -449,23 +449,23 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)  ||
           GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
         {
-          /* Array arguments don't have their size information when they
-           * are set by core code, in C array form.
-           * By convention, the previous argument has to be the array
-           * size argument.
-           */
-          g_return_val_if_fail (prev_value_type == G_TYPE_INT && prev_int_value >= 0, NULL);
-
-          if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
-            gimp_value_set_int32_array (value,
-                                        (const gint32 *) va_arg (va_args, gpointer),
-                                        prev_int_value);
-          else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
-            gimp_value_set_float_array (value,
-                                        (const gdouble *) va_arg (va_args, gpointer),
-                                        prev_int_value);
-          else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
-            g_value_set_boxed (value, va_arg (va_args, gpointer));
+          if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+            {
+              /* Array arguments don't have their size information when they
+               * are set by core code, in C array form.
+               * By convention, the previous argument has to be the array
+               * size argument.
+               */
+              g_return_val_if_fail (prev_value_type == G_TYPE_INT && prev_int_value >= 0, NULL);
+              gimp_value_set_float_array (value,
+                                          (const gdouble *) va_arg (va_args, gpointer),
+                                          prev_int_value);
+            }
+          else if (GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value) ||
+                   GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+            {
+              g_value_set_boxed (value, va_arg (va_args, gpointer));
+            }
         }
       else
         {

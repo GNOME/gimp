@@ -431,18 +431,12 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                         GIMP_RUN_INTERACTIVE,
                                         G_PARAM_READWRITE);
 
-      gimp_procedure_add_int_argument (procedure, "count",
-                                       _("Count"),
-                                       _("The number of images entered (This will be the "
-                                         "number of pages)."),
-                                       1, MAX_PAGE_COUNT, 1,
-                                       G_PARAM_READWRITE);
-
-      gimp_procedure_add_int32_array_argument (procedure, "images",
-                                               "Images",
-                                               "Input image for each page (An image can "
-                                               "appear more than once)",
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_core_object_array_argument (procedure, "images",
+                                                     "Images",
+                                                     "Input image for each page (An image can "
+                                                     "appear more than once)",
+                                                     GIMP_TYPE_IMAGE,
+                                                     G_PARAM_READWRITE);
 
       gimp_procedure_add_boolean_argument (procedure, "vectorize",
                                            _("Convert _bitmaps to vector graphics where possible"),
@@ -528,7 +522,7 @@ pdf_export_multi (GimpProcedure        *procedure,
   GimpRunMode        run_mode;
   GimpExportOptions *options   = NULL;
   gchar             *uri;
-  const gint32      *image_ids = NULL;
+  GimpImage        **images    = NULL;
   GimpImage         *image     = NULL;
   GFile             *file      = NULL;
 
@@ -537,8 +531,7 @@ pdf_export_multi (GimpProcedure        *procedure,
   g_object_get (config,
                 "run-mode", &run_mode,
                 "uri",      &uri,
-                "count",    &multi_page.image_count,
-                "images",   &image_ids,
+                "images",   &images,
                 NULL);
 
   options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS,
@@ -559,11 +552,16 @@ pdf_export_multi (GimpProcedure        *procedure,
   if (file != NULL)
     file_name = g_file_get_path (file);
 
-  if (image_ids)
-    for (gint i = 0; i < multi_page.image_count; i++)
-      multi_page.images[i] = gimp_image_get_by_id (image_ids[i]);
+  if (images)
+    {
+      multi_page.image_count = gimp_core_object_array_get_length ((GObject **) images);
+      for (gint i = 0; i < multi_page.image_count; i++)
+        multi_page.images[i] = images[i];
+    }
   else
-    init_image_list_defaults (image);
+    {
+      init_image_list_defaults (image);
+    }
 
   validate_image_list ();
 

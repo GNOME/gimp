@@ -452,6 +452,49 @@ gimp_value_take_array (GValue *value,
 typedef GimpArray GimpInt32Array;
 G_DEFINE_BOXED_TYPE (GimpInt32Array, gimp_int32_array, gimp_array_copy, gimp_array_free)
 
+/**
+ * gimp_int32_array_get_values:
+ * @array: the #GimpArray representing #int32 values.
+ * @length: the number of #int32 values in the returned array.
+ *
+ * Returns: (array length=length) (transfer none): a C-array of #gint32.
+ */
+const gint32 *
+gimp_int32_array_get_values (GimpArray *array,
+                             gsize     *length)
+{
+  g_return_val_if_fail (array->length % sizeof (gint32) == 0, NULL);
+
+  if (length)
+    *length = array->length / sizeof (gint32);
+
+  return (const gint32 *) array->data;
+}
+
+/**
+ * gimp_int32_array_set_values:
+ * @array: the array to modify.
+ * @values: (array length=length): the C-array.
+ * @length: the number of #int32 values in @data.
+ * @static_data: whether @data is a static rather than allocated array.
+ */
+void
+gimp_int32_array_set_values (GimpArray    *array,
+                             const gint32 *values,
+                             gsize         length,
+                             gboolean      static_data)
+{
+  g_return_if_fail ((values == NULL && length == 0) || (values != NULL && length  > 0));
+
+  if (! array->static_data)
+    g_free (array->data);
+
+  array->length      = length * sizeof (gint32);
+  array->data        = static_data ? (guint8 *) values : g_memdup2 (values, array->length);
+  array->static_data = static_data;
+}
+
+
 /*
  * GIMP_TYPE_PARAM_INT32_ARRAY
  */

@@ -48,8 +48,10 @@
  **/
 
 
-static gboolean gimp_config_serialize_strv (const GValue *value,
-                                            GString      *str);
+static gboolean gimp_config_serialize_strv  (const GValue *value,
+                                             GString      *str);
+static gboolean gimp_config_serialize_array (const GValue *value,
+                                             GString      *str);
 
 
 /**
@@ -512,6 +514,11 @@ gimp_config_serialize_value (const GValue *value,
       return gimp_config_serialize_strv (value, str);
     }
 
+  if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+    {
+      return gimp_config_serialize_array (value, str);
+    }
+
   if (G_VALUE_HOLDS_BOOLEAN (value))
     {
       gboolean bool;
@@ -724,6 +731,41 @@ gimp_config_serialize_strv (const GValue *value,
       /* GValue has NULL value. Not quite the same as an empty GStrv.
        * But handle it quietly as an empty GStrv: write a length of zero.
        */
+      g_string_append (str, "0");
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_config_serialize_array (const GValue *value,
+                             GString      *str)
+{
+  GimpArray *array;
+
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value), FALSE);
+
+  array = g_value_get_boxed (value);
+
+  if (array)
+    {
+      gint32 *values = (gint32 *) array->data;
+      gint    length = array->length / sizeof (gint32);
+
+      /* Write length */
+      g_string_append_printf (str, "%d", length);
+
+      for (gint i = 0; i < length; i++)
+        {
+          gchar *istr;
+
+          istr = g_strdup_printf (" %d", values[i]);
+          g_string_append (str, istr);
+          g_free (istr);
+        }
+    }
+  else
+    {
       g_string_append (str, "0");
     }
 

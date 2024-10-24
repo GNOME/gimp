@@ -483,7 +483,7 @@ gih_export (GimpProcedure        *procedure,
 
 static void
 gih_remove_guides (GimpProcedureConfig *config,
-                        GimpImage           *image)
+                   GimpImage           *image)
 {
   GimpArray *array;
 
