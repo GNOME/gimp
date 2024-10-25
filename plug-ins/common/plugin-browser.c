@@ -423,9 +423,9 @@ browser_search (GimpBrowser   *gimp_browser,
       const gint        *time_ints;
       gint               i;
 
-      accel_strs     = GIMP_VALUES_GET_STRV (return_vals, 2);
-      prog_strs      = GIMP_VALUES_GET_STRV (return_vals, 3);
-      time_ints      = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 5, NULL);
+      accel_strs = GIMP_VALUES_GET_STRV (return_vals, 2);
+      prog_strs  = GIMP_VALUES_GET_STRV (return_vals, 3);
+      time_ints  = GIMP_VALUES_GET_INT32_ARRAY (return_vals, 4, NULL);
 
       for (i = 0; i < num_plugins; i++)
         {
