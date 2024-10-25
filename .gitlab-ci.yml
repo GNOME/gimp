@@ -377,7 +377,6 @@ gimp-flatpak-x64:
     - <<: *CI_COMMIT
       when: never
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-      when: never
   image: $CI_REGISTRY_IMAGE:build-debian-latest
 
 deps-win-x64-cross:
