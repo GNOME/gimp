@@ -18,6 +18,7 @@ endif
 # scripts interpreted by extension-script-fu, installed to /scripts
 scripts = [
   'contactsheet.scm',
+  'clothify-v2.scm',
   'clothify-v3.scm',
   'test-sphere.scm',
   'test-v3.scm',
