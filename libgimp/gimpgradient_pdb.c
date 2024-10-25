@@ -235,6 +235,8 @@ gimp_gradient_get_custom_samples (GimpGradient   *gradient,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
+  g_return_val_if_fail (num_samples >= 1, FALSE);
+
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_GRADIENT, gradient,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,

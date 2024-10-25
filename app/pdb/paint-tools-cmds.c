@@ -54,7 +54,7 @@ paint_tools_stroke (Gimp              *gimp,
                     GimpContext       *context,
                     GimpPaintOptions  *options,
                     GimpDrawable      *drawable,
-                    gint               n_strokes,
+                    gsize              n_strokes,
                     const gdouble     *strokes,
                     GError           **error,
                     const gchar       *first_property_name,
@@ -113,7 +113,7 @@ airbrush_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble pressure;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -160,7 +160,7 @@ airbrush_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -206,7 +206,7 @@ clone_invoker (GimpProcedure         *procedure,
   gint clone_type;
   gdouble src_x;
   gdouble src_y;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -263,7 +263,7 @@ clone_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -307,7 +307,7 @@ convolve_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gdouble pressure;
   gint convolve_type;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -356,7 +356,7 @@ convolve_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -401,7 +401,7 @@ dodgeburn_invoker (GimpProcedure         *procedure,
   gdouble exposure;
   gint dodgeburn_type;
   gint dodgeburn_mode;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -452,7 +452,7 @@ dodgeburn_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -494,7 +494,7 @@ eraser_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
   gint hardness;
   gint method;
@@ -545,7 +545,7 @@ eraser_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -590,7 +590,7 @@ heal_invoker (GimpProcedure         *procedure,
   GimpDrawable *src_drawable;
   gdouble src_x;
   gdouble src_y;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -645,7 +645,7 @@ heal_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -688,7 +688,7 @@ paintbrush_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble fade_out;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
   gint method;
   gdouble gradient_length;
@@ -771,7 +771,7 @@ paintbrush_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -813,7 +813,7 @@ pencil_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -856,7 +856,7 @@ smudge_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble pressure;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
@@ -903,7 +903,7 @@ smudge_default_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint num_strokes;
+  gsize num_strokes;
   const gdouble *strokes;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));

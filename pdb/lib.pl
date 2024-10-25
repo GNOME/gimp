@@ -188,6 +188,7 @@ sub generate_fun {
     my $arglist = "";
     my $argdesc = "";
     my $sincedesc = "";
+    my $inargs_testing = "";
     my $value_array = "";
     my $arg_array = "";
     my $argc = 0;
@@ -201,6 +202,34 @@ sub generate_fun {
 
         if (exists $_->{nopdb}) {
             $argc--;
+
+            if (defined $typeinfo[0]) {
+                $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
+                # gsize is positive, no need to test for >= 0.
+                if ($min > 0) {
+                    if ($rettype eq 'void') {
+                        # void rettype is in fact boolean.
+                        $inargs_testing .= "\n" . ' ' x 2 . "g_return_val_if_fail ($_->{name} >= $min, FALSE);";
+                    }
+                    else {
+                        # TODO: I should in fact test the exact return
+                        # type. E.g. it could be int or float. But since
+                        # we have no such case (while also generating in
+                        # argument testing) so far, I took the easy way
+                        # out. To be completed if needed.
+                        $inargs_testing .= "\n" . ' ' x 2 . "g_return_val_if_fail ($_->{name} >= $min, NULL);";
+                    }
+                }
+            }
+            if (defined $typeinfo[2]) {
+                $max = ($typeinfo[3] eq '<') ? ($typeinfo[2] - 1) : $typeinfo[2];
+                if ($rettype eq 'void') {
+                    $inargs_testing .= "\n" . ' ' x 2 . "g_return_val_if_fail ($_->{name} <= $max, FALSE);";
+                }
+                else {
+                    $inargs_testing .= "\n" . ' ' x 2 . "g_return_val_if_fail ($_->{name} <= $max, NULL);";
+                }
+            }
         }
         else {
             # This gets passed to gimp_value_array_new_with_types()
@@ -274,6 +303,10 @@ sub generate_fun {
         $argdesc .= "\n";
 
         $argc++;
+    }
+
+    if ($inargs_testing ne "") {
+        $inargs_testing .= "\n";
     }
 
     # This marshals the return value(s)
@@ -553,7 +586,7 @@ $wrapped$funcname ($clist)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;$return_args
-
+$inargs_testing
   args = gimp_value_array_new_from_types (NULL,
                                           ${value_array}G_TYPE_NONE);
 $arg_array

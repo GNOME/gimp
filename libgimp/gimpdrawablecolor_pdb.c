@@ -214,6 +214,9 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
+  g_return_val_if_fail (num_values >= 256, FALSE);
+  g_return_val_if_fail (num_values <= 2096, FALSE);
+
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
@@ -263,6 +266,9 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
+
+  g_return_val_if_fail (num_points >= 4, FALSE);
+  g_return_val_if_fail (num_points <= 2048, FALSE);
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE, drawable,

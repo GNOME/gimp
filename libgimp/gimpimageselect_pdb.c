@@ -379,6 +379,8 @@ gimp_image_select_polygon (GimpImage      *image,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
+  g_return_val_if_fail (num_segs >= 2, FALSE);
+
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
                                           GIMP_TYPE_CHANNEL_OPS, operation,

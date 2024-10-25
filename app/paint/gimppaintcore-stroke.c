@@ -51,7 +51,7 @@ gimp_paint_core_stroke (GimpPaintCore     *core,
                         GimpDrawable      *drawable,
                         GimpPaintOptions  *paint_options,
                         GimpCoords        *strokes,
-                        gint               n_strokes,
+                        gsize              n_strokes,
                         gboolean           push_undo,
                         GError           **error)
 {
