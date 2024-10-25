@@ -9,29 +9,23 @@
 
 
 ;                 get-layers
-; procedure returns (1 #(<layerID>)) ....in the REPL
+; procedure returns (#(<layerID>)) ....in the REPL
 
+; get-layers returns a list of layers
+(assert `(vector? (car (gimp-image-get-layers ,testImage))))
 
-; the testImage has one layer
-(assert `(= (car (gimp-image-get-layers ,testImage ))
-            1))
-
-; get-layers returns second result a vector of ID's
-; !!! use cadr to get second result
-(assert `(vector? (cadr (gimp-image-get-layers ,testImage ))))
-
-; the vector also has one element
-(assert `(= (vector-length (cadr (gimp-image-get-layers ,testImage )))
+; the vector has one element
+(assert `(= (vector-length (car (gimp-image-get-layers ,testImage)))
             1))
 
 ; the vector can be indexed at first element
 ; and is a numeric ID
 (assert `(number?
-            (vector-ref (cadr (gimp-image-get-layers ,testImage ))
+            (vector-ref (car (gimp-image-get-layers ,testImage))
                         0)))
 
 ; store the layer ID
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (car (gimp-image-get-layers testImage))
                               0))
 
 ; FIXME seems to fail??? because name is actually "Background"
@@ -50,9 +44,6 @@
 ; TODO gimp-image-get-layer-by-tattoo
 
 ; the single layer is selected  in freshly opened image
-(assert `(= (car (gimp-image-get-selected-layers ,testImage ))
-            1))
+(assert `(vector? (car (gimp-image-get-selected-layers ,testImage))))
 
 ; TODO test selected layer is same layer
-
-

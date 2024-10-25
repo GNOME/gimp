@@ -18,7 +18,7 @@
 
 ; get all the root layers
 ; testImage has exactly one root layer.
-(define testLayers (cadr (gimp-image-get-layers testImage)))
+(define testLayers (gimp-image-get-layers testImage))
 ;testLayers is-a vector
 
 (define testLayer (vector-ref testLayers 0))
@@ -35,7 +35,6 @@
 (test! "named-copy")
 
 (define testBuffer (gimp-edit-named-copy
-                              1
                               (make-vector 1 testLayer)
                               "testBufferName"))
 ; There is one named buffer
@@ -69,15 +68,15 @@
 ;  - image has one drawable
 ;  - one drawable is passed
 ; returns true and clip has one drawable
-(assert `(gimp-edit-copy 1 ,testLayers))
+(assert `(gimp-edit-copy ,testLayers))
 
 ; paste when clipboard is not empty returns a vector of length one
-(assert `(= (car (gimp-edit-paste
+(assert `(= (vector-length (gimp-edit-paste
                    ,testLayer
                    TRUE)) ; paste-into
             1))
 ; get reference to pasted layer
-(define testPastedLayer (vector-ref (cadr (gimp-image-get-layers testImage))
+(define testPastedLayer (vector-ref (gimp-image-get-layers testImage)
                                        0))
 
 ; !!! this is not what happens in the GUI, the pasted layer is NOT floating
@@ -109,8 +108,8 @@
 
 (test! "paste  into")
 ; paste when clipboard is not empty returns a vector of length one
-; returns (1 #(x))
-(assert `(= (car (gimp-edit-paste ,testLayer TRUE)) ; paste-into
+; returns (#(x))
+(assert `(= (vector-length (gimp-edit-paste ,testLayer TRUE)) ; paste-into
             1))
 
 ; The first pasted floating layer was anchored (merged into) first layer
@@ -121,9 +120,9 @@
 ;              "Procedure")
 
 ; There are now two layers
-(assert `(= (car (gimp-image-get-layers ,testImage)) 2))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage)) 2))
 
-(define testPastedLayer2 (vector-ref (cadr (gimp-image-get-layers testImage))
+(define testPastedLayer2 (vector-ref (gimp-image-get-layers testImage)
                                        0))
 ; the new layer is now floating.
 (assert `(gimp-layer-is-floating-sel ,testPastedLayer2))
@@ -149,16 +148,16 @@
 (assert `(gimp-selection-all ,testImage))
 (assert `(not (gimp-selection-is-empty ,testImage)))
 
-(assert `(gimp-edit-cut 1 (make-vector 1 (vector-ref ,testLayers 0))))
+(assert `(gimp-edit-cut (make-vector 1 (vector-ref ,testLayers 0))))
 ; There are still two layers
-(assert `(= (car (gimp-image-get-layers ,testImage)) 2))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage)) 2))
 ; !!! No API method is-clipboard-empty
 
 
 (test! "edit-named-cut when selection")
-(assert `(gimp-edit-named-cut 1 (make-vector 1 (vector-ref ,testLayers 0)) "testBufferName2"))
+(assert `(gimp-edit-named-cut (make-vector 1 (vector-ref ,testLayers 0)) "testBufferName2"))
 ; There are still two layers
-(assert `(= (car (gimp-image-get-layers ,testImage)) 2))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage)) 2))
 ; There is two named buffer
 (assert `(= (length (gimp-buffers-get-list ""))
             2))
@@ -173,10 +172,10 @@
 ; cut when no selection cuts given layers out of image
 ; Cut one of two layers.
 ; returns #t when succeeds
-(assert `(gimp-edit-cut 1 (make-vector 1 (vector-ref ,testLayers 0))))
+(assert `(gimp-edit-cut (make-vector 1 (vector-ref ,testLayers 0))))
 ; effective: count layers now 0
 ; FIXME, the count of layers should be 1, since we cut only one of 2
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             0))
 
 

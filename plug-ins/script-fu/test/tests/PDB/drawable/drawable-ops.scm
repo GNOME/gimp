@@ -11,8 +11,8 @@
 (define testImage (testing:load-test-image-basic-v3))
 ; Wilber has one layer
 
-; cadr is vector, first element is a drawable
-(define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
+; car is vector, first element is a drawable
+(define testDrawable (vector-ref (gimp-image-get-layers testImage) 0))
 
 
 (test! "drawable operations")
@@ -27,10 +27,10 @@
 
 ; requires vector of size 256 of floats
 (assert `(gimp-drawable-curves-explicit ,testDrawable HISTOGRAM-RED
-      256 (make-vector 256 1.0)))
+      (make-vector 256 1.0)))
 
 ; two pairs of float control points of a spline, four floats in total
-(assert `(gimp-drawable-curves-spline ,testDrawable HISTOGRAM-RED 4 #(0 0 25.0 25.0) ))
+(assert `(gimp-drawable-curves-spline ,testDrawable HISTOGRAM-RED #(0 0 25.0 25.0) ))
 
 (assert `(gimp-drawable-desaturate ,testDrawable DESATURATE-LUMA))
 

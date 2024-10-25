@@ -6,7 +6,7 @@
 
 ; an image, drawable, and path
 (define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (car (gimp-image-get-layers testImage ))
                                   0))
 (define testPath (car (gimp-path-new testImage "Test Path")))
 ; must add to image
@@ -19,8 +19,7 @@
 (gimp-path-stroke-new-from-points
             testPath
             PATH-STROKE-TYPE-BEZIER
-            12 ; count control points, 2*2
-            (vector 1 2 83 84 5 6 7 8 9 10 11 12)
+            (vector 1 2 83 84 5 6 7 8 9 10 11 12) ; control points
             FALSE) ; not closed
 
 ; make test harder by using float precision
@@ -39,7 +38,7 @@
 
 ; introspection: gimp module returns list of names of dynamics
 ; second arg is a regex
-(assert `(list? (car (gimp-dynamics-get-list ""))))
+(assert `(list? (gimp-dynamics-get-list "")))
 
 ; refresh: gimp module will load newly installed dynamics
 ; method is void and should never fail.
@@ -101,8 +100,3 @@
   dynamicsList)
 
 ;(gimp-display-new testImage)
-
-
-
-
-

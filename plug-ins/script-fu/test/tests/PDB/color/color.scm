@@ -28,7 +28,7 @@
 ; an image mode rgba i.e. with alpha
 ; require existing image gimp-logo.png is rgb with alpha
 (define testImage (testing:load-test-image-basic-v3))
-(define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
+(define testDrawable (vector-ref (gimp-image-get-layers testImage) 0))
 
 ; an image mode rgb flat
 ; Create separate image, avoid side effects on testImage
@@ -39,7 +39,7 @@
 ; an image mode grayscale w alpha
 (define testImageGrayA (testing:load-test-image-basic-v3))
 (gimp-image-convert-grayscale testImageGrayA)
-(define testDrawableGrayA (vector-ref (cadr (gimp-image-get-layers testImageGrayA)) 0))
+(define testDrawableGrayA (vector-ref (gimp-image-get-layers testImageGrayA) 0))
 
 ; an image mode grayscale w/o alpha
 (define testImageGray (testing:load-test-image-basic-v3))
@@ -59,7 +59,7 @@
                   #t ; remove-unused
                   "myPalette" ; ignored
                   )
-(define testDrawableIndexed (vector-ref (cadr (gimp-image-get-layers testImageIndexed)) 0))
+(define testDrawableIndexed (vector-ref (gimp-image-get-layers testImageIndexed) 0))
 
 
 

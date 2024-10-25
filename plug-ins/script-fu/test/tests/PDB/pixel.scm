@@ -32,11 +32,11 @@
 ; gimp-logo.png
 (define testImage (testing:load-test-image-basic-v3))
 ; image has one layer
-(define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
+(define testDrawable (vector-ref (gimp-image-get-layers testImage) 0))
 
 (define testImageGray (testing:load-test-image-basic-v3))
 (gimp-image-convert-grayscale testImageGray)
-(define testDrawableGray (vector-ref (cadr (gimp-image-get-layers testImageGray)) 0))
+(define testDrawableGray (vector-ref (gimp-image-get-layers testImageGray) 0))
 
 (define testImageIndexed (testing:load-test-image-basic-v3))
 (gimp-image-convert-indexed
@@ -48,7 +48,7 @@
                   1  ; remove-unused. FUTURE: #t
                   "myPalette" ; ignored
                   )
-(define testDrawableIndexed (vector-ref (cadr (gimp-image-get-layers testImageIndexed)) 0))
+(define testDrawableIndexed (vector-ref (gimp-image-get-layers testImageIndexed) 0))
 
 
 

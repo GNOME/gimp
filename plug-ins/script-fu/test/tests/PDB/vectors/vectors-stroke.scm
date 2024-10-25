@@ -2,14 +2,14 @@
 
 ; in the console, this typically works to debug:
 ; i.e. these are the typical IDs
-; (gimp-image-get-paths 1) => (1 #(3))
-; (gimp-path-get-strokes 3) => (1 #(2))
-;  (gimp-path-stroke-get-points 3 2) => (0 6 #(200.0 200.0 200.0 200.0 200.0 200.0) 0)
+; (gimp-image-get-paths 1) => (#(3))
+; (gimp-path-get-strokes 3) => (#(2))
+;  (gimp-path-stroke-get-points 3 2) => (0 #(200.0 200.0 200.0 200.0 200.0 200.0) 0)
 
 ; setup
 
 (define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (car (gimp-image-get-layers testImage ))
                                   0))
 
 (define testPath (car (gimp-path-new
@@ -33,18 +33,17 @@
 (assert `(gimp-path-stroke-new-from-points
             ,testPath
             PATH-STROKE-TYPE-BEZIER
-            12 ; count control points, 2*2
-            (vector 1 2 3 4 5 6 7 8 9 10 11 12)
+            (vector 1 2 3 4 5 6 7 8 9 10 11 12) ; control points
             FALSE)) ; not closed
 
 ; path now has one stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             1))
 
 
 
 ; capture stroke ID
-(define testStroke (vector-ref (cadr (gimp-path-get-strokes testPath)) 0))
+(define testStroke (vector-ref (car (gimp-path-get-strokes testPath)) 0))
 
 ; stroke has correct count of control points
 (assert `(gimp-path-stroke-get-points
@@ -73,11 +72,11 @@
 ; close a path does not throw
 (assert `(gimp-path-stroke-close ,testPath ,testStroke))
 ; effective: path still has one stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             1))
 ; effective: the flag on the stroke says it is closed
-; the flag is the fourth element of the returned list.
-(assert `(= (cadddr (gimp-path-stroke-get-points ,testPath ,testStroke))
+; the flag is the third element of the returned list.
+(assert `(= (caddr (gimp-path-stroke-get-points ,testPath ,testStroke))
             1))
 ; effective: the coords coincide
 ; TODO
@@ -137,7 +136,7 @@
             200 200 ; x, y of moveto point
           ))
 ; effective: path now has two stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             2))
 
 ; FIXME: this crashes app when the stroke is closed
@@ -154,7 +153,7 @@
             200 ; angle of x axis in radians
           ))
 ; effective: path now has three stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             3))
 
 (test! "add strokeconicto")
@@ -169,7 +168,7 @@
             20 20   ; x, y of end point
           ))
 ; effective: path now has three stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             3))
 
 (test! "add strokecubicto")
@@ -183,7 +182,7 @@
             20 20   ; x, y of end point
           ))
 ; effective: path now has three stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             3))
 
 
@@ -192,6 +191,6 @@
 
 (assert `(gimp-path-remove-stroke ,testPath ,testStroke))
 ; effective: path now has two stroke
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (car (gimp-path-get-strokes ,testPath)))
             2))
 

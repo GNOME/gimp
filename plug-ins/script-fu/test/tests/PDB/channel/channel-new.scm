@@ -10,7 +10,7 @@
 
 
 ; new image has no custom channels
-(assert `(= (car (gimp-image-get-channels ,testImage))
+(assert `(= (vector-length (gimp-image-get-channels ,testImage))
             0))
 
 ; setup (not in an assert and not quoted)
@@ -28,7 +28,7 @@
 
 (test! "new channel is not in image until inserted")
 ; get-channels yields (0 #())
-(assert `(= (car (gimp-image-get-channels ,testImage))
+(assert `(= (vector-length (gimp-image-get-channels ,testImage))
             0))
 
 ; channel ID is valid
@@ -59,7 +59,7 @@
             0))          ; position in stack
 
 ; insert was effective: testImage now has one channel
-(assert `(= (car (gimp-image-get-channels ,testImage))
+(assert `(= (vector-length (gimp-image-get-channels ,testImage))
             1))
 
 ; insert was effective: image now knows by name
@@ -80,7 +80,7 @@
 (assert `(gimp-image-remove-channel ,testImage ,testChannel))
 
 ; Effective: image now has zero channels
-(assert `(= (car (gimp-image-get-channels ,testImage))
+(assert `(= (vector-length (gimp-image-get-channels ,testImage))
             0))
 
 ; After remove, channel ID is NOT valid

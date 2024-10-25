@@ -26,7 +26,7 @@
 ; but cadr returns the second element!!
 ; TODO make this a library routine: get-first-layer
 ; (1 #(<layerID>))
-(define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testDrawable (vector-ref (gimp-image-get-layers testImage)
                                   0))
 
 (test! "Create new named buffer")
@@ -35,7 +35,6 @@
 ; instead it is a method of the Edit class so-to-speak
 ; You can't: #(testDrawable)
 (define testBuffer (gimp-edit-named-copy
-                              1
                               (make-vector 1 testDrawable)
                               "bufferName"))
 ; Since no selection, the buffer is same size as image

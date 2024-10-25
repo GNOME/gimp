@@ -10,7 +10,7 @@
 
 ; an image, drawable, and path
 (define testImage (testing:load-test-image-basic-v3))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (gimp-image-get-layers testImage )
                                   0))
 (define testPath (gimp-path-new testImage "Test Path"))
 ; must add to image
@@ -22,8 +22,7 @@
 (gimp-path-stroke-new-from-points
             testPath
             PATH-STROKE-TYPE-BEZIER
-            12 ; count control points, 2*2
-            (vector 1 2 3 4 5 6 7 8 9 10 11 12)
+            (vector 1 2 3 4 5 6 7 8 9 10 11 12) ; control points
             FALSE) ; not closed
 
 

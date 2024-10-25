@@ -63,7 +63,4 @@
 ; gimp-get-images does not follow the pattern:
 ; it doesn't take a regex
 ; and it returns a vector of image objects (0 #())
-(assert `(vector? (cadr (gimp-get-images))))
-
-
-
+(assert `(vector? (car (gimp-get-images))))

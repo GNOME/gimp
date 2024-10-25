@@ -132,7 +132,7 @@
 ; See earlier tests, where setup is lifted from
 
 (define testImage (testing:load-test-image "gimp-logo.png"))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (car (gimp-image-get-layers testImage ))
                                   0))
 (define testSelection (car (gimp-image-get-selection testImage)))
 (define testFont (car (gimp-context-get-font)))

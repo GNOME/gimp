@@ -19,7 +19,7 @@
 ; Load test image that already has drawable
 (define testImage (testing:load-test-image "gimp-logo.png"))
 
-(define testLayers (cadr (gimp-image-get-layers testImage )))
+(define testLayers (car (gimp-image-get-layers testImage )))
 ; assert testLayers is-a vector of length one
 (define testLayer (vector-ref testLayers 0))
 
@@ -34,7 +34,7 @@
 ; a new channel is not in the image until added
 (gimp-image-insert-channel testImage testChannel)
 ; get a vector that only has the new channel
-(define testChannels (cadr (gimp-image-get-channels testImage )))
+(define testChannels (car (gimp-image-get-channels testImage)))
 
 ; create test path
 (define testPath (car (gimp-path-new
@@ -42,7 +42,7 @@
                         "Test Path")))
 (gimp-image-insert-path testImage testPath 0 0)
 ; list of paths
-(define testPaths (cadr (gimp-image-get-paths testImage )))
+(define testPaths (car (gimp-image-get-paths testImage)))
 
 
 
@@ -52,12 +52,12 @@
 ; layer
 (assert `(gimp-image-set-selected-layers
             ,testImage
-            1 ,testLayers ))
+            ,testLayers ))
 ; effective: one layer is selected
-(assert `(= (car (gimp-image-get-selected-layers ,testImage))
+(assert `(= (vector-length (car (gimp-image-get-selected-layers ,testImage)))
             1))
 ; effective: selected layer is the one we just selected
-(assert `(= (vector-ref (cadr (gimp-image-get-selected-layers ,testImage)) 0)
+(assert `(= (vector-ref (car (gimp-image-get-selected-layers ,testImage)) 0)
             ,testLayer))
 
 
@@ -65,15 +65,15 @@
 ; channel
 (assert `(gimp-image-set-selected-channels
             ,testImage
-            1 ,testChannels ))
+            ,testChannels ))
 ; effective: one channel is selected
-(assert `(= (car (gimp-image-get-selected-channels ,testImage))
+(assert `(= (vector-length (car (gimp-image-get-selected-channels ,testImage)))
             1))
 ; effective: selected channel is the one we just selected
-(assert `(= (vector-ref (cadr (gimp-image-get-selected-channels ,testImage)) 0)
+(assert `(= (vector-ref (car (gimp-image-get-selected-channels ,testImage)) 0)
             ,testChannel))
 ; !!! Selecting a channel deselects previously selected layer
-(assert `(= (car (gimp-image-get-selected-layers ,testImage))
+(assert `(= (vector-length (car (gimp-image-get-selected-layers ,testImage)))
             0))
 
 
@@ -83,19 +83,19 @@
 ; select a set of paths (but the set has one member)
 (assert `(gimp-image-set-selected-paths
             ,testImage
-            1 ,testPaths ))
+            ,testPaths ))
 ; After selecting a set of paths of one member, the first selected path is that member
-(assert `(= (vector-ref (cadr (gimp-image-get-selected-paths ,testImage)) 0)
+(assert `(= (vector-ref (car (gimp-image-get-selected-paths ,testImage)) 0)
             ,testPath))
 ; Selecting a path does not unselect a drawable i.e. previously selected channel
-(assert `(= (vector-ref (cadr (gimp-image-get-selected-channels ,testImage)) 0)
+(assert `(= (vector-ref (car (gimp-image-get-selected-channels ,testImage)) 0)
             ,testChannel))
 
 ; TODO test multi-select, a set of two member path
 
 ; The generic getter get-selected-drawables
 ; Returns a homogenous vector of previously selected channels.
-(assert `(= (vector-ref (cadr (gimp-image-get-selected-drawables ,testImage)) 0)
+(assert `(= (vector-ref (car (gimp-image-get-selected-drawables ,testImage)) 0)
             ,testChannel))
 
 
@@ -106,13 +106,13 @@
 ; iError to pass empty vector to setter
 (assert-error `(gimp-image-set-selected-layers
                   ,testImage
-                  0 #() )
-              "Invalid value for argument 2")
+                  #() )
+              "Invalid value for argument 1")
 (assert-error `(gimp-image-set-selected-channels
                   ,testImage
-                  0 #() )
-              "Invalid value for argument 2")
+                  #() )
+              "Invalid value for argument 1")
 (assert-error `(gimp-image-set-selected-paths
                   ,testImage
-                  0 #() )
-              "Invalid value for argument 2")
+                  #() )
+              "Invalid value for argument 1")

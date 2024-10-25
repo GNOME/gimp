@@ -16,8 +16,7 @@
 
 ; The list of open images is a vector of integer ID
 ; At test time, we don't know how many
-(assert '(number? (car (gimp-get-images))))
-(assert '(vector? (cadr (gimp-get-images))))
+(assert '(vector? (car (gimp-get-images))))
 
 ; The list of modules to not be loaded is a list of strings
 ; Not double wrapped in a list, usually ("")

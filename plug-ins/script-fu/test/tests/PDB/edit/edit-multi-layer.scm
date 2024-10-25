@@ -35,7 +35,7 @@
 
 ; get all the root layers
 ; testImage has two layers at root.
-(define testLayers (cadr (gimp-image-get-layers testImage)))
+(define testLayers (gimp-image-get-layers testImage))
 ;testLayers is-a vector
 
 ; capture a ref to the first layer
@@ -44,7 +44,7 @@
 (test! "insert layer was effective")
 
 ; the image has two layers
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             2))
 
 ; our local list of layers is length 2
@@ -64,10 +64,9 @@
 ; copy first of two
 ; returns #t in v3 binding
 (assert `(gimp-edit-copy
-              1  ; how many to copy
-              ,testLayers))
+              (make-vector 1 (vector-ref ,testLayers 0))))
 ; copy both of two
-(assert `(gimp-edit-copy 2 ,testLayers))
+(assert `(gimp-edit-copy ,testLayers))
 
 
 (test! "paste with clip of two layers")
@@ -76,7 +75,7 @@
 ;  - clip has two layers
 ;  - no selection
 ; returns the pasted layers, a vector of length two
-(assert `(= (car (gimp-edit-paste
+(assert `(= (vector-length (gimp-edit-paste
                    ,testLayer
                   TRUE)) ; paste-into
             2))
@@ -85,7 +84,7 @@
 ; the passed layer is moot: new layers are created.
 
 ; the image now has four layers
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             4))
 
 ; The new layers were pasted centered at (0,0)
@@ -114,11 +113,11 @@
 
 ; Get reference to one of the new layers
 ; it is top of stack, the first element in the vector of layers
-(define testOffCanvasLayer (vector-ref (cadr (gimp-image-get-layers testImage))
+(define testOffCanvasLayer (vector-ref (gimp-image-get-layers testImage)
                                        0))
 
 ; returns (2 <vector>)
-(assert `(= (car (gimp-edit-paste
+(assert `(= (vector-length (gimp-edit-paste
                    ,testOffCanvasLayer
                   TRUE)) ; paste-into
             2))
@@ -143,7 +142,7 @@
 ;  - clip has one layers
 ;  - no selection
 ; returns (1 <vector>) a vector of length one
-(assert `(= (car (gimp-edit-paste
+(assert `(= (vector-length (gimp-edit-paste
                    ,testLayer
                   TRUE)) ; paste-into
             1))

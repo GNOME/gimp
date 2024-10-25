@@ -16,17 +16,17 @@
 ; Default is pattern length zero
 ; Even if user has stroked already and chosen a stroke>line>pattern
 ; Returns (<len> #(<pattern>)))
-(assert `(= (car (gimp-context-get-line-dash-pattern))
+(assert `(= (vector-length (gimp-context-get-line-dash-pattern))
             0))
 
 ; setter succeeds
-(assert `(gimp-context-set-line-dash-pattern 2 #(5.0 11.0)))
+(assert `(gimp-context-set-line-dash-pattern #(5.0 11.0)))
 
 ; setter effective, length now two
-(assert `(= (car (gimp-context-get-line-dash-pattern))
+(assert `(= (vector-length (gimp-context-get-line-dash-pattern))
             2))
 ; and pattern is as set
-(assert `(equal? (cadr (gimp-context-get-line-dash-pattern))
+(assert `(equal? (gimp-context-get-line-dash-pattern)
                   #(5.0 11.0)))
 
 

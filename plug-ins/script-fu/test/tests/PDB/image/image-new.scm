@@ -46,7 +46,7 @@
 ; Returns (<length> #(1))
 ; Test that the length is 1.
 ; !!! This is sensitive to retest, if a test leaves images.
-(assert `(= (car (gimp-get-images))
+(assert `(= (vector-length (gimp-get-images))
              1))
 
 
@@ -65,11 +65,11 @@
 
 
 ; new image has zero layers
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             0))
 
 ; new image has zero paths
-(assert `(= (car (gimp-image-get-paths ,testImage))
+(assert `(= (vector-length (gimp-image-get-paths ,testImage))
             0))
 
 ; new image has no parasites
@@ -148,7 +148,7 @@
 ; Returns (<length> #())
 ; FUTURE Returns empty list `()
 (assert `(=
-            (car (gimp-get-images))
+            (vector-length (gimp-get-images))
             0))
 ; !!! This only passes when testing is from fresh Gimp restart
 

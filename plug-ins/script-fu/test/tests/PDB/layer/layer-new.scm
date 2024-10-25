@@ -22,7 +22,7 @@
 
 (test! "new layer is not in the image until inserted")
 ; returns (length, list), check length is 0
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             0))
 
 

@@ -3,7 +3,7 @@
 
 ; setup
 (define testImage (testing:load-test-image-basic))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (car (gimp-image-get-layers testImage ))
                                   0))
 
 

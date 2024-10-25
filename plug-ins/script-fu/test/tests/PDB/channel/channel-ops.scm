@@ -57,7 +57,7 @@
             "Channel copied from red copy"))
 
 ; effective: image now has two non-component channels
-(assert `(= (car (gimp-image-get-channels ,testImage))
+(assert `(= (vector-length (car (gimp-image-get-channels ,testImage)))
             2))
 
 
@@ -72,7 +72,7 @@
             -10 -10))   ; offset
 
 ; effective: image still has two non-component channels
-(assert `(= (car (gimp-image-get-channels ,testImage))
+(assert `(= (vector-length (car (gimp-image-get-channels ,testImage)))
             2))
 
 ; effective: second channel still valid

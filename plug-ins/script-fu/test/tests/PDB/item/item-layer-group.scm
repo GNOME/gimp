@@ -6,7 +6,7 @@
 ; setup
 (define testImage (testing:load-test-image "gimp-logo.png"))
 (displayln testImage)
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (car (gimp-image-get-layers testImage ))
                               0))
 
 ; !!! Note that load-test-image is not script-fu-v3 compatible, already unpacks
@@ -24,7 +24,7 @@
 
 ; new group is not in the image until inserted
 ; length of list of layers is one, the background
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             1))
 
 (test! "insert GroupLayer")
@@ -37,7 +37,7 @@
             0  ))  ; position within parent
 
 ; insertion effective: image now has two layers
-(assert `(= (car (gimp-image-get-layers ,testImage))
+(assert `(= (vector-length (gimp-image-get-layers ,testImage))
             2))
 
 ; TODO Error to insert layer into invalid parent
@@ -48,7 +48,7 @@
 
 ; Newly created group has no children
 ; vector length is zero
-(assert `(= (car (gimp-item-get-children ,testGroup))
+(assert `(= (vector-length (gimp-item-get-children ,testGroup))
             0))
 
 ; Newly created group is at the top i.e. position 0 of the root level
@@ -68,7 +68,7 @@
 (assert `(gimp-image-reorder-item ,testImage ,testLayer ,testGroup 0))
 
 ; Add child is effective, group now has children
-(assert `(= (car (gimp-item-get-children ,testGroup))
+(assert `(= (vector-length (gimp-item-get-children ,testGroup))
             1))
 
 ; Add child is effective, now child's parent is the group

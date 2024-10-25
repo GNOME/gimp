@@ -23,7 +23,6 @@
   ; the PDB procedure paint-op succeeds
   (assert `(,paint-op
               ,testLayer      ; target
-              2               ; num-strokes
               #(4.0 4.0))))    ; float array))
 
 
@@ -46,8 +45,7 @@
 
 ; paint ops fail until layer is added to image
 (assert-error `(gimp-airbrush ,testLayer 50.0 ; pressure
-                        2               ; num-strokes
-                        #(4.0 4.0))    ; float array
+                        #(4.0 4.0))    ; float array of strokes
               (string-append
                 "Procedure execution of gimp-airbrush failed on invalid input arguments: "))
                 ; "Item 'LayerNew#2' (10) cannot be used because it has not been added to an image"))
@@ -67,22 +65,19 @@
 (assert `(gimp-airbrush
             ,testLayer
             50.0 ; pressure
-            2               ; num-strokes
-            #(4.0 4.0)))    ; float array
+            #(4.0 4.0)))    ; float array of strokes
 
 ; with two strokes
 (assert `(gimp-airbrush
             ,testLayer
             50.0 ; pressure
-            4    ; num-strokes
-            #(4.0 4.0 8.0 8.0)))    ; float array
+            #(4.0 4.0 8.0 8.0)))    ; float array of strokes
 
 ; with stroke out of bounds of image
 (assert `(gimp-airbrush
             ,testLayer
             50.0  ; pressure
-            4     ; num-strokes
-            #(4.0 4.0 800.0 800.0)))    ; float array
+            #(4.0 4.0 800.0 800.0)))    ; float array of strokes
 
 
 
@@ -96,8 +91,7 @@
             ,testLayer      ; source
             CLONE-IMAGE     ; clone type
             1.0 1.0         ; source coord x,y is not a vector
-            2               ; num-strokes
-            #(4.0 4.0)))    ; float array
+            #(4.0 4.0)))    ; float array of strokes
 
 ; TODO CLONE-PATTERN
 
@@ -108,15 +102,13 @@
 
 (assert `(gimp-eraser
             ,testLayer  ; target
-            4                      ; num-strokes
-            #(4.0 4.0 800.0 800.0) ; float array
+            #(4.0 4.0 800.0 800.0) ; float array of strokes
             BRUSH-HARD         ; hardness
             PAINT-CONSTANT))   ; PaintApplicationMode
 
 (assert `(gimp-eraser-default
             ,testLayer  ; target
-            4                      ; num-strokes
-            #(0.0 0.0 800.0 800.0) ; float array
+            #(0.0 0.0 800.0 800.0) ; float array of strokes
             ))
 
 
@@ -127,8 +119,7 @@
             ,testLayer      ; affected i.e. target
             ,testLayer      ; source
             1.0 1.0         ; source coord x,y is not a vector
-            2               ; num-strokes
-            #(4.0 4.0)))    ; float array
+            #(4.0 4.0)))    ; float array of strokes
 
 
 (test! "convolve")
@@ -136,8 +127,7 @@
             ,testLayer      ; affected i.e. target
             99.9999999999   ; pressure
             CONVOLVE-BLUR   ; type
-            2               ; num-strokes
-            #(4.0 4.0)))    ; float array
+            #(4.0 4.0)))    ; float array of strokes
 
 
 (test! "dodgeburn")
@@ -146,8 +136,7 @@
             66.0            ; exposure
             DODGE-BURN-TYPE-DODGE ; type, BURN or DODGE
             TRANSFER-MIDTONES ; transfer mode
-            2               ; num-strokes
-            #(4.0 4.0)))    ; float array
+            #(4.0 4.0)))    ; float array of strokes
 
 
 ; pencil
@@ -159,8 +148,7 @@
 (assert `(gimp-smudge
             ,testLayer      ; affected i.e. target
             0.0             ; pressure
-            2               ; num-strokes
-            #(4.0 4.0)))    ; float array
+            #(4.0 4.0)))    ; float array of strokes
 
 
 
@@ -190,15 +178,13 @@
 (assert-error `(gimp-airbrush
                   ,testLayer
                   50.0 ; pressure
-                  1        ; num-strokes
-                  #(4.0))  ; float array
-                "argument 3 in call to gimp-airbrush has value 1 out of range:")
+                  #(4.0))  ; float array of strokes
+                "Procedure execution of gimp-airbrush failed")
 
 ; The binding requires a Scheme vector for C float array,
 ; not a list, here a literal i.e. quoted.
 (assert-error `(gimp-airbrush
                   ,testLayer
                   50.0 ; pressure
-                  2            ; num-strokes
                   `(4.0 49.0))  ; strokes
-                "in script, expected type: vector for argument 4 to gimp-airbrush")
+                "in script, expected type: vector for argument 3 to gimp-airbrush")

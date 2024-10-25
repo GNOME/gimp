@@ -32,7 +32,7 @@
 
 ; ensure get-paths from image having no paths yields list length zero
 ; FUTURE: returns just #(), not (0 #())
-(assert `(= (car (gimp-image-get-paths ,testImage))
+(assert `(= (vector-length (gimp-image-get-paths ,testImage))
             0))
 
 
@@ -53,12 +53,12 @@
 
 ; new path is not in image yet
 ; image still has count of paths == 0
-(assert `(= (car (gimp-image-get-paths ,testImage))
+(assert `(= (vector-length (gimp-image-get-paths ,testImage))
             0))
 
 ; new path has no strokes
 ; path has stroke count == 0
-(assert `(= (car (gimp-path-get-strokes ,testPath))
+(assert `(= (vector-length (gimp-path-get-strokes ,testPath))
             0))
 
 
@@ -70,7 +70,7 @@
                   0 0)) ; parent=0 position=0
 
 ; image with one inserted path now has count of paths == 1
-(assert `(= (car (gimp-image-get-paths ,testImage))
+(assert `(= (vector-length (gimp-image-get-paths ,testImage))
             1))
 
 

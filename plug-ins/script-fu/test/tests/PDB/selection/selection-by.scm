@@ -18,7 +18,7 @@
 
 ; setup
 (define testImage (testing:load-test-image-basic-v3))
-(define testLayer (vector-ref (cadr (gimp-image-get-layers testImage ))
+(define testLayer (vector-ref (gimp-image-get-layers testImage)
                                   0))
 ; a layer mask from alpha
 (define testLayerMask (gimp-layer-create-mask

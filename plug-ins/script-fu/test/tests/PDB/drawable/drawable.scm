@@ -7,7 +7,7 @@
 ; setup
 (define testImage (testing:load-test-image "gimp-logo.png"))
 ; Wilber has one layer
-(define testDrawable (vector-ref (cadr (gimp-image-get-layers testImage)) 0))
+(define testDrawable (vector-ref (car (gimp-image-get-layers testImage)) 0))
 
 
 
