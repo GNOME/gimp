@@ -173,9 +173,11 @@ Plug-ins:
   - file-raw-data can now be run interactively.
   - The lua binding is now marked experimental because of the too many
     unstabilities we experienced.
-  - Script-fu: resource argument defaults are set as a string which is
-    the name of a resource, or the empty string or "from context" to
-    default to the context resource.
+  - Script-fu:
+    * resource argument defaults are set as a string which is
+      the name of a resource, or the empty string or "from context" to
+      default to the context resource.
+    * Various compat aliases to ancient PDB procedures were removed.
   - Python Console: history of commands is saved between runs.
   - BMP: new support for loading 64bpp BMPs. Each channel uses 13 bits
     (2^13 max value), so it's scaled to fit our 16 bit integer image
@@ -242,6 +244,8 @@ API:
       - gimp_palette_get_colormap()
       - gimp_palette_set_colormap()
       - gimp_image_set_palette()
+      - gimp_context_get_emulate_brush_dynamics()
+      - gimp_context_set_emulate_brush_dynamics()
     * Renamed functions:
       - gimp_path_export_to_file() to gimp_image_export_path_to_file()
       - gimp_path_export_to_string() to gimp_image_export_path_to_string()
@@ -272,6 +276,9 @@ API:
         (context-dependant).
     * GimpBrushSelect now chooses only a brush (no more widgets to
       select a spacing, opacity or paint mode).
+    * All arrays of items, drawables, layers, channels, paths, resources
+      (and each specific subtypes of resources) and images as argument
+      in a libgimp function were now changed to NULL-terminated arrays.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -290,6 +297,11 @@ API:
         introspectable.
       - concepts of singular/plural removed from this class because it
         just doesn't work out with proper internationalization.
+    * New functions:
+      - gimp_int32_array_get_values()
+      - gimp_int32_array_set_values()
+      - gimp_float_array_get_values()
+      - gimp_float_array_set_values()
     * Removed functions:
       - gimp_unit_get_singular()
       - gimp_unit_get_plural()
@@ -304,6 +316,10 @@ API:
       type for GimpParamSpecColor, GimpParamSpecUnit and all
       GimpParamSpecResource subtypes.
     * GIMP_PDB_PROC_TYPE_EXTENSION renamed GIMP_PDB_PROC_TYPE_PERSISTENT.
+    * GimpCoreObjectArray: new alias to NULL-terminated core objects,
+      such as images, items, etc. The main reason is to make it a boxed
+      type for proper handling as object properties and PDB argument.
+    * GimpObjectArray was removed.
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
@@ -319,6 +335,9 @@ API:
       indentation is not broken anymore in code samples on the gi-docgen
       API documentation.
     * New "format" PDB type to pass Babl format arguments.
+    * Compat PDB procedures were removed.
+    * All int32 and float arrays are now passed through the PDB without
+      requiring a size argument preceding it.
 
 Translations:
 
