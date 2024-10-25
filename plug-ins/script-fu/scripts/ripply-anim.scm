@@ -8,7 +8,7 @@
 ;
 
 (define (script-fu-ripply-anim image drawables displacement num-frames edge-type)
-  (let* ((drawable (vector-ref (cadr (gimp-image-get-selected-drawables image)) 0))
+  (let* ((drawable (vector-ref (car (gimp-image-get-selected-drawables image)) 0))
          (width (car (gimp-drawable-get-width drawable)))
          (height (car (gimp-drawable-get-height drawable)))
          (work-image (car (gimp-image-new width
@@ -32,7 +32,7 @@
     (gimp-image-insert-layer work-image map-layer 0 0)
     (gimp-drawable-edit-fill map-layer FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE work-image map-layer FALSE 1.0 1.0 1.0 0.0)
-    (plug-in-tile RUN-NONINTERACTIVE work-image 1 (vector map-layer) (* width 3) (* height 3) FALSE)
+    (plug-in-tile RUN-NONINTERACTIVE work-image (vector map-layer) (* width 3) (* height 3) FALSE)
     (plug-in-gauss-iir RUN-NONINTERACTIVE work-image map-layer 35 TRUE TRUE)
     (gimp-drawable-equalize map-layer TRUE)
     (plug-in-gauss-rle RUN-NONINTERACTIVE work-image map-layer 5 TRUE TRUE)

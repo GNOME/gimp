@@ -58,7 +58,7 @@
         (copy-source-img (gimp-image-duplicate mask-img))
         ; side effect on image, not use the returned layer
         (flat-source-layer (gimp-image-flatten copy-source-img))
-        (copy-source-drawables (cadr (gimp-image-get-layers copy-source-img))))
+        (copy-source-drawables (gimp-image-get-layers copy-source-img)))
 
     ; call inner, passing adapted args
     (chrome-it-inner
@@ -124,16 +124,16 @@
     (gimp-drawable-edit-clear dest-drawable)
     (gimp-selection-none dest-image)
     (gimp-selection-all source-image)
-    (gimp-edit-copy 1 (vector source-drawable))
+    (gimp-edit-copy (vector source-drawable))
     (let* (
            (pasted (gimp-edit-paste dest-drawable #f))
-           (num-pasted (car pasted))
-           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+           (num-pasted (vector-length pasted))
+           (floating-sel (vector-ref pasted (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)))
 
   (let* (
-        (banding-layer (vector-ref (cadr (gimp-image-get-selected-drawables banding-img)) 0))
+        (banding-layer (vector-ref (gimp-image-get-selected-drawables banding-img) 0))
         (banding-height (gimp-drawable-get-height banding-layer))
         (banding-width (gimp-drawable-get-width banding-layer))
         (banding-type (gimp-drawable-type banding-layer))
@@ -170,13 +170,13 @@
     (gimp-image-insert-layer img layer3 0 0)
     (gimp-image-insert-layer img layer2 0 0)
 
-    (gimp-edit-copy 1 (vector mask-drawable))
+    (gimp-edit-copy (vector mask-drawable))
 
     ; Clipboard is copy of mask-drawable.  Paste into mask, a channel, and anchor it.
     (let* (
            (pasted (gimp-edit-paste mask #f))
-           (num-pasted (car pasted))
-           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+           (num-pasted (vector-length pasted))
+           (floating-sel (vector-ref pasted (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )
@@ -212,7 +212,7 @@
     (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 #t #t)
     (gimp-layer-set-opacity layer1 50)
     (set! layer1 (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))
-    (gimp-drawable-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
+    (gimp-drawable-curves-spline layer1 HISTOGRAM-VALUE (spline-chrome-it))
 
     (set! layer-mask (gimp-layer-create-mask layer1 ADD-MASK-BLACK))
     (gimp-layer-add-mask layer1 layer-mask)

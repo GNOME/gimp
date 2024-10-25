@@ -16,9 +16,8 @@
 
 (define (script-fu-reverse-layers img drawables)
   (let* (
-        (layers (gimp-image-get-layers img))
-        (num-layers (car layers))
-        (layer-array (cadr layers))
+        (layer-array (car (gimp-image-get-layers img)))
+        (num-layers (vector-length layer-array))
         (i (- num-layers 1))
         )
 

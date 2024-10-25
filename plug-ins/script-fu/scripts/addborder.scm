@@ -142,26 +142,22 @@
            (gimp-context-set-background (adjcolor color dvalue))
            (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
-                                      10
                                       (gen_top_array xsize ysize innerwidth innerheight outerwidth outerheight))
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
            (gimp-context-set-background (adjcolor color (/ dvalue 2)))
            (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
-                                      10
                                       (gen_left_array xsize ysize innerwidth innerheight outerwidth outerheight))
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
            (gimp-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
            (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
-                                      10
                                       (gen_right_array xsize ysize innerwidth innerheight outerwidth outerheight))
 
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)
            (gimp-context-set-background (adjcolor color (- 0 dvalue)))
            (gimp-image-select-polygon aimg
                                       CHANNEL-OP-REPLACE
-                                      10
                                       (gen_bottom_array xsize ysize innerwidth innerheight outerwidth outerheight))
 
            (gimp-drawable-edit-fill layer FILL-BACKGROUND)

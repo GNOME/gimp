@@ -31,7 +31,7 @@
         (theImage (if (= inCopy TRUE)
                       (car (gimp-image-duplicate inImage))
                       inImage))
-        (theLayer (vector-ref (cadr (gimp-image-get-selected-layers theImage)) 0))
+        (theLayer (vector-ref (car (gimp-image-get-selected-layers theImage)) 0))
         (n 0)
         (ang (* (/ 360 inFrames)
                 (if (= inFromLeft TRUE) 1 -1) ))
@@ -50,7 +50,7 @@
                                         " (replace)"))
     (plug-in-map-object RUN-NONINTERACTIVE
                         theImage             ; mapping image
-                        1 (vector theFrame)  ; mapping drawables
+                        (vector theFrame)    ; mapping drawables
                         "map-sphere"         ; sphere
                         0.5 0.5 2.0          ; viewpoint
                         0.5 0.5 0.0          ; object pos

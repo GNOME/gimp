@@ -35,16 +35,16 @@
         )
 
     (gimp-selection-all img)
-    (gimp-edit-copy 1 (vector drw))
+    (gimp-edit-copy (vector drw))
 
     (gimp-image-undo-disable new-image)
 
     (gimp-image-insert-layer new-image original-layer 0 0)
 
     (let* (
-           (pasted (gimp-edit-paste original-layer FALSE))
-           (num-pasted (car pasted))
-           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+           (pasted (car (gimp-edit-paste original-layer FALSE)))
+           (num-pasted (vector-length pasted))
+           (floating-sel (vector-ref pasted (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )

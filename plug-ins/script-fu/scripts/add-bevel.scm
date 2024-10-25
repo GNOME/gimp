@@ -62,7 +62,7 @@
         (greyness 0)
         (thickness (abs thickness))
         (image (if (= work-on-copy TRUE) (car (gimp-image-duplicate img)) img))
-        (pic-layer (vector-ref (cadr (gimp-image-get-selected-drawables image)) 0))
+        (pic-layer (vector-ref (car (gimp-image-get-selected-drawables image)) 0))
         (offsets (gimp-drawable-get-offsets pic-layer))
         (width (car (gimp-drawable-get-width pic-layer)))
         (height (car (gimp-drawable-get-height pic-layer)))
@@ -167,7 +167,7 @@
         (gimp-image-remove-layer image bump-layer)
     )
 
-    (gimp-image-set-selected-layers image 1 (vector pic-layer))
+    (gimp-image-set-selected-layers image (vector pic-layer))
 
     ; enable undo / end undo group
     (if (= work-on-copy TRUE)

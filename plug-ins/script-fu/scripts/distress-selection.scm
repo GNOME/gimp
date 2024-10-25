@@ -36,7 +36,7 @@
        (theHeight (car (gimp-image-get-height inImage)))
        (theLayer 0)
        (theMode (car (gimp-image-get-base-type inImage)))
-       (prevLayers (gimp-image-get-selected-layers inImage))
+       (prevLayers (car (gimp-image-get-selected-layers inImage)))
        )
 
     (gimp-context-push)
@@ -90,11 +90,11 @@
     (gimp-image-remove-layer theImage theLayer)
     (if (and (= (car (gimp-item-id-is-channel inDrawable)) TRUE)
              (= (car (gimp-item-id-is-layer-mask inDrawable)) FALSE))
-      (gimp-image-set-selected-channels theImage 1 (make-vector 1 inDrawable))
+      (gimp-image-set-selected-channels theImage (make-vector 1 inDrawable))
       )
     (gimp-image-undo-group-end theImage)
 
-    (gimp-image-set-selected-layers theImage (car prevLayers) (cadr prevLayers))
+    (gimp-image-set-selected-layers theImage prevLayers)
 
     (gimp-displays-flush)
     (gimp-context-pop)

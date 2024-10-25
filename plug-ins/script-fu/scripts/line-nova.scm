@@ -26,7 +26,7 @@
         (2pi (* 2 *pi*))
         (rad/deg (/ 2pi 360))
         (variation/2 (/ variation 2))
-        (drw (vector-ref (cadr (gimp-image-get-selected-drawables img)) 0))
+        (drw (vector-ref (car (gimp-image-get-selected-drawables img)) 0))
         (drw-width (car (gimp-drawable-get-width drw)))
         (drw-height (car (gimp-drawable-get-height drw)))
         (drw-offsets (gimp-drawable-get-offsets drw))
@@ -76,7 +76,7 @@
                     (+ beg-y (* off (sin dir0)))
         )
         (set-marginal-point beg-x beg-y direction)
-        (gimp-image-select-polygon img CHANNEL-OP-ADD 6 *points*)
+        (gimp-image-select-polygon img CHANNEL-OP-ADD *points*)
       )
     )
 

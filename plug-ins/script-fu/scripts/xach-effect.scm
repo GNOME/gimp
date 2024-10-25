@@ -109,7 +109,7 @@
     (if (= keep-selection FALSE)
         (gimp-selection-none image))
 
-    (gimp-image-set-selected-layers image 1 (vector drawable))
+    (gimp-image-set-selected-layers image (vector drawable))
     (gimp-image-remove-channel image active-selection)
     (gimp-image-undo-group-end image)
     (gimp-displays-flush)

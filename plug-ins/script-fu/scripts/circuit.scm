@@ -81,16 +81,16 @@
           (gimp-selection-none image)
           (gimp-drawable-edit-clear effect-layer)
           (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-edit-copy 1 (vector layer))
+          (gimp-edit-copy (vector layer))
 
           (let* (
-                 (pasted (gimp-edit-paste effect-layer FALSE))
-                 (num-pasted (car pasted))
-                 (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+                 (pasted (car (gimp-edit-paste effect-layer FALSE)))
+                 (num-pasted (vector-length pasted))
+                 (floating-sel (vector-ref pasted (- num-pasted 1)))
                 )
            (gimp-floating-sel-anchor floating-sel)
           )
-          (gimp-image-set-selected-layers image 1 (vector effect-layer)))
+          (gimp-image-set-selected-layers image (vector effect-layer)))
           (set! effect-layer layer)
     )
     (set! active-layer effect-layer)
@@ -118,7 +118,7 @@
         (gimp-selection-none image))
 
     (gimp-image-remove-channel image active-selection)
-    (gimp-image-set-selected-layers image 1 (vector layer))
+    (gimp-image-set-selected-layers image (vector layer))
 
     (gimp-image-undo-group-end image)
 

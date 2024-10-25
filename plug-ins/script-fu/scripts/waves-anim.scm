@@ -41,7 +41,7 @@
          (phase 0)
          (phaseshift (/ 360 num-frames))
          (image (car (gimp-image-duplicate img)))
-         (source-layer (vector-ref (cadr (gimp-image-get-selected-layers image)) 0)))
+         (source-layer (vector-ref (car (gimp-image-get-selected-layers image)) 0)))
 
   (gimp-image-undo-disable image)
 

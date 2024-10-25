@@ -19,16 +19,16 @@
 
   (let* (
         (theImage inImage)
-        (theLayer (vector-ref (cadr (gimp-image-get-selected-drawables theImage)) 0))
+        (theLayer (vector-ref (car (gimp-image-get-selected-drawables theImage)) 0))
         (theHeight (car (gimp-drawable-get-height theLayer)))
         (theWidth (car (gimp-drawable-get-width theLayer)))
         )
 
     (define (pasteat xoff yoff)
       (let* (
-             (pasted (gimp-edit-paste theLayer FALSE))
-             (num-pasted (car pasted))
-             (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+             (pasted (car (gimp-edit-paste theLayer FALSE)))
+             (num-pasted (vector-length pasted))
+             (floating-sel (vector-ref pasted (- num-pasted 1)))
             )
         (gimp-layer-set-offsets floating-sel (* xoff theWidth) (* yoff theHeight) )
         (gimp-floating-sel-anchor floating-sel)
@@ -42,7 +42,7 @@
     (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
     (gimp-image-select-rectangle theImage CHANNEL-OP-REPLACE 0 0 theWidth theHeight)
-    (gimp-edit-cut 1 (vector theLayer))
+    (gimp-edit-cut (vector theLayer))
 
     (gimp-selection-none theImage)
     (gimp-layer-set-offsets theLayer theWidth theHeight)

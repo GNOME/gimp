@@ -92,7 +92,7 @@
                                        "Background"
                                        100
                                        LAYER-MODE-NORMAL)))
-        (pic-layer (vector-ref (cadr (gimp-image-get-selected-drawables image)) 0))
+        (pic-layer (vector-ref (car (gimp-image-get-selected-drawables image)) 0))
         (numbera (string-append number "A"))
         )
 

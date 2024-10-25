@@ -49,9 +49,8 @@
         (image (car (gimp-image-duplicate img)))
         (width (car (gimp-image-get-width image)))
         (height (car (gimp-image-get-height image)))
-        (layers (gimp-image-get-layers image))
-        (num-layers (car layers))
-        (layer-array (cadr layers))
+        (layer-array (car (gimp-image-get-layers image)))
+        (num-layers (vector-length layer-array))
         (slots (- num-layers 2))
         (bg-layer (vector-ref layer-array (- num-layers 1)))
         (max-width 0)
@@ -69,9 +68,8 @@
 			  (let* ((copy (car (gimp-layer-copy
 						 (vector-ref layer-array (- num-layers 2)) TRUE))))
 				(gimp-image-insert-layer image copy 0 0)
-				(set! layers (gimp-image-get-layers image))
-				(set! num-layers (car layers))
-				(set! layer-array (cadr layers))
+				(set! layer-array (car (gimp-image-get-layers image)))
+				(set! num-layers (vector-length layer-array))
 				(set! slots (- num-layers 2))
 				(set! bg-layer (vector-ref layer-array (- num-layers 1)))))
 
@@ -197,9 +195,8 @@
 			(gimp-image-merge-visible-layers image CLIP-TO-IMAGE))
 
 		  ; make all layers visible again
-		  (let* ((result-layers (gimp-image-get-layers image))
-				 (num-result-layers (car result-layers))
-				 (result-layer-array (cadr result-layers))
+		  (let* ((result-layer-array (car (gimp-image-get-layers image)))
+				 (num-result-layers (vector-length result-layer-array))
 				 (layer-count (- num-result-layers 1)))
 			(while (> layer-count -1)
 			   (let* ((layer (vector-ref result-layer-array layer-count))

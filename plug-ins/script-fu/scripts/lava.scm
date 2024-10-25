@@ -44,9 +44,8 @@
         (select-height 0)
         (lava-layer 0)
         (active-layer 0)
-        (selected-layers (gimp-image-get-selected-layers image))
-        (num-selected-layers (car selected-layers))
-        (selected-layers-array (cadr selected-layers))
+        (selected-layers-array (car (gimp-image-get-selected-layers image)))
+        (num-selected-layers (vector-length selected-layers-array))
         )
 
     (if (= num-selected-layers 1)
@@ -64,7 +63,7 @@
             )
 
             (set! active-selection (car (gimp-selection-save image)))
-            (gimp-image-set-selected-layers image 1 (make-vector 1 first-layer))
+            (gimp-image-set-selected-layers image (make-vector 1 first-layer))
 
             (set! selection-bounds (gimp-selection-bounds image))
             (set! select-offset-x (cadr selection-bounds))
@@ -88,13 +87,12 @@
                   (gimp-drawable-edit-clear lava-layer)
 
                   (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-                  (gimp-image-set-selected-layers image 1 (make-vector 1 lava-layer))
+                  (gimp-image-set-selected-layers image (make-vector 1 lava-layer))
                 )
             )
 
-            (set! selected-layers (gimp-image-get-selected-layers image))
-            (set! num-selected-layers (car selected-layers))
-            (set! selected-layers-array (cadr selected-layers))
+            (set! selected-layers-array (car (gimp-image-get-selected-layers image)))
+            (set! num-selected-layers (vector-length selected-layers-array))
             (set! active-layer (vector-ref selected-layers-array (- num-selected-layers 1)))
 
             (if (= current-grad FALSE)
@@ -106,13 +104,13 @@
             (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask_size 0)
             (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 0 0)
             (plug-in-gauss-rle RUN-NONINTERACTIVE image active-layer 2 TRUE TRUE)
-            (plug-in-gradmap RUN-NONINTERACTIVE image num-selected-layers selected-layers-array)
+            (plug-in-gradmap RUN-NONINTERACTIVE image selected-layers-array)
 
             (if (= keep-selection FALSE)
                 (gimp-selection-none image)
             )
 
-            (gimp-image-set-selected-layers image 1 (make-vector 1 first-layer))
+            (gimp-image-set-selected-layers image (make-vector 1 first-layer))
             (gimp-image-remove-channel image active-selection)
 
             (gimp-image-undo-group-end image)

@@ -49,7 +49,7 @@
         (set! speed (* -1 speed)) )
 
     ;--- check image and work on a copy
-    (if (and (= (car (gimp-image-get-layers org-img)) 2)
+    (if (and (= (vector-length (car (gimp-image-get-layers org-img))) 2)
              (= (car (gimp-image-get-floating-sel org-img)) -1))
 
         ;--- main program structure starts here, begin of "if-1"
@@ -61,8 +61,8 @@
           (gimp-image-undo-disable img)
           (if (> (car (gimp-drawable-type (vector-ref org-layers 0))) 1 )
               (gimp-image-convert-rgb img))
-          (set! source-layer    (vector-ref (cadr (gimp-image-get-layers img)) 0 ))
-          (set! bg-source-layer (vector-ref (cadr (gimp-image-get-layers img)) 1 ))
+          (set! source-layer    (vector-ref (car (gimp-image-get-layers img)) 0 ))
+          (set! bg-source-layer (vector-ref (car (gimp-image-get-layers img)) 1 ))
           (set! source-layer-width (car (gimp-drawable-get-width  source-layer)))
 
           ;--- hide layers, cause we want to "merge visible layers" later
@@ -202,7 +202,7 @@
               )
           )
 
-          (gimp-item-set-visible (vector-ref (cadr (gimp-image-get-layers img)) 0)
+          (gimp-item-set-visible (vector-ref (car (gimp-image-get-layers img)) 0)
                                   TRUE)
           (gimp-image-undo-enable img)
           (gimp-image-clean-all img)

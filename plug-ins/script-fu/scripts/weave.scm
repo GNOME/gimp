@@ -30,11 +30,11 @@
                         dest-x
                         dest-y)
   (gimp-image-select-rectangle img CHANNEL-OP-REPLACE x1 y1 width height)
-  (gimp-edit-copy 1 (vector drawable))
+  (gimp-edit-copy (vector drawable))
   (let* (
-         (pasted (gimp-edit-paste drawable FALSE))
-         (num-pasted (car pasted))
-         (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+         (pasted (car (gimp-edit-paste drawable FALSE)))
+         (num-pasted (vector-length pasted))
+         (floating-sel (vector-ref pasted (- num-pasted 1)))
         )
    (gimp-layer-set-offsets floating-sel dest-x dest-y)
    (gimp-floating-sel-anchor floating-sel)
@@ -152,7 +152,7 @@
                                   shadow-depth))
          (tile-img (car tile))
          (tile-layer (cadr tile))
-          (weaving (plug-in-tile RUN-NONINTERACTIVE tile-img 1 (vector tile-layer) width height TRUE)))
+          (weaving (plug-in-tile RUN-NONINTERACTIVE tile-img (vector tile-layer) width height TRUE)))
     (gimp-image-delete tile-img)
     weaving))
 
@@ -218,7 +218,7 @@
                                  r3-x1 r3-y1 r3-width r3-height))
          (tile-img (car tile))
          (tile-layer (cadr tile))
-         (mask (plug-in-tile RUN-NONINTERACTIVE tile-img 1 (vector tile-layer) final-width final-height
+         (mask (plug-in-tile RUN-NONINTERACTIVE tile-img (vector tile-layer) final-width final-height
                              TRUE)))
     (gimp-image-delete tile-img)
     mask))
@@ -325,12 +325,12 @@
 
     (gimp-layer-add-mask h-layer h-mask)
     (gimp-selection-all hm-img)
-    (gimp-edit-copy 1 (vector hm-layer))
+    (gimp-edit-copy (vector hm-layer))
     (gimp-image-delete hm-img)
     (let* (
-           (pasted (gimp-edit-paste h-mask FALSE))
-           (num-pasted (car pasted))
-           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+           (pasted (car (gimp-edit-paste h-mask FALSE)))
+           (num-pasted (vector-length pasted))
+           (floating-sel (vector-ref pasted (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )
@@ -339,12 +339,12 @@
 
     (gimp-layer-add-mask v-layer v-mask)
     (gimp-selection-all vm-img)
-    (gimp-edit-copy 1 (vector vm-layer))
+    (gimp-edit-copy (vector vm-layer))
     (gimp-image-delete vm-img)
     (let* (
-           (pasted (gimp-edit-paste v-mask FALSE))
-           (num-pasted (car pasted))
-           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+           (pasted (car (gimp-edit-paste v-mask FALSE)))
+           (num-pasted (vector-length pasted))
+           (floating-sel (vector-ref pasted (- num-pasted 1)))
           )
      (gimp-floating-sel-anchor floating-sel)
     )
@@ -396,12 +396,12 @@
     (gimp-context-set-feather FALSE)
 
     (gimp-selection-all w-img)
-    (gimp-edit-copy 1 (vector w-layer))
+    (gimp-edit-copy (vector w-layer))
     (gimp-image-delete w-img)
     (let* (
-           (pasted (gimp-edit-paste drawable FALSE))
-           (num-pasted (car pasted))
-           (floating-sel (vector-ref (cadr pasted) (- num-pasted 1)))
+           (pasted (car (gimp-edit-paste drawable FALSE)))
+           (num-pasted (vector-length pasted))
+           (floating-sel (vector-ref pasted (- num-pasted 1)))
           )
           (gimp-layer-set-offsets floating-sel
                                   (car d-offsets)
