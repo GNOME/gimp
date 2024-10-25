@@ -43,7 +43,9 @@
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
+#include "gimpview.h"
 #include "gimpviewabledialog.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -642,8 +644,10 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
 
   if (event_name)
     {
-      GtkWidget *view;
-      gchar     *title;
+      GtkWidget        *view;
+      gchar            *title;
+      GimpViewRenderer *renderer;
+      GeglColor        *color = gegl_color_new ("transparent");
 
       title = g_strdup_printf (_("Select Action for Event '%s'"),
                                event_blurb);
@@ -667,9 +671,9 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       g_free (title);
 
       gimp_dialog_set_alternative_button_order (GTK_DIALOG (editor->edit_dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
+                                                GTK_RESPONSE_OK,
+                                                GTK_RESPONSE_CANCEL,
+                                                -1);
 
       gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                        "gimp-controller-action-dialog",
@@ -685,7 +689,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       gtk_container_set_border_width (GTK_CONTAINER (view), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (editor->edit_dialog))),
                           view, TRUE, TRUE, 0);
-      gtk_widget_show (view);
+      gtk_widget_set_visible (view, TRUE);
 
       g_signal_connect (GIMP_ACTION_EDITOR (view)->view, "row-activated",
                         G_CALLBACK (gimp_controller_editor_edit_activated),
@@ -696,11 +700,20 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
          gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view)));
 
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
-      gtk_widget_show (editor->edit_dialog);
+      gtk_widget_set_visible (editor->edit_dialog, TRUE);
+
+      /* GimpViewDialog's icon is a GimpView, so it always has a border.
+       * Since we show a standard icon instead however, we'll set the
+       * GimpView border to transparent */
+      renderer =
+        GIMP_VIEW (GIMP_VIEWABLE_DIALOG (editor->edit_dialog)->view)->renderer;
+      gimp_view_renderer_set_border_color (renderer, color);
 
       g_free (event_name);
       g_free (event_blurb);
       g_free (action_name);
+
+      g_object_unref (color);
     }
 }
 
