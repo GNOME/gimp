@@ -160,7 +160,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
   GimpGradient *gradient;
   gint num_samples;
   gboolean reverse;
-  gint num_color_samples = 0;
+  gsize num_color_samples = 0;
   gdouble *color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
@@ -228,7 +228,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
   gint num_samples;
   const gdouble *positions;
   gboolean reverse;
-  gint num_color_samples = 0;
+  gsize num_color_samples = 0;
   gdouble *color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));

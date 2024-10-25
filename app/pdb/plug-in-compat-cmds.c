@@ -1126,12 +1126,12 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint argc_matrix;
+  gsize argc_matrix;
   const gdouble *matrix;
   gboolean alpha_alg;
   gdouble divisor;
   gdouble offset;
-  gint argc_channels;
+  gsize argc_channels;
   const gint32 *channels;
   gint bmode;
 
@@ -1149,7 +1149,10 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
         {
           g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                        _("Array 'matrix' has only %d members, must have 25"),
-                       argc_matrix);
+                       /* TODO: rather than converting the gsize, we should
+                        * change the string, but we are in string freeze.
+                        */
+                       (gint) argc_matrix);
           success = FALSE;
         }
 
@@ -1157,7 +1160,10 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
         {
           g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                        _("Array 'channels' has only %d members, must have 5"),
-                       argc_channels);
+                       /* TODO: rather than converting the gsize, we should
+                        * change the string, but we are in string freeze.
+                        */
+                       (gint) argc_channels);
           success = FALSE;
         }
 

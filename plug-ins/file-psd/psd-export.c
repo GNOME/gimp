@@ -1155,7 +1155,7 @@ save_paths (GOutputStream  *output,
   GList  *paths;
   GList  *iter;
   gint    v;
-  gint    num_strokes;
+  gsize   num_strokes;
   gint   *strokes;
   gint    s;
 
@@ -1228,7 +1228,7 @@ save_paths (GOutputStream  *output,
         {
           GimpPathStrokeType  type;
           gdouble            *points;
-          gint                num_points;
+          gsize               num_points;
           gboolean            closed;
           gint                p = 0;
 
@@ -1240,7 +1240,7 @@ save_paths (GOutputStream  *output,
               num_points % 6)
             {
               g_printerr ("psd-export: unsupported stroke type: "
-                          "%d (%d points)\n", type, num_points);
+                          "%d (%" G_GSIZE_FORMAT " points)\n", type, num_points);
               continue;
             }
 

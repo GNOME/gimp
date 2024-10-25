@@ -62,7 +62,7 @@ plug_ins_query_invoker (GimpProcedure         *procedure,
   gchar **procedures = NULL;
   gchar **accelerators = NULL;
   gchar **locations = NULL;
-  gint num_install_times = 0;
+  gsize num_install_times = 0;
   gint32 *install_times = NULL;
 
   search_string = g_value_get_string (gimp_value_array_index (args, 0));

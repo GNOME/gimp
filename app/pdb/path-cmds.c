@@ -170,7 +170,7 @@ path_get_strokes_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpPath *path;
-  gint num_strokes = 0;
+  gsize num_strokes = 0;
   gint32 *stroke_ids = NULL;
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
@@ -657,7 +657,7 @@ path_stroke_get_points_invoker (GimpProcedure         *procedure,
   GimpPath *path;
   gint stroke_id;
   gint type = 0;
-  gint num_points = 0;
+  gsize num_points = 0;
   gdouble *controlpoints = NULL;
   gboolean closed = FALSE;
 
@@ -723,7 +723,7 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpPath *path;
   gint type;
-  gint num_points;
+  gsize num_points;
   const gdouble *controlpoints;
   gboolean closed;
   gint stroke_id = 0;
@@ -795,7 +795,7 @@ path_stroke_interpolate_invoker (GimpProcedure         *procedure,
   GimpPath *path;
   gint stroke_id;
   gdouble precision;
-  gint num_coords = 0;
+  gsize num_coords = 0;
   gdouble *coords = NULL;
   gboolean closed = FALSE;
 

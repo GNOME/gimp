@@ -170,7 +170,7 @@ gboolean
 gimp_gradient_get_uniform_samples (GimpGradient  *gradient,
                                    gint           num_samples,
                                    gboolean       reverse,
-                                   gint          *num_color_samples,
+                                   gsize         *num_color_samples,
                                    gdouble      **color_samples)
 {
   GimpValueArray *args;
@@ -228,7 +228,7 @@ gimp_gradient_get_custom_samples (GimpGradient   *gradient,
                                   gint            num_samples,
                                   const gdouble  *positions,
                                   gboolean        reverse,
-                                  gint           *num_color_samples,
+                                  gsize          *num_color_samples,
                                   gdouble       **color_samples)
 {
   GimpValueArray *args;

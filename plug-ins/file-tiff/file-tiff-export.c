@@ -107,11 +107,12 @@ save_paths (TIFF      *tif,
             gint       offset_x,
             gint       offset_y)
 {
-  gint id = 2000; /* Photoshop paths have IDs >= 2000 */
-  GList *path;
-  GList *iter;
-  gint   v;
-  gint num_strokes, *strokes, s;
+  gint     id = 2000; /* Photoshop paths have IDs >= 2000 */
+  GList   *path;
+  GList   *iter;
+  gint     v;
+  gsize    num_strokes;
+  gint    *strokes, s;
   GString *ps_tag;
 
   path = gimp_image_list_paths (image);
@@ -185,7 +186,7 @@ save_paths (TIFF      *tif,
         {
           GimpPathStrokeType  type;
           gdouble            *points;
-          gint                num_points;
+          gsize               num_points;
           gboolean            closed;
           gint                p = 0;
 
@@ -197,7 +198,7 @@ save_paths (TIFF      *tif,
               num_points % 6)
             {
               g_printerr ("tiff-export: unsupported stroke type: "
-                          "%d (%d points)\n", type, num_points);
+                          "%d (%" G_GSIZE_FORMAT " points)\n", type, num_points);
               continue;
             }
 

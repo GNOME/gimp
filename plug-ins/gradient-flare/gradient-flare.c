@@ -5035,7 +5035,7 @@ gradient_get_values_real_external (const gchar *gradient_name,
                                    gboolean     reverse)
 {
   GimpGradient *gradient;
-  gint          n_tmp_values;
+  gsize         n_tmp_values;
   gdouble      *tmp_values;
   gint          i;
   gint          j;

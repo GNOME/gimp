@@ -62,9 +62,9 @@ gdouble                       gimp_context_get_line_miter_limit           (void)
 gboolean                      gimp_context_set_line_miter_limit           (gdouble                        miter_limit);
 gdouble                       gimp_context_get_line_dash_offset           (void);
 gboolean                      gimp_context_set_line_dash_offset           (gdouble                        dash_offset);
-gboolean                      gimp_context_get_line_dash_pattern          (gint                          *num_dashes,
+gboolean                      gimp_context_get_line_dash_pattern          (gsize                         *num_dashes,
                                                                            gdouble                      **dashes);
-gboolean                      gimp_context_set_line_dash_pattern          (gint                           num_dashes,
+gboolean                      gimp_context_set_line_dash_pattern          (gsize                          num_dashes,
                                                                            const gdouble                 *dashes);
 GimpBrush*                    gimp_context_get_brush                      (void);
 gboolean                      gimp_context_set_brush                      (GimpBrush                     *brush);
