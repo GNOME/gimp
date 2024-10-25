@@ -224,7 +224,7 @@ sub arrayexpand {
 
 	    # We can't have negative lengths, but let them set a min number
 	    unless (exists $arg->{type}) {
-		$arg->{type} = '0 <= int32';
+		$arg->{type} = '0 <= size';
 	    }
 	    elsif ($arg->{type} !~ /^\s*\d+\s*</) {
 		$arg->{type} = '0 <= ' . $arg->{type};

@@ -418,7 +418,7 @@ get_samples_gradient (GimpDrawable *drawable)
 {
   GimpGradient *gradient;
 
-  gint     n_d_samples;
+  gsize    n_d_samples;
   gdouble *d_samples = NULL;
 
   gradient = gimp_context_get_gradient ();

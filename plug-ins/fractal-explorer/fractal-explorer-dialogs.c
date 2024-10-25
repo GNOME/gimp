@@ -36,7 +36,7 @@
 #define ZOOM_UNDO_SIZE 100
 
 
-static gint              n_gradient_samples = 0;
+static gsize             n_gradient_samples = 0;
 static gdouble          *gradient_samples = NULL;
 static GimpGradient     *gradient = NULL;
 static gboolean          ready_now = FALSE;

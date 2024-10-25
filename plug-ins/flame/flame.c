@@ -386,7 +386,7 @@ drawable_to_cmap (control_point *cp)
     {
       GimpGradient *gradient = gimp_context_get_gradient ();
 
-      gint     num;
+      gsize    num;
       gdouble *g;
 
       /* FIXME: "reverse" hardcoded to FALSE. */

@@ -172,7 +172,7 @@ gimp_path_copy (GimpPath *path)
  **/
 gint *
 gimp_path_get_strokes (GimpPath *path,
-                       gint     *num_strokes)
+                       gsize    *num_strokes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -678,7 +678,7 @@ gimp_path_stroke_flip_free (GimpPath *path,
 GimpPathStrokeType
 gimp_path_stroke_get_points (GimpPath  *path,
                              gint       stroke_id,
-                             gint      *num_points,
+                             gsize     *num_points,
                              gdouble  **controlpoints,
                              gboolean  *closed)
 {
@@ -735,7 +735,7 @@ gimp_path_stroke_get_points (GimpPath  *path,
 gint
 gimp_path_stroke_new_from_points (GimpPath           *path,
                                   GimpPathStrokeType  type,
-                                  gint                num_points,
+                                  gsize               num_points,
                                   const gdouble      *controlpoints,
                                   gboolean            closed)
 {
@@ -786,7 +786,7 @@ gdouble *
 gimp_path_stroke_interpolate (GimpPath *path,
                               gint      stroke_id,
                               gdouble   precision,
-                              gint     *num_coords,
+                              gsize    *num_coords,
                               gboolean *closed)
 {
   GimpValueArray *args;

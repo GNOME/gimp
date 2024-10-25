@@ -44,7 +44,7 @@ GimpValueArray * gimp_dash_pattern_to_value_array    (GArray         *pattern);
 GArray         * gimp_dash_pattern_from_double_array (gint            n_dashes,
                                                       const gdouble  *dashes);
 gdouble        * gimp_dash_pattern_to_double_array   (GArray         *pattern,
-                                                      gint           *n_dashes);
+                                                      gsize          *n_dashes);
 
 GArray         * gimp_dash_pattern_copy              (GArray         *pattern);
 void             gimp_dash_pattern_free              (GArray         *pattern);

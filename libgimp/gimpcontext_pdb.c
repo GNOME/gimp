@@ -1137,7 +1137,7 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
  * Since: 2.10
  **/
 gboolean
-gimp_context_get_line_dash_pattern (gint     *num_dashes,
+gimp_context_get_line_dash_pattern (gsize    *num_dashes,
                                     gdouble **dashes)
 {
   GimpValueArray *args;
@@ -1189,7 +1189,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
  * Since: 2.10
  **/
 gboolean
-gimp_context_set_line_dash_pattern (gint           num_dashes,
+gimp_context_set_line_dash_pattern (gsize          num_dashes,
                                     const gdouble *dashes)
 {
   GimpValueArray *args;

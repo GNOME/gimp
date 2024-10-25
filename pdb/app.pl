@@ -500,6 +500,28 @@ g_param_spec_double ("$name",
                      $flags)
 CODE
     }
+    elsif ($pdbtype eq 'size') {
+	if (defined $typeinfo[0]) {
+	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
+	}
+	else {
+	    $min = G_MINSIZE;
+	}
+	if (defined $typeinfo[2]) {
+	    $max = ($typeinfo[3] eq '<') ? ($typeinfo[2] - 1) : $typeinfo[2];
+	}
+	else {
+	    $max = G_MAXSIZE;
+	}
+	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
+	$pspec = <<CODE;
+g_param_spec_size ("$name",
+                   "$nick",
+                   "$blurb",
+                   $min, $max, $default,
+                   $flags)
+CODE
+    }
     elsif ($pdbtype eq 'int32') {
 	if (defined $typeinfo[0]) {
 	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];

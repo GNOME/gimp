@@ -17,6 +17,16 @@
 package Gimp::CodeGen::pdb;
 
 %arg_types = (
+    size        => { name            => 'SIZE',
+		     gtype           => 'G_TYPE_SIZE',
+		     type            => 'gsize ',
+		     const_type      => 'gsize ',
+		     init_value      => '0',
+		     get_value_func  => '$var = g_value_get_size ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_INT ($value)',
+		     set_value_func  => 'g_value_set_size ($value, $var)',
+		     take_value_func => 'g_value_set_size ($value, $var)' },
+
     int32       => { name            => 'INT32',
 		     gtype           => 'G_TYPE_INT',
 		     type            => 'gint ',

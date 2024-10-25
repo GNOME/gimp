@@ -49,7 +49,7 @@ typedef struct
   gint     allocation_width;
 
   gdouble *data;
-  gint     n_samples;
+  gsize    n_samples;
 } GimpGradientPreviewData;
 
 struct _GimpGradientChooser
@@ -213,12 +213,12 @@ gimp_gradient_chooser_new (const gchar  *title,
 static gboolean
 get_gradient_data (GimpGradient  *gradient,
                    gint           allocation_width,
-                   gint          *sample_count,
+                   gsize         *sample_count,
                    gdouble      **sample_array)
 {
   gboolean  result;
   gdouble  *samples;
-  gint      n_samples;
+  gsize     n_samples;
 
   result = gimp_gradient_get_uniform_samples (gradient,
                                               allocation_width,
@@ -399,7 +399,7 @@ static gboolean
 local_grad_data_refresh (GimpGradientChooser *self, GimpGradient *gradient)
 {
   gdouble *src;
-  gint     n_samples;
+  gsize    n_samples;
 
   /* Must not be called before widget is allocated. */
   g_assert (self->local_grad_data->allocation_width != 0);

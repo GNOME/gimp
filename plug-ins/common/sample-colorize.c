@@ -2409,7 +2409,7 @@ get_gradient (gint mode)
 {
   GimpGradient *gradient;
 
-  gint     n_f_samples;
+  gsize    n_f_samples;
   gdouble *f_samples;
   gdouble *f_samp;        /* float samples */
   gint     lum;
