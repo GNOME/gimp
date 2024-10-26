@@ -2,28 +2,28 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Dimitris Spingos (Δημήτρης Σπίγγος)  <dmtrs32@gmail.com>, 2011.
+# Dimitris Spingos (Δημήτρης Σπίγγος)  <dmtrs32@gmail.com>, 2011-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tags.el\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2011-07-02 18:11+0000\n"
-"PO-Revision-Date: 2011-07-11 00:47+0200\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος)  <dmtrs32@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2024-08-01 05:34+0000\n"
+"PO-Revision-Date: 2024-10-26 12:25+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: \n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n !=1);\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-Country: GREECE\n"
+"X-Generator: Poedit 3.5\n"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
-msgid "fuzzy"
-msgstr "θολή"
-
-#: ../data/tags/gimp-tags-default.xml.in.h:2
 msgid "round"
-msgstr "στρογγυλή"
+msgstr "στρογγυλό"
+
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: ../data/tags/gimp-tags-default.xml.in.h:3
+msgid "fuzzy"
+msgstr "ασαφές"
