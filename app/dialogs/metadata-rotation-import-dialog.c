@@ -235,7 +235,8 @@ gimp_image_metadata_rotate_dialog (GimpImage         *image,
   gtk_widget_destroy (dialog);
 
   return (response == GTK_RESPONSE_OK) ?
-         GIMP_METADATA_ROTATION_POLICY_ROTATE : GIMP_COLOR_PROFILE_POLICY_KEEP;
+         GIMP_METADATA_ROTATION_POLICY_ROTATE :
+         GIMP_METADATA_ROTATION_POLICY_KEEP;
 }
 
 static GdkPixbuf *
