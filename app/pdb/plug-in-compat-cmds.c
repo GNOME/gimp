@@ -6564,7 +6564,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                "plug-in-laplace");
   gimp_procedure_set_static_help (procedure,
                                   "High-resolution edge detection",
-                                  "This plug-in creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best.",
+                                  "This plug-in creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss with 1.5 - 5.0 depending on the noise in the image is best.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Compatibility procedure. Please see 'gegl:edge-laplace' for credits.",
