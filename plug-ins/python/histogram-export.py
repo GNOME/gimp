@@ -166,7 +166,7 @@ def histogram_export(procedure, img, layers, gio_file,
 
 def run(procedure, run_mode, image, n_layers, layers, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
-        GimpUi.init("histogram-export.py")
+        GimpUi.init("python-fu-histogram-export")
 
         dialog = GimpUi.ProcedureDialog.new(procedure, config, _("Histogram Export..."))
 
@@ -200,11 +200,11 @@ class HistogramExport(Gimp.PlugIn):
         return True, 'gimp30-python', None
 
     def do_query_procedures(self):
-        return ['histogram-export']
+        return ['python-fu-histogram-export']
 
     def do_create_procedure(self, name):
         procedure = None
-        if name == 'histogram-export':
+        if name == 'python-fu-histogram-export':
             procedure = Gimp.ImageProcedure.new(self, name,
                                                 Gimp.PDBProcType.PLUGIN,
                                                 run, None)

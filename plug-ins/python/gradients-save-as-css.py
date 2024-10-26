@@ -182,13 +182,13 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
         return True, 'gimp30-python', None
 
     def do_query_procedures(self):
-        return [ 'gradient-save-as-css' ]
+        return [ 'python-fu-gradient-save-as-css' ]
 
     def do_create_procedure(self, name):
         procedure = Gimp.Procedure.new(self, name,
                                        Gimp.PDBProcType.PLUGIN,
                                        gradient_css_save, None)
-        if name == 'gradient-save-as-css':
+        if name == 'python-fu-gradient-save-as-css':
             procedure.set_documentation (_("Creates a new palette from a given gradient"),
                                          _("Creates a new palette from a given gradient"),
                                          name)
