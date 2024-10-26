@@ -28,13 +28,23 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 import sys
+import traceback
 
 
 def code_eval(procedure, run_mode, code, config, data):
+    retval = Gimp.PDBStatusType.SUCCESS
+    gerror = GLib.Error()
+
     if code == '-':
-        code = sys.stdin.read()
-    exec(code, globals())
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+      code = sys.stdin.read()
+
+    try:
+      exec(code, globals())
+    except Exception as error:
+      retval = Gimp.PDBStatusType.CALLING_ERROR
+      gerror = GLib.Error(traceback.format_exc())
+
+    return procedure.new_return_values(retval, gerror)
 
 class PythonEval (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
