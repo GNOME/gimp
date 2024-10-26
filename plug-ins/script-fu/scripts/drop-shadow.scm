@@ -140,12 +140,12 @@
   (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
   (gimp-selection-none image)
   (gimp-layer-set-lock-alpha shadow-layer FALSE)
-  (if (>= shadow-blur 1.0) (plug-in-gauss-rle RUN-NONINTERACTIVE
-                                              image
-                                              shadow-layer
-                                              shadow-blur
-                                              TRUE
-                                              TRUE))
+  (if (>= shadow-blur 1.0) (plug-in-gauss RUN-NONINTERACTIVE
+                                          image
+                                          shadow-layer
+                                          (* 0.32 shadow-blur)
+                                          (* 0.32 shadow-blur)
+                                          0))
   (gimp-item-transform-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)

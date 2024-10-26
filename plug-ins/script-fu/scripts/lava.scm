@@ -103,7 +103,7 @@
             (plug-in-cubism RUN-NONINTERACTIVE image active-layer tile_size 2.5 0)
             (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask_size 0)
             (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 0 0)
-            (plug-in-gauss-rle RUN-NONINTERACTIVE image active-layer 2 TRUE TRUE)
+            (plug-in-gauss RUN-NONINTERACTIVE image active-layer 0.64 0.64 0)
             (plug-in-gradmap RUN-NONINTERACTIVE image selected-layers-array)
 
             (if (= keep-selection FALSE)
