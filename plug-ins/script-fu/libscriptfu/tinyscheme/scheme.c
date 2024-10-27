@@ -130,7 +130,7 @@ ts_get_error_string (scheme *sc)
 #include <stdlib.h>
 
 /* Set current outport with checks for validity. */
-void
+static void
 set_outport (scheme * sc, pointer arg)
 {
   if (! is_port (arg))
