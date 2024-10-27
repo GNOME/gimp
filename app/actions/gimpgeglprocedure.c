@@ -266,7 +266,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       GType          config_type;
       GimpContainer *container;
 
-      config_type = G_VALUE_TYPE (gimp_value_array_index (args, 4));
+      config_type = G_VALUE_TYPE (gimp_value_array_index (args, 3));
 
       container = gimp_operation_config_get_container (gimp, config_type,
                                                        (GCompareFunc)
