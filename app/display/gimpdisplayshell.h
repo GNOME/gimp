@@ -193,9 +193,9 @@ struct _GimpDisplayShell
   gboolean           size_allocate_center_image;
 
   /*  the state of gimp_display_shell_tool_events()  */
+  GdkSeat           *grab_seat;
   GdkDevice         *grab_pointer;
   GdkDevice         *grab_pointer_source;
-  guint32            grab_pointer_time;
 
   /*  the state of gimp_display_shell_zoom_gesture_*() */
   gdouble            last_zoom_scale;
