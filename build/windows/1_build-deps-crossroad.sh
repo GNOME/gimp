@@ -8,13 +8,15 @@ if [ -z "$CROSSROAD_PLATFORM" ]; then
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-   if [ "$0" != 'build/windows/1_build-deps-crossroad.sh' ] && [ ${PWD/*\//} != 'windows' ]; then
+  if [ "$0" != 'build/windows/1_build-deps-crossroad.sh' ] && [ ${PWD/*\//} != 'windows' ]; then
     echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, read: https://developer.gimp.org/core/setup/build/windows/'
     exit 1
   elif [ ${PWD/*\//} = 'windows' ]; then
     cd ../..
   fi
+
   export GIT_DEPTH=1
+
   export GIMP_DIR=$(echo "${PWD##*/}/")
   cd $(dirname $PWD)
 fi
@@ -31,11 +33,11 @@ if [ "$GITLAB_CI" ]; then
                      git                        \
                      ccache                     \
                      cpio                       \
-                     g++-mingw-w64-x86-64-posix \
                      gcc-mingw-w64-x86-64-posix \
+                     g++-mingw-w64-x86-64-posix \
                      meson                      \
                      pkg-config                 \
-	                   python3-distutils          \
+                     python3-distutils          \
                      python3-docutils           \
                      python3-zstandard          \
                      rpm                        \
@@ -82,16 +84,14 @@ self_build ()
   # Clone source only if not already cloned or downloaded
   if [ ! -d "$1" ]; then
     git clone --depth $GIT_DEPTH https://gitlab.gnome.org/gnome/$1
-  else
-    cd $1 && git pull && cd ..
   fi
+  cd $1
+  git pull
 
-  if [ ! -f "$1/_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
-    mkdir -p $1/_build$ARTIFACTS_SUFFIX && cd $1/_build$ARTIFACTS_SUFFIX
-    crossroad meson setup .. $2
-  else
-    cd $1/_build$ARTIFACTS_SUFFIX
+  if [ ! -f "_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
+    crossroad meson setup _build$ARTIFACTS_SUFFIX $2
   fi
+  cd _build$ARTIFACTS_SUFFIX
   ninja
   ninja install
   ccache --show-stats
