@@ -2,8 +2,10 @@
   PUBLIC LICENSE -- see the 'COPYING' file in GIMP repository for details:
   https://gitlab.gnome.org/GNOME/gimp/-/blob/master/COPYING
 
-* Icon themes are licensed under Creative Commons by-sa 3.0 or 4.0. See
+* New icon themes are licensed under Creative Commons by-sa 3.0 or 4.0. See
   the file `icons/Default/COPYING`.
+  The Legacy icon theme is more of a patchwork of licenses. See
+  `icons/Legacy/COPYING`.
 
 * Any data used in artworks, such as brushes, patterns and the like should be
   under a CC0 license (Creative Commons Zero) or equivalent, i.e. "No rights
