@@ -59,7 +59,7 @@
 (define (createRGBATestImage)
   ; "gimp-logo.png"
   (set! testImage (testing:load-test-image-basic-v3))
-  (set! testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
+  (set! testLayer (vector-ref (gimp-image-get-layers testImage) 0))
 
   ; Optional stressing: change selection
   ; select everything (but I think a filter does that anyway, when no selection exists)
@@ -114,7 +114,7 @@
 ; Create an INDEXED image, with alpha
 (define (createIndexedImage)
   (set! testImage (testing:load-test-image-basic-v3))
-  (set! testLayer (vector-ref (cadr (gimp-image-get-layers testImage )) 0))
+  (set! testLayer (vector-ref (gimp-image-get-layers testImage) 0))
   (gimp-image-convert-indexed
                   testImage
                   CONVERT-DITHER-NONE
@@ -314,10 +314,8 @@
   (testImageCreator)
   (assert `(plug-in-convmatrix
       RUN-NONINTERACTIVE ,testImage ,testLayer
-      25 ; count elements, must be 25
       #(1 2 3 4 5   1 2 3 4 5  1 2 3 4 5  1 2 3 4 5  1 2 3 4 5) ; conv matrix
       0 0 0
-      5
       #(1 0 1 0 1) ; channel mask
       0 ; border mode
       ))
