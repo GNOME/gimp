@@ -61,9 +61,9 @@ msgid ""
 "Microsoft Windows and OS X."
 msgstr ""
 "GIMP kan gjera mykje og kan lett utvidast. Programmet kan gjerast større med "
-"programutvidingar (\"plug-ins\") og kan såleis utvidast til å gjera nesten "
+"programutvidingar («plug-ins») og kan såleis utvidast til å gjera nesten "
 "kva som helst. Det er også innebygd avanserte skriptfunksjonar, slik at det "
-"er lett å lage spesielle verktøy for enkle oppgåver eller kompliserte "
+"er lett å laga spesielle verktøy for enkle oppgåver eller kompliserte "
 "bilethansamingar som lett kan skriptast. GIMP er tilgjengeleg for Linux, "
 "Windows og OS X."
 
@@ -2580,7 +2580,7 @@ msgstr "Dump vedlagde data"
 #: app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
 msgid "Tool_box"
-msgstr "_Verktøykassa"
+msgstr "_Verktøykassen"
 
 #: app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
@@ -3144,11 +3144,11 @@ msgstr "Handsam utvidingar: søk, installer, avinstaller, oppdater."
 
 #: app/actions/dialogs-actions.c:448
 msgid "Tool_box"
-msgstr "_Verktøykassa"
+msgstr "_Verktøykassen"
 
 #: app/actions/dialogs-actions.c:449
 msgid "Raise the toolbox"
-msgstr "Lyft verktøykassa på skjermen"
+msgstr "Lyft verktøykassen på skjermen"
 
 #: app/actions/dialogs-actions.c:453
 msgid "New Tool_box"
@@ -3946,7 +3946,7 @@ msgstr "Kopier namngjeve"
 
 #: app/actions/edit-commands.c:504
 msgid "Copy Visible Named"
-msgstr "Kopier synlege namngjevne"
+msgstr "Kopier synleg namngjeve"
 
 #: app/actions/edit-commands.c:552
 msgid "Clear"
@@ -4412,7 +4412,7 @@ msgstr "_Bayer Matrix..."
 #: app/actions/filters-actions.c:151
 msgctxt "filters-action"
 msgid "_Bloom..."
-msgstr "_Bloom..."
+msgstr "_Lysglød ..."
 
 #: app/actions/filters-actions.c:156
 msgctxt "filters-action"
@@ -4882,7 +4882,7 @@ msgstr "_Sinus …"
 #: app/actions/filters-actions.c:621
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
-msgstr "_Enkel lineær iterativ gruppering …"
+msgstr "_Enkel lineær gjentakande gruppering …"
 
 #: app/actions/filters-actions.c:626
 msgctxt "filters-action"
@@ -10139,7 +10139,7 @@ msgid ""
 "toolbox and try again."
 msgstr ""
 "Den nyleg valde dokkpanelet inneheld ei verktøykasse. Lukk den opne "
-"verktøykassa og prøv igjen."
+"verktøykassen og prøv igjen."
 
 #: app/config/config-enums.c:26
 msgctxt "canvas-padding-mode"
@@ -10552,7 +10552,7 @@ msgid ""
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"Hinta for vindaugetype er sett for dokkpanel og vindauget med verktøykassa. "
+"Hinta for vindaugetype er sett for dokkpanel og vindauget med verktøykassen. "
 "Dette kan påverka måten vindaugehandsamaren set opp og handsamar desse "
 "vindauga på."
 
@@ -10807,9 +10807,9 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
-"Bestemmer om GIMP skal lage førehandsvisingar av lag og kanalar. Det kan "
-"vere greitt å ha førehandsvisingar i lag- og kanaldialogvindauget, men dei "
-"kan gjere at ting går tregare, særleg ved arbeid på store bilete."
+"Bestemmer om GIMP skal laga førehandsvisingar av lag og kanalar. Det kan "
+"vera greitt å ha førehandsvisingar i lag- og kanaldialogvindauget, men dei "
+"kan gjera at ting går tregare, særleg ved arbeid på store bilete."
 
 #: app/config/gimprc-blurbs.h:376
 msgid ""
@@ -11397,13 +11397,13 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:729
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr "Vis gjeldane forgrunns- og bakgrunnsfarge i verktøykassa."
+msgstr "Vis gjeldane forgrunns- og bakgrunnsfarge i verktøykassen."
 
 #: app/config/gimprc-blurbs.h:732
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Vis den gjeldande penselen, mønsterelementet og fargeovergangen i "
-"verktøykassa."
+"verktøykassen."
 
 #: app/config/gimprc-blurbs.h:735
 msgid "Use a single toolbox button for grouped tools."
@@ -11411,7 +11411,7 @@ msgstr "Bruk éi verktøykasse for grupperte verktøy."
 
 #: app/config/gimprc-blurbs.h:738
 msgid "Show the currently active image in the toolbox."
-msgstr "Vis det gjeldande biletet i verktøykassa."
+msgstr "Vis det gjeldande biletet i verktøykassen."
 
 #: app/config/gimprc-blurbs.h:741
 msgid "Show the GIMP mascot at the top of the toolbox."
@@ -14209,7 +14209,7 @@ msgstr "Nettverksfil"
 
 #: app/core/gimpimagefile.c:839
 msgid "Click to create preview"
-msgstr "Klikk for å lage førehandsvising"
+msgstr "Klikk for å laga førehandsvising"
 
 #: app/core/gimpimagefile.c:845
 msgid "Loading preview..."
@@ -14221,7 +14221,7 @@ msgstr "Førehandsvisinga er utdatert"
 
 #: app/core/gimpimagefile.c:857
 msgid "Cannot create preview"
-msgstr "Kan ikkje lage førehandsvising"
+msgstr "Kan ikkje laga førehandsvising"
 
 #: app/core/gimpimagefile.c:867
 msgid "(Preview may be out of date)"
@@ -15212,7 +15212,7 @@ msgstr "Sjå etter oppdateringar"
 #: app/dialogs/about-dialog.c:488
 #, c-format
 msgid "Last checked on %s at %s"
-msgstr "Sist kontrollert %s på %s"
+msgstr "Sist kontrollert %s kl. %s"
 
 #: app/dialogs/about-dialog.c:715
 msgid "GIMP is brought to you by"
@@ -15744,7 +15744,7 @@ msgstr "_Fjern usynlege lag"
 
 #: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:697
 msgid "Create a New Image"
-msgstr "Lage eit nytt bilete"
+msgstr "Laga eit nytt bilete"
 
 #: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1822
 #: app/dialogs/resize-dialog.c:256
@@ -16899,7 +16899,7 @@ msgstr "Bruk ikonsymbol om tilgjengelege"
 #: app/dialogs/preferences-dialog.c:2267 app/dialogs/preferences-dialog.c:2268
 #: app/widgets/gimptoolbox.c:523
 msgid "Toolbox"
-msgstr "Verktøykassa"
+msgstr "Verktøykassen"
 
 #. Appearance
 #: app/dialogs/preferences-dialog.c:2276 app/dialogs/preferences-dialog.c:3177
@@ -17348,7 +17348,7 @@ msgstr "Vindaugetypar"
 
 #: app/dialogs/preferences-dialog.c:2967
 msgid "Hint for _docks and toolbox:"
-msgstr "_Hint for dokkpanel og verktøykassa:"
+msgstr "_Hint for dokkpanel og verktøykassen:"
 
 #: app/dialogs/preferences-dialog.c:2970
 msgid "Focus"
@@ -20822,7 +20822,7 @@ msgstr "Kurver"
 #: app/pdb/drawable-color-cmds.c:331
 msgctxt "undo-type"
 msgid "Extract Component"
-msgstr "Ekstraher komponent"
+msgstr "Trekk ut komponent"
 
 #: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
@@ -22406,7 +22406,7 @@ msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
 msgstr ""
-"Kan ikkje lage den nye tekstutforminga. Truleg er skriftstorleiken for stor."
+"Kan ikkje laga den nye tekstutforminga. Truleg er skriftstorleiken for stor."
 
 #: app/text/text-enums.c:24
 msgctxt "text-box-mode"
@@ -23084,7 +23084,7 @@ msgstr "Klikk for å gjere skarpare"
 
 #: app/tools/gimpconvolvetool.c:190
 msgid "Click to sharpen the line"
-msgstr "Klikk for å lage linja skarpare"
+msgstr "Klikk for å laga linja skarpare"
 
 #: app/tools/gimpconvolvetool.c:191
 #, c-format
@@ -23581,7 +23581,7 @@ msgstr "Kor mange nivå som skal løysast"
 
 #: app/tools/gimpforegroundselectoptions.c:146
 msgid "Iterations"
-msgstr "Iterasjonar"
+msgstr "Gjentakingar"
 
 #: app/tools/gimpforegroundselectoptions.c:147
 msgid "Number of iterations to perform"
@@ -24418,7 +24418,7 @@ msgstr "Operasjonsverktøy: Bruk ein vilkårleg GEGL-operasjon"
 #. Translators: don't translate "Aux"
 #: app/tools/gimpoperationtool.c:559
 msgid "Aux\\1 Input"
-msgstr "Tilleggsinngang 1"
+msgstr "Tilleggsinngang\\1"
 
 #: app/tools/gimppaintbrushtool.c:60
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -30773,7 +30773,7 @@ msgstr "Angre angreloggen"
 #~ "Smaller values give a more accurate selection border but may introduce "
 #~ "holes in the selection"
 #~ msgstr ""
-#~ "Lågare verdiar gir ein meir nøyaktig utvalskant, men kan lage hol i "
+#~ "Lågare verdiar gir ein meir nøyaktig utvalskant, men kan laga hol i "
 #~ "utvalet. "
 
 #~ msgid "Sensitivity for brightness component"
