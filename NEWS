@@ -106,6 +106,7 @@ Graphical User Interface:
     of the color selection dialog) now displays the selected color model
     (RGB, HSV or LCh) and not only the space/profile (the latter is not
     even displayed anymore in LCh which is CIELAB-based).
+  - Legacy icon theme's tool icons are now all vector.
 
 Plug-ins:
 
@@ -182,6 +183,12 @@ Plug-ins:
   - BMP: new support for loading 64bpp BMPs. Each channel uses 13 bits
     (2^13 max value), so it's scaled to fit our 16 bit integer image
     mode.
+  - gradient-save-as-css renamed python-fu-gradient-save-as-css and
+    histogram-export renamed python-fu-histogram-export for consistent
+    naming.
+  - python-fu-eval is now robust to failing script. Instead of crashing
+    too, it simply returns with a CALLING_ERROR status and pass along
+    the Python error to the core for proper output.
 
 API:
 
