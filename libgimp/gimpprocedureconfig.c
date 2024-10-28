@@ -448,6 +448,227 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
 }
 
 /**
+ * gimp_procedure_config_get_core_object_array:
+ * @config:        a #GimpProcedureConfig
+ * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ *
+ * A function for bindings to get a [type@CoreObjectArray] property. Getting
+ * these with [method@GObject.Object.get] or [method@GObject.Object.get_property] won't
+ * [work for the time being](https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/492)
+ * so all our boxed array types must be set and get using alternative
+ * functions instead.
+ *
+ * C plug-ins should just use [method@GObject.Object.get].
+ *
+ * Returns: (array zero-terminated) (transfer container): an array of #GObjects.
+ *
+ * Since: 3.0
+ **/
+GObject **
+gimp_procedure_config_get_core_object_array (GimpProcedureConfig  *config,
+                                             const gchar          *property_name)
+{
+  GObject    **objects = NULL;
+  GParamSpec  *param_spec;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), property_name);
+
+  if (! param_spec)
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return objects;
+    }
+
+  if (! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
+    {
+      g_warning ("%s: property '%s' of %s is not a GimpParamCoreObjectArray.",
+                 G_STRFUNC,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return objects;
+    }
+
+  g_object_get (config,
+                property_name, &objects,
+                NULL);
+
+  return objects;
+}
+
+/**
+ * gimp_procedure_config_set_core_object_array:
+ * @config:        a #GimpProcedureConfig
+ * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ * @objects: (array length=n_objects) (transfer none): an array of #GObjects.
+ * @n_objects: the numbers of @objects.
+ *
+ * A function for bindings to set a [type@CoreObjectArray] property. Setting
+ * these with [method@GObject.Object.set] or [method@GObject.Object.set_property] won't
+ * [work for the time being](https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/492)
+ * so all our boxed array types must be set and get using alternative
+ * functions instead.
+ *
+ * C plug-ins should just use [method@GObject.Object.set].
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_config_set_core_object_array (GimpProcedureConfig  *config,
+                                             const gchar          *property_name,
+                                             GObject             **objects,
+                                             gsize                 n_objects)
+{
+  GObject    **null_objects;
+  GParamSpec  *param_spec;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  if (! param_spec)
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return;
+    }
+
+  if (! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
+    {
+      g_warning ("%s: property '%s' of %s is not a GimpParamCoreObjectArray.",
+                 G_STRFUNC,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return;
+    }
+
+  null_objects = g_new0 (GObject *, n_objects + 1);
+
+  for (gint i = 0; i < n_objects; i++)
+    null_objects[i] = objects[i];
+
+  g_object_set (config,
+                property_name, null_objects,
+                NULL);
+
+  g_free (null_objects);
+}
+
+/**
+ * gimp_procedure_config_get_color_array:
+ * @config:        a #GimpProcedureConfig
+ * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ *
+ * A function for bindings to get a [type@ColorArray] property. Getting
+ * these with [method@GObject.Object.get] or [method@GObject.Object.get_property] won't
+ * [work for the time being](https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/492)
+ * so all our boxed array types must be set and get using these
+ * alternative functions instead.
+ *
+ * C plug-ins should just use [method@GObject.Object.get].
+ *
+ * Returns: (array zero-terminated) (transfer full): an array of #GObjects.
+ *
+ * Since: 3.0
+ **/
+GeglColor **
+gimp_procedure_config_get_color_array (GimpProcedureConfig  *config,
+                                       const gchar          *property_name)
+{
+  GeglColor  **colors = NULL;
+  GParamSpec  *param_spec;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), property_name);
+
+  if (! param_spec)
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return colors;
+    }
+
+  if (! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_BOXED) ||
+      ! g_type_is_a (param_spec->value_type, GIMP_TYPE_COLOR_ARRAY))
+    {
+      g_warning ("%s: property '%s' of %s is not a GimpColorArray boxed type.",
+                 G_STRFUNC,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return colors;
+    }
+
+  g_object_get (config,
+                property_name, &colors,
+                NULL);
+
+  return colors;
+}
+
+/**
+ * gimp_procedure_config_set_color_array:
+ * @config:        a #GimpProcedureConfig
+ * @property_name: the name of a [struct@ParamSpecCoreObjectArray] param spec.
+ * @colors: (array length=n_colors) (transfer none): an array of [class@Gegl.Color].
+ * @n_colors: the numbers of @colors.
+ *
+ * A function for bindings to set a [type@ColorArray] property. Setting
+ * these with [method@GObject.Object.set] or [method@GObject.Object.set_property] won't
+ * [work for the time being](https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/492)
+ * so all our boxed array types must be set and get using these
+ * alternative functions instead.
+ *
+ * C plug-ins should just use [method@GObject.Object.set].
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_config_set_color_array (GimpProcedureConfig  *config,
+                                       const gchar          *property_name,
+                                       GeglColor           **colors,
+                                       gsize                 n_colors)
+{
+  GeglColor  **null_colors;
+  GParamSpec  *param_spec;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), property_name);
+
+  if (! param_spec)
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return;
+    }
+
+  if (! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_BOXED) ||
+      ! g_type_is_a (param_spec->value_type, GIMP_TYPE_COLOR_ARRAY))
+    {
+      g_warning ("%s: property '%s' of %s is not a GimpColorArray boxed type.",
+                 G_STRFUNC,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return;
+    }
+
+  null_colors = g_new0 (GeglColor *, n_colors + 1);
+
+  for (gint i = 0; i < n_colors; i++)
+    null_colors[i] = colors[i];
+
+  g_object_set (config,
+                property_name, null_colors,
+                NULL);
+
+  g_free (null_colors);
+}
+
+/**
  * gimp_procedure_config_get_choice_id:
  * @config:        a #GimpProcedureConfig
  * @property_name: the name of a [struct@ParamSpecChoice] property.

@@ -50,19 +50,34 @@ struct _GimpProcedureConfigClass
 };
 
 
-GimpProcedure *
-        gimp_procedure_config_get_procedure (GimpProcedureConfig *config);
+GimpProcedure  * gimp_procedure_config_get_procedure         (GimpProcedureConfig *config);
 
 
-void    gimp_procedure_config_save_metadata (GimpProcedureConfig  *config,
-                                             GimpImage            *exported_image,
-                                             GFile                *file);
+void             gimp_procedure_config_save_metadata         (GimpProcedureConfig  *config,
+                                                              GimpImage            *exported_image,
+                                                              GFile                *file);
 
+
+/* Binding functions */
+
+GObject       ** gimp_procedure_config_get_core_object_array (GimpProcedureConfig  *config,
+                                                              const gchar          *property_name);
+void             gimp_procedure_config_set_core_object_array (GimpProcedureConfig  *config,
+                                                              const gchar          *property_name,
+                                                              GObject             **objects,
+                                                              gsize                 n_objects);
+
+GeglColor     ** gimp_procedure_config_get_color_array       (GimpProcedureConfig  *config,
+                                                              const gchar          *property_name);
+void             gimp_procedure_config_set_color_array       (GimpProcedureConfig  *config,
+                                                              const gchar          *property_name,
+                                                              GeglColor           **colors,
+                                                              gsize                 n_colors);
 
 /* Utility functions */
 
-gint    gimp_procedure_config_get_choice_id (GimpProcedureConfig  *config,
-                                             const gchar          *property_name);
+gint             gimp_procedure_config_get_choice_id         (GimpProcedureConfig  *config,
+                                                              const gchar          *property_name);
 
 
 G_END_DECLS

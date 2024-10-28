@@ -61,6 +61,8 @@ GValue         * gimp_value_array_index                 (const GimpValueArray  *
                                                          gint                   index);
 GeglColor     ** gimp_value_array_get_color_array       (const GimpValueArray  *value_array,
                                                          gint                   index);
+GObject       ** gimp_value_array_get_core_object_array (const GimpValueArray  *value_array,
+                                                         gint                   index);
 
 GimpValueArray * gimp_value_array_prepend               (GimpValueArray        *value_array,
                                                          const GValue          *value);
