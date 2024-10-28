@@ -24,6 +24,7 @@ if cfitsio_dep.found()
                           dependencies: [
                            libgimpui_dep,
                            cfitsio_dep,
+                           math,
                           ],
                           install: true,
                           install_dir: gimpplugindir / 'plug-ins' / plugin_name)
