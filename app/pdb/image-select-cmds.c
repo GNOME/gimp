@@ -290,7 +290,7 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpImage *image;
   gint operation;
-  gint num_segs;
+  gsize num_segs;
   const gdouble *segs;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));

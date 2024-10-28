@@ -351,7 +351,7 @@ HELP
         { name => 'segs', type => 'floatarray',
           desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
                    pn.x, pn.y}',
-          array => { type => '2 <= int32',
+          array => { type => '2 <= size',
                      desc => 'Number of points (count 1 coordinate as two
                               points)' } }
     );

@@ -372,7 +372,7 @@ gimp_image_select_ellipse (GimpImage      *image,
 gboolean
 gimp_image_select_polygon (GimpImage      *image,
                            GimpChannelOps  operation,
-                           gint            num_segs,
+                           gsize           num_segs,
                            const gdouble  *segs)
 {
   GimpValueArray *args;
