@@ -77,14 +77,10 @@ gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
        */
       gint     n_dashes     = strlen ((const gchar *) dash_list);
       gdouble *dashes       = g_new (gdouble, n_dashes);
-      gdouble  total_length = 0;
       gint     i;
 
       for (i = 0; i < n_dashes; i++)
-        {
-          dashes[i] = dash_list[i];
-          total_length += dash_list[i];
-        }
+        dashes[i] = dash_list[i];
 
       cairo_set_dash (cr, dashes, n_dashes, 0.5);
 
