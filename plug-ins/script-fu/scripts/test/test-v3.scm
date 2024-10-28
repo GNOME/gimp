@@ -39,8 +39,8 @@
     (gimp-layer-set-mode layer-two LAYER-MODE-MULTIPLY)
     (gimp-image-insert-layer img layer-two 0 0)
 
-    (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-one bx TRUE FALSE)
-    (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-two by FALSE TRUE)
+    (plug-in-gauss RUN-NONINTERACTIVE img layer-one (* 0.32 bx) 0 0)
+    (plug-in-gauss RUN-NONINTERACTIVE img layer-two 0 (* 0.32 by) 0)
     (gimp-image-flatten img)
     ; Note the inner call returns (<numeric length> <vector>)
     ; We still need cadr even in v3 language
