@@ -894,7 +894,11 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (items_header), item_view->priv->search_button,
                     FALSE, FALSE, 2);
   gimp_item_tree_view_create_search_popover (item_view, button_icon_size);
-  gtk_widget_show (item_view->priv->search_button);
+  /* TODO: Currently the search feature only works on layers.
+   * In the future, we should expand this to channels and paths
+   * dockables as well */
+  if (GIMP_IS_LAYER_TREE_VIEW (object))
+    gtk_widget_show (item_view->priv->search_button);
 
   /* Search label */
 
