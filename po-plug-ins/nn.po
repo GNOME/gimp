@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-09-27 14:21+0000\n"
-"PO-Revision-Date: 2024-09-29 21:31+0200\n"
+"POT-Creation-Date: 2024-10-06 10:46+0000\n"
+"PO-Revision-Date: 2024-10-07 18:34+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -72,8 +72,8 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/common/qbist.c:883 plug-ins/common/sphere-designer.c:2292
 #: plug-ins/common/sphere-designer.c:2655 plug-ins/common/unit-editor.c:427
 #: plug-ins/flame/flame.c:622 plug-ins/flame/flame.c:827
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1517
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1555
 #: plug-ins/fractal-explorer/fractal-explorer.c:889
 #: plug-ins/fractal-explorer/fractal-explorer.c:1392
 #: plug-ins/gfig/gfig-dialog.c:354 plug-ins/gfig/gfig-dialog.c:777
@@ -520,11 +520,11 @@ msgstr "Avspelingssfart"
 #.
 #: plug-ins/common/animation-play.c:905 plug-ins/common/file-gif-export.c:224
 msgid "Cumulative layers (combine)"
-msgstr "Kumulative lag (kombinera)"
+msgstr "Kumulative lag (kombiner)"
 
 #: plug-ins/common/animation-play.c:910 plug-ins/common/file-gif-export.c:225
 msgid "One frame per layer (replace)"
-msgstr "Éi ramme per lag (erstatt)"
+msgstr "Éi ramme per lag (byt ut)"
 
 #: plug-ins/common/animation-play.c:1006
 msgid "Memory could not be allocated to the frame container."
@@ -615,7 +615,7 @@ msgstr "Persienne"
 #: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:867
 #: plug-ins/common/smooth-palette.c:302 plug-ins/common/tile.c:392
-#: plug-ins/file-bmp/bmp-load.c:738 plug-ins/file-exr/file-exr.c:287
+#: plug-ins/file-bmp/bmp-load.c:754 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:676
 #: plug-ins/file-jpeg/jpeg-load.c:231
 #: plug-ins/file-psd/psd-image-res-load.c:1093
@@ -1033,7 +1033,7 @@ msgstr "Tilfeldig frø"
 #: plug-ins/common/sphere-designer.c:2704 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1242
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1519
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1518
 #: plug-ins/gfig/gfig-dialog.c:778 plug-ins/ifs-compose/ifs-compose.c:912
 #: plug-ins/ifs-compose/ifs-compose.c:2641 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
@@ -1049,7 +1049,7 @@ msgstr "_Opna"
 #: plug-ins/common/sphere-designer.c:2712 plug-ins/flame/flame.c:624
 #: plug-ins/flame/flame.c:1250
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:803
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1557
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1556
 #: plug-ins/gfig/gfig-dialog.c:828 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:913
 #: plug-ins/ifs-compose/ifs-compose.c:2604 plug-ins/imagemap/imap_file.c:129
@@ -1242,7 +1242,7 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2220
 #: plug-ins/file-tiff/file-tiff-export.c:1086
 #: plug-ins/file-tiff/file-tiff-export.c:1175 plug-ins/flame/flame.c:590
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1420
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1419
 #: plug-ins/gfig/gfig.c:897 plug-ins/ifs-compose/ifs-compose.c:2463
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
@@ -2027,7 +2027,7 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/file-psd/psd-export.c:2225 plug-ins/file-psd/psd-load.c:180
 #: plug-ins/file-psd/psd-load.c:185 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:544
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1780
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1779
 #: plug-ins/fractal-explorer/fractal-explorer.c:1161 plug-ins/gfig/gfig.c:527
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:952
@@ -3750,7 +3750,7 @@ msgstr "HTML sideinnstillingar"
 
 #: plug-ins/common/file-html-table.c:642
 msgid "Table Creation Options"
-msgstr "Innstillingar for å lage tabellen"
+msgstr "Innstillingar for å laga tabellen"
 
 #: plug-ins/common/file-html-table.c:662
 msgid "Table Options"
@@ -4269,13 +4269,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s» er ikkje ei PCX-fil"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:263
-#: plug-ins/file-bmp/bmp-load.c:727 plug-ins/file-psd/psd-load.c:563
+#: plug-ins/file-bmp/bmp-load.c:741 plug-ins/file-psd/psd-load.c:563
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ugyldig biletbreidd: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:269
-#: plug-ins/file-bmp/bmp-load.c:733 plug-ins/file-psd/psd-load.c:555
+#: plug-ins/file-bmp/bmp-load.c:747 plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ugyldig bilethøgd: %d"
@@ -7804,7 +7804,7 @@ msgstr "Tilleggsinnstillingar"
 
 #: plug-ins/common/sphere-designer.c:336 plug-ins/gimpressionist/general.c:173
 msgid "Solid"
-msgstr "Heiltrukke"
+msgstr "Einsfarga"
 
 #: plug-ins/common/sphere-designer.c:337
 msgid "Checker"
@@ -8511,12 +8511,12 @@ msgstr "Flytsteg %d"
 
 #: plug-ins/common/wavelet-decompose.c:118
 msgid "_Wavelet-decompose..."
-msgstr "_Wavelet nedbryting …"
+msgstr "_Wavelet-separering …"
 
 #: plug-ins/common/wavelet-decompose.c:122
 #: plug-ins/common/wavelet-decompose.c:377
 msgid "Wavelet decompose"
-msgstr "Wavelet nedbryting"
+msgstr "Wavelet-separering"
 
 #: plug-ins/common/wavelet-decompose.c:131
 msgid "Scal_es"
@@ -8540,7 +8540,7 @@ msgstr "Legg til ei lagmaske til kvart skaleringslag"
 
 #: plug-ins/common/wavelet-decompose.c:204
 msgid "Wavelet-Decompose"
-msgstr "Wavelet-nedbryting"
+msgstr "Wavelet-separering"
 
 #: plug-ins/common/wavelet-decompose.c:212
 msgid "Decomposition"
@@ -8727,10 +8727,10 @@ msgstr "Feil fargekart"
 
 #: plug-ins/file-bmp/bmp-load.c:242 plug-ins/file-bmp/bmp-load.c:252
 #: plug-ins/file-bmp/bmp-load.c:260 plug-ins/file-bmp/bmp-load.c:269
-#: plug-ins/file-bmp/bmp-load.c:284 plug-ins/file-bmp/bmp-load.c:492
-#: plug-ins/file-bmp/bmp-load.c:517 plug-ins/file-bmp/bmp-load.c:528
-#: plug-ins/file-bmp/bmp-load.c:536 plug-ins/file-bmp/bmp-load.c:545
-#: plug-ins/file-bmp/bmp-load.c:557
+#: plug-ins/file-bmp/bmp-load.c:284 plug-ins/file-bmp/bmp-load.c:493
+#: plug-ins/file-bmp/bmp-load.c:518 plug-ins/file-bmp/bmp-load.c:529
+#: plug-ins/file-bmp/bmp-load.c:537 plug-ins/file-bmp/bmp-load.c:546
+#: plug-ins/file-bmp/bmp-load.c:558
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "«%s» er ikkje ei gyldig BMP-fil"
@@ -8747,16 +8747,16 @@ msgstr "Feil ved lesing av header for BMP-fila «%s»"
 msgid "Unsupported compression (%u) in BMP file from '%s'"
 msgstr "Har ikkje støtte for kompresjon (%u) i BMP-fil frå «%s»"
 
-#: plug-ins/file-bmp/bmp-load.c:674
+#: plug-ins/file-bmp/bmp-load.c:680
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Ukjend eller ugyldig komprimeringingsformat for BMP."
 
-#: plug-ins/file-bmp/bmp-load.c:721
+#: plug-ins/file-bmp/bmp-load.c:735
 msgid "Unsupported or invalid bitdepth."
 msgstr "Ukjend eller ugyldig fargedjupn."
 
-#: plug-ins/file-bmp/bmp-load.c:886 plug-ins/file-bmp/bmp-load.c:929
-#: plug-ins/file-bmp/bmp-load.c:983
+#: plug-ins/file-bmp/bmp-load.c:962 plug-ins/file-bmp/bmp-load.c:1005
+#: plug-ins/file-bmp/bmp-load.c:1059
 msgid "The bitmap ends unexpectedly."
 msgstr "Punktgrafikken slutta uventa."
 
@@ -11440,29 +11440,29 @@ msgstr "Fargefunksjon"
 msgid "FractalExplorer Gradient"
 msgstr "Fraktalutforskarovergang"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1008
 msgid "Presets"
 msgstr "Førehandsinnstillingar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1434
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1433
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Klarte ikkje skriva til «%s»: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1514
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1513
 msgid "Load Fractal Parameters"
 msgstr "Hent fraktalparametrar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1551
 msgid "Save Fractal Parameters"
 msgstr "Lagra fraktalparametrar"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1788
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1787
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "«%s» er ikkje ei Fraktalutforskarfil"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1795
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1794
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Feil i «%s». Innstillingane i %d er feil"
@@ -14651,7 +14651,7 @@ msgstr "X"
 #: plug-ins/map-object/map-object-main.c:156
 #: plug-ins/map-object/map-object-main.c:161
 msgid "Position of viewpoint (x,y,z)"
-msgstr "Posisjonen til synspunktet (x,y,z)"
+msgstr "Posisjonen til utsiktspunktet (x,y,z)"
 
 #: plug-ins/map-object/map-object-main.c:155
 #: plug-ins/map-object/map-object-main.c:203
@@ -14824,7 +14824,7 @@ msgstr "Gjennomsiktig _bakgrunn"
 
 #: plug-ins/map-object/map-object-main.c:354
 msgid "Sphere radius"
-msgstr "Sfæreradius"
+msgstr "Kuleradius"
 
 #: plug-ins/map-object/map-object-main.c:360
 msgid "Fro_nt"
@@ -14924,7 +14924,7 @@ msgstr "_Førehandsvis!"
 
 #: plug-ins/map-object/map-object-ui.c:412
 msgid "Show _wireframe"
-msgstr "Vis berre _kantlinjer"
+msgstr "Vis _trådramme"
 
 #: plug-ins/map-object/map-object-ui.c:421
 msgid "Update preview _live"
@@ -14944,7 +14944,7 @@ msgstr "Utsiktspunkt"
 
 #: plug-ins/map-object/map-object-ui.c:442
 msgid "Sp_here"
-msgstr "_Sfære"
+msgstr "_Kule"
 
 #: plug-ins/map-object/map-object-ui.c:444
 msgid "_Box"
@@ -14971,9 +14971,12 @@ msgid "Second Axis"
 msgstr "Andre akse"
 
 #: plug-ins/map-object/map-object-ui.c:661
-#: plug-ins/map-object/map-object-ui.c:675
 msgid "Intensity Levels"
 msgstr "Intensitetsnivå"
+
+#: plug-ins/map-object/map-object-ui.c:675
+msgid "Reflectivity"
+msgstr "Refleksjonsevne"
 
 #: plug-ins/map-object/map-object-ui.c:778
 #: plug-ins/map-object/map-object-ui.c:873
@@ -15391,7 +15394,7 @@ msgstr "Rediger metadata (EXIF, IPTC, XMP)"
 
 #: plug-ins/metadata/metadata-editor.c:774
 msgid "Parent's window handle"
-msgstr ""
+msgstr "Overordna vindaugehandtak"
 
 #: plug-ins/metadata/metadata-editor.c:775
 msgid ""
@@ -18521,7 +18524,7 @@ msgstr "Overfører data frå skannar/kamera"
 #~ msgstr "Luminans"
 
 #~ msgid "Halftone the image to give newspaper-like effect"
-#~ msgstr "Raster biletet for å lage ein effekt som minner om avistrykk"
+#~ msgstr "Raster biletet for å laga ein effekt som minner om avistrykk"
 
 #~ msgid "Newsprin_t..."
 #~ msgstr "_Avistrykk …"
@@ -19005,7 +19008,7 @@ msgstr "Overfører data frå skannar/kamera"
 #~ msgstr "_Førehandsvis"
 
 #~ msgid "Simulate glow by making highlights intense and fuzzy"
-#~ msgstr "Simulerer glød ved å lage høglysa meir intense og ullne"
+#~ msgstr "Simulerer glød ved å laga høglysa meir intense og ullne"
 
 #~ msgid "_Softglow..."
 #~ msgstr "_Mjukglød …"
@@ -19257,9 +19260,6 @@ msgstr "Overfører data frå skannar/kamera"
 
 #~ msgid "_Waves..."
 #~ msgstr "Bøl_gjer …"
-
-#~ msgid "_Reflective"
-#~ msgstr "_Reflekterande"
 
 #~ msgid "_Amplitude:"
 #~ msgstr "_Amplitude:"
