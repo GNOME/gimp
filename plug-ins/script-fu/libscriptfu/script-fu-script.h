@@ -51,7 +51,6 @@ gchar    * script_fu_script_get_command_from_params (SFScript             *scrip
 gchar    * script_fu_script_get_command_for_image_proc (
                                                      SFScript             *script,
                                                      GimpImage            *image,
-                                                     guint                 n_drawables,
                                                      GimpDrawable        **drawables,
                                                      GimpProcedureConfig  *config);
 gchar    * script_fu_script_get_command_for_regular_proc (

@@ -96,7 +96,6 @@ static GimpProcedure  * align_layers_create_procedure       (GimpPlugIn         
 static GimpValueArray * align_layers_run                    (GimpProcedure        *procedure,
                                                              GimpRunMode           run_mode,
                                                              GimpImage            *image,
-                                                             gint                  n_drawables,
                                                              GimpDrawable        **drawables,
                                                              GimpProcedureConfig  *config,
                                                              gpointer              run_data);
@@ -278,7 +277,6 @@ static GimpValueArray *
 align_layers_run (GimpProcedure        *procedure,
                   GimpRunMode           run_mode,
                   GimpImage            *image,
-                  gint                  n_drawables,
                   GimpDrawable        **drawables,
                   GimpProcedureConfig  *config,
                   gpointer              run_data)

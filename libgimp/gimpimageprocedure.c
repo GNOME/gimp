@@ -151,14 +151,12 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   GimpRunMode          run_mode;
   GimpImage           *image;
   GimpDrawable       **drawables;
-  gint                 n_drawables;
   gint                 i;
 
   run_mode    = GIMP_VALUES_GET_ENUM              (args, 0);
   image       = GIMP_VALUES_GET_IMAGE             (args, 1);
   drawables   = GIMP_VALUES_GET_CORE_OBJECT_ARRAY (args, 2);
 
-  n_drawables = gimp_core_object_array_get_length ((GObject **) drawables);
   remaining   = gimp_value_array_new (gimp_value_array_length (args) - ARG_OFFSET);
 
   for (i = ARG_OFFSET; i < gimp_value_array_length (args); i++)
@@ -171,8 +169,7 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   config = _gimp_procedure_create_run_config (procedure);
   _gimp_procedure_config_begin_run (config, image, run_mode, remaining, NULL);
 
-  return_values = image_proc->run_func (procedure, run_mode,
-                                        image, n_drawables, drawables,
+  return_values = image_proc->run_func (procedure, run_mode, image, drawables,
                                         config, image_proc->run_data);
 
   if (return_values != NULL                       &&

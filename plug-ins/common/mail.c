@@ -78,14 +78,12 @@ static GimpProcedure  * mail_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * mail_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
 
 static GimpPDBStatusType  send_image          (GObject              *config,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                gint32                run_mode);
 
@@ -245,7 +243,6 @@ static GimpValueArray *
 mail_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          gint                  n_drawables,
           GimpDrawable        **drawables,
           GimpProcedureConfig  *config,
           gpointer              run_data)
@@ -274,10 +271,7 @@ mail_run (GimpProcedure        *procedure,
         return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
     }
 
-  status = send_image (G_OBJECT (config),
-                       image,
-                       n_drawables, drawables,
-                       run_mode);
+  status = send_image (G_OBJECT (config), image, drawables, run_mode);
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
 }
@@ -285,7 +279,6 @@ mail_run (GimpProcedure        *procedure,
 static GimpPDBStatusType
 send_image (GObject       *config,
             GimpImage     *image,
-            gint           n_drawables,
             GimpDrawable **drawables,
             gint32         run_mode)
 {

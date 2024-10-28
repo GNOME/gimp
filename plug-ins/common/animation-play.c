@@ -97,7 +97,6 @@ static GimpProcedure  * play_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * play_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
@@ -354,7 +353,6 @@ static GimpValueArray *
 play_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *_image,
-          gint                  n_drawables,
           GimpDrawable        **drawables,
           GimpProcedureConfig  *config,
           gpointer              run_data)

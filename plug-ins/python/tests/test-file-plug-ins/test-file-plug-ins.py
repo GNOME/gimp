@@ -99,7 +99,7 @@ class PythonTest (Gimp.PlugIn):
         self.log = GimpLogger(True, self.test_cfg.log_file, LOG_APPEND, PRINT_VERBOSE, DEBUGGING)
 
     def run_import_tests(self, procedure, _run_mode, _image,
-                         _n_drawables, _drawable, _config, _data):
+                         _drawable, _config, _data):
         self.init_logging()
 
         if self.log.enabled:
@@ -109,7 +109,7 @@ class PythonTest (Gimp.PlugIn):
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
     def run_export_tests(self, procedure, _run_mode, _image,
-                         _n_drawables, _drawable, _config, _data):
+                         _drawable, _config, _data):
         self.init_logging()
 
         if self.log.enabled:

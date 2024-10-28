@@ -54,7 +54,6 @@ static void     script_fu_script_set_drawable_sensitivity (
 
 static void     script_fu_command_append_drawables (
                                              GString              *s,
-                                             guint                 n_drawables,
                                              GimpDrawable        **drawables);
 /*
  *  Function definitions
@@ -170,7 +169,7 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
       /* Script author does not declare image, drawable in script-fu-register-filter,
        * and we don't add to formal args in PDB.
        * The convenience class GimpImageProcedure already has formal args:
-       * run_mode, image, n_drawables, drawables.
+       * run_mode, image, drawables.
        * "0" means not skip any arguments declared in the script.
        */
       script_fu_script_set_proc_args (procedure, script, 0);
@@ -411,17 +410,16 @@ script_fu_script_get_command_from_params (SFScript             *script,
  */
 static void
 script_fu_command_append_drawables (GString       *s,
-                                    guint          n_drawables,
                                     GimpDrawable **drawables)
 {
   /* Require non-empty array of drawables. */
-  g_assert (n_drawables > 0);
+  g_assert (drawables != NULL && drawables[0] != NULL);
 
   /* !!! leading space to separate from prior args.
    * #() is scheme syntax for a vector.
    */
   g_string_append (s, " #(" );
-  for (guint i=0; i < n_drawables; i++)
+  for (guint i = 0; drawables[i] != NULL; i++)
     {
       g_string_append_printf (s, " %d", gimp_item_get_id ((GimpItem*) drawables[i]));
     }
@@ -433,7 +431,6 @@ script_fu_command_append_drawables (GString       *s,
 gchar *
 script_fu_script_get_command_for_image_proc (SFScript            *script,
                                              GimpImage            *image,
-                                             guint                 n_drawables,
                                              GimpDrawable        **drawables,
                                              GimpProcedureConfig  *config)
 {
@@ -453,16 +450,12 @@ script_fu_script_get_command_for_image_proc (SFScript            *script,
   /* scripts use integer ID's for Gimp objects. */
   g_string_append_printf (s, " %d", gimp_image_get_id (image));
 
-  /* Not pass n_drawables.
-   * An author must use Scheme functions for length of container of drawables.
-   */
-
   /* Append text repr for a container of all drawable ID's.
    * Even if script->drawable_arity = SF_PROC_IMAGE_SINGLE_DRAWABLE
    * since that means the inner run func takes many but will only process one.
    * We are not adapting to an inner run func that expects a single numeric.
    */
-  script_fu_command_append_drawables (s, n_drawables, drawables);
+  script_fu_command_append_drawables (s, drawables);
 
   /* config contains the "other" args
    * Iterate over the GimpValueArray.

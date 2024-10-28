@@ -70,7 +70,6 @@ static GimpProcedure  * gimp_c_test_create_procedure (GimpPlugIn           *plug
 static GimpValueArray * gimp_c_test_run              (GimpProcedure        *procedure,
                                                       GimpRunMode           run_mode,
                                                       GimpImage            *image,
-                                                      gint                  n_drawables,
                                                       GimpDrawable        **drawables,
                                                       GimpProcedureConfig  *config,
                                                       gpointer              run_data);

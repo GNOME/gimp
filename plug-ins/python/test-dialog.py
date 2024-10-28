@@ -94,7 +94,7 @@ def process_args(brush, font, gradient, palette, pattern):
     return
 
 
-def test_dialog(procedure, run_mode, image, n_drawables, drawables, config, data):
+def test_dialog(procedure, run_mode, image, drawables, config, data):
     '''
     Just a standard shell for a plugin.
     '''

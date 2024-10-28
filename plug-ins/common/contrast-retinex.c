@@ -86,7 +86,6 @@ static GimpProcedure  * retinex_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * retinex_run              (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
                                                   GimpImage            *image,
-                                                  gint                  n_drawables,
                                                   GimpDrawable        **drawables,
                                                   GimpProcedureConfig  *config,
                                                   gpointer              run_data);
@@ -231,7 +230,6 @@ static GimpValueArray *
 retinex_run (GimpProcedure        *procedure,
              GimpRunMode           run_mode,
              GimpImage            *image,
-             gint                  n_drawables,
              GimpDrawable        **drawables,
              GimpProcedureConfig  *config,
              gpointer              run_data)
@@ -241,7 +239,7 @@ retinex_run (GimpProcedure        *procedure,
 
   gegl_init (NULL, NULL);
 
-  if (n_drawables != 1)
+  if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
       GError *error = NULL;
 

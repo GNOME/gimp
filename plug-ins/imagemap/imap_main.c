@@ -74,7 +74,6 @@ static GimpProcedure  * imap_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * imap_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
@@ -239,7 +238,6 @@ static GimpValueArray *
 imap_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          gint                  n_drawables,
           GimpDrawable        **drawables,
           GimpProcedureConfig  *config,
           gpointer              run_data)
@@ -258,7 +256,7 @@ imap_run (GimpProcedure        *procedure,
 
   imap->builder = gtk_builder_new_from_resource ("/org/gimp/imagemap/imap-menu.ui");
 
-  if (n_drawables != 1)
+  if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
       GError *error = NULL;
 

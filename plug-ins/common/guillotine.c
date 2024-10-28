@@ -57,7 +57,6 @@ static GimpProcedure  * guillotine_create_procedure (GimpPlugIn           *plug_
 static GimpValueArray * guillotine_run              (GimpProcedure        *procedure,
                                                      GimpRunMode           run_mode,
                                                      GimpImage            *image,
-                                                     gint                  n_drawables,
                                                      GimpDrawable        **drawables,
                                                      GimpProcedureConfig  *config,
                                                      gpointer              run_data);
@@ -139,7 +138,6 @@ static GimpValueArray *
 guillotine_run (GimpProcedure        *procedure,
                 GimpRunMode           run_mode,
                 GimpImage            *image,
-                gint                  n_drawables,
                 GimpDrawable        **drawables,
                 GimpProcedureConfig  *config,
                 gpointer              run_data)

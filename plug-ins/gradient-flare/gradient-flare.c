@@ -378,7 +378,6 @@ static GimpProcedure  * gflare_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * gflare_run              (GimpProcedure        *procedure,
                                                  GimpRunMode           run_mode,
                                                  GimpImage            *image,
-                                                 gint                  n_drawables,
                                                  GimpDrawable        **drawables,
                                                  GimpProcedureConfig  *config,
                                                  gpointer              run_data);
@@ -906,7 +905,6 @@ static GimpValueArray *
 gflare_run (GimpProcedure        *procedure,
             GimpRunMode           run_mode,
             GimpImage            *_image,
-            gint                  n_drawables,
             GimpDrawable        **drawables,
             GimpProcedureConfig  *config,
             gpointer              run_data)
@@ -917,7 +915,7 @@ gflare_run (GimpProcedure        *procedure,
 
   image = _image;
 
-  if (n_drawables != 1)
+  if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
       GError *error = NULL;
 

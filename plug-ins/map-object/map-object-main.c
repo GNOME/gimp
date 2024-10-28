@@ -64,7 +64,6 @@ static GimpProcedure  * map_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * map_run              (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
                                               GimpImage            *image,
-                                              gint                  n_drawables,
                                               GimpDrawable        **drawables,
                                               GimpProcedureConfig  *config,
                                               gpointer              run_data);
@@ -115,8 +114,8 @@ map_create_procedure (GimpPlugIn  *plug_in,
       default_color = gegl_color_new ("white");
 
       procedure = gimp_image_procedure_new (plug_in, name,
-                                             GIMP_PDB_PROC_TYPE_PLUGIN,
-                                             map_run, NULL, NULL);
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            map_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*");
       gimp_procedure_set_sensitivity_mask (procedure,
@@ -520,7 +519,6 @@ static GimpValueArray *
 map_run (GimpProcedure        *procedure,
          GimpRunMode           run_mode,
          GimpImage            *_image,
-         gint                  n_drawables,
          GimpDrawable        **drawables,
          GimpProcedureConfig  *config,
          gpointer              run_data)
@@ -531,7 +529,7 @@ map_run (GimpProcedure        *procedure,
 
   image = _image;
 
-  if (n_drawables != 1)
+  if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
       GError *error = NULL;
 

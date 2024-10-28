@@ -336,7 +336,6 @@ static GimpProcedure  * explorer_create_procedure (GimpPlugIn           *plug_in
 static GimpValueArray * explorer_run              (GimpProcedure        *procedure,
                                                    GimpRunMode           run_mode,
                                                    GimpImage            *image,
-                                                   gint                  n_drawables,
                                                    GimpDrawable        **drawables,
                                                    GimpProcedureConfig  *config,
                                                    gpointer              run_data);
@@ -551,7 +550,6 @@ static GimpValueArray *
 explorer_run (GimpProcedure        *procedure,
               GimpRunMode           run_mode,
               GimpImage            *image,
-              gint                  n_drawables,
               GimpDrawable        **drawables,
               GimpProcedureConfig  *config,
               gpointer              run_data)
@@ -559,7 +557,7 @@ explorer_run (GimpProcedure        *procedure,
   GBytes *settings_bytes = NULL;
   GError *error          = NULL;
 
-  if (n_drawables != 1)
+  if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
       g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),

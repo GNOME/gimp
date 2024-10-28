@@ -147,14 +147,13 @@ GimpValueArray *
 script_fu_interpret_image_proc (GimpProcedure        *procedure,
                                 SFScript             *script,
                                 GimpImage            *image,
-                                guint                 n_drawables,
                                 GimpDrawable        **drawables,
                                 GimpProcedureConfig  *config)
 {
   gchar          *command;
   GimpValueArray *result = NULL;
 
-  command = script_fu_script_get_command_for_image_proc (script, image, n_drawables, drawables, config);
+  command = script_fu_script_get_command_for_image_proc (script, image, drawables, config);
   result = sf_wrap_run_command (procedure, script, command);
   g_free (command);
   return result;

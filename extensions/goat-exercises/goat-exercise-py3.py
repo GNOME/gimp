@@ -54,8 +54,8 @@ class Goat (Gimp.PlugIn):
 
         return procedure
 
-    def run(self, procedure, run_mode, image, n_drawables, drawables, config, run_data):
-        if n_drawables != 1:
+    def run(self, procedure, run_mode, image, drawables, config, run_data):
+        if len(drawables) != 1:
             msg = _("Procedure '{}' only works with one drawable.").format(procedure.get_name())
             error = GLib.Error.new_literal(Gimp.PlugIn.error_quark(), msg, 0)
             return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error)

@@ -30,7 +30,7 @@ import sys
 def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
-def foggify(procedure, run_mode, image, n_drawables, drawables, config, data):
+def foggify(procedure, run_mode, image, drawables, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
 

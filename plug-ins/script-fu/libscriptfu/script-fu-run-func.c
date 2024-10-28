@@ -65,7 +65,6 @@ GimpValueArray *
 script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProcedure */
                                GimpRunMode           run_mode,
                                GimpImage            *image,
-                               guint                 n_drawables,
                                GimpDrawable        **drawables,
                                GimpProcedureConfig  *config,
                                gpointer              data)
@@ -99,12 +98,12 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
         if (n_specs > 1)
           {
             /* Let user choose "other" args in a dialog, then interpret. Maintain a config. */
-            result = script_fu_dialog_run_image_proc (procedure, script, image, n_drawables, drawables, config);
+            result = script_fu_dialog_run_image_proc (procedure, script, image, drawables, config);
           }
         else
           {
             /* No "other" args for user to choose. No config to maintain. */
-            result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, config);
+            result = script_fu_interpret_image_proc (procedure, script, image, drawables, config);
           }
         break;
       }
@@ -114,7 +113,7 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
          * Use the given config, without interacting with user.
          * Since no user interaction, no config to maintain.
          */
-        result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, config);
+        result = script_fu_interpret_image_proc (procedure, script, image, drawables, config);
         break;
       }
     case GIMP_RUN_WITH_LAST_VALS:
@@ -122,7 +121,7 @@ script_fu_run_image_procedure (GimpProcedure        *procedure, /* GimpImageProc
         /* User invoked from a menu "Filter>Run with last values".
          * Do not show dialog. config are already last values.
          */
-        result = script_fu_interpret_image_proc (procedure, script, image, n_drawables, drawables, config);
+        result = script_fu_interpret_image_proc (procedure, script, image, drawables, config);
         break;
       }
     default:

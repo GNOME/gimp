@@ -163,8 +163,7 @@ def histogram_export(procedure, img, layers, gio_file,
 
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
-
-def run(procedure, run_mode, image, n_layers, layers, config, data):
+def run(procedure, run_mode, image, layers, config, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init("python-fu-histogram-export")
 

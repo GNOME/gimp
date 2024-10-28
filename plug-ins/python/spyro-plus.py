@@ -2309,7 +2309,7 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
         return procedure
 
     # Implementation of plugin.
-    def plug_in_spyrogimp(self, procedure, run_mode, image, n_layers, layers, config, data):
+    def plug_in_spyrogimp(self, procedure, run_mode, image, layers, config, data):
         curve_type=config.get_property('curve-type')
         shape=config.get_property('shape')
         sides=config.get_property('sides')

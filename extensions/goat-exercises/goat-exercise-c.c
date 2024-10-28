@@ -64,7 +64,6 @@ static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
 static GimpValueArray * goat_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
                                                GimpImage            *image,
-                                               gint                  n_drawables,
                                                GimpDrawable        **drawables,
                                                GimpProcedureConfig  *config,
                                                gpointer              run_data);
@@ -133,7 +132,6 @@ static GimpValueArray *
 goat_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
           GimpImage            *image,
-          gint                  n_drawables,
           GimpDrawable        **drawables,
           GimpProcedureConfig  *config,
           gpointer              run_data)
@@ -142,7 +140,7 @@ goat_run (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, width, height;
 
-  if (n_drawables != 1)
+  if (gimp_core_object_array_get_length ((GObject **) drawables) != 1)
     {
       GError *error = NULL;
 

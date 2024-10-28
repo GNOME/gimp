@@ -34,8 +34,7 @@ G_BEGIN_DECLS
  * @procedure:   the #GimpProcedure that runs.
  * @run_mode:    the #GimpRunMode.
  * @image:       the #GimpImage.
- * @n_drawables: the number of #GimpDrawable-s.
- * @drawables: (array length=n_drawables): the input #GimpDrawable-s.
+ * @drawables: (array zero-terminated=1): the input #GimpDrawable-s.
  * @config:      the @procedure's remaining arguments.
  * @run_data: (closure): the run_data given in gimp_image_procedure_new().
  *
@@ -49,7 +48,6 @@ G_BEGIN_DECLS
 typedef GimpValueArray * (* GimpRunImageFunc) (GimpProcedure         *procedure,
                                                GimpRunMode            run_mode,
                                                GimpImage             *image,
-                                               gint                   n_drawables,
                                                GimpDrawable         **drawables,
                                                GimpProcedureConfig   *config,
                                                gpointer               run_data);

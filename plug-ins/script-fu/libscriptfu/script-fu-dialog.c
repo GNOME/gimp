@@ -233,7 +233,6 @@ script_fu_dialog_run_image_proc (
                       GimpProcedure        *procedure,
                       SFScript             *script,
                       GimpImage            *image,
-                      guint                 n_drawables,
                       GimpDrawable        **drawables,
                       GimpProcedureConfig  *config)
 
@@ -249,7 +248,7 @@ script_fu_dialog_run_image_proc (
 
   if (not_canceled)
     result = script_fu_interpret_image_proc (procedure, script,
-                                             image, n_drawables, drawables,
+                                             image, drawables,
                                              config);
   else
     result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);

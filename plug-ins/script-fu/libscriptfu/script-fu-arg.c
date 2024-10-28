@@ -786,7 +786,7 @@ script_fu_arg_reset_name_generator (void)
  * Thus name meets uniquity for names of properties of one object.
  *
  * !!! GimpImageProcedures already have properties for convenience arguments,
- * e.g. a property named "image" "n_drawables" and "drawables"
+ * e.g. a property named "image" and "drawables"
  * So we avoid that name clash by starting with "otherImage"
  *
  * The name means nothing to human readers of the spec.
