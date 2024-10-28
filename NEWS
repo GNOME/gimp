@@ -253,6 +253,10 @@ API:
       - gimp_image_set_palette()
       - gimp_context_get_emulate_brush_dynamics()
       - gimp_context_set_emulate_brush_dynamics()
+      - gimp_procedure_config_get_color_array()
+      - gimp_procedure_config_set_color_array()
+      - gimp_procedure_config_get_core_object_array()
+      - gimp_procedure_config_set_core_object_array()
     * Renamed functions:
       - gimp_path_export_to_file() to gimp_image_export_path_to_file()
       - gimp_path_export_to_string() to gimp_image_export_path_to_string()
@@ -286,6 +290,10 @@ API:
     * All arrays of items, drawables, layers, channels, paths, resources
       (and each specific subtypes of resources) and images as argument
       in a libgimp function were now changed to NULL-terminated arrays.
+    * GimpRunImageFunc (the run() signature for GimpImageProcedure)
+      doesn't have a n_drawables argument anymore. The drawables
+      argument is simply NULL-terminated, consistently to other changes
+      in PDB.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -309,6 +317,7 @@ API:
       - gimp_int32_array_set_values()
       - gimp_float_array_get_values()
       - gimp_float_array_set_values()
+      - gimp_value_array_get_core_object_array()
     * Removed functions:
       - gimp_unit_get_singular()
       - gimp_unit_get_plural()
@@ -353,7 +362,7 @@ Translations:
 Build:
 
   - Minimum dependency version bumps:
-    * babl 0.1.108
+    * babl 0.1.110
     * GEGL 0.4.49 (TODO: update to stable 0.4.50 when released)
     * harfbuzz 2.8.2
   - Started a skeleton for unit testing framework for libgimp (only a few tests
