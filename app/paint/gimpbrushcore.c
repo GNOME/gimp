@@ -740,6 +740,9 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       current_coords.angle     = last_coords.angle;
       current_coords.reflect   = last_coords.reflect;
 
+      fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                                paint_core->pixel_dist);
+
       if (core->jitter > 0.0)
         {
           GimpVector2 x_axis;
