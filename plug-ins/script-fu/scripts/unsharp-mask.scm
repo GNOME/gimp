@@ -57,8 +57,8 @@
 
     ;; make darker mask
     (gimp-image-insert-layer new-image blurred-layer-for-darker 0 -1)
-    (plug-in-gauss-iir RUN-NONINTERACTIVE
-		       new-image blurred-layer-for-darker mask-size TRUE TRUE)
+    (plug-in-gauss RUN-NONINTERACTIVE
+		   new-image blurred-layer-for-darker (* 0.32 mask-size) (* 0.32 mask-size) 0)
     (set! blurred-layer-for-lighter
           (car (gimp-layer-copy blurred-layer-for-darker TRUE)))
     (gimp-image-insert-layer new-image original-layer-for-darker 0 -1)

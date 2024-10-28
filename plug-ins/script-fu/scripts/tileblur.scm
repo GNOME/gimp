@@ -22,7 +22,16 @@
         (theLayer (vector-ref (car (gimp-image-get-selected-drawables theImage)) 0))
         (theHeight (car (gimp-drawable-get-height theLayer)))
         (theWidth (car (gimp-drawable-get-width theLayer)))
+        (horizontalRadius (* 0.32 inRadius))
+        (verticalRadius (* 0.32 inRadius))
         )
+
+    (if (= inHoriz FALSE)
+        (set! horizontalRadius 0)
+    )
+    (if (= inVert FALSE)
+        (set! verticalRadius 0)
+    )
 
     (define (pasteat xoff yoff)
       (let* (
@@ -52,12 +61,8 @@
     (pasteat 3 1) (pasteat 3 2) (pasteat 3 3)
 
     (gimp-selection-none theImage)
-    (if (= inType 0)
-        (plug-in-gauss-iir RUN-NONINTERACTIVE
-                           theImage theLayer inRadius inHoriz inVert)
-        (plug-in-gauss-rle RUN-NONINTERACTIVE
-                           theImage theLayer inRadius inHoriz inVert)
-    )
+    (plug-in-gauss RUN-NONINTERACTIVE
+                   theImage theLayer horizontalRadius verticalRadius 0)
 
     (gimp-layer-resize theLayer
                        theWidth theHeight (- 0 theWidth) (- 0 theHeight))

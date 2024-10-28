@@ -286,9 +286,9 @@
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     (cond ((eq? orientation 'horizontal)
-           (plug-in-gauss-rle RUN-NONINTERACTIVE img drawable length TRUE FALSE))
+           (plug-in-gauss RUN-NONINTERACTIVE img drawable (* 0.32 length) 0 0))
           ((eq? orientation 'vertical)
-           (plug-in-gauss-rle RUN-NONINTERACTIVE img drawable length FALSE TRUE)))
+           (plug-in-gauss RUN-NONINTERACTIVE img drawable 0 (* 0.32 length) 0)))
     (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     drawable))
 

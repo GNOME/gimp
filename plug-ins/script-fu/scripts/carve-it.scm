@@ -118,7 +118,7 @@
 
     (set! mask-emboss (car (gimp-channel-copy mask-fat)))
     (gimp-image-insert-channel img mask-emboss -1 0)
-    (plug-in-gauss-rle RUN-NONINTERACTIVE img mask-emboss feather TRUE TRUE)
+    (plug-in-gauss RUN-NONINTERACTIVE img mask-emboss (* 0.32 feather) (* 0.32 feather) 0)
     (plug-in-emboss RUN-NONINTERACTIVE img mask-emboss 315.0 45.0 7 TRUE)
 
     (gimp-context-set-background '(180 180 180))
@@ -173,7 +173,7 @@
     (gimp-layer-set-mode cast-shadow-layer LAYER-MODE-MULTIPLY)
     (gimp-layer-set-opacity cast-shadow-layer 75)
 
-    (plug-in-gauss-rle RUN-NONINTERACTIVE img cast-shadow-layer feather TRUE TRUE)
+    (plug-in-gauss RUN-NONINTERACTIVE img cast-shadow-layer (* 0.32 feather) (* 0.32 feather) 0)
     (gimp-item-transform-translate cast-shadow-layer offx offy)
 
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-MASK-BLACK)))

@@ -141,7 +141,7 @@
     (gimp-selection-none image)
 
     ; To further lessen jaggies?
-    ;(plug-in-gauss-rle RUN-NONINTERACTIVE image bump-layer thickness TRUE TRUE)
+    ;(plug-in-gauss RUN-NONINTERACTIVE image bump-layer (* 0.32 thickness) (* 0.32 thickness) 0)
 
 
     ;
