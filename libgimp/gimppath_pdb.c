@@ -191,7 +191,7 @@ gimp_path_get_strokes (GimpPath *path,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 1, (gsize *) num_strokes);
+      stroke_ids = GIMP_VALUES_DUP_INT32_ARRAY (return_vals, 1, num_strokes);
     }
 
   gimp_value_array_unref (return_vals);
@@ -701,7 +701,7 @@ gimp_path_stroke_get_points (GimpPath  *path,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       type = GIMP_VALUES_GET_ENUM (return_vals, 1);
-      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, (gsize *) num_points);
+      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, num_points);
       *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 3);
     }
 
@@ -808,7 +808,7 @@ gimp_path_stroke_interpolate (GimpPath *path,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, (gsize *) num_coords);
+      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, num_coords);
       *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 2);
     }
 

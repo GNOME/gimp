@@ -207,7 +207,7 @@ gimp_drawable_colorize_hsl (GimpDrawable *drawable,
 gboolean
 gimp_drawable_curves_explicit (GimpDrawable         *drawable,
                                GimpHistogramChannel  channel,
-                               gint                  num_values,
+                               gsize                 num_values,
                                const gdouble        *values)
 {
   GimpValueArray *args;
@@ -260,7 +260,7 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
 gboolean
 gimp_drawable_curves_spline (GimpDrawable         *drawable,
                              GimpHistogramChannel  channel,
-                             gint                  num_points,
+                             gsize                 num_points,
                              const gdouble        *points)
 {
   GimpValueArray *args;

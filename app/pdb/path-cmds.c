@@ -730,7 +730,7 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
   type = g_value_get_enum (gimp_value_array_index (args, 1));
-  controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 2), (gsize *) &num_points);
+  controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 2), &num_points);
   closed = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)

@@ -781,7 +781,7 @@ context_set_line_dash_pattern_invoker (GimpProcedure         *procedure,
   gsize num_dashes;
   const gdouble *dashes;
 
-  dashes = gimp_value_get_float_array (gimp_value_array_index (args, 0), (gsize *) &num_dashes);
+  dashes = gimp_value_get_float_array (gimp_value_array_index (args, 0), &num_dashes);
 
   if (success)
     {

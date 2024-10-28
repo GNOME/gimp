@@ -47,11 +47,11 @@ gboolean gimp_drawable_colorize_hsl        (GimpDrawable         *drawable,
                                             gdouble               lightness);
 gboolean gimp_drawable_curves_explicit     (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
-                                            gint                  num_values,
+                                            gsize                 num_values,
                                             const gdouble        *values);
 gboolean gimp_drawable_curves_spline       (GimpDrawable         *drawable,
                                             GimpHistogramChannel  channel,
-                                            gint                  num_points,
+                                            gsize                 num_points,
                                             const gdouble        *points);
 gboolean gimp_drawable_extract_component   (GimpDrawable         *drawable,
                                             gint                  component,

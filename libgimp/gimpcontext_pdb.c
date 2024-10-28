@@ -1159,7 +1159,7 @@ gimp_context_get_line_dash_pattern (gsize    *num_dashes,
 
   if (success)
     {
-      *dashes = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, (gsize *) num_dashes);
+      *dashes = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, num_dashes);
     }
 
   gimp_value_array_unref (return_vals);

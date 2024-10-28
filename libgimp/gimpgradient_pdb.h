@@ -41,7 +41,7 @@ gboolean      gimp_gradient_get_uniform_samples                 (GimpGradient   
                                                                  gsize                     *num_color_samples,
                                                                  gdouble                  **color_samples);
 gboolean      gimp_gradient_get_custom_samples                  (GimpGradient              *gradient,
-                                                                 gint                       num_samples,
+                                                                 gsize                      num_samples,
                                                                  const gdouble             *positions,
                                                                  gboolean                   reverse,
                                                                  gsize                     *num_color_samples,

@@ -225,14 +225,14 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpGradient *gradient;
-  gint num_samples;
+  gsize num_samples;
   const gdouble *positions;
   gboolean reverse;
   gsize num_color_samples = 0;
   gdouble *color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
-  positions = gimp_value_get_float_array (gimp_value_array_index (args, 1), (gsize *) &num_samples);
+  positions = gimp_value_get_float_array (gimp_value_array_index (args, 1), &num_samples);
   reverse = g_value_get_boolean (gimp_value_array_index (args, 2));
 
   if (success)
