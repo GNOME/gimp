@@ -153,8 +153,8 @@
             "sources" : [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.2.4.tar.gz",
-                    "sha256": "81e6518f2c4656fdeaf18a018f135e96a96e7f66dbe1c1f05860dd94772176cc",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.3.1.tar.gz",
+                    "sha256": "58aad2b32c047070a52f1205b309bdae007442e0f983120e4ff57551eb6f10f1",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -205,8 +205,8 @@
                     "sources" : [
                         {
                             "type": "archive",
-                            "url" : "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.21.zip",
-                            "sha256": "619199c0b04d19fd40833f8d787f99bf25c1309ed89534a3df946e94fdfb32be",
+                            "url" : "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.22.zip",
+                            "sha256": "da384a2d96e112c25aca295aea5de5a1e4a6d9fd230bd36f506ffd1a772667a4",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 242778,
@@ -234,8 +234,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.09.0.tar.xz",
-                    "sha256": "ebd857987e2395608c69fdc44009692d5906f13b612c5280beff65a0b75dc255",
+                    "url": "https://poppler.freedesktop.org/poppler-24.10.0.tar.xz",
+                    "sha256": "58ed1849810f04a10b37c7ff6f3e411845c8a57d731d599d0045acc7a7fff09d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -802,8 +802,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.2.tar.gz",
-                            "sha256": "996c48c87baaeb5fc04bd85c7e66d3651a56fe749c531c60926d75b4db5d2181",
+                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.3.tar.gz",
+                            "sha256": "ce39b28d4038a09c14f21e02c664401be73c0cb96a9198418d6a98a7db73a259",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 4908,
