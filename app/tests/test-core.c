@@ -248,6 +248,7 @@ white_graypoint_in_red_levels (GimpTestFixture *fixture,
 
   gimp_levels_config_adjust_by_colors (config,
                                        channel,
+                                       NULL,
                                        black,
                                        gray,
                                        white);

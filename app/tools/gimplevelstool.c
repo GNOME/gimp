@@ -776,18 +776,19 @@ static void
 levels_input_adjust_by_color (GimpLevelsConfig     *config,
                               guint                 value,
                               GimpHistogramChannel  channel,
+                              const Babl           *target_space,
                               GeglColor            *color)
 {
   switch (value & 0xF)
     {
     case PICK_LOW_INPUT:
-      gimp_levels_config_adjust_by_colors (config, channel, color, NULL, NULL);
+      gimp_levels_config_adjust_by_colors (config, channel, target_space, color, NULL, NULL);
       break;
     case PICK_GAMMA:
-      gimp_levels_config_adjust_by_colors (config, channel, NULL, color, NULL);
+      gimp_levels_config_adjust_by_colors (config, channel, target_space, NULL, color, NULL);
       break;
     case PICK_HIGH_INPUT:
-      gimp_levels_config_adjust_by_colors (config, channel, NULL, NULL, color);
+      gimp_levels_config_adjust_by_colors (config, channel, target_space, NULL, NULL, color);
       break;
     default:
       break;
@@ -802,9 +803,12 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
                                const Babl     *sample_format,
                                GeglColor      *color)
 {
-  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (color_tool);
-  GimpLevelsConfig *config      = GIMP_LEVELS_CONFIG (filter_tool->config);
-  guint             value       = GPOINTER_TO_UINT (identifier);
+  GimpFilterTool   *filter_tool  = GIMP_FILTER_TOOL (color_tool);
+  GimpLevelsConfig *config       = GIMP_LEVELS_CONFIG (filter_tool->config);
+  guint             value        = GPOINTER_TO_UINT (identifier);
+  const Babl       *target_space = NULL;
+
+  target_space = gimp_drawable_get_space (GIMP_TOOL (filter_tool)->drawables->data);
 
   if (value & PICK_ALL_CHANNELS &&
       gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
@@ -832,12 +836,12 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
         {
-          levels_input_adjust_by_color (config, value, channel, color);
+          levels_input_adjust_by_color (config, value, channel, target_space, color);
         }
     }
   else
     {
-      levels_input_adjust_by_color (config, value, config->channel, color);
+      levels_input_adjust_by_color (config, value, config->channel, target_space, color);
     }
 }
 

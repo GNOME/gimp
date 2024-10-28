@@ -74,6 +74,7 @@ void       gimp_levels_config_stretch_channel  (GimpLevelsConfig      *config,
                                                 GimpHistogramChannel   channel);
 void       gimp_levels_config_adjust_by_colors (GimpLevelsConfig      *config,
                                                 GimpHistogramChannel   channel,
+                                                const Babl            *target_space,
                                                 GeglColor             *black,
                                                 GeglColor             *gray,
                                                 GeglColor             *white);
