@@ -922,10 +922,11 @@ gimp_item_tree_view_constructed (GObject *object)
    * Catching the signal at the column's button level, we manage to block the
    * event from having any side effect other than opening our popup.
    */
-  g_signal_connect (gtk_tree_view_column_get_button (GIMP_CONTAINER_TREE_VIEW (item_view)->main_column),
-                    "button-press-event",
-                    G_CALLBACK (gimp_item_tree_view_search_clicked),
-                    item_view);
+  if (GIMP_IS_LAYER_TREE_VIEW (object))
+    g_signal_connect (gtk_tree_view_column_get_button (GIMP_CONTAINER_TREE_VIEW (item_view)->main_column),
+                      "button-press-event",
+                      G_CALLBACK (gimp_item_tree_view_search_clicked),
+                      item_view);
   gtk_widget_show (items_header);
 }
 
