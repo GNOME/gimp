@@ -4,7 +4,7 @@ Installation instructions for GIMP @GIMP_APP_VERSION@
 
 There are some basic steps to building and installing GIMP.
 
-GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.99.x versions. It is advised to
+GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.10.x versions. It is advised to
 uninstall them before installing GIMP @GIMP_APP_VERSION@. Since libgimp* libraries
 and data are all versionned anyway, it is possible to keep your older
 GIMP 2.x installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
@@ -37,8 +37,10 @@ help in that regard:
   ******************************************************************
 
 
-  1. You need to have installed a recent version of pkg-config (>= @GIMP_PKGCONFIG_VERSION@) available
-     from https://www.freedesktop.org/software/pkgconfig/.
+  1. You need to have installed a recent version of pkg-config available from:
+
+       https://www.freedesktop.org/software/pkgconfig/
+
      The compatible pkgconf utility would also work.
 
   2. You need gettext version 0.19.8 or newer. Older versions did not have support yet
@@ -315,9 +317,9 @@ compilation and installation output is not shown.
 
   % tar xvf gimp-@GIMP_VERSION@.tar.xz   # unpack the sources
   % cd gimp-@GIMP_VERSION@               # change to the toplevel directory
-  % meson _build                  # `configure' step
-  % ninja -C _build               # build GIMP
-  % ninja -C _build install       # install GIMP
+  % meson setup _build              # `configure' step
+  % ninja -C _build                 # build GIMP
+  % ninja -C _build install         # install GIMP
 
 
 The `configure' step examines your system, and adapts GIMP to run on
@@ -402,7 +404,7 @@ These are:
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
 
-  -Djavascript=false  If for some reason you don't want to install the
+  -Djavascript=disabled  If for some reason you don't want to install the
      JavaScript plug-ins, you can use -Djavascript=false.
 
   -Dlua=true  Lua binding is experimental because of stability issues.
@@ -432,73 +434,53 @@ was successful you should be able to run `gimp'.
 When configure fails
 ======================
 
-The configuration step uses pkg-config, a tool that replaces the old foo-config
-scripts. The most recent version is available from
-	https://www.freedesktop.org/software/pkgconfig/
-
-'configure' tries to compile and run a short GTK program. There are
-several reasons why this might fail:
-
-* pkg-config could not find the file 'gtk+-3.0.pc' that gets installed
-  with GTK. (This file is used to get information about where GTK+ is
-  installed.)
-
-  Fix: Either make sure that this file is in the path where pkg-config
-  looks for it (try 'pkg-config --debug' or add the location of
-  gtk+-3.0.pc to the environment variable PKG_CONFIG_PATH before running
-  configure.
-
-* Libraries you installed are not found when you attempt to start GIMP.
-  The details of how to fix this problem will depend on the system:
-
-  On Linux and other systems using ELF libraries, add the directory to
-  holding the library to /etc/ld.so.conf or to the environment variable
-  LD_LIBRARY_PATH, and run 'ldconfig'.
-
-  On other systems, it may be necessary to encode this path
-  into the executable, by setting the LDFLAGS environment variable
-  before running configure. For example:
-
-    LDFLAGS="-R/home/joe/lib" ./configure
-  or
-    LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
-
-* An old version of the GTK libraries was found instead of
-  your newly installed version. This commonly happens if a
-  binary package of GTK was previously installed on your system,
-  and you later compiled GTK from source.
-
-  Fix: Remove the old libraries and include files.  If you are afraid
-  that removing the old libraries may break other packages supplied by
-  your distributor, you can try installing GLib, GTK and other
-  libraries in a different prefix after setting the environment
-  variable PKG_CONFIG_LIBDIR to point to lib/pkgconfig/ in that new
-  prefix so that it does not try to read the *.pc files from the
-  default directory (/usr/lib/pkgconfig).  However, removing the old
-  packages is often the easier solution.
+The most important is to read the error output displayed by meson, as it
+will very likely tell you the exact problem.
 
 A detailed log of the meson output is written to the file meson-logs/meson-log.txt.
 This may help diagnose problems.
 
+The configuration step verify that various tools are installed, such as:
+C and C++ compilers, pkg-config or pkgconf (tools that replaces the old
+foo-config scripts), and more. Make sure these are installed.
 
-When meson configure fails on plug-ins
-======================================
+Then it will try to search for various libraries, by looking up a `.pc`
+file (used to get information on installation details). For instance if
+pkg-config could not find the file 'gtk+-3.0.pc' that gets installed
+with GTK, verify that the development package of GTK+3 is installed or
+that you have a version equal or higher than the required version.
 
-There are some GIMP plug-ins that need additional third-party libraries
-installed on your system. For example to compile the plug-ins that load
-and save JPEG, PNG or TIFF files you need the related libraries and header
-files installed, otherwise you'll get a message that plug-in xyz will not
-be built.
+If you installed a supported version of a dependency but the configure
+step still cannot find it, you may need to add the location of the .pc
+file to the environment variable PKG_CONFIG_PATH before running meson
+setup.
 
-If you are sure that those libraries are correctly installed, but configure
-fails to detect them, the following might help:
+When you use custom installation prefixes for dependencies, you will
+likely need to set more environment variables, such as LD_LIBRARY_PATH
+or GI_TYPELIB_PATH, either for the configuration to succeed, the build
+itself or to start GIMP at all.
+Please check out our building tutorial for more in-depth details:
 
-Set your LDFLAGS environment variable to look for the library in a certain
-place, e.g. if you are working in a bash shell you would say:
-      export LDFLAGS="-L<path_to_library> -L<path_to_another_one>"
-before you run configure.
+  https://developer.gimp.org/core/setup/build/
 
-Set your CPPFLAGS environment variable to look for the header file in a
-certain place, e.g. if you are working in a bash shell you would say:
-      export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
-before you run meson.
+
+About optional features
+=======================
+
+When the configure step succeeds, it will display a summary of which
+optional features or plug-ins will be installed.
+
+There are some GIMP features, in particular for the support of more
+recent or less used image formats, that need additional third-party
+libraries installed on your system. You need the related libraries and
+header files installed for these, otherwise the compiled GIMP will be a
+minimal version without these features.
+
+Once you installed them, run the following command to trigger a
+reconfiguration:
+
+  % ninja reconfigure
+
+Verify that the optional features you wanted are now shown as `true`,
+otherwise follow similar advices than above to make sure they are
+visible to your setup.
