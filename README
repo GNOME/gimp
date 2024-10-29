@@ -1,16 +1,16 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                      2.99 Development Branch
+                       3.0 Release Candidate
                    ------------------------------
 
-This is an unstable development release, an intermediate state on the
-way to the next stable release: GIMP 3.0. GIMP 2.99 may or may not do
-what you expect. Save your work early and often. If you want a stable
+This is a release candidate for upcoming version 3.0.0 of GIMP.
+This is not considered stable yet, unless testing tell us it is.
+Therefore save your work early and often. If you want a stable
 version, please use GIMP 2.10 instead.
 
-If you think you found a bug in this version, please make sure that it
-hasn't been reported earlier and that it is not just new stuff that is
-still being worked on and obviously not quite finished yet.
+If you think you found a bug in this version, please report it! We are
+at the verge of releasing the next major version of GIMP, so any report
+helps.
 
 If you want to hack on GIMP, please read the file devel-docs/README.md.
 For detailed installation instructions, see the file INSTALL.
