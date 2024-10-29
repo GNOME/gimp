@@ -29,7 +29,14 @@ package_string= prettyname + ' ' + gimp_version
 gimp_app_version_arr = gimp_version.split('.')
 gimp_app_version_major = gimp_app_version_arr[0].to_int()
 gimp_app_version_minor = gimp_app_version_arr[1].to_int()
-gimp_app_version_micro = gimp_app_version_arr[2].to_int()
+gimp_app_micro_rc      = gimp_app_version_arr[2].split('-')
+gimp_app_version_micro = gimp_app_micro_rc[0].to_int()
+if gimp_app_micro_rc.length() > 1
+  if not gimp_app_micro_rc[1].startswith('RC')
+    error('Version format is: <major>.<minor>.<micro> with optional "-RC<num>" suffix.')
+  endif
+  gimp_app_version_rc = gimp_app_micro_rc[1].substring(2).to_int()
+endif
 
 # Override for Release-candidates
 gimp_app_version = '@0@.@1@'.format(
