@@ -894,7 +894,11 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (items_header), item_view->priv->search_button,
                     FALSE, FALSE, 2);
   gimp_item_tree_view_create_search_popover (item_view, button_icon_size);
-  gtk_widget_show (item_view->priv->search_button);
+  /* TODO: Currently the search feature only works on layers.
+   * In the future, we should expand this to channels and paths
+   * dockables as well */
+  if (GIMP_IS_LAYER_TREE_VIEW (object))
+    gtk_widget_show (item_view->priv->search_button);
 
   /* Search label */
 
@@ -918,10 +922,11 @@ gimp_item_tree_view_constructed (GObject *object)
    * Catching the signal at the column's button level, we manage to block the
    * event from having any side effect other than opening our popup.
    */
-  g_signal_connect (gtk_tree_view_column_get_button (GIMP_CONTAINER_TREE_VIEW (item_view)->main_column),
-                    "button-press-event",
-                    G_CALLBACK (gimp_item_tree_view_search_clicked),
-                    item_view);
+  if (GIMP_IS_LAYER_TREE_VIEW (object))
+    g_signal_connect (gtk_tree_view_column_get_button (GIMP_CONTAINER_TREE_VIEW (item_view)->main_column),
+                      "button-press-event",
+                      G_CALLBACK (gimp_item_tree_view_search_clicked),
+                      item_view);
   gtk_widget_show (items_header);
 }
 
