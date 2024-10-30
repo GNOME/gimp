@@ -194,7 +194,7 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
       selection =
         GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
                                            GIMP_TYPE_CHANNEL));
-      gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+      gimp_channel_clear (gimp_image_get_mask (image), NULL, FALSE);
     }
 
   if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
