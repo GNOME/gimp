@@ -54,7 +54,6 @@
 #include <libgimpwidgets/gimpenumlabel.h>
 #include <libgimpwidgets/gimpenumstore.h>
 #include <libgimpwidgets/gimpenumwidgets.h>
-#include <libgimpwidgets/gimpfileentry.h>
 #include <libgimpwidgets/gimpframe.h>
 #include <libgimpwidgets/gimphelpui.h>
 #include <libgimpwidgets/gimphintbox.h>

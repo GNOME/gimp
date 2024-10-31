@@ -323,7 +323,7 @@ gimp_path_editor_new (const gchar *title,
 
   editor = g_object_new (GIMP_TYPE_PATH_EDITOR, NULL);
 
-  editor->file_entry = gimp_file_entry_new (title, "", TRUE, TRUE);
+  editor->file_entry = _gimp_file_entry_new (title, "", TRUE, TRUE);
   gtk_widget_set_sensitive (editor->file_entry, FALSE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->file_entry,
                       TRUE, TRUE, 0);
@@ -643,9 +643,9 @@ gimp_path_editor_new_clicked (GtkWidget      *widget,
   gtk_widget_set_sensitive (editor->file_entry, TRUE);
 
   gtk_editable_set_position
-    (GTK_EDITABLE (gimp_file_entry_get_entry (GIMP_FILE_ENTRY (editor->file_entry))), -1);
+    (GTK_EDITABLE (_gimp_file_entry_get_entry (GIMP_FILE_ENTRY (editor->file_entry))), -1);
   gtk_widget_grab_focus
-    (gimp_file_entry_get_entry (GIMP_FILE_ENTRY (editor->file_entry)));
+    (_gimp_file_entry_get_entry (GIMP_FILE_ENTRY (editor->file_entry)));
 }
 
 static void
@@ -737,7 +737,7 @@ gimp_path_editor_delete_clicked (GtkWidget      *widget,
                                        gimp_path_editor_file_entry_changed,
                                        editor);
 
-      gimp_file_entry_set_filename (GIMP_FILE_ENTRY (editor->file_entry), "");
+      _gimp_file_entry_set_filename (GIMP_FILE_ENTRY (editor->file_entry), "");
 
       g_signal_handlers_unblock_by_func (editor->file_entry,
                                          gimp_path_editor_file_entry_changed,
@@ -773,7 +773,7 @@ gimp_path_editor_file_entry_changed (GtkWidget      *widget,
   gchar       *utf8;
   GtkTreeIter  iter;
 
-  dir = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (widget));
+  dir = _gimp_file_entry_get_filename (GIMP_FILE_ENTRY (widget));
   if (strcmp (dir, "") == 0)
     {
       g_free (dir);
@@ -828,8 +828,8 @@ gimp_path_editor_selection_changed (GtkTreeSelection *sel,
                                        gimp_path_editor_file_entry_changed,
                                        editor);
 
-      gimp_file_entry_set_filename (GIMP_FILE_ENTRY (editor->file_entry),
-                                    directory);
+      _gimp_file_entry_set_filename (GIMP_FILE_ENTRY (editor->file_entry),
+                                     directory);
 
       g_signal_handlers_unblock_by_func (editor->file_entry,
                                          gimp_path_editor_file_entry_changed,

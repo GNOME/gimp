@@ -51,7 +51,6 @@ libgimpwidgets_sources_introspectable = files(
   'gimpenumlabel.c',
   'gimpenumstore.c',
   'gimpenumwidgets.c',
-  'gimpfileentry.c',
   'gimpframe.c',
   'gimphelpui.c',
   'gimphintbox.c',
@@ -96,6 +95,7 @@ libgimpwidgets_sources = [
   'gimpcolorselect.c',
   'gimpcontroller.c',
   'gimpeevl.c',
+  'gimpfileentry.c',
   'gimpwidgets-private.c',
 
   'gimpwidgetsenums.c',
@@ -134,7 +134,6 @@ libgimpwidgets_headers_introspectable = files(
   'gimpenumlabel.h',
   'gimpenumstore.h',
   'gimpenumwidgets.h',
-  'gimpfileentry.h',
   'gimpframe.h',
   'gimphelpui.h',
   'gimphintbox.h',
