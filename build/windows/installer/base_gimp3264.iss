@@ -79,67 +79,65 @@
 ;
 #pragma option -e+
 
+;1 NOTE: This script do NOT work with Inno Compiler
 
+
+;2 GLOBAL VARIABLES
 ; Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES
 ; Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
 
-#define X86 1
-#define X64 2
-#define ARM64 3
-
-#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
-#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
-#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
-
-#define DDIR32 DIR32
-#define DDIR64 DIR64
-#define DDIRA64 DIRA64
-
-#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
-#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
-#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
-
-
+;Get GIMP_MUTEX_VERSION (used for internal versioning control)
 #define MAJOR=Copy(GIMP_VERSION,1,Pos(".",GIMP_VERSION)-1)
 #define MINOR=Copy(GIMP_VERSION,Pos(".",GIMP_VERSION)+1)
 #expr MINOR=Copy(MINOR,1,Pos(".",MINOR)-1)
 #if Int(MINOR) % 2 == 1
- #define GIMP_UNSTABLE="-dev"
+  #define GIMP_UNSTABLE="-dev"
+	#define GIMP_MUTEX_VERSION GIMP_APP_VERSION
+#else
+	#define GIMP_UNSTABLE=""
+	#define GIMP_MUTEX_VERSION MAJOR
 #endif
 
+;Get FULL_GIMP_VERSION (used by ITs)
+#define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
+
+
+;3 INSTALLER SOURCE
+
+;3.1.1 Icons and other files
+#define ASSETS_DIR BUILD_DIR + "\build\windows\installer"
+
+;3.1.2 Installer lang files
+[Languages]
+Name: "en"; MessagesFile: "compiler:Default.isl,{#ASSETS_DIR}\lang\en.setup.isl"
+#include ASSETS_DIR + "\base_po-msg.list"
+;Avoid annoying inoffensive warnings about langs that we can't do nothing about
 [Setup]
 MissingMessagesWarning=no
 NotRecognizedMessagesWarning=no
-#define ASSETS_DIR BUILD_DIR + "\build\windows\installer"
 
-;INSTALLER AND APP INFO
-AppName=GIMP
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-	;Inno installer identifier: https://github.com/jrsoftware/issrc/pull/461
-	SetupMutex=GIMP-{#GIMP_APP_VERSION}
-	;Inno installer (default) install location
-	DefaultDirName={autopf}\GIMP {#GIMP_APP_VERSION}
-	;Inno uninstaller identifier
-	AppID=GIMP-{#GIMP_APP_VERSION}
-#else
-	SetupMutex=GIMP-{#MAJOR}
-	DefaultDirName={autopf}\GIMP {#MAJOR}
-	AppID=GIMP-{#MAJOR}
-#endif
 
-#if !defined(REVISION) || REVISION == "0"
-	;Inno installer file version
-	VersionInfoVersion={#GIMP_VERSION}
-	;Inno installer product version and ImmersiveControlPanel 'DisplayVersion'
-	AppVersion={#GIMP_VERSION}.0
-	;ImmersiveControlPanel 'DisplayName'
-	AppVerName=GIMP {#GIMP_VERSION}
-#else
-	VersionInfoVersion={#GIMP_VERSION}.{#REVISION}
-	AppVersion={#GIMP_VERSION}.{#REVISION}
-	AppVerName=GIMP {#GIMP_VERSION}.{#REVISION}
-#endif
+;3.2.1 INNO INTERNAL VERSIONING (used to rule how different versions are installed)
+;Inno installer identifier: https://github.com/jrsoftware/issrc/pull/461
+SetupMutex=GIMP-{#GIMP_MUTEX_VERSION}
+;Inno installer (default) install location
+DefaultDirName={autopf}\GIMP {#GIMP_MUTEX_VERSION}
+;Inno uninstaller identifier
+AppID=GIMP-{#GIMP_MUTEX_VERSION}
+;Inno unninstaller identifier logs location
+UninstallFilesDir={app}\uninst
 
+;3.2.2 WINDOWS INTERNAL VERSIONING (used by ITs for deploying GIMP)
+;Inno installer file version
+VersionInfoVersion={#FULL_GIMP_VERSION}
+;Inno installer product version and ImmersiveControlPanel 'DisplayVersion'
+AppVersion={#FULL_GIMP_VERSION}
+
+;3.2.3 THAT'S WHAT THE FINAL USER ACTUALLY SEE
+;ImmersiveControlPanel 'DisplayName'
+AppVerName=GIMP {#CUSTOM_GIMP_VERSION}
+;ImmersiveControlPanel 'DisplayIcon'
+UninstallDisplayIcon={app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe
 ;ImmersiveControlPanel 'Publisher'
 AppPublisher=The GIMP Team
 ;ControlPanel 'URLInfoAbout'
@@ -153,45 +151,16 @@ AppSupportURL=https://www.gimp.org/docs/
 	AppUpdatesURL=https://www.gimp.org/downloads/
 #endif
 
-;INSTALLER PAGES
-PrivilegesRequiredOverridesAllowed=dialog
-ShowLanguageDialog=auto
-DisableWelcomePage=no
-InfoBeforeFile=gpl+python.rtf
-DisableDirPage=auto
-FlatComponentsList=yes
-DisableProgramGroupPage=yes
-;AllowNoIcons=true
-ChangesAssociations=true
-ChangesEnvironment=yes
-AlwaysShowDirOnReadyPage=yes
 
-WizardStyle=modern
-WizardSizePercent=100
-WizardResizable=no
-WizardSmallImageFile={#ASSETS_DIR}\gimp.scale-100.bmp,{#ASSETS_DIR}\gimp.scale-125.bmp,{#ASSETS_DIR}\gimp.scale-150.bmp,{#ASSETS_DIR}\gimp.scale-175.bmp,{#ASSETS_DIR}\gimp.scale-200.bmp,{#ASSETS_DIR}\gimp.scale-225.bmp,{#ASSETS_DIR}\gimp.scale-250.bmp
-WizardImageFile={#ASSETS_DIR}\install-end.scale-100.bmp,{#ASSETS_DIR}\install-end.scale-125.bmp,{#ASSETS_DIR}\install-end.scale-150.bmp,{#ASSETS_DIR}\install-end.scale-175.bmp,{#ASSETS_DIR}\install-end.scale-200.bmp,{#ASSETS_DIR}\install-end.scale-225.bmp,{#ASSETS_DIR}\install-end.scale-250.bmp
-WizardImageStretch=yes
-
-
-;INSTALLER .EXE FILE
-SetupIconFile={#ASSETS_DIR}\setup.ico
-ArchitecturesInstallIn64BitMode=x64 arm64
-MinVersion=10.0
-
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
+;3.3.1 EXE COMPRESSION
 LZMANumBlockThreads=4
 LZMABlockSize=76800
-#endif
 #ifdef NOCOMPRESSION
-;UseSetupLdr=no
 OutputDir={#GIMP_DIR}\unc
 Compression=none
-;InternalCompressLevel=0
 DiskSpanning=yes
 DiskSliceSize=max
 #else
-OutputDir={#GIMP_DIR}
 Compression=lzma2/ultra64
 InternalCompressLevel=ultra
 SolidCompression=yes
@@ -201,38 +170,60 @@ LZMANumFastBytes=273
 ; expense of memory requirement. We run into "Out of memory" error in
 ; the CI.
 ;LZMADictionarySize=524288
+#endif //NOCOMPRESSION
 
+;3.3.2 EXE SIGNING
 ;SignTool=Default
 ;SignedUninstaller=yes
 ;SignedUninstallerDir=_Uninst
-#endif //NOCOMPRESSION
 
-#if !defined(REVISION) || REVISION == "0"
-OutputBaseFileName=gimp-{#GIMP_VERSION}-setup
-#else
-OutputBaseFileName=gimp-{#GIMP_VERSION}.{#REVISION}-setup
-#endif
+;3.3.3 EXE FILE DETAILS
+AppName=GIMP
+SetupIconFile={#ASSETS_DIR}\setup.ico
+OutputDir={#GIMP_DIR}
+OutputBaseFileName=gimp-{#CUSTOM_GIMP_VERSION}-setup
 OutputManifestFile=inno.log
+ArchitecturesInstallIn64BitMode=x64 arm64
+MinVersion=10.0
 
 
-;UNINSTALLER
-;ImmersiveControlPanel 'DisplayIcon'
-UninstallDisplayIcon={app}\bin\gimp-{#GIMP_APP_VERSION}.exe
-UninstallFilesDir={app}\uninst
+;3.4.1 INSTALLER PAGES
+PrivilegesRequiredOverridesAllowed=dialog
+ShowLanguageDialog=auto
+DisableWelcomePage=no
+InfoBeforeFile=gpl+python.rtf
+DisableDirPage=auto
+FlatComponentsList=yes
+DisableProgramGroupPage=yes
+AllowNoIcons=no
+ChangesAssociations=true
+ChangesEnvironment=yes
+AlwaysShowDirOnReadyPage=yes
 
-
+;3.4.2 INSTALLER UI: uses modern Win32 "Vista" (still used today) design
+WizardStyle=modern
+WizardSizePercent=100
+WizardResizable=no
+WizardSmallImageFile={#ASSETS_DIR}\gimp.scale-100.bmp,{#ASSETS_DIR}\gimp.scale-125.bmp,{#ASSETS_DIR}\gimp.scale-150.bmp,{#ASSETS_DIR}\gimp.scale-175.bmp,{#ASSETS_DIR}\gimp.scale-200.bmp,{#ASSETS_DIR}\gimp.scale-225.bmp,{#ASSETS_DIR}\gimp.scale-250.bmp
+WizardImageFile={#ASSETS_DIR}\install-end.scale-100.bmp,{#ASSETS_DIR}\install-end.scale-125.bmp,{#ASSETS_DIR}\install-end.scale-150.bmp,{#ASSETS_DIR}\install-end.scale-175.bmp,{#ASSETS_DIR}\install-end.scale-200.bmp,{#ASSETS_DIR}\install-end.scale-225.bmp,{#ASSETS_DIR}\install-end.scale-250.bmp
+WizardImageStretch=yes
 [LangOptions]
-;Win32 Vista design (despite the name it is still used in Win32 Win 11 apps)
 DialogFontName=Segoe UI
 DialogFontSize=9
 WelcomeFontName=Segoe UI
 WelcomeFontSize=12
 
-[Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl,{#ASSETS_DIR}\lang\en.setup.isl"
-#include ASSETS_DIR + "\base_po-msg.list"
+;3.4.1 INSTALLER PAGES AGAIN
+[Tasks]
+Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"
+[Icons]
+Name: "{autoprograms}\GIMP {#CUSTOM_GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#CUSTOM_GIMP_VERSION}"
+Name: "{autodesktop}\GIMP {#CUSTOM_GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#CUSTOM_GIMP_VERSION}"; Tasks: desktopicon
+[Run]
+Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; Description: "{cm:LaunchGimp}"; Flags: unchecked postinstall nowait skipifsilent
 
 
+;4 GIMP FILES
 [Types]
 ;Name: normal; Description: "{cm:TypeTypical}"
 Name: full; Description: "{cm:TypeFull}"
@@ -245,9 +236,9 @@ Name: gimp32; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full co
 Name: gimp64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
 Name: gimpARM64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
 
-Name: deps32; Description: "{cm:ComponentsDeps}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
-Name: deps64; Description: "{cm:ComponentsDeps}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
-Name: depsARM64; Description: "{cm:ComponentsDeps}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
+Name: deps32; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
+Name: deps64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
+Name: depsARM64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
 
 ;Optional components (complete install)
 #ifdef DEBUG_SYMBOLS
@@ -283,19 +274,23 @@ Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
 ;32-bit TWAIN support
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
 
-
-[Tasks]
-Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"
-
-[Icons]
-Name: "{autoprograms}\GIMP {#GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#GIMP_VERSION}"
-Name: "{autodesktop}\GIMP {#GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#GIMP_VERSION}"; Tasks: desktopicon
-
-[Run]
-Filename: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"; Description: "{cm:LaunchGimp}"; Flags: unchecked postinstall nowait skipifsilent
-
-
 [Files]
+#define X86 1
+#define X64 2
+#define ARM64 3
+
+#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
+#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
+
+#define DDIR32 DIR32
+#define DDIR64 DIR64
+#define DDIRA64 DIRA64
+
+#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
+#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
+
 ;setup files
 Source: "{#ASSETS_DIR}\install-end.scale-100.bmp"; Flags: dontcopy
 Source: "{#ASSETS_DIR}\installsplash.bmp"; Flags: dontcopy
@@ -402,24 +397,9 @@ Type: files; Name: "{app}\bin\gimp-console-?.?.exe"
 Type: files; Name: "{app}\bin\gimp-console-?.??.exe"
 ;old ghostscript
 Type: filesandordirs; Name: "{app}\share\ghostscript\*"
-;<2.99.14 plug-ins and modules
-Type: files; Name: "{app}\lib\gimp\2.99\plug-ins\py-slice\py-slice.py"
-Type: files; Name: "{app}\lib\gimp\2.99\plug-ins\benchmark-foreground-extract\benchmark-foreground-extract.py"
-;Some typo in meson which we used for GIMP 2.99.12 installer.
-Type: files; Name: "{app}\lib\gimp\2.99\modules\libcontroller-dx-input.dll"
-;old icons
-#ifndef GIMP_UNSTABLE
-Type: files; Name: "{autoprograms}\GIMP {#MAJOR}.lnk"
-Type: files; Name: "{autodesktop}\GIMP {#MAJOR}.lnk"
-#endif
 ;get previous GIMP icon name from uninstall name in Registry
-#if Defined(GIMP_UNSTABLE) && GIMP_UNSTABLE != ""
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1,DisplayVersion|GIMP {#GIMP_APP_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1,DisplayVersion|GIMP {#GIMP_APP_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_APP_VERSION}_is1','DisplayVersion')
-#else
-Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
-Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1,DisplayVersion|GIMP {#MAJOR}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#MAJOR}_is1','DisplayVersion')
-#endif
+Type: files; Name: "{autoprograms}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayVersion|GIMP {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayVersion')
+Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1,DisplayVersion|GIMP {#GIMP_MUTEX_VERSION}}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1','DisplayVersion')
 ;remove old babl and gegl plugins
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
@@ -427,17 +407,16 @@ Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 
 [Registry]
 ;Shell "Open with"
-Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "GIMP"
-Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe,1"
-Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "GIMP"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,1"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
 
-Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "GIMP"
-Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe,0"
-Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "GIMP is a free raster graphics editor used for image retouching and editing, free-form drawing, converting between different image formats, and more specialized tasks."
-
-Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "GIMP {#GIMP_APP_VERSION}"; ValueData: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities"; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "GIMP"
+Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,0"
+Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "GIMP is a free raster graphics editor used for image retouching and editing, free-form drawing, converting between different image formats, and more specialized tasks."
+Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "GIMP {#GIMP_MUTEX_VERSION}"; ValueData: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; Flags: uninsdeletevalue
 
 ;Associations
 #pragma option -e-
@@ -450,12 +429,12 @@ Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueNa
 			//skip comments and empty lines
 		#else
 			#pragma message "Processing data_associations.list: " + FileLine
-Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#MAJOR}.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#GIMP_VERSION} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_APP_VERSION}.exe,1"
-Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"" ""%1"""
-Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: ""
-Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: "GIMP{#MAJOR}.{#FileLine}"
+Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION} {#UpperCase(FileLine)}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,1"
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: ""
+Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"
 		#endif
 	#endif
 #endsub
@@ -469,12 +448,12 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities\FileAssociati
 #endif
 
 ;special case for .ico files
-Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#MAJOR}.ico"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#GIMP_VERSION}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
-Root: HKA; Subkey: "Software\Classes\GIMP{#MAJOR}.ico\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_APP_VERSION}.exe"" ""%1"""
-Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_APP_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".ico"; ValueData: ""
-Root: HKA; Subkey: "Software\GIMP {#GIMP_APP_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".ico"; ValueData: "GIMP{#MAJOR}.{#FileLine}"
+Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
+Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\SupportedTypes"; ValueType: string; ValueName: ".ico"; ValueData: ""
+Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".ico"; ValueData: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"
 
 
 [UninstallDelete]
@@ -1195,12 +1174,12 @@ begin
 	if RemoveResult = rogUninstallFailed then
 	begin
 		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version');
-		Result := FmtMessage(CustomMessage('RemovingOldVersionFailed'),['{#GIMP_VERSION}',ExpandConstant('{app}')]);
+		Result := FmtMessage(CustomMessage('RemovingOldVersionFailed'),['{#CUSTOM_GIMP_VERSION}',ExpandConstant('{app}')]);
 	end else
 	if RemoveResult = rogCantUninstall then
 	begin
 		DebugMsg('PrepareToInstall','RemoveOldGIMPVersions failed to uninstall old GIMP version [1]');
-		Result := FmtMessage(CustomMessage('RemovingOldVersionCantUninstall'),['{#GIMP_VERSION}',ExpandConstant('{app}')]);
+		Result := FmtMessage(CustomMessage('RemovingOldVersionCantUninstall'),['{#CUSTOM_GIMP_VERSION}',ExpandConstant('{app}')]);
 	end else
 	begin
 		DebugMsg('PrepareToInstall','Internal error 11');

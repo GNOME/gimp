@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 # Parameters
-param ($revision = '0',
+param ($revision = "$GIMP_CI_WIN_INSTALLER",
        $GIMP_BASE = "$PWD",
        $BUILD_DIR = "$GIMP_BASE\_build",
        $GIMP32 = 'gimp-x86',
@@ -46,22 +46,18 @@ if (-not (Test-Path "$CONFIG_PATH"))
     exit 1
   }
 
-## Get AppVer (GIMP version as we use on Inno)
-### AppVer without revision
-$gimp_version = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
-                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-$APPVER = $gimp_version
-### Revisioned AppVer
-if ($CI_PIPELINE_SOURCE -ne 'schedule' -and $GIMP_CI_WIN_INSTALLER -and $GIMP_CI_WIN_INSTALLER -match '[0-9]')
+## Get CUSTOM_GIMP_VERSION (GIMP version as we display for users in installer)
+$CUSTOM_GIMP_VERSION = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
+                       Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+if ($revision -notmatch '[1-9]' -or $CI_PIPELINE_SOURCE -eq 'schedule')
   {
-    Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
-    $revision = $GIMP_CI_WIN_INSTALLER
+    $revision = '0'
   }
-if ($revision -ne '0')
+else
   {
-    $APPVER = "$gimp_version.$revision"
+    $CUSTOM_GIMP_VERSION = "$CUSTOM_GIMP_VERSION.$revision"
   }
-Write-Output "(INFO): GIMP version: $APPVER"
+Write-Output "(INFO): GIMP version: $CUSTOM_GIMP_VERSION"
 
 ## FIXME: Our Inno scripts can't construct an one-arch installer
 $supported_archs = "$GIMP32","$GIMP64","$GIMPA64"
@@ -111,13 +107,13 @@ foreach ($langfile in $langsArray)
   }
 
 ## Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
-Write-Output "(INFO): patching Official and unofficial Inno lang files with $APPVER"
+Write-Output "(INFO): patching Official and unofficial Inno lang files with $CUSTOM_GIMP_VERSION"
 function fix_msg ([string]$langsdir)
 {
   #Prefer MSYS2 since PowerShell/.NET doesn't handle well files with mixed encodings
   Copy-Item $GIMP_BASE/build/windows/installer/lang/fix_msg.sh $langsdir
   Set-Location $langsdir
-  (Get-Content fix_msg.sh) | Foreach-Object {$_ -replace "AppVer","$APPVER"} |
+  (Get-Content fix_msg.sh) | Foreach-Object {$_ -replace "AppVer","$CUSTOM_GIMP_VERSION"} |
   Set-Content fix_msg.sh
   bash fix_msg.sh
   Remove-Item fix_msg.sh
@@ -144,6 +140,9 @@ fix_msg $INNO_PATH\Languages\Unofficial
 # 4. PREPARE GIMP FILES
 
 ## Get GIMP versions used in some versioned files and dirs
+$gimp_version = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
+                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''} |
+                Foreach-Object {$_ -replace '(.+?)-.+','$1'}
 $gimp_app_version = Get-Content "$CONFIG_PATH"                                   | Select-String 'GIMP_APP_VERSION "'  |
                     Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
 $gimp_api_version = Get-Content "$CONFIG_PATH"                                         | Select-String 'GIMP_PKGCONFIG_VERSION' |
@@ -163,12 +162,12 @@ bash build/windows/installer/3_dist-gimp-inno_sym.sh | Out-Null
 
 
 # 5. CONSTRUCT .EXE INSTALLER
-$INSTALLER="gimp-${APPVER}-setup.exe"
+$INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
 Write-Output "(INFO): constructing $INSTALLER installer"
 
 ## Compile installer
 Set-Location build\windows\installer
-iscc -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$gimp_app_version" -DGIMP_API_VERSION="$gimp_api_version" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null
+iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$gimp_app_version" -DGIMP_API_VERSION="$gimp_api_version" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON base_gimp3264.iss | Out-Null
 Set-Location $GIMP_BASE
 
 ## Clean changes in the bundles
