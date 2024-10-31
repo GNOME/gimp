@@ -8,6 +8,10 @@ param ($revision = '0',
        $GIMP64 = 'gimp-x64',
        $GIMPA64 = 'gimp-a64')
 
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+
+
 # This script needs a bit of MSYS2 to work
 Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,17) -replace '> ','')
 

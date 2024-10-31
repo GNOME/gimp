@@ -7,6 +7,9 @@ param ($revision = "$GIMP_CI_MS_STORE",
        $a64_bundle = 'gimp-a64',
        $x64_bundle = 'gimp-x64')
 
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+
 
 # Autodetects latest WinSDK installed
 if ($Env:PROCESSOR_ARCHITECTURE -eq 'ARM64')
