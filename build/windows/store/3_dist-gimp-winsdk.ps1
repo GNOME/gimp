@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 # Parameters
-param ($revision = '0',
+param ($revision = "$GIMP_CI_MS_STORE",
        $wack = 'Non-WACK',
        $build_dir = '_build',
        $a64_bundle = 'gimp-a64',
@@ -34,19 +34,15 @@ if (-not (Test-Path "$config_path"))
     exit 1
   }
 
-## Figure out if GIMP is unstable (dev)
-$gimp_unstable = Get-Content "$config_path"                               | Select-String 'GIMP_UNSTABLE' |
-                 Foreach-Object {$_ -replace '#define GIMP_UNSTABLE ',''}
-if ($gimp_unstable -eq '1')
-  {
-    $dev = '1'
-  }
-
 $gimp_version = Get-Content "$config_path"                               | Select-String 'GIMP_VERSION'        |
                 Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-if ($gimp_version -match 'RC[0-9]')
+
+## Figure out if GIMP is unstable (dev version)
+$gimp_unstable = Get-Content "$config_path"                               | Select-String 'GIMP_UNSTABLE' |
+                 Foreach-Object {$_ -replace '#define GIMP_UNSTABLE ',''}
+if ($gimp_unstable -eq '1' -or $gimp_version -match 'RC[0-9]')
   {
-    $dev = 'rc'
+    $dev = $true
   }
 
 ## Get Identity Name (the dir shown in Explorer)
@@ -60,46 +56,32 @@ else
   }
 
 ## Get GIMP app version (major.minor)
-$GIMP_APP_VERSION = Get-Content "$config_path"                                   | Select-String 'GIMP_APP_VERSION "'  |
+$gimp_app_version = Get-Content "$config_path"                                   | Select-String 'GIMP_APP_VERSION "'  |
                     Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-$major = ($GIMP_APP_VERSION.Split('.'))[0]
-$minor = ($GIMP_APP_VERSION.Split('.'))[-1]
+$major = ($gimp_app_version.Split('.'))[0]
+$minor = ($gimp_app_version.Split('.'))[-1]
 
 ## Get GIMP micro version
-$micro = ($gimp_version.Split('.'))[-1]
-if ($dev -eq 'rc')
+$micro = ($gimp_version.Split('.'))[-1] -replace '(.+?)-.+','$1'
+if ($micro -ne '0')
   {
-    $micro = $micro -replace ".{4}$"
-  }
-
-$micro_digit = $micro
-if ($micro -eq '0')
-  {
-    $micro_digit = ''
+    $micro_digit = $micro
   }
 
 ## Get GIMP revision
-if ($CI_PIPELINE_SOURCE -ne 'schedule' -and $GIMP_CI_MS_STORE -like 'MSIXUPLOAD_*')
+if ($revision -match '[1-9]' -and $CI_PIPELINE_SOURCE -ne 'schedule')
   {
-    Write-Host "(WARNING): The revision is being made on CI, more updated deps than necessary may be packaged." -ForegroundColor yellow
-    $revision = $GIMP_CI_MS_STORE -replace 'MSIXUPLOAD_',''
+    $revision = $revision -replace 'MSIXUPLOAD_',''
+    $revision_text = ", revision: $revision"
   }
-
-## (Special case when using WACK locally)
-if ($revision -eq 'WACK')
+else
   {
     $revision = "0"
-    $wack = "WACK"
-  }
-
-if ($revision -ne '0')
-  {
-    $revision_text = ", revision: $revision"
   }
 
 ## Get custom GIMP version (major.minor.micro+revision.0), a compliant way to publish to Partner Center:
 ## https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements)
-$CUSTOM_GIMP_VERSION = "$GIMP_APP_VERSION.${micro_digit}${revision}.0"
+$CUSTOM_GIMP_VERSION = "$gimp_app_version.${micro_digit}${revision}.0"
 
 Write-Output "(INFO): Identity: $IDENTITY_NAME | Version: $CUSTOM_GIMP_VERSION (major: $major, minor: $minor, micro: ${micro}${revision_text})"
 
@@ -188,8 +170,16 @@ foreach ($bundle in $supported_archs)
         (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@CUSTOM_GIMP_VERSION@","$CUSTOM_GIMP_VERSION"} |
         Set-Content $msix_arch\AppxManifest.xml
 
-        ## Set GIMP app version (major.minor)
-        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_APP_VERSION@","$GIMP_APP_VERSION"} |
+        ## Set GIMP mutex version (major.minor or major)
+        if ($dev -and ($gimp_version -notmatch 'RC[0-9]'))
+          {
+            $gimp_mutex_version="$gimp_app_version"
+          }
+        else
+          {
+            $gimp_mutex_version="$major"
+          }
+        (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@GIMP_MUTEX_VERSION@","$gimp_mutex_version"} |
         Set-Content $msix_arch\AppxManifest.xml
 
         ## Match supported filetypes
@@ -312,7 +302,7 @@ Rename-Item .gitignore.bak .gitignore
 
 # 5. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
 # (Partner Center does the same thing before publishing)
-if (-not $GITLAB_CI -and $wack -eq 'WACK')
+if (-not $GITLAB_CI -and ($wack -eq 'WACK' -or $revision -eq 'WACK'))
   {
     ## Prepare file naming
     ## (appcert CLI does NOT allow relative paths)
