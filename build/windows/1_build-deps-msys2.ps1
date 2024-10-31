@@ -1,5 +1,9 @@
 #!/usr/bin/env pwsh
 
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+
+
 if (-not $GITLAB_CI)
   {
     # Make the script work locally
@@ -94,6 +98,11 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     Set-Location _build
     ninja
     ninja install
+    if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
+      {
+        ## We need to manually check failures in pre-7.4 PS
+        exit 1
+      }
     ccache --show-stats
     Set-Location ../..
   }
