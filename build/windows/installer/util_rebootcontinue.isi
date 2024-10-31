@@ -21,7 +21,7 @@ begin
 end;
 
 const
-	RunOnceName = 'Resume GIMP {#GIMP_VERSION} install';
+	RunOnceName = 'Resume GIMP {#CUSTOM_GIMP_VERSION} install';
 
 procedure CreateRunOnceEntry;
 var	RunOnceData, SetupRestartData: String;
