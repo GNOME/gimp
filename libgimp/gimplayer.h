@@ -44,6 +44,7 @@ struct _GimpLayerClass
   GimpLayer * (* copy) (GimpLayer *layer);
 
   /* Padding for future expansion */
+  void (*_gimp_reserved0) (void);
   void (*_gimp_reserved1) (void);
   void (*_gimp_reserved2) (void);
   void (*_gimp_reserved3) (void);

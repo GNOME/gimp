@@ -94,14 +94,6 @@ typedef struct _GimpProgressVtable GimpProgressVtable;
  * @set_value:  sets a new percentage on the progress.
  * @pulse:      makes the progress pulse.
  * @get_window_handle: returns the handle of the window where the progress is displayed.
- * @_gimp_reserved1: reserved pointer for future expansion.
- * @_gimp_reserved2: reserved pointer for future expansion.
- * @_gimp_reserved3: reserved pointer for future expansion.
- * @_gimp_reserved4: reserved pointer for future expansion.
- * @_gimp_reserved5: reserved pointer for future expansion.
- * @_gimp_reserved6: reserved pointer for future expansion.
- * @_gimp_reserved7: reserved pointer for future expansion.
- * @_gimp_reserved8: reserved pointer for future expansion.
  **/
 struct _GimpProgressVtable
 {
@@ -113,6 +105,7 @@ struct _GimpProgressVtable
   GimpProgressVtableGetWindowFunc get_window_handle;
 
   /* Padding for future expansion. Must be initialized with NULL! */
+  void (* _gimp_reserved0) (void);
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
@@ -121,6 +114,7 @@ struct _GimpProgressVtable
   void (* _gimp_reserved6) (void);
   void (* _gimp_reserved7) (void);
   void (* _gimp_reserved8) (void);
+  void (* _gimp_reserved9) (void);
 };
 
 
