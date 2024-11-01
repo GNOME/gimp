@@ -178,7 +178,7 @@ gimp_param_export_options_get_type (void)
         (GInstanceInitFunc) gimp_param_export_options_init
       };
 
-      type = g_type_register_static (G_TYPE_PARAM_BOXED,
+      type = g_type_register_static (G_TYPE_PARAM_OBJECT,
                                      "GimpParamExportOptions", &info, 0);
     }
 

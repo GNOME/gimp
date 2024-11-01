@@ -81,9 +81,9 @@ typedef struct _GimpParamSpecExportOptions GimpParamSpecExportOptions;
 
 struct _GimpParamSpecExportOptions
 {
-  GParamSpecBoxed parent_instance;
+  GParamSpecObject parent_instance;
 
-  gint            capabilities;
+  gint             capabilities;
 };
 
 GType        gimp_param_export_options_get_type (void) G_GNUC_CONST;
