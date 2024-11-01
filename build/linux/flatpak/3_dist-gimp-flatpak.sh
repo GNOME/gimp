@@ -15,7 +15,7 @@ flatpak build-bundle repo gimp-git.flatpak --runtime-repo=https://nightly.gnome.
 
 # Publish GIMP repo in GNOME nightly
 # We take the commands from 'flatpak_ci_initiative.yml'
-if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
   curl https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml --output flatpak_ci_initiative.yml
   IFS=$'\n' cmd_array=($(cat flatpak_ci_initiative.yml | sed -n '/flatpak build-update-repo/,/exit $result\"/p' | sed 's/    - //'))
   IFS=$' \t\n'
