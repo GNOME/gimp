@@ -376,15 +376,6 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_enum.default_val = espec->default_value;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_CHOICE)
-    {
-      GimpParamSpecChoice *cspec = GIMP_PARAM_SPEC_CHOICE (pspec);
-
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_CHOICE;
-
-      param_def->meta.m_choice.default_val = cspec->default_value;
-      param_def->meta.m_choice.choice      = cspec->choice;
-    }
   else if (pspec_type == G_TYPE_PARAM_BOOLEAN)
     {
       GParamSpecBoolean *bspec = G_PARAM_SPEC_BOOLEAN (pspec);
@@ -402,6 +393,17 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_float.min_val     = dspec->minimum;
       param_def->meta.m_float.max_val     = dspec->maximum;
       param_def->meta.m_float.default_val = dspec->default_value;
+    }
+  /* Must be before G_IS_PARAM_SPEC_STRING() because it's a parent. */
+  else if (pspec_type == GIMP_TYPE_PARAM_CHOICE)
+    {
+      GimpParamSpecChoice *cspec = GIMP_PARAM_SPEC_CHOICE (pspec);
+      GParamSpecString    *sspec = G_PARAM_SPEC_STRING (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_CHOICE;
+
+      param_def->meta.m_choice.default_val = sspec->default_value;
+      param_def->meta.m_choice.choice      = cspec->choice;
     }
   else if (G_IS_PARAM_SPEC_STRING (pspec))
     {

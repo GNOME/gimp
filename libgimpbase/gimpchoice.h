@@ -80,10 +80,9 @@ typedef struct _GimpParamSpecChoice GimpParamSpecChoice;
 
 struct _GimpParamSpecChoice
 {
-  GParamSpecBoxed parent_instance;
+  GParamSpecString  parent_instance;
 
-  gchar          *default_value;
-  GimpChoice     *choice;
+  GimpChoice       *choice;
 };
 
 GType        gimp_param_choice_get_type (void) G_GNUC_CONST;

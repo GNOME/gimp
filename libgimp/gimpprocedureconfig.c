@@ -703,9 +703,10 @@ gimp_procedure_config_get_choice_id (GimpProcedureConfig *config,
 
   if (! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), GIMP_TYPE_PARAM_CHOICE))
     {
-      g_warning ("%s: property '%s' of %s is not a GimpParamSpecChoice.",
+      g_warning ("%s: property '%s' of %s is a %s, not a GimpParamSpecChoice.",
                  G_STRFUNC,
                  param_spec->name,
+                 g_type_name (G_TYPE_FROM_INSTANCE (param_spec)),
                  g_type_name (param_spec->owner_type));
       return 0;
     }

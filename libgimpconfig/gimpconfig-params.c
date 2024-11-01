@@ -94,7 +94,16 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecString *spec = G_PARAM_SPEC_STRING (pspec);
 
-      if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))
+      if (GIMP_IS_PARAM_SPEC_CHOICE (pspec))
+        {
+          GimpParamSpecChoice *cspec  = GIMP_PARAM_SPEC_CHOICE (pspec);
+
+          copy = gimp_param_spec_choice (name, nick, blurb,
+                                         g_object_ref (cspec->choice),
+                                         spec->default_value,
+                                         flags);
+        }
+      else if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))
         {
           copy = gimp_param_spec_config_path (name, nick, blurb,
                                               GIMP_CONFIG_PATH_FILE,
@@ -228,15 +237,6 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
                                     spec->default_value,
                                     flags);
         }
-    }
-  else if (GIMP_IS_PARAM_SPEC_CHOICE (pspec))
-    {
-      GimpParamSpecChoice *spec = GIMP_PARAM_SPEC_CHOICE (pspec);
-
-      copy = gimp_param_spec_choice (name, nick, blurb,
-                                     g_object_ref (spec->choice),
-                                     spec->default_value,
-                                     flags);
     }
   else if (GIMP_IS_PARAM_SPEC_OBJECT (pspec))
     {
