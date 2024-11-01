@@ -304,11 +304,7 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
     }
   else if (GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS (pspec))
     {
-      GimpParamSpecExportOptions *spec = GIMP_PARAM_SPEC_EXPORT_OPTIONS (pspec);
-
-      copy = gimp_param_spec_export_options (name, nick, blurb,
-                                             spec->capabilities,
-                                             flags);
+      copy = gimp_param_spec_export_options (name, nick, blurb, flags);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec))
     {

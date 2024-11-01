@@ -521,7 +521,6 @@ register_file_procs (GimpPDB *pdb)
                                gimp_param_spec_export_options ("options",
                                                                "options",
                                                                "Export option settings",
-                                                               0,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

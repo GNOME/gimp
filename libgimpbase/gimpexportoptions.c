@@ -90,12 +90,13 @@ gimp_export_options_class_init (GimpExportOptionsClass *klass)
    *
    * Since: 3.0.0
    */
-  props[PROP_CAPABILITIES] = g_param_spec_int ("capabilities",
-                                               "Supported image capabilities",
-                                               NULL,
-                                               0, G_MAXINT, 0,
-                                               G_PARAM_CONSTRUCT |
-                                               G_PARAM_READWRITE);
+  props[PROP_CAPABILITIES] = g_param_spec_flags ("capabilities",
+                                                 "Supported image capabilities",
+                                                 NULL,
+                                                 GIMP_TYPE_EXPORT_CAPABILITIES,
+                                                 0,
+                                                 G_PARAM_CONSTRUCT |
+                                                 G_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
@@ -123,7 +124,7 @@ gimp_export_options_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CAPABILITIES:
-      options->capabilities = g_value_get_int (value);
+      options->capabilities = g_value_get_flags (value);
       break;
 
     default:
@@ -143,7 +144,7 @@ gimp_export_options_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_CAPABILITIES:
-      g_value_set_int (value, options->capabilities);
+      g_value_set_flags (value, options->capabilities);
       break;
 
     default:
@@ -173,7 +174,7 @@ gimp_param_export_options_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_export_options_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecExportOptions),
+        sizeof (GParamSpecObject),
         0,
         (GInstanceInitFunc) gimp_param_export_options_init
       };
@@ -194,9 +195,6 @@ gimp_param_export_options_class_init (GParamSpecClass *klass)
 static void
 gimp_param_export_options_init (GParamSpec *pspec)
 {
-  GimpParamSpecExportOptions *options = GIMP_PARAM_SPEC_EXPORT_OPTIONS (pspec);
-
-  options->capabilities = 0;
 }
 
 /**
@@ -204,7 +202,6 @@ gimp_param_export_options_init (GParamSpec *pspec)
  * @name:         Canonical name of the property specified.
  * @nick:         Nick name of the property specified.
  * @blurb:        Description of the property specified.
- * @capabilities: Int representing the image export capabilities
  * @flags:        Flags for the property specified.
  *
  * Creates a new #GimpParamSpecExportOptions specifying a
@@ -220,17 +217,14 @@ GParamSpec *
 gimp_param_spec_export_options (const gchar *name,
                                 const gchar *nick,
                                 const gchar *blurb,
-                                gint         capabilities,
                                 GParamFlags  flags)
 {
-  GimpParamSpecExportOptions *options_spec;
+  GParamSpec *options_spec;
 
   options_spec = g_param_spec_internal (GIMP_TYPE_PARAM_EXPORT_OPTIONS,
                                         name, nick, blurb, flags);
 
   g_return_val_if_fail (options_spec, NULL);
 
-  options_spec->capabilities = capabilities;
-
-  return G_PARAM_SPEC (options_spec);
+  return options_spec;
 }

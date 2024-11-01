@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 14
+#define PLUG_IN_RC_FILE_VERSION 15
 
 
 /*
@@ -1000,12 +1000,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
-      if (! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_export_options.capabilities))
-        {
-          token = G_TOKEN_INT;
-          goto error;
-        }
       break;
 
     case GP_PARAM_DEF_TYPE_RESOURCE:
@@ -1271,8 +1265,6 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
-      gimp_config_writer_printf (writer, "%d",
-                                 param_def.meta.m_export_options.capabilities);
       break;
 
     case GP_PARAM_DEF_TYPE_RESOURCE:

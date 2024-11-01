@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0113
+#define GIMP_PROTOCOL_VERSION  0x0114
 
 
 enum
@@ -98,7 +98,6 @@ typedef struct _GPParamStrv              GPParamStrv;
 typedef struct _GPParamDefGeglColor      GPParamDefGeglColor;
 typedef struct _GPParamDefID             GPParamDefID;
 typedef struct _GPParamDefIDArray        GPParamDefIDArray;
-typedef struct _GPParamDefExportOptions  GPParamDefExportOptions;
 typedef struct _GPParamDefResource       GPParamDefResource;
 typedef struct _GPParam                  GPParam;
 typedef struct _GPParamArray             GPParamArray;
@@ -231,11 +230,6 @@ struct _GPParamDefChoice
   gchar      *default_val;
 };
 
-struct _GPParamDefExportOptions
-{
-  gint capabilities;
-};
-
 struct _GPParamDefResource
 {
   gint32 none_ok;
@@ -265,7 +259,6 @@ struct _GPParamDef
     GPParamDefID               m_id;
     GPParamDefIDArray          m_id_array;
     GPParamDefChoice           m_choice;
-    GPParamDefExportOptions    m_export_options;
     GPParamDefResource         m_resource;
   } meta;
 };
@@ -307,7 +300,10 @@ struct _GPParamColorArray
 
 struct _GPParamExportOptions
 {
-  gint capabilities;
+  /* XXX: this is an empty shell right now, because there are no export
+   * options yet. The capabilities property doesn't need to be passed
+   * through the wire because it is set by libgimp, not at run call.
+   */
 };
 
 struct _GPParam

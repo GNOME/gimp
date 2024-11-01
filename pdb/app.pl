@@ -484,7 +484,6 @@ CODE
 gimp_param_spec_export_options ("$name",
                                 "$nick",
                                 "$blurb",
-                                0,
                                 $flags)
 CODE
     }

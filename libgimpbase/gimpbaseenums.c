@@ -1925,6 +1925,54 @@ gimp_path_stroke_type_get_type (void)
   return type;
 }
 
+GType
+gimp_export_capabilities_get_type (void)
+{
+  static const GFlagsValue values[] =
+  {
+    { GIMP_EXPORT_CAN_HANDLE_RGB, "GIMP_EXPORT_CAN_HANDLE_RGB", "can-handle-rgb" },
+    { GIMP_EXPORT_CAN_HANDLE_GRAY, "GIMP_EXPORT_CAN_HANDLE_GRAY", "can-handle-gray" },
+    { GIMP_EXPORT_CAN_HANDLE_INDEXED, "GIMP_EXPORT_CAN_HANDLE_INDEXED", "can-handle-indexed" },
+    { GIMP_EXPORT_CAN_HANDLE_BITMAP, "GIMP_EXPORT_CAN_HANDLE_BITMAP", "can-handle-bitmap" },
+    { GIMP_EXPORT_CAN_HANDLE_ALPHA, "GIMP_EXPORT_CAN_HANDLE_ALPHA", "can-handle-alpha" },
+    { GIMP_EXPORT_CAN_HANDLE_LAYERS, "GIMP_EXPORT_CAN_HANDLE_LAYERS", "can-handle-layers" },
+    { GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION, "GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION", "can-handle-layers-as-animation" },
+    { GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS, "GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS", "can-handle-layer-masks" },
+    { GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS, "GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS", "can-handle-layer-effects" },
+    { GIMP_EXPORT_NEEDS_ALPHA, "GIMP_EXPORT_NEEDS_ALPHA", "needs-alpha" },
+    { GIMP_EXPORT_NEEDS_CROP, "GIMP_EXPORT_NEEDS_CROP", "needs-crop" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpFlagsDesc descs[] =
+  {
+    { GIMP_EXPORT_CAN_HANDLE_RGB, "GIMP_EXPORT_CAN_HANDLE_RGB", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_GRAY, "GIMP_EXPORT_CAN_HANDLE_GRAY", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_INDEXED, "GIMP_EXPORT_CAN_HANDLE_INDEXED", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_BITMAP, "GIMP_EXPORT_CAN_HANDLE_BITMAP", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_ALPHA, "GIMP_EXPORT_CAN_HANDLE_ALPHA", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_LAYERS, "GIMP_EXPORT_CAN_HANDLE_LAYERS", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION, "GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS, "GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS", NULL },
+    { GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS, "GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS", NULL },
+    { GIMP_EXPORT_NEEDS_ALPHA, "GIMP_EXPORT_NEEDS_ALPHA", NULL },
+    { GIMP_EXPORT_NEEDS_CROP, "GIMP_EXPORT_NEEDS_CROP", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_flags_register_static ("GimpExportCapabilities", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "export-capabilities");
+      gimp_flags_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

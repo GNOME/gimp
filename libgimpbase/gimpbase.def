@@ -57,6 +57,7 @@ EXPORTS
 	gimp_enum_value_get_help
 	gimp_env_init
 	gimp_escape_uline
+	gimp_export_capabilities_get_type
 	gimp_export_options_get_type
 	gimp_file_get_utf8_name
 	gimp_file_has_extension

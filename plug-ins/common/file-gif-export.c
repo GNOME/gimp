@@ -69,43 +69,43 @@ struct _GifClass
 #define GIF_TYPE  (gif_get_type ())
 #define GIF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIF_TYPE, Gif))
 
-GType                    gif_get_type         (void) G_GNUC_CONST;
+GType                           gif_get_type         (void) G_GNUC_CONST;
 
-static GList           * gif_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure   * gif_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList                  * gif_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure          * gif_create_procedure (GimpPlugIn           *plug_in,
+                                                      const gchar          *name);
 
-static GimpValueArray  * gif_export           (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               GFile                *file,
-                                               GimpExportOptions    *options,
-                                               GimpMetadata         *metadata,
-                                               GimpProcedureConfig  *config,
-                                               gpointer              run_data);
+static GimpValueArray         * gif_export           (GimpProcedure        *procedure,
+                                                      GimpRunMode           run_mode,
+                                                      GimpImage            *image,
+                                                      GFile                *file,
+                                                      GimpExportOptions    *options,
+                                                      GimpMetadata         *metadata,
+                                                      GimpProcedureConfig  *config,
+                                                      gpointer              run_data);
 
-static gboolean          export_image         (GFile                *file,
-                                               GimpImage            *image,
-                                               GimpDrawable         *drawable,
-                                               GimpImage            *orig_image,
-                                               GObject              *config,
-                                               GError              **error);
+static gboolean                 export_image         (GFile                *file,
+                                                      GimpImage            *image,
+                                                      GimpDrawable         *drawable,
+                                                      GimpImage            *orig_image,
+                                                      GObject              *config,
+                                                      GError              **error);
 
-static void              export_edit_options  (GimpProcedure        *procedure,
-                                               GimpProcedureConfig  *config,
-                                               GimpExportOptions    *options,
-                                               gpointer              create_data);
+static GimpExportCapabilities   export_edit_options  (GimpProcedure        *procedure,
+                                                      GimpProcedureConfig  *config,
+                                                      GimpExportOptions    *options,
+                                                      gpointer              create_data);
 
-static GimpPDBStatusType sanity_check         (GFile                *file,
-                                               GimpImage           **image,
-                                               GimpRunMode           run_mode,
-                                               GError              **error);
-static gboolean          bad_bounds_dialog    (void);
+static GimpPDBStatusType        sanity_check         (GFile                *file,
+                                                      GimpImage           **image,
+                                                      GimpRunMode           run_mode,
+                                                      GError              **error);
+static gboolean                 bad_bounds_dialog    (void);
 
-static gboolean          save_dialog          (GimpImage            *image,
-                                               GimpImage            *orig_image,
-                                               GimpProcedure        *procedure,
-                                               GObject              *config);
+static gboolean                 save_dialog          (GimpImage            *image,
+                                                      GimpImage            *orig_image,
+                                                      GimpProcedure        *procedure,
+                                                      GObject              *config);
 
 
 G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
@@ -186,10 +186,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                           "gif");
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
-                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
-                                              export_edit_options, NULL, NULL);
+                                              0, export_edit_options, NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "interlace",
                                            _("_Interlace"),
@@ -1173,7 +1170,7 @@ export_image (GFile         *file,
   return TRUE;
 }
 
-static void
+static GimpExportCapabilities
 export_edit_options (GimpProcedure        *procedure,
                      GimpProcedureConfig  *config,
                      GimpExportOptions    *options,
@@ -1193,9 +1190,7 @@ export_edit_options (GimpProcedure        *procedure,
   if (as_animation)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-  g_object_set (G_OBJECT (options),
-                "capabilities", capabilities,
-                NULL);
+  return capabilities;
 }
 
 static gboolean

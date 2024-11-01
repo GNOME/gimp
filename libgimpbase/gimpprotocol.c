@@ -1113,6 +1113,7 @@ _gp_param_def_read (GIOChannel *channel,
   switch (param_def->param_def_type)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
@@ -1275,13 +1276,6 @@ _gp_param_def_read (GIOChannel *channel,
       if (! _gimp_wire_read_string (channel,
                                     &param_def->meta.m_id_array.type_name, 1,
                                     user_data))
-        return FALSE;
-      break;
-
-    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
-      if (! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_export_options.capabilities, 1,
-                                   user_data))
         return FALSE;
       break;
 
@@ -1475,6 +1469,7 @@ _gp_param_def_write (GIOChannel *channel,
   switch (param_def->param_def_type)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
+    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
@@ -1629,13 +1624,6 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_string (channel,
                                      &param_def->meta.m_id_array.type_name, 1,
                                      user_data))
-        return FALSE;
-      break;
-
-    case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
-      if (! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_export_options.capabilities, 1,
-                                    user_data))
         return FALSE;
       break;
 
@@ -2137,10 +2125,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GP_PARAM_TYPE_EXPORT_OPTIONS:
-          if (! _gimp_wire_read_int32 (channel,
-                                       (guint32 *) &(*params)[i].data.d_export_options.capabilities, 1,
-                                       user_data))
-            goto cleanup;
+          /* XXX: reading export options when we'll have any. */
           break;
 
         case GP_PARAM_TYPE_PARAM_DEF:
@@ -2361,10 +2346,9 @@ _gp_params_write (GIOChannel *channel,
           break;
 
         case GP_PARAM_TYPE_EXPORT_OPTIONS:
-          if (! _gimp_wire_write_int32 (channel,
-                                        (const guint32 *) &params[i].data.d_export_options.capabilities, 1,
-                                        user_data))
-            return;
+          /* XXX When we'll have actual export options, this is where
+           * we'll want to pass them through the wire.
+           */
           break;
 
         case GP_PARAM_TYPE_PARAM_DEF:

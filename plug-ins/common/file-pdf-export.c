@@ -177,61 +177,61 @@ struct _PdfClass
 #define PDF_TYPE  (pdf_get_type ())
 #define PDF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PDF_TYPE, Pdf))
 
-GType                   pdf_get_type             (void) G_GNUC_CONST;
+GType                           pdf_get_type             (void) G_GNUC_CONST;
 
-static GList          * pdf_query_procedures     (GimpPlugIn           *plug_in);
-static GimpProcedure  * pdf_create_procedure     (GimpPlugIn           *plug_in,
-                                                  const gchar          *name);
+static GList                  * pdf_query_procedures     (GimpPlugIn           *plug_in);
+static GimpProcedure          * pdf_create_procedure     (GimpPlugIn           *plug_in,
+                                                          const gchar          *name);
 
-static GimpValueArray * pdf_export               (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
-                                                  GFile                *file,
-                                                  GimpExportOptions    *options,
-                                                  GimpMetadata         *metadata,
-                                                  GimpProcedureConfig  *config,
-                                                  gpointer              run_data);
-static GimpValueArray * pdf_export_multi         (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config,
-                                                  gpointer              run_data);
+static GimpValueArray         * pdf_export               (GimpProcedure        *procedure,
+                                                          GimpRunMode           run_mode,
+                                                          GimpImage            *image,
+                                                          GFile                *file,
+                                                          GimpExportOptions    *options,
+                                                          GimpMetadata         *metadata,
+                                                          GimpProcedureConfig  *config,
+                                                          gpointer              run_data);
+static GimpValueArray         * pdf_export_multi         (GimpProcedure        *procedure,
+                                                          GimpProcedureConfig  *config,
+                                                          gpointer              run_data);
 
-static GimpPDBStatusType pdf_export_image        (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config,
-                                                  GimpExportOptions    *options,
-                                                  gboolean              single_image,
-                                                  gboolean              show_progress,
-                                                  GError              **error);
+static GimpPDBStatusType        pdf_export_image         (GimpProcedure        *procedure,
+                                                          GimpProcedureConfig  *config,
+                                                          GimpExportOptions    *options,
+                                                          gboolean              single_image,
+                                                          gboolean              show_progress,
+                                                          GError              **error);
 
-static void              export_edit_options     (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config,
-                                                  GimpExportOptions    *options,
-                                                  gpointer              create_data);
+static GimpExportCapabilities   export_edit_options      (GimpProcedure        *procedure,
+                                                          GimpProcedureConfig  *config,
+                                                          GimpExportOptions    *options,
+                                                          gpointer              create_data);
 
-static void             init_image_list_defaults (GimpImage            *image);
+static void                     init_image_list_defaults (GimpImage            *image);
 
-static void             validate_image_list      (void);
+static void                     validate_image_list      (void);
 
-static gboolean         gui_single               (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config,
-                                                  GimpImage            *image);
-static gboolean         gui_multi                (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config);
+static gboolean                 gui_single               (GimpProcedure        *procedure,
+                                                          GimpProcedureConfig  *config,
+                                                          GimpImage            *image);
+static gboolean                 gui_multi                (GimpProcedure        *procedure,
+                                                          GimpProcedureConfig  *config);
 
-static void             choose_file_call         (GtkWidget            *browse_button,
-                                                  gpointer              file_entry);
+static void                     choose_file_call         (GtkWidget            *browse_button,
+                                                          gpointer              file_entry);
 
-static gboolean         get_image_list           (void);
+static gboolean                 get_image_list           (void);
 
-static GtkTreeModel   * create_model             (void);
+static GtkTreeModel           * create_model             (void);
 
-static void             add_image_call           (GtkWidget            *widget,
-                                                  gpointer              img_combo);
-static void             del_image_call           (GtkWidget            *widget,
-                                                  gpointer              icon_view);
-static void             remove_call              (GtkTreeModel         *tree_model,
-                                                  GtkTreePath          *path,
-                                                  gpointer              user_data);
-static void             recount_pages            (void);
+static void                     add_image_call           (GtkWidget            *widget,
+                                                          gpointer              img_combo);
+static void                     del_image_call           (GtkWidget            *widget,
+                                                          gpointer              icon_view);
+static void                     remove_call              (GtkTreeModel         *tree_model,
+                                                          GtkTreePath          *path,
+                                                          gpointer              user_data);
+static void                     recount_pages            (void);
 
 static cairo_surface_t *get_cairo_surface        (GimpDrawable         *drawable,
                                                   gboolean              as_mask,
@@ -341,12 +341,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                           "pdf");
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
-                                              GIMP_EXPORT_CAN_HANDLE_RGB    |
-                                              GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                                              GIMP_EXPORT_CAN_HANDLE_GRAY   |
-                                              GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                                              GIMP_EXPORT_CAN_HANDLE_INDEXED,
-                                              export_edit_options, NULL, NULL);
+                                              0, export_edit_options, NULL, NULL);
 
       gimp_procedure_add_boolean_argument (procedure, "vectorize",
                                            _("Convert _bitmaps to vector graphics where possible"),
@@ -835,7 +830,7 @@ pdf_export_image (GimpProcedure        *procedure,
   return GIMP_PDB_SUCCESS;
 }
 
-static void
+static GimpExportCapabilities
 export_edit_options (GimpProcedure        *procedure,
                      GimpProcedureConfig  *config,
                      GimpExportOptions    *options,
@@ -854,13 +849,10 @@ export_edit_options (GimpProcedure        *procedure,
                   GIMP_EXPORT_CAN_HANDLE_LAYERS |
                   GIMP_EXPORT_CAN_HANDLE_INDEXED);
 
-
   if (! apply_masks)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
 
-  g_object_set (G_OBJECT (options),
-                "capabilities", capabilities,
-                NULL);
+  return capabilities;
 }
 
 /******************************************************/

@@ -78,43 +78,43 @@ struct _TiffClass
 #define TIFF_TYPE  (tiff_get_type ())
 #define TIFF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TIFF_TYPE, Tiff))
 
-GType                    tiff_get_type         (void) G_GNUC_CONST;
+GType                           tiff_get_type         (void) G_GNUC_CONST;
 
-static GList           * tiff_query_procedures (GimpPlugIn            *plug_in);
-static GimpProcedure   * tiff_create_procedure (GimpPlugIn            *plug_in,
-                                                const gchar           *name);
+static GList                  * tiff_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure          * tiff_create_procedure (GimpPlugIn            *plug_in,
+                                                       const gchar           *name);
 
-static GimpValueArray  * tiff_load             (GimpProcedure         *procedure,
-                                                GimpRunMode            run_mode,
-                                                GFile                 *file,
-                                                GimpMetadata          *metadata,
-                                                GimpMetadataLoadFlags *flags,
-                                                GimpProcedureConfig   *config,
-                                                gpointer               run_data);
-static GimpValueArray  * tiff_export           (GimpProcedure         *procedure,
-                                                GimpRunMode            run_mode,
-                                                GimpImage             *image,
-                                                GFile                 *file,
-                                                GimpExportOptions     *options,
-                                                GimpMetadata          *metadata,
-                                                GimpProcedureConfig   *config,
-                                                gpointer               run_data);
-static GimpPDBStatusType tiff_export_rec       (GimpProcedure         *procedure,
-                                                GimpRunMode            run_mode,
-                                                GimpImage             *orig_image,
-                                                GFile                 *file,
-                                                GimpProcedureConfig   *config,
-                                                GimpExportOptions     *options,
-                                                GimpMetadata          *metadata,
-                                                gboolean               retried,
-                                                GError               **error);
-static void              export_edit_options   (GimpProcedure         *procedure,
-                                                GimpProcedureConfig   *config,
-                                                GimpExportOptions     *options,
-                                                gpointer               create_data);
+static GimpValueArray         * tiff_load             (GimpProcedure         *procedure,
+                                                       GimpRunMode            run_mode,
+                                                       GFile                 *file,
+                                                       GimpMetadata          *metadata,
+                                                       GimpMetadataLoadFlags *flags,
+                                                       GimpProcedureConfig   *config,
+                                                       gpointer               run_data);
+static GimpValueArray         * tiff_export           (GimpProcedure         *procedure,
+                                                       GimpRunMode            run_mode,
+                                                       GimpImage             *image,
+                                                       GFile                 *file,
+                                                       GimpExportOptions     *options,
+                                                       GimpMetadata          *metadata,
+                                                       GimpProcedureConfig   *config,
+                                                       gpointer               run_data);
+static GimpPDBStatusType        tiff_export_rec       (GimpProcedure         *procedure,
+                                                       GimpRunMode            run_mode,
+                                                       GimpImage             *orig_image,
+                                                       GFile                 *file,
+                                                       GimpProcedureConfig   *config,
+                                                       GimpExportOptions     *options,
+                                                       GimpMetadata          *metadata,
+                                                       gboolean               retried,
+                                                       GError               **error);
+static GimpExportCapabilities   export_edit_options   (GimpProcedure         *procedure,
+                                                       GimpProcedureConfig   *config,
+                                                       GimpExportOptions     *options,
+                                                       gpointer               create_data);
 
-static gboolean          image_is_monochrome  (GimpImage            *image);
-static gboolean          image_is_multi_layer (GimpImage            *image);
+static gboolean                 image_is_monochrome  (GimpImage            *image);
+static gboolean                 image_is_multi_layer (GimpImage            *image);
 
 
 G_DEFINE_TYPE (Tiff, tiff, GIMP_TYPE_PLUG_IN)
@@ -452,7 +452,7 @@ tiff_export_rec (GimpProcedure        *procedure,
   return status;
 }
 
-static void
+static GimpExportCapabilities
 export_edit_options (GimpProcedure        *procedure,
                      GimpProcedureConfig  *config,
                      GimpExportOptions    *options,
@@ -493,9 +493,7 @@ export_edit_options (GimpProcedure        *procedure,
         capabilities |= GIMP_EXPORT_NEEDS_CROP;
     }
 
-  g_object_set (G_OBJECT (options),
-                "capabilities", capabilities,
-                NULL);
+  return capabilities;
 }
 
 static gboolean

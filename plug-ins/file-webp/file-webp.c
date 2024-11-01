@@ -53,32 +53,33 @@ struct _WebpClass
 #define WEBP_TYPE  (webp_get_type ())
 #define WEBP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBP_TYPE, Webp))
 
-GType                   webp_get_type         (void) G_GNUC_CONST;
+GType                           webp_get_type         (void) G_GNUC_CONST;
 
-static GList          * webp_query_procedures (GimpPlugIn            *plug_in);
-static GimpProcedure  * webp_create_procedure (GimpPlugIn            *plug_in,
-                                               const gchar           *name);
+static GList                  * webp_query_procedures (GimpPlugIn            *plug_in);
+static GimpProcedure          * webp_create_procedure (GimpPlugIn            *plug_in,
+                                                       const gchar           *name);
 
-static GimpValueArray * webp_load             (GimpProcedure         *procedure,
-                                               GimpRunMode            run_mode,
-                                               GFile                 *file,
-                                               GimpMetadata          *metadata,
-                                               GimpMetadataLoadFlags *flags,
-                                               GimpProcedureConfig   *config,
-                                               gpointer               run_data);
-static GimpValueArray * webp_export           (GimpProcedure         *procedure,
-                                               GimpRunMode            run_mode,
-                                               GimpImage             *image,
-                                               GFile                 *file,
-                                               GimpExportOptions     *options,
-                                               GimpMetadata          *metadata,
-                                               GimpProcedureConfig   *config,
-                                               gpointer               run_data);
+static GimpValueArray         * webp_load             (GimpProcedure         *procedure,
+                                                       GimpRunMode            run_mode,
+                                                       GFile                 *file,
+                                                       GimpMetadata          *metadata,
+                                                       GimpMetadataLoadFlags *flags,
+                                                       GimpProcedureConfig   *config,
+                                                       gpointer               run_data);
+static GimpValueArray         * webp_export           (GimpProcedure         *procedure,
+                                                       GimpRunMode            run_mode,
+                                                       GimpImage             *image,
+                                                       GFile                 *file,
+                                                       GimpExportOptions     *options,
+                                                       GimpMetadata          *metadata,
+                                                       GimpProcedureConfig   *config,
+                                                       gpointer               run_data);
 
-static void             export_edit_options   (GimpProcedure        *procedure,
-                                               GimpProcedureConfig  *config,
-                                               GimpExportOptions    *options,
-                                               gpointer              create_data);
+static GimpExportCapabilities   export_edit_options   (GimpProcedure        *procedure,
+                                                       GimpProcedureConfig  *config,
+                                                       GimpExportOptions    *options,
+                                                       gpointer              create_data);
+
 
 G_DEFINE_TYPE (Webp, webp, GIMP_TYPE_PLUG_IN)
 
@@ -171,11 +172,7 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                           "webp");
 
       gimp_export_procedure_set_capabilities (GIMP_EXPORT_PROCEDURE (procedure),
-                                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                              GIMP_EXPORT_CAN_HANDLE_ALPHA,
-                                              export_edit_options, NULL, NULL);
+                                              0, export_edit_options, NULL, NULL);
 
       gimp_procedure_add_choice_argument (procedure, "preset",
                                           _("Source _type"),
@@ -373,7 +370,7 @@ webp_export (GimpProcedure        *procedure,
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
-static void
+static GimpExportCapabilities
 export_edit_options (GimpProcedure       *procedure,
                      GimpProcedureConfig *config,
                      GimpExportOptions   *options,
@@ -394,7 +391,5 @@ export_edit_options (GimpProcedure       *procedure,
   if (animation)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
 
-  g_object_set (G_OBJECT (options),
-                "capabilities", capabilities,
-                NULL);
+  return capabilities;
 }

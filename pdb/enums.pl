@@ -636,6 +636,31 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_PATH_STROKE_TYPE_BEZIER) ],
 	  mapping => { GIMP_PATH_STROKE_TYPE_BEZIER => '0' }
 	},
+    GimpExportCapabilities =>
+	{ contig => 0,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_EXPORT_CAN_HANDLE_RGB
+			  GIMP_EXPORT_CAN_HANDLE_GRAY
+			  GIMP_EXPORT_CAN_HANDLE_INDEXED
+			  GIMP_EXPORT_CAN_HANDLE_BITMAP
+			  GIMP_EXPORT_CAN_HANDLE_ALPHA
+			  GIMP_EXPORT_CAN_HANDLE_LAYERS
+			  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION
+			  GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS
+			  GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS
+			  GIMP_EXPORT_NEEDS_ALPHA GIMP_EXPORT_NEEDS_CROP) ],
+	  mapping => { GIMP_EXPORT_CAN_HANDLE_RGB => '1 << 0',
+		       GIMP_EXPORT_CAN_HANDLE_GRAY => '1 << 1',
+		       GIMP_EXPORT_CAN_HANDLE_INDEXED => '1 << 2',
+		       GIMP_EXPORT_CAN_HANDLE_BITMAP => '1 << 3',
+		       GIMP_EXPORT_CAN_HANDLE_ALPHA => '1 << 4',
+		       GIMP_EXPORT_CAN_HANDLE_LAYERS => '1 << 5',
+		       GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION => '1 << 6',
+		       GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS => '1 << 7',
+		       GIMP_EXPORT_CAN_HANDLE_LAYER_EFFECTS => '1 << 8',
+		       GIMP_EXPORT_NEEDS_ALPHA => '1 << 9',
+		       GIMP_EXPORT_NEEDS_CROP => '1 << 10' }
+	},
     GimpColorManagementMode =>
 	{ contig => 1,
 	  header => 'libgimpconfig/gimpconfigenums.h',

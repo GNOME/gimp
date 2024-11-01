@@ -58,25 +58,25 @@ enum
 
 struct _GimpExportProcedure
 {
-  GimpFileProcedure         parent_instance;
+  GimpFileProcedure             parent_instance;
 
-  GimpRunExportFunc         run_func;
-  gpointer                  run_data;
-  GDestroyNotify            run_data_destroy;
+  GimpRunExportFunc             run_func;
+  gpointer                      run_data;
+  GDestroyNotify                run_data_destroy;
 
-  GimpExportCapabilities    capabilities;
-  GimpExportOptionsEditFunc edit_func;
-  gpointer                  edit_data;
-  GDestroyNotify            edit_data_destroy;
+  GimpExportCapabilities        capabilities;
+  GimpExportGetCapabilitiesFunc get_capabilities_func;
+  gpointer                      get_capabilities_data;
+  GDestroyNotify                get_capabilities_data_destroy;
 
-  gboolean                  supports_exif;
-  gboolean                  supports_iptc;
-  gboolean                  supports_xmp;
-  gboolean                  supports_profile;
-  gboolean                  supports_thumbnail;
-  gboolean                  supports_comment;
+  gboolean                      supports_exif;
+  gboolean                      supports_iptc;
+  gboolean                      supports_xmp;
+  gboolean                      supports_profile;
+  gboolean                      supports_thumbnail;
+  gboolean                      supports_comment;
 
-  gboolean                  export_metadata;
+  gboolean                      export_metadata;
 };
 
 
@@ -135,12 +135,13 @@ gimp_export_procedure_class_init (GimpExportProcedureClass *klass)
    *
    * Since: 3.0.0
    */
-  props[PROP_CAPABILITIES] = g_param_spec_int ("capabilities",
-                                               "Supported image capabilities",
-                                               NULL,
-                                               0, G_MAXINT, 0,
-                                               G_PARAM_CONSTRUCT |
-                                               GIMP_PARAM_READWRITE);
+  props[PROP_CAPABILITIES] = g_param_spec_flags ("capabilities",
+                                                 "Supported image capabilities",
+                                                 NULL,
+                                                 GIMP_TYPE_EXPORT_CAPABILITIES,
+                                                 0,
+                                                 G_PARAM_CONSTRUCT |
+                                                 GIMP_PARAM_READWRITE);
 
   /**
    * GimpExportProcedure:supports-exif:
@@ -251,7 +252,7 @@ gimp_export_procedure_constructed (GObject *object)
 
   _gimp_procedure_add_argument (procedure,
                                 gimp_param_spec_export_options ("options", "Options",
-                                                                "Export options", 0,
+                                                                "Export options",
                                                                 G_PARAM_READWRITE));
 }
 
@@ -277,7 +278,7 @@ gimp_export_procedure_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CAPABILITIES:
-      procedure->capabilities = g_value_get_int (value);
+      procedure->capabilities = g_value_get_flags (value);
       break;
     case PROP_SUPPORTS_EXIF:
       procedure->supports_exif = g_value_get_boolean (value);
@@ -315,7 +316,7 @@ gimp_export_procedure_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_CAPABILITIES:
-      g_value_set_int (value, procedure->capabilities);
+      g_value_set_flags (value, procedure->capabilities);
       break;
     case PROP_SUPPORTS_EXIF:
       g_value_set_boolean (value, procedure->supports_exif);
@@ -445,10 +446,16 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
       free_options = TRUE;
     }
 
-  if (export_proc->edit_func != NULL)
+  if (export_proc->get_capabilities_func != NULL)
     {
-      export_proc->edit_func (procedure, config, options,
-                              export_proc->edit_data);
+      GimpExportCapabilities capabilities;
+
+      capabilities = export_proc->get_capabilities_func (procedure, config, options,
+                                                         export_proc->get_capabilities_data);
+
+      g_object_set (G_OBJECT (options),
+                    "capabilities", capabilities,
+                    NULL);
 
       g_signal_connect_object (config, "notify",
                                G_CALLBACK (gimp_export_procedure_update_options),
@@ -486,8 +493,8 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   g_object_unref (config);
   gimp_value_array_unref (remaining);
 
-  if (export_proc->edit_data_destroy && export_proc->edit_data)
-    export_proc->edit_data_destroy (export_proc->edit_data);
+  if (export_proc->get_capabilities_data_destroy && export_proc->get_capabilities_data)
+    export_proc->get_capabilities_data_destroy (export_proc->get_capabilities_data);
 
   return return_values;
 }
@@ -579,15 +586,21 @@ gimp_export_procedure_update_options (GimpProcedureConfig *config,
                                       GParamSpec          *param,
                                       gpointer             data)
 {
-  GimpProcedure       *procedure;
-  GimpExportProcedure *export_proc;
-  GimpExportOptions   *options = GIMP_EXPORT_OPTIONS (data);
+  GimpProcedure          *procedure;
+  GimpExportProcedure    *export_proc;
+  GimpExportOptions      *options = GIMP_EXPORT_OPTIONS (data);
+  GimpExportCapabilities  capabilities;
+
 
   procedure   = gimp_procedure_config_get_procedure (config);
   export_proc = GIMP_EXPORT_PROCEDURE (procedure);
 
-  export_proc->edit_func (procedure, config, options,
-                          export_proc->edit_data);
+  capabilities = export_proc->get_capabilities_func (procedure, config, options,
+                                                     export_proc->get_capabilities_data);
+
+  g_object_set (G_OBJECT (options),
+                "capabilities", capabilities,
+                NULL);
 }
 
 
@@ -665,23 +678,33 @@ gimp_export_procedure_new (GimpPlugIn       *plug_in,
 /**
  * gimp_export_procedure_set_capabilities:
  * @procedure:               a #GimpProcedure.
- * @capabilities:            a #GimpExportCapabilities enum
- * @edit_func: (nullable): callback function to update export options
- * @edit_data: (nullable): data for @edit_func
- * @edit_data_destroy: (nullable): free function for @edit_data, or %NULL
+ * @capabilities:            a #GimpExportCapabilities bitfield.
+ * @get_capabilities_func: (nullable): callback function to update export options
+ * @get_capabilities_data: (nullable): data for @get_capabilities_func
+ * @get_capabilities_data_destroy: (nullable): free function for @get_capabilities_data, or %NULL
  *
  * Sets default #GimpExportCapabilities for image export.
+ *
+ * @capabilities and @get_capabilities_func are overlapping arguments.
+ * Either set @capabilities if your format capabilities are stable or
+ * @get_capabilities_func if they depend on other options.
+ * If @get_capabilities_func is set, @capabilities must be 0.
+ *
+ * If set, @get_capabilities_func will be called every time an argument
+ * in the [class@Gimp.ProcedureConfig] is edited and it will be used to
+ * edit the export capabilities dynamically.
  *
  * Since: 3.0
  **/
 void
-gimp_export_procedure_set_capabilities (GimpExportProcedure       *procedure,
-                                        GimpExportCapabilities     capabilities,
-                                        GimpExportOptionsEditFunc  edit_func,
-                                        gpointer                   edit_data,
-                                        GDestroyNotify             edit_data_destroy)
+gimp_export_procedure_set_capabilities (GimpExportProcedure           *procedure,
+                                        GimpExportCapabilities         capabilities,
+                                        GimpExportGetCapabilitiesFunc  get_capabilities_func,
+                                        gpointer                       get_capabilities_data,
+                                        GDestroyNotify                 get_capabilities_data_destroy)
 {
   g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
+  g_return_if_fail (get_capabilities_func == NULL || capabilities == 0);
 
   /* Assign default image capabilities */
   g_object_set (procedure,
@@ -690,11 +713,11 @@ gimp_export_procedure_set_capabilities (GimpExportProcedure       *procedure,
 
   /* TODO: Do more with this when we have user-specified callbacks for
    * image capabilities */
-  if (edit_func != NULL)
+  if (get_capabilities_func != NULL)
     {
-      procedure->edit_func         = edit_func;
-      procedure->edit_data         = edit_data;
-      procedure->edit_data_destroy = edit_data_destroy;
+      procedure->get_capabilities_func         = get_capabilities_func;
+      procedure->get_capabilities_data         = get_capabilities_data;
+      procedure->get_capabilities_data_destroy = get_capabilities_data_destroy;
     }
 }
 

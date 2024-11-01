@@ -290,9 +290,7 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
     case GP_PARAM_DEF_TYPE_EXPORT_OPTIONS:
       if (! strcmp (param_def->type_name, "GimpParamExportOptions"))
         {
-          return gimp_param_spec_export_options (name, nick, blurb,
-                                                 param_def->meta.m_export_options.capabilities,
-                                                 flags);
+          return gimp_param_spec_export_options (name, nick, blurb, flags);
         }
       break;
 
@@ -522,11 +520,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
   else if (pspec_type == GIMP_TYPE_PARAM_EXPORT_OPTIONS)
     {
-      GimpParamSpecExportOptions *eospec = GIMP_PARAM_SPEC_EXPORT_OPTIONS (pspec);
-
       param_def->param_def_type = GP_PARAM_DEF_TYPE_EXPORT_OPTIONS;
-
-      param_def->meta.m_export_options.capabilities = eospec->capabilities;
     }
   else if (pspec_type == G_TYPE_PARAM_OBJECT &&
            value_type != G_TYPE_FILE &&
@@ -980,9 +974,11 @@ gimp_gp_param_to_value (gpointer        gimp,
     {
       GimpExportOptions *options;
 
-      options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS,
-                              "capabilities", param->data.d_export_options.capabilities,
-                              NULL);
+      /* Recreating the same options when it'll have settings. The
+       * "capabilities" property doesn't need to be recreated. It is
+       * managed by the GimpExportProcedure code.
+       */
+      options = g_object_new (GIMP_TYPE_EXPORT_OPTIONS, NULL);
 
       g_value_set_object (value, options);
 
@@ -1499,17 +1495,7 @@ gimp_value_to_gp_param (const GValue *value,
     }
   else if (g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_EXPORT_OPTIONS))
     {
-      GimpExportOptions *options      = g_value_get_object (value);
-      gint               capabilities = 0;
-
-      param->param_type = GP_PARAM_TYPE_INT;
-
-      if (options)
-        g_object_get (options,
-                      "capabilities", &capabilities,
-                      NULL);
-
-      param->data.d_export_options.capabilities = capabilities;
+      param->param_type = GP_PARAM_TYPE_EXPORT_OPTIONS;
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
