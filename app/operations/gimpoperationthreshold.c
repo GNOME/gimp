@@ -26,6 +26,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpcolor/gimpcolor-private.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "operations-types.h"

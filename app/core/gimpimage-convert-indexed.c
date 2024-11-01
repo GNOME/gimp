@@ -148,6 +148,7 @@
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpcolor/gimpcolor-private.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"

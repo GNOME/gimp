@@ -28,6 +28,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpcolor/gimpcolor-private.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 

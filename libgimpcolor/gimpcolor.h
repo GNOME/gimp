@@ -93,16 +93,6 @@ GParamSpec * gimp_param_spec_color_from_string (const gchar *name,
 gboolean     gimp_param_spec_color_has_alpha   (GParamSpec  *pspec);
 
 
-/* Legacy definition to calculate luminance from sRGB */
-#define GIMP_RGB_LUMINANCE_RED    (0.22248840)
-#define GIMP_RGB_LUMINANCE_GREEN  (0.71690369)
-#define GIMP_RGB_LUMINANCE_BLUE   (0.06060791)
-
-#define GIMP_RGB_LUMINANCE(r,g,b) ((r) * GIMP_RGB_LUMINANCE_RED   + \
-                                   (g) * GIMP_RGB_LUMINANCE_GREEN + \
-                                   (b) * GIMP_RGB_LUMINANCE_BLUE)
-
-
 
 /*
  * GIMP_TYPE_BABL_FORMAT

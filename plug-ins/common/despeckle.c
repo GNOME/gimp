@@ -24,6 +24,8 @@
 
 #include <stdlib.h>
 
+#include "libgimpcolor/gimpcolor-private.h"
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

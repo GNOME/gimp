@@ -34,6 +34,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpcolor/gimpcolor-private.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"

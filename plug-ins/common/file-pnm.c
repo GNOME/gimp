@@ -33,6 +33,8 @@
 #include <math.h>
 #include <errno.h>
 
+#include "libgimpcolor/gimpcolor-private.h"
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

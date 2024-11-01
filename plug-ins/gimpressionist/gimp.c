@@ -21,6 +21,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor-private.h"
+
 #include <libgimp/gimp.h>
 
 #include "ppmtool.h"
