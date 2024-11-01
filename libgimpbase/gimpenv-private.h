@@ -32,4 +32,3 @@ void          gimp_env_init                    (gboolean      plug_in);
 G_END_DECLS
 
 #endif  /*  __GIMP_ENV_PRIVATE_H__  */
-
