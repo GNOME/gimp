@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
   if [ "$0" != 'build/linux/flatpak/2_build-gimp-flatpak.sh' ] && [ ${PWD/*\//} != 'flatpak' ]; then

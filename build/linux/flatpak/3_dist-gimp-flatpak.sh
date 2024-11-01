@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 
 if [ "$GITLAB_CI" ]; then
   # Extract previously exported repo/
