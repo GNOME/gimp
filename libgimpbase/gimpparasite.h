@@ -48,8 +48,6 @@ GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
 #define GIMP_TYPE_PARAM_PARASITE           (gimp_param_parasite_get_type ())
 #define GIMP_IS_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PARASITE))
 
-typedef struct _GimpParamSpecParasite GimpParamSpecParasite;
-
 GType        gimp_param_parasite_get_type  (void) G_GNUC_CONST;
 
 GParamSpec * gimp_param_spec_parasite      (const gchar  *name,

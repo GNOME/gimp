@@ -60,12 +60,6 @@ G_DEFINE_BOXED_TYPE (GimpParasite, gimp_parasite, gimp_parasite_copy, gimp_paras
  * GIMP_TYPE_PARAM_PARASITE
  */
 
-#define GIMP_PARAM_SPEC_PARASITE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PARASITE, GimpParamSpecParasite))
-
-struct _GimpParamSpecParasite
-{
-  GParamSpecBoxed parent_instance;
-};
 
 static void       gimp_param_parasite_class_init  (GParamSpecClass *class);
 static void       gimp_param_parasite_init        (GParamSpec      *pspec);
@@ -88,7 +82,7 @@ gimp_param_parasite_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_parasite_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecParasite),
+        sizeof (GParamSpecBoxed),
         0,
         (GInstanceInitFunc) gimp_param_parasite_init
       };
@@ -177,12 +171,12 @@ gimp_param_spec_parasite (const gchar *name,
                           const gchar *blurb,
                           GParamFlags  flags)
 {
-  GimpParamSpecParasite *parasite_spec;
+  GParamSpec *parasite_spec;
 
   parasite_spec = g_param_spec_internal (GIMP_TYPE_PARAM_PARASITE,
                                          name, nick, blurb, flags);
 
-  return G_PARAM_SPEC (parasite_spec);
+  return parasite_spec;
 }
 
 

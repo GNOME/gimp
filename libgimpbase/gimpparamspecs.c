@@ -294,7 +294,7 @@ gimp_param_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecArray),
+        sizeof (GParamSpecBoxed),
         0,
         (GInstanceInitFunc) gimp_param_array_init
       };
@@ -382,12 +382,12 @@ gimp_param_spec_array (const gchar *name,
                        const gchar *blurb,
                        GParamFlags  flags)
 {
-  GimpParamSpecArray *array_spec;
+  GParamSpec *array_spec;
 
   array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_ARRAY,
                                       name, nick, blurb, flags);
 
-  return G_PARAM_SPEC (array_spec);
+  return array_spec;
 }
 
 static const guint8 *
@@ -515,7 +515,7 @@ gimp_param_int32_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_int32_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecInt32Array),
+        sizeof (GParamSpecBoxed),
         0,
         (GInstanceInitFunc) gimp_param_int32_array_init
       };
@@ -560,12 +560,12 @@ gimp_param_spec_int32_array (const gchar *name,
                              const gchar *blurb,
                              GParamFlags  flags)
 {
-  GimpParamSpecArray *array_spec;
+  GParamSpec *array_spec;
 
   array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_INT32_ARRAY,
                                       name, nick, blurb, flags);
 
-  return G_PARAM_SPEC (array_spec);
+  return array_spec;
 }
 
 /**
@@ -750,7 +750,7 @@ gimp_param_float_array_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_float_array_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecFloatArray),
+        sizeof (GParamSpecBoxed),
         0,
         (GInstanceInitFunc) gimp_param_float_array_init
       };
@@ -795,12 +795,12 @@ gimp_param_spec_float_array (const gchar *name,
                              const gchar *blurb,
                              GParamFlags  flags)
 {
-  GimpParamSpecArray *array_spec;
+  GParamSpec *array_spec;
 
   array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_FLOAT_ARRAY,
                                       name, nick, blurb, flags);
 
-  return G_PARAM_SPEC (array_spec);
+  return array_spec;
 }
 
 /**

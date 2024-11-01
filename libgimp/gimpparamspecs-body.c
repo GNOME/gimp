@@ -258,7 +258,7 @@ gimp_param_drawable_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_drawable_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecDrawable),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_drawable_init
       };
@@ -338,7 +338,7 @@ gimp_param_layer_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_layer_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecLayer),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_layer_init
       };
@@ -418,7 +418,7 @@ gimp_param_text_layer_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_text_layer_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecTextLayer),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_text_layer_init
       };
@@ -498,7 +498,7 @@ gimp_param_group_layer_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_group_layer_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecGroupLayer),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_group_layer_init
       };
@@ -578,7 +578,7 @@ gimp_param_channel_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_channel_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecChannel),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_channel_init
       };
@@ -658,7 +658,7 @@ gimp_param_layer_mask_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_layer_mask_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecLayerMask),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_layer_mask_init
       };
@@ -738,7 +738,7 @@ gimp_param_selection_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_selection_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecSelection),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_selection_init
       };
@@ -818,7 +818,7 @@ gimp_param_path_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_path_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecPath),
+        sizeof (GimpParamSpecItem),
         0,
         (GInstanceInitFunc) gimp_param_path_init
       };
@@ -1234,7 +1234,7 @@ gimp_param_brush_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_brush_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecBrush),
+        sizeof (GimpParamSpecResource),
         0,
         (GInstanceInitFunc) gimp_param_brush_init
       };
@@ -1309,7 +1309,7 @@ gimp_param_pattern_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_pattern_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecPattern),
+        sizeof (GimpParamSpecResource),
         0,
         (GInstanceInitFunc) gimp_param_pattern_init
       };
@@ -1384,7 +1384,7 @@ gimp_param_gradient_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_gradient_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecGradient),
+        sizeof (GimpParamSpecResource),
         0,
         (GInstanceInitFunc) gimp_param_gradient_init
       };
@@ -1459,7 +1459,7 @@ gimp_param_palette_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_palette_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecPalette),
+        sizeof (GimpParamSpecResource),
         0,
         (GInstanceInitFunc) gimp_param_palette_init
       };
@@ -1534,7 +1534,7 @@ gimp_param_font_get_type (void)
         NULL, NULL,
         (GClassInitFunc) gimp_param_font_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecFont),
+        sizeof (GimpParamSpecResource),
         0,
         (GInstanceInitFunc) gimp_param_font_init
       };

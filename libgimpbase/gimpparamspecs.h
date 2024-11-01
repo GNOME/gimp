@@ -189,15 +189,7 @@ GType   gimp_array_get_type           (void) G_GNUC_CONST;
  */
 
 #define GIMP_TYPE_PARAM_ARRAY           (gimp_param_array_get_type ())
-#define GIMP_PARAM_SPEC_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_ARRAY, GimpParamSpecArray))
 #define GIMP_IS_PARAM_SPEC_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_ARRAY))
-
-typedef struct _GimpParamSpecArray GimpParamSpecArray;
-
-struct _GimpParamSpecArray
-{
-  GParamSpecBoxed parent_instance;
-};
 
 GType        gimp_param_array_get_type (void) G_GNUC_CONST;
 
@@ -229,15 +221,7 @@ void           gimp_int32_array_set_values         (GimpArray    *array,
  */
 
 #define GIMP_TYPE_PARAM_INT32_ARRAY           (gimp_param_int32_array_get_type ())
-#define GIMP_PARAM_SPEC_INT32_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_INT32_ARRAY, GimpParamSpecInt32Array))
 #define GIMP_IS_PARAM_SPEC_INT32_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_INT32_ARRAY))
-
-typedef struct _GimpParamSpecInt32Array GimpParamSpecInt32Array;
-
-struct _GimpParamSpecInt32Array
-{
-  GimpParamSpecArray parent_instance;
-};
 
 GType          gimp_param_int32_array_get_type   (void) G_GNUC_CONST;
 
@@ -283,15 +267,7 @@ void            gimp_float_array_set_values         (GimpArray     *array,
  */
 
 #define GIMP_TYPE_PARAM_FLOAT_ARRAY           (gimp_param_float_array_get_type ())
-#define GIMP_PARAM_SPEC_FLOAT_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_FLOAT_ARRAY, GimpParamSpecFloatArray))
 #define GIMP_IS_PARAM_SPEC_FLOAT_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_FLOAT_ARRAY))
-
-typedef struct _GimpParamSpecFloatArray GimpParamSpecFloatArray;
-
-struct _GimpParamSpecFloatArray
-{
-  GimpParamSpecArray parent_instance;
-};
 
 GType           gimp_param_float_array_get_type   (void) G_GNUC_CONST;
 

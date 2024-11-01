@@ -96,15 +96,7 @@ GParamSpec * gimp_param_spec_item     (const gchar  *name,
                                             GIMP_TYPE_DRAWABLE))
 
 #define GIMP_TYPE_PARAM_DRAWABLE           (gimp_param_drawable_get_type ())
-#define GIMP_PARAM_SPEC_DRAWABLE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DRAWABLE, GimpParamSpecDrawable))
 #define GIMP_IS_PARAM_SPEC_DRAWABLE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DRAWABLE))
-
-typedef struct _GimpParamSpecDrawable GimpParamSpecDrawable;
-
-struct _GimpParamSpecDrawable
-{
-  GimpParamSpecItem parent_instance;
-};
 
 GType        gimp_param_drawable_get_type (void) G_GNUC_CONST;
 
@@ -123,15 +115,7 @@ GParamSpec * gimp_param_spec_drawable     (const gchar  *name,
                                          GIMP_TYPE_LAYER))
 
 #define GIMP_TYPE_PARAM_LAYER           (gimp_param_layer_get_type ())
-#define GIMP_PARAM_SPEC_LAYER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_LAYER, GimpParamSpecLayer))
 #define GIMP_IS_PARAM_SPEC_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_LAYER))
-
-typedef struct _GimpParamSpecLayer GimpParamSpecLayer;
-
-struct _GimpParamSpecLayer
-{
-  GimpParamSpecDrawable parent_instance;
-};
 
 GType        gimp_param_layer_get_type (void) G_GNUC_CONST;
 
@@ -150,15 +134,7 @@ GParamSpec * gimp_param_spec_layer     (const gchar  *name,
                                               GIMP_TYPE_TEXT_LAYER))
 
 #define GIMP_TYPE_PARAM_TEXT_LAYER           (gimp_param_text_layer_get_type ())
-#define GIMP_PARAM_SPEC_TEXT_LAYER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_TEXT_LAYER, GimpParamSpecTextLayer))
 #define GIMP_IS_PARAM_SPEC_TEXT_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_TEXT_LAYER))
-
-typedef struct _GimpParamSpecTextLayer GimpParamSpecTextLayer;
-
-struct _GimpParamSpecTextLayer
-{
-  GimpParamSpecLayer parent_instance;
-};
 
 GType        gimp_param_text_layer_get_type (void) G_GNUC_CONST;
 
@@ -177,15 +153,7 @@ GParamSpec * gimp_param_spec_text_layer     (const gchar  *name,
                                                GIMP_TYPE_GROUP_LAYER))
 
 #define GIMP_TYPE_PARAM_GROUP_LAYER           (gimp_param_group_layer_get_type ())
-#define GIMP_PARAM_SPEC_GROUP_LAYER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_GROUP_LAYER, GimpParamSpecGroupLayer))
 #define GIMP_IS_PARAM_SPEC_GROUP_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_GROUP_LAYER))
-
-typedef struct _GimpParamSpecGroupLayer GimpParamSpecGroupLayer;
-
-struct _GimpParamSpecGroupLayer
-{
-  GimpParamSpecLayer parent_instance;
-};
 
 GType        gimp_param_group_layer_get_type (void) G_GNUC_CONST;
 
@@ -204,15 +172,7 @@ GParamSpec * gimp_param_spec_group_layer     (const gchar  *name,
                                            GIMP_TYPE_CHANNEL))
 
 #define GIMP_TYPE_PARAM_CHANNEL           (gimp_param_channel_get_type ())
-#define GIMP_PARAM_SPEC_CHANNEL(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CHANNEL, GimpParamSpecChannel))
 #define GIMP_IS_PARAM_SPEC_CHANNEL(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CHANNEL))
-
-typedef struct _GimpParamSpecChannel GimpParamSpecChannel;
-
-struct _GimpParamSpecChannel
-{
-  GimpParamSpecDrawable parent_instance;
-};
 
 GType        gimp_param_channel_get_type (void) G_GNUC_CONST;
 
@@ -231,15 +191,7 @@ GParamSpec * gimp_param_spec_channel     (const gchar  *name,
                                               GIMP_TYPE_LAYER_MASK))
 
 #define GIMP_TYPE_PARAM_LAYER_MASK           (gimp_param_layer_mask_get_type ())
-#define GIMP_PARAM_SPEC_LAYER_MASK(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_LAYER_MASK, GimpParamSpecLayerMask))
 #define GIMP_IS_PARAM_SPEC_LAYER_MASK(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_LAYER_MASK))
-
-typedef struct _GimpParamSpecLayerMask GimpParamSpecLayerMask;
-
-struct _GimpParamSpecLayerMask
-{
-  GimpParamSpecChannel parent_instance;
-};
 
 GType        gimp_param_layer_mask_get_type (void) G_GNUC_CONST;
 
@@ -258,15 +210,7 @@ GParamSpec * gimp_param_spec_layer_mask     (const gchar   *name,
                                              GIMP_TYPE_SELECTION))
 
 #define GIMP_TYPE_PARAM_SELECTION           (gimp_param_selection_get_type ())
-#define GIMP_PARAM_SPEC_SELECTION(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_SELECTION, GimpParamSpecSelection))
 #define GIMP_IS_PARAM_SPEC_SELECTION(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SELECTION))
-
-typedef struct _GimpParamSpecSelection GimpParamSpecSelection;
-
-struct _GimpParamSpecSelection
-{
-  GimpParamSpecChannel parent_instance;
-};
 
 GType        gimp_param_selection_get_type (void) G_GNUC_CONST;
 
@@ -285,15 +229,7 @@ GParamSpec * gimp_param_spec_selection     (const gchar   *name,
                                         GIMP_TYPE_PATH))
 
 #define GIMP_TYPE_PARAM_PATH           (gimp_param_path_get_type ())
-#define GIMP_PARAM_SPEC_PATH(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PATH, GimpParamSpecPath))
 #define GIMP_IS_PARAM_SPEC_PATH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATH))
-
-typedef struct _GimpParamSpecPath GimpParamSpecPath;
-
-struct _GimpParamSpecPath
-{
-  GimpParamSpecItem parent_instance;
-};
 
 GType        gimp_param_path_get_type (void) G_GNUC_CONST;
 
@@ -373,15 +309,7 @@ GParamSpec * gimp_param_spec_resource     (const gchar  *name,
                                          GIMP_TYPE_BRUSH))
 
 #define GIMP_TYPE_PARAM_BRUSH           (gimp_param_brush_get_type ())
-#define GIMP_PARAM_SPEC_BRUSH(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_BRUSH, GimpParamSpecBrush))
 #define GIMP_IS_PARAM_SPEC_BRUSH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_BRUSH))
-
-typedef struct _GimpParamSpecBrush GimpParamSpecBrush;
-
-struct _GimpParamSpecBrush
-{
-  GimpParamSpecResource  parent_instance;
-};
 
 GType        gimp_param_brush_get_type (void) G_GNUC_CONST;
 
@@ -402,15 +330,7 @@ GParamSpec * gimp_param_spec_brush (const gchar  *name,
                                            GIMP_TYPE_PATTERN))
 
 #define GIMP_TYPE_PARAM_PATTERN           (gimp_param_pattern_get_type ())
-#define GIMP_PARAM_SPEC_PATTERN(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PATTERN, GimpParamSpecPattern))
 #define GIMP_IS_PARAM_SPEC_PATTERN(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATTERN))
-
-typedef struct _GimpParamSpecPattern GimpParamSpecPattern;
-
-struct _GimpParamSpecPattern
-{
-  GimpParamSpecResource  parent_instance;
-};
 
 GType        gimp_param_pattern_get_type (void) G_GNUC_CONST;
 
@@ -431,15 +351,7 @@ GParamSpec * gimp_param_spec_pattern (const gchar  *name,
                                             GIMP_TYPE_GRADIENT))
 
 #define GIMP_TYPE_PARAM_GRADIENT           (gimp_param_gradient_get_type ())
-#define GIMP_PARAM_SPEC_GRADIENT(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_GRADIENT, GimpParamSpecGradient))
 #define GIMP_IS_PARAM_SPEC_GRADIENT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_GRADIENT))
-
-typedef struct _GimpParamSpecGradient GimpParamSpecGradient;
-
-struct _GimpParamSpecGradient
-{
-  GimpParamSpecResource  parent_instance;
-};
 
 GType        gimp_param_gradient_get_type (void) G_GNUC_CONST;
 
@@ -460,15 +372,7 @@ GParamSpec * gimp_param_spec_gradient (const gchar  *name,
                                            GIMP_TYPE_PALETTE))
 
 #define GIMP_TYPE_PARAM_PALETTE           (gimp_param_palette_get_type ())
-#define GIMP_PARAM_SPEC_PALETTE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PALETTE, GimpParamSpecPalette))
 #define GIMP_IS_PARAM_SPEC_PALETTE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PALETTE))
-
-typedef struct _GimpParamSpecPalette GimpParamSpecPalette;
-
-struct _GimpParamSpecPalette
-{
-  GimpParamSpecResource  parent_instance;
-};
 
 GType        gimp_param_palette_get_type (void) G_GNUC_CONST;
 
@@ -489,15 +393,7 @@ GParamSpec * gimp_param_spec_palette (const gchar  *name,
                                         GIMP_TYPE_FONT))
 
 #define GIMP_TYPE_PARAM_FONT           (gimp_param_font_get_type ())
-#define GIMP_PARAM_SPEC_FONT(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_FONT, GimpParamSpecFont))
 #define GIMP_IS_PARAM_SPEC_FONT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_FONT))
-
-typedef struct _GimpParamSpecFont GimpParamSpecFont;
-
-struct _GimpParamSpecFont
-{
-  GimpParamSpecResource  parent_instance;
-};
 
 GType        gimp_param_font_get_type (void) G_GNUC_CONST;
 
