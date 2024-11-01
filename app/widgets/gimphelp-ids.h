@@ -60,6 +60,8 @@
 #define GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER         "gimp-edit-paste-as-new-layer"
 #define GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER_IN_PLACE "gimp-edit-paste-as-new-layer-in-place"
 #define GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE         "gimp-edit-paste-as-new-image"
+#define GIMP_HELP_EDIT_PASTE_FLOAT                "gimp-edit-paste-float"
+#define GIMP_HELP_EDIT_PASTE_FLOAT_IN_PLACE       "gimp-edit-paste-float-in-place"
 #define GIMP_HELP_EDIT_CLEAR                      "gimp-edit-clear"
 #define GIMP_HELP_EDIT_FILL_FG                    "gimp-edit-fill-fg"
 #define GIMP_HELP_EDIT_FILL_BG                    "gimp-edit-fill-bg"

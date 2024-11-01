@@ -198,13 +198,13 @@ static const GimpEnumActionEntry edit_paste_actions[] =
     NC_("edit-action", "Paste as _Floating Data"), NULL, { NULL },
     NC_("edit-action", "Paste the content of the clipboard as Floating Data"),
     GIMP_PASTE_TYPE_FLOATING, FALSE,
-    GIMP_HELP_EDIT_PASTE },
+    GIMP_HELP_EDIT_PASTE_FLOAT },
 
   { "edit-paste-float-in-place", GIMP_ICON_EDIT_PASTE,
     NC_("edit-action", "Paste as Floa_ting Data In Place"), NULL, { NULL },
     NC_("edit-action", "Paste the content of the clipboard as Floating Data at its original position"),
     GIMP_PASTE_TYPE_FLOATING_IN_PLACE, FALSE,
-    GIMP_HELP_EDIT_PASTE }
+    GIMP_HELP_EDIT_PASTE_FLOAT_IN_PLACE }
 };
 
 static const GimpEnumActionEntry edit_fill_actions[] =
