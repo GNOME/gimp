@@ -4,22 +4,15 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "master",
     "sdk": "org.gnome.Sdk",
-    "sdk-extensions": [
-        "org.freedesktop.Sdk.Extension.llvm18"
-    ],
     "command": "gimp",
     "build-options": {
-        "append-path": "/usr/lib/sdk/llvm18/bin",
-        "prepend-ld-library-path": "/usr/lib/sdk/llvm18/lib",
         "env": {
-            "CC": "ccache clang",
-            "CXX": "ccache clang++",
-            "CC_LD": "lld",
-            "CXX_LD": "lld",
+            "CC": "ccache cc",
+            "CXX": "ccache c++",
             "CLICOLOR_FORCE": "1"
         },
-        "cflags": "-fcolor-diagnostics",
-        "cxxflags": "-fcolor-diagnostics"
+        "cflags": "-fdiagnostics-color=always",
+        "cxxflags": "-fdiagnostics-color=always"
     },
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
@@ -569,8 +562,7 @@
                     "buildsystem": "cmake-ninja",
                     "config-opts": [
                         "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
-                        "-DCMAKE_CXX_COMPILER=clang++",
-                        "-DCMAKE_CXX_FLAGS=-fuse-ld=lld",
+                        "-DCMAKE_CXX_COMPILER=c++",
                         "-DCMAKE_INSTALL_PREFIX=/app/lib/libheif",
                         "-DEXTRA_LIB='libx265-10.a;libx265-12.a'",
                         "-DEXTRA_LINK_FLAGS=-L/app/lib/libheif/lib",

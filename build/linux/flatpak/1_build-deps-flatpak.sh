@@ -30,8 +30,6 @@ if [ -z "$GITLAB_CI" ]; then
   flatpak remote-add --if-not-exists --user --from gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
   flatpak install --user gnome-nightly org.gnome.Platform/$(uname -m)/master org.gnome.Sdk/$(uname -m)/master -y
 fi
-flatpak remote-add --if-not-exists --user --from flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user flathub org.freedesktop.Sdk.Extension.llvm18 -y
 
 
 # Prepare env (only GIMP_PREFIX is needed for flatpak)
