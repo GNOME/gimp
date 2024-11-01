@@ -4,8 +4,9 @@ set -e
 
 
 if [ "$GITLAB_CI" ]; then
-  # Extract previously exported repo/
-  tar xf repo.tar
+  # Extract previously exported OSTree repo/
+  echo '(INFO): extracting previously exported repo'
+  tar xf repo.tar --warning=no-timestamp
 fi
 
 
