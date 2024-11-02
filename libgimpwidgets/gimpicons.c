@@ -306,7 +306,8 @@ gimp_icons_init (void)
 
   if (pixbuf)
     {
-      gtk_icon_theme_add_builtin_icon (GIMP_ICON_WILBER_EEK, 64, pixbuf);
+      gtk_icon_theme_add_resource_path (gtk_icon_theme_get_default (),
+                                        "/org/gimp/icons/64/gimp-wilber-eek.png");
       g_object_unref (pixbuf);
     }
   else
