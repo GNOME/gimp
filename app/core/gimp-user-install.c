@@ -71,7 +71,7 @@ struct _GimpUserInstall
 
   gint                    scale_factor;
 
-  const gchar            *migrate;
+  gboolean                migrate;
 
   GimpUserInstallLogFunc  log;
   gpointer                log_data;
@@ -118,7 +118,8 @@ gimp_user_install_items[] =
 
 static gboolean  user_install_detect_old         (GimpUserInstall    *install,
                                                   const gchar        *gimp_dir);
-static gchar *   user_install_old_style_gimpdir  (void);
+static gchar   * user_install_old_style_gimpdir  (void);
+static gchar   * user_install_flatpak_gimpdir    (gint                minor);
 
 static void      user_install_log                (GimpUserInstall    *install,
                                                   const gchar        *format,
@@ -214,16 +215,28 @@ gimp_user_install_run (GimpUserInstall *install,
   dirname = g_filename_display_name (gimp_directory ());
 
   if (install->migrate)
-    user_install_log (install,
-                      _("It seems you have used GIMP %s before.  "
-                        "GIMP will now migrate your user settings to '%s'."),
-                      install->migrate, dirname);
+    {
+      gchar *verstring;
+
+      /* TODO: these 2 strings should be merged into one, but it was not
+       * possible to do it at implementation time, in order not to break
+       * string freeze.
+       */
+      verstring = g_strdup_printf ("%d.%d", install->old_major, install->old_minor);
+      user_install_log (install,
+                        _("It seems you have used GIMP %s before.  "
+                          "GIMP will now migrate your user settings to '%s'."),
+                        verstring, dirname);
+      g_free (verstring);
+    }
   else
-    user_install_log (install,
-                      _("It appears that you are using GIMP for the "
-                        "first time.  GIMP will now create a folder "
-                        "named '%s' and copy some files to it."),
-                      dirname);
+    {
+      user_install_log (install,
+                        _("It appears that you are using GIMP for the "
+                          "first time.  GIMP will now create a folder "
+                          "named '%s' and copy some files to it."),
+                        dirname);
+    }
 
   g_free (dirname);
 
@@ -267,7 +280,7 @@ static gboolean
 user_install_detect_old (GimpUserInstall *install,
                          const gchar     *gimp_dir)
 {
-  gchar    *dir     = g_strdup (gimp_dir);
+  gchar    *dir     = g_strconcat (gimp_dir, "ZZZ", NULL);
   gchar    *version;
   gboolean  migrate = FALSE;
 
@@ -288,21 +301,72 @@ user_install_detect_old (GimpUserInstall *install,
 
           if (migrate)
             {
-#ifdef GIMP_UNSTABLE
-              g_printerr ("gimp-user-install: migrating from %s\n", dir);
-#endif
               install->old_major = 2;
               install->old_minor = i;
 
               break;
             }
+
+#ifdef G_OS_UNIX
+          if (i == 10)
+            {
+              /* This is special-casing for GIMP 2.10 as flatpak where
+               * we had this weird inconsistency: depending on whether a
+               * previous $XDG_CONFIG_HOME/GIMP/ folder was found or
+               * not, the config folder would be either inside, or would
+               * be in $HOME/.var/<etc> as other flatpak (see #5331).
+               * For GIMP 3, even the flatpak will always be in
+               * $XDG_CONFIG_HOME. But then we want a migration to still
+               * find the previous config folder.
+               * If one was found in $XDG_CONFIG_HOME, it is used in
+               * priority. Then ~/.var/ is used a fallback, if found.
+               */
+              gchar *flatpak_dir = user_install_flatpak_gimpdir (i);
+
+              if (flatpak_dir)
+                /* This first test is for finding a 2.10 flatpak config
+                 * dir from a non-flatpak GIMP 3+.
+                 */
+                migrate = g_file_test (flatpak_dir, G_FILE_TEST_IS_DIR);
+
+              if (! migrate && g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS))
+                {
+                  /* Now we check /var/config/GIMP because this is where
+                   * local ~/.var/ is mounted inside the sandbox.
+                   * So this second test is for finding a 2.10 flatpak
+                   * config dir from a flatpak GIMP 3+.
+                   */
+                  g_free (flatpak_dir);
+                  flatpak_dir = g_build_filename ("/var/config/GIMP/", version, NULL);
+
+                  migrate = g_file_test (flatpak_dir, G_FILE_TEST_IS_DIR);
+                }
+
+              if (migrate)
+                {
+                  install->old_major = 2;
+                  install->old_minor = i;
+
+                  g_free (dir);
+                  dir = flatpak_dir;
+                  break;
+                }
+              else
+                {
+                  g_free (flatpak_dir);
+                }
+            }
+#endif
         }
     }
 
+  install->migrate = migrate;
   if (migrate)
     {
       install->old_dir = dir;
-      install->migrate = (const gchar *) version;
+#ifdef GIMP_UNSTABLE
+      g_printerr ("gimp-user-install: migrating from %s\n", dir);
+#endif
     }
   else
     {
@@ -354,6 +418,27 @@ user_install_old_style_gimpdir (void)
       g_free (user_name);
       g_free (subdir_name);
     }
+
+  return gimp_dir;
+}
+
+static gchar *
+user_install_flatpak_gimpdir (gint minor)
+{
+  const gchar *home_dir = g_get_home_dir ();
+  gchar       *version  = g_strdup_printf ("2.%d", minor);
+  gchar       *gimp_dir = NULL;
+
+  if (home_dir)
+    /* AFAIK (after researching flatpak docs, and searching the web),
+     * the ~/.var/ directory is hardcoded and cannot be modified by an
+     * environment variable.
+     */
+    gimp_dir = g_build_filename (home_dir,
+                                 ".var/app/org.gimp.GIMP/config/GIMP/",
+                                 version, NULL);
+
+  g_free (version);
 
   return gimp_dir;
 }
