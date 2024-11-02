@@ -63,6 +63,15 @@ Core:
     * GeglOperationSink operations;
     * GEGL Graph ("gegl:gegl") except if the environment variable
       GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT is set.
+  - On UNIX-like OSes, at first startup, if a 2.10 folder was not found
+    in the usual $XDG_CONFIG_HOME, we now lookup the flatpak folder
+    ~/.var/app/org.gimp.GIMP/config/ so that we are able to migrate from
+    a config created by a flatpak 2.10. Not only this, but we also look
+    in /var/config/ which is a mount to the same folder, from the host,
+    inside the flatpak sandbox. This way, both a 3.0 flatpak and
+    non-flatpak will find the config of the 2.10 flatpak despite the
+    change done to the flatpak manifest to always use $XDG_CONFIG_HOME
+    (see Build section).
 
 Tools:
 
@@ -303,6 +312,8 @@ API:
     * Updated functions:
       - gimp_help_connect() has a new `tooltip` argument as a proper
         advanced version of gimp_help_set_help_data().
+    * GimpFileEntry was made private because it is still used internally
+      but the whole API was deprecated since 2006.
   - Changes in libgimpbase:
     * GimpRGB and GimpRGB arrays are not supported anymore in the PDB and GIMP
       Protocol (only GeglColor and GimpColorArray).
@@ -341,6 +352,9 @@ API:
       (GeglColor based rather than GimpRGB).
     * GimpRGB, GimpCMYK, GimpHSV, GimpHSL type and all usage was
       removed. Related API were deleted too.
+    * GIMP_RGB_LUMINANCE* macros were made private. They are still used
+      internally by some core plug-ins but are not exposed anymore as
+      official API.
   - Changes in libgimpconfig:
     * Removed functions:
       - gimp_config_serialize_strv()
