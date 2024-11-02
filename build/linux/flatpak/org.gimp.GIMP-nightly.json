@@ -839,7 +839,7 @@
                             ],
                             "no-autogen": true,
                             "make-args": [
-                                "DYNAMIC_ARCH=0",
+                                "DYNAMIC_ARCH=1",
                                 "USE_OPENMP=0",
                                 "NO_CBLAS=1",
                                 "NO_LAPACKE=1"
