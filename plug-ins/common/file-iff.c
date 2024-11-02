@@ -38,9 +38,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-iff-load"
-#define PLUG_IN_BINARY "file-iff"
-#define PLUG_IN_ROLE   "gimp-file-iff"
+#define LOAD_PROC       "file-iff-load"
+#define LOAD_THUMB_PROC "file-iff-load-thumb"
+#define PLUG_IN_BINARY  "file-iff"
+#define PLUG_IN_ROLE    "gimp-file-iff"
 
 typedef struct _Iff      Iff;
 typedef struct _IffClass IffClass;
@@ -73,9 +74,15 @@ static GimpValueArray * iff_load             (GimpProcedure         *procedure,
                                               GimpMetadataLoadFlags *flags,
                                               GimpProcedureConfig   *config,
                                               gpointer               run_data);
+static GimpValueArray * iff_load_thumb       (GimpProcedure         *procedure,
+                                              GFile                 *file,
+                                              gint                   size,
+                                              GimpProcedureConfig   *config,
+                                              gpointer               run_data);
 
 static GimpImage      * load_image           (GFile                 *file,
                                               GObject               *config,
+                                              gboolean               is_thumbnail,
                                               GimpRunMode            run_mode,
                                               GError               **error);
 
@@ -127,6 +134,7 @@ iff_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
+  list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
 
   return list;
@@ -161,7 +169,27 @@ iff_create_procedure (GimpPlugIn  *plug_in,
                                           "iff,ilbm,lbm,acbm,ham,ham6,ham8");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,FORM");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
     }
+  else if (! strcmp (name, LOAD_THUMB_PROC))
+    {
+      procedure = gimp_thumbnail_procedure_new (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                iff_load_thumb, NULL, NULL);
+
+      /* TODO: localize when string freeze is over. */
+      gimp_procedure_set_documentation (procedure,
+                                        "Load IFF file as thumbnail",
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alex S.",
+                                      "Alex S.",
+                                      "2024");
+    }
+
 
   return procedure;
 }
@@ -181,7 +209,7 @@ iff_load (GimpProcedure         *procedure,
 
   gegl_init (NULL, NULL);
 
-  image = load_image (file, G_OBJECT (config), run_mode, &error);
+  image = load_image (file, G_OBJECT (config), FALSE, run_mode, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
@@ -197,9 +225,44 @@ iff_load (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+iff_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
+
+  gegl_init (NULL, NULL);
+
+  image = load_image (file, G_OBJECT (config), TRUE, GIMP_RUN_NONINTERACTIVE,
+                      &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  GIMP_VALUES_SET_INT   (return_vals, 2, gimp_image_get_width  (image));
+  GIMP_VALUES_SET_INT   (return_vals, 3, gimp_image_get_height (image));
+
+  gimp_value_array_truncate (return_vals, 4);
+
+  return return_vals;
+}
+
 static GimpImage *
 load_image (GFile        *file,
             GObject      *config,
+            gboolean      is_thumbnail,
             GimpRunMode   run_mode,
             GError      **error)
 {
@@ -358,8 +421,9 @@ load_image (GFile        *file,
           gdouble image_yres;
           gfloat  ratio = (gfloat) aspect_x / aspect_y;
 
-          g_message (_("Non-square pixels. Image might look squashed if "
-                       "Dot for Dot mode is enabled."));
+          if (! is_thumbnail)
+            g_message (_("Non-square pixels. Image might look squashed if "
+                         "Dot for Dot mode is enabled."));
 
           gimp_image_get_resolution (image, &image_xres, &image_yres);
           if (ratio < 1)
