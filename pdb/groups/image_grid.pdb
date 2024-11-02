@@ -30,9 +30,9 @@ HELP
     );
 
     @outargs = (
-        { name => 'xspacing', type => 'float', void_ret => 1,
+        { name => 'xspacing', type => 'double', void_ret => 1,
           desc => "The image's grid horizontal spacing" },
-        { name => 'yspacing', type => 'float', void_ret => 1,
+        { name => 'yspacing', type => 'double', void_ret => 1,
           desc => "The image's grid vertical spacing" }
     );
 
@@ -65,9 +65,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'xspacing', type => 'float',
+        { name => 'xspacing', type => 'double',
           desc => "The image's grid horizontal spacing" },
-        { name => 'yspacing', type => 'float',
+        { name => 'yspacing', type => 'double',
           desc => "The image's grid vertical spacing" }
     );
 
@@ -104,9 +104,9 @@ HELP
     );
 
     @outargs = (
-        { name => 'xoffset', type => 'float', void_ret => 1,
+        { name => 'xoffset', type => 'double', void_ret => 1,
           desc => "The image's grid horizontal offset" },
-        { name => 'yoffset', type => 'float', void_ret => 1,
+        { name => 'yoffset', type => 'double', void_ret => 1,
           desc => "The image's grid vertical offset" }
     );
 
@@ -139,9 +139,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'xoffset', type => 'float',
+        { name => 'xoffset', type => 'double',
           desc => "The image's grid horizontal offset" },
-        { name => 'yoffset', type => 'float',
+        { name => 'yoffset', type => 'double',
           desc => "The image's grid vertical offset" }
     );
 

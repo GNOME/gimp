@@ -40,7 +40,7 @@ HELP
           desc => 'The text to generate (in UTF-8 encoding)' },
         { name => 'font', type => 'font',
           desc => 'The font to write the text with' },
-        { name => 'size', type => '0.0 <= float <= 8192.0',
+        { name => 'size', type => '0.0 <= double <= 8192.0',
           desc => 'The size of text in either pixels or points' },
         { name => 'unit', type => 'unit', allow_pixel => 1,
           desc => 'The units of specified size' }
@@ -294,7 +294,7 @@ sub text_layer_get_font_size {
 
     $help = <<'HELP';
 This procedure returns the size of the font which is used in a text
-layer. You will receive the size as a float 'font-size' in 'unit'
+layer. You will receive the size as a double 'font-size' in 'unit'
 units.
 HELP
 
@@ -306,7 +306,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'font_size', type => 'float',
+        { name => 'font_size', type => 'double',
           desc => 'The font size' },
         { name => 'unit', type => 'unit',
           desc => 'The unit used for the font size' }
@@ -337,7 +337,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'font_size', type => '0.0 <= float <= 8192.0',
+        { name => 'font_size', type => '0.0 <= double <= 8192.0',
           desc => 'The font size' },
         { name => 'unit', type => 'unit',
           desc => 'The unit to use for the font size' }
@@ -785,7 +785,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'indent', type => 'float',
+        { name => 'indent', type => 'double',
           desc => 'The indentation value of the first line.' }
     );
 
@@ -812,7 +812,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'indent', type => '-8192.0 <= float <= 8192.0',
+        { name => 'indent', type => '-8192.0 <= double <= 8192.0',
           desc => 'The indentation for the first line.' }
      );
 
@@ -843,7 +843,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'line_spacing', type => 'float',
+        { name => 'line_spacing', type => 'double',
           desc => 'The line-spacing value.' }
     );
 
@@ -870,7 +870,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'line_spacing', type => '-8192.0 <= float <= 8192.0',
+        { name => 'line_spacing', type => '-8192.0 <= double <= 8192.0',
           desc => 'The additional line spacing to use.' }
     );
 
@@ -902,7 +902,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'letter_spacing', type => 'float',
+        { name => 'letter_spacing', type => 'double',
           desc => 'The letter-spacing value.' }
     );
 
@@ -930,7 +930,7 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'letter_spacing', type => '-8192.0 <= float <= 8192.0',
+        { name => 'letter_spacing', type => '-8192.0 <= double <= 8192.0',
           desc => 'The additional letter spacing to use.' }
     );
 
@@ -960,9 +960,9 @@ HELP
     @inargs = (
         { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
-        { name => 'width', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'width', type => '0.0 <= double <= GIMP_MAX_IMAGE_SIZE',
           desc => 'The new box width in pixels' },
-        { name => 'height', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'height', type => '0.0 <= double <= GIMP_MAX_IMAGE_SIZE',
           desc => 'The new box height in pixels' },
     );
 

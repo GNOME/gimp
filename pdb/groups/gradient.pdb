@@ -155,7 +155,7 @@ HELP
         );
 
     @outargs = (
-        { name => 'color_samples', type => 'floatarray', void_ret => 1,
+        { name => 'color_samples', type => 'doublearray', void_ret => 1,
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
 	  array => { desc => 'Length of the color_samples array (4 *
 			      num_samples)' } }
@@ -183,7 +183,6 @@ HELP
                                             pos, reverse,
                                             GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                             &color);
-          /* XXX "float" in PDB are in fact double. */
           if (color)
             gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
           /* TODO: should we really return a list of floats? What about a list
@@ -217,7 +216,7 @@ HELP
 
     @inargs = (
         ${gradient_arg_spec},
-      	{ name  => 'positions', type  => 'floatarray',
+      	{ name  => 'positions', type  => 'doublearray',
       	  desc  => 'The list of positions to sample along the gradient',
       	  array => { name => 'num_samples', type => '1 <= size',
       		     desc => 'The number of samples to take' } },
@@ -226,7 +225,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'color_samples', type => 'floatarray', void_ret => 1,
+        { name => 'color_samples', type => 'doublearray', void_ret => 1,
     	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
     	  array => { desc => 'Length of the color_samples array (4 *
     			      num_samples)' } }
@@ -436,7 +435,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'pos', type => 'float', void_ret => 1,
+        { name => 'pos', type => 'double', void_ret => 1,
           desc => 'The return position' }
     );
 
@@ -470,7 +469,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'pos', type => 'float', void_ret => 1,
+        { name => 'pos', type => 'double', void_ret => 1,
           desc => 'The return position' }
     );
 
@@ -504,7 +503,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'pos', type => 'float', void_ret => 1,
+        { name => 'pos', type => 'double', void_ret => 1,
           desc => 'The return position' }
     );
 
@@ -538,12 +537,12 @@ HELP
     @inargs = (
         ${gradient_arg_spec},
         ${gradient_seg_arg_spec},
-        { name => 'pos', type => '0.0 <= float <= 1.0',
+        { name => 'pos', type => '0.0 <= double <= 1.0',
           desc => 'The position to set the guidepoint to' }
     );
 
     @outargs = (
-        { name => 'final_pos', type => 'float', void_ret => 1,
+        { name => 'final_pos', type => 'double', void_ret => 1,
           desc => 'The return position' }
     );
 
@@ -585,12 +584,12 @@ HELP
     @inargs = (
         ${gradient_arg_spec},
         ${gradient_seg_arg_spec},
-        { name => 'pos', type => '0.0 <= float <= 1.0',
+        { name => 'pos', type => '0.0 <= double <= 1.0',
           desc => 'The position to set the right endpoint to' }
     );
 
     @outargs = (
-        { name => 'final_pos', type => 'float', void_ret => 1,
+        { name => 'final_pos', type => 'double', void_ret => 1,
           desc => 'The return position' }
     );
 
@@ -631,12 +630,12 @@ HELP
     @inargs = (
         ${gradient_arg_spec},
         ${gradient_seg_arg_spec},
-        { name => 'pos', type => '0.0 <= float <= 1.0',
+        { name => 'pos', type => '0.0 <= double <= 1.0',
           desc => 'The position to set the guidepoint to' }
     );
 
     @outargs = (
-        { name => 'final_pos', type => 'float', void_ret => 1,
+        { name => 'final_pos', type => 'double', void_ret => 1,
           desc => 'The return position' }
     );
 
@@ -1197,14 +1196,14 @@ HELP
         ${gradient_arg_spec},
         ${gradient_start_segment_arg_spec},
         ${gradient_end_segment_arg_spec},
-        { name => 'delta', type => '-1.0 <= float <= 1.0',
+        { name => 'delta', type => '-1.0 <= double <= 1.0',
           desc => 'The delta to move the segment range' },
         { name => 'control_compress', type => 'boolean',
           desc => 'Whether or not to compress the neighboring segments' }
     );
 
     @outargs = (
-        { name => 'final_delta', type => 'float',
+        { name => 'final_delta', type => 'double',
           desc => 'The final delta by which the range moved' }
     );
 

@@ -892,13 +892,13 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
         }
       break;
 
-    case GP_PARAM_DEF_TYPE_FLOAT:
-      if (! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_float.min_val) ||
-          ! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_float.max_val) ||
-          ! gimp_scanner_parse_float (scanner,
-                                      &param_def.meta.m_float.default_val))
+    case GP_PARAM_DEF_TYPE_DOUBLE:
+      if (! gimp_scanner_parse_double (scanner,
+                                       &param_def.meta.m_double.min_val) ||
+          ! gimp_scanner_parse_double (scanner,
+                                       &param_def.meta.m_double.max_val) ||
+          ! gimp_scanner_parse_double (scanner,
+                                       &param_def.meta.m_double.default_val))
         {
           token = G_TOKEN_FLOAT;
           goto error;
@@ -1049,7 +1049,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
-    case GP_PARAM_DEF_TYPE_FLOAT:
+    case GP_PARAM_DEF_TYPE_DOUBLE:
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
@@ -1203,13 +1203,13 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
                                  param_def.meta.m_boolean.default_val);
       break;
 
-    case GP_PARAM_DEF_TYPE_FLOAT:
+    case GP_PARAM_DEF_TYPE_DOUBLE:
       g_ascii_dtostr (buf[0], sizeof (buf[0]),
-                      param_def.meta.m_float.min_val);
+                      param_def.meta.m_double.min_val);
       g_ascii_dtostr (buf[1], sizeof (buf[1]),
-                      param_def.meta.m_float.max_val),
+                      param_def.meta.m_double.max_val),
       g_ascii_dtostr (buf[2], sizeof (buf[2]),
-                      param_def.meta.m_float.default_val);
+                      param_def.meta.m_double.default_val);
       gimp_config_writer_printf (writer, "%s %s %s",
                                  buf[0], buf[1], buf[2]);
       break;

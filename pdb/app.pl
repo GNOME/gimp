@@ -487,7 +487,7 @@ gimp_param_spec_export_options ("$name",
                                 $flags)
 CODE
     }
-    elsif ($pdbtype eq 'float') {
+    elsif ($pdbtype eq 'double') {
 	$min = defined $typeinfo[0] ? $typeinfo[0] : -G_MAXDOUBLE;
 	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXDOUBLE;
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0.0;
@@ -686,12 +686,12 @@ gimp_param_spec_int32_array ("$name",
                              $flags)
 CODE
     }
-    elsif ($pdbtype eq 'floatarray') {
+    elsif ($pdbtype eq 'doublearray') {
 	$pspec = <<CODE;
-gimp_param_spec_float_array ("$name",
-                             "$nick",
-                             "$blurb",
-                             $flags)
+gimp_param_spec_double_array ("$name",
+                              "$nick",
+                              "$blurb",
+                              $flags)
 CODE
     }
     elsif ($pdbtype eq 'bytes') {

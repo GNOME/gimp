@@ -465,29 +465,29 @@ bender_create_procedure (GimpPlugIn  *plug_in,
                                           "upper",
                                           G_PARAM_READWRITE);
 
-      gimp_procedure_add_float_array_argument (procedure, "upper-point-x",
-                                               _("Upper point X"),
-                                               _("Array of 17 x point coords "
-                                                 "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_double_array_argument (procedure, "upper-point-x",
+                                                _("Upper point X"),
+                                                _("Array of 17 x point coords "
+                                                  "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
+                                                G_PARAM_READWRITE);
 
-      gimp_procedure_add_float_array_argument (procedure, "upper-point-y",
-                                               _("Upper point Y"),
-                                               _("Array of 17 y point coords "
-                                                 "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_double_array_argument (procedure, "upper-point-y",
+                                                _("Upper point Y"),
+                                                _("Array of 17 y point coords "
+                                                  "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
+                                                G_PARAM_READWRITE);
 
-      gimp_procedure_add_float_array_argument (procedure, "lower-point-x",
-                                               _("Lower point X"),
-                                               _("Array of 17 x point coords "
-                                                 "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_double_array_argument (procedure, "lower-point-x",
+                                                _("Lower point X"),
+                                                _("Array of 17 x point coords "
+                                                  "{ 0.0 <= x <= 1.0 or -1 for unused point }"),
+                                                G_PARAM_READWRITE);
 
-      gimp_procedure_add_float_array_argument (procedure, "lower-point-y",
-                                               _("Lower point Y"),
-                                               _("Array of 17 y point coords "
-                                                 "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_double_array_argument (procedure, "lower-point-y",
+                                                _("Lower point Y"),
+                                                _("Array of 17 y point coords "
+                                                  "{ 0.0 <= y <= 1.0 or -1 for unused point }"),
+                                                G_PARAM_READWRITE);
 
       gimp_procedure_add_bytes_argument (procedure, "upper-val-y",
                                          _("Upper val Y"),

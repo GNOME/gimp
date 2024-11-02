@@ -798,6 +798,9 @@ EXPORTS
 	gimp_procedure_add_display_aux_argument
 	gimp_procedure_add_display_return_value
 	gimp_procedure_add_double_argument
+	gimp_procedure_add_double_array_argument
+	gimp_procedure_add_double_array_aux_argument
+	gimp_procedure_add_double_array_return_value
 	gimp_procedure_add_double_aux_argument
 	gimp_procedure_add_double_return_value
 	gimp_procedure_add_drawable_argument
@@ -809,9 +812,6 @@ EXPORTS
 	gimp_procedure_add_file_argument
 	gimp_procedure_add_file_aux_argument
 	gimp_procedure_add_file_return_value
-	gimp_procedure_add_float_array_argument
-	gimp_procedure_add_float_array_aux_argument
-	gimp_procedure_add_float_array_return_value
 	gimp_procedure_add_font_argument
 	gimp_procedure_add_font_aux_argument
 	gimp_procedure_add_font_return_value

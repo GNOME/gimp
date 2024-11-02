@@ -398,7 +398,7 @@ gimp_procedure_add_unit_return_value (GimpProcedure *procedure,
  * @value:       the default value.
  * @flags:       argument flags.
  *
- * Add a new double argument to @procedure.
+ * Add a new floating-point in double precision argument to @procedure.
  *
  * Since: 3.0
  **/
@@ -429,7 +429,7 @@ gimp_procedure_add_double_argument (GimpProcedure *procedure,
  * @value:       the default value.
  * @flags:       argument flags.
  *
- * Add a new double auxiliary argument to @procedure.
+ * Add a new floating-point in double precision auxiliary argument to @procedure.
  *
  * Since: 3.0
  **/
@@ -460,7 +460,7 @@ gimp_procedure_add_double_aux_argument (GimpProcedure *procedure,
  * @value:       the default value.
  * @flags:       argument flags.
  *
- * Add a new double return value to @procedure.
+ * Add a new floating-point in double precision return value to @procedure.
  *
  * Since: 3.0
  **/
@@ -1195,75 +1195,75 @@ gimp_procedure_add_int32_array_return_value (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_add_float_array_argument:
+ * gimp_procedure_add_double_array_argument:
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
  * @flags:       argument flags.
  *
- * Add a new float array argument to @procedure.
+ * Add a new double array argument to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_float_array_argument (GimpProcedure *procedure,
-                                         const gchar   *name,
-                                         const gchar   *nick,
-                                         const gchar   *blurb,
-                                         GParamFlags    flags)
+gimp_procedure_add_double_array_argument (GimpProcedure *procedure,
+                                          const gchar   *name,
+                                          const gchar   *nick,
+                                          const gchar   *blurb,
+                                          GParamFlags    flags)
 {
   _gimp_procedure_add_argument (procedure,
-                                gimp_param_spec_float_array (name, nick, blurb,
-                                                             flags));
+                                gimp_param_spec_double_array (name, nick, blurb,
+                                                              flags));
 }
 
 /**
- * gimp_procedure_add_float_array_aux_argument:
+ * gimp_procedure_add_double_array_aux_argument:
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
  * @flags:       argument flags.
  *
- * Add a new float array auxiliary argument to @procedure.
+ * Add a new double array auxiliary argument to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_float_array_aux_argument (GimpProcedure *procedure,
-                                             const gchar   *name,
-                                             const gchar   *nick,
-                                             const gchar   *blurb,
-                                             GParamFlags    flags)
+gimp_procedure_add_double_array_aux_argument (GimpProcedure *procedure,
+                                              const gchar   *name,
+                                              const gchar   *nick,
+                                              const gchar   *blurb,
+                                              GParamFlags    flags)
 {
   _gimp_procedure_add_aux_argument (procedure,
-                                    gimp_param_spec_float_array (name, nick, blurb,
-                                                                 flags));
+                                    gimp_param_spec_double_array (name, nick, blurb,
+                                                                  flags));
 }
 
 /**
- * gimp_procedure_add_float_array_return_value:
+ * gimp_procedure_add_double_array_return_value:
  * @procedure:   the #GimpProcedure.
  * @name:        the name of the argument to be created.
  * @nick:        the label used in #GimpProcedureDialog.
  * @blurb:       a more detailed help description.
  * @flags:       argument flags.
  *
- * Add a new float array return value to @procedure.
+ * Add a new double array return value to @procedure.
  *
  * Since: 3.0
  **/
 void
-gimp_procedure_add_float_array_return_value (GimpProcedure *procedure,
-                                             const gchar   *name,
-                                             const gchar   *nick,
-                                             const gchar   *blurb,
-                                             GParamFlags    flags)
+gimp_procedure_add_double_array_return_value (GimpProcedure *procedure,
+                                              const gchar   *name,
+                                              const gchar   *nick,
+                                              const gchar   *blurb,
+                                              GParamFlags    flags)
 {
   _gimp_procedure_add_return_value (procedure,
-                                    gimp_param_spec_float_array (name, nick, blurb,
-                                                                 flags));
+                                    gimp_param_spec_double_array (name, nick, blurb,
+                                                                  flags));
 }
 
 /**

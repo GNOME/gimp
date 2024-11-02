@@ -46,7 +46,7 @@ HELP
 	  desc => 'The channel width' },
 	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The channel height' },
-	{ name => 'opacity', type => '0 <= float <= 100',
+	{ name => 'opacity', type => '0 <= double <= 100',
 	  desc => 'The channel opacity' },
 	{ name => 'color', type => 'geglcolor',
 	  desc => 'The channel compositing color'
@@ -270,7 +270,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'opacity', type => '0 <= float <= 100',
+	{ name => 'opacity', type => '0 <= double <= 100',
 	  desc => 'The channel opacity' }
     );
 
@@ -295,7 +295,7 @@ HELP
     @inargs = (
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
-	{ name => 'opacity', type => '0 <= float <= 100',
+	{ name => 'opacity', type => '0 <= double <= 100',
 	  desc => 'The new channel opacity' }
     );
 

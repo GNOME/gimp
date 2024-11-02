@@ -331,7 +331,7 @@ gimp_text_layer_set_font (GimpTextLayer *layer,
  * Get the font size from a text layer.
  *
  * This procedure returns the size of the font which is used in a text
- * layer. You will receive the size as a float 'font-size' in 'unit'
+ * layer. You will receive the size as a double 'font-size' in 'unit'
  * units.
  *
  * Returns: The font size.

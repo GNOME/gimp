@@ -179,12 +179,12 @@ sub path_stroke_get_length {
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'precision', type => '0.0 <= float', default => 0.1,
+        { name => 'precision', type => '0.0 <= double', default => 0.1,
           desc => 'The precision used for approximating straight portions of the stroke' }
     );
 
     @outargs = (
-        { name => 'length', type => 'float',
+        { name => 'length', type => 'double',
           desc => 'The length (in pixels) of the given stroke.' }
     );
 
@@ -220,18 +220,18 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'dist', type => 'float',
+        { name => 'dist', type => 'double',
           desc => 'The given distance.' },
-        { name => 'precision', type => 'float',
+        { name => 'precision', type => 'double',
           desc => 'The precision used for the approximation' }
     );
 
     @outargs = (
-        { name => 'x_point', type => 'float', void_ret => 1,
+        { name => 'x_point', type => 'double', void_ret => 1,
           desc => 'The x position of the point.' },
-        { name => 'y_point', type => 'float',
+        { name => 'y_point', type => 'double',
           desc => 'The y position of the point.' },
-        { name => 'slope', type => 'float',
+        { name => 'slope', type => 'double',
           desc => 'The slope (dy / dx) at the specified point.' },
         { name => 'valid', type => 'boolean',
           desc => 'Indicator for the validity of the returned data.' }
@@ -392,9 +392,9 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-	{ name => "off_x", type => 'float',
+	{ name => "off_x", type => 'double',
           desc => "Offset in x direction" },
-	{ name => "off_y", type => 'float',
+	{ name => "off_y", type => 'double',
           desc => "Offset in y direction" }
     );
 
@@ -438,9 +438,9 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-	{ name => "scale_x", type => 'float',
+	{ name => "scale_x", type => 'double',
 	  desc => "Scale factor in x direction" },
-	{ name => "scale_y", type => 'float',
+	{ name => "scale_y", type => 'double',
 	  desc => "Scale factor in y direction" }
     );
 
@@ -483,11 +483,11 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-	{ name => "center_x", type => 'float',
+	{ name => "center_x", type => 'double',
 	  desc => "X coordinate of the rotation center" },
-	{ name => "center_y", type => 'float',
+	{ name => "center_y", type => 'double',
 	  desc => "Y coordinate of the rotation center" },
-        { name => "angle", type => 'float',
+        { name => "angle", type => 'double',
 	  desc => "angle to rotate about" }
     );
 
@@ -533,7 +533,7 @@ HELP
 	{ name => "flip_type",
 	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
 	  desc => "Flip orientation, either vertical or horizontal" },
-	{ name => "axis", type => 'float',
+	{ name => "axis", type => 'double',
 	  desc => "axis coordinate about which to flip, in pixels" }
     );
 
@@ -577,13 +577,13 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-	{ name => "x1", type => 'float',
+	{ name => "x1", type => 'double',
 	  desc => "X coordinate of the first point of the flipping axis" },
-	{ name => "y1", type => 'float',
+	{ name => "y1", type => 'double',
 	  desc => "Y coordinate of the first point of the flipping axis" },
-	{ name => "x2", type => 'float',
+	{ name => "x2", type => 'double',
 	  desc => "X coordinate of the second point of the flipping axis" },
-	{ name => "y2", type => 'float',
+	{ name => "y2", type => 'double',
 	  desc => "Y coordinate of the second point of the flipping axis" },
 
     );
@@ -635,7 +635,7 @@ HELP
     @outargs = (
         { name => 'type', type => 'enum GimpPathStrokeType',
           desc => 'type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).' },
-        { name => 'controlpoints', type => 'floatarray',
+        { name => 'controlpoints', type => 'doublearray',
           desc => 'List of the control points for the stroke (x0, y0, x1, y1, ...).',
           array => { name => 'num_points',
                      desc => 'The number of floats returned.' } },
@@ -696,12 +696,12 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'precision', type => 'float',
+        { name => 'precision', type => 'double',
           desc => 'The precision used for the approximation' }
     );
 
     @outargs = (
-        { name => 'coords', type => 'floatarray',
+        { name => 'coords', type => 'doublearray',
           desc => 'List of the coords along the path (x0, y0, x1, y1, ...).',
           array => { name => 'num_coords',
                      desc => 'The number of floats returned.' } },
@@ -752,7 +752,7 @@ sub path_stroke_new_from_points {
 Adds a stroke of a given type to the path object. The coordinates of the
 control points can be specified.
 For now only strokes of the type GIMP_PATH_STROKE_TYPE_BEZIER are supported.
-The control points are specified as a pair of float values for the x- and
+The control points are specified as a pair of double values for the x- and
 y-coordinate.
 The Bezier stroke type needs a multiple of three control points. Each Bezier
 segment endpoint (anchor, A) has two additional control points (C) associated.
@@ -766,7 +766,7 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'type', type => 'enum GimpPathStrokeType',
 	  desc => 'type of the stroke (always GIMP_PATH_STROKE_TYPE_BEZIER for now).' },
-	{ name => 'controlpoints', type => 'floatarray',
+	{ name => 'controlpoints', type => 'doublearray',
 	  desc => 'List of the x- and y-coordinates of the control points.',
           array => { name => 'num_points',
                      desc => 'The number of elements in the array, i.e. the
@@ -837,9 +837,9 @@ HELP
     @inargs = (
 	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
-        { name => 'x0', type => 'float',
+        { name => 'x0', type => 'double',
           desc => 'The x-coordinate of the moveto' },
-        { name => 'y0', type => 'float',
+        { name => 'y0', type => 'double',
           desc => 'The y-coordinate of the moveto' }
     );
 
@@ -894,9 +894,9 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'x0', type => 'float',
+        { name => 'x0', type => 'double',
           desc => 'The x-coordinate of the lineto' },
-        { name => 'y0', type => 'float',
+        { name => 'y0', type => 'double',
           desc => 'The y-coordinate of the lineto' }
     );
 
@@ -945,13 +945,13 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'x0', type => 'float',
+        { name => 'x0', type => 'double',
           desc => 'The x-coordinate of the control point' },
-        { name => 'y0', type => 'float',
+        { name => 'y0', type => 'double',
           desc => 'The y-coordinate of the control point' },
-        { name => 'x1', type => 'float',
+        { name => 'x1', type => 'double',
           desc => 'The x-coordinate of the end point' },
-        { name => 'y1', type => 'float',
+        { name => 'y1', type => 'double',
           desc => 'The y-coordinate of the end point' }
     );
 
@@ -1002,17 +1002,17 @@ HELP
 	  desc => 'The path object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-        { name => 'x0', type => 'float',
+        { name => 'x0', type => 'double',
           desc => 'The x-coordinate of the first control point' },
-        { name => 'y0', type => 'float',
+        { name => 'y0', type => 'double',
           desc => 'The y-coordinate of the first control point' },
-        { name => 'x1', type => 'float',
+        { name => 'x1', type => 'double',
           desc => 'The x-coordinate of the second control point' },
-        { name => 'y1', type => 'float',
+        { name => 'y1', type => 'double',
           desc => 'The y-coordinate of the second control point' },
-        { name => 'x2', type => 'float',
+        { name => 'x2', type => 'double',
           desc => 'The x-coordinate of the end point' },
-        { name => 'y2', type => 'float',
+        { name => 'y2', type => 'double',
           desc => 'The y-coordinate of the end point' }
     );
 
@@ -1065,15 +1065,15 @@ HELP
     @inargs = (
 	{ name => 'path', type => 'path',
 	  desc => 'The path object' },
-        { name => 'x0', type => 'float',
+        { name => 'x0', type => 'double',
           desc => 'The x-coordinate of the center' },
-        { name => 'y0', type => 'float',
+        { name => 'y0', type => 'double',
           desc => 'The y-coordinate of the center' },
-        { name => 'radius_x', type => 'float',
+        { name => 'radius_x', type => 'double',
           desc => 'The radius in x direction' },
-        { name => 'radius_y', type => 'float',
+        { name => 'radius_y', type => 'double',
           desc => 'The radius in y direction' },
-        { name => 'angle', type => 'float',
+        { name => 'angle', type => 'double',
           desc => 'The angle the x-axis of the ellipse
                    (radians, counterclockwise)' }
     );

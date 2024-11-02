@@ -392,7 +392,7 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'opacity', type => '0 <= float <= 100',
+        { name => 'opacity', type => '0 <= double <= 100',
           desc => 'The opacity' }
     );
 
@@ -416,7 +416,7 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'opacity', type => '0 <= float <= 100',
+        { name => 'opacity', type => '0 <= double <= 100',
           desc => 'The opacity' }
     );
 
@@ -492,7 +492,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'line_width', type => '0.0 <= float <= 2000.0',
+        { name => 'line_width', type => '0.0 <= double <= 2000.0',
           desc => 'The line width setting' }
     );
 
@@ -524,7 +524,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'line_width', type => '0.0 <= float <= 2000.0',
+        { name => 'line_width', type => '0.0 <= double <= 2000.0',
           desc => 'The line width setting' }
     );
 
@@ -731,7 +731,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'miter_limit', type => '0.0 <= float <= 100.0',
+        { name => 'miter_limit', type => '0.0 <= double <= 100.0',
           desc => 'The line miter limit setting' }
     );
 
@@ -767,7 +767,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'miter_limit', type => '0.0 <= float <= 100.0',
+        { name => 'miter_limit', type => '0.0 <= double <= 100.0',
           desc => 'The line miter limit setting' }
     );
 
@@ -795,7 +795,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'dash_offset', type => '0.0 <= float <= 2000.0',
+        { name => 'dash_offset', type => '0.0 <= double <= 2000.0',
           desc => 'The line dash offset setting' }
     );
 
@@ -827,7 +827,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'dash_offset', type => '0.0 <= float <= 100.0',
+        { name => 'dash_offset', type => '0.0 <= double <= 100.0',
           desc => 'The line dash offset setting' }
     );
 
@@ -855,7 +855,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @outargs = (
-        { name => 'dashes', type => 'floatarray', void_ret => 1,
+        { name => 'dashes', type => 'doublearray', void_ret => 1,
           desc => 'The line dash pattern setting',
           array => { desc => 'The number of dashes in the dash_pattern array' } }
     );
@@ -893,7 +893,7 @@ HELP
     &mitch_pdb_misc('2015', '2.10');
 
     @inargs = (
-        { name => 'dashes', type => 'floatarray',
+        { name => 'dashes', type => 'doublearray',
           desc => 'The line dash pattern setting',
           array => { desc => 'The number of dashes in the dash_pattern array' } }
     );
@@ -980,7 +980,7 @@ sub context_get_brush_size {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "size", type => "0 < float",
+        { name => "size", type => "0 < double",
           desc => "Brush size in pixels" }
     );
 
@@ -1010,7 +1010,7 @@ sub context_set_brush_size {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "size", type => "1 <= float <= 10000",
+        { name => "size", type => "1 <= double <= 10000",
           desc => "Brush size in pixels" }
     );
 
@@ -1075,7 +1075,7 @@ sub context_set_brush_aspect_ratio {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "aspect", type => "-20 <= float <= 20",
+        { name => "aspect", type => "-20 <= double <= 20",
           desc => "Aspect ratio" }
     );
 
@@ -1105,7 +1105,7 @@ sub context_get_brush_aspect_ratio {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "aspect", type => "-20 <= float <= 20",
+        { name => "aspect", type => "-20 <= double <= 20",
           desc => "Aspect ratio" }
     );
 
@@ -1135,7 +1135,7 @@ sub context_set_brush_angle {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-	{ name => "angle", type => "-180 <= float <= 180",
+	{ name => "angle", type => "-180 <= double <= 180",
 	  desc => "Angle in degrees" }
     );
 
@@ -1165,7 +1165,7 @@ sub context_get_brush_angle {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-	{ name => "angle", type => "-180 <= float <= 180",
+	{ name => "angle", type => "-180 <= double <= 180",
 	  desc => "Angle in degrees" }
     );
 
@@ -1195,7 +1195,7 @@ sub context_get_brush_spacing {
     &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
-        { name => "spacing", type => "0.01 <= float <= 50.0",
+        { name => "spacing", type => "0.01 <= double <= 50.0",
           desc => "Brush spacing as fraction of size" }
     );
 
@@ -1225,7 +1225,7 @@ sub context_set_brush_spacing {
     &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
-        { name => "spacing", type => "0.01 <= float <= 50.0",
+        { name => "spacing", type => "0.01 <= double <= 50.0",
           desc => "Brush spacing as fraction of size" }
     );
 
@@ -1290,7 +1290,7 @@ sub context_get_brush_hardness {
     &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
-        { name => "hardness", type => "0.0 <= float <= 1.0",
+        { name => "hardness", type => "0.0 <= double <= 1.0",
           desc => "Brush hardness" }
     );
 
@@ -1320,7 +1320,7 @@ sub context_set_brush_hardness {
     &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
-        { name => "hardness", type => "0.0 <= float <= 1.0",
+        { name => "hardness", type => "0.0 <= double <= 1.0",
           desc => "Brush hardness" }
     );
 
@@ -1385,7 +1385,7 @@ sub context_get_brush_force {
     &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
-        { name => "force", type => "0.0 <= float <= 1.0",
+        { name => "force", type => "0.0 <= double <= 1.0",
           desc => "Brush application force" }
     );
 
@@ -1415,7 +1415,7 @@ sub context_set_brush_force {
     &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
-        { name => "force", type => "0.0 <= float <= 1.0",
+        { name => "force", type => "0.0 <= double <= 1.0",
           desc => "Brush application force" }
     );
 
@@ -2293,9 +2293,9 @@ HELP
     &mitch_pdb_misc('2010', '2.8');
 
     @outargs = (
-        { name => 'feather_radius_x', type => '0 <= float <= 1000', void_ret => 1,
+        { name => 'feather_radius_x', type => '0 <= double <= 1000', void_ret => 1,
           desc => 'The horizontal feather radius' },
-        { name => 'feather_radius_y', type => '0 <= float <= 1000',
+        { name => 'feather_radius_y', type => '0 <= double <= 1000',
           desc => 'The vertical feather radius' }
     );
 
@@ -2325,9 +2325,9 @@ HELP
     &mitch_pdb_misc('2010', '2.8');
 
     @inargs = (
-        { name => 'feather_radius_x', type => '0 <= float <= 1000',
+        { name => 'feather_radius_x', type => '0 <= double <= 1000',
           desc => 'The horizontal feather radius' },
-        { name => 'feather_radius_y', type => '0 <= float <= 1000',
+        { name => 'feather_radius_y', type => '0 <= double <= 1000',
           desc => 'The vertical feather radius' }
     );
 
@@ -2471,7 +2471,7 @@ HELP
     &mitch_pdb_misc('2011', '2.8');
 
     @outargs = (
-        { name => 'sample_threshold', type => '0.0 <= float <= 1.0',
+        { name => 'sample_threshold', type => '0.0 <= double <= 1.0',
           desc => 'The sample threshold setting' }
     );
 
@@ -2505,7 +2505,7 @@ HELP
     &mitch_pdb_misc('2011', '2.8');
 
     @inargs = (
-        { name => 'sample_threshold', type => '0.0 <= float <= 1.0',
+        { name => 'sample_threshold', type => '0.0 <= double <= 1.0',
           desc => 'The sample threshold setting' }
     );
 
@@ -2948,7 +2948,7 @@ sub context_get_ink_size {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "size", type => "0 <= float <= 200",
+        { name => "size", type => "0 <= double <= 200",
           desc => "ink blob size in pixels" }
     );
 
@@ -2978,7 +2978,7 @@ sub context_set_ink_size {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "size", type => "0 <= float <= 200",
+        { name => "size", type => "0 <= double <= 200",
           desc => "ink blob size in pixels" }
     );
 
@@ -3008,7 +3008,7 @@ sub context_get_ink_angle {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "angle", type => "-90 <= float <= 90",
+        { name => "angle", type => "-90 <= double <= 90",
           desc => "ink angle in degrees" }
     );
 
@@ -3038,7 +3038,7 @@ sub context_set_ink_angle {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "angle", type => "-90 <= float <= 90",
+        { name => "angle", type => "-90 <= double <= 90",
           desc => "ink angle in degrees" }
     );
 
@@ -3068,7 +3068,7 @@ sub context_get_ink_size_sensitivity {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "size", type => "0 <= float <= 1",
+        { name => "size", type => "0 <= double <= 1",
           desc => "ink size sensitivity" }
     );
 
@@ -3098,7 +3098,7 @@ sub context_set_ink_size_sensitivity {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "size", type => "0 <= float <= 1",
+        { name => "size", type => "0 <= double <= 1",
           desc => "ink size sensitivity" }
     );
 
@@ -3128,7 +3128,7 @@ sub context_get_ink_tilt_sensitivity {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "tilt", type => "0 <= float <= 1",
+        { name => "tilt", type => "0 <= double <= 1",
           desc => "ink tilt sensitivity" }
     );
 
@@ -3158,7 +3158,7 @@ sub context_set_ink_tilt_sensitivity {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "tilt", type => "0 <= float <= 1",
+        { name => "tilt", type => "0 <= double <= 1",
           desc => "ink tilt sensitivity" }
     );
 
@@ -3188,7 +3188,7 @@ sub context_get_ink_speed_sensitivity {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "speed", type => "0 <= float <= 1",
+        { name => "speed", type => "0 <= double <= 1",
           desc => "ink speed sensitivity" }
     );
 
@@ -3218,7 +3218,7 @@ sub context_set_ink_speed_sensitivity {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "speed", type => "0 <= float <= 1",
+        { name => "speed", type => "0 <= double <= 1",
           desc => "ink speed sensitivity" }
     );
 
@@ -3308,7 +3308,7 @@ sub context_get_ink_blob_aspect_ratio {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "aspect", type => "1 <= float <= 10",
+        { name => "aspect", type => "1 <= double <= 10",
           desc => "ink blob aspect ratio" }
     );
 
@@ -3338,7 +3338,7 @@ sub context_set_ink_blob_aspect_ratio {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "aspect", type => "1 <= float <= 10",
+        { name => "aspect", type => "1 <= double <= 10",
           desc => "ink blob aspect ratio" }
     );
 
@@ -3368,7 +3368,7 @@ sub context_get_ink_blob_angle {
     &ejs_pdb_misc('2012', '2.8');
 
     @outargs = (
-        { name => "angle", type => "-180 <= float <= 180",
+        { name => "angle", type => "-180 <= double <= 180",
           desc => "ink blob angle in degrees" }
     );
 
@@ -3401,7 +3401,7 @@ sub context_set_ink_blob_angle {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "angle", type => "-180 <= float <= 180",
+        { name => "angle", type => "-180 <= double <= 180",
           desc => "ink blob angle in degrees" }
     );
 

@@ -17,7 +17,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub stroke_arg () {
-    { name => 'strokes', type => 'floatarray',
+    { name => 'strokes', type => 'doublearray',
       desc => 'Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,
 	       sn.x, sn.y }',
       array => { type => '2 <= size',
@@ -44,7 +44,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'pressure', type => '0 <= float <= 100',
+	{ name => 'pressure', type => '0 <= double <= 100',
 	  desc => 'The pressure of the airbrush strokes' },
 	&stroke_arg
     );
@@ -153,9 +153,9 @@ HELP
 	  desc => 'The source drawable' },
 	{ name => 'clone_type', type => 'enum GimpCloneType',
 	  desc => 'The type of clone' },
-	{ name => 'src_x', type => 'float',
+	{ name => 'src_x', type => 'double',
 	  desc => 'The x coordinate in the source image' },
-	{ name => 'src_y', type => 'float',
+	{ name => 'src_y', type => 'double',
 	  desc => 'The y coordinate in the source image' },
 	&stroke_arg
     );
@@ -305,7 +305,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'pressure', type => '0 <= float <= 100',
+	{ name => 'pressure', type => '0 <= double <= 100',
 	  desc => 'The pressure' },
 	{ name => 'convolve_type', type => 'enum GimpConvolveType',
 	  desc => 'Convolve type' },
@@ -516,9 +516,9 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'src_drawable', type => 'drawable',
 	  desc => 'The source drawable' },
-	{ name => 'src_x', type => 'float',
+	{ name => 'src_x', type => 'double',
 	  desc => 'The x coordinate in the source image' },
-	{ name => 'src_y', type => 'float',
+	{ name => 'src_y', type => 'double',
 	  desc => 'The y coordinate in the source image' },
 	&stroke_arg
     );
@@ -628,12 +628,12 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'fade_out', type => '0 <= float',
+	{ name => 'fade_out', type => '0 <= double',
 	  desc => 'Fade out parameter' },
 	  &stroke_arg,
 	{ name => 'method', type => 'enum GimpPaintApplicationMode',
 	  desc => 'The paint method to use' },
-	{ name => 'gradient_length', type => '0 <= float',
+	{ name => 'gradient_length', type => '0 <= double',
 	  desc => 'Length of gradient to draw' }
     );
 
@@ -811,7 +811,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	 { name => 'pressure', type => '0 <= float <= 100',
+	 { name => 'pressure', type => '0 <= double <= 100',
 	   desc => 'The pressure of the smudge strokes' },
 	   &stroke_arg
     );
@@ -906,7 +906,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	 { name => 'exposure', type => '0 <= float <= 100',
+	 { name => 'exposure', type => '0 <= double <= 100',
 	   desc => 'The exposure of the  strokes' },
         { name => 'dodgeburn_type', type => 'enum GimpDodgeBurnType',
 	  desc => 'The type either dodge or burn' },

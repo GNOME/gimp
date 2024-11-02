@@ -515,7 +515,7 @@ gimp_config_serialize_value (const GValue *value,
     }
 
   if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-      GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+      GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value))
     {
       return gimp_config_serialize_array (value, str);
     }
@@ -745,7 +745,7 @@ gimp_config_serialize_array (const GValue *value,
   GimpArray *array;
 
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-                        GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), FALSE);
+                        GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value), FALSE);
 
   array = g_value_get_boxed (value);
 

@@ -32,9 +32,9 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'brightness', type => '-1.0 <= float <= 1.0',
+	{ name => 'brightness', type => '-1.0 <= double <= 1.0',
 	  desc => 'Brightness adjustment' },
-	{ name => 'contrast', type => '-1.0 <= float <= 1.0',
+	{ name => 'contrast', type => '-1.0 <= double <= 1.0',
 	  desc => 'Contrast adjustment' }
     );
 
@@ -88,11 +88,11 @@ HELP
 	  desc => 'Transfer mode' },
 	{ name => 'preserve_lum', type => 'boolean',
 	  desc => 'Preserve luminosity values at each pixel' },
-	{ name => 'cyan_red', type => '-100 <= float <= 100',
+	{ name => 'cyan_red', type => '-100 <= double <= 100',
 	  desc => 'Cyan-Red color balance' },
-	{ name => 'magenta_green', type => '-100 <= float <= 100',
+	{ name => 'magenta_green', type => '-100 <= double <= 100',
 	  desc => 'Magenta-Green color balance' },
-	{ name => 'yellow_blue', type => '-100 <= float <= 100',
+	{ name => 'yellow_blue', type => '-100 <= double <= 100',
 	  desc => 'Yellow-Blue color balance' }
     );
 
@@ -141,11 +141,11 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'hue', type => '0 <= float <= 360',
+	{ name => 'hue', type => '0 <= double <= 360',
 	  desc => 'Hue in degrees' },
-	{ name => 'saturation', type => '0 <= float <= 100',
+	{ name => 'saturation', type => '0 <= double <= 100',
 	  desc => 'Saturation in percent' },
-	{ name => 'lightness', type => '-100 <= float <= 100',
+	{ name => 'lightness', type => '-100 <= double <= 100',
 	  desc => 'Lightness in percent' }
     );
 
@@ -197,7 +197,7 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to modify' },
-	{ name => 'values', type => 'floatarray',
+	{ name => 'values', type => 'doublearray',
 	  desc => 'The explicit curve',
 	  array => { name => 'num_values', type => '256 <= size <= 2096',
 		     desc => 'The number of values in the new curve' } }
@@ -254,7 +254,7 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to modify' },
-	{ name => 'points', type => 'floatarray',
+	{ name => 'points', type => 'doublearray',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
 	  array => { name => 'num_points', type => '4 <= size <= 2048',
@@ -462,24 +462,24 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to query' },
-	{ name => 'start_range', type => '0.0 <= float <= 1.0',
+	{ name => 'start_range', type => '0.0 <= double <= 1.0',
 	  desc => 'Start of the intensity measurement range' },
-	{ name => 'end_range', type => '0.0 <= float <= 1.0',
+	{ name => 'end_range', type => '0.0 <= double <= 1.0',
 	  desc => 'End of the intensity measurement range' }
     );
 
     @outargs = (
-	{ name => 'mean', type => 'float', void_ret => 1,
+	{ name => 'mean', type => 'double', void_ret => 1,
 	  desc => 'Mean intensity value' },
-	{ name => 'std_dev',  type => 'float',
+	{ name => 'std_dev',  type => 'double',
 	  desc => 'Standard deviation of intensity values' },
-	{ name => 'median',  type => 'float',
+	{ name => 'median',  type => 'double',
 	  desc => 'Median intensity value' },
-	{ name => 'pixels',  type => 'float',
+	{ name => 'pixels',  type => 'double',
 	  desc => 'Alpha-weighted pixel count for entire image' },
-	{ name => 'count',  type => 'float',
+	{ name => 'count',  type => 'double',
 	  desc => 'Alpha-weighted pixel count for range' },
-	{ name => 'percentile',  type => 'float',
+	{ name => 'percentile',  type => 'double',
 	  desc => 'Percentile that range falls under' }
     );
 
@@ -558,13 +558,13 @@ HELP
           desc => 'The drawable' },
         { name => 'hue_range', type => 'enum GimpHueRange',
           desc => 'Range of affected hues' },
-        { name => 'hue_offset', type => '-180 <= float <= 180',
+        { name => 'hue_offset', type => '-180 <= double <= 180',
           desc => 'Hue offset in degrees' },
-        { name => 'lightness', type => '-100 <= float <= 100',
+        { name => 'lightness', type => '-100 <= double <= 100',
           desc => 'Lightness modification' },
-        { name => 'saturation', type => '-100 <= float <= 100',
+        { name => 'saturation', type => '-100 <= double <= 100',
           desc => 'Saturation modification' },
-        { name => 'overlap', type => '0 <= float <= 100',
+        { name => 'overlap', type => '0 <= double <= 100',
           desc => 'Overlap other hue channels' }
     );
 
@@ -665,17 +665,17 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to modify' },
-	{ name => 'low_input', type => '0.0 <= float <= 1.0',
+	{ name => 'low_input', type => '0.0 <= double <= 1.0',
 	  desc => "Intensity of lowest input" },
-	{ name => 'high_input', type => '0.0 <= float <= 1.0',
+	{ name => 'high_input', type => '0.0 <= double <= 1.0',
 	  desc => "Intensity of highest input" },
 	{ name => 'clamp_input', type => 'boolean',
 	  desc => 'Clamp input values before applying output levels' },
-	{ name => 'gamma', type => '0.1 <= float <= 10',
+	{ name => 'gamma', type => '0.1 <= double <= 10',
 	  desc => 'Gamma adjustment factor' },
-	{ name => 'low_output', type => '0.0 <= float <= 1.0',
+	{ name => 'low_output', type => '0.0 <= double <= 1.0',
 	  desc => "Intensity of lowest output" },
-	{ name => 'high_output', type => '0.0 <= float <= 1.0',
+	{ name => 'high_output', type => '0.0 <= double <= 1.0',
 	  desc => "Intensity of highest output" },
 	{ name => 'clamp_output', type => 'boolean',
 	  desc => 'Clamp final output values' },
@@ -771,19 +771,19 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'shadows', type => '-100 <= float <= 100',
+	{ name => 'shadows', type => '-100 <= double <= 100',
 	  desc => 'Adjust exposure of shadows' },
-	{ name => 'highlights', type => '-100 <= float <= 100',
+	{ name => 'highlights', type => '-100 <= double <= 100',
 	  desc => 'Adjust exposure of highlights' },
-	{ name => 'whitepoint', type => '-10 <= float <= 10',
+	{ name => 'whitepoint', type => '-10 <= double <= 10',
 	  desc => 'Shift white point' },
-	{ name => 'radius', type => '0.1 <= float <= 1500',
+	{ name => 'radius', type => '0.1 <= double <= 1500',
 	  desc => 'Spatial extent' },
-	{ name => 'compress', type => '0 <= float <= 100',
+	{ name => 'compress', type => '0 <= double <= 100',
 	  desc => 'Compress the effect on shadows/highlights and preserve midtones' },
-	{ name => 'shadows_ccorrect', type => '0 <= float <= 100',
+	{ name => 'shadows_ccorrect', type => '0 <= double <= 100',
 	  desc => 'Adjust saturation of shadows' },
-	{ name => 'highlights_ccorrect', type => '0 <= float <= 100',
+	{ name => 'highlights_ccorrect', type => '0 <= double <= 100',
 	  desc => 'Adjust saturation of highlights' },
     );
 
@@ -881,9 +881,9 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to base the threshold on' },
-	{ name => 'low_threshold', type => '0.0 <= float <= 1.0',
+	{ name => 'low_threshold', type => '0.0 <= double <= 1.0',
 	  desc => 'The low threshold value' },
-	{ name => 'high_threshold', type => '0.0 <= float <= 1.0',
+	{ name => 'high_threshold', type => '0.0 <= double <= 1.0',
 	  desc => 'The high threshold value' }
     );
 

@@ -444,7 +444,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
         }
 
       if (GIMP_VALUE_HOLDS_INT32_ARRAY (value)  ||
-          GIMP_VALUE_HOLDS_FLOAT_ARRAY (value)  ||
+          GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value)  ||
           GIMP_VALUE_HOLDS_CORE_OBJECT_ARRAY (value))
         {
           g_value_set_boxed (value, va_arg (va_args, gpointer));

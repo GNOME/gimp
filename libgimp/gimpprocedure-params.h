@@ -196,19 +196,19 @@ G_BEGIN_DECLS
   gimp_value_take_int32_array (gimp_value_array_index (args, n), value, length)
 
 
-/*  float array  */
+/*  double array  */
 
-#define GIMP_VALUES_GET_FLOAT_ARRAY(args, n, length) \
-  gimp_value_get_float_array (gimp_value_array_index (args, n), length)
+#define GIMP_VALUES_GET_DOUBLE_ARRAY(args, n, length) \
+  gimp_value_get_double_array (gimp_value_array_index (args, n), length)
 
-#define GIMP_VALUES_DUP_FLOAT_ARRAY(args, n, length) \
-  gimp_value_dup_float_array (gimp_value_array_index (args, n), length)
+#define GIMP_VALUES_DUP_DOUBLE_ARRAY(args, n, length) \
+  gimp_value_dup_double_array (gimp_value_array_index (args, n), length)
 
-#define GIMP_VALUES_SET_FLOAT_ARRAY(args, n, value, length) \
-  gimp_value_set_float_array (gimp_value_array_index (args, n), value, length)
+#define GIMP_VALUES_SET_DOUBLE_ARRAY(args, n, value, length) \
+  gimp_value_set_double_array (gimp_value_array_index (args, n), value, length)
 
-#define GIMP_VALUES_TAKE_FLOAT_ARRAY(args, n, value, length) \
-  gimp_value_take_float_array (gimp_value_array_index (args, n), value, length)
+#define GIMP_VALUES_TAKE_DOUBLE_ARRAY(args, n, value, length) \
+  gimp_value_take_double_array (gimp_value_array_index (args, n), value, length)
 
 
 /*  string array (strv)  */
@@ -722,17 +722,17 @@ void gimp_procedure_add_int32_array_return_value       (GimpProcedure *procedure
                                                         const gchar   *blurb,
                                                         GParamFlags    flags);
 
-void gimp_procedure_add_float_array_argument           (GimpProcedure *procedure,
+void gimp_procedure_add_double_array_argument          (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GParamFlags    flags);
-void gimp_procedure_add_float_array_aux_argument       (GimpProcedure *procedure,
+void gimp_procedure_add_double_array_aux_argument      (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,
                                                         GParamFlags    flags);
-void gimp_procedure_add_float_array_return_value       (GimpProcedure *procedure,
+void gimp_procedure_add_double_array_return_value      (GimpProcedure *procedure,
                                                         const gchar   *name,
                                                         const gchar   *nick,
                                                         const gchar   *blurb,

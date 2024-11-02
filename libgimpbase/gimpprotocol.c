@@ -1197,15 +1197,15 @@ _gp_param_def_read (GIOChannel *channel,
         return FALSE;
       break;
 
-    case GP_PARAM_DEF_TYPE_FLOAT:
+    case GP_PARAM_DEF_TYPE_DOUBLE:
       if (! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_float.min_val, 1,
+                                    &param_def->meta.m_double.min_val, 1,
                                     user_data) ||
           ! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_float.max_val, 1,
+                                    &param_def->meta.m_double.max_val, 1,
                                     user_data) ||
           ! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_float.default_val, 1,
+                                    &param_def->meta.m_double.default_val, 1,
                                     user_data))
         return FALSE;
       break;
@@ -1316,7 +1316,7 @@ _gp_param_def_destroy (GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
-    case GP_PARAM_DEF_TYPE_FLOAT:
+    case GP_PARAM_DEF_TYPE_DOUBLE:
       break;
 
     case GP_PARAM_DEF_TYPE_CHOICE:
@@ -1557,15 +1557,15 @@ _gp_param_def_write (GIOChannel *channel,
         return FALSE;
       break;
 
-    case GP_PARAM_DEF_TYPE_FLOAT:
+    case GP_PARAM_DEF_TYPE_DOUBLE:
       if (! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_float.min_val, 1,
+                                     &param_def->meta.m_double.min_val, 1,
                                      user_data) ||
           ! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_float.max_val, 1,
+                                     &param_def->meta.m_double.max_val, 1,
                                      user_data) ||
           ! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_float.default_val, 1,
+                                     &param_def->meta.m_double.default_val, 1,
                                      user_data))
         return FALSE;
       break;
@@ -1825,9 +1825,9 @@ _gp_params_read (GIOChannel  *channel,
             goto cleanup;
           break;
 
-        case GP_PARAM_TYPE_FLOAT:
+        case GP_PARAM_TYPE_DOUBLE:
           if (! _gimp_wire_read_double (channel,
-                                        &(*params)[i].data.d_float, 1,
+                                        &(*params)[i].data.d_double, 1,
                                         user_data))
             goto cleanup;
           break;
@@ -2178,9 +2178,9 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
-        case GP_PARAM_TYPE_FLOAT:
+        case GP_PARAM_TYPE_DOUBLE:
           if (! _gimp_wire_write_double (channel,
-                                         (const gdouble *) &params[i].data.d_float, 1,
+                                         (const gdouble *) &params[i].data.d_double, 1,
                                          user_data))
             return;
           break;
@@ -2374,7 +2374,7 @@ _gp_params_destroy (GPParam *params,
       switch (params[i].param_type)
         {
         case GP_PARAM_TYPE_INT:
-        case GP_PARAM_TYPE_FLOAT:
+        case GP_PARAM_TYPE_DOUBLE:
           break;
 
         case GP_PARAM_TYPE_STRING:

@@ -562,18 +562,18 @@ gimp_scanner_parse_int64 (GimpScanner *scanner,
 }
 
 /**
- * gimp_scanner_parse_float:
+ * gimp_scanner_parse_double:
  * @scanner: A #GimpScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: (out): Return location for the parsed float
+ * @dest: (out): Return location for the parsed double
  *
  * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
 gboolean
-gimp_scanner_parse_float (GimpScanner *scanner,
-                          gdouble     *dest)
+gimp_scanner_parse_double (GimpScanner *scanner,
+                           gdouble     *dest)
 {
   gboolean negate = FALSE;
 
@@ -933,13 +933,13 @@ gimp_scanner_parse_matrix2 (GimpScanner *scanner,
           {
             token = G_TOKEN_FLOAT;
 
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[0][0]))
+            if (! gimp_scanner_parse_double (scanner, &matrix.coeff[0][0]))
               goto finish;
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[0][1]))
+            if (! gimp_scanner_parse_double (scanner, &matrix.coeff[0][1]))
               goto finish;
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[1][0]))
+            if (! gimp_scanner_parse_double (scanner, &matrix.coeff[1][0]))
               goto finish;
-            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[1][1]))
+            if (! gimp_scanner_parse_double (scanner, &matrix.coeff[1][1]))
               goto finish;
 
             token = G_TOKEN_RIGHT_PAREN;
@@ -1030,7 +1030,7 @@ gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
         case G_TOKEN_SYMBOL:
           {
             gdouble  col[4]     = { 0.0, 0.0, 0.0, 1.0 };
-            gdouble  col_f[4]   = { 0.0, 0.0, 0.0, 1.0 };
+            gfloat   col_f[4]   = { 0.0f, 0.0f, 0.0f, 1.0f };
             gint     n_channels = 4;
             gboolean is_hsv     = FALSE;
             gint     i;
@@ -1055,7 +1055,7 @@ gimp_scanner_parse_deprecated_color (GimpScanner  *scanner,
 
             for (i = 0; i < n_channels; i++)
               {
-                if (! gimp_scanner_parse_float (scanner, &col[i]))
+                if (! gimp_scanner_parse_double (scanner, &col[i]))
                   goto finish;
 
                 col_f[i] = (gfloat) col[i];

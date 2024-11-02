@@ -246,49 +246,49 @@ void           gimp_value_take_int32_array       (GValue       *value,
 
 
 /*
- * GIMP_TYPE_FLOAT_ARRAY
+ * GIMP_TYPE_DOUBLE_ARRAY
  */
 
-#define         GIMP_TYPE_FLOAT_ARRAY               (gimp_float_array_get_type ())
-#define         GIMP_VALUE_HOLDS_FLOAT_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_FLOAT_ARRAY))
+#define         GIMP_TYPE_DOUBLE_ARRAY               (gimp_double_array_get_type ())
+#define         GIMP_VALUE_HOLDS_DOUBLE_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_DOUBLE_ARRAY))
 
-GType           gimp_float_array_get_type           (void) G_GNUC_CONST;
+GType           gimp_double_array_get_type           (void) G_GNUC_CONST;
 
-const gdouble * gimp_float_array_get_values         (GimpArray     *array,
-                                                     gsize         *length);
-void            gimp_float_array_set_values         (GimpArray     *array,
-                                                     const gdouble *values,
-                                                     gsize         length,
-                                                     gboolean      static_data);
+const gdouble * gimp_double_array_get_values         (GimpArray     *array,
+                                                      gsize         *length);
+void            gimp_double_array_set_values         (GimpArray     *array,
+                                                      const gdouble *values,
+                                                      gsize         length,
+                                                      gboolean      static_data);
 
 
 /*
- * GIMP_TYPE_PARAM_FLOAT_ARRAY
+ * GIMP_TYPE_PARAM_DOUBLE_ARRAY
  */
 
-#define GIMP_TYPE_PARAM_FLOAT_ARRAY           (gimp_param_float_array_get_type ())
-#define GIMP_IS_PARAM_SPEC_FLOAT_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_FLOAT_ARRAY))
+#define GIMP_TYPE_PARAM_DOUBLE_ARRAY           (gimp_param_double_array_get_type ())
+#define GIMP_IS_PARAM_SPEC_DOUBLE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DOUBLE_ARRAY))
 
-GType           gimp_param_float_array_get_type   (void) G_GNUC_CONST;
+GType           gimp_param_double_array_get_type   (void) G_GNUC_CONST;
 
-GParamSpec    * gimp_param_spec_float_array       (const gchar  *name,
-                                                   const gchar  *nick,
-                                                   const gchar  *blurb,
-                                                   GParamFlags   flags);
+GParamSpec    * gimp_param_spec_double_array       (const gchar  *name,
+                                                    const gchar  *nick,
+                                                    const gchar  *blurb,
+                                                    GParamFlags   flags);
 
-const gdouble * gimp_value_get_float_array        (const GValue  *value,
-                                                   gsize         *length);
-gdouble       * gimp_value_dup_float_array        (const GValue  *value,
-                                                   gsize         *length);
-void            gimp_value_set_float_array        (GValue        *value,
-                                                   const gdouble *data,
-                                                   gsize         length);
-void            gimp_value_set_static_float_array (GValue        *value,
-                                                   const gdouble *data,
-                                                   gsize         length);
-void            gimp_value_take_float_array       (GValue        *value,
-                                                   gdouble       *data,
-                                                   gsize         length);
+const gdouble * gimp_value_get_double_array        (const GValue  *value,
+                                                    gsize         *length);
+gdouble       * gimp_value_dup_double_array        (const GValue  *value,
+                                                    gsize         *length);
+void            gimp_value_set_double_array        (GValue        *value,
+                                                    const gdouble *data,
+                                                    gsize         length);
+void            gimp_value_set_static_double_array (GValue        *value,
+                                                    const gdouble *data,
+                                                    gsize         length);
+void            gimp_value_take_double_array       (GValue        *value,
+                                                    gdouble       *data,
+                                                    gsize         length);
 
 
 /*

@@ -54,7 +54,7 @@ typedef enum
   GP_PARAM_DEF_TYPE_ENUM,
   GP_PARAM_DEF_TYPE_CHOICE,
   GP_PARAM_DEF_TYPE_BOOLEAN,
-  GP_PARAM_DEF_TYPE_FLOAT,
+  GP_PARAM_DEF_TYPE_DOUBLE,
   GP_PARAM_DEF_TYPE_STRING,
   GP_PARAM_DEF_TYPE_GEGL_COLOR,
   GP_PARAM_DEF_TYPE_ID,
@@ -66,7 +66,7 @@ typedef enum
 typedef enum
 {
   GP_PARAM_TYPE_INT,
-  GP_PARAM_TYPE_FLOAT,
+  GP_PARAM_TYPE_DOUBLE,
   GP_PARAM_TYPE_STRING,
   GP_PARAM_TYPE_STRV,
   GP_PARAM_TYPE_BYTES,
@@ -91,7 +91,7 @@ typedef struct _GPParamDefInt            GPParamDefInt;
 typedef struct _GPParamDefUnit           GPParamDefUnit;
 typedef struct _GPParamDefEnum           GPParamDefEnum;
 typedef struct _GPParamDefBoolean        GPParamDefBoolean;
-typedef struct _GPParamDefFloat          GPParamDefFloat;
+typedef struct _GPParamDefDouble         GPParamDefDouble;
 typedef struct _GPParamDefString         GPParamDefString;
 typedef struct _GPParamDefChoice         GPParamDefChoice;
 typedef struct _GPParamStrv              GPParamStrv;
@@ -196,7 +196,7 @@ struct _GPParamDefBoolean
   gint32 default_val;
 };
 
-struct _GPParamDefFloat
+struct _GPParamDefDouble
 {
   gdouble min_val;
   gdouble max_val;
@@ -253,7 +253,7 @@ struct _GPParamDef
     GPParamDefUnit             m_unit;
     GPParamDefEnum             m_enum;
     GPParamDefBoolean          m_boolean;
-    GPParamDefFloat            m_float;
+    GPParamDefDouble           m_double;
     GPParamDefString           m_string;
     GPParamDefGeglColor        m_gegl_color;
     GPParamDefID               m_id;
@@ -314,7 +314,7 @@ struct _GPParam
   union
   {
     gint32                 d_int;
-    gdouble                d_float;
+    gdouble                d_double;
     gchar                 *d_string;
     gchar                **d_strv;
     GBytes                *d_bytes;

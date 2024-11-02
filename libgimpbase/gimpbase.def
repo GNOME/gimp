@@ -48,6 +48,9 @@ EXPORTS
 	gimp_directory
 	gimp_directory_file
 	gimp_dodge_burn_type_get_type
+	gimp_double_array_get_type
+	gimp_double_array_get_values
+	gimp_double_array_set_values
 	gimp_enum_get_desc
 	gimp_enum_get_value
 	gimp_enum_get_value_descriptions
@@ -71,9 +74,6 @@ EXPORTS
 	gimp_flags_value_get_abbrev
 	gimp_flags_value_get_desc
 	gimp_flags_value_get_help
-	gimp_float_array_get_type
-	gimp_float_array_get_values
-	gimp_float_array_set_values
 	gimp_foreground_extract_mode_get_type
 	gimp_gradient_blend_color_space_get_type
 	gimp_gradient_segment_color_get_type
@@ -129,8 +129,8 @@ EXPORTS
 	gimp_param_array_get_type
 	gimp_param_choice_get_type
 	gimp_param_core_object_array_get_type
+	gimp_param_double_array_get_type
 	gimp_param_export_options_get_type
-	gimp_param_float_array_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_memsize_get_type
 	gimp_param_object_get_type
@@ -138,8 +138,8 @@ EXPORTS
 	gimp_param_spec_array
 	gimp_param_spec_choice
 	gimp_param_spec_core_object_array
+	gimp_param_spec_double_array
 	gimp_param_spec_export_options
-	gimp_param_spec_float_array
 	gimp_param_spec_int32_array
 	gimp_param_spec_memsize
 	gimp_param_spec_object_duplicate
@@ -249,15 +249,15 @@ EXPORTS
 	gimp_value_array_remove
 	gimp_value_array_truncate
 	gimp_value_array_unref
-	gimp_value_dup_float_array
+	gimp_value_dup_double_array
 	gimp_value_dup_int32_array
-	gimp_value_get_float_array
+	gimp_value_get_double_array
 	gimp_value_get_int32_array
-	gimp_value_set_float_array
+	gimp_value_set_double_array
 	gimp_value_set_int32_array
-	gimp_value_set_static_float_array
+	gimp_value_set_static_double_array
 	gimp_value_set_static_int32_array
-	gimp_value_take_float_array
+	gimp_value_take_double_array
 	gimp_value_take_int32_array
 	gimp_wire_clear_error
 	gimp_wire_destroy

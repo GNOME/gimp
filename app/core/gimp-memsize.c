@@ -217,7 +217,7 @@ gimp_g_value_get_memsize (GValue *value)
         }
       else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
                GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+               GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value))
         {
           GimpArray *array = g_value_get_boxed (value);
 

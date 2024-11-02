@@ -307,7 +307,7 @@ gimp_unitrc_unit_info_deserialize (GScanner *scanner,
             {
             case UNIT_FACTOR:
               token = G_TOKEN_FLOAT;
-              if (! gimp_scanner_parse_float (scanner, &factor))
+              if (! gimp_scanner_parse_double (scanner, &factor))
                 goto cleanup;
               break;
 

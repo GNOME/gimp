@@ -385,7 +385,7 @@ gimp_config_deserialize_value (GValue     *value,
       return gimp_config_deserialize_strv (value, scanner);
     }
   else if (prop_spec->value_type == GIMP_TYPE_INT32_ARRAY ||
-           prop_spec->value_type == GIMP_TYPE_FLOAT_ARRAY)
+           prop_spec->value_type == GIMP_TYPE_DOUBLE_ARRAY)
     {
       return gimp_config_deserialize_array (value, scanner);
     }
@@ -538,8 +538,8 @@ gimp_config_deserialize_fundamental (GValue     *value,
     case G_TYPE_FLOAT:
       if (next_token == G_TOKEN_FLOAT)
         g_value_set_float (value, negate ?
-                           - scanner->value.v_float :
-                             scanner->value.v_float);
+                           - (gfloat) scanner->value.v_float :
+                             (gfloat) scanner->value.v_float);
       else
         g_value_set_float (value, negate ?
                            - (gfloat) scanner->value.v_int :
@@ -946,7 +946,7 @@ gimp_config_deserialize_array (GValue     *value,
 
   if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
     values = g_new0 (gint32, n_values);
-  else /* GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) */
+  else /* GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value) */
     values = (gint32 *) g_new0 (gdouble, n_values);
 
   for (gint i = 0; i < n_values; i++)
@@ -967,7 +967,7 @@ gimp_config_deserialize_array (GValue     *value,
         {
           gdouble value;
 
-          if (! gimp_scanner_parse_float (scanner, &value))
+          if (! gimp_scanner_parse_double (scanner, &value))
             {
               result_token = G_TOKEN_FLOAT;
               break;
@@ -982,7 +982,7 @@ gimp_config_deserialize_array (GValue     *value,
       if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
         gimp_value_take_int32_array (value, values, n_values);
       else
-        gimp_value_take_float_array (value, (gdouble *) values, n_values);
+        gimp_value_take_double_array (value, (gdouble *) values, n_values);
     }
   else
     {

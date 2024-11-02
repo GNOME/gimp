@@ -704,7 +704,7 @@ path_stroke_get_points_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_enum (gimp_value_array_index (return_vals, 1), type);
-      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), controlpoints, num_points);
+      gimp_value_take_double_array (gimp_value_array_index (return_vals, 2), controlpoints, num_points);
       g_value_set_boolean (gimp_value_array_index (return_vals, 3), closed);
     }
 
@@ -730,7 +730,7 @@ path_stroke_new_from_points_invoker (GimpProcedure         *procedure,
 
   path = g_value_get_object (gimp_value_array_index (args, 0));
   type = g_value_get_enum (gimp_value_array_index (args, 1));
-  controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 2), &num_points);
+  controlpoints = gimp_value_get_double_array (gimp_value_array_index (args, 2), &num_points);
   closed = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)
@@ -839,7 +839,7 @@ path_stroke_interpolate_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), coords, num_coords);
+      gimp_value_take_double_array (gimp_value_array_index (return_vals, 1), coords, num_coords);
       g_value_set_boolean (gimp_value_array_index (return_vals, 2), closed);
     }
 
@@ -1718,10 +1718,10 @@ register_path_procs (GimpPDB *pdb)
                                                       GIMP_PATH_STROKE_TYPE_BEZIER,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_float_array ("controlpoints",
-                                                                "controlpoints",
-                                                                "List of the control points for the stroke (x0, y0, x1, y1, ...).",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_double_array ("controlpoints",
+                                                                 "controlpoints",
+                                                                 "List of the control points for the stroke (x0, y0, x1, y1, ...).",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("closed",
                                                          "closed",
@@ -1739,7 +1739,7 @@ register_path_procs (GimpPDB *pdb)
                                "gimp-path-stroke-new-from-points");
   gimp_procedure_set_static_help (procedure,
                                   "Adds a stroke of a given type to the path object.",
-                                  "Adds a stroke of a given type to the path object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_PATH_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
+                                  "Adds a stroke of a given type to the path object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_PATH_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of double values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Simon Budig",
@@ -1759,10 +1759,10 @@ register_path_procs (GimpPDB *pdb)
                                                   GIMP_PATH_STROKE_TYPE_BEZIER,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("controlpoints",
-                                                            "controlpoints",
-                                                            "List of the x- and y-coordinates of the control points.",
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_double_array ("controlpoints",
+                                                             "controlpoints",
+                                                             "List of the x- and y-coordinates of the control points.",
+                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("closed",
                                                      "closed",
@@ -1811,10 +1811,10 @@ register_path_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_float_array ("coords",
-                                                                "coords",
-                                                                "List of the coords along the path (x0, y0, x1, y1, ...).",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_double_array ("coords",
+                                                                 "coords",
+                                                                 "List of the coords along the path (x0, y0, x1, y1, ...).",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("closed",
                                                          "closed",

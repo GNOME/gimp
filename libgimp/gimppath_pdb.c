@@ -701,7 +701,7 @@ gimp_path_stroke_get_points (GimpPath  *path,
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
       type = GIMP_VALUES_GET_ENUM (return_vals, 1);
-      *controlpoints = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 2, num_points);
+      *controlpoints = GIMP_VALUES_DUP_DOUBLE_ARRAY (return_vals, 2, num_points);
       *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 3);
     }
 
@@ -723,10 +723,11 @@ gimp_path_stroke_get_points (GimpPath  *path,
  * Adds a stroke of a given type to the path object. The coordinates of
  * the control points can be specified. For now only strokes of the
  * type GIMP_PATH_STROKE_TYPE_BEZIER are supported. The control points
- * are specified as a pair of float values for the x- and y-coordinate.
- * The Bezier stroke type needs a multiple of three control points.
- * Each Bezier segment endpoint (anchor, A) has two additional control
- * points (C) associated. They are specified in the order CACCACCAC...
+ * are specified as a pair of double values for the x- and
+ * y-coordinate. The Bezier stroke type needs a multiple of three
+ * control points. Each Bezier segment endpoint (anchor, A) has two
+ * additional control points (C) associated. They are specified in the
+ * order CACCACCAC...
  *
  * Returns: The stroke ID of the newly created stroke.
  *
@@ -746,10 +747,10 @@ gimp_path_stroke_new_from_points (GimpPath           *path,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_PATH, path,
                                           GIMP_TYPE_PATH_STROKE_TYPE, type,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          GIMP_TYPE_DOUBLE_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, closed,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 2), controlpoints, num_points);
+  gimp_value_set_double_array (gimp_value_array_index (args, 2), controlpoints, num_points);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-path-stroke-new-from-points",
@@ -808,7 +809,7 @@ gimp_path_stroke_interpolate (GimpPath *path,
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      coords = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, num_coords);
+      coords = GIMP_VALUES_DUP_DOUBLE_ARRAY (return_vals, 1, num_coords);
       *closed = GIMP_VALUES_GET_BOOLEAN (return_vals, 2);
     }
 

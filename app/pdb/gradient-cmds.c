@@ -188,7 +188,6 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
                                                 pos, reverse,
                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                 &color);
-              /* XXX "float" in PDB are in fact double. */
               if (color)
                 gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
               /* TODO: should we really return a list of floats? What about a list
@@ -209,7 +208,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
+    gimp_value_take_double_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
 
   return return_vals;
 }
@@ -232,7 +231,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
   gdouble *color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
-  positions = gimp_value_get_float_array (gimp_value_array_index (args, 1), &num_samples);
+  positions = gimp_value_get_double_array (gimp_value_array_index (args, 1), &num_samples);
   reverse = g_value_get_boolean (gimp_value_array_index (args, 2));
 
   if (success)
@@ -273,7 +272,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_take_float_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
+    gimp_value_take_double_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
 
   return return_vals;
 }
@@ -1381,10 +1380,10 @@ register_gradient_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_float_array ("color-samples",
-                                                                "color samples",
-                                                                "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_double_array ("color-samples",
+                                                                 "color samples",
+                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1411,10 +1410,10 @@ register_gradient_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("positions",
-                                                            "positions",
-                                                            "The list of positions to sample along the gradient",
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_double_array ("positions",
+                                                             "positions",
+                                                             "The list of positions to sample along the gradient",
+                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",
                                                      "reverse",
@@ -1422,10 +1421,10 @@ register_gradient_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_float_array ("color-samples",
-                                                                "color samples",
-                                                                "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_double_array ("color-samples",
+                                                                 "color samples",
+                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -53,8 +53,8 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       if (! strcmp (param_def->type_name, "GimpParamInt32Array"))
         return gimp_param_spec_int32_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamFloatArray"))
-        return gimp_param_spec_float_array (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "GimpParamDoubleArray"))
+        return gimp_param_spec_double_array (name, nick, blurb, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamParasite"))
         return gimp_param_spec_parasite (name, nick, blurb, flags);
@@ -151,12 +151,12 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                      flags);
       break;
 
-    case GP_PARAM_DEF_TYPE_FLOAT:
+    case GP_PARAM_DEF_TYPE_DOUBLE:
       if (! strcmp (param_def->type_name, "GParamDouble"))
         return g_param_spec_double (name, nick, blurb,
-                                    param_def->meta.m_float.min_val,
-                                    param_def->meta.m_float.max_val,
-                                    param_def->meta.m_float.default_val,
+                                    param_def->meta.m_double.min_val,
+                                    param_def->meta.m_double.max_val,
+                                    param_def->meta.m_double.default_val,
                                     flags);
       break;
 
@@ -388,11 +388,11 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     {
       GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (pspec);
 
-      param_def->param_def_type = GP_PARAM_DEF_TYPE_FLOAT;
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_DOUBLE;
 
-      param_def->meta.m_float.min_val     = dspec->minimum;
-      param_def->meta.m_float.max_val     = dspec->maximum;
-      param_def->meta.m_float.default_val = dspec->default_value;
+      param_def->meta.m_double.min_val     = dspec->minimum;
+      param_def->meta.m_double.max_val     = dspec->maximum;
+      param_def->meta.m_double.default_val = dspec->default_value;
     }
   /* Must be before G_IS_PARAM_SPEC_STRING() because it's a parent. */
   else if (pspec_type == GIMP_TYPE_PARAM_CHOICE)
@@ -732,7 +732,7 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (G_VALUE_HOLDS_DOUBLE (value))
     {
-      g_value_set_double (value, param->data.d_float);
+      g_value_set_double (value, param->data.d_double);
     }
   else if (G_VALUE_HOLDS_STRING (value))
     {
@@ -839,9 +839,9 @@ gimp_gp_param_to_value (gpointer        gimp,
                                   param->data.d_array.size /
                                   sizeof (gint32));
     }
-  else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+  else if (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value))
     {
-      gimp_value_set_float_array (value,
+      gimp_value_set_double_array (value,
                                   (const gdouble *)
                                   param->data.d_array.data,
                                   param->data.d_array.size /
@@ -1135,9 +1135,9 @@ gimp_value_to_gp_param (const GValue *value,
     }
   else if (G_VALUE_HOLDS_DOUBLE (value))
     {
-      param->param_type = GP_PARAM_TYPE_FLOAT;
+      param->param_type = GP_PARAM_TYPE_DOUBLE;
 
-      param->data.d_float = g_value_get_double (value);
+      param->data.d_double = g_value_get_double (value);
     }
   else if (G_VALUE_HOLDS_STRING (value))
     {
@@ -1272,7 +1272,7 @@ gimp_value_to_gp_param (const GValue *value,
         }
     }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+           GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value))
     {
       GimpArray *array = g_value_get_boxed (value);
 
@@ -1550,7 +1550,7 @@ _gimp_gp_params_free (GPParam  *params,
       switch (params[i].param_type)
         {
         case GP_PARAM_TYPE_INT:
-        case GP_PARAM_TYPE_FLOAT:
+        case GP_PARAM_TYPE_DOUBLE:
           break;
 
         case GP_PARAM_TYPE_STRING:

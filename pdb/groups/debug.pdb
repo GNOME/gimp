@@ -58,7 +58,7 @@ HELP
     &std_pdb_debug();
 
     @outargs = (
-        { name => 'elapsed', type => 'float',
+        { name => 'elapsed', type => 'double',
           desc => 'The elapsed time, in seconds' }
     );
 

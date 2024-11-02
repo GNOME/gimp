@@ -1138,7 +1138,7 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
   gint bmode;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  matrix = gimp_value_get_float_array (gimp_value_array_index (args, 3), &argc_matrix);
+  matrix = gimp_value_get_double_array (gimp_value_array_index (args, 3), &argc_matrix);
   alpha_alg = g_value_get_boolean (gimp_value_array_index (args, 4));
   divisor = g_value_get_double (gimp_value_array_index (args, 5));
   offset = g_value_get_double (gimp_value_array_index (args, 6));
@@ -5518,10 +5518,10 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("matrix",
-                                                            "matrix",
-                                                            "The 5x5 convolution matrix",
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_double_array ("matrix",
+                                                             "matrix",
+                                                             "The 5x5 convolution matrix",
+                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("alpha-alg",
                                                      "alpha alg",

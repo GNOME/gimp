@@ -67,7 +67,7 @@ gboolean      gimp_scanner_parse_int                (GimpScanner   *scanner,
                                                      gint          *dest);
 gboolean      gimp_scanner_parse_int64              (GimpScanner   *scanner,
                                                      gint64        *dest);
-gboolean      gimp_scanner_parse_float              (GimpScanner   *scanner,
+gboolean      gimp_scanner_parse_double             (GimpScanner   *scanner,
                                                      gdouble       *dest);
 gboolean      gimp_scanner_parse_boolean            (GimpScanner   *scanner,
                                                      gboolean      *dest);

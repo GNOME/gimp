@@ -127,10 +127,10 @@ create_callback_PDB_procedure_params (GimpProcedure *procedure,
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_GRADIENT))
     {
-      gimp_procedure_add_float_array_argument (procedure, "gradient-data",
-                                               "Gradient data",
-                                               "The gradient data",
-                                               G_PARAM_READWRITE);
+      gimp_procedure_add_double_array_argument (procedure, "gradient-data",
+                                                "Gradient data",
+                                                "The gradient data",
+                                                G_PARAM_READWRITE);
     }
   else if (g_type_is_a (resource_type, GIMP_TYPE_BRUSH))
     {

@@ -212,7 +212,7 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  values = gimp_value_get_float_array (gimp_value_array_index (args, 2), &num_values);
+  values = gimp_value_get_double_array (gimp_value_array_index (args, 2), &num_values);
 
   if (success)
     {
@@ -260,7 +260,7 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  points = gimp_value_get_float_array (gimp_value_array_index (args, 2), &num_points);
+  points = gimp_value_get_double_array (gimp_value_array_index (args, 2), &num_points);
 
   if (success)
     {
@@ -993,10 +993,10 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("values",
-                                                            "values",
-                                                            "The explicit curve",
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_double_array ("values",
+                                                             "values",
+                                                             "The explicit curve",
+                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1028,10 +1028,10 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("points",
-                                                            "points",
-                                                            "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_double_array ("points",
+                                                             "points",
+                                                             "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
+                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -314,7 +314,7 @@ HELP
     );
 
     @outargs = (
-      { name => 'radius', type => 'float',
+      { name => 'radius', type => 'double',
         void_ret => 1,
         desc => 'The radius of the brush in pixels' }
     );
@@ -369,7 +369,7 @@ sub brush_get_hardness {
     $help = <<'HELP';
 Gets the hardness of a generated brush.
 The hardness of a brush is the amount its intensity fades at the
-outside edge, as a float between 0.0 and 1.0.
+outside edge, as a double between 0.0 and 1.0.
 Returns an error when called for a non-parametric brush.
 HELP
 
@@ -380,7 +380,7 @@ HELP
     );
 
     @outargs = (
-      { name => 'hardness', type => 'float',
+      { name => 'hardness', type => 'double',
         void_ret => 1,
         desc => 'The hardness of the brush.' }
     );
@@ -403,7 +403,7 @@ sub brush_get_aspect_ratio {
     $help = <<'HELP';
 Gets the aspect ratio of a generated brush.
 Returns an error when called for a non-parametric brush.
-The aspect ratio is a float between 0.0 and 1000.0.
+The aspect ratio is a double between 0.0 and 1000.0.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
@@ -413,7 +413,7 @@ HELP
     );
 
     @outargs = (
-      { name => 'aspect_ratio', type => 'float',
+      { name => 'aspect_ratio', type => 'double',
         void_ret => 1,
         desc => 'The aspect ratio of the brush.' }
     );
@@ -445,7 +445,7 @@ HELP
     );
 
     @outargs = (
-      { name => 'angle', type => 'float',
+      { name => 'angle', type => 'double',
         void_ret => 1,
         desc => 'The rotation angle of the brush in degree.' }
     );
@@ -551,12 +551,12 @@ HELP
 
     @inargs = (
       ${brush_arg_spec},
-      { name => 'radius_in', type => 'float',
+      { name => 'radius_in', type => 'double',
         desc => 'The desired brush radius in pixel' }
     );
 
     @outargs = (
-      { name => 'radius_out', type => 'float',
+      { name => 'radius_out', type => 'double',
         void_ret => 1,
         desc => 'The brush radius actually assigned' }
     );
@@ -637,12 +637,12 @@ HELP
 
     @inargs = (
       ${brush_arg_spec},
-      { name => 'hardness_in', type => 'float',
+      { name => 'hardness_in', type => 'double',
         desc => 'The desired brush hardness' }
     );
 
     @outargs = (
-      { name => 'hardness_out', type => 'float',
+      { name => 'hardness_out', type => 'double',
         void_ret => 1,
         desc => 'The brush hardness actually assigned' }
     );
@@ -680,12 +680,12 @@ HELP
 
     @inargs = (
       ${brush_arg_spec},
-      { name => 'aspect_ratio_in', type => 'float',
+      { name => 'aspect_ratio_in', type => 'double',
         desc => 'The desired brush aspect ratio' }
     );
 
     @outargs = (
-      { name => 'aspect_ratio_out', type => 'float',
+      { name => 'aspect_ratio_out', type => 'double',
         void_ret => 1,
         desc => 'The brush aspect ratio actually assigned' }
     );
@@ -723,12 +723,12 @@ HELP
 
     @inargs = (
       ${brush_arg_spec},
-      { name => 'angle_in', type => 'float',
+      { name => 'angle_in', type => 'double',
         desc => 'The desired brush rotation angle in degrees' }
         );
 
     @outargs = (
-      { name => 'angle_out', type => 'float',
+      { name => 'angle_out', type => 'double',
         void_ret => 1,
         desc => 'The brush rotation angle actually assigned' }
     );

@@ -1159,7 +1159,7 @@ gimp_context_get_line_dash_pattern (gsize    *num_dashes,
 
   if (success)
     {
-      *dashes = GIMP_VALUES_DUP_FLOAT_ARRAY (return_vals, 1, num_dashes);
+      *dashes = GIMP_VALUES_DUP_DOUBLE_ARRAY (return_vals, 1, num_dashes);
     }
 
   gimp_value_array_unref (return_vals);
@@ -1197,9 +1197,9 @@ gimp_context_set_line_dash_pattern (gsize          num_dashes,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          GIMP_TYPE_DOUBLE_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 0), dashes, num_dashes);
+  gimp_value_set_double_array (gimp_value_array_index (args, 0), dashes, num_dashes);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                                "gimp-context-set-line-dash-pattern",

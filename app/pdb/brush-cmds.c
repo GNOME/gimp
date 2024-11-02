@@ -1249,7 +1249,7 @@ register_brush_procs (GimpPDB *pdb)
                                "gimp-brush-get-hardness");
   gimp_procedure_set_static_help (procedure,
                                   "Gets the hardness of a generated brush.",
-                                  "Gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge, as a float between 0.0 and 1.0. Returns an error when called for a non-parametric brush.",
+                                  "Gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge, as a double between 0.0 and 1.0. Returns an error when called for a non-parametric brush.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -1317,7 +1317,7 @@ register_brush_procs (GimpPDB *pdb)
                                "gimp-brush-get-aspect-ratio");
   gimp_procedure_set_static_help (procedure,
                                   "Gets the aspect ratio of a generated brush.",
-                                  "Gets the aspect ratio of a generated brush. Returns an error when called for a non-parametric brush. The aspect ratio is a float between 0.0 and 1000.0.",
+                                  "Gets the aspect ratio of a generated brush. Returns an error when called for a non-parametric brush. The aspect ratio is a double between 0.0 and 1000.0.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",

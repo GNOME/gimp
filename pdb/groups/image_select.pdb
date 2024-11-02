@@ -125,10 +125,10 @@ HELP
 	  desc => 'The selection operation' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'x', type => 'float',
+	{ name => 'x', type => 'double',
 	  desc => 'x coordinate of initial seed fill point: (image
 	  	   coordinates)' },
-	{ name => 'y', type => 'float',
+	{ name => 'y', type => 'double',
 	  desc => 'y coordinate of initial seed fill point: (image
 	  	   coordinates)' }
     );
@@ -184,13 +184,13 @@ HELP
 	  desc => 'The image' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
 	  desc => 'The selection operation' },
-	{ name => 'x', type => 'float',
+	{ name => 'x', type => 'double',
 	  desc => 'x coordinate of upper-left corner of rectangle' },
-	{ name => 'y', type => 'float',
+	{ name => 'y', type => 'double',
 	  desc => 'y coordinate of upper-left corner of rectangle' },
-	{ name => 'width', type => '0 < float',
+	{ name => 'width', type => '0 < double',
 	  desc => 'The width of the rectangle' },
-	{ name => 'height', type => '0 < float',
+	{ name => 'height', type => '0 < double',
 	  desc => 'The height of the rectangle' }
     );
 
@@ -235,17 +235,17 @@ HELP
 	  desc => 'The image' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
 	  desc => 'The selection operation' },
-	{ name => 'x', type => 'float',
+	{ name => 'x', type => 'double',
 	  desc => 'x coordinate of upper-left corner of rectangle' },
-	{ name => 'y', type => 'float',
+	{ name => 'y', type => 'double',
 	  desc => 'y coordinate of upper-left corner of rectangle' },
-	{ name => 'width', type => '0 < float',
+	{ name => 'width', type => '0 < double',
 	  desc => 'The width of the rectangle' },
-	{ name => 'height', type => '0 < float',
+	{ name => 'height', type => '0 < double',
 	  desc => 'The height of the rectangle' },
-        { name => 'corner_radius_x', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
+        { name => 'corner_radius_x', type => '0 < double < GIMP_MAX_IMAGE_SIZE',
           desc => 'The corner radius in X direction' },
-        { name => 'corner_radius_y', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
+        { name => 'corner_radius_y', type => '0 < double < GIMP_MAX_IMAGE_SIZE',
           desc => 'The corner radius in Y direction' }
     );
 
@@ -292,13 +292,13 @@ HELP
 	  desc => 'The image' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
 	  desc => 'The selection operation' },
-	{ name => 'x', type => 'float',
+	{ name => 'x', type => 'double',
 	  desc => 'x coordinate of upper-left corner of ellipse bounding box' },
-	{ name => 'y', type => 'float',
+	{ name => 'y', type => 'double',
 	  desc => 'y coordinate of upper-left corner of ellipse bounding box' },
-	{ name => 'width', type => '0 < float',
+	{ name => 'width', type => '0 < double',
 	  desc => 'The width of the ellipse' },
-	{ name => 'height', type => '0 < float',
+	{ name => 'height', type => '0 < double',
 	  desc => 'The height of the ellipse' }
     );
 
@@ -348,7 +348,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'operation', type => 'enum GimpChannelOps',
 	  desc => 'The selection operation' },
-        { name => 'segs', type => 'floatarray',
+        { name => 'segs', type => 'doublearray',
           desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
                    pn.x, pn.y}',
           array => { type => '2 <= size',

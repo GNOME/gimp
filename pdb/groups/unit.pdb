@@ -37,7 +37,7 @@ HELP
     @outargs = (
 	{ name => 'name', type => 'string',
 	  desc => "The unit's name" },
-	{ name => 'factor', type => 'float',
+	{ name => 'factor', type => 'double',
 	  desc => "The unit's factor" },
 	{ name => 'digits', type => 'int32',
 	  desc => "The unit's number of digits" },
@@ -82,7 +82,7 @@ HELP
     @inargs = (
 	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => "The new unit's name" },
-	{ name => 'factor', type => 'float',
+	{ name => 'factor', type => 'double',
 	  desc => "The new unit's factor" },
 	{ name => 'digits', type => 'int32',
 	  desc => "The new unit's digits" },

@@ -295,7 +295,7 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  segs = gimp_value_get_float_array (gimp_value_array_index (args, 2), &num_segs);
+  segs = gimp_value_get_double_array (gimp_value_array_index (args, 2), &num_segs);
 
   if (success)
     {
@@ -668,10 +668,10 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("segs",
-                                                            "segs",
-                                                            "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
-                                                            GIMP_PARAM_READWRITE));
+                               gimp_param_spec_double_array ("segs",
+                                                             "segs",
+                                                             "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
+                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

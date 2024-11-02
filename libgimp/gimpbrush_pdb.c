@@ -631,7 +631,7 @@ gimp_brush_set_spikes (GimpBrush *brush,
  * Gets the hardness of a generated brush.
  *
  * Gets the hardness of a generated brush. The hardness of a brush is
- * the amount its intensity fades at the outside edge, as a float
+ * the amount its intensity fades at the outside edge, as a double
  * between 0.0 and 1.0. Returns an error when called for a
  * non-parametric brush.
  *
@@ -723,7 +723,7 @@ gimp_brush_set_hardness (GimpBrush *brush,
  * Gets the aspect ratio of a generated brush.
  *
  * Gets the aspect ratio of a generated brush. Returns an error when
- * called for a non-parametric brush. The aspect ratio is a float
+ * called for a non-parametric brush. The aspect ratio is a double
  * between 0.0 and 1000.0.
  *
  * Returns: TRUE on success.

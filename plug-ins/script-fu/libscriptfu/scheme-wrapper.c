@@ -1163,7 +1163,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               debug_vector (sc, vector, "%ld");
             }
         }
-      else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (&value))
+      else if (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
@@ -1188,7 +1188,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   array[j] = (gdouble) sc->vptr->rvalue (v_element);
                 }
 
-              gimp_value_take_float_array (&value, array, n_elements);
+              gimp_value_take_double_array (&value, array, n_elements);
 
               debug_vector (sc, vector, "%f");
             }

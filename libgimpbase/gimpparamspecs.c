@@ -681,22 +681,22 @@ gimp_value_take_int32_array (GValue *value,
 
 
 /*
- * GIMP_TYPE_FLOAT_ARRAY
+ * GIMP_TYPE_DOUBLE_ARRAY
  */
 
-typedef GimpArray GimpFloatArray;
-G_DEFINE_BOXED_TYPE (GimpFloatArray, gimp_float_array, gimp_array_copy, gimp_array_free)
+typedef GimpArray GimpDoubleArray;
+G_DEFINE_BOXED_TYPE (GimpDoubleArray, gimp_double_array, gimp_array_copy, gimp_array_free)
 
 /**
- * gimp_float_array_get_values:
- * @array: the #GimpArray representing #float values.
- * @length: the number of #float values in the returned array.
+ * gimp_double_array_get_values:
+ * @array: the #GimpArray representing #double values.
+ * @length: the number of #double values in the returned array.
  *
  * Returns: (array length=length) (transfer none): a C-array of #gdouble.
  */
 const gdouble *
-gimp_float_array_get_values (GimpArray *array,
-                             gsize     *length)
+gimp_double_array_get_values (GimpArray *array,
+                              gsize     *length)
 {
   g_return_val_if_fail (array->length % sizeof (gdouble) == 0, NULL);
 
@@ -707,17 +707,17 @@ gimp_float_array_get_values (GimpArray *array,
 }
 
 /**
- * gimp_float_array_set_values:
+ * gimp_double_array_set_values:
  * @array: the array to modify.
  * @values: (array length=length): the C-array.
- * @length: the number of #float values in @data.
+ * @length: the number of #double values in @data.
  * @static_data: whether @data is a static rather than allocated array.
  */
 void
-gimp_float_array_set_values (GimpArray     *array,
-                             const gdouble *values,
-                             gsize          length,
-                             gboolean       static_data)
+gimp_double_array_set_values (GimpArray     *array,
+                              const gdouble *values,
+                              gsize          length,
+                              gboolean       static_data)
 {
   g_return_if_fail ((values == NULL && length == 0) || (values != NULL && length  > 0));
 
@@ -731,14 +731,14 @@ gimp_float_array_set_values (GimpArray     *array,
 
 
 /*
- * GIMP_TYPE_PARAM_FLOAT_ARRAY
+ * GIMP_TYPE_PARAM_DOUBLE_ARRAY
  */
 
-static void   gimp_param_float_array_class_init (GParamSpecClass *klass);
-static void   gimp_param_float_array_init       (GParamSpec      *pspec);
+static void   gimp_param_double_array_class_init (GParamSpecClass *klass);
+static void   gimp_param_double_array_init       (GParamSpec      *pspec);
 
 GType
-gimp_param_float_array_get_type (void)
+gimp_param_double_array_get_type (void)
 {
   static GType type = 0;
 
@@ -748,77 +748,77 @@ gimp_param_float_array_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_float_array_class_init,
+        (GClassInitFunc) gimp_param_double_array_class_init,
         NULL, NULL,
         sizeof (GParamSpecBoxed),
         0,
-        (GInstanceInitFunc) gimp_param_float_array_init
+        (GInstanceInitFunc) gimp_param_double_array_init
       };
 
       type = g_type_register_static (GIMP_TYPE_PARAM_ARRAY,
-                                     "GimpParamFloatArray", &info, 0);
+                                     "GimpParamDoubleArray", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_float_array_class_init (GParamSpecClass *klass)
+gimp_param_double_array_class_init (GParamSpecClass *klass)
 {
-  klass->value_type = GIMP_TYPE_FLOAT_ARRAY;
+  klass->value_type = GIMP_TYPE_DOUBLE_ARRAY;
 }
 
 static void
-gimp_param_float_array_init (GParamSpec *pspec)
+gimp_param_double_array_init (GParamSpec *pspec)
 {
 }
 
 /**
- * gimp_param_spec_float_array:
+ * gimp_param_spec_double_array:
  * @name:  Canonical name of the property specified.
  * @nick:  Nick name of the property specified.
  * @blurb: Description of the property specified.
  * @flags: Flags for the property specified.
  *
- * Creates a new #GimpParamSpecFloatArray specifying a
- * %GIMP_TYPE_FLOAT_ARRAY property.
+ * Creates a new #GimpParamSpecDoubleArray specifying a
+ * %GIMP_TYPE_DOUBLE_ARRAY property.
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer floating): The newly created #GimpParamSpecFloatArray.
+ * Returns: (transfer floating): The newly created #GimpParamSpecDoubleArray.
  *
  * Since: 3.0
  **/
 GParamSpec *
-gimp_param_spec_float_array (const gchar *name,
-                             const gchar *nick,
-                             const gchar *blurb,
-                             GParamFlags  flags)
+gimp_param_spec_double_array (const gchar *name,
+                              const gchar *nick,
+                              const gchar *blurb,
+                              GParamFlags  flags)
 {
   GParamSpec *array_spec;
 
-  array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_FLOAT_ARRAY,
+  array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_DOUBLE_ARRAY,
                                       name, nick, blurb, flags);
 
   return array_spec;
 }
 
 /**
- * gimp_value_get_float_array:
- * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * gimp_value_get_double_array:
+ * @value: A valid value of type %GIMP_TYPE_DOUBLE_ARRAY
  * @length: the number of returned #double elements.
  *
- * Gets the contents of a %GIMP_TYPE_FLOAT_ARRAY #GValue
+ * Gets the contents of a %GIMP_TYPE_DOUBLE_ARRAY #GValue
  *
  * Returns: (transfer none) (array length=length): The contents of @value
  */
 const gdouble *
-gimp_value_get_float_array (const GValue *value,
-                            gsize        *length)
+gimp_value_get_double_array (const GValue *value,
+                             gsize        *length)
 {
   GimpArray *array;
 
-  g_return_val_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), NULL);
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value), NULL);
 
   array = value->data[0].v_pointer;
 
@@ -831,21 +831,21 @@ gimp_value_get_float_array (const GValue *value,
 }
 
 /**
- * gimp_value_dup_float_array:
- * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
+ * gimp_value_dup_double_array:
+ * @value: A valid value of type %GIMP_TYPE_DOUBLE_ARRAY
  * @length: the number of returned #double elements.
  *
- * Gets the contents of a %GIMP_TYPE_FLOAT_ARRAY #GValue
+ * Gets the contents of a %GIMP_TYPE_DOUBLE_ARRAY #GValue
  *
  * Returns: (transfer full) (array length=length): The contents of @value
  */
 gdouble *
-gimp_value_dup_float_array (const GValue *value,
-                            gsize        *length)
+gimp_value_dup_double_array (const GValue *value,
+                             gsize        *length)
 {
   GimpArray *array;
 
-  g_return_val_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), NULL);
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value), NULL);
 
   array = value->data[0].v_pointer;
 
@@ -858,57 +858,57 @@ gimp_value_dup_float_array (const GValue *value,
 }
 
 /**
- * gimp_value_set_float_array:
- * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
- * @data: (array length=length): A #gfloat array
+ * gimp_value_set_double_array:
+ * @value: A valid value of type %GIMP_TYPE_DOUBLE_ARRAY
+ * @data: (array length=length): A #gdouble array
  * @length: The number of elements in @data
  *
  * Sets the contents of @value to @data.
  */
 void
-gimp_value_set_float_array (GValue        *value,
-                            const gdouble *data,
-                            gsize         length)
+gimp_value_set_double_array (GValue        *value,
+                             const gdouble *data,
+                             gsize         length)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
+  g_return_if_fail (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value));
 
   gimp_value_set_array (value, (const guint8 *) data,
                         length * sizeof (gdouble));
 }
 
 /**
- * gimp_value_set_static_float_array:
- * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
- * @data: (array length=length): A #gfloat array
+ * gimp_value_set_static_double_array:
+ * @value: A valid value of type %GIMP_TYPE_DOUBLE_ARRAY
+ * @data: (array length=length): A #gdouble array
  * @length: The number of elements in @data
  *
  * Sets the contents of @value to @data, without copying the data.
  */
 void
-gimp_value_set_static_float_array (GValue        *value,
-                                   const gdouble *data,
-                                   gsize         length)
+gimp_value_set_static_double_array (GValue        *value,
+                                    const gdouble *data,
+                                    gsize         length)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
+  g_return_if_fail (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value));
 
   gimp_value_set_static_array (value, (const guint8 *) data,
                                length * sizeof (gdouble));
 }
 
 /**
- * gimp_value_take_float_array:
- * @value: A valid value of type %GIMP_TYPE_FLOAT_ARRAY
- * @data: (transfer full) (array length=length): A #gfloat array
+ * gimp_value_take_double_array:
+ * @value: A valid value of type %GIMP_TYPE_DOUBLE_ARRAY
+ * @data: (transfer full) (array length=length): A #gdouble array
  * @length: The number of elements in @data
  *
  * Sets the contents of @value to @data, and takes ownership of @data.
  */
 void
-gimp_value_take_float_array (GValue  *value,
-                             gdouble *data,
-                             gsize    length)
+gimp_value_take_double_array (GValue  *value,
+                              gdouble *data,
+                              gsize    length)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
+  g_return_if_fail (GIMP_VALUE_HOLDS_DOUBLE_ARRAY (value));
 
   gimp_value_take_array (value, (guint8 *) data,
                          length * sizeof (gdouble));

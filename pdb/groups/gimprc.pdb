@@ -110,9 +110,9 @@ HELP
     &std_pdb_misc;
 
     @outargs = (
-	{  name => 'xres', type => 'float', void_ret => 1,
+	{  name => 'xres', type => 'double', void_ret => 1,
 	   desc => 'X resolution' },
-	{  name => 'yres', type => 'float',
+	{  name => 'yres', type => 'double',
 	   desc => 'Y resolution' },	   
     );
 

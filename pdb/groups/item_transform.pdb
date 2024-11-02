@@ -117,9 +117,9 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The item' },
-	{ name => 'off_x', type => 'float',
+	{ name => 'off_x', type => 'double',
 	  desc => "Offset in x direction" },
-	{ name => 'off_y', type => 'float',
+	{ name => 'off_y', type => 'double',
 	  desc => "Offset in y direction" }
     );
 
@@ -178,7 +178,7 @@ HELP
           desc => 'Type of flip' },
         { name => 'auto_center', type => 'boolean',
           desc => 'Whether to automatically position the axis in the selection center' },
-        { name => 'axis', type => 'float',
+        { name => 'axis', type => 'double',
           desc => 'coord. of flip axis' }
     );
 
@@ -272,13 +272,13 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-        { name => 'x0', type => 'float',
+        { name => 'x0', type => 'double',
           desc => 'horz. coord. of one end of axis' },
-        { name => 'y0', type => 'float',
+        { name => 'y0', type => 'double',
           desc => 'vert. coord. of one end of axis' },
-        { name => 'x1', type => 'float',
+        { name => 'x1', type => 'double',
           desc => 'horz. coord. of other end of axis' },
-        { name => 'y1', type => 'float',
+        { name => 'y1', type => 'double',
           desc => 'vert. coord. of other end of axis' }
     );
 
@@ -335,28 +335,28 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-	{ name => 'x0', type => 'float',
+	{ name => 'x0', type => 'double',
 	  desc => 'The new x coordinate of upper-left corner of original
 		   bounding box' },
-	{ name => 'y0', type => 'float',
+	{ name => 'y0', type => 'double',
 	  desc => 'The new y coordinate of upper-left corner of original
 		   bounding box' },
-	{ name => 'x1', type => 'float',
+	{ name => 'x1', type => 'double',
 	  desc => 'The new x coordinate of upper-right corner of original
 		   bounding box' },
-	{ name => 'y1', type => 'float',
+	{ name => 'y1', type => 'double',
 	  desc => 'The new y coordinate of upper-right corner of original
 		   bounding box' },
-	{ name => 'x2', type => 'float',
+	{ name => 'x2', type => 'double',
 	  desc => 'The new x coordinate of lower-left corner of original
 		   bounding box' },
-	{ name => 'y2', type => 'float',
+	{ name => 'y2', type => 'double',
 	  desc => 'The new y coordinate of lower-left corner of original
 		   bounding box' },
-	{ name => 'x3', type => 'float',
+	{ name => 'x3', type => 'double',
 	  desc => 'The new x coordinate of lower-right corner of original
 		   bounding box' },
-	{ name => 'y3', type => 'float',
+	{ name => 'y3', type => 'double',
 	  desc => 'The new y coordinate of lower-right corner of original
 		   bounding box' }
     );
@@ -414,9 +414,9 @@ HELP
           desc => 'Type of rotation' },
         { name => 'auto_center', type => 'boolean',
           desc => 'Whether to automatically rotate around the selection center' },
-        { name => 'center_x', type => 'float',
+        { name => 'center_x', type => 'double',
           desc => 'The hor. coordinate of the center of rotation' },
-        { name => 'center_y', type => 'float',
+        { name => 'center_y', type => 'double',
           desc => 'The vert. coordinate of the center of rotation' }
     );
 
@@ -518,13 +518,13 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-        { name => 'angle', type => 'float',
+        { name => 'angle', type => 'double',
           desc => 'The angle of rotation (radians)' },
         { name => 'auto_center', type => 'boolean',
           desc => 'Whether to automatically rotate around the selection center' },
-        { name => 'center_x', type => 'float',
+        { name => 'center_x', type => 'double',
           desc => 'The hor. coordinate of the center of rotation' },
-        { name => 'center_y', type => 'float',
+        { name => 'center_y', type => 'double',
           desc => 'The vert. coordinate of the center of rotation' }
     );
 
@@ -578,16 +578,16 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-	{ name => 'x0', type => 'float',
+	{ name => 'x0', type => 'double',
 	  desc => 'The new x coordinate of the upper-left corner of the
 		    scaled region' },
-	{ name => 'y0', type => 'float',
+	{ name => 'y0', type => 'double',
 	  desc => 'The new y coordinate of the upper-left corner of the
 		    scaled region' },
-	{ name => 'x1', type => 'float',
+	{ name => 'x1', type => 'double',
 	  desc => 'The new x coordinate of the lower-right corner of the
 		    scaled region' },
-	{ name => 'y1', type => 'float',
+	{ name => 'y1', type => 'double',
 	  desc => 'The new y coordinate of the lower-right corner of the
 		    scaled region' }
     );
@@ -645,7 +645,7 @@ HELP
         { name => 'shear_type',
 	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
           desc => 'Type of shear' },
-        { name => 'magnitude', type => 'float',
+        { name => 'magnitude', type => 'double',
           desc => 'The magnitude of the shear' }
     );
 
@@ -698,19 +698,19 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-        { name => 'source_x', type => 'float',
+        { name => 'source_x', type => 'double',
           desc => 'X coordinate of the transformation center' },
-        { name => 'source_y', type => 'float',
+        { name => 'source_y', type => 'double',
           desc => 'Y coordinate of the transformation center' },
-        { name => 'scale_x', type => 'float',
+        { name => 'scale_x', type => 'double',
           desc => 'Amount to scale in x direction' },
-        { name => 'scale_y', type => 'float',
+        { name => 'scale_y', type => 'double',
           desc => 'Amount to scale in y direction' },
-        { name => 'angle', type => 'float',
+        { name => 'angle', type => 'double',
           desc => 'The angle of rotation (radians)' },
-        { name => 'dest_x', type => 'float',
+        { name => 'dest_x', type => 'double',
           desc => 'X coordinate of where the center goes' },
-        { name => 'dest_y', type => 'float',
+        { name => 'dest_y', type => 'double',
           desc => 'Y coordinate of where the center goes' }
     );
 
@@ -762,23 +762,23 @@ HELP
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The affected item' },
-        { name => 'coeff_0_0', type => 'float',
+        { name => 'coeff_0_0', type => 'double',
           desc => 'coefficient (0,0) of the transformation matrix' },
-        { name => 'coeff_0_1', type => 'float',
+        { name => 'coeff_0_1', type => 'double',
           desc => 'coefficient (0,1) of the transformation matrix' },
-        { name => 'coeff_0_2', type => 'float',
+        { name => 'coeff_0_2', type => 'double',
           desc => 'coefficient (0,2) of the transformation matrix' },
-        { name => 'coeff_1_0', type => 'float',
+        { name => 'coeff_1_0', type => 'double',
           desc => 'coefficient (1,0) of the transformation matrix' },
-        { name => 'coeff_1_1', type => 'float',
+        { name => 'coeff_1_1', type => 'double',
           desc => 'coefficient (1,1) of the transformation matrix' },
-        { name => 'coeff_1_2', type => 'float',
+        { name => 'coeff_1_2', type => 'double',
           desc => 'coefficient (1,2) of the transformation matrix' },
-        { name => 'coeff_2_0', type => 'float',
+        { name => 'coeff_2_0', type => 'double',
           desc => 'coefficient (2,0) of the transformation matrix' },
-        { name => 'coeff_2_1', type => 'float',
+        { name => 'coeff_2_1', type => 'double',
           desc => 'coefficient (2,1) of the transformation matrix' },
-        { name => 'coeff_2_2', type => 'float',
+        { name => 'coeff_2_2', type => 'double',
           desc => 'coefficient (2,2) of the transformation matrix' }
     );
 

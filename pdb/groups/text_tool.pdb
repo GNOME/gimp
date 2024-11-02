@@ -43,9 +43,9 @@ HELP
         { name => 'drawable', type => 'drawable',
           desc => 'The affected drawable: (%NULL for a new text layer)',
           none_ok => 1 },
-        { name => 'x', type => 'float',
+        { name => 'x', type => 'double',
           desc => 'The x coordinate for the left of the text bounding box' },
-        { name => 'y', type => 'float',
+        { name => 'y', type => 'double',
           desc => 'The y coordinate for the top of the text bounding box' },
         { name => 'text', type => 'string',
           desc => 'The text to generate (in UTF-8 encoding)' },
@@ -53,7 +53,7 @@ HELP
           desc => 'The size of the border' },
         { name => 'antialias', type => 'boolean',
           desc => 'Antialiasing' },
-        { name => 'size', type => '0 < float',
+        { name => 'size', type => '0 < double',
           desc => 'The size of text in pixels' },
         { name => 'font', type => 'font',
           desc => 'The font' }
@@ -107,7 +107,7 @@ HELP
     @inargs = (
         { name => 'text', type => 'string',
           desc => 'The text to generate (in UTF-8 encoding)' },
-        { name => 'size', type => '0 < float',
+        { name => 'size', type => '0 < double',
           desc => 'The size of text in either pixels or points' },
         { name => 'font', type => 'font',
           desc => 'The name of the font' }

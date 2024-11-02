@@ -66,7 +66,7 @@ HELP
     $lib_private = 1;
 
     @inargs = (
-	{ name => 'percentage', type => 'float',
+	{ name => 'percentage', type => 'double',
 	  desc => 'Percentage of progress completed which must
                    be between 0.0 and 1.0' }
     );

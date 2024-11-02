@@ -1245,7 +1245,7 @@ register_text_layer_procs (GimpPDB *pdb)
                                "gimp-text-layer-get-font-size");
   gimp_procedure_set_static_help (procedure,
                                   "Get the font size from a text layer.",
-                                  "This procedure returns the size of the font which is used in a text layer. You will receive the size as a float 'font-size' in 'unit' units.",
+                                  "This procedure returns the size of the font which is used in a text layer. You will receive the size as a double 'font-size' in 'unit' units.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Marcus Heese <heese@cip.ifi.lmu.de>",

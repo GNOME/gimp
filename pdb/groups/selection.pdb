@@ -353,7 +353,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'radius', type => '0 <= float',
+	{ name => 'radius', type => '0 <= double',
 	  desc => 'Radius of feather (in pixels)' }
     );
 

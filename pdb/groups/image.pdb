@@ -408,16 +408,16 @@ HELP
           desc => 'The image' },
         { name => 'drawables', type => 'drawablearray',
           desc => 'The drawables to pick from' },
-        { name => 'x', type => 'float',
+        { name => 'x', type => 'double',
           desc => 'x coordinate of upper-left corner of rectangle' },
-        { name => 'y', type => 'float',
+        { name => 'y', type => 'double',
           desc => 'y coordinate of upper-left corner of rectangle' },
         { name => 'sample_merged', type => 'boolean',
           desc => 'Use the composite image, not the drawables' },
         { name => 'sample_average', type => 'boolean',
           desc => 'Average the color of all the pixels in a specified
                    radius' },
-        { name => 'average_radius', type => '0 < float', no_validate => 1,
+        { name => 'average_radius', type => '0 < double', no_validate => 1,
           desc => 'The radius of pixels to average' }
     );
 
@@ -2608,9 +2608,9 @@ HELP
     );
 
     @outargs = (
-        { name => 'xresolution', type => 'float', void_ret => 1,
+        { name => 'xresolution', type => 'double', void_ret => 1,
           desc => 'The resolution in the x-axis, in dots per inch' },
-        { name => 'yresolution', type => 'float',
+        { name => 'yresolution', type => 'double',
           desc => 'The resolution in the y-axis, in dots per inch' }
     );
 
@@ -2637,9 +2637,9 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'xresolution', type => 'float',
+        { name => 'xresolution', type => 'double',
           desc => 'The new image resolution in the x-axis, in dots per inch' },
-        { name => 'yresolution', type => 'float',
+        { name => 'yresolution', type => 'double',
           desc => 'The new image resolution in the y-axis, in dots per inch' }
     );
 
