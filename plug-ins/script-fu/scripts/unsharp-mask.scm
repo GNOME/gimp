@@ -4,8 +4,7 @@
 ;;; Version 0.8
 
 ; This script-fu-unsharp-mask is not in the menus.
-; There is an equivalent GEGL filter at Filters>Enhance>Sharpen (Unsharp)
-; and a GEGL wrapper in the PDB, plug-in-unsharp-mask.
+; There is an equivalent GEGL filter at Filters>Enhance>Sharpen (Unsharp).
 ; This might be kept for compatibility and used by third party scripts.
 
 ; Seems not used by any script in the repo.

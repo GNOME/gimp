@@ -169,7 +169,6 @@
 ; in alphabetical order.
 (define gegl-wrapper-names
   (list
-    "alienmap2"
     "antialias"
     "apply-canvas"
     "applylens"
@@ -201,7 +200,6 @@
     "median-blur"
     "mosaic"
     "neon"
-    ; nova requires color arg that does not default
     "newsprint"
     "normalize"
     "oilify"
@@ -289,34 +287,6 @@
 (define (testSpecialGeglWrappers)
   (test! "Special test GEGL wrappers")
 
-  ; This is a typical, more elaborate test using sensical, not default, values.
-  ; Note that freq 0 produces little effect
-  (test! "alienmap2")
-  (testImageCreator)
-  (assert
-    `(plug-in-alienmap2
-        RUN-NONINTERACTIVE ,testImage ,testLayer
-        1 0 ; red freq, angle
-        1 0 ; green
-        1 0 ; blue
-        0 ; TODO what is the enum symbol RGB-MODEL ; color model
-        1 1 1 ;  RGB application modes
-        ; when script-fu-use-v3 #t #t #t
-        ))
-
-  ; Requires non-defaultable convolution matrix
-  (test! "convmatrix")
-  (testImageCreator)
-  (assert `(plug-in-convmatrix
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      #(1 2 3 4 5   1 2 3 4 5  1 2 3 4 5  1 2 3 4 5  1 2 3 4 5) ; conv matrix
-      0 0 0
-      #(1 0 1 0 1) ; channel mask
-      0 ; border mode
-      ))
-  (gimp-display-new testImage)
-  (gimp-displays-flush)
-
   ; Requires non-defaultable maps.
   ; We can never add test auto-defaulting the args.
   ; These are NOT the declared defaults.
@@ -328,57 +298,6 @@
       0 0 ; do displace x, y booleans
       ,testLayer ,testLayer ; x, y maps
       1 ; edge behaviour
-      ))
-  (gimp-display-new testImage)
-  (gimp-displays-flush)
-
-  ; Requires non-defaultable maps
-  (test! "displace-polar")
-  (testImageCreator)
-  (assert `(plug-in-displace-polar
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      0 0 ; multiplier radial, tangent  default is -500
-      0 0 ; do displace x, y booleans
-      ,testLayer ,testLayer ; x, y maps
-      1 ; edge behaviour
-      ))
-  (gimp-display-new testImage)
-  (gimp-displays-flush)
-
-  ; Requires non-defaultable color
-  (test! "nova")
-  (testImageCreator)
-  (assert `(plug-in-nova
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      0 0 "red" ; other args defaulted
-      ))
-  (gimp-display-new testImage)
-  (gimp-displays-flush)
-
-  ; Requires non-defaultable color
-  (test! "papertile")
-  (testImageCreator)
-  (assert `(plug-in-papertile
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      1 ; tile size (width, height as one arg)
-      1.0 ; move rate
-      0 ; fractional type enum
-      0 0 ; wrap around, centering boolean
-      5  ; background type enum
-      "red" ; color when background type==5
-      ; other args defaulted
-      ))
-  (gimp-display-new testImage)
-  (gimp-displays-flush)
-
-  ; Requires non-defaultable color
-  (test! "sinus")
-  (testImageCreator)
-  (assert `(plug-in-sinus
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      0.1 0.1 ; x, y scale
-      0 0 0 0 0 "red" "green"
-      ; other args defaulted
       ))
   (gimp-display-new testImage)
   (gimp-displays-flush)
