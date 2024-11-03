@@ -39,8 +39,9 @@ sub palettes_get_list {
     $blurb = 'Retrieves a list of all of the available palettes';
 
     $help = <<'HELP';
-This procedure returns a complete listing of available palettes. Each name
-returned can be used as input to the command gimp_context_set_palette().
+This procedure returns a complete listing of available palettes.
+
+Each palette returned can be used as input to [func@Gimp.context_set_palette].
 HELP
 
     &rock_pdb_misc('2001');
@@ -51,16 +52,16 @@ HELP
     );
 
     @outargs = (
-        { name => 'palette_list', type => 'strv',
-          desc => 'The list of palette names' }
+        { name => 'palette_list', type => 'palettearray',
+          desc => 'The list of palettes' }
     );
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
         code    => <<'CODE'
 {
-  palette_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->palette_factory),
-                                                         filter);
+  palette_list = (GimpPalette **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->palette_factory),
+                                                                     filter);
 }
 CODE
     );

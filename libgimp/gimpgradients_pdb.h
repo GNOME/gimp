@@ -32,8 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_gradients_refresh  (void);
-gchar**  gimp_gradients_get_list (const gchar *filter);
+gboolean       gimp_gradients_refresh  (void);
+GimpGradient** gimp_gradients_get_list (const gchar *filter);
 
 
 G_END_DECLS

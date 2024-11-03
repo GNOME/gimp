@@ -75,19 +75,20 @@ gimp_patterns_refresh (void)
  * Retrieve a complete listing of the available patterns.
  *
  * This procedure returns a complete listing of available GIMP
- * patterns. Each name returned can be used as input to the
- * gimp_context_set_pattern().
+ * patterns.
+ * Each pattern returned can be used as input to
+ * [func@Gimp.context_set_pattern].
  *
- * Returns: (array zero-terminated=1) (transfer full):
- *          The list of pattern names.
- *          The returned value must be freed with g_strfreev().
+ * Returns: (element-type GimpPattern) (array zero-terminated=1) (transfer container):
+ *          The list of patterns.
+ *          The returned value must be freed with g_free().
  **/
-gchar **
+GimpPattern **
 gimp_patterns_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar **pattern_list = NULL;
+  GimpPattern **pattern_list = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
@@ -99,7 +100,7 @@ gimp_patterns_get_list (const gchar *filter)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    pattern_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+    pattern_list = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

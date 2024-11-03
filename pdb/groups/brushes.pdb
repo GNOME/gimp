@@ -40,28 +40,29 @@ sub brushes_get_list {
 
     $help = <<'HELP';
 This procedure returns a complete listing of available GIMP
-brushes. Each name returned can be used as input to the
-gimp_context_set_brush() procedure.
+brushes.
+
+Each brush returned can be used as input to [func@Gimp.context_set_brush].
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'filter', type => 'string', null_ok => 1,
+	{ name => 'filter', type => 'string',
           desc => 'An optional regular expression used to filter the list' }
     );
 
     @outargs = (
-	{ name => 'brush_list', type => 'strv',
-	  desc => 'The list of brush names' }
+	{ name => 'brush_list', type => 'brusharray',
+	  desc => 'The list of brushes' }
     );
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
 	code    => <<'CODE'
 {
-  brush_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->brush_factory),
-                                                       filter);
+  brush_list = (GimpBrush **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->brush_factory),
+                                                                 filter);
 }
 CODE
     );

@@ -68,14 +68,14 @@ palettes_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gchar **palette_list = NULL;
+  GimpPalette **palette_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      palette_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->palette_factory),
-                                                             filter);
+      palette_list = (GimpPalette **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->palette_factory),
+                                                                         filter);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -117,7 +117,8 @@ register_palettes_procs (GimpPDB *pdb)
                                "gimp-palettes-get-list");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieves a list of all of the available palettes",
-                                  "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
+                                  "This procedure returns a complete listing of available palettes.\n"
+                                  "Each palette returned can be used as input to [func@Gimp.context_set_palette].",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Nathan Summers <rock@gimp.org>",
@@ -131,11 +132,11 @@ register_palettes_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boxed ("palette-list",
-                                                       "palette list",
-                                                       "The list of palette names",
-                                                       G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("palette-list",
+                                                                      "palette list",
+                                                                      "The list of palettes",
+                                                                      GIMP_TYPE_PALETTE,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

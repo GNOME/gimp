@@ -68,14 +68,14 @@ gradients_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gchar **gradient_list = NULL;
+  GimpGradient **gradient_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      gradient_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->gradient_factory),
-                                                              filter);
+      gradient_list = (GimpGradient **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->gradient_factory),
+                                                                           filter);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -117,7 +117,8 @@ register_gradients_procs (GimpPDB *pdb)
                                "gimp-gradients-get-list");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieve the list of loaded gradients.",
-                                  "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp-context-set-gradient' function to set the active gradient.",
+                                  "This procedure returns a list of the gradients that are currently loaded.\n"
+                                  "Each gradient returned can be used as input to [func@Gimp.context_set_gradient].",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Federico Mena Quintero",
@@ -131,11 +132,11 @@ register_gradients_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boxed ("gradient-list",
-                                                       "gradient list",
-                                                       "The list of gradient names",
-                                                       G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("gradient-list",
+                                                                      "gradient list",
+                                                                      "The list of gradients",
+                                                                      GIMP_TYPE_GRADIENT,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

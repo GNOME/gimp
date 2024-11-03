@@ -42,6 +42,8 @@ sub fonts_get_list {
 
     $help = <<'HELP';
 This procedure returns a list of the fonts that are currently available.
+
+Each font returned can be used as input to [func@Gimp.context_set_font].
 HELP
 
     &neo_pdb_misc('2003');
@@ -52,8 +54,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'font_list', type => 'strv',
-	  desc => 'The list of font names' }
+	{ name => 'font_list', type => 'fontarray',
+	  desc => 'The list of fonts' }
     );
 
     %invoke = (
@@ -64,10 +66,8 @@ HELP
     success = FALSE;
 
   if (success)
-    {
-      font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
-                                                          filter);
-    }
+    font_list = (GimpFont **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->font_factory),
+                                                                 filter);
 }
 CODE
     );
@@ -135,6 +135,7 @@ CODE
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
+              "text/gimpfont.h"
               "text/gimpfontfactory.h");
 
 @procs = qw(fonts_refresh

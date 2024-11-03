@@ -32,8 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_patterns_refresh  (void);
-gchar**  gimp_patterns_get_list (const gchar *filter);
+gboolean      gimp_patterns_refresh  (void);
+GimpPattern** gimp_patterns_get_list (const gchar *filter);
 
 
 G_END_DECLS

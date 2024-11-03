@@ -87,7 +87,6 @@ gimp_container_filter (GimpContainer        *container,
   if (GIMP_IS_LIST (result))
     gimp_list_reverse (GIMP_LIST (result));
 
-
   return result;
 }
 
@@ -138,7 +137,6 @@ gimp_container_filter_by_name (GimpContainer  *container,
   return result;
 }
 
-
 gchar **
 gimp_container_get_filtered_name_array (GimpContainer *container,
                                         const gchar   *regexp)
@@ -168,4 +166,39 @@ gimp_container_get_filtered_name_array (GimpContainer *container,
 
       return NULL;
     }
+}
+
+GimpObject **
+gimp_container_get_filtered_array (GimpContainer *container,
+                                   const gchar   *regexp)
+{
+  GimpObject    **retval = NULL;
+  GimpContainer  *weak   = NULL;
+  GError         *error  = NULL;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+
+  if (regexp != NULL && strlen (regexp) > 0)
+    weak = gimp_container_filter_by_name (container, regexp, &error);
+
+  if (error == NULL)
+    {
+      GList *list;
+      GList *iter;
+      gint   i;
+
+      list   = GIMP_LIST (weak ? weak : container)->queue->head;
+      retval = g_new0 (GimpObject *, g_list_length (list) + 1);
+      for (iter = list, i = 0; iter; iter = iter->next, i++)
+        retval[i] = iter->data;
+    }
+  else
+    {
+      g_warning ("%s", error->message);
+      g_error_free (error);
+    }
+
+  g_clear_object (&weak);
+
+  return retval;
 }

@@ -69,14 +69,14 @@ patterns_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gchar **pattern_list = NULL;
+  GimpPattern **pattern_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
-                                                             filter);
+      pattern_list = (GimpPattern **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->pattern_factory),
+                                                                         filter);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -118,7 +118,8 @@ register_patterns_procs (GimpPDB *pdb)
                                "gimp-patterns-get-list");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieve a complete listing of the available patterns.",
-                                  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
+                                  "This procedure returns a complete listing of available GIMP patterns.\n"
+                                  "Each pattern returned can be used as input to [func@Gimp.context_set_pattern].",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -132,11 +133,11 @@ register_patterns_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boxed ("pattern-list",
-                                                       "pattern list",
-                                                       "The list of pattern names",
-                                                       G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_core_object_array ("pattern-list",
+                                                                      "pattern list",
+                                                                      "The list of patterns",
+                                                                      GIMP_TYPE_PATTERN,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

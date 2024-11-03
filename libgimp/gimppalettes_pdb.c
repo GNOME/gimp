@@ -75,19 +75,19 @@ gimp_palettes_refresh (void)
  * Retrieves a list of all of the available palettes
  *
  * This procedure returns a complete listing of available palettes.
- * Each name returned can be used as input to the command
- * gimp_context_set_palette().
+ * Each palette returned can be used as input to
+ * [func@Gimp.context_set_palette].
  *
- * Returns: (array zero-terminated=1) (transfer full):
- *          The list of palette names.
- *          The returned value must be freed with g_strfreev().
+ * Returns: (element-type GimpPalette) (array zero-terminated=1) (transfer container):
+ *          The list of palettes.
+ *          The returned value must be freed with g_free().
  **/
-gchar **
+GimpPalette **
 gimp_palettes_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar **palette_list = NULL;
+  GimpPalette **palette_list = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
@@ -99,7 +99,7 @@ gimp_palettes_get_list (const gchar *filter)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    palette_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+    palette_list = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

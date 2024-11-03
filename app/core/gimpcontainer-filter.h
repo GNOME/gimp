@@ -22,16 +22,17 @@
 #define __GIMP_CONTAINER_FILTER_H__
 
 
-GimpContainer * gimp_container_filter         (GimpContainer        *container,
-                                               GimpObjectFilterFunc  filter,
-                                               gpointer              user_data);
-GimpContainer * gimp_container_filter_by_name (GimpContainer        *container,
-                                               const gchar          *regexp,
-                                               GError              **error);
+GimpContainer * gimp_container_filter                  (GimpContainer         *container,
+                                                        GimpObjectFilterFunc   filter,
+                                                        gpointer               user_data);
+GimpContainer * gimp_container_filter_by_name          (GimpContainer         *container,
+                                                        const gchar           *regexp,
+                                                        GError               **error);
 
-gchar        ** gimp_container_get_filtered_name_array
-                                              (GimpContainer        *container,
-                                               const gchar          *regexp);
+gchar        ** gimp_container_get_filtered_name_array (GimpContainer         *container,
+                                                        const gchar           *regexp);
+GimpObject   ** gimp_container_get_filtered_array      (GimpContainer         *container,
+                                                        const gchar           *regexp);
 
 
 #endif  /* __GIMP_CONTAINER_FILTER_H__ */

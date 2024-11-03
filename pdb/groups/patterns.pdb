@@ -39,8 +39,9 @@ sub patterns_get_list {
     $blurb = 'Retrieve a complete listing of the available patterns.';
 
     $help = <<'HELP';
-This procedure returns a complete listing of available GIMP patterns. Each name
-returned can be used as input to the gimp_context_set_pattern().
+This procedure returns a complete listing of available GIMP patterns.
+
+Each pattern returned can be used as input to [func@Gimp.context_set_pattern].
 HELP
 
     &std_pdb_misc;
@@ -51,16 +52,16 @@ HELP
     );
 
     @outargs = (
-	{ name => 'pattern_list', type => 'strv',
-	  desc => 'The list of pattern names' }
+	{ name => 'pattern_list', type => 'patternarray',
+	  desc => 'The list of patterns' }
     );
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
 	code => <<'CODE'
 {
-  pattern_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->pattern_factory),
-                                                         filter);
+  pattern_list = (GimpPattern **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->pattern_factory),
+                                                                     filter);
 }
 CODE
     );

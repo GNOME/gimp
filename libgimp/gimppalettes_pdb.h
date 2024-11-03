@@ -32,8 +32,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_palettes_refresh  (void);
-gchar**  gimp_palettes_get_list (const gchar *filter);
+gboolean      gimp_palettes_refresh  (void);
+GimpPalette** gimp_palettes_get_list (const gchar *filter);
 
 
 G_END_DECLS

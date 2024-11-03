@@ -75,18 +75,19 @@ gimp_brushes_refresh (void)
  * Retrieve a complete listing of the available brushes.
  *
  * This procedure returns a complete listing of available GIMP brushes.
- * Each name returned can be used as input to the
- * gimp_context_set_brush() procedure.
+ * Each brush returned can be used as input to
+ * [func@Gimp.context_set_brush].
  *
- * Returns: (array zero-terminated=1) (transfer full): The list of brush names.
- *          The returned value must be freed with g_strfreev().
+ * Returns: (element-type GimpBrush) (array zero-terminated=1) (transfer container):
+ *          The list of brushes.
+ *          The returned value must be freed with g_free().
  **/
-gchar **
+GimpBrush **
 gimp_brushes_get_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar **brush_list = NULL;
+  GimpBrush **brush_list = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
@@ -98,7 +99,7 @@ gimp_brushes_get_list (const gchar *filter)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    brush_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+    brush_list = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 

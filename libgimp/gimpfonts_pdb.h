@@ -36,7 +36,7 @@ gboolean               gimp_fonts_refresh             (void);
 G_GNUC_INTERNAL gchar* _gimp_fonts_get_custom_configs (gchar        **sysconfig,
                                                        gchar        **renaming_config,
                                                        gchar       ***dirs);
-gchar**                gimp_fonts_get_list            (const gchar   *filter);
+GimpFont**             gimp_fonts_get_list            (const gchar   *filter);
 
 
 G_END_DECLS

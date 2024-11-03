@@ -40,8 +40,8 @@ sub gradients_get_list {
 
     $help = <<'HELP';
 This procedure returns a list of the gradients that are currently loaded.
-You can later use the gimp_context_set_gradient() function to
-set the active gradient.
+
+Each gradient returned can be used as input to [func@Gimp.context_set_gradient].
 HELP
 
     &federico_pdb_misc('1997');
@@ -52,16 +52,16 @@ HELP
     );
 
     @outargs = (
-	{ name => 'gradient_list', type => 'strv',
-	  desc => 'The list of gradient names' }
+	{ name => 'gradient_list', type => 'gradientarray',
+	  desc => 'The list of gradients' }
     );
 
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
 	code => <<'CODE'
 {
-  gradient_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->gradient_factory),
-                                                          filter);
+  gradient_list = (GimpGradient **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->gradient_factory),
+                                                                       filter);
 }
 CODE
     );
