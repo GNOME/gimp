@@ -46,11 +46,9 @@ struct _GimpFilterStackClass
 };
 
 
-GType           gimp_filter_stack_get_type         (void) G_GNUC_CONST;
-GimpContainer * gimp_filter_stack_new              (GType            filter_type);
+GType           gimp_filter_stack_get_type  (void) G_GNUC_CONST;
+GimpContainer * gimp_filter_stack_new       (GType            filter_type);
 
-GeglNode *      gimp_filter_stack_get_graph        (GimpFilterStack *stack);
-void            gimp_filter_stack_get_bounding_box (GimpFilterStack *stack,
-                                                    GeglRectangle   *rect);
+GeglNode *      gimp_filter_stack_get_graph (GimpFilterStack *stack);
 
 #endif  /*  __GIMP_FILTER_STACK_H__  */

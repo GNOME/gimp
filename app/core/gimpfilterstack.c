@@ -25,7 +25,6 @@
 
 #include "core-types.h"
 
-#include "gimpdrawablefilter.h"
 #include "gimpfilter.h"
 #include "gimpfilterstack.h"
 
@@ -222,39 +221,6 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
   gegl_node_link (previous, output);
 
   return stack->graph;
-}
-
-void
-gimp_filter_stack_get_bounding_box (GimpFilterStack *stack,
-                                    GeglRectangle   *rect)
-{
-  GList         *list;
-  GeglRectangle  current_rect;
-
-  g_return_if_fail (GIMP_IS_FILTER_STACK (stack));
-
-  for (list = GIMP_LIST (stack)->queue->tail;
-       list; list = g_list_previous (list))
-    {
-      if (GIMP_IS_DRAWABLE_FILTER (list->data))
-        {
-          GimpFilter *filter = GIMP_FILTER (list->data);
-
-          current_rect = gegl_node_get_bounding_box (gimp_filter_get_node (filter));
-
-          if (rect->x > current_rect.x)
-            rect->x = current_rect.x;
-
-          if (rect->y > current_rect.y)
-            rect->y = current_rect.y;
-
-          if (rect->x + rect->width < current_rect.x + current_rect.width)
-            rect->width = (current_rect.x + current_rect.width - rect->x);
-
-          if (rect->y + rect->height < current_rect.y + current_rect.height)
-            rect->height = (current_rect.y + current_rect.height - rect->y);
-        }
-    }
 }
 
 

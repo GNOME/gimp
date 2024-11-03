@@ -45,7 +45,6 @@
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpdrawablefilterundo.h"
-#include "core/gimpfilterstack.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
@@ -2717,9 +2716,6 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
 
       if (index >= 0)
         {
-          GimpChannel   *mask = NULL;
-          GeglRectangle  rect;
-
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
                                                drawable,
                                                view->priv->effects_filter);
@@ -2733,14 +2729,6 @@ gimp_item_tree_view_effects_raised_clicked (GtkWidget        *widget,
               if (index == 0)
                 gtk_widget_set_sensitive (view->priv->effects_raise_button, FALSE);
             }
-
-          mask = gimp_drawable_filter_get_mask (view->priv->effects_filter);
-          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
-                                              &rect);
-
-          if (gimp_channel_is_empty (mask))
-            gimp_drawable_filter_refresh_crop (view->priv->effects_filter,
-                                               &rect);
 
           /* Hack to make the effects visibly change */
           gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
@@ -2783,10 +2771,6 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
 
       if (index < gimp_container_get_n_children (filters))
         {
-          GimpDrawableFilter *moved_filter = NULL;
-          GimpChannel        *mask         = NULL;
-          GeglRectangle       rect;
-
           gimp_image_undo_push_filter_reorder (image, _("Reorder filter"),
                                                drawable,
                                                view->priv->effects_filter);
@@ -2800,17 +2784,6 @@ gimp_item_tree_view_effects_lowered_clicked (GtkWidget        *widget,
               if (index == gimp_container_get_n_children (filters) - 1)
                 gtk_widget_set_sensitive (view->priv->effects_lower_button, FALSE);
             }
-
-          moved_filter = (GimpDrawableFilter *)
-            gimp_container_get_child_by_index (filters, index - 1);
-
-          mask = gimp_drawable_filter_get_mask (moved_filter);
-          gimp_filter_stack_get_bounding_box (GIMP_FILTER_STACK (filters),
-                                              &rect);
-
-          if (gimp_channel_is_empty (mask))
-            gimp_drawable_filter_refresh_crop (moved_filter, &rect);
-
 
           /* Hack to make the effects visibly change */
           gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
