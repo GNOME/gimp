@@ -4812,14 +4812,14 @@ gradient_free (void)
 static gchar **
 gradient_get_list (gint *num_gradients)
 {
-  gchar **gradients;
-  gchar **external_gradients = NULL;
-  gint    external_ngradients = 0;
-  gint    i, n;
+  gchar        **gradients;
+  GimpGradient **external_gradients  = NULL;
+  gint           external_ngradients = 0;
+  gint           i, n;
 
   gradient_cache_flush ();
   external_gradients = gimp_gradients_get_list (NULL);
-  external_ngradients = g_strv_length (external_gradients);
+  external_ngradients = gimp_core_object_array_get_length ((GObject **) external_gradients);
 
   *num_gradients = G_N_ELEMENTS (internal_gradients) + external_ngradients;
   gradients = g_new (gchar *, *num_gradients);
@@ -4831,10 +4831,10 @@ gradient_get_list (gint *num_gradients)
     }
   for (i = 0; i < external_ngradients; i++)
     {
-      gradients[n++] = g_strdup (external_gradients[i]);
+      gradients[n++] = gimp_resource_get_name ((GimpResource *) external_gradients[i]);
     }
 
-  g_strfreev (external_gradients);
+  g_free (external_gradients);
 
   return gradients;
 }
