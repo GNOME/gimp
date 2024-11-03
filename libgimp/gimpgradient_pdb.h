@@ -32,94 +32,92 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpGradient* gimp_gradient_new                                 (const gchar               *name);
-GimpGradient* gimp_gradient_get_by_name                         (const gchar               *name);
-gint          gimp_gradient_get_number_of_segments              (GimpGradient              *gradient);
-GeglColor**   gimp_gradient_get_uniform_samples                 (GimpGradient              *gradient,
-                                                                 gint                       num_samples,
-                                                                 gboolean                   reverse);
-gboolean      gimp_gradient_get_custom_samples                  (GimpGradient              *gradient,
-                                                                 gsize                      num_samples,
-                                                                 const gdouble             *positions,
-                                                                 gboolean                   reverse,
-                                                                 gsize                     *num_color_samples,
-                                                                 gdouble                  **color_samples);
-GeglColor*    gimp_gradient_segment_get_left_color              (GimpGradient              *gradient,
-                                                                 gint                       segment);
-gboolean      gimp_gradient_segment_set_left_color              (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 GeglColor                 *color);
-GeglColor*    gimp_gradient_segment_get_right_color             (GimpGradient              *gradient,
-                                                                 gint                       segment);
-gboolean      gimp_gradient_segment_set_right_color             (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 GeglColor                 *color);
-gboolean      gimp_gradient_segment_get_left_pos                (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 gdouble                   *pos);
-gboolean      gimp_gradient_segment_set_left_pos                (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 gdouble                    pos,
-                                                                 gdouble                   *final_pos);
-gboolean      gimp_gradient_segment_get_middle_pos              (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 gdouble                   *pos);
-gboolean      gimp_gradient_segment_set_middle_pos              (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 gdouble                    pos,
-                                                                 gdouble                   *final_pos);
-gboolean      gimp_gradient_segment_get_right_pos               (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 gdouble                   *pos);
-gboolean      gimp_gradient_segment_set_right_pos               (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 gdouble                    pos,
-                                                                 gdouble                   *final_pos);
-gboolean      gimp_gradient_segment_get_blending_function       (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 GimpGradientSegmentType   *blend_func);
-gboolean      gimp_gradient_segment_get_coloring_type           (GimpGradient              *gradient,
-                                                                 gint                       segment,
-                                                                 GimpGradientSegmentColor  *coloring_type);
-gboolean      gimp_gradient_segment_range_set_blending_function (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment,
-                                                                 GimpGradientSegmentType    blending_function);
-gboolean      gimp_gradient_segment_range_set_coloring_type     (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment,
-                                                                 GimpGradientSegmentColor   coloring_type);
-gboolean      gimp_gradient_segment_range_flip                  (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment);
-gboolean      gimp_gradient_segment_range_replicate             (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment,
-                                                                 gint                       replicate_times);
-gboolean      gimp_gradient_segment_range_split_midpoint        (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment);
-gboolean      gimp_gradient_segment_range_split_uniform         (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment,
-                                                                 gint                       split_parts);
-gboolean      gimp_gradient_segment_range_delete                (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment);
-gboolean      gimp_gradient_segment_range_redistribute_handles  (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment);
-gboolean      gimp_gradient_segment_range_blend_colors          (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment);
-gboolean      gimp_gradient_segment_range_blend_opacity         (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment);
-gdouble       gimp_gradient_segment_range_move                  (GimpGradient              *gradient,
-                                                                 gint                       start_segment,
-                                                                 gint                       end_segment,
-                                                                 gdouble                    delta,
-                                                                 gboolean                   control_compress);
+GimpGradient* gimp_gradient_new                                 (const gchar              *name);
+GimpGradient* gimp_gradient_get_by_name                         (const gchar              *name);
+gint          gimp_gradient_get_number_of_segments              (GimpGradient             *gradient);
+GeglColor**   gimp_gradient_get_uniform_samples                 (GimpGradient             *gradient,
+                                                                 gint                      num_samples,
+                                                                 gboolean                  reverse);
+GeglColor**   gimp_gradient_get_custom_samples                  (GimpGradient             *gradient,
+                                                                 gsize                     num_samples,
+                                                                 const gdouble            *positions,
+                                                                 gboolean                  reverse);
+GeglColor*    gimp_gradient_segment_get_left_color              (GimpGradient             *gradient,
+                                                                 gint                      segment);
+gboolean      gimp_gradient_segment_set_left_color              (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 GeglColor                *color);
+GeglColor*    gimp_gradient_segment_get_right_color             (GimpGradient             *gradient,
+                                                                 gint                      segment);
+gboolean      gimp_gradient_segment_set_right_color             (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 GeglColor                *color);
+gboolean      gimp_gradient_segment_get_left_pos                (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 gdouble                  *pos);
+gboolean      gimp_gradient_segment_set_left_pos                (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 gdouble                   pos,
+                                                                 gdouble                  *final_pos);
+gboolean      gimp_gradient_segment_get_middle_pos              (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 gdouble                  *pos);
+gboolean      gimp_gradient_segment_set_middle_pos              (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 gdouble                   pos,
+                                                                 gdouble                  *final_pos);
+gboolean      gimp_gradient_segment_get_right_pos               (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 gdouble                  *pos);
+gboolean      gimp_gradient_segment_set_right_pos               (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 gdouble                   pos,
+                                                                 gdouble                  *final_pos);
+gboolean      gimp_gradient_segment_get_blending_function       (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 GimpGradientSegmentType  *blend_func);
+gboolean      gimp_gradient_segment_get_coloring_type           (GimpGradient             *gradient,
+                                                                 gint                      segment,
+                                                                 GimpGradientSegmentColor *coloring_type);
+gboolean      gimp_gradient_segment_range_set_blending_function (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment,
+                                                                 GimpGradientSegmentType   blending_function);
+gboolean      gimp_gradient_segment_range_set_coloring_type     (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment,
+                                                                 GimpGradientSegmentColor  coloring_type);
+gboolean      gimp_gradient_segment_range_flip                  (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment);
+gboolean      gimp_gradient_segment_range_replicate             (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment,
+                                                                 gint                      replicate_times);
+gboolean      gimp_gradient_segment_range_split_midpoint        (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment);
+gboolean      gimp_gradient_segment_range_split_uniform         (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment,
+                                                                 gint                      split_parts);
+gboolean      gimp_gradient_segment_range_delete                (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment);
+gboolean      gimp_gradient_segment_range_redistribute_handles  (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment);
+gboolean      gimp_gradient_segment_range_blend_colors          (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment);
+gboolean      gimp_gradient_segment_range_blend_opacity         (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment);
+gdouble       gimp_gradient_segment_range_move                  (GimpGradient             *gradient,
+                                                                 gint                      start_segment,
+                                                                 gint                      end_segment,
+                                                                 gdouble                   delta,
+                                                                 gboolean                  control_compress);
 
 
 G_END_DECLS

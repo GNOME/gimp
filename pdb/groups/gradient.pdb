@@ -196,7 +196,7 @@ sub gradient_get_custom_samples {
 Samples the color of the gradient at positions from a list.
 The left endpoint of the gradient corresponds
 to position 0.0, and the right endpoint corresponds to 1.0.
-Returns a list of floating-point values, four for each sample (RGBA.)
+Returns a list of colors, one for each sample.
 HELP
 
     &federico_pdb_misc('1997', '2.2');
@@ -212,10 +212,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'color_samples', type => 'doublearray', void_ret => 1,
-    	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-    	  array => { desc => 'Length of the color_samples array (4 *
-    			      num_samples)' } }
+        { name => 'color_samples', type => 'colorarray',
+          desc => 'Color samples' }
     );
 
     %invoke = (
@@ -223,30 +221,21 @@ HELP
 {
   if (gradient)
     {
-      GimpGradientSegment *seg = NULL;
-      gdouble             *sample;
+      GimpGradientSegment  *seg = NULL;
+      GeglColor           **sample;
 
-      num_color_samples = num_samples * 4;
-
-      sample = color_samples = g_new0 (gdouble, num_color_samples);
+      sample = color_samples = g_new0 (GeglColor *, num_samples + 1);
 
       while (num_samples--)
         {
-          GeglColor *color = NULL;
-
           seg = gimp_gradient_get_color_at (gradient, context,
                                             seg, *positions,
                                             reverse,
                                             GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
-                                            &color);
+                                            sample);
 
-          if (color)
-            gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
-
-          sample += 4;
+          sample++;
           positions++;
-
-          g_clear_object (&color);
         }
     }
   else

@@ -215,8 +215,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
   gsize num_samples;
   const gdouble *positions;
   gboolean reverse;
-  gsize num_color_samples = 0;
-  gdouble *color_samples = NULL;
+  GeglColor **color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   positions = gimp_value_get_double_array (gimp_value_array_index (args, 1), &num_samples);
@@ -226,30 +225,21 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
     {
       if (gradient)
         {
-          GimpGradientSegment *seg = NULL;
-          gdouble             *sample;
+          GimpGradientSegment  *seg = NULL;
+          GeglColor           **sample;
 
-          num_color_samples = num_samples * 4;
-
-          sample = color_samples = g_new0 (gdouble, num_color_samples);
+          sample = color_samples = g_new0 (GeglColor *, num_samples + 1);
 
           while (num_samples--)
             {
-              GeglColor *color = NULL;
-
               seg = gimp_gradient_get_color_at (gradient, context,
                                                 seg, *positions,
                                                 reverse,
                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
-                                                &color);
+                                                sample);
 
-              if (color)
-                gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
-
-              sample += 4;
+              sample++;
               positions++;
-
-              g_clear_object (&color);
             }
         }
       else
@@ -260,7 +250,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_take_double_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), color_samples);
 
   return return_vals;
 }
@@ -1384,7 +1374,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-get-custom-samples");
   gimp_procedure_set_static_help (procedure,
                                   "Sample the gradient in custom positions.",
-                                  "Samples the color of the gradient at positions from a list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. Returns a list of floating-point values, four for each sample (RGBA.)",
+                                  "Samples the color of the gradient at positions from a list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. Returns a list of colors, one for each sample.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Federico Mena Quintero",
@@ -1410,10 +1400,11 @@ register_gradient_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_double_array ("color-samples",
-                                                                 "color samples",
-                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("color-samples",
+                                                       "color samples",
+                                                       "Color samples",
+                                                       GIMP_TYPE_COLOR_ARRAY,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
