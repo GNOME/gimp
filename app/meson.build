@@ -232,22 +232,34 @@ gimpmain_exe = executable(gimpmain_exe_name,
 if enable_default_bin
   if not platform_windows
     install_symlink(fs.name(gimpmain_exe.full_path()).replace(exec_ver, ''),
-      pointing_to: fs.name(gimpmain_exe.full_path()),
-      install_dir: get_option('bindir')
-    )
+                    pointing_to: fs.name(gimpmain_exe.full_path()),
+                    install_dir: get_option('bindir'))
+    install_symlink(fs.name(gimpmain_exe.full_path()).replace(exec_ver, '-@0@'.format(api_version_major)),
+                    pointing_to: fs.name(gimpmain_exe.full_path()),
+                    install_dir: get_option('bindir'))
   else
     meson.add_install_script('sh', '-c',
-                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format((gimpmain_exe.full_path()), fs.name(gimpmain_exe.name()).replace(exec_ver, '.exe')))
+                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpmain_exe.full_path(),
+                                                                                          fs.name(gimpmain_exe.name()).replace(exec_ver, '.exe')))
+    meson.add_install_script('sh', '-c',
+                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpmain_exe.full_path(),
+                                                                                          fs.name(gimpmain_exe.name()).replace(exec_ver, '-@0@.exe'.format(api_version_major))))
   endif
   if enable_console_bin
     if not platform_windows
       install_symlink(fs.name(gimpconsole_exe.full_path()).replace(exec_ver, ''),
-        pointing_to: fs.name(gimpconsole_exe.full_path()),
-        install_dir: get_option('bindir')
-      )
+                      pointing_to: fs.name(gimpconsole_exe.full_path()),
+                      install_dir: get_option('bindir'))
+      install_symlink(fs.name(gimpconsole_exe.full_path()).replace(exec_ver, '-@0@'.format(api_version_major)),
+                      pointing_to: fs.name(gimpconsole_exe.full_path()),
+                      install_dir: get_option('bindir'))
     else
       meson.add_install_script('sh', '-c',
-                               'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format((gimpconsole_exe.full_path()), fs.name(gimpconsole_exe.name()).replace(exec_ver, '.exe')))
+                               'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpconsole_exe.full_path(),
+                                                                                            fs.name(gimpconsole_exe.name()).replace(exec_ver, '.exe')))
+      meson.add_install_script('sh', '-c',
+                               'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimpconsole_exe.full_path(),
+                                                                                            fs.name(gimpconsole_exe.name()).replace(exec_ver, '-@0@.exe'.format(api_version_major))))
     endif
   endif
 endif

@@ -26,11 +26,17 @@ gimp_debug_tool = executable('gimp-debug-tool' + exec_ver,
 if enable_default_bin
   if not platform_windows
     install_symlink(fs.name(gimp_debug_tool.full_path()).replace(exec_ver, ''),
-      pointing_to: fs.name(gimp_debug_tool.full_path()),
-      install_dir: gimp_debug_tool_dir
-    )
+                    pointing_to: fs.name(gimp_debug_tool.full_path()),
+                    install_dir: gimp_debug_tool_dir)
+    install_symlink(fs.name(gimp_debug_tool.full_path()).replace(exec_ver, '-@0@'.format(api_version_major)),
+                    pointing_to: fs.name(gimp_debug_tool.full_path()),
+                    install_dir: gimp_debug_tool_dir)
   else
     meson.add_install_script('sh', '-c',
-                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format((gimp_debug_tool.full_path()), fs.name(gimp_debug_tool.name()).replace(exec_ver, '.exe')))
+                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimp_debug_tool.full_path(),
+                                                                                          fs.name(gimp_debug_tool.name()).replace(exec_ver, '.exe')))
+    meson.add_install_script('sh', '-c',
+                             'cp -f "@0@" "$MESON_INSTALL_DESTDIR_PREFIX/bin/@1@"'.format(gimp_debug_tool.full_path(),
+                                                                                          fs.name(gimp_debug_tool.name()).replace(exec_ver, '-@0@.exe'.format(api_version_major))))
   endif
 endif

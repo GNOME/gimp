@@ -42,21 +42,32 @@ install_man(man_files)
 
 if enable_default_bin and not platform_windows
   install_symlink('gimptool.1',
-    pointing_to: 'gimptool-' + gimp_app_version + '.1',
-    install_dir: get_option('mandir') + '/man1'
-  )
+                  pointing_to: 'gimptool-' + gimp_app_version + '.1',
+                  install_dir: get_option('mandir') + '/man1')
+  install_symlink('gimptool-@0@.1'.format(api_version_major),
+                  pointing_to: 'gimptool-' + gimp_app_version + '.1',
+                  install_dir: get_option('mandir') + '/man1')
+
   install_symlink('gimprc.5',
-    pointing_to: 'gimprc-' + gimp_app_version + '.5',
-    install_dir: get_option('mandir') + '/man5'
-  )
+                  pointing_to: 'gimprc-' + gimp_app_version + '.5',
+                  install_dir: get_option('mandir') + '/man5')
+  install_symlink('gimprc-@0@.5'.format(api_version_major),
+                  pointing_to: 'gimprc-' + gimp_app_version + '.5',
+                  install_dir: get_option('mandir') + '/man5')
+
   if enable_console_bin
     install_symlink('gimp-console.1',
-      pointing_to: 'gimp-console-' + gimp_app_version + '.1',
-      install_dir: get_option('mandir') + '/man1'
-    )
+                    pointing_to: 'gimp-console-' + gimp_app_version + '.1',
+                    install_dir: get_option('mandir') + '/man1')
+    install_symlink('gimp-console-@0@.1'.format(api_version_major),
+                    pointing_to: 'gimp-console-' + gimp_app_version + '.1',
+                    install_dir: get_option('mandir') + '/man1')
   endif
+
   install_symlink('gimp.1',
-    pointing_to: 'gimp-' + gimp_app_version + '.1',
-    install_dir: get_option('mandir') + '/man1'
-  )
+                  pointing_to: 'gimp-' + gimp_app_version + '.1',
+                  install_dir: get_option('mandir') + '/man1')
+  install_symlink('gimp-@0@.1'.format(api_version_major),
+                  pointing_to: 'gimp-' + gimp_app_version + '.1',
+                  install_dir: get_option('mandir') + '/man1')
 endif
