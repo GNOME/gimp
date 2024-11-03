@@ -278,6 +278,10 @@ API:
       - gimp_plug_in_extension_enable() to gimp_plug_in_persistent_enable()
       - gimp_plug_in_extension_process() to gimp_plug_in_persistent_process()
       - gimp_procedure_extension_ready() to gimp_procedure_persistent_ready()
+      - gimp_buffers_get_list() to gimp_buffers_get_name_list()
+      - gimp_context_get_dynamics() to gimp_context_get_dynamics_name()
+      - gimp_context_set_dynamics() to gimp_context_set_dynamics_name()
+      - gimp_dynamics_get_list() to gimp_dynamics_get_name_list()
     * Removed functions:
       - gimp_image_get_colormap()
       - gimp_image_set_colormap()
@@ -288,6 +292,7 @@ API:
       - gimp_resource_chooser_set_drag_target()
       - gimp_resource_select_new()
       - gimp_resource_select_set()
+      + gimp_fonts_get_by_name()
     * GimpResource:
       - The ParamSpec arguments (including every subtype) may now have a
         default value.
@@ -303,6 +308,8 @@ API:
       doesn't have a n_drawables argument anymore. The drawables
       argument is simply NULL-terminated, consistently to other changes
       in PDB.
+    * Various functions now return arrays of GeglColor or arrays of
+      specific resource types when relevant.
   - Changes in libgimpwidgets:
     * GimpColorArea: dropped colors are now passed as GeglColor.
     * New functions:
@@ -335,8 +342,17 @@ API:
       - gimp_env_init()
       - gimp_cpu_accel_set_use()
       - gimp_signal_private()
-    * Modified functions:
-      - gimp_unit_get_identifier() renamed gimp_unit_get_name()
+    * Renamed functions:
+      - gimp_unit_get_identifier() to gimp_unit_get_name()
+      - gimp_float_array_get_values() to gimp_double_array_get_values()
+      - gimp_float_array_set_values() to gimp_double_array_set_values()
+      - gimp_param_float_array_get_type() to gimp_param_double_array_get_type()
+      - gimp_param_spec_float_array() to gimp_param_spec_double_array()
+      - gimp_value_dup_float_array() to gimp_value_dup_double_array()
+      - gimp_value_get_float_array() to gimp_value_get_double_array()
+      - gimp_value_set_float_array() to gimp_value_set_double_array()
+      - gimp_value_set_static_float_array() to gimp_value_set_static_double_array()
+      - gimp_value_take_float_array() to gimp_value_take_double_array()
     * New argument flag GIMP_PARAM_DONT_SERIALIZE.
     * New type GimpParamSpecObject, which is basically a
       GParamSpecObject with a default value. It is now used as parent
@@ -359,6 +375,8 @@ API:
     * Removed functions:
       - gimp_config_serialize_strv()
       - gimp_config_deserialize_strv()
+    * Renamed functions:
+      - gimp_scanner_parse_float() to gimp_scanner_parse_double()
   - PDB:
     * Triple-backtick blocks in PDB-generated functions' descriptions is
       now recognized so that pre-formatted code is kept as-is. E.g.
