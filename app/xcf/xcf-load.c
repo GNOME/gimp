@@ -2176,6 +2176,28 @@ xcf_load_channel_props (XcfInfo      *info,
                 continue;
               }
 
+            if (*channel == gimp_image_get_mask (image))
+              {
+                /* PROP_SELECTION was already seen once for this
+                 * channel. Let's silently ignore the second identical
+                 * property to avoid a double free.
+                 */
+                continue;
+              }
+            else if (gimp_image_get_mask (image) != NULL &&
+                     ! gimp_channel_is_empty (gimp_image_get_mask (image)))
+              {
+                /* This would happen when PROP_SELECTION was already set
+                 * on a previous channel. This is a minor case of data
+                 * loss (we don't know which selection was the right one
+                 * and we drop the non-first ones), and also means it's
+                 * a broken XCF, though it's not a major bug either. So
+                 * let's go with a stderr print.
+                 */
+                g_printerr ("PROP_SELECTION property was set on 2 channels (skipping)\n");
+                continue;
+              }
+
             /* We're going to delete *channel, Don't leave its pointer
              * in @info. See bug #767873.
              */
