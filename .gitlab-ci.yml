@@ -772,7 +772,7 @@ dist-flatpak-weekly:
   artifacts:
     expose_as: 'Linux flatpak'
     paths:
-      - gimp-git.flatpak
+      - org.gimp.GIMP.flatpak
     expire_in: 8 days
 
 dist-installer-weekly:

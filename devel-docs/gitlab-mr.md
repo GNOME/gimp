@@ -26,8 +26,8 @@ the pipeline. Once the pipeline ends, the flatpak can be installed by:
 - clicking the pipeline ID.
 - In the "gimp" stage, click the "gimp-flatpak-x64" job.
 - Then click the "Browse" button.
-- Click the `gimp-git.flatpak` file to download it.
-- Locally run: `flatpak install --user ./gimp-git.flatpak`
+- Click the `org.gimp.GIMP.flatpak` file to download it.
+- Locally run: `flatpak install --user ./org.gimp.GIMP.flatpak`
   It should propose you to install the flatpak, allowing you to test.
 - After testing, you can uninstall with: `flatpak remove org.gimp.GIMP//master`
 

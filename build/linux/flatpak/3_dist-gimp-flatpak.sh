@@ -13,7 +13,7 @@ fi
 # Generate a Flatpak "bundle" to be tested with GNOME runtime installed
 # (it is NOT a real/full bundle, deps from GNOME runtime are not bundled)
 echo '(INFO): packaging repo as .flatpak'
-flatpak build-bundle repo gimp-git.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo org.gimp.GIMP ${BRANCH}
+flatpak build-bundle repo org.gimp.GIMP.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo org.gimp.GIMP ${BRANCH}
 
 
 # Publish GIMP repo in GNOME nightly
