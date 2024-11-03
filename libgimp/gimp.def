@@ -39,7 +39,7 @@ EXPORTS
 	gimp_buffer_get_image_type
 	gimp_buffer_get_width
 	gimp_buffer_rename
-	gimp_buffers_get_list
+	gimp_buffers_get_name_list
 	gimp_channel_combine_masks
 	gimp_channel_copy
 	gimp_channel_get_by_id
@@ -71,7 +71,7 @@ EXPORTS
 	gimp_context_get_brush_spacing
 	gimp_context_get_diagonal_neighbors
 	gimp_context_get_distance_metric
-	gimp_context_get_dynamics
+	gimp_context_get_dynamics_name
 	gimp_context_get_emulate_brush_dynamics
 	gimp_context_get_feather
 	gimp_context_get_feather_radius
@@ -130,7 +130,7 @@ EXPORTS
 	gimp_context_set_defaults
 	gimp_context_set_diagonal_neighbors
 	gimp_context_set_distance_metric
-	gimp_context_set_dynamics
+	gimp_context_set_dynamics_name
 	gimp_context_set_emulate_brush_dynamics
 	gimp_context_set_feather
 	gimp_context_set_feather_radius
@@ -252,7 +252,7 @@ EXPORTS
 	gimp_drawables_close_popup
 	gimp_drawables_popup
 	gimp_drawables_set_popup
-	gimp_dynamics_get_list
+	gimp_dynamics_get_name_list
 	gimp_dynamics_refresh
 	gimp_edit_copy
 	gimp_edit_copy_visible

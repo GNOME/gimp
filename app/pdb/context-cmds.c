@@ -1330,12 +1330,12 @@ context_set_brush_force_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-context_get_dynamics_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+context_get_dynamics_name_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -1358,12 +1358,12 @@ context_get_dynamics_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-context_set_dynamics_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
+context_set_dynamics_name_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -4238,11 +4238,11 @@ register_context_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-context-get-dynamics
+   * gimp-context-get-dynamics-name
    */
-  procedure = gimp_procedure_new (context_get_dynamics_invoker);
+  procedure = gimp_procedure_new (context_get_dynamics_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-dynamics");
+                               "gimp-context-get-dynamics-name");
   gimp_procedure_set_static_help (procedure,
                                   "Get the currently active paint dynamics.",
                                   "Returns the name of the currently active paint dynamics. If enabled, all paint operations and stroke operations use this paint dynamics to control the application of paint to the image. If disabled, the dynamics will be ignored during paint actions.\n"
@@ -4263,11 +4263,11 @@ register_context_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-context-set-dynamics
+   * gimp-context-set-dynamics-name
    */
-  procedure = gimp_procedure_new (context_set_dynamics_invoker);
+  procedure = gimp_procedure_new (context_set_dynamics_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-dynamics");
+                               "gimp-context-set-dynamics-name");
   gimp_procedure_set_static_help (procedure,
                                   "Set the active paint dynamics.",
                                   "Sets the active paint dynamics. The paint dynamics will be used in all subsequent paint operations when dynamics are enabled. The name should be a name of an installed paint dynamics. Returns an error if no matching paint dynamics is found.",

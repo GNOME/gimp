@@ -54,12 +54,12 @@ dynamics_refresh_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-dynamics_get_list_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
+dynamics_get_name_list_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -106,11 +106,11 @@ register_dynamics_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-dynamics-get-list
+   * gimp-dynamics-get-name-list
    */
-  procedure = gimp_procedure_new (dynamics_get_list_invoker);
+  procedure = gimp_procedure_new (dynamics_get_name_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-dynamics-get-list");
+                               "gimp-dynamics-get-name-list");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieve the list of loaded paint dynamics.",
                                   "This procedure returns a list of the paint dynamics that are currently available.",

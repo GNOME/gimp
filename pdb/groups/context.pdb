@@ -1438,7 +1438,7 @@ CODE
     );
 }
 
-sub context_get_dynamics {
+sub context_get_dynamics_name {
     $blurb = 'Get the currently active paint dynamics.';
 
     $help = <<'HELP';
@@ -1472,7 +1472,7 @@ CODE
     );
 }
 
-sub context_set_dynamics {
+sub context_set_dynamics_name {
     $blurb = 'Set the active paint dynamics.';
 
     $help = <<'HELP';
@@ -3521,7 +3521,7 @@ CODE
             context_set_brush_hardness context_set_brush_default_hardness
             context_get_brush_force
             context_set_brush_force
-            context_get_dynamics context_set_dynamics
+            context_get_dynamics_name context_set_dynamics_name
             context_are_dynamics_enabled context_enable_dynamics
             context_get_emulate_brush_dynamics context_set_emulate_brush_dynamics
             context_get_mypaint_brush context_set_mypaint_brush

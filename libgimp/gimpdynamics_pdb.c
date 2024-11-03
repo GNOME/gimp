@@ -72,7 +72,7 @@ gimp_dynamics_refresh (void)
 }
 
 /**
- * gimp_dynamics_get_list:
+ * gimp_dynamics_get_name_list:
  * @filter: An optional regular expression used to filter the list.
  *
  * Retrieve the list of loaded paint dynamics.
@@ -87,7 +87,7 @@ gimp_dynamics_refresh (void)
  * Since: 2.8
  **/
 gchar **
-gimp_dynamics_get_list (const gchar *filter)
+gimp_dynamics_get_name_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -98,7 +98,7 @@ gimp_dynamics_get_list (const gchar *filter)
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-dynamics-get-list",
+                                               "gimp-dynamics-get-name-list",
                                                args);
   gimp_value_array_unref (args);
 

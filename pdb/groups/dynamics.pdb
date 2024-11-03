@@ -36,7 +36,7 @@ CODE
     );
 }
 
-sub dynamics_get_list {
+sub dynamics_get_name_list {
     $blurb = 'Retrieve the list of loaded paint dynamics.';
 
     $help = <<'HELP';
@@ -73,7 +73,7 @@ CODE
               "core/gimpdatafactory.h");
 
 @procs = qw(dynamics_refresh
-            dynamics_get_list);
+            dynamics_get_name_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

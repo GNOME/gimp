@@ -1804,7 +1804,7 @@ gimp_context_set_brush_force (gdouble force)
 }
 
 /**
- * gimp_context_get_dynamics:
+ * gimp_context_get_dynamics_name:
  *
  * Get the currently active paint dynamics.
  *
@@ -1821,7 +1821,7 @@ gimp_context_set_brush_force (gdouble force)
  * Since: 2.8
  **/
 gchar *
-gimp_context_get_dynamics (void)
+gimp_context_get_dynamics_name (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1831,7 +1831,7 @@ gimp_context_get_dynamics (void)
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-context-get-dynamics",
+                                               "gimp-context-get-dynamics-name",
                                                args);
   gimp_value_array_unref (args);
 
@@ -1844,7 +1844,7 @@ gimp_context_get_dynamics (void)
 }
 
 /**
- * gimp_context_set_dynamics:
+ * gimp_context_set_dynamics_name:
  * @name: A name of a paint dynamics.
  *
  * Set the active paint dynamics.
@@ -1859,7 +1859,7 @@ gimp_context_get_dynamics (void)
  * Since: 2.8
  **/
 gboolean
-gimp_context_set_dynamics (const gchar *name)
+gimp_context_set_dynamics_name (const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1870,7 +1870,7 @@ gimp_context_set_dynamics (const gchar *name)
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-context-set-dynamics",
+                                               "gimp-context-set-dynamics-name",
                                                args);
   gimp_value_array_unref (args);
 

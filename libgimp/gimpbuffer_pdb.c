@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_buffers_get_list:
+ * gimp_buffers_get_name_list:
  * @filter: An optional regular expression used to filter the list.
  *
  * Retrieve a complete listing of the available buffers.
@@ -52,7 +52,7 @@
  * Since: 2.4
  **/
 gchar **
-gimp_buffers_get_list (const gchar *filter)
+gimp_buffers_get_name_list (const gchar *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -63,7 +63,7 @@ gimp_buffers_get_list (const gchar *filter)
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-buffers-get-list",
+                                               "gimp-buffers-get-name-list",
                                                args);
   gimp_value_array_unref (args);
 

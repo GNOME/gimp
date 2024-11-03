@@ -16,7 +16,7 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub buffers_get_list {
+sub buffers_get_name_list {
     $blurb = 'Retrieve a complete listing of the available buffers.';
 
     $help = <<'HELP';
@@ -240,7 +240,7 @@ CODE
               "core/gimpcontainer-filter.h"
 	      "gimppdb-utils.h");
 
-@procs = qw(buffers_get_list
+@procs = qw(buffers_get_name_list
             buffer_rename
             buffer_delete
 	    buffer_get_width

@@ -45,12 +45,12 @@
 
 
 static GimpValueArray *
-buffers_get_list_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
+buffers_get_name_list_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -286,11 +286,11 @@ register_buffer_procs (GimpPDB *pdb)
   GimpProcedure *procedure;
 
   /*
-   * gimp-buffers-get-list
+   * gimp-buffers-get-name-list
    */
-  procedure = gimp_procedure_new (buffers_get_list_invoker);
+  procedure = gimp_procedure_new (buffers_get_name_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-buffers-get-list");
+                               "gimp-buffers-get-name-list");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieve a complete listing of the available buffers.",
                                   "This procedure returns a complete listing of available named buffers.",

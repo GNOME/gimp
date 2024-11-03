@@ -83,8 +83,8 @@ gboolean                      gimp_context_set_brush_hardness             (gdoub
 gboolean                      gimp_context_set_brush_default_hardness     (void);
 gdouble                       gimp_context_get_brush_force                (void);
 gboolean                      gimp_context_set_brush_force                (gdouble                        force);
-gchar*                        gimp_context_get_dynamics                   (void);
-gboolean                      gimp_context_set_dynamics                   (const gchar                   *name);
+gchar*                        gimp_context_get_dynamics_name              (void);
+gboolean                      gimp_context_set_dynamics_name              (const gchar                   *name);
 gboolean                      gimp_context_are_dynamics_enabled           (void);
 gboolean                      gimp_context_enable_dynamics                (gboolean                       enable);
 gboolean                      gimp_context_get_emulate_brush_dynamics     (void);
