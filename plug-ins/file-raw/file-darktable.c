@@ -504,14 +504,22 @@ load_image (GFile        *file,
 
           response = g_strsplit (darktable_stdout, "\n", 0);
 
-          if (response != NULL && response[1] != NULL)
+          if (response != NULL)
             {
               GFile *darktable_file;
 
-              darktable_file = g_file_new_for_path (response[1]);
-              image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, darktable_file);
+              for (gint i = 0; response[i] != NULL; i++)
+                {
+                  if (g_strrstr (response[i], "<<gimp") != NULL &&
+                      response[i + 1] != NULL)
+                    {
+                      darktable_file = g_file_new_for_path (response[i + 1]);
+                      image = gimp_file_load (run_mode, darktable_file);
 
-              g_object_unref (darktable_file);
+                      g_object_unref (darktable_file);
+                      break;
+                    }
+                }
               g_strfreev (response);
             }
         }
@@ -634,15 +642,24 @@ load_thumbnail_image (GFile   *file,
 
           response = g_strsplit (darktable_stdout, "\n", 0);
 
-          if (response != NULL && response[2] != NULL)
+          if (response != NULL)
             {
               GFile *darktable_file;
 
-              darktable_file = g_file_new_for_path (response[1]);
-              image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, darktable_file);
-              sscanf (response[2], "%d %d", width, height);
+              for (gint i = 0; response[i] != NULL; i++)
+                {
+                  if (g_strrstr (response[i], "<<gimp") != NULL &&
+                      response[i + 2] != NULL)
+                    {
+                      darktable_file = g_file_new_for_path (response[i + 1]);
+                      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                                              darktable_file);
+                      sscanf (response[i + 2], "%d %d", width, height);
 
-              g_object_unref (darktable_file);
+                      g_object_unref (darktable_file);
+                      break;
+                    }
+                }
               g_strfreev (response);
             }
         }
