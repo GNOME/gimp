@@ -332,8 +332,8 @@ def export_ora(procedure, run_mode, image, file, options, metadata, config, data
         else:
             w, h = max(w*256/h, 1), 256
         thumb_layer.scale(w, h, False)
-    if thumb.get_precision() != Gimp.Precision.U8_GAMMA:
-        thumb.convert_precision (Gimp.Precision.U8_GAMMA)
+    if thumb.get_precision() != Gimp.Precision.U8_NON_LINEAR:
+        thumb.convert_precision (Gimp.Precision.U8_NON_LINEAR)
     store_layer(thumb, thumb_layer, 'Thumbnails/thumbnail.png')
     thumb.delete()
 

@@ -4,7 +4,6 @@
 #include "stamp-gimpbaseenums.h"
 #include "config.h"
 #include <glib-object.h>
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 #include "libgimp/libgimp-intl.h"
 #include "gimpbaseenums.h"
@@ -1332,12 +1331,6 @@ gimp_precision_get_type (void)
     { GIMP_PRECISION_DOUBLE_LINEAR, "GIMP_PRECISION_DOUBLE_LINEAR", "double-linear" },
     { GIMP_PRECISION_DOUBLE_NON_LINEAR, "GIMP_PRECISION_DOUBLE_NON_LINEAR", "double-non-linear" },
     { GIMP_PRECISION_DOUBLE_PERCEPTUAL, "GIMP_PRECISION_DOUBLE_PERCEPTUAL", "double-perceptual" },
-    { GIMP_PRECISION_U8_GAMMA, "GIMP_PRECISION_U8_GAMMA", "u8-gamma" },
-    { GIMP_PRECISION_U16_GAMMA, "GIMP_PRECISION_U16_GAMMA", "u16-gamma" },
-    { GIMP_PRECISION_U32_GAMMA, "GIMP_PRECISION_U32_GAMMA", "u32-gamma" },
-    { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", "half-gamma" },
-    { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", "float-gamma" },
-    { GIMP_PRECISION_DOUBLE_GAMMA, "GIMP_PRECISION_DOUBLE_GAMMA", "double-gamma" },
     { 0, NULL, NULL }
   };
 
@@ -1361,12 +1354,6 @@ gimp_precision_get_type (void)
     { GIMP_PRECISION_DOUBLE_LINEAR, NC_("precision", "64-bit linear floating point"), NULL },
     { GIMP_PRECISION_DOUBLE_NON_LINEAR, NC_("precision", "64-bit non-linear floating point"), NULL },
     { GIMP_PRECISION_DOUBLE_PERCEPTUAL, NC_("precision", "64-bit perceptual floating point"), NULL },
-    { GIMP_PRECISION_U8_GAMMA, "GIMP_PRECISION_U8_GAMMA", NULL },
-    { GIMP_PRECISION_U16_GAMMA, "GIMP_PRECISION_U16_GAMMA", NULL },
-    { GIMP_PRECISION_U32_GAMMA, "GIMP_PRECISION_U32_GAMMA", NULL },
-    { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", NULL },
-    { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", NULL },
-    { GIMP_PRECISION_DOUBLE_GAMMA, "GIMP_PRECISION_DOUBLE_GAMMA", NULL },
     { 0, NULL, NULL }
   };
 

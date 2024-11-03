@@ -21,7 +21,6 @@ stamp_base_enums = custom_target('stamp-gimpbaseenums.h',
     meson.current_build_dir(),
     'gimpbase',
     '#include <glib-object.h>\n'       +
-    '#undef GIMP_DISABLE_DEPRECATED\n' +
     '#include "gimpbasetypes.h"\n'     +
     '#include "libgimp/libgimp-intl.h"\n',
     '',

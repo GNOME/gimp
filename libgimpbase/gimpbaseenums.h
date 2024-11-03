@@ -890,18 +890,6 @@ typedef enum
  * @GIMP_PRECISION_DOUBLE_LINEAR:     64-bit linear floating point
  * @GIMP_PRECISION_DOUBLE_NON_LINEAR: 64-bit non-linear floating point
  * @GIMP_PRECISION_DOUBLE_PERCEPTUAL: 64-bit perceptual floating point
- * @GIMP_PRECISION_U8_GAMMA:      deprecated alias for
- *                                @GIMP_PRECISION_U8_NON_LINEAR
- * @GIMP_PRECISION_U16_GAMMA:     deprecated alias for
- *                                @GIMP_PRECISION_U16_NON_LINEAR
- * @GIMP_PRECISION_U32_GAMMA:     deprecated alias for
- *                                @GIMP_PRECISION_U32_NON_LINEAR
- * @GIMP_PRECISION_HALF_GAMMA:    deprecated alias for
- *                                @GIMP_PRECISION_HALF_NON_LINEAR
- * @GIMP_PRECISION_FLOAT_GAMMA:   deprecated alias for
- *                                @GIMP_PRECISION_FLOAT_NON_LINEAR
- * @GIMP_PRECISION_DOUBLE_GAMMA:  deprecated alias for
- *                                @GIMP_PRECISION_DOUBLE_NON_LINEAR
  *
  * Precisions for pixel encoding.
  *
@@ -931,15 +919,6 @@ typedef enum
   GIMP_PRECISION_DOUBLE_LINEAR     = 700, /*< desc="64-bit linear floating point" >*/
   GIMP_PRECISION_DOUBLE_NON_LINEAR = 750, /*< desc="64-bit non-linear floating point"  >*/
   GIMP_PRECISION_DOUBLE_PERCEPTUAL = 775, /*< desc="64-bit perceptual floating point"  >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_PRECISION_U8_GAMMA      = GIMP_PRECISION_U8_NON_LINEAR,
-  GIMP_PRECISION_U16_GAMMA     = GIMP_PRECISION_U16_NON_LINEAR,
-  GIMP_PRECISION_U32_GAMMA     = GIMP_PRECISION_U32_NON_LINEAR,
-  GIMP_PRECISION_HALF_GAMMA    = GIMP_PRECISION_HALF_NON_LINEAR,
-  GIMP_PRECISION_FLOAT_GAMMA   = GIMP_PRECISION_FLOAT_NON_LINEAR,
-  GIMP_PRECISION_DOUBLE_GAMMA  = GIMP_PRECISION_DOUBLE_NON_LINEAR
-#endif
 } GimpPrecision;
 
 
