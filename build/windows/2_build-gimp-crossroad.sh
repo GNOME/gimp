@@ -57,7 +57,7 @@ fi
 # CROSSROAD ENV
 export PATH="$PWD/${PARENT_DIR}.local/bin:$PWD/bin:$PATH"
 export XDG_DATA_HOME="$PWD/${PARENT_DIR}.local/share"
-crossroad w64 gimp --run="build/windows/2_build-gimp-crossroad.sh"
+crossroad w64 gimp --depends msys2 --run="build/windows/2_build-gimp-crossroad.sh"
 else
 
 ## The required packages for GIMP are taken from the result of previous script

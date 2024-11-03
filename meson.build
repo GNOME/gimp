@@ -734,7 +734,12 @@ MIMEtypes += 'image/jpeg'
 zlib = dependency('zlib')
 MIMEtypes += 'image/x-psp'
 
-bz2 = cc.find_library('bz2')
+# Compiler-provided headers can't be found in crossroads environment
+if not meson.is_cross_build()
+  bz2 = cc.find_library('bz2')
+else
+  bz2 = dependency('bzip2')
+endif
 
 liblzma_minver = '5.0.0'
 liblzma = dependency('liblzma', version: '>='+liblzma_minver)

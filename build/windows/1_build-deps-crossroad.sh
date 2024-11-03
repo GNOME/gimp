@@ -61,71 +61,75 @@ cd ..
 # CROSSROAD ENV
 export PATH="$PWD/.local/bin:$PATH"
 export XDG_DATA_HOME="$PWD/.local/share"
-crossroad w64 gimp --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
+crossroad w64 msys2 --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
+crossroad w64 gimp --depends msys2 --run="${GIMP_DIR}build/windows/1_build-deps-crossroad.sh"
 else
 
-## Install the required (pre-built) packages for babl, GEGL and GIMP
-crossroad source msys2
-deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt |
-       sed "s/\${MINGW_PACKAGE_PREFIX}-//g"          | sed 's/\\//g')
-## NOTE: Crossroad is too prone to fail at downloading deps so let's retry
-crossroad install $deps || crossroad install $deps
-if [ $? -ne 0 ]; then
-  echo "Installation of pre-built dependencies failed.";
-  exit 1;
+if [ "$CROSSROAD_PROJECT" = 'msys2' ]; then
+  ## Install the required (pre-built) packages for babl, GEGL and GIMP
+  crossroad source msys2
+  deps=$(cat ${GIMP_DIR}build/windows/all-deps-uni.txt |
+         sed "s/\${MINGW_PACKAGE_PREFIX}-//g"          | sed 's/\\//g')
+  ## NOTE: Crossroad is too prone to fail at downloading deps so let's retry
+  crossroad install $deps || crossroad install $deps
+  if [ $? -ne 0 ]; then
+    echo "Installation of pre-built dependencies failed.";
+    exit 1;
+  fi
+
+  ## FIXME: Build manually gio 'giomodule.cache' to fix error about
+  ## absent libgiognutls.dll that prevents generating loaders.cache
+  echo 'libgiognomeproxy.dll: gio-proxy-resolver
+  libgiognutls.dll: gio-tls-backend
+  libgiolibproxy.dll: gio-proxy-resolver
+  libgioopenssl.dll: gio-tls-backend' > $CROSSROAD_PREFIX/lib/gio/modules/giomodule.cache
+
+  ## FIXME: Build manually pixbuf 'loaders.cache' for GUI image support
+  echo '"lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-png.dll"
+        "png" 5 "gdk-pixbuf" "PNG" "LGPL"
+        "image/png" ""
+        "png" ""
+        "\211PNG\r\n\032\n" "" 100
+
+        "lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-svg.dll"
+        "svg" 6 "gdk-pixbuf" "Scalable Vector Graphics" "LGPL"
+        "image/svg+xml" "image/svg" "image/svg-xml" "image/vnd.adobe.svg+xml" "text/xml-svg" "image/svg+xml-compressed" ""
+        "svg" "svgz" "svg.gz" ""
+        " <svg" "*    " 100
+        " <!DOCTYPE svg" "*             " 100
+
+        ' > $(echo $CROSSROAD_PREFIX/lib/gdk-pixbuf-*/*/)/loaders.cache
+
+  ## FIXME: Build manually glib 'gschemas.compiled'
+  GLIB_PATH=$(echo $CROSSROAD_PREFIX/share/glib-*/schemas/)
+  wine $CROSSROAD_PREFIX/bin/glib-compile-schemas.exe --targetdir=$GLIB_PATH $GLIB_PATH >/dev/null 2>&1
 fi
 
-## Prepare env (no env var is needed, all are auto set to CROSSROAD_PREFIX)
-export ARTIFACTS_SUFFIX="-cross"
+if [ "$CROSSROAD_PROJECT" = 'gimp' ]; then
+  ## Prepare env (no env var is needed, all are auto set to CROSSROAD_PREFIX)
+  export ARTIFACTS_SUFFIX="-cross"
 
-## Build babl and GEGL
-self_build ()
-{
-  # Clone source only if not already cloned or downloaded
-  if [ ! -d "$1" ]; then
-    git clone --depth $GIT_DEPTH https://gitlab.gnome.org/gnome/$1
-  fi
-  cd $1
-  git pull
+  ## Build babl and GEGL
+  self_build ()
+  {
+    # Clone source only if not already cloned or downloaded
+    if [ ! -d "$1" ]; then
+      git clone --depth $GIT_DEPTH https://gitlab.gnome.org/gnome/$1
+    fi
+    cd $1
+    git pull
 
-  if [ ! -f "_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
-    crossroad meson setup _build$ARTIFACTS_SUFFIX $2
-  fi
-  cd _build$ARTIFACTS_SUFFIX
-  ninja
-  ninja install
-  ccache --show-stats
-  cd ../..
-}
+    if [ ! -f "_build$ARTIFACTS_SUFFIX/build.ninja" ]; then
+      crossroad meson setup _build$ARTIFACTS_SUFFIX $2
+    fi
+    cd _build$ARTIFACTS_SUFFIX
+    ninja
+    ninja install
+    ccache --show-stats
+    cd ../..
+  }
 
-self_build babl '-Denable-gir=false'
-self_build gegl '-Dintrospection=false'
-
-## FIXME: Build manually gio 'giomodule.cache' to fix error about
-## absent libgiognutls.dll that prevents generating loaders.cache
-echo 'libgiognomeproxy.dll: gio-proxy-resolver
-libgiognutls.dll: gio-tls-backend
-libgiolibproxy.dll: gio-proxy-resolver
-libgioopenssl.dll: gio-tls-backend' > $CROSSROAD_PREFIX/lib/gio/modules/giomodule.cache
-
-## FIXME: Build manually pixbuf 'loaders.cache' for GUI image support
-echo '"lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-png.dll"
-      "png" 5 "gdk-pixbuf" "PNG" "LGPL"
-      "image/png" ""
-      "png" ""
-      "\211PNG\r\n\032\n" "" 100
-
-      "lib\\gdk-pixbuf-2.0\\2.10.0\\loaders\\libpixbufloader-svg.dll"
-      "svg" 6 "gdk-pixbuf" "Scalable Vector Graphics" "LGPL"
-      "image/svg+xml" "image/svg" "image/svg-xml" "image/vnd.adobe.svg+xml" "text/xml-svg" "image/svg+xml-compressed" ""
-      "svg" "svgz" "svg.gz" ""
-      " <svg" "*    " 100
-      " <!DOCTYPE svg" "*             " 100
-
-      ' > $(echo $CROSSROAD_PREFIX/lib/gdk-pixbuf-*/*/)/loaders.cache
-
-## FIXME: Build manually glib 'gschemas.compiled'
-GLIB_PATH=$(echo $CROSSROAD_PREFIX/share/glib-*/schemas/)
-wine $CROSSROAD_PREFIX/bin/glib-compile-schemas.exe --targetdir=$GLIB_PATH $GLIB_PATH >/dev/null 2>&1
-
+  self_build babl '-Denable-gir=false'
+  self_build gegl '-Dintrospection=false'
+fi
 fi # END OF CROSSROAD ENV
