@@ -382,20 +382,17 @@ drawable_to_cmap (control_point *cp)
     }
   else if (GRADIENT_DRAWABLE == config.cmap_drawable_id)
     {
-      GimpGradient *gradient = gimp_context_get_gradient ();
-
-      gsize    num;
-      gdouble *g;
+      GimpGradient  *gradient   = gimp_context_get_gradient ();
+      GeglColor    **colors;
+      const Babl    *format_dst = babl_format ("R'G'B' double");
 
       /* FIXME: "reverse" hardcoded to FALSE. */
-      gimp_gradient_get_uniform_samples (gradient, 256, FALSE,
-                                         &num, &g);
-
+      colors = gimp_gradient_get_uniform_samples (gradient, 256, FALSE);
 
       for (i = 0; i < 256; i++)
-        for (j = 0; j < 3; j++)
-          cp->cmap[i][j] = g[i*4 + j];
-      g_free (g);
+        gegl_color_get_pixel (colors[i], format_dst, &(cp->cmap[i][0]));
+
+      gimp_color_array_free (colors);
     }
   else
     {

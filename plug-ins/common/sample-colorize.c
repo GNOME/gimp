@@ -2405,36 +2405,34 @@ fill_missing_colors (void)
 static void
 get_gradient (gint mode)
 {
-  GimpGradient *gradient;
-
-  gsize    n_f_samples;
-  gdouble *f_samples;
-  gdouble *f_samp;        /* float samples */
-  gint     lum;
+  GimpGradient  *gradient;
+  GeglColor    **colors;
+  const Babl    *format_dst = babl_format ("RGB u8");
+  guchar        *g_sample_color_tab_p;
+  gint           lum;
 
   free_colors ();
 
   gradient = gimp_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (gradient, 256 /* n_samples */,
-                                     mode == SMP_INV_GRADIENT,
-                                     &n_f_samples, &f_samples);
+  colors = gimp_gradient_get_uniform_samples (gradient, 256 /* n_samples */,
+                                              mode == SMP_INV_GRADIENT);
 
+  g_return_if_fail (gimp_color_array_get_length (colors) == 256);
+
+  g_sample_color_tab_p = g_sample_color_tab;
   for (lum = 0; lum < 256; lum++)
     {
-      f_samp = &f_samples[lum * 4];
+      gegl_color_get_pixel (colors[lum], format_dst, g_sample_color_tab_p);
 
-      g_sample_color_tab[3 * lum + 0] = f_samp[0] * 255;
-      g_sample_color_tab[3 * lum + 1] = f_samp[1] * 255;
-      g_sample_color_tab[3 * lum + 2] = f_samp[2] * 255;
-
-      g_lum_tab[lum].col_ptr =
-        new_samp_color (&g_sample_color_tab[3 * lum]);
+      g_lum_tab[lum].col_ptr     = new_samp_color (g_sample_color_tab_p);
       g_lum_tab[lum].from_sample = TRUE;
       g_lum_tab[lum].all_samples = 1;
+
+      g_sample_color_tab_p += 3;
     }
 
-  g_free (f_samples);
+  gimp_color_array_free (colors);
 }
 
 static void

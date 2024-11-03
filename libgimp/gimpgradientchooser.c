@@ -216,21 +216,27 @@ get_gradient_data (GimpGradient  *gradient,
                    gsize         *sample_count,
                    gdouble      **sample_array)
 {
-  gboolean  result;
-  gdouble  *samples;
-  gsize     n_samples;
+  gboolean    result = FALSE;
+  GeglColor **samples;
 
-  result = gimp_gradient_get_uniform_samples (gradient,
-                                              allocation_width,
-                                              FALSE,  /* not reversed. */
-                                              &n_samples,
-                                              &samples);
+  samples = gimp_gradient_get_uniform_samples (gradient, allocation_width,
+                                               FALSE  /* not reversed. */);
 
-  if (result)
+  if (samples)
     {
+      gdouble *dsamples;
+
       /* Return array of samples to dereferenced handles. */
-      *sample_array = samples;
-      *sample_count = n_samples;
+      *sample_count = gimp_color_array_get_length (samples);;
+      *sample_array = dsamples = g_new0 (gdouble, *sample_count * 4);
+      for (gint i = 0; samples[i] != NULL; i++)
+        {
+          gegl_color_get_pixel (samples[i], babl_format ("R'G'B'A double"), dsamples);
+          dsamples += 4;
+        }
+      gimp_color_array_free (samples);
+
+      result = TRUE;
     }
 
   /* When result is true, caller must free the array. */

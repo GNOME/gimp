@@ -160,8 +160,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
   GimpGradient *gradient;
   gint num_samples;
   gboolean reverse;
-  gsize num_color_samples = 0;
-  gdouble *color_samples = NULL;
+  GeglColor **color_samples = NULL;
 
   gradient = g_value_get_object (gimp_value_array_index (args, 0));
   num_samples = g_value_get_int (gimp_value_array_index (args, 1));
@@ -174,30 +173,19 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
           GimpGradientSegment *seg   = NULL;
           gdouble              pos   = 0.0;
           gdouble              delta = 1.0 / (num_samples - 1);
-          gdouble             *sample;
+          GeglColor          **sample;
 
-          num_color_samples = num_samples * 4;
-
-          sample = color_samples = g_new0 (gdouble, num_color_samples);
+          sample = color_samples = g_new0 (GeglColor *, num_samples + 1);
 
           while (num_samples--)
             {
-              GeglColor *color = NULL;
-
               seg = gimp_gradient_get_color_at (gradient, context, seg,
                                                 pos, reverse,
                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
-                                                &color);
-              if (color)
-                gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
-              /* TODO: should we really return a list of floats? What about a list
-               * of GeglColor?
-               */
+                                                sample);
 
-              sample += 4;
-              pos    += delta;
-
-              g_clear_object (&color);
+              sample++,
+              pos += delta;
             }
         }
       else
@@ -208,7 +196,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_take_double_array (gimp_value_array_index (return_vals, 1), color_samples, num_color_samples);
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), color_samples);
 
   return return_vals;
 }
@@ -1353,7 +1341,7 @@ register_gradient_procs (GimpPDB *pdb)
                                "gimp-gradient-get-uniform-samples");
   gimp_procedure_set_static_help (procedure,
                                   "Sample the gradient in uniform parts.",
-                                  "Samples colors uniformly across the gradient. It returns a list of floating-point values which correspond to the RGBA values for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the { 0.0, 1.0 } positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.",
+                                  "Samples colors uniformly across the gradient. It returns a list of colors for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the `{ 0.0, 1.0 }` positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions `{ 0.0, 0.5, 1.0 }`.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Federico Mena Quintero",
@@ -1380,10 +1368,11 @@ register_gradient_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_double_array ("color-samples",
-                                                                 "color samples",
-                                                                 "Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }",
-                                                                 GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("color-samples",
+                                                       "color samples",
+                                                       "Color samples",
+                                                       GIMP_TYPE_COLOR_ARRAY,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

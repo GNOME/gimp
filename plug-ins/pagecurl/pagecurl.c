@@ -887,15 +887,20 @@ static gdouble *
 get_gradient_samples (GimpDrawable *drawable,
                       gboolean      reverse)
 {
-  GimpGradient *gradient;
-
-  gsize    n_d_samples;
-  gdouble *d_samples = NULL;
+  GimpGradient  *gradient;
+  GeglColor    **colors;
+  const Babl    *format = babl_format ("R'G'B'A double");
+  gdouble       *d_samples;
 
   gradient = gimp_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (gradient, NGRADSAMPLES, reverse,
-                                     &n_d_samples, &d_samples);
+  colors = gimp_gradient_get_uniform_samples (gradient, NGRADSAMPLES, reverse);
+
+  d_samples = g_new0 (gdouble, NGRADSAMPLES * 4);
+  for (gint i = 0; i < NGRADSAMPLES; i++)
+    gegl_color_get_pixel (colors[i], format, &d_samples[i * 4]);
+
+  gimp_color_array_free (colors);
 
   return d_samples;
 }

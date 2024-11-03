@@ -36,8 +36,7 @@
 #define ZOOM_UNDO_SIZE 100
 
 
-static gsize             n_gradient_samples = 0;
-static gdouble          *gradient_samples = NULL;
+static GeglColor       **gradient_samples = NULL;
 static GimpGradient     *gradient = NULL;
 static gboolean          ready_now = FALSE;
 static gchar            *tpath = NULL;
@@ -1186,22 +1185,23 @@ set_cmap_preview (GimpProcedureConfig *config)
 void
 make_color_map (GimpProcedureConfig *config)
 {
-  gint     i;
-  gint     r;
-  gint     gr;
-  gint     bl;
-  gdouble  redstretch;
-  gdouble  greenstretch;
-  gdouble  bluestretch;
-  gdouble  pi = atan (1) * 4;
-  gint     n_colors;
-  gint     color_mode;
-  gint     red_mode;
-  gint     green_mode;
-  gint     blue_mode;
-  gboolean red_invert;
-  gboolean green_invert;
-  gboolean blue_invert;
+  const Babl *colormap_format = babl_format ("R'G'B' u8");
+  gint        i;
+  gint        r;
+  gint        gr;
+  gint        bl;
+  gdouble     redstretch;
+  gdouble     greenstretch;
+  gdouble     bluestretch;
+  gdouble     pi = atan (1) * 4;
+  gint        n_colors;
+  gint        color_mode;
+  gint        red_mode;
+  gint        green_mode;
+  gint        blue_mode;
+  gboolean    red_invert;
+  gboolean    green_invert;
+  gboolean    blue_invert;
 
   g_object_get (config,
                 "n-colors",      &n_colors,
@@ -1224,11 +1224,8 @@ make_color_map (GimpProcedureConfig *config)
     {
       GimpGradient *gradient = gimp_context_get_gradient ();
 
-      gimp_gradient_get_uniform_samples (gradient,
-                                         n_colors,
-                                         FALSE,
-                                         &n_gradient_samples,
-                                         &gradient_samples);
+      gradient_samples = gimp_gradient_get_uniform_samples (gradient,
+                                                            n_colors, FALSE);
     }
 
   redstretch   *= 127.5;
@@ -1238,9 +1235,7 @@ make_color_map (GimpProcedureConfig *config)
   for (i = 0; i < n_colors; i++)
     if (color_mode == 1)
       {
-        colormap[i].r = (guchar)(gradient_samples[i * 4] * 255.9);
-        colormap[i].g = (guchar)(gradient_samples[i * 4 + 1] * 255.9);
-        colormap[i].b = (guchar)(gradient_samples[i * 4 + 2] * 255.9);
+        gegl_color_get_pixel (gradient_samples[i], colormap_format, (void *) &(colormap[i]));
       }
     else
       {
@@ -1587,8 +1582,8 @@ create_save_file_chooser (GtkWidget *widget,
 
 /* Set cache of gradient and samples from it.
  *
- * The cache is in three global variables:
- * gradient, gradient_samples, n_gradient_samples.
+ * The cache is in 2 global variables:
+ * gradient, gradient_samples.
  * This keeps the three variables coherent.
  *
  * !!! There is one other writer of gradient_samples, see below.
@@ -1614,13 +1609,10 @@ set_grad_data_cache (GimpGradient *in_gradient,
 
   /* Refresh the global cache of samples. */
   if (gradient_samples != NULL)
-    g_free (gradient_samples);
+    gimp_color_array_free (gradient_samples);
 
-  gimp_gradient_get_uniform_samples (gradient,
-                                     n_colors,
-                                     FALSE,
-                                     &n_gradient_samples,
-                                     &gradient_samples);
+  gradient_samples = gimp_gradient_get_uniform_samples (gradient,
+                                                        n_colors, FALSE);
 }
 
 gchar*

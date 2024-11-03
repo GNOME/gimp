@@ -5034,22 +5034,21 @@ gradient_get_values_real_external (const gchar *gradient_name,
                                    gint         nvalues,
                                    gboolean     reverse)
 {
-  GimpGradient *gradient;
-  gsize         n_tmp_values;
+  GimpGradient  *gradient;
+  GeglColor    **colors;
+  const Babl    *format = babl_format ("R'G'B'A u8");
   gdouble      *tmp_values;
   gint          i;
   gint          j;
 
   gradient = gimp_gradient_get_by_name (gradient_name);
 
-  gimp_gradient_get_uniform_samples (gradient, nvalues, reverse,
-                                     &n_tmp_values, &tmp_values);
+  colors = gimp_gradient_get_uniform_samples (gradient, nvalues, reverse);
 
   for (i = 0; i < nvalues; i++)
-    for (j = 0; j < 4; j++)
-      values[4 * i + j] = (guchar) (tmp_values[4 * i + j] * 255);
+    gegl_color_get_pixel (colors[i], format, (void *) &values[4 * i]);
 
-  g_free (tmp_values);
+  gimp_color_array_free (colors);
 }
 
 void

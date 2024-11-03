@@ -137,11 +137,11 @@ sub gradient_get_uniform_samples {
     $blurb = 'Sample the gradient in uniform parts.';
 
     $help = <<'HELP';
-Samples colors uniformly across the gradient. It returns a list of floating-point values
-which correspond to the RGBA values for each sample. The minimum number of
-samples to take is 2, in which case the returned colors will correspond to the
-{ 0.0, 1.0 } positions in the gradient. For example, if the number of samples
-is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
+Samples colors uniformly across the gradient. It returns a list of
+colors for each sample. The minimum number of samples to take is 2, in
+which case the returned colors will correspond to the `{ 0.0, 1.0 }`
+positions in the gradient. For example, if the number of samples is 3,
+the procedure will return the colors at positions `{ 0.0, 0.5, 1.0 }`.
 HELP
 
     &federico_pdb_misc('1997', '2.2');
@@ -155,10 +155,8 @@ HELP
         );
 
     @outargs = (
-        { name => 'color_samples', type => 'doublearray', void_ret => 1,
-	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-	  array => { desc => 'Length of the color_samples array (4 *
-			      num_samples)' } }
+        { name => 'color_samples', type => 'colorarray',
+	  desc => 'Color samples' }
     );
 
     %invoke = (
@@ -169,30 +167,19 @@ HELP
       GimpGradientSegment *seg   = NULL;
       gdouble              pos   = 0.0;
       gdouble              delta = 1.0 / (num_samples - 1);
-      gdouble             *sample;
+      GeglColor          **sample;
 
-      num_color_samples = num_samples * 4;
-
-      sample = color_samples = g_new0 (gdouble, num_color_samples);
+      sample = color_samples = g_new0 (GeglColor *, num_samples + 1);
 
       while (num_samples--)
         {
-          GeglColor *color = NULL;
-
           seg = gimp_gradient_get_color_at (gradient, context, seg,
                                             pos, reverse,
                                             GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
-                                            &color);
-          if (color)
-            gegl_color_get_pixel (color, babl_format ("R'G'B'A double"), sample);
-          /* TODO: should we really return a list of floats? What about a list
-           * of GeglColor?
-           */
+                                            sample);
 
-          sample += 4;
-          pos    += delta;
-
-          g_clear_object (&color);
+          sample++,
+          pos += delta;
         }
     }
   else
