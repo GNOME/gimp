@@ -87,6 +87,9 @@ GIMP_MAIN (DARKTABLE_TYPE)
 DEFINE_STD_SET_I18N
 
 
+static gboolean before_darktable_4_6 = FALSE;
+
+
 static void
 darktable_class_init (DarktableClass *klass)
 {
@@ -145,7 +148,10 @@ darktable_init_procedures (GimpPlugIn *plug_in)
       if (! error)
         {
           if (! (darktable_stderr && *darktable_stderr))
-            have_darktable = TRUE;
+            {
+              have_darktable       = TRUE;
+              before_darktable_4_6 = FALSE;
+            }
         }
     }
   else if (debug_prints)
@@ -201,7 +207,8 @@ darktable_init_procedures (GimpPlugIn *plug_in)
                   if (g_strstr_len (darktable_stdout, -1,
                                     "Lua support enabled"))
                     {
-                      have_darktable = TRUE;
+                      have_darktable       = TRUE;
+                      before_darktable_4_6 = TRUE;
                     }
                 }
             }
@@ -434,7 +441,15 @@ load_image (GFile        *file,
                                                              "org.darktable",
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
-  gchar    *argv[] =
+  gchar    *argv[]           =
+    {
+      exec_path,
+      "--gimp",
+      "file",
+      (gchar *) g_file_peek_path (file),
+      NULL
+    };
+  gchar    *argv_pre_4_6[]   =
     {
       exec_path,
       "--library", ":memory:",
@@ -468,20 +483,56 @@ load_image (GFile        *file,
       g_strfreev (environ_) ;
     }
 
-  if (g_spawn_sync (NULL,
-                    argv,
-                    NULL,
-                    /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
-                    /*G_SPAWN_STDERR_TO_DEV_NULL |*/
-                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
-                    NULL,
-                    NULL,
-                    &darktable_stdout,
-                    &darktable_stderr,
-                    NULL,
-                    error))
+  if (! before_darktable_4_6)
     {
-      image = gimp_file_load (run_mode, file_out);
+      if (g_spawn_sync (NULL,
+                        argv,
+                        NULL,
+                        /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
+                        /*G_SPAWN_STDERR_TO_DEV_NULL |*/
+                        (search_path ? G_SPAWN_SEARCH_PATH : 0),
+                        NULL,
+                        NULL,
+                        &darktable_stdout,
+                        &darktable_stderr,
+                        NULL,
+                        error))
+        {
+          gchar **response = NULL;
+
+          gimp_progress_update (0.5);
+
+          response = g_strsplit (darktable_stdout, "\n", 0);
+
+          if (response != NULL && response[1] != NULL)
+            {
+              GFile *darktable_file;
+
+              darktable_file = g_file_new_for_path (response[1]);
+              image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, darktable_file);
+
+              g_object_unref (darktable_file);
+              g_strfreev (response);
+            }
+        }
+    }
+  else
+    {
+      if (g_spawn_sync (NULL,
+                        argv_pre_4_6,
+                        NULL,
+                        /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
+                        /*G_SPAWN_STDERR_TO_DEV_NULL |*/
+                        (search_path ? G_SPAWN_SEARCH_PATH : 0),
+                        NULL,
+                        NULL,
+                        &darktable_stdout,
+                        &darktable_stderr,
+                        NULL,
+                        error))
+        {
+          image = gimp_file_load (run_mode, file_out);
+        }
     }
 
   if (debug_prints)
@@ -531,7 +582,16 @@ load_thumbnail_image (GFile   *file,
                                                              "org.darktable",
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
-  gchar    *argv[] =
+  gchar    *argv[]           =
+    {
+      exec_path,
+      "--gimp",
+      "thumb",
+      (gchar *) g_file_peek_path (file),
+      size,
+      NULL
+    };
+  gchar    *argv_pre_4_6[]   =
     {
       exec_path,
       (gchar *) g_file_peek_path (file),
@@ -554,30 +614,67 @@ load_thumbnail_image (GFile   *file,
 
   *width = *height = 0;
 
-  if (g_spawn_sync (NULL,
-                    argv,
-                    NULL,
-                    G_SPAWN_STDERR_TO_DEV_NULL |
-                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
-                    NULL,
-                    NULL,
-                    &darktable_stdout,
-                    NULL,
-                    NULL,
-                    error))
+  if (! before_darktable_4_6)
     {
-      gimp_progress_update (0.5);
-      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
-      if (image)
+      if (g_spawn_sync (NULL,
+                        argv,
+                        NULL,
+                        G_SPAWN_STDERR_TO_DEV_NULL |
+                        (search_path ? G_SPAWN_SEARCH_PATH : 0),
+                        NULL,
+                        NULL,
+                        &darktable_stdout,
+                        NULL,
+                        NULL,
+                        error))
         {
-          /* the size reported by raw files isn't precise,
-           * but it should be close enough to get an idea.
-           */
-          gchar *start_of_size = g_strstr_len (darktable_stdout,
-                                               -1,
-                                               "[dt4gimp]");
-          if (start_of_size)
-            sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
+          gchar **response = NULL;
+
+          gimp_progress_update (0.5);
+
+          response = g_strsplit (darktable_stdout, "\n", 0);
+
+          if (response != NULL && response[2] != NULL)
+            {
+              GFile *darktable_file;
+
+              darktable_file = g_file_new_for_path (response[1]);
+              image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, darktable_file);
+              sscanf (response[2], "%d %d", width, height);
+
+              g_object_unref (darktable_file);
+              g_strfreev (response);
+            }
+        }
+    }
+  else
+    {
+      if (g_spawn_sync (NULL,
+                        argv_pre_4_6,
+                        NULL,
+                        G_SPAWN_STDERR_TO_DEV_NULL |
+                        (search_path ? G_SPAWN_SEARCH_PATH : 0),
+                        NULL,
+                        NULL,
+                        &darktable_stdout,
+                        NULL,
+                        NULL,
+                        error))
+        {
+          gimp_progress_update (0.5);
+
+          image = gimp_file_load (GIMP_RUN_NONINTERACTIVE, file_out);
+          if (image)
+            {
+              /* the size reported by raw files isn't precise,
+               * but it should be close enough to get an idea.
+               */
+              gchar *start_of_size = g_strstr_len (darktable_stdout,
+                                                   -1,
+                                                   "[dt4gimp]");
+              if (start_of_size)
+                sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
+            }
         }
     }
 
