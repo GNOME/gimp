@@ -265,7 +265,9 @@ deps-debian-x64:
     paths:
       - _install/
       - babl/_build/meson-logs/meson-log.txt
+      - babl/_build/config.h
       - gegl/_build/meson-logs/meson-log.txt
+      - gegl/_build/config.h
     expire_in: 2 hours
 
 gimp-debian-x64:
