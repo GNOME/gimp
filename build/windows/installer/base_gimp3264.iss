@@ -303,6 +303,7 @@ Source: "{#ASSETS_DIR}\installsplash_small.bmp"; Flags: dontcopy
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
 #define OPTIONAL_EXT="*.debug,*.lua,*.py"
 Source: "{#GIMP_DIR32}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#GIMP_DIR32}\include\gimp-{#GIMP_API_VERSION}\*"; DestDir: "{app}\include\gimp-{#GIMP_API_VERSION}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\gimp-script-fu-interpreter.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\extensions\*"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\extensions"; Excludes: "*.dll,*.exe,{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
@@ -313,6 +314,7 @@ Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Compo
 
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
 Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#DEPS_DIR32}\include\*"; DestDir: "{app}\include"; Excludes: "gimp*"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,metainfo,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 
 ;Optional arch-neutral components (full install)
