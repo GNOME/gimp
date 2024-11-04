@@ -53,6 +53,7 @@ fi
 
 bundle ()
 {
+  cd $GIMP_DISTRIB
   limited_search_path=$(dirname $(echo $2 | sed "s|${2%%/*}/|$1/${2%%/*}/|g" | sed "s|*|no_scape|g"))
   search_path=$(echo $(echo $limited_search_path | sed "s|no_scape|*|g"))
   bundledArray=($(find "$search_path" -maxdepth 1 -name ${2##*/}))
@@ -65,6 +66,7 @@ bundle ()
     mkdir -p "$parent_path"
     cp -fru "$target_path" $parent_path >/dev/null 2>&1 || continue
   done
+  cd ..
 }
 
 clean ()
@@ -103,10 +105,10 @@ bundle "$GIMP_PREFIX" etc/gimp
 bundle "$MSYS_PREFIX" etc/fonts
 
 
-## Headers (in evaluation): https://gitlab.gnome.org/GNOME/gimp/-/issues/6378.
-#bundle $GIMP_PREFIX/include/gimp-*
-#bundle $GIMP_PREFIX/include/babl-*
-#bundle $GIMP_PREFIX/include/gegl-*
+## Headers.
+bundle "$GIMP_PREFIX" include/gimp-*
+bundle "$GIMP_PREFIX" include/babl-*
+bundle "$GIMP_PREFIX" include/gegl-*
 
 
 ## Library data.
