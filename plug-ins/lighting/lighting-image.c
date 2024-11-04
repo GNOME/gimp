@@ -397,15 +397,19 @@ bumpmap_setup (GimpDrawable *bumpmap)
 {
   if (bumpmap)
     {
+      gboolean has_alpha = gimp_drawable_has_alpha (bumpmap);
+
       if (! bump_buffer)
         {
           bump_buffer = gimp_drawable_get_buffer (bumpmap);
         }
 
       if (gimp_drawable_is_rgb (bumpmap))
-        bump_format = babl_format ("R'aG'aB'aA u8");
+        bump_format = has_alpha ? babl_format ("R'aG'aB'aA u8") :
+                                  babl_format ("R'G'B' u8");
       else
-        bump_format = babl_format ("Y'aA u8"); /* FIXME */
+        bump_format = has_alpha ? babl_format ("Y'aA u8") : /* FIXME */
+                                  babl_format ("Y' u8");
     }
 }
 
