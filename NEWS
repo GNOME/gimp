@@ -363,6 +363,7 @@ API:
       such as images, items, etc. The main reason is to make it a boxed
       type for proper handling as object properties and PDB argument.
     * GimpObjectArray was removed.
+    * Deprecated GIMP_PRECISION_*_GAMMA enum values have been removed.
   - Changes in libgimpcolor:
     * All gimp_rgb_parse_*() functions now become gimp_color_parse_*() functions
       (GeglColor based rather than GimpRGB).
@@ -383,7 +384,8 @@ API:
       indentation is not broken anymore in code samples on the gi-docgen
       API documentation.
     * New "format" PDB type to pass Babl format arguments.
-    * Compat PDB procedures were removed.
+    * Most compat PDB procedures were removed, except the few ones we
+      still use in some of our core plug-ins or scripts.
     * All int32 and float arrays are now passed through the PDB without
       requiring a size argument preceding it.
 
@@ -395,7 +397,7 @@ Build:
 
   - Minimum dependency version bumps:
     * babl 0.1.110
-    * GEGL 0.4.49 (TODO: update to stable 0.4.50 when released)
+    * GEGL 0.4.50
     * harfbuzz 2.8.2
   - Started a skeleton for unit testing framework for libgimp (only a few tests
     so far but we eventually target exhaustivity).
@@ -443,6 +445,12 @@ Build:
   - The last of deprecated gdk_pointer_grab() calls are now removed.
   - Build made more portables for non-GLibc or non-GNU coreutils
     environments.
+  - enable-default-bin meson option now also installs a symlink for a
+    gimp-3 binary (additionally to default gimp-3.0 and gimp symlink),
+    or a renamed copy on Windows.
+  - Installer for Windows will use the new gimp-3.exe binary so that it
+    can properly register a registry entry based on the major version
+    only.
 
 
 Overview of Changes from GIMP 2.99.16 to GIMP 2.99.18
