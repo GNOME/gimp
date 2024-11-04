@@ -39,13 +39,16 @@ def parse_appdata(infile, version):
   release_texts = []
   release_demos = []
 
+  version = version.lower()
   spaces = re.compile(r'\s+')
   tree = ET.parse(infile)
   root = tree.getroot()
   releases_node = root.find('releases')
   releases = releases_node.findall('release')
   for release in releases:
-    if 'version' in release.attrib and release.attrib['version'] == version:
+    if 'version' in release.attrib and \
+       (release.attrib['version'].lower() == version or
+        release.attrib['version'].replace('~', '-').lower() == version):
       intro = release.findall('./description/p')
       for p in intro:
         # Naive conversion for C strings, but it will probably fit for
