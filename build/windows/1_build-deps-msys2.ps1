@@ -70,12 +70,13 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     if (-not (Test-Path $dep))
       {
         $repo="https://gitlab.gnome.org/GNOME/$dep.git"
+        $tagprefix="$dep".ToUpper()
 
         # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
         # last tag. Otherwise use the default branch's HEAD.
         if ($CI_COMMIT_TAG)
           {
-            $tag = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/GIMP_[0-9]*_* | Select-Object -Last 1).Split('refs/')[-1]
+            $tag = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/${tagprefix}_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
             $git_options="--branch=$tag"
             Write-Output "Using tagged release of ${dep}: $tag"
           }
