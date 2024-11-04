@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="3.0.0~rc1" date="TODO" type="development">
+    <release version="3.0.0~rc1" date="2024-11-04" type="development">
       <description>
         <p>
         GIMP 3.0.0-RC1 is the first release candidate of the GIMP 3 stable branch.
