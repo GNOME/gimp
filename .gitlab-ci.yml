@@ -447,6 +447,9 @@ gimp-win-x64-cross:
       variables:
         STORE_OPTION: '-Dms-store=true'
     - <<: *CI_RELEASE
+      variables:
+        INSTALLER_OPTION: '-Dwindows-installer=true'
+        STORE_OPTION: '-Dms-store=true'
   # We don't use the universal variables since we use PS
   before_script:
     # MSYS2 config
