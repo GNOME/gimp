@@ -1,6 +1,6 @@
 project('gimp',
   'c', 'cpp',
-  version: '3.0.0-RC1',
+  version: '3.0.0-RC1+git',
   meson_version: '>=0.61.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -33,9 +33,13 @@ gimp_app_micro_rc      = gimp_app_version_arr[2].split('-')
 gimp_app_version_micro = gimp_app_micro_rc[0].to_int()
 if gimp_app_micro_rc.length() > 1
   if not gimp_app_micro_rc[1].startswith('RC')
-    error('Version format is: <major>.<minor>.<micro> with optional "-RC<num>" suffix.')
+    error('Version format is: <major>.<minor>.<micro> with optional "-RC<num>" suffix and optional "+git".')
   endif
-  gimp_app_version_rc = gimp_app_micro_rc[1].substring(2).to_int()
+  if gimp_app_micro_rc[1].endswith('+git')
+    gimp_app_version_rc = gimp_app_micro_rc[1].substring(2, -4).to_int()
+  else
+    gimp_app_version_rc = gimp_app_micro_rc[1].substring(2).to_int()
+  endif
 endif
 
 # Override for Release-candidates
