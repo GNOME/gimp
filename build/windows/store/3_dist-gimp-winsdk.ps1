@@ -12,7 +12,7 @@ $PSNativeCommandUseErrorActionPreference = $true
 
 
 # Autodetects latest WinSDK installed
-if ($Env:PROCESSOR_ARCHITECTURE -eq 'ARM64')
+if ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'ARM64*')
   {
     $cpu_arch = 'arm64'
   }
