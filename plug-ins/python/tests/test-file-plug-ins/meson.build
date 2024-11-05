@@ -1,4 +1,4 @@
-if not stable or not release
+if not stable or not release or gimp_version.endswith('+git')
 
 # This does not get installed for releases
 plugins += {
