@@ -3,7 +3,6 @@
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
-
 if (-not $GITLAB_CI)
   {
     # Make the script work locally

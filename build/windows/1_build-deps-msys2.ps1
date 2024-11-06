@@ -3,7 +3,6 @@
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
-
 if (-not $GITLAB_CI)
   {
     # Make the script work locally
@@ -74,12 +73,12 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     if (-not (Test-Path $dep))
       {
         $repo="https://gitlab.gnome.org/GNOME/$dep.git"
-        $tagprefix="$dep".ToUpper()
 
         # For tagged jobs (i.e. release or test jobs for upcoming releases), use the
         # last tag. Otherwise use the default branch's HEAD.
         if ($CI_COMMIT_TAG)
           {
+            $tagprefix="$dep".ToUpper()
             $tag = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/${tagprefix}_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
             $git_options="--branch=$tag"
             Write-Output "Using tagged release of ${dep}: $tag"
