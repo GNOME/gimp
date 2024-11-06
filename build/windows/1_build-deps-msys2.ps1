@@ -107,7 +107,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
   }
 
 #https://gitlab.gnome.org/GNOME/babl/-/issues/97
-self_build babl '-Dwith-docs=false' '-Denable-vapi=false'
-self_build gegl '-Dworkshop=true' '-Dvapigen=disabled'
+self_build babl '-Dwith-docs=false'
+self_build gegl '-Dworkshop=true'
 
 Set-Location $GIMP_DIR

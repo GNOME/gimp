@@ -47,7 +47,7 @@ if (-not (Test-Path _build\build.ninja -Type Leaf))
   {
     #https://gitlab.gnome.org/GNOME/gimp/-/issues/11200
     #https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
-    meson setup _build -Dprefix="$GIMP_PREFIX" -Dgi-docgen=disabled -Djavascript=disabled -Dvala=disabled `
+    meson setup _build -Dprefix="$GIMP_PREFIX" -Dgi-docgen=disabled -Djavascript=disabled `
                        -Ddirectx-sdk-dir="$MSYS2_PREFIX/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
                        -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION
   }
