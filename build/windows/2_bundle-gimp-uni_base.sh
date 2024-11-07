@@ -126,9 +126,9 @@ clean "$GIMP_DISTRIB" lib/*.a
 bundle "$GIMP_PREFIX" share/gimp
 ### Needed for file dialogs
 bundle "$MSYS_PREFIX" share/glib-*/schemas/gschemas.compiled
-### https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
+### Needed to not crash UI. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6165
 bundle "$MSYS_PREFIX" share/icons/Adwaita
-### https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
+### Needed by GTK to use icon themes. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5080
 bundle "$GIMP_PREFIX" share/icons/hicolor
 ### Needed for file-wmf work
 bundle "$MSYS_PREFIX" share/libwmf
@@ -160,19 +160,21 @@ rm -f done-dll.list
 ### Minimal (and some additional) executables for the 'bin' folder
 bundle "$GIMP_PREFIX" bin/gimp*.exe
 bundle "$GIMP_PREFIX" bin/libgimp*.dll
-### https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
+### Bundled just to promote GEGL. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10580
 bundle "$GIMP_PREFIX" bin/gegl*.exe
-### https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
+### Needed for 'Show image graph'. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/6045
 bundle "$MSYS_PREFIX" bin/dot.exe
-### https://gitlab.gnome.org/GNOME/gimp/-/issues/8877
+### Needed to not pollute output. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8877
 bundle "$MSYS_PREFIX" bin/gdbus.exe
+### Needed for hyperlink support etc. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12288
+bundle "$MSYS_PREFIX" bin/gspawn*-console.exe
 
 ### Optional binaries for GObject Introspection support
 if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
   bundle "$GIMP_PREFIX" lib/girepository-*
   bundle "$MSYS_PREFIX" lib/girepository-*
 
-  # https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
+  #FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
   #bundle "$MSYS_PREFIX" bin/luajit.exe
   #bundle "$MSYS_PREFIX" lib/lua
   #bundle "$MSYS_PREFIX" share/lua
