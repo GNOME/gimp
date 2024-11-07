@@ -21,7 +21,7 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP
-#https://github.com/msys2/msys2-installer/issues/85
+#MSYS2 forces us to presume 'InstallLocation'. See: https://github.com/msys2/msys2-installer/issues/85
 $MSYS2_PREFIX = 'C:/msys64'
 if ($MSYSTEM_PREFIX -eq 'mingw32')
   {
@@ -39,7 +39,7 @@ elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'x64*')
   }
 $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
 
-#https://github.com/msys2/MSYS2-packages/issues/4340
+#Workaround to avoid stuck pacman. See: https://github.com/msys2/MSYS2-packages/issues/4340
 $PACMAN_CONF = "$MSYS2_PREFIX\etc\pacman.conf"
 Copy-Item $PACMAN_CONF "$PACMAN_CONF.bak"
 (Get-Content $PACMAN_CONF) | Foreach-Object {$_ -replace "SigLevel    = Required","SigLevel    = DatabaseNever"} |
@@ -106,7 +106,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     Set-Location ../..
   }
 
-#https://gitlab.gnome.org/GNOME/babl/-/issues/97
+#FIXME: babl dev docs are broken. See: https://gitlab.gnome.org/GNOME/babl/-/issues/97
 self_build babl '-Dwith-docs=false'
 self_build gegl '-Dworkshop=true'
 

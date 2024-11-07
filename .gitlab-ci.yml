@@ -458,7 +458,7 @@ gimp-win-x64-cross:
     - $MSYS2_PREFIX = 'C:/msys64'
     - $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
     # Build-time vars
-    # FIXME:'gimpenv' have buggy code about Windows paths
+    # FIXME:'gimpenv' have buggy code about Windows paths. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12284
     - $GIMP_PREFIX = "$PWD\_install".Replace('\', '/')
     - $env:Path = $env:Path + ";$GIMP_PREFIX/bin"
     - $env:PKG_CONFIG_PATH = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/lib/pkgconfig;$MSYS2_PREFIX/$MSYSTEM_PREFIX/share/pkgconfig;$GIMP_PREFIX/lib/pkgconfig"
