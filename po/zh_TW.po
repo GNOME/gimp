@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-08 16:11+0000\n"
-"PO-Revision-Date: 2024-10-10 11:37+0800\n"
+"POT-Creation-Date: 2024-10-26 12:03+0000\n"
+"PO-Revision-Date: 2024-11-07 23:31+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -6900,7 +6900,7 @@ msgstr "抬升檢視(_R)"
 #: ../app/actions/images-actions.c:48
 msgctxt "images-action"
 msgid "Raise this image's displays"
-msgstr "讓這個影像的顯示窗抬升起來"
+msgstr "讓這個影像的顯示器抬升起來"
 
 #: ../app/actions/images-actions.c:53
 msgctxt "images-action"
@@ -6910,7 +6910,7 @@ msgstr "新增檢視(_N)"
 #: ../app/actions/images-actions.c:54
 msgctxt "images-action"
 msgid "Create a new display for this image"
-msgstr "用新的顯示窗來檢視這個影像"
+msgstr "用新的顯示器來檢視這個影像"
 
 #: ../app/actions/images-actions.c:59
 msgctxt "images-action"
@@ -9939,12 +9939,12 @@ msgstr "顯示這個影像的總覽視窗"
 #: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "顯示窗濾色片(_F)..."
+msgstr "顯示器濾色片(_F)..."
 
 #: ../app/actions/view-actions.c:144
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
-msgstr "設定要套用到這個檢視的顯示窗濾色片組態"
+msgstr "設定要套用到這個檢視的顯示器濾色片組態"
 
 #: ../app/actions/view-actions.c:149
 msgctxt "view-action"
