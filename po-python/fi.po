@@ -7,303 +7,1102 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tiny-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2008-10-06 14:07+0300\n"
-"PO-Revision-Date: 2013-01-27 18:34+0200\n"
+"POT-Creation-Date: 2024-08-10 16:16+0000\n"
+"PO-Revision-Date: 2024-11-07 23:29+0200\n"
 "Last-Translator: Ville Skyttä <ville.skytta@iki.fi>\n"
 "Language-Team: fi\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:385
-msgid "Missing exception information"
-msgstr "Poikkeustietoja puuttuu"
+#: plug-ins/python/colorxhtml.py:78
+msgid "Save as colored HTML text..."
+msgstr "Tallenna väritettynä HTML-tekstinä..."
 
-#: ../plug-ins/pygimp/gimpfu.py:394
-#, python-format
-msgid "An error occured running %s"
-msgstr "Tapahtui virhe suoritettaessa %s"
-
-#: ../plug-ins/pygimp/gimpfu.py:405
-msgid "_More Information"
-msgstr "_Lisätietoja"
-
-#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
-#: ../plug-ins/pygimp/gimpfu.py:529
-msgid "No"
-msgstr "Ei"
-
-#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
-msgid "Yes"
-msgstr "Kyllä"
-
-#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
-msgid "Python-Fu File Selection"
-msgstr "Python-Fu tiedostovalinta"
-
-#: ../plug-ins/pygimp/gimpfu.py:591
-msgid "Python-Fu Folder Selection"
-msgstr "Python-Fu kansiovalinta"
-
-#: ../plug-ins/pygimp/gimpfu.py:682
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "Virheellinen syöte skriptille \"%s\""
-
-#: ../plug-ins/pygimp/gimpui.py:177
-msgid "Python-Fu Color Selection"
-msgstr "Python-Fu värivalinta"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#: plug-ins/python/colorxhtml.py:137
 msgid "Saving as colored XHTML"
 msgstr "Tallennetta väritettynä XHTML-tiedostona"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
-msgid "Save as colored XHTML"
-msgstr "Tallenna väritettynä XHTML:nä"
+#: plug-ins/python/colorxhtml.py:211
+msgid "Save as colored HTML text"
+msgstr "Tallenna väritettynä HTML-tekstinä"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
-msgid "Colored XHTML"
-msgstr "Väritetty XHTML"
+#: plug-ins/python/colorxhtml.py:214
+msgid "Colored HTML text"
+msgstr "Väritetty HTML-teksti"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "Character _source"
-msgstr "Merkki_lähde"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
-msgid "Source code"
-msgstr "Lähdekoodi"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Text file"
-msgstr "Tekstitiedosto"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Entry box"
-msgstr "Syötelaatikko"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "_File to read or characters to use"
+#: plug-ins/python/colorxhtml.py:222
+#, fuzzy
+#| msgid "_File to read or characters to use"
+msgid "Rea_d characters from file"
 msgstr "_Luettava tiedosto tai käytettävät merkit"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: plug-ins/python/colorxhtml.py:223
+msgid "Read characters from file, if true, or use text entry"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:225
+#, fuzzy
+#| msgid "Character _source"
+msgid "Charac_ters"
+msgstr "Merkki_lähde"
+
+#: plug-ins/python/colorxhtml.py:226
+msgid "Characters that will be used as colored pixels."
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:228
 msgid "Fo_nt size in pixels"
 msgstr "_Kirjasinkoko pikseleinä"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+#: plug-ins/python/colorxhtml.py:229
+msgid "Font size in pixels"
+msgstr "Fontin koko pikseleinä"
+
+#: plug-ins/python/colorxhtml.py:231
 msgid "_Write a separate CSS file"
 msgstr "Kirjoita _erillinen CSS-tiedosto"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:53
+#: plug-ins/python/colorxhtml.py:232
+msgid "Write a separate CSS file"
+msgstr "Kirjoita erillinen CSS-tiedosto"
+
+#. GUI only, used to create a widget to open a file if source-file is enabled
+#: plug-ins/python/colorxhtml.py:235
+msgid "Choose File"
+msgstr "Valitse tiedosto"
+
+#: plug-ins/python/foggify.py:114
 msgid "Add a layer of fog"
 msgstr "Lisää sumukerros"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:58
+#: plug-ins/python/foggify.py:115
+#, fuzzy
+#| msgid "Add a layer of fog"
+msgid "Adds a layer of fog to the image."
+msgstr "Lisää sumukerros"
+
+#: plug-ins/python/foggify.py:117
 msgid "_Fog..."
 msgstr "_Sumu..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
-msgid "_Layer name"
+#: plug-ins/python/foggify.py:123
+msgid "Layer _name"
 msgstr "Tason _nimi"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: plug-ins/python/foggify.py:123
+msgid "Layer name"
+msgstr "Tason nimi"
+
+#: plug-ins/python/foggify.py:124
 msgid "Clouds"
 msgstr "Pilvet"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: plug-ins/python/foggify.py:125
 msgid "_Fog color"
 msgstr "_Sumun väri"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: plug-ins/python/foggify.py:125
+#, fuzzy
+#| msgid "_Fog color"
+msgid "Fog color"
+msgstr "_Sumun väri"
+
+#: plug-ins/python/foggify.py:127
 msgid "_Turbulence"
 msgstr "_Turbulenssi"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "Op_acity"
+#: plug-ins/python/foggify.py:127
+#, fuzzy
+#| msgid "_Turbulence"
+msgid "Turbulence"
+msgstr "_Turbulenssi"
+
+#: plug-ins/python/foggify.py:129
+#, fuzzy
+#| msgid "Op_acity"
+msgid "O_pacity"
 msgstr "_Läpinäkyvyys"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
-msgid "Offset the colors in a palette"
-msgstr "Paletin värien siirtymä"
+#: plug-ins/python/foggify.py:129
+#, fuzzy
+#| msgid "Op_acity"
+msgid "Opacity"
+msgstr "_Läpinäkyvyys"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+#: plug-ins/python/gradients-save-as-css.py:94
+#| msgid "_Slice..."
+msgid "_File..."
+msgstr "_Tiedosto..."
+
+#: plug-ins/python/gradients-save-as-css.py:102
+msgid "Choose CSS file..."
+msgstr "Valitse CSS-tiedosto..."
+
+#: plug-ins/python/gradients-save-as-css.py:111
+msgid "Save as CSS file..."
+msgstr "Tallenna CSS-tiedostoksi..."
+
+#: plug-ins/python/gradients-save-as-css.py:113
+#: plug-ins/python/python-console/python-console.py:272
+#: plug-ins/python/spyro-plus.py:1735
+msgid "_Cancel"
+msgstr "_Peru"
+
+#: plug-ins/python/gradients-save-as-css.py:114
+#: plug-ins/python/spyro-plus.py:1736
+msgid "_OK"
+msgstr "_OK"
+
+#: plug-ins/python/gradients-save-as-css.py:192
+#: plug-ins/python/gradients-save-as-css.py:193
+msgid "Creates a new palette from a given gradient"
+msgstr ""
+
+#: plug-ins/python/gradients-save-as-css.py:195
+msgid "Save Gradient as CSS..."
+msgstr "Tallenna liukuväri CSS:nä..."
+
+#: plug-ins/python/gradients-save-as-css.py:201
+#: plug-ins/python/palette-offset.py:55 plug-ins/python/palette-sort.py:354
+#: plug-ins/python/palette-to-gradient.py:143
+#: plug-ins/python/python-console/python-console.py:316
+msgid "Run mode"
+msgstr ""
+
+#: plug-ins/python/gradients-save-as-css.py:202
+#: plug-ins/python/palette-offset.py:56 plug-ins/python/palette-sort.py:355
+#: plug-ins/python/palette-to-gradient.py:144
+#: plug-ins/python/python-console/python-console.py:317
+msgid "The run mode"
+msgstr ""
+
+#: plug-ins/python/gradients-save-as-css.py:205
+msgid "_Gradient to use"
+msgstr "_Käytettävä liukuväri"
+
+#: plug-ins/python/gradients-save-as-css.py:207
+msgid "_File"
+msgstr "_Tiedosto"
+
+#: plug-ins/python/histogram-export.py:153
+msgid "File is either a directory or file name is empty."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:156
+msgid "Directory not found."
+msgstr "Kansiota ei löydy."
+
+#: plug-ins/python/histogram-export.py:171
+msgid "Histogram Export..."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:214
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:217
+msgid "_Export histogram..."
+msgstr ""
+
+#. TODO: GFile props still don't have labels + only load existing files
+#. (here we likely want to create a new file).
+#: plug-ins/python/histogram-export.py:225
+msgid "Histogram File"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:226
+msgid "Histogram export file"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:227
+msgid "_Bucket Size"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:227
+msgid "Bucket Size"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample _Average"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:229
+msgid "Sample Average"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:232
+msgid "Pixel Count"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:233
+msgid "Normalized"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:234
+msgid "Percent"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output _format"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:235
+msgid "Output format"
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:48
 msgid "_Offset Palette..."
 msgstr "Paletin _siirtymä..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: plug-ins/python/palette-offset.py:49
+msgid "Offset the colors in a palette"
+msgstr "Paletin värien siirtymä"
+
+#: plug-ins/python/palette-offset.py:59 plug-ins/python/palette-sort.py:358
+#: plug-ins/python/palette-to-gradient.py:147
+msgid "_Palette"
+msgstr "_Paletti"
+
+#: plug-ins/python/palette-offset.py:60 plug-ins/python/palette-sort.py:359
+#: plug-ins/python/palette-sort.py:399 plug-ins/python/palette-sort.py:400
+#: plug-ins/python/palette-to-gradient.py:148
 msgid "Palette"
 msgstr "Paletti"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Off_set"
-msgstr "Siir_tymä"
+#: plug-ins/python/palette-offset.py:62
+msgid "O_ffset"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
-msgid "Sort the colors in a palette"
-msgstr "Järjestä paletin värit"
+#: plug-ins/python/palette-offset.py:62
+msgid "Offset"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+#: plug-ins/python/palette-offset.py:64
+msgid "The edited palette"
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:65
+msgid "The newly created palette when read-only, otherwise the input palette"
+msgstr ""
+
+#. TODO: Re-incorporate LAB and LCHab options with GeglColor
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:463
+msgid "Red"
+msgstr "Punainen"
+
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:464
+msgid "Green"
+msgstr "Vihreä"
+
+#: plug-ins/python/palette-sort.py:45 plug-ins/python/palette-sort.py:465
+msgid "Blue"
+msgstr "Sininen"
+
+#: plug-ins/python/palette-sort.py:46 plug-ins/python/palette-sort.py:466
+msgid "Luma (Y)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:467
+msgid "Hue"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:468
+#, fuzzy
+#| msgid "Green or Saturation"
+msgid "Saturation"
+msgstr "Vihreä tai värikylläisyys"
+
+#: plug-ins/python/palette-sort.py:47 plug-ins/python/palette-sort.py:469
+msgid "Value"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:470
+msgid "Saturation (HSL)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:48 plug-ins/python/palette-sort.py:471
+msgid "Lightness (HSL)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:49 plug-ins/python/palette-sort.py:472
+msgid "Index"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:50 plug-ins/python/palette-sort.py:473
+msgid "Random"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:94
+msgid ""
+"\n"
+"    Format is 'start:nrows,length' . All items are optional.\n"
+"\n"
+"    The empty string selects all items, as does ':'\n"
+"    ':4,' makes a 4-row selection out of all colors (length auto-"
+"determined)\n"
+"    ':4' also.\n"
+"    ':1,4' selects the first 4 colors\n"
+"    ':,4' selects rows of 4 colors (nrows auto-determined)\n"
+"    ':3,4' selects 3 rows of 4 colors\n"
+"    '4:' selects a single row of all colors after 4, inclusive.\n"
+"    '3:,4' selects rows of 4 colors, starting at 3 (nrows auto-determined)\n"
+"    '2:3,4' selects 3 rows of 4 colors (12 colors total), beginning at index "
+"2.\n"
+"    '4' is illegal (ambiguous)\n"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:343
 msgid "_Sort Palette..."
 msgstr "_Järjestä paletti..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color _model"
-msgstr "Väri_malli"
+#: plug-ins/python/palette-sort.py:345
+msgid "Sort the colors in a palette"
+msgstr "Järjestä paletin värit"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "RGB"
-msgstr "RGB"
+#: plug-ins/python/palette-sort.py:363
+msgid "All"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
-msgid "HSV"
-msgstr "HSV"
+#: plug-ins/python/palette-sort.py:364
+msgid "Slice / Array"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to _sort"
+#: plug-ins/python/palette-sort.py:365
+msgid "Autoslice (fg->bg)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:366
+msgid "Partitioned"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:367
+msgid "Select_ions"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:367
+msgid "Selections"
+msgstr ""
+
+#. TODO: It would be much simpler to replace the slice expression with three
+#. separate parameters: start-index, number-of-rows, row_length
+#: plug-ins/python/palette-sort.py:371
+msgid "Slice _expression"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:376
+#, fuzzy
+#| msgid "Channel to _sort"
+msgid "Channel _to sort"
 msgstr "_Järjestettävä kanava"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Red or Hue"
-msgstr "Punainen tai sävy"
+#: plug-ins/python/palette-sort.py:376
+#, fuzzy
+#| msgid "Channel to _sort"
+msgid "Channel to sort"
+msgstr "_Järjestettävä kanava"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Green or Saturation"
-msgstr "Vihreä tai värikylläisyys"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
-msgid "Blue or Value"
-msgstr "Sininen tai arvo"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+#: plug-ins/python/palette-sort.py:378
 msgid "_Ascending"
 msgstr "_Kasvava"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Luo toistuva väriliuku käyttäen paletin värejä"
+#: plug-ins/python/palette-sort.py:378 plug-ins/python/palette-sort.py:385
+#, fuzzy
+#| msgid "_Ascending"
+msgid "Ascending"
+msgstr "_Kasvava"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
-msgid "Palette to _Repeating Gradient"
-msgstr "Paletti _toistuvaksi väriliu'uksi"
+#: plug-ins/python/palette-sort.py:382
+#, fuzzy
+#| msgid "Channel to _sort"
+msgid "Secondary C_hannel to sort"
+msgstr "_Järjestettävä kanava"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
-msgid "Create a gradient using colors from the palette"
-msgstr "Luo väriliuku käyttäen paletin värejä"
+#: plug-ins/python/palette-sort.py:383
+#, fuzzy
+#| msgid "Channel to _sort"
+msgid "Secondary Channel to sort"
+msgstr "_Järjestettävä kanava"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+#: plug-ins/python/palette-sort.py:385
+#, fuzzy
+#| msgid "_Ascending"
+msgid "Ascen_ding"
+msgstr "_Kasvava"
+
+#: plug-ins/python/palette-sort.py:387
+msgid "_Quantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:388
+msgid "Quantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:392
+msgid "Partitionin_g channel"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:393
+msgid "Partitioning channel"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:395
+msgid "Partition q_uantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:396
+msgid "Partition quantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:474
+msgid "Lightness (LAB)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:475
+msgid "A-color"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:476
+msgid "B-color"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:477
+msgid "Chroma (LCHab)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:478
+msgid "Hue (LCHab)"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:127
 msgid "Palette to _Gradient"
 msgstr "Paletti _väriliu'uksi"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
-msgid "Slice"
-msgstr "Paloittelu"
+#: plug-ins/python/palette-to-gradient.py:128
+msgid "Create a gradient using colors from the palette"
+msgstr "Luo väriliuku käyttäen paletin värejä"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Leikkaa kuvan apuviivoja pitkin, luo kuvia ja HTML-taulunpalan"
+#: plug-ins/python/palette-to-gradient.py:129
+#, fuzzy
+#| msgid "Create a gradient using colors from the palette"
+msgid "Create a new gradient using colors from the palette."
+msgstr "Luo väriliuku käyttäen paletin värejä"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
-msgid "_Slice..."
-msgstr "_Paloittele..."
+#: plug-ins/python/palette-to-gradient.py:132
+msgid "Palette to _Repeating Gradient"
+msgstr "Paletti _toistuvaksi väriliu'uksi"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "Path for HTML export"
-msgstr "Polku HTML-viennille"
+#: plug-ins/python/palette-to-gradient.py:133
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Luo toistuva väriliuku käyttäen paletin värejä"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
-msgid "Filename for export"
-msgstr "Tiedostonimi viennille"
+#: plug-ins/python/palette-to-gradient.py:134
+#, fuzzy
+#| msgid "Create a repeating gradient using colors from the palette"
+msgid "Create a new repeating gradient using colors from the palette."
+msgstr "Luo toistuva väriliuku käyttäen paletin värejä"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
-msgid "Image name prefix"
-msgstr "Kuvannimen etuliite"
+#: plug-ins/python/palette-to-gradient.py:150
+#: plug-ins/python/palette-to-gradient.py:151
+msgid "The newly created gradient"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
-msgid "Image format"
-msgstr "Kuvamuoto"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
-msgid "Separate image folder"
-msgstr "Erillinen kuvakansio"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Folder for image export"
-msgstr "Kansio, johon kuvat viedään"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Space between table elements"
-msgstr "Väli taulun alkioiden välillä"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript \"onmouseover\" ja \"clicked\""
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Skip animation for table caps"
-msgstr "Ohita animaatio taulun otsikoille"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+#: plug-ins/python/python-console/python-console.py:79
 msgid "Python Console"
 msgstr "Python-konsoli"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+#: plug-ins/python/python-console/python-console.py:81
+#: plug-ins/python/python-console/python-console.py:273
+msgid "_Save"
+msgstr "_Tallenna"
+
+#: plug-ins/python/python-console/python-console.py:82
+msgid "Cl_ear"
+msgstr "T_yhjennä"
+
+#: plug-ins/python/python-console/python-console.py:83
 msgid "_Browse..."
 msgstr "_Selaa..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+#: plug-ins/python/python-console/python-console.py:84
+#: plug-ins/python/python-console/python-console.py:221
+msgid "_Close"
+msgstr "_Sulje"
+
+#: plug-ins/python/python-console/python-console.py:218
 msgid "Python Procedure Browser"
 msgstr "Python-proseduuriselain"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#: plug-ins/python/python-console/python-console.py:220
+msgid "_Apply"
+msgstr "T_oteuta"
+
+#: plug-ins/python/python-console/python-console.py:246
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Tiedostoa \"%s\" ei voi avata kirjoitettavaksi: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#: plug-ins/python/python-console/python-console.py:261
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Tiedostoon \"%s\" ei voi kirjoittaa: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+#: plug-ins/python/python-console/python-console.py:270
 msgid "Save Python-Fu Console Output"
 msgstr "Tallenna Python-Fu -konsolin tuloste"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+#: plug-ins/python/python-console/python-console.py:309
+msgid "Python _Console"
+msgstr "Python-_konsoli"
+
+#: plug-ins/python/python-console/python-console.py:310
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiivinen Gimpin Python-tulkki"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
-msgid "_Console"
-msgstr "_Konsoli"
+#: plug-ins/python/python-console/python-console.py:311
+msgid "Type in commands and see results"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Lisää varjo ja valinnainen reuna tasoon"
+#: plug-ins/python/spyro-plus.py:51
+msgid "Spyro Layer"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
-msgid "_Drop Shadow and Bevel..."
-msgstr "_Varjo ja reunus..."
+#: plug-ins/python/spyro-plus.py:52
+msgid "Spyro Path"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Shadow blur"
-msgstr "_Varjon sumennus"
+#: plug-ins/python/spyro-plus.py:62
+msgid "As New Layer"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Bevel"
-msgstr "_Reunus"
+#: plug-ins/python/spyro-plus.py:63
+msgid "Redraw on last active layer"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "_Drop shadow"
-msgstr "_Varjo"
+#: plug-ins/python/spyro-plus.py:64
+msgid "As Path"
+msgstr ""
 
-msgid "Drop shadow _X displacement"
-msgstr "Varjon _X-siirtymä"
+#: plug-ins/python/spyro-plus.py:112 plug-ins/python/spyro-plus.py:2255
+msgid "Circle"
+msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
-msgid "Drop shadow _Y displacement"
-msgstr "Varjon _Y-siirtymä"
+#: plug-ins/python/spyro-plus.py:148 plug-ins/python/spyro-plus.py:2259
+msgid "Polygon-Star"
+msgstr ""
+
+#. Sine wave on a circle ring.
+#: plug-ins/python/spyro-plus.py:164 plug-ins/python/spyro-plus.py:996
+#: plug-ins/python/spyro-plus.py:2250 plug-ins/python/spyro-plus.py:2260
+msgid "Sine"
+msgstr ""
+
+#. Semi-circles, based on a polygon
+#: plug-ins/python/spyro-plus.py:174 plug-ins/python/spyro-plus.py:2261
+msgid "Bumps"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:279
+msgid "Rack"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:323
+msgid "Frame"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:436 plug-ins/python/spyro-plus.py:2258
+msgid "Selection"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:526 plug-ins/python/spyro-plus.py:2295
+msgid "Pencil"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:542 plug-ins/python/spyro-plus.py:2296
+msgid "AirBrush"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:609 plug-ins/python/spyro-plus.py:2293
+msgid "Preview"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:614 plug-ins/python/spyro-plus.py:2297
+msgid "Stroke"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:661 plug-ins/python/spyro-plus.py:2294
+msgid "PaintBrush"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:665 plug-ins/python/spyro-plus.py:2298
+msgid "Ink"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:666 plug-ins/python/spyro-plus.py:2299
+msgid "MyPaintBrush"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:982 plug-ins/python/spyro-plus.py:2248
+msgid "Spyrograph"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:989 plug-ins/python/spyro-plus.py:2249
+msgid "Epitrochoid"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1016 plug-ins/python/spyro-plus.py:2251
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1472 plug-ins/python/spyro-plus.py:2252
+msgid "Curve Type"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1473
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+
+#. TODO: Add Clone option once it's fixed
+#: plug-ins/python/spyro-plus.py:1478 plug-ins/python/spyro-plus.py:2301
+msgid "Tool"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1479
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1484
+#, fuzzy
+#| msgid "Palette to _Gradient"
+msgid "Long Gradient"
+msgstr "Paletti _väriliu'uksi"
+
+#: plug-ins/python/spyro-plus.py:1486
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1506
+msgid "Specify pattern using one of the following tabs:"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1508
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1532
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1535 plug-ins/python/spyro-plus.py:1563
+msgid "Fixed Gear Teeth"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1543
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1546 plug-ins/python/spyro-plus.py:1568
+msgid "Moving Gear Teeth"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1551
+msgid "Hole percent"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1552
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1573
+msgid "Hole Number"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1574
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1585
+msgid "Flower Petals"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1586
+msgid "The number of petals in the pattern."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1591
+msgid "Petal Skip"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1592
+msgid "The number of petals to advance for drawing the next petal."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1597
+msgid "Hole Radius(%)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1598
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1619
+msgid "Width(%)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1620
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1631
+msgid "Visual"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1637
+msgid "Toy Kit"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1643
+msgid "Gears"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1656 plug-ins/python/spyro-plus.py:1700
+msgid "Rotation"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1657
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1680 plug-ins/python/spyro-plus.py:2262
+msgid "Shape"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1681
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1690
+msgid "Sides"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1690
+msgid "Number of sides of the shape."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1695
+msgid "Morph"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1695
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1700
+msgid "Rotation of the fixed gear, in degrees"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1715
+msgid "Margin (px)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1715
+msgid "Margin from edge of selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1720 plug-ins/python/spyro-plus.py:2283
+#: plug-ins/python/spyro-plus.py:2284
+msgid "Make width and height equal"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1722
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1737
+msgid "Re_draw"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1739
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1742
+msgid "_Reset"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1750
+msgid "Save"
+msgstr "Tallenna"
+
+#: plug-ins/python/spyro-plus.py:1751
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1765
+msgid "Spyrogimp"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1774 plug-ins/python/spyro-plus.py:2237
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1787
+msgid "Curve Pattern"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1790
+msgid "Fixed Gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1793
+msgid "Size"
+msgstr "Koko"
+
+#: plug-ins/python/spyro-plus.py:2149
+msgid "Rendering Pattern"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2161
+msgid "Please wait : Rendering Pattern"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2238
+msgid ""
+"Uses current tool settings to draw Spyrograph patterns. The size and "
+"location of the pattern is based on the current selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2241
+msgid "Spyrogimp..."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2256
+msgid "rack"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2257
+msgid "frame"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2264
+msgid "Si_des"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2265
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2267
+msgid "_Morph"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2268
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2270
+msgid "Fi_xed Gear Teeth"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2271 plug-ins/python/spyro-plus.py:2274
+msgid "Number of teeth for fixed gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2273
+msgid "Mo_ving Gear Teeth"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2276
+msgid "_Hole Radius (%)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2277
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2280
+msgid "Margin (_px)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2281
+msgid "Margin from selection, in pixels"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2286 plug-ins/python/spyro-plus.py:2289
+msgid "_Rotation"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2287
+msgid "Pattern rotation, in degrees"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2290
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2304
+#, fuzzy
+#| msgid "Palette to _Gradient"
+msgid "Long _Gradient"
+msgstr "Paletti _väriliu'uksi"
+
+#: plug-ins/python/spyro-plus.py:2305
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+
+#~ msgid "Missing exception information"
+#~ msgstr "Poikkeustietoja puuttuu"
+
+#, python-format
+#~ msgid "An error occured running %s"
+#~ msgstr "Tapahtui virhe suoritettaessa %s"
+
+#~ msgid "_More Information"
+#~ msgstr "_Lisätietoja"
+
+#~ msgid "No"
+#~ msgstr "Ei"
+
+#~ msgid "Yes"
+#~ msgstr "Kyllä"
+
+#~ msgid "Python-Fu File Selection"
+#~ msgstr "Python-Fu tiedostovalinta"
+
+#~ msgid "Python-Fu Folder Selection"
+#~ msgstr "Python-Fu kansiovalinta"
+
+#, python-format
+#~ msgid "Invalid input for '%s'"
+#~ msgstr "Virheellinen syöte skriptille \"%s\""
+
+#~ msgid "Python-Fu Color Selection"
+#~ msgstr "Python-Fu värivalinta"
+
+#~ msgid "Source code"
+#~ msgstr "Lähdekoodi"
+
+#~ msgid "Text file"
+#~ msgstr "Tekstitiedosto"
+
+#~ msgid "Entry box"
+#~ msgstr "Syötelaatikko"
+
+#~ msgid "Off_set"
+#~ msgstr "Siir_tymä"
+
+#~ msgid "Color _model"
+#~ msgstr "Väri_malli"
+
+#~ msgid "RGB"
+#~ msgstr "RGB"
+
+#~ msgid "HSV"
+#~ msgstr "HSV"
+
+#~ msgid "Red or Hue"
+#~ msgstr "Punainen tai sävy"
+
+#~ msgid "Blue or Value"
+#~ msgstr "Sininen tai arvo"
+
+#~ msgid "Slice"
+#~ msgstr "Paloittelu"
+
+#~ msgid ""
+#~ "Cuts an image along its guides, creates images and a HTML table snippet"
+#~ msgstr "Leikkaa kuvan apuviivoja pitkin, luo kuvia ja HTML-taulunpalan"
+
+#~ msgid "Path for HTML export"
+#~ msgstr "Polku HTML-viennille"
+
+#~ msgid "Filename for export"
+#~ msgstr "Tiedostonimi viennille"
+
+#~ msgid "Image name prefix"
+#~ msgstr "Kuvannimen etuliite"
+
+#~ msgid "Image format"
+#~ msgstr "Kuvamuoto"
+
+#~ msgid "Separate image folder"
+#~ msgstr "Erillinen kuvakansio"
+
+#~ msgid "Folder for image export"
+#~ msgstr "Kansio, johon kuvat viedään"
+
+#~ msgid "Space between table elements"
+#~ msgstr "Väli taulun alkioiden välillä"
+
+#~ msgid "Javascript for onmouseover and clicked"
+#~ msgstr "Javascript \"onmouseover\" ja \"clicked\""
+
+#~ msgid "Skip animation for table caps"
+#~ msgstr "Ohita animaatio taulun otsikoille"
+
+#~ msgid "_Console"
+#~ msgstr "_Konsoli"
+
+#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
+#~ msgstr "Lisää varjo ja valinnainen reuna tasoon"
+
+#~ msgid "_Drop Shadow and Bevel..."
+#~ msgstr "_Varjo ja reunus..."
+
+#~ msgid "_Shadow blur"
+#~ msgstr "_Varjon sumennus"
+
+#~ msgid "_Bevel"
+#~ msgstr "_Reunus"
+
+#~ msgid "_Drop shadow"
+#~ msgstr "_Varjo"
+
+#~ msgid "Drop shadow _X displacement"
+#~ msgstr "Varjon _X-siirtymä"
+
+#~ msgid "Drop shadow _Y displacement"
+#~ msgstr "Varjon _Y-siirtymä"
