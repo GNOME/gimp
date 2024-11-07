@@ -4,19 +4,19 @@
 #endif
 
 #if PLATFORM==X86
-	#define DIR DIR32
-	#define DDIR DDIR32
-	#define COMPONENT "32"
+  #define DIR DIR32
+  #define DDIR DDIR32
+  #define COMPONENT "32"
 #elif PLATFORM==X64
-	#define DIR DIR64
-	#define DDIR DDIR64
-	#define COMPONENT "64"
+  #define DIR DIR64
+  #define DDIR DDIR64
+  #define COMPONENT "64"
 #elif PLATFORM==ARM64
-	#define DIR DIRA64
-	#define DDIR DDIRA64
-	#define COMPONENT "ARM64"
+  #define DIR DIRA64
+  #define DDIR DDIRA64
+  #define COMPONENT "ARM64"
 #else
-	#error "Unknown PLATFORM:" + PLATFORM
+  #error "Unknown PLATFORM:" + PLATFORM
 #endif
 
 ;Required arch-specific components (compact installation)

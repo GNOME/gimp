@@ -17,39 +17,39 @@
 
 //avoid too much nesting
 #sub DoActualWork
-	#if Copy(FileLine,Len(FileLine),1)=="\"
-		//include whole directory
+  #if Copy(FileLine,Len(FileLine),1)=="\"
+    //include whole directory
 Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: gimp32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete ignoreversion
-	#else
-		//include files from a certain directory
-		#define OutputDir Copy(FileLine,1,RPos("\",FileLine)-1)
+  #else
+    //include files from a certain directory
+    #define OutputDir Copy(FileLine,1,RPos("\",FileLine)-1)
 Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: gimp32on64; Flags: restartreplace replacesameversion uninsrestartdelete ignoreversion
-	#endif
+  #endif
 #endsub
 
 #sub Process32on64Line
-	#if !defined(Finished)
-		//show that something's happening
-		#expr Line=Line+1
-		#pragma message "Processing base_twain32on64.list line " + Str(Line)
+  #if !defined(Finished)
+    //show that something's happening
+    #expr Line=Line+1
+    #pragma message "Processing base_twain32on64.list line " + Str(Line)
 
-		#if Copy(FileLine,1,1)=="#" || FileLine==""
-			//skip comments and empty lines
-		#elif Copy(FileLine,1,1)=="!"
-			#if Copy(FileLine,2)=="GIMP"
-				#expr SRC_DIR=GIMP_DIR32
-			#elif Copy(FileLine,2)=="GTK"
-				#expr SRC_DIR=DEPS_DIR32
-			#elif Copy(FileLine,2)=="end"
-				#define public Finished 1
-				//finished
-			#else
-				#error "Unknown command: "+FileLine
-			#endif
-		#else
-			#expr DoActualWork
-		#endif
-	#endif
+    #if Copy(FileLine,1,1)=="#" || FileLine==""
+      //skip comments and empty lines
+    #elif Copy(FileLine,1,1)=="!"
+      #if Copy(FileLine,2)=="GIMP"
+        #expr SRC_DIR=GIMP_DIR32
+      #elif Copy(FileLine,2)=="GTK"
+        #expr SRC_DIR=DEPS_DIR32
+      #elif Copy(FileLine,2)=="end"
+        #define public Finished 1
+        //finished
+      #else
+        #error "Unknown command: "+FileLine
+      #endif
+    #else
+      #expr DoActualWork
+    #endif
+  #endif
 #endsub
 
 #for {FileHandle = FileOpen(AddBackslash(SourcePath)+"base_twain32on64.list"); \

@@ -4,16 +4,16 @@
 
 procedure DebugMsg(Const pProc,pMsg: String);
 begin
-	Log('[Code] ' + pProc + #9 + pMsg);
+  Log('[Code] ' + pProc + #9 + pMsg);
 end;
 
 
 function BoolToStr(const b: Boolean): String;
 begin
-	if b then
-		Result := 'True'
-	else
-		Result := 'False';
+  if b then
+    Result := 'True'
+  else
+    Result := 'False';
 end;
 
 
@@ -21,19 +21,19 @@ function RevPos(const SearchStr, Str: string): Integer;
 var i: Integer;
 begin
 
-	if Length(SearchStr) < Length(Str) then
-		for i := (Length(Str) - Length(SearchStr) + 1) downto 1 do
-		begin
+  if Length(SearchStr) < Length(Str) then
+    for i := (Length(Str) - Length(SearchStr) + 1) downto 1 do
+    begin
 
-			if Copy(Str, i, Length(SearchStr)) = SearchStr then
-			begin
-				Result := i;
-				exit;
-			end;
+      if Copy(Str, i, Length(SearchStr)) = SearchStr then
+      begin
+        Result := i;
+        exit;
+      end;
 
-		end;
+    end;
 
-	Result := 0;
+  Result := 0;
 end;
 
 
@@ -41,21 +41,21 @@ function Replace(pSearchFor, pReplaceWith, pText: String): String;
 begin
     StringChangeEx(pText,pSearchFor,pReplaceWith,True);
 
-	Result := pText;
+  Result := pText;
 end;
 
 
 function Count(What, Where: String): Integer;
 begin
-	Result := 0;
-	if Length(What) = 0 then
-		exit;
+  Result := 0;
+  if Length(What) = 0 then
+    exit;
 
-	while Pos(What,Where)>0 do
-	begin
-		Where := Copy(Where,Pos(What,Where)+Length(What),Length(Where));
-		Result := Result + 1;
-	end;
+  while Pos(What,Where)>0 do
+  begin
+    Where := Copy(Where,Pos(What,Where)+Length(What),Length(Where));
+    Result := Result + 1;
+  end;
 end;
 
 
@@ -63,45 +63,45 @@ end;
 procedure Explode(var ADest: TArrayOfString; aText, aSeparator: String);
 var tmp: Integer;
 begin
-	if aSeparator='' then
-		exit;
+  if aSeparator='' then
+    exit;
 
-	SetArrayLength(ADest,Count(aSeparator,aText)+1)
+  SetArrayLength(ADest,Count(aSeparator,aText)+1)
 
-	tmp := 0;
-	repeat
-		if Pos(aSeparator,aText)>0 then
-		begin
+  tmp := 0;
+  repeat
+    if Pos(aSeparator,aText)>0 then
+    begin
 
-			ADest[tmp] := Copy(aText,1,Pos(aSeparator,aText)-1);
-			aText := Copy(aText,Pos(aSeparator,aText)+Length(aSeparator),Length(aText));
-			tmp := tmp + 1;
+      ADest[tmp] := Copy(aText,1,Pos(aSeparator,aText)-1);
+      aText := Copy(aText,Pos(aSeparator,aText)+Length(aSeparator),Length(aText));
+      tmp := tmp + 1;
 
-		end else
-		begin
+    end else
+    begin
 
-			 ADest[tmp] := aText;
-			 aText := '';
+       ADest[tmp] := aText;
+       aText := '';
 
-		end;
-	until Length(aText)=0;
+    end;
+  until Length(aText)=0;
 end;
 
 
 function String2Utf8(const pInput: String): AnsiString;
 var Output: AnsiString;
-	ret, outLen, nulPos: Integer;
+  ret, outLen, nulPos: Integer;
 begin
-	outLen := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, 0, 0, 0);
-	Output := StringOfChar(#0,outLen);
-	ret := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, outLen, 0, 0);
+  outLen := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, 0, 0, 0);
+  Output := StringOfChar(#0,outLen);
+  ret := WideCharToMultiByte(CP_UTF8, 0, pInput, -1, Output, outLen, 0, 0);
 
-	if ret = 0 then
-		RaiseException('WideCharToMultiByte failed: ' + IntToStr(GetLastError));
+  if ret = 0 then
+    RaiseException('WideCharToMultiByte failed: ' + IntToStr(GetLastError));
 
-	nulPos := Pos(#0,Output) - 1;
-	if nulPos = -1 then
-		nulPos := Length(Output);
+  nulPos := Pos(#0,Output) - 1;
+  if nulPos = -1 then
+    nulPos := Length(Output);
 
     Result := Copy(Output,1,nulPos);
 end;
@@ -109,18 +109,18 @@ end;
 
 function Utf82String(const pInput: AnsiString): String;
 var Output: AnsiString;
-	ret, outLen, nulPos: Integer;
+  ret, outLen, nulPos: Integer;
 begin
-	outLen := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, 0);
-	Output := StringOfChar(#0,outLen);
-	ret := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, outLen);
+  outLen := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, 0);
+  Output := StringOfChar(#0,outLen);
+  ret := MultiByteToWideChar(CP_UTF8, 0, pInput, -1, Output, outLen);
 
-	if ret = 0 then
-		RaiseException('MultiByteToWideChar failed: ' + IntToStr(GetLastError));
+  if ret = 0 then
+    RaiseException('MultiByteToWideChar failed: ' + IntToStr(GetLastError));
 
-	nulPos := Pos(#0,Output) - 1;
-	if nulPos = -1 then
-		nulPos := Length(Output);
+  nulPos := Pos(#0,Output) - 1;
+  if nulPos = -1 then
+    nulPos := Length(Output);
 
     Result := Copy(Output,1,nulPos);
 end;
@@ -128,50 +128,50 @@ end;
 
 function SaveStringToUTF8File(const pFileName, pS: String; const pAppend: Boolean): Boolean;
 begin
-	Result := SaveStringToFile(pFileName, String2Utf8(pS), pAppend);
+  Result := SaveStringToFile(pFileName, String2Utf8(pS), pAppend);
 end;
 
 
 function LoadStringFromUTF8File(const pFileName: String; var oS: String): Boolean;
 var Utf8String: AnsiString;
 begin
-	Result := LoadStringFromFile(pFileName, Utf8String);
-	oS := Utf82String(Utf8String);
+  Result := LoadStringFromFile(pFileName, Utf8String);
+  oS := Utf82String(Utf8String);
 end;
 
 
 procedure StatusLabel(const Status1,Status2: string);
 begin
-	WizardForm.StatusLabel.Caption := Status1;
-	WizardForm.FilenameLabel.Caption := Status2;
-	WizardForm.Refresh();
+  WizardForm.StatusLabel.Caption := Status1;
+  WizardForm.FilenameLabel.Caption := Status2;
+  WizardForm.Refresh();
 end;
 
 
 //reverse encoding done by Encode
 function Decode(pText: String): String;
 var p: Integer;
-	tmp: String;
+  tmp: String;
 begin
-	if Pos('%',pText) = 0 then
-		Result := pText
-	else
-	begin		
-		Result := '';
-		while Length(pText) > 0 do
-		begin
-			p := Pos('%',pText);
-			if p = 0 then
-			begin
-				Result := Result + pText;
-				break;
-			end;
-			Result := Result + Copy(pText,1,p-1);
-			tmp := '$' + Copy(pText,p+1,2);
-			Result := Result + Chr(StrToIntDef(tmp,32));
-			pText := Copy(pText,p+3,Length(pText));
-		end;
-	end;
+  if Pos('%',pText) = 0 then
+    Result := pText
+  else
+  begin    
+    Result := '';
+    while Length(pText) > 0 do
+    begin
+      p := Pos('%',pText);
+      if p = 0 then
+      begin
+        Result := Result + pText;
+        break;
+      end;
+      Result := Result + Copy(pText,1,p-1);
+      tmp := '$' + Copy(pText,p+1,2);
+      Result := Result + Chr(StrToIntDef(tmp,32));
+      pText := Copy(pText,p+3,Length(pText));
+    end;
+  end;
 end;
 
 
