@@ -22,10 +22,8 @@
 ;      distribution.                                                    ;
 ;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.;
 ;
-;Install script for GIMP and GTK+
+;Install script for GIMP and its deps
 ;requires Inno Setup 6
-;
-;See base_directories.isi
 ;
 ;Changelog:
 ;
@@ -79,13 +77,12 @@
 ;
 #pragma option -e+
 
-;1 NOTE: This script do NOT work with Inno Compiler
+;1 NOTE: This script do NOT work with Inno Compiler alone
 
 
-;2 GLOBAL VARIABLES
-; Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES
-; Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
+;2 GLOBAL VARIABLES SET BY PARAMS
 
+;Required Build-time vars are set in 'iscc' call of .ps1 file, except these two:
 ;Get GIMP_MUTEX_VERSION (used for internal versioning control)
 #define MAJOR=Copy(GIMP_VERSION,1,Pos(".",GIMP_VERSION)-1)
 #define MINOR=Copy(GIMP_VERSION,Pos(".",GIMP_VERSION)+1)
@@ -97,9 +94,12 @@
 	#define GIMP_UNSTABLE=""
 	#define GIMP_MUTEX_VERSION MAJOR
 #endif
-
 ;Get FULL_GIMP_VERSION (used by ITs)
 #define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
+
+;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES
+
+;Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
 
 
 ;3 INSTALLER SOURCE
@@ -223,19 +223,19 @@ Name: "{autodesktop}\GIMP {#CUSTOM_GIMP_VERSION}"; Filename: "{app}\bin\gimp-{#G
 Filename: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"; Description: "{cm:LaunchGimp}"; Flags: unchecked postinstall nowait skipifsilent
 
 
-;4 GIMP FILES
+;4.1 GIMP FILES
 [Types]
-;Name: normal; Description: "{cm:TypeTypical}"
 Name: full; Description: "{cm:TypeFull}"
 Name: compact; Description: "{cm:TypeCompact}"
 Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 
 [Components]
 ;Required components (minimal install)
+;GIMP files
 Name: gimp32; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
 Name: gimp64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
 Name: gimpARM64; Description: "{cm:ComponentsGimp,{#GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
-
+;Deps files
 Name: deps32; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
 Name: deps64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('x64')
 Name: depsARM64; Description: "{cm:ComponentsDeps,{#FULL_GIMP_VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('arm64')
@@ -246,60 +246,53 @@ Name: debug32; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: d
 Name: debug64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('x64')
 Name: debugARM64; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning; Check: Check3264('arm64')
 #endif
-
-;Ghostscript
+;PostScript support
 Name: gs32; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('32')
 Name: gs64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('x64')
 Name: gsARM64; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('arm64')
-
+;Lua plug-ins support
 #ifdef LUA
 Name: lua32; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('32')
 Name: lua64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('x64')
 Name: luaARM64; Description: "{cm:ComponentsLua}"; Types: full custom; Check: Check3264('arm64')
 #endif
-
+;Python plug-ins support
 #ifdef PYTHON
 Name: py32; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
 Name: py64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('x64')
 Name: pyARM64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('arm64')
 #endif
-
 ;Locales
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 #include ASSETS_DIR + "\base_po-cmp.list"
-
 ;MyPaint Brushes
 Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
-
 ;32-bit TWAIN support
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
 
 [Files]
-#define X86 1
-#define X64 2
-#define ARM64 3
-
-#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
-#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
-#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
-
-#define DDIR32 DIR32
-#define DDIR64 DIR64
-#define DDIRA64 DIRA64
-
-#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
-#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
-#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
-
 ;setup files
 Source: "{#ASSETS_DIR}\install-end.scale-100.bmp"; Flags: dontcopy
 Source: "{#ASSETS_DIR}\installsplash.bmp"; Flags: dontcopy
 Source: "{#ASSETS_DIR}\installsplash_small.bmp"; Flags: dontcopy
 
 #ifndef NOFILES
+#define X86 1
+#define X64 2
+#define ARM64 3
+#define GIMP_DIR32 GIMP_DIR + "\" + DIR32
+#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
+#define GIMP_DIRA64 GIMP_DIR + "\" + DIR64
+#define DDIR32 DIR32
+#define DDIR64 DIR64
+#define DDIRA64 DIRA64
+#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
+#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+#define DEPS_DIRA64 DEPS_DIR + "\" + DDIRA64
+
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
 
-;Required arch-neutral components (compact install)
+;Required arch-neutral files (compact install)
 #define GIMP_ARCHS="gimp32 or gimp64 or gimpARM64"
 #define OPTIONAL_EXT="*.debug,*.lua,*.py"
 Source: "{#GIMP_DIR32}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
@@ -311,13 +304,12 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\*"; DestDir: "{app}
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Excludes: "{#OPTIONAL_EXT}"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 Source: "{#GIMP_DIR32}\share\icons\hicolor\*"; DestDir: "{app}\share\icons\hicolor"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
-
 #define DEPS_ARCHS="deps32 or deps64 or depsARM64"
 Source: "{#DEPS_DIR32}\etc\*"; DestDir: "{app}\etc"; Excludes: "gimp"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#DEPS_DIR32}\include\*"; DestDir: "{app}\include"; Excludes: "gimp*"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#DEPS_DIR32}\share\*"; DestDir: "{app}\share"; Excludes: "gimp,icons\hicolor,metainfo,locale\*,mypaint-data"; Components: {#DEPS_ARCHS}; Flags: {#COMMON_FLAGS} createallsubdirs
 
-;Optional arch-neutral components (full install)
+;Optional arch-neutral files (full install)
 #ifdef LUA
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
 Source: "{#GIMP_DIR32}\*.lua"; DestDir: "{app}"; Components: (lua32 or lua64 or luaARM64); Flags: {#COMMON_FLAGS}
@@ -331,24 +323,21 @@ Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Component
 #include ASSETS_DIR + "\base_po-files.list"
 Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 
-;files arch specific
+;Required and optional arch specific files (binaries), except TWAIN in x64 and amd64
 ;i686
 #define PLATFORM X86
 #include "base_executables.isi"
-;special case, since 64bit version doesn't work, and is excluded in base_executables.isi
+;TWAIN is always installed in the 32-bit version of GIMP
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins"; Components: gimp32; Flags: {#COMMON_FLAGS}
-
 ;x86_64
 #define PLATFORM X64
 #include "base_executables.isi"
-
 ;AArch64
 #define PLATFORM ARM64
 #include "base_executables.isi"
 
-;32-on-64bit
+;Optional 32-bit specific bins for TWAIN, since x64 and arm64 twain drivers are rare
 #include "base_twain32on64.isi"
-;prefer 32bit twain plugin over 64bit because 64bit twain drivers are rare
 Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; DestDir: "{app}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain"; Components: gimp32on64; Flags: {#COMMON_FLAGS}
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
@@ -356,9 +345,8 @@ Source: "{#GIMP_DIR32}\lib\gimp\{#GIMP_API_VERSION}\plug-ins\twain\twain.exe"; D
 Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: {#GIMP_ARCHS}; Flags: restartreplace sharedfile 32bit uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',32)
 Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete comparetimestamp; Check: BadSysDLL('zlib1.dll',64)
 
-;allow specific configuration files to be overridden by files in a specific directory
+;allow specific config files to be overridden if '/configoverride=' is set at run time
 #define FindHandle
-
 #sub ProcessConfigFile
   #define FileName FindGetFileName(FindHandle)
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
@@ -366,7 +354,6 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; 
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
   #endif
 #endsub
-
 #define FindResult
 #sub ProcessConfigDir
   #emit ';; ' + ConfigDir
@@ -377,11 +364,9 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
     #expr FindClose(FindHandle)
   #endif
 #endsub
-
 #define public BaseDir GIMP_DIR32
 #define public ConfigDir "etc\gimp\" + GIMP_API_VERSION
 #expr ProcessConfigDir
-
 #define public ConfigDir "etc\fonts"
 #expr ProcessConfigDir
 
@@ -392,6 +377,7 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
 Name: "{app}\32\share\locale"; Components: gimp32on64; Flags: uninsalwaysuninstall
 
 
+;4.2 SPECIAL-CASE FILES TO BE WIPED
 [InstallDelete]
 Type: files; Name: "{app}\bin\gimp-?.?.exe"
 Type: files; Name: "{app}\bin\gimp-?.??.exe"
@@ -406,20 +392,28 @@ Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\Curre
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 
+[UninstallDelete]
+Type: files; Name: "{app}\uninst\uninst.inf"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"
+Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ\pygimp.env"
 
+
+;4.3 KEYS TO BE REGISTERED
 [Registry]
+;ImmersiveControlPanel/ControlPanel entry (using info from 3.2.3 [Setup] section)
+;Root: HKA; Subkey: "Software\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-{#GIMP_MUTEX_VERSION}_is1"; //(auto registered by Inno)
+
 ;Shell "Open with"
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "GIMP"
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,1"
 Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe"" ""%1"""
-
+;'ms-settings:defaultapps' page
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "GIMP"
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{app}\bin\gimp-{#GIMP_MUTEX_VERSION}.exe,0"
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "GIMP is a free raster graphics editor used for image retouching and editing, free-form drawing, converting between different image formats, and more specialized tasks."
 Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "GIMP {#GIMP_MUTEX_VERSION}"; ValueData: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities"; Flags: uninsdeletevalue
-
 ;Associations
 #pragma option -e-
 #define protected
@@ -440,7 +434,6 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssocia
 		#endif
 	#endif
 #endsub
-
 #define FileHandle
 #for {FileHandle = FileOpen(AddBackslash(SourcePath)+"data_associations.list"); \
   FileHandle && !FileEof(FileHandle); FileLine = FileRead(FileHandle)} \
@@ -448,8 +441,7 @@ Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssocia
 #if FileHandle
   #expr FileClose(FileHandle)
 #endif
-
-;special case for .ico files
+;Associations (special case for .ico files)
 Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#CUSTOM_GIMP_VERSION}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP{#GIMP_MUTEX_VERSION}.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
@@ -458,12 +450,7 @@ Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#GIMP_MUTEX_VERSION}.exe
 Root: HKA; Subkey: "Software\GIMP {#GIMP_MUTEX_VERSION}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".ico"; ValueData: "GIMP{#GIMP_MUTEX_VERSION}.{#FileLine}"
 
 
-[UninstallDelete]
-Type: files; Name: "{app}\uninst\uninst.inf"
-Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\interpreters\lua.interp"
-Type: files; Name: "{app}\lib\gimp\{#GIMP_API_VERSION}\environ\pygimp.env"
-
-
+;5 INSTALLER CUSTOM CODE
 [Code]
 //GENERAL VARS AND UTILS
 const
