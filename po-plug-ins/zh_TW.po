@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-07 15:36+0000\n"
-"PO-Revision-Date: 2024-11-08 23:38+0800\n"
+"PO-Revision-Date: 2024-11-09 02:22+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -4517,19 +4517,16 @@ msgstr ""
 "請試著變更熱點區的位置、圖層的幾何，或是停用自動裁切再嘗試匯出。"
 
 #: ../plug-ins/common/file-xmc.c:1791
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully exported but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose width or height is more than %ipx, a historical max dimension value "
 "for X bitmap cursors.\n"
 "It might be unsupported by some environments."
 msgstr ""
-"您的游標已成功匯出，但它包含幾個寬度或高度大於 %ipx 的畫格。\n"
-"它在某些環境使用時會使螢幕變得雜亂。"
+"您的游標已成功匯出，但它包含幾個寬度或高度大於 %ipx 的畫格，這是 X 點陣圖游標"
+"的歷史性最大尺寸值。\n"
+"它在某些環境下可能尚未支援。"
 
 #: ../plug-ins/common/file-xmc.c:1799
 msgid ""
@@ -4550,18 +4547,14 @@ msgid ""
 msgstr "附帶資訊「%s」對於 X 游標註言來說太長了。已將其截斷適應。"
 
 #: ../plug-ins/common/file-xmc.c:2151
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully exported but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
-"您的游標已成功匯出，但它包含幾個寬度或高度大於 %ipx 的畫格。\n"
-"它在某些環境使用時會使螢幕變得雜亂。"
+"您的游標已成功匯出，但它包含幾個大小超過 8 位元的畫格。\n"
+"我們將其限定為 %dpx。您應該檢查一下匯出的游標。"
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2248
@@ -12054,6 +12047,11 @@ msgid ""
 "or 10.45\n"
 "Delete all text to remove the current value."
 msgstr ""
+"請在此處輸入或編輯 GPS 值。\n"
+"有效的值可以用 1、2 或 3 個數字（度、分、秒）構成，請見下列範例：\n"
+"10deg 15’ 20” 或 10° 15’ 20” 或 10:15:20.45 或 10 15 20 或 10 15.30 或 "
+"10.45\n"
+"刪除所有文字則移除目前的值。"
 
 #: ../plug-ins/metadata/metadata-editor.c:1693
 msgid ""
@@ -12064,6 +12062,11 @@ msgid ""
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
 msgstr ""
+"請在此處輸入或編輯 GPS 海拔值。\n"
+"有效的值以一個數字構成，請見下列範例：\n"
+"如：100 或 12.24\n"
+"取決於您所選的尺度類型，數值應以公尺 (m) 或英呎 (ft) 對應輸入\n"
+"刪除所有文字則移除目前的值。"
 
 #: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
@@ -12639,19 +12642,13 @@ msgid "Corner Always Threshold:"
 msgstr "總是角落閾值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:133
-#, fuzzy
-#| msgid ""
-#| "If the angle defined by a point and its predecessors and successors is "
-#| "smaller than this, it's a corner, even if it's within `corner_surround' "
-#| "pixels of a point with a smaller angle."
 msgid ""
 "If the angle defined by a point and its predecessors and successors is "
 "smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
-"如果一個點與其前方與後方的點形成的角度小於此數值，則該點便一定會被當作是角"
-"落，即使它與另一個角度更小的點的距離像素數比 `corner_surround'（角落周圍）更"
-"小。"
+"如果一個點與其前方與後方的點所形成的角度小於此數值，則該點一定會被當作角落，"
+"即使它與另一個角度更小的點的距離像素數比 `corner_surround'（角落周圍）更小。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
 msgid "Corner Surround:"
@@ -12678,15 +12675,11 @@ msgid "Error Threshold:"
 msgstr "錯誤閾值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:176
-#, fuzzy
-#| msgid ""
-#| "Amount of error at which a fitted spline is unacceptable.  If any pixel "
-#| "is further away than this from the fitted curve, we try again."
 msgid ""
 "Amount of error at which a fitted spline is unacceptable. If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
-"擬合後樣條的誤差超過此數值則會被回絕。如果任何像素與擬合曲線的距離超過這個"
+"擬合後樣條的誤差量超過此數值則不接受。如果任何像素與擬合曲線的距離超過這個"
 "值，就再試一次。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
@@ -12715,20 +12708,14 @@ msgid "Filter Iteration Count:"
 msgstr "過濾迭代次數："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:220
-#, fuzzy
-#| msgid ""
-#| "Number of times to smooth original data points.  Increasing this number "
-#| "dramatically --- to 50 or so --- can produce vastly better results.  But "
-#| "if any points that ``should'' be corners aren't found, the curve goes to "
-#| "hell around that point."
 msgid ""
 "Number of times to smooth original data points.  Increasing this number "
 "dramatically --- to 50 or so --- can produce vastly better results. But if "
 "any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
-"平滑化原始資料點的次數。大量提升此數字 — 到 50 左右 — 會提供較好的結果。但如"
-"果有任何「應該」要是角落的點沒有找到的話，曲線就會在那地方亂飛。"
+"平滑化原始資料點的次數。大量提升此數字——到 50 左右——會提供較好的結果。但如果"
+"有任何「應該」要是角落的點沒有找到的話，曲線就會在那地方亂飛。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
@@ -12744,15 +12731,11 @@ msgid "Filter Secondary Surround:"
 msgstr "過濾第二周圍："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:249
-#, fuzzy
-#| msgid ""
-#| "Number of adjacent points to consider if `filter_surround' points defines "
-#| "a straight line."
 msgid ""
 "Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
 msgstr ""
-"「filter_surround」（過濾周圍）的點在定義直線時要考慮多少個周圍鄰接點。"
+"「filter_surround」（過濾周圍）的點在定義直線時，要考慮多少個周圍鄰接點。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:259
 msgid "Filter Surround:"
@@ -12764,14 +12747,11 @@ msgstr "過濾時要考慮周圍多少個鄰接點。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:271
 msgid "Keep Knees"
-msgstr "保留曲折點"
+msgstr "保留曲折膝點"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
-#, fuzzy
-#| msgid ""
-#| "Says whether or not to remove ``knee'' points after finding the outline."
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr "找到輪廓之後要移除還是要保留曲折點（「膝點」）。"
+msgstr "在找到輪廓之後，是要移除還是要保留曲折「膝點」。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
 msgid "Line Reversion Threshold:"
@@ -12814,13 +12794,6 @@ msgid "Reparametrize Threshold:"
 msgstr "重新參數化閾值："
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:335
-#, fuzzy
-#| msgid ""
-#| "Amount of error at which it is pointless to reparameterize.  This "
-#| "happens, for example, when we are trying to fit the outline of the "
-#| "outside of an `O' with a single spline.  The initial fit is not good "
-#| "enough for the Newton-Raphson iteration to improve it.  It may be that it "
-#| "would be better to detect the cases where we didn't find any corners."
 msgid ""
 "Amount of error at which it is pointless to reparameterize.  This happens, "
 "for example, when we are trying to fit the outline of the outside of an 'O' "
@@ -12828,9 +12801,9 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
-"重新參數化不再有意義的誤差量。舉例來說，如果我們嘗試用單一個樣條去擬合一個"
-"「O」，初始的擬合沒有好到能讓牛頓-拉弗森迭代法作出改善。偵測沒有找到角落的情"
-"況可能比較好。"
+"對重新參數化不再有意義的誤差量。舉例來說，如果我們嘗試用單一個樣條去擬合一個"
+"「O」的外部輪廓，初始的擬合沒有好到能讓牛頓-拉弗森迭代法作出改善。偵測沒有找"
+"到角落的情況可能比較好。"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
 msgid "Subdivide Search:"
