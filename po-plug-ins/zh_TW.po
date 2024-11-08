@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-07 15:36+0000\n"
-"PO-Revision-Date: 2024-11-09 02:22+0800\n"
+"POT-Creation-Date: 2024-11-08 18:23+0000\n"
+"PO-Revision-Date: 2024-11-09 02:55+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1032,7 +1032,7 @@ msgstr "關閉(_C)"
 
 #: ../plug-ins/common/cml-explorer.c:1963
 msgid "Warning: the source and the destination are the same channel."
-msgstr "警告：來源和目的地都是相同的色板。"
+msgstr "警告：來源和目的地都是相同的色版。"
 
 #: ../plug-ins/common/cml-explorer.c:2022
 msgid "Save CML Explorer Parameters"
