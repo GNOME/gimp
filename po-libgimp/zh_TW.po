@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-07 16:22+0000\n"
-"PO-Revision-Date: 2024-11-08 11:37+0800\n"
+"POT-Creation-Date: 2024-11-08 03:39+0000\n"
+"PO-Revision-Date: 2024-11-09 02:45+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -2303,7 +2303,7 @@ msgstr "控制器的狀態，為人類可閱讀的字串"
 
 #: libgimpwidgets/gimpdialog.c:196
 msgid "_Help"
-msgstr "說明(_H)"
+msgstr "求助(_H)"
 
 #: libgimpwidgets/gimpfileentry.c:166
 msgid "Show file location in the file manager"
