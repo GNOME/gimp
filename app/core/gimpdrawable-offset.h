@@ -23,6 +23,7 @@ void   gimp_drawable_offset (GimpDrawable   *drawable,
                              GimpContext    *context,
                              gboolean        wrap_around,
                              GimpOffsetType  fill_type,
+                             GeglColor      *color,
                              gint            offset_x,
                              gint            offset_y);
 

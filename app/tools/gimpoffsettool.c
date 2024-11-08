@@ -36,6 +36,7 @@
 #include "core/gimplayermask.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolgui.h"
@@ -101,8 +102,7 @@ static void       gimp_offset_tool_half_y_clicked        (GtkButton             
 static void       gimp_offset_tool_edge_behavior_toggled (GtkToggleButton       *toggle,
                                                           GimpOffsetTool        *offset_tool);
 
-static void       gimp_offset_tool_background_changed    (GimpContext           *context,
-                                                          GeglColor             *color,
+static void       gimp_offset_tool_color_changed         (GimpColorButton       *button,
                                                           GimpOffsetTool        *offset_tool);
 
 static gint       gimp_offset_tool_get_width             (GimpOffsetTool        *offset_tool);
@@ -175,6 +175,7 @@ gimp_offset_tool_initialize (GimpTool     *tool,
   GimpContext    *context     = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool));
   GimpImage      *image;
   GimpDrawable   *drawable;
+  GeglColor      *color;
   gdouble         xres;
   gdouble         yres;
 
@@ -225,14 +226,9 @@ gimp_offset_tool_initialize (GimpTool     *tool,
                                      gimp_offset_tool_offset_changed,
                                      offset_tool);
 
-  gegl_node_set (
-    filter_tool->operation,
-    "context", context,
-    NULL);
-
-  g_signal_connect (context, "background-changed",
-                    G_CALLBACK (gimp_offset_tool_background_changed),
-                    offset_tool);
+  color = gegl_color_duplicate (gimp_context_get_background (context));
+  gegl_node_set (filter_tool->operation, "color", color, NULL);
+  g_object_unref (color);
 
   gimp_offset_tool_update (offset_tool);
 
@@ -467,6 +463,8 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget      *spinbutton;
   GtkWidget      *frame;
   GtkAdjustment  *adjustment;
+  GeglColor      *color = NULL;
+  gint            type  = 0;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
@@ -540,6 +538,11 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
                     G_CALLBACK (gimp_offset_tool_half_y_clicked),
                     offset_tool);
 
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_START);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
   /*  The edge behavior frame  */
   frame = gimp_int_radio_group_new (TRUE, _("Edge Behavior"),
 
@@ -551,16 +554,40 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
                                     _("W_rap around"),
                                     GIMP_OFFSET_WRAP_AROUND, NULL,
 
-                                    _("Fill with _background color"),
-                                    GIMP_OFFSET_BACKGROUND, NULL,
+                                    _("Fill with plain color"),
+                                    GIMP_OFFSET_COLOR, NULL,
 
                                     _("Make _transparent"),
                                     GIMP_OFFSET_TRANSPARENT,
                                     &offset_tool->transparent_radio,
                                     NULL);
 
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  /* Color area */
+  gegl_node_get (filter_tool->operation,
+                 "color", &color,
+                 "type",  &type,
+                 NULL);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_widget_set_valign (vbox, GTK_ALIGN_END);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
+  gtk_widget_set_visible (vbox, TRUE);
+
+  offset_tool->color_button = gimp_color_button_new (_("Fill Color"),
+                                                     40, 24, color,
+                                                     GIMP_COLOR_AREA_FLAT);
+  gtk_box_pack_start (GTK_BOX (vbox), offset_tool->color_button, TRUE, FALSE, 0);
+  if (type == GIMP_OFFSET_COLOR)
+    gtk_widget_set_visible (offset_tool->color_button, TRUE);
+
+  g_signal_connect (GIMP_COLOR_BUTTON (offset_tool->color_button),
+                    "color-changed",
+                    G_CALLBACK (gimp_offset_tool_color_changed),
+                    offset_tool);
+  g_object_unref (color);
 }
 
 static void
@@ -632,29 +659,27 @@ gimp_offset_tool_edge_behavior_toggled (GtkToggleButton *toggle,
       g_object_set (GIMP_FILTER_TOOL (offset_tool)->config,
                     "type", type,
                     NULL);
+
+      if (type == GIMP_OFFSET_COLOR)
+        gtk_widget_set_visible (offset_tool->color_button, TRUE);
+      else
+        gtk_widget_set_visible (offset_tool->color_button, FALSE);
     }
 }
 
 static void
-gimp_offset_tool_background_changed (GimpContext    *context,
-                                     GeglColor      *color,
-                                     GimpOffsetTool *offset_tool)
+gimp_offset_tool_color_changed (GimpColorButton *button,
+                                GimpOffsetTool  *offset_tool)
 {
+  GeglColor      *color       = gimp_color_button_get_color (button);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (offset_tool);
-  GimpOffsetType  type;
 
-  g_object_get (filter_tool->config,
-                "type", &type,
-                NULL);
+  gegl_node_set (filter_tool->operation,
+                 "color", color,
+                 NULL);
 
-  if (type == GIMP_OFFSET_BACKGROUND)
-    {
-      gegl_node_set (filter_tool->operation,
-                     "context", context,
-                     NULL);
-
-      gimp_drawable_filter_apply (filter_tool->filter, NULL);
-    }
+  gimp_drawable_filter_apply (filter_tool->filter, NULL);
+  g_object_unref (color);
 }
 
 static gint
@@ -723,11 +748,11 @@ gimp_offset_tool_update (GimpOffsetTool *offset_tool)
 
   type = orig_type;
 
-  if (tool->drawables                            &&
+  if (tool->drawables                                   &&
       ! gimp_drawable_has_alpha (tool->drawables->data) &&
       type == GIMP_OFFSET_TRANSPARENT)
     {
-      type = GIMP_OFFSET_BACKGROUND;
+      type = GIMP_OFFSET_COLOR;
     }
 
   if (x    != orig_x ||
@@ -780,18 +805,31 @@ gimp_offset_tool_update (GimpOffsetTool *offset_tool)
         GTK_RADIO_BUTTON (offset_tool->transparent_radio),
         type);
     }
+
+  if (offset_tool->color_button)
+    {
+      GeglColor *color;
+
+      gegl_node_get (filter_tool->operation, "color", &color, NULL);
+
+      g_signal_handlers_block_by_func (offset_tool->color_button,
+                                       gimp_offset_tool_color_changed,
+                                       offset_tool);
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (offset_tool->color_button),
+                                   color);
+      g_signal_handlers_unblock_by_func (offset_tool->color_button,
+                                         gimp_offset_tool_color_changed,
+                                         offset_tool);
+
+      g_object_unref (color);
+    }
+
 }
 
 static void
 gimp_offset_tool_halt (GimpOffsetTool *offset_tool)
 {
-  GimpContext *context = GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (offset_tool));
-
   offset_tool->offset_se         = NULL;
   offset_tool->transparent_radio = NULL;
-
-  g_signal_handlers_disconnect_by_func (
-    context,
-    gimp_offset_tool_background_changed,
-    offset_tool);
+  offset_tool->color_button      = NULL;
 }

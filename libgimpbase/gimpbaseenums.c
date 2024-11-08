@@ -1119,7 +1119,7 @@ gimp_offset_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_OFFSET_BACKGROUND, "GIMP_OFFSET_BACKGROUND", "background" },
+    { GIMP_OFFSET_COLOR, "GIMP_OFFSET_COLOR", "color" },
     { GIMP_OFFSET_TRANSPARENT, "GIMP_OFFSET_TRANSPARENT", "transparent" },
     { GIMP_OFFSET_WRAP_AROUND, "GIMP_OFFSET_WRAP_AROUND", "wrap-around" },
     { 0, NULL, NULL }
@@ -1127,7 +1127,7 @@ gimp_offset_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_OFFSET_BACKGROUND, "GIMP_OFFSET_BACKGROUND", NULL },
+    { GIMP_OFFSET_COLOR, "GIMP_OFFSET_COLOR", NULL },
     { GIMP_OFFSET_TRANSPARENT, "GIMP_OFFSET_TRANSPARENT", NULL },
     { GIMP_OFFSET_WRAP_AROUND, "GIMP_OFFSET_WRAP_AROUND", NULL },
     { 0, NULL, NULL }

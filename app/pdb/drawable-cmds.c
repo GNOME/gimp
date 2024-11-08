@@ -758,14 +758,16 @@ drawable_offset_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gboolean wrap_around;
   gint fill_type;
+  GeglColor *color;
   gint offset_x;
   gint offset_y;
 
   drawable = g_value_get_object (gimp_value_array_index (args, 0));
   wrap_around = g_value_get_boolean (gimp_value_array_index (args, 1));
   fill_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  offset_x = g_value_get_int (gimp_value_array_index (args, 3));
-  offset_y = g_value_get_int (gimp_value_array_index (args, 4));
+  color = g_value_get_object (gimp_value_array_index (args, 3));
+  offset_x = g_value_get_int (gimp_value_array_index (args, 4));
+  offset_y = g_value_get_int (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -773,7 +775,7 @@ drawable_offset_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         gimp_drawable_offset (drawable, context, wrap_around, fill_type,
-                              offset_x, offset_y);
+                              color, offset_x, offset_y);
       else
         success = FALSE;
     }
@@ -1737,8 +1739,15 @@ register_drawable_procs (GimpPDB *pdb)
                                                   "fill type",
                                                   "fill vacated regions of drawable with background or transparent",
                                                   GIMP_TYPE_OFFSET_TYPE,
-                                                  GIMP_OFFSET_BACKGROUND,
+                                                  GIMP_OFFSET_COLOR,
                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_color ("color",
+                                                      "color",
+                                                      "fills in the background color when fill_type is set to OFFSET-COLOR",
+                                                      FALSE,
+                                                      NULL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("offset-x",
                                                  "offset x",

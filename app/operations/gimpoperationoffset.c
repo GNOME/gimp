@@ -24,6 +24,8 @@
 #include <gegl-plugin.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "operations-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
@@ -39,7 +41,7 @@
 enum
 {
   PROP_0,
-  PROP_CONTEXT,
+  PROP_COLOR,
   PROP_TYPE,
   PROP_X,
   PROP_Y
@@ -118,13 +120,13 @@ gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
                                  "description", _("Shift the pixels, optionally wrapping them at the borders"),
                                  NULL);
 
-  g_object_class_install_property (object_class, PROP_CONTEXT,
-                                   g_param_spec_object ("context",
-                                                        "Context",
-                                                        "A GimpContext",
-                                                        GIMP_TYPE_CONTEXT,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_color_from_string ("color",
+                                                                      _("Fill Color"),
+                                                                      _("Fill Color"),
+                                                                      FALSE, "white",
+                                                                      G_PARAM_READWRITE |
+                                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum  ("type",
@@ -162,7 +164,7 @@ gimp_operation_offset_dispose (GObject *object)
 {
   GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (object);
 
-  g_clear_object (&offset->context);
+  g_object_unref (offset->color);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -177,8 +179,8 @@ gimp_operation_offset_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_CONTEXT:
-      g_value_set_object (value, offset->context);
+    case PROP_COLOR:
+      g_value_set_object (value, offset->color);
       break;
 
     case PROP_TYPE:
@@ -201,16 +203,17 @@ gimp_operation_offset_get_property (GObject    *object,
 
 static void
 gimp_operation_offset_set_property (GObject      *object,
-                                         guint         property_id,
-                                         const GValue *value,
-                                         GParamSpec   *pspec)
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
   GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (object);
 
   switch (property_id)
     {
-    case PROP_CONTEXT:
-      g_set_object (&offset->context, g_value_get_object (value));
+    case PROP_COLOR:
+      g_clear_object (&offset->color);
+      offset->color = gegl_color_duplicate (g_value_get_object (value));
       break;
 
     case PROP_TYPE:
@@ -293,9 +296,7 @@ gimp_operation_offset_parent_process (GeglOperation        *operation,
 
       return TRUE;
     }
-  else if (offset->type  == GIMP_OFFSET_TRANSPARENT ||
-           (offset->type == GIMP_OFFSET_BACKGROUND  &&
-            ! offset->context))
+  else if (offset->type == GIMP_OFFSET_TRANSPARENT)
     {
       GObject *output = NULL;
 
@@ -346,7 +347,6 @@ gimp_operation_offset_process (GeglOperation       *operation,
                                gint                 level)
 {
   GimpOperationOffset *offset = GIMP_OPERATION_OFFSET (operation);
-  GeglColor           *color  = NULL;
   GeglRectangle        bounds;
   gint                 x;
   gint                 y;
@@ -355,9 +355,6 @@ gimp_operation_offset_process (GeglOperation       *operation,
   bounds = gegl_operation_get_bounding_box (GEGL_OPERATION (offset));
 
   gimp_operation_offset_get_offset (offset, FALSE, &x, &y);
-
-  if (offset->type == GIMP_OFFSET_BACKGROUND && offset->context)
-    color = gimp_context_get_background (offset->context);
 
   for (i = 0; i < 4; i++)
     {
@@ -385,9 +382,9 @@ gimp_operation_offset_process (GeglOperation       *operation,
               gimp_gegl_buffer_copy (input,  &offset_roi, GEGL_ABYSS_NONE,
                                      output, &offset_bounds);
             }
-          else if (color)
+          else if (offset->color)
             {
-              gegl_buffer_set_color (output, &offset_bounds, color);
+              gegl_buffer_set_color (output, &offset_bounds, offset->color);
             }
         }
     }

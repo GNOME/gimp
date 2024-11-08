@@ -37,7 +37,7 @@ struct _GimpOperationOffset
 {
   GeglOperationFilter  parent_instance;
 
-  GimpContext         *context;
+  GeglColor           *color;
   GimpOffsetType       type;
   gint                 x;
   gint                 y;

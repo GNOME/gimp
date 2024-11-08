@@ -77,6 +77,7 @@ gboolean                 gimp_drawable_fill                  (GimpDrawable      
 gboolean                 gimp_drawable_offset                (GimpDrawable               *drawable,
                                                               gboolean                    wrap_around,
                                                               GimpOffsetType              fill_type,
+                                                              GeglColor                  *color,
                                                               gint                        offset_x,
                                                               gint                        offset_y);
 G_GNUC_INTERNAL gboolean _gimp_drawable_thumbnail            (GimpDrawable               *drawable,

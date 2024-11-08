@@ -750,7 +750,7 @@ typedef enum
 
 /**
  * GimpOffsetType:
- * @GIMP_OFFSET_BACKGROUND:  Background
+ * @GIMP_OFFSET_COLOR:       Color
  * @GIMP_OFFSET_TRANSPARENT: Transparent
  * @GIMP_OFFSET_WRAP_AROUND: Wrap image around
  *
@@ -762,7 +762,7 @@ GType gimp_offset_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_OFFSET_BACKGROUND,
+  GIMP_OFFSET_COLOR,
   GIMP_OFFSET_TRANSPARENT,
   GIMP_OFFSET_WRAP_AROUND
 } GimpOffsetType;

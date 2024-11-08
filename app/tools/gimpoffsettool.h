@@ -46,6 +46,7 @@ struct _GimpOffsetTool
   /* dialog */
   GtkWidget      *offset_se;
   GtkWidget      *transparent_radio;
+  GtkWidget      *color_button;
 };
 
 struct _GimpOffsetToolClass

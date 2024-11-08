@@ -886,6 +886,7 @@ gimp_drawable_fill (GimpDrawable *drawable,
  * @drawable: The drawable to offset.
  * @wrap_around: wrap image around or fill vacated regions.
  * @fill_type: fill vacated regions of drawable with background or transparent.
+ * @color: fills in the background color when fill_type is set to OFFSET-COLOR.
  * @offset_x: offset by this amount in X direction.
  * @offset_y: offset by this amount in Y direction.
  *
@@ -905,6 +906,7 @@ gboolean
 gimp_drawable_offset (GimpDrawable   *drawable,
                       gboolean        wrap_around,
                       GimpOffsetType  fill_type,
+                      GeglColor      *color,
                       gint            offset_x,
                       gint            offset_y)
 {
@@ -916,6 +918,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                                           GIMP_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, wrap_around,
                                           GIMP_TYPE_OFFSET_TYPE, fill_type,
+                                          GEGL_TYPE_COLOR, color,
                                           G_TYPE_INT, offset_x,
                                           G_TYPE_INT, offset_y,
                                           G_TYPE_NONE);

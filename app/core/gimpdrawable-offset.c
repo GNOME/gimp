@@ -39,6 +39,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                       GimpContext    *context,
                       gboolean        wrap_around,
                       GimpOffsetType  fill_type,
+                      GeglColor      *color,
                       gint            offset_x,
                       gint            offset_y)
 {
@@ -69,11 +70,21 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 
   node = gegl_node_new_child (NULL,
                               "operation", "gimp:offset",
-                              "context", context,
-                              "type",    fill_type,
-                              "x",       offset_x,
-                              "y",       offset_y,
+                              "type",      fill_type,
+                              "x",         offset_x,
+                              "y",         offset_y,
                               NULL);
+
+  if (color == NULL)
+    {
+      color = gegl_color_duplicate (gimp_context_get_background (context));
+      gegl_node_set (node, "color", color, NULL);
+      g_object_unref (color);
+    }
+  else
+    {
+      gegl_node_set (node, "color", color, NULL);
+    }
 
   gimp_drawable_apply_operation (drawable, NULL,
                                  C_("undo-type", "Offset Drawable"),
