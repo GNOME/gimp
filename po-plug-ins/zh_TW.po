@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-08 13:55+0000\n"
-"PO-Revision-Date: 2024-10-08 23:41+0800\n"
+"POT-Creation-Date: 2024-11-07 15:36+0000\n"
+"PO-Revision-Date: 2024-11-08 23:38+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -2335,19 +2335,14 @@ msgid "'%s' is not a DICOM file."
 msgstr "「%s」不是 DICOM 格式檔案。"
 
 #: ../plug-ins/common/file-dicom.c:545
-#, fuzzy, c-format
-#| msgid ""
-#| "Aggressive RLE\n"
-#| "(not supported by SGI)"
+#, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
-msgstr ""
-"積極 RLE\n"
-"(SGI 不支援)"
+msgstr "GIMP 不支援傳輸語法 %s。"
 
 #: ../plug-ins/common/file-dicom.c:600
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
-msgstr ""
+msgstr "GIMP 不支援 %s 搭配使用每像素取樣：%d"
 
 #: ../plug-ins/common/file-dicom.c:1489
 msgid "Cannot save images with alpha channel."
@@ -2377,10 +2372,8 @@ msgid "_Spacing:"
 msgstr "間隔(_S)："
 
 #: ../plug-ins/common/file-gegl.c:77
-#, fuzzy
-#| msgid "Radians"
 msgid "Radiance RGBE"
-msgstr "弧度"
+msgstr "輻射率 RGBE"
 
 #: ../plug-ins/common/file-gegl.c:93 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
@@ -2569,6 +2562,8 @@ msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
+"載入 HEIF 格式（高效率影像檔，High Efficiency Image File）儲存的影像。HEIF 檔"
+"常見的後綴名為 .heif、.heic。"
 
 #: ../plug-ins/common/file-heif.c:154 ../plug-ins/common/file-heif.c:183
 msgid "HEIF/HEIC"
@@ -2580,7 +2575,7 @@ msgstr "匯出 HEIF 影像"
 
 #: ../plug-ins/common/file-heif.c:178
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
-msgstr ""
+msgstr "以 HEIF 格式（高效率影像檔，High Efficiency Image File）儲存影像。"
 
 #: ../plug-ins/common/file-heif.c:198
 msgid "Exports AVIF images"
@@ -2588,7 +2583,7 @@ msgstr "匯出 AVIF 影像"
 
 #: ../plug-ins/common/file-heif.c:199
 msgid "Save image in AV1 Image File Format (AVIF)"
-msgstr ""
+msgstr "以 AV1 影像檔格式 (AVIF) 儲存影像"
 
 #: ../plug-ins/common/file-heif.c:776 ../plug-ins/common/file-heif.c:809
 #: ../plug-ins/common/file-heif.c:848 ../plug-ins/common/file-heif.c:914
@@ -2822,7 +2817,7 @@ msgstr "xvYCC"
 #: ../plug-ins/common/file-jp2-load.c:1003
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr ""
+msgstr "不支援有 %3$d 個色彩要素的 JPEG 2000%1$s「%2$s」。"
 
 #: ../plug-ins/common/file-jp2-load.c:1012
 msgid "Color space:"
@@ -2834,61 +2829,54 @@ msgid "Could not open '%s' for reading"
 msgstr "無法開啟「%s」以讀取"
 
 #: ../plug-ins/common/file-jp2-load.c:1095
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "無法解碼「%s」。"
+msgstr "無法為「%s」設定解碼器參數。"
 
 #: ../plug-ins/common/file-jp2-load.c:1103
-#, fuzzy, c-format
-#| msgid "Could not read header from '%s'"
+#, c-format
 msgid "Couldn't read JP2 header from '%s'."
-msgstr "無法從「%s」讀取標頭資料"
+msgstr "無法從「%s」讀取 JP2 標頭資料。"
 
 #: ../plug-ins/common/file-jp2-load.c:1111
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "無法解碼「%s」。"
+msgstr "無法解碼「%s」中的 JP2 影像。"
 
 #: ../plug-ins/common/file-jp2-load.c:1119
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
-msgstr "無法解碼「%s」。"
+msgstr "無法解壓縮「%s」中的 JP2 影像。"
 
 #: ../plug-ins/common/file-jp2-load.c:1150
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "無法解碼「%s」。"
+msgstr "無法解碼「%s」中的 CIELAB JP2 影像。"
 
 #: ../plug-ins/common/file-jp2-load.c:1207
-#, fuzzy, c-format
-#| msgid "Unknown color model in PNG file '%s'."
+#, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "PNG 檔案「%s」中有未知的色彩模型。"
+msgstr "JP2 程式碼串流「%s」中有未知的色彩空間。"
 
 #: ../plug-ins/common/file-jp2-load.c:1218
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
-msgstr ""
+msgstr "無法將 YCbCr JP2 影像「%s」轉換到 RGB。"
 
 #: ../plug-ins/common/file-jp2-load.c:1228
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "無法將「%s」的 CMYK JP2 影像轉換到 RGB。"
 
 #: ../plug-ins/common/file-jp2-load.c:1238
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "無法將「%s」的 xvYCC JP2 影像轉換到 RGB。"
 
 #: ../plug-ins/common/file-jp2-load.c:1265
-#, fuzzy, c-format
-#| msgid "Unsupported color mode: %s"
+#, c-format
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "不支援的色彩模式：%s"
+msgstr "不支援 JP2 影像「%s」的色彩空間。"
 
 #: ../plug-ins/common/file-jpegxl.c:82 ../plug-ins/common/file-jpegxl.c:99
 msgid "JPEG XL image"
@@ -3311,16 +3299,14 @@ msgid "Error loading PNG file: %s\n"
 msgstr "載入 PNG 檔時發生錯誤：%s\n"
 
 #: ../plug-ins/common/file-png.c:899
-#, fuzzy, c-format
-#| msgid "Error creating PNG read struct while exporting '%s'."
+#, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr "匯出「%s」時在建立 PNG 讀取結構體時發生錯誤。"
+msgstr "載入「%s」時在建立 PNG 讀取結構體時發生錯誤。"
 
 #: ../plug-ins/common/file-png.c:908
-#, fuzzy, c-format
-#| msgid "Error while exporting '%s'. Could not export image."
+#, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "匯出「%s」時發生錯誤。無法匯出影像。"
+msgstr "讀取「%s」時發生錯誤。無法建立 PNG 標頭資料結構。"
 
 #: ../plug-ins/common/file-png.c:916
 #, c-format
@@ -3369,10 +3355,9 @@ msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "匯出「%s」時在建立 PNG 寫入結構體時發生錯誤。"
 
 #: ../plug-ins/common/file-png.c:1586
-#, fuzzy, c-format
-#| msgid "Error while exporting '%s'. Could not export image."
+#, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "匯出「%s」時發生錯誤。無法匯出影像。"
+msgstr "匯出「%s」時發生錯誤。無法建立 PNG 標頭資料結構。"
 
 #: ../plug-ins/common/file-png.c:1594
 #, c-format
@@ -3682,7 +3667,7 @@ msgstr "讀取區塊標頭時發生錯誤"
 #: ../plug-ins/common/file-psp.c:790
 #, c-format
 msgid "Invalid block header at %ld"
-msgstr ""
+msgstr "%ld 處有無效的區塊標頭"
 
 #: ../plug-ins/common/file-psp.c:793
 #, c-format
@@ -3690,66 +3675,60 @@ msgid "Invalid block header"
 msgstr "無效的區塊標頭"
 
 #: ../plug-ins/common/file-psp.c:825
-#, fuzzy, c-format
-#| msgid "WebP error: '%s'"
+#, c-format
 msgid "Seek error: %s"
-msgstr "WebP 錯誤：「%s」"
+msgstr "查找時發生錯誤：%s"
 
 #: ../plug-ins/common/file-psp.c:848
 #, c-format
 msgid "Invalid general image attribute chunk size."
-msgstr ""
+msgstr "一般影像特性區塊大小無效。"
 
 #: ../plug-ins/common/file-psp.c:870
 #, c-format
 msgid "Error reading general image attribute block."
-msgstr ""
+msgstr "讀取一般影像特性區塊時發生錯誤。"
 
 #: ../plug-ins/common/file-psp.c:885
-#, fuzzy, c-format
-#| msgid "Compression type"
+#, c-format
 msgid "Unknown compression type %d"
-msgstr "壓縮類型"
+msgstr "未知壓縮類型 %d"
 
 #: ../plug-ins/common/file-psp.c:921 ../plug-ins/common/file-psp.c:928
-#, fuzzy, c-format
-#| msgid "Unsupported bit depth: %d"
+#, c-format
 msgid "Unsupported bit depth %d"
-msgstr "不支援的位元深度：%d"
+msgstr "不支援的位元深度 %d"
 
 #: ../plug-ins/common/file-psp.c:975
 #, c-format
 msgid "Error reading creator keyword chunk"
-msgstr ""
+msgstr "讀取建立程式關鍵字區塊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:981
 #, c-format
 msgid "Invalid keyword chunk header"
-msgstr ""
+msgstr "無效的關鍵字區塊標頭"
 
 #: ../plug-ins/common/file-psp.c:996 ../plug-ins/common/file-psp.c:1023
 #, c-format
 msgid "Error reading creator keyword data"
-msgstr ""
+msgstr "讀取建立程式關鍵字資料時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1107 ../plug-ins/common/file-psp.c:1116
 #: ../plug-ins/common/file-psp.c:1125
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error reading color block"
-msgstr "讀取檔案發生錯誤"
+msgstr "讀取顏色區塊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1136
-#, fuzzy, c-format
-#| msgid "Unsupported drawable type"
+#, c-format
 msgid "Error: Unsupported palette size"
-msgstr "不支援的可繪物件類型"
+msgstr "錯誤：不支援的調色盤大小"
 
 #: ../plug-ins/common/file-psp.c:1147
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error reading color palette"
-msgstr "讀取檔案發生錯誤"
+msgstr "讀取調色盤時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1573 ../plug-ins/common/file-psp.c:1587
 #, c-format
@@ -3760,24 +3739,22 @@ msgstr "zlib 錯誤"
 #: ../plug-ins/common/file-psp.c:1694
 #, c-format
 msgid "Error reading layer extension information"
-msgstr ""
+msgstr "讀取圖層擴充資訊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1671
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error reading block information"
-msgstr "讀取檔案發生錯誤"
+msgstr "讀取區塊資訊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1751
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
-msgstr ""
+msgstr "無效的圖層子區塊 %s，應該是 LAYER"
 
 #: ../plug-ins/common/file-psp.c:1782 ../plug-ins/common/file-psp.c:1839
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error reading layer information chunk"
-msgstr "讀取 BMP 點陣圖「%s」的標頭時發生錯誤"
+msgstr "讀取圖層資訊區塊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1881
 #, c-format
@@ -3785,47 +3762,44 @@ msgid "Invalid layer dimensions: %dx%d"
 msgstr "無效的圖層尺寸：%d×%d"
 
 #: ../plug-ins/common/file-psp.c:1942
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error creating layer"
-msgstr "讀取檔案發生錯誤"
+msgstr "建立圖層時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:1987
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr ""
+msgstr "無效的圖層子區塊 %s，應該是 CHANNEL"
 
 #: ../plug-ins/common/file-psp.c:2003
 #, c-format
 msgid "Error reading channel information chunk"
-msgstr ""
+msgstr "讀取色版資訊區塊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:2026
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
-msgstr ""
+msgstr "色版資訊區塊中的色版類型 %d 無效"
 
 #: ../plug-ins/common/file-psp.c:2130 ../plug-ins/common/file-psp.c:2147
-#, fuzzy, c-format
-#| msgid "Error reading pixel data from '%s'"
+#, c-format
 msgid "Error reading tube data chunk"
-msgstr "從「%s」讀取像素資料時發生錯誤"
+msgstr "讀取映像管資料區塊時發生錯誤"
 
 #: ../plug-ins/common/file-psp.c:2248
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading file header."
-msgstr "讀取檔案‘%s’時發生錯誤：%s"
+msgstr "讀取檔案標頭時發生錯誤。"
 
 #: ../plug-ins/common/file-psp.c:2255
 #, c-format
 msgid "Incorrect file signature."
-msgstr ""
+msgstr "檔案簽章不正確。"
 
 #: ../plug-ins/common/file-psp.c:2269
-#, fuzzy, c-format
-#| msgid "Unsupported file format version: %d"
+#, c-format
 msgid "Unsupported PSP file format version %d.%d."
-msgstr "不支援檔案格式版本：%d"
+msgstr "不支援 PSP 檔案格式版本 %d.%d。"
 
 #: ../plug-ins/common/file-psp.c:2289
 msgid "invalid block size"
@@ -3834,17 +3808,17 @@ msgstr "無效的區塊大小"
 #: ../plug-ins/common/file-psp.c:2298
 #, c-format
 msgid "Duplicate General Image Attributes block."
-msgstr ""
+msgstr "再製一般影像特性區塊。"
 
 #: ../plug-ins/common/file-psp.c:2328
 #, c-format
 msgid "Missing General Image Attributes block."
-msgstr ""
+msgstr "缺失一般影像特性區塊。"
 
 #: ../plug-ins/common/file-psp.c:2442
 #, c-format
 msgid "Exporting not implemented yet."
-msgstr ""
+msgstr "匯出功能尚未實作。"
 
 #: ../plug-ins/common/file-raw-data.c:283
 #: ../plug-ins/common/file-raw-data.c:319
@@ -6659,15 +6633,15 @@ msgstr "DDS 影像"
 
 #: ../plug-ins/file-dds/dds.c:217
 msgid "Decode YCoCg"
-msgstr ""
+msgstr "解碼 YCoCg"
 
 #: ../plug-ins/file-dds/dds.c:230
 msgid "Decode YCoCg (scaled)"
-msgstr ""
+msgstr "解碼 YCoCg（縮放）"
 
 #: ../plug-ins/file-dds/dds.c:243
 msgid "Decode Alpha exponent"
-msgstr ""
+msgstr "解碼 Alpha 指數"
 
 #: ../plug-ins/file-dds/ddsread.c:1399
 msgid "Load DDS"
@@ -6679,7 +6653,7 @@ msgstr "載入 Mipmap(_L)"
 
 #: ../plug-ins/file-dds/ddsread.c:1425
 msgid "_Automatically decode YCoCg/AExp images when detected"
-msgstr ""
+msgstr "自動解碼偵測到的 YCoCg/_AExp 影像"
 
 #: ../plug-ins/file-dds/ddswrite.c:1981
 msgid "Export as DDS"
@@ -6696,7 +6670,7 @@ msgstr "壓縮(_C)："
 
 #: ../plug-ins/file-dds/ddswrite.c:2021
 msgid "Use _perceptual error metric"
-msgstr ""
+msgstr "使用感知式錯誤度量(_P)"
 
 #: ../plug-ins/file-dds/ddswrite.c:2050
 msgid "_Save:"
@@ -6704,7 +6678,7 @@ msgstr "儲存(_S)："
 
 #: ../plug-ins/file-dds/ddswrite.c:2062
 msgid "Flip the image _vertically on export"
-msgstr ""
+msgstr "匯出時垂直翻轉影像(_V)"
 
 #: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
@@ -7416,6 +7390,8 @@ msgid_plural ""
 "TIFF '%s' directory count by header failed though there seem to be %d pages. "
 "Attempting to load the file with this assumption."
 msgstr[0] ""
+"TIFF「%s」目錄依標頭計數失敗，雖然看起來似乎是有 %d 頁。試圖依此假設載入檔"
+"案。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Extra channels with unspecified data."
@@ -7430,12 +7406,12 @@ msgstr "帶有未指定資料的額外色版。"
 #.
 #: ../plug-ins/file-tiff/file-tiff-load.c:488
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
-msgstr ""
+msgstr "TIFF 未遵循規範：有額外色版卻沒有「ExtraSamples」欄位。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:582
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
-msgstr ""
+msgstr "無法讀取頁面 %d / %d。影像可能毀損。\n"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:611
 #, c-format
@@ -7443,6 +7419,8 @@ msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
+"這個影像有線性色彩描述檔，但不是設在第一個圖層。圖層 # %d 下方的其他圖層會以"
+"非線性方式直譯。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:619
 msgid ""
@@ -7450,34 +7428,33 @@ msgid ""
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
+"影像有多個色彩描述檔。我們會使用第一個描述檔。如果這導致成果不正確，您應該考"
+"慮載入各個圖層作為獨立影像。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:631
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
-msgstr ""
+msgstr "可疑的位元深度：頁面 %2$d 採用 %1$d。影像可能毀損。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:705
-#, fuzzy, c-format
-#| msgid "Unsupported bit depth: %d"
+#, c-format
 msgid "Unsupported bit depth: %d for page %d."
-msgstr "不支援的位元深度：%d"
+msgstr "頁面 %2$d 採用不支援的位元深度 %1$d。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:720
-#, fuzzy, c-format
-#| msgid "Could not read header from '%s'"
+#, c-format
 msgid "Could not get image width from '%s'"
-msgstr "無法從「%s」讀取標頭資料"
+msgstr "無法從「%s」取得影像寬度"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:728
-#, fuzzy, c-format
-#| msgid "Could not read color entries from '%s'"
+#, c-format
 msgid "Could not get image length from '%s'"
-msgstr "無法從「%s」讀取色彩項目"
+msgstr "無法從「%s」取得影像長度"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:736
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
-msgstr ""
+msgstr "頁面 %3$d 的影像尺寸 (%1$u x %2$u) 無效 。影像可能毀損。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:757
 #, c-format
@@ -7485,11 +7462,13 @@ msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr ""
+"無法從「%s」取得 photometric 色彩空間測光資訊。影像為 CCITT 壓縮格式，故假定 "
+"min-is-white"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:764
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
-msgstr ""
+msgstr "無法從「%s」取得 photometric 色彩空間測光資訊。假定 min-is-black"
 
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
@@ -7498,7 +7477,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
-msgstr ""
+msgstr "%s 並未定義 Alpha 色版類型。假定 Alpha 未預先相乘"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:821
 #, c-format
@@ -7507,11 +7486,13 @@ msgid ""
 "not set while extra channels are present. Assuming the first extra channel "
 "is non-premultiplied alpha."
 msgstr ""
+"影像「%s」未遵循 TIFF 規格：ExtraSamples 欄位並未設定，但是額外色版卻存在。假"
+"定第一個額外色版是非預先相乘的 Alpha。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1110
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
-msgstr ""
+msgstr "無效或未知的壓縮 %u。改將壓縮設為無。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1168
 #, c-format
@@ -7526,28 +7507,27 @@ msgstr "%s-第%d頁-共%d頁"
 #: ../plug-ins/file-tiff/file-tiff-load.c:1333
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
-msgstr ""
+msgstr "未知的解析度單位類型 %d，假定為 dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
 #: ../plug-ins/file-tiff/file-tiff-load.c:1343
 msgid "Warning: resolution specified without unit type, assuming dpi"
-msgstr ""
+msgstr "警告：有指定解析度卻沒有單位類型，假定為 dpi"
 
 #. xres but no yres
 #: ../plug-ins/file-tiff/file-tiff-load.c:1351
 msgid "Warning: no y resolution info, assuming same as x"
-msgstr ""
+msgstr "警告：沒有 y 解析度資訊，假定與 x 相同"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1368
 msgid "Invalid image resolution info, using default"
-msgstr ""
+msgstr "無效的影像解析度資訊，改用預設值"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1427
-#, fuzzy, c-format
-#| msgid "Could not read color entries from '%s'"
+#, c-format
 msgid "Could not get colormaps from '%s'"
-msgstr "無法從「%s」讀取色彩項目"
+msgstr "無法從「%s」取得顏色映射表"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
@@ -7557,7 +7537,7 @@ msgstr "無法從「%s」讀取色彩項目"
 #: ../plug-ins/file-tiff/file-tiff-load.c:1521
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
-msgstr ""
+msgstr "可疑的額外色版數：%d。影像可能毀損。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1583
 msgid "TIFF Channel"
@@ -7566,25 +7546,25 @@ msgstr "TIFF 色版"
 #: ../plug-ins/file-tiff/file-tiff-load.c:1721
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
-msgstr ""
+msgstr "無法從 TIFF「%s」讀取資料。檔案可能毀損。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1792
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
-msgstr ""
+msgstr "%s：不支援的影像格式，沒有可用的 RGBA 載入器"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2104
 #: ../plug-ins/file-tiff/file-tiff-load.c:2301
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
-msgstr ""
+msgstr "分塊讀取失敗。影像可能在第 %d 列處毀損。"
 
 #. Error reading scanline, stop loading
 #: ../plug-ins/file-tiff/file-tiff-load.c:2113
 #: ../plug-ins/file-tiff/file-tiff-load.c:2310
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
-msgstr ""
+msgstr "掃描線讀取失敗。影像可能在第 %d 列處毀損。"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2660
 msgid "Import from TIFF"
@@ -7608,11 +7588,11 @@ msgstr "處理額外色版作為："
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
-msgstr ""
+msgstr "無預先相乘 Alpha(_N)"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2736
 msgid "Pre_multiplied alpha"
-msgstr ""
+msgstr "預先相乘 Alpha"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:2737
 msgid "Channe_l"
@@ -7644,7 +7624,7 @@ msgstr ""
 #: ../plug-ins/file-tiff/file-tiff-save.c:1095
 #, c-format
 msgid "Writing pages with different bit depth is strange."
-msgstr ""
+msgstr "以不同的位元深度寫入頁面很奇怪。"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1157
 msgid "TIFF"
@@ -7655,6 +7635,8 @@ msgid ""
 "<i>Warning: maximum TIFF file size exceeded.\n"
 " Retry as BigTIFF or cancel.</i>"
 msgstr ""
+"<i>警告：超過最大的 TIFF 檔案大小。\n"
+" 請改以 BigTIFF 重試，或取消。</i>"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:1199
 msgid "Compression"
@@ -9639,10 +9621,12 @@ msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
 msgstr ""
+"警告：已超過最大的 TIFF 檔大小。請改用 BigTIFF 重試，或改用不同的壓縮演算法，"
+"或者取消。"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
 msgid "Export in _BigTIFF variant file format"
-msgstr ""
+msgstr "以 _BigTIFF 變體檔案格式匯出"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "Save _layers"
@@ -9654,7 +9638,7 @@ msgstr "裁切圖層到影像邊界(_O)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Colors are not stored premultiplied by the associated alpha"
-msgstr ""
+msgstr "顏色並未以關聯的 Alpha 預先相乘作儲存"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "<b>Comment</b>"
@@ -9670,7 +9654,7 @@ msgstr "儲存 _GeoTIFF 資料"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:14
 msgid "Keep the GeoTIFF metadata if it was present on import"
-msgstr ""
+msgstr "如果匯入時 GeoTIFF 中介資料存在要保留"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -12029,7 +12013,7 @@ msgstr "編輯中介資料(_E)"
 
 #: ../plug-ins/metadata/metadata-editor.c:571
 msgid "Error loading metadata-editor dialog."
-msgstr ""
+msgstr "載入中介資料編輯器對話方塊時發生錯誤。"
 
 #: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
@@ -12343,7 +12327,7 @@ msgstr "檢視中介資料(_V)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:242
 msgid "Error loading metadata-viewer dialog."
-msgstr ""
+msgstr "載入中介資料檢視器對話方塊時發生錯誤。"
 
 #: ../plug-ins/metadata/metadata-viewer.c:253
 #, c-format
