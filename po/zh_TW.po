@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-03 18:02+0000\n"
-"PO-Revision-Date: 2024-11-07 23:25+0800\n"
+"POT-Creation-Date: 2024-11-07 16:19+0000\n"
+"PO-Revision-Date: 2024-11-09 02:49+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -6066,19 +6066,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "刪除這個影像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:720
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:719
 msgid "Lock content"
 msgstr "鎖定內容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:721
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:720
 msgid "Unlock content"
 msgstr "解除內容鎖定"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:736
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:735
 msgid "Lock position"
 msgstr "鎖定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:737
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:736
 msgid "Unlock position"
 msgstr "解除位置鎖定"
 
@@ -8030,7 +8030,7 @@ msgstr "從選取範圍移除孔洞"
 #: app/actions/select-actions.c:111
 msgctxt "select-action"
 msgid "Save to _Channel"
-msgstr "儲存到色板(_C)"
+msgstr "儲存到色版(_C)"
 
 #: app/actions/select-actions.c:112
 msgctxt "select-action"
@@ -13921,7 +13921,7 @@ msgstr "無法將不可見圖層向下合併。"
 msgid "Cannot merge down to a layer group."
 msgstr "無法向下合併到圖層群組。"
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2862
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2835
 msgid "The layer to merge down to is locked."
 msgstr "圖層向下合併的功能被鎖住。"
 
@@ -14042,7 +14042,7 @@ msgstr "無法開啟縮圖「%s」：%s"
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
 #: app/display/gimpdisplayshell-dnd.c:410 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2626
+#: app/widgets/gimpitemtreeview.c:2625
 msgid "A selected layer's pixels are locked."
 msgstr "所選的圖層像素已鎖定。"
 
@@ -15033,7 +15033,7 @@ msgstr "鎖定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:169
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:752
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:751
 msgid "Lock visibility"
 msgstr "鎖定可見性"
 
@@ -18436,7 +18436,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "拖放顏色到圖層"
 
-#: app/display/gimpdisplayshell-dnd.c:616 app/widgets/gimpitemtreeview.c:1940
+#: app/display/gimpdisplayshell-dnd.c:616 app/widgets/gimpitemtreeview.c:1939
 #: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "拖放圖層"
@@ -22586,7 +22586,7 @@ msgstr "曲線(_C)..."
 
 #: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:299
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2605
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2604
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "無法修改多個可繪物件。請只選取一個。"
 
@@ -22801,7 +22801,7 @@ msgid "A selected item's pixels are locked."
 msgstr "所選的項目像素已鎖定。"
 
 #: app/tools/gimpfiltertool.c:323 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2617
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2616
 msgid "A selected layer is not visible."
 msgstr "所選的圖層不可見。"
 
@@ -27148,121 +27148,121 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引色轉換（%d 個顏色）"
 
-#: app/widgets/gimpitemtreeview.c:722
+#: app/widgets/gimpitemtreeview.c:721
 msgid "Set Item Exclusive Content Lock"
 msgstr "設定項目唯獨內容鎖定"
 
-#: app/widgets/gimpitemtreeview.c:738
+#: app/widgets/gimpitemtreeview.c:737
 msgid "Set Item Exclusive Position Lock"
 msgstr "設定項目唯獨位置鎖定"
 
-#: app/widgets/gimpitemtreeview.c:753
+#: app/widgets/gimpitemtreeview.c:752
 msgid "Unlock visibility"
 msgstr "解除可見性鎖定"
 
-#: app/widgets/gimpitemtreeview.c:754
+#: app/widgets/gimpitemtreeview.c:753
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "設定項目唯獨可見性鎖定"
 
-#: app/widgets/gimpitemtreeview.c:783
+#: app/widgets/gimpitemtreeview.c:782
 msgid "Toggle the visibility of all filters."
 msgstr "切換所有濾色片的可見性。"
 
-#: app/widgets/gimpitemtreeview.c:797
+#: app/widgets/gimpitemtreeview.c:796
 msgid "Edit the selected filter."
 msgstr "編輯所選的濾色片。"
 
-#: app/widgets/gimpitemtreeview.c:810
+#: app/widgets/gimpitemtreeview.c:809
 msgid "Raise filter one step up in the stack."
 msgstr "讓濾色片在堆疊中提升一階。"
 
-#: app/widgets/gimpitemtreeview.c:823
+#: app/widgets/gimpitemtreeview.c:822
 msgid "Lower filter one step down in the stack."
 msgstr "讓濾色片在堆疊中降低一階。"
 
-#: app/widgets/gimpitemtreeview.c:836
+#: app/widgets/gimpitemtreeview.c:835
 msgid "Merge all active filters down."
 msgstr "向下合併所有使用中濾色片。"
 
-#: app/widgets/gimpitemtreeview.c:849
+#: app/widgets/gimpitemtreeview.c:848
 msgid "Remove the selected filter."
 msgstr "移除所選的濾色片。"
 
-#: app/widgets/gimpitemtreeview.c:860
+#: app/widgets/gimpitemtreeview.c:859
 msgid "Layer Effects"
 msgstr "圖層特效"
 
-#: app/widgets/gimpitemtreeview.c:893
+#: app/widgets/gimpitemtreeview.c:892
 msgid "Select items by patterns and store item sets"
 msgstr "依樣式選取項目並儲存項目集"
 
-#: app/widgets/gimpitemtreeview.c:1790
+#: app/widgets/gimpitemtreeview.c:1789
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "已選取 %d 個項目"
 
-#: app/widgets/gimpitemtreeview.c:2702 app/widgets/gimpitemtreeview.c:2768
+#: app/widgets/gimpitemtreeview.c:2701 app/widgets/gimpitemtreeview.c:2756
 msgid "Cannot reorder a filter that is being edited."
 msgstr "無法重新編排正在編輯的濾鏡。"
 
-#: app/widgets/gimpitemtreeview.c:2723 app/widgets/gimpitemtreeview.c:2790
+#: app/widgets/gimpitemtreeview.c:2719 app/widgets/gimpitemtreeview.c:2774
 msgid "Reorder filter"
 msgstr "重新編排濾鏡次序"
 
-#: app/widgets/gimpitemtreeview.c:2846
+#: app/widgets/gimpitemtreeview.c:2819
 msgid "Effects from active tools can not be merged."
 msgstr "無法合併作用中工具的效果。"
 
-#: app/widgets/gimpitemtreeview.c:2899
+#: app/widgets/gimpitemtreeview.c:2872
 msgid "Remove filter"
 msgstr "移除濾鏡"
 
-#: app/widgets/gimpitemtreeview.c:3425
+#: app/widgets/gimpitemtreeview.c:3398
 msgid "No layer set stored"
 msgstr "未儲存圖層集"
 
-#: app/widgets/gimpitemtreeview.c:3447
+#: app/widgets/gimpitemtreeview.c:3420
 msgid "New layer set's name"
 msgstr "新的圖層集名稱"
 
-#: app/widgets/gimpitemtreeview.c:3489 app/widgets/gimpitemtreeview.c:3504
+#: app/widgets/gimpitemtreeview.c:3462 app/widgets/gimpitemtreeview.c:3477
 msgid "Select layers by text search"
 msgstr "依文字搜尋選取圖層"
 
-#: app/widgets/gimpitemtreeview.c:3491 app/widgets/gimpitemtreeview.c:3506
+#: app/widgets/gimpitemtreeview.c:3464 app/widgets/gimpitemtreeview.c:3479
 msgid "Text search"
 msgstr "文字搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3510
+#: app/widgets/gimpitemtreeview.c:3483
 msgid "Select layers by glob patterns"
 msgstr "以 glob 胚騰樣式選取圖層"
 
-#: app/widgets/gimpitemtreeview.c:3512
+#: app/widgets/gimpitemtreeview.c:3485
 msgid "Glob pattern search"
 msgstr "Glob 胚騰搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3516
+#: app/widgets/gimpitemtreeview.c:3489
 msgid "Select layers by regular expressions"
 msgstr "以常規表達式選取圖層"
 
-#: app/widgets/gimpitemtreeview.c:3518
+#: app/widgets/gimpitemtreeview.c:3491
 msgid "Regular Expression search"
 msgstr "常規表達式搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3573
+#: app/widgets/gimpitemtreeview.c:3546
 msgid "search"
 msgstr "搜尋"
 
-#: app/widgets/gimpitemtreeview.c:3574
+#: app/widgets/gimpitemtreeview.c:3547
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimpitemtreeview.c:3574
+#: app/widgets/gimpitemtreeview.c:3547
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimpitemtreeview.c:3743
+#: app/widgets/gimpitemtreeview.c:3716
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "無效的常規表達式：%s\n"
