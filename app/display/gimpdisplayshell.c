@@ -344,6 +344,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->dot_for_dot = TRUE;
   shell->scale_x     = 1.0;
   shell->scale_y     = 1.0;
+  shell->unit        = gimp_unit_pixel ();
 
   shell->show_image  = TRUE;
 
