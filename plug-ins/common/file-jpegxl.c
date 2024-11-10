@@ -434,7 +434,6 @@ load_image (GFile                 *file,
   gpointer          picture_buffer;
   gpointer          key_buffer      = NULL;
   gboolean          is_cmyk         = FALSE;
-  gboolean          has_alpha       = FALSE;
   gint              cmyk_channel_id = -1;
   GimpImage        *image;
   GimpLayer        *layer;
@@ -645,7 +644,7 @@ load_image (GFile                 *file,
           pixel_format.num_channels = 1;
         }
     }
-  else /* RGB */
+  else /* RGB or CMYK */
     {
 
       if (basicinfo.alpha_bits > 0) /* RGB with alpha */
@@ -656,34 +655,26 @@ load_image (GFile                 *file,
         {
           pixel_format.num_channels = 3;
         }
-    }
 
-  /* Check for extra channels */
-  for (i = 0; i < basicinfo.num_extra_channels; i++)
-    {
-      JxlExtraChannelInfo extra;
-
-      if (JXL_DEC_SUCCESS != JxlDecoderGetExtraChannelInfo (decoder, i, &extra))
-        break;
-
-      /* K channel for CMYK images */
-      if (extra.type == JXL_CHANNEL_BLACK)
+      /* search if BLACK (K) channel is present (CMYK detection) */
+      for (i = 0; i < basicinfo.num_extra_channels; i++)
         {
-          is_cmyk = TRUE;
-          cmyk_channel_id = i;
-          if (pixel_format.num_channels < 3)
-            pixel_format.num_channels = 3;
-        }
-      /* Confirm presence of alpha channel */
-      if (extra.type == JXL_CHANNEL_ALPHA)
-        {
-          has_alpha = TRUE;
-          pixel_format.num_channels = 4;
+          JxlExtraChannelInfo extra;
+
+          if (JXL_DEC_SUCCESS != JxlDecoderGetExtraChannelInfo (decoder, i, &extra))
+            break;
+
+          if (extra.type == JXL_CHANNEL_BLACK)
+            {
+              is_cmyk = TRUE;
+              cmyk_channel_id = i;
+              extra_channel_size = channel_depth * (size_t) basicinfo.xsize * (size_t) basicinfo.ysize;
+              break;
+            }
         }
     }
 
   result_size = channel_depth * pixel_format.num_channels * (size_t) basicinfo.xsize * (size_t) basicinfo.ysize;
-  extra_channel_size = channel_depth * basicinfo.num_extra_channels * (size_t) basicinfo.xsize * (size_t) basicinfo.ysize;
   result_size += extra_channel_size;
 
 
@@ -938,7 +929,7 @@ load_image (GFile                 *file,
   if (is_cmyk)
     {
       create_cmyk_layer (image, layer, type, space, picture_buffer,
-                         key_buffer, channel_depth, has_alpha);
+                         key_buffer, channel_depth, basicinfo.alpha_bits > 0);
     }
   else
     {
