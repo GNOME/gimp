@@ -21513,7 +21513,7 @@ msgid ""
 "argument #%d '%s'. This argument does not allow percent unit."
 msgstr ""
 "S'ha cridat el procediment '%s' amb `gimp_unit_percent()' per a l'argument "
-"GimpUnit #%d '%s'. Aquest argument no permet la unitat percentual"
+"GimpUnit #%d '%s'. Aquest argument no permet la unitat percentual."
 
 #: app/pdb/gimpprocedure.c:1012
 #, c-format
@@ -29193,7 +29193,7 @@ msgid ""
 "was updated without proper version management. In the latter case, you "
 "should report the issue to the filter's developers."
 msgstr ""
-"Avís XCF: la versió '%s' del filtre '%s' no és compatible. S'ha descartat el "
+"Avís XCF: la versió «%s» del filtre «%s» no és compatible. S'ha descartat el "
 "filtre.\n"
 "Això vol dir que esteu utilitzant una versió antiga del filtre o que s'ha "
 "actualitzat sense una gestió de versions adequada. En aquest últim cas, "

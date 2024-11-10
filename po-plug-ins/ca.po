@@ -5839,7 +5839,7 @@ msgstr ""
 "imatge de sortida serà RGB, tots els colors són en escala de grisos per "
 "defecte i el contrast serà bastant baix en la majoria del relleu de la "
 "terra. Per tant, probablement voldreu tornar a assignar l'elevació als "
-"colors com a segon pas, per exemple amb el connector «Gradient Map»."
+"colors com a segon pas, per exemple amb el connector «Mapa del degradat»."
 
 #: plug-ins/common/file-raw-data.c:467
 msgid "Sa_mple spacing"
@@ -8431,7 +8431,7 @@ msgid ""
 "watercolor paint, in some cases."
 msgstr ""
 "Unta una imatge al llarg de camins vectorials calculats com el degradat "
-"d'una matriu de control separada. L'efecte pot semblar pinzellades de "
+"d'una matriu de control separada. L'efecte pot semblar-se a pinzellades de "
 "pintura acrílica o aquarel·la, en alguns casos."
 
 #: plug-ins/common/warp.c:235
