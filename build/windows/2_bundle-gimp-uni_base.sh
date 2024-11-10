@@ -53,10 +53,14 @@ fi
 
 bundle ()
 {
-  cd $GIMP_DISTRIB
+  ## Tweak paths to avoid expanding
+  mkdir -p limbo
+  cd limbo
   limited_search_path=$(dirname $(echo $2 | sed "s|${2%%/*}/|$1/${2%%/*}/|g" | sed "s|*|no_scape|g"))
+  ## Search for targets in search path
   search_path=$(echo $(echo $limited_search_path | sed "s|no_scape|*|g"))
   bundledArray=($(find "$search_path" -maxdepth 1 -name ${2##*/}))
+  ## Copy found targets to bundle path
   for target_path in "${bundledArray[@]}"; do
     bundled_path=$(echo $target_path | sed "s|$1/|$GIMP_DISTRIB/|g")
     parent_path=$(dirname $bundled_path)
@@ -66,7 +70,9 @@ bundle ()
     mkdir -p "$parent_path"
     cp -fru "$target_path" $parent_path >/dev/null 2>&1 || continue
   done
+  ## Undo the tweak done above
   cd ..
+  rm -r limbo
 }
 
 clean ()
