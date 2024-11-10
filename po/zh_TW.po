@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-08 15:39+0000\n"
-"PO-Revision-Date: 2024-11-09 02:53+0800\n"
+"PO-Revision-Date: 2024-11-10 23:31+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -61,7 +61,7 @@ msgid ""
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
 msgstr ""
-"GIMP 可擴展且可延伸：它以搭配外掛元件與擴充套件為精神作設計，讓用途有無限可"
+"GIMP 可擴展且可延伸：它以搭配外掛插件與擴充套件為精神作設計，讓用途有無限可"
 "能。其中進階的命令稿編寫介面，讓您無論從簡單的操作，甚至到複雜的影像處理流"
 "程，都能輕鬆寫成命令稿。GIMP 也提供 Linux、Microsoft Windows 及 OS X 等版本。"
 
@@ -210,7 +210,7 @@ msgstr "其他格式支援改善：BMP、DICOM、EPS、RAW、TGA、WebP"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
-msgstr "Windows 版的螢幕擷圖外掛元件現在有擷取游標的選項"
+msgstr "Windows 版的螢幕擷圖外掛插件現在有擷取游標的選項"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Several usability improvements in official themes and icons"
@@ -252,7 +252,7 @@ msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
-"GIMP 2.10.26 是臭蟲修正版，包含對核心、命令稿與外掛元件程式碼中的錯誤修正。"
+"GIMP 2.10.26 是臭蟲修正版，包含對核心、命令稿與外掛插件程式碼中的錯誤修正。"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
@@ -601,13 +601,13 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "New DDS format loading/exporting plug-in"
-msgstr "新的 DDS 格式載入/匯出外掛元件"
+msgstr "新的 DDS 格式載入/匯出外掛插件"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
-msgstr "完全重寫 GIMP 旋輪外掛元件，提供更多選項並改善互動"
+msgstr "完全重寫 GIMP 旋輪外掛插件，提供更多選項並改善互動"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid ""
@@ -734,7 +734,7 @@ msgid ""
 "\"Recursive Transform\". These are nice examples of our relaxed feature "
 "policy in stable micro releases."
 msgstr ""
-"這同時提供支援 HEIC 格式的新外掛元件，支援匯入與匯出，還有「球弧」與「遞迴變"
+"這同時提供支援 HEIC 格式的新外掛插件，支援匯入與匯出，還有「球弧」與「遞迴變"
 "換」兩個全新濾鏡。前述這些是我們決定在穩定版小更新中放寬功能收錄政策的好例"
 "子。"
 
@@ -844,8 +844,8 @@ msgid ""
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
-"改善外掛元件除錯功能，若有設定 \"fatal-warnings\" 除錯鍵值時，則 --stack-"
-"trace-mode 命令選項不只用於接收訊號，也可用於警告和重大錯誤，並輸出至外掛元件"
+"改善外掛插件除錯功能，若有設定 \"fatal-warnings\" 除錯鍵值時，則 --stack-"
+"trace-mode 命令選項不只用於接收訊號，也可用於警告和重大錯誤，並輸出至外掛插件"
 "的堆疊追蹤"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
@@ -1062,7 +1062,7 @@ msgstr "不要顯示啟動快閃畫面"
 
 #: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
-msgstr "GIMP 和外掛元件之間不要使用共享的記憶體"
+msgstr "GIMP 和外掛插件之間不要使用共享的記憶體"
 
 #: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
@@ -1341,7 +1341,7 @@ msgstr "圖樣"
 
 #: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3327
 msgid "Plug-ins"
-msgstr "外掛元件"
+msgstr "外掛插件"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:358
@@ -8131,7 +8131,7 @@ msgstr "重設所有濾鏡(_F)"
 #: ../app/actions/plug-in-actions.c:85
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
-msgstr "重設所有外掛元件回預設值"
+msgstr "重設所有外掛插件回預設值"
 
 #: ../app/actions/plug-in-commands.c:180
 msgid "Reset all Filters"
@@ -11263,7 +11263,7 @@ msgstr "將 Alpha 色版添加到匯入影像的所有圖層中。"
 
 #: ../app/config/gimprc-blurbs.h:221
 msgid "Which plug-in to use for importing raw digital camera files."
-msgstr "要用哪個外掛元件來匯入數位相機的原生 Raw 檔。"
+msgstr "要用哪個外掛插件來匯入數位相機的原生 Raw 檔。"
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export file type used by default."
@@ -12630,7 +12630,7 @@ msgstr "匯入路徑"
 #: ../app/core/core-enums.c:1201
 msgctxt "undo-type"
 msgid "Plug-In"
-msgstr "外掛元件"
+msgstr "外掛插件"
 
 #: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
@@ -14798,7 +14798,7 @@ msgstr ""
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
-msgstr "無法執行 %s 的 callback。相應的外掛元件可能不正常結束。"
+msgstr "無法執行 %s 的 callback。相應的外掛插件可能不正常結束。"
 
 #: ../app/core/gimpselection.c:171
 msgctxt "undo-type"
@@ -17628,15 +17628,15 @@ msgstr "選取 MyPaint 筆刷資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3327
 msgid "Plug-in Folders"
-msgstr "外掛元件資料夾"
+msgstr "外掛插件資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3330
 msgid "Reset plug-in _Folders"
-msgstr "重設外掛元件資料夾(_F)"
+msgstr "重設外掛插件資料夾(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:3331
 msgid "Select plug-in Folders"
-msgstr "選取外掛元件資料夾"
+msgstr "選取外掛插件資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3333
 msgid "Scripts"
@@ -18819,12 +18819,12 @@ msgstr "存取遭拒"
 #: ../app/file/file-open.c:263
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "%s 外掛元件回傳值為 SUCCESS，但沒有回傳影像"
+msgstr "%s 外掛插件回傳值為 SUCCESS，但沒有回傳影像"
 
 #: ../app/file/file-open.c:274
 #, c-format
 msgid "%s plug-in could not open image"
-msgstr "%s 外掛元件無法開啟影像"
+msgstr "%s 外掛插件無法開啟影像"
 
 #: ../app/file/file-open.c:665
 msgid "Image doesn't contain any layers"
@@ -18874,7 +18874,7 @@ msgstr "取得檔案資訊失敗"
 #: ../app/file/file-save.c:310
 #, c-format
 msgid "%s plug-in could not save image"
-msgstr "%s 外掛元件無法儲存影像"
+msgstr "%s 外掛插件無法儲存影像"
 
 #: ../app/file/file-utils.c:65
 #, c-format
@@ -20331,7 +20331,7 @@ msgstr "閾值"
 
 #: ../app/pdb/drawable-cmds.c:554
 msgid "Plug-in"
-msgstr "外掛元件"
+msgstr "外掛插件"
 
 #: ../app/pdb/drawable-cmds.c:993 ../app/tools/gimpforegroundselecttool.c:1020
 msgctxt "command"
@@ -20737,7 +20737,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"處理程序「%s」為引數「%s」回傳了無效的 ID。這應該是代表有外掛元件正嘗試在不復"
+"處理程序「%s」為引數「%s」回傳了無效的 ID。這應該是代表有外掛插件正嘗試在不復"
 "存在的圖層上作業。"
 
 #: ../app/pdb/gimpprocedure.c:811
@@ -20746,7 +20746,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"處理程序「%s」呼叫時為引數「%s」傳入了無效的 ID。這應該是代表有外掛元件正嘗試"
+"處理程序「%s」呼叫時為引數「%s」傳入了無效的 ID。這應該是代表有外掛插件正嘗試"
 "在不復存在的圖層上作業。"
 
 #: ../app/pdb/gimpprocedure.c:828
@@ -20755,7 +20755,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"處理程序「%s」為引數「%s」回傳了無效的 ID。這應該是代表有外掛元件正嘗試在不復"
+"處理程序「%s」為引數「%s」回傳了無效的 ID。這應該是代表有外掛插件正嘗試在不復"
 "存在的影像上作業。"
 
 #: ../app/pdb/gimpprocedure.c:841
@@ -20764,7 +20764,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"處理程序「%s」呼叫時為引數「%s」傳入了無效的 ID。這應該是代表有外掛元件正嘗試"
+"處理程序「%s」呼叫時為引數「%s」傳入了無效的 ID。這應該是代表有外掛插件正嘗試"
 "在不復存在的影像上作業。"
 
 #: ../app/pdb/gimpprocedure.c:862
@@ -21207,10 +21207,10 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"外掛元件已崩潰：「%s」\n"
+"外掛插件已崩潰：「%s」\n"
 "(%s)\n"
 "\n"
-"這個外掛元件終止時可能擾亂 GIMP 的內部狀態。為了安全起見，您可能會想儲存影像"
+"這個外掛插件終止時可能擾亂 GIMP 的內部狀態。為了安全起見，您可能會想儲存影像"
 "並重新啟動 GIMP。"
 
 #: ../app/plug-in/gimpplugin-message.c:486
@@ -21237,18 +21237,18 @@ msgstr "已取消"
 
 #: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
-msgstr "外掛元件直譯器"
+msgstr "外掛插件直譯器"
 
 #: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
-msgstr "外掛元件環境"
+msgstr "外掛插件環境"
 
 #: ../app/plug-in/gimppluginmanager-call.c:185
 #: ../app/plug-in/gimppluginmanager-call.c:245
 #: ../app/plug-in/gimppluginmanager-call.c:343
 #, c-format
 msgid "Failed to run plug-in \"%s\""
-msgstr "外掛元件「%s」執行失敗"
+msgstr "外掛插件「%s」執行失敗"
 
 #: ../app/plug-in/gimppluginmanager-file-procedure.c:208
 msgid "Unknown file type"
@@ -21256,7 +21256,7 @@ msgstr "未知的檔案類型"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:230
 msgid "Searching plug-ins"
-msgstr "正在搜尋外掛元件"
+msgstr "正在搜尋外掛插件"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:395
 msgid "Resource configuration"
@@ -21264,11 +21264,11 @@ msgstr "資源組態"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:431
 msgid "Querying new Plug-ins"
-msgstr "正在查詢新的外掛元件"
+msgstr "正在查詢新的外掛插件"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:482
 msgid "Initializing Plug-ins"
-msgstr "正在初始化外掛元件"
+msgstr "正在初始化外掛插件"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:555
 msgid "Starting Extensions"
@@ -21300,7 +21300,7 @@ msgstr "索引色含 Alpha"
 
 #: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "This plug-in only works on the following layer types:"
-msgstr "這個外掛元件只支援以下圖層類型："
+msgstr "這個外掛插件只支援以下圖層類型："
 
 #: ../app/plug-in/gimppluginprocedure.c:1274
 #, c-format
@@ -26612,7 +26612,7 @@ msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"GIMP 安裝時似乎缺少有關求助文件瀏覽器的外掛元件。您可以改用網頁瀏覽器閱讀求助"
+"GIMP 安裝時似乎缺少有關求助文件瀏覽器的外掛插件。您可以改用網頁瀏覽器閱讀求助"
 "文件。"
 
 #: ../app/widgets/gimphelp.c:419
@@ -26621,7 +26621,7 @@ msgstr "求助文件瀏覽器無法啟動"
 
 #: ../app/widgets/gimphelp.c:420
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "無法啟動 GIMP 求助文件瀏覽器外掛元件。"
+msgstr "無法啟動 GIMP 求助文件瀏覽器外掛插件。"
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
@@ -26887,7 +26887,7 @@ msgstr "編輯調色盤項目"
 
 #: ../app/widgets/gimppdbdialog.c:282
 msgid "The corresponding plug-in may have crashed."
-msgstr "對應的外掛元件可能崩潰。"
+msgstr "對應的外掛插件可能崩潰。"
 
 #: ../app/widgets/gimppdbdialog.c:286
 #, c-format
@@ -26905,7 +26905,7 @@ msgstr "選取左側面板中的影像"
 
 #: ../app/widgets/gimppluginview.c:149
 msgid "Plug-In"
-msgstr "外掛元件"
+msgstr "外掛插件"
 
 #: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
