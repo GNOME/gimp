@@ -22,6 +22,15 @@ fi
 
 # Bundle deps and GIMP files
 export GIMP_SOURCE=$(echo $MESON_SOURCE_ROOT | sed 's|\\|/|g')
+
+grep -q '#define GIMP_UNSTABLE' config.h && export GIMP_UNSTABLE=1
+gimp_app_version=$(grep GIMP_APP_VERSION config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+if [ "$GIMP_UNSTABLE" ]; then
+  gimp_mutex_version="$gimp_app_version"
+else
+  gimp_mutex_version=$(echo $gimp_app_version | sed 's/^[^0-9]*\([0-9]*\).*$/\1/')
+fi
+
 grep -q 'windows-installer=true' meson-logs/meson-log.txt && export INSTALLER_OPTION_ON=1
 grep -q 'ms-store=true' meson-logs/meson-log.txt && export STORE_OPTION_ON=1
 if [ "$GITLAB_CI" ] || [ "$INSTALLER_OPTION_ON" ] || [ "$STORE_OPTION_ON" ]; then
@@ -31,7 +40,7 @@ fi
 ## GIMP prefix: as set at meson configure time
 export GIMP_PREFIX=$(echo $MESON_INSTALL_DESTDIR_PREFIX | sed 's|\\|/|g')
 ## System prefix: on Windows shell, it is manually set; on POSIX shell, it is set by crossroad
-export MSYS_PREFIX=$(grep 'Main binary:' $MESON_BUILD_ROOT/meson-logs/meson-log.txt | sed 's|Main binary: ||' | sed 's|\\bin\\python.exe||' | sed 's|\\|/|g')
+export MSYS_PREFIX=$(grep 'Main binary:' meson-logs/meson-log.txt | sed 's|Main binary: ||' | sed 's|\\bin\\python.exe||' | sed 's|\\|/|g')
 if [ "$CROSSROAD_PLATFORM" ]; then
   export MSYS_PREFIX="$GIMP_PREFIX"
 fi
@@ -101,8 +110,7 @@ fi
 
 ## Add a wrapper at tree root, less messy than having to look for the
 ## binary inside bin/, in the middle of all the DLLs.
-gimp_app_version=$(grep GIMP_APP_VERSION $MESON_BUILD_ROOT/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-echo "bin\gimp-$gimp_app_version.exe" > $GIMP_DISTRIB/gimp.cmd
+echo "bin\gimp-$gimp_mutex_version.exe" > $GIMP_DISTRIB/gimp.cmd
 
 
 ## Settings.
