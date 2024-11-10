@@ -391,6 +391,10 @@ Type: files; Name: "{autodesktop}\GIMP {reg:HKA\SOFTWARE\Microsoft\Windows\Curre
 ;remove old babl and gegl plugins
 Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
+;This was bunbled in RC1 but not needed since the "Debug" menu is hidden in stable releases
+#if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="")
+	Type: files; Name: "{app}\bin\dot.exe"
+#endif
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
