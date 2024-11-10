@@ -115,10 +115,14 @@ bundle "$GIMP_PREFIX" include/gegl-*
 bundle "$GIMP_PREFIX" lib/gimp
 bundle "$GIMP_PREFIX" lib/babl-*
 bundle "$GIMP_PREFIX" lib/gegl-*
+### Needed to open remote files
 bundle "$MSYS_PREFIX" lib/gio
+### Needed to loading icons in GUI
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders.cache
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-png.dll
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll
+### Support for paste clipboard images sent by most Windows apps
+bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll
 clean "$GIMP_DISTRIB" lib/*.a
 
 
