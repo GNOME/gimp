@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-09-29 15:00+0000\n"
-"PO-Revision-Date: 2024-09-30 15:09+0200\n"
+"PO-Revision-Date: 2024-11-11 20:16+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -61,9 +61,9 @@ msgid ""
 "Microsoft Windows and OS X."
 msgstr ""
 "GIMP kan gjera mykje og kan lett utvidast. Programmet kan gjerast større med "
-"programutvidingar («plug-ins») og kan såleis utvidast til å gjera nesten "
-"kva som helst. Det er også innebygd avanserte skriptfunksjonar, slik at det "
-"er lett å laga spesielle verktøy for enkle oppgåver eller kompliserte "
+"programutvidingar («plug-ins») og kan såleis utvidast til å gjera nesten kva "
+"som helst. Det er også innebygd avanserte skriptfunksjonar, slik at det er "
+"lett å laga spesielle verktøy for enkle oppgåver eller kompliserte "
 "bilethansamingar som lett kan skriptast. GIMP er tilgjengeleg for Linux, "
 "Windows og OS X."
 
@@ -3631,7 +3631,7 @@ msgstr "Gjenta den siste operasjonen du angra"
 #: app/actions/edit-actions.c:78
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr "Sterk angre"
+msgstr "Sterk angra"
 
 #: app/actions/edit-actions.c:79
 msgctxt "edit-action"
@@ -3879,7 +3879,7 @@ msgstr "Fyll utvalet med det gjeldande mønsterelementet"
 #: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
 #, c-format
 msgid "_Undo %s"
-msgstr "_Angre %s"
+msgstr "_Angra %s"
 
 #: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
 #, c-format
@@ -3888,7 +3888,7 @@ msgstr "_Gjenta %s"
 
 #: app/actions/edit-actions.c:342
 msgid "_Undo"
-msgstr "_Angre"
+msgstr "_Angra"
 
 #: app/actions/edit-actions.c:343
 msgid "_Redo"
@@ -15553,7 +15553,7 @@ msgstr "Symmetriteikning"
 
 #: app/dialogs/dialogs.c:404
 msgid "Undo"
-msgstr "Angre"
+msgstr "Angra"
 
 #: app/dialogs/dialogs.c:404
 msgid "Undo History"
@@ -19526,7 +19526,7 @@ msgstr "Snitt"
 #: app/operations/operations-enums.c:154
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
-msgstr "Normal (legacy)"
+msgstr "Normal (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Normal (legacy)".
 #. Keep it short.
@@ -19543,7 +19543,7 @@ msgstr "Oppløys"
 #: app/operations/operations-enums.c:159
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
-msgstr "Bak (legacy)"
+msgstr "Bak (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Behind (legacy)".
 #. Keep it short.
@@ -19555,7 +19555,7 @@ msgstr "Bak (I)"
 #: app/operations/operations-enums.c:163
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
-msgstr "Multipliser (legacy)"
+msgstr "Multipliser (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Multiply (legacy)".
 #. Keep it short.
@@ -19567,7 +19567,7 @@ msgstr "Multipliser (I)"
 #: app/operations/operations-enums.c:167
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr "Skjerm (legacy)"
+msgstr "Skjerm (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
@@ -19591,7 +19591,7 @@ msgstr "Gammalt overlegg"
 #: app/operations/operations-enums.c:175
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
-msgstr "Differanse (legacy)"
+msgstr "Differanse (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Difference (legacy)".
 #. Keep it short.
@@ -19603,7 +19603,7 @@ msgstr "Differanse (I)"
 #: app/operations/operations-enums.c:179
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
-msgstr "Addisjon (legacy)"
+msgstr "Addisjon (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Addition (legacy)".
 #. Keep it short.
@@ -19615,7 +19615,7 @@ msgstr "Addisjon (I)"
 #: app/operations/operations-enums.c:183
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
-msgstr "Subtraher (legacy)"
+msgstr "Subtraher (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Subtract (legacy)".
 #. Keep it short.
@@ -19627,7 +19627,7 @@ msgstr "Subtraher (I)"
 #: app/operations/operations-enums.c:187
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "Gjer berre mørkare (legacy)"
+msgstr "Gjer berre mørkare (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
@@ -19639,7 +19639,7 @@ msgstr "Gjer berre mørkare (I)"
 #: app/operations/operations-enums.c:191
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
-msgstr "Gjer berre lysare (legacy)"
+msgstr "Gjer berre lysare (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
@@ -19651,7 +19651,7 @@ msgstr "Gjer berre lysare (I)"
 #: app/operations/operations-enums.c:195
 msgctxt "layer-mode"
 msgid "HSV Hue (legacy)"
-msgstr "HSV kulør (legacy)"
+msgstr "HSV kulør (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Hue (legacy)".
 #. Keep it short.
@@ -19663,7 +19663,7 @@ msgstr "HSV kulør (l)"
 #: app/operations/operations-enums.c:199
 msgctxt "layer-mode"
 msgid "HSV Saturation (legacy)"
-msgstr "HSV-metning (legacy)"
+msgstr "HSV-metning (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Saturation (legacy)".
 #. Keep it short.
@@ -19675,7 +19675,7 @@ msgstr "HSV-metning (I)"
 #: app/operations/operations-enums.c:203
 msgctxt "layer-mode"
 msgid "HSL Color (legacy)"
-msgstr "HSL farge (legacy)"
+msgstr "HSL farge (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSL Color (legacy)".
 #. Keep it short.
@@ -19687,7 +19687,7 @@ msgstr "HSL-farge (I)"
 #: app/operations/operations-enums.c:207
 msgctxt "layer-mode"
 msgid "HSV Value (legacy)"
-msgstr "HSV verdi (legacy)"
+msgstr "HSV verdi (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Value (legacy)".
 #. Keep it short.
@@ -19699,7 +19699,7 @@ msgstr "HSV-verdi (I)"
 #: app/operations/operations-enums.c:211
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
-msgstr "Divider (legacy)"
+msgstr "Divider (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Divide (legacy)".
 #. Keep it short.
@@ -19711,7 +19711,7 @@ msgstr "Del opp (I)"
 #: app/operations/operations-enums.c:215
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
-msgstr "Avskugg (legacy)"
+msgstr "Avskugg (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Dodge (legacy)".
 #. Keep it short.
@@ -19723,7 +19723,7 @@ msgstr "Avskugg (I)"
 #: app/operations/operations-enums.c:219
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
-msgstr "Etterbelys (legacy)"
+msgstr "Etterbelys (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Burn (legacy)".
 #. Keep it short.
@@ -19735,7 +19735,7 @@ msgstr "Etterbelys (I)"
 #: app/operations/operations-enums.c:223
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
-msgstr "Hardt lys (legacy)"
+msgstr "Hardt lys (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
 #. Keep it short.
@@ -19747,7 +19747,7 @@ msgstr "Hardt lys (i)"
 #: app/operations/operations-enums.c:227
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "Mjukt lys (legacy)"
+msgstr "Mjukt lys (ltradisjonell)"
 
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
@@ -19759,7 +19759,7 @@ msgstr "Mjukt lys (I)"
 #: app/operations/operations-enums.c:231
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
-msgstr "Trekk ut korn (legacy)"
+msgstr "Trekk ut korn (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
@@ -19771,7 +19771,7 @@ msgstr "Trekk ut korn (I)"
 #: app/operations/operations-enums.c:235
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr "Flett korn (legacy)"
+msgstr "Flett korn (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
@@ -19783,7 +19783,7 @@ msgstr "Flett korn (I)"
 #: app/operations/operations-enums.c:239
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "Slett farge (legacy)"
+msgstr "Slett farge (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
@@ -20019,7 +20019,7 @@ msgstr "Standard"
 #: app/operations/operations-enums.c:318
 msgctxt "layer-mode-group"
 msgid "Legacy"
-msgstr "Legacy"
+msgstr "Tradisjonell"
 
 #: app/operations/gimpbrightnesscontrastconfig.c:82
 #: app/operations/gimpbrightnesscontrastconfig.c:83
@@ -28227,7 +28227,7 @@ msgstr "_Koplingsstil:"
 
 #: app/widgets/gimpstrokeeditor.c:163
 msgid "_Miter limit:"
-msgstr "_Fugeutfylling:"
+msgstr "_Gjæringsgrense:"
 
 #: app/widgets/gimpstrokeeditor.c:169
 msgid "Dash pattern:"
