@@ -6946,7 +6946,7 @@ msgstr "Palettkart"
 
 #: plug-ins/common/grid.c:165
 msgid "_Grid (legacy)..."
-msgstr "_Rutenett (legacy) …"
+msgstr "_Rutenett (tradisjonell) …"
 
 #: plug-ins/common/grid.c:170
 msgid "Draw a grid on the image"
@@ -8297,11 +8297,11 @@ msgstr "Filterlengde"
 
 #: plug-ins/common/van-gogh-lic.c:199
 msgid "_Noise Magnitude"
-msgstr "_Støymengdel"
+msgstr "_Støymengde"
 
 #: plug-ins/common/van-gogh-lic.c:200
 msgid "Noise Magnitude"
-msgstr "Støymengdel"
+msgstr "Støymengde"
 
 #: plug-ins/common/van-gogh-lic.c:205
 msgid "Inte_gration steps"
