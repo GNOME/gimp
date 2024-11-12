@@ -569,7 +569,7 @@ save_layer (TIFF        *tif,
       format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
       cmap    = gimp_palette_get_colormap (palette, babl_format_with_space ("R'G'B' u8", format), &num_colors, NULL);
 
-      if (num_colors == 2 || num_colors == 1)
+      if (drawable_type == GIMP_INDEXED_IMAGE && (num_colors == 2 || num_colors == 1))
         {
           is_bw = (memcmp (cmap, bw_map, 3 * num_colors) == 0);
           photometric = PHOTOMETRIC_MINISWHITE;
