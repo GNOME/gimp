@@ -203,7 +203,10 @@ about_dialog_create (Gimp           *gimp,
 #ifdef GIMP_UNSTABLE
           about_dialog_add_unstable_message (children->data);
 #endif /* GIMP_UNSTABLE */
-          about_dialog_add_update (&dialog, config);
+#ifdef CHECK_UPDATE
+          if (gimp_version_check_update ())
+            about_dialog_add_update (&dialog, config);
+#endif
         }
       else
         g_warning ("%s: ooops, no box in this container?", G_STRLOC);
