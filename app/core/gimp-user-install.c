@@ -292,7 +292,10 @@ user_install_detect_old (GimpUserInstall *install,
 
       g_snprintf (version, 5, "%d.XY", 2);
 
-      for (i = (GIMP_MINOR_VERSION & ~1); i >= 0; i -= 2)
+      /* XXX Looking from 2.10 and downwards. This logic must be changed
+       * to look 3.x versions too when we'll move up to 3.2 and upper.
+       */
+      for (i = 10; i >= 0; i -= 2)
         {
           /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
           g_snprintf (version + 2, 3, "%d", i);
