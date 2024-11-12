@@ -6,14 +6,14 @@
 # Áki G. Karlsson <aki@akademia.is>, 2004.
 # Helgi Þormar Þorbjörnsson  <helgi@trance.is>, 2004.
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sveinki@nett.is>, 2009.
+# SPDX-FileCopyrightText: 2009, 2024 Sveinn í Felli <sveinki@nett.is>
 # Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-08-25 20:48+0000\n"
-"PO-Revision-Date: 2024-09-03 11:43+0000\n"
+"POT-Creation-Date: 2024-11-10 17:26+0000\n"
+"PO-Revision-Date: 2024-11-12 16:24+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -145,15 +145,21 @@ msgstr ""
 "Ný útgáfa af GIMP (%s) hefur verið gefin út.\n"
 "Mælt er með því að uppfæra."
 
-#: app/gimp-version.c:70
+#: app/gimp-version.c:72
 #, c-format
 msgid "%s version %s"
 msgstr "%s útgáfa %s"
 
-#: app/gimp-version.c:162 app/gimp-version.c:281
+#: app/gimp-version.c:164 app/gimp-version.c:283
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "Nota %s útgáfu %s (vistþýtt inn á móti útgáfu %s)"
+
+#: app/gimp-version.c:305
+#, c-format
+#| msgid "%s version %s"
+msgid "using %s version %s"
+msgstr "notar %s útgáfu %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
@@ -162,119 +168,119 @@ msgstr "Nota %s útgáfu %s (vistþýtt inn á móti útgáfu %s)"
 msgid "System Language"
 msgstr "Tungumál kerfis"
 
-#: app/main.c:160
+#: app/main.c:161
 msgid "Show version information and exit"
 msgstr "Sýna upplýsingar um þessa útgáfu og hætta"
 
-#: app/main.c:165
+#: app/main.c:166
 msgid "Show license information and exit"
 msgstr "Sýna upplýsingar um leyfi og hætta"
 
-#: app/main.c:170
+#: app/main.c:171
 msgid "Be more verbose"
 msgstr "Vera ítarlegri"
 
-#: app/main.c:175
+#: app/main.c:176
 msgid "Start a new GIMP instance"
 msgstr "Ræsa nýtt eintak af GIMP"
 
-#: app/main.c:180
+#: app/main.c:181
 msgid "Open images as new"
 msgstr "Opna myndir sem nýjar"
 
-#: app/main.c:185
+#: app/main.c:186
 msgid "Run without a user interface"
 msgstr "Keyra án notendaviðmóts"
 
-#: app/main.c:190
+#: app/main.c:191
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ekki hlaða inn penslum, litstiglum, mynstrum, ..."
 
-#: app/main.c:195
+#: app/main.c:196
 msgid "Do not load any fonts"
 msgstr "Ekki hlaða inn neinu letri"
 
-#: app/main.c:200
+#: app/main.c:201
 msgid "Do not show a splash screen"
 msgstr "Ekki sýna ræsiskjá"
 
-#: app/main.c:205
+#: app/main.c:206
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Ekki nota samnýtt minni fyrir Gimp og hjálparforritin"
 
-#: app/main.c:210
+#: app/main.c:211
 msgid "Do not use special CPU acceleration functions"
 msgstr "Ekki nota sértækar aðgerðir fyrir örgjörvahröðun"
 
-#: app/main.c:215
+#: app/main.c:216
 msgid "Use an alternate sessionrc file"
 msgstr "Nota aðra sessionrc skrá"
 
-#: app/main.c:220
+#: app/main.c:221
 msgid "Use an alternate user gimprc file"
 msgstr "Nota aðra gimprc-notandaskrá"
 
-#: app/main.c:225
+#: app/main.c:226
 msgid "Use an alternate system gimprc file"
 msgstr "Nota aðra gimprc-kerfisskrá"
 
-#: app/main.c:230
+#: app/main.c:231
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Magnvinnsluskipun sem á að nota (er hægt að nota oft)"
 
-#: app/main.c:235
+#: app/main.c:236
 msgid "The procedure to process batch commands with"
 msgstr "Aðgerð sem nota á við magnvinnsluskipanir"
 
-#: app/main.c:240
+#: app/main.c:241
 msgid "Quit immediately after performing requested actions"
 msgstr "Hætta strax eftir að hafa framkvæmt umbeðnar aðgerðir"
 
-#: app/main.c:245
+#: app/main.c:246
 msgid "Send messages to console instead of using a dialog"
 msgstr "Senda skilaboð á stjórnskjá í stað þess að nota samskiptaglugga"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:251
+#: app/main.c:252
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB-samhæfnihamur (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:257
+#: app/main.c:258
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Villukemba ef hrun á sér stað (never|query|always)"
 
-#: app/main.c:262
+#: app/main.c:263
 msgid "Enable non-fatal debugging signal handlers"
 msgstr ""
 "Virkja meðhöndlun lítið alvarlegra aflúsunarmerkja (non-fatal debugging "
 "signal handlers)"
 
-#: app/main.c:267
+#: app/main.c:268
 msgid "Make all warnings fatal"
 msgstr "Gera allar aðvaranir alvarlegar"
 
-#: app/main.c:272
+#: app/main.c:273
 msgid "Output a gimprc file with default settings"
 msgstr "Skrifa gimprc-skrá með sjálfgefnum stillingum"
 
-#: app/main.c:288
+#: app/main.c:289
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Skrifa raðaðan lista yfir úreld ferli í PDB (Procedural DataBase)"
 
-#: app/main.c:293
+#: app/main.c:294
 msgid "Show a preferences page with experimental features"
 msgstr "Birta kjörstillingasíðu með tilraunaeiginleikum"
 
-#: app/main.c:298
+#: app/main.c:299
 msgid "Show an image submenu with debug actions"
 msgstr "Birta undirvalmynd myndar með aðgerðum fyrir villuleit"
 
-#: app/main.c:715
+#: app/main.c:716
 msgid "[FILE|URI...]"
 msgstr "[SKRÁ|SLÓÐ...]"
 
-#: app/main.c:743
+#: app/main.c:744
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -282,20 +288,20 @@ msgstr ""
 "GIMP tókst ekki að frumstilla myndræna notendaviðmótið.\n"
 "Athugaðu hvort viðeigandi uppsetning sé til staðar fyrir skjáumhverfið þitt."
 
-#: app/main.c:764
+#: app/main.c:765
 msgid "Another GIMP instance is already running."
 msgstr "Annað eintak af GIMP er þegar í keyrslu."
 
-#: app/main.c:853
+#: app/main.c:854
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP úttak. Sláðu á einhvern lykil til að loka þessum glugga."
 
-#: app/main.c:854
+#: app/main.c:855
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Ýttu á einhvern lykil til að loka þessum glugga)\n"
 
-#: app/main.c:871
+#: app/main.c:872
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Gimp úttak. Þú getur lágmarkað þennan glugga en ekki loka honum."
 
@@ -423,7 +429,7 @@ msgid "Fonts"
 msgstr "Leturgerðir"
 
 #: app/actions/actions.c:176 app/dialogs/dialogs.c:434
-#: app/widgets/gimpgradienteditor.c:295
+#: app/widgets/gimpgradienteditor.c:296
 msgid "Gradient Editor"
 msgstr "Litstiglaritill"
 
@@ -503,7 +509,7 @@ msgid "Select"
 msgstr "Velja"
 
 #. initialize the template list
-#: app/actions/actions.c:224 app/core/gimp.c:852 app/dialogs/dialogs.c:371
+#: app/actions/actions.c:224 app/core/gimp.c:856 app/dialogs/dialogs.c:371
 msgid "Templates"
 msgstr "Sniðmát"
 
@@ -999,7 +1005,7 @@ msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "Velja litrásirnar sem eru fyrir neðan völdu litrásirnar"
 
-#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:711
+#: app/actions/channels-commands.c:121 app/actions/channels-commands.c:714
 msgid "Channel Attributes"
 msgstr "Eiginleikar litrásar"
 
@@ -1051,24 +1057,24 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Setja litrás neðst"
 msgstr[1] "Setja litrásir neðst"
 
-#: app/actions/channels-commands.c:400 app/core/gimpimage-new.c:550
-#: app/display/gimpdisplayshell-dnd.c:687 app/widgets/gimpchanneltreeview.c:265
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:580
+#: app/display/gimpdisplayshell-dnd.c:723 app/widgets/gimpchanneltreeview.c:265
 #: app/widgets/gimplayertreeview.c:862
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Afritun %s litrásar"
 
-#: app/actions/channels-commands.c:421
+#: app/actions/channels-commands.c:424
 msgid "Duplicate channels"
 msgstr "Tvítaka litrásir"
 
-#: app/actions/channels-commands.c:464
+#: app/actions/channels-commands.c:467
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "Fjarlægja %d litrásir"
 
-#: app/actions/channels-commands.c:508
+#: app/actions/channels-commands.c:511
 msgid "Channels to selection"
 msgstr "Litrásir í myndval"
 
@@ -2448,10 +2454,10 @@ msgstr "240 sekúndur"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:358 app/tools/gimpforegroundselecttool.c:331
+#: app/tools/gimpfiltertool.c:359 app/tools/gimpforegroundselecttool.c:331
 #: app/tools/gimptexttool.c:1774 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:621
-#: app/widgets/gimpcolordialog.c:483 app/widgets/gimpcontrollereditor.c:662
+#: app/widgets/gimpcolordialog.c:485 app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpcontrollerlist.c:549 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdeviceinfoeditor.c:1160 app/widgets/gimpdnd-xds.c:228
 #: app/widgets/gimpfiledialog.c:336 app/widgets/gimphelp.c:438
@@ -2518,7 +2524,7 @@ msgstr "Settu inn lýsingu á merkingunni"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:630
+#: app/dialogs/welcome-dialog.c:1239 app/display/gimpdisplayshell-dnd.c:666
 #: app/widgets/gimplayertreeview.c:820 app/widgets/gimptoolbox.c:826
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -2532,7 +2538,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2389
-#: app/core/gimppalette.c:500 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:583 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:774 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Ónefnt"
@@ -5051,7 +5057,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Endurskanna uppsett letur"
 
-#: app/actions/gimpgeglprocedure.c:304
+#: app/actions/gimpgeglprocedure.c:305
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -5291,75 +5297,75 @@ msgstr "Sýna allt"
 msgid "Zoom all"
 msgstr "Sýna allt"
 
-#: app/actions/gradient-editor-actions.c:808
+#: app/actions/gradient-editor-actions.c:768
 msgid "_Blending Function for Segment"
 msgstr "_Blöndunarfall fyrir litgeira"
 
-#: app/actions/gradient-editor-actions.c:810
+#: app/actions/gradient-editor-actions.c:770
 msgid "Coloring _Type for Segment"
 msgstr "_Tegund litunar fyrir litgeira"
 
-#: app/actions/gradient-editor-actions.c:813
+#: app/actions/gradient-editor-actions.c:773
 msgid "_Flip Segment"
 msgstr "_Fletta litgeira"
 
-#: app/actions/gradient-editor-actions.c:815
+#: app/actions/gradient-editor-actions.c:775
 msgid "_Replicate Segment..."
 msgstr "Endu_rgera litgeira"
 
-#: app/actions/gradient-editor-actions.c:817
+#: app/actions/gradient-editor-actions.c:777
 msgid "Split Segment at _Midpoint"
 msgstr "Kljúfa litgeira við _miðpunkt"
 
-#: app/actions/gradient-editor-actions.c:819
+#: app/actions/gradient-editor-actions.c:779
 msgid "Split Segment _Uniformly..."
 msgstr "_Kljúfa litgeira jafnt..."
 
-#: app/actions/gradient-editor-actions.c:821
+#: app/actions/gradient-editor-actions.c:781
 msgid "_Delete Segment"
 msgstr "_Eyða litgeira"
 
-#: app/actions/gradient-editor-actions.c:823
+#: app/actions/gradient-editor-actions.c:783
 msgid "Re-_center Segment's Midpoint"
 msgstr "Endur_miðja miðpunkta í litgeira"
 
-#: app/actions/gradient-editor-actions.c:825
+#: app/actions/gradient-editor-actions.c:785
 msgid "Re-distribute _Handles in Segment"
 msgstr "Endur_dreifa haldföngum í litgeira"
 
-#: app/actions/gradient-editor-actions.c:830
+#: app/actions/gradient-editor-actions.c:790
 msgid "_Blending Function for Selection"
 msgstr "_Blöndunarfall fyrir valið"
 
-#: app/actions/gradient-editor-actions.c:832
+#: app/actions/gradient-editor-actions.c:792
 msgid "Coloring _Type for Selection"
 msgstr "_Tegund litunar fyrir valið"
 
-#: app/actions/gradient-editor-actions.c:835
+#: app/actions/gradient-editor-actions.c:795
 msgid "_Flip Selection"
 msgstr "S_pegla vali"
 
-#: app/actions/gradient-editor-actions.c:837
+#: app/actions/gradient-editor-actions.c:797
 msgid "_Replicate Selection..."
 msgstr "Endu_rgera val..."
 
-#: app/actions/gradient-editor-actions.c:839
+#: app/actions/gradient-editor-actions.c:799
 msgid "Split Segments at _Midpoints"
 msgstr "Kljúfa litgeira við _miðpunkta"
 
-#: app/actions/gradient-editor-actions.c:841
+#: app/actions/gradient-editor-actions.c:801
 msgid "Split Segments _Uniformly..."
 msgstr "Kljúfa litgeira _jafnt..."
 
-#: app/actions/gradient-editor-actions.c:843
+#: app/actions/gradient-editor-actions.c:803
 msgid "_Delete Selection"
 msgstr "_Eyða vali"
 
-#: app/actions/gradient-editor-actions.c:845
+#: app/actions/gradient-editor-actions.c:805
 msgid "Re-_center Midpoints in Selection"
 msgstr "Endur_miðja miðpunkta í vali"
 
-#: app/actions/gradient-editor-actions.c:847
+#: app/actions/gradient-editor-actions.c:807
 msgid "Re-distribute _Handles in Selection"
 msgstr "Endur_dreifa haldföngum í vali"
 
@@ -5748,7 +5754,7 @@ msgctxt "image-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Nota svartgildismótvægi (BPC) fyrir próförk"
 
-#: app/actions/image-actions.c:185 app/actions/image-actions.c:516
+#: app/actions/image-actions.c:185 app/actions/image-actions.c:529
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
@@ -5758,7 +5764,7 @@ msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Umbreyta myndinni yfir í RGB litarýmd"
 
-#: app/actions/image-actions.c:190 app/actions/image-actions.c:518
+#: app/actions/image-actions.c:190 app/actions/image-actions.c:531
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "_Grátóna"
@@ -5958,12 +5964,12 @@ msgctxt "image-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er algild litmæling"
 
-#: app/actions/image-actions.c:509
+#: app/actions/image-actions.c:522
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB..."
 
-#: app/actions/image-actions.c:511
+#: app/actions/image-actions.c:524
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Grátóna..."
@@ -6000,7 +6006,7 @@ msgstr "Fletting"
 msgid "Rotating"
 msgstr "Sný"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1305
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1307
 msgid "Cannot crop because the current selection is empty."
 msgstr "Get ekki utansniðið þar sem núverandi val er tómt."
 
@@ -6049,7 +6055,7 @@ msgid "Scale Image"
 msgstr "Kvarða mynd"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2535
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2537
 #: app/dialogs/preferences-dialog.c:1757 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:378
 #: app/tools/gimpscaletool.c:122
@@ -6903,7 +6909,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Í _nýtt lag"
 
-#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2377
+#: app/actions/layers-commands.c:286 app/actions/layers-commands.c:2379
 msgid "Layer Attributes"
 msgstr "Eiginleikar lags"
 
@@ -6925,7 +6931,7 @@ msgid_plural "Create %d New Layers"
 msgstr[0] "Búa til nýtt lag"
 msgstr[1] "Búa til %d ný lög"
 
-#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2262
+#: app/actions/layers-commands.c:444 app/actions/layers-commands.c:2264
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nýtt lag"
@@ -6969,46 +6975,46 @@ msgstr[1] "Lækka lög neðst"
 msgid "Duplicate layers"
 msgstr "Tvítaka lög"
 
-#: app/actions/layers-commands.c:960
+#: app/actions/layers-commands.c:962
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Sameina %d lagahópa"
 
-#: app/actions/layers-commands.c:1020
+#: app/actions/layers-commands.c:1022
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Fjarlægja %d lög"
 
-#: app/actions/layers-commands.c:1047 app/text/gimptextlayer.c:584
+#: app/actions/layers-commands.c:1049 app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Henda textaupplýsingum"
 
-#: app/actions/layers-commands.c:1066
+#: app/actions/layers-commands.c:1068
 msgid "Add Paths"
 msgstr "Bæta við ferlum"
 
-#: app/actions/layers-commands.c:1190
+#: app/actions/layers-commands.c:1192
 msgid "Set Layer Boundary Size"
 msgstr "Stilla mörk lags"
 
-#: app/actions/layers-commands.c:1220
+#: app/actions/layers-commands.c:1222
 msgid "Layers to Image Size"
 msgstr "Lög að myndstærð"
 
-#: app/actions/layers-commands.c:1271
+#: app/actions/layers-commands.c:1273
 msgid "Scale Layer"
 msgstr "Kvarða lag"
 
-#: app/actions/layers-commands.c:1310
+#: app/actions/layers-commands.c:1312
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Utansníða lag að myndvali"
 msgstr[1] "Utansníða %d lög að myndvali"
 
-#: app/actions/layers-commands.c:1375
+#: app/actions/layers-commands.c:1377
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7016,108 +7022,108 @@ msgstr ""
 "Get ekki utansniðið þar sem ekkert afvöldu lögunum er með neitt innihald eða "
 "að þau eru þegar skorin að innihaldi sínu."
 
-#: app/actions/layers-commands.c:1381
+#: app/actions/layers-commands.c:1383
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Utansníða lag að innihaldi"
 msgstr[1] "Utansníða %d lög að innihaldi"
 
-#: app/actions/layers-commands.c:1518 app/actions/layers-commands.c:2470
+#: app/actions/layers-commands.c:1520 app/actions/layers-commands.c:2472
 msgid "Add Layer Masks"
 msgstr "Bæta inn laghulum"
 
-#: app/actions/layers-commands.c:1570
+#: app/actions/layers-commands.c:1572
 msgid "Apply Layer Masks"
 msgstr "Beita laghulum"
 
-#: app/actions/layers-commands.c:1574
+#: app/actions/layers-commands.c:1576
 msgid "Delete Layer Masks"
 msgstr "Eyða laghulum"
 
-#: app/actions/layers-commands.c:1661
+#: app/actions/layers-commands.c:1663
 msgid "Show Layer Masks"
 msgstr "Sýna laghulur"
 
-#: app/actions/layers-commands.c:1708
+#: app/actions/layers-commands.c:1710
 msgid "Disable Layer Masks"
 msgstr "Gera laghulur óvirkar"
 
-#: app/actions/layers-commands.c:1747
+#: app/actions/layers-commands.c:1749
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Hulur í myndval"
 
-#: app/actions/layers-commands.c:1751
+#: app/actions/layers-commands.c:1753
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Bæta laghulum í myndval"
 
-#: app/actions/layers-commands.c:1755
+#: app/actions/layers-commands.c:1757
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Draga  laghulur frá myndvali"
 
-#: app/actions/layers-commands.c:1759
+#: app/actions/layers-commands.c:1761
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Skara laghulur við myndval"
 
-#: app/actions/layers-commands.c:1780
+#: app/actions/layers-commands.c:1782
 msgid "Add Alpha Channel"
 msgstr "Bæta inn alfa-gegnsæislitrás"
 
-#: app/actions/layers-commands.c:1801
+#: app/actions/layers-commands.c:1803
 msgid "Remove Alpha Channel"
 msgstr "Fjarlægja alfa-gegnsæislitrás"
 
-#: app/actions/layers-commands.c:1829 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1831 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa-gegnsæislitrás í myndval"
 
-#: app/actions/layers-commands.c:1833 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1835 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Bæta alfa-gegnsæislitrás í myndval"
 
-#: app/actions/layers-commands.c:1837 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1839 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Draga alfa-gegnsæislitrás frá myndvali"
 
-#: app/actions/layers-commands.c:1841 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1843 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Skara alfa-gegnsæislitrás við myndval"
 
-#: app/actions/layers-commands.c:1852
+#: app/actions/layers-commands.c:1854
 msgid "Empty Selection"
 msgstr "Autt myndval"
 
-#: app/actions/layers-commands.c:1882 app/actions/layers-commands.c:1926
+#: app/actions/layers-commands.c:1884 app/actions/layers-commands.c:1928
 #: app/widgets/gimplayertreeview.c:1115
 msgid "Set layers opacity"
 msgstr "Stilla ógegnsæi lagsins"
 
-#: app/actions/layers-commands.c:1996
+#: app/actions/layers-commands.c:1998
 msgid "Set layers' blend space"
 msgstr "Stilla litarýmd blöndunar lagsins"
 
-#: app/actions/layers-commands.c:2049
+#: app/actions/layers-commands.c:2051
 msgid "Set layers' composite space"
 msgstr "Stilla litarýmd samsetningar lagsins"
 
-#: app/actions/layers-commands.c:2102
+#: app/actions/layers-commands.c:2104
 msgid "Set layers' composite mode"
 msgstr "Stilla samsetningarham lagsins"
 
-#: app/actions/layers-commands.c:2186
+#: app/actions/layers-commands.c:2188
 msgid "Lock alpha channels"
 msgstr "Læsa alfa-gegnsæislitrásum"
 
-#: app/actions/layers-commands.c:2186
+#: app/actions/layers-commands.c:2188
 msgid "Unlock alpha channels"
 msgstr "Aflæsa alfa-gegnsæislitrásum"
 
@@ -7898,8 +7904,8 @@ msgstr "Frumstilla allar síur"
 #: app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:357 app/tools/gimptransformgridtool.c:1261
-#: app/widgets/gimpcolordialog.c:482 app/widgets/gimpcolordisplayeditor.c:332
+#: app/tools/gimpfiltertool.c:358 app/tools/gimptransformgridtool.c:1261
+#: app/widgets/gimpcolordialog.c:484 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "F_rumstilla"
 
@@ -8260,85 +8266,80 @@ msgstr ""
 
 #: app/actions/text-editor-actions.c:40
 msgctxt "text-editor-action"
-msgid "Text Editor Toolbar"
-msgstr "Verkfærastika textaritils"
-
-#: app/actions/text-editor-actions.c:45
-msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Opna"
 
-#: app/actions/text-editor-actions.c:46
+#: app/actions/text-editor-actions.c:41
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Hlaða inn texta úr skrá"
 
-#: app/actions/text-editor-actions.c:51
+#: app/actions/text-editor-actions.c:46
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Hreinsa"
 
-#: app/actions/text-editor-actions.c:52
+#: app/actions/text-editor-actions.c:47
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Hreinsa allan texta"
 
-#: app/actions/text-editor-actions.c:60
+#: app/actions/text-editor-actions.c:55
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "LTR"
 
-#: app/actions/text-editor-actions.c:61
+#: app/actions/text-editor-actions.c:56
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "Frá vinstri til hægri"
 
-#: app/actions/text-editor-actions.c:66
+#: app/actions/text-editor-actions.c:61
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "RTL"
 
-#: app/actions/text-editor-actions.c:67
+#: app/actions/text-editor-actions.c:62
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Frá hægri til vinstri"
 
-#: app/actions/text-editor-actions.c:72
+#: app/actions/text-editor-actions.c:67
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
 msgstr "TTB-RTL"
 
-#: app/actions/text-editor-actions.c:73
+#: app/actions/text-editor-actions.c:68
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
-#: app/actions/text-editor-actions.c:78
+#: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
 msgstr "TTB-RTL-UPPRÉTT"
 
-#: app/actions/text-editor-actions.c:79
+#: app/actions/text-editor-actions.c:74
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
-#: app/actions/text-editor-actions.c:84
+#: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
 msgstr "TTB-LTR"
 
-#: app/actions/text-editor-actions.c:85
+#: app/actions/text-editor-actions.c:80
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
-#: app/actions/text-editor-actions.c:90
+#: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
 msgstr "TTB-LTR-UPPRÉTT"
 
-#: app/actions/text-editor-actions.c:91
+#: app/actions/text-editor-actions.c:86
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
@@ -9985,8 +9986,8 @@ msgstr "Opna skjá"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:191
-#: app/tools/gimpfiltertool.c:359 app/widgets/gimpcolordialog.c:484
-#: app/widgets/gimpcontrollereditor.c:663
+#: app/tools/gimpfiltertool.c:360 app/widgets/gimpcolordialog.c:486
+#: app/widgets/gimpcontrollereditor.c:667
 #: app/widgets/gimpdeviceinfoeditor.c:1161 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:689
 #: app/widgets/gimppdbdialog.c:146
@@ -10390,8 +10391,8 @@ msgid "Layer"
 msgstr "Lag"
 
 #: app/config/gimpdialogconfig.c:418 app/core/gimpchannel.c:256
-#: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
-#: app/operations/gimpoperationthreshold.c:93
+#: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:125
+#: app/operations/gimpoperationthreshold.c:94
 #: app/widgets/gimpchanneltreeview.c:338
 msgid "Channel"
 msgstr "Litrás"
@@ -12269,7 +12270,7 @@ msgctxt "undo-type"
 msgid "Paste"
 msgstr "Líma"
 
-#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1224
+#: app/core/core-enums.c:1337 app/core/gimp-edit.c:1251
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klippa"
@@ -12585,26 +12586,26 @@ msgid "Selection by glob pattern search"
 msgstr "Val eftir mynsturleit með algildisstöfum"
 
 #. initialize babl fishes
-#: app/core/gimp.c:535 app/core/gimp.c:565
+#: app/core/gimp.c:539 app/core/gimp.c:569
 msgid "Initialization"
 msgstr "Frumstilling"
 
 #. register all internal procedures
-#: app/core/gimp.c:545
+#: app/core/gimp.c:549
 msgid "Internal Procedures"
 msgstr "Innri ferlar"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:845
+#: app/core/gimp.c:849
 msgid "Looking for data files"
 msgstr "Leita að gagnaskrám"
 
-#: app/core/gimp.c:845
+#: app/core/gimp.c:849
 msgid "Parasites"
 msgstr "Sníklar"
 
 #. initialize the module list
-#: app/core/gimp.c:856 app/dialogs/preferences-dialog.c:3582
+#: app/core/gimp.c:860 app/dialogs/preferences-dialog.c:3582
 msgid "Modules"
 msgstr "Forritseiningar"
 
@@ -12684,11 +12685,11 @@ msgstr "Get ekki klippt því valið svæði er tómt."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Get ekki afritað því valið svæði er tómt."
 
-#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:597
+#: app/core/gimp-edit.c:642 app/core/gimpimage-new.c:627
 msgid "Pasted Layer"
 msgstr "Límt lag"
 
-#: app/core/gimp-edit.c:1241
+#: app/core/gimp-edit.c:1268
 msgid "Global Buffer"
 msgstr "Víðvært biðminni"
 
@@ -12803,12 +12804,12 @@ msgid "Please wait: %s\n"
 msgstr "Hinkraðu aðeins…: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:650 app/core/gimpdata.c:663
+#: app/core/gimpdata.c:652 app/core/gimpdata.c:665
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Villa við að vista '%s': "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:669
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:671
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Villa við að vista '%s'"
@@ -12838,7 +12839,7 @@ msgstr "tags-locale:is"
 msgid "Error closing '%s': %s"
 msgstr "Villa við að loka '%s': %s"
 
-#: app/core/gimp-user-install.c:218
+#: app/core/gimp-user-install.c:227
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -12847,7 +12848,7 @@ msgstr ""
 "Það lítur út fyrir að þú hafir notað GIMP %s áður.  GIMP mun núna yfirfæra "
 "notandastillingarnar þínar í '%s'."
 
-#: app/core/gimp-user-install.c:223
+#: app/core/gimp-user-install.c:235
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -12856,17 +12857,17 @@ msgstr ""
 "Það lítur út fyrir að þú sért að nota GIMP í fyrsta skipti.  GIMP mun núna "
 "búa til möppu með heitinu '%s' og afrita nokkrar skrár í hana."
 
-#: app/core/gimp-user-install.c:424
+#: app/core/gimp-user-install.c:509
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Afrita skrá '%s' frá '%s'..."
 
-#: app/core/gimp-user-install.c:439 app/core/gimp-user-install.c:465
+#: app/core/gimp-user-install.c:524 app/core/gimp-user-install.c:550
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Bý til möppuna '%s'..."
 
-#: app/core/gimp-user-install.c:450 app/core/gimp-user-install.c:476
+#: app/core/gimp-user-install.c:535 app/core/gimp-user-install.c:561
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Get ekki búið til möppu '%s': %s"
@@ -13289,7 +13290,7 @@ msgid "Background color"
 msgstr "Bakgrunnslitur"
 
 #: app/core/gimpcontext.c:682 app/core/gimpcontext.c:683
-#: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
+#: app/operations/gimpoperationsettings.c:100
 #: app/widgets/gimplayertreeview.c:295
 msgid "Opacity"
 msgstr "Ógegnsæi"
@@ -13727,7 +13728,7 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Ummynda lagahóp"
 
-#: app/core/gimpimage.c:685 app/widgets/gimpsymmetryeditor.c:182
+#: app/core/gimpimage.c:685 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Samhverfa"
 
@@ -13743,114 +13744,114 @@ msgstr " (yfirskrifað)"
 msgid " (imported)"
 msgstr " (flutt inn)"
 
-#: app/core/gimpimage.c:2820 app/core/gimpimage.c:2834
-#: app/core/gimpimage.c:2877
+#: app/core/gimpimage.c:2821 app/core/gimpimage.c:2835
+#: app/core/gimpimage.c:2878
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Lagahamnum '%s' var bætt við í %s"
 
-#: app/core/gimpimage.c:2892
+#: app/core/gimpimage.c:2893
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Lagahópum var bætt við í %s"
 
-#: app/core/gimpimage.c:2899
+#: app/core/gimpimage.c:2900
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Laghulum á hópuð lög var bætt við í %s"
 
-#: app/core/gimpimage.c:2906
+#: app/core/gimpimage.c:2907
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Læsing staðsetninga á hópuð lög var bætt við í %s"
 
-#: app/core/gimpimage.c:2913
+#: app/core/gimpimage.c:2914
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Læsing alfa-gegnsæislitrása á hópuð lög var bætt við í %s"
 
-#: app/core/gimpimage.c:2921 app/core/gimpimage.c:2957
+#: app/core/gimpimage.c:2922 app/core/gimpimage.c:2959
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Sýnileikalæsingum var bætt við í %s"
 
-#: app/core/gimpimage.c:2932
+#: app/core/gimpimage.c:2933
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Sniði leturupplýsinga í textalagi var breytt í %s"
 
-#: app/core/gimpimage.c:2939
+#: app/core/gimpimage.c:2941
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Lagabrellum var bætt við í %s"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2968
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Vali með mörgum ferlum var bætt við í %s"
 
-#: app/core/gimpimage.c:2978
+#: app/core/gimpimage.c:2980
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Stuðningi við að geyma litamerki í ferlum var bætt við í %s"
 
-#: app/core/gimpimage.c:2985
+#: app/core/gimpimage.c:2987
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Stuðningi við að geyma læsingar í ferlum var bætt við í %s"
 
-#: app/core/gimpimage.c:2999
+#: app/core/gimpimage.c:3001
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Myndum með hárri bitadýpt var bætt við í %s"
 
-#: app/core/gimpimage.c:3007
+#: app/core/gimpimage.c:3009
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kóðun mynda með hárri bitadýpt var löguð í %s"
 
-#: app/core/gimpimage.c:3015
+#: app/core/gimpimage.c:3017
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Innri Zlib-þjöppun var bætt við í %s"
 
-#: app/core/gimpimage.c:3032
+#: app/core/gimpimage.c:3034
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Stuðningi við skrár stærri en 4GB var bætt við í %s"
 
-#: app/core/gimpimage.c:3039
+#: app/core/gimpimage.c:3041
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Vali með mörgum lögum var bætt við í %s"
 
-#: app/core/gimpimage.c:3056
+#: app/core/gimpimage.c:3058
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Stoðlínum utan myndflatar bætt við í %s"
 
-#: app/core/gimpimage.c:3067
+#: app/core/gimpimage.c:3069
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Sett af atriðum og leit eftir mynstrum í heiti atriða var bætt við í %s"
 
-#: app/core/gimpimage.c:3073
+#: app/core/gimpimage.c:3075
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Vali með mörgum litrásum var bætt við í %s"
 
-#: app/core/gimpimage.c:3187
+#: app/core/gimpimage.c:3189
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Breyta myndupplausn"
 
-#: app/core/gimpimage.c:3239
+#: app/core/gimpimage.c:3241
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Breyta einingum myndar"
 
-#: app/core/gimpimage.c:4292
+#: app/core/gimpimage.c:4294
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13858,47 +13859,47 @@ msgstr ""
 "Fullgilding á 'gimp-comment' sníkli mistókst: athugasemd inniheldur ógilt "
 "UTF-8"
 
-#: app/core/gimpimage.c:4354
+#: app/core/gimpimage.c:4356
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Festa sníkil við mynd"
 
-#: app/core/gimpimage.c:4399
+#: app/core/gimpimage.c:4401
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Fjarlægja sníkil úr mynd"
 
-#: app/core/gimpimage.c:5234
+#: app/core/gimpimage.c:5236
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Bæta við lagi"
 
-#: app/core/gimpimage.c:5278 app/core/gimpimage.c:5309
+#: app/core/gimpimage.c:5280 app/core/gimpimage.c:5311
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Fjarlægja lag"
 
-#: app/core/gimpimage.c:5303
+#: app/core/gimpimage.c:5305
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Fjarlægja fljótandi val"
 
-#: app/core/gimpimage.c:5811
+#: app/core/gimpimage.c:5813
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Bæta við litrás"
 
-#: app/core/gimpimage.c:5841 app/core/gimpimage.c:5866
+#: app/core/gimpimage.c:5843 app/core/gimpimage.c:5868
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Fjarlægja litrás"
 
-#: app/core/gimpimage.c:5926
+#: app/core/gimpimage.c:5928
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Bæta við ferli"
 
-#: app/core/gimpimage.c:5961 app/core/gimpimage.c:5969
+#: app/core/gimpimage.c:5963 app/core/gimpimage.c:5971
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Fjarlægja feril"
@@ -13976,57 +13977,57 @@ msgstr "Umbreyting litasniðs"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Litavörpun af myndinni #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:230 app/core/gimpimage-colormap.c:310
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:904
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Stilla litavörpun"
 
-#: app/core/gimpimage-colormap.c:348
+#: app/core/gimpimage-colormap.c:305
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Aftengja litvörpun (colormap)"
 
-#: app/core/gimpimage-colormap.c:440 app/core/gimppalette.c:612
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:695
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Breyta færslu fyrir litavörpun"
 
-#: app/core/gimpimage-colormap.c:462
+#: app/core/gimpimage-colormap.c:419
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Bæta lit í litavörpun"
 
-#: app/core/gimpimage-colormap.c:487
+#: app/core/gimpimage-colormap.c:444
 msgctxt "undo-type"
 msgid "Delete Colormap entry"
 msgstr "Eyða færslu fyrir litavörpun"
 
-#: app/core/gimpimage-convert-indexed.c:855
+#: app/core/gimpimage-convert-indexed.c:856
 msgid "Cannot convert image: palette is empty."
 msgstr "Get ekki umbreytt mynd: litaspjald er tómt."
 
-#: app/core/gimpimage-convert-indexed.c:867
+#: app/core/gimpimage-convert-indexed.c:868
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Umbreyta mynd í númeraða liti"
 
-#: app/core/gimpimage-convert-indexed.c:958
+#: app/core/gimpimage-convert-indexed.c:959
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Umbreyta mynd í númeraða liti (þrep 2)"
 
-#: app/core/gimpimage-convert-indexed.c:1007
+#: app/core/gimpimage-convert-indexed.c:1008
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Umbreyta mynd í númeraða liti (þrep 3)"
 
-#: app/core/gimpimage-convert-precision.c:79
+#: app/core/gimpimage-convert-precision.c:76
 #, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Umbreyta mynd í %s"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:249
-#: app/core/gimpimage-convert-precision.c:270
+#: app/core/gimpimage-convert-precision.c:198
+#: app/core/gimpimage-convert-precision.c:219
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:129
@@ -14119,7 +14120,7 @@ msgstr "Get ekki sameinað niður ósýnilegt lag."
 msgid "Cannot merge down to a layer group."
 msgstr "Get ekki sameinað niður í lagahóp."
 
-#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2826
+#: app/core/gimpimage-merge.c:342 app/widgets/gimpitemtreeview.c:2835
 msgid "The layer to merge down to is locked."
 msgstr "Lagið sem á að sameina niður í er læst."
 
@@ -14241,9 +14242,9 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Ekki tókst að opna '%s' smámyndina: %s"
 
 #: app/core/gimpitem.c:1851 app/core/gimpitem.c:1918
-#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
+#: app/display/gimpdisplayshell-dnd.c:410 app/tools/gimptransformtool.c:704
 #: app/tools/gimpvectortool.c:757 app/tools/gimpvectortool.c:846
-#: app/widgets/gimpitemtreeview.c:2620
+#: app/widgets/gimpitemtreeview.c:2625
 msgid "A selected layer's pixels are locked."
 msgstr "Mynddílar valins lags eru læstir."
 
@@ -14266,12 +14267,12 @@ msgstr "Fjarlægja sníkil af hlut"
 msgid "Set Item Exclusive Visibility"
 msgstr "Stilla sérstakan sýnileika þessa atriðis"
 
-#: app/core/gimplayer-floating-selection.c:126
+#: app/core/gimplayer-floating-selection.c:127
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Festa fljótandi val"
 
-#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1047
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1047
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14279,7 +14280,7 @@ msgstr ""
 "Ekki er hægt að búa til nýtt lag úr fljótandi valinu því það tilheyrir "
 "laghulu eða litrás."
 
-#: app/core/gimplayer-floating-selection.c:189
+#: app/core/gimplayer-floating-selection.c:190
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Fljótandi val á lag"
@@ -14347,7 +14348,7 @@ msgstr "Ekki hægt að hækka lagið frekar."
 msgid "Layer cannot be lowered more."
 msgstr "Ekki hægt að lækka lag frekar."
 
-#: app/core/gimplayer.c:733 app/core/gimplayer.c:2005
+#: app/core/gimplayer.c:733 app/core/gimplayer.c:2000
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
@@ -14374,75 +14375,75 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1906
+#: app/core/gimplayer.c:1901
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Get ekki sett hulu á lag\n"
 "þar sem lag er þegar með hulu."
 
-#: app/core/gimplayer.c:1917
+#: app/core/gimplayer.c:1912
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Get ekki bætt við hulu af annarri stærð en viðkomandi lag."
 
-#: app/core/gimplayer.c:1923
+#: app/core/gimplayer.c:1918
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Bæta inn laghulum"
 
-#: app/core/gimplayer.c:2047
+#: app/core/gimplayer.c:2042
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Færa alfalitrás í laghulu"
 
-#: app/core/gimplayer.c:2210
+#: app/core/gimplayer.c:2205
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Beita laghulum"
 
-#: app/core/gimplayer.c:2211
+#: app/core/gimplayer.c:2206
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Eyða laghulum"
 
-#: app/core/gimplayer.c:2318
+#: app/core/gimplayer.c:2313
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Virkja laghulur"
 
-#: app/core/gimplayer.c:2319
+#: app/core/gimplayer.c:2314
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Gera laghulur óvirkar"
 
-#: app/core/gimplayer.c:2400
+#: app/core/gimplayer.c:2395
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Sýna laghulur"
 
-#: app/core/gimplayer.c:2479
+#: app/core/gimplayer.c:2474
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Bæta inn alfa-gegnsæislitrás"
 
-#: app/core/gimplayer.c:2509
+#: app/core/gimplayer.c:2504
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Fjarlægja alfa-gegnsæislitrás"
 
-#: app/core/gimplayer.c:2530
+#: app/core/gimplayer.c:2525
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Lag að myndstærð"
 
-#: app/core/gimplayer.c:2713
+#: app/core/gimplayer.c:2708
 msgid "Set layer's blend space"
 msgstr "Stilla litarýmd blöndunar lagsins"
 
-#: app/core/gimplayer.c:2760
+#: app/core/gimplayer.c:2755
 msgid "Set layer's composite space"
 msgstr "Stilla litarýmd samsetningar lagsins"
 
-#: app/core/gimplayer.c:2807
+#: app/core/gimplayer.c:2802
 msgid "Set layer's composite mode"
 msgstr "Stilla samsetningarham lagsins"
 
@@ -14891,7 +14892,7 @@ msgstr "Herma eftir pensilhreyfingum"
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:512
 #: app/display/gimpstatusbar.c:2146 app/widgets/gimpimagepropview.c:407
-#: app/widgets/gimpsymmetryeditor.c:166 app/widgets/gimpsymmetryeditor.c:176
+#: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
 msgstr "Ekkert"
 
@@ -15067,7 +15068,7 @@ msgid "Precision"
 msgstr "Nákvæmni"
 
 #: app/core/gimptemplate.c:212 app/operations/gimpcurvesconfig.c:105
-#: app/operations/gimplevelsconfig.c:110 app/widgets/gimphistogrameditor.c:115
+#: app/operations/gimplevelsconfig.c:111 app/widgets/gimphistogrameditor.c:115
 msgid "Linear/Perceptual"
 msgstr "Línulegt/Skynjanlegt"
 
@@ -15450,7 +15451,7 @@ msgstr "Umbreyting kóðunar"
 
 #. gamma
 #: app/dialogs/convert-precision-dialog.c:176
-#: app/operations/gimplevelsconfig.c:149 app/operations/gimplevelsconfig.c:150
+#: app/operations/gimplevelsconfig.c:150 app/operations/gimplevelsconfig.c:151
 #: app/tools/gimplevelstool.c:510
 msgid "Gamma"
 msgstr "Litróf (gamma)"
@@ -15675,11 +15676,11 @@ msgstr "Uppgefið viðskeyti samsvarar ekki valinni skráartegund."
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Viltu samt vista myndina með þessu heiti?"
 
-#: app/dialogs/file-save-dialog.c:838
+#: app/dialogs/file-save-dialog.c:845
 msgid "Saving canceled"
 msgstr "Hætt við vistun"
 
-#: app/dialogs/file-save-dialog.c:844 app/widgets/gimpdnd-xds.c:190
+#: app/dialogs/file-save-dialog.c:852 app/widgets/gimpdnd-xds.c:190
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -15690,7 +15691,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/dialogs/file-save-dialog.c:846
+#: app/dialogs/file-save-dialog.c:854
 msgid "Unknown error"
 msgstr "Óþekkt villa"
 
@@ -16670,7 +16671,7 @@ msgstr "Verkfæravalkostir"
 #. general device information
 #: app/dialogs/preferences-dialog.c:1729 app/dialogs/preferences-dialog.c:2656
 #: app/dialogs/preferences-dialog.c:3094 app/dialogs/preferences-dialog.c:3118
-#: app/widgets/gimpcontrollereditor.c:188
+#: app/widgets/gimpcontrollereditor.c:190
 #: app/widgets/gimpdeviceinfoeditor.c:362
 msgid "General"
 msgstr "Almennt"
@@ -18555,23 +18556,23 @@ msgstr "H"
 msgid "_Sample Merged"
 msgstr "_Sameinað sýni"
 
-#: app/display/gimpdisplayshell.c:539
+#: app/display/gimpdisplayshell.c:548
 msgid "Access the image menu"
 msgstr "Opna valmynd myndar"
 
-#: app/display/gimpdisplayshell.c:702
+#: app/display/gimpdisplayshell.c:711
 msgid "Zoom image when window size changes"
 msgstr "Breyta aðdrætti myndar þegar stærð glugga breytist"
 
-#: app/display/gimpdisplayshell.c:731
+#: app/display/gimpdisplayshell.c:740
 msgid "Toggle Quick Mask"
 msgstr "Víxla flýtihulu"
 
-#: app/display/gimpdisplayshell.c:746
+#: app/display/gimpdisplayshell.c:755
 msgid "Navigate the image display"
 msgstr "Flakka um sýniglugga myndar"
 
-#: app/display/gimpdisplayshell.c:799 app/display/gimpdisplayshell.c:1551
+#: app/display/gimpdisplayshell.c:808 app/display/gimpdisplayshell.c:1578
 #: app/widgets/gimptoolbox.c:269
 msgid "Drop image files here to open them"
 msgstr "Slepptu myndskrám hér til að opna þær"
@@ -18654,44 +18655,44 @@ msgstr[1] ""
 msgid "The image has been exported to '%s'."
 msgstr "Myndin hefur verið flutt út í '%s'."
 
-#: app/display/gimpdisplayshell-dnd.c:249
-#: app/display/gimpdisplayshell-dnd.c:690
-#: app/display/gimpdisplayshell-dnd.c:749
+#: app/display/gimpdisplayshell-dnd.c:255
+#: app/display/gimpdisplayshell-dnd.c:726
+#: app/display/gimpdisplayshell-dnd.c:785
 msgid "Drop New Layer"
 msgstr "Sleppa nýju lagi"
 
-#: app/display/gimpdisplayshell-dnd.c:291
+#: app/display/gimpdisplayshell-dnd.c:327
 msgid "Drop New Path"
 msgstr "Sleppa nýjum ferli"
 
-#: app/display/gimpdisplayshell-dnd.c:365 app/tools/gimpbucketfilltool.c:610
+#: app/display/gimpdisplayshell-dnd.c:401 app/tools/gimpbucketfilltool.c:610
 #: app/tools/gimpcagetool.c:243 app/tools/gimpgradienttool.c:276
 #: app/tools/gimpselectiontool.c:567
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Get ekki breytt mynddílum í lagahópum."
 
-#: app/display/gimpdisplayshell-dnd.c:430
+#: app/display/gimpdisplayshell-dnd.c:466
 #: app/widgets/gimpdrawabletreeview.c:267
 #: app/widgets/gimpdrawabletreeview.c:381
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Sleppa mynstri á lag"
 
-#: app/display/gimpdisplayshell-dnd.c:452
+#: app/display/gimpdisplayshell-dnd.c:488
 #: app/widgets/gimpdrawabletreeview.c:298
 #: app/widgets/gimpdrawabletreeview.c:401
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Sleppa lit á lag"
 
-#: app/display/gimpdisplayshell-dnd.c:580 app/widgets/gimpitemtreeview.c:1934
+#: app/display/gimpdisplayshell-dnd.c:616 app/widgets/gimpitemtreeview.c:1939
 #: app/widgets/gimplayertreeview.c:811
 msgid "Drop layers"
 msgstr "Sleppa lögum"
 
-#: app/display/gimpdisplayshell-dnd.c:723
-#: app/display/gimpdisplayshell-dnd.c:740 app/widgets/gimplayertreeview.c:888
+#: app/display/gimpdisplayshell-dnd.c:759
+#: app/display/gimpdisplayshell-dnd.c:776 app/widgets/gimplayertreeview.c:888
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Sleppt biðminni"
@@ -18784,7 +18785,7 @@ msgstr "(hreinsað)"
 msgid "(none)"
 msgstr "(enginn)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1742
+#: app/display/gimpdisplayshell-tool-events.c:1757
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Lag valið: '%s'"
@@ -19353,15 +19354,15 @@ msgstr "Neikvæð y-hliðrun: %d fyrir lagið %s leiðrétt."
 msgid "GIMP brush"
 msgstr "GIMP-pensill"
 
-#: app/file-data/file-data.c:201 app/file-data/file-data.c:255
+#: app/file-data/file-data.c:195 app/file-data/file-data.c:249
 msgid "GIMP brush (animated)"
 msgstr "GIMP-pensill (hreyfimynd)"
 
-#: app/file-data/file-data.c:345 app/file-data/file-data.c:398
+#: app/file-data/file-data.c:333 app/file-data/file-data.c:386
 msgid "GIMP pattern"
 msgstr "GIMP-mynstur"
 
-#: app/file-data/file-data.c:475
+#: app/file-data/file-data.c:457
 msgid "GIMP extension"
 msgstr "GIMP-forritsviðauki"
 
@@ -19371,7 +19372,7 @@ msgstr "GIMP-forritsviðauki"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1019
+#: app/plug-in/gimppluginprocedure.c:1022
 msgid "RGB"
 msgstr "RGB"
 
@@ -19390,7 +19391,7 @@ msgstr "RGB-alfa"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1037
+#: app/plug-in/gimppluginprocedure.c:1040
 msgid "Grayscale"
 msgstr "Grátóna"
 
@@ -19439,7 +19440,7 @@ msgstr "Alfa gegnsæisþáttur"
 msgid "Indexed-alpha"
 msgstr "Litnúmerað-alfa"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1055
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1058
 msgid "Indexed"
 msgstr "Litnúmerað"
 
@@ -20041,19 +20042,19 @@ msgstr "Gult-Blátt"
 msgid "Preserve Luminosity"
 msgstr "Varðveita skærleika"
 
-#: app/operations/gimpcurvesconfig.c:106 app/operations/gimplevelsconfig.c:111
+#: app/operations/gimpcurvesconfig.c:106 app/operations/gimplevelsconfig.c:112
 msgid "Work on linear or perceptual RGB"
 msgstr "Vinna með línulegt eða skynjanlegt RGB"
 
-#: app/operations/gimpcurvesconfig.c:113 app/operations/gimplevelsconfig.c:118
+#: app/operations/gimpcurvesconfig.c:113 app/operations/gimplevelsconfig.c:119
 msgid "Linear"
 msgstr "Línulegt"
 
-#: app/operations/gimpcurvesconfig.c:114 app/operations/gimplevelsconfig.c:119
+#: app/operations/gimpcurvesconfig.c:114 app/operations/gimplevelsconfig.c:120
 msgid "Work on linear RGB"
 msgstr "Vinna með línulegt RGB"
 
-#: app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:125
+#: app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:126
 msgid "The affected channel"
 msgstr "Litrás sem kemur við sögu"
 
@@ -20075,22 +20076,22 @@ msgstr "Skrifun í litferlaskrá mistókst: "
 
 #: app/operations/gimphuesaturationconfig.c:101
 #: app/operations/gimphuesaturationconfig.c:102
-#: app/operations/gimpoperationcolorize.c:99
 #: app/operations/gimpoperationcolorize.c:100
+#: app/operations/gimpoperationcolorize.c:101
 msgid "Hue"
 msgstr "Litblær"
 
 #: app/operations/gimphuesaturationconfig.c:107
 #: app/operations/gimphuesaturationconfig.c:108
-#: app/operations/gimpoperationcolorize.c:105
 #: app/operations/gimpoperationcolorize.c:106
+#: app/operations/gimpoperationcolorize.c:107
 msgid "Saturation"
 msgstr "Litmettun"
 
 #: app/operations/gimphuesaturationconfig.c:113
 #: app/operations/gimphuesaturationconfig.c:114
-#: app/operations/gimpoperationcolorize.c:111
 #: app/operations/gimpoperationcolorize.c:112
+#: app/operations/gimpoperationcolorize.c:113
 msgid "Lightness"
 msgstr "Ljósleiki"
 
@@ -20099,47 +20100,47 @@ msgstr "Ljósleiki"
 msgid "Overlap"
 msgstr "Skörun"
 
-#: app/operations/gimplevelsconfig.c:131 app/operations/gimplevelsconfig.c:132
+#: app/operations/gimplevelsconfig.c:132 app/operations/gimplevelsconfig.c:133
 msgid "Low Input"
 msgstr "Lág-inntak"
 
-#: app/operations/gimplevelsconfig.c:137 app/operations/gimplevelsconfig.c:138
+#: app/operations/gimplevelsconfig.c:138 app/operations/gimplevelsconfig.c:139
 msgid "High Input"
 msgstr "Há-inntak"
 
-#: app/operations/gimplevelsconfig.c:143
+#: app/operations/gimplevelsconfig.c:144
 msgid "Clamp Input"
 msgstr "Festa inntak"
 
-#: app/operations/gimplevelsconfig.c:144
+#: app/operations/gimplevelsconfig.c:145
 msgid "Clamp input values before applying output mapping."
 msgstr "Festa inntaksgildi áður en frálagsvörpun er beitt."
 
-#: app/operations/gimplevelsconfig.c:155 app/operations/gimplevelsconfig.c:156
+#: app/operations/gimplevelsconfig.c:156 app/operations/gimplevelsconfig.c:157
 msgid "Low Output"
 msgstr "Lág-úttak"
 
-#: app/operations/gimplevelsconfig.c:161 app/operations/gimplevelsconfig.c:162
+#: app/operations/gimplevelsconfig.c:162 app/operations/gimplevelsconfig.c:163
 msgid "High Output"
 msgstr "Há-úttak"
 
-#: app/operations/gimplevelsconfig.c:167
+#: app/operations/gimplevelsconfig.c:168
 msgid "Clamp Output"
 msgstr "Festa frálag"
 
-#: app/operations/gimplevelsconfig.c:168
+#: app/operations/gimplevelsconfig.c:169
 msgid "Clamp final output values."
 msgstr "Festa endanleg frálagsgildi."
 
-#: app/operations/gimplevelsconfig.c:874
+#: app/operations/gimplevelsconfig.c:876
 msgid "not a GIMP Levels file"
 msgstr "Ekki GIMP litatíðniskrá (levels file)"
 
-#: app/operations/gimplevelsconfig.c:949
+#: app/operations/gimplevelsconfig.c:951
 msgid "parse error"
 msgstr "þáttunarvilla"
 
-#: app/operations/gimplevelsconfig.c:984
+#: app/operations/gimplevelsconfig.c:986
 msgid "Writing levels file failed: "
 msgstr "Mistókst að skrifa litatíðniskrá: "
 
@@ -20170,21 +20171,21 @@ msgstr "Fylla með hreinum lit"
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Fylla upprunastöðu sjónarhornsrammans með hreinum lit"
 
-#: app/operations/gimpoperationcolorbalance.c:65
+#: app/operations/gimpoperationcolorbalance.c:66
 msgid "Adjust color distribution"
 msgstr "Stilla litadreifingu"
 
-#: app/operations/gimpoperationcolorize.c:92
+#: app/operations/gimpoperationcolorize.c:93
 msgid "Colorize the image"
 msgstr "Litþrykkja myndina"
 
-#: app/operations/gimpoperationcolorize.c:120
 #: app/operations/gimpoperationcolorize.c:121
+#: app/operations/gimpoperationcolorize.c:122
 #: app/operations/gimpoperationsemiflatten.c:92
 msgid "Color"
 msgstr "Litur"
 
-#: app/operations/gimpoperationcurves.c:67 app/tools/gimpcurvestool.c:154
+#: app/operations/gimpoperationcurves.c:67 app/tools/gimpcurvestool.c:155
 msgid "Adjust color curves"
 msgstr "Breyta litferlum"
 
@@ -20193,7 +20194,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Breytir litum í gráa tóna"
 
 #: app/operations/gimpoperationdesaturate.c:91
-#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1350
+#: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1437
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:179
 #: app/widgets/gimpdeviceinfoeditor.c:573 app/widgets/gimplayertreeview.c:281
@@ -20232,7 +20233,7 @@ msgstr "Skipta út hlutagegnsæi með lit"
 msgid "The color"
 msgstr "Liturinn"
 
-#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1313
+#: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1400
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
 #: app/tools/gimptransformoptions.c:262
 msgid "Clipping"
@@ -20243,15 +20244,15 @@ msgstr "Afmörkun"
 msgid "How to clip"
 msgstr "Hvernig á að klemma (clip)"
 
-#: app/operations/gimpoperationthreshold.c:88 app/tools/gimpthresholdtool.c:94
+#: app/operations/gimpoperationthreshold.c:89 app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
 msgstr "Smætta mynd niður í tvo liti með notkun litmarka (threshold)"
 
-#: app/operations/gimpoperationthreshold.c:101
+#: app/operations/gimpoperationthreshold.c:102
 msgid "Low threshold"
 msgstr "Lág litmörk"
 
-#: app/operations/gimpoperationthreshold.c:108
+#: app/operations/gimpoperationthreshold.c:109
 msgid "High threshold"
 msgstr "Há litmörk"
 
@@ -20309,7 +20310,7 @@ msgstr[1] "%d myndum var bjargað eftir hrunið. Viltu reyna að endurheimta þ�
 msgid "Documents"
 msgstr "Skjöl"
 
-#: app/gui/splash.c:181
+#: app/gui/splash.c:182
 msgid "GIMP Startup"
 msgstr "GIMP ræsing"
 
@@ -20791,52 +20792,52 @@ msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Litþrykkja"
 
-#: app/pdb/drawable-color-cmds.c:235 app/pdb/drawable-color-cmds.c:283
+#: app/pdb/drawable-color-cmds.c:234 app/pdb/drawable-color-cmds.c:281
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Litferlar"
 
-#: app/pdb/drawable-color-cmds.c:331
+#: app/pdb/drawable-color-cmds.c:329
 msgctxt "undo-type"
 msgid "Extract Component"
 msgstr "Afþjappa einingu (component)"
 
-#: app/pdb/drawable-color-cmds.c:372
+#: app/pdb/drawable-color-cmds.c:370
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Afmetta"
 
-#: app/pdb/drawable-color-cmds.c:546
+#: app/pdb/drawable-color-cmds.c:544
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Litblær-Litmettun"
 
-#: app/pdb/drawable-color-cmds.c:581 app/pdb/plug-in-compat-cmds.c:1585
+#: app/pdb/drawable-color-cmds.c:579
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Umhverfa"
 
-#: app/pdb/drawable-color-cmds.c:649
+#: app/pdb/drawable-color-cmds.c:647
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Litatíðnidreifing"
 
-#: app/pdb/drawable-color-cmds.c:737
+#: app/pdb/drawable-color-cmds.c:735
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
 msgstr "Skuggar-Hátónar"
 
-#: app/pdb/drawable-color-cmds.c:777
+#: app/pdb/drawable-color-cmds.c:775
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Þrykkja"
 
-#: app/pdb/drawable-color-cmds.c:823
+#: app/pdb/drawable-color-cmds.c:821
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Litmörk"
 
-#: app/pdb/edit-cmds.c:95 app/pdb/edit-cmds.c:387 app/pdb/edit-cmds.c:472
+#: app/pdb/edit-cmds.c:93 app/pdb/edit-cmds.c:378 app/pdb/edit-cmds.c:461
 msgid "All specified drawables must belong to the same image."
 msgstr "Allir tilgreindir myndhlutar verða að tilheyra sömu mynd."
 
@@ -21089,12 +21090,12 @@ msgctxt "PDB-error-data-label"
 msgid "MyPaint brush"
 msgstr "MyPaint málunarpensill"
 
-#: app/pdb/gimppdb.c:304 app/pdb/gimppdb.c:377 app/pdb/pdb-cmds.c:71
+#: app/pdb/gimppdb.c:304 app/pdb/gimppdb.c:375 app/pdb/pdb-cmds.c:71
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Aðgerðin '%s' fannst ekki"
 
-#: app/pdb/gimppdb.c:433
+#: app/pdb/gimppdb.c:431
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
@@ -21284,12 +21285,12 @@ msgstr ""
 "Aðferðin '%s' hefur verið kölluð fram með röngum UTF-8 streng fyrir "
 "frumbreytuna '%s'."
 
-#: app/pdb/image-cmds.c:2462
+#: app/pdb/image-cmds.c:2556
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Upplausn myndar er út úr kortinu, nota sjálfgefna upplausn í staðinn."
 
-#: app/pdb/image-select-cmds.c:306 app/tools/gimpfreeselecttool.c:105
+#: app/pdb/image-select-cmds.c:305 app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "Frjálst val"
 
@@ -21311,39 +21312,39 @@ msgstr "2D ummyndun"
 msgid "2D Transforming"
 msgstr "2D ummyndun"
 
-#: app/pdb/path-cmds.c:330
+#: app/pdb/path-cmds.c:325
 msgid "Remove path stroke"
 msgstr "Fjarlægja pensilstroku"
 
-#: app/pdb/path-cmds.c:367
+#: app/pdb/path-cmds.c:362
 msgid "Close path stroke"
 msgstr "Loka pensilstroku"
 
-#: app/pdb/path-cmds.c:406
+#: app/pdb/path-cmds.c:401
 msgid "Reverse path stroke"
 msgstr "Snúa við pensilstroku"
 
-#: app/pdb/path-cmds.c:451
+#: app/pdb/path-cmds.c:446
 msgid "Translate path stroke"
 msgstr "Umbreyta pensilstroku"
 
-#: app/pdb/path-cmds.c:496
+#: app/pdb/path-cmds.c:491
 msgid "Scale path stroke"
 msgstr "Kvarða pensilstroku"
 
-#: app/pdb/path-cmds.c:543
+#: app/pdb/path-cmds.c:538
 msgid "Rotate path stroke"
 msgstr "Snúa pensilstroku"
 
-#: app/pdb/path-cmds.c:588 app/pdb/path-cmds.c:637
+#: app/pdb/path-cmds.c:583 app/pdb/path-cmds.c:632
 msgid "Flip path stroke"
 msgstr "Fletta pensilstroku"
 
-#: app/pdb/path-cmds.c:768 app/pdb/path-cmds.c:892 app/pdb/path-cmds.c:1122
+#: app/pdb/path-cmds.c:761 app/pdb/path-cmds.c:884 app/pdb/path-cmds.c:1114
 msgid "Add path stroke"
 msgstr "Bæta við pensilstroku"
 
-#: app/pdb/path-cmds.c:946 app/pdb/path-cmds.c:1002 app/pdb/path-cmds.c:1066
+#: app/pdb/path-cmds.c:938 app/pdb/path-cmds.c:994 app/pdb/path-cmds.c:1058
 msgid "Extend path stroke"
 msgstr "Lengja pensilstroku"
 
@@ -21362,353 +21363,78 @@ msgctxt "undo-type"
 msgid "Displace"
 msgstr "Tilfærsla"
 
-#: app/pdb/plug-in-compat-cmds.c:378
+#: app/pdb/plug-in-compat-cmds.c:380
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "Gauss mýking"
 
-#: app/pdb/plug-in-compat-cmds.c:484
-msgctxt "undo-type"
-msgid "Alien Map"
-msgstr "Geimveru-gljái"
-
-#: app/pdb/plug-in-compat-cmds.c:521
-msgctxt "undo-type"
-msgid "Antialias"
-msgstr "Afstöllun"
-
-#: app/pdb/plug-in-compat-cmds.c:564
-msgctxt "undo-type"
-msgid "Apply Canvas"
-msgstr "Setja strigaáferð"
-
-#: app/pdb/plug-in-compat-cmds.c:626
-msgctxt "undo-type"
-msgid "Apply Lens"
-msgstr "Beita linsu"
-
-#: app/pdb/plug-in-compat-cmds.c:672
+#: app/pdb/plug-in-compat-cmds.c:465
 msgid "Autocrop image"
 msgstr "Sníða sjálfvirkt af mynd"
 
-#: app/pdb/plug-in-compat-cmds.c:735
+#: app/pdb/plug-in-compat-cmds.c:528
 msgid "Autocrop layer"
 msgstr "Sníða sjálfvirkt af lagi"
 
-#: app/pdb/plug-in-compat-cmds.c:789
-msgctxt "undo-type"
-msgid "Stretch Contrast HSV"
-msgstr "Teygja HSV birtuskil"
-
-#: app/pdb/plug-in-compat-cmds.c:943
+#: app/pdb/plug-in-compat-cmds.c:641
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Teygja birtuskil"
 
-#: app/pdb/plug-in-compat-cmds.c:986
-msgctxt "undo-type"
-msgid "Cartoon"
-msgstr "Teiknimynd"
-
-#: app/pdb/plug-in-compat-cmds.c:1065
-msgctxt "undo-type"
-msgid "Channel Mixer"
-msgstr "Rásablandari"
-
-#: app/pdb/plug-in-compat-cmds.c:1107
-msgctxt "undo-type"
-msgid "Color to Alpha"
-msgstr "Litur í gegnsæi"
-
-#: app/pdb/plug-in-compat-cmds.c:1153
-#, c-format
-msgid "Array 'matrix' has only %d members, must have 25"
-msgstr "Fylkið 'matrix' er aðeins með %d meðlimi, verður að hafa 25"
-
-#: app/pdb/plug-in-compat-cmds.c:1161
-#, c-format
-msgid "Array 'channels' has only %d members, must have 5"
-msgstr "Fylkið 'channels' er aðeins með %d meðlimi, verður að hafa 5"
-
-#: app/pdb/plug-in-compat-cmds.c:1233
-msgctxt "undo-type"
-msgid "Convolution Matrix"
-msgstr "Fléttunarfylki"
-
-#: app/pdb/plug-in-compat-cmds.c:1293
+#: app/pdb/plug-in-compat-cmds.c:701
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kúbismi"
 
-#: app/pdb/plug-in-compat-cmds.c:1338
-msgctxt "undo-type"
-msgid "Deinterlace"
-msgstr "Afflétta"
-
-#: app/pdb/plug-in-compat-cmds.c:1417
-msgctxt "undo-type"
-msgid "Diffraction Patterns"
-msgstr "Ljósbrotsmynstur"
-
-#: app/pdb/plug-in-compat-cmds.c:1554 app/pdb/plug-in-compat-cmds.c:1565
-msgctxt "undo-type"
-msgid "DoG Edge Detect"
-msgstr "Leita að brúnum með gaussískum mismun"
-
-#: app/pdb/plug-in-compat-cmds.c:1578 app/pdb/plug-in-compat-cmds.c:2897
-msgctxt "undo-type"
-msgid "Normalize"
-msgstr "Samræma"
-
-#: app/pdb/plug-in-compat-cmds.c:1655
+#: app/pdb/plug-in-compat-cmds.c:814
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Kantur"
 
-#: app/pdb/plug-in-compat-cmds.c:1707
+#: app/pdb/plug-in-compat-cmds.c:866
 msgctxt "undo-type"
 msgid "Emboss"
 msgstr "Upphleypt"
 
-#: app/pdb/plug-in-compat-cmds.c:1750
-msgctxt "undo-type"
-msgid "Engrave"
-msgstr "Myndrista"
-
-#: app/pdb/plug-in-compat-cmds.c:1820
-msgctxt "undo-type"
-msgid "Color Exchange"
-msgstr "Litaskipti"
-
-#: app/pdb/plug-in-compat-cmds.c:1868
-msgctxt "undo-type"
-msgid "Lens Flare"
-msgstr "Ljósglampi í linsu"
-
-#: app/pdb/plug-in-compat-cmds.c:1933
-msgctxt "undo-type"
-msgid "Fractal Trace"
-msgstr "Línugerð brotamynd"
-
-#: app/pdb/plug-in-compat-cmds.c:2117
-msgctxt "undo-type"
-msgid "Glass Tile"
-msgstr "Glerflísar"
-
-#: app/pdb/plug-in-compat-cmds.c:2170
-msgctxt "undo-type"
-msgid "Noise HSV"
-msgstr "HSV truflanir"
-
-#: app/pdb/plug-in-compat-cmds.c:2213
-msgctxt "undo-type"
-msgid "Illusion"
-msgstr "Sjónblekking"
-
-#: app/pdb/plug-in-compat-cmds.c:2250
-msgctxt "undo-type"
-msgid "Laplace"
-msgstr "Laplace"
-
-#: app/pdb/plug-in-compat-cmds.c:2319
-msgctxt "undo-type"
-msgid "Lens Distortion"
-msgstr "Linsubjögun"
-
-#: app/pdb/plug-in-compat-cmds.c:2359
-msgctxt "undo-type"
-msgid "Tile Seamless"
-msgstr "Saumlaus uppröðun"
-
-#: app/pdb/plug-in-compat-cmds.c:2419
+#: app/pdb/plug-in-compat-cmds.c:954
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Völundarhús"
 
-#: app/pdb/plug-in-compat-cmds.c:2502 app/pdb/plug-in-compat-cmds.c:2586
-msgctxt "undo-type"
-msgid "Motion Blur"
-msgstr "Hreyfingarafskerping"
-
-#: app/pdb/plug-in-compat-cmds.c:2633
-msgctxt "undo-type"
-msgid "Median Blur"
-msgstr "Miðgildis-afskerping"
-
-#: app/pdb/plug-in-compat-cmds.c:2725
-msgctxt "undo-type"
-msgid "Mosaic"
-msgstr "Mósaík"
-
-#: app/pdb/plug-in-compat-cmds.c:2769
-msgctxt "undo-type"
-msgid "Neon"
-msgstr "Neon"
-
-#: app/pdb/plug-in-compat-cmds.c:2857
-msgctxt "undo-type"
-msgid "Newsprint"
-msgstr "Dagblaðaprent"
-
-#: app/pdb/plug-in-compat-cmds.c:2961
-msgctxt "undo-type"
-msgid "Supernova"
-msgstr "Sprengistjarna"
-
-#: app/pdb/plug-in-compat-cmds.c:3005 app/pdb/plug-in-compat-cmds.c:3073
+#: app/pdb/plug-in-compat-cmds.c:998
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Olíulitun"
 
-#: app/pdb/plug-in-compat-cmds.c:3164
-msgctxt "undo-type"
-msgid "Paper Tile"
-msgstr "Pappírsflís"
-
-#: app/pdb/plug-in-compat-cmds.c:3213
-msgctxt "undo-type"
-msgid "Photocopy"
-msgstr "Ljósritun"
-
-#: app/pdb/plug-in-compat-cmds.c:3254 app/pdb/plug-in-compat-cmds.c:3297
-msgctxt "undo-type"
-msgid "Pixelize"
-msgstr "Gera stöllótt"
-
-#: app/pdb/plug-in-compat-cmds.c:3352
+#: app/pdb/plug-in-compat-cmds.c:1053
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: app/pdb/plug-in-compat-cmds.c:3406
-msgctxt "undo-type"
-msgid "Polar Coordinates"
-msgstr "Pólhnit"
-
-#: app/pdb/plug-in-compat-cmds.c:3446
-msgctxt "undo-type"
-msgid "Red Eye Removal"
-msgstr "Laga rauð augu"
-
-#: app/pdb/plug-in-compat-cmds.c:3499
-msgctxt "undo-type"
-msgid "Random Hurl"
-msgstr "Slembið kast"
-
-#: app/pdb/plug-in-compat-cmds.c:3552
-msgctxt "undo-type"
-msgid "Random Pick"
-msgstr "Slembið val"
-
-#: app/pdb/plug-in-compat-cmds.c:3605
-msgctxt "undo-type"
-msgid "Random Slur"
-msgstr "Slembið útmá"
-
-#: app/pdb/plug-in-compat-cmds.c:3680
-msgctxt "undo-type"
-msgid "RGB Noise"
-msgstr "RGB suð"
-
-#: app/pdb/plug-in-compat-cmds.c:3750
-msgctxt "undo-type"
-msgid "Ripple"
-msgstr "Gárur"
-
-#: app/pdb/plug-in-compat-cmds.c:3875
+#: app/pdb/plug-in-compat-cmds.c:1176
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Setja inn truflanir"
 
-#: app/pdb/plug-in-compat-cmds.c:3919
-msgctxt "undo-type"
-msgid "Selective Gaussian Blur"
-msgstr "Valkvæð Gaussísk afskerping"
-
-#: app/pdb/plug-in-compat-cmds.c:3963
-msgctxt "undo-type"
-msgid "Semi-Flatten"
-msgstr "Hálf-fletja"
-
-#: app/pdb/plug-in-compat-cmds.c:4006
-msgctxt "undo-type"
-msgid "Shift"
-msgstr "Hnika"
-
-#: app/pdb/plug-in-compat-cmds.c:4111
-msgctxt "undo-type"
-msgid "Sinus"
-msgstr "Sínus"
-
-#: app/pdb/plug-in-compat-cmds.c:4159
-msgctxt "undo-type"
-msgid "Sobel"
-msgstr "Sobel"
-
-#: app/pdb/plug-in-compat-cmds.c:4207
-msgctxt "undo-type"
-msgid "Softglow"
-msgstr "Mjúkljómi"
-
-#: app/pdb/plug-in-compat-cmds.c:4268
+#: app/pdb/plug-in-compat-cmds.c:1237
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Gegnheilt suð"
 
-#: app/pdb/plug-in-compat-cmds.c:4312
+#: app/pdb/plug-in-compat-cmds.c:1281
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Dreifa"
 
-#: app/pdb/plug-in-compat-cmds.c:4353
+#: app/pdb/plug-in-compat-cmds.c:1322
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Gegnsæi litmarka"
 
-#: app/pdb/plug-in-compat-cmds.c:4399
-msgctxt "undo-type"
-msgid "Sharpen (Unsharp Mask)"
-msgstr "Skerpa (Afskerpa hulu)"
-
-#: app/pdb/plug-in-compat-cmds.c:4445
-msgctxt "undo-type"
-msgid "Video"
-msgstr "Myndskeið"
-
-#: app/pdb/plug-in-compat-cmds.c:4482
-msgctxt "undo-type"
-msgid "Value Invert"
-msgstr "Snúa við litgildum"
-
-#: app/pdb/plug-in-compat-cmds.c:4583
-msgctxt "undo-type"
-msgid "Value Propagate"
-msgstr "Áframsenda gildi"
-
-#: app/pdb/plug-in-compat-cmds.c:4630
-msgctxt "undo-type"
-msgid "Dilate"
-msgstr "Þenja"
-
-#: app/pdb/plug-in-compat-cmds.c:4677
-msgctxt "undo-type"
-msgid "Erode"
-msgstr "Veðra"
-
-#: app/pdb/plug-in-compat-cmds.c:4740
+#: app/pdb/plug-in-compat-cmds.c:1385
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Bylgjur"
-
-#: app/pdb/plug-in-compat-cmds.c:4788
-msgctxt "undo-type"
-msgid "Whirl and Pinch"
-msgstr "Þyrla og Klípa"
-
-#: app/pdb/plug-in-compat-cmds.c:4840
-msgctxt "undo-type"
-msgid "Wind"
-msgstr "Vindur"
 
 #: app/pdb/resource-cmds.c:467
 #, c-format
@@ -21848,35 +21574,35 @@ msgstr "Frumstilli hjálparforrit"
 msgid "Starting Extensions"
 msgstr "Ræsi forritsviðauka"
 
-#: app/plug-in/gimppluginprocedure.c:1023
+#: app/plug-in/gimppluginprocedure.c:1026
 msgid "RGB without alpha"
 msgstr "RGB án alfa-gegnsæis"
 
-#: app/plug-in/gimppluginprocedure.c:1027
+#: app/plug-in/gimppluginprocedure.c:1030
 msgid "RGB with alpha"
 msgstr "RGB með alfa-gegnsæi"
 
-#: app/plug-in/gimppluginprocedure.c:1041
+#: app/plug-in/gimppluginprocedure.c:1044
 msgid "Grayscale without alpha"
 msgstr "Grátóna án alfa-gegnsæis"
 
-#: app/plug-in/gimppluginprocedure.c:1045
+#: app/plug-in/gimppluginprocedure.c:1048
 msgid "Grayscale with alpha"
 msgstr "Grátóna með alfa-gegnsæi"
 
-#: app/plug-in/gimppluginprocedure.c:1059
+#: app/plug-in/gimppluginprocedure.c:1062
 msgid "Indexed without alpha"
 msgstr "Litnúmerað án alfa-gegnsæis"
 
-#: app/plug-in/gimppluginprocedure.c:1063
+#: app/plug-in/gimppluginprocedure.c:1066
 msgid "Indexed with alpha"
 msgstr "Litnúmerað með alfa-gegnsæi"
 
-#: app/plug-in/gimppluginprocedure.c:1074
+#: app/plug-in/gimppluginprocedure.c:1077
 msgid "This plug-in only works on the following layer types:"
 msgstr "Þetta hjálparforrit virkar einungis á eftirgarandi tegundir laga:"
 
-#: app/plug-in/gimppluginprocedure.c:1315
+#: app/plug-in/gimppluginprocedure.c:1318
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -21885,7 +21611,7 @@ msgstr ""
 "Kallvilla vegna '%s':\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1327
+#: app/plug-in/gimppluginprocedure.c:1330
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22811,7 +22537,7 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Get ekki fyllt mörg lög. Veldu aðeins eitt lag."
 
 #: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:219 app/tools/gimpfiltertool.c:300
+#: app/tools/gimpcurvestool.c:220 app/tools/gimpfiltertool.c:301
 #: app/tools/gimpforegroundselecttool.c:295 app/tools/gimplevelstool.c:210
 #: app/tools/gimpoffsettool.c:190 app/tools/gimppainttool.c:297
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
@@ -23167,76 +22893,76 @@ msgid_plural "Resize %d layers"
 msgstr[0] "Breyta stærð lags"
 msgstr[1] "Breyta stærð %d laga"
 
-#: app/tools/gimpcurvestool.c:153
+#: app/tools/gimpcurvestool.c:154
 msgid "Curves"
 msgstr "Sveigjur"
 
-#: app/tools/gimpcurvestool.c:155
+#: app/tools/gimpcurvestool.c:156
 msgid "_Curves..."
 msgstr "Lit_ferlar..."
 
-#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:298
+#: app/tools/gimpcurvestool.c:218 app/tools/gimpfiltertool.c:299
 #: app/tools/gimplevelstool.c:208 app/tools/gimpoffsettool.c:188
-#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2599
+#: app/tools/gimpthresholdtool.c:158 app/widgets/gimpitemtreeview.c:2604
 msgid "Cannot modify multiple drawables. Select only one."
 msgstr "Get ekki breytt mörgum myndhlutum. Veldu aðeins einn."
 
-#: app/tools/gimpcurvestool.c:410
+#: app/tools/gimpcurvestool.c:411
 msgid "Click to add a control point"
 msgstr "Smelltu til að bæta við stýripunkti"
 
-#: app/tools/gimpcurvestool.c:415
+#: app/tools/gimpcurvestool.c:416
 msgid "Click to add control points to all channels"
 msgstr "Smelltu til að bæta við stýripunkti við allar litrásir"
 
-#: app/tools/gimpcurvestool.c:420
+#: app/tools/gimpcurvestool.c:421
 msgid "Click to locate on curve"
 msgstr "Smella til staðsetja á litferli"
 
-#: app/tools/gimpcurvestool.c:422
+#: app/tools/gimpcurvestool.c:423
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: bæta við stýripunkti"
 
-#: app/tools/gimpcurvestool.c:423
+#: app/tools/gimpcurvestool.c:424
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: bæta stýripunkti við allar litrásir"
 
-#: app/tools/gimpcurvestool.c:440
+#: app/tools/gimpcurvestool.c:441
 msgid "Adjust Color Curves"
 msgstr "Breyta litferlum"
 
-#: app/tools/gimpcurvestool.c:485 app/tools/gimplevelstool.c:367
+#: app/tools/gimpcurvestool.c:486 app/tools/gimplevelstool.c:367
 #: app/tools/gimpthresholdtool.c:247
 msgid "Cha_nnel:"
 msgstr "L_itrás"
 
-#: app/tools/gimpcurvestool.c:514 app/tools/gimplevelstool.c:394
+#: app/tools/gimpcurvestool.c:515 app/tools/gimplevelstool.c:394
 msgid "R_eset Channel"
 msgstr "_Núllstilla litrás"
 
-#: app/tools/gimpcurvestool.c:621
+#: app/tools/gimpcurvestool.c:622
 msgid "_Input:"
 msgstr "_Inntak:"
 
-#: app/tools/gimpcurvestool.c:635
+#: app/tools/gimpcurvestool.c:636
 msgid "O_utput:"
 msgstr "Útta_k:"
 
-#: app/tools/gimpcurvestool.c:649
+#: app/tools/gimpcurvestool.c:650
 msgid "T_ype:"
 msgstr "Te_gund:"
 
-#: app/tools/gimpcurvestool.c:668 app/widgets/gimpdeviceinfoeditor.c:492
+#: app/tools/gimpcurvestool.c:669 app/widgets/gimpdeviceinfoeditor.c:492
 msgid "Curve _type:"
 msgstr "_Tegund litferils:"
 
-#: app/tools/gimpcurvestool.c:754 app/tools/gimplevelstool.c:745
+#: app/tools/gimpcurvestool.c:755 app/tools/gimplevelstool.c:745
 msgid "Could not read header: "
 msgstr "Gat ekki lesið haus: "
 
-#: app/tools/gimpcurvestool.c:831
+#: app/tools/gimpcurvestool.c:832
 msgid "Use _old curves file format"
 msgstr "N_ota gamla skráasniðið fyrir litferla"
 
@@ -23383,67 +23109,67 @@ msgid ""
 "Otherwise, it becomes an editable non-destructive filter."
 msgstr ""
 
-#: app/tools/gimpfiltertool.c:310 app/tools/gimpselectiontool.c:575
+#: app/tools/gimpfiltertool.c:311 app/tools/gimpselectiontool.c:575
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "Mynddílar valins atriðis eru læstir."
 
-#: app/tools/gimpfiltertool.c:322 app/tools/gimppainttool.c:371
-#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2611
+#: app/tools/gimpfiltertool.c:323 app/tools/gimppainttool.c:371
+#: app/tools/gimptransformtool.c:713 app/widgets/gimpitemtreeview.c:2616
 msgid "A selected layer is not visible."
 msgstr "Valið lag er ekki sýnilegt."
 
-#: app/tools/gimpfiltertool.c:420
+#: app/tools/gimpfiltertool.c:431
 msgid "Disabled because this filter depends on another image."
 msgstr "Ekki er hægt að nota þessa síu vegna þess að hún er háð annarri mynd."
 
-#: app/tools/gimpfiltertool.c:710
+#: app/tools/gimpfiltertool.c:749
 msgid "Click to switch the original and filtered sides"
 msgstr "Smelltu til að víxla upprunalegri og síaðri hlið"
 
-#: app/tools/gimpfiltertool.c:714
+#: app/tools/gimpfiltertool.c:753
 msgid "Click to switch between vertical and horizontal"
 msgstr "Smella til að skipta á milli lóðrétts og lárétts"
 
-#: app/tools/gimpfiltertool.c:718
+#: app/tools/gimpfiltertool.c:757
 msgid "Click to move the split guide"
 msgstr "Smelltu til að færa klofningsstoðlínuna"
 
-#: app/tools/gimpfiltertool.c:720
+#: app/tools/gimpfiltertool.c:759
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: víxla upprunalegu og síuðu"
 
-#: app/tools/gimpfiltertool.c:721
+#: app/tools/gimpfiltertool.c:760
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: víxla láréttu og lóðréttu"
 
-#: app/tools/gimpfiltertool.c:1234
+#: app/tools/gimpfiltertool.c:1321
 msgid "Add filter"
 msgstr "Bæta við síu"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1326
+#: app/tools/gimpfiltertool.c:1413
 msgid "Blending Options"
 msgstr "Blöndunarvalkostir"
 
 #. The Color Options expander
-#: app/tools/gimpfiltertool.c:1365
+#: app/tools/gimpfiltertool.c:1452
 msgid "Advanced Color Options"
 msgstr "Ítarlegir valkostir lita"
 
-#: app/tools/gimpfiltertool.c:1795 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1932 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Flytja inn stillingar '%s'"
 
-#: app/tools/gimpfiltertool.c:1797 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1934 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Flytja út stillingar '%s'"
 
-#: app/tools/gimpfiltertool.c:2040
+#: app/tools/gimpfiltertool.c:2172
 msgid "Editing filter..."
 msgstr "Breyti síu..."
 
@@ -23563,7 +23289,7 @@ msgid "Number of iterations to perform"
 msgstr "Fjöldi endurtekninga til útreiknings"
 
 #: app/tools/gimpforegroundselectoptions.c:332
-#: app/tools/gimppaintselectoptions.c:200
+#: app/tools/gimppaintselectoptions.c:236
 msgid "Reset stroke width native size"
 msgstr "Endurstilla breidd stroku í frumstærð"
 
@@ -24094,11 +23820,11 @@ msgstr "Breyta litatíðnistigum allra litrása sjálfvirkt"
 msgid "Edit these Settings as Curves"
 msgstr "Breyta þessum stillingum sem um litferla sé að ræða"
 
-#: app/tools/gimplevelstool.c:855
+#: app/tools/gimplevelstool.c:859
 msgid "Use _old levels file format"
 msgstr "N_ota gamla skráasniðið fyrir litatíðnirit"
 
-#: app/tools/gimplevelstool.c:1000 app/tools/gimpthresholdtool.c:429
+#: app/tools/gimplevelstool.c:1004 app/tools/gimpthresholdtool.c:429
 msgid "Calculating histogram..."
 msgstr "Reikna litatíðnirit..."
 
@@ -24472,7 +24198,7 @@ msgstr "Get ekki málað val á mörg lög. Veldu aðeins eitt lag."
 msgid "Cannot paint select on layer groups."
 msgstr "Get ekki málað val á hópuð lög."
 
-#: app/tools/gimppaintselecttool.c:653
+#: app/tools/gimppaintselecttool.c:708
 msgctxt "command"
 msgid "Paint Select"
 msgstr "Málunarval"
@@ -24792,7 +24518,7 @@ msgstr "Klóna forgrunnshlutinn"
 msgid "Enable feathering of selection edges"
 msgstr "Virkja fjöðrun á brúnum myndvals"
 
-#: app/tools/gimpselectionoptions.c:235 app/widgets/gimpbrushselect.c:190
+#: app/tools/gimpselectionoptions.c:235
 msgid "Mode:"
 msgstr "Hamur:"
 
@@ -25984,7 +25710,7 @@ msgstr "_Leita:"
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:343
+#: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:345
 #: app/widgets/gimpdeviceinfoeditor.c:579
 msgid "Action"
 msgstr "Aðgerð"
@@ -26314,7 +26040,7 @@ msgstr "Litnúmer:"
 msgid "HTML notation (sRGB):"
 msgstr "HTML litkóði (sRGB):"
 
-#: app/widgets/gimpcolormapselection.c:517
+#: app/widgets/gimpcolormapselection.c:519
 msgid "Only indexed images have a colormap."
 msgstr "Einungis litnúmeraðar myndir (indexed) eru með litavörpun."
 
@@ -26346,65 +26072,65 @@ msgstr "Smærri forskoðun"
 msgid "Larger Previews"
 msgstr "Stærri forskoðun"
 
-#: app/widgets/gimpcontrollereditor.c:200
+#: app/widgets/gimpcontrollereditor.c:202
 msgid "_Dump events from this controller"
 msgstr "Prenta at_vik frá þessari stýringu"
 
-#: app/widgets/gimpcontrollereditor.c:204
+#: app/widgets/gimpcontrollereditor.c:206
 msgid "_Enable this controller"
 msgstr "V_irkja þessa stýringu"
 
-#: app/widgets/gimpcontrollereditor.c:224
+#: app/widgets/gimpcontrollereditor.c:226
 msgid "Name:"
 msgstr "Heiti:"
 
-#: app/widgets/gimpcontrollereditor.c:230
+#: app/widgets/gimpcontrollereditor.c:232
 msgid "State:"
 msgstr "Staða:"
 
-#: app/widgets/gimpcontrollereditor.c:337
+#: app/widgets/gimpcontrollereditor.c:339
 #: app/widgets/gimpdeviceinfoeditor.c:567
 msgid "Event"
 msgstr "Atvik"
 
-#: app/widgets/gimpcontrollereditor.c:362
+#: app/widgets/gimpcontrollereditor.c:364
 #: app/widgets/gimpdeviceinfoeditor.c:624
 msgid "_Grab event"
 msgstr "_Grípa atvik"
 
-#: app/widgets/gimpcontrollereditor.c:371
+#: app/widgets/gimpcontrollereditor.c:373
 msgid "Select the next event arriving from the controller"
 msgstr "Veldu næsta atvik sem kemur frá stýringunni"
 
-#: app/widgets/gimpcontrollereditor.c:375
+#: app/widgets/gimpcontrollereditor.c:377
 #: app/widgets/gimpdeviceinfoeditor.c:638
 msgid "_Edit event"
 msgstr "Br_eyta atviki"
 
-#: app/widgets/gimpcontrollereditor.c:383
+#: app/widgets/gimpcontrollereditor.c:385
 #: app/widgets/gimpdeviceinfoeditor.c:648
 msgid "_Clear event"
 msgstr "_Hreinsa atvik"
 
-#: app/widgets/gimpcontrollereditor.c:522
+#: app/widgets/gimpcontrollereditor.c:524
 #: app/widgets/gimpdeviceinfoeditor.c:971
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Fjarlægja aðgerð úthlutaðri á '%s'"
 
-#: app/widgets/gimpcontrollereditor.c:527
+#: app/widgets/gimpcontrollereditor.c:529
 #: app/widgets/gimpdeviceinfoeditor.c:975
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Úthluta aðgerð til '%s'"
 
-#: app/widgets/gimpcontrollereditor.c:648
+#: app/widgets/gimpcontrollereditor.c:652
 #: app/widgets/gimpdeviceinfoeditor.c:1142
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Velja aðgerð fyrir atvik '%s'"
 
-#: app/widgets/gimpcontrollereditor.c:654
+#: app/widgets/gimpcontrollereditor.c:658
 msgid "Select Controller Event Action"
 msgstr "Velja aðgerð fyrir atvik stýringar"
 
@@ -27456,33 +27182,33 @@ msgstr "Fylla bakgrunnslit"
 msgid "_Antialiasing"
 msgstr "_Afstöllun"
 
-#: app/widgets/gimpgradienteditor.c:622
+#: app/widgets/gimpgradienteditor.c:623
 msgid "Left Endpoint Color"
 msgstr "Litur vinstri enda"
 
-#: app/widgets/gimpgradienteditor.c:624
+#: app/widgets/gimpgradienteditor.c:625
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Litur vinstri enda litstigilgeira"
 
-#: app/widgets/gimpgradienteditor.c:667
+#: app/widgets/gimpgradienteditor.c:668
 msgid "Right Endpoint Color"
 msgstr "Litur hægri enda"
 
-#: app/widgets/gimpgradienteditor.c:669
+#: app/widgets/gimpgradienteditor.c:670
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Litur hægri enda litstigilgeira"
 
-#: app/widgets/gimpgradienteditor.c:951
+#: app/widgets/gimpgradienteditor.c:952
 #, c-format
 msgid "Zoom factor: %f:1"
 msgstr "Aðdráttarhlutfall: %f:1"
 
-#: app/widgets/gimpgradienteditor.c:954
+#: app/widgets/gimpgradienteditor.c:955
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "Birti [%0.4f, %0.4f]"
 
-#: app/widgets/gimpgradienteditor.c:1331
+#: app/widgets/gimpgradienteditor.c:1332
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Staðsetning: %0.4f"
@@ -27490,63 +27216,63 @@ msgstr "Staðsetning: %0.4f"
 #. TODO: Current hints are displaying sRGB values. Ideally we'd want to update
 #. * the RGB space depending on the active image.
 #.
-#: app/widgets/gimpgradienteditor.c:1335
+#: app/widgets/gimpgradienteditor.c:1336
 #, c-format
 msgid "sRGB (%0.3f, %0.3f, %0.3f)"
 msgstr "sRGB (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:1337
+#: app/widgets/gimpgradienteditor.c:1338
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: app/widgets/gimpgradienteditor.c:1339
+#: app/widgets/gimpgradienteditor.c:1340
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Ljómi: %0.1f    Ógegnsæi: %0.1f"
 
-#: app/widgets/gimpgradienteditor.c:1374
+#: app/widgets/gimpgradienteditor.c:1375
 #, c-format
 msgid "sRGB (%d, %d, %d)"
 msgstr "sRGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:1385
+#: app/widgets/gimpgradienteditor.c:1386
 msgid "Foreground color set to:"
 msgstr "Forgrunnslitur stilltur á:"
 
-#: app/widgets/gimpgradienteditor.c:1392
+#: app/widgets/gimpgradienteditor.c:1393
 msgid "Background color set to:"
 msgstr "Bakgrunnslitur stilltur á:"
 
-#: app/widgets/gimpgradienteditor.c:1667 app/widgets/gimpgradienteditor.c:1728
+#: app/widgets/gimpgradienteditor.c:1668 app/widgets/gimpgradienteditor.c:1729
 #, c-format
 msgid "%s-Drag: move & compress"
 msgstr "%s-draga: flytja og þjappa"
 
-#: app/widgets/gimpgradienteditor.c:1672
+#: app/widgets/gimpgradienteditor.c:1673
 msgid "Drag: move"
 msgstr "Draga: flytja"
 
-#: app/widgets/gimpgradienteditor.c:1679 app/widgets/gimpgradienteditor.c:1692
-#: app/widgets/gimpgradienteditor.c:1705 app/widgets/gimpgradienteditor.c:1726
+#: app/widgets/gimpgradienteditor.c:1680 app/widgets/gimpgradienteditor.c:1693
+#: app/widgets/gimpgradienteditor.c:1706 app/widgets/gimpgradienteditor.c:1727
 #, c-format
 msgid "%s-Click: extend selection"
 msgstr "%s-smella: víkka val"
 
-#: app/widgets/gimpgradienteditor.c:1684 app/widgets/gimpgradienteditor.c:1697
+#: app/widgets/gimpgradienteditor.c:1685 app/widgets/gimpgradienteditor.c:1698
 msgid "Click: select"
 msgstr "Smella: velja"
 
-#: app/widgets/gimpgradienteditor.c:1710 app/widgets/gimpgradienteditor.c:1732
+#: app/widgets/gimpgradienteditor.c:1711 app/widgets/gimpgradienteditor.c:1733
 msgid "Click: select    Drag: move"
 msgstr "Smella: velja    Draga: flytja"
 
-#: app/widgets/gimpgradienteditor.c:1950 app/widgets/gimpgradienteditor.c:1958
+#: app/widgets/gimpgradienteditor.c:1951 app/widgets/gimpgradienteditor.c:1959
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Staða haldfangs: %0.4f"
 
-#: app/widgets/gimpgradienteditor.c:1975
+#: app/widgets/gimpgradienteditor.c:1976
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Fjarlægð: %0.4f"
@@ -27825,74 +27551,74 @@ msgstr "Lagabrellur"
 msgid "Select items by patterns and store item sets"
 msgstr "Velja atriði eftir mynstri og geyma atriðasett"
 
-#: app/widgets/gimpitemtreeview.c:1784
+#: app/widgets/gimpitemtreeview.c:1789
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d atriði valið"
 msgstr[1] "%d atriði valin"
 
-#: app/widgets/gimpitemtreeview.c:2695 app/widgets/gimpitemtreeview.c:2748
+#: app/widgets/gimpitemtreeview.c:2701 app/widgets/gimpitemtreeview.c:2756
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Ekki er hægt að endurraða síu sem verið er að breyta."
 
-#: app/widgets/gimpitemtreeview.c:2712 app/widgets/gimpitemtreeview.c:2765
+#: app/widgets/gimpitemtreeview.c:2719 app/widgets/gimpitemtreeview.c:2774
 msgid "Reorder filter"
 msgstr "Endurraða síu"
 
-#: app/widgets/gimpitemtreeview.c:2810
+#: app/widgets/gimpitemtreeview.c:2819
 msgid "Effects from active tools can not be merged."
 msgstr "Ekki er hægt að sameina sjónhverfingar frá virkum verkfærum."
 
-#: app/widgets/gimpitemtreeview.c:2863
+#: app/widgets/gimpitemtreeview.c:2872
 msgid "Remove filter"
 msgstr "Fjarlægja síu"
 
-#: app/widgets/gimpitemtreeview.c:3389
+#: app/widgets/gimpitemtreeview.c:3398
 msgid "No layer set stored"
 msgstr "Ekkert lagasett geymt"
 
-#: app/widgets/gimpitemtreeview.c:3411
+#: app/widgets/gimpitemtreeview.c:3420
 msgid "New layer set's name"
 msgstr "Heiti á nýju lagasetti"
 
-#: app/widgets/gimpitemtreeview.c:3453 app/widgets/gimpitemtreeview.c:3468
+#: app/widgets/gimpitemtreeview.c:3462 app/widgets/gimpitemtreeview.c:3477
 msgid "Select layers by text search"
 msgstr "Velja lög með textaleit"
 
-#: app/widgets/gimpitemtreeview.c:3455 app/widgets/gimpitemtreeview.c:3470
+#: app/widgets/gimpitemtreeview.c:3464 app/widgets/gimpitemtreeview.c:3479
 msgid "Text search"
 msgstr "Textaleit"
 
-#: app/widgets/gimpitemtreeview.c:3474
+#: app/widgets/gimpitemtreeview.c:3483
 msgid "Select layers by glob patterns"
 msgstr "Velja lög eftir mynstri með algildisstöfum"
 
-#: app/widgets/gimpitemtreeview.c:3476
+#: app/widgets/gimpitemtreeview.c:3485
 msgid "Glob pattern search"
 msgstr "Mynsturleit með algildisstöfum"
 
-#: app/widgets/gimpitemtreeview.c:3480
+#: app/widgets/gimpitemtreeview.c:3489
 msgid "Select layers by regular expressions"
 msgstr "Velja lög eftir reglulegum segðum"
 
-#: app/widgets/gimpitemtreeview.c:3482
+#: app/widgets/gimpitemtreeview.c:3491
 msgid "Regular Expression search"
 msgstr "Leit með reglulegri segð"
 
-#: app/widgets/gimpitemtreeview.c:3537
+#: app/widgets/gimpitemtreeview.c:3546
 msgid "search"
 msgstr "leita"
 
-#: app/widgets/gimpitemtreeview.c:3538
+#: app/widgets/gimpitemtreeview.c:3547
 msgid "glob"
 msgstr "algildisstafir"
 
-#: app/widgets/gimpitemtreeview.c:3538
+#: app/widgets/gimpitemtreeview.c:3547
 msgid "regexp"
 msgstr "regl. segð"
 
-#: app/widgets/gimpitemtreeview.c:3707
+#: app/widgets/gimpitemtreeview.c:3716
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Ógild regluleg segð: %s\n"
@@ -28028,7 +27754,7 @@ msgstr "Hjálparforrit"
 msgid "Progress"
 msgstr "Framvinda"
 
-#: app/widgets/gimpsamplepointeditor.c:161
+#: app/widgets/gimpsamplepointeditor.c:163
 msgid ""
 "This image\n"
 "has no\n"
@@ -28754,11 +28480,11 @@ msgstr "Villa við ritun '%s': "
 msgid "Error creating '%s': "
 msgstr "Villa við að búa til '%s': "
 
-#: app/xcf/xcf-load.c:295
+#: app/xcf/xcf-load.c:296
 msgid "Invalid image mode and precision combination."
 msgstr "Ógild samsetning myndhams og nákvæmni."
 
-#: app/xcf/xcf-load.c:502
+#: app/xcf/xcf-load.c:503
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28767,7 +28493,7 @@ msgstr ""
 "Fann skemmdan aukahlut í 'exif-data'.\n"
 "Ekki var hægt að yfirfæra EXIF-lýsigögn: %s"
 
-#: app/xcf/xcf-load.c:541
+#: app/xcf/xcf-load.c:542
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28775,7 +28501,7 @@ msgstr ""
 "Fann skemmdan aukahlut í 'gimp-metadata'.\n"
 "Ekki var hægt að yfirfæra XMP-lýsigögn."
 
-#: app/xcf/xcf-load.c:565
+#: app/xcf/xcf-load.c:566
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28788,19 +28514,19 @@ msgstr ""
 "Ef þú veist ekki hvað XMP er, eru líkur á að þú þurfir ekki að hafa áhyggjur "
 "af þessu. Uppgefin villa: %s."
 
-#: app/xcf/xcf-load.c:905
+#: app/xcf/xcf-load.c:906
 msgid "Linked Layers"
 msgstr "Tengd lög"
 
-#: app/xcf/xcf-load.c:915
+#: app/xcf/xcf-load.c:916
 msgid "Linked Channels"
 msgstr "Tengdar litrásir"
 
-#: app/xcf/xcf-load.c:940
+#: app/xcf/xcf-load.c:941
 msgid "Linked Paths"
 msgstr "Tengdir ferlar"
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:988
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28808,7 +28534,7 @@ msgstr ""
 "Þessi XCF skrá er skemmd!  Reynt hefur verið að hlaða eins miklu inn og hægt "
 "er, en samt vantar upp á."
 
-#: app/xcf/xcf-load.c:1007
+#: app/xcf/xcf-load.c:1008
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28816,7 +28542,7 @@ msgstr ""
 "Þessi XCF skrá er skemmd!  Ekki tókst að bjarga neinum myndupplýsingum úr "
 "henni."
 
-#: app/xcf/xcf-load.c:1164
+#: app/xcf/xcf-load.c:1165
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28826,7 +28552,7 @@ msgstr ""
 "vistaði litnúmeraskrá ekki rétt.\n"
 "Skipti yfir í grátónavörpun."
 
-#: app/xcf/xcf-load.c:2523
+#: app/xcf/xcf-load.c:2524
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28835,7 +28561,7 @@ msgid ""
 "developers."
 msgstr ""
 
-#: app/xcf/xcf-load.c:3408
+#: app/xcf/xcf-load.c:3448
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -29271,8 +28997,6 @@ msgid "De_velopment"
 msgstr "F_orritsþróun"
 
 #: menus/image-menu.ui.in.in:846
-#| msgctxt "filters-action"
-#| msgid "Plug-in _Examples"
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Dæmi um _hjálparforrit"
@@ -29426,6 +29150,230 @@ msgstr "Valmynd fyrir verkfæravalkosti"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Valmynd um feril afturkallana"
+
+#~ msgctxt "text-editor-action"
+#~ msgid "Text Editor Toolbar"
+#~ msgstr "Verkfærastika textaritils"
+
+#~ msgctxt "undo-type"
+#~ msgid "Alien Map"
+#~ msgstr "Geimveru-gljái"
+
+#~ msgctxt "undo-type"
+#~ msgid "Antialias"
+#~ msgstr "Afstöllun"
+
+#~ msgctxt "undo-type"
+#~ msgid "Apply Canvas"
+#~ msgstr "Setja strigaáferð"
+
+#~ msgctxt "undo-type"
+#~ msgid "Apply Lens"
+#~ msgstr "Beita linsu"
+
+#~ msgctxt "undo-type"
+#~ msgid "Stretch Contrast HSV"
+#~ msgstr "Teygja HSV birtuskil"
+
+#~ msgctxt "undo-type"
+#~ msgid "Cartoon"
+#~ msgstr "Teiknimynd"
+
+#~ msgctxt "undo-type"
+#~ msgid "Channel Mixer"
+#~ msgstr "Rásablandari"
+
+#~ msgctxt "undo-type"
+#~ msgid "Color to Alpha"
+#~ msgstr "Litur í gegnsæi"
+
+#, c-format
+#~ msgid "Array 'matrix' has only %d members, must have 25"
+#~ msgstr "Fylkið 'matrix' er aðeins með %d meðlimi, verður að hafa 25"
+
+#, c-format
+#~ msgid "Array 'channels' has only %d members, must have 5"
+#~ msgstr "Fylkið 'channels' er aðeins með %d meðlimi, verður að hafa 5"
+
+#~ msgctxt "undo-type"
+#~ msgid "Convolution Matrix"
+#~ msgstr "Fléttunarfylki"
+
+#~ msgctxt "undo-type"
+#~ msgid "Deinterlace"
+#~ msgstr "Afflétta"
+
+#~ msgctxt "undo-type"
+#~ msgid "Diffraction Patterns"
+#~ msgstr "Ljósbrotsmynstur"
+
+#~ msgctxt "undo-type"
+#~ msgid "DoG Edge Detect"
+#~ msgstr "Leita að brúnum með gaussískum mismun"
+
+#~ msgctxt "undo-type"
+#~ msgid "Normalize"
+#~ msgstr "Samræma"
+
+#~ msgctxt "undo-type"
+#~ msgid "Engrave"
+#~ msgstr "Myndrista"
+
+#~ msgctxt "undo-type"
+#~ msgid "Color Exchange"
+#~ msgstr "Litaskipti"
+
+#~ msgctxt "undo-type"
+#~ msgid "Lens Flare"
+#~ msgstr "Ljósglampi í linsu"
+
+#~ msgctxt "undo-type"
+#~ msgid "Fractal Trace"
+#~ msgstr "Línugerð brotamynd"
+
+#~ msgctxt "undo-type"
+#~ msgid "Glass Tile"
+#~ msgstr "Glerflísar"
+
+#~ msgctxt "undo-type"
+#~ msgid "Noise HSV"
+#~ msgstr "HSV truflanir"
+
+#~ msgctxt "undo-type"
+#~ msgid "Illusion"
+#~ msgstr "Sjónblekking"
+
+#~ msgctxt "undo-type"
+#~ msgid "Laplace"
+#~ msgstr "Laplace"
+
+#~ msgctxt "undo-type"
+#~ msgid "Lens Distortion"
+#~ msgstr "Linsubjögun"
+
+#~ msgctxt "undo-type"
+#~ msgid "Tile Seamless"
+#~ msgstr "Saumlaus uppröðun"
+
+#~ msgctxt "undo-type"
+#~ msgid "Motion Blur"
+#~ msgstr "Hreyfingarafskerping"
+
+#~ msgctxt "undo-type"
+#~ msgid "Median Blur"
+#~ msgstr "Miðgildis-afskerping"
+
+#~ msgctxt "undo-type"
+#~ msgid "Mosaic"
+#~ msgstr "Mósaík"
+
+#~ msgctxt "undo-type"
+#~ msgid "Neon"
+#~ msgstr "Neon"
+
+#~ msgctxt "undo-type"
+#~ msgid "Newsprint"
+#~ msgstr "Dagblaðaprent"
+
+#~ msgctxt "undo-type"
+#~ msgid "Supernova"
+#~ msgstr "Sprengistjarna"
+
+#~ msgctxt "undo-type"
+#~ msgid "Paper Tile"
+#~ msgstr "Pappírsflís"
+
+#~ msgctxt "undo-type"
+#~ msgid "Photocopy"
+#~ msgstr "Ljósritun"
+
+#~ msgctxt "undo-type"
+#~ msgid "Pixelize"
+#~ msgstr "Gera stöllótt"
+
+#~ msgctxt "undo-type"
+#~ msgid "Polar Coordinates"
+#~ msgstr "Pólhnit"
+
+#~ msgctxt "undo-type"
+#~ msgid "Red Eye Removal"
+#~ msgstr "Laga rauð augu"
+
+#~ msgctxt "undo-type"
+#~ msgid "Random Hurl"
+#~ msgstr "Slembið kast"
+
+#~ msgctxt "undo-type"
+#~ msgid "Random Pick"
+#~ msgstr "Slembið val"
+
+#~ msgctxt "undo-type"
+#~ msgid "Random Slur"
+#~ msgstr "Slembið útmá"
+
+#~ msgctxt "undo-type"
+#~ msgid "RGB Noise"
+#~ msgstr "RGB suð"
+
+#~ msgctxt "undo-type"
+#~ msgid "Ripple"
+#~ msgstr "Gárur"
+
+#~ msgctxt "undo-type"
+#~ msgid "Selective Gaussian Blur"
+#~ msgstr "Valkvæð Gaussísk afskerping"
+
+#~ msgctxt "undo-type"
+#~ msgid "Semi-Flatten"
+#~ msgstr "Hálf-fletja"
+
+#~ msgctxt "undo-type"
+#~ msgid "Shift"
+#~ msgstr "Hnika"
+
+#~ msgctxt "undo-type"
+#~ msgid "Sinus"
+#~ msgstr "Sínus"
+
+#~ msgctxt "undo-type"
+#~ msgid "Sobel"
+#~ msgstr "Sobel"
+
+#~ msgctxt "undo-type"
+#~ msgid "Softglow"
+#~ msgstr "Mjúkljómi"
+
+#~ msgctxt "undo-type"
+#~ msgid "Sharpen (Unsharp Mask)"
+#~ msgstr "Skerpa (Afskerpa hulu)"
+
+#~ msgctxt "undo-type"
+#~ msgid "Video"
+#~ msgstr "Myndskeið"
+
+#~ msgctxt "undo-type"
+#~ msgid "Value Invert"
+#~ msgstr "Snúa við litgildum"
+
+#~ msgctxt "undo-type"
+#~ msgid "Value Propagate"
+#~ msgstr "Áframsenda gildi"
+
+#~ msgctxt "undo-type"
+#~ msgid "Dilate"
+#~ msgstr "Þenja"
+
+#~ msgctxt "undo-type"
+#~ msgid "Erode"
+#~ msgstr "Veðra"
+
+#~ msgctxt "undo-type"
+#~ msgid "Whirl and Pinch"
+#~ msgstr "Þyrla og Klípa"
+
+#~ msgctxt "undo-type"
+#~ msgid "Wind"
+#~ msgstr "Vindur"
 
 #~ msgctxt "text-tool-action"
 #~ msgid "_Path from Text"
@@ -31671,3 +31619,4 @@ msgstr "Valmynd um feril afturkallana"
 
 #~ msgid "Error saving XCF file: %s"
 #~ msgstr "Villa við vistun XCF-skráar: %s"
+
