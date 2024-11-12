@@ -127,8 +127,12 @@ bundle "$MSYS_PREFIX" lib/gio
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders.cache
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-png.dll
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/pixbufloader_svg.dll
-### Support for paste clipboard images sent by most Windows apps
+### Support for legacy Win clipboard images: https://gitlab.gnome.org/GNOME/gimp/-/issues/4802
 bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-bmp.dll
+### Support for non .PAT patterns: https://gitlab.gnome.org/GNOME/gimp/-/issues/12351
+bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-jpeg.dll
+bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-gif.dll
+bundle "$MSYS_PREFIX" lib/gdk-pixbuf-*/*/loaders/libpixbufloader-tiff.dll
 clean "$GIMP_DISTRIB" lib/*.a
 
 
