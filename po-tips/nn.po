@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-08-24 14:42+0000\n"
-"PO-Revision-Date: 2024-08-18 21:04+0200\n"
+"POT-Creation-Date: 2024-09-27 14:22+0000\n"
+"PO-Revision-Date: 2024-09-27 20:57+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/tips/gimp-tips.xml.in:18
 msgid ""
@@ -230,29 +230,13 @@ msgstr ""
 
 #: data/tips/gimp-tips.xml.in:175
 msgid ""
-"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
-"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
-"should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
-"prevent accidentally assigning/reassigning shortcuts."
-msgstr ""
-"Etter at du har slått på «Set opp tastatursnarvegar» i brukarinnstillingane, "
-"kan du tildela snarvegar på nytt. Dette gjer du ved å velja eit menyelement "
-"og trykkja på den ønskte tastekombinasjonen. Viss «Lagra tastesnarvegar» er "
-"slått på, vert dei nye kombinasjonane lagra når du avsluttar GIMP. Du bør "
-"kanskje slå av «Bruk dynamiske snarvegtastar» etterpå, for å unngå at du ved "
-"eit uhell kan tilordna/omordna snarvegar på nytt."
-
-#: data/tips/gimp-tips.xml.in:186
-msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
 "Dersom skjermen er svært rotete, kan du trykkja <tt>Tabulator</tt>-tasten "
 "fleire gongar for å gøyma eller visa verktøykassa og andre dialogvindauge."
 
-#: data/tips/gimp-tips.xml.in:193
+#: data/tips/gimp-tips.xml.in:182
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -261,7 +245,7 @@ msgstr ""
 "laga unntatt det du klikka på. <tt>Shift</tt>-klikk igjen for å visa alle "
 "laga."
 
-#: data/tips/gimp-tips.xml.in:199
+#: data/tips/gimp-tips.xml.in:188
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -271,7 +255,7 @@ msgstr ""
 "effekten av lagmaska av og på. <tt>Alt</tt>-klikkar du i staden, vil dette "
 "slå av og på visinga av lagmaska."
 
-#: data/tips/gimp-tips.xml.in:206
+#: data/tips/gimp-tips.xml.in:195
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -280,17 +264,17 @@ msgstr ""
 "eit bilete (dersom ikkje vindaugehandsamaren i maskinen din har lagt beslag "
 "på desse tastane)."
 
-#: data/tips/gimp-tips.xml.in:212
+#: data/tips/gimp-tips.xml.in:201
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
 "with the eyedropper tool sets the background color instead of the foreground "
 "color."
 msgstr ""
-"<tt>Ctrl</tt>-klikk når du ønskjer at fyllverktøyet eller fargeplukkaren "
+"<tt>Ctrl</tt>-klikk når du ønskjer at bøttefyll eller fargeplukkaren "
 "skal arbeida på bakgrunnsfargen i staden for på forgrunnsfargen."
 
-#: data/tips/gimp-tips.xml.in:220
+#: data/tips/gimp-tips.xml.in:209
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -298,7 +282,7 @@ msgstr ""
 "Held du nede <tt>Ctrl</tt>-tasten når du brukar rotasjonsverkøtyet, vert "
 "rotasjonen avgrensa til vinklar som er multiplar av 15 grader."
 
-#: data/tips/gimp-tips.xml.in:226
+#: data/tips/gimp-tips.xml.in:215
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool "
@@ -308,3 +292,19 @@ msgstr ""
 "Viss nokre av dei skanna bileta dine ikkje er fargerike nok, er det enkelt å "
 "forbetra fargeområdet med knappen «Auto» i nivåverktøyet (Fargar → Nivå). "
 "Uheldige fargestikk kan korrigerast med kurveverktøyet (Fargar → Kurver)."
+
+#~ msgid ""
+#~ "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences "
+#~ "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+#~ "selecting a menu item, and pressing the desired key combination. If "
+#~ "\"Save Keyboard Shortcuts\" is enabled, the key bindings are saved when "
+#~ "you exit GIMP. You should probably disable \"Dynamic Keyboard Shortcuts\" "
+#~ "afterwards, to prevent accidentally assigning/reassigning shortcuts."
+#~ msgstr ""
+#~ "Etter at du har slått på «Set opp tastatursnarvegar» i "
+#~ "brukarinnstillingane, kan du tildela snarvegar på nytt. Dette gjer du ved "
+#~ "å velja eit menyelement og trykkja på den ønskte tastekombinasjonen. Viss "
+#~ "«Lagra tastesnarvegar» er slått på, vert dei nye kombinasjonane lagra når "
+#~ "du avsluttar GIMP. Du bør kanskje slå av «Bruk dynamiske snarvegtastar» "
+#~ "etterpå, for å unngå at du ved eit uhell kan tilordna/omordna snarvegar "
+#~ "på nytt."
