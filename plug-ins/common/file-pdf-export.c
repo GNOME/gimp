@@ -761,8 +761,9 @@ pdf_export_image (GimpProcedure        *procedure,
       layers   = gimp_image_get_layers (image);
       n_layers = gimp_core_object_array_get_length ((GObject **) layers);
 
-      /* Fill image with background color if transparent and
-       * user chose that option.
+      /* First fill image with opaque background color
+       * when last layer has transparency and user chose that option.
+       * Later we paint the same layer and others layers with transparency.
        */
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[n_layers - 1])) &&
           fill_background_color)
@@ -774,7 +775,7 @@ pdf_export_image (GimpProcedure        *procedure,
                            gimp_image_get_width  (image),
                            gimp_image_get_height (image));
           color = gimp_context_get_background ();
-          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B'A double", NULL), rgb);
+          gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", NULL), rgb);
           cairo_set_source_rgb (cr, rgb[0], rgb[1], rgb[2]);
           cairo_fill (cr);
 
