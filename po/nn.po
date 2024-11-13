@@ -13446,7 +13446,7 @@ msgstr "Skaler"
 #: app/core/gimpdrawable-bucket-fill.c:92
 msgctxt "undo-type"
 msgid "Bucket Fill"
-msgstr "Fyll"
+msgstr "Bøttefyll"
 
 #: app/core/gimpdrawable-edit.c:154
 msgctxt "undo-type"
@@ -22809,16 +22809,16 @@ msgstr "Fyll kantane"
 
 #: app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill"
-msgstr "Fyll"
+msgstr "Bøttefyll"
 
 #: app/tools/gimpbucketfilltool.c:169
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
-"Verktøyet «fyll»: Fyll valde område med ein farge eller eit mønsterelement"
+"Verktøyet «Bøttefyll»: Fyll valde område med ein farge eller eit mønsterelement"
 
 #: app/tools/gimpbucketfilltool.c:170
 msgid "_Bucket Fill"
-msgstr "Fargef_ylling"
+msgstr "_Bøttefyll"
 
 #: app/tools/gimpbucketfilltool.c:371
 msgid "Bucket fill"
@@ -22826,7 +22826,7 @@ msgstr "Bøttefyll"
 
 #: app/tools/gimpbucketfilltool.c:596
 msgid "Cannot fill multiple layers. Select only one layer."
-msgstr "Kan ikkje fylle fleire lag. Vel berre eitt lag."
+msgstr "Kan ikkje fylla fleire lag. Vel berre eitt lag."
 
 #: app/tools/gimpbucketfilltool.c:598 app/tools/gimpcagetool.c:231
 #: app/tools/gimpcurvestool.c:219 app/tools/gimpfiltertool.c:301
