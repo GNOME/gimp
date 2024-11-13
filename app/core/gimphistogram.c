@@ -984,6 +984,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
   GimpAsync            *async;
   CalculateContext     *context;
   GeglBufferIterator   *iter;
+  const Babl           *fish;
   gdouble              *values;
   gint                  n_components;
   gint                  n_bins;
@@ -995,6 +996,8 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
   n_bins       = context->n_bins;
   n_components = context->n_components;
+
+  fish = babl_fish (data->format, babl_format ("Y' float"));
 
   values = g_new0 (gdouble, (n_components + N_DERIVED_CHANNELS) * n_bins);
   gimp_atomic_slist_push_head (&data->values_list, values);
@@ -1093,7 +1096,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += masked;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  babl_process (fish, data, &luminance, 1);
                   VALUE (4, luminance) += masked;
 
                   data += n_components;
@@ -1118,7 +1121,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += weight * masked;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  babl_process (fish, data, &luminance, 1);
                   VALUE (5, luminance) += weight * masked;
 
                   data += n_components;
@@ -1169,7 +1172,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += 1.0;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  babl_process (fish, data, &luminance, 1);
                   VALUE (4, luminance) += 1.0;
 
                   data += n_components;
@@ -1192,7 +1195,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
                   max = MAX (data[2], max);
                   VALUE (0, max) += weight;
 
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  babl_process (fish, data, &luminance, 1);
                   VALUE (5, luminance) += weight;
 
                   data += n_components;
