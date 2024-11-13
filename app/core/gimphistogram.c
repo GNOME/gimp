@@ -997,7 +997,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
   n_bins       = context->n_bins;
   n_components = context->n_components;
 
-  fish = babl_fish (data->format, babl_format ("Y' float"));
+  fish = babl_fish (data->format, babl_format ("Y float"));
 
   values = g_new0 (gdouble, (n_components + N_DERIVED_CHANNELS) * n_bins);
   gimp_atomic_slist_push_head (&data->values_list, values);
