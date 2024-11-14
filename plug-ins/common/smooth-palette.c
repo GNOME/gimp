@@ -282,7 +282,8 @@ smooth_palette (GimpProcedureConfig  *config,
   gfloat       *pal;
   GRand        *gr;
 
-  const Babl *format = babl_format ("RGB float");
+  const Babl *format = gimp_drawable_has_alpha (drawable) ?
+                       babl_format ("RGBA float") : babl_format ("RGB float");
 
   g_object_get (config,
                 "width",   &config_width,
