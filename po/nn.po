@@ -11029,7 +11029,7 @@ msgstr "Slår på verktøyet N-punktdeformering."
 
 #: app/config/gimprc-blurbs.h:501
 msgid "Enable the Handle Transform tool."
-msgstr "Slår på bur-transformeringsverktøyet."
+msgstr "Slår på handtaks-transformeringsverktøyet."
 
 #: app/config/gimprc-blurbs.h:504
 msgid "Enable symmetry on painting."
@@ -19467,7 +19467,7 @@ msgstr "Indeksert"
 #: app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Opprett eller rediger formendringa"
+msgstr "Opprett eller rediger buret"
 
 #: app/gegl/gimp-gegl-enums.c:26
 msgctxt "cage-mode"
@@ -23932,25 +23932,25 @@ msgstr "Fjern transformingshandtaka"
 
 #: app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
-msgstr "Bur-transformering"
+msgstr "Handtaks-transformering"
 
 #: app/tools/gimphandletransformtool.c:112
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"Bur-transformeringsverktøyet: Deformer laget, utvalet eller banen med handtak"
+"Handtaks-transformeringsverktøyet: Deformer laget, utvalet eller banen med handtak"
 
 #: app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
-msgstr "_Bur-transformering"
+msgstr "_Handtaks-transformering"
 
 #: app/tools/gimphandletransformtool.c:138
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "Bur-transformering"
+msgstr "Handtaks-transformering"
 
 #: app/tools/gimphandletransformtool.c:139
 msgid "Handle transformation"
-msgstr "Bur-transformering"
+msgstr "Handtaks-transformering"
 
 #: app/tools/gimphealtool.c:56
 msgid "Healing Tool: Heal image irregularities"
