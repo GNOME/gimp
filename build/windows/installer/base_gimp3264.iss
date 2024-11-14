@@ -97,7 +97,7 @@
 ;Get FULL_GIMP_VERSION (used by ITs)
 #define FULL_GIMP_VERSION GIMP_VERSION + "." + REVISION
 
-;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES
+;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL_WARNING
 
 ;Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
 
