@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-10 17:30+0000\n"
-"PO-Revision-Date: 2024-11-12 16:57+0000\n"
+"PO-Revision-Date: 2024-11-14 17:52+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -241,16 +241,14 @@ msgid "Align all visible layers of the image"
 msgstr "Hliðjafna öll sýnileg lög í myndinni"
 
 #: plug-ins/common/align-layers.c:183
-#, fuzzy
 #| msgid "Align Visible Layers"
 msgid "Align visible layers"
 msgstr "Jafna sýnileg lög"
 
 #: plug-ins/common/align-layers.c:191
-#, fuzzy
 #| msgid "_Horizontal style:"
 msgid "_Horizontal style"
-msgstr "_Láréttur stíll:"
+msgstr "_Láréttur stíll"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:431 plug-ins/common/file-ps.c:440
@@ -283,10 +281,9 @@ msgid "Snap to grid"
 msgstr "Grípa í hnitanet"
 
 #: plug-ins/common/align-layers.c:203
-#, fuzzy
 #| msgid "Ho_rizontal base:"
 msgid "Hori_zontal base"
-msgstr "Lá_réttur grunnur:"
+msgstr "Lá_réttur grunnur"
 
 #: plug-ins/common/align-layers.c:205
 msgid "Left edge"
@@ -302,10 +299,9 @@ msgid "Right edge"
 msgstr "Hægri brún"
 
 #: plug-ins/common/align-layers.c:213
-#, fuzzy
 #| msgid "_Vertical style:"
 msgid "_Vertical style"
-msgstr "Lóð_réttur stíll:"
+msgstr "Lóðrétt_ur stíll"
 
 #: plug-ins/common/align-layers.c:217
 msgid "Fill (top to bottom)"
@@ -316,10 +312,9 @@ msgid "Fill (bottom to top)"
 msgstr "Fylla (neðan og upp)"
 
 #: plug-ins/common/align-layers.c:225
-#, fuzzy
 #| msgid "Ver_tical base:"
 msgid "Ver_tical base"
-msgstr "Lóðré_ttur grunnur:"
+msgstr "Lóðré_ttur grunnur"
 
 #: plug-ins/common/align-layers.c:227
 msgid "Top edge"
@@ -341,26 +336,23 @@ msgid "Grid"
 msgstr "Hnitanet"
 
 #: plug-ins/common/align-layers.c:242
-#, fuzzy
 #| msgid "_Ignore the bottom layer even if visible"
 msgid "Ignore the _bottom layer even if visible"
 msgstr "_Hunsa neðsta lagið jafnvel þótt það sé sýnilegt"
 
 #: plug-ins/common/align-layers.c:243
-#, fuzzy
 #| msgid "_Ignore the bottom layer even if visible"
 msgid "Ignore the bottom layer even if visible"
-msgstr "_Hunsa neðsta lagið jafnvel þótt það sé sýnilegt"
+msgstr "Hunsa neðsta lagið jafnvel þótt það sé sýnilegt"
 
 #: plug-ins/common/align-layers.c:249
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "N_ota (ósýnilega) neðsta lagið sem grunn"
 
 #: plug-ins/common/align-layers.c:250
-#, fuzzy
 #| msgid "_Use the (invisible) bottom layer as the base"
 msgid "Use the (invisible) bottom layer as the base"
-msgstr "N_ota (ósýnilega) neðsta lagið sem grunn"
+msgstr "Nota (ósýnilega) neðsta lagið sem grunn"
 
 #: plug-ins/common/align-layers.c:299
 #, c-format
@@ -571,10 +563,9 @@ msgid "_Number of segments"
 msgstr "Fjöldi _búta"
 
 #: plug-ins/common/blinds.c:160
-#, fuzzy
 #| msgid "_Number of segments:"
 msgid "Number of segments in blinds"
-msgstr "Fjöldi _búta:"
+msgstr "Fjöldi búta í strimlum"
 
 #: plug-ins/common/blinds.c:165 plug-ins/map-object/map-object-ui.c:439
 #| msgid "Orientation"
@@ -681,7 +672,7 @@ msgstr "Stærð _fötu:"
 
 #: plug-ins/common/border-average.c:152
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:254
 msgid "2"
@@ -693,7 +684,7 @@ msgstr "4"
 
 #: plug-ins/common/border-average.c:155
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: plug-ins/common/border-average.c:156
 #| msgid "6"
@@ -712,11 +703,11 @@ msgstr "64"
 
 #: plug-ins/common/border-average.c:159
 msgid "128"
-msgstr ""
+msgstr "128"
 
 #: plug-ins/common/border-average.c:160
 msgid "256"
-msgstr ""
+msgstr "256"
 
 #: plug-ins/common/border-average.c:166 plug-ins/common/border-average.c:167
 #, fuzzy
@@ -1013,10 +1004,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/cml-explorer.c:535
-#, fuzzy
 #| msgid "Parameter k:"
 msgid "Parameter File"
-msgstr "Færibreyta k:"
+msgstr "Færibreytuskrá"
 
 #: plug-ins/common/cml-explorer.c:536
 msgid ""
@@ -1589,10 +1579,9 @@ msgid "This function creates a new image from multiple gray images"
 msgstr "Búa til mynd með því að nota nokkrar grátóna myndir sem litrásir"
 
 #: plug-ins/common/compose.c:417
-#, fuzzy
 #| msgid "Image"
 msgid "Image 2"
-msgstr "Mynd"
+msgstr "Mynd 2"
 
 #: plug-ins/common/compose.c:418
 #, fuzzy
@@ -1601,10 +1590,9 @@ msgid "Second input image"
 msgstr "Endurhlaða mynd"
 
 #: plug-ins/common/compose.c:423
-#, fuzzy
 #| msgid "Image"
 msgid "Image 3"
-msgstr "Mynd"
+msgstr "Mynd 3"
 
 #: plug-ins/common/compose.c:424
 #, fuzzy
@@ -1613,10 +1601,9 @@ msgid "Third input image"
 msgstr "Prenta myndina"
 
 #: plug-ins/common/compose.c:429
-#, fuzzy
 #| msgid "Image"
 msgid "Image 4"
-msgstr "Mynd"
+msgstr "Mynd 4"
 
 #: plug-ins/common/compose.c:430
 #, fuzzy
@@ -1839,10 +1826,9 @@ msgid "High"
 msgstr "Mikill"
 
 #: plug-ins/common/contrast-retinex.c:220
-#, fuzzy
 #| msgid "Dy_namic:"
 msgid "Dy_namic"
-msgstr "_Breytilegt:"
+msgstr "_Breytilegt"
 
 #: plug-ins/common/contrast-retinex.c:221
 #, fuzzy
@@ -1902,10 +1888,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/curve-bend.c:425
-#, fuzzy
 #| msgid "Rotat_e:"
 msgid "Rotat_e"
-msgstr "S_núa:"
+msgstr "S_núa"
 
 #: plug-ins/common/curve-bend.c:426
 msgid "Direction {angle 0 to 360 degree } of the bend effect"
@@ -1916,10 +1901,9 @@ msgid "Smoo_thing"
 msgstr "Mý_king"
 
 #: plug-ins/common/curve-bend.c:433
-#, fuzzy
 #| msgid "Smoothing:"
 msgid "Smoothing"
-msgstr "Mýking:"
+msgstr "Mýking"
 
 #: plug-ins/common/curve-bend.c:438 plug-ins/lighting/lighting-main.c:309
 msgid "_Antialiasing"
@@ -1970,18 +1954,16 @@ msgid "Choose the active border line to edit"
 msgstr ""
 
 #: plug-ins/common/curve-bend.c:462
-#, fuzzy
 #| msgctxt "curve-border"
 #| msgid "_Upper"
 msgid "Upper"
-msgstr "_Efri"
+msgstr "Efri"
 
 #: plug-ins/common/curve-bend.c:463
-#, fuzzy
 #| msgid "Lower"
 msgctxt "adjective"
 msgid "Lower"
-msgstr "Lækka"
+msgstr "Neðri"
 
 #: plug-ins/common/curve-bend.c:469
 #, fuzzy
@@ -2401,70 +2383,59 @@ msgid "Combine two images using depth maps (z-buffers)"
 msgstr ""
 
 #: plug-ins/common/depth-merge.c:222
-#, fuzzy
 #| msgid "Source 1:"
 msgid "Source _1"
-msgstr "Uppruni 1:"
+msgstr "Uppruni _1"
 
 #: plug-ins/common/depth-merge.c:223
-#, fuzzy
 #| msgid "Source 1:"
 msgid "Source 1"
-msgstr "Uppruni 1:"
+msgstr "Uppruni 1"
 
 #: plug-ins/common/depth-merge.c:228
-#, fuzzy
 #| msgid "Depth map:"
 msgid "_Depth map 1"
-msgstr "Dýptarvörpun:"
+msgstr "_Dýptarvörpun 1"
 
 #: plug-ins/common/depth-merge.c:229
-#, fuzzy
 #| msgid "Depth map:"
 msgid "Depth map 1"
-msgstr "Dýptarvörpun:"
+msgstr "Dýptarvörpun 1"
 
 #: plug-ins/common/depth-merge.c:234
-#, fuzzy
 #| msgid "Source 2:"
 msgid "Source _2"
-msgstr "Uppruni 2:"
+msgstr "Uppruni _2"
 
 #: plug-ins/common/depth-merge.c:235
-#, fuzzy
 #| msgid "Source 2:"
 msgid "Source 2"
-msgstr "Uppruni 2:"
+msgstr "Uppruni 2"
 
 #: plug-ins/common/depth-merge.c:240
-#, fuzzy
 #| msgid "Depth map:"
 msgid "Depth _map 2"
-msgstr "Dýptarvörpun:"
+msgstr "Dýptarvör_pun 2"
 
 #: plug-ins/common/depth-merge.c:241
-#, fuzzy
 #| msgid "Depth map:"
 msgid "Depth map 2"
-msgstr "Dýptarvörpun:"
+msgstr "Dýptarvörpun 2"
 
 #: plug-ins/common/depth-merge.c:246
-#, fuzzy
 #| msgid "O_verlap:"
 msgid "O_verlap"
-msgstr "S_körun:"
+msgstr "S_körun"
 
 #: plug-ins/common/depth-merge.c:247
-#, fuzzy
 #| msgid "O_verlap:"
 msgid "Overlap"
-msgstr "S_körun:"
+msgstr "Skörun"
 
 #: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:364
-#, fuzzy
 #| msgid "O_ffset:"
 msgid "O_ffset"
-msgstr "_Hliðrun:"
+msgstr "_Hliðrun"
 
 #: plug-ins/common/depth-merge.c:253
 #, fuzzy
@@ -2473,20 +2444,18 @@ msgid "Depth relative offset"
 msgstr "Vista _hliðrun lags"
 
 #: plug-ins/common/depth-merge.c:258
-#, fuzzy
 #| msgid "Sc_ale 1:"
 msgid "Sc_ale 1"
-msgstr "Kv_arði 1:"
+msgstr "Kv_arði 1"
 
 #: plug-ins/common/depth-merge.c:259
 msgid "Depth relative scale 1"
 msgstr ""
 
 #: plug-ins/common/depth-merge.c:264
-#, fuzzy
 #| msgid "Scale X:"
 msgid "Scal_e 2"
-msgstr "X-kvarði:"
+msgstr "K_varði 2"
 
 #: plug-ins/common/depth-merge.c:265
 msgid "Depth relative scale 2"
@@ -2519,10 +2488,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/despeckle.c:186
-#, fuzzy
 #| msgid "R_adius:"
 msgid "R_adius"
-msgstr "R_adíus:"
+msgstr "R_adíus"
 
 #: plug-ins/common/despeckle.c:187
 #, fuzzy
@@ -3414,7 +3382,7 @@ msgstr ""
 #: plug-ins/common/file-gif-load.c:1095
 #, c-format
 msgid "%s. %s"
-msgstr ""
+msgstr "%s. %s"
 
 #: plug-ins/common/file-gif-load.c:1096 plug-ins/common/file-gif-load.c:1100
 #, fuzzy
@@ -3948,7 +3916,7 @@ msgstr "Valkostir töflu"
 
 #: plug-ins/common/file-iff.c:155
 msgid "Amiga IFF"
-msgstr ""
+msgstr "Amiga IFF"
 
 #: plug-ins/common/file-iff.c:158 plug-ins/common/file-iff.c:159
 msgid "Load file in the IFF file format"
@@ -3967,20 +3935,18 @@ msgid "JPEG 2000 image"
 msgstr "JPEG 2000 mynd"
 
 #: plug-ins/common/file-jp2-load.c:191 plug-ins/common/file-jp2-load.c:225
-#, fuzzy
 #| msgid "JPEG 2000 image"
 msgid "JPEG 2000"
-msgstr "JPEG 2000 mynd"
+msgstr "JPEG 2000"
 
 #: plug-ins/common/file-jp2-load.c:223
 msgid "JPEG 2000 codestream"
 msgstr "JPEG 2000 kóðastreymi"
 
 #: plug-ins/common/file-jp2-load.c:228
-#, fuzzy
 #| msgid "JPEG 2000 codestream"
 msgid "Loads JPEG 2000 codestream."
-msgstr "JPEG 2000 kóðastreymi"
+msgstr "Hleður inn JPEG 2000 kóðastreymi."
 
 #: plug-ins/common/file-jp2-load.c:229
 msgid ""
@@ -3991,26 +3957,23 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/file-jp2-load.c:249
-#, fuzzy
 #| msgid "Color space:"
 msgid "Color s_pace"
-msgstr "Litarýmd:"
+msgstr "L_itarýmd"
 
 #: plug-ins/common/file-jp2-load.c:250
-#, fuzzy
 #| msgid "Color space:"
 msgid "Color space"
-msgstr "Litarýmd:"
+msgstr "Litarýmd"
 
 #: plug-ins/common/file-jp2-load.c:251
 msgid "sRGB"
 msgstr "sRGB"
 
 #: plug-ins/common/file-jp2-load.c:252
-#, fuzzy
 #| msgid "Grayscale 2-bit"
 msgid "Grayscale"
-msgstr "Grátóna 2-bita"
+msgstr "Grátóna"
 
 #: plug-ins/common/file-jp2-load.c:253
 msgid "YCbCr"
@@ -4169,10 +4132,9 @@ msgid "Store ICC profile to exported JXL file"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:233 plug-ins/file-tiff/file-tiff.c:265
-#, fuzzy
 #| msgid "Export as _CMYK"
 msgid "Export as CMY_K"
-msgstr "Flytja út sem _CMYK"
+msgstr "Flytja út sem CMY_K"
 
 #: plug-ins/common/file-jpegxl.c:234
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
@@ -4442,10 +4404,9 @@ msgid "Use black and white palette"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:245
-#, fuzzy
 #| msgid "ZSoft PCX image"
 msgid "ZSoft DCX image"
-msgstr "ZSoft PCX mynd"
+msgstr "ZSoft DCX-mynd"
 
 #: plug-ins/common/file-pcx.c:248
 msgid "Loads files in Zsoft DCX file format"
@@ -4582,7 +4543,7 @@ msgstr ""
 
 #: plug-ins/common/file-pdf-export.c:337 plug-ins/common/file-pdf-load.c:214
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: plug-ins/common/file-pdf-export.c:347 plug-ins/common/file-pdf-export.c:437
 msgid "Convert _bitmaps to vector graphics where possible"
@@ -4672,10 +4633,9 @@ msgid "_Create multipage PDF..."
 msgstr "_Búa til margsíðna PDF..."
 
 #: plug-ins/common/file-pdf-export.c:463
-#, fuzzy
 #| msgid "Save to:"
 msgid "Save to"
-msgstr "Vista í:"
+msgstr "Vista í"
 
 #: plug-ins/common/file-pdf-export.c:464
 msgid "The URI of the file to save to"
@@ -4777,10 +4737,9 @@ msgid "Number of pages to load (0 for all)"
 msgstr "Virkja þessa síu á bréf á leið inn:"
 
 #: plug-ins/common/file-pdf-load.c:264
-#, fuzzy
 #| msgid "Pages:"
 msgid "Pages"
-msgstr "Síður:"
+msgstr "Síður"
 
 #: plug-ins/common/file-pdf-load.c:265
 #, fuzzy
@@ -5072,10 +5031,9 @@ msgstr ""
 
 #: plug-ins/common/file-pnm.c:380 plug-ins/common/file-pnm.c:423
 #: plug-ins/common/file-pnm.c:466 plug-ins/common/file-pnm.c:510
-#, fuzzy
 #| msgid "Data formatting"
 msgid "_Data formatting"
-msgstr "Snið gagna"
+msgstr "Snið _gagna"
 
 #: plug-ins/common/file-pnm.c:381 plug-ins/common/file-pnm.c:424
 #: plug-ins/common/file-pnm.c:467 plug-ins/common/file-pnm.c:511
@@ -5084,10 +5042,9 @@ msgstr ""
 
 #: plug-ins/common/file-pnm.c:382 plug-ins/common/file-pnm.c:425
 #: plug-ins/common/file-pnm.c:468 plug-ins/common/file-pnm.c:512
-#, fuzzy
 #| msgid "_ASCII"
 msgid "ASCII"
-msgstr "_ASCII"
+msgstr "ASCII"
 
 #: plug-ins/common/file-pnm.c:383 plug-ins/common/file-pnm.c:426
 #: plug-ins/common/file-pnm.c:469 plug-ins/common/file-pnm.c:513
@@ -5095,10 +5052,9 @@ msgid "Raw"
 msgstr "RAW"
 
 #: plug-ins/common/file-pnm.c:398
-#, fuzzy
 #| msgid "PNM"
 msgid "PBM"
-msgstr "PNM"
+msgstr "PBM"
 
 #: plug-ins/common/file-pnm.c:399
 msgid "PBM image"
@@ -5117,10 +5073,9 @@ msgid "PGM image"
 msgstr "PGM mynd"
 
 #: plug-ins/common/file-pnm.c:443
-#, fuzzy
 #| msgid "PNG"
 msgid "PGM"
-msgstr "PNG"
+msgstr "PGM"
 
 #: plug-ins/common/file-pnm.c:445
 msgid "Exports files in the PGM file format"
@@ -5135,10 +5090,9 @@ msgid "PPM image"
 msgstr "PPM mynd"
 
 #: plug-ins/common/file-pnm.c:486
-#, fuzzy
 #| msgid "PNM"
 msgid "PPM"
-msgstr "PNM"
+msgstr "PPM"
 
 #: plug-ins/common/file-pnm.c:488
 msgid "Exports files in the PPM file format"
@@ -5279,10 +5233,9 @@ msgid "Load Encapsulated PostScript images"
 msgstr "Encapsulated PostScript mynd"
 
 #: plug-ins/common/file-ps.c:389 plug-ins/common/file-ps.c:490
-#, fuzzy
 #| msgid "_Encapsulated PostScript"
 msgid "Encapsulated PostScript"
-msgstr "_Encapsulated PostScript"
+msgstr "Encapsulated PostScript"
 
 #: plug-ins/common/file-ps.c:407
 #, fuzzy
@@ -5295,10 +5248,9 @@ msgid "FALSE: Use width/height, TRUE: Use BoundingBox"
 msgstr ""
 
 #: plug-ins/common/file-ps.c:413
-#, fuzzy
 #| msgid "Pages:"
 msgid "_Pages"
-msgstr "Síður:"
+msgstr "_Síður"
 
 #: plug-ins/common/file-ps.c:414
 #, fuzzy
@@ -5388,10 +5340,9 @@ msgstr ""
 "gegnsæislitrásum"
 
 #: plug-ins/common/file-ps.c:481
-#, fuzzy
 #| msgid "GPS"
 msgid "PS"
-msgstr "GPS"
+msgstr "PS"
 
 #: plug-ins/common/file-ps.c:493
 #, fuzzy
@@ -5400,10 +5351,9 @@ msgid "Export image as Encapsulated PostScript image"
 msgstr "Encapsulated PostScript mynd"
 
 #: plug-ins/common/file-ps.c:501
-#, fuzzy
 #| msgid "GPS"
 msgid "EPS"
-msgstr "GPS"
+msgstr "EPS"
 
 #: plug-ins/common/file-ps.c:526
 msgid "Width of the image in PostScript file (0: use input image size)"
@@ -5470,10 +5420,9 @@ msgid "Rotation"
 msgstr "Snúningur"
 
 #: plug-ins/common/file-ps.c:572
-#, fuzzy
 #| msgid "_PostScript level 2"
 msgid "PostScript Level _2"
-msgstr "_PostScript level 2"
+msgstr "PostScript stig _2"
 
 #: plug-ins/common/file-ps.c:573
 msgid ""
@@ -5559,19 +5508,19 @@ msgstr "Stærð myndar"
 #. Rotation
 #: plug-ins/common/file-ps.c:3949
 msgid "_0"
-msgstr ""
+msgstr "_0"
 
 #: plug-ins/common/file-ps.c:3950
 msgid "_90"
-msgstr ""
+msgstr "_90"
 
 #: plug-ins/common/file-ps.c:3951
 msgid "_180"
-msgstr ""
+msgstr "_180"
 
 #: plug-ins/common/file-ps.c:3952
 msgid "_270"
-msgstr ""
+msgstr "_270"
 
 #: plug-ins/common/file-ps.c:3959
 msgid "Output"
@@ -5605,17 +5554,16 @@ msgstr "Engin þjöppun"
 
 #: plug-ins/common/file-psp.c:728
 msgid "none"
-msgstr ""
+msgstr "ekkert"
 
 #: plug-ins/common/file-psp.c:729
-#, fuzzy
 #| msgid "red"
 msgid "rle"
-msgstr "rautt"
+msgstr "rle"
 
 #: plug-ins/common/file-psp.c:730
 msgid "lz77"
-msgstr ""
+msgstr "lz77"
 
 #: plug-ins/common/file-psp.c:920
 #, c-format
@@ -6329,14 +6277,13 @@ msgid "SVG image"
 msgstr "SVG mynd"
 
 #: plug-ins/common/file-svg.c:180
-#, fuzzy
 #| msgid "HSV"
 msgid "SVG"
-msgstr "HSV"
+msgstr "SVG"
 
 #: plug-ins/common/file-svg.c:189
 msgid "_Paths"
-msgstr ""
+msgstr "_Ferlar"
 
 #: plug-ins/common/file-svg.c:190
 msgid ""
@@ -6374,7 +6321,7 @@ msgstr "_Nei"
 
 #: plug-ins/common/file-svg.c:280
 msgid "_Yes"
-msgstr ""
+msgstr "_Já"
 
 #. Unfortunately the error returned by librsvg is unclear. While
 #. * libxml explicitly returns a "parser error : internal error:
@@ -6496,7 +6443,7 @@ msgstr "Microsoft WMF skrá"
 
 #: plug-ins/common/file-wmf.c:189
 msgid "WMF"
-msgstr ""
+msgstr "WMF"
 
 #: plug-ins/common/file-wmf.c:631
 msgid "Rendered WMF"
@@ -7378,11 +7325,11 @@ msgstr "Málunarhamur"
 
 #: plug-ins/common/hot.c:271
 msgid "NTSC"
-msgstr ""
+msgstr "NTSC"
 
 #: plug-ins/common/hot.c:272
 msgid "PAL"
-msgstr ""
+msgstr "PAL"
 
 #: plug-ins/common/hot.c:278
 #, fuzzy
@@ -8476,7 +8423,7 @@ msgstr ""
 
 #: plug-ins/common/tile-small.c:284
 msgid "_n²"
-msgstr ""
+msgstr "_n²"
 
 #: plug-ins/common/tile-small.c:285
 #, fuzzy
@@ -9293,10 +9240,9 @@ msgid "Loads files of Windows BMP file format"
 msgstr "Hleður inn forskoðun úr Windows ANI-skrám"
 
 #: plug-ins/file-bmp/bmp.c:182
-#, fuzzy
 #| msgid "XMP"
 msgid "BMP"
-msgstr "XMP"
+msgstr "BMP"
 
 #: plug-ins/file-bmp/bmp.c:185 plug-ins/file-bmp/bmp.c:186
 msgid "Saves files in Windows BMP file format"
@@ -9387,7 +9333,7 @@ msgstr ""
 
 #: plug-ins/file-dds/dds.c:170
 msgid "DDS"
-msgstr ""
+msgstr "DDS"
 
 #: plug-ins/file-dds/dds.c:174 plug-ins/file-dds/dds.c:175
 msgid "Saves files in DDS image format"
@@ -9407,39 +9353,39 @@ msgstr "_Tegund þjöppunar:"
 
 #: plug-ins/file-dds/dds.c:199
 msgid "BC1 / DXT1"
-msgstr ""
+msgstr "BC1 / DXT1"
 
 #: plug-ins/file-dds/dds.c:200
 msgid "BC2 / DXT3"
-msgstr ""
+msgstr "BC2 / DXT3"
 
 #: plug-ins/file-dds/dds.c:201
 msgid "BC3 / DXT5"
-msgstr ""
+msgstr "BC3 / DXT5"
 
 #: plug-ins/file-dds/dds.c:202
 msgid "BC3nm / DXT5nm"
-msgstr ""
+msgstr "BC3nm / DXT5nm"
 
 #: plug-ins/file-dds/dds.c:203
 msgid "BC4 / ATI1 (3Dc+)"
-msgstr ""
+msgstr "BC4 / ATI1 (3Dc+)"
 
 #: plug-ins/file-dds/dds.c:204
 msgid "BC5 / ATI2 (3Dc)"
-msgstr ""
+msgstr "BC5 / ATI2 (3Dc)"
 
 #: plug-ins/file-dds/dds.c:205
 msgid "RXGB (DXT5)"
-msgstr ""
+msgstr "RXGB (DXT5)"
 
 #: plug-ins/file-dds/dds.c:206
 msgid "Alpha Exponent (DXT5)"
-msgstr ""
+msgstr "Alpha Exponent (DXT5)"
 
 #: plug-ins/file-dds/dds.c:207
 msgid "YCoCg (DXT5)"
-msgstr ""
+msgstr "YCoCg (DXT5)"
 
 #: plug-ins/file-dds/dds.c:208
 #, fuzzy
@@ -9456,10 +9402,9 @@ msgid "Use a perceptual error metric during compression"
 msgstr ""
 
 #: plug-ins/file-dds/dds.c:221
-#, fuzzy
 #| msgid "Pixel format:"
 msgid "Pixel format"
-msgstr "Snið mynddíla:"
+msgstr "Snið mynddíla"
 
 #: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
 #: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
@@ -9469,69 +9414,64 @@ msgstr "Sjálfgefið"
 
 #: plug-ins/file-dds/dds.c:223
 msgid "RGB8"
-msgstr ""
+msgstr "RGB8"
 
 #: plug-ins/file-dds/dds.c:224
-#, fuzzy
 #| msgid "RGBA"
 msgid "RGBA8"
-msgstr "RGBA"
+msgstr "RGBA8"
 
 #: plug-ins/file-dds/dds.c:225
 msgid "BGR8"
-msgstr ""
+msgstr "BGR8"
 
 #: plug-ins/file-dds/dds.c:226
 msgid "ABGR8"
-msgstr ""
+msgstr "ABGR8"
 
 #: plug-ins/file-dds/dds.c:227
 msgid "R5G6B5"
-msgstr ""
+msgstr "R5G6B5"
 
 #: plug-ins/file-dds/dds.c:228
-#, fuzzy
 #| msgid "RGBA"
 msgid "RGBA4"
-msgstr "RGBA"
+msgstr "RGBA4"
 
 #: plug-ins/file-dds/dds.c:229
-#, fuzzy
 #| msgid "RGB565"
 msgid "RGB5A1"
-msgstr "RGB565"
+msgstr "RGB5A1"
 
 #: plug-ins/file-dds/dds.c:230
 msgid "RGB10A2"
-msgstr ""
+msgstr "RGB10A2"
 
 #: plug-ins/file-dds/dds.c:231
 msgid "R3G3B2"
-msgstr ""
+msgstr "R3G3B2"
 
 #: plug-ins/file-dds/dds.c:232
-#, fuzzy
 #| msgid "A"
 msgid "A8"
-msgstr "A"
+msgstr "A8"
 
 #: plug-ins/file-dds/dds.c:233
-#, fuzzy
 #| msgid "L"
 msgid "L8"
-msgstr "L"
+msgstr "L8"
 
 #: plug-ins/file-dds/dds.c:234
 msgid "L8A8"
-msgstr ""
+msgstr "L8A8"
 
 #: plug-ins/file-dds/dds.c:235
 msgid "AEXP"
-msgstr ""
+msgstr "AEXP"
 
 #: plug-ins/file-dds/dds.c:236
 msgid "YCOCG"
-msgstr ""
+msgstr "YCOCG"
 
 #: plug-ins/file-dds/dds.c:242
 #, fuzzy
@@ -9595,10 +9535,9 @@ msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 
 #: plug-ins/file-dds/dds.c:273
-#, fuzzy
 #| msgid "_Mipmaps:"
 msgid "_Mipmaps"
-msgstr "_Mipmaps:"
+msgstr "_Mipmaps"
 
 #: plug-ins/file-dds/dds.c:274
 #, fuzzy
@@ -9619,10 +9558,9 @@ msgid "Use existing mipmaps"
 msgstr "Nota fyrirliggjandi mipmap-myndir"
 
 #: plug-ins/file-dds/dds.c:283
-#, fuzzy
 #| msgid "F_ilter:"
 msgid "F_ilter"
-msgstr "Sí_a:"
+msgstr "Sí_a"
 
 #: plug-ins/file-dds/dds.c:284
 msgid "Filtering to use when generating mipmaps"
@@ -9652,15 +9590,15 @@ msgstr ""
 
 #: plug-ins/file-dds/dds.c:291
 msgid "Mitchell"
-msgstr ""
+msgstr "Mitchell"
 
 #: plug-ins/file-dds/dds.c:292
 msgid "Catmull-Rom"
-msgstr ""
+msgstr "Catmull-Rom"
 
 #: plug-ins/file-dds/dds.c:293
 msgid "Lanczos"
-msgstr ""
+msgstr "Lanczos"
 
 #: plug-ins/file-dds/dds.c:294
 #, fuzzy
@@ -9679,10 +9617,9 @@ msgid "Wrap mode to use when generating mipmaps"
 msgstr ""
 
 #: plug-ins/file-dds/dds.c:303
-#, fuzzy
 #| msgid "_Mirror"
 msgid "Mirror"
-msgstr "S_pegla"
+msgstr "Spegla"
 
 #: plug-ins/file-dds/dds.c:304
 #, fuzzy
@@ -9714,10 +9651,9 @@ msgid "Use sRGB colorspace for gamma correction"
 msgstr "Nota s_RGB litrýmd"
 
 #: plug-ins/file-dds/dds.c:323 plug-ins/flame/flame.c:204
-#, fuzzy
 #| msgid "_Gamma:"
 msgid "_Gamma"
-msgstr "Litróf (_gamma):"
+msgstr "Litró_f"
 
 #: plug-ins/file-dds/dds.c:324
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
@@ -9992,7 +9928,7 @@ msgstr "FITS skrá geymir engar birtanlegar myndir"
 
 #: plug-ins/file-fits/fits.c:492
 msgid "FITS HDU"
-msgstr ""
+msgstr "FITS HDU"
 
 #: plug-ins/file-fits/fits.c:630
 msgid "FITS export cannot handle images with alpha channels"
@@ -11483,7 +11419,7 @@ msgstr ""
 
 #: plug-ins/file-webp/file-webp.c:181
 msgid "Picture"
-msgstr ""
+msgstr "Mynd"
 
 #: plug-ins/file-webp/file-webp.c:182
 #, fuzzy
@@ -11695,10 +11631,9 @@ msgid "_Brightness"
 msgstr "_Birtustig"
 
 #: plug-ins/flame/flame.c:199
-#, fuzzy
 #| msgid "Co_ntrast:"
 msgid "Co_ntrast"
-msgstr "_Birtuskil:"
+msgstr "_Birtuskil"
 
 #: plug-ins/flame/flame.c:209
 #, fuzzy
@@ -11723,16 +11658,14 @@ msgid "_Zoom"
 msgstr "Aðdrá_ttur"
 
 #: plug-ins/flame/flame.c:229
-#, fuzzy
 #| msgid "_X:"
 msgid "_X"
-msgstr "_X:"
+msgstr "_X"
 
 #: plug-ins/flame/flame.c:234
-#, fuzzy
 #| msgid "_Y:"
 msgid "_Y"
-msgstr "_Y:"
+msgstr "_Y"
 
 #: plug-ins/flame/flame.c:342
 msgid "Drawing flame"
@@ -11976,10 +11909,9 @@ msgid "_Parameters"
 msgstr "_Viðföng"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:737
-#, fuzzy
 #| msgid "Colors"
 msgid "_Colors"
-msgstr "Litir"
+msgstr "_Litir"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
 msgid "_Fractals"
@@ -12014,10 +11946,9 @@ msgid "FractalExplorer Gradient"
 msgstr "FractalExplorer litstigull"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1007
-#, fuzzy
 #| msgid "_Presets"
 msgid "Presets"
-msgstr "For_stillingar:"
+msgstr "Forstillingar"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1428
 #, c-format
@@ -12144,31 +12075,26 @@ msgid "Iteration value"
 msgstr "Endurtekning:"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:302
-#, fuzzy
 #| msgid "_X:"
 msgid "C_X"
-msgstr "_X:"
+msgstr "C_X"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:303
-#, fuzzy
 #| msgid "value"
 msgid "cx value"
-msgstr "gildi"
+msgstr "cx gildi"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:308
-#, fuzzy
 #| msgid "C_MYK"
 msgid "C_Y"
-msgstr "C_MYK"
+msgstr "C_Y"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:309
-#, fuzzy
 #| msgid "value"
 msgid "cy value"
-msgstr "gildi"
+msgstr "cy gildi"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:314
-#, fuzzy
 #| msgid "Color Mode"
 msgid "Color mode"
 msgstr "Litahamur"
@@ -12222,10 +12148,9 @@ msgid "Blue stretching factor"
 msgstr "Sjálfvirk teyging birtuskila"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:341
-#, fuzzy
 #| msgid "_Red:"
 msgid "_Red"
-msgstr "_Rautt:"
+msgstr "_Rautt"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:342
 msgid "Red application mode"
@@ -12782,10 +12707,9 @@ msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 
 #: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
-#, fuzzy
 #| msgid "_File"
 msgid "File"
-msgstr "_Skrá"
+msgstr "Skrá"
 
 #: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1528
 #: plug-ins/imagemap/imap-menu.ui:8
@@ -12799,16 +12723,14 @@ msgstr "Vista"
 
 #: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
 #: plug-ins/imagemap/imap-menu.ui:22
-#, fuzzy
 #| msgid "_Close"
 msgid "Close"
-msgstr "_Loka"
+msgstr "Loka"
 
 #: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
-#, fuzzy
 #| msgid "_Edit"
 msgid "Edit"
-msgstr "Br_eyta"
+msgstr "Breyta"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:961
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1536
@@ -12827,16 +12749,14 @@ msgid "Preferences"
 msgstr "Kjörstillingar"
 
 #: plug-ins/gfig/gfig-menu.ui:124
-#, fuzzy
 #| msgid "Top:"
 msgid "Top"
-msgstr "Efst:"
+msgstr "Efst"
 
 #: plug-ins/gfig/gfig-menu.ui:128
-#, fuzzy
 #| msgid "Bottom:"
 msgid "Bottom"
-msgstr "Neðst:"
+msgstr "Neðst"
 
 #: plug-ins/gimpressionist/brush.c:261
 msgid "Can only save drawables!"
@@ -14804,7 +14724,7 @@ msgstr "Pólhnit"
 
 #: plug-ins/imagemap/imap_statusbar.c:70
 msgid "Active Area Size:"
-msgstr ""
+msgstr "Stærð virks svæðis:"
 
 #: plug-ins/imagemap/imap-menu.ui:16
 #, fuzzy
@@ -14846,31 +14766,31 @@ msgstr "_Aðdráttur að"
 
 #: plug-ins/imagemap/imap-menu.ui:119
 msgid "8:1"
-msgstr ""
+msgstr "8:1"
 
 #: plug-ins/imagemap/imap-menu.ui:124
 msgid "4:1"
-msgstr ""
+msgstr "4:1"
 
 #: plug-ins/imagemap/imap-menu.ui:129
 msgid "2:1"
-msgstr ""
+msgstr "2:1"
 
 #: plug-ins/imagemap/imap-menu.ui:134
 msgid "1:1"
-msgstr ""
+msgstr "1:1"
 
 #: plug-ins/imagemap/imap-menu.ui:139
 msgid "1:2"
-msgstr ""
+msgstr "1:2"
 
 #: plug-ins/imagemap/imap-menu.ui:144
 msgid "1:4"
-msgstr ""
+msgstr "1:4"
 
 #: plug-ins/imagemap/imap-menu.ui:149
 msgid "1:8"
-msgstr ""
+msgstr "1:8"
 
 #: plug-ins/imagemap/imap-menu.ui:158
 #, fuzzy
@@ -15395,10 +15315,9 @@ msgstr "Hvolf"
 #: plug-ins/map-object/map-object-main.c:149
 #: plug-ins/map-object/map-object-main.c:181
 #: plug-ins/map-object/map-object-main.c:197
-#, fuzzy
 #| msgid "X:"
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: plug-ins/map-object/map-object-main.c:150
 #: plug-ins/map-object/map-object-main.c:155
@@ -15408,18 +15327,16 @@ msgstr ""
 
 #: plug-ins/map-object/map-object-main.c:154
 #: plug-ins/map-object/map-object-main.c:202
-#, fuzzy
 #| msgid "Y:"
 msgid "Y"
-msgstr "Y:"
+msgstr "Y"
 
 #: plug-ins/map-object/map-object-main.c:159
 #: plug-ins/map-object/map-object-main.c:191
 #: plug-ins/map-object/map-object-main.c:207
-#, fuzzy
 #| msgid "Z:"
 msgid "Z"
-msgstr "Z:"
+msgstr "Z"
 
 #: plug-ins/map-object/map-object-main.c:165
 #, fuzzy
@@ -15455,7 +15372,7 @@ msgstr ""
 
 #: plug-ins/map-object/map-object-main.c:186
 msgid "y"
-msgstr ""
+msgstr "y"
 
 #: plug-ins/map-object/map-object-main.c:198
 #: plug-ins/map-object/map-object-main.c:203
@@ -16661,10 +16578,9 @@ msgid "Current gradient (reversed)"
 msgstr "Núverandi litstigull (viðsnúinn)"
 
 #: plug-ins/pagecurl/pagecurl.c:237
-#, fuzzy
 #| msgid "Curl Location"
 msgid "Locatio_n"
-msgstr "Staðsetning hornbrots"
+msgstr "Staðset_ning"
 
 #: plug-ins/pagecurl/pagecurl.c:238
 msgid "Corner which is curled"
@@ -17200,7 +17116,7 @@ msgstr "_Skanni/Myndavél..."
 #: plug-ins/twain/twain.c:412
 #, c-format
 msgid "TWAIN driver not found, scanning not available"
-msgstr ""
+msgstr "TWAIN-rekill fannst ekki, skönnun er ekki tiltæk"
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:490
@@ -20362,4 +20278,5 @@ msgstr "Flyt gögn frá skanna/myndavél"
 #, fuzzy
 #~ msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
 #~ msgstr "Óþekkt eigind %s í hlutinum <%s>"
+
 
