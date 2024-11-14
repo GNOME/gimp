@@ -669,7 +669,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     }
   else if (g_str_has_prefix (menu_path, "<Layers>"))
     {
-      if ((procedure->num_args < 4)                          ||
+      if ((procedure->num_args < 3)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
           ! (G_TYPE_FROM_INSTANCE       (procedure->args[2]) == GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
@@ -692,7 +692,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     }
   else if (g_str_has_prefix (menu_path, "<Channels>"))
     {
-      if ((procedure->num_args < 4)                          ||
+      if ((procedure->num_args < 3)                          ||
           ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE    (procedure->args[1]) ||
           ! (G_TYPE_FROM_INSTANCE       (procedure->args[2]) == GIMP_TYPE_PARAM_CORE_OBJECT_ARRAY))
