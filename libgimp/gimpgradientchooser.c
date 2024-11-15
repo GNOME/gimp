@@ -347,7 +347,7 @@ gimp_gradient_select_preview_draw_handler (GtkWidget           *widget,
 
   /* Width in pixels of src, since BPP is 4. */
   gimp_gradient_select_preview_draw (cr,
-                                     self->local_grad_data->n_samples / 4,
+                                     self->local_grad_data->n_samples,
                                      self->local_grad_data->allocation_width,
                                      self->local_grad_data->data);
 
