@@ -17,20 +17,31 @@ Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-St
 
 
 # 1. GET INNO
-Write-Output "(INFO): installing Inno"
 
 ## Download Inno
+Write-Output '(INFO): checking Inno version'
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
+$inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 
 ## Install or Update Inno
-..\is.exe /VERYSILENT /SUPPRESSMSGBOXES /CURRENTUSER /SP- #/LOG="..\innosetup.log"
-Wait-Process is
-$inno_version = Get-ItemProperty (Resolve-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*') | Select-Object -ExpandProperty DisplayVersion
-#$inno_version = (Get-Item ..\is.exe).VersionInfo.ProductVersion
+$inno_version = Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DisplayVersion
+if ("$inno_version" -ne "$inno_version_downloaded")
+  {
+    if ("$inno_version" -notlike "*.*")
+      {
+        Write-Output '(INFO): installing Inno'
+      }
+    else
+      {
+        Write-Output "(INFO): updating Inno from $inno_version to $inno_version_downloaded"
+      }
+    ..\is.exe /VERYSILENT /SUPPRESSMSGBOXES /CURRENTUSER /SP- #/LOG="..\innosetup.log"
+    Wait-Process is
+  }
 Remove-Item ..\is.exe
-Write-Output "(INFO): Installed Inno: $inno_version"
+Write-Output "(INFO): Installed Inno: $inno_version_downloaded"
 
 ## Get Inno install path
 $INNO_PATH = Get-ItemProperty (Resolve-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*') | Select-Object -ExpandProperty InstallLocation
@@ -94,7 +105,7 @@ if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
 
 ## Download unofficial translations (of unknown quality and maintenance)
 ## Cf. https://jrsoftware.org/files/istrans/
-Write-Output "(INFO): downloading unofficial Inno lang files"
+Write-Output "(INFO): temporarily installing unofficial Inno lang files"
 New-Item "$INNO_PATH/Languages/Unofficial/" -ItemType Directory -Force | Out-Null
 $xmlObject = New-Object XML
 $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
@@ -107,34 +118,41 @@ foreach ($langfile in $langsArray)
   }
 
 ## Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
-Write-Output "(INFO): patching Official and unofficial Inno lang files with $CUSTOM_GIMP_VERSION"
-function fix_msg ([string]$langsdir)
+Write-Output "(INFO): temporarily patching Official and unofficial Inno lang files with $CUSTOM_GIMP_VERSION"
+function fix_msg ([string]$langsdir, [string]$AppVer)
 {
-  #Prefer MSYS2 since PowerShell/.NET doesn't handle well files with mixed encodings
-  Copy-Item $GIMP_BASE/build/windows/installer/lang/fix_msg.sh $langsdir
-  Set-Location $langsdir
-  (Get-Content fix_msg.sh) | Foreach-Object {$_ -replace "AppVer","$CUSTOM_GIMP_VERSION"} |
-  Set-Content fix_msg.sh
-  bash fix_msg.sh
-  Remove-Item fix_msg.sh
-  Set-Location $GIMP_BASE
+  $langsArray_local = Get-ChildItem $langsdir -Filter *.isl -Name
+  foreach ($langfile in $langsArray_local)
+    {
+      $langfilePath = "$langsdir\$langfile"
 
-  #$langsArray_local = Get-ChildItem *.isl -Name
-  #foreach ($langfile in $langsArray_local)
-    #{
-    #  $msg = Get-Content $langfile
-    #  $linenumber = $msg | Select-String 'SetupWindowTitle' | Select-Object -ExpandProperty LineNumber
-    #  $msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
-    #         Set-Content "$langfile" -Encoding UTF8
-    #  $msg = Get-Content $langfile
-    #  $linenumber = $msg | Select-String 'UninstallAppFullTitle' | Select-Object -ExpandProperty LineNumber
-    #  $msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
-    #         Set-Content "$langfile" -Encoding UTF8
-    #}
+      if ($AppVer -ne 'revert')
+        {
+          Copy-Item "$langfilePath" "$Env:Tmp\$langfile.bak" -Force
+
+          #Prefer MSYS2 since PowerShell/.NET doesn't handle well files with mixed encodings
+          $langfilePathUnix = "$langfilePath" -replace '\\','/' -replace '//','/'
+          bash build/windows/installer/lang/fix_msg.sh "$langfilePathUnix" $AppVer
+
+          #$msg = Get-Content $langfilePath
+          #$linenumber = $msg | Select-String 'SetupWindowTitle' | Select-Object -ExpandProperty LineNumber
+          #$msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
+          #       Set-Content "$langfilePath" -Encoding UTF8
+          #$msg = Get-Content $langfilePath
+          #$linenumber = $msg | Select-String 'UninstallAppFullTitle' | Select-Object -ExpandProperty LineNumber
+          #$msg | ForEach-Object { If ($_.ReadCount -eq $linenumber) {$_ -Replace "%1", "%1 $AppVer"} Else {$_} } |
+          #       Set-Content "$langfilePath" -Encoding UTF8
+        }
+
+      else #($AppVer -eq 'revert')
+        {
+          Move-Item "$Env:Tmp\$langfile.bak" "$langfilePath" -Force
+        }
+    }
 }
-fix_msg $INNO_PATH
-fix_msg $INNO_PATH\Languages
-fix_msg $INNO_PATH\Languages\Unofficial
+fix_msg "$INNO_PATH" $CUSTOM_GIMP_VERSION
+fix_msg "$INNO_PATH\Languages" $CUSTOM_GIMP_VERSION
+fix_msg "$INNO_PATH\Languages\Unofficial" $CUSTOM_GIMP_VERSION
 
 
 # 4. PREPARE GIMP FILES
@@ -174,12 +192,16 @@ if ($CUSTOM_GIMP_VERSION -match 'RC[1-9]')
 iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$gimp_app_version" -DGIMP_API_VERSION="$gimp_api_version" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON $devel_warning base_gimp3264.iss | Out-Null
 Set-Location $GIMP_BASE
 
-## Clean changes in the bundles
+## Clean changes in the bundles and Inno installation
 foreach ($bundle in $supported_archs)
   {
     (Get-Content "$bundle\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=$revision","revision=0"} |
     Set-Content "$bundle\share\gimp\*\gimp-release"
   }
+fix_msg "$INNO_PATH" revert
+fix_msg "$INNO_PATH\Languages" revert
+fix_msg "$INNO_PATH\Languages\Unofficial" revert
+Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 
 if ($GITLAB_CI)
