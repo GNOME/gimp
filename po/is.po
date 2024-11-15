@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-10 17:26+0000\n"
-"PO-Revision-Date: 2024-11-12 16:24+0000\n"
+"PO-Revision-Date: 2024-11-15 11:20+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -12293,12 +12293,12 @@ msgstr "Mála"
 #: app/core/core-enums.c:1341 app/core/core-enums.c:1397
 msgctxt "undo-type"
 msgid "Attach parasite"
-msgstr "Festa sníkil"
+msgstr "Bæta við textasníkli"
 
 #: app/core/core-enums.c:1342 app/core/core-enums.c:1398
 msgctxt "undo-type"
 msgid "Remove parasite"
-msgstr "Fjarlægja sníkil"
+msgstr "Fjarlægja textasníkil"
 
 #: app/core/core-enums.c:1343
 msgctxt "undo-type"
@@ -12602,7 +12602,7 @@ msgstr "Leita að gagnaskrám"
 
 #: app/core/gimp.c:849
 msgid "Parasites"
-msgstr "Sníklar"
+msgstr "Textasníklar"
 
 #. initialize the module list
 #: app/core/gimp.c:860 app/dialogs/preferences-dialog.c:3582
@@ -13856,18 +13856,19 @@ msgstr "Breyta einingum myndar"
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
-"Fullgilding á 'gimp-comment' sníkli mistókst: athugasemd inniheldur ógilt "
+"Fullgilding á 'gimp-comment' textasníkli mistókst: athugasemd inniheldur"
+" ógilt "
 "UTF-8"
 
 #: app/core/gimpimage.c:4356
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
-msgstr "Festa sníkil við mynd"
+msgstr "Festa textasníkil við mynd"
 
 #: app/core/gimpimage.c:4401
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
-msgstr "Fjarlægja sníkil úr mynd"
+msgstr "Fjarlægja textasníkil úr mynd"
 
 #: app/core/gimpimage.c:5236
 msgctxt "undo-type"
@@ -13920,32 +13921,33 @@ msgstr "Gera 'Nota sRGB litasnið' óvirkt"
 #: app/core/gimpimage-color-profile.c:202
 #, c-format
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
-msgstr "Prófun ICC litasniðs mistókst: Heiti sníkils er ekki '%s'"
+msgstr "Prófun ICC-litasniðs mistókst: Heiti textasníkils er ekki '%s'"
 
 #: app/core/gimpimage-color-profile.c:217
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
 msgstr ""
-"Prófun ICC litasniðs mistókst: Flögg sníkils eru ekki (PERSISTENT | UNDOABLE)"
+"Prófun ICC-litasniðs mistókst: Flögg textasníkils eru ekki (PERSISTENT |"
+" UNDOABLE)"
 
 #: app/core/gimpimage-color-profile.c:276
 msgid "ICC profile validation failed: "
-msgstr "Prófun ICC litasniðs mistókst: "
+msgstr "Prófun ICC-litasniðs mistókst: "
 
 #: app/core/gimpimage-color-profile.c:278
 msgid "Simulation ICC profile validation failed: "
-msgstr "Herming á prófun ICC litasniðs mistókst: "
+msgstr "Herming á prófun ICC-litasniðs mistókst: "
 
 #: app/core/gimpimage-color-profile.c:548
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
-"Prófun ICC litasniðs mistókst: Litasniðið er ekki fyrir grátóna litarýmd"
+"Prófun ICC-litasniðs mistókst: Litasniðið er ekki fyrir grátóna litarýmd"
 
 #: app/core/gimpimage-color-profile.c:558
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
-msgstr "Prófun ICC litasniðs mistókst: Litasniðið er ekki fyrir RGB litarýmd"
+msgstr "Prófun ICC-litasniðs mistókst: Litasniðið er ekki fyrir RGB-litarýmd"
 
 #: app/core/gimpimage-color-profile.c:617
 msgid "Assigning color profile"
@@ -14251,17 +14253,17 @@ msgstr "Mynddílar valins lags eru læstir."
 #: app/core/gimpitem.c:2227
 msgctxt "undo-type"
 msgid "Attach Parasite"
-msgstr "Festa sníkil"
+msgstr "Bæta við textasníkli"
 
 #: app/core/gimpitem.c:2237
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
-msgstr "Festa sníkil við hlut"
+msgstr "Festa textasníkil við atriði"
 
 #: app/core/gimpitem.c:2288 app/core/gimpitem.c:2295
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
-msgstr "Fjarlægja sníkil af hlut"
+msgstr "Fjarlægja textasníkil af atriði"
 
 #: app/core/gimpitem-exclusive.c:65
 msgid "Set Item Exclusive Visibility"
@@ -15251,7 +15253,7 @@ msgstr "B_yrja frá myndvali"
 
 #: app/dialogs/color-profile-dialog.c:128
 msgid "Assign ICC Color Profile"
-msgstr "Úthluta ICC litasniði"
+msgstr "Úthluta ICC-litasniði"
 
 #: app/dialogs/color-profile-dialog.c:131
 msgid "Assign a color profile to the image"
@@ -15267,7 +15269,7 @@ msgstr "Úthluta"
 
 #: app/dialogs/color-profile-dialog.c:146
 msgid "Convert to ICC Color Profile"
-msgstr "Umbreyta í ICC litasnið"
+msgstr "Umbreyta í ICC-litasnið"
 
 #: app/dialogs/color-profile-dialog.c:149
 msgid "Convert the image to a color profile"
@@ -17227,7 +17229,7 @@ msgstr "Nota uppsett afrit á þessari tölvu"
 
 #: app/dialogs/preferences-dialog.c:2666
 msgid "U_ser manual:"
-msgstr "Notanda_handbók:"
+msgstr "Notenda_handbók:"
 
 #: app/dialogs/preferences-dialog.c:2677
 msgid "User interface language"
@@ -18301,6 +18303,8 @@ msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
 msgstr ""
+"Eins og hver annar hugbúnaður, þá er GIMP ekki laust við villur; tilkynningar"
+" um slíkt sem þú rekst á eru mjög mikilvægar fyrir framþróun verkefnisins."
 
 #: app/dialogs/welcome-dialog.c:874 app/dialogs/welcome-dialog.c:884
 msgid "Write Code"
@@ -18312,6 +18316,8 @@ msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
 msgstr ""
+"Þróunarvefsvæðið okkar er staðurinn sem þú vilt kynna þér ef þú hefur áhuga á"
+" að taka þátt í að leggja fram kóða."
 
 #: app/dialogs/welcome-dialog.c:888 app/dialogs/welcome-dialog.c:898
 msgid "Translate"
@@ -22038,7 +22044,7 @@ msgstr "Bæta inn textalagi"
 
 #: app/text/gimptext-parasite.c:168
 msgid "Invalid markup format in text parasite"
-msgstr ""
+msgstr "Ógilt snið merkinga í textasníkli"
 
 #: app/text/gimptext-parasite.c:192
 msgid "Empty text parasite"
@@ -28490,7 +28496,7 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
-"Fann skemmdan aukahlut í 'exif-data'.\n"
+"Fann skemmdan textasníkil í 'exif-data'.\n"
 "Ekki var hægt að yfirfæra EXIF-lýsigögn: %s"
 
 #: app/xcf/xcf-load.c:542
@@ -28498,7 +28504,7 @@ msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr ""
-"Fann skemmdan aukahlut í 'gimp-metadata'.\n"
+"Fann skemmdan textasníkil í 'gimp-metadata'.\n"
 "Ekki var hægt að yfirfæra XMP-lýsigögn."
 
 #: app/xcf/xcf-load.c:566
@@ -29029,7 +29035,7 @@ msgstr "_Festanlegir samskiptagluggar"
 #: menus/image-menu.ui.in.in:898
 msgctxt "help-action"
 msgid "_User Manual"
-msgstr "Notanda_handbók"
+msgstr "Noten_dahandbók"
 
 #: menus/image-menu.ui.in.in:914
 msgctxt "help-action"
@@ -31619,4 +31625,5 @@ msgstr "Valmynd um feril afturkallana"
 
 #~ msgid "Error saving XCF file: %s"
 #~ msgstr "Villa við vistun XCF-skráar: %s"
+
 
