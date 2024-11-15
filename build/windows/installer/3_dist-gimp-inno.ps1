@@ -53,7 +53,7 @@ Set-Alias iscc "$INNO_PATH\iscc.exe"
 $CONFIG_PATH = "$BUILD_DIR\config.h"
 if (-not (Test-Path "$CONFIG_PATH"))
   {
-    Write-Host "(ERROR): config.h file not found. You can run 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP to generate it.'" -ForegroundColor red
+    Write-Host "(ERROR): config.h file not found. You can run 'build\windows\2_build-gimp-msys2.ps1' or configure GIMP to generate it.'" -ForegroundColor red
     exit 1
   }
 
@@ -92,7 +92,7 @@ Write-Output "(INFO): Arch: universal (x86, x64 and arm64)"
 ## (They are loaded with '-DBUILD_DIR')
 if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
   {
-    Write-Host "(ERROR): Installer assets not found. You can tweak 'build/windows/2_build-gimp-msys2.ps1' or configure GIMP with '-Dwindows-installer=true' to build them." -ForegroundColor red
+    Write-Host "(ERROR): Installer assets not found. You can tweak 'build\windows\2_build-gimp-msys2.ps1' or configure GIMP with '-Dwindows-installer=true' to build them." -ForegroundColor red
     exit 1
   }
 
@@ -100,13 +100,13 @@ if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
 #Write-Output "(INFO): downloading Official Inno lang files (not present in a release yet)"
 #function download_lang_official ([string]$langfile)
 #{
-#  Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/$langfile -OutFile "$INNO_PATH/Languages/$langfile"
+#  Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/$langfile -OutFile "$INNO_PATH\Languages\$langfile"
 #}
 
 ## Download unofficial translations (of unknown quality and maintenance)
 ## Cf. https://jrsoftware.org/files/istrans/
 Write-Output "(INFO): temporarily installing unofficial Inno lang files"
-New-Item "$INNO_PATH/Languages/Unofficial/" -ItemType Directory -Force | Out-Null
+New-Item "$INNO_PATH\Languages\Unofficial\" -ItemType Directory -Force | Out-Null
 $xmlObject = New-Object XML
 $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
 $langsArray = $xmlObject.iso_639_entries.iso_639_entry |
@@ -114,7 +114,7 @@ $langsArray = $xmlObject.iso_639_entries.iso_639_entry |
 foreach ($langfile in $langsArray)
   {
     $langfileUnix = $langfile.Replace('\\', '/')
-    Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$INNO_PATH/$langfileUnix"
+    Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$INNO_PATH\$langfile"
   }
 
 ## Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
