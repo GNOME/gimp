@@ -444,10 +444,17 @@ spinbutton button.up, spinbutton button.down {
   -gtk-icon-shadow: none;
 }
 
+GimpSpinScale entry {
+  padding:      0px 8px 0px 5px;
+  border-color: @stronger-border-color;
+  box-shadow:   none;
+}
+
 GimpSpinScale entry progress {
   background-color: @extreme-selected-color;
   border-width:     0px;
   border-radius:    3px;
+  margin:           0px -8px 0px -5px;
 }
 
 GimpSpinScale button
