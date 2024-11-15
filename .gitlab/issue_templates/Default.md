@@ -12,7 +12,8 @@ https://gitlab.gnome.org/GNOME/gimp/-/issues/?sort=updated_desc&state=all&label_
 
 - GIMP version:
 - Package: <!--[flatpak? Installer from gimp.org? If another installer, tell us where from] (write it after the > symbol)-->
-- Operating System: <!--[Windows? macOS? Linux? All?] (write it after the > symbol) -->
+- Operating System: <!--[Windows? macOS? Linux? All? Add OS versions too] (write it after the > symbol) -->
+- (if Linux) Display system: <!--[X11? Wayland? Which compositor and version?] (write it after the > symbol) -->
 
 <!--Note: bug reporters are expected to have verified the bug still exists
 either in the last stable version of GIMP or on updated development code
