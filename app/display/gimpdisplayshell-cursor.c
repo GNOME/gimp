@@ -181,7 +181,7 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
                                                &t_x, &t_y, FALSE);
 
           gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
-                                          image, shell->unit,
+                                          image, shell->unit, shell->show_all,
                                           t_x, t_y);
         }
     }

@@ -91,6 +91,7 @@ struct _GimpCursorViewPrivate
   guint             cursor_idle_id;
   GimpImage        *cursor_image;
   GimpUnit         *cursor_unit;
+  gboolean          cursor_show_all;
   gdouble           cursor_x;
   gdouble           cursor_y;
 };
@@ -747,13 +748,13 @@ gimp_cursor_view_update_selection_info (GimpCursorView *view,
 static gboolean
 gimp_cursor_view_cursor_idle (GimpCursorView *view)
 {
-
   if (view->priv->cursor_image)
     {
-      GimpImage  *image = view->priv->cursor_image;
-      GimpUnit   *unit  = view->priv->cursor_unit;
-      gdouble     x     = view->priv->cursor_x;
-      gdouble     y     = view->priv->cursor_y;
+      GimpImage  *image    = view->priv->cursor_image;
+      GimpUnit   *unit     = view->priv->cursor_unit;
+      gboolean    show_all = view->priv->cursor_show_all;
+      gdouble     x        = view->priv->cursor_x;
+      gdouble     y        = view->priv->cursor_y;
       gboolean    in_image;
       gchar       buf[32];
       const Babl *sample_format;
@@ -794,7 +795,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
       color = gegl_color_new ("black");
       if (gimp_image_pick_color (image, NULL,
                                  int_x, int_y,
-                                 view->priv->shell->show_all,
+                                 show_all,
                                  view->priv->sample_merged,
                                  FALSE, 0.0,
                                  &sample_format, pixel, &color))
@@ -884,6 +885,7 @@ void
 gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 GimpImage        *image,
                                 GimpUnit         *shell_unit,
+                                gboolean          shell_show_all,
                                 gdouble           x,
                                 gdouble           y)
 {
@@ -892,10 +894,11 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
 
   g_clear_object (&view->priv->cursor_image);
 
-  view->priv->cursor_image = g_object_ref (image);
-  view->priv->cursor_unit  = shell_unit;
-  view->priv->cursor_x     = x;
-  view->priv->cursor_y     = y;
+  view->priv->cursor_image    = g_object_ref (image);
+  view->priv->cursor_unit     = shell_unit;
+  view->priv->cursor_show_all = shell_show_all;
+  view->priv->cursor_x        = x;
+  view->priv->cursor_y        = y;
 
   if (view->priv->cursor_idle_id == 0)
     {
