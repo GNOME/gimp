@@ -21,11 +21,15 @@ fi
 
 ## We apply these patches otherwise appstream-cli get confused with
 ## (non-reverse) DNS naming and fails. That's NOT a GIMP bug, see: #6798
-echo '(INFO): patching GIMP with reverse DNS naming'
-git apply -v build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch >/dev/null 2>&1
-cd gimp-data
-git apply -v ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch >/dev/null 2>&1
-cd ..
+echo '(INFO): temporarily patching GIMP with reverse DNS naming'
+patch_app_id ()
+{
+  git apply $1 build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch >/dev/null 2>&1 || true
+  cd gimp-data
+  git apply $1 ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch >/dev/null 2>&1 || true
+  cd ..
+}
+patch_app_id
 
 ## Prepare env. Universal variables from .gitlab-ci.yml
 IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
@@ -34,39 +38,50 @@ for VAR in "${VAR_ARRAY[@]}"; do
   eval "$VAR" || continue
 done
 
-## Rebuild GIMP
-echo '(INFO): rebuilding GIMP as relocatable'
-### FIXME: GIMP tests fails with raster icons in relocatable mode
-meson configure _build -Drelocatable-bundle=yes -Dvector-icons=true >/dev/null 2>&1
-cd _build
-ninja &> ninja.log | rm ninja.log || cat ninja.log
-ninja install >/dev/null 2>&1
-ccache --show-stats
-cd ..
+## Ensure that GIMP is relocatable
+grep -q 'relocatable-bundle=yes' _build/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
+if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
+  echo '(INFO): rebuilding GIMP as relocatable'
+  ### FIXME: GIMP tests fails with raster icons in relocatable mode
+  meson configure _build -Drelocatable-bundle=yes -Dvector-icons=true >/dev/null 2>&1
+  cd _build
+  ninja &> ninja.log | rm ninja.log || cat ninja.log
+  ninja install >/dev/null 2>&1
+  ccache --show-stats
+  cd ..
+fi
+
+## Revert previously applied patches
+patch_app_id '-R'
 
 
 # INSTALL GO-APPIMAGETOOL
 echo '(INFO): downloading go-appimagetool'
-apt-get install -y --no-install-recommends wget >/dev/null 2>&1
+if [ -f "*appimagetool*.AppImage" ]; then
+  rm *appimagetool*.AppImage
+fi
+if [ "$GITLAB_CI" ]; then
+  apt-get install -y --no-install-recommends wget >/dev/null 2>&1
+fi
+arch=$(uname -m)
 
 ## For now, we always use the latest version of go-appimagetool
-wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
-mv *.AppImage appimagetool.appimage
-go_appimagetool=appimagetool.appimage
+wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${arch}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
+go_appimagetool='go-appimagetool.AppImage'
+mv appimagetool-*.AppImage $go_appimagetool
 chmod +x "$go_appimagetool"
 
 ## go-appimagetool have buggy appstreamcli so we need to use the legacy one
-legacy_appimagetool="appimagetool-x86_64.AppImage"
-wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/$legacy_appimagetool" >/dev/null 2>&1
+wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-${arch}.AppImage" >/dev/null 2>&1
+legacy_appimagetool='legacy-appimagetool.AppImage'
+mv appimagetool-*.AppImage $legacy_appimagetool
 chmod +x "$legacy_appimagetool"
 
 
 # BUNDLE FILES
 echo '(INFO): copying files to AppDir'
 UNIX_PREFIX='/usr'
-if [ "$GITLAB_CI" ]; then
-  export GIMP_PREFIX="$PWD/_install"
-elif [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
+if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
 APP_DIR="$PWD/AppDir"
@@ -74,41 +89,47 @@ USR_DIR="$APP_DIR/usr"
 
 prep_pkg ()
 {
-  apt-get install -y --no-install-recommends $1 >/dev/null 2>&1
+  if [ "$GITLAB_CI" ]; then
+    apt-get install -y --no-install-recommends $1 >/dev/null 2>&1
+  fi
 }
 
 bund_usr ()
 {
   if [ "$3" != '--go' ]; then
-    cd $APP_DIR
+    #Prevent unwanted expansion
+    mkdir -p limbo
+    cd limbo
+
+    #Paths where to search
     case $2 in
       bin*)
         search_path=("$1/bin" "/usr/sbin" "/usr/libexec")
         ;;
-
       lib*)
         search_path=("$(dirname $(echo $2 | sed "s|lib/|$1/${LIB_DIR}/${LIB_SUBDIR}|g" | sed "s|*|no_scape|g"))"
                      "$(dirname $(echo $2 | sed "s|lib/|/usr/${LIB_DIR}/|g" | sed "s|*|no_scape|g"))")
         ;;
-
       share*|etc*)
         search_path=("$(dirname $(echo $2 | sed "s|${2%%/*}|$1/${2%%/*}|g" | sed "s|*|no_scape|g"))")
         ;;
     esac
-
     for path in "${search_path[@]}"; do
       expanded_path=$(echo $(echo $path | sed "s|no_scape|*|g"))
       if [ ! -d "$expanded_path" ]; then
         break
       fi
+
+      #Copy found targets from search_path to bundle dir
       target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
       for target_path in "${target_array[@]}"; do
         dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
         mkdir -p $dest_path
         if [ -d "$target_path" ] || [ -f "$target_path" ]; then
-          cp -r $target_path $dest_path
+          cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
         fi
 
+        #Additional parameters for special situations
         if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
           if [ "$3" = '--dest' ]; then
             mkdir -p ${USR_DIR}/$4
@@ -124,7 +145,10 @@ bund_usr ()
         fi
       done
     done
+
+    #Undo the tweak done above
     cd ..
+    rm -r limbo
   fi
 }
 
@@ -155,7 +179,7 @@ wipe_usr ()
 if [ ! -f 'build/linux/appimage/AppRun.bak' ]; then
   cp build/linux/appimage/AppRun build/linux/appimage/AppRun.bak
 fi
-mkdir $APP_DIR
+mkdir -p $APP_DIR
 bund_usr "$UNIX_PREFIX" "lib64/ld-*.so.*" --go
 conf_app LD_LINUX "lib64/ld-*.so.*"
 
