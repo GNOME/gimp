@@ -122,7 +122,7 @@ static void       gimp_cursor_view_image_changed         (GimpCursorView      *v
                                                           GimpContext         *context);
 static void       gimp_cursor_view_mask_changed          (GimpCursorView      *view,
                                                           GimpImage           *image);
-static void       gimp_cursor_view_diplay_changed        (GimpCursorView      *view,
+static void       gimp_cursor_view_display_changed       (GimpCursorView      *view,
                                                           GimpDisplay         *display,
                                                           GimpContext         *context);
 static void       gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
@@ -578,7 +578,7 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
   if (view->priv->context)
     {
       g_signal_handlers_disconnect_by_func (view->priv->context,
-                                            gimp_cursor_view_diplay_changed,
+                                            gimp_cursor_view_display_changed,
                                             view);
       g_signal_handlers_disconnect_by_func (view->priv->context,
                                             gimp_cursor_view_image_changed,
@@ -594,7 +594,7 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
       g_object_ref (view->priv->context);
 
       g_signal_connect_swapped (view->priv->context, "display-changed",
-                                G_CALLBACK (gimp_cursor_view_diplay_changed),
+                                G_CALLBACK (gimp_cursor_view_display_changed),
                                 view);
 
       g_signal_connect_swapped (view->priv->context, "image-changed",
@@ -611,7 +611,7 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
   gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (view->priv->color_frame_2),
                                      config);
 
-  gimp_cursor_view_diplay_changed (view, display, view->priv->context);
+  gimp_cursor_view_display_changed (view, display, view->priv->context);
   gimp_cursor_view_image_changed (view, image, view->priv->context);
 }
 
@@ -654,9 +654,9 @@ gimp_cursor_view_mask_changed (GimpCursorView *view,
 }
 
 static void
-gimp_cursor_view_diplay_changed (GimpCursorView *view,
-                                 GimpDisplay    *display,
-                                 GimpContext    *context)
+gimp_cursor_view_display_changed (GimpCursorView *view,
+                                  GimpDisplay    *display,
+                                  GimpContext    *context)
 {
   GimpDisplayShell *shell = NULL;
 
