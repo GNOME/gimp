@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-07 16:19+0000\n"
-"PO-Revision-Date: 2024-11-07 22:56+0200\n"
+"POT-Creation-Date: 2024-11-10 17:26+0000\n"
+"PO-Revision-Date: 2024-11-16 12:15+0200\n"
 "Last-Translator: VeikkoM <veikkko.muurikainen@kolumbus.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -946,12 +946,9 @@ msgid "_Add Channels to Selection"
 msgstr "_Lisää kanavat valitaan"
 
 #: app/actions/channels-actions.c:190
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "Add this channel to the current selection"
 msgctxt "channels-action"
 msgid "Add selected channels to the current selection"
-msgstr "Lisää tämä kanava nykyiseen valintaan"
+msgstr "Lisää valitut kanavat nykyiseen valintaan"
 
 #: app/actions/channels-actions.c:195
 #, fuzzy
@@ -2569,7 +2566,7 @@ msgstr "Tiedoston näyttäminen tiedostonhallinnassa ei onnistu: %s"
 
 #: app/actions/debug-actions.c:40
 msgid "Start _GtkInspector"
-msgstr ""
+msgstr "Käynnistä _GtkInspector"
 
 #: app/actions/debug-actions.c:45
 #, fuzzy
@@ -3133,7 +3130,6 @@ msgid "Open the dashboard"
 msgstr "Avaa kojelauta"
 
 #: app/actions/dialogs-actions.c:311 app/actions/dialogs-actions.c:312
-#| msgid "_Manage Settings..."
 msgctxt "dialogs-action"
 msgid "_Settings..."
 msgstr "_Asetukset..."
@@ -4393,7 +4389,6 @@ msgstr "Kor_vaa %s"
 #.
 #: app/actions/file-actions.c:381
 #, c-format
-#| msgid "Re_peat \"%s\""
 msgid "Open \"%s\""
 msgstr "Avaa \"%s\""
 
@@ -5145,7 +5140,6 @@ msgstr "Näytä viimeksi käytetty suodatinvalintaikkuna uudelleen"
 #.
 #: app/actions/filters-actions.c:848
 #, c-format
-#| msgid "_Fade %s..."
 msgid "%s..."
 msgstr "%s..."
 
@@ -9308,7 +9302,6 @@ msgstr "Työkalun voima: Lisää suhteellisesti"
 
 #: app/actions/tools-actions.c:817
 #, c-format
-#| msgid "Activate the \"%s\" tool"
 msgid "Activate tool \"%s\""
 msgstr "Aktivoi työkalu \"%s\""
 
@@ -10413,7 +10406,6 @@ msgstr "Yhden ikkunan tila pois käytöstä"
 #.
 #: app/actions/windows-actions.c:391
 #, c-format
-#| msgid "R_e-Show \"%s\""
 msgid "Show \"%s-%d.%d\""
 msgstr "Näytä \"%s-%d.%d\""
 
@@ -10787,7 +10779,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:81
 msgid "Merge menu and title bar (client-side decoration)"
-msgstr ""
+msgstr "Yhdistä valikko- ja otsikkopalkki (asiakaspuolen dekoraatio)"
 
 #: app/config/gimprc-blurbs.h:84
 msgid "Show full image content by default."
@@ -15792,10 +15784,8 @@ msgid "The image '%s' has an embedded color profile"
 msgstr "Kuva '%s' sisältää väriprofiilin"
 
 #: app/dialogs/color-profile-import-dialog.c:151
-#, fuzzy
-#| msgid "Simulation profile"
 msgid "Built-in Profile"
-msgstr "Simulointiprofiili"
+msgstr "Sisäänrakennettu profiili"
 
 #: app/dialogs/color-profile-import-dialog.c:161
 msgid "Convert the image to the preferred grayscale color profile?"
@@ -15806,10 +15796,8 @@ msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Muunnetaanko kuva haluttuun RGB-väriprofiiliin?"
 
 #: app/dialogs/color-profile-import-dialog.c:167
-#, fuzzy
-#| msgid "Preferred Profiles"
 msgid "Preferred Profile"
-msgstr "Suositut profiilit"
+msgstr "Ensisijainen profiili"
 
 #: app/dialogs/color-profile-import-dialog.c:222
 #: app/dialogs/metadata-rotation-import-dialog.c:227
@@ -16575,7 +16563,6 @@ msgstr "Valittu lähde ei sisällä mitään värejä."
 
 #: app/dialogs/palette-import-dialog.c:452
 #, c-format
-#| msgid "There is no palette to import."
 msgid "The palette was not imported: %s"
 msgstr "Palettia ei tuotu: %s"
 
@@ -18991,23 +18978,23 @@ msgstr "K"
 msgid "_Sample Merged"
 msgstr "_Yhdistetty valinta"
 
-#: app/display/gimpdisplayshell.c:547
+#: app/display/gimpdisplayshell.c:548
 msgid "Access the image menu"
 msgstr "Avaa kuvavalikko"
 
-#: app/display/gimpdisplayshell.c:710
+#: app/display/gimpdisplayshell.c:711
 msgid "Zoom image when window size changes"
 msgstr "Suurenna kuvaa kun ikkunan koko muuttuu"
 
-#: app/display/gimpdisplayshell.c:739
+#: app/display/gimpdisplayshell.c:740
 msgid "Toggle Quick Mask"
 msgstr "Vaihda pikamaski"
 
-#: app/display/gimpdisplayshell.c:754
+#: app/display/gimpdisplayshell.c:755
 msgid "Navigate the image display"
 msgstr "Selaa kuvanäkymää"
 
-#: app/display/gimpdisplayshell.c:807 app/display/gimpdisplayshell.c:1577
+#: app/display/gimpdisplayshell.c:808 app/display/gimpdisplayshell.c:1578
 #: app/widgets/gimptoolbox.c:269
 msgid "Drop image files here to open them"
 msgstr "Avaa kuvatiedostot pudottamalla ne tähän"
@@ -19800,7 +19787,7 @@ msgstr "GIMP-laajennus"
 #: app/gegl/gimp-babl.c:193 app/gegl/gimp-babl.c:194 app/gegl/gimp-babl.c:195
 #: app/gegl/gimp-babl.c:196 app/gegl/gimp-babl.c:197 app/gegl/gimp-babl.c:198
 #: app/gegl/gimp-babl.c:199 app/gegl/gimp-babl.c:200 app/gegl/gimp-babl.c:201
-#: app/plug-in/gimppluginprocedure.c:1017
+#: app/plug-in/gimppluginprocedure.c:1022
 msgid "RGB"
 msgstr "RGB"
 
@@ -19819,7 +19806,7 @@ msgstr "RGB-alfa"
 #: app/gegl/gimp-babl.c:231 app/gegl/gimp-babl.c:232 app/gegl/gimp-babl.c:233
 #: app/gegl/gimp-babl.c:234 app/gegl/gimp-babl.c:235 app/gegl/gimp-babl.c:236
 #: app/gegl/gimp-babl.c:237 app/gegl/gimp-babl.c:238 app/gegl/gimp-babl.c:239
-#: app/plug-in/gimppluginprocedure.c:1035
+#: app/plug-in/gimppluginprocedure.c:1040
 msgid "Grayscale"
 msgstr "Harmaasävy"
 
@@ -19868,7 +19855,7 @@ msgstr "Alfa-komponentti"
 msgid "Indexed-alpha"
 msgstr "Indeksoitu alfa"
 
-#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1053
+#: app/gegl/gimp-babl.c:352 app/plug-in/gimppluginprocedure.c:1058
 msgid "Indexed"
 msgstr "Indeksoitu"
 
@@ -20746,6 +20733,8 @@ msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
 "gimp-light.css nor gimp.css."
 msgstr ""
+"Virheellinen teema: kansio '%s' ei sisällä yhtäkään seuraavista tiedostoista "
+"gimp-dark.css, gimp-gray.css, gimp-light.css tai gimp.css."
 
 #: app/menus/shortcuts-rc.c:137
 #, c-format
@@ -22031,35 +22020,35 @@ msgstr "Alustetaan liitännäisiä"
 msgid "Starting Extensions"
 msgstr "Käynnistetään laajennokset"
 
-#: app/plug-in/gimppluginprocedure.c:1021
+#: app/plug-in/gimppluginprocedure.c:1026
 msgid "RGB without alpha"
 msgstr "RGB ilman alphaa"
 
-#: app/plug-in/gimppluginprocedure.c:1025
+#: app/plug-in/gimppluginprocedure.c:1030
 msgid "RGB with alpha"
 msgstr "RGB alphan kanssa"
 
-#: app/plug-in/gimppluginprocedure.c:1039
+#: app/plug-in/gimppluginprocedure.c:1044
 msgid "Grayscale without alpha"
 msgstr "Harmaasävy ilman alfaa"
 
-#: app/plug-in/gimppluginprocedure.c:1043
+#: app/plug-in/gimppluginprocedure.c:1048
 msgid "Grayscale with alpha"
 msgstr "Harmaasävy ja alfa"
 
-#: app/plug-in/gimppluginprocedure.c:1057
+#: app/plug-in/gimppluginprocedure.c:1062
 msgid "Indexed without alpha"
 msgstr "Indeksoitu ilman alfaa"
 
-#: app/plug-in/gimppluginprocedure.c:1061
+#: app/plug-in/gimppluginprocedure.c:1066
 msgid "Indexed with alpha"
 msgstr "Indeksoitu alfalla"
 
-#: app/plug-in/gimppluginprocedure.c:1072
+#: app/plug-in/gimppluginprocedure.c:1077
 msgid "This plug-in only works on the following layer types:"
 msgstr "Tämä lisäosa toimii vain seuraavissa tasotyypeissä:"
 
-#: app/plug-in/gimppluginprocedure.c:1313
+#: app/plug-in/gimppluginprocedure.c:1318
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22068,7 +22057,7 @@ msgstr ""
 "Kutsuvirhe proseduurille \"%s\":\n"
 "%s"
 
-#: app/plug-in/gimppluginprocedure.c:1325
+#: app/plug-in/gimppluginprocedure.c:1330
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -26177,10 +26166,10 @@ msgid "_Search:"
 msgstr "_Etsi:"
 
 #: app/widgets/gimpactiongroup.c:1200
-#, fuzzy, c-format
+#, c-format
 #| msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgid "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "sRGB+A (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpactionview.c:259 app/widgets/gimpcontrollereditor.c:345
 #: app/widgets/gimpdeviceinfoeditor.c:579
@@ -27705,7 +27694,6 @@ msgstr "Sijainti: %0.4f"
 #.
 #: app/widgets/gimpgradienteditor.c:1336
 #, c-format
-#| msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgid "sRGB (%0.3f, %0.3f, %0.3f)"
 msgstr "sRGB (%0.3f, %0.3f, %0.3f)"
 
@@ -27721,7 +27709,6 @@ msgstr "Kirkkaus: %0.1f    Peittokyky: %0.1f"
 
 #: app/widgets/gimpgradienteditor.c:1375
 #, c-format
-#| msgid "RGB (%d, %d, %d)"
 msgid "sRGB (%d, %d, %d)"
 msgstr "sRGB (%d, %d, %d)"
 
@@ -28056,7 +28043,6 @@ msgstr "Valitse tasot kuvioiden mukaan ja tallenna tasojoukot"
 
 #: app/widgets/gimpitemtreeview.c:1789
 #, c-format
-#| msgid "No filter selected"
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] "%d tietue valittu"
@@ -28320,7 +28306,6 @@ msgstr "Pikavalinnat"
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
 #: app/widgets/gimpsearchpopup.c:297 app/widgets/gimpsearchpopup.c:319
 #, c-format
-#| msgid "%s: %d"
 msgid "%s: %s"
 msgstr "%s: %s"
 
@@ -29524,7 +29509,6 @@ msgid "De_velopment"
 msgstr "_Kehitys"
 
 #: menus/image-menu.ui.in.in:846
-#| msgid "Plug-in Folders"
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Liitännäisten _esimerkit"
@@ -29562,7 +29546,6 @@ msgid "_User Manual"
 msgstr "_Käyttöohje"
 
 #: menus/image-menu.ui.in.in:914
-#| msgid "GIMP extension"
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP verkossa"
