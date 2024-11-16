@@ -1,5 +1,14 @@
 #!/usr/bin/env pwsh
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
+
+## Install or Update Inno
+..\is.exe /VERYSILENT /SUPPRESSMSGBOXES /CURRENTUSER /SP- #/LOG="..\innosetup.log"
+Wait-Process is
+
+exit
+
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
