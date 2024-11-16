@@ -207,15 +207,19 @@ Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
-    $output_dir = 'build\windows\installer\_Output'
+    $output_dir = "$GIMP_BASE\build\windows\installer\_Output"
     New-Item $output_dir -ItemType Directory | Out-Null
     Move-Item $GIMP_BASE\$INSTALLER $output_dir
 
-    # Generate checksums
+    # Generate checksums in common "sha*sum" format
     if ($CI_COMMIT_TAG)
       {
         Write-Output "(INFO): generating checksums for $INSTALLER"
-        Get-FileHash $output_dir\$INSTALLER -Algorithm SHA256 | Out-File $output_dir\$INSTALLER.SHA256SUMS
-        Get-FileHash $output_dir\$INSTALLER -Algorithm SHA512 | Out-File $output_dir\$INSTALLER.SHA512SUMS
+        # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
+        $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
+        [System.IO.File]::WriteAllText("$output_dir\$INSTALLER.SHA256SUMS", "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER", $Utf8NoBomEncoding)
+        #Set-Content $output_dir\$INSTALLER.SHA256SUMS "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER" -Encoding utf8NoBOM -NoNewline
+        [System.IO.File]::WriteAllText("$output_dir\$INSTALLER.SHA512SUMS", "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER", $Utf8NoBomEncoding)
+        #Set-Content $output_dir\$INSTALLER.SHA512SUMS "$((Get-FileHash $output_dir\$INSTALLER -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$INSTALLER" -Encoding utf8NoBOM -NoNewline
       }
   }

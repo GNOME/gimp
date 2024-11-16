@@ -366,18 +366,23 @@ if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*') -and ($M
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
-    New-Item build\windows\store\_Output -ItemType Directory | Out-Null
-    Move-Item $MSIX_ARTIFACT build\windows\store\_Output
+    $output_dir = "$PWD\build\windows\store\_Output"
+    New-Item $output_dir -ItemType Directory | Out-Null
+    Move-Item $MSIX_ARTIFACT $output_dir
     if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*'))
       {
-        Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination build\windows\store\_Output
+        Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination $output_dir
       }
 
-    # Generate checksums
+    # Generate checksums in common "sha*sum" format
     if ($CI_COMMIT_TAG)
       {
         Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
-        Get-FileHash build\windows\store\_Output\$MSIX_ARTIFACT -Algorithm SHA256 | Out-File build\windows\store\_Output\$MSIX_ARTIFACT.SHA256SUMS
-        Get-FileHash build\windows\store\_Output\$MSIX_ARTIFACT -Algorithm SHA512 | Out-File build\windows\store\_Output\$MSIX_ARTIFACT.SHA512SUMS
+        # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
+        $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
+        [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA256SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
+        #Set-Content $output_dir\$MSIX_ARTIFACT.SHA256SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
+        [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA512SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
+        #Set-Content $output_dir\$MSIX_ARTIFACT.SHA512SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
       }
   }
