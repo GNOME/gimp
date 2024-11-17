@@ -3,14 +3,14 @@
 # Copyright (C) 2004, 2005 Free Software Foundation, Inc.
 #
 # Gatis Kalnins <gatis.kalnins@metatrons.org>, 2004, 2005.
-# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2010.
+# SPDX-FileCopyrightText: 2010, 2024 Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>
 # Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2016, 2018, 2019, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.lv\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-11-09 14:43+0000\n"
-"PO-Revision-Date: 2021-11-14 20:53+0200\n"
+"POT-Creation-Date: 2024-11-10 17:30+0000\n"
+"PO-Revision-Date: 2024-11-17 15:29+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -19,92 +19,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 :"
 " 2);\n"
-"X-Generator: Lokalize 21.08.1\n"
+"X-Generator: Lokalize 23.08.5\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:177
-msgid "Brush Selection"
-msgstr "Otas izvēle"
-
-#: ../libgimp/gimpbrushselectbutton.c:884
-#: ../libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Pārlūkot..."
 
-#: ../libgimp/gimpexport.c:332 ../libgimp/gimpexport.c:368
+#: libgimp/gimpdrawablechooser.c:238
+#| msgid "_Browse..."
+msgid "Browse..."
+msgstr "Pārlūkot..."
+
+#: libgimp/gimpexportoptions.c:341 libgimp/gimpexportoptions.c:377
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s spraudnis nevar apstrādāt slāņus"
 
-#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:342
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:369
+#: libgimp/gimpexportoptions.c:342 libgimp/gimpexportoptions.c:351
+#: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:378
 msgid "Merge Visible Layers"
 msgstr "Apvienot redzamos slāņus"
 
-#: ../libgimp/gimpexport.c:341
+#: libgimp/gimpexportoptions.c:350
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s spraudnis nevar apstrādāt slāņu nobīdi, izmēru vai blīvumu"
 
-#: ../libgimp/gimpexport.c:350 ../libgimp/gimpexport.c:359
+#: libgimp/gimpexportoptions.c:359 libgimp/gimpexportoptions.c:368
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s spraudnis var apstrādāt slāņus tikai kā animētus kadrus"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:360
+#: libgimp/gimpexportoptions.c:360 libgimp/gimpexportoptions.c:369
 msgid "Save as Animation"
 msgstr "Saglabāt kā animāciju"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:369
-#: ../libgimp/gimpexport.c:378 ../libgimp/gimpexport.c:387
+#: libgimp/gimpexportoptions.c:369 libgimp/gimpexportoptions.c:378
+#: libgimp/gimpexportoptions.c:387 libgimp/gimpexportoptions.c:405
 msgid "Flatten Image"
 msgstr "Saplacināt attēlu"
 
-#: ../libgimp/gimpexport.c:377
+#: libgimp/gimpexportoptions.c:386
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s spraudnis nevar apstrādāt caurspīdīgumu"
 
-#: ../libgimp/gimpexport.c:386
+#: libgimp/gimpexportoptions.c:395
+#, c-format
+#| msgid "%s plug-in can't handle layers"
+msgid "%s plug-in can't handle layer effects"
+msgstr "%s spraudnis nevar apstrādāt slāņu efektus"
+
+#: libgimp/gimpexportoptions.c:396
+#| msgid "Merge Visible Layers"
+msgid "Merge Layer Effects"
+msgstr "Apvienošanas slāņa efekti"
+
+#: libgimp/gimpexportoptions.c:404
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s spraudnis nevar apstrādāt caurspīdīgus slāņus"
 
-#: ../libgimp/gimpexport.c:395
+#: libgimp/gimpexportoptions.c:413
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s spraudnis nevar apstrādāt slāņa maskas"
 
-#: ../libgimp/gimpexport.c:396
+#: libgimp/gimpexportoptions.c:414
 msgid "Apply Layer Masks"
 msgstr "Apstiprināt slāņa maskas"
 
-#: ../libgimp/gimpexport.c:404
+#: libgimp/gimpexportoptions.c:422
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s spraudnis var apstrādāt tikai RGB attēlus"
 
-#: ../libgimp/gimpexport.c:405 ../libgimp/gimpexport.c:443
-#: ../libgimp/gimpexport.c:452
+#: libgimp/gimpexportoptions.c:423 libgimp/gimpexportoptions.c:461
+#: libgimp/gimpexportoptions.c:470
 msgid "Convert to RGB"
 msgstr "Konvertēt uz RGB"
 
-#: ../libgimp/gimpexport.c:413
+#: libgimp/gimpexportoptions.c:431
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s spraudnis var apstrādāt tikai pelēktoņu attēlus"
 
-#: ../libgimp/gimpexport.c:414 ../libgimp/gimpexport.c:443
-#: ../libgimp/gimpexport.c:464
+#: libgimp/gimpexportoptions.c:432 libgimp/gimpexportoptions.c:461
+#: libgimp/gimpexportoptions.c:482
 msgid "Convert to Grayscale"
 msgstr "Konvertēt uz pelēktoņu"
 
-#: ../libgimp/gimpexport.c:422
+#: libgimp/gimpexportoptions.c:440
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s spraudnis var apstrādāt tikai indeksētus attēlus"
 
-#: ../libgimp/gimpexport.c:423 ../libgimp/gimpexport.c:452
-#: ../libgimp/gimpexport.c:462
+#: libgimp/gimpexportoptions.c:441 libgimp/gimpexportoptions.c:470
+#: libgimp/gimpexportoptions.c:480
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -112,13 +123,13 @@ msgstr ""
 "Konvertēt par indeksēto, izmantojot noklusējuma iestatījumus\n"
 "(Rezultātu var koriģēt manuāli)"
 
-#: ../libgimp/gimpexport.c:432
+#: libgimp/gimpexportoptions.c:450
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s spraudnis var apstrādāt tikai bitkaršu (divu krāsu) indeksētos attēlus"
 
-#: ../libgimp/gimpexport.c:433
+#: libgimp/gimpexportoptions.c:451
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -126,233 +137,233 @@ msgstr ""
 "Konvertēt par indeksēto, izmantojot bitkartes noklusējuma iestatījumus\n"
 "(Rezultātu var koriģēt manuāli)"
 
-#: ../libgimp/gimpexport.c:442
+#: libgimp/gimpexportoptions.c:460
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s spraudnis var apstrādāt tikai RGB vai pelēktoņu attēlus"
 
-#: ../libgimp/gimpexport.c:451
+#: libgimp/gimpexportoptions.c:469
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s spraudnis var apstrādāt tikai RGB vai indeksētos attēlus"
 
-#: ../libgimp/gimpexport.c:461
+#: libgimp/gimpexportoptions.c:479
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s spraudnis var apstrādāt tikai pelēktoņu vai indeksētos attēlus"
 
-#: ../libgimp/gimpexport.c:472
+#: libgimp/gimpexportoptions.c:490
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s spraudnim ir nepieciešams alfa kanāls"
 
-#: ../libgimp/gimpexport.c:473
+#: libgimp/gimpexportoptions.c:491
 msgid "Add Alpha Channel"
 msgstr "Pievienot alfa kanālu"
 
-#: ../libgimp/gimpexport.c:481
+#: libgimp/gimpexportoptions.c:499
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "%s spraudnim jāapgriež slāņi uz attēla robežām"
 
-#: ../libgimp/gimpexport.c:482
-#| msgctxt "page-selector-target"
-#| msgid "Layers"
+#: libgimp/gimpexportoptions.c:500
 msgid "Crop Layers"
 msgstr "Kadrēt slāņus"
 
-#: ../libgimp/gimpexport.c:482
+#: libgimp/gimpexportoptions.c:500
 msgid "Resize Image to Layers"
 msgstr "Mainīt attēla izmēru uz slāņu izmēriem"
 
-#: ../libgimp/gimpexport.c:541
-msgid "Confirm Save"
-msgstr "Apstiprināt saglabāšanu"
+#: libgimp/gimpexportprocedure.c:536
+msgid "Save _Exif"
+msgstr "Saglabāt _Exif"
 
-#: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:303
-#: ../libgimpwidgets/gimpcolorbutton.c:553
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
-#: ../libgimpwidgets/gimpfileentry.c:466 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
-#: ../libgimpwidgets/gimpquerybox.c:479
-msgid "_Cancel"
-msgstr "At_celt"
+#: libgimp/gimpexportprocedure.c:537
+msgid "Save Exif (Exchangeable image file format) metadata"
+msgstr "Saglabāt Exif (Exchangeable image file format) metadatus"
 
-#: ../libgimp/gimpexport.c:547
-msgid "C_onfirm"
-msgstr "_Apstiprināt"
+#: libgimp/gimpexportprocedure.c:542
+msgid "Save _IPTC"
+msgstr "Saglabāt _IPTC"
 
-#: ../libgimp/gimpexport.c:623
-msgid "Export File"
-msgstr "Eksportēt datni"
-
-#: ../libgimp/gimpexport.c:627
-msgid "_Ignore"
-msgstr "_Ignorēt"
-
-#: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:275
-msgid "_Export"
-msgstr "_Eksportēt"
-
-#. the headline
-#: ../libgimp/gimpexport.c:659
-#, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
+#: libgimp/gimpexportprocedure.c:543
+msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
-"Attēls ir jāeksportē kamēr tas nav saglabāts kā %s sekojošu iemeslu dēļ:"
+"Saglabāt IPTC (International Press Telecommunications Council) metadatus"
 
-#. the footline
-#: ../libgimp/gimpexport.c:733
-msgid "The export conversion won't modify your original image."
-msgstr "Eksportēšana nemainīs sākotnējo attēlu"
+#: libgimp/gimpexportprocedure.c:548
+msgid "Save _XMP"
+msgstr "Saglabāt _XMP"
 
-#: ../libgimp/gimpexport.c:853
-#, c-format
-msgid ""
-"You are about to save a layer mask as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Jūs drīz saglabāsiet slāņa masku kā %s.\n"
-"Redzamie slāņi netiks saglabāti."
+#: libgimp/gimpexportprocedure.c:549
+msgid "Save XMP (Extensible Metadata Platform) metadata"
+msgstr "Saglabāt XMP (Extensible Metadata Platform) metadatus"
 
-#: ../libgimp/gimpexport.c:859
-#, c-format
-msgid ""
-"You are about to save a channel (saved selection) as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Jūs drīz saglabāsiet kanālu (saglabāto iezīmējumu) kā %s.\n"
-"Redzamie slāņi netiks saglabāti."
+#: libgimp/gimpexportprocedure.c:554
+#| msgid "Monitor profile"
+msgid "Save color _profile"
+msgstr "Saglabāt krāsu _profilu"
 
-#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: libgimp/gimpexportprocedure.c:555
+msgid "Save the ICC color profile as metadata"
+msgstr "Saglabāt ICC krāsu profilu kā metadatus"
+
+#: libgimp/gimpexportprocedure.c:560
+msgid "Save _thumbnail"
+msgstr "Saglabāt sīk_tēlu"
+
+#: libgimp/gimpexportprocedure.c:561
+msgid "Save a smaller representation of the image as metadata"
+msgstr "Saglabāt mazāku attēla atveidojumu kā metadatus"
+
+#: libgimp/gimpexportprocedure.c:567
+msgid "Save c_omment"
+msgstr "Saglabāt komentāru"
+
+#: libgimp/gimpexportprocedure.c:568
+msgid "Save a comment as metadata"
+msgstr "Saglabāt komentāru kā metadatus"
+
+#: libgimp/gimpexportprocedure.c:572
+msgid "Comment"
+msgstr "Komentārs"
+
+#: libgimp/gimpexportprocedure.c:573
+#| msgctxt "icon-type"
+#| msgid "Image file"
+msgid "Image comment"
+msgstr "Attēla komentārs"
+
+#: libgimp/gimpexportproceduredialog.c:150
+msgid "Metadata"
+msgstr "Metadati"
+
+#: libgimp/gimpexportproceduredialog.c:159
+msgid "Edit Metadata"
+msgstr "Rediģēt metadatus"
+
+#: libgimp/gimpexportproceduredialog.c:159
+msgid "(edit)"
+msgstr "(rediģēt)"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
+#: libgimp/gimpexportproceduredialog.c:436
 #, c-format
 msgid "Export Image as %s"
 msgstr "Eksportēt attēlu kā %s"
 
-#: ../libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Fonta izvēle"
-
-#: ../libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Krāsu pārejas izvēle"
-
-#: ../libgimp/gimpimagemetadata.c:273
+#: libgimp/gimpimagemetadata.c:124
 msgid "Background"
 msgstr "Fons"
 
-#: ../libgimp/gimpimagemetadata-save.c:512 ../modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:773 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Paletes izvēle"
+#: libgimp/gimploadprocedure.c:271 libgimp/gimpvectorloadprocedure.c:445
+#, c-format
+msgid ""
+"This file loading plug-in returned SUCCESS as a status without an image. "
+"This is a bug in the plug-in code. Contact the plug-in developer."
+msgstr ""
+"Šis datņu ielādes spraudnis atgrieza SUCCESS (izdevās) kā statusu bez attēla. "
+"Šī ir kļūda spraudņa kodā. Sazinieties ar spraudņa izstrādātāju."
 
-#: ../libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Raksta izvēle"
+#: libgimp/gimpparamspecs-desc.c:65
+msgid "Allowed values:"
+msgstr "Atļautās vērtības:"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:520
+#: libgimp/gimppdb.c:337
 msgid "success"
 msgstr "izdevās"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:524
+#: libgimp/gimppdb.c:341
 msgid "execution error"
 msgstr "izpildīšanas kļūda"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:528
+#: libgimp/gimppdb.c:345
 msgid "calling error"
 msgstr "izsaukšanas kļūda"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:532
+#: libgimp/gimppdb.c:349
 msgid "cancelled"
 msgstr "atcelts"
 
-#: ../libgimp/gimpprocbrowserdialog.c:162
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
 msgstr "pēc nosaukuma"
 
-#: ../libgimp/gimpprocbrowserdialog.c:163
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
 msgstr "pēc apraksta"
 
-#: ../libgimp/gimpprocbrowserdialog.c:164
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
 msgstr "pēc palīdzības"
 
-#: ../libgimp/gimpprocbrowserdialog.c:165
-#| msgid "by author"
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by authors"
 msgstr "pēc autoriem"
 
-#: ../libgimp/gimpprocbrowserdialog.c:166
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
 msgstr "pēc autortiesībām"
 
-#: ../libgimp/gimpprocbrowserdialog.c:167
+#: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
 msgstr "pēc datuma"
 
-#: ../libgimp/gimpprocbrowserdialog.c:168
+#: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
 msgstr "pēc tipa"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:369
-#: ../libgimp/gimpprocbrowserdialog.c:525 ../libgimpwidgets/gimpbrowser.c:168
+#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
+#: libgimpwidgets/gimpbrowser.c:161
 msgid "No matches"
 msgstr "Nekas neatbilst vaicājumam"
 
-#: ../libgimp/gimpprocbrowserdialog.c:372
+#: libgimp/gimpprocbrowserdialog.c:361
 msgid "Search term invalid or incomplete"
 msgstr "Meklētā frāze ir nederīga vai nepilnīga"
 
-#: ../libgimp/gimpprocbrowserdialog.c:381
+#: libgimp/gimpprocbrowserdialog.c:370
 msgid "Searching"
 msgstr "Meklē"
 
-#: ../libgimp/gimpprocbrowserdialog.c:393
+#: libgimp/gimpprocbrowserdialog.c:382
 msgid "Searching by name"
 msgstr "Meklē pēc nosaukuma"
 
-#: ../libgimp/gimpprocbrowserdialog.c:414
+#: libgimp/gimpprocbrowserdialog.c:403
 msgid "Searching by description"
 msgstr "Meklē pēc apraksta"
 
-#: ../libgimp/gimpprocbrowserdialog.c:422
+#: libgimp/gimpprocbrowserdialog.c:411
 msgid "Searching by help"
 msgstr "Meklē pēc palīdzības"
 
-#: ../libgimp/gimpprocbrowserdialog.c:430
-#| msgid "Searching by author"
+#: libgimp/gimpprocbrowserdialog.c:419
 msgid "Searching by authors"
 msgstr "Meklē pēc autoriem"
 
-#: ../libgimp/gimpprocbrowserdialog.c:438
+#: libgimp/gimpprocbrowserdialog.c:427
 msgid "Searching by copyright"
 msgstr "Meklē pēc autortiesībām"
 
-#: ../libgimp/gimpprocbrowserdialog.c:446
+#: libgimp/gimpprocbrowserdialog.c:435
 msgid "Searching by date"
 msgstr "Meklē pēc datuma"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: libgimp/gimpprocbrowserdialog.c:443
 msgid "Searching by type"
 msgstr "Meklē pēc tipa"
 
-#: ../libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:456
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -360,11 +371,11 @@ msgstr[0] "%d procedūra"
 msgstr[1] "%d procedūras"
 msgstr[2] "%d procedūru"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: libgimp/gimpprocbrowserdialog.c:465
 msgid "No matches for your query"
 msgstr "Nav atrasti atbilstoši rezultāti"
 
-#: ../libgimp/gimpprocbrowserdialog.c:478
+#: libgimp/gimpprocbrowserdialog.c:469
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -372,12 +383,12 @@ msgstr[0] "%d procedūra atbilst vaicājumam"
 msgstr[1] "%d procedūras atbilst vaicājumam"
 msgstr[2] "%d procedūru atbilst vaicājumam"
 
-#: ../libgimp/gimpprocedure.c:1914
+#: libgimp/gimpprocedure.c:2158
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedūra “%s” neatgrieza vērtību"
 
-#: ../libgimp/gimpprocedure.c:2006
+#: libgimp/gimpprocedure.c:2335
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -386,16 +397,16 @@ msgstr ""
 "Procedūra “%s” atgrieza nepareizu vērtības tipu vērtībai “%s” (#%d). Gaidīja "
 "%s, saņēma %s."
 
-#: ../libgimp/gimpprocedure.c:2018
+#: libgimp/gimpprocedure.c:2347
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
-"Procedūra “%s” tika izsaukta ar nepareizu vērtības tipu argumentam “%s” (#"
-"%d). Gaidīja %s, saņēma %s."
+"Procedūra “%s” tika izsaukta ar nepareizu vērtības tipu argumentam “%s” "
+"(#%d). Gaidīja %s, saņēma %s."
 
-#: ../libgimp/gimpprocedure.c:2053
+#: libgimp/gimpprocedure.c:2382
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -404,7 +415,7 @@ msgstr ""
 "Procedūra “%s” atgrieza “%s” kā atbildi “%s” (#%d, tips %s). Šī vērtība ir "
 "ārpus pieļaujamo vērtību apgabala."
 
-#: ../libgimp/gimpprocedure.c:2067
+#: libgimp/gimpprocedure.c:2396
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -413,1284 +424,1450 @@ msgstr ""
 "Procedūra “%s” tika izsaukta ar vērtību  “%s” argumentam “%s” (#%d, tips "
 "%s). Šī vērtība ir ārpus pieļaujamo vērtību apgabala."
 
-#: ../libgimp/gimpprocedure.c:2117
+#: libgimp/gimpprocedure.c:2440
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedūra “%s” atgrieza nederīgu UTF-8 virkni argumentam “%s”."
 
-#: ../libgimp/gimpprocedure.c:2127
+#: libgimp/gimpprocedure.c:2450
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr "Procedūra “%s” tika izsaukta ar nederīgu UTF-8 virkni argumentam “%s”."
 
-#: ../libgimp/gimpproceduredialog.c:273
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
+#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Atvērt"
 
-#: ../libgimp/gimpproceduredialog.c:277 ../libgimpwidgets/gimpcolorbutton.c:554
-#: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
-#: ../libgimpwidgets/gimpquerybox.c:479
+#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+msgid "_Export"
+msgstr "_Eksportēt"
+
+#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfileentry.c:466
+#: libgimpwidgets/gimpquerybox.c:274 libgimpwidgets/gimpquerybox.c:337
+#: libgimpwidgets/gimpquerybox.c:403 libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Labi"
 
-#: ../libgimp/gimpproceduredialog.c:285 ../libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_Atstatīt"
 
-#: ../libgimp/gimpproceduredialog.c:337
+#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
+#: libgimpwidgets/gimpfileentry.c:465 libgimpwidgets/gimpquerybox.c:274
+#: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
+#: libgimpwidgets/gimpquerybox.c:479
+msgid "_Cancel"
+msgstr "At_celt"
+
+#: libgimp/gimpproceduredialog.c:379
 msgid "_Load Saved Settings"
 msgstr "Ie_lādēt saglabātos iestatījumus"
 
-#: ../libgimp/gimpproceduredialog.c:338
+#: libgimp/gimpproceduredialog.c:380
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Ielādēt iestatījumus, kas ir saglabāti ar pogu “Saglabāt iestatījumus”"
 
-#: ../libgimp/gimpproceduredialog.c:350
+#: libgimp/gimpproceduredialog.c:392
 msgid "_Save Settings"
 msgstr "_Saglabāt iestatījumus"
 
-#: ../libgimp/gimpproceduredialog.c:351
+#: libgimp/gimpproceduredialog.c:393
 msgid "Store current settings for later reuse"
 msgstr "Saglabāt esošos iestatījumus vēlākai lietošanai"
 
-#: ../libgimp/gimpproceduredialog.c:1664
+#: libgimp/gimpproceduredialog.c:847
+msgid "Brush Chooser"
+msgstr "Otu izvēlētājs"
+
+#: libgimp/gimpproceduredialog.c:851
+msgid "Font Chooser"
+msgstr "Fontu izvēlētājs"
+
+#: libgimp/gimpproceduredialog.c:855
+msgid "Gradient Chooser"
+msgstr "Krāsu pārejas izvēlētājs"
+
+#: libgimp/gimpproceduredialog.c:859
+msgid "Palette Chooser"
+msgstr "Paletes izvēlētājs"
+
+#: libgimp/gimpproceduredialog.c:863
+#| msgctxt "clone-type"
+#| msgid "Pattern"
+msgid "Pattern Chooser"
+msgstr "Raksta izvēlētājs"
+
+#: libgimp/gimpproceduredialog.c:2665
 msgid "Reset to _Initial Values"
 msgstr "At_iestatīt uz sākotnējām vērtībām"
 
-#: ../libgimp/gimpproceduredialog.c:1673
+#: libgimp/gimpproceduredialog.c:2674
 msgid "Reset to _Factory Defaults"
 msgstr "Atiestatīt uz _rūpnīcas iestatījumiem"
 
-#: ../libgimp/gimpprocview.c:176
-#| msgid "Image profile:"
+#: libgimp/gimpprocview.c:176
 msgid "Image types:"
 msgstr "Attēla veids:"
 
-#: ../libgimp/gimpprocview.c:179
+#: libgimp/gimpprocview.c:179
 msgid "Menu label:"
 msgstr "Izvēlnes iezīme:"
 
-#: ../libgimp/gimpprocview.c:187
+#: libgimp/gimpprocview.c:187
 msgid "Menu path:"
 msgstr "Izvēlnes ceļš:"
 
-#: ../libgimp/gimpprocview.c:202
+#: libgimp/gimpprocview.c:202
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../libgimp/gimpprocview.c:216
+#: libgimp/gimpprocview.c:216
 msgid "Return Values"
 msgstr "Atgrieztās vērtības"
 
-#: ../libgimp/gimpprocview.c:231
+#: libgimp/gimpprocview.c:231
 msgid "Additional Information"
 msgstr "Papildus informācija"
 
-#: ../libgimp/gimpprocview.c:263
-#| msgid "Author:"
+#: libgimp/gimpprocview.c:263
 msgid "Authors:"
 msgstr "Autori:"
 
-#: ../libgimp/gimpprocview.c:266
+#: libgimp/gimpprocview.c:266
 msgid "Date:"
 msgstr "Datums:"
 
-#: ../libgimp/gimpprocview.c:269
+#: libgimp/gimpprocview.c:269
 msgid "Copyright:"
 msgstr "Autortiesības:"
 
-#: ../libgimp/gimpsaveproceduredialog.c:166
-msgid "Metadata"
-msgstr "Metadati"
+#: libgimp/gimppropwidgets.c:191
+#, c-format
+msgid "Choose layer: %s"
+msgstr "Izvēlieties slāni: %s"
 
-#: ../libgimp/gimpsaveproceduredialog.c:175
-msgid "Edit Metadata"
-msgstr "Rediģēt metadatus"
+#: libgimp/gimppropwidgets.c:193
+#, c-format
+#| msgid "Channel:"
+msgid "Choose channel: %s"
+msgstr "Izvēlieties kanālu: %s"
 
-#: ../libgimp/gimpsaveproceduredialog.c:175
-msgid "(edit)"
-msgstr "(rediģēt)"
+#: libgimp/gimppropwidgets.c:195
+#, c-format
+msgid "Choose drawable: %s"
+msgstr "Izvēlieties zīmējamo: %s"
 
-#: ../libgimp/gimpunitcache.c:54
-msgid "percent"
-msgstr "procenti"
+#: libgimp/gimpresolutionentry-private.c:136
+msgid ""
+"This unit is used to select the pixel density and show dimensions in "
+"physical unit"
+msgstr ""
+"Šo vienību izmanto, lai izvēlētos pikseļu blīvumu un parādītu izmērus"
+" fiziskajā vienībā"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: libgimp/gimpresolutionentry-private.c:144
+#: libgimp/gimpvectorloadprocedure.c:125
+msgid "_Keep aspect ratio"
+msgstr "_Paturēt izmēra attiecību"
+
+#: libgimp/gimpresolutionentry-private.c:145
+#: libgimp/gimpvectorloadprocedure.c:126
+msgid "Force dimensions with aspect ratio"
+msgstr "Uzspiest dimensijas ar izmēru attiecību"
+
+#: libgimp/gimpresolutionentry-private.c:199
+#: libgimp/gimpresolutionentry-private.c:200
+#, c-format
+#| msgctxt "size-type"
+#| msgid "Pixels"
+msgid "pixels/%a"
+msgstr "pikseļi/%a"
+
+#: libgimp/gimpvectorloadprocedure.c:111
+msgid "_Width (pixels)"
+msgstr "_Platums (pikseļi)"
+
+#: libgimp/gimpvectorloadprocedure.c:118
+msgid "_Height (pixels)"
+msgstr "_Augstums (pikseļi)"
+
+#: libgimp/gimpvectorloadprocedure.c:130
+msgid "_Prefer native dimensions"
+msgstr "Dod _priekšroku vietējām dimensijām"
+
+#: libgimp/gimpvectorloadprocedure.c:131
+msgid "Load and use dimensions from source file"
+msgstr "Ielādēt un izmantot izmērus no avota datnes"
+
+#: libgimp/gimpvectorloadprocedure.c:139
+msgid "Resolu_tion"
+msgstr "_Izšķirtspēja"
+
+#: libgimp/gimpvectorloadprocedure.c:140
+msgid "Pixel Density: number of pixels per physical unit"
+msgstr "Pikseļu blīvums: pikseļu skaits vienā fiziskajā vienībā"
+
+#: libgimp/gimpvectorloadprocedure.c:145
+msgid "Unit"
+msgstr "Vienība"
+
+#: libgimp/gimpvectorloadprocedure.c:146
+msgid "Physical unit"
+msgstr "Fiziskā vienība"
+
+#: libgimp/gimpvectorloadprocedure.c:368
+msgid ""
+"dimensions could neither be extracted nor computed from the vector image's "
+"data."
+msgstr "izmērus nevarēja ne iegūt, ne aprēķināt no vektora attēla datiem."
+
+#: libgimp/gimpvectorloadprocedure.c:373
+msgid "Vector image loading plug-in failed: "
+msgstr "Vektora attēla ielādes spraudnis cieta neveiksmi:"
+
+#: libgimp/gimpvectorloadprocedure.c:397
+msgid ""
+"Dimensions cannot be 0 and no native dimensions could be extracted from the "
+"vector image."
+msgstr ""
+"Izmēri nevar būt 0, un no vektora attēla nevar iegūt sākotnējos izmērus."
+
+#. TRANSLATORS: the %s is a vector format name, e.g. "SVG" or "PDF",
+#. * followed by 2D dimensions with unit, e.g. "200 inch x 400 inch"
+#.
+#: libgimp/gimpvectorloadproceduredialog.c:131
+#, c-format
+msgid "Source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Avota %s datnes izmērs: %%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:168
+#, c-format
+msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+msgstr "Avota %s datnes izmēru attiecība: %%.%df × %%.%df"
+
+#: libgimp/gimpvectorloadproceduredialog.c:176
+#, c-format
+msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+msgstr "Aptuvenais avota %s datnes izmērs: %%.%df %s × %%.%df %s"
+
+#. TRANSLATOR: the %s is a vector format name, e.g. "SVG" or "PDF".
+#: libgimp/gimpvectorloadproceduredialog.c:189
+#, c-format
+msgid "The source %s file does not specify a size!"
+msgstr "Avota %s datne nenorāda izmēru!"
+
+#. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
+#: libgimp/gimpvectorloadproceduredialog.c:330
+#, c-format
+msgid "Load %s Image"
+msgstr "Ielādēt %s attēlu"
+
+#: libgimpbase/gimpbaseenums.c:30
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Balts (pilnīgi blīvs)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Melns (pilnīgi caurspīdīgs)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Slāņa _alfa kanāls"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "Pārcel_t slāņa alfa kanālu"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "Iezīmējum_s"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: libgimpbase/gimpbaseenums.c:35
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "Slāņa _pelēktoņu kopija"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: libgimpbase/gimpbaseenums.c:36
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Kanāls"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: libgimpbase/gimpbaseenums.c:66
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Riņķis"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: libgimpbase/gimpbaseenums.c:67
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Kvadrāts"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: libgimpbase/gimpbaseenums.c:68
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Rombs"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: libgimpbase/gimpbaseenums.c:98
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Ass"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: libgimpbase/gimpbaseenums.c:99
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Apaļš"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: libgimpbase/gimpbaseenums.c:100
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Kvadrāts"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Pievienot aktīvajam iezīmējumam"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Izņemt no aktīvā iezīmējuma"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: libgimpbase/gimpbaseenums.c:133
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Aizvietot aktīvo iezīmējumu"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Šķelt ar aktīvo iezīmējumu"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../libgimpbase/gimpbaseenums.c:166
+#: libgimpbase/gimpbaseenums.c:168
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../libgimpbase/gimpbaseenums.c:167
+#: libgimpbase/gimpbaseenums.c:169
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Zils"
 
-#: ../libgimpbase/gimpbaseenums.c:168
+#: libgimpbase/gimpbaseenums.c:170
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Pelēks"
 
-#: ../libgimpbase/gimpbaseenums.c:169
+#: libgimpbase/gimpbaseenums.c:171
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indeksēts"
 
-#: ../libgimpbase/gimpbaseenums.c:170
+#: libgimpbase/gimpbaseenums.c:172
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:200
+#: libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
 msgid "Small"
 msgstr "Mazs"
 
-#: ../libgimpbase/gimpbaseenums.c:201
+#: libgimpbase/gimpbaseenums.c:203
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Vidējs"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: libgimpbase/gimpbaseenums.c:204
 msgctxt "check-size"
 msgid "Large"
 msgstr "Liels"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Gaišas rūtiņas"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Pelēkas rūtiņas"
 
-#: ../libgimpbase/gimpbaseenums.c:237
+#: libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Tumšas rūtiņas"
 
-#: ../libgimpbase/gimpbaseenums.c:238
+#: libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "White only"
 msgstr "Tikai balts"
 
-#: ../libgimpbase/gimpbaseenums.c:239
+#: libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Tikai pelēks"
 
-#: ../libgimpbase/gimpbaseenums.c:240
+#: libgimpbase/gimpbaseenums.c:243
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Tikai melns"
 
-#: ../libgimpbase/gimpbaseenums.c:269
+#: libgimpbase/gimpbaseenums.c:244
+#| msgctxt "check-type"
+#| msgid "Mid-tone checks"
+msgctxt "check-type"
+msgid "Custom checks"
+msgstr "Pielāgotas rūtiņas"
+
+#: libgimpbase/gimpbaseenums.c:273
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Attēls"
 
-#: ../libgimpbase/gimpbaseenums.c:270
+#: libgimpbase/gimpbaseenums.c:274
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Raksts"
 
-#: ../libgimpbase/gimpbaseenums.c:306
+#: libgimpbase/gimpbaseenums.c:310
 msgctxt "color-tag"
 msgid "None"
 msgstr "Nav"
 
-#: ../libgimpbase/gimpbaseenums.c:307
+#: libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Zils"
 
-#: ../libgimpbase/gimpbaseenums.c:308
+#: libgimpbase/gimpbaseenums.c:312
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../libgimpbase/gimpbaseenums.c:309
+#: libgimpbase/gimpbaseenums.c:313
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Dzeltens"
 
-#: ../libgimpbase/gimpbaseenums.c:310
+#: libgimpbase/gimpbaseenums.c:314
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Oranžs"
 
-#: ../libgimpbase/gimpbaseenums.c:311
+#: libgimpbase/gimpbaseenums.c:315
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Brūns"
 
-#: ../libgimpbase/gimpbaseenums.c:312
+#: libgimpbase/gimpbaseenums.c:316
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../libgimpbase/gimpbaseenums.c:313
+#: libgimpbase/gimpbaseenums.c:317
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Violets"
 
-#: ../libgimpbase/gimpbaseenums.c:314
+#: libgimpbase/gimpbaseenums.c:318
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Pelēks"
 
-#: ../libgimpbase/gimpbaseenums.c:347
+#: libgimpbase/gimpbaseenums.c:351
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8 bitu vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:348
+#: libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16 bitu vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:349
+#: libgimpbase/gimpbaseenums.c:353
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32 bitu vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:350
+#: libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16 bitu peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:351
+#: libgimpbase/gimpbaseenums.c:355
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32 bitu peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:352
+#: libgimpbase/gimpbaseenums.c:356
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64 bitu peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:383
+#: libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Izveidot optimālu paleti"
 
-#: ../libgimpbase/gimpbaseenums.c:384
+#: libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Izmantot tīmeklim pielāgotu paleti"
 
-#: ../libgimpbase/gimpbaseenums.c:385
+#: libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Izmantot melnbaltu (1 bita) paleti"
 
-#: ../libgimpbase/gimpbaseenums.c:386
+#: libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Izmantot pielāgotu paleti"
 
-#: ../libgimpbase/gimpbaseenums.c:415
+#: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Aizmiglošana"
 
-#: ../libgimpbase/gimpbaseenums.c:416
+#: libgimpbase/gimpbaseenums.c:420
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Asināšana"
 
-#: ../libgimpbase/gimpbaseenums.c:448
+#: libgimpbase/gimpbaseenums.c:452
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Gaišums (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:449
+#: libgimpbase/gimpbaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Luma"
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Vidējais (HSI intensitāte)"
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: libgimpbase/gimpbaseenums.c:455
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Spilgtums"
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: libgimpbase/gimpbaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Vērtība (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:481
+#: libgimpbase/gimpbaseenums.c:485
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Izgaismošana"
 
-#: ../libgimpbase/gimpbaseenums.c:482
+#: libgimpbase/gimpbaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Aptumšošana"
 
-#: ../libgimpbase/gimpbaseenums.c:514
+#: libgimpbase/gimpbaseenums.c:519
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Priekšplāna krāsa"
 
-#: ../libgimpbase/gimpbaseenums.c:515
+#: libgimpbase/gimpbaseenums.c:520
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Fona krāsa"
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: libgimpbase/gimpbaseenums.c:521
+msgctxt "fill-type"
+msgid "Middle Gray (CIELAB)"
+msgstr "Vidēji pelēks (CIELAB)"
+
+#: libgimpbase/gimpbaseenums.c:522
 msgctxt "fill-type"
 msgid "White"
 msgstr "Balts"
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: libgimpbase/gimpbaseenums.c:523
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Caurspīdīgums"
 
-#: ../libgimpbase/gimpbaseenums.c:518
+#: libgimpbase/gimpbaseenums.c:524
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Raksts"
 
-#: ../libgimpbase/gimpbaseenums.c:576
+#: libgimpbase/gimpbaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Perceptuāls RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:577
+#: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Lineārs RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:578
+#: libgimpbase/gimpbaseenums.c:584
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "CIE Lab"
 
-#: ../libgimpbase/gimpbaseenums.c:608
+#: libgimpbase/gimpbaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:609
+#: libgimpbase/gimpbaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (pretēji pulksteņrādītāja virziena nokrāsa)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:612
+#: libgimpbase/gimpbaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (pret pulkst.)"
 
-#: ../libgimpbase/gimpbaseenums.c:613
+#: libgimpbase/gimpbaseenums.c:619
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (pulksteņrādītāja virziena nokrāsa)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:616
+#: libgimpbase/gimpbaseenums.c:622
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (pa pulkst.)"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: libgimpbase/gimpbaseenums.c:655
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Lineārs"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: libgimpbase/gimpbaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "Liekts"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "Sinusoidāls"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "Sfērisks (pieaugoši)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:655
+#: libgimpbase/gimpbaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Sfērisks (pieaug.)"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "Sfērisks (samazinoši)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:659
+#: libgimpbase/gimpbaseenums.c:665
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Sfērisks (samaz.)"
 
-#: ../libgimpbase/gimpbaseenums.c:660
+#: libgimpbase/gimpbaseenums.c:666
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Solis"
 
-#: ../libgimpbase/gimpbaseenums.c:698
+#: libgimpbase/gimpbaseenums.c:704
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Lineārs"
 
-#: ../libgimpbase/gimpbaseenums.c:699
+#: libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bi-lineārs"
 
-#: ../libgimpbase/gimpbaseenums.c:700
+#: libgimpbase/gimpbaseenums.c:706
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radiāls"
 
-#: ../libgimpbase/gimpbaseenums.c:701
+#: libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Kvadrātisks"
 
-#: ../libgimpbase/gimpbaseenums.c:702
+#: libgimpbase/gimpbaseenums.c:708
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Konisks (simetrisks)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:705
+#: libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Konisks (sim.)"
 
-#: ../libgimpbase/gimpbaseenums.c:706
+#: libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Konisks (asimetrisks)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:709
+#: libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Konisks (asim.)"
 
-#: ../libgimpbase/gimpbaseenums.c:710
+#: libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Pēc formas (stūraina)"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Pēc formas (sfēriska)"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Pēc formas (padziļināta)"
 
-#: ../libgimpbase/gimpbaseenums.c:713
+#: libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Spirāle (pulksteņrādītāja virzienā)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:716
+#: libgimpbase/gimpbaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Spirāle (pa pulkst.)"
 
-#: ../libgimpbase/gimpbaseenums.c:717
+#: libgimpbase/gimpbaseenums.c:723
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Spirāle (pretēji pulksteņrādītāja virzienā)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:720
+#: libgimpbase/gimpbaseenums.c:726
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Spirāle (pret pulkst.)"
 
-#: ../libgimpbase/gimpbaseenums.c:752
+#: libgimpbase/gimpbaseenums.c:758
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Krustpunkti (punkti)"
 
-#: ../libgimpbase/gimpbaseenums.c:753
+#: libgimpbase/gimpbaseenums.c:759
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Krustpunkti (krustiņi)"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: libgimpbase/gimpbaseenums.c:760
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Svītrots"
 
-#: ../libgimpbase/gimpbaseenums.c:755
+#: libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Dubulti svītrots"
 
-#: ../libgimpbase/gimpbaseenums.c:756
+#: libgimpbase/gimpbaseenums.c:762
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Vienlaidus"
 
-#: ../libgimpbase/gimpbaseenums.c:826
+#: libgimpbase/gimpbaseenums.c:832
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Ikonas nosaukums"
 
-#: ../libgimpbase/gimpbaseenums.c:827
+#: libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
 msgid "Pixbuf"
 msgstr "Pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:828
+#: libgimpbase/gimpbaseenums.c:834
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Attēla datne"
 
-#: ../libgimpbase/gimpbaseenums.c:858
+#: libgimpbase/gimpbaseenums.c:864
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB krāsa"
 
-#: ../libgimpbase/gimpbaseenums.c:859
+#: libgimpbase/gimpbaseenums.c:865
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Pelēktoņu"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: libgimpbase/gimpbaseenums.c:866
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Indeksēta krāsa"
 
-#: ../libgimpbase/gimpbaseenums.c:893
+#: libgimpbase/gimpbaseenums.c:899
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:894
+#: libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: libgimpbase/gimpbaseenums.c:901
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Pelēktoņu"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: libgimpbase/gimpbaseenums.c:902
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Pelēktoņu-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:897
+#: libgimpbase/gimpbaseenums.c:903
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indeksēts"
 
-#: ../libgimpbase/gimpbaseenums.c:898
+#: libgimpbase/gimpbaseenums.c:904
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indeksēts-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:928
+#: libgimpbase/gimpbaseenums.c:934
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Riņķis"
 
-#: ../libgimpbase/gimpbaseenums.c:929
+#: libgimpbase/gimpbaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Kvadrāts"
 
-#: ../libgimpbase/gimpbaseenums.c:930
+#: libgimpbase/gimpbaseenums.c:936
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Rombs"
 
-#: ../libgimpbase/gimpbaseenums.c:962
+#: libgimpbase/gimpbaseenums.c:968
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "nav"
 
-#: ../libgimpbase/gimpbaseenums.c:963
+#: libgimpbase/gimpbaseenums.c:969
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "lineāra"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: libgimpbase/gimpbaseenums.c:970
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "kubiska"
 
-#: ../libgimpbase/gimpbaseenums.c:965
+#: libgimpbase/gimpbaseenums.c:971
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "Bez oreola"
 
-#: ../libgimpbase/gimpbaseenums.c:966
+#: libgimpbase/gimpbaseenums.c:972
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "Maz oreola"
 
-#: ../libgimpbase/gimpbaseenums.c:996
+#: libgimpbase/gimpbaseenums.c:1002
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Salaidums"
 
-#: ../libgimpbase/gimpbaseenums.c:997
+#: libgimpbase/gimpbaseenums.c:1003
 msgctxt "join-style"
 msgid "Round"
 msgstr "Apaļots"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: libgimpbase/gimpbaseenums.c:1004
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Slīps"
 
-#: ../libgimpbase/gimpbaseenums.c:1059
+#: libgimpbase/gimpbaseenums.c:1065
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Izvērsts, cik nepieciešams"
 
-#: ../libgimpbase/gimpbaseenums.c:1060
+#: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "Apcirsts līdz attēlam"
 
-#: ../libgimpbase/gimpbaseenums.c:1061
+#: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "Apcirsts līdz apakšējam slānim"
 
-#: ../libgimpbase/gimpbaseenums.c:1062
+#: libgimpbase/gimpbaseenums.c:1068
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Saplacināt"
 
-#: ../libgimpbase/gimpbaseenums.c:1156
+#: libgimpbase/gimpbaseenums.c:1162
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Horizontāls"
 
-#: ../libgimpbase/gimpbaseenums.c:1157
+#: libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Vertikāls"
 
-#: ../libgimpbase/gimpbaseenums.c:1158
+#: libgimpbase/gimpbaseenums.c:1164
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Nezināms"
 
-#: ../libgimpbase/gimpbaseenums.c:1187
+#: libgimpbase/gimpbaseenums.c:1193
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Konstants"
 
-#: ../libgimpbase/gimpbaseenums.c:1188
+#: libgimpbase/gimpbaseenums.c:1194
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Papildinošs"
 
-#: ../libgimpbase/gimpbaseenums.c:1249
+#: libgimpbase/gimpbaseenums.c:1255
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Iekšējā GIMP procedūra"
 
-#: ../libgimpbase/gimpbaseenums.c:1250
+#: libgimpbase/gimpbaseenums.c:1256
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "GIMP spraudnis"
 
-#: ../libgimpbase/gimpbaseenums.c:1251
+#: libgimpbase/gimpbaseenums.c:1257
+#| msgctxt "pdb-proc-type"
+#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "GIMP paplašinājums"
+msgid "GIMP Persistent Plug-In"
+msgstr "GIMP pastāvīgais spraudnis"
 
-#: ../libgimpbase/gimpbaseenums.c:1252
+#: libgimpbase/gimpbaseenums.c:1258
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Pagaidu procedūra"
 
-#: ../libgimpbase/gimpbaseenums.c:1339
+#: libgimpbase/gimpbaseenums.c:1339
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8 bitu lineārs vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1340
-#| msgctxt "precision"
-#| msgid "8-bit linear integer"
+#: libgimpbase/gimpbaseenums.c:1340
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "8 bitu nelineārs vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1341
-#| msgctxt "precision"
-#| msgid "8-bit linear integer"
+#: libgimpbase/gimpbaseenums.c:1341
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "8 bitu perceptuāls vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1342
+#: libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16 bitu lineārs vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1343
-#| msgctxt "precision"
-#| msgid "16-bit linear integer"
+#: libgimpbase/gimpbaseenums.c:1343
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "16 bitu nelineārs vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1344
-#| msgctxt "precision"
-#| msgid "16-bit linear integer"
+#: libgimpbase/gimpbaseenums.c:1344
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "16 bitu perceptuāls vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1345
+#: libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32 bitu lineārs vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1346
-#| msgctxt "precision"
-#| msgid "32-bit linear integer"
+#: libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "32 bitu nelineārs vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1347
-#| msgctxt "precision"
-#| msgid "32-bit linear integer"
+#: libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "32 bitu perceptuāls vesels skaitlis"
 
-#: ../libgimpbase/gimpbaseenums.c:1348
+#: libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16 bitu lineārs peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1349
-#| msgctxt "precision"
-#| msgid "16-bit linear floating point"
+#: libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "16 bitu nelineārs peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1350
-#| msgctxt "precision"
-#| msgid "16-bit linear floating point"
+#: libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "16 bitu perceptuāls peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1351
+#: libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32 bitu lineārs peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1352
-#| msgctxt "precision"
-#| msgid "32-bit linear floating point"
+#: libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "32 bitu nelineārs peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1353
-#| msgctxt "precision"
-#| msgid "32-bit linear floating point"
+#: libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "32 bitu perceptuāls peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1354
+#: libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64 bitu lineārs peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1355
-#| msgctxt "precision"
-#| msgid "64-bit linear floating point"
+#: libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "64 bitu nelineārs peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1356
-#| msgctxt "precision"
-#| msgid "64-bit linear floating point"
+#: libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "64 bitu perceptuāls peldošais komats"
 
-#: ../libgimpbase/gimpbaseenums.c:1467
+#: libgimpbase/gimpbaseenums.c:1461
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Nekas (izvērst)"
 
-#: ../libgimpbase/gimpbaseenums.c:1468
+#: libgimpbase/gimpbaseenums.c:1462
+#| msgctxt "repeat-mode"
+#| msgid "None (extend)"
+msgctxt "repeat-mode"
+msgid "None (truncate)"
+msgstr "Nekas (aprauts)"
+
+#: libgimpbase/gimpbaseenums.c:1463
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Zāģveida vilnis"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: libgimpbase/gimpbaseenums.c:1464
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Trijstūrveida vilnis"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
-msgctxt "repeat-mode"
-msgid "Truncate"
-msgstr "Saīsināt"
-
-#: ../libgimpbase/gimpbaseenums.c:1532
+#: libgimpbase/gimpbaseenums.c:1526
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Palaist interaktīvi"
 
-#: ../libgimpbase/gimpbaseenums.c:1533
+#: libgimpbase/gimpbaseenums.c:1527
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Palaist neinteraktīvi"
 
-#: ../libgimpbase/gimpbaseenums.c:1534
+#: libgimpbase/gimpbaseenums.c:1528
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Palaist ar iepriekš lietotajām vērtībām"
 
-#: ../libgimpbase/gimpbaseenums.c:1572
+#: libgimpbase/gimpbaseenums.c:1566
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Salikts"
 
-#: ../libgimpbase/gimpbaseenums.c:1573
+#: libgimpbase/gimpbaseenums.c:1567
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../libgimpbase/gimpbaseenums.c:1574
+#: libgimpbase/gimpbaseenums.c:1568
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../libgimpbase/gimpbaseenums.c:1575
+#: libgimpbase/gimpbaseenums.c:1569
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Zils"
 
-#: ../libgimpbase/gimpbaseenums.c:1576
+#: libgimpbase/gimpbaseenums.c:1570
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "HSV tonis"
 
-#: ../libgimpbase/gimpbaseenums.c:1577
+#: libgimpbase/gimpbaseenums.c:1571
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "HSV piesātinājums"
 
-#: ../libgimpbase/gimpbaseenums.c:1578
+#: libgimpbase/gimpbaseenums.c:1572
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "HSV vērtība"
 
-#: ../libgimpbase/gimpbaseenums.c:1579
+#: libgimpbase/gimpbaseenums.c:1573
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "LCh gaišums"
 
-#: ../libgimpbase/gimpbaseenums.c:1580
+#: libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCh piesātinājums"
 
-#: ../libgimpbase/gimpbaseenums.c:1581
+#: libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCh nokrāsa"
 
-#: ../libgimpbase/gimpbaseenums.c:1582
+#: libgimpbase/gimpbaseenums.c:1576
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1611
+#: libgimpbase/gimpbaseenums.c:1605
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Pikseļi"
 
-#: ../libgimpbase/gimpbaseenums.c:1612
+#: libgimpbase/gimpbaseenums.c:1606
 msgctxt "size-type"
 msgid "Points"
 msgstr "Punkti"
 
-#: ../libgimpbase/gimpbaseenums.c:1673
+#: libgimpbase/gimpbaseenums.c:1667
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Vilkt līniju"
 
-#: ../libgimpbase/gimpbaseenums.c:1674
+#: libgimpbase/gimpbaseenums.c:1668
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Vilkt līniju ar zīmēšanas rīku"
 
-#: ../libgimpbase/gimpbaseenums.c:1707
+#: libgimpbase/gimpbaseenums.c:1701
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "No kreisās uz labo"
 
-#: ../libgimpbase/gimpbaseenums.c:1708
+#: libgimpbase/gimpbaseenums.c:1702
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "No labās uz kreiso"
 
-#: ../libgimpbase/gimpbaseenums.c:1709
+#: libgimpbase/gimpbaseenums.c:1703
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Vertikāli, no labās uz kreiso (jaukta orientācija)"
 
-#: ../libgimpbase/gimpbaseenums.c:1710
+#: libgimpbase/gimpbaseenums.c:1704
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Vertikāli, no labās uz kreiso (augšup pa labi orientācija)"
 
-#: ../libgimpbase/gimpbaseenums.c:1711
+#: libgimpbase/gimpbaseenums.c:1705
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Vertikāli, no kreisās uz labo (jaukta orientācija)"
 
-#: ../libgimpbase/gimpbaseenums.c:1712
+#: libgimpbase/gimpbaseenums.c:1706
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Vertikāli, no kreisās uz labo (augšup pa labi orientācija)"
 
-#: ../libgimpbase/gimpbaseenums.c:1743
+#: libgimpbase/gimpbaseenums.c:1737
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Nav"
 
-#: ../libgimpbase/gimpbaseenums.c:1744
+#: libgimpbase/gimpbaseenums.c:1738
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Niecīgs"
 
-#: ../libgimpbase/gimpbaseenums.c:1745
+#: libgimpbase/gimpbaseenums.c:1739
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Vidējs"
 
-#: ../libgimpbase/gimpbaseenums.c:1746
+#: libgimpbase/gimpbaseenums.c:1740
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Pilns"
 
-#: ../libgimpbase/gimpbaseenums.c:1777
+#: libgimpbase/gimpbaseenums.c:1771
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Līdzināt pie kreisās"
 
-#: ../libgimpbase/gimpbaseenums.c:1778
+#: libgimpbase/gimpbaseenums.c:1772
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Līdzināt pie labās"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: libgimpbase/gimpbaseenums.c:1773
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Vidū"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: libgimpbase/gimpbaseenums.c:1774
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Aizpildīts"
 
-#: ../libgimpbase/gimpbaseenums.c:1810
+#: libgimpbase/gimpbaseenums.c:1804
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Ēnas"
 
-#: ../libgimpbase/gimpbaseenums.c:1811
+#: libgimpbase/gimpbaseenums.c:1805
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Pustoņi"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: libgimpbase/gimpbaseenums.c:1806
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Gaišās vietas"
 
-#: ../libgimpbase/gimpbaseenums.c:1841
+#: libgimpbase/gimpbaseenums.c:1835
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normāls (uz priekšu)"
 
-#: ../libgimpbase/gimpbaseenums.c:1842
+#: libgimpbase/gimpbaseenums.c:1836
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Labojošs (atpakaļ)"
 
-#: ../libgimpbase/gimpbaseenums.c:1873
+#: libgimpbase/gimpbaseenums.c:1867
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Mainīt"
 
-#: ../libgimpbase/gimpbaseenums.c:1874
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Apcirst"
 
-#: ../libgimpbase/gimpbaseenums.c:1875
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Kadrēt līdz rezultātam"
 
-#: ../libgimpbase/gimpbaseenums.c:1876
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Kadrēt ar samēru"
 
-#: ../libgimpbase/gimpmetadata.c:932
+#: libgimpbase/gimpmetadata.c:1215
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Var ielādēt metadatus tikai no lokālajām datnēm"
 
-#: ../libgimpbase/gimpmetadata.c:988
+#: libgimpbase/gimpmetadata.c:1271
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Var saglabāt metadatus tikai lokālajās datnēs"
 
-#: ../libgimpbase/gimpmetadata.c:1036
+#: libgimpbase/gimpmetadata.c:1320
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Nederīgs Exif izmērs."
 
-#: ../libgimpbase/gimpmetadata.c:1065
+#: libgimpbase/gimpmetadata.c:1365
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Neizdevās parsēt Exif datus."
 
-#: ../libgimpbase/gimpmetadata.c:1115
+#: libgimpbase/gimpmetadata.c:1417
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Neizdevās parsēt IPTC datus."
 
-#: ../libgimpbase/gimpmetadata.c:1163
+#: libgimpbase/gimpmetadata.c:1465
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Neizdevās parsēt XMP datus."
 
-#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
+#: libgimpbase/gimpunit.c:81
+#| msgctxt "size-type"
+#| msgid "Pixels"
+msgctxt "unit-plural"
+msgid "pixels"
+msgstr "pikseļi"
+
+#: libgimpbase/gimpunit.c:88
+msgctxt "unit-plural"
+msgid "inches"
+msgstr "collas"
+
+#: libgimpbase/gimpunit.c:94
+msgctxt "unit-plural"
+msgid "millimeters"
+msgstr "milimetri"
+
+#: libgimpbase/gimpunit.c:101
+#| msgctxt "size-type"
+#| msgid "Points"
+msgctxt "unit-plural"
+msgid "points"
+msgstr "punkti"
+
+#: libgimpbase/gimpunit.c:107
+msgctxt "unit-plural"
+msgid "picas"
+msgstr "pica"
+
+#: libgimpbase/gimpunit.c:117
+#| msgid "percent"
+msgctxt "unit-plural"
+msgid "percent"
+msgstr "procenti"
+
+#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorekta UTF-8 rinda)"
 
-#: ../libgimpbase/gimputils.c:394
+#: libgimpbase/gimputils.c:395
 msgid "File path is NULL"
 msgstr "Datnes ceļš ir NULL"
 
-#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:403
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Kļūda, konvertēt UTF-8 datnes nosaukumu uz paplašināto rakstzīmi"
 
-#: ../libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:411
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() neizdevās"
 
-#: ../libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:450
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Nevar konvertēt “%s” par derīgu NSURL."
 
-#: ../libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:478
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Neizdevās savienoties ar org.freedesktop.FileManager1"
 
-#: ../libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:502
 msgid "Calling ShowItems failed: "
 msgstr "Neizdevās izsaukt ShowItems:"
 
-#: ../libgimpcolor/gimpcolorprofile.c:258
+#: libgimpcolor/gimpcolorprofile.c:259
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "“%s” neizskatās kā ICC krāsu profils"
 
-#: ../libgimpcolor/gimpcolorprofile.c:304
+#: libgimpcolor/gimpcolorprofile.c:305
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Dati neizskatās kā ICC krāsu profils"
 
-#: ../libgimpcolor/gimpcolorprofile.c:361
+#: libgimpcolor/gimpcolorprofile.c:362
 msgid "Could not save color profile to memory"
 msgstr "Nevar saglabāt krāsu profilu atmiņā"
 
-#: ../libgimpcolor/gimpcolorprofile.c:578
+#: libgimpcolor/gimpcolorprofile.c:579
 msgid "(unnamed profile)"
 msgstr "(nenosaukts profils)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:620
+#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2074
 #, c-format
 msgid "Model: %s"
 msgstr "Modelis: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:629
+#: libgimpcolor/gimpcolorprofile.c:630
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Ražotājs: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:638
+#: libgimpcolor/gimpcolorprofile.c:639
 #, c-format
 msgid "Copyright: %s"
 msgstr "Autortiesības: %s"
 
-#: ../libgimpconfig/gimpconfigenums.c:24
+#: libgimpconfig/gimpconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Nav krāsu pārvaldības"
 
-#: ../libgimpconfig/gimpconfigenums.c:25
+#: libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Krāsu pārvaldīts displejs"
 
-#: ../libgimpconfig/gimpconfigenums.c:26
+#: libgimpconfig/gimpconfigenums.c:27
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr "Monitora korektūra"
 
-#: ../libgimpconfig/gimpconfigenums.c:57
+#: libgimpconfig/gimpconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Perceptuāls"
 
-#: ../libgimpconfig/gimpconfigenums.c:58
+#: libgimpconfig/gimpconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Relatīvi kolorimetrisks"
 
-#: ../libgimpconfig/gimpconfigenums.c:59
+#: libgimpconfig/gimpconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Piesātinājumam"
 
-#: ../libgimpconfig/gimpconfigenums.c:60
+#: libgimpconfig/gimpconfigenums.c:61
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Absolūti kolorimetrisks"
@@ -1702,15 +1879,15 @@ msgstr "Absolūti kolorimetrisks"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: libgimpconfig/gimpcolorconfig.c:52
 msgid "How images are displayed on screen."
 msgstr "Kā attēli tiek attēloti uz ekrāna."
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Jūsu (galvenā) ekrāna krāsu profils."
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1719,7 +1896,7 @@ msgstr ""
 "Kad ieslēgts, GIMP mēģinās izmantot krāsu profilu no logu sistēmas. "
 "Konfigurētais monitora profils tiks izmantots tikai kā rezerves variants."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
@@ -1727,7 +1904,7 @@ msgstr ""
 "Vēlamais RGB darba vides krāsu profils. Tas tiks piedāvāts pie iebūvētā RGB "
 "profila, kad varēs izvēlēties krāsu profilu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:67
+#: libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
@@ -1735,15 +1912,11 @@ msgstr ""
 "Vēlamais pelēktoņu darba vides krāsu profils. Tas tiks piedāvāts pie "
 "iebūvētā pelēktoņu profila, kad varēs izvēlēties krāsu profilu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK krāsu profils konvertēšanai no RGB uz CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
-#| msgid ""
-#| "The color profile to use for soft-proofing from your image's color space "
-#| "to some other color space, including soft-proofing to a printer or other "
-#| "output device profile. "
+#: libgimpconfig/gimpcolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
@@ -1753,7 +1926,7 @@ msgstr ""
 "kādu citu krāsu telpu, tai skaitā monitora korektūrai uz printeri vai citas "
 "izvades ierīces profila."
 
-#: ../libgimpconfig/gimpcolorconfig.c:79
+#: libgimpconfig/gimpcolorconfig.c:79
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1765,24 +1938,20 @@ msgstr ""
 "neizmantojat LUT monitora profilu (vairums monitoru profili ir matricas), "
 "perceptuālais veids tiešām dod relatīvo kolorimetriju."
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
 "Izmantot melno punktu saspiešanu (ja vien zināt, ka ir iemesls tā nedarīt)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:90
+#: libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
 "Ja izslēgts, attēla attēlojums var būt labākas kvalitātes, bet uz ātruma "
 "rēķina."
 
-#: ../libgimpconfig/gimpcolorconfig.c:94
-#| msgid ""
-#| "How colors are converted from your image's color space to the output "
-#| "simulation device (usually your monitor). Try them all and choose what "
-#| "looks the best. "
+#: libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1792,23 +1961,21 @@ msgstr ""
 "simulācijas ierīci (parasti monitoru). Pamēģiniet visas un izvēlieties to, "
 "kas izskatās vislabāk."
 
-#: ../libgimpconfig/gimpcolorconfig.c:99
-#| msgid ""
-#| "Try with and without black point compensation and choose what looks best. "
+#: libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best."
 msgstr ""
 "Pamēģiniet ar un bez melnā punkta kompensācijas un izvēlieties to, kas "
 "izskatās vislabāk."
 
-#: ../libgimpconfig/gimpcolorconfig.c:103
+#: libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
 "Ja izslēgts, monitora korektūra var būt labākas kvalitātes, bet uz ātruma "
 "rēķina."
 
-#: ../libgimpconfig/gimpcolorconfig.c:107
+#: libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
@@ -1816,192 +1983,204 @@ msgstr ""
 "Kad ieslēgts, monitora korektūra atzīmēs krāsas, kuras nevar attēlot mērķa "
 "krāsu telpā."
 
-#: ../libgimpconfig/gimpcolorconfig.c:111
+#: libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 "Krāsa, kuru izmantot, lai atzīmētu krāsas, kuras ir ārpus krāsu diapazona."
 
-#: ../libgimpconfig/gimpcolorconfig.c:210
+#: libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr "Kad ieslēgts, krāsu skala ir no 0 līdz 255, nevis procentos"
+
+#: libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr "Kad ieslēgts, krāsu skala attēlo HSV sajaukšanas režīmu, nevis LCh"
+
+#: libgimpconfig/gimpcolorconfig.c:225
 msgid "Mode of operation"
 msgstr "Darbības režīms"
 
-#: ../libgimpconfig/gimpcolorconfig.c:218
+#: libgimpconfig/gimpcolorconfig.c:233
 msgid "Preferred RGB profile"
 msgstr "Vēlamais RGB profils"
 
-#: ../libgimpconfig/gimpcolorconfig.c:225
+#: libgimpconfig/gimpcolorconfig.c:240
 msgid "Preferred grayscale profile"
 msgstr "Vēlamais pelēktoņu profils"
 
-#: ../libgimpconfig/gimpcolorconfig.c:232
+#: libgimpconfig/gimpcolorconfig.c:247
 msgid "CMYK profile"
 msgstr "CMYK profils"
 
-#: ../libgimpconfig/gimpcolorconfig.c:239
+#: libgimpconfig/gimpcolorconfig.c:254
 msgid "Monitor profile"
 msgstr "Monitora profils"
 
-#: ../libgimpconfig/gimpcolorconfig.c:246
+#: libgimpconfig/gimpcolorconfig.c:261
 msgid "Use the system monitor profile"
 msgstr "Izmantot sistēmas monitora profilu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:253
+#: libgimpconfig/gimpcolorconfig.c:268
 msgid "Simulation profile for soft-proofing"
 msgstr "Simulācijas profils monitora korektūrai"
 
-#: ../libgimpconfig/gimpcolorconfig.c:260
+#: libgimpconfig/gimpcolorconfig.c:275
 msgid "Display rendering intent"
 msgstr "Attēlot attēlošanas nolūku"
 
-#: ../libgimpconfig/gimpcolorconfig.c:268
+#: libgimpconfig/gimpcolorconfig.c:283
 msgid "Use black point compensation for the display"
 msgstr "Izmantot melno punktu kompensāciju displejam"
 
-#: ../libgimpconfig/gimpcolorconfig.c:275
+#: libgimpconfig/gimpcolorconfig.c:290
 msgid "Optimize display color transformations"
 msgstr "Optimizēt displeja krāsu pārveidošanu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:282
+#: libgimpconfig/gimpcolorconfig.c:297
 msgid "Soft-proofing rendering intent"
 msgstr "Monitora korektūras attēlošanas nolūks"
 
-#: ../libgimpconfig/gimpcolorconfig.c:290
+#: libgimpconfig/gimpcolorconfig.c:305
 msgid "Use black point compensation for soft-proofing"
 msgstr "Izmantot melno punktu kompensēšanu monitora korektūrai"
 
-#: ../libgimpconfig/gimpcolorconfig.c:297
+#: libgimpconfig/gimpcolorconfig.c:312
 msgid "Optimize soft-proofing color transformations"
 msgstr "Optimizēt monitora korektūras krāsu pārveidošanu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:304
+#: libgimpconfig/gimpcolorconfig.c:319
 msgid "Mark out of gamut colors"
 msgstr "Izcelt krāsu gammu"
 
-#: ../libgimpconfig/gimpcolorconfig.c:311
+#: libgimpconfig/gimpcolorconfig.c:326
 msgid "Out of gamut warning color"
 msgstr "“Ārpus gammas” brīdinājuma krāsa"
 
-#: ../libgimpconfig/gimpcolorconfig.c:661
-#: ../libgimpconfig/gimpcolorconfig.c:854
+#: libgimpconfig/gimpcolorconfig.c:334
+msgid "Show RGB 0..255 scales"
+msgstr "Rādīt RGB 0..255 skalas"
+
+#: libgimpconfig/gimpcolorconfig.c:341
+msgid "Show HSV instead of LCH"
+msgstr "Rādīt HSV nevis LCH"
+
+#: libgimpconfig/gimpcolorconfig.c:706 libgimpconfig/gimpcolorconfig.c:895
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Krāsu profilam “%s” nav RGB krāsu telpas."
 
-#: ../libgimpconfig/gimpcolorconfig.c:705
-#: ../libgimpconfig/gimpcolorconfig.c:904
+#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:945
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Krāsu profilam “%s” nav GRAY krāsu telpas."
 
-#: ../libgimpconfig/gimpcolorconfig.c:749
-#: ../libgimpconfig/gimpcolorconfig.c:954
+#: libgimpconfig/gimpcolorconfig.c:792 libgimpconfig/gimpcolorconfig.c:995
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Krāsu profilam “%s” nav CMYK krāsu telpas."
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:116
+#: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "zīmes %s vērtība nav derīga UTF-8 rinda"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:480
+#: libgimpconfig/gimpconfig-deserialize.c:505
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "gaidāmā būla vērtība “yes” vai “no” ir %s, iegūts “%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:595
+#: libgimpconfig/gimpconfig-deserialize.c:620
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "nepareiza vērtība “%s” zīmei %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:610
+#: libgimpconfig/gimpconfig-deserialize.c:635
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "nepareiza vērtība “%ld” zīmei %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:679
+#: libgimpconfig/gimpconfig-deserialize.c:704
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "parsējot marķieri “%s” — %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:666
-#: ../libgimpconfig/gimpconfig-iface.c:679 ../libgimpconfig/gimpscanner.c:774
-#: ../libgimpconfig/gimpscanner.c:856
-#: ../libgimpwidgets/gimpcolorprofilestore.c:682
+#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
+#: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
+#: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
 msgstr "nelabojama parsēšanas kļūda"
 
-#: ../libgimpconfig/gimpconfig-path.c:506
+#: libgimpconfig/gimpconfig-path.c:513
 msgid "File has no path representation"
 msgstr "Datnei nav ceļa reprezentācijas"
 
-#: ../libgimpconfig/gimpconfig-path.c:593
+#: libgimpconfig/gimpconfig-path.c:600
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nevar izvērst ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:95
-#: ../libgimpconfig/gimpconfigwriter.c:725
+#: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Kļūda, ierakstot “%s” — %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:153
+#: libgimpconfig/gimpconfigwriter.c:153
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
 msgstr "Neizdevās izveidot “%2$s” direktoriju “%1$s”:"
 
-#: ../libgimpconfig/gimpconfigwriter.c:169
+#: libgimpconfig/gimpconfigwriter.c:169
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Neizdevās izveidot pagaidu datni priekš “%s”:"
 
-#: ../libgimpconfig/gimpconfigwriter.c:835
+#: libgimpconfig/gimpconfigwriter.c:837
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Kļūda, rakstot “%s” — %s"
 
-#: ../libgimpconfig/gimpscanner.c:422
-#, c-format
+#: libgimpconfig/gimpscanner.c:424
 msgid "invalid UTF-8 string"
 msgstr "nekorekta UTF-8 rinda"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:649
+#: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "gaidāmā būla vērtība “yes” vai “no”, iegūta “%s”"
 
-#: ../libgimpconfig/gimpscanner.c:883
+#: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Kļūda, parsējot “%s” rindā %d — %s"
 
-#: ../libgimpmodule/gimpmodule.c:172 ../libgimpmodule/gimpmodule.c:190
-#: ../libgimpmodule/gimpmodule.c:451 ../libgimpmodule/gimpmodule.c:474
-#: ../libgimpmodule/gimpmodule.c:524
+#: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
+#: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
+#: libgimpmodule/gimpmodule.c:589
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Moduļa “%s” ielādes kļūda — %s"
 
-#: ../libgimpmodule/gimpmoduledb.c:500
+#: libgimpmodule/gimpmoduledb.c:450
 msgid "Module error"
 msgstr "Kļūda modulī"
 
-#: ../libgimpmodule/gimpmoduledb.c:501
+#: libgimpmodule/gimpmoduledb.c:451
 msgid "Loaded"
 msgstr "Ielādēts"
 
-#: ../libgimpmodule/gimpmoduledb.c:502
+#: libgimpmodule/gimpmoduledb.c:452
 msgid "Load failed"
 msgstr "Ielādes kļūda"
 
-#: ../libgimpmodule/gimpmoduledb.c:503
+#: libgimpmodule/gimpmoduledb.c:453
 msgid "Not loaded"
 msgstr "Nav ielādēts"
 
-#: ../libgimpthumb/gimpthumb-utils.c:153
+#: libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
@@ -2010,42 +2189,42 @@ msgstr ""
 "Nevar noteikt korektu sīktēlu mapi.\n"
 "Sīktēli tiks izvietoti pagaidu datņu mapē (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
+#: libgimpthumb/gimpthumb-utils.c:299 libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Neizdevās izveidot sīktēlu mapi “%s”."
 
-#: ../libgimpthumb/gimpthumbnail.c:481
+#: libgimpthumb/gimpthumbnail.c:523
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Sīktēls nesatur Thumb::URI birku"
 
-#: ../libgimpthumb/gimpthumbnail.c:878
+#: libgimpthumb/gimpthumbnail.c:920
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Neizdevās izveidot sīktēlu priekš “%s” — %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:141
+#: libgimpwidgets/gimpbrowser.c:134
 msgid "_Search:"
 msgstr "_Meklēt:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:152
+#: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
 msgstr "_Priekšplāna krāsa"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:156
+#: libgimpwidgets/gimpcolorbutton.c:376
 msgid "_Background Color"
 msgstr "_Fona krāsa"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:160
+#: libgimpwidgets/gimpcolorbutton.c:381
 msgid "Blac_k"
 msgstr "_Melns"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:164
+#: libgimpwidgets/gimpcolorbutton.c:382
 msgid "_White"
 msgstr "_Balts"
 
-#: ../libgimpwidgets/gimpcolorhexentry.c:134
+#: libgimpwidgets/gimpcolorhexentry.c:125
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -2053,165 +2232,231 @@ msgstr ""
 "Krāsu heksadecimālais pieraksts kā HTML un CSS. Šis lauks pieņem arī CSS "
 "krāsu nosaukumus."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:108
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Visas datnes (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:113
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC krāsu profils (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Saglabāt"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:346
-#: ../libgimpwidgets/gimppatheditor.c:267
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:347
+#: libgimpwidgets/gimppatheditor.c:288
 msgid "Folder"
 msgstr "Mape"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:351
+#: libgimpwidgets/gimpcolorprofilechooserdialog.c:352
 msgid "Not a regular file."
 msgstr "Nav parasta datne."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:158
+#: libgimpwidgets/gimpcolorprofilestore.c:156
 msgid "Select color profile from disk..."
 msgstr "Izvēlieties krāsu profilu no diska..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:287
+#: libgimpwidgets/gimpcolorprofilestore.c:284
 msgctxt "profile"
 msgid "None"
 msgstr "Nav"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:168
+#: libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Ražotājs: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:180
+#: libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Autortiesības: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: libgimpwidgets/gimpcolorscales.c:195
 msgid "Scales"
 msgstr "Skala"
 
-#: ../libgimpwidgets/gimpcolorscales.c:434
+#. TODO: in future, this could be a better thought localized
+#. * string, but for now, I had to preserve string freeze.
+#.
+#: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691
+#: libgimpwidgets/gimpcolorselect.c:2085 modules/color-selector-water.c:206
+#: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
+#: modules/color-selector-wheel.c:175
+#| msgid "Profile: %s"
+msgid "Profile: sRGB"
+msgstr "Profils: sRGB"
+
+#: libgimpwidgets/gimpcolorscales.c:456
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:436
+#: libgimpwidgets/gimpcolorscales.c:458
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:457
+#: libgimpwidgets/gimpcolorscales.c:479
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:459
+#: libgimpwidgets/gimpcolorscales.c:481
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpcolorselection.c:247
+#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2104
+#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
+#: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
+#, c-format
+msgid "Profile: %s"
+msgstr "Profils: %s"
+
+#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2117
+#: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
+#| msgid "Profile: (none)"
+msgid "Profile: <i>unknown</i>"
+msgstr "Profils: <i>nezināms</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:521 libgimpwidgets/gimpcolorselect.c:800
+#: libgimpwidgets/gimpcolorselect.c:817
+msgid "Soft-Proof Profile: <i>unknown</i>"
+msgstr "Drukāšanas simulācijas profils: <i>nezināms</i>"
+
+#: libgimpwidgets/gimpcolorselect.c:784
+msgid "Soft-Proof Profile: sRGB"
+msgstr "Drukāšanas simulācijas profils: sRGB"
+
+#: libgimpwidgets/gimpcolorselect.c:791
+#, c-format
+#| msgid "Profile: %s"
+msgid "Soft-Proof Profile: %s"
+msgstr "Drukāšanas simulācijas profils: %s"
+
+#: libgimpwidgets/gimpcolorselection.c:233
 msgid "Current:"
 msgstr "Pašreizējā:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:256
+#: libgimpwidgets/gimpcolorselection.c:242
 msgid "Old:"
 msgstr "Iepriekšējā:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:343
+#: libgimpwidgets/gimpcolorselection.c:327
 msgid "HTML _notation:"
 msgstr "HTML _notācija:"
 
-#: ../libgimpwidgets/gimpfileentry.c:167
+#: libgimpwidgets/gimpcontroller.c:114
+msgid "The controller's name"
+msgstr "Kontroliera nosaukums"
+
+#: libgimpwidgets/gimpcontroller.c:122
+msgid "The controller's state, as human-readable string"
+msgstr "Kontroliera stāvoklis, kā cilvēkam lasāma testa virkne"
+
+#: libgimpwidgets/gimpdialog.c:196
+msgid "_Help"
+msgstr "_Palīdzība"
+
+#: libgimpwidgets/gimpfileentry.c:166
 msgid "Show file location in the file manager"
 msgstr "Rādīt datnes atrašanās vietu datņu pārvaldniekā"
 
-#: ../libgimpwidgets/gimpfileentry.c:238
+#: libgimpwidgets/gimpfileentry.c:237
 msgid "Open a file selector to browse your folders"
 msgstr "Atvērt datņu izvēli, lai pārlūkotu mapes"
 
-#: ../libgimpwidgets/gimpfileentry.c:239
+#: libgimpwidgets/gimpfileentry.c:238
 msgid "Open a file selector to browse your files"
 msgstr "Atvērt datņu izvēli, lai pārlūkotu datnes"
 
-#: ../libgimpwidgets/gimpfileentry.c:251
+#: libgimpwidgets/gimpfileentry.c:250
 msgid "Indicates whether or not the folder exists"
 msgstr "Norāda, vai mape eksistē"
 
-#: ../libgimpwidgets/gimpfileentry.c:252
+#: libgimpwidgets/gimpfileentry.c:251
 msgid "Indicates whether or not the file exists"
 msgstr "Norāda, vai datne eksistē"
 
-#: ../libgimpwidgets/gimpfileentry.c:428
+#: libgimpwidgets/gimpfileentry.c:427
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nevar parādīt datni datņu pārvaldniekā — %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:455
+#: libgimpwidgets/gimpfileentry.c:454
 msgid "Select Folder"
 msgstr "Izvēlēties mapi"
 
-#: ../libgimpwidgets/gimpfileentry.c:457
+#: libgimpwidgets/gimpfileentry.c:456
 msgid "Select File"
 msgstr "Izvēlieties datni"
 
-#: ../libgimpwidgets/gimphelpui.c:384
+#: libgimpwidgets/gimphelpui.c:387
 msgid "Press F1 for more help"
 msgstr "Spiediet F1, lai uzzinātu vairāk"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimpwidgets/gimpintstore.c:255
+#: libgimpwidgets/gimpintstore.c:256
 msgid "(Empty)"
 msgstr "(Tukšs)"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:252
-#| msgid "Kilobytes"
+#: libgimpwidgets/gimpmemsizeentry.c:242
 msgid "Kibibyte"
 msgstr "Kibibaits"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:253
-#| msgid "Megabytes"
+#: libgimpwidgets/gimpmemsizeentry.c:243
 msgid "Mebibyte"
 msgstr "Mebibaiti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:254
-#| msgid "Gigabytes"
+#: libgimpwidgets/gimpmemsizeentry.c:244
 msgid "Gibibyte"
 msgstr "Gibibaiti"
 
-#. Count label
-#: ../libgimpwidgets/gimppageselector.c:283
-#: ../libgimpwidgets/gimppageselector.c:1079
-msgid "Nothing selected"
-msgstr "Nekas nav izvēlēts"
+#: libgimpwidgets/gimppageselector.c:182
+#| msgctxt "page-selector-target"
+#| msgid "Images"
+msgid "N Pages"
+msgstr "N Lappuses"
 
-#: ../libgimpwidgets/gimppageselector.c:301
+#: libgimpwidgets/gimppageselector.c:183
+msgid "The number of pages to open"
+msgstr "Lappušu skaits, ko atvērt"
+
+#: libgimpwidgets/gimppageselector.c:196
+#| msgctxt "check-size"
+#| msgid "Large"
+msgid "Target"
+msgstr "Mērķis"
+
+#: libgimpwidgets/gimppageselector.c:197
+msgid "the target to open to"
+msgstr "mērķis, kurā atvērt"
+
+#. Count label
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1018
+msgid "Nothing selected"
+msgstr "Nekas nav atlasīts"
+
+#: libgimpwidgets/gimppageselector.c:293
 msgid "Select _All"
 msgstr "Izvēlēties _visu"
 
-#: ../libgimpwidgets/gimppageselector.c:321
+#: libgimpwidgets/gimppageselector.c:313
 msgid "Select _range:"
 msgstr "Izvēlēties _apgabalu:"
 
-#: ../libgimpwidgets/gimppageselector.c:333
+#: libgimpwidgets/gimppageselector.c:325
 msgid "Open _pages as"
 msgstr "Atvērt la_pas kā"
 
-#: ../libgimpwidgets/gimppageselector.c:461
-#: ../libgimpwidgets/gimppageselector.c:659
+#: libgimpwidgets/gimppageselector.c:448 libgimpwidgets/gimppageselector.c:625
 #, c-format
 msgid "Page %d"
 msgstr "Lapa %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1084
+#: libgimpwidgets/gimppageselector.c:1023
 msgid "One page selected"
 msgstr "Ir izvēlēta viena lapa"
 
-#: ../libgimpwidgets/gimppageselector.c:1091
-#: ../libgimpwidgets/gimppageselector.c:1095
+#: libgimpwidgets/gimppageselector.c:1030
+#: libgimpwidgets/gimppageselector.c:1034
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2219,27 +2464,27 @@ msgstr[0] "Ir izvēlēta %d lapa"
 msgstr[1] "Ir izvēlētas %d lapas"
 msgstr[2] "Ir izvēlētas %d lapas"
 
-#: ../libgimpwidgets/gimppatheditor.c:178
+#: libgimpwidgets/gimppatheditor.c:199
 msgid "Add a new folder"
 msgstr "Pievienot jaunu mapi"
 
-#: ../libgimpwidgets/gimppatheditor.c:196
+#: libgimpwidgets/gimppatheditor.c:217
 msgid "Move the selected folder up"
 msgstr "Pārvietot izvēlēto mapi augšup"
 
-#: ../libgimpwidgets/gimppatheditor.c:214
+#: libgimpwidgets/gimppatheditor.c:235
 msgid "Move the selected folder down"
 msgstr "Pārvietot izvēlēto mapi lejup"
 
-#: ../libgimpwidgets/gimppatheditor.c:232
+#: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
 msgstr "Izņemt izvēlēto mapi no saraksta"
 
-#: ../libgimpwidgets/gimppatheditor.c:258
+#: libgimpwidgets/gimppatheditor.c:279
 msgid "Writable"
 msgstr "Rediģējams"
 
-#: ../libgimpwidgets/gimppickbutton.c:115
+#: libgimpwidgets/gimppickbutton.c:143
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2248,19 +2493,27 @@ msgstr ""
 "jebkurā ekrāna vietā."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:282
+#: libgimpwidgets/gimppreview.c:284
 msgid "_Preview"
 msgstr "_Priekšskatījums"
 
-#: ../libgimpwidgets/gimppreviewarea.c:134
+#: libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Size"
 msgstr "Pārbaudīt izmēru"
 
-#: ../libgimpwidgets/gimppreviewarea.c:142
+#: libgimpwidgets/gimppreviewarea.c:162
 msgid "Check Style"
 msgstr "Pārbaudīt stilu"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2199
+#: libgimpwidgets/gimppreviewarea.c:170
+msgid "Custom Checks Color 1"
+msgstr "Pielāgotu rūtiņu krāsa 1"
+
+#: libgimpwidgets/gimppreviewarea.c:177
+msgid "Custom Checks Color 2"
+msgstr "Pielāgotu rūtiņu krāsa 2"
+
+#: libgimpwidgets/gimppropwidgets.c:2474
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2268,7 +2521,7 @@ msgstr[0] "Šajā teksta laukā iespējams ierakstīt tikai %d rakstzīmes."
 msgstr[1] "Šajā teksta laukā iespējams ierakstīt tikai %d zīmes."
 msgstr[2] "Šajā teksta laukā iespējams ierakstīt tikai %d zīmes."
 
-#: ../libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2276,558 +2529,549 @@ msgstr ""
 "Izmantojiet šo vērtību gadījumskaitļu ģeneratora inicializēšanai - tas ļaus "
 "jums atkārtot izvēlēto “gadījuma” darbību"
 
-#: ../libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:263
 msgid "_New Seed"
 msgstr "Jau_na sēkla"
 
-#: ../libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:279
 msgid "Seed random number generator with a generated random number"
 msgstr "Inicializēt gadījumskaitļu ģeneratoru ar ģenerētu gadījumskaitli"
 
-#: ../libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:283
 msgid "_Randomize"
 msgstr "_Sajaukt"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Atslēgts"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Ekrāns"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:53
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Logs"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Kvadrāts"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Portrets"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: libgimpwidgets/gimpwidgetsenums.c:27
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Ainava"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: libgimpwidgets/gimpwidgetsenums.c:130
 msgid "HSV Hue"
 msgstr "HSV nokrāsa"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Saturation"
 msgstr "HSV piesātinājums"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: libgimpwidgets/gimpwidgetsenums.c:132
 msgid "HSV Value"
 msgstr "HSV vērtība"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: libgimpwidgets/gimpwidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: libgimpwidgets/gimpwidgetsenums.c:133
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: libgimpwidgets/gimpwidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_Z"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: libgimpwidgets/gimpwidgetsenums.c:134
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: libgimpwidgets/gimpwidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_I"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: libgimpwidgets/gimpwidgetsenums.c:135
 msgid "Blue"
 msgstr "Zils"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: libgimpwidgets/gimpwidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_L"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: libgimpwidgets/gimpwidgetsenums.c:136
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_L"
 msgstr "_L"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Lightness"
 msgstr "LCh gaišums"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Chroma"
 msgstr "LCh piesātinājums"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: libgimpwidgets/gimpwidgetsenums.c:139
 msgctxt "color-selector-channel"
 msgid "_h"
 msgstr "_h"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: libgimpwidgets/gimpwidgetsenums.c:139
 msgid "LCh Hue"
 msgstr "LCh tonis"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: libgimpwidgets/gimpwidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: libgimpwidgets/gimpwidgetsenums.c:169
 msgid "RGB color model"
 msgstr "RGB krāsu modelis"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: libgimpwidgets/gimpwidgetsenums.c:170
 msgid "CIE LCh color model"
 msgstr "CIE LCh krāsu modelis"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: libgimpwidgets/gimpwidgetsenums.c:171
 msgctxt "color-selector-model"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: libgimpwidgets/gimpwidgetsenums.c:171
 msgid "HSV color model"
 msgstr "HSV krāsu modelis"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:231
+#: libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Slāņi"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:232
+#: libgimpwidgets/gimpwidgetsenums.c:233
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Attēli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:293
+#: libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Tuvināt"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:294
+#: libgimpwidgets/gimpwidgetsenums.c:295
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Tālināt"
 
-#: ../modules/color-selector-cmyk.c:82
+#: modules/color-selector-cmyk.c:85
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK krāsu izvēle (izmantojot krāsu profilu)"
 
-#: ../modules/color-selector-cmyk.c:116
+#: modules/color-selector-cmyk.c:119
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:139
+#: modules/color-selector-cmyk.c:143
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:141
+#: modules/color-selector-cmyk.c:145
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:143
+#: modules/color-selector-cmyk.c:147
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:149
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:153
 msgid "Cyan"
 msgstr "Ciāns"
 
-#: ../modules/color-selector-cmyk.c:150
+#: modules/color-selector-cmyk.c:154
 msgid "Magenta"
 msgstr "Fuksīns"
 
-#: ../modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:155
 msgid "Yellow"
 msgstr "Dzeltens"
 
-#: ../modules/color-selector-cmyk.c:152
+#: modules/color-selector-cmyk.c:156
 msgid "Black"
 msgstr "Melns"
 
-#: ../modules/color-selector-cmyk.c:368
+#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
 msgid "Profile: (none)"
 msgstr "Profils: (nav)"
 
-#: ../modules/color-selector-cmyk.c:380
-#, c-format
-msgid "Profile: %s"
-msgstr "Profils: %s"
-
-#: ../modules/color-selector-water.c:96
+#: modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Akvareļkrāsu izvēlne"
 
-#: ../modules/color-selector-water.c:130
+#: modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Akvarelis"
 
-#: ../modules/color-selector-water.c:198
+#: modules/color-selector-water.c:197
 msgid "Pressure"
 msgstr "Spiediens"
 
-#: ../modules/color-selector-wheel.c:72
+#: modules/color-selector-wheel.c:76
 msgid "HSV color wheel"
 msgstr "HVS krāsu aplis"
 
-#: ../modules/color-selector-wheel.c:104
+#: modules/color-selector-wheel.c:108
 msgid "Wheel"
 msgstr "Aplis"
 
-#: ../modules/controller-dx-dinput.c:156
+#: modules/controller-dx-dinput.c:154
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput notikumu kontrolieris"
 
-#: ../modules/controller-dx-dinput.c:196
-#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
+#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
+#: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Iekārta:"
 
-#: ../modules/controller-dx-dinput.c:197
+#: modules/controller-dx-dinput.c:195
 msgid "The device to read DirectInput events from."
 msgstr "Iekārta, no kuras nolasīt DirectInput notikumus."
 
-#: ../modules/controller-dx-dinput.c:206
+#: modules/controller-dx-dinput.c:204
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:419
+#: modules/controller-dx-dinput.c:417
 #, c-format
 msgid "Button %d"
 msgstr "Taustiņš %d"
 
-#: ../modules/controller-dx-dinput.c:422
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d Press"
 msgstr "Taustiņš %d nospiests"
 
-#: ../modules/controller-dx-dinput.c:425
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Release"
 msgstr "Taustiņš %d atlaists"
 
-#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X kustība pa kreisi"
 
-#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X kustība pa labi"
 
-#: ../modules/controller-dx-dinput.c:451
+#: modules/controller-dx-dinput.c:449
 msgid "Y Move Away"
 msgstr "Y pārvietot tālāk"
 
-#: ../modules/controller-dx-dinput.c:454
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Near"
 msgstr "Y pārvietot tuvāk"
 
-#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z kustība augšup"
 
-#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z kustība lejup"
 
-#: ../modules/controller-dx-dinput.c:469
+#: modules/controller-dx-dinput.c:467
 msgid "X Axis Tilt Away"
 msgstr "X ass noliekta tālāk"
 
-#: ../modules/controller-dx-dinput.c:472
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Near"
 msgstr "X ass noliekta tuvāk"
 
-#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y ass noliekta pa labi"
 
-#: ../modules/controller-dx-dinput.c:481
-#: ../modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y ass noliekta pa kreisi"
 
-#: ../modules/controller-dx-dinput.c:487
-#: ../modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z ass noliekta pa kreisi"
 
-#: ../modules/controller-dx-dinput.c:490
-#: ../modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z ass noliekta pa labi"
 
-#: ../modules/controller-dx-dinput.c:501
+#: modules/controller-dx-dinput.c:499
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Slīdnis %d palielinās"
 
-#: ../modules/controller-dx-dinput.c:504
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Slīdnis %d samazinās"
 
-#: ../modules/controller-dx-dinput.c:514
+#: modules/controller-dx-dinput.c:512
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X skats"
 
-#: ../modules/controller-dx-dinput.c:517
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y skats"
 
-#: ../modules/controller-dx-dinput.c:520
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d atgriež"
 
-#: ../modules/controller-dx-dinput.c:1081
+#: modules/controller-dx-dinput.c:1079
 msgid "DirectInput Events"
 msgstr "DirectInput notikumi"
 
-#: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
+#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
+#: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Neviena iekārta nav nokonfigurēta"
 
-#: ../modules/controller-dx-dinput.c:1117
-#: ../modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Iekārta nav pieejama"
 
-#: ../modules/controller-linux-input.c:58
+#: modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "Taustiņš 0"
 
-#: ../modules/controller-linux-input.c:59
+#: modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "Taustiņš 1"
 
-#: ../modules/controller-linux-input.c:60
+#: modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "Taustiņš 2"
 
-#: ../modules/controller-linux-input.c:61
+#: modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "Taustiņš 3"
 
-#: ../modules/controller-linux-input.c:62
+#: modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "Taustiņš 4"
 
-#: ../modules/controller-linux-input.c:63
+#: modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "Taustiņš 5"
 
-#: ../modules/controller-linux-input.c:64
+#: modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "Taustiņš 6"
 
-#: ../modules/controller-linux-input.c:65
+#: modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "Taustiņš 7"
 
-#: ../modules/controller-linux-input.c:66
+#: modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "Taustiņš 8"
 
-#: ../modules/controller-linux-input.c:67
+#: modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "Taustiņš 9"
 
-#: ../modules/controller-linux-input.c:68
+#: modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Peles taustiņš"
 
-#: ../modules/controller-linux-input.c:69
+#: modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Kreisais taustiņš"
 
-#: ../modules/controller-linux-input.c:70
+#: modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Labais taustiņš"
 
-#: ../modules/controller-linux-input.c:71
+#: modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Vidējais taustiņš"
 
-#: ../modules/controller-linux-input.c:72
+#: modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Sānu taustiņš"
 
-#: ../modules/controller-linux-input.c:73
+#: modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "Papildus taustiņš"
 
-#: ../modules/controller-linux-input.c:74
+#: modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Uz priekšu taustiņš"
 
-#: ../modules/controller-linux-input.c:75
+#: modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Atpakaļ taustiņš"
 
-#: ../modules/controller-linux-input.c:76
+#: modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Uzdevumu taustiņš"
 
-#: ../modules/controller-linux-input.c:78
+#: modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Peles rullītis"
 
-#: ../modules/controller-linux-input.c:81
+#: modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "Rullītis lejup "
 
-#: ../modules/controller-linux-input.c:84
+#: modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "Rullītis augšup"
 
-#: ../modules/controller-linux-input.c:92
+#: modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Y kustība uz priekšu"
 
-#: ../modules/controller-linux-input.c:93
+#: modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Y kustība atpakaļ"
 
-#: ../modules/controller-linux-input.c:97
+#: modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
 msgstr "X ass noliekta uz priekšu"
 
-#: ../modules/controller-linux-input.c:98
+#: modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
 msgstr "X ass noliekta atpakaļ"
 
-#: ../modules/controller-linux-input.c:104
+#: modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Horiz. rullītis pagriezts atpakaļ"
 
-#: ../modules/controller-linux-input.c:105
+#: modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Horiz. rullītis pagriezts uz priekšu"
 
-#: ../modules/controller-linux-input.c:106
+#: modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Aplis pa kreisi"
 
-#: ../modules/controller-linux-input.c:107
+#: modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Aplis pa labi"
 
-#: ../modules/controller-linux-input.c:108
+#: modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Ritenis pa kreisi"
 
-#: ../modules/controller-linux-input.c:109
+#: modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Ritenis pa labi"
 
-#: ../modules/controller-linux-input.c:178
+#: modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Linux ievada notikumu kontrolieris"
 
-#: ../modules/controller-linux-input.c:219
+#: modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr "Iekārtas nosaukums, no kuras ielasīt Linux ievades notikumus."
 
-#: ../modules/controller-linux-input.c:230
+#: modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linux ievade"
 
-#: ../modules/controller-linux-input.c:513
+#: modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Linux ievades notikumi"
 
-#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
-#: ../modules/controller-midi.c:480
+#: modules/controller-linux-input.c:551 modules/controller-midi.c:454
+#: modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Ielasa no %s"
 
-#: ../modules/controller-linux-input.c:569
-#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
-#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
+#: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623
+#: modules/controller-midi.c:436 modules/controller-midi.c:497
+#: modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Iekārta nav pieejama: %s"
 
-#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
+#: modules/controller-linux-input.c:632 modules/controller-midi.c:577
 msgid "End of file"
 msgstr "Datnes beigas"
 
-#: ../modules/controller-midi.c:164
+#: modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "MIDI notikumu kontrolieris"
 
-#: ../modules/controller-midi.c:203
+#: modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Iekārtas nosaukums, no kuras ielasīt MIDI notikumus."
 
-#: ../modules/controller-midi.c:206
+#: modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Ievadiet “alsa”, lai izmantotu ALSA virknētāju."
 
-#: ../modules/controller-midi.c:221
+#: modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Kanāls:"
 
-#: ../modules/controller-midi.c:222
+#: modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -2835,172 +3079,236 @@ msgstr ""
 "MIDI kanāls, no kura ielasīt notikumus. Iestatiet uz -1, lai lasītu no "
 "visiem MIDI kanāliem."
 
-#: ../modules/controller-midi.c:226
+#: modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller-midi.c:355
+#: modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "Nots %02x ieslēgta"
 
-#: ../modules/controller-midi.c:358
+#: modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "Nots %02x izslēgta"
 
-#: ../modules/controller-midi.c:361
+#: modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Kontrolieris %03d"
 
-#: ../modules/controller-midi.c:408
+#: modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI notikumi"
 
-#: ../modules/controller-midi.c:428
+#: modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI ievades kontrolieris"
 
-#: ../modules/display-filter-aces-rrt.c:84
+#: modules/display-filter-aces-rrt.c:84
 msgid ""
 "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
 "display filter, using a luminance-only approximation of the ACES RRT, a pre-"
 "defined filmic look to be used before ODT (display or output space ICC "
 "profile)"
 msgstr ""
-"ACES RRT (RRT = Reference Rendering Transform). HDR uz SDR krāsu attēlošanas"
-" filtrs, izmanto tikai ACES RRT spilgtuma tuvinājumu, iepriekš definēts"
-" filmiņas izskats tiks izmantots pirms ODT (displeja vai izvades telpas ICC"
-" profils)"
+"ACES RRT (RRT = Reference Rendering Transform). HDR uz SDR krāsu attēlošanas "
+"filtrs, izmanto tikai ACES RRT spilgtuma tuvinājumu, iepriekš definēts "
+"filmiņas izskats tiks izmantots pirms ODT (displeja vai izvades telpas ICC "
+"profils)"
 
-#: ../modules/display-filter-aces-rrt.c:121
+#: modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
 msgstr "Iepriekš transformēšanas izmaiņās pa soļiem"
 
-#: ../modules/display-filter-aces-rrt.c:126
+#: modules/display-filter-aces-rrt.c:126
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: ../modules/display-filter-clip-warning.c:121
+#. Translators: "Clip Warning" is the name of a (color) display filter
+#. * that highlights pixels outside of the color space range.
+#. * Shown as a label description.
+#: modules/display-filter-clip-warning.c:125
 msgid "Clip warning color display filter"
 msgstr "Apgriešanas brīdinājuma krāsu attēlošanas filtrs"
 
-#: ../modules/display-filter-clip-warning.c:158
+#: modules/display-filter-clip-warning.c:166
 msgid "Show shadows"
 msgstr "Rādīt ēnas"
 
-#: ../modules/display-filter-clip-warning.c:159
+#: modules/display-filter-clip-warning.c:167
 msgid "Show warning for pixels with a negative component"
 msgstr "Rādīt brīdinājumu pikseļiem, kuriem ir negatīva komponente"
 
-#: ../modules/display-filter-clip-warning.c:165
+#: modules/display-filter-clip-warning.c:173
 msgid "Shadows color"
 msgstr "Ēnu krāsa"
 
-#: ../modules/display-filter-clip-warning.c:166
+#: modules/display-filter-clip-warning.c:174
 msgid "Shadows warning color"
 msgstr "Ēnu brīdinājuma krāsa"
 
-#: ../modules/display-filter-clip-warning.c:178
+#: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
 msgstr "Rādīt gaišās vietas"
 
-#: ../modules/display-filter-clip-warning.c:179
+#: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Rāda brīdinājumu pikseļiem, kuriem komponente ir lielāka par “1”"
 
-#: ../modules/display-filter-clip-warning.c:185
+#: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
 msgstr "Gaišo vietu krāsa"
 
-#: ../modules/display-filter-clip-warning.c:186
+#: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
 msgstr "Gaišo vietu brīdinājuma krāsa"
 
-#: ../modules/display-filter-clip-warning.c:198
+#: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
 msgstr "Rādīt apšaubāmos"
 
-#: ../modules/display-filter-clip-warning.c:199
+#: modules/display-filter-clip-warning.c:207
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr "Rādīt brīdinājumu pikseļiem, kuriem ir NaN (nav skaitlis) komponente"
 
-#: ../modules/display-filter-clip-warning.c:205
+#: modules/display-filter-clip-warning.c:215
 msgid "Bogus color"
 msgstr "Apšaubāmo pikseļu krāsa"
 
-#: ../modules/display-filter-clip-warning.c:206
+#: modules/display-filter-clip-warning.c:216
 msgid "Bogus warning color"
 msgstr "Apšaubāmo pikseļu brīdinājuma krāsa"
 
-#: ../modules/display-filter-clip-warning.c:218
+#: modules/display-filter-clip-warning.c:227
 msgid "Include alpha component"
 msgstr "Iekļaut komponenti “alfa”"
 
-#: ../modules/display-filter-clip-warning.c:219
+#: modules/display-filter-clip-warning.c:228
 msgid "Include alpha component in the warning"
 msgstr "Brīdinājumā iekļaut komponenti “alfa”"
 
-#: ../modules/display-filter-clip-warning.c:225
+#: modules/display-filter-clip-warning.c:234
 msgid "Include transparent pixels"
 msgstr "Iekļaut caurspīdīgos pikseļus"
 
-#: ../modules/display-filter-clip-warning.c:226
+#: modules/display-filter-clip-warning.c:235
 msgid "Include fully transparent pixels in the warning"
 msgstr "Brīdinājumā iekļaut pilnīgi caurspīdīgos pikseļus"
 
-#: ../modules/display-filter-clip-warning.c:230
+#: modules/display-filter-clip-warning.c:239
 msgid "Clip Warning"
 msgstr "Apciršanas brīdinājums"
 
-#: ../modules/display-filter-color-blind.c:68
+#: modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopija (nejutīgums uz sarkano)"
 
-#: ../modules/display-filter-color-blind.c:70
+#: modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopija (nejutīgums uz zaļo)"
 
-#: ../modules/display-filter-color-blind.c:72
+#: modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopija (nejutīgums uz zilo)"
 
-#: ../modules/display-filter-color-blind.c:194
+#: modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Krāsas trūkuma modelēšanas filtrs (Brettela-Vienota-Mollona algoritms)"
 
-#: ../modules/display-filter-color-blind.c:253
+#: modules/display-filter-color-blind.c:253
 msgid "Type"
 msgstr "Tips"
 
-#: ../modules/display-filter-color-blind.c:254
+#: modules/display-filter-color-blind.c:254
 msgid "Color vision deficiency type"
 msgstr "Pazeminātas krāsas _uztveres tips"
 
-#: ../modules/display-filter-color-blind.c:259
+#: modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
 msgstr "Skats ar pazeminātu krāsas uztveri"
 
-#: ../modules/display-filter-gamma.c:86
+#: modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Krāsu gammas filtrs"
 
-#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
+#: modules/display-filter-gamma.c:123 modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-high-contrast.c:86
+#: modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "Paaugstināta kontrasta filtrs"
 
-#: ../modules/display-filter-high-contrast.c:123
+#: modules/display-filter-high-contrast.c:123
 msgid "Contrast cycles"
 msgstr "Kontrasta cikli"
 
-#: ../modules/display-filter-high-contrast.c:128
+#: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrasts"
+
+#~ msgid "Brush Selection"
+#~ msgstr "Otas izvēle"
+
+#~ msgid "Confirm Save"
+#~ msgstr "Apstiprināt saglabāšanu"
+
+#~ msgid "C_onfirm"
+#~ msgstr "_Apstiprināt"
+
+#~ msgid "Export File"
+#~ msgstr "Eksportēt datni"
+
+#~ msgid "_Ignore"
+#~ msgstr "_Ignorēt"
+
+#, c-format
+#~ msgid ""
+#~ "Your image should be exported before it can be saved as %s for the "
+#~ "following reasons:"
+#~ msgstr ""
+#~ "Attēls ir jāeksportē kamēr tas nav saglabāts kā %s sekojošu iemeslu dēļ:"
+
+#~ msgid "The export conversion won't modify your original image."
+#~ msgstr "Eksportēšana nemainīs sākotnējo attēlu"
+
+#, c-format
+#~ msgid ""
+#~ "You are about to save a layer mask as %s.\n"
+#~ "This will not save the visible layers."
+#~ msgstr ""
+#~ "Jūs drīz saglabāsiet slāņa masku kā %s.\n"
+#~ "Redzamie slāņi netiks saglabāti."
+
+#, c-format
+#~ msgid ""
+#~ "You are about to save a channel (saved selection) as %s.\n"
+#~ "This will not save the visible layers."
+#~ msgstr ""
+#~ "Jūs drīz saglabāsiet kanālu (saglabāto iezīmējumu) kā %s.\n"
+#~ "Redzamie slāņi netiks saglabāti."
+
+#~ msgid "Font Selection"
+#~ msgstr "Fonta izvēle"
+
+#~ msgid "Gradient Selection"
+#~ msgstr "Krāsu pārejas izvēle"
+
+#~ msgid "Palette Selection"
+#~ msgstr "Paletes izvēle"
+
+#~ msgid "Pattern Selection"
+#~ msgstr "Raksta izvēle"
+
+#~ msgctxt "pdb-proc-type"
+#~ msgid "GIMP Extension"
+#~ msgstr "GIMP paplašinājums"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "Truncate"
+#~ msgstr "Saīsināt"
 
 #~ msgid "GIMP 2.10"
 #~ msgstr "GIMP 2.10"
@@ -3088,9 +3396,6 @@ msgstr "Kontrasts"
 #~ msgid "Conversion of the filename to system codepage failed."
 #~ msgstr "Neizdevās pārveidot datnes nosaukumu uz sistēmas kodu lapu. "
 
-#~ msgid "_Help"
-#~ msgstr "_Palīdzība"
-
 #~ msgid "Anchor"
 #~ msgstr "Nostiprināt"
 
@@ -3144,9 +3449,6 @@ msgstr "Kontrasts"
 
 #~ msgid "Unit Selection"
 #~ msgstr "Vienību izvēle"
-
-#~ msgid "Unit"
-#~ msgstr "Vienība"
 
 #~ msgid "Factor"
 #~ msgstr "Reizinātājs"
@@ -3235,3 +3537,4 @@ msgstr "Kontrasts"
 
 #~ msgid "_Intent:"
 #~ msgstr "Ve_ids:"
+
