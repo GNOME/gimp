@@ -696,6 +696,26 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+#define TEMPLATERC_UPDATE_PATTERN \
+  "\\(precision (.*)-gamma\\)"
+
+static gboolean
+user_update_templaterc (const GMatchInfo *matched_value,
+                        GString          *new_value,
+                        gpointer          data)
+{
+  gchar *original = g_match_info_fetch (matched_value, 0);
+  gchar *match    = g_match_info_fetch (matched_value, 1);
+
+  /* GIMP_PRECISION_*_GAMMA removed in GIMP 3.0.0 (commit 2559138931). */
+  g_string_append_printf (new_value, "(precision %s-non-linear)", match);
+
+  g_free (original);
+  g_free (match);
+
+  return FALSE;
+}
+
 #define CONTROLLERRC_UPDATE_PATTERN \
   "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""
 
@@ -810,7 +830,8 @@ user_update_sessionrc (const GMatchInfo *matched_value,
 #define GIMPRC_UPDATE_PATTERN \
   "\\(theme [^)]*\\)"          "|" \
   "^ *\\(.*-path \".*\"\\) *$" "|" \
-  "\\(style solid\\)"
+  "\\(style solid\\)"          "|" \
+  "\\(precision (.*)-gamma\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
@@ -825,6 +846,15 @@ user_update_gimprc (const GMatchInfo *matched_value,
        * GIMP_FILL_STYLE_FG_COLOR and GIMP_FILL_STYLE_BG_COLOR.
        */
       g_string_append (new_value, "(style fg-color)");
+    }
+  else if (g_str_has_prefix (match, "(precision "))
+    {
+      gchar *precision_match = g_match_info_fetch (matched_value, 1);
+
+      /* GIMP_PRECISION_*_GAMMA removed in GIMP 3.0.0 (commit 2559138931). */
+      g_string_append_printf (new_value, "(precision %s-non-linear)", precision_match);
+
+      g_free (precision_match);
     }
   else
     {
@@ -1147,6 +1177,11 @@ user_install_migrate_files (GimpUserInstall *install)
                   new_dest        = "shortcutsrc";
                   break;
                 }
+            }
+          else if (strcmp (basename, "templaterc") == 0)
+            {
+              update_pattern  = TEMPLATERC_UPDATE_PATTERN;
+              update_callback = user_update_templaterc;
             }
           else if (strcmp (basename, "controllerrc") == 0)
             {
