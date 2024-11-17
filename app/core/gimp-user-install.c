@@ -288,78 +288,93 @@ user_install_detect_old (GimpUserInstall *install,
 
   if (version)
     {
-      gint i;
+      gint major;
+      gint minor;
 
-      g_snprintf (version, 5, "%d.XY", 2);
-
-      /* XXX Looking from 2.10 and downwards. This logic must be changed
-       * to look 3.x versions too when we'll move up to 3.2 and upper.
-       */
-      for (i = 10; i >= 0; i -= 2)
+      for (major = 3; major >= 2; major--)
         {
-          /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
-          g_snprintf (version + 2, 3, "%d", i);
+          gint max_minor;
 
-          migrate = g_file_test (dir, G_FILE_TEST_IS_DIR);
+          g_snprintf (version, 5, "%d.XY", major);
 
-          if (migrate)
+          switch (major)
             {
-              install->old_major = 2;
-              install->old_minor = i;
-
+            case 3:
+              max_minor = GIMP_MINOR_VERSION;
               break;
+            case 2:
+              max_minor = 10;
+              break;
+            default:
+              g_return_val_if_reached (FALSE);
             }
 
-#ifdef G_OS_UNIX
-          if (i == 10)
+          for (minor = (max_minor & ~1); minor >= 0; minor -= 2)
             {
-              /* This is special-casing for GIMP 2.10 as flatpak where
-               * we had this weird inconsistency: depending on whether a
-               * previous $XDG_CONFIG_HOME/GIMP/ folder was found or
-               * not, the config folder would be either inside, or would
-               * be in $HOME/.var/<etc> as other flatpak (see #5331).
-               * For GIMP 3, even the flatpak will always be in
-               * $XDG_CONFIG_HOME. But then we want a migration to still
-               * find the previous config folder.
-               * If one was found in $XDG_CONFIG_HOME, it is used in
-               * priority. Then ~/.var/ is used a fallback, if found.
-               */
-              gchar *flatpak_dir = user_install_flatpak_gimpdir (i);
+              /*  we assume that GIMP_APP_VERSION is in the form '2.x'  */
+              g_snprintf (version + 2, 3, "%d", minor);
 
-              if (flatpak_dir)
-                /* This first test is for finding a 2.10 flatpak config
-                 * dir from a non-flatpak GIMP 3+.
-                 */
-                migrate = g_file_test (flatpak_dir, G_FILE_TEST_IS_DIR);
-
-              if (! migrate && g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS))
-                {
-                  /* Now we check /var/config/GIMP because this is where
-                   * local ~/.var/ is mounted inside the sandbox.
-                   * So this second test is for finding a 2.10 flatpak
-                   * config dir from a flatpak GIMP 3+.
-                   */
-                  g_free (flatpak_dir);
-                  flatpak_dir = g_build_filename ("/var/config/GIMP/", version, NULL);
-
-                  migrate = g_file_test (flatpak_dir, G_FILE_TEST_IS_DIR);
-                }
+              migrate = g_file_test (dir, G_FILE_TEST_IS_DIR);
 
               if (migrate)
                 {
                   install->old_major = 2;
-                  install->old_minor = i;
+                  install->old_minor = minor;
 
-                  g_free (dir);
-                  dir = flatpak_dir;
                   break;
                 }
-              else
+
+#ifdef G_OS_UNIX
+              if (minor == 10)
                 {
-                  g_free (flatpak_dir);
+                  /* This is special-casing for GIMP 2.10 as flatpak where
+                   * we had this weird inconsistency: depending on whether a
+                   * previous $XDG_CONFIG_HOME/GIMP/ folder was found or
+                   * not, the config folder would be either inside, or would
+                   * be in $HOME/.var/<etc> as other flatpak (see #5331).
+                   * For GIMP 3, even the flatpak will always be in
+                   * $XDG_CONFIG_HOME. But then we want a migration to still
+                   * find the previous config folder.
+                   * If one was found in $XDG_CONFIG_HOME, it is used in
+                   * priority. Then ~/.var/ is used a fallback, if found.
+                   */
+                  gchar *flatpak_dir = user_install_flatpak_gimpdir (minor);
+
+                  if (flatpak_dir)
+                    /* This first test is for finding a 2.10 flatpak config
+                     * dir from a non-flatpak GIMP 3+.
+                     */
+                    migrate = g_file_test (flatpak_dir, G_FILE_TEST_IS_DIR);
+
+                  if (! migrate && g_file_test ("/.flatpak-info", G_FILE_TEST_EXISTS))
+                    {
+                      /* Now we check /var/config/GIMP because this is where
+                       * local ~/.var/ is mounted inside the sandbox.
+                       * So this second test is for finding a 2.10 flatpak
+                       * config dir from a flatpak GIMP 3+.
+                       */
+                      g_free (flatpak_dir);
+                      flatpak_dir = g_build_filename ("/var/config/GIMP/", version, NULL);
+
+                      migrate = g_file_test (flatpak_dir, G_FILE_TEST_IS_DIR);
+                    }
+
+                  if (migrate)
+                    {
+                      install->old_major = 2;
+                      install->old_minor = minor;
+
+                      g_free (dir);
+                      dir = flatpak_dir;
+                      break;
+                    }
+                  else
+                    {
+                      g_free (flatpak_dir);
+                    }
                 }
-            }
 #endif
+            }
         }
     }
 
