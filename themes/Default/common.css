@@ -445,13 +445,18 @@ spinbutton button.up, spinbutton button.down {
   -gtk-icon-shadow: none;
 }
 
+GimpSpinScale {
+  border-radius: 6px;
+  box-shadow:    0px 0.5px @stronger-border-color;
+}
+
 GimpSpinScale entry {
   padding:            0px 8px 0px 5px;
   background-color:   @stronger-border-color;
   border-color:       @edge-border-color;
   border-radius:      5px 0px 0px 5px;
   border-right-width: 0px;
-  box-shadow:         0px 0.5px @stronger-border-color;
+  box-shadow:         none;
 }
 
 GimpSpinScale entry progress {
@@ -465,6 +470,7 @@ GimpSpinScale button {
   -gtk-icon-shadow: none;
   border-color:     @border-color;
   border-radius:    0px 0px 0px 0px;
+  box-shadow:       0px 0.5px @stronger-border-color;
 }
 
 /* Round the right-side edge of the end button */
