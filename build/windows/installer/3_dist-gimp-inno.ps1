@@ -26,10 +26,16 @@ Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
 $inno_version_downloaded = (Get-Item ..\is.exe).VersionInfo.ProductVersion -replace ' ',''
 
 ## Install or Update Inno
+$broken_inno = Get-ChildItem $Env:Tmp -Filter *.isl.bak -ErrorAction SilentlyContinue
 $inno_version = Get-ItemProperty Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty DisplayVersion
-if ("$inno_version" -ne "$inno_version_downloaded")
+if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
   {
-    if ("$inno_version" -notlike "*.*")
+    if ("$broken_inno")
+      {
+        Write-Output '(INFO): repairing Inno'
+        $broken_inno | Remove-Item -Recurse
+      }
+    elseif ("$inno_version" -notlike "*.*")
       {
         Write-Output '(INFO): installing Inno'
       }
