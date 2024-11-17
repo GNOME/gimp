@@ -34,9 +34,8 @@ button:not(.flat) {
 /* Define GimpSpinScale slider colors */
 GimpSpinScale entry {
   background-color: @extreme-bg-color;
-  border-color:     @extreme-selected-color;
 }
 
 GimpSpinScale entry progress {
-  background-color: @stronger-border-color;
+  background-color: @widget-bg-color;
 }
