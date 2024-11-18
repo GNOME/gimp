@@ -297,6 +297,7 @@ load_image (GFile   *file,
                  tile_height, /* Height of tile in GIMP */
                  count,       /* Count of rows to put in image */
                  bytes;       /* Number of channels to use */
+  gboolean       errprinted;  /* flag to avoid spamming logfile */
   sgi_t         *sgip;        /* File pointer */
   GimpImage     *image;       /* Image */
   GimpLayer     *layer;       /* Layer */
@@ -485,6 +486,7 @@ load_image (GFile   *file,
    * Load the image...
    */
 
+  errprinted = FALSE;
   for (y = 0, count = 0;
        y < sgip->ysize;
        y ++, count ++)
@@ -501,9 +503,12 @@ load_image (GFile   *file,
         }
 
       for (i = 0; i < sgip->zsize; i ++)
-        if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
-          g_printerr ("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
-                      sgip->ysize - 1 - y, i);
+        if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0 && ! errprinted)
+          {
+            g_printerr ("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
+                        sgip->ysize - 1 - y, i);
+            errprinted = TRUE;
+          }
 
       if (sgip->bpp == 1)
         {
