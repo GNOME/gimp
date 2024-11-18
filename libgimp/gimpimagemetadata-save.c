@@ -338,7 +338,11 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 static const gchar *
 gimp_fix_xmp_tag (const gchar *tag)
 {
-  gchar *substring;
+  const gchar *const org = "/Iptc4xmpExt";
+  const gchar *const new = "/iptcExt";
+  gchar *substring, *tail;
+
+  G_STATIC_ASSERT (strlen (new) < strlen (org));
 
   /* Due to problems using /Iptc4xmpExt namespace (/iptcExt is used
    * instead by Exiv2) we replace all occurrences with /iptcExt which
@@ -346,28 +350,21 @@ gimp_fix_xmp_tag (const gchar *tag)
    * metadata to fail. This has to be done after getting the values
    * from the source metadata since that source uses the original
    * tag names and would otherwise return NULL as value.
-   * /Iptc4xmpExt length = 12
-   * /iptcExt     length =  8
+   * Multiple occurrences are possible: e.g.:
+   * Xmp.iptcExt.ImageRegion[3]/Iptc4xmpExt:RegionBoundary/Iptc4xmpExt:rbVertices[1]/Iptc4xmpExt:rbX
    */
 
-  substring = strstr (tag, "/Iptc4xmpExt");
-  while (substring)
+  while ((substring = strstr (tag, org)))
     {
-      gint len_tag = strlen (tag);
-      gint len_end;
+      strcpy (substring, new);
 
-      len_end = len_tag - (substring - tag) - 12;
-      strncpy (substring, "/iptcExt", 8);
-      substring += 8;
-      /* Using memmove: we have overlapping source and dest */
-      memmove (substring, substring+4, len_end);
-      substring[len_end] = '\0';
+      tail = substring + strlen (org);
+      substring += strlen (new);
+
+      while ((*substring++ = *tail++))
+        ;
+
       g_debug ("Fixed tag value: %s", tag);
-
-      /* Multiple occurrences are possible: e.g.:
-       * Xmp.iptcExt.ImageRegion[3]/Iptc4xmpExt:RegionBoundary/Iptc4xmpExt:rbVertices[1]/Iptc4xmpExt:rbX
-       */
-      substring = strstr (tag, "/Iptc4xmpExt");
     }
   return tag;
 }
