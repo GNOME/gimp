@@ -29,6 +29,7 @@
 #include "tools-types.h"
 
 #include "core/gimpcontainer.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpitem.h"
 
 #include "display/gimpdisplay.h"
@@ -559,19 +560,25 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
                                      GeglRectangle     *area,
                                      const GimpMatrix3 *transform)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
-  gdouble       x1 = area->x;
-  gdouble       y1 = area->y;
-  gdouble       x2 = area->x + area->width;
-  gdouble       y2 = area->y + area->height;
-  GimpMatrix3   matrix;
+  GimpTool       *tool;
+  GimpFilterTool *filter_tool;
+  GimpDrawable   *drawable;
+  gdouble         x1 = area->x;
+  gdouble         y1 = area->y;
+  gdouble         x2 = area->x + area->width;
+  gdouble         y2 = area->y + area->height;
+  GimpMatrix3     matrix;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
-  drawable = tool->drawables->data;
+  tool        = GIMP_TOOL (controller->filter_tool);
+  filter_tool = controller->filter_tool;
+
+  if (filter_tool->existing_filter)
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+  else
+    drawable = tool->drawables->data;
 
   if (drawable)
     {
