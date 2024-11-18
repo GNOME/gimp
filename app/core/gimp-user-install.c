@@ -672,6 +672,23 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
       /* select-float became select-cut-float in 3.0 (select-copy-float added). */
       else if (g_strcmp0 (action_match, "select-float") == 0)
         new_action_name = g_strdup ("select-cut-float");
+      /* edit-paste-as-new-layer* actions removed in 3.0.0 (commit
+       * 2c4f91f585) because the default edit-paste pastes as new layer.
+       *
+       * XXX I realize though that it's not a perfect equivalent: if a
+       * layer mask exists, edit-paste would still create a floating
+       * mask (unlike old edit-paste-as-new-layer which was always
+       * creating a new layer). Should we reintroduce
+       * edit-paste-as-new-layers* actions?
+       *
+       * There exists edit-paste-merged too (introduced in 143496af22)
+       * but it has the same caveats of possibly creating floating
+       * items.
+       */
+      else if (g_strcmp0 (action_match, "edit-paste-as-new-layer") == 0)
+        new_action_name = g_strdup ("edit-paste");
+      else if (g_strcmp0 (action_match, "edit-paste-as-new-layer-in-place") == 0)
+        new_action_name = g_strdup ("edit-paste-in-place");
 
       if (new_action_name == NULL)
         new_action_name = g_strdup (action_match);
