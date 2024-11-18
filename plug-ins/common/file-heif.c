@@ -971,8 +971,6 @@ load_image (GFile                 *file,
       return NULL;
     }
 
-  has_alpha = heif_image_handle_has_alpha_channel (handle);
-
   bit_depth = heif_image_handle_get_luma_bits_per_pixel (handle);
   if (bit_depth < 0)
     {
@@ -983,6 +981,8 @@ load_image (GFile                 *file,
 
       return NULL;
     }
+
+  has_alpha = heif_image_handle_has_alpha_channel (handle);
 
   if (bit_depth == 8)
     {
