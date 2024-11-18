@@ -75,6 +75,8 @@ struct _GimpUserInstall
 
   GimpUserInstallLogFunc  log;
   gpointer                log_data;
+
+  GHashTable             *accels;
 };
 
 typedef enum
@@ -136,13 +138,15 @@ static gboolean  user_install_file_copy          (GimpUserInstall    *install,
                                                   const gchar        *source,
                                                   const gchar        *dest,
                                                   const gchar        *old_options_regexp,
-                                                  GRegexEvalCallback  update_callback);
+                                                  GRegexEvalCallback  update_callback,
+                                                  GimpCopyPostProcess post_process_callback);
 static gboolean  user_install_dir_copy           (GimpUserInstall    *install,
                                                   gint                level,
                                                   const gchar        *source,
                                                   const gchar        *base,
                                                   const gchar        *update_pattern,
-                                                  GRegexEvalCallback  update_callback);
+                                                  GRegexEvalCallback  update_callback,
+                                                  GimpCopyPostProcess post_process_callback);
 
 static gboolean  user_install_create_files       (GimpUserInstall    *install);
 static gboolean  user_install_migrate_files      (GimpUserInstall    *install);
@@ -158,6 +162,7 @@ gimp_user_install_new (GObject  *gimp,
 
   install->gimp    = gimp;
   install->verbose = verbose;
+  install->accels  = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
   user_install_detect_old (install, gimp_directory ());
 
@@ -258,6 +263,7 @@ gimp_user_install_free (GimpUserInstall *install)
   g_return_if_fail (install != NULL);
 
   g_free (install->old_dir);
+  g_hash_table_destroy (install->accels);
 
   g_slice_free (GimpUserInstall, install);
 }
@@ -519,7 +525,8 @@ user_install_file_copy (GimpUserInstall    *install,
                         const gchar        *source,
                         const gchar        *dest,
                         const gchar        *old_options_regexp,
-                        GRegexEvalCallback  update_callback)
+                        GRegexEvalCallback  update_callback,
+                        GimpCopyPostProcess post_process_callback)
 {
   GError   *error = NULL;
   gboolean  success;
@@ -528,7 +535,9 @@ user_install_file_copy (GimpUserInstall    *install,
                     gimp_filename_to_utf8 (dest),
                     gimp_filename_to_utf8 (source));
 
-  success = gimp_config_file_copy (source, dest, old_options_regexp, update_callback, install, &error);
+  success = gimp_config_file_copy (source, dest, old_options_regexp,
+                                   update_callback, post_process_callback,
+                                   install, &error);
 
   user_install_log_error (install, &error);
 
@@ -611,6 +620,7 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   gchar           *accel_match     = g_match_info_fetch (matched_value, 3);
   gchar           *ignore_match    = g_match_info_fetch (matched_value, 4);
   gchar           *new_action_name = NULL;
+  gboolean         accel_variant   = FALSE;
 
   if (strlen (ignore_match) == 0)
     {
@@ -689,19 +699,45 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
         new_action_name = g_strdup ("edit-paste");
       else if (g_strcmp0 (action_match, "edit-paste-as-new-layer-in-place") == 0)
         new_action_name = g_strdup ("edit-paste-in-place");
+      /* These actions had an -accel variant which got removed in commit
+       * 71c8ff1f21. Since we cannot know if both variants were given a
+       * custom shortcut when processing per-line, we temporarily store
+       * them all and will do a second pass allowing us to store one or
+       * both shortcuts if needed.
+       */
+      else if (g_str_has_suffix (action_match, "-accel")  ||
+               g_strcmp0 (action_match, "view-zoom-out")  == 0 ||
+               g_strcmp0 (action_match, "view-zoom-in")   == 0 ||
+               g_strcmp0 (action_match, "view-zoom-16-1") == 0 ||
+               g_strcmp0 (action_match, "view-zoom-8-1")  == 0 ||
+               g_strcmp0 (action_match, "view-zoom-4-1")  == 0 ||
+               g_strcmp0 (action_match, "view-zoom-2-1")  == 0 ||
+               g_strcmp0 (action_match, "view-zoom-1-1")  == 0)
+        accel_variant = TRUE;
 
       if (new_action_name == NULL)
         new_action_name = g_strdup (action_match);
 
       if (g_strcmp0 (comment_match, ";") == 0)
-        g_string_append (new_value, "# ");
+        {
+          g_string_append (new_value, "# ");
+        }
+      else if (accel_variant)
+        {
+          g_hash_table_insert (install->accels, action_match, accel_match);
+          action_match = NULL;
+          accel_match  = NULL;
+        }
 
-      if (strlen (accel_match) > 0)
-        g_string_append_printf (new_value, "(action \"%s\" \"%s\")",
-                                new_action_name, accel_match);
-      else
-        g_string_append_printf (new_value, "(action \"%s\")",
-                                new_action_name);
+      if (action_match)
+        {
+          if (strlen (accel_match) > 0)
+            g_string_append_printf (new_value, "(action \"%s\" \"%s\")",
+                                    new_action_name, accel_match);
+          else
+            g_string_append_printf (new_value, "(action \"%s\")",
+                                    new_action_name);
+        }
     }
 
   g_free (comment_match);
@@ -711,6 +747,77 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   g_free (new_action_name);
 
   return FALSE;
+}
+
+gchar *
+user_update_post_process_menurc_over20 (gpointer user_data)
+{
+  GString         *string  = g_string_new (NULL);
+  GimpUserInstall *install = (GimpUserInstall *) user_data;
+
+  static gchar    * gimp_2_accels[][3] =
+  {
+    { "view-zoom-out",  "minus", "KP_Subtract" },
+    { "view-zoom-in",   "plus",  "KP_Add" },
+    { "view-zoom-16-1", "5",     "KP_5" },
+    { "view-zoom-8-1",  "4",     "KP_4" },
+    { "view-zoom-4-1",  "3",     "KP_3" },
+    { "view-zoom-2-1",  "2",     "KP_2" },
+    { "view-zoom-1-1",  "1",     "KP_1" }
+  };
+
+  for (gint i = 0; i < G_N_ELEMENTS (gimp_2_accels); i++)
+    {
+      const gchar *action = gimp_2_accels[i][0];
+      gchar       *action_variant = g_strconcat (action, "-accel", NULL);
+      gchar       *accel;
+      gchar       *accel_variant;
+
+      accel         = g_hash_table_lookup (install->accels, action);
+      accel_variant = g_hash_table_lookup (install->accels, action_variant);
+      if (accel != NULL && strlen (accel) > 0 &&
+          accel_variant != NULL && strlen (accel_variant) > 0)
+        {
+          g_string_append_printf (string, "\n(action \"%s\" \"%s\" \"%s\")",
+                                  action, accel, accel_variant);
+        }
+      else if (accel != NULL)
+        {
+          if (strlen (accel) > 0)
+            {
+              if (accel_variant == NULL)
+                g_string_append_printf (string, "\n(action \"%s\" \"%s\" \"%s\")", action, accel, gimp_2_accels[i][2]);
+              else
+                g_string_append_printf (string, "\n(action \"%s\" \"%s\")", action, accel);
+            }
+          else if (accel_variant != NULL)
+            {
+              if (strlen (accel_variant) > 0)
+                g_string_append_printf (string, "\n(action \"%s\" \"%s\")", action, accel_variant);
+              else
+                g_string_append_printf (string, "\n(action \"%s\")", action);
+            }
+          else
+            {
+              g_string_append_printf (string, "\n(action \"%s\" \"%s\")", action, gimp_2_accels[i][2]);
+            }
+        }
+      else if (accel_variant != NULL)
+        {
+          if (strlen (accel_variant) > 0)
+            {
+              g_string_append_printf (string, "\n(action \"%s\" \"%s\" \"%s\")", action, accel_variant, gimp_2_accels[i][1]);
+            }
+          else
+            {
+              g_string_append_printf (string, "\n(action \"%s\" \"%s\")", action, gimp_2_accels[i][1]);
+            }
+        }
+
+      g_free (action_variant);
+    }
+
+  return g_string_free (string, FALSE);
 }
 
 #define TEMPLATERC_UPDATE_PATTERN \
@@ -1000,7 +1107,8 @@ user_install_dir_copy (GimpUserInstall    *install,
                        const gchar        *source,
                        const gchar        *base,
                        const gchar        *update_pattern,
-                       GRegexEvalCallback  update_callback)
+                       GRegexEvalCallback  update_callback,
+                       GimpCopyPostProcess post_process_callback)
 {
   GDir        *source_dir = NULL;
   GDir        *dest_dir   = NULL;
@@ -1051,7 +1159,8 @@ user_install_dir_copy (GimpUserInstall    *install,
 
           success = user_install_file_copy (install, name, dest,
                                             update_pattern,
-                                            update_callback);
+                                            update_callback,
+                                            post_process_callback);
           if (! success)
             {
               g_free (name);
@@ -1061,7 +1170,8 @@ user_install_dir_copy (GimpUserInstall    *install,
       else
         {
           user_install_dir_copy (install, level + 1, name, dirname,
-                                 update_pattern, update_callback);
+                                 update_pattern, update_callback,
+                                 post_process_callback);
         }
 
       g_free (name);
@@ -1111,7 +1221,7 @@ user_install_create_files (GimpUserInstall *install)
                       gimp_sysconf_directory (), G_DIR_SEPARATOR,
                       gimp_user_install_items[i].name);
 
-          if (! user_install_file_copy (install, source, dest, NULL, NULL))
+          if (! user_install_file_copy (install, source, dest, NULL, NULL, NULL))
             return FALSE;
           break;
         }
@@ -1157,8 +1267,9 @@ user_install_migrate_files (GimpUserInstall *install)
 
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
-          const gchar        *update_pattern = NULL;
-          GRegexEvalCallback  update_callback = NULL;
+          const gchar        *update_pattern        = NULL;
+          GRegexEvalCallback  update_callback       = NULL;
+          GimpCopyPostProcess post_process_callback = NULL;
 
           /*  skip these files for all old versions  */
           if (strcmp (basename, "documents") == 0      ||
@@ -1188,10 +1299,11 @@ user_install_migrate_files (GimpUserInstall *install)
                   goto next_file;
                   break;
                 default:
-                  update_pattern  = MENURC_OVER20_UPDATE_PATTERN;
-                  update_callback = user_update_menurc_over20;
+                  update_pattern        = MENURC_OVER20_UPDATE_PATTERN;
+                  update_callback       = user_update_menurc_over20;
+                  post_process_callback = user_update_post_process_menurc_over20;
                   /* menurc becomes shortcutsrc in 3.0. */
-                  new_dest        = "shortcutsrc";
+                  new_dest              = "shortcutsrc";
                   break;
                 }
             }
@@ -1222,7 +1334,8 @@ user_install_migrate_files (GimpUserInstall *install)
                       new_dest ? new_dest : basename);
 
           user_install_file_copy (install, source, dest,
-                                  update_pattern, update_callback);
+                                  update_pattern, update_callback,
+                                  post_process_callback);
         }
       else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {
@@ -1255,7 +1368,7 @@ user_install_migrate_files (GimpUserInstall *install)
               update_callback = user_update_tool_presets;
             }
           user_install_dir_copy (install, 0, source, gimp_directory (),
-                                 update_pattern, update_callback);
+                                 update_pattern, update_callback, NULL);
         }
 
     next_file:

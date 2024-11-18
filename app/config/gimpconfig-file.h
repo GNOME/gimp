@@ -22,10 +22,14 @@
 #define __GIMP_CONFIG_FILE_H__
 
 
+typedef gchar * (* GimpCopyPostProcess) (gpointer user_data);
+
+
 gboolean   gimp_config_file_copy             (const gchar        *source,
                                               const gchar        *dest,
                                               const gchar        *old_options_regexp,
                                               GRegexEvalCallback  update_callback,
+                                              GimpCopyPostProcess post_process_callback,
                                               gpointer            user_data,
                                               GError            **error);
 

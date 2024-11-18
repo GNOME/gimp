@@ -45,6 +45,7 @@ gimp_config_file_copy (const gchar         *source,
                        const gchar         *dest,
                        const gchar         *old_options_pattern,
                        GRegexEvalCallback   update_callback,
+                       GimpCopyPostProcess  post_process_callback,
                        gpointer             user_data,
                        GError             **error)
 {
@@ -191,6 +192,31 @@ gimp_config_file_copy (const gchar         *source,
 
   fclose (sfile);
 
+  if (post_process_callback)
+    {
+      gchar* write_bytes;
+      size_t write_len;
+
+      write_bytes = post_process_callback (user_data);
+      write_len   = strlen (write_bytes);
+
+      if (fwrite (write_bytes, 1, write_len, dfile) < write_len)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Error writing '%s': %s"),
+                       gimp_filename_to_utf8 (dest), g_strerror (errno));
+
+          if (old_options_regexp)
+            g_regex_unref (old_options_regexp);
+
+          g_free (write_bytes);
+          fclose (dfile);
+          return FALSE;
+        }
+
+      g_free (write_bytes);
+    }
+
   if (fclose (dfile) == EOF)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -227,7 +253,7 @@ gimp_config_file_backup_on_error (GFile        *file,
   path   = g_file_get_path (file);
   backup = g_strconcat (path, "~", NULL);
 
-  success = gimp_config_file_copy (path, backup, NULL, NULL, NULL, error);
+  success = gimp_config_file_copy (path, backup, NULL, NULL, NULL, NULL, error);
 
   if (success)
     g_message (_("There was an error parsing your '%s' file. "
