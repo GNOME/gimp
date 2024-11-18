@@ -1,4 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
+# updated to python3 - cameron
+
+# A simple client app to the ScriptFu server.
+# Usually for testing.
+# CLI, a REPL: submits each entered line to the server, then prints response.
 
 import readline, socket, sys
 
@@ -29,9 +35,9 @@ for addr in addresses:
     numeric_addr = sockaddr[0]
 
     if canonname:
-        print "Trying %s ('%s')." % (numeric_addr, canonname)
+        print ("Trying %s ('%s')." % (numeric_addr, canonname))
     else:
-        print "Trying %s." % numeric_addr
+        print ("Trying %s." % numeric_addr)
 
     try:
         sock = socket.socket(family, socket.SOCK_STREAM)
@@ -42,34 +48,39 @@ for addr in addresses:
         pass
 
 if not connected:
-    print "Failed."
+    print ("Failed.")
     sys.exit(1)
 
 try:
-   cmd = raw_input("Script-Fu-Remote - Testclient\n> ")
+   cmd = input("Script-Fu-Remote - Testclient\n> ")
 
    while len(cmd) > 0:
-      sock.send('G%c%c%s' % (len(cmd) / 256, len(cmd) % 256, cmd))
+      my_bytes = bytearray()
+      my_bytes.append(71) # G=71
+      my_bytes.append((len(cmd)) >> 8)
+      my_bytes.append((len(cmd)) % 0xFF)
+      my_bytes.extend(bytearray(cmd,"UTF-8"))
+      sock.send(my_bytes)
 
-      data = ""
+      data = bytearray()
       while len(data) < 4:
-         data += sock.recv(4 - len(data))
+         data.extend(sock.recv(4 - len(data)))
 
       if len(data) >= 4:
-         if data[0] == 'G':
-            l = ord(data[2]) * 256 + ord(data[3])
+         if data[0] == 71: # MAGIC_BYTE 'G'=71
+            l = (data[2] << 8) + data[3]
             msg = ""
             while len(msg) < l:
-               msg += sock.recv(l - len(msg))
-            if ord(data[1]):
-               print "(ERR):", msg
+               msg += (sock.recv(l - len(msg))).decode("utf-8")
+            if data[1]: # ERROR_BYTE
+               print ("(ERR):", msg)
             else:
-               print " (OK):", msg
+               print (" (OK):", msg)
+            cmd = input("> ")
          else:
-            print "invalid magic: %s\n" % data
+            print ("invalid magic: %s\n" % data)
       else:
-         print "short response: %s\n" % data
-      cmd = raw_input("> ")
+         print ("short response: %s\n" % data)
 
 except EOFError:
    print
