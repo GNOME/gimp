@@ -211,29 +211,38 @@ script_fu_server_outer_run (GimpProcedure        *procedure,
   return return_vals;
 }
 
-/*
- * The server is just the interpreter.
- * It does not register any scripts as TEMPORARY procs.
- * extension-script-fu should also be running, to register its TEMPORARY procs
- * (those defined by .scm files in /scripts)
- * in the PDB, and to execute the TEMPORARY PDB procs.
+/* Init the server's interpreter.
  *
- * We do load initialization and compatibility scripts.
+ * See below, we do load /scripts.
+ * So the server serves those scripts directly, instead of via PDB calls
+ * to extension-script-fu.
+ * Thus there are two "servers" of the same script files.
+ * Version 2 of the SF server also loads /scripts.
+ *
+ * Alternatively (not loading /scripts), only extension-script-fu serves /scripts,
+ * and the SF server calls extension-script-fu via PDB calls.
  */
 static void
 script_fu_server_run_init (GimpProcedure *procedure,
                            GimpRunMode    run_mode)
 {
-  GList *path;
+  GList      *path;
+  GimpPlugIn *plug_in = gimp_procedure_get_plug_in (procedure);
 
-  /*
-   * Non-null path so we load init and compat scripts
-   * which are jumbled in same dir as TEMPORARY procedure scripts.
-   */
+  /* The path to init and compat scripts, and /scripts. */
   path = script_fu_search_path ();
 
-  /*  Init the interpreter, not allow register scripts */
+  /* Init the interpreter, not allow scripts to register in the PDB.
+   * This loads init and compat scripts, but not /scripts.
+   */
   script_fu_init_embedded_interpreter (path, FALSE, run_mode);
+
+  /* Load /scripts, their defined run functions.
+   * Then a call to a script is not a PDB call, and does not require run_mode arg.
+   * The yielded repr is of the last evaluated expression of the script.
+   * Otherwise, as a PDB call would yield the repr of a call to a void func: #t.
+   */
+  script_fu_find_and_register_scripts (plug_in, path);
 
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 }
