@@ -35,6 +35,7 @@ foreach plugin_name : file_raw_exes
   plugin_exe = executable(plugin_name,
                           plugin_sources,
                           dependencies: libgimpui_dep,
+                          win_subsystem: 'windows',
                           install: true,
                           install_dir: gimpplugindir / 'plug-ins' / plugin_name)
   plugin_executables += [plugin_exe.full_path()]

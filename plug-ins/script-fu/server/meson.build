@@ -43,6 +43,7 @@ if not meson.is_cross_build()
                             scriptfuInclude,
                           ],
                           link_with : libscriptfu,
+                          win_subsystem: 'windows',
                           install: true,
                           install_dir: gimpplugindir / 'plug-ins' / executable_name)
 endif

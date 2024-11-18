@@ -44,6 +44,7 @@ screenshot = executable('screenshot',
                           libgimpui_dep,
                           x11, xmu, xext, xfixes,
                         ],
+                        win_subsystem: 'windows',
                         install: true,
                         install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 plugin_executables += [screenshot.full_path()]

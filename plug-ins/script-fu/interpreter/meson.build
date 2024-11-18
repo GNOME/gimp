@@ -39,6 +39,7 @@ if not meson.is_cross_build()
                                        scriptfuInclude,
                                      ],
                                      link_with : libscriptfu,
+                                     win_subsystem: 'windows',
                                      install: true)
   plugin_executables += [plugin_exe.full_path()]
 endif

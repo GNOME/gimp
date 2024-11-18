@@ -29,6 +29,7 @@ exe = executable(plug_in_name + '-c',
   ],
   install: true,
   install_dir: gimpplugindir /  'extensions' / extension_name,
+  win_subsystem: 'windows',
 )
 
 # XXX This is so ugly!
@@ -54,6 +55,7 @@ if have_vala and have_gobject_introspection
     ],
     install: true,
     install_dir: gimpplugindir /  'extensions' / extension_name,
+    win_subsystem: 'windows',
   )
   plug_ins = plug_ins + ':' + exe.full_path().split('/')[-1].split('\\')[-1]
 

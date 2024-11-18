@@ -232,6 +232,7 @@ foreach plugin : common_plugins_list
                           ],
                           dependencies: [ plugin_deps, math ],
                           c_args: plugin_cflags,
+                          win_subsystem: 'windows',
                           install: true,
                           install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 

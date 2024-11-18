@@ -212,6 +212,7 @@ if enable_console_bin
       rootInclude,
       rootAppInclude,
     ],
+    win_subsystem: 'console',
     link_args: link_args,
     install: true,
   )
@@ -226,6 +227,7 @@ gimpmain_exe = executable(gimpmain_exe_name,
     app_libgimps,
     gui_libapps,
   ],
+  win_subsystem: 'windows',
   install: true,
 )
 

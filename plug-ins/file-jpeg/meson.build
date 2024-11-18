@@ -31,6 +31,7 @@ plugin_exe = executable(plugin_name,
                           lcms,
                           gexiv2,
                         ],
+                        win_subsystem: 'windows',
                         install: true,
                         install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 plugin_executables += [plugin_exe.full_path()]

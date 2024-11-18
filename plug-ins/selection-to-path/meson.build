@@ -33,6 +33,7 @@ plugin_selection_to_path_deps = [
 selection_to_path = executable(plugin_name,
                                plugin_sources,
                                dependencies: plugin_selection_to_path_deps,
+                               win_subsystem: 'windows',
                                install: true,
                                install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 plugin_executables += [selection_to_path.full_path()]

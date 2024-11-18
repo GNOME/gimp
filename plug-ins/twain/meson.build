@@ -30,6 +30,7 @@ twain = executable(plugin_name,
                      glib,
                      gtk3,
                    ],
+                   win_subsystem: 'windows',
                    install: true,
                    install_dir: gimpplugindir / 'plug-ins' / plugin_name)
 plugin_executables += [twain.full_path()]
