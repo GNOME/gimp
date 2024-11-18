@@ -208,7 +208,13 @@ if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
   #bundle "$MSYS_PREFIX" lib/lua
   #bundle "$MSYS_PREFIX" share/lua
 
-  bundle "$MSYS_PREFIX" bin/python*.exe
+  if [ "$GIMP_UNSTABLE" ]; then
+    #python.exe is prefered in unstable versions because of error output
+    bundle "$MSYS_PREFIX" bin/python.exe
+  else
+    #pythonw.exe is prefered in stable releases because it works silently
+    bundle "$MSYS_PREFIX" bin/pythonw.exe
+  fi
   bundle "$MSYS_PREFIX" lib/python*
   clean "$GIMP_DISTRIB" lib/python*/*.pyc
 else

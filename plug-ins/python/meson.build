@@ -37,10 +37,16 @@ foreach plugin : plugins
   endforeach
 endforeach
 
-# Fallback fix to the problem of non-configured interpreters
+# Fallback fix to the problem of non-configured interpreters (needed by MSIX)
 if platform_windows and not meson.is_cross_build() and python.found()
   python_config = configuration_data()
-  python_config.set('PYTHON_PATH', '')
+  if not stable
+    #python.exe is prefered in unstable versions because of error output
+    python_config.set('PYTHON_EXE', 'python.exe')
+  else
+    #pythonw.exe is prefered in stable releases because it works silently
+    python_config.set('PYTHON_EXE', 'pythonw.exe')
+  endif
 
   configure_file(input : 'pygimp.interp.in',
                  output: 'pygimp.interp',
