@@ -163,12 +163,19 @@ tiff_reset_file_size_error (void)
   tiff_file_size_error = FALSE;
 }
 
+static gint max_msgs_per_instance = 3;
+
 static void
 tiff_io_warning (const gchar *module,
                  const gchar *fmt,
                  va_list      ap)
 {
   gint tag = 0;
+
+  if (max_msgs_per_instance > 0)
+    max_msgs_per_instance--;
+  else
+    return;
 
   /* Between libtiff 3.7.0beta2 and 4.0.0alpha. */
   if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered") ||
@@ -279,6 +286,11 @@ tiff_io_error (const gchar *module,
                va_list      ap)
 {
   gchar *msg;
+
+  if (max_msgs_per_instance > 0)
+    max_msgs_per_instance--;
+  else
+    return;
 
   /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=132297
    * Ignore the errors related to random access and JPEG compression
