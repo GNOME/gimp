@@ -131,7 +131,6 @@
 
 
 ; error to insert layer created by gimp-text-font
-; TODO make the error message matching by prefix only
 (assert-error `(gimp-image-insert-layer
                   ,testImage
                   ,testTextLayer2

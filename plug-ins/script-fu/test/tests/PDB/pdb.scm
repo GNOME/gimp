@@ -54,6 +54,7 @@
 (testing:load-test "item.scm")
 (testing:load-test "item-position.scm")
 (testing:load-test "item-layer-group.scm")
+(testing:load-test "item-layer-group-2.scm")
 
 (testing:load-test "drawable.scm")
 (testing:load-test "drawable-attributes.scm")

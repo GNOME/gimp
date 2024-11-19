@@ -34,6 +34,8 @@ test_scripts = [
   'tests' / 'PDB' / 'item' / 'item.scm',
   'tests' / 'PDB' / 'item' / 'item-position.scm',
   'tests' / 'PDB' / 'item' / 'item-layer-group.scm',
+  'tests' / 'PDB' / 'item' / 'item-layer-group-2.scm',
+
 
   'tests' / 'PDB' / 'drawable' / 'drawable.scm',
   'tests' / 'PDB' / 'drawable' / 'drawable-attributes.scm',
