@@ -12,7 +12,7 @@ subdir('scripts')
 subdir('server')
 subdir('interpreter')
 subdir('console')
-if not stable or not release
+if not stable or not release or gimp_version.endswith('+git')
   subdir('test')
 endif
 
