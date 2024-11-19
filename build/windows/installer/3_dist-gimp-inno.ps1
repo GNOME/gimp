@@ -102,29 +102,34 @@ if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
     exit 1
   }
 
-## Download Official translations not present in a Inno release yet
-#Write-Output "(INFO): downloading Official Inno lang files (not present in a release yet)"
-#function download_lang_official ([string]$langfile)
-#{
-#  Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/$langfile -OutFile "$INNO_PATH\Languages\$langfile"
-#}
-
-## Download unofficial translations (of unknown quality and maintenance)
+## Complete Inno source with not released translations
 ## Cf. https://jrsoftware.org/files/istrans/
-Write-Output "(INFO): temporarily installing unofficial Inno lang files"
-New-Item "$INNO_PATH\Languages\Unofficial\" -ItemType Directory -Force | Out-Null
+Write-Output "(INFO): temporarily installing additional Inno lang files"
 $xmlObject = New-Object XML
 $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
-$langsArray = $xmlObject.iso_639_entries.iso_639_entry |
-              Select-Object -ExpandProperty inno_code  | Where-Object { $_ -like "*Unofficial*" }
-foreach ($langfile in $langsArray)
-  {
-    $langfileUnix = $langfile.Replace('\\', '/')
-    Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$INNO_PATH\$langfile"
-  }
+function download_langs ([array]$langsArray)
+{
+  foreach ($langfile in $langsArray)
+    {
+      if ($langfile -ne '' -and -not (Test-Path "$INNO_PATH\$langfile" -Type Leaf))
+        {
+          $langfileUnix = $langfile.Replace('\\', '/')
+          Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$INNO_PATH\$langfile"
+        }
+    }
+}
+### Official translations not present in a Inno release yet
+$langsArray_Official = $xmlObject.iso_639_entries.iso_639_entry | Select-Object -ExpandProperty inno_code     |
+                       Where-Object { $_ -like "*Languages*" }  | Where-Object { $_ -notlike "*Unofficial*" }
+download_langs $langsArray_Official
+### unofficial translations (of unknown quality and maintenance)
+New-Item "$INNO_PATH\Languages\Unofficial" -ItemType Directory -Force | Out-Null
+$langsArray_unofficial = $xmlObject.iso_639_entries.iso_639_entry | Select-Object -ExpandProperty inno_code |
+                         Where-Object { $_ -like "*Unofficial*" }
+download_langs $langsArray_unofficial
 
 ## Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
-Write-Output "(INFO): temporarily patching Official and unofficial Inno lang files with $CUSTOM_GIMP_VERSION"
+Write-Output "(INFO): temporarily patching all Inno lang files with $CUSTOM_GIMP_VERSION"
 function fix_msg ([string]$langsdir, [string]$AppVer)
 {
   $langsArray_local = Get-ChildItem $langsdir -Filter *.isl -Name
@@ -207,6 +212,7 @@ foreach ($bundle in $supported_archs)
 fix_msg "$INNO_PATH" revert
 fix_msg "$INNO_PATH\Languages" revert
 fix_msg "$INNO_PATH\Languages\Unofficial" revert
+### We delete only unofficial langs because the downloaded official ones will be kept by Inno updates
 Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 
