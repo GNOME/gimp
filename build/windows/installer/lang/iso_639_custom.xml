@@ -316,7 +316,7 @@ To fill data for a new entry:
 		name="Svenska" />
 	<iso_639_entry
 		dl_code="ta"
-		inno_code=""
+		inno_code="Languages\\Tamil.isl"
 		name="தமிழ்" />
 	<iso_639_entry
 		dl_code="te"
