@@ -4340,7 +4340,11 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-reorder-item");
   gimp_procedure_set_static_help (procedure,
                                   "Reorder the specified item within its item tree",
-                                  "This procedure reorders the specified item within its item tree.",
+                                  "Reorders or moves item within an item tree. Requires parent is %NULL or a GroupLayer, else returns error. When parent is not %NULL and item is in parent, reorders item within parent group. When parent is not %NULL and item is not in parent, moves item into parent group. When parent is %NULL, moves item from current parent to top level.\n"
+                                  "\n"
+                                  "Requires item is in same tree as not %NULL parent, else returns error. Layers, Channels, and Paths are in separate trees.\n"
+                                  "\n"
+                                  "Requires item is not ancestor of parent, else returns error, to preclude cycles.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

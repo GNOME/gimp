@@ -1709,7 +1709,17 @@ gimp_image_lower_item_to_bottom (GimpImage *image,
  *
  * Reorder the specified item within its item tree
  *
- * This procedure reorders the specified item within its item tree.
+ * Reorders or moves item within an item tree. Requires parent is %NULL
+ * or a GroupLayer, else returns error. When parent is not %NULL and
+ * item is in parent, reorders item within parent group. When parent is
+ * not %NULL and item is not in parent, moves item into parent group.
+ * When parent is %NULL, moves item from current parent to top level.
+ *
+ * Requires item is in same tree as not %NULL parent, else returns
+ * error. Layers, Channels, and Paths are in separate trees.
+ *
+ * Requires item is not ancestor of parent, else returns error, to
+ * preclude cycles.
  *
  * Returns: TRUE on success.
  *
