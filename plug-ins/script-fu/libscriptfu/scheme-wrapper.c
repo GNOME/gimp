@@ -1068,7 +1068,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gint item_ID;
               item_ID = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
-              /* Avoid failed assertion in libgimp.*/
               if (gimp_item_id_is_valid (item_ID))
                 {
                   GimpItem *item = gimp_item_get_by_id (item_ID);
@@ -1076,7 +1075,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
                 }
               else
                 {
-                  return script_error (sc, "runtime: invalid item ID", a);
+                  /* item ID is invalid.
+                   * Usually 0 or -1, passed for a nullable arg.
+                   */
+                  g_value_set_object (&value, NULL);
                 }
             }
         }
