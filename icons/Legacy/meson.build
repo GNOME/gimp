@@ -420,6 +420,29 @@ legacy_tools_scalable = [
   'scalable/gimp-tool-zoom.svg',
 ]
 
+# Eventually replace with custom icons
+legacy_temporary_scalable = [
+  '../Default/scalable/gimp-effects.svg',
+  '../Default/scalable/gimp-effects-symbolic.svg',
+  '../Default/scalable/gimp-lock-alpha.svg',
+  '../Default/scalable/gimp-lock-alpha-symbolic.svg',
+  '../Default/scalable/gimp-lock-content.svg',
+  '../Default/scalable/gimp-lock-content-symbolic.svg',
+  '../Default/scalable/gimp-lock-multi.svg',
+  '../Default/scalable/gimp-lock-multi-symbolic.svg',
+  '../Default/scalable/gimp-lock-path.svg',
+  '../Default/scalable/gimp-lock-path-symbolic.svg',
+  '../Default/scalable/gimp-lock-position.svg',
+  '../Default/scalable/gimp-lock-position-symbolic.svg',
+  '../Default/scalable/gimp-lock-visibility.svg',
+  '../Default/scalable/gimp-lock-visibility-symbolic.svg',
+  '../Default/scalable/gimp-lock.svg',
+  '../Default/scalable/gimp-lock-symbolic.svg',
+  '../Default/scalable/gimp-menu-left.svg',
+  '../Default/scalable/gimp-menu-right.svg',
+  '../Default/scalable/gimp-pattern.svg',
+]
+
 all_legacy_icons = [
   [ '12x12',    legacy_icons_12 ],
   [ '16x16',    legacy_icons_16 ],
@@ -434,6 +457,7 @@ all_legacy_icons = [
   [ '128x128',  legacy_icons_128 ],
   [ '192x192',  legacy_icons_192 ],
   [ '256x256',  legacy_icons_256 ],
+  [ 'scalable', legacy_temporary_scalable ],
 ]
 all_legacy_tools = [
   [ 'scalable', legacy_tools_scalable ],
