@@ -20,13 +20,10 @@ else
   {
     $cpu_arch = 'x64'
   }
-$win_sdk_path = Resolve-Path "C:\Program Files (x86)\Windows Kits\10\bin\*\$cpu_arch" | Select-Object -Last 1
-Write-Output "(INFO): Installed WinSDK: $win_sdk_path"
-
-# Needed tools from Windows SDK
-Set-Alias 'makepri' "$win_sdk_path\makepri.exe"
-Set-Alias 'makeappx' 'C:\Program Files (x86)\Windows Kits\10\App Certification Kit\MakeAppx.exe'
-Set-Alias 'signtool' "$win_sdk_path\signtool.exe"
+$win_sdk_version = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty ProductVersion
+$win_sdk_path = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty InstallationFolder
+$env:Path = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}App Certification Kit;" + $env:Path
+Write-Output "(INFO): Installed WinSDK: $win_sdk_version"
 
 
 # Global variables
@@ -325,10 +322,6 @@ if (-not $GITLAB_CI -and ($wack -eq 'WACK' -or $revision -eq 'WACK'))
         exit 1
       }
     Write-Output "(INFO): certifying $MSIX_ARTIFACT with WACK"
-    if ("$env:Path" -notlike '*App Certification Kit*')
-      {
-        $env:Path = 'C:\Program Files (x86)\Windows Kits\10\App Certification Kit;' + $env:Path
-      }
     sudo appcert test -appxpackagepath $fullpath\$MSIX_ARTIFACT -reportoutputpath $fullpath\$xml_artifact
 
     ## Output overall result
