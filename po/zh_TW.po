@@ -13,10 +13,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-08 15:39+0000\n"
-"PO-Revision-Date: 2024-11-10 23:31+0800\n"
+"POT-Creation-Date: 2024-11-10 15:32+0000\n"
+"PO-Revision-Date: 2024-11-21 03:13+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
-"Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>po/zh_Hant/>\n"
+"Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,7 +71,7 @@ msgstr "在 GIMP 中繪圖"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:7
 msgid "Photo editing in GIMP"
-msgstr "在 GIMP 中編輯照片"
+msgstr "在 GIMP 中編輯相片"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
@@ -1116,7 +1116,7 @@ msgstr "使用預設設定值輸出 gimprc 檔案"
 
 #: ../app/main.c:289
 msgid "Output a sorted list of deprecated procedures in the PDB"
-msgstr "在 PDB 中輸出啟用處理程序的排序列表"
+msgstr "在 PDB 中輸出棄用處理程序的排序列表"
 
 #: ../app/main.c:294
 msgid "Show a preferences page with experimental features"
@@ -2108,7 +2108,7 @@ msgstr "前景：使用調色盤的最後一個顏色"
 #: ../app/actions/context-actions.c:109
 msgctxt "context-action"
 msgid "Foreground: Use Previous Palette Color"
-msgstr "前景：使用調色盤的前一個顏色"
+msgstr "前景：使用調色盤的上一個顏色"
 
 #: ../app/actions/context-actions.c:113
 msgctxt "context-action"
@@ -2233,72 +2233,72 @@ msgstr "背景：跳過顏色映射表的下一個顏色"
 #: ../app/actions/context-actions.c:225
 msgctxt "context-action"
 msgid "Foreground: Set Color From Swatch"
-msgstr "前景：設定來自色塊的顏色"
+msgstr "前景：設定來自色票的顏色"
 
 #: ../app/actions/context-actions.c:229
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Swatch"
-msgstr "前景：使用色塊中的第一個顏色"
+msgstr "前景：使用色票中的第一個顏色"
 
 #: ../app/actions/context-actions.c:233
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Swatch"
-msgstr "前景：使用色塊中的最後一個顏色"
+msgstr "前景：使用色票中的最後一個顏色"
 
 #: ../app/actions/context-actions.c:237
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Swatch"
-msgstr "前景：使用色塊中的上一個顏色"
+msgstr "前景：使用色票中的上一個顏色"
 
 #: ../app/actions/context-actions.c:241
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Swatch"
-msgstr "前景：使用色塊中的下一個顏色"
+msgstr "前景：使用色票中的下一個顏色"
 
 #: ../app/actions/context-actions.c:245
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "前景：跳過色塊的上一個顏色"
+msgstr "前景：跳過色票的上一個顏色"
 
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr "前景：跳過色塊的下一個顏色"
+msgstr "前景：跳過色票的下一個顏色"
 
 #: ../app/actions/context-actions.c:257
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "背景：設定來自色塊的顏色"
+msgstr "背景：設定來自色票的顏色"
 
 #: ../app/actions/context-actions.c:261
 msgctxt "context-action"
 msgid "Background: Use First Color From Swatch"
-msgstr "背景：使用色塊中的第一個顏色"
+msgstr "背景：使用色票中的第一個顏色"
 
 #: ../app/actions/context-actions.c:265
 msgctxt "context-action"
 msgid "Background: Use Last Color From Swatch"
-msgstr "背景：使用色塊中的最後一個顏色"
+msgstr "背景：使用色票中的最後一個顏色"
 
 #: ../app/actions/context-actions.c:269
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Swatch"
-msgstr "背景：使用色塊中的上一個顏色"
+msgstr "背景：使用色票中的上一個顏色"
 
 #: ../app/actions/context-actions.c:273
 msgctxt "context-action"
 msgid "Background: Use Next Color From Swatch"
-msgstr "背景：使用色塊中的下一個顏色"
+msgstr "背景：使用色票中的下一個顏色"
 
 #: ../app/actions/context-actions.c:277
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr "背景：跳過色塊的上一個顏色"
+msgstr "背景：跳過色票的上一個顏色"
 
 #: ../app/actions/context-actions.c:281
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr "背景：跳過色塊的下一個顏色"
+msgstr "背景：跳過色票的下一個顏色"
 
 #: ../app/actions/context-actions.c:289
 msgctxt "context-action"
@@ -3224,7 +3224,7 @@ msgstr "更新間隔(_U)"
 #: ../app/actions/dashboard-actions.c:48
 msgctxt "dashboard-action"
 msgid "_History Duration"
-msgstr "歷史顯示期間(_H)"
+msgstr "紀錄期間(_H)"
 
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
@@ -3901,7 +3901,7 @@ msgstr "開啟顯示器(_O)..."
 #: ../app/actions/dock-actions.c:56
 msgctxt "dock-action"
 msgid "Connect to another display"
-msgstr "連接到其他螢幕顯示器"
+msgstr "連接到其他顯示器"
 
 #: ../app/actions/dock-actions.c:64
 msgctxt "dock-action"
@@ -3931,7 +3931,7 @@ msgstr "預覽尺寸(_P)"
 #: ../app/actions/dockable-actions.c:58
 msgctxt "dockable-action"
 msgid "_Tab Style"
-msgstr "分頁風格(_T)"
+msgstr "分頁樣式(_T)"
 
 #: ../app/actions/dockable-actions.c:61
 msgctxt "dockable-action"
@@ -4111,7 +4111,7 @@ msgstr "移除所選的項目"
 #: ../app/actions/documents-actions.c:82
 msgctxt "documents-action"
 msgid "_Clear History"
-msgstr "清除記錄(_C)"
+msgstr "清除歷史記錄(_C)"
 
 #: ../app/actions/documents-actions.c:83
 msgctxt "documents-action"
@@ -5598,7 +5598,7 @@ msgstr "挑選(_P)..."
 #: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_RGB Noise..."
-msgstr "RGB 雜訊(_R)..."
+msgstr "_RGB 雜訊..."
 
 #: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
@@ -5778,7 +5778,7 @@ msgstr "閾值 Alpha(_T)…"
 #: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr "玻璃磁磚(_G)…"
+msgstr "玻璃瓷磚(_G)…"
 
 #: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
@@ -6324,7 +6324,7 @@ msgstr "編輯漸層(_E)..."
 #: ../app/actions/gradients-actions.c:94
 msgctxt "gradients-action"
 msgid "Edit this gradient"
-msgstr "編輯此漸層"
+msgstr "編輯這個漸層"
 
 #: ../app/actions/gradients-commands.c:73
 #, c-format
@@ -6344,7 +6344,7 @@ msgstr "開啟 GIMP 使用者手冊"
 #: ../app/actions/help-actions.c:47
 msgctxt "help-action"
 msgid "_Context Help"
-msgstr "情境求助說明(_C)"
+msgstr "情境選項求助(_C)"
 
 #: ../app/actions/help-actions.c:48
 msgctxt "help-action"
@@ -6833,7 +6833,7 @@ msgstr "無法裁切，因為影像沒有內容。"
 
 #: ../app/actions/image-commands.c:918
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "無法裁切，因為影像已經裁切到內容範圍。"
+msgstr "無法裁切，因為影像已經裁切到只剩內容範圍。"
 
 #: ../app/actions/image-commands.c:1084
 #, c-format
@@ -6928,7 +6928,7 @@ msgstr "沒有作用中的圖層或色版可以填充。"
 
 #: ../app/actions/items-commands.c:289 ../app/actions/items-commands.c:334
 msgid "There is no active layer or channel to stroke to."
-msgstr "沒有作用中的圖層或色版可以用來描畫。"
+msgstr "沒有作用中的圖層或色版可以描畫。"
 
 #: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
@@ -7043,7 +7043,7 @@ msgstr "新增圖層(_N)"
 #: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
-msgstr "用上次使用的值新增圖層"
+msgstr "用上次使用的數值新增圖層"
 
 #: ../app/actions/layers-actions.c:119
 msgctxt "layers-action"
@@ -7198,7 +7198,7 @@ msgstr "將這個文字圖層轉成為一般圖層"
 #: ../app/actions/layers-actions.c:220
 msgctxt "layers-action"
 msgid "Text to _Path"
-msgstr "文字轉換為路徑(_P)"
+msgstr "文字轉為路徑(_P)"
 
 #: ../app/actions/layers-actions.c:221
 msgctxt "layers-action"
@@ -7253,7 +7253,7 @@ msgstr "裁切到選取範圍(_C)"
 #: ../app/actions/layers-actions.c:251
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "將圖層裁切至選取範圍的尺寸"
+msgstr "將圖層裁切到選取範圍的尺寸"
 
 #: ../app/actions/layers-actions.c:256
 msgctxt "layers-action"
@@ -7265,7 +7265,7 @@ msgctxt "layers-action"
 msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
 "layer)"
-msgstr "將圖層裁切至其內容尺寸（從圖層移除空白邊框）"
+msgstr "將圖層裁切到只剩內容的尺寸（從圖層移除空白邊框）"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
 msgctxt "layers-action"
@@ -7285,7 +7285,7 @@ msgstr "加入圖層遮罩(_Y)"
 #: ../app/actions/layers-actions.c:281
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
-msgstr "用上次的設定值加入遮罩"
+msgstr "用上次使用的數值加入遮罩"
 
 #: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
@@ -7741,7 +7741,7 @@ msgstr "快捷鍵："
 #.
 #: ../app/actions/layers-actions.c:666
 msgid "-Click on thumbnail in Layers dockable"
-msgstr "-點按「圖層」面板上的縮圖"
+msgstr "-同時點按「圖層」面板上的縮圖"
 
 #: ../app/actions/layers-actions.c:924 ../app/actions/layers-actions.c:925
 msgctxt "layers-action"
@@ -7780,7 +7780,7 @@ msgstr "縮放圖層"
 
 #: ../app/actions/layers-commands.c:872
 msgid "Crop Layer to Selection"
-msgstr "將圖層裁切至選取範圍"
+msgstr "將圖層裁切到選取範圍"
 
 #: ../app/actions/layers-commands.c:903
 msgid "Crop Layer to Content"
@@ -7792,7 +7792,7 @@ msgstr "無法裁切，因為作用中的圖層沒有內容。"
 
 #: ../app/actions/layers-commands.c:923
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "無法裁切，因為作用中的圖層已經裁切至其內容範圍。"
+msgstr "無法裁切，因為作用中的圖層已經裁切到只剩內容範圍。"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8153,7 +8153,7 @@ msgstr "重設(_R)"
 
 #: ../app/actions/plug-in-commands.c:200
 msgid "Do you really want to reset all filters to default values?"
-msgstr "您是否真的要將所有濾鏡重設為預設值？"
+msgstr "您是否真的要將所有濾鏡重設回預設值？"
 
 #: ../app/actions/quick-mask-actions.c:43
 msgctxt "quick-mask-action"
@@ -8354,7 +8354,7 @@ msgstr "填充選取範圍輪廓(_F)"
 #: ../app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
-msgstr "用上次使用的值來填充選取範圍輪廓"
+msgstr "用上次使用的數值來填充選取範圍輪廓"
 
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
@@ -9422,12 +9422,12 @@ msgstr "建立新路徑..."
 #: ../app/actions/vectors-actions.c:72
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "用上次設定值新增路徑(_N)"
+msgstr "用上次使用的值新增路徑(_N)"
 
 #: ../app/actions/vectors-actions.c:73
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "用上次的設定值建立新路徑"
+msgstr "用上次使用的數值建立新路徑"
 
 #: ../app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
@@ -9487,7 +9487,7 @@ msgstr "降低這條路徑"
 #: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
-msgstr "降低路徑到最層(_B)"
+msgstr "降低路徑到最下層(_B)"
 
 #: ../app/actions/vectors-actions.c:114
 msgctxt "vectors-action"
@@ -9512,7 +9512,7 @@ msgstr "填充路徑"
 #: ../app/actions/vectors-actions.c:126
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
-msgstr "用上次的設定值填充路徑"
+msgstr "用上次的數值填充路徑"
 
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
@@ -9532,7 +9532,7 @@ msgstr "沿路徑畫線(_K)"
 #: ../app/actions/vectors-actions.c:138
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
-msgstr "用上次的設定值沿著路徑畫線"
+msgstr "用上次的數值沿著路徑畫線"
 
 #: ../app/actions/vectors-actions.c:143
 msgctxt "vectors-action"
@@ -9573,7 +9573,7 @@ msgstr "鎖定路徑的筆畫(_O)"
 #: ../app/actions/vectors-actions.c:184
 msgctxt "vectors-action"
 msgid "L_ock Position of Path"
-msgstr "鎖定路徑位置(_O)"
+msgstr "鎖定路徑的位置(_O)"
 
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
@@ -9728,7 +9728,7 @@ msgstr "選取範圍轉為路徑"
 #: ../app/actions/vectors-actions.c:289
 msgctxt "vectors-action"
 msgid "To _Path"
-msgstr "轉換為路徑(_P)"
+msgstr "轉為路徑(_P)"
 
 #: ../app/actions/vectors-actions.c:295
 msgctxt "vectors-action"
@@ -9869,7 +9869,7 @@ msgstr "關閉作用中的影像檢視"
 #: ../app/actions/view-actions.c:101
 msgctxt "view-action"
 msgid "C_enter Image in Window"
-msgstr "將影像置中於視窗中(_E)"
+msgstr "將影像於視窗中置中(_E)"
 
 #: ../app/actions/view-actions.c:102
 msgctxt "view-action"
@@ -10009,7 +10009,7 @@ msgstr "在螢幕上的像素等於影像的像素"
 #: ../app/actions/view-actions.c:192
 msgctxt "view-action"
 msgid "_Color-Manage this View"
-msgstr "色彩管理這個檢視(_C)"
+msgstr "色彩管理這個檢視畫面(_C)"
 
 #: ../app/actions/view-actions.c:193
 msgctxt "view-action"
@@ -11267,7 +11267,7 @@ msgstr "要用哪個外掛插件來匯入數位相機的原生 Raw 檔。"
 
 #: ../app/config/gimprc-blurbs.h:224
 msgid "Export file type used by default."
-msgstr "預設匯出使用的檔案類型。"
+msgstr "匯出預設使用的檔案類型。"
 
 #: ../app/config/gimprc-blurbs.h:227
 msgid "Export the image's color profile by default."
@@ -11278,21 +11278,21 @@ msgstr "影像匯出的預設色彩描述檔。"
 #.
 #: ../app/config/gimprc-blurbs.h:233
 msgid "Export Exif metadata by default."
-msgstr "預設匯出採 Exif 中介資料。"
+msgstr "匯出預設採 Exif 中介資料。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:239
 msgid "Export XMP metadata by default."
-msgstr "預設匯出採 XMP 中介資料。"
+msgstr "匯出預設採 XMP 中介資料。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:245
 msgid "Export IPTC metadata by default."
-msgstr "預設匯出採 IPTC 中介資料。"
+msgstr "匯出預設採 IPTC 中介資料。"
 
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -12066,7 +12066,7 @@ msgstr "保留嵌入的色彩描述檔"
 #: ../app/core/core-enums.c:190
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "轉換成內建 sRGB 或是灰階描述檔"
+msgstr "轉換到內建 sRGB 或是灰階描述檔"
 
 #: ../app/core/core-enums.c:284
 msgctxt "convert-dither-type"
@@ -13095,7 +13095,7 @@ msgstr "「%s」中有無效的標頭資料：筆刷名稱過長：%lu"
 #: ../app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "筆刷檔案 「%s」 中含有無效的 UTF-8 字串。"
+msgstr "筆刷檔 「%s」 中有無效的 UTF-8 字串。"
 
 #: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:142
 #: ../app/dialogs/template-options-dialog.c:110
@@ -13612,7 +13612,7 @@ msgstr "計算未知像素的 Alpha"
 
 #: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:679
 msgid "Not enough points to fill"
-msgstr "沒有足夠的點可以填滿"
+msgstr "沒有足夠的點可以填充"
 
 #: ../app/core/gimpdrawable-fill.c:267
 msgctxt "undo-type"
@@ -14780,7 +14780,7 @@ msgstr "檔案似乎被截斷。"
 #: ../app/core/gimppattern-load.c:135
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "圖樣檔案「%s」中含有無效的 UTF-8 字串。"
+msgstr "圖樣檔「%s」中含有無效的 UTF-8 字串。"
 
 #: ../app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
@@ -14862,11 +14862,11 @@ msgstr "去除孔洞"
 
 #: ../app/core/gimpselection.c:306
 msgid "There is no selection to fill."
-msgstr "沒有選取範圍可填滿。"
+msgstr "沒有選取範圍可以填充。"
 
 #: ../app/core/gimpselection.c:342
 msgid "There is no selection to stroke."
-msgstr "沒有可描邊的選取範圍。"
+msgstr "沒有選取範圍可以描邊。"
 
 #: ../app/core/gimpselection.c:699
 msgid "Unable to cut or copy because the selected region is empty."
@@ -15020,7 +15020,7 @@ msgstr "水平軸位置"
 
 #: ../app/core/gimpsymmetry-tiling.c:98
 msgid "Tiling"
-msgstr "平鋪"
+msgstr "平鋪中"
 
 #: ../app/core/gimpsymmetry-tiling.c:103
 msgid "Interval X"
@@ -15326,7 +15326,7 @@ msgid ""
 "commit %s"
 msgstr ""
 "這是不穩定的開發中發行版\n"
-"送交版號 %s"
+"送交版次 %s"
 
 #: ../app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -15368,11 +15368,11 @@ msgstr "指派"
 
 #: ../app/dialogs/color-profile-dialog.c:146
 msgid "Convert to ICC Color Profile"
-msgstr "轉換成 ICC 色彩描述檔"
+msgstr "轉換到 ICC 色彩描述檔"
 
 #: ../app/dialogs/color-profile-dialog.c:149
 msgid "Convert the image to a color profile"
-msgstr "將影像轉換成色彩描述檔"
+msgstr "將影像轉換到色彩描述檔"
 
 #: ../app/dialogs/color-profile-dialog.c:155
 #: ../app/dialogs/color-profile-dialog.c:173
@@ -15387,7 +15387,7 @@ msgstr "轉換(_O)"
 #: ../app/dialogs/color-profile-dialog.c:176
 #: ../app/dialogs/color-profile-dialog.c:194
 msgid "Convert to"
-msgstr "轉換成"
+msgstr "轉換到"
 
 #: ../app/dialogs/color-profile-dialog.c:164
 msgid "RGB Conversion"
@@ -15656,7 +15656,7 @@ msgstr "開啟位置"
 
 #: ../app/dialogs/file-open-location-dialog.c:112
 msgid "Enter location (URI):"
-msgstr "輸入位置 (URI)："
+msgstr "請輸入位置 (URI)："
 
 #. error should never be NULL, also issue #3093
 #: ../app/dialogs/file-open-location-dialog.c:246
@@ -16377,7 +16377,7 @@ msgstr "臭蟲回報"
 
 #: ../app/dialogs/preferences-dialog.c:1276
 msgid "Debug _policy:"
-msgstr "除錯政策(_P)："
+msgstr "除錯方針(_P)："
 
 #: ../app/dialogs/preferences-dialog.c:1288
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
@@ -16555,7 +16555,7 @@ msgstr "匯出方針"
 
 #: ../app/dialogs/preferences-dialog.c:1543
 msgid "Export the i_mage's color profile by default"
-msgstr "預設匯出影像的色彩描述檔(_M)"
+msgstr "匯出影像的預設色彩描述檔(_M)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -16595,7 +16595,7 @@ msgstr "匯出檔案類型"
 
 #: ../app/dialogs/preferences-dialog.c:1578
 msgid "Default export file t_ype:"
-msgstr "預設匯出檔案類型(_Y)："
+msgstr "匯出檔案預設類型(_Y)："
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1582
@@ -17334,7 +17334,7 @@ msgstr "預設使用「點對點」模式(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:2892
 msgid "Marching ants s_peed:"
-msgstr "選取範圍虛線移動速度(_P)："
+msgstr "選取範圍虛線行進速度(_P)："
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2896
@@ -17749,12 +17749,12 @@ msgstr "高度(_E)："
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:257
 #: ../app/widgets/gimptemplateeditor.c:328
 msgid "_X resolution:"
-msgstr "水平解析度(_X)："
+msgstr "_X 解析度："
 
 #: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:335
 msgid "_Y resolution:"
-msgstr "垂直解析度(_Y)："
+msgstr "_Y 解析度："
 
 #: ../app/dialogs/print-size-dialog.c:254 ../app/widgets/gimpsizebox.c:253
 #, c-format
@@ -18763,7 +18763,7 @@ msgstr "刪除錨點"
 
 #: ../app/display/gimptoolpolygon.c:892
 msgid "Click to close shape"
-msgstr "點按以關閉形狀"
+msgstr "點按以閉合形狀"
 
 #: ../app/display/gimptoolpolygon.c:896
 msgid "Click-Drag to move segment vertex"
@@ -19690,7 +19690,7 @@ msgstr "剖析錯誤"
 
 #: ../app/operations/gimplevelsconfig.c:956
 msgid "Writing levels file failed: "
-msgstr "寫入色階檔失敗："
+msgstr "色階檔寫入失敗："
 
 #: ../app/operations/gimpoperationbrightnesscontrast.c:65
 #: ../app/tools/gimpbrightnesscontrasttool.c:98
@@ -19699,7 +19699,7 @@ msgstr "調整亮度及對比"
 
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
-msgstr "計算 GIMP 籠套工具的一組係數緩衝區"
+msgstr "運算 GIMP 籠套工具的一組係數緩衝區"
 
 #: ../app/operations/gimpoperationcagetransform.c:104
 msgid ""
@@ -20268,7 +20268,7 @@ msgstr "對齊"
 #: ../app/paint/paint-enums.c:85
 msgctxt "source-align-mode"
 msgid "Registered"
-msgstr "註冊"
+msgstr "套印對位"
 
 #: ../app/paint/paint-enums.c:86
 msgctxt "source-align-mode"
@@ -22017,7 +22017,7 @@ msgstr "最大顏色差異"
 
 #: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
-msgstr "線稿計算的來源影像"
+msgstr "線稿運算的來源影像"
 
 #: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
@@ -22142,7 +22142,7 @@ msgstr "按下 Enter 鍵來送出變換"
 
 #: ../app/tools/gimpcagetool.c:1145
 msgid "Computing Cage Coefficients"
-msgstr "計算籠套係數"
+msgstr "運算籠套係數"
 
 #: ../app/tools/gimpcagetool.c:1278
 msgid "Cage transform"
@@ -23159,7 +23159,7 @@ msgstr "%s：移除這個點"
 
 #: ../app/tools/gimpiscissorstool.c:934
 msgid "Click to close the curve"
-msgstr "點按以關閉曲線"
+msgstr "點按以閉合曲線"
 
 #: ../app/tools/gimpiscissorstool.c:940
 msgid "Click to add a point on this segment"
@@ -23167,11 +23167,11 @@ msgstr "點按以在此區段中加入點"
 
 #: ../app/tools/gimpiscissorstool.c:953
 msgid "Click or press Enter to convert to a selection"
-msgstr "點選或按 Enter 來轉換為擇選區域"
+msgstr "點選或按 Enter 來轉換為選取區域"
 
 #: ../app/tools/gimpiscissorstool.c:963
 msgid "Press Enter to convert to a selection"
-msgstr "按 Enter 來轉換為擇選區域"
+msgstr "按 Enter 來轉換為選取區域"
 
 #: ../app/tools/gimpiscissorstool.c:979
 msgid "Click or Click-Drag to add a point"
@@ -25748,7 +25748,7 @@ msgstr "如果想幫助我們改善 GIMP，您可以依下列步驟輕鬆回報�
 #: ../app/widgets/gimpcriticaldialog.c:240
 #: ../app/widgets/gimpcriticaldialog.c:592
 msgid "Copy the bug information to the clipboard by clicking: "
-msgstr "請點按以複製臭蟲資訊到剪貼簿："
+msgstr "請點按以複製臭蟲資訊到剪貼簿中："
 
 #: ../app/widgets/gimpcriticaldialog.c:242
 #: ../app/widgets/gimpcriticaldialog.c:594
@@ -26053,7 +26053,7 @@ msgstr "可用量"
 
 #: ../app/widgets/gimpdashboard.c:691
 msgid "Amount of available physical memory"
-msgstr "可用的物理記憶體大小"
+msgstr "可用的實體記憶體大小"
 
 #: ../app/widgets/gimpdashboard.c:700
 msgid "Physical memory size"
@@ -26467,7 +26467,7 @@ msgstr "選取檔案類型(_T)"
 
 #: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
-msgstr "檔案格式"
+msgstr "檔案類型"
 
 #: ../app/widgets/gimpfileprocview.c:212
 msgid "Extensions"
@@ -26657,7 +26657,7 @@ msgstr "您可以選擇閱讀其他語言的手冊，或是閱讀線上版。"
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
-msgstr "您可以安裝額外的求助檔軟體包，或改變偏好設定來使用線上版本。"
+msgstr "您可以安裝額外的求助說明軟體包，或改變偏好設定來使用線上版本。"
 
 #: ../app/widgets/gimphelp.c:847
 msgid "Read _Online"
