@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-08 18:23+0000\n"
-"PO-Revision-Date: 2024-11-09 02:55+0800\n"
+"POT-Creation-Date: 2024-11-10 15:36+0000\n"
+"PO-Revision-Date: 2024-11-21 03:32+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -3458,7 +3458,7 @@ msgstr "原生 _Raw"
 
 #: ../plug-ins/common/file-pnm.c:1622
 msgid "_ASCII"
-msgstr "_ASCII"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:654 ../plug-ins/common/file-ps.c:721
 msgid "PostScript document"
@@ -9333,7 +9333,7 @@ msgstr "還原至原來的影像"
 
 #: ../plug-ins/gimpressionist/size.c:94
 msgid "_Size"
-msgstr "筆畫大小(_S)"
+msgstr "大小(_S)"
 
 #: ../plug-ins/gimpressionist/size.c:108
 msgid "Size variants:"
@@ -13029,7 +13029,7 @@ msgstr "從掃描器/相機傳輸資料"
 #~ msgstr "黃(_Y)"
 
 #~ msgid "Luminance"
-#~ msgstr "光度"
+#~ msgstr "輝度"
 
 #~ msgid "Halftone the image to give newspaper-like effect"
 #~ msgstr "讓影像以半色調呈現，製作出類似報紙的印刷效果"
