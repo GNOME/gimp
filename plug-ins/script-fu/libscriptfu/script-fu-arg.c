@@ -81,6 +81,8 @@ static void append_int_repr_from_gvalue    (GString     *result_string,
 static void append_scheme_repr_of_c_string (const gchar *user_string,
                                             GString     *result_string);
 
+static GString *script_fu_arg_get_blurb    (SFArg *arg);
+
 /* Free any allocated members.
  * Somewhat hides what members of the SFArg struct are allocated.
  * !!! A few other places in the code do the allocations.
@@ -232,12 +234,11 @@ script_fu_add_resource_arg_default_from_context (
   GimpProcedure          *procedure,
   const gchar            *name,
   const gchar            *nick,
-  SFArg                  *arg,
+  const gchar            *blurb,
   ResourceArgDeclareFunc  func)
 {
   /* Default from context, dynamically: default:NULL, default_from_context:TRUE */
-  (*func) (procedure, name, nick,
-            arg->label,
+  (*func) (procedure, name, nick, blurb,
             FALSE,  /* none OK */
             NULL,   /* default */
             TRUE,   /* default_from_context */
@@ -250,12 +251,11 @@ script_fu_add_resource_arg_with_default (
   GimpProcedure          *procedure,
   const gchar            *name,
   const gchar            *nick,
-  SFArg                  *arg,
+  const gchar            *blurb,
   ResourceArgDeclareFunc  func,
   GimpResource           *default_resource)
 {
-  (*func) (procedure, name, nick,
-            arg->label,
+  (*func) (procedure, name, nick, blurb,
             FALSE,  /* none OK */
             default_resource,
             FALSE,   /* default_from_context */
@@ -271,6 +271,7 @@ script_fu_add_resource_arg (
   GimpProcedure          *procedure,
   const gchar            *name,
   const gchar            *nick,
+  const gchar            *blurb,
   SFArg                  *arg,
   ResourceArgDeclareFunc  func)
 {
@@ -282,7 +283,7 @@ script_fu_add_resource_arg (
      )
     {
       /* Author declared default name is empty or the special "from context". */
-      script_fu_add_resource_arg_default_from_context (procedure, name, nick, arg, func);
+      script_fu_add_resource_arg_default_from_context (procedure, name, nick, blurb, func);
     }
   else
     {
@@ -304,15 +305,45 @@ script_fu_add_resource_arg (
       if (default_resource == NULL)
         {
           g_warning ("%s declared resource name is invalid %s", G_STRFUNC, declared_name_of_default);
-          script_fu_add_resource_arg_default_from_context (procedure, name, nick, arg, func);
+          script_fu_add_resource_arg_default_from_context (procedure, name, nick, blurb, func);
         }
       else
         {
           /* Declared name is valid name of resource. */
-          script_fu_add_resource_arg_with_default (procedure, name, nick, arg, func,
+          script_fu_add_resource_arg_with_default (procedure, name, nick, blurb, func,
                                                    default_resource);
         }
     }
+}
+
+/* Get the blurb of an argument.
+ *
+ * The blurb becomes the tooltip for widgets
+ * and the description for the arg in the PDB.
+ *
+ * ScriptFu does not let authors declare blurb.
+ * Instead we derive the blurb from a "label",
+ * replacing the mnemonic/accelerator mark char.
+ * An author declares a label i.e. menu item, with optional accelerator mark.
+ * The label is a translated text.
+ * SF also uses label for nick of the argument's param spec.
+ *
+ * For this implementation, the widget tooltip is redundant with the widget label,
+ * but at least the PDB description is not empty.
+ * The PDB description must not be empty because the author also cannot declare
+ * the name (SF generates it) and the generated name is meaningless to a reader.
+ * FUTURE: let author's declare a separate, translated blurb.
+ * FUTURE: let author's declare a name for the arg (instead of generating one.)
+ *
+ * Caller owns the result.
+ */
+static GString*
+script_fu_arg_get_blurb (SFArg *arg)
+{
+  GString *result = g_string_new (arg->label);
+
+  g_string_replace (result, "_", "", 0);
+  return result;
 }
 
 
@@ -337,47 +368,50 @@ script_fu_arg_add_argument (SFArg         *arg,
                             const gchar   *name,
                             const gchar   *nick)
 {
+  GString *blurb_gstring = script_fu_arg_get_blurb (arg);
+  gchar   *blurb         = blurb_gstring->str;
+
   switch (arg->type)
     {
       /* No defaults for GIMP objects: Image, Item subclasses, Display */
     case SF_IMAGE:
       gimp_procedure_add_image_argument (procedure, name,
-                                         nick, arg->label,
+                                         nick, blurb,
                                          TRUE,  /* None is valid. */
                                          G_PARAM_READWRITE);
       break;
 
     case SF_DRAWABLE:
       gimp_procedure_add_drawable_argument (procedure, name,
-                                            nick, arg->label,
+                                            nick, blurb,
                                             TRUE,
                                             G_PARAM_READWRITE);
       break;
 
     case SF_LAYER:
       gimp_procedure_add_layer_argument (procedure, name,
-                                         nick, arg->label,
+                                         nick, blurb,
                                          TRUE,
                                          G_PARAM_READWRITE);
       break;
 
     case SF_CHANNEL:
       gimp_procedure_add_channel_argument (procedure, name,
-                                           nick, arg->label,
+                                           nick, blurb,
                                            TRUE,
                                            G_PARAM_READWRITE);
       break;
 
     case SF_VECTORS:
       gimp_procedure_add_path_argument (procedure, name,
-                                        nick, arg->label,
+                                        nick, blurb,
                                         TRUE,
                                         G_PARAM_READWRITE);
       break;
 
     case SF_DISPLAY:
       gimp_procedure_add_display_argument (procedure, name,
-                                           nick, arg->label,
+                                           nick, blurb,
                                            TRUE,
                                            G_PARAM_READWRITE);
       break;
@@ -386,7 +420,7 @@ script_fu_arg_add_argument (SFArg         *arg,
       {
         GeglColor *color = sf_color_arg_get_default_color (arg);
 
-        gimp_procedure_add_color_argument (procedure, name, nick, arg->label, TRUE,
+        gimp_procedure_add_color_argument (procedure, name, nick, blurb, TRUE,
                                            color, G_PARAM_READWRITE);
         g_object_unref (color);
       }
@@ -395,7 +429,7 @@ script_fu_arg_add_argument (SFArg         *arg,
     case SF_TOGGLE:
       /* Implicit conversion from gint32 to gboolean. */
       gimp_procedure_add_boolean_argument (procedure, name,
-                                           nick, arg->label,
+                                           nick, blurb,
                                            arg->default_value.sfa_toggle,
                                            G_PARAM_READWRITE);
       break;
@@ -406,7 +440,7 @@ script_fu_arg_add_argument (SFArg         *arg,
     case SF_STRING:
     case SF_TEXT:
       gimp_procedure_add_string_argument (procedure, name,
-                                          nick, arg->label,
+                                          nick, blurb,
                                           arg->default_value.sfa_value,
                                           G_PARAM_READWRITE);
       break;
@@ -414,27 +448,27 @@ script_fu_arg_add_argument (SFArg         *arg,
     /* Subclasses of GimpResource.  Special widgets. */
     case SF_FONT:
       /* Avoid compiler warning: cast a type specific function to a generic function. */
-      script_fu_add_resource_arg (procedure, name, nick, arg,
+      script_fu_add_resource_arg (procedure, name, nick, blurb, arg,
           (ResourceArgDeclareFunc) gimp_procedure_add_font_argument);
       break;
 
     case SF_PALETTE:
-      script_fu_add_resource_arg (procedure, name, nick, arg,
+      script_fu_add_resource_arg (procedure, name, nick, blurb, arg,
           (ResourceArgDeclareFunc) gimp_procedure_add_palette_argument);
       break;
 
     case SF_PATTERN:
-      script_fu_add_resource_arg (procedure, name, nick, arg,
+      script_fu_add_resource_arg (procedure, name, nick, blurb, arg,
           (ResourceArgDeclareFunc) gimp_procedure_add_pattern_argument);
       break;
 
     case SF_GRADIENT:
-      script_fu_add_resource_arg (procedure, name, nick, arg,
+      script_fu_add_resource_arg (procedure, name, nick, blurb, arg,
           (ResourceArgDeclareFunc) gimp_procedure_add_gradient_argument);
       break;
 
     case SF_BRUSH:
-      script_fu_add_resource_arg (procedure, name, nick, arg,
+      script_fu_add_resource_arg (procedure, name, nick, blurb, arg,
           (ResourceArgDeclareFunc) gimp_procedure_add_brush_argument);
       break;
 
@@ -444,13 +478,13 @@ script_fu_arg_add_argument (SFArg         *arg,
        * Decimal places == 0 means type integer, else float
        */
       if (arg->default_value.sfa_adjustment.digits == 0)
-        gimp_procedure_add_int_argument (procedure, name, nick, arg->label,
+        gimp_procedure_add_int_argument (procedure, name, nick, blurb,
                                          arg->default_value.sfa_adjustment.lower,
                                          arg->default_value.sfa_adjustment.upper,
                                          arg->default_value.sfa_adjustment.value,
                                          G_PARAM_READWRITE);
       else
-        gimp_procedure_add_double_argument (procedure, name, nick, arg->label,
+        gimp_procedure_add_double_argument (procedure, name, nick, blurb,
                                             arg->default_value.sfa_adjustment.lower,
                                             arg->default_value.sfa_adjustment.upper,
                                             arg->default_value.sfa_adjustment.value,
@@ -463,7 +497,7 @@ script_fu_arg_add_argument (SFArg         *arg,
           GParamSpec *pspec = NULL;
 
           gimp_procedure_add_file_argument (procedure, name,
-                                            nick, arg->label,
+                                            nick, blurb,
                                             G_PARAM_READWRITE |
                                             GIMP_PARAM_NO_VALIDATE);
           pspec = gimp_procedure_find_argument (procedure, name);
@@ -479,7 +513,7 @@ script_fu_arg_add_argument (SFArg         *arg,
     case SF_ENUM:
       /* history is the last used value AND the default. */
       gimp_procedure_add_enum_argument (procedure, name,
-                                        nick, arg->label,
+                                        nick, blurb,
                                         g_type_from_name (arg->default_value.sfa_enum.type_name),
                                         arg->default_value.sfa_enum.history,
                                         G_PARAM_READWRITE);
@@ -487,7 +521,7 @@ script_fu_arg_add_argument (SFArg         *arg,
 
     case SF_OPTION:
       gimp_procedure_add_int_argument (procedure, name,
-                                       nick, arg->label,
+                                       nick, blurb,
                                        0,        /* Always zero based. */
                                        g_slist_length (arg->default_value.sfa_option.list) - 1,
                                        arg->default_value.sfa_option.history,
@@ -496,6 +530,8 @@ script_fu_arg_add_argument (SFArg         *arg,
       /* FUTURE: Does not show a combo box widget ??? */
       break;
     }
+
+  g_string_free (blurb_gstring, TRUE);
 }
 
 /* Warn of an error in a GFile argument
@@ -906,7 +942,7 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
 
   *returned_name = numbered_name;
 
-  /* nick is what the script author said describes the arg */
+  /* nick is what the script author declared for menu label */
   *returned_nick = arg->label;
 }
 
