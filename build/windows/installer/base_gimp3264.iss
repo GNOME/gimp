@@ -183,7 +183,7 @@ SetupIconFile={#ASSETS_DIR}\setup.ico
 OutputDir={#GIMP_DIR}
 OutputBaseFileName=gimp-{#CUSTOM_GIMP_VERSION}-setup
 OutputManifestFile=inno.log
-ArchitecturesInstallIn64BitMode=x64 arm64
+ArchitecturesInstallIn64BitMode=x64os arm64
 MinVersion=10.0
 
 
