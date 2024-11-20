@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-01 06:12+0000\n"
-"PO-Revision-Date: 2024-10-04 23:40+0800\n"
+"POT-Creation-Date: 2024-11-20 18:29+0000\n"
+"PO-Revision-Date: 2024-11-21 03:43+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -1516,7 +1516,7 @@ msgstr "邊距（像素）"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
 msgid "Hole ratio"
-msgstr "齒洞比率"
+msgstr "齒孔比率"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
 msgid "Start angle"
