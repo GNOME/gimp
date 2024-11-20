@@ -195,6 +195,8 @@ item_options_dialog_new (GimpImage               *image,
       gimp_grid_attach_aligned (GTK_GRID (grid), 0, private->grid_row++,
                                 name_label, 0.0, 0.5,
                                 private->name_entry, 1);
+      /* Make the item name entry field have focus on creation */
+      gtk_widget_grab_focus (private->name_entry);
 
       radio_box = gimp_enum_radio_box_new (GIMP_TYPE_COLOR_TAG,
                                            G_CALLBACK (gimp_radio_button_update),
