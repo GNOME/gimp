@@ -1533,35 +1533,38 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
                               GIMP_PROGRESS (filter_tool),
                               gimp_tool_get_undo_desc (tool));
 
-  if (options->preview)
+  /* We need to add the filter first to ensure it is ordered correctly,
+   * then toggle its visibility based on user settings */
+  if (filter_tool->existing_filter)
     {
-      if (filter_tool->existing_filter)
-        {
-          GimpChannel *mask = NULL;
+      GimpChannel *mask = NULL;
 
-          mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
-          gimp_drawable_filter_apply_with_mask (filter_tool->filter, mask,
-                                                NULL);
-        }
-      else
-        {
-          gimp_drawable_filter_apply (filter_tool->filter, NULL);
-        }
+      mask = gimp_drawable_filter_get_mask (filter_tool->existing_filter);
+      gimp_drawable_filter_apply_with_mask (filter_tool->filter, mask,
+                                            NULL);
     }
+  else
+    {
+      gimp_drawable_filter_apply (filter_tool->filter, NULL);
+    }
+  gimp_drawable_filter_set_preview (filter_tool->filter, options->preview);
 
   /* TODO: Once we can serialize GimpDrawable, remove so that filters with
    * aux nodes can be non-destructive */
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
     {
-      filters  = gimp_drawable_get_filters (drawable);
-      count    = gimp_container_get_n_children (filters);
+      filters = gimp_drawable_get_filters (drawable);
+      count   = gimp_container_get_n_children (filters);
 
-      gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
-                              count - 1);
-      gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
-      gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+      if (gimp_container_have (filters, GIMP_OBJECT (filter_tool->filter)))
+        {
+          gimp_container_reorder (filters, GIMP_OBJECT (filter_tool->filter),
+                                  count - 1);
+          gimp_item_set_visible (GIMP_ITEM (drawable), FALSE, FALSE);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+          gimp_item_set_visible (GIMP_ITEM (drawable), TRUE, FALSE);
+          gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
+        }
     }
 }
 
