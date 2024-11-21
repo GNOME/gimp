@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-11-08 18:50+0000\n"
-"PO-Revision-Date: 2024-11-09 02:52+0800\n"
+"POT-Creation-Date: 2024-11-20 20:00+0000\n"
+"PO-Revision-Date: 2024-11-21 13:08+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -605,7 +605,7 @@ msgstr "百葉窗"
 #: plug-ins/common/file-raw-data.c:1873 plug-ins/common/file-sunras.c:1059
 #: plug-ins/common/file-tga.c:1103 plug-ins/common/file-wbmp.c:274
 #: plug-ins/common/file-xbm.c:887 plug-ins/common/film.c:865
-#: plug-ins/common/smooth-palette.c:300 plug-ins/common/tile.c:390
+#: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:390
 #: plug-ins/file-bmp/bmp-load.c:745 plug-ins/file-exr/file-exr.c:287
 #: plug-ins/file-faxg3/faxg3.c:578 plug-ins/file-fits/fits.c:673
 #: plug-ins/file-jpeg/jpeg-load.c:231
@@ -2732,7 +2732,7 @@ msgstr "「%s」：讀取調色盤資料時遇到 EOF 檔案結尾或發生錯�
 #.
 #: plug-ins/common/file-cel.c:821 plug-ins/common/file-farbfeld.c:347
 #: plug-ins/common/file-gif-export.c:939 plug-ins/common/file-html-table.c:349
-#: plug-ins/common/file-jpegxl.c:1405 plug-ins/common/file-pcx.c:1083
+#: plug-ins/common/file-jpegxl.c:1396 plug-ins/common/file-pcx.c:1083
 #: plug-ins/common/file-pix.c:636 plug-ins/common/file-png.c:1483
 #: plug-ins/common/file-pnm.c:1607 plug-ins/common/file-ps.c:1369
 #: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:605
@@ -3728,7 +3728,7 @@ msgstr "載入 HEIF 影像"
 msgid "Select Image"
 msgstr "選取影像"
 
-#: plug-ins/common/file-heif.c:2445 plug-ins/common/file-jpegxl.c:2038
+#: plug-ins/common/file-heif.c:2445 plug-ins/common/file-jpegxl.c:2029
 msgid "8 bit/channel"
 msgstr ""
 
@@ -4138,21 +4138,21 @@ msgstr "匯出為 DDS"
 msgid "Create a CMYK JPEG XL image using the soft-proofing color profile"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2039
+#: plug-ins/common/file-jpegxl.c:2030
 msgid "16 bit/channel"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2047
+#: plug-ins/common/file-jpegxl.c:2038
 msgid "CMYK profile required for export"
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-export.c:899
+#: plug-ins/common/file-jpegxl.c:2046 plug-ins/file-jpeg/jpeg-export.c:899
 #: plug-ins/file-psd/psd-export.c:2465
 #: plug-ins/file-tiff/file-tiff-export.c:1318
 msgid "Name of the color profile used for CMYK export."
 msgstr ""
 
-#: plug-ins/common/file-jpegxl.c:2074 plug-ins/file-jpeg/jpeg-export.c:910
+#: plug-ins/common/file-jpegxl.c:2065 plug-ins/file-jpeg/jpeg-export.c:910
 #: plug-ins/file-psd/psd-export.c:2476
 #: plug-ins/file-tiff/file-tiff-export.c:1330
 #, c-format
@@ -8099,17 +8099,17 @@ msgstr "輸出色階："
 msgid "Deriving smooth palette"
 msgstr "衍生出平滑色調色盤"
 
-#: plug-ins/common/smooth-palette.c:484
+#: plug-ins/common/smooth-palette.c:485
 msgid "Smooth Palette"
 msgstr "平滑色調色盤"
 
-#: plug-ins/common/smooth-palette.c:501 plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/common/smooth-palette.c:502 plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:398
 #: plug-ins/print/print-page-layout.c:286
 msgid "_Width:"
 msgstr "寬度(_W)："
 
-#: plug-ins/common/smooth-palette.c:506 plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/common/smooth-palette.c:507 plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:405
 #: plug-ins/print/print-page-layout.c:288
 msgid "_Height:"
@@ -8680,7 +8680,7 @@ msgstr "重新整理(_R)"
 
 #: plug-ins/common/unit-editor.c:252
 msgid "_Help"
-msgstr "說明(_H)"
+msgstr "求助(_H)"
 
 #: plug-ins/common/unit-editor.c:283
 msgid "Create a new unit from scratch"
@@ -14040,7 +14040,7 @@ msgstr "第二耀光(_S)"
 #. the dialog window
 #: plug-ins/help-browser/dialog.c:263 plug-ins/help-browser/dialog.c:831
 msgid "GIMP Help Browser"
-msgstr "GIMP 說明文件瀏覽器"
+msgstr "GIMP 求助文件瀏覽器"
 
 #: plug-ins/help-browser/dialog.c:277 plug-ins/help-browser/help-menu.ui:14
 msgid "_Reload"
@@ -14138,7 +14138,7 @@ msgstr "複製位置(_O)"
 #: plug-ins/help/gimphelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
-msgstr "「%s」的說明頁面無法使用。"
+msgstr "「%s」的求助頁面無法使用。"
 
 #: plug-ins/help/gimphelpdomain.c:186
 msgid "The GIMP user manual is not available."
@@ -14155,7 +14155,8 @@ msgid ""
 "Please install the additional help package or use the online user manual at: "
 "https://docs.gimp.org/"
 msgstr ""
-"請安裝額外的說明軟體包，或是使用此處的線上使用者手冊：https://docs.gimp.org/"
+"請安裝額外的求助文件軟體包，或是使用此處的線上使用者手冊：https://docs.gimp."
+"org/"
 
 #: plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -14164,7 +14165,7 @@ msgstr "或許您的系統缺乏 GIO 後端，需要安裝 GVFS？"
 #: plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
-msgstr "說明 ID「%s」不明"
+msgstr "求助 ID「%s」不明"
 
 #: plug-ins/help/gimphelplocale.c:218
 #, c-format
