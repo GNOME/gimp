@@ -76,6 +76,7 @@ if ($revision -match '[1-9]' -and $CI_PIPELINE_SOURCE -ne 'schedule')
   }
 else
   {
+    $wack = "$revision"
     $revision = "0"
   }
 
@@ -302,7 +303,7 @@ Rename-Item .gitignore.bak .gitignore
 
 # 5. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
 # (Partner Center does the same thing before publishing)
-if (-not $GITLAB_CI -and ($wack -eq 'WACK' -or $revision -eq 'WACK'))
+if (-not $GITLAB_CI -and $wack -eq 'WACK')
   {
     ## Prepare file naming
     ## (appcert CLI does NOT allow relative paths)
