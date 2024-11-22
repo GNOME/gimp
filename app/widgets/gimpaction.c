@@ -1422,9 +1422,10 @@ gimp_action_update_proxy_tooltip (GimpAction *action,
   GimpActionPrivate *priv;
   const gchar       *tooltip;
   const gchar       *help_id;
-  const gchar       *reason         = NULL;
-  gchar             *escaped_reason = NULL;
-  gchar             *markup         = NULL;
+  const gchar       *reason          = NULL;
+  gchar             *escaped_tooltip = NULL;
+  gchar             *escaped_reason  = NULL;
+  gchar             *markup          = NULL;
 
   g_return_if_fail (GIMP_IS_ACTION (action));
 
@@ -1433,14 +1434,14 @@ gimp_action_update_proxy_tooltip (GimpAction *action,
   help_id = gimp_action_get_help_id (action);
 
   gimp_action_get_sensitive (action, &reason);
-  if (reason)
-    escaped_reason = g_markup_escape_text (reason, -1);
+  escaped_reason  = reason ? g_markup_escape_text (reason, -1) : NULL;
+  escaped_tooltip = tooltip ? g_markup_escape_text (tooltip, -1) : NULL;
 
-  if (tooltip || escaped_reason)
+  if (escaped_tooltip || escaped_reason)
     markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
                               "<i><span weight='light'>%s</span></i>", /* Inactive reason */
-                              tooltip ? tooltip : "",
-                              tooltip && escaped_reason ? "\n" : "",
+                              escaped_tooltip ? escaped_tooltip : "",
+                              escaped_tooltip && escaped_reason ? "\n" : "",
                               escaped_reason ? escaped_reason : "");
 
   /*  This hack makes sure we don't replace the tooltips of GimpButtons
@@ -1463,6 +1464,7 @@ gimp_action_update_proxy_tooltip (GimpAction *action,
           gimp_help_set_help_data_with_markup (list->data, markup, help_id);
     }
 
+  g_free (escaped_tooltip);
   g_free (escaped_reason);
   g_free (markup);
 }

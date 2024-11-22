@@ -698,7 +698,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 
   icon_name = gimp_action_get_icon_name (action);
-  tooltip   = g_strdup (gimp_action_get_tooltip (action));
+  tooltip   = g_markup_escape_text (gimp_action_get_tooltip (action), -1);
   help_id   = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
   old_child = gtk_bin_get_child (GTK_BIN (button));
@@ -738,7 +738,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
           if (tooltip)
             {
-              const gchar *ext_tooltip = gimp_action_get_tooltip (action);
+              gchar *ext_tooltip = g_markup_escape_text (gimp_action_get_tooltip (action), -1);
 
               if (ext_tooltip)
                 {
@@ -747,6 +747,8 @@ gimp_editor_add_action_button (GimpEditor  *editor,
                                             "</b>  ", ext_tooltip, NULL);
                   g_free (tooltip);
                   tooltip = tmp;
+
+                  g_free (ext_tooltip);
                 }
             }
         }
