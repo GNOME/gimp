@@ -971,12 +971,24 @@ activate_fractal (fractalexplorerOBJ *sel_obj)
                 "red-stretch",   current_obj->opts.redstretch,
                 "green-stretch", current_obj->opts.greenstretch,
                 "blue-stretch",  current_obj->opts.bluestretch,
-                "color-mode",    current_obj->opts.colormode,
                 "red-invert",    current_obj->opts.redinvert,
                 "green-invert",  current_obj->opts.greeninvert,
                 "blue-invert",   current_obj->opts.blueinvert,
                 NULL);
 
+  switch (current_obj->opts.colormode)
+    {
+    case 0:
+      g_object_set (wvals.config, "color-mode", "colormap", NULL);
+      break;
+
+    case 1:
+      g_object_set (wvals.config, "color-mode", "gradient", NULL);
+      break;
+
+    default:
+      break;
+    }
   switch (current_obj->opts.fractaltype)
     {
     case 0:
