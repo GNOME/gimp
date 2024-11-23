@@ -64,16 +64,17 @@ if [ "$GITLAB_CI" ]; then
   apt-get install -y --no-install-recommends wget >/dev/null 2>&1
   apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
 fi
-arch=$(uname -m)
+export ARCH=$(uname -m)
+export APPIMAGE_EXTRACT_AND_RUN=1
 
 ## For now, we always use the latest version of go-appimagetool
-wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${arch}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
+wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
 go_appimagetool='go-appimagetool.AppImage'
 mv appimagetool-*.AppImage $go_appimagetool
 chmod +x "$go_appimagetool"
 
 ## go-appimagetool have buggy appstreamcli so we need to use the legacy one
-wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-${arch}.AppImage" >/dev/null 2>&1
+wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${ARCH}.AppImage" >/dev/null 2>&1
 legacy_appimagetool='legacy-appimagetool.AppImage'
 mv appimagetool-*.AppImage $legacy_appimagetool
 chmod +x "$legacy_appimagetool"
@@ -281,7 +282,7 @@ wipe_usr ${LIB_DIR}/*.pyc
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/org.gimp.GIMP.desktop"
-"./$go_appimagetool" --appimage-extract-and-run -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop &> appimagetool.log
+"./$go_appimagetool" -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop &> appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully)
 ### Ensure that LD is in right dir
@@ -321,10 +322,9 @@ cp $GIMP_PREFIX/share/icons/hicolor/scalable/apps/org.gimp.GIMP.svg $APP_DIR/org
 
 ## Construct .appimage
 gimp_version=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-appimage="GIMP-${gimp_version}-$(uname -m).AppImage"
+appimage="GIMP-${gimp_version}-${ARCH}.AppImage"
 echo "(INFO): making $appimage"
-ARCH=$(uname -m) "./$legacy_appimagetool" --appimage-extract-and-run $APP_DIR &>> appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-$(uname -m).AppImage.zsync"
-mv GNU*.AppImage $appimage
+"./$legacy_appimagetool" -n $APP_DIR $appimage &>> appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-${ARCH}.AppImage.zsync"
 rm -r $APP_DIR
 
 if [ "$GITLAB_CI" ]; then
