@@ -284,6 +284,7 @@ gimp-debian-x64:
                      -Dgi-docgen=enabled
                      -Dg-ir-doc=true
                      -Drelocatable-bundle=no
+                     -Denable-default-bin=enabled
                      $MESON_OPTIONS
     - ninja
     # Check execution

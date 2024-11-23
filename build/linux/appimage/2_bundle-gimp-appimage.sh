@@ -81,7 +81,8 @@ chmod +x "$legacy_appimagetool"
 
 
 # BUNDLE FILES
-echo '(INFO): copying files to AppDir'
+grep -q '#define GIMP_UNSTABLE' _build/config.h && export GIMP_UNSTABLE=1
+
 UNIX_PREFIX='/usr'
 if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
@@ -177,6 +178,7 @@ wipe_usr ()
 }
 
 ## Prepare AppDir
+echo '(INFO): copying files to AppDir'
 if [ ! -f 'build/linux/appimage/AppRun.bak' ]; then
   cp build/linux/appimage/AppRun build/linux/appimage/AppRun.bak
 fi
@@ -248,16 +250,18 @@ bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### file-wmf support (not portable, depends on how the distro deals with PS fonts)
 #bund_usr "$UNIX_PREFIX" "share/libwmf"
-### Image graph support
-bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
-bund_usr "$UNIX_PREFIX" "lib/graphviz/config*"
-bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_dot*"
-bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
-### Needed for GTK inspector
-bund_usr "$UNIX_PREFIX" "lib/libEGL*"
-bund_usr "$UNIX_PREFIX" "lib/libGL*"
-bund_usr "$UNIX_PREFIX" "lib/dri*"
-conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
+if [ "$GIMP_UNSTABLE" ]; then
+  ### Image graph support
+  bund_usr "$UNIX_PREFIX" "bin/libgvc*" --rename "bin/dot"
+  bund_usr "$UNIX_PREFIX" "lib/graphviz/config*"
+  bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_dot*"
+  bund_usr "$UNIX_PREFIX" "lib/graphviz/libgvplugin_pango*"
+  ### Needed for GTK inspector
+  bund_usr "$UNIX_PREFIX" "lib/libEGL*"
+  bund_usr "$UNIX_PREFIX" "lib/libGL*"
+  bund_usr "$UNIX_PREFIX" "lib/dri*"
+  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
+fi
 ### FIXME: Debug dialog (NOT WORKING)
 #bund_usr "$UNIX_PREFIX" "bin/lldb*"
 #bund_usr "$GIMP_PREFIX" "libexec/gimp-debug-tool*"
@@ -309,8 +313,7 @@ rm -r $APP_DIR/etc
 
 ## Configure AppRun
 echo '(INFO): configuring AppRun'
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-sed -i "s|GIMP_APP_VERSION|${GIMP_APP_VERSION}|" build/linux/appimage/AppRun
+sed -i '/_WILD/d' build/linux/appimage/AppRun
 mv build/linux/appimage/AppRun $APP_DIR
 chmod +x $APP_DIR/AppRun
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
@@ -320,10 +323,11 @@ echo "(INFO): copying org.gimp.GIMP.svg asset to AppDir"
 cp $GIMP_PREFIX/share/icons/hicolor/scalable/apps/org.gimp.GIMP.svg $APP_DIR/org.gimp.GIMP.svg
 
 ## Construct .appimage
+gimp_app_version=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 gimp_version=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 appimage="GIMP-${gimp_version}-${ARCH}.AppImage"
 echo "(INFO): making $appimage"
-"./$legacy_appimagetool" -n $APP_DIR $appimage &>> appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${GIMP_APP_VERSION}/GIMP-latest-${ARCH}.AppImage.zsync"
+"./$legacy_appimagetool" -n $APP_DIR $appimage &>> appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${gimp_app_version}/GIMP-latest-${ARCH}.AppImage.zsync"
 rm -r $APP_DIR
 
 if [ "$GITLAB_CI" ]; then
