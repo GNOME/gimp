@@ -395,6 +395,11 @@ Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 #if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="")
 	Type: files; Name: "{app}\bin\dot.exe"
 #endif
+;No need to all these python binaries
+Type: files; Name: "{app}\bin\python3*.exe"
+#if (!Defined(GIMP_UNSTABLE) || GIMP_UNSTABLE=="")
+	Type: files; Name: "{app}\bin\python.exe"
+#endif
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
