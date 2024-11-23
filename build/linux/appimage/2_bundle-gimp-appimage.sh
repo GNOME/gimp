@@ -139,10 +139,8 @@ bund_usr ()
             mkdir -p $(dirname ${USR_DIR}/$4)
           fi
           mv $dest_path/${2##*/} ${USR_DIR}/$4
-          if [ -d "$USR_DIR/sbin" ]; then
-            rm -r "$USR_DIR/sbin"
-          elif [ -d "$USR_DIR/libexec" ]; then
-            rm -r "$USR_DIR/libexec"
+          if [ -z "$(ls -A "$dest_path")" ]; then
+            rm -r "$dest_path"
           fi
         fi
       done
@@ -269,6 +267,7 @@ bund_usr "$UNIX_PREFIX" "lib/girepository-*"
 conf_app GI_TYPELIB_PATH "${LIB_DIR}/${LIB_SUBDIR}girepository-*"
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
+bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-1.0/Gjs*" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
 #### Python plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
