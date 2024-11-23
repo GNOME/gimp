@@ -565,12 +565,12 @@ menubar > menuitem:hover {
 }
 
 /* Top menubar subitem style */
-menubar menu menuitem {
+menu menuitem {
   color: @fg-color;
   background-color: @bg-color;
 }
 
-menubar menu menuitem:hover {
+menu menuitem:hover {
   color: @fg-color;
   background-color: @extreme-bg-color;
 }
