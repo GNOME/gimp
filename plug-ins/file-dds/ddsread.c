@@ -972,6 +972,7 @@ validate_dx10_header (dds_header_dx10_t  *dx10hdr,
     case DXGI_FORMAT_BC5_UNORM:
     case DXGI_FORMAT_BC5_SNORM:
       /* Return early for supported compressed formats */
+      load_info->dxgi_format = dx10hdr->dxgiFormat & 0xFF;
       return TRUE;
     default:
       /* Unset FourCC flag for uncompressed formats */
