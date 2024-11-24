@@ -248,6 +248,9 @@ static void      gimp_image_window_page_reordered      (GtkNotebook         *not
                                                         GtkWidget           *widget,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
+static gboolean  gimp_image_window_page_scrolled       (GtkWidget           *widget,
+                                                        GdkEventScroll      *event,
+                                                        GimpImageWindow     *window);
 static void      gimp_image_window_disconnect_from_active_shell
                                                        (GimpImageWindow *window);
 
@@ -529,6 +532,11 @@ gimp_image_window_constructed (GObject *object)
                     window);
   g_signal_connect (private->notebook, "page-reordered",
                     G_CALLBACK (gimp_image_window_page_reordered),
+                    window);
+  gtk_widget_add_events (GTK_WIDGET (private->notebook),
+                         GDK_SCROLL_MASK);
+  g_signal_connect (private->notebook, "scroll-event",
+                    G_CALLBACK (gimp_image_window_page_scrolled),
                     window);
   gtk_widget_show (private->notebook);
 
@@ -2187,6 +2195,45 @@ gimp_image_window_page_reordered (GtkNotebook     *notebook,
   gtk_notebook_reorder_child (notebook, widget, page_num);
 }
 
+/* Restore GTK2 behavior of mouse-scrolling to switch between
+ * notebook tabs. References Geany's notebook_tab_bar_click_cb ()
+ * at https://github.com/geany/geany/blob/master/src/notebook.c
+ */
+static gboolean
+gimp_image_window_page_scrolled (GtkWidget       *widget,
+                                 GdkEventScroll  *event,
+                                 GimpImageWindow *window)
+{
+  GtkNotebook            *notebook = NULL;
+  GimpImageWindowPrivate *private  = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkWidget              *page     = NULL;
+
+  notebook = GTK_NOTEBOOK (private->notebook);
+
+  page = gtk_notebook_get_nth_page (notebook,
+                                    gtk_notebook_get_current_page (notebook));
+  if (! page)
+    return FALSE;
+
+  switch (event->direction)
+    {
+    case GDK_SCROLL_RIGHT:
+    case GDK_SCROLL_DOWN:
+      gtk_notebook_next_page (notebook);
+      break;
+
+    case GDK_SCROLL_LEFT:
+    case GDK_SCROLL_UP:
+      gtk_notebook_prev_page (notebook);
+      break;
+
+    default:
+      break;
+    }
+
+  return TRUE;
+}
+
 static void
 gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
 {
@@ -2466,6 +2513,11 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (gimp_image_window_shell_close_button_callback),
                             shell);
+
+  /* Enable mouse wheel scolling on image tabs */
+  gtk_widget_add_events (GTK_WIDGET (hbox), GDK_SCROLL_MASK);
+  gtk_widget_add_events (GTK_WIDGET (view), GDK_SCROLL_MASK);
+  gtk_widget_add_events (GTK_WIDGET (button), GDK_SCROLL_MASK);
 
   g_object_set_data (G_OBJECT (hbox), "close-button", button);
 
