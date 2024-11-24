@@ -40,9 +40,11 @@
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
+#include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimpprogress.h"
@@ -57,13 +59,17 @@ enum
 enum
 {
   PROP_0,
-  PROP_MASK
+  PROP_ID,
+  PROP_MASK,
+  N_PROPS
 };
 
 
 struct _GimpDrawableFilter
 {
   GimpFilter              parent_instance;
+
+  gint                    ID;
 
   GimpDrawable           *drawable;
   GimpChannel            *mask;
@@ -158,7 +164,8 @@ G_DEFINE_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP_TYPE_FILTER)
 
 #define parent_class gimp_drawable_filter_parent_class
 
-static guint drawable_filter_signals[LAST_SIGNAL] = { 0, };
+static guint       drawable_filter_signals[LAST_SIGNAL] = { 0, };
+static GParamSpec *drawable_filter_props[N_PROPS]       = { NULL, };
 
 
 static void
@@ -179,11 +186,16 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
   object_class->dispose      = gimp_drawable_filter_dispose;
   object_class->finalize     = gimp_drawable_filter_finalize;
 
-  g_object_class_install_property (object_class, PROP_MASK,
-                                   g_param_spec_object ("mask",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_CHANNEL,
-                                                        GIMP_PARAM_READWRITE));
+  drawable_filter_props[PROP_ID] = g_param_spec_int ("id", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     GIMP_PARAM_READABLE);
+
+  drawable_filter_props[PROP_MASK] = g_param_spec_object ("mask",
+                                                          NULL, NULL,
+                                                          GIMP_TYPE_CHANNEL,
+                                                          GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, drawable_filter_props);
 }
 
 static void
@@ -235,6 +247,9 @@ gimp_drawable_filter_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ID:
+      g_value_set_int (value, filter->ID);
+      break;
     case PROP_MASK:
       g_value_set_object (value, gimp_drawable_filter_get_mask (filter));
       break;
@@ -261,6 +276,13 @@ gimp_drawable_filter_finalize (GObject *object)
 {
   GimpDrawableFilter *drawable_filter = GIMP_DRAWABLE_FILTER (object);
 
+  if (drawable_filter->drawable)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable_filter->drawable));
+
+      gimp_id_table_remove (image->gimp->drawable_filter_table, drawable_filter->ID);
+    }
+
   g_clear_object (&drawable_filter->applicator);
   g_clear_object (&drawable_filter->drawable);
   g_clear_object (&drawable_filter->operation);
@@ -276,6 +298,7 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                           const gchar  *icon_name)
 {
   GimpDrawableFilter *filter;
+  GimpImage          *image;
   GeglNode           *node;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -290,6 +313,10 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 
   filter->drawable  = g_object_ref (drawable);
   filter->operation = g_object_ref (operation);
+
+  image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  filter->ID = gimp_id_table_insert (image->gimp->drawable_filter_table, filter);
+  g_object_notify_by_pspec (G_OBJECT (filter), drawable_filter_props[PROP_ID]);
 
   node = gimp_filter_get_node (GIMP_FILTER (filter));
 
@@ -439,6 +466,26 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
   g_free (operation);
 
   return filter;
+}
+
+gint
+gimp_drawable_filter_get_id (GimpDrawableFilter *filter)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), -1);
+
+  return filter->ID;
+}
+
+GimpDrawableFilter *
+gimp_drawable_filter_get_by_id (Gimp *gimp,
+                                gint  filter_id)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->drawable_filter_table == NULL)
+    return NULL;
+
+  return (GimpDrawableFilter *) gimp_id_table_lookup (gimp->drawable_filter_table, filter_id);
 }
 
 GimpDrawable *

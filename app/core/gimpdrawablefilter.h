@@ -58,6 +58,11 @@ GimpDrawableFilter *
            gimp_drawable_filter_duplicate      (GimpDrawable        *drawable,
                                                 GimpDrawableFilter  *prior_filter);
 
+gint       gimp_drawable_filter_get_id         (GimpDrawableFilter  *item);
+GimpDrawableFilter *
+           gimp_drawable_filter_get_by_id      (Gimp                *gimp,
+                                                gint                 filter_id);
+
 GimpDrawable *
            gimp_drawable_filter_get_drawable   (GimpDrawableFilter  *filter);
 GeglNode * gimp_drawable_filter_get_operation  (GimpDrawableFilter  *filter);
