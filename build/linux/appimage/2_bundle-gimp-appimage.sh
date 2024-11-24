@@ -260,7 +260,6 @@ if [ "$GIMP_UNSTABLE" ]; then
   bund_usr "$UNIX_PREFIX" "lib/libEGL*"
   bund_usr "$UNIX_PREFIX" "lib/libGL*"
   bund_usr "$UNIX_PREFIX" "lib/dri*"
-  conf_app LIBGL_DRIVERS_PATH "${LIB_DIR}/${LIB_SUBDIR}dri"
 fi
 ### FIXME: Debug dialog (NOT WORKING)
 #bund_usr "$UNIX_PREFIX" "bin/lldb*"
