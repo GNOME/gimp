@@ -155,6 +155,7 @@ typedef struct _GimpPlugInPrivate
   GHashTable *displays;
   GHashTable *images;
   GHashTable *items;
+  GHashTable *filters;
   GHashTable *resources;
 } GimpPlugInPrivate;
 
@@ -374,6 +375,7 @@ gimp_plug_in_finalize (GObject *object)
   gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  TRUE);
   gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    TRUE);
   gimp_plug_in_destroy_proxies (plug_in, priv->items,     "item",     TRUE);
+  gimp_plug_in_destroy_proxies (plug_in, priv->filters,   "filters",  TRUE);
   gimp_plug_in_destroy_proxies (plug_in, priv->resources, "resource", TRUE);
 
   gimp_plug_in_destroy_hashes (plug_in);
@@ -1808,6 +1810,40 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
     }
 
   return item;
+}
+
+GimpDrawableFilter *
+_gimp_plug_in_get_filter (GimpPlugIn *plug_in,
+                          gint32      filter_id)
+{
+  GimpPlugInPrivate  *priv;
+  GimpDrawableFilter *filter = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  priv = gimp_plug_in_get_instance_private (plug_in);
+
+  if (G_UNLIKELY (! priv->filters))
+    priv->filters =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  filter = g_hash_table_lookup (priv->filters, GINT_TO_POINTER (filter_id));
+
+  if (! filter)
+    {
+      filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
+                             "id", filter_id,
+                             NULL);
+
+      g_hash_table_insert (priv->filters,
+                           GINT_TO_POINTER (filter_id),
+                           filter);
+    }
+
+  return filter;
 }
 
 GimpResource *

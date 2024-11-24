@@ -677,6 +677,46 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 }
 
 /**
+ * gimp_drawable_get_filters:
+ * @drawable: The drawable.
+ *
+ * Returns the list of filters applied to the drawable.
+ *
+ * This procedure returns the list of filters which are currently
+ * applied non-destructively to @drawable. The order of filters is from
+ * topmost to bottommost.
+ *
+ * Returns: (element-type GimpDrawableFilter) (array zero-terminated=1) (transfer container):
+ *          The list of filters on the drawable.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
+ **/
+GimpDrawableFilter **
+gimp_drawable_get_filters (GimpDrawable *drawable)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter **filters = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-get-filters",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    filters = g_value_dup_boxed (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return filters;
+}
+
+/**
  * gimp_drawable_merge_filters:
  * @drawable: The drawable.
  *

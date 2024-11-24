@@ -63,6 +63,7 @@ gboolean                 gimp_drawable_mask_intersect        (GimpDrawable      
                                                               gint                       *y,
                                                               gint                       *width,
                                                               gint                       *height);
+GimpDrawableFilter**     gimp_drawable_get_filters           (GimpDrawable               *drawable);
 gboolean                 gimp_drawable_merge_filters         (GimpDrawable               *drawable);
 gboolean                 gimp_drawable_merge_shadow          (GimpDrawable               *drawable,
                                                               gboolean                    undo);

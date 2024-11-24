@@ -30,6 +30,7 @@
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpdisplay.h"
+#include "gimpdrawablefilter.h"
 #include "gimpgradient.h"
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"

@@ -111,6 +111,46 @@ CODE
     );
 }
 
+sub drawable_get_filters {
+    $blurb = 'Returns the list of filters applied to the drawable.';
+
+    $help = <<'HELP';
+This procedure returns the list of filters which are currently applied non-destructively to @drawable.
+The order of filters is from topmost to bottommost.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+        { name => 'drawable', type => 'drawable',
+          desc => 'The drawable' }
+    );
+
+    @outargs = (
+        { name => 'filters', type => 'filterarray',
+          desc => 'The list of filters on the drawable.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpContainer *container;
+  GList         *iter;
+  gsize          num_filters;
+  gint           i;
+
+  container   = gimp_drawable_get_filters (drawable);
+  num_filters = gimp_container_get_n_children (container);
+  filters     = g_new0 (GimpDrawableFilter *, num_filters + 1);
+
+  iter = GIMP_LIST (container)->queue->head;
+  for (i = 0; i < num_filters; i++, iter = iter->next)
+    filters[i] = iter->data;
+}
+CODE
+    );
+}
+
 sub drawable_merge_filters {
     $blurb = 'Merge the layer effect filters to the specified drawable.';
 
@@ -1024,10 +1064,13 @@ CODE
               "gegl/gimp-babl.h"
               "gegl/gimp-babl-compat.h"
               "core/gimp.h"
+              "core/gimpcontainer.h"
               "core/gimpchannel-select.h"
+              "core/gimpdrawablefilter.h"
               "core/gimpdrawable-filters.h"
               "core/gimpdrawable-offset.h"
               "core/gimpimage.h"
+              "core/gimplist.h"
               "core/gimptempbuf.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
@@ -1049,6 +1092,7 @@ CODE
             drawable_get_offsets
             drawable_mask_bounds
             drawable_mask_intersect
+            drawable_get_filters
             drawable_merge_filters
             drawable_merge_shadow
             drawable_free_shadow

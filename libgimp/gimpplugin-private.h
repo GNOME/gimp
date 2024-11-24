@@ -53,6 +53,9 @@ G_GNUC_INTERNAL GimpImage     * _gimp_plug_in_get_image              (GimpPlugIn
                                                                       gint32           image_id);
 G_GNUC_INTERNAL GimpItem      * _gimp_plug_in_get_item               (GimpPlugIn      *plug_in,
                                                                       gint32           item_id);
+G_GNUC_INTERNAL GimpDrawableFilter *
+                                _gimp_plug_in_get_filter             (GimpPlugIn      *plug_in,
+                                                                      gint32           filter_id);
 G_GNUC_INTERNAL GimpResource  * _gimp_plug_in_get_resource           (GimpPlugIn      *plug_in,
                                                                       gint32           resource_id);
 

@@ -433,6 +433,16 @@ gimp_param_spec_path ("$name",
                       $flags)
 CODE
     }
+    elsif ($pdbtype eq 'filter') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$pspec = <<CODE;
+gimp_param_spec_drawable_filter ("$name",
+                                 "$nick",
+                                 "$blurb",
+                                 $none_ok,
+                                 $flags)
+CODE
+    }
     elsif ($pdbtype eq 'display') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
@@ -772,6 +782,15 @@ gimp_param_spec_core_object_array ("$name",
                                    "$nick",
                                    "$blurb",
                                    GIMP_TYPE_PATH,
+                                   $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'filterarray') {
+	$pspec = <<CODE;
+gimp_param_spec_core_object_array ("$name",
+                                   "$nick",
+                                   "$blurb",
+                                   GIMP_TYPE_DRAWABLE_FILTER,
                                    $flags)
 CODE
     }

@@ -373,6 +373,18 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
+/*  Drawable Filter  */
+
+#define GIMP_VALUES_GET_DRAWABLE_FILTER(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_DRAWABLE_FILTER_ID(args, n) \
+  gimp_drawable_filter_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
+#define GIMP_VALUES_SET_DRAWABLE_FILTER(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+
 /*  file  */
 
 #define GIMP_VALUES_GET_FILE(args, n) \

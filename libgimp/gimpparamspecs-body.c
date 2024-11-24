@@ -879,6 +879,86 @@ gimp_param_spec_path (const gchar *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_DRAWABLE_FILTER
+ */
+
+static void   gimp_param_drawable_filter_class_init (GParamSpecClass *klass);
+static void   gimp_param_drawable_filter_init       (GParamSpec      *pspec);
+
+GType
+gimp_param_drawable_filter_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_drawable_filter_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecDrawableFilter),
+        0,
+        (GInstanceInitFunc) gimp_param_drawable_filter_init
+      };
+
+      type = g_type_register_static (G_TYPE_PARAM_OBJECT,
+                                     "GimpParamDrawableFilter", &info, 0);
+    }
+
+  return type;
+}
+
+static void
+gimp_param_drawable_filter_class_init (GParamSpecClass *klass)
+{
+  klass->value_type = GIMP_TYPE_DRAWABLE_FILTER;
+}
+
+static void
+gimp_param_drawable_filter_init (GParamSpec *pspec)
+{
+}
+
+/**
+ * gimp_param_spec_drawable_filter:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecDrawableFilter specifying a
+ * [type@DrawableFilter] property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer floating): The newly created #GimpParamSpecPath.
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_param_spec_drawable_filter (const gchar *name,
+                                 const gchar *nick,
+                                 const gchar *blurb,
+                                 gboolean     none_ok,
+                                 GParamFlags  flags)
+{
+  GimpParamSpecDrawableFilter *fspec;
+
+  fspec = g_param_spec_internal (GIMP_TYPE_PARAM_DRAWABLE_FILTER,
+                                 name, nick, blurb, flags);
+
+  g_return_val_if_fail (fspec, NULL);
+
+  fspec->none_ok = none_ok ? TRUE : FALSE;
+
+  return G_PARAM_SPEC (fspec);
+}
+
+
+/*
  * GIMP_TYPE_PARAM_DISPLAY
  */
 

@@ -36,6 +36,7 @@
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable-fill.h"
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawable-foreground-extract.h"
@@ -43,7 +44,9 @@
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpdrawable-shadow.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptempbuf.h"
 #include "gegl/gimp-babl-compat.h"
@@ -594,6 +597,46 @@ drawable_mask_intersect_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 4), width);
       g_value_set_int (gimp_value_array_index (return_vals, 5), height);
     }
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_get_filters_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawable *drawable;
+  GimpDrawableFilter **filters = NULL;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpContainer *container;
+      GList         *iter;
+      gsize          num_filters;
+      gint           i;
+
+      container   = gimp_drawable_get_filters (drawable);
+      num_filters = gimp_container_get_n_children (container);
+      filters     = g_new0 (GimpDrawableFilter *, num_filters + 1);
+
+      iter = GIMP_LIST (container)->queue->head;
+      for (i = 0; i < num_filters; i++, iter = iter->next)
+        filters[i] = iter->data;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_boxed (gimp_value_array_index (return_vals, 1), filters);
 
   return return_vals;
 }
@@ -1552,6 +1595,35 @@ register_drawable_procs (GimpPDB *pdb)
                                                      "height of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-get-filters
+   */
+  procedure = gimp_procedure_new (drawable_get_filters_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-filters");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the list of filters applied to the drawable.",
+                                  "This procedure returns the list of filters which are currently applied non-destructively to @drawable. The order of filters is from topmost to bottommost.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_core_object_array ("filters",
+                                                                      "filters",
+                                                                      "The list of filters on the drawable.",
+                                                                      GIMP_TYPE_DRAWABLE_FILTER,
+                                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

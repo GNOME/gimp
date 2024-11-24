@@ -637,6 +637,17 @@ get_item_by_id (gpointer gimp,
 #endif
 }
 
+static GimpDrawableFilter *
+get_filter_by_id (gpointer gimp,
+                  gint     id)
+{
+#ifdef LIBGIMP_COMPILATION
+  return gimp_drawable_filter_get_by_id (id);
+#else
+  return gimp_drawable_filter_get_by_id (gimp, id);
+#endif
+}
+
 static GimpDisplay *
 get_display_by_id (gpointer gimp,
                    gint     id)
@@ -937,6 +948,10 @@ gimp_gp_param_to_value (gpointer        gimp,
             {
               objects[i] = (GObject *) get_item_by_id (gimp, id);
             }
+          else if (g_type_is_a (object_type, GIMP_TYPE_DRAWABLE_FILTER))
+            {
+              objects[i] = (GObject *) get_filter_by_id (gimp, id);
+            }
           else if (g_type_is_a (object_type, GIMP_TYPE_DISPLAY))
             {
               objects[i] = (GObject *) get_display_by_id (gimp, id);
@@ -959,6 +974,10 @@ gimp_gp_param_to_value (gpointer        gimp,
   else if (GIMP_VALUE_HOLDS_ITEM (value))
     {
       g_value_set_object (value, get_item_by_id (gimp, param->data.d_int));
+    }
+  else if (GIMP_VALUE_HOLDS_DRAWABLE_FILTER (value))
+    {
+      g_value_set_object (value, get_filter_by_id (gimp, param->data.d_int));
     }
   else if (GIMP_VALUE_HOLDS_DISPLAY (value))
     {
@@ -1390,6 +1409,10 @@ gimp_value_to_gp_param (const GValue *value,
                 {
                   element_type = GIMP_TYPE_ITEM;
                 }
+              else if (GIMP_IS_DRAWABLE_FILTER (array[i]))
+                {
+                  element_type = GIMP_TYPE_DRAWABLE_FILTER;
+                }
               else if (GIMP_IS_DISPLAY (array[i]))
                 {
                   element_type = GIMP_TYPE_DISPLAY;
@@ -1431,6 +1454,11 @@ gimp_value_to_gp_param (const GValue *value,
                   param->data.d_id_array.data[i] =
                     gimp_item_get_id (GIMP_ITEM (array[i]));
                 }
+              else if (GIMP_IS_DRAWABLE_FILTER (array[i]))
+                {
+                  param->data.d_id_array.data[i] =
+                    gimp_drawable_filter_get_id (GIMP_DRAWABLE_FILTER (array[i]));
+                }
               else if (GIMP_IS_DISPLAY (array[i]))
                 {
                   param->data.d_id_array.data[i] =
@@ -1470,6 +1498,14 @@ gimp_value_to_gp_param (const GValue *value,
       param->param_type = GP_PARAM_TYPE_INT;
 
       param->data.d_int = item ? gimp_item_get_id (item) : -1;
+    }
+  else if (GIMP_VALUE_HOLDS_DRAWABLE_FILTER (value))
+    {
+      GimpDrawableFilter *filter = g_value_get_object (value);
+
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = filter ? gimp_drawable_filter_get_id (filter) : -1;
     }
   else if (GIMP_VALUE_HOLDS_DISPLAY (value))
     {

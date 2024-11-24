@@ -12,6 +12,7 @@ pdb_names = [
   'display',
   'drawable_color',
   'drawable_edit',
+  'drawable_filter',
   'drawable_select',
   'drawable',
   'dynamics',

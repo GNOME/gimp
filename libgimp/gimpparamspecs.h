@@ -241,6 +241,35 @@ GParamSpec * gimp_param_spec_path     (const gchar  *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_DRAWABLE_FILTER
+ */
+
+#define GIMP_VALUE_HOLDS_DRAWABLE_FILTER(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
+                                                                            GIMP_TYPE_DRAWABLE_FILTER))
+
+#define GIMP_TYPE_PARAM_DRAWABLE_FILTER           (gimp_param_drawable_filter_get_type ())
+#define GIMP_PARAM_SPEC_DRAWABLE_FILTER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_DRAWABLE_FILTER, GimpParamSpecDrawableFilter))
+#define GIMP_IS_PARAM_SPEC_DRAWABLE_FILTER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DRAWABLE_FILTER))
+
+typedef struct _GimpParamSpecDrawableFilter GimpParamSpecDrawableFilter;
+
+struct _GimpParamSpecDrawableFilter
+{
+  GParamSpecObject  parent_instance;
+
+  gboolean          none_ok;
+};
+
+GType        gimp_param_drawable_filter_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_drawable_filter     (const gchar  *name,
+                                                  const gchar  *nick,
+                                                  const gchar  *blurb,
+                                                  gboolean      none_ok,
+                                                  GParamFlags   flags);
+
+
+/*
  * GIMP_TYPE_PARAM_DISPLAY
  */
 
