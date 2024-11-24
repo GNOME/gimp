@@ -29,6 +29,13 @@ GimpColorNotebook tab {
     padding: 0 0 0 0;
 }
 
+/* Define colors so the nib handle appears in Gimp Ink Options */
+GimpBlobEditor {
+  color: @theme_fg_color;
+  background-color: @theme_bg_color;
+  border: 0.1em solid @theme_fg_color;
+}
+
 GimpDock entry,
 GimpDock spinbutton,
 GimpDock GimpColorNotebook spinbutton,
