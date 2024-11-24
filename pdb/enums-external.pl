@@ -1,5 +1,6 @@
     GeglDistanceMetric =>
 	{ contig => 1,
+	  header => '',
 	  external => 1,
 	  symbols => [ qw(GEGL_DISTANCE_METRIC_EUCLIDEAN
 			  GEGL_DISTANCE_METRIC_MANHATTAN
