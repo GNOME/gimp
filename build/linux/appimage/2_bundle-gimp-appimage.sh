@@ -211,8 +211,6 @@ prep_pkg "libxapp-gtk3-module"
 bund_usr "$UNIX_PREFIX" "lib/gtk-*" --go
 conf_app GTK_PATH "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0"
 conf_app GTK_IM_MODULE_FILE "${LIB_DIR}/${LIB_SUBDIR}gtk-3.0/*.*.*"
-### FIXME: GTK theming support (NOT WORKING)
-#bund_usr "$UNIX_PREFIX" "bin/gsettings"
 
 ## Core features
 bund_usr "$GIMP_PREFIX" "lib/libbabl*"

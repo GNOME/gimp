@@ -23,7 +23,6 @@ export GDK_PIXBUF_MODULEDIR="$HERE"/GDK_PIXBUF_MODULEDIR_WILD/loaders
 export GDK_PIXBUF_MODULE_FILE="$HERE"/GDK_PIXBUF_MODULE_FILE_WILD/loaders.cache
 export GTK_PATH="$HERE"/GTK_PATH_WILD
 export GTK_IM_MODULE_FILE="$HERE"/GTK_IM_MODULE_FILE_WILD/immodules.cache
-#export GTK_THEME=$(eval "$LD_LINUX" "$HERE"/usr/bin/gsettings get org.gnome.desktop.interface gtk-theme)
 
 ## GIMP-specific paths
 export BABL_PATH="$HERE"/BABL_PATH_WILD
