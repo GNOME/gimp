@@ -290,7 +290,7 @@ gimp-debian-x64:
     - ninja test
     # Check source
     - if [ $(git diff |wc -l) -ne 0 ]; then
-        echo "ERROR: a generated file was updated without the source:";
+        echo "ERROR. A generated file was updated without the source:";
         git diff;
         exit 1;
       fi
