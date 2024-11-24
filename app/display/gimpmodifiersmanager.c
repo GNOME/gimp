@@ -565,35 +565,35 @@ gimp_modifiers_manager_initialize (GimpModifiersManager *manager,
         {
           /* The default mapping for second (middle) button which had no explicit configuration. */
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = GDK_MOD1_MASK;
           mapping->mod_action = GIMP_MODIFIER_ACTION_LAYER_PICKING;
           gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = gimp_get_extend_selection_mask () | GDK_CONTROL_MASK;
           mapping->mod_action = GIMP_MODIFIER_ACTION_STEP_ROTATING;
           gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = gimp_get_extend_selection_mask ();
           mapping->mod_action = GIMP_MODIFIER_ACTION_ROTATING;
           gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = gimp_get_toggle_behavior_mask ();
           mapping->mod_action = GIMP_MODIFIER_ACTION_ZOOMING;
           gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = 0;
           mapping->mod_action = GIMP_MODIFIER_ACTION_PANNING;
           gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
@@ -604,14 +604,14 @@ gimp_modifiers_manager_initialize (GimpModifiersManager *manager,
         {
           /* The default mapping for third button which had no explicit configuration. */
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = GDK_MOD1_MASK;
           mapping->mod_action = GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
           gimp_modifiers_manager_get_keys (device, 3, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new0 (GimpModifierMapping);
           mapping->modifiers  = 0;
           mapping->mod_action = GIMP_MODIFIER_ACTION_MENU;
           gimp_modifiers_manager_get_keys (device, 3, mapping->modifiers,
