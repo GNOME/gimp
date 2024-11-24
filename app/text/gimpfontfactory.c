@@ -1014,10 +1014,12 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
   if (n_ignored > 0)
     {
-      if (g_getenv ("GIMP_DEBUG_FONTS") == NULL)
-        g_printerr ("%s: %d unsupported fonts were ignored. Set the GIMP_DEBUG_FONTS environment variable for a listing.\n", G_STRFUNC, n_ignored);
+      if (g_getenv ("GIMP_DEBUG_FONTS") != NULL)
+        g_printerr ("%s: %d unsupported fonts were ignored: \n%s", G_STRFUNC, n_ignored, ignored_fonts->str);
+#if defined (GIMP_UNSTABLE) || ! defined (GIMP_RELEASE)
       else
-        g_printerr ("%s: %d unsupported fonts were ignored: %s", G_STRFUNC, n_ignored, ignored_fonts->str);
+        g_printerr ("%s: %d unsupported fonts were ignored. Set the GIMP_DEBUG_FONTS environment variable for a listing.\n", G_STRFUNC, n_ignored);
+#endif
     }
 
   g_string_free (ignored_fonts, TRUE);
