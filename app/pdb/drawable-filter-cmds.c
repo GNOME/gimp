@@ -73,6 +73,120 @@ drawable_filter_id_is_valid_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_filter_get_name_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter;
+  gchar *name = NULL;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (filter)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_get_operation_name_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter;
+  gchar *name = NULL;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GeglNode *node;
+
+      node = gimp_drawable_filter_get_operation (filter);
+      name = g_strdup (gegl_node_get_operation (node));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_get_visible_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter;
+  gboolean visible = FALSE;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      visible = gimp_filter_get_active (GIMP_FILTER (filter));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), visible);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_set_visible_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawableFilter *filter;
+  gboolean visible;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+  visible = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_filter_set_active (GIMP_FILTER (filter), visible);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 drawable_filter_delete_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
@@ -137,6 +251,126 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                          "Whether the filter ID is valid",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-name
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get a drawable filter's name.",
+                                  "This procedure returns the specified filter's name.\n"
+                                  "Since it is not possible to set a drawable filter's name yet, this will be the operation's name. Eventually this filter's name will be a free form field so do not rely on this information for any processing.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter whose name you want",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The filter's name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-operation-name
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_operation_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-operation-name");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get a drawable filter's operation name.",
+                                  "This procedure returns the specified filter's operation name.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter whose operation name you want",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The filter's operation name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-visible
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-visible");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the visibility of the specified filter.",
+                                  "This procedure returns the specified filter's visibility.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("visible",
+                                                         "visible",
+                                                         "The filter visibility",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-set-visible
+   */
+  procedure = gimp_procedure_new (drawable_filter_set_visible_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-set-visible");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the visibility of the specified filter.",
+                                  "This procedure sets the specified filter's visibility.\n"
+                                  "The drawable won't be immediately rendered. Use [method@Gimp.Drawable.update] to trigger an update.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("visible",
+                                                     "visible",
+                                                     "The new filter visibility",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

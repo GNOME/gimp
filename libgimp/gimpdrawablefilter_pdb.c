@@ -74,6 +74,160 @@ gimp_drawable_filter_id_is_valid (gint filter_id)
 }
 
 /**
+ * gimp_drawable_filter_get_name:
+ * @filter: The filter whose name you want.
+ *
+ * Get a drawable filter's name.
+ *
+ * This procedure returns the specified filter's name.
+ * Since it is not possible to set a drawable filter's name yet, this
+ * will be the operation's name. Eventually this filter's name will be
+ * a free form field so do not rely on this information for any
+ * processing.
+ *
+ * Returns: (transfer full): The filter's name.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
+ **/
+gchar *
+gimp_drawable_filter_get_name (GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *name = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-name",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return name;
+}
+
+/**
+ * gimp_drawable_filter_get_operation_name:
+ * @filter: The filter whose operation name you want.
+ *
+ * Get a drawable filter's operation name.
+ *
+ * This procedure returns the specified filter's operation name.
+ *
+ * Returns: (transfer full): The filter's operation name.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
+ **/
+gchar *
+gimp_drawable_filter_get_operation_name (GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *name = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-operation-name",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return name;
+}
+
+/**
+ * gimp_drawable_filter_get_visible:
+ * @filter: The filter.
+ *
+ * Get the visibility of the specified filter.
+ *
+ * This procedure returns the specified filter's visibility.
+ *
+ * Returns: The filter visibility.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_drawable_filter_get_visible (GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean visible = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-visible",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    visible = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return visible;
+}
+
+/**
+ * gimp_drawable_filter_set_visible:
+ * @filter: The filter.
+ * @visible: The new filter visibility.
+ *
+ * Set the visibility of the specified filter.
+ *
+ * This procedure sets the specified filter's visibility.
+ * The drawable won't be immediately rendered. Use
+ * [method@Gimp.Drawable.update] to trigger an update.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_drawable_filter_set_visible (GimpDrawableFilter *filter,
+                                  gboolean            visible)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_BOOLEAN, visible,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-set-visible",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_filter_delete:
  * @filter: The filter to delete.
  *

@@ -44,6 +44,122 @@ CODE
     );
 }
 
+sub drawable_filter_get_name {
+    $blurb = 'Get a drawable filter\'s name.';
+
+    $help = <<'HELP';
+This procedure returns the specified filter's name.
+
+Since it is not possible to set a drawable filter's name yet, this will
+be the operation's name. Eventually this filter's name will be a free
+form field so do not rely on this information for any processing.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter whose name you want' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The filter's name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (filter)));
+}
+CODE
+    );
+}
+
+sub drawable_filter_get_operation_name {
+    $blurb = 'Get a drawable filter\'s operation name.';
+
+    $help = <<'HELP';
+This procedure returns the specified filter's operation name.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter whose operation name you want' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The filter's operation name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GeglNode *node;
+
+  node = gimp_drawable_filter_get_operation (filter);
+  name = g_strdup (gegl_node_get_operation (node));
+}
+CODE
+    );
+}
+
+sub drawable_filter_get_visible {
+    $blurb = "Get the visibility of the specified filter.";
+
+    $help = "This procedure returns the specified filter's visibility.";
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter' }
+    );
+
+    @outargs = (
+	{ name => 'visible', type => 'boolean',
+	  desc => "The filter visibility" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  visible = gimp_filter_get_active (GIMP_FILTER (filter));
+}
+CODE
+    );
+}
+
+sub drawable_filter_set_visible {
+    $blurb = "Set the visibility of the specified filter.";
+
+    $help = <<'HELP';
+This procedure sets the specified filter's visibility.
+
+The drawable won't be immediately rendered. Use [method@Gimp.Drawable.update] to trigger an update.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter' },
+	{ name => 'visible', type => 'boolean',
+	  desc => "The new filter visibility" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_filter_set_active (GIMP_FILTER (filter), visible);
+}
+CODE
+    );
+}
+
 sub drawable_filter_delete {
     $blurb = 'Delete a drawable filter.';
 
@@ -91,6 +207,10 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(drawable_filter_id_is_valid
+            drawable_filter_get_name
+            drawable_filter_get_operation_name
+            drawable_filter_get_visible
+            drawable_filter_set_visible
             drawable_filter_delete);
 
 %exports = (app => [@procs], lib => [@procs]);

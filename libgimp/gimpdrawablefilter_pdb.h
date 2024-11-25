@@ -32,8 +32,13 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_drawable_filter_id_is_valid (gint                filter_id);
-gboolean gimp_drawable_filter_delete      (GimpDrawableFilter *filter);
+gboolean gimp_drawable_filter_id_is_valid        (gint                filter_id);
+gchar*   gimp_drawable_filter_get_name           (GimpDrawableFilter *filter);
+gchar*   gimp_drawable_filter_get_operation_name (GimpDrawableFilter *filter);
+gboolean gimp_drawable_filter_get_visible        (GimpDrawableFilter *filter);
+gboolean gimp_drawable_filter_set_visible        (GimpDrawableFilter *filter,
+                                                  gboolean            visible);
+gboolean gimp_drawable_filter_delete             (GimpDrawableFilter *filter);
 
 
 G_END_DECLS
