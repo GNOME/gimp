@@ -211,6 +211,7 @@ EXPORTS
 	gimp_drawable_equalize
 	gimp_drawable_extract_component
 	gimp_drawable_fill
+	gimp_drawable_filter_delete
 	gimp_drawable_filter_get_by_id
 	gimp_drawable_filter_get_id
 	gimp_drawable_filter_get_type

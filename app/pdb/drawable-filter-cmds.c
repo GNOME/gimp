@@ -29,12 +29,18 @@
 
 #include "pdb-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawablefilter.h"
+#include "core/gimpimage-undo-push.h"
+#include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
+
+#include "gimp-intl.h"
 
 
 static GimpValueArray *
@@ -64,6 +70,40 @@ drawable_filter_id_is_valid_invoker (GimpProcedure         *procedure,
     g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
 
   return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_delete_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawableFilter *filter;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpDrawable *drawable = gimp_drawable_filter_get_drawable (filter);
+
+      if (drawable && gimp_drawable_has_filter (drawable, GIMP_FILTER (filter)))
+        {
+          gimp_image_undo_push_filter_remove (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                              _("Remove filter"), drawable, filter);
+
+          gimp_drawable_filter_abort (filter);
+        }
+      else
+        {
+          g_clear_object (&filter);
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 void
@@ -97,6 +137,30 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                          "Whether the filter ID is valid",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-delete
+   */
+  procedure = gimp_procedure_new (drawable_filter_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-delete");
+  gimp_procedure_set_static_help (procedure,
+                                  "Delete a drawable filter.",
+                                  "This procedure deletes the specified filter. This must not be done if the drawable whose this filter was applied to was already deleted or if the drawable was already removed from the image.\n"
+                                  "Do not use anymore the @filter object after having deleted it.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter to delete",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

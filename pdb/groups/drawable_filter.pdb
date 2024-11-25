@@ -44,9 +44,54 @@ CODE
     );
 }
 
-@headers = qw("core/gimpdrawablefilter.h");
+sub drawable_filter_delete {
+    $blurb = 'Delete a drawable filter.';
 
-@procs = qw(drawable_filter_id_is_valid);
+    $help = <<'HELP';
+This procedure deletes the specified filter. This must not be done if the
+drawable whose this filter was applied to was already deleted or if the
+drawable was already removed from the image.
+
+Do not use anymore the @filter object after having deleted it.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter to delete' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpDrawable *drawable = gimp_drawable_filter_get_drawable (filter);
+
+  if (drawable && gimp_drawable_has_filter (drawable, GIMP_FILTER (filter)))
+    {
+      gimp_image_undo_push_filter_remove (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                          _("Remove filter"), drawable, filter);
+
+      gimp_drawable_filter_abort (filter);
+    }
+  else
+    {
+      g_clear_object (&filter);
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimpcontainer.h"
+              "core/gimpdrawablefilter.h"
+              "core/gimpdrawable-filters.h"
+              "core/gimpimage-undo-push.h"
+              "core/gimpitem.h"
+              "gimp-intl.h");
+
+@procs = qw(drawable_filter_id_is_valid
+            drawable_filter_delete);
 
 %exports = (app => [@procs], lib => [@procs]);
 
