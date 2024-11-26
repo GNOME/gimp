@@ -2324,22 +2324,34 @@ xcf_load_channel_props (XcfInfo      *info,
 
         case PROP_COLOR:
           {
-            guchar col[3];
+            guchar  col[3];
+            gdouble opacity;
+
+            /* Load existing opacity */
+            opacity = gimp_channel_get_opacity (*channel);
 
             xcf_read_int8 (info, (guint8 *) col, 3);
 
             gegl_color_set_pixel ((*channel)->color, babl_format ("R'G'B' u8"), col);
+
+            gimp_channel_set_opacity (*channel, opacity, FALSE);
           }
           break;
 
         case PROP_FLOAT_COLOR:
           {
-            gfloat col[3];
+            gfloat  col[3];
+            gdouble opacity;
+
+            /* Load existing opacity */
+            opacity = gimp_channel_get_opacity (*channel);
 
             xcf_read_float (info, col, 3);
 
             /* TODO: is the channel color in sRGB or in the image's color space? */
             gegl_color_set_pixel ((*channel)->color, babl_format ("R'G'B' float"), col);
+
+            gimp_channel_set_opacity (*channel, opacity, FALSE);
           }
           break;
 
