@@ -285,6 +285,12 @@ bund_usr "$GIMP_PREFIX" "share/applications/org.gimp.GIMP.desktop"
 "./$go_appimagetool" -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop &> appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully)
+### Remove unnecessary files bunbled by go-appimagetool
+rm -r $APP_DIR/${LIB_DIR}/${LIB_SUBDIR}gconv
+rm -r $APP_DIR/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+wipe_usr share/doc
+wipe_usr share/themes
+rm -r $APP_DIR/etc
 ### Ensure that LD is in right dir
 cp -r $APP_DIR/lib64 $USR_DIR
 rm -r $APP_DIR/lib64
@@ -298,12 +304,40 @@ done
 ### Undo the mess that go-appimagetool makes on the prefix which breaks babl and GEGL
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
-### Remove unnecessary files bunbled by go-appimagetool
-wipe_usr ${LIB_DIR}/${LIB_SUBDIR}gconv
-wipe_usr ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
-wipe_usr share/doc
-wipe_usr share/themes
-rm -r $APP_DIR/etc
+lib_array=($(find $USR_DIR -iname *.so* -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF | sort -r))
+rpath_array=()
+for lib in "${lib_array[@]}"; do
+  if [[ ! "$lib" =~ 'ELF' ]] && [[ ! "$lib" =~ 'python' ]]; then
+    element=${lib%/*}
+    if [ "$element" != "$previous_element" ]; then
+      rpath_array+=($element)
+    fi
+    export previous_element=$element
+  fi
+done
+fix_rpath ()
+{
+  if [[ ! "$1" =~ 'ELF' ]]; then
+    echo "removing rpath of $1"
+    patchelf --remove-rpath $1
+    for rpath in "${rpath_array[@]}"; do
+      existing_rpath=$(objdump -x $1 | grep 'R.*PATH' | sed -e 's/RUNPATH//g' -e 's/ //g')
+      added_rpath="$(realpath --relative-to=${1%/*} $rpath)"
+      if [ "$added_rpath" != "$previous_added_rpath" ]; then
+        patchelf --set-rpath $(echo "$existing_rpath:\$ORIGIN/$added_rpath" | sed 's/^://') $1
+      fi
+      export previous_added_rpath="$added_rpath"
+    done
+    echo "final path is $(objdump -x $1 | grep 'R.*PATH' | sed -e 's/RUNPATH//g' -e 's/ //g')"
+    echo "---------------"
+  fi
+}
+for lib in "${lib_array[@]}"; do
+  fix_rpath $lib
+done
+for exec in "${exec_array[@]}"; do
+  fix_rpath $exec
+done
 
 
 # FINISH APPIMAGE
