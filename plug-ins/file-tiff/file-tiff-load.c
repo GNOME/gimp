@@ -1303,8 +1303,8 @@ load_image (GimpProcedure        *procedure,
 
       /* any resolution info in the file? */
       {
-        gdouble   xres      = 72.0;
-        gdouble   yres      = 72.0;
+        gfloat    xres      = 72.0;
+        gfloat    yres      = 72.0;
         gushort   read_unit = RESUNIT_NONE;
         GimpUnit *unit      = gimp_unit_pixel (); /* invalid unit */
 
@@ -1360,6 +1360,7 @@ load_image (GimpProcedure        *procedure,
              * the resolution at all. Gimp will then use the default
              * set by the user
              */
+
             if (read_unit != RESUNIT_NONE)
               {
                 if (! isfinite (xres) ||
@@ -1367,11 +1368,17 @@ load_image (GimpProcedure        *procedure,
                     ! isfinite (yres) ||
                     yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
                   {
+                    gdouble default_xres = 0.0;
+                    gdouble default_yres = 0.0;
+
                     g_message (_("Invalid image resolution info, using default"));
                     /* We need valid xres and yres for computing
                      * layer_offset_x_pixel and layer_offset_y_pixel.
                      */
-                    gimp_image_get_resolution (*image, &xres, &yres);
+                    gimp_image_get_resolution (*image,
+                                               &default_xres, &default_yres);
+                    xres = (gfloat) default_xres;
+                    yres = (gfloat) default_yres;
                   }
                 else
                   {
