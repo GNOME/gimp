@@ -358,6 +358,7 @@ gimp_color_select_init (GimpColorSelect *select)
   GtkWidget              *hbox;
   GtkWidget              *frame;
   GtkWidget              *vbox;
+  GtkWidget              *grid;
   GEnumClass             *model_class;
   GEnumClass             *channel_class;
   const GimpEnumDesc     *enum_desc;
@@ -506,20 +507,28 @@ gimp_color_select_init (GimpColorSelect *select)
       }
     }
 
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 1);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 1);
+  gtk_box_pack_start (GTK_BOX (select), grid, FALSE, FALSE, 0);
+  gtk_widget_set_visible (grid, TRUE);
+
   select->label = gtk_label_new (NULL);
   gtk_widget_set_halign (select->label, GTK_ALIGN_START);
   gtk_widget_set_vexpand (select->label, FALSE);
+  gtk_label_set_ellipsize (GTK_LABEL (select->label), PANGO_ELLIPSIZE_END);
   gtk_label_set_justify (GTK_LABEL (select->label), GTK_JUSTIFY_LEFT);
-  gimp_color_select_set_label (select);
-  gtk_box_pack_start (GTK_BOX (select), select->label, FALSE, FALSE, 0);
+  gtk_grid_attach (GTK_GRID (grid), select->label, 0, 0, 1, 1);
   gtk_widget_show (select->label);
+  gimp_color_select_set_label (select);
 
   select->simulation_label = gtk_label_new (NULL);
   gtk_widget_set_halign (select->simulation_label, GTK_ALIGN_START);
   gtk_widget_set_vexpand (select->simulation_label, FALSE);
+  gtk_label_set_ellipsize (GTK_LABEL (select->simulation_label), PANGO_ELLIPSIZE_END);
   gtk_label_set_justify (GTK_LABEL (select->simulation_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_markup (GTK_LABEL (select->simulation_label), _("Soft-Proof Profile: <i>unknown</i>"));
-  gtk_box_pack_start (GTK_BOX (select), select->simulation_label, FALSE, FALSE, 0);
+  gtk_grid_attach (GTK_GRID (grid), select->simulation_label, 0, 1, 1, 1);
 
   g_type_class_unref (model_class);
   g_type_class_unref (channel_class);
