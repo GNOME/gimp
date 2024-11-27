@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-10-08 16:13+0000\n"
-"PO-Revision-Date: 2024-10-10 11:34+0800\n"
+"POT-Creation-Date: 2024-11-10 15:36+0000\n"
+"PO-Revision-Date: 2024-11-28 03:47+0800\n"
 "Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -181,7 +181,7 @@ msgstr "裁切圖層"
 
 #: ../libgimp/gimpexport.c:445
 msgid "Resize Image to Layers"
-msgstr "重新將影像尺寸調整為圖層大小"
+msgstr "影像調整為圖層尺寸"
 
 #: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
@@ -259,6 +259,7 @@ msgid "Gradient Selection"
 msgstr "漸層選取"
 
 #: ../libgimp/gimpimagemetadata.c:685
+#| msgid "GIMP 2.9/2.10"
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
@@ -456,7 +457,7 @@ msgstr "選取區域(_S)"
 #: ../libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
-msgstr "圖層的灰階複本(_G)"
+msgstr "圖層的灰階副本(_G)"
 
 #: ../libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
@@ -884,7 +885,7 @@ msgstr "球體（減）"
 #: ../libgimpbase/gimpbaseenums.c:728
 msgctxt "gradient-segment-type"
 msgid "Step"
-msgstr "步進"
+msgstr "步階"
 
 #: ../libgimpbase/gimpbaseenums.c:766
 msgctxt "gradient-type"
@@ -1307,7 +1308,7 @@ msgstr "HSV 明度"
 #: ../libgimpbase/gimpbaseenums.c:1659
 msgctxt "select-criterion"
 msgid "Alpha"
-msgstr "透度 (Alpha)"
+msgstr "Alpha 透度"
 
 #: ../libgimpbase/gimpbaseenums.c:1660
 msgctxt "select-criterion"
@@ -1332,7 +1333,7 @@ msgstr "像素"
 #: ../libgimpbase/gimpbaseenums.c:1692
 msgctxt "size-type"
 msgid "Points"
-msgstr "pt 點"
+msgstr "Pt 點"
 
 #: ../libgimpbase/gimpbaseenums.c:1753
 msgctxt "stroke-method"
@@ -1357,22 +1358,22 @@ msgstr "由右至左"
 #: ../libgimpbase/gimpbaseenums.c:1789
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr "垂直，由右向左（混合方向）"
+msgstr "垂直，由右至左（混合方向）"
 
 #: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "垂直，由右向左（直書方向）"
+msgstr "垂直，由右至左（直書方向）"
 
 #: ../libgimpbase/gimpbaseenums.c:1791
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr "垂直，由左向右（混合方向）"
+msgstr "垂直，由左至右（混合方向）"
 
 #: ../libgimpbase/gimpbaseenums.c:1792
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
-msgstr "垂直，由左向右（直書方向）"
+msgstr "垂直，由左至右（直書方向）"
 
 #: ../libgimpbase/gimpbaseenums.c:1823
 msgctxt "text-hint-style"
@@ -1636,7 +1637,7 @@ msgid ""
 "device profile. "
 msgstr ""
 "當軟校樣要從影像的色彩空間，轉換到另一種色彩空間時，所採用的色彩描述檔；包含"
-"軟校樣至印表機，或其他輸出裝置的描述檔。 "
+"軟校樣至印表機，或其他輸出裝置的描述檔。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1665,13 +1666,13 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
-"顏色要如何從您影像的色彩空間，轉換為輸出模擬裝置（通常是您的螢幕）。請每一個"
-"都嘗試看看，接著選出看起來最好的。 "
+"顏色要如何從您影像的色彩空間，轉換到輸出模擬裝置（通常是您的螢幕）。請每一個"
+"都嘗試看看，接著選出看起來最好的。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
-msgstr "嘗試有用或沒有用黑點補償，並選出看起來最好的。 "
+msgstr "嘗試有用或沒有用黑點補償，並選出看起來最好的。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
@@ -1691,12 +1692,12 @@ msgstr "這個顏色用來標記超出色域的顏色。"
 #: ../libgimpconfig/gimpcolorconfig.c:114
 msgid ""
 "When enabled, set the color scales to display 0...255 instead of percentages"
-msgstr "當啟用時，設定顏色尺度為顯示 0...255 而不是百分比。"
+msgstr "當啟用時，將顏色尺度設定為顯示 0...255 而不是百分比"
 
 #: ../libgimpconfig/gimpcolorconfig.c:118
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
-msgstr "當啟用時，設定顏色尺度顯示 HSV 混合模式而不是 LCh 模式。"
+msgstr "當啟用時，將顏色尺度設定為顯示 HSV 混合模式，而不是 LCh 模式"
 
 #: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
@@ -1835,7 +1836,7 @@ msgstr "寫入「%s」時發生錯誤：%s"
 #: ../libgimpconfig/gimpconfigwriter.c:183
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "無法為「%s」建立目錄「%s」："
+msgstr "無法為「%2$s」建立「%1$s」目錄："
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
@@ -2431,17 +2432,17 @@ msgstr "CMYK"
 #. Cyan
 #: ../modules/color-selector-cmyk.c:138
 msgid "_C"
-msgstr "青(_C)"
+msgstr "_C"
 
 #. Magenta
 #: ../modules/color-selector-cmyk.c:140
 msgid "_M"
-msgstr "洋(_M)"
+msgstr "_M"
 
 #. Yellow
 #: ../modules/color-selector-cmyk.c:142
 msgid "_Y"
-msgstr "黃(_Y)"
+msgstr "_Y"
 
 #. Key (Black)
 #: ../modules/color-selector-cmyk.c:144
@@ -2462,7 +2463,7 @@ msgstr "黃"
 
 #: ../modules/color-selector-cmyk.c:151
 msgid "Black"
-msgstr "黑色"
+msgstr "黑"
 
 #: ../modules/color-selector-cmyk.c:374
 msgid "Profile: (none)"
@@ -2952,6 +2953,391 @@ msgstr "對比循環數"
 msgid "Contrast"
 msgstr "對比"
 
+#~ msgid "Browse..."
+#~ msgstr "瀏覽..."
+
+#, c-format
+#~ msgid "%s plug-in can't handle layer effects"
+#~ msgstr "%s 外掛元件無法處理圖層效果"
+
+#~ msgid "Merge Layer Effects"
+#~ msgstr "合併可見圖層效果"
+
+#~ msgid "Save _Exif"
+#~ msgstr "儲存 _Exif"
+
+#~ msgid "Save Exif (Exchangeable image file format) metadata"
+#~ msgstr ""
+#~ "儲存 Exif（可交換影像檔格式, Exchangeable image file format） 中介資料"
+
+#~ msgid "Save _IPTC"
+#~ msgstr "儲存 _IPTC"
+
+#~ msgid "Save IPTC (International Press Telecommunications Council) metadata"
+#~ msgstr ""
+#~ "儲存 IPTC（國際出版電信委員會, International Press Telecommunications "
+#~ "Council）中介資料"
+
+#~ msgid "Save _XMP"
+#~ msgstr "儲存 _XMP"
+
+#~ msgid "Save XMP (Extensible Metadata Platform) metadata"
+#~ msgstr ""
+#~ "儲存 XMP（可延伸中介資料平台, Extensible Metadata Platform）中介資料"
+
+#~ msgid "Save color _profile"
+#~ msgstr "儲存色彩描述檔(_P)"
+
+#~ msgid "Save the ICC color profile as metadata"
+#~ msgstr "將 ICC 色彩描述檔儲存為中介資料"
+
+#~ msgid "Save _thumbnail"
+#~ msgstr "儲存縮圖(_T)"
+
+#~ msgid "Save a smaller representation of the image as metadata"
+#~ msgstr "將較小的影像表示圖儲存為中介資料"
+
+#~ msgid "Save c_omment"
+#~ msgstr "儲存評註(_O)"
+
+#~ msgid "Save a comment as metadata"
+#~ msgstr "將評註儲存為中介資料"
+
+#~ msgid "Comment"
+#~ msgstr "評註"
+
+#~ msgid "Image comment"
+#~ msgstr "影像評註"
+
+#~ msgid "Metadata"
+#~ msgstr "中介資料"
+
+#~ msgid "Edit Metadata"
+#~ msgstr "編輯中介資料"
+
+#~ msgid "(edit)"
+#~ msgstr "（編輯）"
+
+#, c-format
+#~ msgid ""
+#~ "This file loading plug-in returned SUCCESS as a status without an image. "
+#~ "This is a bug in the plug-in code. Contact the plug-in developer."
+#~ msgstr ""
+#~ "載入檔案的外掛元件雖傳回 SUCCESS 狀態，卻沒有影像。這是外掛元件程式碼的程"
+#~ "式錯誤，請聯繫外掛元件開發者。"
+
+#~ msgid "Allowed values:"
+#~ msgstr "允許的值："
+
+#, c-format
+#~ msgid "Procedure '%s' returned no return values"
+#~ msgstr "處理程序「%s」傳回「沒有回傳值」"
+
+#, c-format
+#~ msgid ""
+#~ "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
+#~ "Expected %s, got %s."
+#~ msgstr ""
+#~ "處理程序「%s」在「%s」回傳值 (#%d) 傳回錯誤的數值類型。預期為 %s，卻收到 "
+#~ "%s。"
+
+#, c-format
+#~ msgid ""
+#~ "Procedure '%s' has been called with a wrong value type for argument '%s' "
+#~ "(#%d). Expected %s, got %s."
+#~ msgstr ""
+#~ "對「%2$s」引數 (#%3$d) 使用錯誤的數值類型來呼叫處理程序「%1$s」。預期為 "
+#~ "%4$s，卻收到 %5$s。"
+
+#, c-format
+#~ msgid ""
+#~ "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This "
+#~ "value is out of range."
+#~ msgstr ""
+#~ "處理程序「%s」傳回「%s」作為「%s」回傳值 (#%d，類型 %s)。這個數值超出範"
+#~ "圍。"
+
+#, c-format
+#~ msgid ""
+#~ "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, "
+#~ "type %s). This value is out of range."
+#~ msgstr ""
+#~ "對「%3$s」引數 (#%4$d，類型 %5$s) 使用「%2$s」數值來呼叫處理程序「%1$s」。"
+#~ "這個數值超出範圍。"
+
+#, c-format
+#~ msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
+#~ msgstr "處理程序「%s」傳回無效的 UTF-8 字串給引數「%s」。"
+
+#, c-format
+#~ msgid ""
+#~ "Procedure '%s' has been called with an invalid UTF-8 string for argument "
+#~ "'%s'."
+#~ msgstr "對引數「%2$s」使用無效的 UTF-8 字串來呼叫處理程序「%1$s」。"
+
+#~ msgid "_Load Saved Settings"
+#~ msgstr "載入儲存的設定(_L)"
+
+#~ msgid "Load settings saved with \"Save Settings\" button"
+#~ msgstr "載入「儲存設定」按鈕所儲存的設定值"
+
+#~ msgid "_Save Settings"
+#~ msgstr "儲存設定(_S)"
+
+#~ msgid "Store current settings for later reuse"
+#~ msgstr "儲存目前的設定值方便之後重複使用"
+
+#~ msgid "Brush Chooser"
+#~ msgstr "筆刷選擇器"
+
+#~ msgid "Font Chooser"
+#~ msgstr "字型選擇器"
+
+#~ msgid "Gradient Chooser"
+#~ msgstr "漸層選擇器"
+
+#~ msgid "Palette Chooser"
+#~ msgstr "調色盤選擇器"
+
+#~ msgid "Pattern Chooser"
+#~ msgstr "圖樣選擇器"
+
+#~ msgid "Reset to _Initial Values"
+#~ msgstr "重設回初始值(_I)"
+
+#~ msgid "Reset to _Factory Defaults"
+#~ msgstr "重設回出廠預設值(_F)"
+
+#~ msgid "Image types:"
+#~ msgstr "影像類型："
+
+#~ msgid "Menu label:"
+#~ msgstr "選單標籤："
+
+#~ msgid "Menu path:"
+#~ msgstr "選單路徑："
+
+#, c-format
+#~ msgid "Choose layer: %s"
+#~ msgstr "選擇圖層：%s"
+
+#, c-format
+#~ msgid "Choose channel: %s"
+#~ msgstr "選擇色版：%s"
+
+#, c-format
+#~ msgid "Choose drawable: %s"
+#~ msgstr "選擇可繪物件：%s"
+
+#~ msgid ""
+#~ "This unit is used to select the pixel density and show dimensions in "
+#~ "physical unit"
+#~ msgstr "這個單位用來選取像素密度，以及以物理單位顯示尺度"
+
+#~ msgid "_Keep aspect ratio"
+#~ msgstr "維持寬高比(_K)"
+
+#~ msgid "Force dimensions with aspect ratio"
+#~ msgstr "尺寸強制維持寬高比"
+
+#, c-format
+#~ msgid "pixels/%a"
+#~ msgstr "像素/%a"
+
+#~ msgid "_Width (pixels)"
+#~ msgstr "寬度（像素）(_W)"
+
+#~ msgid "_Height (pixels)"
+#~ msgstr "高度（像素）(_H)"
+
+#~ msgid "_Prefer native dimensions"
+#~ msgstr "偏好原生尺寸(_P)"
+
+#~ msgid "Load and use dimensions from source file"
+#~ msgstr "載入並使用來源檔案的尺寸"
+
+#~ msgid "Resolu_tion"
+#~ msgstr "解析度(_T)"
+
+#~ msgid "Pixel Density: number of pixels per physical unit"
+#~ msgstr "像素密度：每物理單位的像素數"
+
+#~ msgid "Physical unit"
+#~ msgstr "物理單位"
+
+#~ msgid ""
+#~ "dimensions could neither be extracted nor computed from the vector "
+#~ "image's data."
+#~ msgstr "無法從向量影像圖資料中取出或計算度量尺寸。"
+
+#~ msgid "Vector image loading plug-in failed: "
+#~ msgstr "向量影像載入外掛元件時失敗："
+
+#~ msgid ""
+#~ "Dimensions cannot be 0 and no native dimensions could be extracted from "
+#~ "the vector image."
+#~ msgstr "尺寸不能為 0，而且無法從向量影像中取出原生尺寸。"
+
+#, c-format
+#~ msgid "Source %s file size: %%.%df %s × %%.%df %s"
+#~ msgstr "來源 %s 檔案尺寸：%%.%df %s × %%.%df %s"
+
+#, c-format
+#~ msgid "Source %s file's aspect ratio: %%.%df × %%.%df"
+#~ msgstr "來源 %s 檔案寬高比：%%.%df × %%.%df"
+
+#, c-format
+#~ msgid "Approximated source %s file size: %%.%df %s × %%.%df %s"
+#~ msgstr "來源 %s 檔案尺寸大約為：%%.%df %s × %%.%df %s"
+
+#, c-format
+#~ msgid "The source %s file does not specify a size!"
+#~ msgstr "來源 %s 檔案並未指定尺寸！"
+
+#, c-format
+#~ msgid "Load %s Image"
+#~ msgstr "載入 %s 影像"
+
+#~ msgctxt "check-type"
+#~ msgid "Custom checks"
+#~ msgstr "自訂棋盤格"
+
+#~ msgctxt "fill-type"
+#~ msgid "Middle Gray (CIELAB)"
+#~ msgstr "中灰色 (CIELAB)"
+
+#~ msgctxt "icon-type"
+#~ msgid "Pixbuf"
+#~ msgstr "Pixbuf"
+
+#~ msgctxt "precision"
+#~ msgid "8-bit non-linear integer"
+#~ msgstr "8 位元非線性整數"
+
+#~ msgctxt "precision"
+#~ msgid "8-bit perceptual integer"
+#~ msgstr "8 位元感知整數"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit non-linear integer"
+#~ msgstr "16 位元非線性整數"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit perceptual integer"
+#~ msgstr "16 位元感知整數"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit non-linear integer"
+#~ msgstr "32 位元非線性整數"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit perceptual integer"
+#~ msgstr "32 位元感知整數"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit non-linear floating point"
+#~ msgstr "16 位元非線性浮點數"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit perceptual floating point"
+#~ msgstr "16 位元感知浮點數"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit non-linear floating point"
+#~ msgstr "32 位元非線性浮點數"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit perceptual floating point"
+#~ msgstr "32 位元感知浮點數"
+
+#~ msgctxt "precision"
+#~ msgid "64-bit non-linear floating point"
+#~ msgstr "64 位元非線性浮點數"
+
+#~ msgctxt "precision"
+#~ msgid "64-bit perceptual floating point"
+#~ msgstr "64 位元感知浮點數"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "None (truncate)"
+#~ msgstr "無（截斷）"
+
+#~ msgctxt "unit-plural"
+#~ msgid "pixels"
+#~ msgstr "像素"
+
+#~ msgctxt "unit-plural"
+#~ msgid "inches"
+#~ msgstr "英吋"
+
+#~ msgctxt "unit-plural"
+#~ msgid "millimeters"
+#~ msgstr "公釐"
+
+#~ msgctxt "unit-plural"
+#~ msgid "points"
+#~ msgstr "磅點"
+
+#~ msgctxt "unit-plural"
+#~ msgid "picas"
+#~ msgstr "派卡"
+
+#~ msgid "Profile: sRGB"
+#~ msgstr "描述檔：sRGB"
+
+#~ msgid "Profile: <i>unknown</i>"
+#~ msgstr "描述檔：<i>未知</i>"
+
+#~ msgid "Soft-Proof Profile: <i>unknown</i>"
+#~ msgstr "軟校樣描述檔：<i>未知</i>"
+
+#~ msgid "Soft-Proof Profile: sRGB"
+#~ msgstr "軟校樣描述檔：sRGB"
+
+#, c-format
+#~ msgid "Soft-Proof Profile: %s"
+#~ msgstr "軟校樣描述檔：%s"
+
+#~ msgid "The controller's name"
+#~ msgstr "控制器的名稱"
+
+#~ msgid "The controller's state, as human-readable string"
+#~ msgstr "控制器的狀態，為人類可閱讀的字串"
+
+#~ msgid "N Pages"
+#~ msgstr "N 頁"
+
+#~ msgid "The number of pages to open"
+#~ msgstr "要開啟的頁數"
+
+#~ msgid "Target"
+#~ msgstr "目標"
+
+#~ msgid "the target to open to"
+#~ msgstr "要開啟的目標"
+
+#~ msgid "Custom Checks Color 1"
+#~ msgstr "自訂棋盤格顏色 1"
+
+#~ msgid "Custom Checks Color 2"
+#~ msgstr "自訂棋盤格顏色 2"
+
+#~ msgid ""
+#~ "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
+#~ "display filter, using a luminance-only approximation of the ACES RRT, a "
+#~ "pre-defined filmic look to be used before ODT (display or output space "
+#~ "ICC profile)"
+#~ msgstr ""
+#~ "ACES RRT（RRT = Reference Rendering Transform，參照算繪變換）。HDR 轉 SDR "
+#~ "的校樣濾色片，會使用 ACES RRT 的唯輝度概略，它是在 ODT（顯示器或輸出空間 "
+#~ "ICC 描述檔）之前所要使用的預先定義膠卷底片外觀"
+
+#~ msgid "Pre-transform change in stops"
+#~ msgstr "預先變換更動的止點"
+
+#~ msgid "Aces RRT"
+#~ msgstr "Aces RRT"
+
 #~ msgctxt "select-criterion"
 #~ msgid "Hue (HSV)"
 #~ msgstr "色相 (HSV)"
@@ -2970,7 +3356,7 @@ msgstr "對比"
 
 #~ msgctxt "select-criterion"
 #~ msgid "Chroma (LCH)"
-#~ msgstr "彩度 (LCH)"
+#~ msgstr "色度 (LCH)"
 
 #~ msgctxt "select-criterion"
 #~ msgid "Hue (LCH)"
@@ -3000,9 +3386,6 @@ msgstr "對比"
 
 #~ msgid "Mode of operation:"
 #~ msgstr "操作模式："
-
-#~ msgid "Image profile:"
-#~ msgstr "圖片配置檔："
 
 #~ msgid "Monitor profile:"
 #~ msgstr "螢幕配置檔："
