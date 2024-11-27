@@ -87,7 +87,19 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
       break;
 
     case GP_PARAM_DEF_TYPE_CHOICE:
-      if (! strcmp (param_def->type_name, "GimpParamChoice"))
+      if (! strcmp (param_def->type_name, "GimpParamChoice") ||
+#ifdef LIBGIMP_COMPILATION
+          /* Special case for GeglParamEnum which are passed from core
+           * as a GimpChoice because the internal enum type could not
+           * always be reconstructed (XXX some could, the ones created
+           * as global GEGL enum types, but I could not find how to
+           * differentiate them on the other side of the wire).
+           */
+          ! strcmp (param_def->type_name, "GeglParamEnum")
+#else
+          FALSE
+#endif
+          )
         {
           return gimp_param_spec_choice (name, nick, blurb,
                                          g_object_ref (param_def->meta.m_choice.choice),
@@ -328,9 +340,18 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
   param_def->blurb           = (gchar *) g_param_spec_get_blurb (pspec);
   param_def->flags           = pspec->flags;
 
-  if (pspec_type == G_TYPE_PARAM_INT)
+  if (pspec_type == G_TYPE_PARAM_INT ||
+#ifdef LIBGIMP_COMPILATION
+      FALSE
+#else
+      pspec_type == GEGL_TYPE_PARAM_INT
+#endif
+      )
     {
       GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
+
+      if (! strcmp (param_def->type_name, "GeglParamInt"))
+        param_def->type_name = "GParamInt";
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_INT;
 
@@ -368,6 +389,60 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_unit.allow_percent = uspec->allow_percent;
       param_def->meta.m_unit.default_val   = gimp_unit_get_id (uspec->default_value);
     }
+#ifndef LIBGIMP_COMPILATION
+  /* This trick is only for core side when it needs to send the param
+   * spec of an enum argument of a GEGL Operation, because for all enum
+   * types created with enum_start|end macros in GEGL code, we are not
+   * able to recreate the enum type on the other side of the wire.
+   * Callers for instance will typically use int values instead.
+   * What we do instead is to reuse GimpChoice (which was exactly
+   * created for such internal-only enums, though it was initially for
+   * plug-ins only. In particular it means the value nicks will be used
+   * to set such argument (as a string property).
+   */
+  else if (GEGL_IS_PARAM_SPEC_ENUM (pspec))
+    {
+      GParamSpecEnum    *espec  = G_PARAM_SPEC_ENUM (pspec);
+      GeglParamSpecEnum *gespec = GEGL_PARAM_SPEC_ENUM (pspec);
+      GimpChoice        *choice = gimp_choice_new ();
+      GEnumClass        *enum_class;
+      GEnumValue        *value;
+
+      param_def->param_def_type            = GP_PARAM_DEF_TYPE_CHOICE;
+      param_def->meta.m_choice.default_val = NULL;
+
+      enum_class = g_type_class_ref (value_type);
+      for (value = enum_class->values;
+           value->value_name;
+           value++)
+        {
+          GSList *iter;
+
+          if (value->value < enum_class->minimum || value->value > enum_class->maximum)
+            continue;
+
+          for (iter = gespec->excluded_values; iter; iter = iter->next)
+            if (GPOINTER_TO_INT (iter->data) == value->value)
+              break;
+
+          if (iter != NULL)
+            /* Excluded value. */
+            continue;
+
+          if (espec->default_value == value->value)
+            param_def->meta.m_choice.default_val = (gchar *) value->value_nick;
+          else if (param_def->meta.m_choice.default_val == NULL)
+            /* Make double-sure defaults is set. */
+            param_def->meta.m_choice.default_val = (gchar *) value->value_nick;
+
+          gimp_choice_add (choice, value->value_nick, value->value, value->value_name, NULL);
+        }
+
+      param_def->meta.m_choice.choice = choice;
+
+      g_type_class_unref (enum_class);
+    }
+#endif
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
       GParamSpecEnum *espec = G_PARAM_SPEC_ENUM (pspec);
@@ -384,9 +459,24 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_boolean.default_val = bspec->default_value;
     }
-  else if (pspec_type == G_TYPE_PARAM_DOUBLE)
+  else if (pspec_type == G_TYPE_PARAM_DOUBLE ||
+#ifdef LIBGIMP_COMPILATION
+      FALSE
+#else
+      pspec_type == GEGL_TYPE_PARAM_DOUBLE
+#endif
+      )
     {
       GParamSpecDouble *dspec = G_PARAM_SPEC_DOUBLE (pspec);
+
+      /* We only support passing various GEGL param types from app to
+       * libgimp so far. It's used to send GEGL operations' arguments
+       * specifications.
+       * We transform them into simpler GLib param types. Additional
+       * features of GEGL params are mostly for UI usage.
+       */
+      if (! strcmp (param_def->type_name, "GeglParamDouble"))
+        param_def->type_name = "GParamDouble";
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_DOUBLE;
 
@@ -405,11 +495,18 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_choice.default_val = sspec->default_value;
       param_def->meta.m_choice.choice      = cspec->choice;
     }
-  else if (G_IS_PARAM_SPEC_STRING (pspec))
+  else if (G_IS_PARAM_SPEC_STRING (pspec) &&
+#ifdef LIBGIMP_COMPILATION
+           pspec_type != GEGL_TYPE_PARAM_STRING
+#else
+           TRUE
+#endif
+          )
     {
       GParamSpecString *gsspec = G_PARAM_SPEC_STRING (pspec);
 
-      if (! strcmp (param_def->type_name, "GimpParamString"))
+      if (! strcmp (param_def->type_name, "GimpParamString") ||
+          ! strcmp (param_def->type_name, "GeglParamString"))
         param_def->type_name = "GParamString";
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_STRING;
@@ -1641,6 +1738,9 @@ _gimp_gp_params_free (GPParam  *params,
           break;
 
         case GP_PARAM_TYPE_PARAM_DEF:
+          if (params[i].data.d_param_def.param_def_type == GP_PARAM_DEF_TYPE_CHOICE &&
+              g_strcmp0 (params[i].data.d_param_def.type_name, "GeglParamEnum") == 0)
+            g_clear_object (&params[i].data.d_param_def.meta.m_choice.choice);
           break;
         }
     }

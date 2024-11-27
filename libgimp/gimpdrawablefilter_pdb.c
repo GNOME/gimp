@@ -228,6 +228,85 @@ gimp_drawable_filter_set_visible (GimpDrawableFilter *filter,
 }
 
 /**
+ * _gimp_drawable_filter_get_number_arguments:
+ * @operation_name: The procedure name.
+ *
+ * Queries for the number of arguments on the specified filter.
+ *
+ * This procedure returns the number of arguments on the specified
+ * filter.
+ * For specific information on each input argument, use
+ * gimp_drawable_filter_get_argument().
+ *
+ * Returns: The number of input arguments.
+ *
+ * Since: 3.0
+ **/
+gint
+_gimp_drawable_filter_get_number_arguments (const gchar *operation_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint num_args = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, operation_name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-number-arguments",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    num_args = GIMP_VALUES_GET_INT (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return num_args;
+}
+
+/**
+ * _gimp_drawable_filter_get_argument:
+ * @operation_name: The procedure name.
+ * @arg_num: The argument number.
+ *
+ * Queries for information on the specified filter's argument.
+ *
+ * This procedure returns the #GParamSpec of filter's argument.
+ *
+ * Returns: (transfer full): The GParamSpec of the argument.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+_gimp_drawable_filter_get_argument (const gchar *operation_name,
+                                    gint         arg_num)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GParamSpec *param_spec = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, operation_name,
+                                          G_TYPE_INT, arg_num,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-argument",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    param_spec = GIMP_VALUES_DUP_PARAM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return param_spec;
+}
+
+/**
  * gimp_drawable_filter_delete:
  * @filter: The filter to delete.
  *

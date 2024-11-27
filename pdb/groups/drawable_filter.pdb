@@ -160,6 +160,105 @@ CODE
     );
 }
 
+sub drawable_filter_get_number_arguments {
+    $blurb = <<'BLURB';
+Queries for the number of arguments on the specified filter.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the number of arguments on the specified filter.
+
+For specific information on each input argument, use gimp_drawable_filter_get_argument().
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name  => 'operation_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+        { name => 'num_args', type => 'int32',
+	  desc => 'The number of input arguments' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gegl_has_operation (operation_name))
+    {
+      guint n_properties;
+
+      g_free (gegl_operation_list_properties (operation_name, &n_properties));
+      num_args = (gint) n_properties;
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub drawable_filter_get_argument {
+    $blurb = <<BLURB;
+Queries for information on the specified filter's argument.
+BLURB
+
+    $help = <<HELP;
+This procedure returns the #GParamSpec of filter's argument.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'operation_name', type  => 'string', non_empty => 1,
+	  desc => 'The procedure name' },
+	{ name => 'arg_num', type => 'int32',
+	  desc => 'The argument number' }
+    );
+
+    @outargs = (
+	{ name => 'param_spec', type => 'param',
+	  desc => "The GParamSpec of the argument" }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  if (gegl_has_operation (operation_name))
+    {
+      GParamSpec **specs;
+      guint        n_properties;
+
+      specs = gegl_operation_list_properties (operation_name, &n_properties);
+
+      if (arg_num >= 0 && arg_num < n_properties)
+        {
+          param_spec = g_param_spec_ref (specs[arg_num]);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_free (specs);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+   );
+}
+
 sub drawable_filter_delete {
     $blurb = 'Delete a drawable filter.';
 
@@ -211,6 +310,8 @@ CODE
             drawable_filter_get_operation_name
             drawable_filter_get_visible
             drawable_filter_set_visible
+            drawable_filter_get_number_arguments
+            drawable_filter_get_argument
             drawable_filter_delete);
 
 %exports = (app => [@procs], lib => [@procs]);

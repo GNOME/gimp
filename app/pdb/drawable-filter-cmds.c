@@ -187,6 +187,97 @@ drawable_filter_set_visible_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_filter_get_number_arguments_invoker (GimpProcedure         *procedure,
+                                              Gimp                  *gimp,
+                                              GimpContext           *context,
+                                              GimpProgress          *progress,
+                                              const GimpValueArray  *args,
+                                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *operation_name;
+  gint num_args = 0;
+
+  operation_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      if (gegl_has_operation (operation_name))
+        {
+          guint n_properties;
+
+          g_free (gegl_operation_list_properties (operation_name, &n_properties));
+          num_args = (gint) n_properties;
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_int (gimp_value_array_index (return_vals, 1), num_args);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_get_argument_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *operation_name;
+  gint arg_num;
+  GParamSpec *param_spec = NULL;
+
+  operation_name = g_value_get_string (gimp_value_array_index (args, 0));
+  arg_num = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      if (gegl_has_operation (operation_name))
+        {
+          GParamSpec **specs;
+          guint        n_properties;
+
+          specs = gegl_operation_list_properties (operation_name, &n_properties);
+
+          if (arg_num >= 0 && arg_num < n_properties)
+            {
+              param_spec = g_param_spec_ref (specs[arg_num]);
+            }
+          else
+            {
+              success = FALSE;
+            }
+
+          g_free (specs);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_param (gimp_value_array_index (return_vals, 1), param_spec);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 drawable_filter_delete_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
@@ -371,6 +462,73 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                      "The new filter visibility",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-number-arguments
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_number_arguments_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-number-arguments");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries for the number of arguments on the specified filter.",
+                                  "This procedure returns the number of arguments on the specified filter.\n"
+                                  "For specific information on each input argument, use 'gimp-drawable-filter-get-argument'.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("operation-name",
+                                                       "operation name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-args",
+                                                     "num args",
+                                                     "The number of input arguments",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-argument
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_argument_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-argument");
+  gimp_procedure_set_static_help (procedure,
+                                  "Queries for information on the specified filter's argument.",
+                                  "This procedure returns the #GParamSpec of filter's argument.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("operation-name",
+                                                       "operation name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("arg-num",
+                                                 "arg num",
+                                                 "The argument number",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_param ("param-spec",
+                                                       "param spec",
+                                                       "The GParamSpec of the argument",
+                                                       G_TYPE_PARAM,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

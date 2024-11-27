@@ -28,38 +28,39 @@ G_BEGIN_DECLS
 /* For information look into the html documentation */
 
 
-typedef struct _GimpPDB                 GimpPDB;
-typedef struct _GimpPlugIn              GimpPlugIn;
-typedef struct _GimpProcedure           GimpProcedure;
-typedef struct _GimpBatchProcedure      GimpBatchProcedure;
-typedef struct _GimpImageProcedure      GimpImageProcedure;
-typedef struct _GimpFileProcedure       GimpFileProcedure;
-typedef struct _GimpVectorLoadProcedure GimpVectorLoadProcedure;
-typedef struct _GimpLoadProcedure       GimpLoadProcedure;
-typedef struct _GimpExportProcedure     GimpExportProcedure;
-typedef struct _GimpThumbnailProcedure  GimpThumbnailProcedure;
-typedef struct _GimpProcedureConfig     GimpProcedureConfig;
+typedef struct _GimpPDB                  GimpPDB;
+typedef struct _GimpPlugIn               GimpPlugIn;
+typedef struct _GimpProcedure            GimpProcedure;
+typedef struct _GimpBatchProcedure       GimpBatchProcedure;
+typedef struct _GimpImageProcedure       GimpImageProcedure;
+typedef struct _GimpFileProcedure        GimpFileProcedure;
+typedef struct _GimpVectorLoadProcedure  GimpVectorLoadProcedure;
+typedef struct _GimpLoadProcedure        GimpLoadProcedure;
+typedef struct _GimpExportProcedure      GimpExportProcedure;
+typedef struct _GimpThumbnailProcedure   GimpThumbnailProcedure;
+typedef struct _GimpProcedureConfig      GimpProcedureConfig;
 
-typedef struct _GimpImage               GimpImage;
-typedef struct _GimpItem                GimpItem;
-typedef struct _GimpDrawable            GimpDrawable;
-typedef struct _GimpGroupLayer          GimpGroupLayer;
-typedef struct _GimpLayer               GimpLayer;
-typedef struct _GimpChannel             GimpChannel;
-typedef struct _GimpLayerMask           GimpLayerMask;
-typedef struct _GimpSelection           GimpSelection;
-typedef struct _GimpTextLayer           GimpTextLayer;
-typedef struct _GimpPath                GimpPath;
-typedef struct _GimpDrawableFilter      GimpDrawableFilter;
+typedef struct _GimpImage                GimpImage;
+typedef struct _GimpItem                 GimpItem;
+typedef struct _GimpDrawable             GimpDrawable;
+typedef struct _GimpGroupLayer           GimpGroupLayer;
+typedef struct _GimpLayer                GimpLayer;
+typedef struct _GimpChannel              GimpChannel;
+typedef struct _GimpLayerMask            GimpLayerMask;
+typedef struct _GimpSelection            GimpSelection;
+typedef struct _GimpTextLayer            GimpTextLayer;
+typedef struct _GimpPath                 GimpPath;
+typedef struct _GimpDrawableFilter       GimpDrawableFilter;
+typedef struct _GimpDrawableFilterConfig GimpDrawableFilterConfig;
 
-typedef struct _GimpDisplay             GimpDisplay;
+typedef struct _GimpDisplay              GimpDisplay;
 
-typedef struct _GimpResource            GimpResource;
-typedef struct _GimpBrush               GimpBrush;
-typedef struct _GimpFont                GimpFont;
-typedef struct _GimpGradient            GimpGradient;
-typedef struct _GimpPattern             GimpPattern;
-typedef struct _GimpPalette             GimpPalette;
+typedef struct _GimpResource             GimpResource;
+typedef struct _GimpBrush                GimpBrush;
+typedef struct _GimpFont                 GimpFont;
+typedef struct _GimpGradient             GimpGradient;
+typedef struct _GimpPattern              GimpPattern;
+typedef struct _GimpPalette              GimpPalette;
 
 
 /* FIXME move somewhere else */

@@ -37,11 +37,14 @@ enum
 
 struct _GimpDrawableFilter
 {
-  GObject parent_instance;
-  gint    id;
+  GObject                   parent_instance;
+  gint                      id;
+
+  GimpDrawableFilterConfig *config;
 };
 
 
+static void   gimp_drawable_filter_finalize      (GObject      *object);
 static void   gimp_drawable_filter_set_property  (GObject      *object,
                                                   guint         property_id,
                                                   const GValue *value,
@@ -64,6 +67,7 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_drawable_filter_finalize;
   object_class->set_property = gimp_drawable_filter_set_property;
   object_class->get_property = gimp_drawable_filter_get_property;
 
@@ -81,6 +85,17 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
 static void
 gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
 {
+  drawable_filter->config = NULL;
+}
+
+static void
+gimp_drawable_filter_finalize (GObject *object)
+{
+  GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (object);
+
+  g_clear_object (&filter->config);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -181,4 +196,62 @@ gboolean
 gimp_drawable_filter_is_valid (GimpDrawableFilter *filter)
 {
   return gimp_drawable_filter_id_is_valid (gimp_drawable_filter_get_id (filter));
+}
+
+/**
+ * gimp_drawable_filter_get_config:
+ * @filter: A drawable filter.
+ *
+ * Get the #GimpConfig with properties that match @filter's arguments.
+ *
+ * Returns: (transfer none): The new #GimpConfig.
+ *
+ * Since: 3.0
+ **/
+GimpDrawableFilterConfig *
+gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
+{
+  gchar *config_type_name;
+  gchar *op_name;
+  gchar *canonical_name;
+  GType  config_type;
+  gint   n_args;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
+
+  if (filter->config)
+    return filter->config;
+
+  op_name          = gimp_drawable_filter_get_operation_name (filter);
+  canonical_name   = gimp_canonicalize_identifier (op_name);
+  config_type_name = g_strdup_printf ("GimpDrawableFilterConfig-%s", canonical_name);
+  config_type      = g_type_from_name (config_type_name);
+  n_args           = _gimp_drawable_filter_get_number_arguments (op_name);
+
+  if (! config_type)
+    {
+      GParamSpec **config_args;
+
+      config_args = g_new0 (GParamSpec *, n_args);
+
+      for (gint i = 0; i < n_args; i++)
+        {
+          GParamSpec *pspec;
+
+          pspec = _gimp_drawable_filter_get_argument (op_name, i);
+          config_args[i] = pspec;
+        }
+
+      config_type = gimp_config_type_register (GIMP_TYPE_DRAWABLE_FILTER_CONFIG,
+                                               config_type_name, config_args, n_args);
+
+      g_free (config_args);
+    }
+
+  g_free (op_name);
+  g_free (canonical_name);
+
+  filter->config = g_object_new (config_type, NULL);
+
+  return filter->config;
 }

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpdrawablefilter.h
+ * gimpdrawablefilterconfig.h
  * Copyright (C) 2024 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -23,26 +23,35 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_DRAWABLE_FILTER_H__
-#define __GIMP_DRAWABLE_FILTER_H__
+#ifndef __GIMP_DRAWABLE_FILTER_CONFIG_H__
+#define __GIMP_DRAWABLE_FILTER_CONFIG_H__
 
 G_BEGIN_DECLS
-
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_DRAWABLE_FILTER (gimp_drawable_filter_get_type ())
-G_DECLARE_FINAL_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP, DRAWABLE_FILTER, GObject)
+#define GIMP_TYPE_DRAWABLE_FILTER_CONFIG (gimp_drawable_filter_config_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpDrawableFilterConfig, gimp_drawable_filter_config, GIMP, DRAWABLE_FILTER_CONFIG, GObject)
 
+struct _GimpDrawableFilterConfigClass
+{
+  GObjectClass  parent_class;
 
-gint32                     gimp_drawable_filter_get_id     (GimpDrawableFilter *filter);
-GimpDrawableFilter       * gimp_drawable_filter_get_by_id  (gint32              filter_id);
+  /* Padding for future expansion */
+  void (* _gimp_reserved0) (void);
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
+  void (* _gimp_reserved9) (void);
+};
 
-gboolean                   gimp_drawable_filter_is_valid   (GimpDrawableFilter *filter);
-
-GimpDrawableFilterConfig * gimp_drawable_filter_get_config (GimpDrawableFilter *filter);
 
 G_END_DECLS
 
-#endif /* __GIMP_DRAWABLE_FILTER_H__ */
+#endif /* __GIMP_DRAWABLE_FILTER_CONFIG_H__ */

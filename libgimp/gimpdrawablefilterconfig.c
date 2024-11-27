@@ -1,8 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgpparams.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * gimpdrawablefilterconfig.c
+ * Copyright (C) 2024 Jehan
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,22 +21,33 @@
 
 #include "config.h"
 
-#include <cairo.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gegl.h>
-#include <gegl-paramspecs.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpprotocol.h"
-
 #include "gimp.h"
-#include "gimpgpparams.h"
 
 
-/*  include the implementation, they are shared between app/ and
- *  libgimp/ but need different headers.
- */
-#define LIBGIMP_COMPILATION
-#include "gimpgpparams-body.c"
-#undef LIBGIMP_COMPILATION
+/**
+ * GimpDrawableFilterConfig:
+ *
+ * The base class for [class@DrawableFilter] specific config objects.
+ *
+ * A drawable filter config is created by a [class@DrawableFilter] using
+ * [method@DrawableFilter.get_config] and its properties match the
+ * filter's arguments in number, order and type.
+ *
+ * Since: 3.0
+ **/
+
+
+G_DEFINE_ABSTRACT_TYPE (GimpDrawableFilterConfig, gimp_drawable_filter_config, G_TYPE_OBJECT)
+
+#define parent_class gimp_drawable_filter_config_parent_class
+
+
+static void
+gimp_drawable_filter_config_class_init (GimpDrawableFilterConfigClass *klass)
+{
+}
+
+static void
+gimp_drawable_filter_config_init (GimpDrawableFilterConfig *config)
+{
+}
