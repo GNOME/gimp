@@ -404,7 +404,9 @@ static void       gimp_param_choice_class_init        (GParamSpecClass *klass);
 static void       gimp_param_choice_init              (GParamSpec      *pspec);
 static void       gimp_param_choice_finalize          (GParamSpec      *pspec);
 static gboolean   gimp_param_choice_validate          (GParamSpec      *pspec,
-                                                      GValue          *value);
+                                                       GValue          *value);
+static gboolean   gimp_param_choice_value_is_valid    (GParamSpec      *pspec,
+                                                       const GValue    *value);
 static gint       gimp_param_choice_values_cmp        (GParamSpec      *pspec,
                                                       const GValue    *value1,
                                                       const GValue    *value2);
@@ -437,10 +439,11 @@ gimp_param_choice_get_type (void)
 static void
 gimp_param_choice_class_init (GParamSpecClass *klass)
 {
-  klass->value_type        = G_TYPE_STRING;
-  klass->finalize          = gimp_param_choice_finalize;
-  klass->value_validate    = gimp_param_choice_validate;
-  klass->values_cmp        = gimp_param_choice_values_cmp;
+  klass->value_type     = G_TYPE_STRING;
+  klass->finalize       = gimp_param_choice_finalize;
+  klass->value_validate = gimp_param_choice_validate;
+  klass->value_is_valid = gimp_param_choice_value_is_valid;
+  klass->values_cmp     = gimp_param_choice_values_cmp;
 }
 
 static void
@@ -496,6 +499,17 @@ gimp_param_choice_validate (GParamSpec *pspec,
     }
 
   return FALSE;
+}
+
+static gboolean
+gimp_param_choice_value_is_valid (GParamSpec   *pspec,
+                                  const GValue *value)
+{
+  GimpParamSpecChoice *cspec  = GIMP_PARAM_SPEC_CHOICE (pspec);
+  const gchar         *strval = g_value_get_string (value);
+  GimpChoice          *choice = cspec->choice;
+
+  return gimp_choice_is_valid (choice, strval);
 }
 
 static gint
