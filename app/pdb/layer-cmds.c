@@ -35,13 +35,17 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdrawable-filters.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawablefilter.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
@@ -234,9 +238,49 @@ layer_new_from_drawable_invoker (GimpProcedure         *procedure,
       new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
 
       if (new_item)
-        layer_copy = GIMP_LAYER (new_item);
+        {
+          GimpContainer *filters;
+
+          layer_copy = GIMP_LAYER (new_item);
+
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (drawable));
+          if (gimp_container_get_n_children (filters) > 0)
+            {
+              GList        *filter_list;
+              GimpDrawable *drawable_copy;
+
+              drawable_copy = GIMP_DRAWABLE (layer_copy);
+
+              for (filter_list = GIMP_LIST (filters)->queue->tail;
+                   filter_list;
+                   filter_list = g_list_previous (filter_list))
+                {
+                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                    {
+                      GimpDrawableFilter *old_filter = filter_list->data;
+                      GimpDrawableFilter *filter;
+
+                      filter =
+                        gimp_drawable_filter_duplicate (drawable_copy,
+                                                        old_filter);
+
+                      if (filter != NULL)
+                        {
+                          gimp_drawable_filter_apply (filter, NULL);
+                          gimp_drawable_filter_commit (filter, TRUE, NULL,
+                                                       FALSE);
+
+                          gimp_drawable_filter_layer_mask_freeze (filter);
+                          g_object_unref (filter);
+                        }
+                    }
+                }
+            }
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -271,8 +315,44 @@ layer_copy_invoker (GimpProcedure         *procedure,
                                                     G_TYPE_FROM_INSTANCE (layer)));
       if (layer_copy)
         {
+          GimpContainer *filters;
+
           if (add_alpha)
             gimp_layer_add_alpha (layer_copy);
+
+          filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+          if (gimp_container_get_n_children (filters) > 0)
+            {
+              GList        *filter_list;
+              GimpDrawable *drawable_copy;
+
+              drawable_copy = GIMP_DRAWABLE (layer_copy);
+
+              for (filter_list = GIMP_LIST (filters)->queue->tail;
+                   filter_list;
+                   filter_list = g_list_previous (filter_list))
+                {
+                  if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                    {
+                      GimpDrawableFilter *old_filter = filter_list->data;
+                      GimpDrawableFilter *filter;
+
+                      filter =
+                        gimp_drawable_filter_duplicate (drawable_copy,
+                                                        old_filter);
+
+                      if (filter != NULL)
+                        {
+                          gimp_drawable_filter_apply (filter, NULL);
+                          gimp_drawable_filter_commit (filter, TRUE, NULL,
+                                                       FALSE);
+
+                          gimp_drawable_filter_layer_mask_freeze (filter);
+                          g_object_unref (filter);
+                        }
+                    }
+                }
+            }
         }
       else
         {

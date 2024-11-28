@@ -214,9 +214,49 @@ HELP
   new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
 
   if (new_item)
-    layer_copy = GIMP_LAYER (new_item);
+    {
+      GimpContainer *filters;
+
+      layer_copy = GIMP_LAYER (new_item);
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (drawable));
+      if (gimp_container_get_n_children (filters) > 0)
+        {
+          GList        *filter_list;
+          GimpDrawable *drawable_copy;
+
+          drawable_copy = GIMP_DRAWABLE (layer_copy);
+
+          for (filter_list = GIMP_LIST (filters)->queue->tail;
+               filter_list;
+               filter_list = g_list_previous (filter_list))
+            {
+              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                {
+                  GimpDrawableFilter *old_filter = filter_list->data;
+                  GimpDrawableFilter *filter;
+
+                  filter =
+                    gimp_drawable_filter_duplicate (drawable_copy,
+                                                    old_filter);
+
+                  if (filter != NULL)
+                    {
+                      gimp_drawable_filter_apply (filter, NULL);
+                      gimp_drawable_filter_commit (filter, TRUE, NULL,
+                                                   FALSE);
+
+                      gimp_drawable_filter_layer_mask_freeze (filter);
+                      g_object_unref (filter);
+                    }
+                }
+            }
+        }
+    }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -256,8 +296,44 @@ HELP
                                                 G_TYPE_FROM_INSTANCE (layer)));
   if (layer_copy)
     {
+      GimpContainer *filters;
+
       if (add_alpha)
         gimp_layer_add_alpha (layer_copy);
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+      if (gimp_container_get_n_children (filters) > 0)
+        {
+          GList        *filter_list;
+          GimpDrawable *drawable_copy;
+
+          drawable_copy = GIMP_DRAWABLE (layer_copy);
+
+          for (filter_list = GIMP_LIST (filters)->queue->tail;
+               filter_list;
+               filter_list = g_list_previous (filter_list))
+            {
+              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                {
+                  GimpDrawableFilter *old_filter = filter_list->data;
+                  GimpDrawableFilter *filter;
+
+                  filter =
+                    gimp_drawable_filter_duplicate (drawable_copy,
+                                                    old_filter);
+
+                  if (filter != NULL)
+                    {
+                      gimp_drawable_filter_apply (filter, NULL);
+                      gimp_drawable_filter_commit (filter, TRUE, NULL,
+                                                   FALSE);
+
+                      gimp_drawable_filter_layer_mask_freeze (filter);
+                      g_object_unref (filter);
+                    }
+                }
+            }
+        }
     }
   else
     {
@@ -1247,9 +1323,14 @@ CODE
               "libgimpbase/gimpbase.h"
               "libgimpcolor/gimpcolor.h"
               "core/gimp.h"
+              "core/gimpcontainer.h"
+              "core/gimpdrawable.h"
+              "core/gimpdrawable-filters.h"
+              "core/gimpdrawablefilter.h"
               "core/gimpimage-color-profile.h"
               "core/gimpimage-undo.h"
               "core/gimplayer-new.h"
+              "core/gimplist.h"
               "core/gimppickable.h"
               "core/gimpprogress.h"
               "operations/layer-modes/gimp-layer-modes.h"
