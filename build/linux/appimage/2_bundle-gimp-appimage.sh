@@ -296,6 +296,9 @@ for exec in "${exec_array[@]}"; do
   fi
 done
 ### Undo the mess that go-appimagetool makes on the prefix which breaks babl and GEGL
+ls $APP_DIR/lib/${LIB_SUBDIR}
+ls $APP_DIR/etc/*
+exit
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
 ### Remove unnecessary files bunbled by go-appimagetool
