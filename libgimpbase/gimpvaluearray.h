@@ -35,7 +35,8 @@ G_BEGIN_DECLS
  *
  * Since: 2.10
  */
-#define GIMP_TYPE_VALUE_ARRAY (gimp_value_array_get_type ())
+#define GIMP_TYPE_VALUE_ARRAY               (gimp_value_array_get_type ())
+#define GIMP_VALUE_HOLDS_VALUE_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_VALUE_ARRAY))
 
 
 GType            gimp_value_array_get_type              (void) G_GNUC_CONST;

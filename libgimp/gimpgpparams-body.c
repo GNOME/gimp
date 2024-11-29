@@ -1109,6 +1109,16 @@ gimp_gp_param_to_value (gpointer        gimp,
 
       g_value_take_param (value, pspec);
     }
+  else if (GIMP_VALUE_HOLDS_VALUE_ARRAY (value))
+    {
+      GimpValueArray *values;
+
+      values = _gimp_gp_params_to_value_array (gimp, NULL, 0,
+                                               param->data.d_value_array.values,
+                                               param->data.d_value_array.n_values,
+                                               FALSE);
+      g_value_take_boxed (value, values);
+    }
   else
     {
       g_warning ("%s: unsupported deserialization to GValue of type '%s'\n",
@@ -1639,6 +1649,17 @@ gimp_value_to_gp_param (const GValue *value,
       _gimp_param_spec_to_gp_param_def (g_value_get_param (value),
                                         &param->data.d_param_def);
     }
+  else if (GIMP_VALUE_HOLDS_VALUE_ARRAY (value))
+    {
+      GimpValueArray *array = g_value_get_boxed (value);
+
+      param->param_type = GP_PARAM_TYPE_VALUE_ARRAY;
+
+      param->data.d_value_array.n_values = gimp_value_array_length (array);
+      param->data.d_value_array.values   = NULL;
+      if (param->data.d_value_array.n_values > 0)
+        param->data.d_value_array.values = _gimp_value_array_to_gp_params (array, full_copy);
+    }
 
   if (param->param_type == -1)
     g_warning ("%s: GValue holds unsupported type '%s'", G_STRFUNC, param->type_name);
@@ -1741,6 +1762,12 @@ _gimp_gp_params_free (GPParam  *params,
           if (params[i].data.d_param_def.param_def_type == GP_PARAM_DEF_TYPE_CHOICE &&
               g_strcmp0 (params[i].data.d_param_def.type_name, "GeglParamEnum") == 0)
             g_clear_object (&params[i].data.d_param_def.meta.m_choice.choice);
+          break;
+
+        case GP_PARAM_TYPE_VALUE_ARRAY:
+          _gimp_gp_params_free (params[i].data.d_value_array.values,
+                                params[i].data.d_value_array.n_values,
+                                full_copy);
           break;
         }
     }

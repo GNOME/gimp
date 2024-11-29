@@ -30,6 +30,7 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <gegl-paramspecs.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -44,6 +45,7 @@
 #include "gimpchannel.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
+#include "gimperror.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
@@ -706,6 +708,146 @@ gimp_drawable_filter_set_preview_split (GimpDrawableFilter  *filter,
                                       old_position,
                                       TRUE);
     }
+}
+
+gboolean
+gimp_drawable_filter_update (GimpDrawableFilter    *filter,
+                             const gchar          **propnames,
+                             const GimpValueArray  *values,
+                             GError               **error)
+{
+  GParamSpec  **pspecs;
+  gchar        *opname;
+  guint         n_pspecs;
+  gint          n_values;
+  gboolean      changed = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
+  g_return_val_if_fail (error != NULL && *error == NULL, FALSE);
+
+  n_values = gimp_value_array_length (values);
+
+  if (n_values != g_strv_length ((gchar **) propnames))
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   "%s: the number of property names and values differ.",
+                   G_STRFUNC);
+      return FALSE;
+    }
+
+  g_object_freeze_notify (G_OBJECT (filter));
+
+  gegl_node_get (filter->operation, "operation", &opname, NULL);
+
+  pspecs = gegl_operation_list_properties (opname, &n_pspecs);
+  for (gint i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *pspec     = pspecs[i];
+      GValue      old_value = G_VALUE_INIT;
+      gint        j;
+
+      gegl_node_get_property (filter->operation, pspec->name, &old_value);
+
+      for (j = 0; j < n_values; j++)
+        if (g_strcmp0 (pspec->name, propnames[j]) == 0)
+          break;
+
+      if (j < n_values)
+        {
+          GValue   *new_value;
+          GValue    replaced_value        = G_VALUE_INIT;
+          gboolean  new_value_initialized = FALSE;
+
+          new_value = gimp_value_array_index (values, j);
+
+          if (GEGL_IS_PARAM_SPEC_ENUM (pspec) && G_VALUE_HOLDS_STRING (new_value))
+            {
+              /* GEGL enum types are special-cased to be passed as
+               * GimpChoice (string) param specs on libgimp.
+               */
+              GeglParamSpecEnum *gespec = GEGL_PARAM_SPEC_ENUM (pspec);
+              GEnumClass        *enum_class;
+              GEnumValue        *enum_value;
+              const gchar       *new_str;
+
+              new_str    = g_value_get_string (new_value);
+              enum_class = g_type_class_ref (G_PARAM_SPEC_VALUE_TYPE (pspec));
+              for (enum_value = enum_class->values; enum_value->value_name; enum_value++)
+                {
+                  GSList *iter;
+
+                  if (enum_value->value < enum_class->minimum || enum_value->value > enum_class->maximum)
+                    continue;
+
+                  for (iter = gespec->excluded_values; iter; iter = iter->next)
+                    if (GPOINTER_TO_INT (iter->data) == enum_value->value)
+                      break;
+
+                  if (iter != NULL)
+                    /* Excluded value. */
+                    continue;
+
+                  if (g_strcmp0 (enum_value->value_nick, new_str) == 0)
+                    {
+                      g_value_init (&replaced_value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+                      g_value_set_enum (&replaced_value, enum_value->value);
+                      new_value = &replaced_value;
+                      new_value_initialized = TRUE;
+                    }
+                }
+
+              g_type_class_unref (enum_class);
+            }
+          else if (! G_TYPE_CHECK_VALUE_TYPE (new_value, G_PARAM_SPEC_VALUE_TYPE (pspec)))
+            {
+              g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                           /* TODO: localize after string freeze. */
+                           "GEGL operation '%s' has been called with a "
+                           "wrong value type for argument '%s' (#%d). "
+                           "Expected %s, got %s.",
+                           opname, pspec->name, i,
+                           g_type_name (pspec->value_type),
+                           g_type_name (G_VALUE_TYPE (new_value)));
+
+              break;
+            }
+
+          if (g_param_values_cmp (pspec, new_value, &old_value) != 0)
+            {
+              gegl_node_set_property (filter->operation, pspec->name, new_value);
+              changed = TRUE;
+            }
+
+          if (new_value_initialized)
+            g_value_unset (new_value);
+
+          continue;
+        }
+
+      if (! g_param_value_defaults (pspec, &old_value))
+        {
+          GValue default_value = G_VALUE_INIT;
+
+          g_value_init (&default_value, pspec->value_type);
+          g_param_value_set_default (pspec, &default_value);
+          gegl_node_set_property (filter->operation, pspec->name, &default_value);
+          changed = TRUE;
+
+          g_value_unset (&default_value);
+        }
+
+      g_value_unset (&old_value);
+    }
+
+  g_object_thaw_notify (G_OBJECT (filter));
+
+  g_free (pspecs);
+  g_free (opname);
+
+  if (changed && gimp_drawable_filter_is_active (filter))
+    gimp_drawable_filter_update_drawable (filter, NULL);
+
+  return (*error != NULL);
 }
 
 void

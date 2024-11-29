@@ -160,6 +160,37 @@ CODE
     );
 }
 
+sub drawable_filter_update_settings {
+    $blurb = "Update the settings of the specified filter.";
+
+    $help = <<'HELP';
+This procedure updates the settings of the specified filter all at once.
+
+In particular, update will be frozen and will happen only once for all changed settings.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter' },
+	{ name => 'propnames', type => 'strv',
+	  desc => 'Array of property names' },
+	{ name => 'propvalues', type => 'valuearray',
+	  desc => 'Array of values, one per property in propnames' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_drawable_filter_update (filter, propnames, propvalues, error);
+}
+CODE
+    );
+}
+
 sub drawable_filter_get_number_arguments {
     $blurb = <<'BLURB';
 Queries for the number of arguments on the specified filter.
@@ -310,6 +341,7 @@ CODE
             drawable_filter_get_operation_name
             drawable_filter_get_visible
             drawable_filter_set_visible
+            drawable_filter_update_settings
             drawable_filter_get_number_arguments
             drawable_filter_get_argument
             drawable_filter_delete);

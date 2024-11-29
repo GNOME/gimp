@@ -228,6 +228,50 @@ gimp_drawable_filter_set_visible (GimpDrawableFilter *filter,
 }
 
 /**
+ * _gimp_drawable_filter_update_settings:
+ * @filter: The filter.
+ * @propnames: (array zero-terminated=1): Array of property names.
+ * @propvalues: Array of values, one per property in propnames.
+ *
+ * Update the settings of the specified filter.
+ *
+ * This procedure updates the settings of the specified filter all at
+ * once.
+ * In particular, update will be frozen and will happen only once for
+ * all changed settings.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_drawable_filter_update_settings (GimpDrawableFilter    *filter,
+                                       const gchar          **propnames,
+                                       const GimpValueArray  *propvalues)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_STRV, propnames,
+                                          GIMP_TYPE_VALUE_ARRAY, propvalues,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-update-settings",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_drawable_filter_get_number_arguments:
  * @operation_name: The procedure name.
  *

@@ -78,7 +78,8 @@ typedef enum
   GP_PARAM_TYPE_ARRAY,
   GP_PARAM_TYPE_ID_ARRAY,
   GP_PARAM_TYPE_EXPORT_OPTIONS,
-  GP_PARAM_TYPE_PARAM_DEF
+  GP_PARAM_TYPE_PARAM_DEF,
+  GP_PARAM_TYPE_VALUE_ARRAY,
 } GPParamType;
 
 
@@ -106,6 +107,7 @@ typedef struct _GPParamFormat            GPParamFormat;
 typedef struct _GPParamColor             GPParamColor;
 typedef struct _GPParamColorArray        GPParamColorArray;
 typedef struct _GPParamExportOptions     GPParamExportOptions;
+typedef struct _GPParamValueArray        GPParamValueArray;
 typedef struct _GPProcRun                GPProcRun;
 typedef struct _GPProcReturn             GPProcReturn;
 typedef struct _GPProcInstall            GPProcInstall;
@@ -306,6 +308,12 @@ struct _GPParamExportOptions
    */
 };
 
+struct _GPParamValueArray
+{
+  guint32  n_values;
+  GPParam *values;
+};
+
 struct _GPParam
 {
   GPParamType  param_type;
@@ -326,6 +334,7 @@ struct _GPParam
     GPParamIDArray         d_id_array;
     GPParamExportOptions   d_export_options;
     GPParamDef             d_param_def;
+    GPParamValueArray      d_value_array;
   } data;
 };
 

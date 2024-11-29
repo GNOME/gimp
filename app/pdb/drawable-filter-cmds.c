@@ -187,6 +187,32 @@ drawable_filter_set_visible_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_filter_update_settings_invoker (GimpProcedure         *procedure,
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawableFilter *filter;
+  const gchar **propnames;
+  const GimpValueArray *propvalues;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+  propnames = g_value_get_boxed (gimp_value_array_index (args, 1));
+  propvalues = g_value_get_boxed (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      success = gimp_drawable_filter_update (filter, propnames, propvalues, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 drawable_filter_get_number_arguments_invoker (GimpProcedure         *procedure,
                                               Gimp                  *gimp,
                                               GimpContext           *context,
@@ -462,6 +488,42 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                      "The new filter visibility",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-update-settings
+   */
+  procedure = gimp_procedure_new (drawable_filter_update_settings_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-update-settings");
+  gimp_procedure_set_static_help (procedure,
+                                  "Update the settings of the specified filter.",
+                                  "This procedure updates the settings of the specified filter all at once.\n"
+                                  "In particular, update will be frozen and will happen only once for all changed settings.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("propnames",
+                                                   "propnames",
+                                                   "Array of property names",
+                                                   G_TYPE_STRV,
+                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_value_array ("propvalues",
+                                                            "propvalues",
+                                                            "Array of values, one per property in propnames",
+                                                            NULL,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

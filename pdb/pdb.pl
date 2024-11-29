@@ -624,7 +624,17 @@ package Gimp::CodeGen::pdb;
 		     dup_value_func  => '$var = GIMP_VALUES_GET_FONT ($value)',
 		     set_value_func  => 'g_value_set_object ($value, $var)',
 		     take_value_func => 'g_value_set_object ($value, $var)',
-		     headers         => [ qw("text/gimpfont.h") ] }
+		     headers         => [ qw("text/gimpfont.h") ] },
+
+    valuearray  => { name            => 'VALUEARRAY',
+		     gtype           => 'GIMP_TYPE_VALUE_ARRAY',
+		     type            => 'GimpValueArray *',
+		     const_type      => 'const GimpValueArray *',
+		     init_value      => 'NULL',
+		     get_value_func  => '$var = g_value_get_boxed ($value)',
+		     dup_value_func  => '$var = g_value_dup_boxed (gimp_value_array_index ($value))',
+		     set_value_func  => 'g_value_set_boxed ($value, $var)',
+		     take_value_func => 'g_value_take_boxed ($value, $var)' },
 );
 
 # Split out the parts of an arg constraint

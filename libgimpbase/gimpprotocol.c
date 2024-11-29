@@ -2134,6 +2134,19 @@ _gp_params_read (GIOChannel  *channel,
                                     user_data))
             goto cleanup;
           break;
+
+        case GP_PARAM_TYPE_VALUE_ARRAY:
+          {
+            guint n_values = 0;
+
+            (*params)[i].data.d_value_array.values = NULL;
+            _gp_params_read (channel,
+                             &(*params)[i].data.d_value_array.values,
+                             &n_values,
+                             user_data);
+            (*params)[i].data.d_value_array.n_values = (guint32) n_values;
+            break;
+          }
         }
     }
 
@@ -2357,6 +2370,14 @@ _gp_params_write (GIOChannel *channel,
                                      user_data))
             return;
           break;
+
+        case GP_PARAM_TYPE_VALUE_ARRAY:
+          _gp_params_write (channel,
+                            params[i].data.d_value_array.values,
+                            params[i].data.d_value_array.n_values,
+                            user_data);
+          break;
+
         }
     }
 }
@@ -2429,6 +2450,11 @@ _gp_params_destroy (GPParam *params,
 
         case GP_PARAM_TYPE_PARAM_DEF:
           _gp_param_def_destroy (&params[i].data.d_param_def);
+          break;
+
+        case GP_PARAM_TYPE_VALUE_ARRAY:
+          _gp_params_destroy (params[i].data.d_value_array.values,
+                              params[i].data.d_value_array.n_values);
           break;
         }
     }

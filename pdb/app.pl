@@ -848,6 +848,15 @@ gimp_param_spec_core_object_array ("$name",
                                    $flags)
 CODE
     }
+    elsif ($pdbtype eq 'valuearray') {
+	$pspec = <<CODE;
+gimp_param_spec_value_array ("$name",
+                             "$nick",
+                             "$blurb",
+                             NULL,
+                             $flags)
+CODE
+    }
     else {
 	warn "Unsupported PDB type: $arg->{name} ($arg->{type})";
 	exit -1;

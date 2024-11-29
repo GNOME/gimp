@@ -43,6 +43,9 @@ gboolean                   gimp_drawable_filter_is_valid   (GimpDrawableFilter *
 
 GimpDrawableFilterConfig * gimp_drawable_filter_get_config (GimpDrawableFilter *filter);
 
+void                       gimp_drawable_filter_update     (GimpDrawableFilter *filter);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_DRAWABLE_FILTER_H__ */
