@@ -63,12 +63,14 @@ fi
 if [ "$GITLAB_CI" ]; then
   apt-get install -y --no-install-recommends wget >/dev/null 2>&1
   apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
+  apt-get install -y --no-install-recommends unzip >/dev/null 2>&1 || true
 fi
 export ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 ## For now, we always use the latest version of go-appimagetool
-wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
+wget https://github.com/user-attachments/files/17962057/appimagetool-859-x86_64.zip
+unzip appimagetool-859-x86_64.zip
 go_appimagetool='go-appimagetool.AppImage'
 mv appimagetool-*.AppImage $go_appimagetool
 chmod +x "$go_appimagetool"
@@ -282,7 +284,7 @@ wipe_usr ${LIB_DIR}/*.pyc
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/org.gimp.GIMP.desktop"
-"./$go_appimagetool" -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop &> appimagetool.log
+"./$go_appimagetool" -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully)
 ### Ensure that LD is in right dir
@@ -304,6 +306,21 @@ wipe_usr ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
 wipe_usr share/doc
 wipe_usr share/themes
 rm -r $APP_DIR/etc
+
+lib_array=($(find $USR_DIR -iname *.so* -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF | sort -r))
+fix_rpath ()
+{
+  if [[ ! "$1" =~ 'ELF' ]]; then
+    echo "final path is $(objdump -x $1 | grep 'R.*PATH' | sed -e 's/RUNPATH//g' -e 's/ //g')"
+    echo "---------------"
+  fi
+}
+for lib in "${lib_array[@]}"; do
+  fix_rpath $lib
+done
+for exec in "${exec_array[@]}"; do
+  fix_rpath $exec
+done
 
 
 # FINISH APPIMAGE
