@@ -1198,8 +1198,9 @@ gimp_palette_load_ase (GimpContext   *context,
         break;
 
       /* The L component of LAB goes from 0 to 100 percent */
-      if (g_str_has_prefix (color_space, "LAB"))
+      if (g_str_has_prefix (g_strstrip (color_space), "LAB"))
         pixels[0] *= 100;
+
 
       /* TODO: When GIMP supports spot colors, use this information in
        * the palette. */
