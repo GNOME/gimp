@@ -11,8 +11,8 @@ $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
 
-# 1. AUTODECTET LATEST WINDOWS SDK
-Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_tlkt$([char]13)$([char]27)[0KChecking WinSDK installation"
+# 1. AUTODECTET LATEST WINDOWS SDK AND MSSTORE-CLI
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_tlkt$([char]13)$([char]27)[0KChecking WinSDK and other tools installation"
 if ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'ARM64*')
   {
     $cpu_arch = 'arm64'
@@ -21,10 +21,40 @@ else
   {
     $cpu_arch = 'x64'
   }
+# Windows SDK
 $win_sdk_version = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty ProductVersion
 $win_sdk_path = Get-ItemProperty Registry::'HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows\v10.0' | Select-Object -ExpandProperty InstallationFolder
 $env:Path = "${win_sdk_path}bin\${win_sdk_version}.0\$cpu_arch;${win_sdk_path}App Certification Kit;" + $env:Path
-Write-Output "(INFO): Installed WinSDK: $win_sdk_version"
+# msstore-cli (ONLY FOR RELEASES)
+if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
+  {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+    $msstore_tag = (Invoke-WebRequest https://api.github.com/repos/microsoft/msstore-cli/releases | ConvertFrom-Json)[0].tag_name
+    $xmlObject = New-Object XML
+    $xmlObject.Load("https://raw.githubusercontent.com/microsoft/msstore-cli/refs/heads/rel/$msstore_tag/MSStore.API/MSStore.API.csproj")
+    $dotnet_major = ($xmlObject.Project.PropertyGroup.TargetFramework | Out-String) -replace "`r`n",'' -replace 'net',''
+    $dotnet_tag = ((Invoke-WebRequest https://api.github.com/repos/dotnet/runtime/releases | ConvertFrom-Json).tag_name | Select-String "$dotnet_major" | Select-Object -First 1).ToString() -replace 'v',''
+
+    if (-not (Test-Path "$Env:ProgramFiles\dotnet\shared\Microsoft.NETCore.App\$dotnet_major*\"))
+      {
+        Write-Output "(INFO): downloading .NET v$dotnet_tag"
+        Invoke-WebRequest https://download.visualstudio.microsoft.com/download/pr/92f9abc6-1e19-40cd-82cf-670be98d3533/46e1346503f4b54418bf9d5f861f1d43/dotnet-runtime-$dotnet_tag-win-x64.zip -OutFile ..\dotnet-runtime.zip
+        Expand-Archive ..\dotnet-runtime.zip ..\dotnet-runtime -Force
+        $env:Path = "$(Resolve-Path $PWD\..\dotnet-runtime);" + $env:Path
+        $env:DOTNET_ROOT = "$(Resolve-Path $PWD\..\dotnet-runtime)"
+      }
+
+    if (-not (Test-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\App Paths\MSStore.exe'))
+      {
+        Write-Output "(INFO): downloading MSStoreCLI $msstore_tag"
+        Invoke-WebRequest https://github.com/microsoft/msstore-cli/releases/download/$msstore_tag/MSStoreCLI-win-$cpu_arch.zip -OutFile ..\MSStoreCLI.zip
+        Expand-Archive ..\MSStoreCLI.zip ..\MSStoreCLI -Force
+        $env:Path = "$(Resolve-Path $PWD\..\MSStoreCLI);" + $env:Path
+      }
+    $msstore_text = " | Installed MSStoreCLI: $(msstore --version)"
+  }
+Write-Output "(INFO): Installed WinSDK: ${win_sdk_version}${msstore_text}"
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_tlkt$([char]13)$([char]27)[0K"
 
 
@@ -297,15 +327,13 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
         Get-ChildItem *.msixbundle | Remove-Item -Recurse -Force
       }
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_making$([char]13)$([char]27)[0K"
-    #FIXME: .msixupload should be published automatically
-    #https://gitlab.gnome.org/GNOME/gimp/-/issues/11397
   }
 
 Remove-Item .gitignore
 Rename-Item .gitignore.bak .gitignore
 
 
-# 6. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
+# 6.A. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
 # (Partner Center does the same thing before publishing)
 if (-not $GITLAB_CI -and $wack -eq 'WACK')
   {
@@ -360,7 +388,8 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
   }
 
 
-# 7. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY)
+# 6.B. SIGN .MSIX OR .MSIXBUNDLE PACKAGE (NOT THE BINARIES)
+# (Partner Center does the same thing, for free, before publishing)
 if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
@@ -378,12 +407,12 @@ if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE 
 if ($GITLAB_CI)
   {
     # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
-    $output_dir = "$PWD\build\windows\store\_Output"
-    New-Item $output_dir -ItemType Directory | Out-Null
-    Move-Item $MSIX_ARTIFACT $output_dir
+    $OUTPUT_DIR = "$PWD\build\windows\store\_Output"
+    New-Item $OUTPUT_DIR -ItemType Directory -Force | Out-Null
+    Move-Item $MSIX_ARTIFACT $OUTPUT_DIR -Force
     if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
       {
-        Copy-Item pseudo-gimp.pfx $output_dir
+        Copy-Item pseudo-gimp.pfx $OUTPUT_DIR
       }
 
     # Generate checksums in common "sha*sum" format
@@ -392,9 +421,82 @@ if ($GITLAB_CI)
         Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
         # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
         $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
-        [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA256SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
-        #Set-Content $output_dir\$MSIX_ARTIFACT.SHA256SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
-        [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA512SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
-        #Set-Content $output_dir\$MSIX_ARTIFACT.SHA512SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
+
+        [System.IO.File]::WriteAllText("$OUTPUT_DIR\$MSIX_ARTIFACT.SHA256SUMS", "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
+        #Set-Content $OUTPUT_DIR\$MSIX_ARTIFACT.SHA256SUMS "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
+
+        [System.IO.File]::WriteAllText("$OUTPUT_DIR\$MSIX_ARTIFACT.SHA512SUMS", "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
+        #Set-Content $OUTPUT_DIR\$MSIX_ARTIFACT.SHA512SUMS "$((Get-FileHash $OUTPUT_DIR\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
       }
+  }
+
+
+# 7. SUBMIT .MSIXUPLOAD TO MS STORE (ONLY FOR RELEASES)
+if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
+  {
+    ## Connect with Microsoft Entra credentials (stored on GitLab)
+    ## (The last one can be revoked at any time in MS Entra Admin center)
+    msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
+
+    ## Set product_id (which is not confidential) needed by HTTP calls of some commands
+    if ($dev)
+      {
+        $PRODUCT_ID="9NZVDVP54JMR"
+      }
+    else
+      {
+        #$PRODUCT_ID="NONE_YET"
+      }
+
+    ## Create submission and upload .msixupload file to it
+    msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $PRODUCT_ID -nc
+
+    ## FIXME: Update submission info. See: https://github.com/microsoft/msstore-cli/issues/70
+    ###Get changelog from Linux appdata
+    #$xmlObject = New-Object XML
+    #$xmlObject.Load("desktop\org.gimp.GIMP.appdata.xml.in.in")
+    #if ($xmlObject.component.releases.release[0].version -ne ("$gimp_version".ToLower() -replace '-','~'))
+    #  {
+    #    Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
+    #    exit 1
+    #  }
+    #$store_changelog = ''
+    #foreach ($p in $xmlObject.component.releases.release[0].description.p){$store_changelog += "$p"}
+    #foreach ($li in $xmlObject.component.releases.release[0].description.ul.li){$store_changelog += "- $li`n"}
+    #$store_changelog = $store_changelog -replace "  ",'' -replace '(?m)^\s*?\n' -replace '"',"'"
+    ###Prepare submission info
+    #$jsonObject = msstore submission getListingAssets $PRODUCT_ID | Select-Object -Skip 5 | ConvertFrom-Json
+    #$jsonObject.'ReleaseNotes' = "$store_changelog"
+    #$full_jsonObject = msstore submission get $PRODUCT_ID | Select-Object -Skip 3 | ConvertFrom-Json
+    #$full_jsonObject."Listings"."en-us"."BaseListing" = ($jsonObject | ConvertTo-Json -Compress)
+    ###Fix submission info against JSON scaping hell
+    #$final_json = $full_jsonObject | ConvertTo-Json -Compress
+    #Fix excessive backslashes
+    #$final_json = $final_json -replace "\\\\",'\' -replace "\\\\",'\'
+    #Scape spaces and new lines
+    #$final_json = $final_json -replace ' ','\b' -replace '`n','\n'
+    #PowerShell converts 'BaseListing' wrongly
+    #$final_json = $final_json -replace '"{','{' -replace '}"','}'
+    #$final_json = $final_json -replace '\\"Title\\":\\"GIMP\\b\(Preview\)\\"','\"Title\":\"GIMP\b\r\n(Preview)\"'
+    #PowerShell converts 'PlatformOverrides' wrongly
+    #$final_json = $final_json -replace '""','{}'
+    #PowerShell destroys 'Genres' array
+    #$final_json = $final_json -replace '\"Genres\":\"MultimediaDesign_IllustrationAndGraphicDesign\"','"Genres":["MultimediaDesign_IllustrationAndGraphicDesign"]'
+    #PowerShell converts 'Warning' wrongly
+    #$final_json = $final_json -replace '\"@{','{"' -replace 'Code=','Code":"' -replace ';\\b','","'
+    #$final_json = $final_json -replace 'Details=','Details":"' -replace '\.}]','."}]'
+    #PowerShell destroys 'Languages' array
+    #$final_json = $final_json -replace '\"Languages\":{}','"Languages":[]'
+    #$final_json = $final_json -replace '\"Languages\":\"en-US\"','"Languages":["en-US"]'
+    #PowerShell destroys 'Capabilities' array
+    #$final_json = $final_json -replace '\"Capabilities\":{}','"Capabilities":[]'
+    #$final_json = $final_json -replace 'Capabilities\":\"','Capabilities":["' -replace '\\brunFullTrust\",','","runFullTrust"],'
+    ##Scape double quotes
+    #$final_json = $final_json -replace '"','\"'
+    #Fix excessive backslashes again
+    #$final_json = $final_json -replace "\\\\",'\' -replace "\\\\",'\'
+    #msstore submission update $PRODUCT_ID $final_json
+
+    ## Start certification then publishing
+    msstore submission publish $PRODUCT_ID
   }
