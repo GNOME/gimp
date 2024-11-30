@@ -12,12 +12,14 @@
         <attribute name="label" translatable="yes" context="layers-action">Blend Space</attribute>
         <item><attribute name="action">app.layers-blend-space-auto</attribute></item>
         <item><attribute name="action">app.layers-blend-space-rgb-linear</attribute></item>
+        <item><attribute name="action">app.layers-blend-space-rgb-non-linear</attribute></item>
         <item><attribute name="action">app.layers-blend-space-rgb-perceptual</attribute></item>
       </submenu>
       <submenu>
         <attribute name="label" translatable="yes" context="layers-action">Composite Space</attribute>
         <item><attribute name="action">app.layers-composite-space-auto</attribute></item>
         <item><attribute name="action">app.layers-composite-space-rgb-linear</attribute></item>
+        <item><attribute name="action">app.layers-composite-space-rgb-non-linear</attribute></item>
         <item><attribute name="action">app.layers-composite-space-rgb-perceptual</attribute></item>
       </submenu>
       <submenu>

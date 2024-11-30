@@ -679,10 +679,14 @@ package Gimp::CodeGen::enums;
 	  header => 'operations/operations-enums.h',
 	  symbols => [ qw(GIMP_LAYER_COLOR_SPACE_AUTO
 			  GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+			  GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR
+			  GIMP_LAYER_COLOR_SPACE_LAB
 			  GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL) ],
 	  mapping => { GIMP_LAYER_COLOR_SPACE_AUTO => '0',
 		       GIMP_LAYER_COLOR_SPACE_RGB_LINEAR => '1',
-		       GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL => '2' }
+		       GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR => '2',
+		       GIMP_LAYER_COLOR_SPACE_LAB => '3',
+		       GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL => '4' }
 	},
     GimpLayerCompositeMode =>
 	{ contig => 1,

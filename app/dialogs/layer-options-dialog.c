@@ -194,9 +194,12 @@ layer_options_dialog_new (GimpImage                *image,
                     private);
 
   space_model =
-    gimp_enum_store_new_with_range (GIMP_TYPE_LAYER_COLOR_SPACE,
-                                    GIMP_LAYER_COLOR_SPACE_AUTO,
-                                    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+    gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_COLOR_SPACE,
+                                     4,
+                                     GIMP_LAYER_COLOR_SPACE_AUTO,
+                                     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+                                     GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR,
+                                     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
 
   private->blend_space_combo = combo =
     gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (space_model));

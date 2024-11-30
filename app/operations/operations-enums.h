@@ -29,8 +29,9 @@ typedef enum
 {
   GIMP_LAYER_COLOR_SPACE_AUTO,           /*< desc="Auto"             >*/
   GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,     /*< desc="RGB (linear)"     >*/
+  GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR, /*< desc="RGB (from color profile)" >*/
+  GIMP_LAYER_COLOR_SPACE_LAB,            /*< desc="LAB"              >*/
   GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, /*< desc="RGB (perceptual)" >*/
-  GIMP_LAYER_COLOR_SPACE_LAB,            /*< desc="LAB", pdb-skip    >*/
 } GimpLayerColorSpace;
 
 
