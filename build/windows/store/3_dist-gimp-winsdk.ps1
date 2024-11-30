@@ -293,15 +293,13 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
         #Get-ChildItem *.appxsym | Remove-Item -Recurse -Force
         Get-ChildItem *.msixbundle | Remove-Item -Recurse -Force
       }
-    #FIXME: .msixupload should be published automatically
-    #https://gitlab.gnome.org/GNOME/gimp/-/issues/11397
   }
 
 Remove-Item .gitignore
 Rename-Item .gitignore.bak .gitignore
 
 
-# 5. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
+# 5.A. CERTIFY .MSIX OR .MSIXBUNDLE WITH WACK (OPTIONAL)
 # (Partner Center does the same thing before publishing)
 if (-not $GITLAB_CI -and $wack -eq 'WACK')
   {
@@ -348,7 +346,8 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
   }
 
 
-# 6. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY)
+# 5.B. SIGN .MSIX OR .MSIXBUNDLE PACKAGE (NOT THE BINARIES)
+# (Partner Center does the same thing, for free, before publishing)
 if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*') -and ($MSIX_ARTIFACT -notlike "*msixupload"))
  {
   Write-Output "(INFO): signing $MSIX_ARTIFACT (for testing purposes)"
@@ -358,25 +357,102 @@ if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*') -and ($M
 
 
 if ($GITLAB_CI)
+ {
+   # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
+   $output_dir = "$PWD\build\windows\store\_Output"
+   New-Item $output_dir -ItemType Directory | Out-Null
+   Move-Item $MSIX_ARTIFACT $output_dir
+   if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*'))
+     {
+       Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination $output_dir
+     }
+
+   # Generate checksums in common "sha*sum" format
+   if ($CI_COMMIT_TAG)
+     {
+       Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
+       # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
+       $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
+
+       [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA256SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
+       #Set-Content $output_dir\$MSIX_ARTIFACT.SHA256SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
+
+       [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA512SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
+       #Set-Content $output_dir\$MSIX_ARTIFACT.SHA512SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
+     }
+ }
+
+
+# 6. SUBMIT .MSIXUPLOAD TO MS STORE (ONLY FOR RELEASES)
+if ($GITLAB_CI -and "$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags/',''}))
   {
-    # GitLab doesn't support wildcards when using "expose_as" so let's move to a dir
-    $output_dir = "$PWD\build\windows\store\_Output"
-    New-Item $output_dir -ItemType Directory | Out-Null
-    Move-Item $MSIX_ARTIFACT $output_dir
-    if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*'))
+    ## Connect with Microsoft Entra credentials (stored on GitLab)
+    ## (The last one can be revoked at any time in MS Entra Admin center)
+    msstore reconfigure --tenantId $TENANT_ID --sellerId $SELLER_ID --clientId $CLIENT_ID --clientSecret $CLIENT_SECRET
+
+    ## Set product_id (which is not confidential) needed by HTTP calls of some commands
+    if ($dev)
       {
-        Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination $output_dir
+        $PRODUCT_ID="9NZVDVP54JMR"
+      }
+    else
+      {
+        #$PRODUCT_ID="NONE_YET"
       }
 
-    # Generate checksums in common "sha*sum" format
-    if ($CI_COMMIT_TAG)
+    ## Create submission and upload .msixupload file to it
+    msstore publish $MSIX_ARTIFACT -id $PRODUCT_ID -nc
+
+    ## Update submission info
+    ###Get changelog from Linux appdata
+    $xmlObject = New-Object XML
+    $xmlObject.Load("desktop\org.gimp.GIMP.appdata.xml.in.in")
+    if (($xml.component.releases.release[0].version -ne "$gimp_version".ToLower() -replace '-','~'))
       {
-        Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
-        # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
-        $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
-        [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA256SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
-        #Set-Content $output_dir\$MSIX_ARTIFACT.SHA256SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
-        [System.IO.File]::WriteAllText("$output_dir\$MSIX_ARTIFACT.SHA512SUMS", "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT", $Utf8NoBomEncoding)
-        #Set-Content $output_dir\$MSIX_ARTIFACT.SHA512SUMS "$((Get-FileHash $output_dir\$MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()) *$MSIX_ARTIFACT" -Encoding utf8NoBOM -NoNewline
+        Write-Host "(ERROR): appdata does not match main meson file. Submission can't be done." -ForegroundColor red
+        exit 1
       }
-  }
+    $store_changelog = ''
+    foreach ($p in $xml.component.releases.release[0].description.p){$store_changelog += "$p"}
+    foreach ($li in $xml.component.releases.release[0].description.ul.li){$store_changelog += "- $li`n"}
+    $store_changelog = $store_changelog -replace "  ",'' -replace '(?m)^\s*?\n' -replace '"',"'"
+    ###Prepare submission info
+    $jsonObject = msstore submission getListingAssets 9NZVDVP54JMR | Select-Object -Skip 5 | ConvertFrom-Json
+    $jsonObject.'ReleaseNotes' = "$store_changelog"
+    $full_jsonObject = msstore submission get 9NZVDVP54JMR | Select-Object -Skip 3 | ConvertFrom-Json
+    $full_jsonObject."Listings"."en-us"."BaseListing" = ($jsonObject | ConvertTo-Json -Compress)
+    $final_json = $full_jsonObject | ConvertTo-Json -Compress
+    ###Fix submission info against JSON scaping hell
+    function fix_json ()
+      {
+        #Fix excessive backslashes
+        $final_json = $final_json -replace "\\\\",'\' -replace "\\\\",'\'
+        #Scape spaces and new lines
+        $final_json = $final_json -replace ' ','\b' -replace '`n','\n'
+        #PowerShell converts 'BaseListing' wrongly
+        $final_json = $final_json -replace '"{','{' -replace '}"','}'
+        $final_json = $final_json -replace '\\"Title\\":\\"GIMP\\b\(Preview\)\\"','\"Title\":\"GIMP\b\r\n(Preview)\"'
+        #PowerShell converts 'PlatformOverrides' wrongly
+        $final_json = $final_json -replace '""','{}'
+        #PowerShell destroys 'Genres' array
+        $final_json = $final_json -replace '\"Genres\":\"MultimediaDesign_IllustrationAndGraphicDesign\"','"Genres":["MultimediaDesign_IllustrationAndGraphicDesign"]'
+        #PowerShell converts 'Warning' wrongly
+        $final_json = $final_json -replace '\"@{','{"' -replace 'Code=','Code":"' -replace ';\\b','","'
+        $final_json = $final_json -replace 'Details=','Details":"' -replace '\.}]','."}]'
+        #PowerShell destroys 'Languages' array
+        $final_json = $final_json -replace '\"Languages\":{}','"Languages":[]'
+        $final_json = $final_json -replace '\"Languages\":\"en-US\"','"Languages":["en-US"]'
+        #PowerShell destroys 'Capabilities' array
+        $final_json = $final_json -replace '\"Capabilities\":{}','"Capabilities":[]'
+        $final_json = $final_json -replace 'Capabilities\":\"','Capabilities":["' -replace '\\brunFullTrust\",','","runFullTrust"],'
+        ##Scape double quotes
+        $final_json = $final_json -replace '"','\"'
+        #Fix excessive backslashes again
+        $final_json = $final_json -replace "\\\\",'\' -replace "\\\\",'\'
+      }
+    fix_json
+    msstore submission update $PRODUCT_ID $final_json
+
+    ## Start certification then publishing
+    msstore submission publish $PRODUCT_ID
+ }

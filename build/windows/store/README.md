@@ -8,9 +8,12 @@ https://partner.microsoft.com/dashboard/products/9NZVDVP54JMR/overview
 Base rule to update the "GIMP (Preview)" entry:
 
 * Regularly, a .msixupload will be generated at each tagged commit. It also can be
-  with a custom pipeline valuating `GIMP_CI_MS_STORE` to `MSIXUPLOAD_${REVISION}`
+  with a custom pipeline valuating `GIMP_CI_MS_STORE` to `MSIXUPLOAD_${REVISION}`.
+  In the process, it will be auto submited (with changelog) to Partner Center.
 
 ## Maintaining the MSIX
+
+If the submission from CLI does not work, you need to do the following yourself:
 
 1. The link above will open 'Partner Center', the frontend to submit .msixupload
 
