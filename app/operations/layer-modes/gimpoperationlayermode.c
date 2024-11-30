@@ -657,8 +657,8 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
 
   if (blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
     {
-      gimp_assert (composite_space >= 1 && composite_space < 4);
-      gimp_assert (blend_space     >= 1 && blend_space     < 4);
+      gimp_assert (composite_space >= 1 && composite_space < 5);
+      gimp_assert (blend_space     >= 1 && blend_space     < 5);
 
       /* Make sure the cache is set up from the start as the
        * operation's prepare() method may have not been run yet.
@@ -904,7 +904,14 @@ gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode *op,
         /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
         /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
           babl_fish (babl_format_with_space ("RGBA float", format),
+                     babl_format_with_space ("R~G~B~A float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR - 1] =
+          babl_fish (babl_format_with_space ("RGBA float", format),
                      babl_format_with_space ("R'G'B'A float", format));
+
       op->space_fish
         /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
         /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
@@ -912,12 +919,25 @@ gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode *op,
                      babl_format_with_space ("CIE Lab alpha float", format));
 
       op->space_fish
-        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR - 1]
         /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
           babl_fish (babl_format_with_space("R'G'B'A float", format),
                      babl_format_with_space ( "RGBA float", format));
+
       op->space_fish
         /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
+          babl_fish (babl_format_with_space("R~G~B~A float", format),
+                     babl_format_with_space ( "RGBA float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
+          babl_fish (babl_format_with_space("R~G~B~A float", format),
+                     babl_format_with_space ( "CIE Lab alpha float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR - 1]
         /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
           babl_fish (babl_format_with_space("R'G'B'A float", format),
                      babl_format_with_space ( "CIE Lab alpha float", format));
@@ -927,11 +947,30 @@ gimp_operation_layer_mode_cache_fishes (GimpOperationLayerMode *op,
         /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
           babl_fish (babl_format_with_space("CIE Lab alpha float", format),
                      babl_format_with_space ( "RGBA float", format));
+
       op->space_fish
         /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
         /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
           babl_fish (babl_format_with_space("CIE Lab alpha float", format),
+                     babl_format_with_space ( "R~G~B~A float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR - 1] =
+          babl_fish (babl_format_with_space("CIE Lab alpha float", format),
                      babl_format_with_space ( "R'G'B'A float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR - 1] =
+          babl_fish (babl_format_with_space("R~G~B~A float", format),
+                     babl_format_with_space ( "R'G'B'A float", format));
+
+      op->space_fish
+        /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR - 1]
+        /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
+          babl_fish (babl_format_with_space("R'G'B'A float", format),
+                     babl_format_with_space ( "R~G~B~A float", format));
     }
 }
 

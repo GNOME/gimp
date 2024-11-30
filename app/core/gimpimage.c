@@ -2951,6 +2951,20 @@ gimp_image_get_xcf_version (GimpImage    *image,
            */
           version = MAX (22, version);
         }
+
+      if ((gimp_layer_get_real_blend_space (layer) == GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
+        ||(gimp_layer_get_real_composite_space (layer) == GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL))
+        {
+          ADD_REASON (g_strdup_printf (_("Blending space fixes in %s"),
+                                       "GIMP 3.0"));
+          /* The blending space variant corresponding to SPACE_RGB_PERCEPTUAL in <3.0
+           * corresponds to R'G'B'A which is NON_LINEAR in babl. Perceptual in babl is
+           * R~G~B~A, >= 3.0 the code, comments and usage matches the existing enum value
+           * as being NON_LINEAR and new layers created use the new interger value for
+           * PERCEPTUAL.
+           */
+          version = MAX (23, version);
+        }
     }
   g_list_free (items);
 

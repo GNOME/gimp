@@ -42,6 +42,7 @@ gimp_gegl_create_flatten_node (GeglColor           *background,
 
   g_return_val_if_fail (GEGL_IS_COLOR (background), NULL);
   g_return_val_if_fail (composite_space == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR ||
+                        composite_space == GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR ||
                         composite_space == GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
                         NULL);
 

@@ -321,6 +321,12 @@ static const GimpRadioActionEntry layers_blend_space_actions[] =
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     NULL },
 
+  { "layers-blend-space-rgb-non-linear", NULL,
+    NC_("layers-action", "RGB (from color profile)"), NULL, { NULL },
+    NC_("layers-action", "Layer Blend Space: RGB (from color profile)"),
+    GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR,
+    NULL },
+
   { "layers-blend-space-rgb-perceptual", NULL,
     NC_("layers-action", "RGB (perceptual)"), NULL, { NULL },
     NC_("layers-action", "Layer Blend Space: RGB (perceptual)"),
@@ -340,6 +346,12 @@ static const GimpRadioActionEntry layers_composite_space_actions[] =
     NC_("layers-action", "RGB (linear)"), NULL, { NULL },
     NC_("layers-action", "Layer Composite Space: RGB (linear)"),
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    NULL },
+
+  { "layers-composite-space-rgb-non-linear", NULL,
+    NC_("layers-action", "RGB (from color profile)"), NULL, { NULL },
+    NC_("layers-action", "Layer Composite Space: RGB (from color profile)"),
+    GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR,
     NULL },
 
   { "layers-composite-space-rgb-perceptual", NULL,
@@ -920,6 +932,8 @@ layers_actions_update (GimpActionGroup *group,
               action = "layers-blend-space-auto"; break;
             case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
               action = "layers-blend-space-rgb-linear"; break;
+            case GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR:
+              action = "layers-blend-space-rgb-non-linear"; break;
             case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
               action = "layers-blend-space-rgb-perceptual"; break;
             default:
@@ -935,6 +949,8 @@ layers_actions_update (GimpActionGroup *group,
               action = "layers-composite-space-auto"; break;
             case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
               action = "layers-composite-space-rgb-linear"; break;
+            case GIMP_LAYER_COLOR_SPACE_RGB_NON_LINEAR:
+              action = "layers-composite-space-rgb-non-linear"; break;
             case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
               action = "layers-composite-space-rgb-perceptual"; break;
             default:
