@@ -69,6 +69,7 @@ export APPIMAGE_EXTRACT_AND_RUN=1
 
 ## For now, we always use the latest version of go-appimagetool
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
+echo "(INFO): Downloaded go-appimagetool: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${ARCH}.AppImage//")"
 go_appimagetool='go-appimagetool.AppImage'
 mv appimagetool-*.AppImage $go_appimagetool
 chmod +x "$go_appimagetool"
