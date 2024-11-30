@@ -330,5 +330,4 @@ rm -r $APP_DIR
 if [ "$GITLAB_CI" ]; then
   mkdir -p build/linux/appimage/_Output/
   mv GIMP*.AppImage build/linux/appimage/_Output/
-  mv *.log build/linux/appimage/_Output/
 fi

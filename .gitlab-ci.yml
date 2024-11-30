@@ -301,12 +301,13 @@ gimp-debian-x64:
     # Check install
     - ninja install
     - cd ..
-    # Make sure that any Debian pipeline is easily testable relocatable on local Debian
+    # Make sure that any Debian pipeline is easily testable locally on any distro
     - bash build/linux/appimage/2_bundle-gimp-appimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:
       - build/linux/appimage/_Output/
+      - appimagetool.log
       - _install/
       - _build/meson-logs/meson-log.txt
       - _build/meson-dist/
