@@ -47,7 +47,7 @@
 # Følgende genvejstaster er IKKE brugt i menuerne (v. 2.99.18):
 # Fil: DHQXYZØ
 # Redigér: MQWXZ (Å brugt to gange)
-# Markering: BCJPQVWXYZÅ
+# Markering: BCJPQWXYZØÅ
 # Vis: QWXÅ (EVÆ brugt to gange)
 # Billede: CQVWXZØÅ
 # Lag: CFHIJOPQUVWXZÅ
@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:24+0000\n"
-"PO-Revision-Date: 2024-10-29 15:54+0100\n"
+"PO-Revision-Date: 2024-11-26 19:54+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -3756,7 +3756,7 @@ msgstr "Kopiér de markerede pixels til udklipsholderen"
 #: app/actions/edit-actions.c:109
 msgctxt "edit-action"
 msgid "Copy _Visible"
-msgstr "Kopiér _synlig"
+msgstr "Kopiér _synlige"
 
 #: app/actions/edit-actions.c:110
 msgctxt "edit-action"
@@ -3802,7 +3802,7 @@ msgstr "Kopiér de markerede pixels til en navngiven buffer"
 #: app/actions/edit-actions.c:135
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Kopiér _synlig navngivet …"
+msgstr "Kopiér synlige navngivet …"
 
 #: app/actions/edit-actions.c:137
 msgctxt "edit-action"
@@ -3853,7 +3853,7 @@ msgstr "Sæt udklipsholderens indhold ind på dets oprindelige placering"
 #: app/actions/edit-actions.c:170
 msgctxt "edit-action"
 msgid "_Paste as Single Layer"
-msgstr "Indsæt som et enkelt _lag"
+msgstr "Indsæt som enkelt _lag"
 
 #: app/actions/edit-actions.c:171
 msgctxt "edit-action"
@@ -4021,7 +4021,7 @@ msgstr "Kopiér navngivet"
 
 #: app/actions/edit-commands.c:504
 msgid "Copy Visible Named"
-msgstr "Kopiér synlig navngivet"
+msgstr "Kopiér synlige navngivet"
 
 #: app/actions/edit-commands.c:552
 msgid "Clear"
@@ -8149,12 +8149,12 @@ msgstr "Formindsk markeringen"
 #: app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "Forst_ør …"
+msgstr "Ud_vid …"
 
 #: app/actions/select-actions.c:94
 msgctxt "select-action"
 msgid "Enlarge the selection"
-msgstr "Forstør markeringen"
+msgstr "Udvid markeringen"
 
 # 'border' er et udsagnsord her, betyder at der laves en ny markering i
 # form af en kant omkring den gamle
@@ -8264,11 +8264,11 @@ msgstr ""
 
 #: app/actions/select-commands.c:296
 msgid "Grow Selection"
-msgstr "Forøg markering"
+msgstr "Udvid markering"
 
 #: app/actions/select-commands.c:300
 msgid "Grow selection by"
-msgstr "Forøg markeringen med"
+msgstr "Udvid markeringen med"
 
 # 'border' er et udsagnsord her, betyder at der laves en ny markering i
 # form af en kant omkring den gamle
@@ -11485,7 +11485,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:690
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
-msgstr "Angiver standardforøgelsesradiussen for dialogen “Forøg markering”."
+msgstr "Angiver standardudvidelsesradiussen for dialogen “Udvid markering”."
 
 #: app/config/gimprc-blurbs.h:693
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
@@ -14996,7 +14996,7 @@ msgstr "Indram markering"
 #: app/core/gimpselection.c:198
 msgctxt "undo-type"
 msgid "Grow Selection"
-msgstr "Forøg markering"
+msgstr "Udvid markering"
 
 #: app/core/gimpselection.c:199
 msgctxt "undo-type"
@@ -17395,11 +17395,11 @@ msgstr "Markerede områder fortsætter uden for billedet"
 #. Grow Selection Dialog
 #: app/dialogs/preferences-dialog.c:2576
 msgid "Grow Selection Dialog"
-msgstr "Dialog for forøg markering"
+msgstr "Dialog for udvid markering"
 
 #: app/dialogs/preferences-dialog.c:2581
 msgid "Grow radius:"
-msgstr "Forøgelsesradius:"
+msgstr "Udvidelsesradius:"
 
 #. Shrink Selection Dialog
 #: app/dialogs/preferences-dialog.c:2585
