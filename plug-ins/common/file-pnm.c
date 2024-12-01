@@ -93,6 +93,7 @@ struct _PNMInfo
   gboolean      float_format;   /* Whether it is a floating point format */
   gint          maxval;         /* For integer format image files, the max value
                                  * which we need to normalize to */
+  gchar        *tupltype;       /* Pixel color model */
   gfloat        scale_factor;   /* PFM files have a scale factor */
   gint          np;             /* Number of image planes (0 for pbm) */
   gboolean      asciibody;      /* 1 if ascii body, 0 if raw body */
@@ -694,6 +695,8 @@ load_image (GFile   *file,
   /* allocate the necessary structures */
   pnminfo = g_new (PNMInfo, 1);
 
+  pnminfo->tupltype = NULL;
+
   scan = NULL;
   /* set error handling */
   if (setjmp (pnminfo->jmpbuf))
@@ -852,6 +855,8 @@ load_image (GFile   *file,
   pnmscanner_destroy (scan);
 
   g_object_unref (buffer);
+  if (pnminfo->tupltype)
+    g_free (pnminfo->tupltype);
   g_free (pnminfo);
   g_object_unref (input);
 
@@ -895,16 +900,22 @@ process_pam_header (PNMScanner *scan,
 
           /* PAM files may have custom tupltypes;
            * however, these are the only 'officially' defined
-           * ones */
+           * ones (plus CMYK since this tupltype exists in the
+           * wild. */
           if (strcmp (buf, "BLACKANDWHITE")       &&
               strcmp (buf, "BLACKANDWHITE_ALPHA") &&
               strcmp (buf, "GRAYSCALE")           &&
               strcmp (buf, "GRAYSCALE_ALPHA")     &&
               strcmp (buf, "RGB")                 &&
-              strcmp (buf, "RGB_ALPHA"))
+              strcmp (buf, "RGB_ALPHA")           &&
+              strcmp (buf, "CMYK"))
             {
               is_unsupported_tupltype = TRUE;
             }
+
+          if (! strcmp (buf, "CMYK"))
+            pnminfo->tupltype = g_strdup ("CMYK");
+
         }
       else if (! strcmp (buf, "ENDHDR"))
         {
@@ -1046,6 +1057,7 @@ pnm_load_raw (PNMScanner *scan,
               GeglBuffer *buffer)
 {
   GInputStream *input;
+  const Babl   *format = NULL;
   gint          bpc;
   guchar       *data, *d;
   gushort      *s;
@@ -1117,9 +1129,13 @@ pnm_load_raw (PNMScanner *scan,
             }
         }
 
+      if (info->tupltype != NULL && ! strcmp (info->tupltype, "CMYK"))
+        format = (bpc == 1) ? babl_format ("CMYK u8") :
+                              babl_format ("CMYK u16");
+
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
-                       NULL, data, GEGL_AUTO_ROWSTRIDE);
+                       format, data, GEGL_AUTO_ROWSTRIDE);
 
       gimp_progress_update ((double) y / (double) info->yres);
     }
@@ -1280,15 +1296,15 @@ output_write (GOutputStream *output,
 }
 
 static void
-create_pam_header (const gchar   **header_string,
-                   PNMRowInfo     *rowinfo,
-                   PNMExportrowFunc *saverow,
-                   GimpImageType   drawable_type,
-                   GeglBuffer     *buffer,
-                   const Babl    **format,
-                   gint           *rowbufsize,
-                   gint           *np,
-                   gchar          *comment)
+create_pam_header (const gchar      **header_string,
+                   PNMRowInfo        *rowinfo,
+                   PNMExportrowFunc  *saverow,
+                   GimpImageType      drawable_type,
+                   GeglBuffer        *buffer,
+                   const Babl       **format,
+                   gint              *rowbufsize,
+                   gint              *np,
+                   gchar             *comment)
 {
   gint   maxval   = 255;
   gint   xres     = gegl_buffer_get_width (buffer);
