@@ -8,7 +8,7 @@ set -e
 
 if [ -z "$GITLAB_CI" ]; then
   # Make the script work locally
-  if [ "$0" != 'build/linux/appimage/2_bundle-gimp-appimage.sh' ] && [ ${PWD/*\//} != 'appimage' ]; then
+  if [ "$0" != 'build/linux/appimage/3_dist-gimp-goappimage.sh' ] && [ ${PWD/*\//} != 'appimage' ]; then
     echo -e '\033[31m(ERROR)\033[0m: Script called from wrong dir. Please, call this script from the root of gimp git dir'
     exit 1
   elif [ ${PWD/*\//} = 'appimage' ]; then
@@ -17,80 +17,95 @@ if [ -z "$GITLAB_CI" ]; then
 fi
 
 
-# SPECIAL BUILDING
-
-## We apply these patches otherwise appstream-cli get confused with
-## (non-reverse) DNS naming and fails. That's NOT a GIMP bug, see: #6798
-echo '(INFO): temporarily patching GIMP with reverse DNS naming'
-patch_app_id ()
-{
-  git apply $1 build/linux/appimage/patches/0001-desktop-po-Use-reverse-DNS-naming.patch >/dev/null 2>&1 || true
-  cd gimp-data
-  git apply $1 ../build/linux/appimage/patches/0001-images-logo-Use-reverse-DNS-naming.patch >/dev/null 2>&1 || true
-  cd ..
-}
-patch_app_id
-
-## Prepare env. Universal variables from .gitlab-ci.yml
-IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
-IFS=$' \t\n'
-for VAR in "${VAR_ARRAY[@]}"; do
-  eval "$VAR" || continue
-done
-
-## Ensure that GIMP is relocatable
-grep -q 'relocatable-bundle=yes' _build/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
-if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
-  echo '(INFO): rebuilding GIMP as relocatable'
-  ### FIXME: GIMP tests fails with raster icons in relocatable mode
-  meson configure _build -Drelocatable-bundle=yes -Dvector-icons=true >/dev/null 2>&1
-  cd _build
-  ninja &> ninja.log | rm ninja.log || cat ninja.log
-  ninja install >/dev/null 2>&1
-  ccache --show-stats
-  cd ..
-fi
-
-## Revert previously applied patches
-patch_app_id '-R'
-
-
-# INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
-echo '(INFO): downloading go-appimagetool'
+# 1. INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
 if [ -f "*appimagetool*.AppImage" ]; then
   rm *appimagetool*.AppImage
 fi
 if [ "$GITLAB_CI" ]; then
   apt-get install -y --no-install-recommends wget >/dev/null 2>&1
-  apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
 fi
 export ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
-## For now, we always use the latest version of go-appimagetool
+## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
+echo '(INFO): downloading go-appimagetool'
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
 echo "(INFO): Downloaded go-appimagetool: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${ARCH}.AppImage//")"
 go_appimagetool='go-appimagetool.AppImage'
 mv appimagetool-*.AppImage $go_appimagetool
 chmod +x "$go_appimagetool"
 
-## go-appimagetool have buggy appstreamcli so we need to use the legacy one
+## go-appimagetool does not patch LD interpreter so we use patchelf. See: https://github.com/probonopd/go-appimage/issues/49
+if [ "$GITLAB_CI" ]; then
+  apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
+fi
+
+## standard appimagetool is needed for squashing the .appimage file. See: https://github.com/probonopd/go-appimage/issues/86
 wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${ARCH}.AppImage" >/dev/null 2>&1
-legacy_appimagetool='legacy-appimagetool.AppImage'
-mv appimagetool-*.AppImage $legacy_appimagetool
-chmod +x "$legacy_appimagetool"
+standard_appimagetool='legacy-appimagetool.AppImage'
+mv appimagetool-*.AppImage $standard_appimagetool
+chmod +x "$standard_appimagetool"
 
 
-# BUNDLE FILES
-grep -q '#define GIMP_UNSTABLE' _build/config.h && export GIMP_UNSTABLE=1
+# 2. GET GLOBAL VARIABLES
+if [ "$1" ]; then
+  export BUILD_DIR="$1"
+else
+  export BUILD_DIR="$PWD/_build"
+fi
 
+## Get info about GIMP version
+GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
+if [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
+  export CHANNEL='continuous'
+else
+  export CHANNEL='latest'
+fi
+export APP_ID="org.gimp.GIMP.$CHANNEL"
+
+## Prefixes to get files to copy
 UNIX_PREFIX='/usr'
 if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
 fi
+
+## Paths to receive copied files
 APP_DIR="$PWD/AppDir"
 USR_DIR="$APP_DIR/usr"
 
+
+# 3. GIMP FILES
+
+## 3.1. Special re-building (only if needed)
+
+### Prepare env. Universal variables from .gitlab-ci.yml
+if [ -z "$GITLAB_CI" ]; then
+  IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
+  IFS=$' \t\n'
+  for VAR in "${VAR_ARRAY[@]}"; do
+    eval "$VAR" || continue
+  done
+fi
+
+### Ensure that GIMP is relocatable
+grep -q 'relocatable-bundle=yes' $BUILD_DIR/meson-logs/meson-log.txt && export RELOCATABLE_BUNDLE_ON=1
+if [ -z "$RELOCATABLE_BUNDLE_ON" ]; then
+  if [ ! -f "$BUILD_DIR/build.ninja" ]; then
+    echo -e "\033[31m(ERROR)\033[0m: No GIMP build found. You can configure GIMP with '-Drelocatable-bundle=yes' to make a build suitable for AppImage."
+  else
+    echo "(INFO): rebuilding GIMP as relocatable"
+    meson configure $BUILD_DIR -Drelocatable-bundle=yes >/dev/null 2>&1
+  fi
+  cd $BUILD_DIR
+  ninja &> ninja.log | rm ninja.log || cat ninja.log
+  ninja install >/dev/null 2>&1
+  ccache --show-stats
+  cd ..
+fi
+
+
+## 3.2. Bundle files
 prep_pkg ()
 {
   if [ "$GITLAB_CI" ]; then
@@ -128,22 +143,18 @@ bund_usr ()
       target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
       for target_path in "${target_array[@]}"; do
         dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
-        mkdir -p $dest_path
-        if [ -d "$target_path" ] || [ -f "$target_path" ]; then
-          cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
+        if [ "$3" = '--dest' ]; then
+          dest_path="${USR_DIR}/$4/tmp"
         fi
+        mkdir -p $dest_path
+        cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
 
         #Additional parameters for special situations
-        if [ "$3" = '--dest' ] || [ "$3" = '--rename' ]; then
-          if [ "$3" = '--dest' ]; then
-            mkdir -p ${USR_DIR}/$4
-          elif [ "$3" = '--rename' ]; then
-            mkdir -p $(dirname ${USR_DIR}/$4)
-          fi
-          mv $dest_path/${2##*/} ${USR_DIR}/$4
-          if [ -z "$(ls -A "$dest_path")" ]; then
-            rm -r "$dest_path"
-          fi
+        if [ "$3" = '--dest' ]; then
+          mv $dest_path/${2##*/} $(dirname $dest_path)
+          rm -r "$dest_path"
+        elif [ "$3" = '--rename' ]; then
+          mv $dest_path/${2##*/} $dest_path/$4
         fi
       done
     done
@@ -156,11 +167,19 @@ bund_usr ()
 
 conf_app ()
 {
+  #Make backup of AppRun before changing it
+  if [ ! -f 'build/linux/appimage/AppRun.bak' ]; then
+    cp build/linux/appimage/AppRun build/linux/appimage/AppRun.bak
+  fi
+
+  #Prefix from which to expand the var
   prefix=$UNIX_PREFIX
   case $1 in
     *BABL*|*GEGL*|*GIMP*)
       prefix=$GIMP_PREFIX
   esac
+
+  #Set expanded var in AppRun (and temporarely in environ if needed by this script)
   var_path=$(echo $prefix/$2 | sed "s|${prefix}/||g")
   sed -i "s|${1}_WILD|usr/${var_path}|" build/linux/appimage/AppRun
   eval $1="usr/$var_path"
@@ -168,21 +187,11 @@ conf_app ()
 
 wipe_usr ()
 {
-  if [[ ! "$1" =~ '*' ]]; then
-    rm -r $USR_DIR/$1
-  else
-    cleanedArray=($(find $USR_DIR -iname ${1##*/}))
-    for path_dest_full in "${cleanedArray[@]}"; do
-      rm -r -f $path_dest_full
-    done
-  fi
+  find $USR_DIR -iname ${1##*/} -execdir rm -r -f "{}" \;
 }
 
 ## Prepare AppDir
-echo '(INFO): copying files to AppDir'
-if [ ! -f 'build/linux/appimage/AppRun.bak' ]; then
-  cp build/linux/appimage/AppRun build/linux/appimage/AppRun.bak
-fi
+echo '(INFO): copying files to AppDir/usr'
 mkdir -p $APP_DIR
 bund_usr "$UNIX_PREFIX" "lib64/ld-*.so.*" --go
 conf_app LD_LINUX "lib64/ld-*.so.*"
@@ -193,7 +202,7 @@ bund_usr "$UNIX_PREFIX" "share/glib-*/schemas"
 ### Glib commonly required modules
 prep_pkg "gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gvfs*"
-bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "lib/gvfs"
+bund_usr "$UNIX_PREFIX" "bin/gvfs*" --dest "${LIB_DIR}/gvfs"
 bund_usr "$UNIX_PREFIX" "lib/gio*"
 conf_app GIO_MODULE_DIR "${LIB_DIR}/${LIB_SUBDIR}gio"
 ### GTK needed files (to be able to load icons)
@@ -240,9 +249,9 @@ conf_app GIMP3_SYSCONFDIR "etc/gimp/*"
 
 ## Other features and plug-ins
 ### Needed for welcome page
-bund_usr "$GIMP_PREFIX" "share/metainfo/org.gimp*.xml"
-sed -i '/kudo/d' $USR_DIR/share/metainfo/org.gimp.GIMP.appdata.xml
-sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" $USR_DIR/share/metainfo/org.gimp.GIMP.appdata.xml
+bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml" --rename $APP_ID.appdata.xml
+sed -i '/kudo/d' $USR_DIR/share/metainfo/$APP_ID.appdata.xml
+sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" $USR_DIR/share/metainfo/$APP_ID.appdata.xml
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
 ### Needed for full CJK and Cyrillic support in file-pdf
@@ -282,11 +291,11 @@ wipe_usr ${LIB_DIR}/*.pyc
 ## Other binaries and deps
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
-bund_usr "$GIMP_PREFIX" "share/applications/org.gimp.GIMP.desktop"
-"./$go_appimagetool" -s deploy $USR_DIR/share/applications/org.gimp.GIMP.desktop &> appimagetool.log
+bund_usr "$GIMP_PREFIX" "share/applications/*.desktop" --rename $APP_ID.desktop
+"./$go_appimagetool" -s deploy $USR_DIR/share/applications/$APP_ID.desktop &> appimagetool.log
 
-## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully)
-### Ensure that LD is in right dir
+## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
+### Ensure that LD is in right dir. See: https://github.com/probonopd/go-appimage/issues/49
 cp -r $APP_DIR/lib64 $USR_DIR
 rm -r $APP_DIR/lib64
 chmod +x "$APP_DIR/$LD_LINUX"
@@ -296,39 +305,54 @@ for exec in "${exec_array[@]}"; do
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
   fi
 done
-### Undo the mess that go-appimagetool makes on the prefix which breaks babl and GEGL
+### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
 cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
 rm -r $APP_DIR/lib
-### Remove unnecessary files bunbled by go-appimagetool
-wipe_usr ${LIB_DIR}/${LIB_SUBDIR}gconv
-wipe_usr ${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
-wipe_usr share/doc
-wipe_usr share/themes
-rm -r $APP_DIR/etc
+
+## Unnecessary files bundled by go-appimagetool
+echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
+      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+      usr/share/doc
+      usr/share/themes
+      etc" > .appimageignore
 
 
-# FINISH APPIMAGE
+# 4. PREPARE .APPIMAGE-SPECIFIC "SOURCE"
 
-## Configure AppRun
-echo '(INFO): configuring AppRun'
+## 4.1. Finish AppRun configuration
+echo '(INFO): copying configured AppRun'
 sed -i '/_WILD/d' build/linux/appimage/AppRun
 mv build/linux/appimage/AppRun $APP_DIR
 chmod +x $APP_DIR/AppRun
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 
-## Copy icon to proper place
-echo "(INFO): copying org.gimp.GIMP.svg asset to AppDir"
-cp $GIMP_PREFIX/share/icons/hicolor/scalable/apps/org.gimp.GIMP.svg $APP_DIR/org.gimp.GIMP.svg
+## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
+echo "(INFO): copying $APP_ID.svg asset to AppDir"
+find "$USR_DIR/share/icons/hicolor" -iname *.svg -execdir ln -s "{}" $APP_ID.svg \;
+find "$USR_DIR/share/icons/hicolor" -iname *.png -execdir ln -s "{}" $APP_ID.png \;
+cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 
-## Construct .appimage
-gimp_app_version=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-gimp_version=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
-appimage="GIMP-${gimp_version}-${ARCH}.AppImage"
-echo "(INFO): making $appimage"
-"./$legacy_appimagetool" -n $APP_DIR $appimage &>> appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${gimp_app_version}/GIMP-latest-${ARCH}.AppImage.zsync"
+## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
+echo "(INFO): configuring $APP_ID.desktop"
+sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+cp "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
+
+## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
+echo "(INFO): configuring $APP_ID.appdata.xml"
+sed -i "s/org.gimp.GIMP/${APP_ID}/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
+sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
+
+
+# 5. CONSTRUCT .APPIMAGE
+APPIMAGETOOL_APP_NAME="GIMP-${CHANNEL}-${ARCH}.AppImage"
+echo "(INFO): making $APPIMAGETOOL_APP_NAME"
+"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME &>> appimagetool.log -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
 rm -r $APP_DIR
+#standard appimagetool does not output runtime version at squashing. See: https://github.com/AppImage/appimagetool/issues/80
+chmod +x "./$APPIMAGETOOL_APP_NAME"
+"./$APPIMAGETOOL_APP_NAME" --appimage-version &>> appimagetool.log
 
 if [ "$GITLAB_CI" ]; then
   mkdir -p build/linux/appimage/_Output/
-  mv GIMP*.AppImage build/linux/appimage/_Output/
+  mv GIMP*.AppImage* build/linux/appimage/_Output/
 fi

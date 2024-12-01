@@ -15,15 +15,16 @@
 #
 # To force step-specific pipelines without waiting for commits and/or
 # pipelines, these are the variable you should set:
-# - GIMP_CI_MESON_CLANG: trigger the Debian Clang build with AppImage artifact.
-# - GIMP_CI_MESON_GCC: trigger the Debian GCC build with AppImage artifact.
-# - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build with AppImage artifact without vector icons.
+# - GIMP_CI_MESON_CLANG: trigger the Debian Clang build.
+# - GIMP_CI_MESON_GCC: trigger the Debian GCC build.
+# - GIMP_CI_RASTER_ICONS: trigger the Debian Clang build without vector icons.
 # - GIMP_CI_CROSSROAD_WIN64: trigger the crossroad build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN_AARCH64: trigger the native MSYS2 build for Win Aarch64.
 # - GIMP_CI_MSYS2_WIN64: trigger the native MSYS2 build for Win 64-bit.
 # - GIMP_CI_MSYS2_WIN32: trigger the native MSYS2 build for Win 32-bit.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 # - GIMP_CI_SOURCES: trigger the Debian Clang build and the source tarball job.
+# - GIMP_CI_APPIMAGE: trigger the appimage making.
 # - GIMP_CI_FLATPAK: trigger the flatpak build and publishing.
 # - GIMP_CI_WIN_INSTALLER: trigger all native MSYS2 builds then creates Inno Windows installer.
 # - GIMP_CI_MS_STORE: trigger arm64 and x64 native MSYS2 builds then creates a .msixbundle.
@@ -84,8 +85,8 @@ workflow:
   # Universal variables (works in all POSIX OSes and archs)
   before_script:
     - export PATH="$GIMP_PREFIX/bin:$PATH"
-    - gcc -print-multi-os-directory 2>/dev/null | grep ./ && LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || LIB_DIR="lib"
-    - gcc -print-multiarch 2>/dev/null | grep . && LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    - gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
+    - gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
     - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
     - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
@@ -132,6 +133,7 @@ stages:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+    - if: '$GIMP_CI_APPIMAGE != null'
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
 
@@ -300,22 +302,31 @@ gimp-debian-x64:
       fi
     # Check install
     - ninja install
-    - cd ..
-    # Make sure that any Debian pipeline is easily testable locally on any distro
-    - bash build/linux/appimage/2_bundle-gimp-appimage.sh
+  artifacts:
+    paths:
+      - _install/
+      - _build/
+    reports:
+      junit: "_build/meson-logs/testlog.junit.xml"
+    expire_in: 2 days
+
+dist-appimage-weekly:
+  extends: .default
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
+      interruptible: true
+    - if: '$GIMP_CI_APPIMAGE != null'
+  needs: ["gimp-debian-x64"]
+  stage: distribution
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  script:
+    - bash build/linux/appimage/3_dist-gimp-goappimage.sh
   artifacts:
     expose_as: 'Linux appimage'
     paths:
       - build/linux/appimage/_Output/
       - appimagetool.log
-      - _install/
-      - _build/meson-logs/meson-log.txt
-      - _build/meson-dist/
-      - _build/config.h
-      - _build/devel-docs/
-    reports:
-      junit: "_build/meson-logs/testlog.junit.xml"
-    expire_in: 2 days
+    expire_in: 8 days
 
 .flatpak-x64:
   extends: .default
