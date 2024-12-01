@@ -324,7 +324,7 @@ sel2path_run (GimpProcedure        *procedure,
       g_message (_("No selection to convert"));
 
       return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_SUCCESS,
+                                               GIMP_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
