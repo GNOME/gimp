@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:27+0000\n"
-"PO-Revision-Date: 2024-10-29 18:25+0100\n"
+"PO-Revision-Date: 2024-11-18 15:56+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -607,7 +607,7 @@ msgstr "_Kornethed (1 er lav)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "S_mooth"
-msgstr "_Udglat"
+msgstr "_Udglatning"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm:117
 msgid "Smooth hor_izontally"
