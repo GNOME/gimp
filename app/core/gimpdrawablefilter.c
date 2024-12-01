@@ -360,7 +360,7 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
   GimpChannel        *mask;
   GeglNode           *prior_node;
   GeglNode           *node = gegl_node_new ();
-  const gchar        *operation;
+  gchar              *operation;
   const gchar        *undo_desc;
   const gchar        *icon_name;
   GParamSpec        **pspecs;
@@ -435,6 +435,8 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
                     NULL);
       g_object_unref (mask);
     }
+
+  g_free (operation);
 
   return filter;
 }
