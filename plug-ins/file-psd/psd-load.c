@@ -1374,8 +1374,8 @@ read_layer_block (PSDimage      *img_a,
           /* To make computations easier add the size of block_len */
           block_len += block_len_size;
 
-          /* Actual block size is a multiple of 4 */
-          adjusted_block_len = (block_len + 3) / 4 * 4;
+          /* Actual block size is a multiple of 2 */
+          adjusted_block_len = (block_len + 1) / 2 * 2;
 
           if (block_len > block_len_size)
             {
