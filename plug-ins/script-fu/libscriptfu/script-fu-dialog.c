@@ -22,6 +22,10 @@
 
 #include <libgimp/gimpui.h>
 
+#ifdef GDK_WINDOWING_QUARTZ
+#import <Cocoa/Cocoa.h>
+#endif
+
 #include "script-fu-types.h"    /* SFScript */
 #include "script-fu-script.h"   /* get_title */
 #include "script-fu-command.h"
@@ -211,6 +215,16 @@ sf_dialog_run (GimpProcedure        *procedure,
       /* NULL means: all properties. */
       gimp_procedure_dialog_fill_list (dialog, NULL);
     }
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* The user chose a plugin from gimp app, now ensure this process is active.
+   * The gimp app was active, but now the plugin should be active.
+   * This is also called in gimpui_init(), but that is not sufficient
+   * for second calls of plugins served by long-running extension-script-fu.
+   * The user can still raise other gimp windows, hiding the dialog.
+   */
+   [NSApp activateIgnoringOtherApps:YES];
+#endif
 
   not_canceled = gimp_procedure_dialog_run (dialog);
 

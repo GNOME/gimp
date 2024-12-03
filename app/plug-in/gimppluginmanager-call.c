@@ -26,6 +26,13 @@
 #include <windows.h>
 #endif
 
+#ifdef __APPLE__
+/* Not include gtk/gtk.h and depend on gtk just for GDK_WINDOWING_QUARTZ macro.
+ * __APPLE__ suffices, we only build for MacOS (vs iOS) and Quartz (vs X11)
+ */
+#import <Cocoa/Cocoa.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
@@ -384,6 +391,18 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
       gimp_plug_in_proc_frame_ref (proc_frame);
 
       gimp_plug_in_main_loop (plug_in);
+
+#ifdef __APPLE__
+      /* The plugin temporary procedure returned, from separate, active process.
+      * Ensure gimp app active.
+      * Usually extension-script-fu was active, except when the temporary procedure
+      * was say a callback from a Resource chooser dialog.
+      * In that case, when the chooser is closing, it would be better
+      * to activate the plugin, avoiding an extra click by the user.
+      * We can't do that here, unless we use the more cooperative API of MacOS.
+      */
+      [NSApp activateIgnoringOtherApps:YES];
+#endif
 
       /*  main_loop is quit and proc_frame is popped in
        *  gimp_plug_in_handle_temp_proc_return()
