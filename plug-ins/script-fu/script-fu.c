@@ -202,16 +202,24 @@ script_fu_run (GimpProcedure        *procedure,
 
   if (strcmp (name, "extension-script-fu") == 0)
     {
-      /*
-       *  The main script-fu extension.
+      /* Simultaneously poll both reads of commands from gimp app, and GUI events.
+       * extension-script-fu periodically has GUI: dialogs for sequential commands.
        */
 
       /*  Acknowledge that the extension is properly initialized  */
       gimp_procedure_persistent_ready (procedure);
 
-      /*  Go into an endless loop  */
-      while (TRUE)
-        gimp_plug_in_persistent_process (plug_in, 0);
+      /* Hang async read from gimp app. */
+      gimp_plug_in_persistent_enable (plug_in);
+
+      /* Process both async reads of commands and GUI events. */
+      g_main_loop_run (g_main_loop_new (NULL, FALSE));
+
+      /* The loop does not return because no command or event calls gimp_quit.
+       * Gimp app does not orderly shutdown extension-script-fu.
+       * When orderly, need to free the GMainLoop.
+       */
+      g_assert_not_reached ();
     }
   else if (strcmp (name, "plug-in-script-fu-text-console") == 0)
     {
