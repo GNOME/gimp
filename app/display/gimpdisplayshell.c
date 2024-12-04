@@ -760,6 +760,7 @@ gimp_display_shell_constructed (GObject *object)
   gimp_statusbar_set_shell (GIMP_STATUSBAR (shell->statusbar), shell);
   gimp_help_set_help_data (shell->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
+  GIMP_STATUSBAR (shell->statusbar)->icon_size = button_icon_size;
 
   /*  pack all the widgets  */
   gtk_grid_attach (GTK_GRID (grid), shell->origin, 0, 0, 1, 1);
@@ -1034,6 +1035,14 @@ gimp_display_shell_style_updated (GtkWidget *widget)
       children = gtk_container_get_children (GTK_CONTAINER (shell->nav_ebox));
       gtk_image_set_pixel_size (GTK_IMAGE (children->data), pixel_size);
       g_list_free (children);
+    }
+
+  if (shell->statusbar)
+    {
+      GimpStatusbar *statusbar = GIMP_STATUSBAR (shell->statusbar);
+
+      statusbar->icon_size = icon_size;
+      GTK_WIDGET_GET_CLASS (statusbar)->style_updated (GTK_WIDGET (statusbar));
     }
 }
 

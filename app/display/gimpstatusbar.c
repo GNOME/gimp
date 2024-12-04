@@ -670,10 +670,19 @@ gimp_statusbar_style_updated (GtkWidget *widget)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
   PangoLayout   *layout;
+  GList         *children;
+  gint           pixel_size;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
+  gtk_icon_size_lookup (statusbar->icon_size, &pixel_size, NULL);
+
   g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
+
+  children =
+    gtk_container_get_children (GTK_CONTAINER (statusbar->soft_proof_button));
+  gtk_image_set_pixel_size (GTK_IMAGE (children->data), pixel_size);
+  g_list_free (children);
 
   layout = gtk_widget_create_pango_layout (widget, " ");
   pango_layout_get_pixel_size (layout, &statusbar->icon_space_width, NULL);
@@ -2405,6 +2414,7 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
                           const gchar   *icon_name)
 {
   GdkPixbuf *icon;
+  gint       pixel_size;
 
   if (G_UNLIKELY (! statusbar->icon_hash))
     {
@@ -2420,10 +2430,13 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
   if (icon)
     return g_object_ref (icon);
 
-  icon = gimp_widget_load_icon (statusbar->label, icon_name, 16);
+  gtk_icon_size_lookup (statusbar->icon_size, &pixel_size, NULL);
+
+  icon = gimp_widget_load_icon (statusbar->label, icon_name,
+                                pixel_size);
 
   /* this is not optimal but so what */
-  if (g_hash_table_size (statusbar->icon_hash) > 16)
+  if (g_hash_table_size (statusbar->icon_hash) > pixel_size)
     g_hash_table_remove_all (statusbar->icon_hash);
 
   g_hash_table_insert (statusbar->icon_hash,
