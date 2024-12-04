@@ -40,6 +40,12 @@ struct _GimpDrawableFilter
   GObject                   parent_instance;
   gint                      id;
 
+  gdouble                   opacity;
+  GimpLayerMode             blend_mode;
+  GimpLayerColorSpace       blend_space;
+  GimpLayerCompositeMode    composite_mode;
+  GimpLayerColorSpace       composite_space;
+
   GimpDrawableFilterConfig *config;
 };
 
@@ -86,6 +92,12 @@ static void
 gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
 {
   drawable_filter->config = NULL;
+
+  drawable_filter->opacity         = 1.0;
+  drawable_filter->blend_mode      = GIMP_LAYER_MODE_NORMAL;
+  drawable_filter->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+  drawable_filter->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
+  drawable_filter->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
 }
 
 static void
@@ -199,12 +211,60 @@ gimp_drawable_filter_is_valid (GimpDrawableFilter *filter)
 }
 
 /**
+ * gimp_drawable_filter_set_opacity:
+ * @filter: The drawable's filter.
+ * @opacity: the opacity.
+ *
+ * This procedure sets the opacity of @filter on a range from 0.0
+ * (transparent) to 1.0 (opaque).
+ *
+ * The change is not synced immediately with the core application.
+ * Use [method@Gimp.Drawable.update] to trigger an actual update.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
+                                  gdouble             opacity)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+  g_return_if_fail (opacity >= 0.0 && opacity <= 1.0);
+
+  filter->opacity = opacity;
+}
+
+/**
+ * gimp_drawable_filter_set_blend_mode:
+ * @filter: The drawable's filter.
+ * @mode: blend mode.
+ *
+ * This procedure sets the blend mode of @filter.
+ *
+ * The change is not synced immediately with the core application.
+ * Use [method@Gimp.Drawable.update] to trigger an actual update.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_drawable_filter_set_blend_mode (GimpDrawableFilter *filter,
+                                     GimpLayerMode       mode)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  filter->blend_mode = mode;
+}
+
+/**
  * gimp_drawable_filter_get_config:
  * @filter: A drawable filter.
  *
  * Get the #GimpConfig with properties that match @filter's arguments.
  *
  * Returns: (transfer none): The new #GimpConfig.
+ *
+ * Changes to @config's properties are not synced immediately with the
+ * core application. Use [method@Gimp.Drawable.update] to trigger an
+ * actual update.
  *
  * Since: 3.0
  **/
@@ -256,6 +316,21 @@ gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
   return filter->config;
 }
 
+/**
+ * gimp_drawable_filter_update:
+ * @filter: A drawable filter.
+ *
+ * Syncs the #GimpConfig with properties that match @filter's arguments.
+ * This procedure updates the settings of the specified filter all at
+ * once, including the arguments of the [class@Gimp.DrawableFilterConfig]
+ * obtained with [method@Gimp.DrawableFilter.get_config] as well as the
+ * blend mode and opacity.
+ *
+ * In particular, if the image is displayed, rendering will be frozen
+ * and will happen only once for all changed settings.
+ *
+ * Since: 3.0
+ **/
 void
 gimp_drawable_filter_update (GimpDrawableFilter *filter)
 {
@@ -297,7 +372,10 @@ gimp_drawable_filter_update (GimpDrawableFilter *filter)
     }
 
   propnames = g_strv_builder_end (builder);
-  _gimp_drawable_filter_update_settings (filter, (const gchar **) propnames, values);
+  _gimp_drawable_filter_update (filter, (const gchar **) propnames, values,
+                                filter->opacity,
+                                filter->blend_mode, filter->blend_space,
+                                filter->composite_mode, filter->composite_space);
 
   g_strfreev (propnames);
   g_strv_builder_unref (builder);

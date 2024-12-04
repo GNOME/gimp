@@ -36,14 +36,19 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GimpDrawableFilter, gimp_drawable_filter, GIMP, DRAWABLE_FILTER, GObject)
 
 
-gint32                     gimp_drawable_filter_get_id     (GimpDrawableFilter *filter);
-GimpDrawableFilter       * gimp_drawable_filter_get_by_id  (gint32              filter_id);
+gint32                     gimp_drawable_filter_get_id              (GimpDrawableFilter *filter);
+GimpDrawableFilter       * gimp_drawable_filter_get_by_id           (gint32              filter_id);
 
-gboolean                   gimp_drawable_filter_is_valid   (GimpDrawableFilter *filter);
+gboolean                   gimp_drawable_filter_is_valid            (GimpDrawableFilter *filter);
 
-GimpDrawableFilterConfig * gimp_drawable_filter_get_config (GimpDrawableFilter *filter);
+void                       gimp_drawable_filter_set_opacity         (GimpDrawableFilter *filter,
+                                                                     gdouble             opacity);
+void                       gimp_drawable_filter_set_blend_mode      (GimpDrawableFilter *filter,
+                                                                     GimpLayerMode       mode);
 
-void                       gimp_drawable_filter_update     (GimpDrawableFilter *filter);
+GimpDrawableFilterConfig * gimp_drawable_filter_get_config          (GimpDrawableFilter *filter);
+
+void                       gimp_drawable_filter_update              (GimpDrawableFilter *filter);
 
 
 G_END_DECLS

@@ -247,13 +247,68 @@ CODE
     );
 }
 
-sub drawable_filter_update_settings {
+sub drawable_filter_get_opacity {
+    $blurb = "Get the opacity of the specified filter.";
+
+    $help = "This procedure returns the specified filter's opacity.";
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter' }
+    );
+
+    @outargs = (
+	{ name => 'opacity', type => 'double',
+	  desc => "The filter's opacity" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  opacity = gimp_drawable_filter_get_opacity (filter);
+}
+CODE
+    );
+}
+
+sub drawable_filter_get_blend_mode {
+    $blurb = "Get the blending mode of the specified filter.";
+
+    $help = "This procedure returns the specified filter's mode.";
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The filter' }
+    );
+
+    @outargs = (
+	{ name => 'mode', type => 'enum GimpLayerMode',
+	  desc => 'The effect blending mode' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  mode = gimp_drawable_filter_get_paint_mode (filter);
+}
+CODE
+    );
+}
+
+sub drawable_filter_update {
     $blurb = "Update the settings of the specified filter.";
 
     $help = <<'HELP';
 This procedure updates the settings of the specified filter all at once.
 
 In particular, update will be frozen and will happen only once for all changed settings.
+
+This PDB function is internal, meant to be private and its arguments will likely change as filters evolve.
+It should not be used.
 HELP
 
     &jehan_pdb_misc('2024', '3.0');
@@ -267,12 +322,30 @@ HELP
 	  desc => 'Array of property names' },
 	{ name => 'propvalues', type => 'valuearray',
 	  desc => 'Array of values, one per property in propnames' },
+	{ name => 'opacity', type => '0 <= double <= 100',
+	  desc => "The filter's opacity" },
+	{ name => 'blend_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The effect blending mode' },
+	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+          default => 'GIMP_LAYER_COLOR_SPACE_AUTO',
+	  desc => 'The effect blending space' },
+	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+          default => 'GIMP_LAYER_COMPOSITE_AUTO',
+	  desc => 'The layer composite mode' },
+	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+          default => 'GIMP_LAYER_COLOR_SPACE_AUTO',
+	  desc => 'The effect composite space' },
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_drawable_filter_update (filter, propnames, propvalues, error);
+  success = gimp_drawable_filter_update (filter, propnames, propvalues,
+                                         opacity,
+                                         blend_mode, blend_space,
+                                         composite_mode, composite_space,
+                                         error);
 }
 CODE
     );
@@ -432,7 +505,9 @@ CODE
             drawable_filter_get_operation_name
             drawable_filter_get_visible
             drawable_filter_set_visible
-            drawable_filter_update_settings
+            drawable_filter_get_opacity
+            drawable_filter_get_blend_mode
+            drawable_filter_update
             drawable_filter_get_number_arguments
             drawable_filter_get_argument
             drawable_filter_delete);

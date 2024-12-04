@@ -214,16 +214,20 @@ EXPORTS
 	gimp_drawable_fill
 	gimp_drawable_filter_config_get_type
 	gimp_drawable_filter_delete
+	gimp_drawable_filter_get_blend_mode
 	gimp_drawable_filter_get_by_id
 	gimp_drawable_filter_get_config
 	gimp_drawable_filter_get_id
 	gimp_drawable_filter_get_name
+	gimp_drawable_filter_get_opacity
 	gimp_drawable_filter_get_operation_name
 	gimp_drawable_filter_get_type
 	gimp_drawable_filter_get_visible
 	gimp_drawable_filter_id_is_valid
 	gimp_drawable_filter_is_valid
 	gimp_drawable_filter_new
+	gimp_drawable_filter_set_blend_mode
+	gimp_drawable_filter_set_opacity
 	gimp_drawable_filter_set_visible
 	gimp_drawable_filter_update
 	gimp_drawable_foreground_extract

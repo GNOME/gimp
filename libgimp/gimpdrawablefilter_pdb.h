@@ -32,22 +32,29 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean                    gimp_drawable_filter_id_is_valid           (gint                   filter_id);
-GimpDrawableFilter*         gimp_drawable_filter_new                   (GimpDrawable          *drawable,
-                                                                        const gchar           *operation_name,
-                                                                        const gchar           *name);
-gchar*                      gimp_drawable_filter_get_name              (GimpDrawableFilter    *filter);
-gchar*                      gimp_drawable_filter_get_operation_name    (GimpDrawableFilter    *filter);
-gboolean                    gimp_drawable_filter_get_visible           (GimpDrawableFilter    *filter);
-gboolean                    gimp_drawable_filter_set_visible           (GimpDrawableFilter    *filter,
-                                                                        gboolean               visible);
-G_GNUC_INTERNAL gboolean    _gimp_drawable_filter_update_settings      (GimpDrawableFilter    *filter,
-                                                                        const gchar          **propnames,
-                                                                        const GimpValueArray  *propvalues);
-G_GNUC_INTERNAL gint        _gimp_drawable_filter_get_number_arguments (const gchar           *operation_name);
-G_GNUC_INTERNAL GParamSpec* _gimp_drawable_filter_get_argument         (const gchar           *operation_name,
-                                                                        gint                   arg_num);
-gboolean                    gimp_drawable_filter_delete                (GimpDrawableFilter    *filter);
+gboolean                    gimp_drawable_filter_id_is_valid           (gint                     filter_id);
+GimpDrawableFilter*         gimp_drawable_filter_new                   (GimpDrawable            *drawable,
+                                                                        const gchar             *operation_name,
+                                                                        const gchar             *name);
+gchar*                      gimp_drawable_filter_get_name              (GimpDrawableFilter      *filter);
+gchar*                      gimp_drawable_filter_get_operation_name    (GimpDrawableFilter      *filter);
+gboolean                    gimp_drawable_filter_get_visible           (GimpDrawableFilter      *filter);
+gboolean                    gimp_drawable_filter_set_visible           (GimpDrawableFilter      *filter,
+                                                                        gboolean                 visible);
+gdouble                     gimp_drawable_filter_get_opacity           (GimpDrawableFilter      *filter);
+GimpLayerMode               gimp_drawable_filter_get_blend_mode        (GimpDrawableFilter      *filter);
+G_GNUC_INTERNAL gboolean    _gimp_drawable_filter_update               (GimpDrawableFilter      *filter,
+                                                                        const gchar            **propnames,
+                                                                        const GimpValueArray    *propvalues,
+                                                                        gdouble                  opacity,
+                                                                        GimpLayerMode            blend_mode,
+                                                                        GimpLayerColorSpace      blend_space,
+                                                                        GimpLayerCompositeMode   composite_mode,
+                                                                        GimpLayerColorSpace      composite_space);
+G_GNUC_INTERNAL gint        _gimp_drawable_filter_get_number_arguments (const gchar             *operation_name);
+G_GNUC_INTERNAL GParamSpec* _gimp_drawable_filter_get_argument         (const gchar             *operation_name,
+                                                                        gint                     arg_num);
+gboolean                    gimp_drawable_filter_delete                (GimpDrawableFilter      *filter);
 
 
 G_END_DECLS

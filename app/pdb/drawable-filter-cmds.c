@@ -275,25 +275,97 @@ drawable_filter_set_visible_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_filter_update_settings_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
-                                         GError               **error)
+drawable_filter_get_opacity_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter;
+  gdouble opacity = 0.0;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      opacity = gimp_drawable_filter_get_opacity (filter);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), opacity);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_get_blend_mode_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter;
+  gint mode = 0;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      mode = gimp_drawable_filter_get_paint_mode (filter);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), mode);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_update_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawableFilter *filter;
   const gchar **propnames;
   const GimpValueArray *propvalues;
+  gdouble opacity;
+  gint blend_mode;
+  gint blend_space;
+  gint composite_mode;
+  gint composite_space;
 
   filter = g_value_get_object (gimp_value_array_index (args, 0));
   propnames = g_value_get_boxed (gimp_value_array_index (args, 1));
   propvalues = g_value_get_boxed (gimp_value_array_index (args, 2));
+  opacity = g_value_get_double (gimp_value_array_index (args, 3));
+  blend_mode = g_value_get_enum (gimp_value_array_index (args, 4));
+  blend_space = g_value_get_enum (gimp_value_array_index (args, 5));
+  composite_mode = g_value_get_enum (gimp_value_array_index (args, 6));
+  composite_space = g_value_get_enum (gimp_value_array_index (args, 7));
 
   if (success)
     {
-      success = gimp_drawable_filter_update (filter, propnames, propvalues, error);
+      success = gimp_drawable_filter_update (filter, propnames, propvalues,
+                                             opacity,
+                                             blend_mode, blend_space,
+                                             composite_mode, composite_space,
+                                             error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -625,15 +697,75 @@ register_drawable_filter_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-filter-update-settings
+   * gimp-drawable-filter-get-opacity
    */
-  procedure = gimp_procedure_new (drawable_filter_update_settings_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_opacity_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-filter-update-settings");
+                               "gimp-drawable-filter-get-opacity");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the opacity of the specified filter.",
+                                  "This procedure returns the specified filter's opacity.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("opacity",
+                                                        "opacity",
+                                                        "The filter's opacity",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-blend-mode
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_blend_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-blend-mode");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the blending mode of the specified filter.",
+                                  "This procedure returns the specified filter's mode.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("mode",
+                                                      "mode",
+                                                      "The effect blending mode",
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-update
+   */
+  procedure = gimp_procedure_new (drawable_filter_update_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-update");
   gimp_procedure_set_static_help (procedure,
                                   "Update the settings of the specified filter.",
                                   "This procedure updates the settings of the specified filter all at once.\n"
-                                  "In particular, update will be frozen and will happen only once for all changed settings.",
+                                  "In particular, update will be frozen and will happen only once for all changed settings.\n"
+                                  "This PDB function is internal, meant to be private and its arguments will likely change as filters evolve. It should not be used.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -657,6 +789,40 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                             "Array of values, one per property in propnames",
                                                             NULL,
                                                             GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("opacity",
+                                                    "opacity",
+                                                    "The filter's opacity",
+                                                    0, 100, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("blend-mode",
+                                                  "blend mode",
+                                                  "The effect blending mode",
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("blend-space",
+                                                  "blend space",
+                                                  "The effect blending space",
+                                                  GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("composite-mode",
+                                                  "composite mode",
+                                                  "The layer composite mode",
+                                                  GIMP_TYPE_LAYER_COMPOSITE_MODE,
+                                                  GIMP_LAYER_COMPOSITE_AUTO,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("composite-space",
+                                                  "composite space",
+                                                  "The effect composite space",
+                                                  GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

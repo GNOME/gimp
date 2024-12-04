@@ -710,11 +710,20 @@ gimp_drawable_filter_set_preview_split (GimpDrawableFilter  *filter,
     }
 }
 
+/* This function is mostly for usage by libgimp API. The idea is to have
+ * a single function which updates a bunch of settings in a single call
+ * and in particular a single rendering update.
+ */
 gboolean
-gimp_drawable_filter_update (GimpDrawableFilter    *filter,
-                             const gchar          **propnames,
-                             const GimpValueArray  *values,
-                             GError               **error)
+gimp_drawable_filter_update (GimpDrawableFilter      *filter,
+                             const gchar            **propnames,
+                             const GimpValueArray    *values,
+                             gdouble                  opacity,
+                             GimpLayerMode            paint_mode,
+                             GimpLayerColorSpace      blend_space,
+                             GimpLayerColorSpace      composite_space,
+                             GimpLayerCompositeMode   composite_mode,
+                             GError                 **error)
 {
   GParamSpec  **pspecs;
   gchar        *opname;
@@ -837,6 +846,28 @@ gimp_drawable_filter_update (GimpDrawableFilter    *filter,
         }
 
       g_value_unset (&old_value);
+    }
+
+  if (opacity != filter->opacity)
+    {
+      filter->opacity = opacity;
+
+      gimp_drawable_filter_sync_opacity (filter);
+      changed = TRUE;
+    }
+
+  if (paint_mode      != filter->paint_mode      ||
+      blend_space     != filter->blend_space     ||
+      composite_space != filter->composite_space ||
+      composite_mode  != filter->composite_mode)
+    {
+      filter->paint_mode      = paint_mode;
+      filter->blend_space     = blend_space;
+      filter->composite_space = composite_space;
+      filter->composite_mode  = composite_mode;
+
+      gimp_drawable_filter_sync_mode (filter);
+      changed = TRUE;
     }
 
   g_object_thaw_notify (G_OBJECT (filter));

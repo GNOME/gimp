@@ -276,10 +276,87 @@ gimp_drawable_filter_set_visible (GimpDrawableFilter *filter,
 }
 
 /**
- * _gimp_drawable_filter_update_settings:
+ * gimp_drawable_filter_get_opacity:
+ * @filter: The filter.
+ *
+ * Get the opacity of the specified filter.
+ *
+ * This procedure returns the specified filter's opacity.
+ *
+ * Returns: The filter's opacity.
+ *
+ * Since: 3.0
+ **/
+gdouble
+gimp_drawable_filter_get_opacity (GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gdouble opacity = 0.0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-opacity",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return opacity;
+}
+
+/**
+ * gimp_drawable_filter_get_blend_mode:
+ * @filter: The filter.
+ *
+ * Get the blending mode of the specified filter.
+ *
+ * This procedure returns the specified filter's mode.
+ *
+ * Returns: The effect blending mode.
+ *
+ * Since: 3.0
+ **/
+GimpLayerMode
+gimp_drawable_filter_get_blend_mode (GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpLayerMode mode = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-blend-mode",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return mode;
+}
+
+/**
+ * _gimp_drawable_filter_update:
  * @filter: The filter.
  * @propnames: (array zero-terminated=1): Array of property names.
  * @propvalues: Array of values, one per property in propnames.
+ * @opacity: The filter's opacity.
+ * @blend_mode: The effect blending mode.
+ * @blend_space: The effect blending space.
+ * @composite_mode: The layer composite mode.
+ * @composite_space: The effect composite space.
  *
  * Update the settings of the specified filter.
  *
@@ -287,15 +364,22 @@ gimp_drawable_filter_set_visible (GimpDrawableFilter *filter,
  * once.
  * In particular, update will be frozen and will happen only once for
  * all changed settings.
+ * This PDB function is internal, meant to be private and its arguments
+ * will likely change as filters evolve. It should not be used.
  *
  * Returns: TRUE on success.
  *
  * Since: 3.0
  **/
 gboolean
-_gimp_drawable_filter_update_settings (GimpDrawableFilter    *filter,
-                                       const gchar          **propnames,
-                                       const GimpValueArray  *propvalues)
+_gimp_drawable_filter_update (GimpDrawableFilter      *filter,
+                              const gchar            **propnames,
+                              const GimpValueArray    *propvalues,
+                              gdouble                  opacity,
+                              GimpLayerMode            blend_mode,
+                              GimpLayerColorSpace      blend_space,
+                              GimpLayerCompositeMode   composite_mode,
+                              GimpLayerColorSpace      composite_space)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -305,10 +389,15 @@ _gimp_drawable_filter_update_settings (GimpDrawableFilter    *filter,
                                           GIMP_TYPE_DRAWABLE_FILTER, filter,
                                           G_TYPE_STRV, propnames,
                                           GIMP_TYPE_VALUE_ARRAY, propvalues,
+                                          G_TYPE_DOUBLE, opacity,
+                                          GIMP_TYPE_LAYER_MODE, blend_mode,
+                                          GIMP_TYPE_LAYER_COLOR_SPACE, blend_space,
+                                          GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode,
+                                          GIMP_TYPE_LAYER_COLOR_SPACE, composite_space,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-drawable-filter-update-settings",
+                                               "gimp-drawable-filter-update",
                                                args);
   gimp_value_array_unref (args);
 
