@@ -9,15 +9,18 @@ BasedOnStyle: GNU
 
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Left
-AlignConsecutiveAssignments: Consecutive
-AlignConsecutiveDeclarations: Consecutive
-AlignConsecutiveMacros: Consecutive
+AlignConsecutiveAssignments: AcrossComments
+AlignConsecutiveDeclarations: AcrossComments
+AlignConsecutiveBitFields: AcrossComments
+AlignConsecutiveMacros: AcrossComments
 AlignEscapedNewlines: Left
 
 AllowAllParametersOfDeclarationOnNextLine: false
 AlwaysBreakAfterReturnType: AllDefinitions
 BinPackParameters: false
+BreakBeforeBinaryOperators: None
 BreakBeforeBraces: GNU
+BreakBeforeTernaryOperators: false
 IndentWidth: 2
 PointerAlignment: Right
 UseTab: Never
