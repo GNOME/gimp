@@ -44,6 +44,93 @@ CODE
     );
 }
 
+sub drawable_filter_new {
+    $blurb = 'Create a new drawable filter.';
+
+    $help = <<'HELP';
+This procedure creates a new filter for the specified operation on @drawable.
+
+The new effect still needs to be either added or merged to @drawable later.
+Add the effect non-destructively with [method@Gimp.Drawable.append_filter].
+
+Currently only layers can have non-destructive effects. The effects must be merged for all other types of drawable.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+        { name => 'drawable', type => 'drawable',
+          desc => 'The drawable' },
+	{ name => 'operation_name', type => 'string',
+	  desc => "The GEGL operation's name" },
+	{ name => 'name', type => 'string',
+	  desc => 'The effect name', null_ok => 0 },
+    );
+
+    @outargs = (
+	{ name => 'filter', type => 'filter',
+	  desc => 'The newly created filter' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GType op_type;
+
+  /* Comes from gegl/operation/gegl-operations.h which is not public. */
+  GType gegl_operation_gtype_from_name (const gchar *name);
+
+  op_type = gegl_operation_gtype_from_name (operation_name);
+  /* Using the same rules as in xcf_load_effect() for plug-in created
+   * effects.
+   */
+  if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   "%s: the filter \"%s\" is unsafe.",
+                   G_STRFUNC, operation_name);
+
+      success = FALSE;
+    }
+  else if (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
+           g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   "%s: the filter \"gegl:gegl\" is unsafe.\n"
+                   "For development purpose, set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.",
+                   G_STRFUNC);
+
+      success = FALSE;
+    }
+
+  if (! gegl_has_operation (operation_name) || ! g_strcmp0 (operation_name, "gegl:nop"))
+    {
+      if (! g_strcmp0 (operation_name, "gegl:nop"))
+        g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                             "The filter \"gegl:nop\" is useless and not allowed.");
+      else
+        g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                     "%s: the filter \"%s\" is not installed.",
+                     G_STRFUNC, operation_name);
+
+      success = FALSE;
+    }
+
+  if (success)
+    {
+      GeglNode *operation = gegl_node_new ();
+
+      gegl_node_set (operation,
+                     "operation", operation_name,
+                     NULL);
+      filter = gimp_drawable_filter_new (drawable, name, operation, NULL);
+      g_clear_object (&operation);
+    }
+}
+CODE
+    );
+}
+
 sub drawable_filter_get_name {
     $blurb = 'Get a drawable filter\'s name.';
 
@@ -329,14 +416,18 @@ CODE
     );
 }
 
-@headers = qw("core/gimpcontainer.h"
+@headers = qw(<gegl.h>
+              <gegl-plugin.h>
+              "core/gimpcontainer.h"
               "core/gimpdrawablefilter.h"
               "core/gimpdrawable-filters.h"
               "core/gimpimage-undo-push.h"
               "core/gimpitem.h"
+              "gimppdberror.h"
               "gimp-intl.h");
 
 @procs = qw(drawable_filter_id_is_valid
+            drawable_filter_new
             drawable_filter_get_name
             drawable_filter_get_operation_name
             drawable_filter_get_visible

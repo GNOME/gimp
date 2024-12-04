@@ -45,7 +45,9 @@
 #include "core/gimpdrawable-shadow.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawablefilter.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptempbuf.h"
@@ -56,6 +58,7 @@
 #include "plug-in/gimppluginmanager.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimppdb-utils.h"
 #include "gimppdbcontext.h"
 #include "gimpprocedure.h"
@@ -599,6 +602,67 @@ drawable_mask_intersect_invoker (GimpProcedure         *procedure,
     }
 
   return return_vals;
+}
+
+static GimpValueArray *
+drawable_append_filter_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpDrawableFilter *filter;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  filter = g_value_get_object (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GeglNode *node;
+
+      if (gimp_drawable_filter_get_drawable (filter) != drawable)
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       "%s: the filter was not created for this drawable.",
+                       G_STRFUNC);
+          success = FALSE;
+        }
+      else if (! GIMP_IS_LAYER (drawable))
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       "%s: only drawables of type GimpLayer can have non-destructive effects.",
+                       G_STRFUNC);
+          success = FALSE;
+        }
+
+      node = gimp_drawable_filter_get_operation (filter);
+      if (success && gegl_node_has_pad (node, "aux"))
+        {
+          /* Filters with aux input should not be NDE. See: gimp_filter_tool_create_filter(). */
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       "%s: effects with an 'aux' pad cannot be applied non-destructively.",
+                       G_STRFUNC);
+          success = FALSE;
+        }
+
+      if (success)
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+          gimp_image_undo_push_filter_add (image, _("Add filter"), drawable, filter);
+          gimp_drawable_filter_apply (filter, NULL);
+          gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+          gimp_drawable_filter_layer_mask_freeze (filter);
+
+          g_object_unref (filter);
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -1595,6 +1659,37 @@ register_drawable_procs (GimpPDB *pdb)
                                                      "height of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-append-filter
+   */
+  procedure = gimp_procedure_new (drawable_append_filter_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-append-filter");
+  gimp_procedure_set_static_help (procedure,
+                                  "Append the specified effect to the top of the list of drawable effects.",
+                                  "This procedure adds the specified drawable effect at the top of the effect list of @drawable.\n"
+                                  "The @drawable argument must be the same as the one used when you created the effect with [ctor@Gimp.DrawableFilter.new].\n"
+                                  "Some effects may be slower than others to render. In order to minimize processing time, it is preferred to customize the operation's arguments as received with [method@Gimp.DrawableFilter.get_config] then sync them to the application with [method@Gimp.DrawableFilter.update] before adding the effect.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The drawable filter to append",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

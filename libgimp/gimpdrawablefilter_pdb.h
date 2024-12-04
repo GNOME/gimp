@@ -33,6 +33,9 @@ G_BEGIN_DECLS
 
 
 gboolean                    gimp_drawable_filter_id_is_valid           (gint                   filter_id);
+GimpDrawableFilter*         gimp_drawable_filter_new                   (GimpDrawable          *drawable,
+                                                                        const gchar           *operation_name,
+                                                                        const gchar           *name);
 gchar*                      gimp_drawable_filter_get_name              (GimpDrawableFilter    *filter);
 gchar*                      gimp_drawable_filter_get_operation_name    (GimpDrawableFilter    *filter);
 gboolean                    gimp_drawable_filter_get_visible           (GimpDrawableFilter    *filter);

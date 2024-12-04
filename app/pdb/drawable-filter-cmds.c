@@ -21,6 +21,9 @@
 
 #include "stamp-pdbgen.h"
 
+#include <gegl-plugin.h>
+#include <gegl.h>
+
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -31,12 +34,14 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable-filters.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -68,6 +73,89 @@ drawable_filter_id_is_valid_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_set_boolean (gimp_value_array_index (return_vals, 1), valid);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_new_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawable *drawable;
+  const gchar *operation_name;
+  const gchar *name;
+  GimpDrawableFilter *filter = NULL;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  operation_name = g_value_get_string (gimp_value_array_index (args, 1));
+  name = g_value_get_string (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      GType op_type;
+
+      /* Comes from gegl/operation/gegl-operations.h which is not public. */
+      GType gegl_operation_gtype_from_name (const gchar *name);
+
+      op_type = gegl_operation_gtype_from_name (operation_name);
+      /* Using the same rules as in xcf_load_effect() for plug-in created
+       * effects.
+       */
+      if (g_type_is_a (op_type, GEGL_TYPE_OPERATION_SINK))
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       "%s: the filter \"%s\" is unsafe.",
+                       G_STRFUNC, operation_name);
+
+          success = FALSE;
+        }
+      else if (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
+               g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL)
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       "%s: the filter \"gegl:gegl\" is unsafe.\n"
+                       "For development purpose, set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.",
+                       G_STRFUNC);
+
+          success = FALSE;
+        }
+
+      if (! gegl_has_operation (operation_name) || ! g_strcmp0 (operation_name, "gegl:nop"))
+        {
+          if (! g_strcmp0 (operation_name, "gegl:nop"))
+            g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                                 "The filter \"gegl:nop\" is useless and not allowed.");
+          else
+            g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                         "%s: the filter \"%s\" is not installed.",
+                         G_STRFUNC, operation_name);
+
+          success = FALSE;
+        }
+
+      if (success)
+        {
+          GeglNode *operation = gegl_node_new ();
+
+          gegl_node_set (operation,
+                         "operation", operation_name,
+                         NULL);
+          filter = gimp_drawable_filter_new (drawable, name, operation, NULL);
+          g_clear_object (&operation);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), filter);
 
   return return_vals;
 }
@@ -368,6 +456,51 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                          "Whether the filter ID is valid",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-new
+   */
+  procedure = gimp_procedure_new (drawable_filter_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-new");
+  gimp_procedure_set_static_help (procedure,
+                                  "Create a new drawable filter.",
+                                  "This procedure creates a new filter for the specified operation on @drawable.\n"
+                                  "The new effect still needs to be either added or merged to @drawable later. Add the effect non-destructively with [method@Gimp.Drawable.append_filter].\n"
+                                  "Currently only layers can have non-destructive effects. The effects must be merged for all other types of drawable.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("operation-name",
+                                                       "operation name",
+                                                       "The GEGL operation's name",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The effect name",
+                                                       FALSE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_drawable_filter ("filter",
+                                                                    "filter",
+                                                                    "The newly created filter",
+                                                                    FALSE,
+                                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

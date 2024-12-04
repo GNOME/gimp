@@ -74,6 +74,54 @@ gimp_drawable_filter_id_is_valid (gint filter_id)
 }
 
 /**
+ * gimp_drawable_filter_new:
+ * @drawable: The drawable.
+ * @operation_name: The GEGL operation's name.
+ * @name: The effect name.
+ *
+ * Create a new drawable filter.
+ *
+ * This procedure creates a new filter for the specified operation on
+ * @drawable.
+ * The new effect still needs to be either added or merged to @drawable
+ * later. Add the effect non-destructively with
+ * [method@Gimp.Drawable.append_filter].
+ * Currently only layers can have non-destructive effects. The effects
+ * must be merged for all other types of drawable.
+ *
+ * Returns: (transfer none): The newly created filter.
+ *
+ * Since: 3.0
+ **/
+GimpDrawableFilter *
+gimp_drawable_filter_new (GimpDrawable *drawable,
+                          const gchar  *operation_name,
+                          const gchar  *name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          G_TYPE_STRING, operation_name,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-new",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    filter = GIMP_VALUES_GET_DRAWABLE_FILTER (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return filter;
+}
+
+/**
  * gimp_drawable_filter_get_name:
  * @filter: The filter whose name you want.
  *

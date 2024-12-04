@@ -677,6 +677,54 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 }
 
 /**
+ * gimp_drawable_append_filter:
+ * @drawable: The drawable.
+ * @filter: The drawable filter to append.
+ *
+ * Append the specified effect to the top of the list of drawable
+ * effects.
+ *
+ * This procedure adds the specified drawable effect at the top of the
+ * effect list of @drawable.
+ * The @drawable argument must be the same as the one used when you
+ * created the effect with [ctor@Gimp.DrawableFilter.new].
+ * Some effects may be slower than others to render. In order to
+ * minimize processing time, it is preferred to customize the
+ * operation's arguments as received with
+ * [method@Gimp.DrawableFilter.get_config] then sync them to the
+ * application with [method@Gimp.DrawableFilter.update] before adding
+ * the effect.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_drawable_append_filter (GimpDrawable       *drawable,
+                             GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-append-filter",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_get_filters:
  * @drawable: The drawable.
  *

@@ -196,6 +196,7 @@ EXPORTS
 	gimp_displays_reconnect
 	gimp_dodgeburn
 	gimp_dodgeburn_default
+	gimp_drawable_append_filter
 	gimp_drawable_brightness_contrast
 	gimp_drawable_color_balance
 	gimp_drawable_colorize_hsl
@@ -222,6 +223,7 @@ EXPORTS
 	gimp_drawable_filter_get_visible
 	gimp_drawable_filter_id_is_valid
 	gimp_drawable_filter_is_valid
+	gimp_drawable_filter_new
 	gimp_drawable_filter_set_visible
 	gimp_drawable_filter_update
 	gimp_drawable_foreground_extract
