@@ -27,6 +27,8 @@
 
 #include "display-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
@@ -377,9 +379,10 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
                              GimpFillOptions  *options,
                              const gchar      *undo_desc)
 {
-  GimpImage    *image = gimp_display_get_image (shell->display);
-  GList        *drawables;
-  GList        *iter;
+  GimpImage     *image  = gimp_display_get_image (shell->display);
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (shell->display->gimp->config);
+  GList         *drawables;
+  GList         *iter;
 
   if (shell->display->gimp->busy)
     return;
@@ -408,6 +411,16 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
                                 _("A selected layer's pixels are locked."));
+          g_list_free (drawables);
+          return;
+        }
+
+      if (! gimp_item_is_visible (GIMP_ITEM (iter->data)) &&
+          ! config->edit_non_visible)
+        {
+          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
+                                GIMP_MESSAGE_ERROR,
+                                _("A selected layer is not visible."));
           g_list_free (drawables);
           return;
         }
