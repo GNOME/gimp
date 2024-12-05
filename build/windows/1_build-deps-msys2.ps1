@@ -39,15 +39,8 @@ elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'x64*')
   }
 $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
 
-#Workaround to avoid stuck pacman. See: https://github.com/msys2/MSYS2-packages/issues/4340
-$PACMAN_CONF = "$MSYS2_PREFIX\etc\pacman.conf"
-Copy-Item $PACMAN_CONF "$PACMAN_CONF.bak"
-(Get-Content $PACMAN_CONF) | Foreach-Object {$_ -replace "SigLevel    = Required","SigLevel    = DatabaseNever"} |
-Set-Content $PACMAN_CONF
 pacman --noconfirm -Suy
 pacman --noconfirm -S --needed base-devel $MINGW_PACKAGE_PREFIX-toolchain (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$MINGW_PACKAGE_PREFIX).Replace(' \','')
-Remove-Item $PACMAN_CONF
-Rename-Item "$PACMAN_CONF.bak" $PACMAN_CONF
 
 
 # Prepare env

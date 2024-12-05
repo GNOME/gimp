@@ -25,7 +25,7 @@ Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-St
 
 if ($GITLAB_CI)
   {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'PACMAN_CONF =' -Context 0,7) -replace '> ','')
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'Suy' -Context 0,1) -replace '> ','')
   }
 
 
