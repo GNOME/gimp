@@ -74,6 +74,21 @@
   </provides>
 
   <releases>
+    <release version="3.0.0~rc2" date="TODO" type="development">
+      <description>
+        <p>
+        The second release candidate for the upcoming GIMP 3.0.0 features a lot of bug fixes, as well as a few
+        necessary core or plug-in changes:
+        </p>
+        <ul>
+          <li>New API functions for handling layer effects from plug-ins</li>
+          <li>More compat PDB procedures removed in favor of new API</li>
+          <li>Perceptual space for layer mode renamed non-linear and real perceptual space added</li>
+          <li>Major BMP support improvement</li>
+          <li>Many bug fixes</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.0~rc1" date="2024-11-04" type="development">
       <description>
         <p>
