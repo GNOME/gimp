@@ -49,7 +49,7 @@ if appstreamcli.found()
     find_program('test-appdata.sh', required: true, dirs: [meson.current_source_dir()]),
     env: [
       'GIMP_TESTING_BUILDDIR=' + meson.current_build_dir(),
-      'GIMP_RELEASE=' + (release ? '1' : '0'),
+      'GIMP_RELEASE=' + (release and not gimp_rc_git ? '1' : '0'),
     ],
     suite: 'desktop',
   )

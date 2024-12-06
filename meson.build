@@ -31,12 +31,14 @@ gimp_app_version_major = gimp_app_version_arr[0].to_int()
 gimp_app_version_minor = gimp_app_version_arr[1].to_int()
 gimp_app_micro_rc      = gimp_app_version_arr[2].split('-')
 gimp_app_version_micro = gimp_app_micro_rc[0].to_int()
+gimp_rc_git            = false
 if gimp_app_micro_rc.length() > 1
   if not gimp_app_micro_rc[1].startswith('RC')
     error('Version format is: <major>.<minor>.<micro> with optional "-RC<num>" suffix and optional "+git".')
   endif
   if gimp_app_micro_rc[1].endswith('+git')
     gimp_app_version_rc = gimp_app_micro_rc[1].substring(2, -4).to_int()
+    gimp_rc_git = true
   else
     gimp_app_version_rc = gimp_app_micro_rc[1].substring(2).to_int()
   endif
