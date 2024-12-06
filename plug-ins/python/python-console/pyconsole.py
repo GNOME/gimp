@@ -312,9 +312,9 @@ class _ReadLine(object):
                 pass
             elif keyval == Gdk.KEY_Return:
                 self._commit()
-            elif keyval == Gdk.KEY_Up:
+            elif keyval == Gdk.KEY_Up or keyval == Gdk.KEY_Page_Up:
                 self.__history(-1)
-            elif keyval == Gdk.KEY_Down:
+            elif keyval == Gdk.KEY_Down or keyval == Gdk.KEY_Page_Down:
                 self.__history(1)
             elif keyval == Gdk.KEY_Left:
                 self.__move_cursor(-1)
