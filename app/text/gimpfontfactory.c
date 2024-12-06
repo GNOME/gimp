@@ -813,6 +813,13 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
       FcPatternGetString (fontset->fonts[i], FC_FILE, 0, (FcChar8 **) &file);
 
+      if (file == NULL || ! g_utf8_validate (file, -1, NULL))
+        {
+          g_string_append_printf (ignored_fonts, "- %s (not a valid utf-8 file name)\n", file);
+          n_ignored++;
+          continue;
+        }
+
       blob = hb_blob_create_from_file_or_fail (file);
       /*
        * Pango doesn't support non SFNT fonts because harfbuzz doesn't support them.
@@ -829,15 +836,18 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
 
       hb_blob_destroy (blob);
 
-      /* Some variable fonts have only a family name and a font version. */
-      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 0, (FcChar8 **) &fullname) != FcResultMatch)
+      /* Some variable fonts have only a family name and a font version.
+       * But we also check in case there is no family name */
+      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 0, (FcChar8 **) &fullname) != FcResultMatch ||
+          FcPatternGetString (fontset->fonts[i], FC_FAMILY,   0, (FcChar8 **) &family)   != FcResultMatch ||
+          ! g_utf8_validate (fullname, -1, NULL)                                                          ||
+          ! g_utf8_validate (family,   -1, NULL))
         {
-          g_string_append_printf (ignored_fonts, "- %s (no full name)\n", file);
+          g_string_append_printf (ignored_fonts, "- %s (no or invalid full name and/or family)\n", file);
           n_ignored++;
           continue;
         }
 
-      FcPatternGetString  (fontset->fonts[i], FC_FAMILY,          0, (FcChar8 **) &family);
       FcPatternGetString  (fontset->fonts[i], FC_POSTSCRIPT_NAME, 0, (FcChar8 **) &psname);
       FcPatternGetString  (fontset->fonts[i], FC_STYLE,           0, (FcChar8 **) &style);
       FcPatternGetInteger (fontset->fonts[i], FC_WEIGHT,          0,              &weight);
@@ -845,6 +855,14 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       FcPatternGetInteger (fontset->fonts[i], FC_INDEX,           0,              &index);
       FcPatternGetInteger (fontset->fonts[i], FC_SLANT,           0,              &slant);
       FcPatternGetInteger (fontset->fonts[i], FC_FONTVERSION,     0,              &fontversion);
+
+      /* Sometimes a font has more than one fullname,
+       * sometimes the second is more appropriate for display,
+       * in such cases we use it instead of the first.
+       */
+      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 1, (FcChar8 **) &fullname2) != FcResultMatch ||
+          ! g_utf8_validate (fullname2, -1, NULL))
+        fullname2 = NULL;
 
       /* this is for backward compatibility*/
       pattern_pfd      = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
@@ -861,13 +879,6 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
       font_info[PROP_SLANT]       = (gpointer) &slant;
       font_info[PROP_FONTVERSION] = (gpointer) &fontversion;
       font_info[PROP_FILE]        = (gpointer)  file;
-
-      /* Sometimes a font has more than one fullname,
-       * sometimes the second is more appropriate for display,
-       * in such cases we use it instead of the first.
-       */
-      if (FcPatternGetString (fontset->fonts[i], FC_FULLNAME, 1, (FcChar8 **) &fullname2) != FcResultMatch)
-        fullname2 = NULL;
 
       newname = g_strdup_printf ("gimpfont%i", i);
 
@@ -912,7 +923,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
                               escaped_file);
       g_free (escaped_file);
 
-      if (psname != NULL)
+      if (psname != NULL && g_utf8_validate (psname, -1, NULL))
         {
           psname = g_markup_escape_text (psname, -1);
           g_string_append_printf (xml,
@@ -924,7 +935,7 @@ gimp_font_factory_load_names (GimpFontFactory *factory,
           g_free (psname);
         }
 
-      if (style != NULL)
+      if (style != NULL && g_utf8_validate (style, -1, NULL))
         {
           style = g_markup_escape_text (style, -1);
           g_string_append_printf (xml,
