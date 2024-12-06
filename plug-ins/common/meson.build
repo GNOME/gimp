@@ -40,7 +40,6 @@ common_plugins_list = [
   },
   { 'name': 'file-header', },
   { 'name': 'file-html-table', },
-  { 'name': 'file-lnk', },
   { 'name': 'file-pat', },
   { 'name': 'file-pcx', },
   { 'name': 'file-pdf-load',
@@ -170,6 +169,10 @@ elif have_ilbm
     'name': 'file-iff',
     'deps': [ gtk3, gegl, ],
   }
+endif
+
+if platform_windows
+  common_plugins_list += { 'name': 'file-lnk', }
 endif
 
 if not platform_windows
