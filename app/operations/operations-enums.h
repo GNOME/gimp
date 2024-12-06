@@ -124,8 +124,10 @@ typedef enum
   GIMP_LAYER_MODE_SPLIT,                 /*< desc="Split"                                                   >*/
   GIMP_LAYER_MODE_PASS_THROUGH,          /*< desc="Pass through"                                            >*/
 
+  /*  Mode only used for drawable filters. */
+  GIMP_LAYER_MODE_REPLACE,               /*< desc="Replace"                                                 >*/
+
   /*  Internal modes, not available to the PDB, must be kept at the end  */
-  GIMP_LAYER_MODE_REPLACE,               /*< pdb-skip, desc="Replace"                                       >*/
   GIMP_LAYER_MODE_ANTI_ERASE,            /*< pdb-skip, desc="Anti erase"                                    >*/
 
   /*  Layer mode menu separator  */

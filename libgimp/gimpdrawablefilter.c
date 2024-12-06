@@ -94,7 +94,7 @@ gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
   drawable_filter->config = NULL;
 
   drawable_filter->opacity         = 1.0;
-  drawable_filter->blend_mode      = GIMP_LAYER_MODE_NORMAL;
+  drawable_filter->blend_mode      = GIMP_LAYER_MODE_REPLACE;
   drawable_filter->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
   drawable_filter->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
   drawable_filter->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;

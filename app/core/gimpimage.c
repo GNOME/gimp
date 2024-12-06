@@ -2884,6 +2884,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_REPLACE:
         case GIMP_LAYER_MODE_ANTI_ERASE:
         case GIMP_LAYER_MODE_SEPARATOR:
+          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
+                               gimp_layer_get_mode (layer),
+                               NULL, NULL, &enum_desc, NULL);
+          g_warning ("%s: layer mode '%s' should not be set on a layer.",
+                     G_STRFUNC, enum_desc);
           break;
         }
 
