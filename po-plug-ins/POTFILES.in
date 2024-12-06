@@ -44,6 +44,7 @@ plug-ins/common/file-html-table.c
 plug-ins/common/file-iff.c
 plug-ins/common/file-jp2-load.c
 plug-ins/common/file-jpegxl.c
+plug-ins/common/file-lnk.c
 plug-ins/common/file-mng.c
 plug-ins/common/file-pat.c
 plug-ins/common/file-pcx.c
