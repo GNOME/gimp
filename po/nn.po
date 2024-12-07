@@ -7996,7 +7996,7 @@ msgstr "Inverter utvalet"
 #: app/actions/select-actions.c:62
 msgctxt "select-action"
 msgid "Cu_t and Float"
-msgstr "_Klipp og gjer flytande"
+msgstr "_Klipp ut og gjer flytande"
 
 #: app/actions/select-actions.c:63
 msgctxt "select-action"
@@ -9201,7 +9201,7 @@ msgstr "Vis eit oversiktsvindauge for dette biletet"
 #: app/actions/view-actions.c:139
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "_Visingsfiletera …"
+msgstr "_Visingsfiltera …"
 
 #: app/actions/view-actions.c:140
 msgctxt "view-action"
