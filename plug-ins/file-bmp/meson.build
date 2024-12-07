@@ -1,9 +1,19 @@
 plugin_name = 'file-bmp'
 
+gen_huffman = executable('generate-huffman',
+                         'generate-huffman.c'
+)
+
+huffman = custom_target('huffman.h',
+                        output: 'huffman.h',
+                        command: [gen_huffman, '@OUTPUT@'],
+)
+
 plugin_sources = [
   'bmp-load.c',
   'bmp-export.c',
   'bmp.c',
+  huffman,
 ]
 
 if platform_windows
