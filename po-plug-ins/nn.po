@@ -16219,7 +16219,7 @@ msgstr ""
 
 #: plug-ins/selection-to-path/selection-to-path.c:261
 msgid "Reparametri_ze Improvement"
-msgstr "Reparametriser forbetring på nytt"
+msgstr "Reparametriser forbetring"
 
 #: plug-ins/selection-to-path/selection-to-path.c:262
 msgid ""
