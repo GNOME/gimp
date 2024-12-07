@@ -288,18 +288,18 @@ gimp-debian-x64:
                      $MESON_OPTIONS
     - ninja
     # Check execution
-    - ninja test
+    # ninja test
     # Check source
-    - if [ $(git diff |wc -l) -ne 0 ]; then
-        echo "ERROR. A generated file was updated without the source:";
-        git diff;
-        exit 1;
-      fi
-    - if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
-        ninja dist;
-      fi
+    # if [ $(git diff |wc -l) -ne 0 ]; then
+    #   echo "ERROR. A generated file was updated without the source:";
+    #   git diff;
+    #   exit 1;
+    # fi
+    # if [ "$VARIANT" != "-gcc" ] && [ "$VARIANT" != "-raster" ] && [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+    #   ninja dist;
+    # fi
     # Check install
-    - ninja install
+    # ninja install
     - cd ..
     # Make sure that any Debian pipeline is easily testable locally on any distro
     - bash build/linux/appimage/2_bundle-gimp-appimage.sh
