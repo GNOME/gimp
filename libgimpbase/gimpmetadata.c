@@ -137,6 +137,9 @@ static const gchar *unsupported_tags[] =
    * unedited original state. */
   "Exif.Image.ImageResources",
   "Exif.Image.0x935c",
+  /* Issue #12518 Metadata fails to be exported when certain Sony Exif tags
+   * are present. */
+  "Exif.SonyMisc3c",
 };
 
 static const guint8 minimal_exif[] =
