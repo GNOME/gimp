@@ -715,8 +715,6 @@ script_fu_marshal_procedure_call (scheme   *sc,
   gint                  i;
   pointer               return_val = sc->NIL;
 
-  g_debug ("In %s()", G_STRFUNC);
-
   if (a == sc->NIL)
     /* Some ScriptFu function is calling this incorrectly. */
     return implementation_error (sc,
@@ -731,8 +729,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
   else
     proc_name = g_strdup (sc->vptr->string_value (a));
 
-  g_debug ("proc name: %s", proc_name);
-  g_debug ("parms rcvd: %d", sc->vptr->list_length (sc, a)-1);
+  g_debug ("%s, proc name: %s, args rcvd: %d",
+           G_STRFUNC,
+           proc_name,
+           sc->vptr->list_length (sc, a)-1);
 
   if (deprecated )
     g_warning ("PDB procedure name %s is deprecated, please use %s.",
@@ -1429,9 +1429,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
   if (strcmp (proc_name, "script-fu-refresh") == 0)
       return script_error (sc, "A script cannot refresh scripts", 0);
 
-  g_debug ("calling %s", proc_name);
+  g_debug ("%s, calling:%s", G_STRFUNC, proc_name);
   values = gimp_procedure_run_config (procedure, config);
-  g_debug ("done.");
   g_clear_object (&config);
 
   /*  Check the return status  */

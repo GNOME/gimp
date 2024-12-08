@@ -60,8 +60,7 @@
  * corresponding to SFType the author declared in script-fu-register call.
  */
 
-/* FUTURE: delete this after v3 is stable. */
-#define DEBUG_CONFIG_PROPERTIES  TRUE
+#define DEBUG_CONFIG_PROPERTIES  FALSE
 
 #if DEBUG_CONFIG_PROPERTIES
 static void

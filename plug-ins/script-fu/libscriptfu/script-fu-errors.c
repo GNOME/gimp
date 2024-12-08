@@ -272,8 +272,9 @@ debug_in_arg (scheme           *sc,
               const guint       arg_index,
               const gchar      *type_name )
 {
-  g_debug ("param %d - expecting type %s", arg_index + 1, type_name );
-  g_debug ("actual arg is type %s (%d)",
+  g_debug ("param:%d, formal C type:%s, actual scheme type:%s (%d)",
+           arg_index + 1,
+           type_name,
            ts_types[ type(sc->vptr->pair_car (a)) ],
            type(sc->vptr->pair_car (a)));
 }
