@@ -735,7 +735,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
            sc->vptr->list_length (sc, a)-1);
 
   if (deprecated )
-    g_warning ("PDB procedure name %s is deprecated, please use %s.",
+    g_info ("PDB procedure name %s is deprecated, please use %s.",
                deprecated_name_for (proc_name),
                proc_name);
 
@@ -756,7 +756,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
   actual_arg_count = sc->vptr->list_length (sc, a) - 1;
 
   /* Check the supplied number of arguments.
-   * This only gives warnings to the console.
+   * This only gives messages to the console.
    * It does not ensure that the count of supplied args equals the count of formal args.
    * Subsequent code must not assume that.
    *
@@ -769,16 +769,13 @@ script_fu_marshal_procedure_call (scheme   *sc,
   {
     if (actual_arg_count > n_arg_specs)
       {
-        /* Warn, but permit extra args. Will discard args from script.*/
-        g_warning ("in script, permitting too many args to %s", proc_name);
+        /* Permit extra args. Will discard args from script, to next right paren.*/
+        g_info ("in script, permitting too many args to %s", proc_name);
       }
     else if (actual_arg_count < n_arg_specs)
       {
-        /* Warn, but permit too few args.
-         * Scriptfu or downstream might provide missing args.
-         * It is author friendly to continue to parse the script for type errors.
-         */
-        g_warning ("in script, permitting too few args to %s", proc_name);
+        /* Permit too few args.  The config carries a sane default for most types. */
+        g_info ("in script, permitting too few args to %s", proc_name);
       }
     /* else equal counts of args. */
   }
