@@ -492,8 +492,7 @@ metadata_tag_is_string (const gchar *tag)
       return FALSE;
     }
 
-  return (g_strcmp0 (tag_type, "Byte")      != 0 &&
-          g_strcmp0 (tag_type, "Undefined") != 0 &&
+  return (g_strcmp0 (tag_type, "Undefined") != 0 &&
           g_strcmp0 (tag_type, NULL)        != 0);
 }
 
