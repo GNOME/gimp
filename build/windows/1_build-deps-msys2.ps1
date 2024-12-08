@@ -39,6 +39,11 @@ elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'x64*')
   }
 $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
 
+$PACMAN_CONF = "$MSYS2_PREFIX\etc\pacman.conf"
+(Get-Content $PACMAN_CONF) | Foreach-Object {$_ -replace "SigLevel    = DatabaseNever","SigLevel    = Required"} | Set-Content $PACMAN_CONF
+(Get-Content $PACMAN_CONF) | Select-String 'SigLevel'
+exit
+
 pacman --noconfirm -Suy
 pacman --noconfirm -S --needed base-devel $MINGW_PACKAGE_PREFIX-toolchain (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$MINGW_PACKAGE_PREFIX).Replace(' \','')
 
