@@ -284,16 +284,9 @@ else
   }
 
 #else /* ! GDK_WINDOWING_QUARTZ */
-  gdk_test_simulate_key (gtk_widget_get_window (widget),
-                         -1, -1, /*x, y*/
-                         keyval,
-                         0 /*modifiers*/,
-                         GDK_KEY_PRESS);
-  gdk_test_simulate_key (gtk_widget_get_window (widget),
-                         -1, -1, /*x, y*/
-                         keyval,
-                         0 /*modifiers*/,
-                         GDK_KEY_RELEASE);
+
+  gtk_test_widget_send_key(widget, keyval, 0);
+
 #endif /* ! GDK_WINDOWING_QUARTZ */
 }
 
