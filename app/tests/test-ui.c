@@ -204,7 +204,7 @@ keyboard_zoom_focus (gconstpointer data)
   factor_before_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
   /* Do the zoom */
-  gimp_test_utils_synthesize_key_event (GTK_WIDGET (window), GDK_KEY_plus);
+  gimp_test_utils_synthesize_key_event (GTK_WIDGET (shell), GDK_KEY_plus);
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure the zoom focus point remained fixed */
