@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="3.0.0~rc2" date="TODO" type="development">
+    <release version="3.0.0~rc2" date="0001-01-01" type="development">
       <description>
         <p>
         The second release candidate for the upcoming GIMP 3.0.0 features a lot of bug fixes, as well as a few
