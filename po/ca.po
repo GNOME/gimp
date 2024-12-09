@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-10 03:41+0000\n"
-"PO-Revision-Date: 2024-10-11 16:47+0200\n"
+"PO-Revision-Date: 2024-12-09 16:47+0200\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -3869,7 +3869,7 @@ msgstr ""
 #: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Paste as _Floating Data"
-msgstr "_Enganxa com a una única capa"
+msgstr "Engan_xa com a dades flotants"
 
 #: app/actions/edit-actions.c:199
 msgctxt "edit-action"
