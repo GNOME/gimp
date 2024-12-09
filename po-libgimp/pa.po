@@ -3,7 +3,7 @@
 #
 #
 # This file is distributed under the same license as the gimp-libgimp package
-#Jaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
+# Jaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
 # ASB <aalam@users.sf.net>,2004,2005,2006, 2007.
 # Amanpreet Singh Alam <aalam@users.sf.net>, 2008.
 msgid ""
