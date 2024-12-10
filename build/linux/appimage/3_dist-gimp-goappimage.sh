@@ -346,7 +346,7 @@ sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.a
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${CHANNEL}-${ARCH}.AppImage"
 echo "(INFO): making $APPIMAGETOOL_APP_NAME"
-"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME &>> appimagetool.log -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
+"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME &>> appimagetool.log -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly" --verbose
 rm -r $APP_DIR
 #standard appimagetool does not output runtime version at squashing. See: https://github.com/AppImage/appimagetool/issues/80
 chmod +x "./$APPIMAGETOOL_APP_NAME"
