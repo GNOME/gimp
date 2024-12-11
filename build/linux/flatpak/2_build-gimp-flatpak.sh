@@ -17,7 +17,6 @@ fi
 
 if [ "$GITLAB_CI" ]; then
   # Extract deps from previous job
-  echo '(INFO): extracting previously built dependencies'
   tar xf .flatpak-builder.tar
 fi
 
@@ -45,17 +44,21 @@ if [ -z "$GITLAB_CI" ] && [ "$1" != '--ci' ]; then
   flatpak-builder --run "$GIMP_PREFIX" ../build/linux/flatpak/org.gimp.GIMP-nightly.json ninja install
 
 elif [ "$GITLAB_CI" ] || [ "$1" = '--ci' ]; then
-  flatpak-builder --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only \
-                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
+  echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
+  flatpak-builder --force-clean --user --disable-rofiles-fuse --keep-build-dirs --build-only --disable-download \
+                  "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json &> gimp-flatpak-builder.log || cat gimp-flatpak-builder.log
   if [ "$GITLAB_CI"  ]; then
     tar cf gimp-meson-log.tar .flatpak-builder/build/gimp-1/_flatpak_build/meson-logs/meson-log.txt
   fi
+  echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
 
   ## Cleanup GIMP_PREFIX (not working) and export it to OSTree repo
   ## https://github.com/flatpak/flatpak-builder/issues/14
+  echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating OSTree repo"
   flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo \
                   "$GIMP_PREFIX" build/linux/flatpak/org.gimp.GIMP-nightly.json
   if [ "$GITLAB_CI"  ]; then
     tar cf repo.tar repo/
   fi
+  echo -e "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K"
 fi

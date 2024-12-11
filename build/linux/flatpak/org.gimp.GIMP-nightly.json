@@ -752,6 +752,127 @@
             ]
         },
         {
+            "//": "Originally taken from org.octave.Octave manifest",
+            "name": "SuiteSparse",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.3.tar.gz",
+                    "sha256": "ce39b28d4038a09c14f21e02c664401be73c0cb96a9198418d6a98a7db73a259",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 4908,
+                        "stable-only": true,
+                        "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
+                    }
+                }
+            ],
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DBLA_VENDOR=OpenBLAS",
+                "-DGRAPHBLAS_COMPACT=ON",
+                "-DSUITESPARSE_USE_OPENMP=OFF",
+                "-DSUITESPARSE_USE_PYTHON=OFF",
+                "-DSUITESPARSE_DEMOS=OFF",
+                "-DBUILD_TESTING=OFF",
+                "-DCMAKE_INSTALL_LIBDIR=/app/lib",
+                "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig"
+            ],
+            "modules": [
+                {
+                    "name": "openblas",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.28.tar.gz",
+                            "sha256": "f1003466ad074e9b0c8d421a204121100b0751c96fc6fcf3d1456bd12f8a00a1",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 2540,
+                                "stable-only": true,
+                                "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
+                            }
+                        }
+                    ],
+                    "no-autogen": true,
+                    "make-args": [
+                        "DYNAMIC_ARCH=1",
+                        "USE_OPENMP=0",
+                        "NO_CBLAS=1",
+                        "NO_LAPACKE=1"
+                    ],
+                    "make-install-args": [
+                        "PREFIX=/app"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "maxflow",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/gerddie/maxflow.git",
+                    "commit": "6ac148f164b9567ac81fbb4ebb36112f850c902b"
+                }
+            ],
+            "buildsystem": "cmake-ninja",
+            "cleanup": [
+                "/include",
+                "/lib/pkgconfig"
+            ]
+        },
+        {
+            "name": "graphviz",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.1.1/graphviz-12.1.2.tar.gz",
+                    "sha256": "4190c51c434c13f718101fbba9e83702d668e20d4eb123c5f4fe059db10d6444",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1249,
+                        "stable-only": true,
+                        "url-template": "https://gitlab.com/graphviz/graphviz/-/archive/$version/graphviz-$version.tar.gz"
+                    }
+                }
+            ],
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--with-gdk=no",
+                "--with-gtk=no",
+                "--with-poppler=no",
+                "--with-rsvg=no",
+                "--with-webp=no",
+                "--with-x=no",
+                "--with-xlib=no"
+            ],
+            "cleanup": [
+                "/bin/??",
+                "/bin/????*",
+                "/bin/fdp",
+                "/bin/nop",
+                "/include",
+                "/lib/libgvpr*",
+                "/lib/graphviz/libgvplugin_core*",
+                "/lib/graphviz/libgvplugin_kitty*",
+                "/lib/graphviz/libgvplugin_neato_layout*",
+                "/lib/graphviz/libgvplugin_vt*",
+                "/lib/pkgconfig",
+                "/share"
+            ]
+        },
+        {
             "name": "babl",
             "sources": [
                 {
@@ -786,129 +907,6 @@
             ],
             "cleanup": [
                 "/share/gegl*"
-            ],
-            "modules": [
-                {
-                    "//": "Originally taken from org.octave.Octave manifest",
-                    "name": "SuiteSparse",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.8.3.tar.gz",
-                            "sha256": "ce39b28d4038a09c14f21e02c664401be73c0cb96a9198418d6a98a7db73a259",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 4908,
-                                "stable-only": true,
-                                "url-template": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v$version.tar.gz"
-                            }
-                        }
-                    ],
-                    "buildsystem": "cmake-ninja",
-                    "builddir": true,
-                    "config-opts": [
-                        "-DBLA_VENDOR=OpenBLAS",
-                        "-DGRAPHBLAS_COMPACT=ON",
-                        "-DSUITESPARSE_USE_OPENMP=OFF",
-                        "-DSUITESPARSE_USE_PYTHON=OFF",
-                        "-DSUITESPARSE_DEMOS=OFF",
-                        "-DBUILD_TESTING=OFF",
-                        "-DCMAKE_INSTALL_LIBDIR=/app/lib",
-                        "-DCMAKE_INSTALL_INCLUDEDIR=/app/include"
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
-                    "modules": [
-                        {
-                            "name": "openblas",
-                            "sources": [
-                                {
-                                    "type": "archive",
-                                    "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.28.tar.gz",
-                                    "sha256": "f1003466ad074e9b0c8d421a204121100b0751c96fc6fcf3d1456bd12f8a00a1",
-                                    "x-checker-data": {
-                                        "type": "anitya",
-                                        "project-id": 2540,
-                                        "stable-only": true,
-                                        "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
-                                    }
-                                }
-                            ],
-                            "no-autogen": true,
-                            "make-args": [
-                                "DYNAMIC_ARCH=1",
-                                "USE_OPENMP=0",
-                                "NO_CBLAS=1",
-                                "NO_LAPACKE=1"
-                            ],
-                            "make-install-args": [
-                                "PREFIX=/app"
-                            ],
-                            "cleanup": [
-                                "/include",
-                                "/lib/pkgconfig"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "maxflow",
-                    "sources": [
-                        {
-                            "type": "git",
-                            "url": "https://github.com/gerddie/maxflow.git",
-                            "commit": "6ac148f164b9567ac81fbb4ebb36112f850c902b"
-                        }
-                    ],
-                    "buildsystem": "cmake-ninja",
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ]
-                },
-                {
-                    "name": "graphviz",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/12.1.1/graphviz-12.1.2.tar.gz",
-                            "sha256": "4190c51c434c13f718101fbba9e83702d668e20d4eb123c5f4fe059db10d6444",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 1249,
-                                "stable-only": true,
-                                "url-template": "https://gitlab.com/graphviz/graphviz/-/archive/$version/graphviz-$version.tar.gz"
-                            }
-                        }
-                    ],
-                    "buildsystem": "autotools",
-                    "config-opts": [
-                        "--with-gdk=no",
-                        "--with-gtk=no",
-                        "--with-poppler=no",
-                        "--with-rsvg=no",
-                        "--with-webp=no",
-                        "--with-x=no",
-                        "--with-xlib=no"
-                    ],
-                    "cleanup": [
-                        "/bin/??",
-                        "/bin/????*",
-                        "/bin/fdp",
-                        "/bin/nop",
-                        "/include",
-                        "/lib/libgvpr*",
-                        "/lib/graphviz/libgvplugin_core*",
-                        "/lib/graphviz/libgvplugin_kitty*",
-                        "/lib/graphviz/libgvplugin_neato_layout*",
-                        "/lib/graphviz/libgvplugin_vt*",
-                        "/lib/pkgconfig",
-                        "/share"
-                    ]
-                }
             ]
         },
         {

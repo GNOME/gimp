@@ -21,11 +21,11 @@ if (-not $GITLAB_CI)
 
 
 # Install the required (pre-built) packages for babl, GEGL and GIMP (again)
-Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,17) -replace '> ','')
+Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'MSYS2_PREFIX =' -Context 0,15) -replace '> ','')
 
 if ($GITLAB_CI)
   {
-    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'Suy' -Context 0,1) -replace '> ','')
+    Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-String 'deps_install\[' -Context 0,6) -replace '> ','')
   }
 
 
@@ -38,11 +38,12 @@ if (-not $GITLAB_CI)
         $GIMP_PREFIX = "$PWD\..\_install".Replace('\', '/')
       }
 
-    Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'env:Path \+' -Context 0,3) -replace '> ','' -replace '- ','')
+    Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,5) -replace '> ','' -replace '- ','')
   }
 
 
 # Build GIMP
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_build[collapsed=true]$([char]13)$([char]27)[0KBuilding GIMP"
 if (-not (Test-Path _build\build.ninja -Type Leaf))
   {
     #FIXME: g-ir-doc is broken. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11200
@@ -53,11 +54,19 @@ if (-not (Test-Path _build\build.ninja -Type Leaf))
   }
 Set-Location _build
 ninja
-ninja install
+ccache --show-stats
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_build$([char]13)$([char]27)[0K"
+
+
+# Bundle GIMP
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle[collapsed=true]$([char]13)$([char]27)[0KCreating bundle"
+ninja install | Out-File ninja_install.log
 if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
   {
     ## We need to manually check failures in pre-7.4 PS
+    Get-Content ninja_install.log
     exit 1
   }
-ccache --show-stats
+Remove-Item ninja_install.log
 Set-Location ..
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_bundle$([char]13)$([char]27)[0K"

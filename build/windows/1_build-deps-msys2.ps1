@@ -39,8 +39,13 @@ elseif ((Get-WmiObject -Class Win32_ComputerSystem).SystemType -like 'x64*')
   }
 $env:Path = "$MSYS2_PREFIX/$MSYSTEM_PREFIX/bin;$MSYS2_PREFIX/usr/bin;" + $env:Path
 
-pacman --noconfirm -Suy
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):deps_install[collapsed=true]$([char]13)$([char]27)[0KInstalling dependencies provided by MSYS2"
+if ("$PSCommandPath" -like "*1_build-deps-msys2.ps1*" -or "$CI_JOB_NAME" -like "*deps*")
+  {
+    pacman --noconfirm -Suy
+  }
 pacman --noconfirm -S --needed base-devel $MINGW_PACKAGE_PREFIX-toolchain (Get-Content build/windows/all-deps-uni.txt).Replace('${MINGW_PACKAGE_PREFIX}',$MINGW_PACKAGE_PREFIX).Replace(' \','')
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):deps_install$([char]13)$([char]27)[0K"
 
 
 # Prepare env
@@ -55,13 +60,15 @@ if (-not $GITLAB_CI)
         $GIMP_PREFIX = "$PWD\_install"
       }
 
-    Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'env:Path \+' -Context 0,3) -replace '> ','' -replace '- ','')
+    Invoke-Expression ((Get-Content $GIMP_DIR\.gitlab-ci.yml | Select-String 'win_environ\[' -Context 0,5) -replace '> ','' -replace '- ','')
   }
 
 
 # Build babl and GEGL
 function self_build ([string]$dep, [string]$option1, [string]$option2)
   {
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build[collapsed=true]$([char]13)$([char]27)[0KBuilding $dep"
+
     ## Make sure that the deps repos are fine
     if (-not (Test-Path $dep))
       {
@@ -97,6 +104,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
       }
     ccache --show-stats
     Set-Location ../..
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
 
 #FIXME: babl dev docs are broken. See: https://gitlab.gnome.org/GNOME/babl/-/issues/97

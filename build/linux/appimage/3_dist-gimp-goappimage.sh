@@ -18,6 +18,7 @@ fi
 
 
 # 1. INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
+echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling go-appimagetool and other tools"
 if [ -f "*appimagetool*.AppImage" ]; then
   rm *appimagetool*.AppImage
 fi
@@ -28,7 +29,6 @@ export ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
 ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
-echo '(INFO): downloading go-appimagetool'
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
 echo "(INFO): Downloaded go-appimagetool: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${ARCH}.AppImage//")"
 go_appimagetool='go-appimagetool.AppImage'
@@ -45,9 +45,11 @@ wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appi
 standard_appimagetool='legacy-appimagetool.AppImage'
 mv appimagetool-*.AppImage $standard_appimagetool
 chmod +x "$standard_appimagetool"
+echo -e "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K"
 
 
 # 2. GET GLOBAL VARIABLES
+echo -e "\e[0Ksection_start:`date +%s`:apmg_info\r\e[0KGetting AppImage global info"
 if [ "$1" ]; then
   export BUILD_DIR="$1"
 else
@@ -63,6 +65,7 @@ else
   export CHANNEL='latest'
 fi
 export APP_ID="org.gimp.GIMP.$CHANNEL"
+echo "(INFO): App ID: $APP_ID | Version: $GIMP_VERSION"
 
 ## Prefixes to get files to copy
 UNIX_PREFIX='/usr'
@@ -73,9 +76,11 @@ fi
 ## Paths to receive copied files
 APP_DIR="$PWD/AppDir"
 USR_DIR="$APP_DIR/usr"
+echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
 
 # 3. GIMP FILES
+echo -e "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir/usr"
 
 ## 3.1. Special re-building (only if needed)
 
@@ -143,10 +148,13 @@ bund_usr ()
       target_array=($(find $expanded_path -maxdepth 1 -name ${2##*/}))
       for target_path in "${target_array[@]}"; do
         dest_path="$(dirname $(echo $target_path | sed "s|$1/|${USR_DIR}/|g"))"
+        output_dest_path="$dest_path"
         if [ "$3" = '--dest' ]; then
-          dest_path="${USR_DIR}/$4/tmp"
+          output_dest_path="${USR_DIR}/$4"
+          dest_path="$output_dest_path/tmp"
         fi
         mkdir -p $dest_path
+        echo "(INFO): bundling $target_path to $output_dest_path"
         cp -ru $target_path $dest_path >/dev/null 2>&1 || continue
 
         #Additional parameters for special situations
@@ -162,6 +170,8 @@ bund_usr ()
     #Undo the tweak done above
     cd ..
     rm -r limbo
+  else
+    echo "(INFO): skipping $1/$2 (will be bundled by go-appimagetool)"
   fi
 }
 
@@ -191,7 +201,6 @@ wipe_usr ()
 }
 
 ## Prepare AppDir
-echo '(INFO): copying files to AppDir/usr'
 mkdir -p $APP_DIR
 bund_usr "$UNIX_PREFIX" "lib64/ld-*.so.*" --go
 conf_app LD_LINUX "lib64/ld-*.so.*"
@@ -292,7 +301,8 @@ wipe_usr ${LIB_DIR}/*.pyc
 bund_usr "$GIMP_PREFIX" 'bin/gimp*'
 bund_usr "$GIMP_PREFIX" "bin/gegl"
 bund_usr "$GIMP_PREFIX" "share/applications/*.desktop" --rename $APP_ID.desktop
-"./$go_appimagetool" -s deploy $USR_DIR/share/applications/$APP_ID.desktop &> appimagetool.log
+#go-appimagetool have too polluted output so we save as log. See: https://github.com/probonopd/go-appimage/issues/314
+"./$go_appimagetool" -s deploy $USR_DIR/share/applications/$APP_ID.desktop &> appimagetool.log || cat appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
 ### Ensure that LD is in right dir. See: https://github.com/probonopd/go-appimage/issues/49
@@ -315,9 +325,11 @@ echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/share/doc
       usr/share/themes
       etc" > .appimageignore
+echo -e "\e[0Ksection_end:`date +%s`:apmg_files\r\e[0K"
 
 
 # 4. PREPARE .APPIMAGE-SPECIFIC "SOURCE"
+echo -e "\e[0Ksection_start:`date +%s`:apmg_source[collapsed=true]\r\e[0KMaking AppImage assets"
 
 ## 4.1. Finish AppRun configuration
 echo '(INFO): copying configured AppRun'
@@ -341,16 +353,18 @@ cp "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 echo "(INFO): configuring $APP_ID.appdata.xml"
 sed -i "s/org.gimp.GIMP/${APP_ID}/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
 sed -i "s/gimp.desktop/${APP_ID}.desktop/g" "$USR_DIR/share/metainfo/${APP_ID}.appdata.xml"
+echo -e "\e[0Ksection_end:`date +%s`:apmg_source\r\e[0K"
 
 
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${CHANNEL}-${ARCH}.AppImage"
-echo "(INFO): making $APPIMAGETOOL_APP_NAME"
-"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME &>> appimagetool.log -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
+echo -e "\e[0Ksection_start:`date +%s`:apmg_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
+"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
 rm -r $APP_DIR
 #standard appimagetool does not output runtime version at squashing. See: https://github.com/AppImage/appimagetool/issues/80
 chmod +x "./$APPIMAGETOOL_APP_NAME"
-"./$APPIMAGETOOL_APP_NAME" --appimage-version &>> appimagetool.log
+"./$APPIMAGETOOL_APP_NAME" --appimage-version
+echo -e "\e[0Ksection_end:`date +%s`:apmg_making\r\e[0K"
 
 if [ "$GITLAB_CI" ]; then
   mkdir -p build/linux/appimage/_Output/

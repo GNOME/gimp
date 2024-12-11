@@ -17,9 +17,9 @@ Invoke-Expression ((Get-Content build\windows\1_build-deps-msys2.ps1 | Select-St
 
 
 # 1. GET INNO
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_tlkt$([char]13)$([char]27)[0KChecking Inno installation"
 
 ## Download Inno
-Write-Output '(INFO): checking Inno version'
 ## (We need to ensure that TLS 1.2 is enabled because of some runners)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest https://jrsoftware.org/download.php/is.exe -OutFile ..\is.exe
@@ -53,9 +53,11 @@ Write-Output "(INFO): Installed Inno: $inno_version_downloaded"
 $INNO_PATH = Get-ItemProperty (Resolve-Path Registry::'HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup*') | Select-Object -ExpandProperty InstallLocation
 #$INNO_PATH = [regex]::Matches((Get-Content ..\innosetup.log | Select-String ISCC.exe), '(?<=filename: ).+?(?=\\ISCC.exe)').Value
 Set-Alias iscc "$INNO_PATH\iscc.exe"
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_tlkt$([char]13)$([char]27)[0K"
 
 
 # 2. GET GLOBAL INFO
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_info$([char]13)$([char]27)[0KGetting installer global info"
 $CONFIG_PATH = "$BUILD_DIR\config.h"
 if (-not (Test-Path "$CONFIG_PATH"))
   {
@@ -90,9 +92,11 @@ if ((-not (Test-Path "$GIMP32")) -or (-not (Test-Path "$GIMP64")) -or (-not (Tes
     exit 1
   }
 Write-Output "(INFO): Arch: universal (x86, x64 and arm64)"
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_info$([char]13)$([char]27)[0K"
 
 
 # 3. PREPARE INSTALLER "SOURCE"
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_source[collapsed=true]$([char]13)$([char]27)[0KMaking installer assets"
 
 ## Custom installer strings translations and other assets
 ## (They are loaded with '-DBUILD_DIR')
@@ -104,17 +108,18 @@ if (-not (Test-Path "$BUILD_DIR\build\windows\installer"))
 
 ## Complete Inno source with not released translations
 ## Cf. https://jrsoftware.org/files/istrans/
-Write-Output "(INFO): temporarily installing additional Inno lang files"
 $xmlObject = New-Object XML
 $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
 function download_langs ([array]$langsArray)
 {
   foreach ($langfile in $langsArray)
     {
-      if ($langfile -ne '' -and -not (Test-Path "$INNO_PATH\$langfile" -Type Leaf))
+      $langfilePath = "$INNO_PATH\$langfile"
+      if ($langfile -ne '' -and -not (Test-Path "$langfilePath" -Type Leaf))
         {
+          Write-Output "(INFO): temporarily installing $($langfilePath -replace '\\\\','\')"
           $langfileUnix = $langfile.Replace('\\', '/')
-          Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$INNO_PATH\$langfile"
+          Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/$langfileUnix -OutFile "$langfilePath"
         }
     }
 }
@@ -129,7 +134,6 @@ $langsArray_unofficial = $xmlObject.iso_639_entries.iso_639_entry | Select-Objec
 download_langs $langsArray_unofficial
 
 ## Patch 'AppVer*' against Inno pervasive behavior: https://groups.google.com/g/innosetup/c/w0sebw5YAeg
-Write-Output "(INFO): temporarily patching all Inno lang files with $CUSTOM_GIMP_VERSION"
 function fix_msg ([string]$langsdir, [string]$AppVer)
 {
   $langsArray_local = Get-ChildItem $langsdir -Filter *.isl -Name
@@ -164,37 +168,45 @@ function fix_msg ([string]$langsdir, [string]$AppVer)
 fix_msg "$INNO_PATH" $CUSTOM_GIMP_VERSION
 fix_msg "$INNO_PATH\Languages" $CUSTOM_GIMP_VERSION
 fix_msg "$INNO_PATH\Languages\Unofficial" $CUSTOM_GIMP_VERSION
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_source$([char]13)$([char]27)[0K"
 
 
 # 4. PREPARE GIMP FILES
-
-## Get GIMP versions used in some versioned files and dirs
-$gimp_version = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
-                Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''} |
-                Foreach-Object {$_ -replace '(.+?)-.+','$1'}
-$gimp_app_version = Get-Content "$CONFIG_PATH"                                   | Select-String 'GIMP_APP_VERSION "'  |
-                    Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-$gimp_api_version = Get-Content "$CONFIG_PATH"                                         | Select-String 'GIMP_PKGCONFIG_VERSION' |
-                    Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
-
-## GIMP revision on about dialog (this does the same as '-Drevision' build option)
-## FIXME: This should be done with Inno scripting
 foreach ($bundle in $supported_archs)
   {
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files[collapsed=true]$([char]13)$([char]27)[0KPreparing GIMP files in $bundle bundle"
+
+    ## Get GIMP versions used in some versioned files and dirs
+    $gimp_version = Get-Content "$CONFIG_PATH"                               | Select-String 'GIMP_VERSION'        |
+                    Foreach-Object {$_ -replace '#define GIMP_VERSION "',''} | Foreach-Object {$_ -replace '"',''} |
+                    Foreach-Object {$_ -replace '(.+?)-.+','$1'}
+    $gimp_app_version = Get-Content "$CONFIG_PATH"                                   | Select-String 'GIMP_APP_VERSION "'  |
+                        Foreach-Object {$_ -replace '#define GIMP_APP_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+    $gimp_api_version = Get-Content "$CONFIG_PATH"                                         | Select-String 'GIMP_PKGCONFIG_VERSION' |
+                        Foreach-Object {$_ -replace '#define GIMP_PKGCONFIG_VERSION "',''} | Foreach-Object {$_ -replace '"',''}
+
+    ## GIMP revision on about dialog (this does the same as '-Drevision' build option)
+    ## FIXME: This should be done with Inno scripting
     (Get-Content "$bundle\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=0","revision=$revision"} |
     Set-Content "$bundle\share\gimp\*\gimp-release"
+
+    ## Split .debug symbols
+    if ("$bundle" -eq 'gimp-x86')
+      {
+        #We do not split 32-bit DWARF symbols here (they were in gimp-win-x86 job)
+        Write-Output "(INFO): skipping (already done) gimp-x86 .debug extracting"
+      }
+    else
+      {
+        bash build/windows/installer/3_dist-gimp-inno_sym.sh $bundle
+      }
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files$([char]13)$([char]27)[0K"
   }
 
-## Split .debug symbols
-Write-Output "(INFO): extracting .debug symbols from bundles"
-bash build/windows/installer/3_dist-gimp-inno_sym.sh | Out-Null
 
-
-# 5. CONSTRUCT .EXE INSTALLER
+# 5. COMPILE .EXE INSTALLER
 $INSTALLER="gimp-${CUSTOM_GIMP_VERSION}-setup.exe"
-Write-Output "(INFO): constructing $INSTALLER installer"
-
-## Compile installer
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_making[collapsed=true]$([char]13)$([char]27)[0KConstructing $INSTALLER installer"
 Set-Location build\windows\installer
 if ($CUSTOM_GIMP_VERSION -match 'RC[1-9]')
   {
@@ -202,8 +214,11 @@ if ($CUSTOM_GIMP_VERSION -match 'RC[1-9]')
   }
 iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$gimp_app_version" -DGIMP_API_VERSION="$gimp_api_version" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON $devel_warning base_gimp3264.iss | Out-Null
 Set-Location $GIMP_BASE
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
-## Clean changes in the bundles and Inno installation
+
+# Clean changes in the bundles and Inno installation
+## Revert revisioning
 foreach ($bundle in $supported_archs)
   {
     (Get-Content "$bundle\share\gimp\*\gimp-release") | Foreach-Object {$_ -replace "revision=$revision","revision=0"} |
@@ -212,7 +227,7 @@ foreach ($bundle in $supported_archs)
 fix_msg "$INNO_PATH" revert
 fix_msg "$INNO_PATH\Languages" revert
 fix_msg "$INNO_PATH\Languages\Unofficial" revert
-### We delete only unofficial langs because the downloaded official ones will be kept by Inno updates
+## We delete only unofficial langs because the downloaded official ones will be kept by Inno updates
 Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 
