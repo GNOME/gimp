@@ -180,6 +180,63 @@ HELP
 CODE
 }
 
+sub drawable_merge_filter {
+    $blurb = 'Apply the specified effect directly to the drawable.';
+
+    $help = <<'HELP';
+This procedure applies the specified drawable effect on @drawable and merge it
+(therefore before non-destructive effects are computed).
+
+The @drawable argument must be the same as the one used when you created
+the effect with [ctor@Gimp.DrawableFilter.new].
+
+Once this is run, @filter is not valid anymore and you should not try to
+do anything with it. In particular, you must customize the operation's
+arguments as received with [method@Gimp.DrawableFilter.get_config] then
+sync them to the application with [method@Gimp.DrawableFilter.update]
+before merging the effect.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    @inargs = (
+        { name => 'drawable', type => 'drawable',
+          desc => 'The drawable' },
+        { name => 'filter', type => 'filter',
+          desc => 'The drawable filter to merge' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_drawable_filter_get_drawable (filter) != drawable)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   "%s: the filter was not created for this drawable.",
+                   G_STRFUNC);
+      success = FALSE;
+    }
+
+  if (success)
+    {
+      GimpContainer *filters;
+      gint           count;
+
+      gimp_drawable_filter_apply (filter, NULL);
+
+      filters = gimp_drawable_get_filters (drawable);
+      count   = gimp_container_get_n_children (filters);
+      if (count > 1)
+        gimp_container_reorder (filters, GIMP_OBJECT (filter), count - 1);
+
+      gimp_drawable_filter_layer_mask_freeze (filter);
+      gimp_drawable_filter_commit (filter, FALSE, NULL, FALSE);
+
+      g_object_unref (filter);
+    }
+}
+CODE
+}
+
 sub drawable_get_filters {
     $blurb = 'Returns the list of filters applied to the drawable.';
 
@@ -1165,6 +1222,7 @@ CODE
             drawable_mask_bounds
             drawable_mask_intersect
             drawable_append_filter
+            drawable_merge_filter
             drawable_get_filters
             drawable_merge_filters
             drawable_merge_shadow

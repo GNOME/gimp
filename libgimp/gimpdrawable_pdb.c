@@ -725,6 +725,54 @@ gimp_drawable_append_filter (GimpDrawable       *drawable,
 }
 
 /**
+ * gimp_drawable_merge_filter:
+ * @drawable: The drawable.
+ * @filter: The drawable filter to merge.
+ *
+ * Apply the specified effect directly to the drawable.
+ *
+ * This procedure applies the specified drawable effect on @drawable
+ * and merge it (therefore before non-destructive effects are
+ * computed).
+ * The @drawable argument must be the same as the one used when you
+ * created the effect with [ctor@Gimp.DrawableFilter.new].
+ * Once this is run, @filter is not valid anymore and you should not
+ * try to do anything with it. In particular, you must customize the
+ * operation's arguments as received with
+ * [method@Gimp.DrawableFilter.get_config] then sync them to the
+ * application with [method@Gimp.DrawableFilter.update] before merging
+ * the effect.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_drawable_merge_filter (GimpDrawable       *drawable,
+                            GimpDrawableFilter *filter)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE, drawable,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-merge-filter",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_drawable_get_filters:
  * @drawable: The drawable.
  *

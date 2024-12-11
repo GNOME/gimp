@@ -666,6 +666,54 @@ drawable_append_filter_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_merge_filter_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpDrawableFilter *filter;
+
+  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  filter = g_value_get_object (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      if (gimp_drawable_filter_get_drawable (filter) != drawable)
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       "%s: the filter was not created for this drawable.",
+                       G_STRFUNC);
+          success = FALSE;
+        }
+
+      if (success)
+        {
+          GimpContainer *filters;
+          gint           count;
+
+          gimp_drawable_filter_apply (filter, NULL);
+
+          filters = gimp_drawable_get_filters (drawable);
+          count   = gimp_container_get_n_children (filters);
+          if (count > 1)
+            gimp_container_reorder (filters, GIMP_OBJECT (filter), count - 1);
+
+          gimp_drawable_filter_layer_mask_freeze (filter);
+          gimp_drawable_filter_commit (filter, FALSE, NULL, FALSE);
+
+          g_object_unref (filter);
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 drawable_get_filters_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -1688,6 +1736,37 @@ register_drawable_procs (GimpPDB *pdb)
                                gimp_param_spec_drawable_filter ("filter",
                                                                 "filter",
                                                                 "The drawable filter to append",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-merge-filter
+   */
+  procedure = gimp_procedure_new (drawable_merge_filter_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-merge-filter");
+  gimp_procedure_set_static_help (procedure,
+                                  "Apply the specified effect directly to the drawable.",
+                                  "This procedure applies the specified drawable effect on @drawable and merge it (therefore before non-destructive effects are computed).\n"
+                                  "The @drawable argument must be the same as the one used when you created the effect with [ctor@Gimp.DrawableFilter.new].\n"
+                                  "Once this is run, @filter is not valid anymore and you should not try to do anything with it. In particular, you must customize the operation's arguments as received with [method@Gimp.DrawableFilter.get_config] then sync them to the application with [method@Gimp.DrawableFilter.update] before merging the effect.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable ("drawable",
+                                                         "drawable",
+                                                         "The drawable",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The drawable filter to merge",
                                                                 FALSE,
                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
