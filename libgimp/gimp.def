@@ -197,6 +197,7 @@ EXPORTS
 	gimp_dodgeburn
 	gimp_dodgeburn_default
 	gimp_drawable_append_filter
+	gimp_drawable_append_new_filter
 	gimp_drawable_brightness_contrast
 	gimp_drawable_color_balance
 	gimp_drawable_colorize_hsl

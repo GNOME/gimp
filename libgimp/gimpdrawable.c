@@ -22,6 +22,8 @@
 
 #include "gimp.h"
 
+#include <gobject/gvaluecollector.h>
+
 #include "gimppixbuf.h"
 #include "gimptilebackendplugin.h"
 
@@ -432,4 +434,85 @@ gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
     }
 
   return format;
+}
+
+/**
+ * gimp_drawable_append_new_filter: (skip)
+ * @drawable:       The #GimpDrawable.
+ * @operation_name: The GEGL operation's name.
+ * @name:           The effect name.
+ * @...:            a %NULL-terminated list of operation argument names
+ *                  and values.
+ *
+ * Utility function which combines [ctor@Gimp.DrawableFilter.new]
+ * followed by setting arguments for the
+ * [class@Gimp.DrawableFilterConfig] returned by
+ * [method@Gimp.DrawableFilter.get_config], and finally appending with
+ * [method@Gimp.Drawable.append_filter]
+ *
+ * The variable arguments are couples of an argument name followed by a
+ * value, NULL-terminated, such as:
+ *
+ * ```C
+ * filter = gimp_drawable_append_new_filter (drawable,
+ *                                           "gegl:gaussian-blur", "My Gaussian Blur",
+ *                                           "std-dev-x", 2.5,
+ *                                           "std-dev-y", 2.5,
+ *                                           "abyss-policy", "clamp",
+ *                                           NULL);
+ * ```
+ *
+ * Returns: (transfer none): The newly created filter.
+ */
+GimpDrawableFilter *
+gimp_drawable_append_new_filter (GimpDrawable *drawable,
+                                 const gchar  *operation_name,
+                                 const gchar  *name,
+                                 ...)
+{
+  GimpDrawableFilter       *filter;
+  GimpDrawableFilterConfig *config;
+  const gchar              *arg_name;
+  va_list                   va_args;
+
+  filter = gimp_drawable_filter_new (drawable, operation_name, name);
+
+  g_return_val_if_fail (filter != NULL, NULL);
+
+  config = gimp_drawable_filter_get_config (filter);
+
+  va_start (va_args, name);
+  while ((arg_name = va_arg (va_args, const gchar *)))
+    {
+      GParamSpec *pspec;
+      gchar      *error = NULL;
+      GValue      value = G_VALUE_INIT;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), arg_name);
+      if (pspec == NULL)
+        {
+          g_warning ("%s: %s has no property named '%s'",
+                     G_STRFUNC,
+                     g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                     arg_name);
+          break;
+        }
+      g_value_init (&value, pspec->value_type);
+      G_VALUE_COLLECT (&value, va_args, G_VALUE_NOCOPY_CONTENTS, &error);
+
+      if (error)
+        {
+          g_warning ("%s: %s", G_STRFUNC, error);
+          g_free (error);
+          break;
+        }
+
+      g_object_set_property (G_OBJECT (config), arg_name, &value);
+      g_value_unset (&value);
+    }
+  va_end (va_args);
+
+  gimp_drawable_append_filter (drawable, filter);
+
+  return filter;
 }
