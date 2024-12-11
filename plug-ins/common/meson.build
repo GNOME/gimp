@@ -171,6 +171,10 @@ elif have_ilbm
   }
 endif
 
+if platform_windows
+  common_plugins_list += { 'name': 'file-lnk', }
+endif
+
 if not platform_windows
   common_plugins_list += { 'name': 'mail', }
 endif
