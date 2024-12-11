@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: GIMP UI VERSION\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-11-29 05:59+0000\n"
-"PO-Revision-Date: 2024-12-11 18:34+0330\n"
+"PO-Revision-Date: 2024-12-11 18:39+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@gnome.org>\n"
 "Language: fa\n"
@@ -145,16 +145,15 @@ msgstr "استفاده از %s نگارش %s (کامپایل شده در کنا�
 
 #: app/gimp-version.c:305
 #, c-format
-#| msgid "%s version %s"
 msgid "using %s version %s"
-msgstr ""
+msgstr "استفاده از %s نگارش %s"
 
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
 #.
 #: app/language.c:69
 msgid "System Language"
-msgstr ""
+msgstr "زبان سامانه"
 
 #: app/main.c:161
 msgid "Show version information and exit"
@@ -1077,12 +1076,12 @@ msgstr "ویرایش این رنگ"
 #: app/actions/colormap-actions.c:53
 msgctxt "colormap-action"
 msgid "_Delete Color..."
-msgstr ""
+msgstr "_حذف رنگ…"
 
 #: app/actions/colormap-actions.c:54
 msgctxt "colormap-action"
 msgid "Delete this color"
-msgstr ""
+msgstr "حذف این رنگ"
 
 #: app/actions/colormap-actions.c:62
 msgctxt "colormap-action"
@@ -2685,9 +2684,10 @@ msgid "_Paths Dialog"
 msgstr ""
 
 #: app/actions/dialogs-actions.c:94
+#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Paths"
-msgstr ""
+msgstr "برون‌ریزی مسیر گزیده"
 
 #: app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
@@ -3030,9 +3030,10 @@ msgid "_Templates Dialog"
 msgstr ""
 
 #: app/actions/dialogs-actions.c:282
+#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Templates"
-msgstr ""
+msgstr "فهرست قالب‌ها"
 
 #: app/actions/dialogs-actions.c:284
 msgctxt "dialogs-action"
@@ -5079,10 +5080,10 @@ msgstr ""
 #. * that this action raises a dialog.
 #.
 #: app/actions/filters-actions.c:848
-#, c-format
+#, fuzzy, c-format
 #| msgid "_Fade %s..."
 msgid "%s..."
-msgstr ""
+msgstr "یادداشت‌های انتشار گیمپ %s"
 
 #: app/actions/filters-actions.c:1179
 #, c-format
@@ -6147,7 +6148,7 @@ msgstr ""
 #: app/actions/images-actions.c:49
 msgctxt "images-action"
 msgid "_New View"
-msgstr ""
+msgstr "نمای _جدید"
 
 #: app/actions/images-actions.c:50
 msgctxt "images-action"
@@ -7276,9 +7277,10 @@ msgid "Edit this entry"
 msgstr ""
 
 #: app/actions/palette-editor-actions.c:50
+#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
-msgstr ""
+msgstr "_حذف رنگ…"
 
 #: app/actions/palette-editor-actions.c:51
 msgctxt "palette-editor-action"
@@ -7756,9 +7758,10 @@ msgid "Selecti_on to Path"
 msgstr ""
 
 #: app/actions/paths-actions.c:270
+#, fuzzy
 msgctxt "paths-action"
 msgid "To _Path"
-msgstr ""
+msgstr "_نام مسیر:"
 
 #: app/actions/paths-actions.c:271
 msgctxt "paths-action"
@@ -8039,8 +8042,7 @@ msgstr ""
 #, fuzzy
 msgctxt "select-action"
 msgid "_All"
-msgstr ""
-"نمای کلی، همهٔ کاره‌ها و پنجره‌هایتان را نشان می‌دهد. زدن کلید سوپر (ویندوز) می‌گشایدش."
+msgstr "همهٔ پرونده‌ها (*.*)"
 
 #: app/actions/select-actions.c:45
 msgctxt "select-action"
@@ -8688,9 +8690,10 @@ msgid "Edit this tool preset"
 msgstr ""
 
 #: app/actions/tools-actions.c:48
+#, fuzzy
 msgctxt "tools-action"
 msgid "_By Color"
-msgstr ""
+msgstr "طرحوارهٔ رنگی"
 
 #: app/actions/tools-actions.c:49
 msgctxt "tools-action"
@@ -10806,7 +10809,7 @@ msgid ""
 "(less time indicates faster marching)."
 msgstr ""
 "سرعت رژهٔ مورچه‌ها در پیرامون ناحیهٔ گزینشی. مقدار به میلی‌ثانیه داده می‌شود (زمان "
-"کمتر به معنی سرعت بیش‌تر است)."
+"کمتر به معنی سرعت بیشتر است)."
 
 #: app/config/gimprc-blurbs.h:310
 msgid ""
@@ -10814,7 +10817,7 @@ msgid ""
 "more memory than the size specified here."
 msgstr ""
 "در صورتی که کاربر سعی کند تصویری ایجاد کند که از مقداری که اینجا مشخص شده حافظهٔ "
-"بیش‌تری اشغال کند، گیمپ به او هشدار می‌دهد."
+"بیشتری اشغال کند، گیمپ به او هشدار می‌دهد."
 
 #: app/config/gimprc-blurbs.h:314
 #| msgid "How to handle embedded color profiles when opening a file."
@@ -11365,10 +11368,10 @@ msgid ""
 "wouldn't fit into memory otherwise.  If you have a lot of RAM, you may want to "
 "set this to a higher value."
 msgstr ""
-"وقتی مقدار داده‌های نقاط از این حد بیش‌تر شود، گیمپ شروع به مبادلهٔ قطعات از روی "
+"وقتی مقدار داده‌های نقاط از این حد بیشتر شود، گیمپ شروع به مبادلهٔ قطعات از روی "
 "دیسک می‌کند. این کار باعث کندی زیاد سیستم می‌شود، ولی کار با تصاویری که در غیر این "
 "صورت در حافظه جا نمی‌گیرند را ممکن می‌سازد. اگر حافظهٔ RAM زیادی دارید، شاید بد "
-"نباشد این گزینه را به مقدار بیش‌تری تنظیم کنید."
+"نباشد این گزینه را به مقدار بیشتری تنظیم کنید."
 
 #: app/config/gimprc-blurbs.h:729
 msgid "Show the current foreground and background colors in the toolbox."
@@ -11421,7 +11424,7 @@ msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels are "
 "kept available until the undo-size limit is reached."
 msgstr ""
-"حداقل تعداد عملیاتی را که می‌توانند برگردانده شوند تنظیم می‌کند. سطوح بیش‌تر برگردان "
+"حداقل تعداد عملیاتی را که می‌توانند برگردانده شوند تنظیم می‌کند. سطوح بیشتر برگردان "
 "تا زمانی که محدودیت اندازهٔ برگردان پر نشود موجود خواهند بود."
 
 #: app/config/gimprc-blurbs.h:766
@@ -11695,7 +11698,7 @@ msgstr "سفارشی"
 #: app/core/core-enums.c:436
 msgctxt "dash-preset"
 msgid "Line"
-msgstr ""
+msgstr "خط"
 
 #: app/core/core-enums.c:437
 msgctxt "dash-preset"
@@ -12653,8 +12656,9 @@ msgstr "حذف «%s» شکست خورد: %s"
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:363 app/core/gimpcontext.c:706
 #: app/dialogs/preferences-dialog.c:3528 app/tools/gimppaintoptions-gui.c:327
+#, fuzzy
 msgid "Dynamics"
-msgstr ""
+msgstr "_شبیه‌سازی دینامیک قلمو"
 
 #. initialize the color history
 #: app/core/gimp-data-factories.c:388 app/core/gimp-palettes.c:60
@@ -13589,9 +13593,10 @@ msgid "Fill with Transparency"
 msgstr ""
 
 #: app/core/gimpfilloptions.c:437 app/core/gimpfilloptions.c:512
+#, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Pattern"
-msgstr ""
+msgstr "پر کردن با _الگو"
 
 #: app/core/gimpgradient-load.c:73
 #, c-format
@@ -14909,7 +14914,7 @@ msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a distance "
 "of more than miter-limit * line-width from the actual join point."
 msgstr ""
-"تبدیل کردن یک تقاطع تاجی به یک تقاطع برجسته، اگر که تاج به اندازهٔ بیش‌تر از حد تاج "
+"تبدیل کردن یک تقاطع تاجی به یک تقاطع برجسته، اگر که تاج به اندازهٔ بیشتر از حد تاج "
 "× پهنای خط، از نقطهٔ اصلی تقاطع فاصله می‌گیرد."
 
 #: app/core/gimpstrokeoptions.c:199
@@ -14917,8 +14922,9 @@ msgid "Dash offset"
 msgstr ""
 
 #: app/core/gimpstrokeoptions.c:221
+#, fuzzy
 msgid "Emulate brush dynamics"
-msgstr ""
+msgstr "_شبیه‌سازی دینامیک قلمو"
 
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:512
@@ -15741,8 +15747,9 @@ msgid "Choose Fill Style"
 msgstr ""
 
 #: app/dialogs/fill-dialog.c:116
+#, fuzzy
 msgid "_Fill"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #: app/dialogs/grid-dialog.c:95
 msgid "Configure Grid"
@@ -15886,8 +15893,9 @@ msgid "Switches"
 msgstr ""
 
 #: app/dialogs/item-options-dialog.c:269
+#, fuzzy
 msgid "_Visible"
-msgstr ""
+msgstr "رونوشت از _نمایان"
 
 #: app/dialogs/keyboard-shortcuts-dialog.c:59
 msgid "Configure Keyboard Shortcuts"
@@ -16381,8 +16389,9 @@ msgid "Network access"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1266
+#, fuzzy
 msgid "Check for updates (requires internet)"
-msgstr ""
+msgstr "به کارانداختن بررسی برای به‌روز رسانی‌ها (نیازمند آغاز دوباره)"
 
 #. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:1273
@@ -16736,8 +16745,9 @@ msgid "_Brush"
 msgstr "_قلم‌مو"
 
 #: app/dialogs/preferences-dialog.c:1776
+#, fuzzy
 msgid "_Dynamics"
-msgstr ""
+msgstr "_شبیه‌سازی دینامیک قلمو"
 
 #: app/dialogs/preferences-dialog.c:1779
 msgid "_Pattern"
@@ -17078,9 +17088,10 @@ msgid "Canvas Size Dialog"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:2444 app/dialogs/preferences-dialog.c:2473
+#, fuzzy
 #| msgid "_Fill with:"
 msgid "Fill with:"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #: app/dialogs/preferences-dialog.c:2447
 #| msgid "Resize _layers:"
@@ -17173,8 +17184,9 @@ msgid "New Path Dialog"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:2528
+#, fuzzy
 msgid "Path name:"
-msgstr ""
+msgstr "_نام مسیر:"
 
 #. Export Path Dialog
 #: app/dialogs/preferences-dialog.c:2532
@@ -17511,8 +17523,9 @@ msgid "Image Windows"
 msgstr "پنجره‌های تصویر"
 
 #: app/dialogs/preferences-dialog.c:3126
+#, fuzzy
 msgid "Merge menu and title bar"
-msgstr ""
+msgstr "ادغام نوار عنوان و فهرست (نیازمند آغاز دوباره)"
 
 #: app/dialogs/preferences-dialog.c:3129
 msgid ""
@@ -18034,9 +18047,10 @@ msgid "Layer Size"
 msgstr "اندازهٔ لایه"
 
 #: app/dialogs/resize-dialog.c:183 app/paint/gimppaintoptions.c:333
+#, fuzzy
 #| msgid "_Fill with:"
 msgid "Fill With"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #: app/dialogs/resize-dialog.c:224
 msgid "Re_set"
@@ -18138,7 +18152,7 @@ msgstr "د_رون‌یابی:"
 
 #: app/dialogs/stroke-dialog.c:123
 msgid "Choose Stroke Style"
-msgstr "سبک خط‌چین را گزینش کنید"
+msgstr "سبک قلم‌ضربه را گزینش کنید"
 
 #: app/dialogs/stroke-dialog.c:130
 msgid "_Stroke"
@@ -18192,7 +18206,7 @@ msgstr "نکتهٔ _پیشین"
 #. a link to the related section in the user manual
 #: app/dialogs/tips-dialog.c:192 app/dialogs/welcome-dialog.c:1087
 msgid "Learn more"
-msgstr "بیش‌تر بدانید"
+msgstr "بیشتر بدانید"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -18209,7 +18223,7 @@ msgstr "نصب کاربر گیمپ"
 
 #: app/dialogs/user-install-dialog.c:95
 msgid "User installation failed!"
-msgstr "نصب کاربر شکست خورد!"
+msgstr "نصب کاربر با شکست مواجه شد!"
 
 #: app/dialogs/user-install-dialog.c:97
 msgid "The GIMP user installation failed; see the log for details."
@@ -18276,7 +18290,7 @@ msgstr "به گیمپ %s خوش آمدید"
 
 #: app/dialogs/welcome-dialog.c:232 app/dialogs/welcome-dialog.c:233
 msgid "Welcome"
-msgstr "خوش آمدید"
+msgstr "خوش‌آمد"
 
 #: app/dialogs/welcome-dialog.c:247 app/dialogs/welcome-dialog.c:248
 msgid "Personalize"
@@ -18292,7 +18306,7 @@ msgstr "ایجاد"
 
 #: app/dialogs/welcome-dialog.c:287 app/dialogs/welcome-dialog.c:288
 msgid "Release Notes"
-msgstr "یادداشت‌های انتشار"
+msgstr "نکات انتشار"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:420
@@ -18311,7 +18325,7 @@ msgstr ""
 
 #: app/dialogs/welcome-dialog.c:464
 msgid "GIMP website"
-msgstr "پایگاه وب گیمپ"
+msgstr "وبگاه گیمپ"
 
 #: app/dialogs/welcome-dialog.c:468
 msgid "Tutorials"
@@ -19072,8 +19086,9 @@ msgid "Click-Drag to remove this handle"
 msgstr ""
 
 #: app/display/gimptoolline.c:345 app/display/gimptoolline.c:504
+#, fuzzy
 msgid "Line: "
-msgstr ""
+msgstr "خط"
 
 #: app/display/gimptoolline.c:1551
 #| msgid "Click-Drag to move this point"
@@ -19304,8 +19319,9 @@ msgid "Rectangle: "
 msgstr "مستطیل: "
 
 #: app/display/gimptoolrectangle.c:2173
+#, fuzzy
 msgid "Position: "
-msgstr ""
+msgstr "قفل مو_قعیت مسیر"
 
 #: app/display/gimptooltransform3dgrid.c:632
 #| msgid "Click-Drag to move this point"
@@ -20359,9 +20375,10 @@ msgid "Replace partial transparency with a color"
 msgstr ""
 
 #: app/operations/gimpoperationsemiflatten.c:93
+#, fuzzy
 #| msgid "Text Color"
 msgid "The color"
-msgstr ""
+msgstr "طرحوارهٔ رنگی"
 
 #: app/operations/gimpoperationsettings.c:77 app/tools/gimpfiltertool.c:1400
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:109
@@ -22264,8 +22281,9 @@ msgid "Selected layers will be aligned or distributed by the tool"
 msgstr ""
 
 #: app/tools/gimpalignoptions.c:164
+#, fuzzy
 msgid "Selected paths"
-msgstr ""
+msgstr "برون‌ریزی مسیر گزیده"
 
 #: app/tools/gimpalignoptions.c:165
 msgid "Selected paths will be aligned or distributed by the tool"
@@ -22545,9 +22563,10 @@ msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr ""
 
 #: app/tools/gimpbucketfilloptions.c:280 app/tools/gimpbucketfilloptions.c:731
+#, fuzzy
 #| msgid "Fill by:"
 msgid "Fill by"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #: app/tools/gimpbucketfilloptions.c:281
 msgid "Criterion used for determining color similarity"
@@ -23612,8 +23631,9 @@ msgstr ""
 #. the position label
 #: app/tools/gimpgradienttool-editor.c:1387 app/tools/gimpgradienttool-editor.c:1486
 #: app/tools/gimprectangleoptions.c:996
+#, fuzzy
 msgid "Position:"
-msgstr ""
+msgstr "قفل مو_قعیت مسیر"
 
 #. the color labels
 #: app/tools/gimpgradienttool-editor.c:1408
@@ -24859,8 +24879,9 @@ msgid "Text Color"
 msgstr "رنگ متن"
 
 #: app/tools/gimptextoptions.c:858
+#, fuzzy
 msgid "Style:"
-msgstr ""
+msgstr "سبک خط‌چین را گزینش کنید"
 
 #: app/tools/gimptextoptions.c:862
 msgid "Outline Options"
@@ -24875,8 +24896,9 @@ msgid "Box:"
 msgstr ""
 
 #: app/tools/gimptextoptions.c:953
+#, fuzzy
 msgid "Language:"
-msgstr ""
+msgstr "زبان میانا (نیازمند آغاز دوباره)"
 
 #: app/tools/gimptexttool.c:218
 msgid "Text"
@@ -24933,8 +24955,9 @@ msgid "Text is required."
 msgstr ""
 
 #: app/tools/gimptexttool.c:2359
+#, fuzzy
 msgid "No image."
-msgstr ""
+msgstr "جایگذاری به شکل تصویر _جدید"
 
 #: app/tools/gimptexttool.c:2362
 msgid "No layer."
@@ -25462,9 +25485,10 @@ msgstr "تعداد قاب‌های پویانمایی"
 
 #. the stroke frame
 #: app/tools/gimpwarpoptions.c:350
+#, fuzzy
 #| msgid "Add Stroke"
 msgid "Stroke"
-msgstr ""
+msgstr "_خط‌چین"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -25993,15 +26017,17 @@ msgstr ""
 
 #. TRANSLATORS: G for Green (RGB)
 #: app/widgets/gimpcolorframe.c:803 app/widgets/gimpcolorframe.c:867
+#, fuzzy
 msgctxt "RGB"
 msgid "G:"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #. TRANSLATORS: B for Blue (RGB)
 #: app/widgets/gimpcolorframe.c:805 app/widgets/gimpcolorframe.c:869
+#, fuzzy
 msgctxt "RGB"
 msgid "B:"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #. TRANSLATORS: Index of the color in the palette.
 #: app/widgets/gimpcolorframe.c:814
@@ -26046,9 +26072,10 @@ msgstr ""
 
 #. TRANSLATORS: S for Saturation (HSV color space)
 #: app/widgets/gimpcolorframe.c:989
+#, fuzzy
 msgctxt "HSV color space"
 msgid "S:"
-msgstr ""
+msgstr "یادداشت‌های انتشار گیمپ %s"
 
 #. TRANSLATORS: V for Value (HSV color space)
 #: app/widgets/gimpcolorframe.c:991
@@ -26064,9 +26091,10 @@ msgstr ""
 
 #. TRANSLATORS: C for Chroma (LCH color space)
 #: app/widgets/gimpcolorframe.c:1016
+#, fuzzy
 msgctxt "LCH color space"
 msgid "C*:"
-msgstr ""
+msgstr "_ایجاد"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
 #: app/widgets/gimpcolorframe.c:1018
@@ -26088,9 +26116,10 @@ msgstr ""
 
 #. TRANSLATORS: b* color channel in Lab color space
 #: app/widgets/gimpcolorframe.c:1046
+#, fuzzy
 msgctxt "Lab color space"
 msgid "b*:"
-msgstr ""
+msgstr "پر کردن با رنگ پی_ش‌زمینه"
 
 #. TRANSLATORS: x from xyY color space
 #: app/widgets/gimpcolorframe.c:1070
@@ -28369,8 +28398,9 @@ msgid "Lock path position"
 msgstr "قفل کردن موقعیت مسیر"
 
 #: app/widgets/gimppathtreeview.c:122
+#, fuzzy
 msgid "Lock path visibility"
-msgstr ""
+msgstr "قفل _نمایانی مسیر"
 
 #: app/widgets/gimpviewablebox.c:94
 msgid "Open the brush selection dialog"
@@ -28829,9 +28859,10 @@ msgid "_Edit"
 msgstr "_ویرایش"
 
 #: menus/image-menu.ui.in.in:92
+#, fuzzy
 msgctxt "edit-action"
 msgid "Paste _as"
-msgstr ""
+msgstr "جایگذاری به شکل تصویر _جدید"
 
 #: menus/image-menu.ui.in.in:106
 msgctxt "edit-action"
@@ -28890,9 +28921,10 @@ msgid "_Image"
 msgstr "_تصویر"
 
 #: menus/image-menu.ui.in.in:315
+#, fuzzy
 msgctxt "image-action"
 msgid "_Mode"
-msgstr ""
+msgstr "حالت مرکب"
 
 #: menus/image-menu.ui.in.in:321
 msgctxt "image-action"
@@ -29101,12 +29133,12 @@ msgstr "_وب"
 #: menus/image-menu.ui.in.in:841
 msgctxt "filters-action"
 msgid "An_imation"
-msgstr ""
+msgstr "_پویانمایی"
 
 #: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "De_velopment"
-msgstr ""
+msgstr "_توسعه"
 
 #: menus/image-menu.ui.in.in:846
 #| msgid "Plug-Ins"
@@ -29153,7 +29185,7 @@ msgstr "_گیمپ برخط"
 #: menus/images-menu.ui:6
 msgctxt "images-action"
 msgid "Images Menu"
-msgstr ""
+msgstr "فهرست تصاویر"
 
 #: menus/layers-menu.ui:6
 msgctxt "layers-action"
@@ -29169,12 +29201,12 @@ msgstr ""
 #: menus/layers-menu.ui:18
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr ""
+msgstr "فضای مرکب"
 
 #: menus/layers-menu.ui:24
 msgctxt "layers-action"
 msgid "Composite Mode"
-msgstr ""
+msgstr "حالت مرکب"
 
 #: menus/mypaint-brushes-menu.ui:6
 msgctxt "mypaint-brushes-action"
@@ -29194,7 +29226,7 @@ msgstr "فهرست تخته‌رنگ‌ها"
 #: menus/palettes-menu.ui:23
 msgctxt "palettes-action"
 msgid "Export as"
-msgstr ""
+msgstr "برون‌ریزی به شکل"
 
 #: menus/paths-menu.ui:6
 msgctxt "paths-action"
@@ -29204,7 +29236,7 @@ msgstr "فهرست مسیرها"
 #: menus/patterns-menu.ui:6
 msgctxt "patterns-action"
 msgid "Patterns Menu"
-msgstr ""
+msgstr "فهرست الگوها"
 
 #: menus/sample-points-menu.ui:6
 msgctxt "sample-points-action"
@@ -29219,7 +29251,7 @@ msgstr "فهرست ویرایشگر گزینش"
 #: menus/templates-menu.ui:6
 msgctxt "templates-action"
 msgid "Templates Menu"
-msgstr ""
+msgstr "فهرست قالب‌ها"
 
 #: menus/text-tool-menu.ui:6
 msgctxt "text-tool-action"
