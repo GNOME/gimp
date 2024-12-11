@@ -450,9 +450,33 @@ endif
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
 pango_minver = '1.50.0'
-pango        = dependency('pango',       version: '>='+pango_minver)
-pangocairo   = dependency('pangocairo',  version: '>='+pango_minver)
-pangoft2     = dependency('pangoft2',    version: '>='+pango_minver)
+if platform_osx
+  pango_macos_recommended_version = '1.55.0'
+  pango_macos_warning='''
+        GIMP encounters major display breakage on some macOS installations
+        with pango < 1.55.0. We highly recommend pango >= 1.55.0.
+        See: https://gitlab.gnome.org/GNOME/gimp/-/issues/7589
+  '''
+  pango = dependency('pango',
+                     version: '>='+pango_macos_recommended_version,
+                     required: false)
+  if pango.found()
+    pangocairo = dependency('pangocairo',  version: '>='+pango_macos_recommended_version)
+    pangoft2   = dependency('pangoft2',    version: '>='+pango_macos_recommended_version)
+  else
+    warning(pango_macos_warning)
+    warnings += pango_macos_warning
+  endif
+else
+  pango = no_dep
+endif
+
+if not pango.found()
+  pango        = dependency('pango',       version: '>='+pango_minver)
+  pangocairo   = dependency('pangocairo',  version: '>='+pango_minver)
+  pangoft2     = dependency('pangoft2',    version: '>='+pango_minver)
+endif
+
 rsvg_minver  = '2.40.6'
 rsvg         = dependency('librsvg-2.0', version: '>='+rsvg_minver)
 
