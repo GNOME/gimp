@@ -855,11 +855,14 @@ gimp_ui_switch_window_mode (Gimp *gimp)
 
 int main(int argc, char **argv)
 {
-  Gimp *gimp   = NULL;
-  gint  result = -1;
+  Gimp  *gimp   = NULL;
+  gint   result = -1;
+  gchar *session_type;
 
   gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
+
+  session_type = g_getenv("XDG_SESSION_TYPE");
 
   gimp_test_utils_setup_menus_path ();
 
@@ -891,7 +894,10 @@ int main(int argc, char **argv)
   ADD_TEST (switch_back_to_multi_window_mode);
   ADD_TEST (close_image);
   ADD_TEST (repeatedly_switch_window_mode);
-  ADD_TEST (window_roles);
+
+  if (g_strcmp0(session_type, "wayland") != 0) {
+    ADD_TEST (window_roles);
+  }
 
   /* Run the tests and return status */
   g_application_run (gimp->app, 0, NULL);
