@@ -1562,6 +1562,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
   /* TODO: Once we can serialize GimpDrawable, remove so that filters with
    * aux nodes can be non-destructive */
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
+    options->merge_filter = TRUE;
+
+  if (options->merge_filter)
     {
       filters = gimp_drawable_get_filters (drawable);
       count   = gimp_container_get_n_children (filters);
