@@ -279,6 +279,15 @@ goat_run (GimpProcedure        *procedure,
       gimp_displays_flush ();
 
       gegl_exit ();
+#if 0
+      /* Above is an example of using GEGL API directly within the
+       * plug-in process. Below is a variant using drawable filters. The
+       * operation rendering is done core process side.
+       */
+      gimp_drawable_merge_new_filter (drawable, "gegl:invert", NULL,
+                                      GIMP_LAYER_MODE_REPLACE, 1.0,
+                                      NULL);
+#endif
     }
 
   return gimp_procedure_new_return_values (procedure, status, NULL);

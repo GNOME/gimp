@@ -97,6 +97,12 @@ GimpDrawableFilter * gimp_drawable_append_new_filter      (GimpDrawable  *drawab
                                                            const gchar   *operation_name,
                                                            const gchar   *name,
                                                            ...) G_GNUC_NULL_TERMINATED;
+void                 gimp_drawable_merge_new_filter       (GimpDrawable  *drawable,
+                                                           const gchar   *operation_name,
+                                                           const gchar   *name,
+                                                           GimpLayerMode  mode,
+                                                           gdouble        opacity,
+                                                           ...) G_GNUC_NULL_TERMINATED;
 
 
 G_END_DECLS

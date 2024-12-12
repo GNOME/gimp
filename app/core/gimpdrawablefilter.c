@@ -30,6 +30,7 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gegl-paramspecs.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -306,6 +307,16 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (operation), NULL);
   g_return_val_if_fail (gegl_node_has_pad (operation, "output"), NULL);
+
+  if (undo_desc == NULL || strlen (undo_desc) == 0)
+    {
+      GeglOperation *op;
+      GeglOperationClass *opclass;
+
+      op        = gegl_node_get_gegl_operation (operation);
+      opclass   = GEGL_OPERATION_GET_CLASS (op);
+      undo_desc = gegl_operation_class_get_key (opclass, "title");
+    }
 
   filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
                          "name",      undo_desc,
