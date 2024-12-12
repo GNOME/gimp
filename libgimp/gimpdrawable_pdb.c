@@ -677,7 +677,7 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 }
 
 /**
- * gimp_drawable_append_filter:
+ * _gimp_drawable_append_filter:
  * @drawable: The drawable.
  * @filter: The drawable filter to append.
  *
@@ -700,8 +700,8 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
  * Since: 3.0
  **/
 gboolean
-gimp_drawable_append_filter (GimpDrawable       *drawable,
-                             GimpDrawableFilter *filter)
+_gimp_drawable_append_filter (GimpDrawable       *drawable,
+                              GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -725,7 +725,7 @@ gimp_drawable_append_filter (GimpDrawable       *drawable,
 }
 
 /**
- * gimp_drawable_merge_filter:
+ * _gimp_drawable_merge_filter:
  * @drawable: The drawable.
  * @filter: The drawable filter to merge.
  *
@@ -748,8 +748,8 @@ gimp_drawable_append_filter (GimpDrawable       *drawable,
  * Since: 3.0
  **/
 gboolean
-gimp_drawable_merge_filter (GimpDrawable       *drawable,
-                            GimpDrawableFilter *filter)
+_gimp_drawable_merge_filter (GimpDrawable       *drawable,
+                             GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

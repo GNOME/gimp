@@ -437,6 +437,64 @@ gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
 }
 
 /**
+ * gimp_drawable_append_filter:
+ * @drawable: The drawable.
+ * @filter: The drawable filter to append.
+ *
+ * This procedure appends the specified drawable effect at the top of the
+ * effect list of @drawable.
+ *
+ * The @drawable argument must be the same as the one used when you
+ * created the effect with [ctor@Gimp.DrawableFilter.new].
+ * Some effects may be slower than others to render. In order to
+ * minimize processing time, it is preferred to customize the
+ * operation's arguments as received with
+ * [method@Gimp.DrawableFilter.get_config] before adding the effect.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_drawable_append_filter (GimpDrawable       *drawable,
+                             GimpDrawableFilter *filter)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  gimp_drawable_filter_update (filter);
+  _gimp_drawable_append_filter (drawable, filter);
+}
+
+/**
+ * gimp_drawable_merge_filter:
+ * @drawable: The drawable.
+ * @filter: The drawable filter to merge.
+ *
+ * This procedure applies the specified drawable effect on @drawable
+ * and merge it (therefore before any non-destructive effects are
+ * computed).
+ *
+ * The @drawable argument must be the same as the one used when you
+ * created the effect with [ctor@Gimp.DrawableFilter.new].
+ * Once this is run, @filter is not valid anymore and you should not
+ * try to do anything with it. In particular, you must customize the
+ * operation's arguments as received with
+ * [method@Gimp.DrawableFilter.get_config] or set the filter's opacity
+ * and blend mode before merging the effect.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_drawable_merge_filter (GimpDrawable       *drawable,
+                            GimpDrawableFilter *filter)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  gimp_drawable_filter_update (filter);
+  _gimp_drawable_merge_filter (drawable, filter);
+}
+
+/**
  * gimp_drawable_append_new_filter: (skip)
  * @drawable:       The #GimpDrawable.
  * @operation_name: The GEGL operation's name.
@@ -512,7 +570,6 @@ gimp_drawable_append_new_filter (GimpDrawable *drawable,
     }
   va_end (va_args);
 
-  gimp_drawable_filter_update (filter);
   gimp_drawable_append_filter (drawable, filter);
 
   return filter;
@@ -601,6 +658,5 @@ gimp_drawable_merge_new_filter (GimpDrawable  *drawable,
 
   gimp_drawable_filter_set_blend_mode (filter, mode);
   gimp_drawable_filter_set_opacity (filter, opacity);
-  gimp_drawable_filter_update (filter);
   gimp_drawable_merge_filter (drawable, filter);
 }

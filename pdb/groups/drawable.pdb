@@ -129,6 +129,8 @@ HELP
 
     &jehan_pdb_misc('2024', '3.0');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'drawable', type => 'drawable',
           desc => 'The drawable' },
@@ -198,6 +200,8 @@ before merging the effect.
 HELP
 
     &jehan_pdb_misc('2024', '3.0');
+
+    $lib_private = 1;
 
     @inargs = (
         { name => 'drawable', type => 'drawable',

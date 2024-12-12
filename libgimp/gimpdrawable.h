@@ -55,53 +55,58 @@ struct _GimpDrawableClass
 };
 
 
-GimpDrawable       * gimp_drawable_get_by_id              (gint32        drawable_id);
+GimpDrawable       * gimp_drawable_get_by_id              (gint32                 drawable_id);
 
-GeglBuffer         * gimp_drawable_get_buffer             (GimpDrawable  *drawable) G_GNUC_WARN_UNUSED_RESULT;
-GeglBuffer         * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable) G_GNUC_WARN_UNUSED_RESULT;
+GeglBuffer         * gimp_drawable_get_buffer             (GimpDrawable           *drawable) G_GNUC_WARN_UNUSED_RESULT;
+GeglBuffer         * gimp_drawable_get_shadow_buffer      (GimpDrawable           *drawable) G_GNUC_WARN_UNUSED_RESULT;
 
-const Babl         * gimp_drawable_get_format             (GimpDrawable  *drawable);
-const Babl         * gimp_drawable_get_thumbnail_format   (GimpDrawable  *drawable);
+const Babl         * gimp_drawable_get_format             (GimpDrawable           *drawable);
+const Babl         * gimp_drawable_get_thumbnail_format   (GimpDrawable           *drawable);
 
-GBytes             * gimp_drawable_get_thumbnail_data     (GimpDrawable  *drawable,
-                                                           gint           width,
-                                                           gint           height,
-                                                           gint          *actual_width,
-                                                           gint          *actual_height,
-                                                           gint          *bpp);
-GdkPixbuf          * gimp_drawable_get_thumbnail          (GimpDrawable  *drawable,
-                                                           gint           width,
-                                                           gint           height,
-                                                           GimpPixbufTransparency alpha);
+GBytes             * gimp_drawable_get_thumbnail_data     (GimpDrawable           *drawable,
+                                                           gint                    width,
+                                                           gint                    height,
+                                                           gint                   *actual_width,
+                                                           gint                   *actual_height,
+                                                           gint                   *bpp);
+GdkPixbuf          * gimp_drawable_get_thumbnail          (GimpDrawable           *drawable,
+                                                           gint                    width,
+                                                           gint                    height,
+                                                           GimpPixbufTransparency  alpha);
 
-GBytes             * gimp_drawable_get_sub_thumbnail_data (GimpDrawable  *drawable,
-                                                           gint           src_x,
-                                                           gint           src_y,
-                                                           gint           src_width,
-                                                           gint           src_height,
-                                                           gint           dest_width,
-                                                           gint           dest_height,
-                                                           gint          *actual_width,
-                                                           gint          *actual_height,
-                                                           gint          *bpp);
-GdkPixbuf          * gimp_drawable_get_sub_thumbnail      (GimpDrawable  *drawable,
-                                                           gint           src_x,
-                                                           gint           src_y,
-                                                           gint           src_width,
-                                                           gint           src_height,
-                                                           gint           dest_width,
-                                                           gint           dest_height,
-                                                           GimpPixbufTransparency alpha);
+GBytes             * gimp_drawable_get_sub_thumbnail_data (GimpDrawable           *drawable,
+                                                           gint                    src_x,
+                                                           gint                    src_y,
+                                                           gint                    src_width,
+                                                           gint                    src_height,
+                                                           gint                    dest_width,
+                                                           gint                    dest_height,
+                                                           gint                   *actual_width,
+                                                           gint                   *actual_height,
+                                                           gint                   *bpp);
+GdkPixbuf          * gimp_drawable_get_sub_thumbnail      (GimpDrawable           *drawable,
+                                                           gint                    src_x,
+                                                           gint                    src_y,
+                                                           gint                    src_width,
+                                                           gint                    src_height,
+                                                           gint                    dest_width,
+                                                           gint                    dest_height,
+                                                           GimpPixbufTransparency  alpha);
 
-GimpDrawableFilter * gimp_drawable_append_new_filter      (GimpDrawable  *drawable,
-                                                           const gchar   *operation_name,
-                                                           const gchar   *name,
+void                 gimp_drawable_append_filter          (GimpDrawable           *drawable,
+                                                           GimpDrawableFilter     *filter);
+void                 gimp_drawable_merge_filter           (GimpDrawable           *drawable,
+                                                           GimpDrawableFilter     *filter);
+
+GimpDrawableFilter * gimp_drawable_append_new_filter      (GimpDrawable           *drawable,
+                                                           const gchar            *operation_name,
+                                                           const gchar            *name,
                                                            ...) G_GNUC_NULL_TERMINATED;
-void                 gimp_drawable_merge_new_filter       (GimpDrawable  *drawable,
-                                                           const gchar   *operation_name,
-                                                           const gchar   *name,
-                                                           GimpLayerMode  mode,
-                                                           gdouble        opacity,
+void                 gimp_drawable_merge_new_filter       (GimpDrawable           *drawable,
+                                                           const gchar            *operation_name,
+                                                           const gchar            *name,
+                                                           GimpLayerMode           mode,
+                                                           gdouble                 opacity,
                                                            ...) G_GNUC_NULL_TERMINATED;
 
 
