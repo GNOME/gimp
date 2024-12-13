@@ -448,7 +448,7 @@ _gimp_drawable_filter_get_number_arguments (const gchar *operation_name)
 }
 
 /**
- * _gimp_drawable_filter_get_argument:
+ * _gimp_drawable_filter_get_pspec:
  * @operation_name: The procedure name.
  * @arg_num: The argument number.
  *
@@ -462,8 +462,8 @@ _gimp_drawable_filter_get_number_arguments (const gchar *operation_name)
  * Since: 3.0
  **/
 GParamSpec *
-_gimp_drawable_filter_get_argument (const gchar *operation_name,
-                                    gint         arg_num)
+_gimp_drawable_filter_get_pspec (const gchar *operation_name,
+                                 gint         arg_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -475,7 +475,7 @@ _gimp_drawable_filter_get_argument (const gchar *operation_name,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-drawable-filter-get-argument",
+                                               "gimp-drawable-filter-get-pspec",
                                                args);
   gimp_value_array_unref (args);
 
@@ -485,6 +485,49 @@ _gimp_drawable_filter_get_argument (const gchar *operation_name,
   gimp_value_array_unref (return_vals);
 
   return param_spec;
+}
+
+/**
+ * _gimp_drawable_filter_get_arguments:
+ * @filter: The filter.
+ * @values: (out): The values of the arguments in same order.
+ *
+ * Returns the currently set filter arguments.
+ *
+ * This procedure returns the filter's arguments.
+ *
+ * Returns: (array zero-terminated=1) (transfer full):
+ *          The names of the arguments.
+ *          The returned value must be freed with g_strfreev().
+ *
+ * Since: 3.0
+ **/
+gchar **
+_gimp_drawable_filter_get_arguments (GimpDrawableFilter  *filter,
+                                     GimpValueArray     **values)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar **argnames = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_FILTER, filter,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-drawable-filter-get-arguments",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      argnames = GIMP_VALUES_DUP_STRV (return_vals, 1);
+      *values = g_value_dup_boxed (gimp_value_array_index (return_vals, 2));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return argnames;
 }
 
 /**

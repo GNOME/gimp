@@ -260,22 +260,29 @@ gimp_drawable_filter_set_blend_mode (GimpDrawableFilter *filter,
  *
  * Get the #GimpConfig with properties that match @filter's arguments.
  *
- * Returns: (transfer none): The new #GimpConfig.
+ * The config object will be created at the first call of this method
+ * and its properties will be synced with the settings of this filter as
+ * set in the core application.
  *
- * Changes to @config's properties are not synced immediately with the
- * core application. Use [method@Gimp.Drawable.update] to trigger an
- * actual update.
+ * Further changes to the config's properties are not synced back
+ * immediately with the core application. Use
+ * [method@Gimp.Drawable.update] to trigger an actual update.
+ *
+ * Returns: (transfer none): The #GimpDrawableFilterConfig. Further
+ *                           calls will return the same object.
  *
  * Since: 3.0
  **/
 GimpDrawableFilterConfig *
 gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
 {
-  gchar *config_type_name;
-  gchar *op_name;
-  gchar *canonical_name;
-  GType  config_type;
-  gint   n_args;
+  gchar          **argnames;
+  GimpValueArray  *values;
+  gchar           *config_type_name;
+  gchar           *op_name;
+  gchar           *canonical_name;
+  GType            config_type;
+  gint             n_args;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
 
@@ -298,7 +305,7 @@ gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
         {
           GParamSpec *pspec;
 
-          pspec = _gimp_drawable_filter_get_argument (op_name, i);
+          pspec = _gimp_drawable_filter_get_pspec (op_name, i);
           config_args[i] = pspec;
         }
 
@@ -312,6 +319,14 @@ gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
   g_free (canonical_name);
 
   filter->config = g_object_new (config_type, NULL);
+
+  argnames = _gimp_drawable_filter_get_arguments (filter, &values);
+  for (gint i = 0; argnames[i] != NULL; i++)
+    g_object_set_property (G_OBJECT (filter->config), argnames[i],
+                           gimp_value_array_index (values, i));
+
+  g_strfreev (argnames);
+  gimp_value_array_unref (values);
 
   return filter->config;
 }

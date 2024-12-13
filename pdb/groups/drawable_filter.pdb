@@ -395,7 +395,7 @@ CODE
     );
 }
 
-sub drawable_filter_get_argument {
+sub drawable_filter_get_pspec {
     $blurb = <<BLURB;
 Queries for information on the specified filter's argument.
 BLURB
@@ -445,6 +445,105 @@ HELP
     {
       success = FALSE;
     }
+}
+CODE
+   );
+}
+
+sub drawable_filter_get_arguments {
+    $blurb = <<BLURB;
+Returns the currently set filter arguments.
+BLURB
+
+    $help = <<HELP;
+This procedure returns the filter's arguments.
+HELP
+
+    &jehan_pdb_misc('2024', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+	{ name => 'filter', type => 'filter', desc => 'The filter' },
+    );
+
+    @outargs = (
+	{ name => 'argnames', type => 'strv',
+	  desc => "The names of the arguments" },
+	{ name => 'values', type => 'valuearray',
+	  desc => "The values of the arguments in same order" }
+    );
+
+   %invoke = (
+	code => <<'CODE'
+{
+  GeglNode     *node;
+  const gchar  *opname;
+  GParamSpec  **specs;
+  guint         n_specs;
+  GStrvBuilder *names_builder;
+
+  node   = gimp_drawable_filter_get_operation (filter);
+  opname = gegl_node_get_operation (node);
+
+  specs = gegl_operation_list_properties (opname, &n_specs);
+
+  names_builder = g_strv_builder_new ();
+  values        = gimp_value_array_new (n_specs);
+
+  for (gint i = 0; i < n_specs; i++)
+    {
+      GParamSpec *pspec = specs[i];
+      GValue      value = G_VALUE_INIT;
+
+      g_value_init (&value, pspec->value_type);
+      gegl_node_get_property (node, pspec->name, &value);
+
+      if (GEGL_IS_PARAM_SPEC_ENUM (pspec))
+        {
+          /* Special-casing GeglParamEnum which are passed as string to
+           * libgimp.
+           */
+          GParamSpecEnum *espec       = G_PARAM_SPEC_ENUM (pspec);
+          GEnumClass     *enum_class  = espec->enum_class;
+          GValue         string_value = G_VALUE_INIT;
+          gint           int_enum     = g_value_get_enum (&value);
+
+          g_value_init (&string_value, G_TYPE_STRING);
+          for (gint j = 0; j < enum_class->n_values; j++)
+            {
+              GEnumValue enum_value = enum_class->values[j];
+
+              if (enum_value.value < enum_class->minimum || enum_value.value > enum_class->maximum)
+                continue;
+
+              if (enum_value.value == espec->default_value)
+                g_value_set_string (&string_value, enum_value.value_nick);
+            }
+
+          for (gint j = 0; j < enum_class->n_values; j++)
+            {
+              GEnumValue enum_value = enum_class->values[j];
+
+              if (enum_value.value == int_enum)
+                g_value_set_string (&string_value, enum_value.value_nick);
+            }
+
+          gimp_value_array_append (values, &string_value);
+          g_value_unset (&string_value);
+        }
+      else
+        {
+          gimp_value_array_append (values, &value);
+        }
+      g_strv_builder_add (names_builder, pspec->name);
+      g_value_unset (&value);
+    }
+
+  argnames = g_strv_builder_end (names_builder);
+
+  g_strv_builder_unref (names_builder);
+  g_free (specs);
 }
 CODE
    );
@@ -509,7 +608,8 @@ CODE
             drawable_filter_get_blend_mode
             drawable_filter_update
             drawable_filter_get_number_arguments
-            drawable_filter_get_argument
+            drawable_filter_get_pspec
+            drawable_filter_get_arguments
             drawable_filter_delete);
 
 %exports = (app => [@procs], lib => [@procs]);

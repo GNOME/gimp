@@ -52,8 +52,10 @@ G_GNUC_INTERNAL gboolean    _gimp_drawable_filter_update               (GimpDraw
                                                                         GimpLayerCompositeMode   composite_mode,
                                                                         GimpLayerColorSpace      composite_space);
 G_GNUC_INTERNAL gint        _gimp_drawable_filter_get_number_arguments (const gchar             *operation_name);
-G_GNUC_INTERNAL GParamSpec* _gimp_drawable_filter_get_argument         (const gchar             *operation_name,
+G_GNUC_INTERNAL GParamSpec* _gimp_drawable_filter_get_pspec            (const gchar             *operation_name,
                                                                         gint                     arg_num);
+G_GNUC_INTERNAL gchar**     _gimp_drawable_filter_get_arguments        (GimpDrawableFilter      *filter,
+                                                                        GimpValueArray         **values);
 gboolean                    gimp_drawable_filter_delete                (GimpDrawableFilter      *filter);
 
 

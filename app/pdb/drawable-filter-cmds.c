@@ -412,12 +412,12 @@ drawable_filter_get_number_arguments_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_filter_get_argument_invoker (GimpProcedure         *procedure,
-                                      Gimp                  *gimp,
-                                      GimpContext           *context,
-                                      GimpProgress          *progress,
-                                      const GimpValueArray  *args,
-                                      GError               **error)
+drawable_filter_get_pspec_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -459,6 +459,105 @@ drawable_filter_get_argument_invoker (GimpProcedure         *procedure,
 
   if (success)
     g_value_take_param (gimp_value_array_index (return_vals, 1), param_spec);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+drawable_filter_get_arguments_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawableFilter *filter;
+  gchar **argnames = NULL;
+  GimpValueArray *values = NULL;
+
+  filter = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GeglNode     *node;
+      const gchar  *opname;
+      GParamSpec  **specs;
+      guint         n_specs;
+      GStrvBuilder *names_builder;
+
+      node   = gimp_drawable_filter_get_operation (filter);
+      opname = gegl_node_get_operation (node);
+
+      specs = gegl_operation_list_properties (opname, &n_specs);
+
+      names_builder = g_strv_builder_new ();
+      values        = gimp_value_array_new (n_specs);
+
+      for (gint i = 0; i < n_specs; i++)
+        {
+          GParamSpec *pspec = specs[i];
+          GValue      value = G_VALUE_INIT;
+
+          g_value_init (&value, pspec->value_type);
+          gegl_node_get_property (node, pspec->name, &value);
+
+          if (GEGL_IS_PARAM_SPEC_ENUM (pspec))
+            {
+              /* Special-casing GeglParamEnum which are passed as string to
+               * libgimp.
+               */
+              GParamSpecEnum *espec       = G_PARAM_SPEC_ENUM (pspec);
+              GEnumClass     *enum_class  = espec->enum_class;
+              GValue         string_value = G_VALUE_INIT;
+              gint           int_enum     = g_value_get_enum (&value);
+
+              g_value_init (&string_value, G_TYPE_STRING);
+              for (gint j = 0; j < enum_class->n_values; j++)
+                {
+                  GEnumValue enum_value = enum_class->values[j];
+
+                  if (enum_value.value < enum_class->minimum || enum_value.value > enum_class->maximum)
+                    continue;
+
+                  if (enum_value.value == espec->default_value)
+                    g_value_set_string (&string_value, enum_value.value_nick);
+                }
+
+              for (gint j = 0; j < enum_class->n_values; j++)
+                {
+                  GEnumValue enum_value = enum_class->values[j];
+
+                  if (enum_value.value == int_enum)
+                    g_value_set_string (&string_value, enum_value.value_nick);
+                }
+
+              gimp_value_array_append (values, &string_value);
+              g_value_unset (&string_value);
+            }
+          else
+            {
+              gimp_value_array_append (values, &value);
+            }
+          g_strv_builder_add (names_builder, pspec->name);
+          g_value_unset (&value);
+        }
+
+      argnames = g_strv_builder_end (names_builder);
+
+      g_strv_builder_unref (names_builder);
+      g_free (specs);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_take_boxed (gimp_value_array_index (return_vals, 1), argnames);
+      g_value_take_boxed (gimp_value_array_index (return_vals, 2), values);
+    }
 
   return return_vals;
 }
@@ -858,11 +957,11 @@ register_drawable_filter_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-filter-get-argument
+   * gimp-drawable-filter-get-pspec
    */
-  procedure = gimp_procedure_new (drawable_filter_get_argument_invoker);
+  procedure = gimp_procedure_new (drawable_filter_get_pspec_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-filter-get-argument");
+                               "gimp-drawable-filter-get-pspec");
   gimp_procedure_set_static_help (procedure,
                                   "Queries for information on the specified filter's argument.",
                                   "This procedure returns the #GParamSpec of filter's argument.",
@@ -890,6 +989,41 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                        "The GParamSpec of the argument",
                                                        G_TYPE_PARAM,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-filter-get-arguments
+   */
+  procedure = gimp_procedure_new (drawable_filter_get_arguments_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-filter-get-arguments");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the currently set filter arguments.",
+                                  "This procedure returns the filter's arguments.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2024");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_filter ("filter",
+                                                                "filter",
+                                                                "The filter",
+                                                                FALSE,
+                                                                GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boxed ("argnames",
+                                                       "argnames",
+                                                       "The names of the arguments",
+                                                       G_TYPE_STRV,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_value_array ("values",
+                                                                "values",
+                                                                "The values of the arguments in same order",
+                                                                NULL,
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
