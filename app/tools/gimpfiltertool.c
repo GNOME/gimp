@@ -290,24 +290,30 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   GimpDisplayShell *shell       = gimp_display_get_shell (display);
   GimpItem         *locked_item = NULL;
   GList            *drawables   = gimp_image_get_selected_drawables (image);
-  GimpDrawable     *drawable;
+  GimpDrawable     *drawable    = NULL;
 
-  if (g_list_length (drawables) != 1)
+  if (filter_tool->existing_filter)
     {
-      if (g_list_length (drawables) > 1)
-        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                             _("Cannot modify multiple drawables. Select only one."));
-      else
-        g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, _("No selected drawables."));
-
-      g_list_free (drawables);
-      return FALSE;
+      drawable =
+        gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
     }
-
-  if (! filter_tool->existing_filter)
-    drawable = drawables->data;
   else
-    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
+    {
+      if (g_list_length (drawables) != 1)
+        {
+          if (g_list_length (drawables) > 1)
+            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                 _("Cannot modify multiple drawables. "
+                                   "Select only one."));
+          else
+            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                 _("No selected drawables."));
+
+          g_list_free (drawables);
+          return FALSE;
+        }
+      drawable = drawables->data;
+    }
 
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
