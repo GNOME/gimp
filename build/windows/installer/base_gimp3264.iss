@@ -522,12 +522,6 @@ end;
 
 //0. PRELIMINARY SETUP CODE
 
-//SSE instructions
-const
-  PF_XMMI_INSTRUCTIONS_AVAILABLE = 6;
-
-function IsProcessorFeaturePresent(ProcessorFeature: DWORD): LongBool; external 'IsProcessorFeaturePresent@kernel32 stdcall';
-
 //Existing 32-bit
 procedure Check32bitOverride;
 var i: Integer;
@@ -603,13 +597,6 @@ var Message,Buttons: TArrayOfString;
 #endif
 begin
 	ConfigOverride := coUndefined;
-
-	if not IsProcessorFeaturePresent(PF_XMMI_INSTRUCTIONS_AVAILABLE) then
-	begin
-		SuppressibleMsgBox(CustomMessage('SSERequired'), mbCriticalError, MB_OK, 0);
-		Result := false;
-		exit;
-	end;
 
 	Check32bitOverride;
 
