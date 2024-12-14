@@ -334,6 +334,7 @@ main_dialog (GimpProcedure       *procedure,
   GtkWidget     *frame;
   GtkWidget     *button;
   GtkWidget     *toggle;
+  GtkWidget     *scale;
   GimpZoomModel *model;
   GtkWidget     *map_combo;
   GtkWidget     *combo;
@@ -804,12 +805,15 @@ main_dialog (GimpProcedure       *procedure,
                                     "box-drawable-label", FALSE,
                                     "box-drawable-box");
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "x-scale", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "y-scale", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "z-scale", 1.0);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                                 "x-scale", 1.0);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 5.0, TRUE);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                                 "y-scale", 1.0);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 5.0, TRUE);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                                 "z-scale", 1.0);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 5.0, TRUE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (appwin),
                                   "box-scale-box",
                                   "x-scale",
@@ -865,10 +869,12 @@ main_dialog (GimpProcedure       *procedure,
                                     "cyl-drawable-label", FALSE,
                                     "cyl-drawable-box");
 
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "cylinder-radius", 1.0);
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
-                                        "cylinder-length", 1.0);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                                 "cylinder-radius", 1.0);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 2.0, TRUE);
+  scale = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (appwin),
+                                                 "cylinder-length", 1.0);
+  gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scale), 0, 2.0, TRUE);
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (appwin),
                                    "cyl-size-label", _("Size"),
                                    FALSE, FALSE);
