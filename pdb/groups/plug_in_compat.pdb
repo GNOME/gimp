@@ -225,72 +225,6 @@ CODE
     );
 }
 
-sub plug_in_cubism {
-    $blurb = 'Convert the image into randomly rotated square blobs';
-
-    $help = <<'HELP';
-Convert the image into randomly rotated square blobs.
-HELP
-
-    &std_pdb_compat('gegl:cubism');
-    $date = '2013';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'tile_size', type => '0.0 <= double <= 100.0',
-	  desc => 'Average diameter of each tile (in pixels)' },
-	{ name => 'tile_saturation', type => '0.0 <= double <= 10.0',
-	  desc => 'Expand tiles by this amount' },
-	{ name => 'bg_color', type => '0 <= int32 <= 1',
-	  desc => 'Background color { BLACK (0), BG (1) }' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglColor *color;
-      GeglNode  *node;
-
-      if (bg_color)
-        {
-          color = gegl_color_duplicate (gimp_context_get_background (context));
-          gimp_color_set_alpha (color, 0.0);
-        }
-      else
-        {
-          color = gegl_color_new ("black");
-          gegl_color_set_rgba_with_space (color, 0.0, 0.0, 0.0, 0.0, NULL);
-        }
-
-      node = gegl_node_new_child (NULL,
-                                  "operation",       "gegl:cubism",
-                                  "tile-size",       tile_size,
-                                  "tile-saturation", tile_saturation,
-                                  "bg-color",        color,
-                                  NULL);
-      g_object_unref (color);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Cubism"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub plug_in_displace {
     $blurb = 'Displace pixels as indicated by displacement maps';
 
@@ -1469,7 +1403,6 @@ CODE
 @procs = qw(plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_bump_map
-            plug_in_cubism
             plug_in_displace
             plug_in_edge
             plug_in_emboss

@@ -100,7 +100,7 @@
             )
 
             (plug-in-solid-noise RUN-NONINTERACTIVE image active-layer FALSE TRUE seed 2 2 2)
-            (plug-in-cubism RUN-NONINTERACTIVE image active-layer tile_size 2.5 0)
+            (gimp-drawable-merge-new-filter active-layer "gegl:cubism" 0 LAYER-MODE-REPLACE 1.0 "tile-size" tile_size "tile-saturation" 2.5 "bg-color" '(0 0 0))
             (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask_size 0)
             (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 0 0)
             (plug-in-gauss RUN-NONINTERACTIVE image active-layer 0.64 0.64 0)

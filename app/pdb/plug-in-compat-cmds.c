@@ -613,66 +613,6 @@ plug_in_bump_map_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_cubism_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
-                        GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gdouble tile_size;
-  gdouble tile_saturation;
-  gint bg_color;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  tile_size = g_value_get_double (gimp_value_array_index (args, 3));
-  tile_saturation = g_value_get_double (gimp_value_array_index (args, 4));
-  bg_color = g_value_get_int (gimp_value_array_index (args, 5));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          GeglColor *color;
-          GeglNode  *node;
-
-          if (bg_color)
-            {
-              color = gegl_color_duplicate (gimp_context_get_background (context));
-              gimp_color_set_alpha (color, 0.0);
-            }
-          else
-            {
-              color = gegl_color_new ("black");
-              gegl_color_set_rgba_with_space (color, 0.0, 0.0, 0.0, 0.0, NULL);
-            }
-
-          node = gegl_node_new_child (NULL,
-                                      "operation",       "gegl:cubism",
-                                      "tile-size",       tile_size,
-                                      "tile-saturation", tile_saturation,
-                                      "bg-color",        color,
-                                      NULL);
-          g_object_unref (color);
-
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Cubism"),
-                                         node);
-          g_object_unref (node);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plug_in_displace_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -1531,60 +1471,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  "type",
                                                  "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
                                                  0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-cubism
-   */
-  procedure = gimp_procedure_new (plug_in_cubism_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-cubism");
-  gimp_procedure_set_static_help (procedure,
-                                  "Convert the image into randomly rotated square blobs",
-                                  "Convert the image into randomly rotated square blobs.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:cubism' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:cubism' for credits.",
-                                         "2013");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("tile-size",
-                                                    "tile size",
-                                                    "Average diameter of each tile (in pixels)",
-                                                    0.0, 100.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("tile-saturation",
-                                                    "tile saturation",
-                                                    "Expand tiles by this amount",
-                                                    0.0, 10.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("bg-color",
-                                                 "bg color",
-                                                 "Background color { BLACK (0), BG (1) }",
-                                                 0, 1, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
