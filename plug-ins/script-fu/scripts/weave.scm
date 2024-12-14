@@ -284,12 +284,12 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
-    (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
+    (gimp-drawable-merge-new-filter drawable "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
     (cond ((eq? orientation 'horizontal)
            (plug-in-gauss RUN-NONINTERACTIVE img drawable (* 0.32 length) 0 0))
           ((eq? orientation 'vertical)
            (plug-in-gauss RUN-NONINTERACTIVE img drawable 0 (* 0.32 length) 0)))
-    (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
+    (gimp-drawable-merge-new-filter drawable "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
     drawable))
 
 (define (create-complete-weave width

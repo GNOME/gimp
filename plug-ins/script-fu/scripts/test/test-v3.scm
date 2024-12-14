@@ -46,7 +46,7 @@
     ; We still need cadr even in v3 language
     (set! bump-layer (vector-ref (cadr (gimp-image-get-selected-layers img)) 0))
 
-    (plug-in-c-astretch RUN-NONINTERACTIVE img bump-layer)
+    (gimp-drawable-merge-new-filter bump-layer "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
     (plug-in-noisify RUN-NONINTERACTIVE img bump-layer FALSE 0.2 0.2 0.2 0.2)
 
     (plug-in-bump-map RUN-NONINTERACTIVE img tdrawable bump-layer azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
