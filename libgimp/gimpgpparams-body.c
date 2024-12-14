@@ -290,6 +290,11 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
         return gimp_param_spec_path (name, nick, blurb,
                                      param_def->meta.m_id.none_ok,
                                      flags);
+
+      if (! strcmp (param_def->type_name, "GimpParamDrawableFilter"))
+        return gimp_param_spec_drawable_filter (name, nick, blurb,
+                                                param_def->meta.m_id.none_ok,
+                                                flags);
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
@@ -584,6 +589,14 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
+    }
+  else if (GIMP_IS_PARAM_SPEC_DRAWABLE_FILTER (pspec))
+    {
+      GimpParamSpecDrawableFilter *fspec = GIMP_PARAM_SPEC_DRAWABLE_FILTER (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+
+      param_def->meta.m_id.none_ok = fspec->none_ok;
     }
   else if (pspec_type == GIMP_TYPE_PARAM_DISPLAY)
     {

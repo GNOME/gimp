@@ -1024,6 +1024,33 @@ script_fu_marshal_arg_to_value (scheme      *sc,
             }
         }
     }
+  else if (GIMP_VALUE_HOLDS_DRAWABLE_FILTER (value))
+    {
+      if (! sc->vptr->is_number (arg_val))
+        {
+          return script_type_error (sc, "numeric", arg_index, proc_name);
+        }
+      else
+        {
+          gint id;
+
+          id = sc->vptr->ivalue (arg_val);
+
+          if (gimp_drawable_filter_id_is_valid (id))
+            {
+              GimpDrawableFilter *filter = gimp_drawable_filter_get_by_id (id);
+
+              g_value_set_object (value, filter);
+            }
+          else
+            {
+              /* Filter ID is invalid.
+               * Usually 0 or -1, passed for a nullable arg.
+               */
+              g_value_set_object (value, NULL);
+            }
+        }
+    }
   else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
     {
       vector = arg_val;
