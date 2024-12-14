@@ -303,7 +303,11 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       g_list_free (drawables);
       return FALSE;
     }
-  drawable = drawables->data;
+
+  if (! filter_tool->existing_filter)
+    drawable = drawables->data;
+  else
+    drawable = gimp_drawable_filter_get_drawable (filter_tool->existing_filter);
 
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
