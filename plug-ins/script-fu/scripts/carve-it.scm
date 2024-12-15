@@ -119,7 +119,7 @@
     (set! mask-emboss (car (gimp-channel-copy mask-fat)))
     (gimp-image-insert-channel img mask-emboss -1 0)
     (gimp-drawable-merge-new-filter mask-emboss "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 feather) "std-dev-y" (* 0.32 feather) "filter" "auto")
-    (plug-in-emboss RUN-NONINTERACTIVE img mask-emboss 315.0 45.0 7 TRUE)
+    (gimp-drawable-merge-new-filter mask-emboss "gegl:emboss" 0 LAYER-MODE-REPLACE 1.0 "azimuth" 315.0 "elevation" 45.0 "depth" 7 "type" "emboss")
 
     (gimp-context-set-background '(180 180 180))
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask-fat)
