@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:24+0000\n"
-"PO-Revision-Date: 2024-11-26 19:54+0100\n"
+"PO-Revision-Date: 2024-12-15 12:53+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -18067,7 +18067,7 @@ msgstr "_Bredde:"
 #: app/dialogs/print-size-dialog.c:177 app/widgets/gimpsizebox.c:194
 #: app/widgets/gimptemplateeditor.c:214
 msgid "H_eight:"
-msgstr "_Højde:"
+msgstr "H_øjde:"
 
 #. the resolution labels
 #: app/dialogs/print-size-dialog.c:227 app/widgets/gimpsizebox.c:257
