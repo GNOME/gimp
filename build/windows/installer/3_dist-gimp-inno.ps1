@@ -172,6 +172,18 @@ Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):i
 
 
 # 4. PREPARE GIMP FILES
+
+## Get 32-bit TWAIN deps list
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_files[collapsed=true]$([char]13)$([char]27)[0KGenerating 32-bit TWAIN dependencies list"
+$twain_list_file = 'build\windows\installer\base_twain32on64.list'
+Copy-Item $twain_list_file "$twain_list_file.bak"
+$twain_list = (python3 build/windows/2_bundle-gimp-uni_dep.py --debug debug-only $(Resolve-Path $GIMP32/lib/gimp/*/plug-ins/twain/twain.exe) $MSYS2_PREFIX/mingw32/ $GIMP32/ 32 |
+              Select-String 'Installed' -CaseSensitive -Context 0,1000) -replace "  `t- ",'bin\'
+(Get-Content $twain_list_file) | Foreach-Object {$_ -replace "@DEPS_GENLIST@","$twain_list"} | Set-Content $twain_list_file
+(Get-Content $twain_list_file) | Select-string 'Installed' -notmatch | Set-Content $twain_list_file
+Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_files$([char]13)$([char]27)[0K"
+
+## Do arch-specific things
 foreach ($bundle in $supported_archs)
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${bundle}_files[collapsed=true]$([char]13)$([char]27)[0KPreparing GIMP files in $bundle bundle"
@@ -227,6 +239,9 @@ foreach ($bundle in $supported_archs)
 fix_msg "$INNO_PATH" revert
 fix_msg "$INNO_PATH\Languages" revert
 fix_msg "$INNO_PATH\Languages\Unofficial" revert
+## Revert change done in TWAIN list
+Remove-Item $twain_list_file
+Move-Item "$twain_list_file.bak" $twain_list_file
 ## We delete only unofficial langs because the downloaded official ones will be kept by Inno updates
 Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
