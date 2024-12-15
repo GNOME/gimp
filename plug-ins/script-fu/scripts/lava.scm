@@ -108,7 +108,7 @@
             (gimp-drawable-merge-new-filter active-layer "gegl:cubism" 0 LAYER-MODE-REPLACE 1.0 "tile-size" tile_size "tile-saturation" 2.5 "bg-color" '(0 0 0))
             (gimp-drawable-merge-new-filter active-layer "gegl:oilify" 0 LAYER-MODE-REPLACE 1.0 "mask-radius" (max 1 (/ mask_size 2)) "use-inten" FALSE)
             (gimp-drawable-merge-new-filter active-layer "gegl:edge" 0 LAYER-MODE-REPLACE 1.0 "amount" 2.0 "border-behavior" "none" "algorithm" "sobel")
-            (plug-in-gauss RUN-NONINTERACTIVE image active-layer 0.64 0.64 0)
+            (gimp-drawable-merge-new-filter active-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 0.64 "std-dev-y" 0.64 "filter" "auto")
             (plug-in-gradmap RUN-NONINTERACTIVE image selected-layers-array)
 
             (if (= keep-selection FALSE)

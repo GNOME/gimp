@@ -33,9 +33,9 @@
     (gimp-drawable-edit-fill map-layer FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE work-image map-layer FALSE 1.0 1.0 1.0 0.0)
     (plug-in-tile RUN-NONINTERACTIVE work-image (vector map-layer) (* width 3) (* height 3) FALSE)
-    (plug-in-gauss RUN-NONINTERACTIVE work-image map-layer 11.2 11.2 0)
+    (gimp-drawable-merge-new-filter map-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 11.2 "std-dev-y" 11.2 "filter" "auto")
     (gimp-drawable-equalize map-layer TRUE)
-    (plug-in-gauss RUN-NONINTERACTIVE work-image map-layer 1.6 1.6 0)
+    (gimp-drawable-merge-new-filter map-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 1.6 "std-dev-y" 1.6 "filter" "auto")
     (gimp-drawable-equalize map-layer TRUE)
     (gimp-image-crop work-image width height width height)
 

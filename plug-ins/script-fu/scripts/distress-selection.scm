@@ -86,11 +86,12 @@
 
     (gimp-drawable-merge-new-filter theLayer "gegl:noise-spread" 0 LAYER-MODE-REPLACE 1.0 "amount-x" inSpread "amount-y" inSpread "seed" (msrg-rand))
 
-    (plug-in-gauss RUN-NONINTERACTIVE
-           theImage theLayer horizontalRadius verticalRadius 0)
+    (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                    "std-dev-x" horizontalRadius "std-dev-y" verticalRadius "filter" "auto")
     (gimp-layer-scale theLayer theWidth theHeight TRUE)
     (gimp-drawable-merge-new-filter theLayer "gimp:threshold-alpha" 0 LAYER-MODE-REPLACE 1.0 "value" inThreshold)
-    (plug-in-gauss RUN-NONINTERACTIVE theImage theLayer 0.32 0.32 0)
+    (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                    "std-dev-x" 0.32 "std-dev-y" 0.32 "filter" "auto")
     (gimp-image-select-item inImage CHANNEL-OP-REPLACE theLayer)
     (gimp-image-remove-layer theImage theLayer)
     (if (and (= (car (gimp-item-id-is-channel inDrawable)) TRUE)

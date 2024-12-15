@@ -130,13 +130,9 @@
 							   blur
 							   blur)
 					(if (>= blur 1.0)
-						(plug-in-gauss RUN-NONINTERACTIVE
-							   image
-							   upper-copy
-							   blur
-							   (* 0.32 blur)
-                               (* 0.32 blur)
-                               0))
+                                          (gimp-drawable-merge-new-filter upper-copy "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                                                          "std-dev-x" (* 0.32 blur) "std-dev-y" (* 0.32 blur) "filter" "auto")
+                                        )
 					(set! blur (- max-blur blur))
 					(gimp-layer-set-lock-alpha lower-copy FALSE)
 					(set! layer-width (car (gimp-drawable-get-width
@@ -149,13 +145,8 @@
 							   blur
 							   blur)
 					(if (>= blur 1.0)
-						(plug-in-gauss RUN-NONINTERACTIVE
-							   image
-							   lower-copy
-							   blur
-							   (* 0.32 blur)
-                               (* 0.32 blur)
-                               0))))
+                                          (gimp-drawable-merge-new-filter lower-copy "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                                                          "std-dev-x" (* 0.32 blur) "std-dev-y" (* 0.32 blur) "filter" "auto"))))
 				  (gimp-layer-resize bg-copy
 							 max-width
 							 max-height

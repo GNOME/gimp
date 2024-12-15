@@ -32,8 +32,8 @@
     (gimp-layer-set-mode layer-two LAYER-MODE-MULTIPLY)
     (gimp-image-insert-layer img layer-two 0 0)
 
-    (plug-in-gauss RUN-NONINTERACTIVE img layer-one (* 0.32 bx) 0 0)
-    (plug-in-gauss RUN-NONINTERACTIVE img layer-two 0 (* 0.32 by) 0)
+    (gimp-drawable-merge-new-filter layer-one "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 bx) "std-dev-y" 0.0 "filter" "auto")
+    (gimp-drawable-merge-new-filter layer-two "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 0.0 "std-dev-y" (* 0.32 by) "filter" "auto")
     (gimp-image-flatten img)
     (set! bump-layer (vector-ref (car (gimp-image-get-selected-layers img)) 0))
 

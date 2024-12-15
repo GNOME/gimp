@@ -168,12 +168,10 @@
                                shadow-height
                                shadow-blur
                                shadow-blur)
-            (plug-in-gauss RUN-NONINTERACTIVE
-                           image
-                           shadow-layer
-                           (* 0.32 shadow-blur)
-                           (* 0.32 shadow-blur)
-                           0))))
+            (gimp-drawable-merge-new-filter shadow-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                            "std-dev-x" (* 0.32 shadow-blur)
+                                            "std-dev-y" (* 0.32 shadow-blur)
+                                            "filter" "auto"))))
 
     (if (= from-selection TRUE)
         (begin

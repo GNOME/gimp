@@ -140,12 +140,11 @@
   (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
   (gimp-selection-none image)
   (gimp-layer-set-lock-alpha shadow-layer FALSE)
-  (if (>= shadow-blur 1.0) (plug-in-gauss RUN-NONINTERACTIVE
-                                          image
-                                          shadow-layer
-                                          (* 0.32 shadow-blur)
-                                          (* 0.32 shadow-blur)
-                                          0))
+  (if (>= shadow-blur 1.0)
+    (gimp-drawable-merge-new-filter shadow-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 shadow-blur)
+                                                                                               "std-dev-y" (* 0.32 shadow-blur)
+                                                                                               "filter" "auto")
+    )
   (gimp-item-transform-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)

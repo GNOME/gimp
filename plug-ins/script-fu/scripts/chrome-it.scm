@@ -209,7 +209,7 @@
     (copy-layer-chrome-it img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height #f)
-    (plug-in-gauss RUN-NONINTERACTIVE img layer1 3.2 3.2 0)
+    (gimp-drawable-merge-new-filter layer1 "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 3.2 "std-dev-y" 3.2 "filter" "auto")
     (gimp-layer-set-opacity layer1 50)
     (set! layer1 (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))
     (gimp-drawable-curves-spline layer1 HISTOGRAM-VALUE (spline-chrome-it))

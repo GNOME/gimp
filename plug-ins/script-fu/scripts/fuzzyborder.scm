@@ -100,8 +100,7 @@
     (chris-color-edge theImage theLayer inColor 1)
 
     (if (= inBlur TRUE)
-        (plug-in-gauss RUN-NONINTERACTIVE
-                       theImage theLayer (* 0.32 inSize) (* 0.32 inSize) 0)
+        (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 inSize) "std-dev-y" (* 0.32 inSize) "filter" "auto")
     )
     (if (= inShadow TRUE)
         (begin
@@ -117,12 +116,7 @@
                              theHeight
                              (/ inSize 2)
                              (/ inSize 2))
-          (plug-in-gauss RUN-NONINTERACTIVE
-                         theImage
-                         theLayer
-                         (* 0.32 (/ inSize 2))
-                         (* 0.32 (/ inSize 2))
-                         0)
+          (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 (/ inSize 2)) "std-dev-y" (* 0.32 (/ inSize 2)) "filter" "auto")
           (gimp-layer-set-opacity theLayer inShadWeight)
         )
     )

@@ -61,8 +61,8 @@
     (pasteat 3 1) (pasteat 3 2) (pasteat 3 3)
 
     (gimp-selection-none theImage)
-    (plug-in-gauss RUN-NONINTERACTIVE
-                   theImage theLayer horizontalRadius verticalRadius 0)
+    (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                    "std-dev-x" horizontalRadius "std-dev-y" verticalRadius "filter" "auto")
 
     (gimp-layer-resize theLayer
                        theWidth theHeight (- 0 theWidth) (- 0 theHeight))

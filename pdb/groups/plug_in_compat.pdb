@@ -337,45 +337,6 @@ CODE
     );
 }
 
-sub plug_in_gauss {
-    $blurb = 'Simplest, most commonly used way of blurring';
-
-    $help = <<'HELP';
-Applies a gaussian blur to the drawable, with specified radius of affect.
-The standard deviation of the normal distribution used to modify pixel
-values is calculated based on the supplied radius.
-Horizontal and vertical blurring can be independently invoked by specifying
-only one to run. The 'method' parameter is ignored.
-HELP
-
-    &std_pdb_compat('gegl:gaussian-blur');
-    $date = '2014';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'horizontal', type => '0.0 <= double <= 1500.0',
-	  desc => 'Horizontal radius of gaussian blur (in pixels)' },
-	{ name => 'vertical', type => '0.0 <= double <= 1500.0',
-	  desc => 'Vertical radius of gaussian blur (in pixels)' },
-	{ name => 'method', type => '0 <= int32 <= 1',
-	  desc => 'Blur method { AUTO (0), FIR (1), IIR (2) }' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  success = gaussian_blur (drawable, horizontal, vertical, method, progress,
-                           error);
-}
-CODE
-    );
-}
-
 # We simplify the GEGL signature, reducing tile width and height to just size
 
 sub plug_in_rotate {
@@ -805,41 +766,6 @@ displace (GimpDrawable  *drawable,
     return FALSE;
 }
 
-static gboolean
-gaussian_blur (GimpDrawable  *drawable,
-               gdouble        horizontal,
-               gdouble        vertical,
-               gint           method,
-               GimpProgress  *progress,
-               GError       **error)
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode *node;
-
-      node = gegl_node_new_child (NULL,
-                                  "operation",    "gegl:gaussian-blur",
-                                  "std-dev-x",    horizontal,
-                                  "std-dev-y",    vertical,
-                                  "filter",       method,
-                                  "abyss-policy", 1,
-                                  NULL);
-
-      node = wrap_in_gamma_cast (node, drawable);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Gaussian Blur"),
-                                     node);
-      g_object_unref (node);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
 static gint
 newsprint_color_model (gint colorspace)
 {
@@ -909,7 +835,6 @@ CODE
             plug_in_bump_map
             plug_in_displace
             plug_in_emboss
-            plug_in_gauss
             plug_in_rotate
             plug_in_noisify);
 

@@ -39,7 +39,7 @@
 
   (set! theLayer (car (gimp-image-flatten theImage)))
   (if (= inDefocus TRUE)
-      (plug-in-gauss RUN-NONINTERACTIVE theImage theLayer 0.48 0.48 0)
+      (gimp-drawable-merge-new-filter theLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 0.48 "std-dev-y" 0.48 "filter" "auto")
   )
   (if (> inBorderSize 0)
       (script-fu-fuzzy-border theImage (vector theLayer) '(255 255 255)
@@ -67,7 +67,7 @@
              (gimp-drawable-edit-clear mLayer)
              (gimp-selection-none theImage)
              (plug-in-noisify RUN-NONINTERACTIVE theImage mLayer TRUE 0 0 0 0.5)
-             (plug-in-gauss RUN-NONINTERACTIVE theImage mLayer 1.6 1.6 0)
+             (gimp-drawable-merge-new-filter mLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 1.6 "std-dev-y" 1.6 "filter" "auto")
              (set! theLayer (car (gimp-image-flatten theImage)))
       )
   )

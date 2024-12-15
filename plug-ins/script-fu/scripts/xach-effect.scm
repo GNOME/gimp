@@ -101,7 +101,8 @@
     (gimp-context-set-background ds-color)
     (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
     (gimp-selection-none image)
-    (plug-in-gauss RUN-NONINTERACTIVE image shadow-layer (* 0.32 ds-blur) (* 0.32 ds-blur) 0)
+    (gimp-drawable-merge-new-filter shadow-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+                                    "std-dev-x" (* 0.32 ds-blur) "std-dev-y" (* 0.32 ds-blur) "filter" "auto")
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (gimp-drawable-edit-clear shadow-layer)
     (gimp-image-lower-item image shadow-layer)

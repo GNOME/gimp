@@ -141,7 +141,10 @@
     (gimp-selection-none image)
 
     ; To further lessen jaggies?
-    ;(plug-in-gauss RUN-NONINTERACTIVE image bump-layer (* 0.32 thickness) (* 0.32 thickness) 0)
+    ;(gimp-drawable-merge-new-filter bump-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0
+    ;                                "std-dev-x" (* 0.32 thickness)
+    ;                                "std-dev-y" (* 0.32 thickness)
+    ;                                "filter" "auto")
 
 
     ;

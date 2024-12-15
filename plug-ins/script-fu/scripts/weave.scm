@@ -286,9 +286,9 @@
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
     (gimp-drawable-merge-new-filter drawable "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
     (cond ((eq? orientation 'horizontal)
-           (plug-in-gauss RUN-NONINTERACTIVE img drawable (* 0.32 length) 0 0))
+           (gimp-drawable-merge-new-filter drawable "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 length) "std-dev-y" 0.0 "filter" "auto"))
           ((eq? orientation 'vertical)
-           (plug-in-gauss RUN-NONINTERACTIVE img drawable 0 (* 0.32 length) 0)))
+           (gimp-drawable-merge-new-filter drawable "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 0.0 "std-dev-y" (* 0.32 length) "filter" "auto")))
     (gimp-drawable-merge-new-filter drawable "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
     drawable))
 
