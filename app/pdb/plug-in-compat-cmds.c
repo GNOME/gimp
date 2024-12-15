@@ -659,73 +659,6 @@ plug_in_displace_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_edge_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
-                      GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gdouble amount;
-  gint warpmode;
-  gint edgemode;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  amount = g_value_get_double (gimp_value_array_index (args, 3));
-  warpmode = g_value_get_int (gimp_value_array_index (args, 4));
-  edgemode = g_value_get_int (gimp_value_array_index (args, 5));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          GeglNode        *node;
-          GeglAbyssPolicy  border_behavior = GEGL_ABYSS_NONE;
-
-          switch (warpmode)
-            {
-            case 0:
-              border_behavior = GEGL_ABYSS_NONE;
-              break;
-
-            case 1:
-              border_behavior = GEGL_ABYSS_LOOP;
-              break;
-
-            case 2:
-              border_behavior = GEGL_ABYSS_CLAMP;
-              break;
-
-            case 3:
-              border_behavior = GEGL_ABYSS_BLACK;
-              break;
-            }
-
-          node = gegl_node_new_child (NULL,
-                                      "operation",       "gegl:edge",
-                                      "algorithm",       edgemode,
-                                      "amount",          amount,
-                                      "border-behavior", border_behavior,
-                                      NULL);
-
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Edge"),
-                                         node);
-          g_object_unref (node);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plug_in_emboss_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -1549,60 +1482,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  "displace type",
                                                  "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
                                                  1, 3, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-edge
-   */
-  procedure = gimp_procedure_new (plug_in_edge_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-edge");
-  gimp_procedure_set_static_help (procedure,
-                                  "Several simple methods for detecting edges",
-                                  "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tileable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:edge' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:edge' for credits.",
-                                         "2015");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("amount",
-                                                    "amount",
-                                                    "Edge detection amount",
-                                                    1.0, 10.0, 1.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("warpmode",
-                                                 "warpmode",
-                                                 "Edge detection behavior { NONE (0), WRAP (1), SMEAR (2), BLACK (3) }",
-                                                 0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("edgemode",
-                                                 "edgemode",
-                                                 "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }",
-                                                 0, 5, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

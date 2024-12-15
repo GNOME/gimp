@@ -103,7 +103,7 @@
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (plug-in-maze RUN-NONINTERACTIVE image active-layer 5 5 TRUE 0 seed 57 1)
     (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
-    (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 1 0)
+    (gimp-drawable-merge-new-filter active-layer "gegl:edge" 0 LAYER-MODE-REPLACE 1.0 "amount" 2.0 "border-behavior" "loop" "algorithm" "sobel")
     (if (= type RGBA-IMAGE)
       (gimp-drawable-desaturate active-layer DESATURATE-LIGHTNESS))
 
