@@ -55,7 +55,8 @@
           (gimp-item-set-visible frame-layer TRUE))
         (gimp-drawable-offset map-layer
                               TRUE
-                              OFFSET-BACKGROUND
+                              OFFSET-COLOR
+                              (car (gimp-context-get-background))
                               (/ width num-frames)
                               (/ height num-frames))
         (loop (- remaining-frames 1))))
