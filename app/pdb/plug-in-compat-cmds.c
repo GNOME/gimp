@@ -739,50 +739,6 @@ plug_in_gauss_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_oilify_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
-                        GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gint mask_size;
-  gint mode;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  mask_size = g_value_get_int (gimp_value_array_index (args, 3));
-  mode = g_value_get_int (gimp_value_array_index (args, 4));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          GeglNode *node;
-
-          node = gegl_node_new_child (NULL,
-                                      "operation",       "gegl:oilify",
-                                      "mask-radius",     MAX (1, mask_size / 2),
-                                      "use-inten",       mode ? TRUE : FALSE,
-                                      NULL);
-
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Oilify"),
-                                         node);
-          g_object_unref (node);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plug_in_plasma_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -1535,54 +1491,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_int ("method",
                                                  "method",
                                                  "Blur method { AUTO (0), FIR (1), IIR (2) }",
-                                                 0, 1, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-oilify
-   */
-  procedure = gimp_procedure_new (plug_in_oilify_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-oilify");
-  gimp_procedure_set_static_help (procedure,
-                                  "Smear colors to simulate an oil painting",
-                                  "This function performs the well-known oil-paint effect on the specified drawable.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:oilify' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:oilify' for credits.",
-                                         "2019");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-size",
-                                                 "mask size",
-                                                 "Oil paint mask size",
-                                                 1, 200, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mode",
-                                                 "mode",
-                                                 "Algorithm { RGB (0), INTENSITY (1) }",
                                                  0, 1, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -376,57 +376,6 @@ CODE
     );
 }
 
-sub plug_in_oilify {
-    $blurb = 'Smear colors to simulate an oil painting';
-
-    $help = <<'HELP';
-This function performs the well-known oil-paint effect on the
-specified drawable.
-HELP
-
-    &std_pdb_compat('gegl:oilify');
-    $date = '2019';
-
-    @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-          desc => 'The run mode' },
-        { name => 'image', type => 'image', dead => 1,
-          desc => 'Input image (unused)' },
-        { name => 'drawable', type => 'drawable',
-          desc => 'Input drawable' },
-        { name => 'mask_size', type => '1 <= int32 <= 200',
-          desc => 'Oil paint mask size' },
-        { name => 'mode', type => '0 <= int32 <= 1',
-          desc => 'Algorithm { RGB (0), INTENSITY (1) }' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode *node;
-
-      node = gegl_node_new_child (NULL,
-                                  "operation",       "gegl:oilify",
-                                  "mask-radius",     MAX (1, mask_size / 2),
-                                  "use-inten",       mode ? TRUE : FALSE,
-                                  NULL);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Oilify"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 # We simplify the GEGL signature, reducing tile width and height to just size
 
 sub plug_in_plasma {
@@ -1259,7 +1208,6 @@ CODE
             plug_in_displace
             plug_in_emboss
             plug_in_gauss
-            plug_in_oilify
             plug_in_plasma
             plug_in_rotate
             plug_in_noisify

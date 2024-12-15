@@ -105,7 +105,7 @@
                                                                                       "seed" seed
                                                                                       "fg-color" (car (gimp-context-get-foreground))
                                                                                       "bg-color" (car (gimp-context-get-background)))
-    (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
+    (gimp-drawable-merge-new-filter active-layer "gegl:oilify" 0 LAYER-MODE-REPLACE 1.0 "mask-radius" (max 1 (/ mask-size 2)) "use-inten" FALSE)
     (gimp-drawable-merge-new-filter active-layer "gegl:edge" 0 LAYER-MODE-REPLACE 1.0 "amount" 2.0 "border-behavior" "loop" "algorithm" "sobel")
     (if (= type RGBA-IMAGE)
       (gimp-drawable-desaturate active-layer DESATURATE-LIGHTNESS))
