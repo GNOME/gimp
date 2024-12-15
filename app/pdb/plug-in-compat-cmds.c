@@ -917,50 +917,6 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_spread_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
-                        GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gdouble spread_amount_x;
-  gdouble spread_amount_y;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  spread_amount_x = g_value_get_double (gimp_value_array_index (args, 3));
-  spread_amount_y = g_value_get_double (gimp_value_array_index (args, 4));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        {
-          GeglNode *node =
-            gegl_node_new_child (NULL,
-                                 "operation", "gegl:noise-spread",
-                                 "amount-x",  (gint) spread_amount_x,
-                                 "amount-y",  (gint) spread_amount_y,
-                                 "seed",      g_random_int (),
-                                 NULL);
-
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Spread"),
-                                         node);
-          g_object_unref (node);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
@@ -1593,54 +1549,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "noise 4",
                                                     "Noise in the fourth channel (alpha)",
                                                     0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-spread
-   */
-  procedure = gimp_procedure_new (plug_in_spread_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-spread");
-  gimp_procedure_set_static_help (procedure,
-                                  "Move pixels around randomly",
-                                  "Spreads the pixels of the specified drawable. Pixels are randomly moved to another location whose distance varies from the original by the horizontal and vertical spread amounts.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
-                                         "2013");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("spread-amount-x",
-                                                    "spread amount x",
-                                                    "Horizontal spread amount",
-                                                    0, 512, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("spread-amount-y",
-                                                    "spread amount y",
-                                                    "Vertical spread amount",
-                                                    0, 512, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

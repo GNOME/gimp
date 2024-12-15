@@ -85,11 +85,7 @@
                       (/ theHeight inGranu)
                       TRUE)
 
-    (plug-in-spread RUN-NONINTERACTIVE
-                    theImage
-                    theLayer
-                    (/ inSize inGranu)
-                    (/ inSize inGranu))
+    (gimp-drawable-merge-new-filter theLayer "gegl:noise-spread" 0 LAYER-MODE-REPLACE 1.0 "amount-x" (/ inSize inGranu) "amount-y" (/ inSize inGranu) "seed" (msrg-rand))
     (chris-color-edge theImage theLayer inColor 1)
     (gimp-layer-scale theLayer theWidth theHeight TRUE)
 

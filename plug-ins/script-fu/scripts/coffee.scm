@@ -58,9 +58,8 @@
 				   blobSize blobSize)
       )
 
-      ; Clamp spread value to 'plug-in-spread' limits.
-      ; This plugin calls plug-in-spread indirectly via distress-selection.
-      ; plug-in-spread is a compatability plug-in to gegl:noise-spread.
+      ; Clamp spread value to 'gegl:noise-spread' limits.
+      ; This plugin calls 'gegl:noise-spread' indirectly via distress-selection.
       ; gegl:noise-spread seems to have a limit of 512.
       ; Here we limit to 200, for undocumented reasons.
       (set! theSpread (/ theSize 25))

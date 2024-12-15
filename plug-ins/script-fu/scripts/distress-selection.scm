@@ -84,11 +84,7 @@
                       (/ theHeight inGranu)
                       TRUE)
 
-    (plug-in-spread RUN-NONINTERACTIVE
-                    theImage
-                    theLayer
-                    inSpread
-                    inSpread)
+    (gimp-drawable-merge-new-filter theLayer "gegl:noise-spread" 0 LAYER-MODE-REPLACE 1.0 "amount-x" inSpread "amount-y" inSpread "seed" (msrg-rand))
 
     (plug-in-gauss RUN-NONINTERACTIVE
            theImage theLayer horizontalRadius verticalRadius 0)
