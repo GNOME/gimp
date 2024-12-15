@@ -117,7 +117,13 @@ _gimp_gp_param_def_to_param_spec (const GPParamDef *param_def)
                                  param_def->meta.m_int.default_val,
                                  flags);
 
-      if (! strcmp (param_def->type_name, "GParamUInt"))
+      if (! strcmp (param_def->type_name, "GParamUInt") ||
+#ifdef LIBGIMP_COMPILATION
+          ! strcmp (param_def->type_name, "GeglParamSeed")
+#else
+          FALSE
+#endif
+         )
         return g_param_spec_uint (name, nick, blurb,
                                   param_def->meta.m_int.min_val,
                                   param_def->meta.m_int.max_val,
@@ -364,7 +370,13 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_int.max_val     = ispec->maximum;
       param_def->meta.m_int.default_val = ispec->default_value;
     }
-  else if (pspec_type == G_TYPE_PARAM_UINT)
+  else if (pspec_type == G_TYPE_PARAM_UINT ||
+#ifdef LIBGIMP_COMPILATION
+           FALSE
+#else
+           pspec_type == GEGL_TYPE_PARAM_SEED
+#endif
+           )
     {
       GParamSpecUInt *uspec = G_PARAM_SPEC_UINT (pspec);
 
