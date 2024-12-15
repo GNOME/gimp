@@ -378,67 +378,6 @@ CODE
 
 # We simplify the GEGL signature, reducing tile width and height to just size
 
-sub plug_in_plasma {
-    $blurb = 'Create a random plasma texture';
-
-    $help = <<'HELP';
-This plug-in produces plasma fractal images.
-HELP
-
-    &std_pdb_compat('gegl:plasma');
-    $date = '2013';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'seed', type => '-1 <= int32 <= G_MAXINT',
-	  desc => 'Random seed' },
-	{ name => 'turbulence', type => '0.0 <= double <= 7.0',
-	  desc => 'The value of the turbulence' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GeglNode  *node;
-      gint       x, y, width, height;
-
-      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
-
-      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-        x = y = 0;
-
-      node = gegl_node_new_child (NULL,
-                                  "operation",  "gegl:plasma",
-                                  "seed",       seed,
-                                  "turbulence", turbulence,
-                                  "x",          x,
-                                  "y",          y,
-                                  "width",      width,
-                                  "height",     height,
-                                  NULL);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Plasma"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub plug_in_rotate {
     $blurb = 'Rotates a layer or the whole image by 90, 180 or 270 degrees';
 
@@ -971,7 +910,6 @@ CODE
             plug_in_displace
             plug_in_emboss
             plug_in_gauss
-            plug_in_plasma
             plug_in_rotate
             plug_in_noisify);
 

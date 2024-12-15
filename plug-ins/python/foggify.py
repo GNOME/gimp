@@ -71,14 +71,19 @@ def foggify(procedure, run_mode, image, drawables, config, data):
         fog.add_mask(mask)
 
         # add some clouds to the layer
-        pdb_proc   = Gimp.get_pdb().lookup_procedure('plug-in-plasma')
-        pdb_config = pdb_proc.create_config()
-        pdb_config.set_property('run-mode', Gimp.RunMode.NONINTERACTIVE)
-        pdb_config.set_property('image', image)
-        pdb_config.set_property('drawable', mask)
-        pdb_config.set_property('seed', int(time.time()))
-        pdb_config.set_property('turbulence', turbulence)
-        pdb_proc.run(pdb_config)
+        _, x, y, width, height = mask.mask_intersect()
+        if not Gimp.Selection.is_empty(image):
+          x = 0
+          y = 0
+        plasma_filter = Gimp.DrawableFilter.new(mask, "gegl:plasma", "")
+        plasma_filter_config = plasma_filter.get_config()
+        plasma_filter_config.set_property("seed", int(time.time()))
+        plasma_filter_config.set_property("turbulence", turbulence)
+        plasma_filter_config.set_property("x", x)
+        plasma_filter_config.set_property("y", y)
+        plasma_filter_config.set_property("width", width)
+        plasma_filter_config.set_property("height", height)
+        mask.merge_filter (plasma_filter)
 
         # apply the clouds to the layer
         fog.remove_mask(Gimp.MaskApplyMode.APPLY)
