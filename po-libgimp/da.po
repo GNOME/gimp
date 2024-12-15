@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:26+0000\n"
-"PO-Revision-Date: 2024-10-29 18:21+0100\n"
+"PO-Revision-Date: 2024-12-15 14:59+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -1347,17 +1347,17 @@ msgstr "Fas"
 #: libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Expanded as necessary"
-msgstr "Udvidet om nødvendigt"
+msgstr "Udvides om nødvendigt"
 
 #: libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr "Beskåret til billedet"
+msgstr "Beskæres til billedet"
 
 #: libgimpbase/gimpbaseenums.c:1068
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr "Beskåret til det nederste lag"
+msgstr "Beskæres til det nederste lag"
 
 #: libgimpbase/gimpbaseenums.c:1069
 msgctxt "merge-type"
