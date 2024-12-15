@@ -575,53 +575,6 @@ CODE
     );
 }
 
-sub plug_in_threshold_alpha {
-    $blurb = 'Make transparency all-or-nothing';
-
-    $help = <<'HELP';
-Make transparency all-or-nothing.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'threshold', type => '0 <= int32 <= 255',
-	  desc => 'Threshold' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      gimp_drawable_has_alpha (drawable))
-    {
-      GeglNode *node =
-        gegl_node_new_child (NULL,
-                             "operation", "gimp:threshold-alpha",
-                             "value",     threshold / 255.0,
-                             NULL);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Threshold Alpha"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub plug_in_waves {
     $blurb = 'Distort the image with waves';
 
@@ -1092,7 +1045,6 @@ CODE
             plug_in_plasma
             plug_in_rotate
             plug_in_noisify
-            plug_in_threshold_alpha
             plug_in_waves);
 
 %exports = (app => [@procs], lib => []);

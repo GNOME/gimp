@@ -917,47 +917,6 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gint threshold;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  threshold = g_value_get_int (gimp_value_array_index (args, 3));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          gimp_drawable_has_alpha (drawable))
-        {
-          GeglNode *node =
-            gegl_node_new_child (NULL,
-                                 "operation", "gimp:threshold-alpha",
-                                 "value",     threshold / 255.0,
-                                 NULL);
-
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Threshold Alpha"),
-                                         node);
-          g_object_unref (node);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plug_in_waves_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -1550,48 +1509,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Noise in the fourth channel (alpha)",
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-threshold-alpha
-   */
-  procedure = gimp_procedure_new (plug_in_threshold_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-threshold-alpha");
-  gimp_procedure_set_static_help (procedure,
-                                  "Make transparency all-or-nothing",
-                                  "Make transparency all-or-nothing.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Spencer Kimball & Peter Mattis",
-                                         "Spencer Kimball & Peter Mattis",
-                                         "1997");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("threshold",
-                                                 "threshold",
-                                                 "Threshold",
-                                                 0, 255, 0,
-                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
