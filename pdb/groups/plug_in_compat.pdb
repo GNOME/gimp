@@ -376,77 +376,6 @@ CODE
     );
 }
 
-sub plug_in_maze {
-    $blurb = 'Draw a labyrinth';
-
-    $help = <<'HELP';
-Generates a maze using either the depth-first search method or Prim's
-algorithm.  Can make tileable mazes too.
-HELP
-
-    &std_pdb_compat('gegl:maze');
-    $date = '2015';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'width', type => '1 <= int32 <= 1024',
-	  desc => 'Width of the passages' },
-	{ name => 'height', type => '1 <= int32 <= 1024',
-	  desc => 'Height of the passages' },
-	{ name => 'tileable', type => 'boolean',
-	  desc => 'Tileable maze?' },
-	{ name => 'algorithm', type => '0 <= int32 <= 1',
-	  desc => 'Generation algorithm (0 = DEPTH FIRST, 1 = PRIM\'S ALGORITHM)' },
-	{ name => 'seed', type => 'int32',
-	  desc => 'Random Seed' },
-	{ name => 'multiple', type => 'int32', dead => 1,
-	  desc => 'Multiple (use 57)' },
-	{ name => 'offset', type => 'int32', dead => 1,
-	  desc => 'Offset (use 1)' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode  *node;
-      GeglColor *fg_color;
-      GeglColor *bg_color;
-
-      fg_color = gimp_context_get_foreground (context);
-      bg_color = gimp_context_get_background (context);
-
-      node =  gegl_node_new_child (NULL,
-                                   "operation",      "gegl:maze",
-                                   "x",              width,
-                                   "y",              height,
-                                   "algorithm-type", algorithm,
-                                   "tileable",       tileable,
-                                   "seed",           seed,
-                                   "fg-color",       fg_color,
-                                   "bg-color",       bg_color,
-                                   NULL);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Maze"),
-                                    node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub plug_in_oilify {
     $blurb = 'Smear colors to simulate an oil painting';
 
@@ -1330,7 +1259,6 @@ CODE
             plug_in_displace
             plug_in_emboss
             plug_in_gauss
-            plug_in_maze
             plug_in_oilify
             plug_in_plasma
             plug_in_rotate

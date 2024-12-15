@@ -101,7 +101,10 @@
     )
 
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-    (plug-in-maze RUN-NONINTERACTIVE image active-layer 5 5 TRUE 0 seed 57 1)
+    (gimp-drawable-merge-new-filter active-layer "gegl:maze" 0 LAYER-MODE-REPLACE 1.0 "x" 5 "y" 5 "tileable" TRUE "algorithm-type" "depth-first"
+                                                                                      "seed" seed
+                                                                                      "fg-color" (car (gimp-context-get-foreground))
+                                                                                      "bg-color" (car (gimp-context-get-background)))
     (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
     (gimp-drawable-merge-new-filter active-layer "gegl:edge" 0 LAYER-MODE-REPLACE 1.0 "amount" 2.0 "border-behavior" "loop" "algorithm" "sobel")
     (if (= type RGBA-IMAGE)
