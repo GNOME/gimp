@@ -517,6 +517,12 @@ script_fu_interface_dialog (SFScript  *script,
   gtk_widget_show (dialog);
 
   gtk_main ();
+  /* The script ran, or was canceled, and called gtk_main_quit */
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Make dock icon go away. */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
 
 #ifdef G_OS_WIN32
       if (! GetForegroundWindow ())
@@ -1004,9 +1010,9 @@ script_fu_activate_main_dialog (void)
 {
   /* Ensure the main dialog of the script-fu extension process is not obscured. */
 #ifdef GDK_WINDOWING_QUARTZ
-  /* In Objective-C, get instance of NSApplication
-   * and send it a "activateIgnoringOtherApps" message, i.e. bring to front.
-   */
+  /* Make Dock icon appear. */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+  /* Bring to front. */
   [NSApp activateIgnoringOtherApps: YES];
 #else
   /* empty function, optimized out. */

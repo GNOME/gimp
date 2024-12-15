@@ -217,13 +217,18 @@ sf_dialog_run (GimpProcedure        *procedure,
     }
 
 #ifdef GDK_WINDOWING_QUARTZ
+  /* Make the Dock icon appear.
+   * The dialog does not stay in front, so user needs Dock menu item "Show."
+   */
+ [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+
   /* The user chose a plugin from gimp app, now ensure this process is active.
    * The gimp app was active, but now the plugin should be active.
    * This is also called in gimpui_init(), but that is not sufficient
    * for second calls of plugins served by long-running extension-script-fu.
    * The user can still raise other gimp windows, hiding the dialog.
    */
-   [NSApp activateIgnoringOtherApps:YES];
+  [NSApp activateIgnoringOtherApps:YES];
 #endif
 
   not_canceled = gimp_procedure_dialog_run (dialog);
@@ -266,6 +271,11 @@ script_fu_dialog_run_image_proc (
   else
     result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
 
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Make dock icon go away. */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
+
   return result;
 }
 
@@ -290,6 +300,11 @@ script_fu_dialog_run_regular_proc (GimpProcedure        *procedure,
     result = script_fu_interpret_regular_proc (procedure, script, config);
   else
     result = gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Make dock icon go away. */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
 
   return result;
 }
