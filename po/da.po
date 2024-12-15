@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:24+0000\n"
-"PO-Revision-Date: 2024-12-15 12:53+0100\n"
+"PO-Revision-Date: 2024-12-15 14:30+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -15943,7 +15943,7 @@ msgstr "_Sammenlæg"
 
 #: app/dialogs/image-merge-layers-dialog.c:129
 msgid "Final, Merged Layer should be:"
-msgstr "Det endelige sammenlagte lag skal være:"
+msgstr "Det endelige sammenlagte lag skal:"
 
 #: app/dialogs/image-merge-layers-dialog.c:138
 msgid "Merge within active _groups only"
