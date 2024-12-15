@@ -57,19 +57,26 @@
                                           remaining-frames) 10
                                        )
                                      " (replace)"))
+          (phi phase)
+          (width (car (gimp-drawable-get-width waves-layer)))
+          (height (car (gimp-drawable-get-height waves-layer)))
+          (aspect (/ width height))
           )
     (gimp-layer-set-lock-alpha waves-layer FALSE)
     (gimp-image-insert-layer image waves-layer 0 -1)
     (gimp-item-set-name waves-layer layer-name)
 
-    (plug-in-waves RUN-NONINTERACTIVE
-                   image
-                   waves-layer
-                   amplitude
-                   phase
-                   wavelength
-                   0
-                   FALSE)
+    (while (< phi 0)
+      (set! phi (+ phi 360.0))
+    )
+    (set! phi (/ (- (modulo phase 360.0) 180.0) 180.0))
+    (if (< aspect 0.1)
+      (set! aspect 0.1))
+    (if (> aspect 10.0)
+      (set! aspect 10.0))
+    (gimp-drawable-merge-new-filter waves-layer "gegl:waves" 0 LAYER-MODE-REPLACE 1.0 "amplitude" amplitude "phi" phi
+                                                                                      "period" (* wavelength 2.0)
+                                                                                      "clamp" TRUE "aspect" aspect)
 
     (set! remaining-frames (- remaining-frames 1))
     (set! phase (- phase phaseshift))
@@ -77,14 +84,27 @@
   )
 
   (gimp-item-set-name source-layer "Frame 1")
-  (plug-in-waves RUN-NONINTERACTIVE
-                 image
-                 source-layer
-                 amplitude
-                 phase
-                 wavelength
-                 0
-                 FALSE)
+
+  (let* (
+        (phi phase)
+        (width (car (gimp-drawable-get-width source-layer)))
+        (height (car (gimp-drawable-get-height source-layer)))
+        (aspect (/ width height))
+        )
+
+    (while (< phi 0)
+      (set! phi (+ phi 360.0))
+    )
+    (set! phi (/ (- (modulo phase 360.0) 180.0) 180.0))
+
+    (if (< aspect 0.1)
+      (set! aspect 0.1))
+    (if (> aspect 10.0)
+      (set! aspect 10.0))
+    (gimp-drawable-merge-new-filter source-layer "gegl:waves" 0 LAYER-MODE-REPLACE 1.0 "amplitude" amplitude "phi" phi
+                                                                                       "period" (* wavelength 2.0)
+                                                                                       "clamp" TRUE "aspect" aspect)
+  )
 
   (gimp-image-undo-enable image)
   (gimp-display-new image)

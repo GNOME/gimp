@@ -575,77 +575,6 @@ CODE
     );
 }
 
-sub plug_in_waves {
-    $blurb = 'Distort the image with waves';
-
-    $help = <<'HELP';
-Distort the image with waves.
-HELP
-
-    &std_pdb_compat('gegl:waves');
-    $date = '2013';
-
-    @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-	  desc => 'The run mode' },
-	{ name => 'image', type => 'image', dead => 1,
-	  desc => 'Input image (unused)' },
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'Input drawable' },
-	{ name => 'amplitude', type => '0 <= double <= 101',
-	  desc => 'The Amplitude of the Waves' },
-	{ name => 'phase', type => '-360 <= double <= 360',
-	  desc => 'The Phase of the Waves' },
-	{ name => 'wavelength', type => '0.1 <= double <= 100',
-	  desc => 'The Wavelength of the Waves' },
-	{ name => 'type', type => 'boolean',
-	  desc => 'Type of waves: { 0 = smeared, 1 = black }' },
-	{ name => 'reflective', type => 'boolean', dead => 1,
-	  desc => 'Use Reflection (not implemented)' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode *node;
-      gdouble   width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      gdouble   height = gimp_item_get_height (GIMP_ITEM (drawable));
-      gdouble   aspect;
-
-      while (phase < 0)
-        phase += 360.0;
-
-      phase = fmod (phase, 360.0);
-
-      aspect = CLAMP (width / height, 0.1, 10.0);
-
-      node = gegl_node_new_child (NULL,
-                                 "operation", "gegl:waves",
-                                 "x",         0.5,
-                                 "y",         0.5,
-                                 "amplitude", amplitude,
-                                 "phi",       (phase - 180.0) / 180.0,
-                                 "period",    wavelength * 2.0,
-                                 "aspect",    aspect,
-                                 "clamp",     ! type,
-                                 NULL);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Waves"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 $extra{app}->{code} = <<'CODE';
 static GeglNode *
 wrap_in_graph (GeglNode *node)
@@ -1044,8 +973,7 @@ CODE
             plug_in_gauss
             plug_in_plasma
             plug_in_rotate
-            plug_in_noisify
-            plug_in_waves);
+            plug_in_noisify);
 
 %exports = (app => [@procs], lib => []);
 
