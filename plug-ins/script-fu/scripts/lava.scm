@@ -99,7 +99,12 @@
                 (gimp-context-set-gradient gradient)
             )
 
-            (plug-in-solid-noise RUN-NONINTERACTIVE image active-layer FALSE TRUE seed 2 2 2)
+            (let* ((width  (cadddr (gimp-drawable-mask-intersect active-layer)))
+                   (height (caddr (cddr (gimp-drawable-mask-intersect active-layer)))))
+              (gimp-drawable-merge-new-filter active-layer "gegl:noise-solid" 0 LAYER-MODE-REPLACE 1.0 "tileable" FALSE "turbulent" TRUE "seed" seed
+                                                                                                       "detail" 2 "x-size" 2.0 "y-size" 2.0
+                                                                                                       "width" width "height" height)
+            )
             (gimp-drawable-merge-new-filter active-layer "gegl:cubism" 0 LAYER-MODE-REPLACE 1.0 "tile-size" tile_size "tile-saturation" 2.5 "bg-color" '(0 0 0))
             (gimp-drawable-merge-new-filter active-layer "gegl:oilify" 0 LAYER-MODE-REPLACE 1.0 "mask-radius" (max 1 (/ mask_size 2)) "use-inten" FALSE)
             (gimp-drawable-merge-new-filter active-layer "gegl:edge" 0 LAYER-MODE-REPLACE 1.0 "amount" 2.0 "border-behavior" "none" "algorithm" "sobel")

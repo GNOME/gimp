@@ -56,7 +56,12 @@
       (gimp-item-transform-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
-    (plug-in-solid-noise SF-RUN-MODE image diff-clouds 0 0 0 1 4.0 4.0)
+    (let* ((cloud-width  (cadddr (gimp-drawable-mask-intersect diff-clouds)))
+           (cloud-height (caddr (cddr (gimp-drawable-mask-intersect diff-clouds)))))
+      (gimp-drawable-merge-new-filter diff-clouds "gegl:noise-solid" 0 LAYER-MODE-REPLACE 1.0 "tileable" FALSE "turbulent" FALSE "seed" 0
+                                                                                               "detail" 1 "x-size" 4.0 "y-size" 4.0
+                                                                                               "width" cloud-width "height" cloud-height)
+    )
 
     ; Merge the clouds layer with the layer below
     (gimp-image-merge-down image diff-clouds EXPAND-AS-NECESSARY)
