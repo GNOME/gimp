@@ -225,60 +225,6 @@ CODE
     );
 }
 
-sub plug_in_displace {
-    $blurb = 'Displace pixels as indicated by displacement maps';
-
-    $help = <<'HELP';
-Displaces the contents of the specified drawable by the amounts specified
-by 'amount-x' and 'amount-y' multiplied by the luminance of corresponding
-pixels in the 'displace-map' drawables.
-HELP
-
-    &std_pdb_compat('gegl:displace');
-    $date = '2015';
-
-    @inargs = (
-  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-    desc => 'The run mode' },
-  { name => 'image', type => 'image', dead => 1,
-    desc => 'Input image (unused)' },
-  { name => 'drawable', type => 'drawable',
-    desc => 'Input drawable' },
-  { name => 'amount_x', type => '-500.0 <= double <= 500.0',
-    desc => 'Displace multiplier for x direction' },
-  { name => 'amount_y', type => '-500.0 <= double <= 500.0',
-    desc => 'Displace multiplier for y direction' },
-  { name => 'do_x', type => 'boolean',
-    desc => 'Displace in x direction ?' },
-  { name => 'do_y', type => 'boolean',
-    desc => 'Displace in y direction ?' },
-  { name => 'displace_map_x', type => 'drawable',
-    desc => 'Displacement map for x direction' },
-  { name => 'displace_map_y', type => 'drawable',
-    desc => 'Displacement map for y direction' },
-  { name => 'displace_type', type => '1 <= int32 <= 3',
-    desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
-    );
-
-    %invoke = (
-  code => <<'CODE'
-{
-  success = displace (drawable,
-                      amount_x,
-                      amount_y,
-                      do_x,
-                      do_y,
-                      displace_map_x,
-                      displace_map_y,
-                      displace_type,
-                      0,
-                      progress,
-                      error);
-}
-CODE
-    );
-}
-
 # We simplify the GEGL signature, reducing tile width and height to just size
 
 $extra{app}->{code} = <<'CODE';
@@ -440,79 +386,6 @@ bump_map (GimpDrawable *drawable,
       return FALSE;
 }
 
-static gboolean
-displace (GimpDrawable  *drawable,
-          gdouble        amount_x,
-          gdouble        amount_y,
-          gboolean       do_x,
-          gboolean       do_y,
-          GimpDrawable  *displace_map_x,
-          GimpDrawable  *displace_map_y,
-          gint           displace_type,
-          gint           displace_mode,
-          GimpProgress  *progress,
-          GError       **error)
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      if (do_x || do_y)
-        {
-          GeglNode *graph;
-          GeglNode *node;
-          GeglAbyssPolicy abyss_policy = GEGL_ABYSS_NONE;
-
-          switch (displace_type)
-            {
-              case 1:
-                abyss_policy = GEGL_ABYSS_LOOP;
-                break;
-              case 2:
-                abyss_policy = GEGL_ABYSS_CLAMP;
-                break;
-              case 3:
-                abyss_policy = GEGL_ABYSS_BLACK;
-                break;
-            }
-
-          node = gegl_node_new_child (NULL,
-                                      "operation",     "gegl:displace",
-                                      "displace_mode", displace_mode,
-                                      "sampler_type",  GEGL_SAMPLER_CUBIC,
-                                      "abyss_policy",  abyss_policy,
-                                      "amount_x",      amount_x,
-                                      "amount_y",      amount_y,
-                                      NULL);
-
-          graph = wrap_in_graph (node);
-
-          if (do_x)
-            {
-              GeglNode *src_node;
-              src_node = create_buffer_source_node (graph, displace_map_x);
-              gegl_node_connect (src_node, "output", node, "aux");
-            }
-
-          if (do_y)
-            {
-              GeglNode *src_node;
-              src_node = create_buffer_source_node (graph, displace_map_y);
-              gegl_node_connect (src_node, "output", node, "aux2");
-            }
-
-          gimp_drawable_apply_operation (drawable, progress,
-                                         C_("undo-type", "Displace"),
-                                         graph);
-          g_object_unref (graph);
-        }
-
-      return TRUE;
-    }
-  else
-    return FALSE;
-}
-
 static gint
 newsprint_color_model (gint colorspace)
 {
@@ -579,8 +452,7 @@ CODE
 
 @procs = qw(plug_in_autocrop
             plug_in_autocrop_layer
-            plug_in_bump_map
-            plug_in_displace);
+            plug_in_bump_map);
 
 %exports = (app => [@procs], lib => []);
 

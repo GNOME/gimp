@@ -292,13 +292,14 @@
   ; These are NOT the declared defaults.
   (test! "displace")
   (testImageCreator)
-  (assert `(plug-in-displace
-      RUN-NONINTERACTIVE ,testImage ,testLayer
-      0 0 ; x, y  default is -500
-      0 0 ; do displace x, y booleans
-      ,testLayer ,testLayer ; x, y maps
-      1 ; edge behaviour
-      ))
+  (let* ((filter (car (gimp-drawable-filter-new ,testLayer "gegl:displace" ""))))
+    (gimp-drawable-filter-configure filter LAYER-MODE-REPLACE 1.0
+                                    "amount-x" 0.0 "amount-x" 0.0 "abyss-policy" "loop"
+                                    "sampler-type" "cubic" "displace-mode" "cartesian")
+    (gimp-drawable-filter-set-aux-input filter "aux" ,testLayer)
+    (gimp-drawable-filter-set-aux-input filter "aux2" ,testLayer)
+    (gimp-drawable-merge-filter ,testLayer filter)
+  )
   (gimp-display-new testImage)
   (gimp-displays-flush)
 )

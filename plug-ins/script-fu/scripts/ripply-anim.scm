@@ -51,9 +51,19 @@
                                              (number->string (+ 1 (- num-frames
                                                                      remaining-frames)))
                                              " (replace)"))
-          (plug-in-displace RUN-NONINTERACTIVE work-image frame-layer
-                            displacement displacement
-                            TRUE TRUE map-layer map-layer (+ edge-type 1))
+          (let* ((abyss "black")
+                 (filter (car (gimp-drawable-filter-new frame-layer "gegl:displace" ""))))
+
+            (if (= edge-type 0) (set! abyss "loop"))
+            (if (= edge-type 1) (set! abyss "clamp"))
+
+            (gimp-drawable-filter-configure filter LAYER-MODE-REPLACE 1.0
+                                            "amount-x" displacement "amount-x" displacement "abyss-policy" abyss
+                                            "sampler-type" "cubic" "displace-mode" "cartesian")
+            (gimp-drawable-filter-set-aux-input filter "aux" map-layer)
+            (gimp-drawable-filter-set-aux-input filter "aux2" map-layer)
+            (gimp-drawable-merge-filter frame-layer filter)
+          )
           (gimp-item-set-visible frame-layer TRUE))
         (gimp-drawable-offset map-layer
                               TRUE
