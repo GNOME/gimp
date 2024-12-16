@@ -564,56 +564,6 @@ plug_in_displace_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_rotate_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
-                        GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpDrawable *drawable;
-  gint angle;
-  gboolean everything;
-
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  angle = g_value_get_int (gimp_value_array_index (args, 3));
-  everything = g_value_get_boolean (gimp_value_array_index (args, 4));
-
-  if (success)
-    {
-      GimpRotationType rotate_type = angle - 1;
-
-      if (everything)
-        {
-          gimp_image_rotate (image, context, rotate_type, progress);
-        }
-      else if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                          GIMP_PDB_ITEM_CONTENT, error))
-        {
-          GimpItem *item = GIMP_ITEM (drawable);
-          gint      off_x, off_y;
-          gdouble   center_x, center_y;
-
-          gimp_item_get_offset (item, &off_x, &off_y);
-
-          center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
-          center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
-
-          gimp_item_rotate (item, context, rotate_type, center_x, center_y,
-                            GIMP_IS_CHANNEL (drawable));
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
 void
 register_plug_in_compat_procs (GimpPDB *pdb)
 {
@@ -868,54 +818,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
                                                  1, 3, 1,
                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-rotate
-   */
-  procedure = gimp_procedure_new (plug_in_rotate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-rotate");
-  gimp_procedure_set_static_help (procedure,
-                                  "Rotates a layer or the whole image by 90, 180 or 270 degrees",
-                                  "This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is chosen, the image is resized if necessary.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
-                                         "Sven Neumann",
-                                         "2014");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("angle",
-                                                 "angle",
-                                                 "Angle { 90 (1), 180 (2), 270 (3) } degrees",
-                                                 1, 3, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("everything",
-                                                     "everything",
-                                                     "Rotate the whole image",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

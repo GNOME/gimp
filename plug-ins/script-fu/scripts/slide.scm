@@ -121,7 +121,10 @@
                      (/ (- width crop-width) 2)
                      (/ (- height crop-height) 2))
   (if (< ratio 1)
-      (plug-in-rotate RUN-NONINTERACTIVE image pic-layer 1 FALSE)
+      (begin
+          (gimp-selection-none image)
+          (gimp-item-transform-rotate-simple pic-layer ROTATE-DEGREES90 TRUE 0 0)
+      )
   )
 
 ; add the background layer
@@ -230,7 +233,7 @@
 
 ; eventually rotate the whole thing back
   (if (< ratio 1)
-      (plug-in-rotate RUN-NONINTERACTIVE image pic-layer 3 TRUE)
+      (gimp-image-rotate image ROTATE-DEGREES270)
   )
 
 ; clean up after the script
