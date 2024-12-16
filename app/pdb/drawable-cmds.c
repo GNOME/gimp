@@ -605,12 +605,12 @@ drawable_mask_intersect_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_append_filter_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+drawable_append_filter_private_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -666,12 +666,12 @@ drawable_append_filter_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_merge_filter_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
-                               GError               **error)
+drawable_merge_filter_private_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1711,16 +1711,17 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-append-filter
+   * gimp-drawable-append-filter-private
    */
-  procedure = gimp_procedure_new (drawable_append_filter_invoker);
+  procedure = gimp_procedure_new (drawable_append_filter_private_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-append-filter");
+                               "gimp-drawable-append-filter-private");
   gimp_procedure_set_static_help (procedure,
                                   "Append the specified effect to the top of the list of drawable effects.",
                                   "This procedure adds the specified drawable effect at the top of the effect list of @drawable.\n"
                                   "The @drawable argument must be the same as the one used when you created the effect with [ctor@Gimp.DrawableFilter.new].\n"
-                                  "Some effects may be slower than others to render. In order to minimize processing time, it is preferred to customize the operation's arguments as received with [method@Gimp.DrawableFilter.get_config] then sync them to the application with [method@Gimp.DrawableFilter.update] before adding the effect.",
+                                  "Some effects may be slower than others to render. In order to minimize processing time, it is preferred to customize the operation's arguments as received with [method@Gimp.DrawableFilter.get_config] then sync them to the application with [method@Gimp.DrawableFilter.update] before adding the effect.\n"
+                                  "This function is private and should not be used. Use [method@Gimp.Drawable.append_filter] instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -1742,16 +1743,17 @@ register_drawable_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-merge-filter
+   * gimp-drawable-merge-filter-private
    */
-  procedure = gimp_procedure_new (drawable_merge_filter_invoker);
+  procedure = gimp_procedure_new (drawable_merge_filter_private_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-merge-filter");
+                               "gimp-drawable-merge-filter-private");
   gimp_procedure_set_static_help (procedure,
                                   "Apply the specified effect directly to the drawable.",
                                   "This procedure applies the specified drawable effect on @drawable and merge it (therefore before non-destructive effects are computed).\n"
                                   "The @drawable argument must be the same as the one used when you created the effect with [ctor@Gimp.DrawableFilter.new].\n"
-                                  "Once this is run, @filter is not valid anymore and you should not try to do anything with it. In particular, you must customize the operation's arguments as received with [method@Gimp.DrawableFilter.get_config] then sync them to the application with [method@Gimp.DrawableFilter.update] before merging the effect.",
+                                  "Once this is run, @filter is not valid anymore and you should not try to do anything with it. In particular, you must customize the operation's arguments as received with [method@Gimp.DrawableFilter.get_config] then sync them to the application with [method@Gimp.DrawableFilter.update] before merging the effect.\n"
+                                  "This function is private and should not be used. Use [method@Gimp.Drawable.merge_filter] instead.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",

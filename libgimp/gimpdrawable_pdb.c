@@ -677,7 +677,7 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 }
 
 /**
- * _gimp_drawable_append_filter:
+ * _gimp_drawable_append_filter_private:
  * @drawable: The drawable.
  * @filter: The drawable filter to append.
  *
@@ -694,14 +694,16 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
  * [method@Gimp.DrawableFilter.get_config] then sync them to the
  * application with [method@Gimp.DrawableFilter.update] before adding
  * the effect.
+ * This function is private and should not be used. Use
+ * [method@Gimp.Drawable.append_filter] instead.
  *
  * Returns: TRUE on success.
  *
  * Since: 3.0
  **/
 gboolean
-_gimp_drawable_append_filter (GimpDrawable       *drawable,
-                              GimpDrawableFilter *filter)
+_gimp_drawable_append_filter_private (GimpDrawable       *drawable,
+                                      GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -713,7 +715,7 @@ _gimp_drawable_append_filter (GimpDrawable       *drawable,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-drawable-append-filter",
+                                               "gimp-drawable-append-filter-private",
                                                args);
   gimp_value_array_unref (args);
 
@@ -725,7 +727,7 @@ _gimp_drawable_append_filter (GimpDrawable       *drawable,
 }
 
 /**
- * _gimp_drawable_merge_filter:
+ * _gimp_drawable_merge_filter_private:
  * @drawable: The drawable.
  * @filter: The drawable filter to merge.
  *
@@ -742,14 +744,16 @@ _gimp_drawable_append_filter (GimpDrawable       *drawable,
  * [method@Gimp.DrawableFilter.get_config] then sync them to the
  * application with [method@Gimp.DrawableFilter.update] before merging
  * the effect.
+ * This function is private and should not be used. Use
+ * [method@Gimp.Drawable.merge_filter] instead.
  *
  * Returns: TRUE on success.
  *
  * Since: 3.0
  **/
 gboolean
-_gimp_drawable_merge_filter (GimpDrawable       *drawable,
-                             GimpDrawableFilter *filter)
+_gimp_drawable_merge_filter_private (GimpDrawable       *drawable,
+                                     GimpDrawableFilter *filter)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -761,7 +765,7 @@ _gimp_drawable_merge_filter (GimpDrawable       *drawable,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                               "gimp-drawable-merge-filter",
+                                               "gimp-drawable-merge-filter-private",
                                                args);
   gimp_value_array_unref (args);
 

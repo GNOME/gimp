@@ -111,7 +111,7 @@ CODE
     );
 }
 
-sub drawable_append_filter {
+sub drawable_append_filter_private {
     $blurb = 'Append the specified effect to the top of the list of drawable effects.';
 
     $help = <<'HELP';
@@ -125,6 +125,9 @@ processing time, it is preferred to customize the operation's arguments
 as received with [method@Gimp.DrawableFilter.get_config] then sync them
 to the application with [method@Gimp.DrawableFilter.update] before
 adding the effect.
+
+This function is private and should not be used. Use
+[method@Gimp.Drawable.append_filter] instead.
 HELP
 
     &jehan_pdb_misc('2024', '3.0');
@@ -182,7 +185,7 @@ HELP
 CODE
 }
 
-sub drawable_merge_filter {
+sub drawable_merge_filter_private {
     $blurb = 'Apply the specified effect directly to the drawable.';
 
     $help = <<'HELP';
@@ -197,6 +200,9 @@ do anything with it. In particular, you must customize the operation's
 arguments as received with [method@Gimp.DrawableFilter.get_config] then
 sync them to the application with [method@Gimp.DrawableFilter.update]
 before merging the effect.
+
+This function is private and should not be used. Use
+[method@Gimp.Drawable.merge_filter] instead.
 HELP
 
     &jehan_pdb_misc('2024', '3.0');
@@ -1225,8 +1231,8 @@ CODE
             drawable_get_offsets
             drawable_mask_bounds
             drawable_mask_intersect
-            drawable_append_filter
-            drawable_merge_filter
+            drawable_append_filter_private
+            drawable_merge_filter_private
             drawable_get_filters
             drawable_merge_filters
             drawable_merge_shadow

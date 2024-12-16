@@ -53,65 +53,71 @@
 
 #undef cons
 
-static void     ts_init_constants                             (scheme              *sc,
-                                                               GIRepository        *repo);
-static void     ts_init_enums                                 (scheme              *sc,
-                                                               GIRepository        *repo,
-                                                               const char          *namespace);
-static void     ts_define_procedure                           (scheme              *sc,
-                                                               const gchar         *symbol_name,
-                                                               TsWrapperFunc        func);
-static void     ts_init_procedures                            (scheme              *sc,
-                                                               gboolean             register_scipts);
-static void     ts_load_init_and_compatibility_scripts        (GList               *paths);
+static void     ts_init_constants                                 (scheme              *sc,
+                                                                   GIRepository        *repo);
+static void     ts_init_enums                                     (scheme              *sc,
+                                                                   GIRepository        *repo,
+                                                                   const char          *namespace);
+static void     ts_define_procedure                               (scheme              *sc,
+                                                                   const gchar         *symbol_name,
+                                                                   TsWrapperFunc        func);
+static void     ts_init_procedures                                (scheme              *sc,
+                                                                   gboolean             register_scipts);
+static void     ts_load_init_and_compatibility_scripts            (GList               *paths);
 
-static pointer  script_fu_marshal_arg_to_value                (scheme              *sc,
-                                                               pointer              a,
-                                                               const gchar         *proc_name,
-                                                               gint                 arg_index,
-                                                               GParamSpec          *arg_spec,
-                                                               GValue              *value);
+static pointer  script_fu_marshal_arg_to_value                    (scheme              *sc,
+                                                                   pointer              a,
+                                                                   const gchar         *proc_name,
+                                                                   gint                 arg_index,
+                                                                   GParamSpec          *arg_spec,
+                                                                   GValue              *value);
 
-static pointer  script_fu_marshal_procedure_call              (scheme              *sc,
-                                                               pointer              a,
-                                                               gboolean             permissive,
-                                                               gboolean             deprecated);
-static pointer  script_fu_marshal_procedure_call_strict       (scheme              *sc,
-                                                               pointer              a);
-static pointer  script_fu_marshal_procedure_call_permissive   (scheme              *sc,
-                                                               pointer              a);
-static pointer  script_fu_marshal_procedure_call_deprecated   (scheme              *sc,
-                                                               pointer              a);
+static pointer  script_fu_marshal_procedure_call                  (scheme              *sc,
+                                                                   pointer              a,
+                                                                   gboolean             permissive,
+                                                                   gboolean             deprecated);
+static pointer  script_fu_marshal_procedure_call_strict           (scheme              *sc,
+                                                                   pointer              a);
+static pointer  script_fu_marshal_procedure_call_permissive       (scheme              *sc,
+                                                                   pointer              a);
+static pointer  script_fu_marshal_procedure_call_deprecated       (scheme              *sc,
+                                                                   pointer              a);
 
-static pointer  script_fu_marshal_drawable_create_filter      (scheme              *sc,
-                                                               pointer              a,
-                                                               const gchar         *proc_name,
-                                                               GimpDrawable       **drawable,
-                                                               GimpDrawableFilter **filter);
-static pointer  script_fu_marshal_drawable_merge_filter_call  (scheme              *sc,
-                                                               pointer               a);
-static pointer  script_fu_marshal_drawable_append_filter_call (scheme              *sc,
-                                                               pointer              a);
+static pointer  script_fu_marshal_drawable_create_filter          (scheme              *sc,
+                                                                   pointer              a,
+                                                                   const gchar         *proc_name,
+                                                                   GimpDrawable       **drawable,
+                                                                   GimpDrawableFilter **filter);
+static pointer  script_fu_marshal_drawable_filter_configure_call  (scheme              *sc,
+                                                                   pointer              a);
+static pointer  script_fu_marshal_drawable_merge_filter_call      (scheme              *sc,
+                                                                   pointer              a);
+static pointer  script_fu_marshal_drawable_append_filter_call     (scheme              *sc,
+                                                                   pointer              a);
+static pointer  script_fu_marshal_drawable_merge_new_filter_call  (scheme              *sc,
+                                                                   pointer               a);
+static pointer  script_fu_marshal_drawable_append_new_filter_call (scheme              *sc,
+                                                                   pointer              a);
 
-static pointer  script_fu_register_call                       (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_register_call_filter                (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_register_call_procedure             (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_menu_register_call                  (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_use_v3_call                         (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_use_v2_call                         (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_quit_call                           (scheme               *sc,
-                                                               pointer               a);
-static pointer  script_fu_nil_call                            (scheme               *sc,
-                                                              pointer               a);
+static pointer  script_fu_register_call                           (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_register_call_filter                    (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_register_call_procedure                 (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_menu_register_call                      (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_use_v3_call                             (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_use_v2_call                             (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_quit_call                               (scheme               *sc,
+                                                                   pointer               a);
+static pointer  script_fu_nil_call                                (scheme               *sc,
+                                                                  pointer               a);
 
-static gboolean ts_load_file                                  (const gchar         *dirname,
-                                                               const gchar         *basename);
+static gboolean ts_load_file                                      (const gchar         *dirname,
+                                                                   const gchar         *basename);
 
 typedef struct
 {
@@ -562,8 +568,11 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
   ts_define_procedure (sc, "-gimp-proc-db-call",  script_fu_marshal_procedure_call_permissive);
   ts_define_procedure (sc, "--gimp-proc-db-call", script_fu_marshal_procedure_call_deprecated);
 
-  ts_define_procedure (sc, "gimp-drawable-merge-new-filter", script_fu_marshal_drawable_merge_filter_call);
-  ts_define_procedure (sc, "gimp-drawable-append-new-filter", script_fu_marshal_drawable_append_filter_call);
+  ts_define_procedure (sc, "gimp-drawable-filter-configure", script_fu_marshal_drawable_filter_configure_call);
+  ts_define_procedure (sc, "gimp-drawable-merge-filter", script_fu_marshal_drawable_merge_filter_call);
+  ts_define_procedure (sc, "gimp-drawable-append-filter", script_fu_marshal_drawable_append_filter_call);
+  ts_define_procedure (sc, "gimp-drawable-merge-new-filter", script_fu_marshal_drawable_merge_new_filter_call);
+  ts_define_procedure (sc, "gimp-drawable-append-new-filter", script_fu_marshal_drawable_append_new_filter_call);
 
   /* Define each PDB procedure as a scheme func.
    * Each call passes through one of the wrapper funcs.
@@ -1584,20 +1593,83 @@ script_fu_marshal_procedure_call_deprecated (scheme  *sc,
 }
 
 static pointer
+script_fu_marshal_drawable_filter_configure (scheme             *sc,
+                                             pointer             a,
+                                             const gchar        *proc_name,
+                                             GimpDrawableFilter *filter)
+{
+  pointer                   return_val  = sc->NIL;
+  GimpLayerMode             mode        = GIMP_LAYER_MODE_REPLACE;
+  gdouble                   opacity     = 1.0;
+  GimpDrawableFilterConfig *config;
+  gint                      arg_index;
+  gchar                     error_str[1024];
+
+  if (sc->vptr->list_length (sc, a) > 0)
+    {
+      mode = sc->vptr->ivalue (sc->vptr->pair_car (a));
+      a = sc->vptr->pair_cdr (a);
+    }
+
+  if (sc->vptr->list_length (sc, a) > 0)
+    {
+      opacity = sc->vptr->rvalue (sc->vptr->pair_car (a));
+      a = sc->vptr->pair_cdr (a);
+    }
+  gimp_drawable_filter_set_opacity (filter, opacity);
+  gimp_drawable_filter_set_blend_mode (filter, mode);
+
+  config    = gimp_drawable_filter_get_config (filter);
+  arg_index = 3;
+  while (sc->vptr->list_length (sc, a) > 1)
+    {
+      gchar      *argname;
+      GParamSpec *arg_spec;
+      GValue      value = G_VALUE_INIT;
+
+      argname  = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
+      arg_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), argname);
+      if (arg_spec == NULL)
+        {
+          g_snprintf (error_str, sizeof (error_str),
+                      "Invalid argument name: %s", argname);
+          g_free (argname);
+          gimp_drawable_filter_delete (filter);
+          return script_error (sc, error_str, 0);
+        }
+      g_value_init (&value, arg_spec->value_type);
+      a = sc->vptr->pair_cdr (a);
+
+      return_val = script_fu_marshal_arg_to_value (sc, a, proc_name, arg_index, arg_spec, &value);
+
+      if (return_val != sc->NIL)
+        {
+          g_value_unset (&value);
+          g_free (argname);
+          gimp_drawable_filter_delete (filter);
+          return return_val;
+        }
+
+      g_object_set_property (G_OBJECT (config), argname, &value);
+      g_value_unset (&value);
+
+      a = sc->vptr->pair_cdr (a);
+      arg_index += 2;
+    }
+
+  return sc->NIL;
+}
+
+static pointer
 script_fu_marshal_drawable_create_filter (scheme              *sc,
                                           pointer              a,
                                           const gchar         *proc_name,
                                           GimpDrawable       **drawable,
                                           GimpDrawableFilter **filter)
 {
-  pointer                   return_val  = sc->NIL;
-  gchar                    *operation_name;
-  gchar                    *filter_name = NULL;
-  GimpLayerMode             mode        = GIMP_LAYER_MODE_REPLACE;
-  gdouble                   opacity     = 1.0;
-  GimpDrawableFilterConfig *config;
-  gint                      arg_index;
-  gchar                     error_str[1024];
+  gchar *operation_name;
+  gchar *filter_name = NULL;
+  gchar  error_str[1024];
 
   if (sc->vptr->list_length (sc, a) < 2)
     {
@@ -1605,7 +1677,7 @@ script_fu_marshal_drawable_create_filter (scheme              *sc,
                   "Drawable Filter marshaller was called with missing arguments. "
                   "The drawable ID, the GEGL operation, filter name, blend mode, opacity "
                   "and the arguments' names and values it requires (possibly none) must be specified: "
-                  "(%s drawable op title mode arg1 val1 arg2 val2...)",
+                  "(%s drawable op title mode opacity arg1 val1 arg2 val2...)",
                   proc_name);
       return implementation_error (sc, error_str, 0);
     }
@@ -1615,7 +1687,7 @@ script_fu_marshal_drawable_create_filter (scheme              *sc,
                   "Drawable Filter marshaller was called with an even number of arguments. "
                   "The drawable ID, the GEGL operation, filter name, blend mode, opacity "
                   "and the arguments' names and values it requires (possibly none) must be specified: "
-                  "(%s drawable op title mode arg1 val1 arg2 val2...)",
+                  "(%s drawable op title mode opacity arg1 val1 arg2 val2...)",
                   proc_name);
       return implementation_error (sc, error_str, 0);
     }
@@ -1652,18 +1724,6 @@ script_fu_marshal_drawable_create_filter (scheme              *sc,
       a = sc->vptr->pair_cdr (a);
     }
 
-  if (sc->vptr->list_length (sc, a) > 0)
-    {
-      mode = sc->vptr->ivalue (sc->vptr->pair_car (a));
-      a = sc->vptr->pair_cdr (a);
-    }
-
-  if (sc->vptr->list_length (sc, a) > 0)
-    {
-      opacity = sc->vptr->rvalue (sc->vptr->pair_car (a));
-      a = sc->vptr->pair_cdr (a);
-    }
-
   *filter = gimp_drawable_filter_new (*drawable, operation_name, filter_name);
   g_free (filter_name);
 
@@ -1676,53 +1736,154 @@ script_fu_marshal_drawable_create_filter (scheme              *sc,
     }
   g_free (operation_name);
 
-  gimp_drawable_filter_set_opacity (*filter, opacity);
-  gimp_drawable_filter_set_blend_mode (*filter, mode);
+  return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, *filter);
+}
 
-  config    = gimp_drawable_filter_get_config (*filter);
-  arg_index = 5;
-  while (sc->vptr->list_length (sc, a) > 1)
+static pointer
+script_fu_marshal_drawable_filter_configure_call (scheme  *sc,
+                                                  pointer  a)
+{
+  GimpDrawableFilter *filter    = NULL;
+  const gchar        *proc_name = "gimp-drawable-filter-configure";
+  gchar               error_str[1024];
+
+  if (sc->vptr->list_length (sc, a) < 3)
     {
-      gchar      *argname;
-      GParamSpec *arg_spec;
-      GValue      value = G_VALUE_INIT;
+      g_snprintf (error_str, sizeof (error_str),
+                  "Drawable Filter marshaller was called with missing arguments. "
+                  "The filter ID, blend mode, opacity and the arguments' names "
+                  "and values it requires (possibly none) must be specified: "
+                  "(%s mode opacity arg1 val1 arg2 val2...)",
+                  proc_name);
+      return implementation_error (sc, error_str, 0);
+    }
+  else if (sc->vptr->list_length (sc, a) > 3 && sc->vptr->list_length (sc, a) % 2 != 1)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Drawable Filter marshaller was called with an even number of arguments. "
+                  "The drawable ID, the GEGL operation, filter name, blend mode, opacity "
+                  "and the arguments' names and values it requires (possibly none) must be specified: "
+                  "(%s mode opacity arg1 val1 arg2 val2...)",
+                  proc_name);
+      return implementation_error (sc, error_str, 0);
+    }
+  else if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+    {
+      return script_type_error (sc, "numeric", 0, proc_name);
+    }
+  else
+    {
+      gint id;
 
-      argname  = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
-      arg_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), argname);
-      if (arg_spec == NULL)
+      id     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+      filter = gimp_drawable_filter_get_by_id (id);
+
+      if (filter == NULL || ! GIMP_IS_DRAWABLE_FILTER (filter))
         {
           g_snprintf (error_str, sizeof (error_str),
-                      "Invalid argument name: %s", argname);
-          g_free (argname);
-          gimp_drawable_filter_delete (*filter);
+                      "Invalid Drawable Filter ID: %d", id);
           return script_error (sc, error_str, 0);
         }
-      g_value_init (&value, arg_spec->value_type);
-      a = sc->vptr->pair_cdr (a);
-
-      return_val = script_fu_marshal_arg_to_value (sc, a, proc_name, arg_index, arg_spec, &value);
-
-      if (return_val != sc->NIL)
-        {
-          g_value_unset (&value);
-          g_free (argname);
-          gimp_drawable_filter_delete (*filter);
-          return return_val;
-        }
-
-      g_object_set_property (G_OBJECT (config), argname, &value);
-      g_value_unset (&value);
 
       a = sc->vptr->pair_cdr (a);
-      arg_index += 2;
     }
 
-  return sc->NIL;
+  return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, filter);
 }
 
 static pointer
 script_fu_marshal_drawable_merge_filter_call (scheme  *sc,
                                               pointer  a)
+{
+  const gchar        *proc_name = "gimp-drawable-merge-filter";
+  GimpItem           *item;
+  GimpDrawableFilter *filter;
+  gint                id;
+  gchar               error_str[1024];
+
+  if (sc->vptr->list_length (sc, a) != 2)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Drawable Filter marshaller was called with missing arguments. "
+                  "The drawable and filter IDs are required: "
+                  "(%s mode opacity arg1 val1 arg2 val2...)",
+                  proc_name);
+
+      return implementation_error (sc, error_str, 0);
+    }
+
+  id   = sc->vptr->ivalue (sc->vptr->pair_car (a));
+  item = gimp_item_get_by_id (id);
+  if (item == NULL || ! GIMP_IS_DRAWABLE (item))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid Drawable ID: %d", id);
+      return script_error (sc, error_str, 0);
+    }
+  a = sc->vptr->pair_cdr (a);
+
+  id     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+  filter = gimp_drawable_filter_get_by_id (id);
+  if (filter == NULL || ! GIMP_IS_DRAWABLE_FILTER (filter))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid Drawable Filter ID: %d", id);
+      return script_error (sc, error_str, 0);
+    }
+
+  gimp_drawable_merge_filter (GIMP_DRAWABLE (item), filter);
+
+  return sc->NIL;
+}
+
+static pointer
+script_fu_marshal_drawable_append_filter_call (scheme  *sc,
+                                               pointer  a)
+{
+  const gchar        *proc_name = "gimp-drawable-append-filter";
+  GimpItem           *item;
+  GimpDrawableFilter *filter;
+  gint                id;
+  gchar               error_str[1024];
+
+  if (sc->vptr->list_length (sc, a) != 2)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Drawable Filter marshaller was called with missing arguments. "
+                  "The drawable and filter IDs are required: "
+                  "(%s mode opacity arg1 val1 arg2 val2...)",
+                  proc_name);
+
+      return implementation_error (sc, error_str, 0);
+    }
+
+  id   = sc->vptr->ivalue (sc->vptr->pair_car (a));
+  item = gimp_item_get_by_id (id);
+  if (item == NULL || ! GIMP_IS_DRAWABLE (item))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid Drawable ID: %d", id);
+      return script_error (sc, error_str, 0);
+    }
+  a = sc->vptr->pair_cdr (a);
+
+  id     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+  filter = gimp_drawable_filter_get_by_id (id);
+  if (filter == NULL || ! GIMP_IS_DRAWABLE_FILTER (filter))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid Drawable Filter ID: %d", id);
+      return script_error (sc, error_str, 0);
+    }
+
+  gimp_drawable_append_filter (GIMP_DRAWABLE (item), filter);
+
+  return sc->NIL;
+}
+
+static pointer
+script_fu_marshal_drawable_merge_new_filter_call (scheme  *sc,
+                                                  pointer  a)
 {
   GimpDrawable       *drawable = NULL;
   GimpDrawableFilter *filter   = NULL;
@@ -1740,8 +1901,8 @@ script_fu_marshal_drawable_merge_filter_call (scheme  *sc,
 }
 
 static pointer
-script_fu_marshal_drawable_append_filter_call (scheme  *sc,
-                                               pointer  a)
+script_fu_marshal_drawable_append_new_filter_call (scheme  *sc,
+                                                   pointer  a)
 {
   GimpDrawable       *drawable    = NULL;
   GimpDrawableFilter *filter      = NULL;
