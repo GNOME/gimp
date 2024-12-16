@@ -90,6 +90,8 @@ static pointer  script_fu_marshal_drawable_create_filter          (scheme       
                                                                    GimpDrawableFilter **filter);
 static pointer  script_fu_marshal_drawable_filter_configure_call  (scheme              *sc,
                                                                    pointer              a);
+static pointer  script_fu_marshal_drawable_filter_set_aux_call    (scheme              *sc,
+                                                                   pointer              a);
 static pointer  script_fu_marshal_drawable_merge_filter_call      (scheme              *sc,
                                                                    pointer              a);
 static pointer  script_fu_marshal_drawable_append_filter_call     (scheme              *sc,
@@ -569,6 +571,7 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
   ts_define_procedure (sc, "--gimp-proc-db-call", script_fu_marshal_procedure_call_deprecated);
 
   ts_define_procedure (sc, "gimp-drawable-filter-configure", script_fu_marshal_drawable_filter_configure_call);
+  ts_define_procedure (sc, "gimp-drawable-filter-set-aux-input", script_fu_marshal_drawable_filter_set_aux_call);
   ts_define_procedure (sc, "gimp-drawable-merge-filter", script_fu_marshal_drawable_merge_filter_call);
   ts_define_procedure (sc, "gimp-drawable-append-filter", script_fu_marshal_drawable_append_filter_call);
   ts_define_procedure (sc, "gimp-drawable-merge-new-filter", script_fu_marshal_drawable_merge_new_filter_call);
@@ -1789,6 +1792,64 @@ script_fu_marshal_drawable_filter_configure_call (scheme  *sc,
     }
 
   return script_fu_marshal_drawable_filter_configure (sc, a, proc_name, filter);
+}
+
+static pointer
+script_fu_marshal_drawable_filter_set_aux_call (scheme  *sc,
+                                                pointer  a)
+{
+  const gchar        *proc_name = "gimp-drawable-filter-set-aux-input";
+  GimpDrawableFilter *filter    = NULL;
+  GimpItem           *input     = NULL;
+  gchar              *pad_name  = NULL;
+  gint                id;
+  gchar               error_str[1024];
+
+  if (sc->vptr->list_length (sc, a) != 3)
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Drawable Filter marshaller was called with missing arguments. "
+                  "The filter ID, aux pad name and the aux drawable: "
+                  "(%s filter-id pad-name drawable-id)",
+                  proc_name);
+      return implementation_error (sc, error_str, 0);
+    }
+
+  if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+     return script_type_error (sc, "numeric", 0, proc_name);
+
+  id     = sc->vptr->ivalue (sc->vptr->pair_car (a));
+  filter = gimp_drawable_filter_get_by_id (id);
+  if (filter == NULL || ! GIMP_IS_DRAWABLE_FILTER (filter))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid Drawable Filter ID: %d", id);
+      return script_error (sc, error_str, 0);
+    }
+  a = sc->vptr->pair_cdr (a);
+
+  if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
+    /*return script_type_error (sc, "string", 1, proc_name);*/
+    return script_type_error (sc, "string", 1, "BLAAA");
+
+  pad_name = g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
+  a = sc->vptr->pair_cdr (a);
+
+  if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
+     return script_type_error (sc, "numeric", 2, proc_name);
+
+  id    = sc->vptr->ivalue (sc->vptr->pair_car (a));
+  input = gimp_item_get_by_id (id);
+  if (input == NULL || ! GIMP_IS_DRAWABLE (input))
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid Drawable ID: %d", id);
+      return script_error (sc, error_str, 0);
+    }
+
+  gimp_drawable_filter_set_aux_input (filter, pad_name, GIMP_DRAWABLE (input));
+
+  return sc->NIL;
 }
 
 static pointer
