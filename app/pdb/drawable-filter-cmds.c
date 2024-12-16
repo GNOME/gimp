@@ -349,6 +349,8 @@ drawable_filter_update_invoker (GimpProcedure         *procedure,
   gint blend_space;
   gint composite_mode;
   gint composite_space;
+  const gchar **auxinputnames;
+  const GimpDrawable **auxinputs;
 
   filter = g_value_get_object (gimp_value_array_index (args, 0));
   propnames = g_value_get_boxed (gimp_value_array_index (args, 1));
@@ -358,6 +360,8 @@ drawable_filter_update_invoker (GimpProcedure         *procedure,
   blend_space = g_value_get_enum (gimp_value_array_index (args, 5));
   composite_mode = g_value_get_enum (gimp_value_array_index (args, 6));
   composite_space = g_value_get_enum (gimp_value_array_index (args, 7));
+  auxinputnames = g_value_get_boxed (gimp_value_array_index (args, 8));
+  auxinputs = g_value_get_boxed (gimp_value_array_index (args, 9));
 
   if (success)
     {
@@ -365,6 +369,7 @@ drawable_filter_update_invoker (GimpProcedure         *procedure,
                                              opacity,
                                              blend_mode, blend_space,
                                              composite_mode, composite_space,
+                                             auxinputnames, auxinputs,
                                              error);
     }
 
@@ -922,6 +927,18 @@ register_drawable_filter_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_LAYER_COLOR_SPACE,
                                                   GIMP_LAYER_COLOR_SPACE_AUTO,
                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boxed ("auxinputnames",
+                                                   "auxinputnames",
+                                                   "Array of aux input pads",
+                                                   G_TYPE_STRV,
+                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_core_object_array ("auxinputs",
+                                                                  "auxinputs",
+                                                                  "Array of drawables, one per auxinputnames",
+                                                                  GIMP_TYPE_DRAWABLE,
+                                                                  GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -357,6 +357,8 @@ gimp_drawable_filter_get_blend_mode (GimpDrawableFilter *filter)
  * @blend_space: The effect blending space.
  * @composite_mode: The layer composite mode.
  * @composite_space: The effect composite space.
+ * @auxinputnames: (array zero-terminated=1): Array of aux input pads.
+ * @auxinputs: (element-type GimpDrawable) (array zero-terminated=1): Array of drawables, one per auxinputnames.
  *
  * Update the settings of the specified filter.
  *
@@ -379,7 +381,9 @@ _gimp_drawable_filter_update (GimpDrawableFilter      *filter,
                               GimpLayerMode            blend_mode,
                               GimpLayerColorSpace      blend_space,
                               GimpLayerCompositeMode   composite_mode,
-                              GimpLayerColorSpace      composite_space)
+                              GimpLayerColorSpace      composite_space,
+                              const gchar            **auxinputnames,
+                              const GimpDrawable     **auxinputs)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -394,6 +398,8 @@ _gimp_drawable_filter_update (GimpDrawableFilter      *filter,
                                           GIMP_TYPE_LAYER_COLOR_SPACE, blend_space,
                                           GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode,
                                           GIMP_TYPE_LAYER_COLOR_SPACE, composite_space,
+                                          G_TYPE_STRV, auxinputnames,
+                                          GIMP_TYPE_CORE_OBJECT_ARRAY, auxinputs,
                                           G_TYPE_NONE);
 
   return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),

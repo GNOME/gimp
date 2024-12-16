@@ -45,6 +45,9 @@ void                       gimp_drawable_filter_set_opacity         (GimpDrawabl
                                                                      gdouble             opacity);
 void                       gimp_drawable_filter_set_blend_mode      (GimpDrawableFilter *filter,
                                                                      GimpLayerMode       mode);
+void                       gimp_drawable_filter_set_aux_input       (GimpDrawableFilter *filter,
+                                                                     const gchar        *input_pad_name,
+                                                                     GimpDrawable       *input);
 
 GimpDrawableFilterConfig * gimp_drawable_filter_get_config          (GimpDrawableFilter *filter);
 

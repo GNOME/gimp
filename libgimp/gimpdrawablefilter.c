@@ -46,6 +46,8 @@ struct _GimpDrawableFilter
   GimpLayerCompositeMode    composite_mode;
   GimpLayerColorSpace       composite_space;
 
+  GHashTable               *pad_inputs;
+
   GimpDrawableFilterConfig *config;
 };
 
@@ -98,6 +100,8 @@ gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
   drawable_filter->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
   drawable_filter->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
   drawable_filter->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+
+  drawable_filter->pad_inputs = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 }
 
 static void
@@ -106,6 +110,7 @@ gimp_drawable_filter_finalize (GObject *object)
   GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (object);
 
   g_clear_object (&filter->config);
+  g_hash_table_unref (filter->pad_inputs);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -255,6 +260,31 @@ gimp_drawable_filter_set_blend_mode (GimpDrawableFilter *filter,
 }
 
 /**
+ * gimp_drawable_filter_set_aux_input:
+ * @filter: The drawable's filter.
+ * @input_pad_name: name of the filter's input pad.
+ * @input: the drawable to use as auxiliary input.
+ *
+ * When a filter has one or several auxiliary inputs, you can use this
+ * function to set them.
+ *
+ * The change is not synced immediately with the core application.
+ * Use [method@Gimp.Drawable.update] to trigger an actual update.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_drawable_filter_set_aux_input (GimpDrawableFilter *filter,
+                                    const gchar        *input_pad_name,
+                                    GimpDrawable       *input)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+  g_return_if_fail (GIMP_IS_DRAWABLE (input));
+
+  g_hash_table_insert (filter->pad_inputs, (gpointer) g_strdup (input_pad_name), input);
+}
+
+/**
  * gimp_drawable_filter_get_config:
  * @filter: A drawable filter.
  *
@@ -349,9 +379,12 @@ gimp_drawable_filter_get_config (GimpDrawableFilter *filter)
 void
 gimp_drawable_filter_update (GimpDrawableFilter *filter)
 {
-  GStrvBuilder   *builder = g_strv_builder_new ();
-  GimpValueArray *values  = NULL;
-  GStrv           propnames;
+  GStrvBuilder        *builder = g_strv_builder_new ();
+  GimpValueArray      *values  = NULL;
+  GStrv                propnames;
+  GStrv                auxnames;
+  const GimpDrawable **auxinputs;
+  guint                n_aux;
 
   if (filter->config)
     {
@@ -387,12 +420,20 @@ gimp_drawable_filter_update (GimpDrawableFilter *filter)
     }
 
   propnames = g_strv_builder_end (builder);
+  auxnames  = (GStrv) g_hash_table_get_keys_as_array (filter->pad_inputs, &n_aux);
+  auxinputs = g_new0 (const GimpDrawable *, n_aux + 1);
+  for (guint i = 0; auxnames[i]; i++)
+    auxinputs[i] = g_hash_table_lookup (filter->pad_inputs, auxnames[i]);
+
   _gimp_drawable_filter_update (filter, (const gchar **) propnames, values,
                                 filter->opacity,
                                 filter->blend_mode, filter->blend_space,
-                                filter->composite_mode, filter->composite_space);
+                                filter->composite_mode, filter->composite_space,
+                                (const gchar **) auxnames, auxinputs);
 
   g_strfreev (propnames);
   g_strv_builder_unref (builder);
   gimp_value_array_unref (values);
+  g_free (auxnames);
+  g_free (auxinputs);
 }

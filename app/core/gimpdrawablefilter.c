@@ -734,12 +734,15 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
                              GimpLayerColorSpace      blend_space,
                              GimpLayerColorSpace      composite_space,
                              GimpLayerCompositeMode   composite_mode,
+                             const gchar            **auxinputnames,
+                             const GimpDrawable     **auxinputs,
                              GError                 **error)
 {
   GParamSpec  **pspecs;
   gchar        *opname;
   guint         n_pspecs;
   gint          n_values;
+  gint          n_auxinputs;
   gboolean      changed = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), FALSE);
@@ -751,6 +754,18 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
     {
       g_set_error (error, GIMP_ERROR, GIMP_FAILED,
                    "%s: the number of property names and values differ.",
+                   G_STRFUNC);
+      return FALSE;
+    }
+
+  n_auxinputs = 0;
+  while (auxinputs[n_auxinputs] != NULL)
+    n_auxinputs++;
+
+  if (n_auxinputs != g_strv_length ((gchar **) auxinputnames))
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   "%s: the number of aux input names and aux inputs differ.",
                    G_STRFUNC);
       return FALSE;
     }
@@ -879,6 +894,36 @@ gimp_drawable_filter_update (GimpDrawableFilter      *filter,
 
       gimp_drawable_filter_sync_mode (filter);
       changed = TRUE;
+    }
+
+  if (*error == NULL)
+    {
+      for (gint i = 0; auxinputnames[i]; i++)
+        {
+          GeglNode   *src_node;
+          GeglBuffer *buffer;
+
+          if (! gegl_node_has_pad (filter->operation, auxinputnames[i]))
+            {
+              g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                           /* TODO: localize after string freeze. */
+                           "GEGL operation '%s' has been called with an "
+                           "invalid aux input name '%s'.",
+                           opname, auxinputnames[i]);
+              break;
+            }
+
+
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (auxinputs[i]));
+          g_object_ref (buffer);
+          src_node = gegl_node_new_child (gegl_node_get_parent (filter->operation),
+                                          "operation", "gegl:buffer-source",
+                                          "buffer",    buffer,
+                                          NULL);
+          g_object_unref (buffer);
+
+          gegl_node_connect (src_node, "output", filter->operation, auxinputnames[i]);
+        }
     }
 
   g_object_thaw_notify (G_OBJECT (filter));

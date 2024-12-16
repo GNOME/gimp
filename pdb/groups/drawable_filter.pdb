@@ -336,6 +336,10 @@ HELP
 	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
           default => 'GIMP_LAYER_COLOR_SPACE_AUTO',
 	  desc => 'The effect composite space' },
+	{ name => 'auxinputnames', type => 'strv',
+	  desc => 'Array of aux input pads' },
+	{ name => 'auxinputs', type => 'drawablearray', no_validate => 1,
+	  desc => 'Array of drawables, one per auxinputnames' },
     );
 
     %invoke = (
@@ -345,6 +349,7 @@ HELP
                                          opacity,
                                          blend_mode, blend_space,
                                          composite_mode, composite_space,
+                                         auxinputnames, auxinputs,
                                          error);
 }
 CODE

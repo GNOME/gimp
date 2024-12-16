@@ -107,6 +107,8 @@ gboolean   gimp_drawable_filter_update         (GimpDrawableFilter      *filter,
                                                 GimpLayerColorSpace      blend_space,
                                                 GimpLayerColorSpace      composite_space,
                                                 GimpLayerCompositeMode   composite_mode,
+                                                const gchar            **auxinputnames,
+                                                const GimpDrawable     **auxinputs,
                                                 GError                 **error);
 void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter      *filter,
                                                 gdouble                  opacity);
