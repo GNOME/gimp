@@ -283,7 +283,9 @@
     (gimp-image-insert-layer img drawable 0 -1)
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
-    (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
+    (gimp-drawable-merge-new-filter drawable "gegl:noise-rgb" 0 LAYER-MODE-REPLACE 1.0
+                                    "independent" FALSE "red" dense "alpha" dense
+                                    "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
     (gimp-drawable-merge-new-filter drawable "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
     (cond ((eq? orientation 'horizontal)
            (gimp-drawable-merge-new-filter drawable "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" (* 0.32 length) "std-dev-y" 0.0 "filter" "auto"))

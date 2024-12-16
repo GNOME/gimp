@@ -29,7 +29,9 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-edit-fill layer-one FILL-BACKGROUND)
 
-    (plug-in-noisify RUN-NONINTERACTIVE img layer-one FALSE 0.7 0.7 0.7 0.7)
+    (gimp-drawable-merge-new-filter layer-one "gegl:noise-rgb" 0 LAYER-MODE-REPLACE 1.0
+                                    "independent" FALSE "red" 0.7 "alpha" 0.7
+                                    "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
 
     (set! layer-two (car (gimp-layer-copy layer-one 0)))
     (gimp-layer-set-mode layer-two LAYER-MODE-MULTIPLY)
@@ -43,7 +45,9 @@
     (set! bump-layer (car (list (vector-ref (cadr (gimp-image-get-selected-layers img)) 0))))
 
     (gimp-drawable-merge-new-filter bump-layer "gegl:stretch-contrast" 0 LAYER-MODE-REPLACE 1.0 "keep-colors" FALSE)
-    (plug-in-noisify RUN-NONINTERACTIVE img bump-layer FALSE 0.2 0.2 0.2 0.2)
+    (gimp-drawable-merge-new-filter bump-layer "gegl:noise-rgb" 0 LAYER-MODE-REPLACE 1.0
+                                    "independent" FALSE "red" 0.2 "alpha" 0.2
+                                    "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
 
     (plug-in-bump-map RUN-NONINTERACTIVE img tdrawable bump-layer azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
     (gimp-image-delete img)

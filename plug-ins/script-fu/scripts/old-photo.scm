@@ -66,7 +66,9 @@
              (gimp-selection-all theImage)
              (gimp-drawable-edit-clear mLayer)
              (gimp-selection-none theImage)
-             (plug-in-noisify RUN-NONINTERACTIVE theImage mLayer TRUE 0 0 0 0.5)
+             (gimp-drawable-merge-new-filter mLayer "gegl:noise-rgb" 0 LAYER-MODE-REPLACE 1.0
+                                             "independent" TRUE "red" 0.0 "green" 0.0 "blue" 0.0 "alpha" 0.5
+                                             "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
              (gimp-drawable-merge-new-filter mLayer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 1.6 "std-dev-y" 1.6 "filter" "auto")
              (set! theLayer (car (gimp-image-flatten theImage)))
       )

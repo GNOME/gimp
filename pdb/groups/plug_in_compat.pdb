@@ -337,86 +337,6 @@ CODE
     );
 }
 
-sub plug_in_noisify {
-    $blurb = 'Adds random noise to image channels';
-
-    $help = <<'HELP';
-Add normally distributed random values to image channels. For color
-images each color channel may be treated together or independently.
-HELP
-
-    &std_pdb_compat('gegl:noise-rgb');
-    $date = '2013';
-
-    @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-          desc => 'The run mode' },
-        { name => 'image', type => 'image', dead => 1,
-          desc => 'Input image (unused)' },
-        { name => 'drawable', type => 'drawable',
-          desc => 'Input drawable' },
-        { name => 'independent', type => 'boolean',
-          desc => 'Noise in channels independent' },
-        { name => 'noise_1', type => '0.0 <= double <= 1.0',
-          desc => 'Noise in the first channel (red, gray)' },
-        { name => 'noise_2', type => '0.0 <= double <= 1.0',
-          desc => 'Noise in the second channel (green, gray_alpha)' },
-        { name => 'noise_3', type => '0.0 <= double <= 1.0',
-          desc => 'Noise in the third channel (blue)' },
-        { name => 'noise_4', type => '0.0 <= double <= 1.0',
-          desc => 'Noise in the fourth channel (alpha)' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode *node;
-      gdouble   r, g, b, a;
-
-      if (gimp_drawable_is_gray (drawable))
-        {
-          r = noise_1;
-          g = noise_1;
-          b = noise_1;
-          a = noise_2;
-        }
-      else
-        {
-          r = noise_1;
-          g = noise_2;
-          b = noise_3;
-          a = noise_4;
-        }
-
-      node = gegl_node_new_child (NULL,
-                                  "operation",   "gegl:noise-rgb",
-                                  "correlated",  FALSE,
-                                  "independent", independent,
-                                  "red",         r,
-                                  "green",       g,
-                                  "blue",        b,
-                                  "alpha",       a,
-                                  "seed",        g_random_int (),
-                                  NULL);
-
-      node = wrap_in_gamma_cast (node, drawable);
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Noisify"),
-                                     node);
-      g_object_unref (node);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 $extra{app}->{code} = <<'CODE';
 static GeglNode *
 wrap_in_graph (GeglNode *node)
@@ -491,65 +411,6 @@ wrap_in_selection_bounds (GeglNode     *node,
                            crop,
                            node,
                            translate_after,
-                           output,
-                           NULL);
-
-      return new_node;
-    }
-  else
-    {
-      return node;
-    }
-}
-
-static GeglNode *
-wrap_in_gamma_cast (GeglNode     *node,
-                    GimpDrawable *drawable)
-{
-  if (gimp_drawable_get_trc (drawable) != GIMP_TRC_LINEAR)
-    {
-      const Babl *drawable_format;
-      const Babl *cast_format;
-      GeglNode   *new_node;
-      GeglNode   *input;
-      GeglNode   *output;
-      GeglNode   *cast_before;
-      GeglNode   *cast_after;
-
-      drawable_format = gimp_drawable_get_format (drawable);
-
-      cast_format =
-        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
-                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
-                                               GIMP_TRC_LINEAR),
-                          babl_format_has_alpha (drawable_format),
-                          babl_format_get_space (drawable_format));
-
-      new_node = gegl_node_new ();
-
-      gegl_node_add_child (new_node, node);
-      g_object_unref (node);
-
-      gimp_gegl_node_set_underlying_operation (new_node, node);
-
-      input  = gegl_node_get_input_proxy  (new_node, "input");
-      output = gegl_node_get_output_proxy (new_node, "output");
-
-      cast_before = gegl_node_new_child (new_node,
-                                         "operation",     "gegl:cast-format",
-                                         "input-format",  drawable_format,
-                                         "output-format", cast_format,
-                                         NULL);
-      cast_after  = gegl_node_new_child (new_node,
-                                         "operation",     "gegl:cast-format",
-                                         "input-format",  cast_format,
-                                         "output-format", drawable_format,
-                                         NULL);
-
-      gegl_node_link_many (input,
-                           cast_before,
-                           node,
-                           cast_after,
                            output,
                            NULL);
 
@@ -776,8 +637,7 @@ CODE
             plug_in_autocrop_layer
             plug_in_bump_map
             plug_in_displace
-            plug_in_rotate
-            plug_in_noisify);
+            plug_in_rotate);
 
 %exports = (app => [@procs], lib => []);
 

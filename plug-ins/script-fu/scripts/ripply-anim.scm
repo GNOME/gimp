@@ -31,7 +31,9 @@
     (gimp-context-set-background '(127 127 127))
     (gimp-image-insert-layer work-image map-layer 0 0)
     (gimp-drawable-edit-fill map-layer FILL-BACKGROUND)
-    (plug-in-noisify RUN-NONINTERACTIVE work-image map-layer FALSE 1.0 1.0 1.0 0.0)
+    (gimp-drawable-merge-new-filter map-layer "gegl:noise-rgb" 0 LAYER-MODE-REPLACE 1.0
+                                    "independent" FALSE "red" 1.0 "alpha" 0.0
+                                    "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
     (plug-in-tile RUN-NONINTERACTIVE work-image (vector map-layer) (* width 3) (* height 3) FALSE)
     (gimp-drawable-merge-new-filter map-layer "gegl:gaussian-blur" 0 LAYER-MODE-REPLACE 1.0 "std-dev-x" 11.2 "std-dev-y" 11.2 "filter" "auto")
     (gimp-drawable-equalize map-layer TRUE)
