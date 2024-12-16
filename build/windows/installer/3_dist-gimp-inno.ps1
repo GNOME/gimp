@@ -33,7 +33,6 @@ if ("$broken_inno" -or "$inno_version" -ne "$inno_version_downloaded")
     if ("$broken_inno")
       {
         Write-Output '(INFO): repairing Inno'
-        $broken_inno | Remove-Item -Recurse
       }
     elseif ("$inno_version" -notlike "*.*")
       {
@@ -225,6 +224,11 @@ if ($CUSTOM_GIMP_VERSION -match 'RC[1-9]')
     $devel_warning='-DDEVEL_WARNING'
   }
 iscc -DCUSTOM_GIMP_VERSION="$CUSTOM_GIMP_VERSION" -DGIMP_VERSION="$gimp_version" -DREVISION="$revision" -DGIMP_APP_VERSION="$gimp_app_version" -DGIMP_API_VERSION="$gimp_api_version" -DBUILD_DIR="$BUILD_DIR" -DGIMP_DIR="$GIMP_BASE" -DDIR32="$GIMP32" -DDIR64="$GIMP64" -DDIRA64="$GIMPA64" -DDEPS_DIR="$GIMP_BASE" -DDDIR32="$GIMP32" -DDDIR64="$GIMP64" -DDDIRA64="$GIMPA64" -DDEBUG_SYMBOLS -DPYTHON $devel_warning base_gimp3264.iss | Out-Null
+if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
+  {
+    ## We need to manually check failures in pre-7.4 PS
+    exit 1
+  }
 Set-Location $GIMP_BASE
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):installer_making$([char]13)$([char]27)[0K"
 
