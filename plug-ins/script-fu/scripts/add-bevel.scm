@@ -150,7 +150,15 @@
     ;
     ; BUMPMAP INVOCATION:
     ;
-    (plug-in-bump-map RUN-NONINTERACTIVE image pic-layer bump-layer 125 45 3 0 0 0 0 TRUE FALSE 1)
+    (let* ((filter (car (gimp-drawable-filter-new pic-layer "gegl:bump-map" ""))))
+      (gimp-drawable-filter-configure filter LAYER-MODE-REPLACE 1.0
+                                      "azimuth" 125.0 "elevation" 45.0 "depth" 3
+                                      "offset-x" 0 "offset-y" 0 "waterlevel" 0.0 "ambient" 0.0
+                                      "compensate" TRUE "invert" FALSE "type" "spherical"
+                                      "tiled" FALSE)
+      (gimp-drawable-filter-set-aux-input filter "aux" bump-layer)
+      (gimp-drawable-merge-filter pic-layer filter)
+    )
 
     ;------------------------------------------------------------
     ;

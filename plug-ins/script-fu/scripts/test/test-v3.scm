@@ -55,7 +55,15 @@
                                     "independent" FALSE "red" 0.2 "alpha" 0.2
                                     "correlated" FALSE "seed" (msrg-rand) "linear" TRUE)
 
-    (plug-in-bump-map RUN-NONINTERACTIVE img tdrawable bump-layer azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
+    (let* ((filter (car (gimp-drawable-filter-new tdrawable "gegl:bump-map" ""))))
+      (gimp-drawable-filter-configure filter LAYER-MODE-REPLACE 1.0
+                                      "azimuth" azimuth "elevation" elevation "depth" depth
+                                      "offset-x" 0 "offset-y" 0 "waterlevel" 0.0 "ambient" 0.0
+                                      "compensate" FALSE "invert" FALSE "type" "linear"
+                                      "tiled" FALSE)
+      (gimp-drawable-filter-set-aux-input filter "aux" bump-layer)
+      (gimp-drawable-merge-filter tdrawable filter)
+    )
     (gimp-image-delete img)
     (gimp-displays-flush)
 

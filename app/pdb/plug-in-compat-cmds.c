@@ -21,245 +21,30 @@
 
 #include "stamp-pdbgen.h"
 
-#include <cairo.h>
-
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-
-#include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-resize.h"
-#include "core/gimpimage-rotate.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimppickable.h"
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimppdb.h"
-#include "gimppdberror.h"
 #include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
 #include "gimp-intl.h"
 
-
-static GeglNode *
-wrap_in_graph (GeglNode *node)
-{
-  GeglNode *new_node;
-  GeglNode *input;
-  GeglNode *output;
-
-  new_node = gegl_node_new ();
-
-  gegl_node_add_child (new_node, node);
-  g_object_unref (node);
-
-  gimp_gegl_node_set_underlying_operation (new_node, node);
-
-  input  = gegl_node_get_input_proxy  (new_node, "input");
-  output = gegl_node_get_output_proxy (new_node, "output");
-
-  gegl_node_link_many (input,
-                       node,
-                       output,
-                       NULL);
-
-  return new_node;
-}
-
-static GeglNode *
-wrap_in_selection_bounds (GeglNode     *node,
-                          GimpDrawable *drawable)
-{
-  gint x, y;
-  gint width, height;
-
-  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                &x, &y, &width, &height))
-    {
-      GeglNode *new_node;
-      GeglNode *input;
-      GeglNode *output;
-      GeglNode *translate_before;
-      GeglNode *crop;
-      GeglNode *translate_after;
-
-      new_node = gegl_node_new ();
-
-      gegl_node_add_child (new_node, node);
-      g_object_unref (node);
-
-      gimp_gegl_node_set_underlying_operation (new_node, node);
-
-      input  = gegl_node_get_input_proxy  (new_node, "input");
-      output = gegl_node_get_output_proxy (new_node, "output");
-
-      translate_before = gegl_node_new_child (new_node,
-                                              "operation", "gegl:translate",
-                                              "x",         (gdouble) -x,
-                                              "y",         (gdouble) -y,
-                                              NULL);
-      crop = gegl_node_new_child (new_node,
-                                  "operation", "gegl:crop",
-                                  "width",     (gdouble) width,
-                                  "height",    (gdouble) height,
-                                  NULL);
-      translate_after = gegl_node_new_child (new_node,
-                                             "operation", "gegl:translate",
-                                             "x",         (gdouble) x,
-                                             "y",         (gdouble) y,
-                                             NULL);
-
-      gegl_node_link_many (input,
-                           translate_before,
-                           crop,
-                           node,
-                           translate_after,
-                           output,
-                           NULL);
-
-      return new_node;
-    }
-  else
-    {
-      return node;
-    }
-}
-
-static GeglNode *
-create_buffer_source_node (GeglNode     *parent,
-                           GimpDrawable *drawable)
-{
-  GeglNode   *new_node;
-  GeglBuffer *buffer;
-
-  buffer = gimp_drawable_get_buffer (drawable);
-  g_object_ref (buffer);
-  new_node = gegl_node_new_child (parent,
-                                  "operation", "gegl:buffer-source",
-                                  "buffer", buffer,
-                                  NULL);
-  g_object_unref (buffer);
-  return new_node;
-}
-
-static gboolean
-bump_map (GimpDrawable *drawable,
-          GimpDrawable *bump_map,
-          gdouble       azimuth,
-          gdouble       elevation,
-          gint          depth,
-          gint          offset_x,
-          gint          offset_y,
-          gdouble       waterlevel,
-          gdouble       ambient,
-          gboolean      compensate,
-          gboolean      invert,
-          gint          type,
-          gboolean      tiled,
-          GimpProgress  *progress,
-          GError       **error)
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      GeglNode *graph;
-      GeglNode *node;
-      GeglNode *src_node;
-
-      node = gegl_node_new_child (NULL,
-                                  "operation", "gegl:bump-map",
-                                  "tiled",      tiled,
-                                  "type",       type,
-                                  "compensate", compensate,
-                                  "invert",     invert,
-                                  "azimuth",    azimuth,
-                                  "elevation",  elevation,
-                                  "depth",      depth,
-                                  "offset_x",   offset_x,
-                                  "offset_y",   offset_y,
-                                  "waterlevel", waterlevel,
-                                  "ambient",    ambient,
-                                  NULL);
-
-      graph = wrap_in_graph (node);
-
-      src_node = create_buffer_source_node (graph, bump_map);
-
-      gegl_node_connect (src_node, "output", node, "aux");
-
-      gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Bump Map"),
-                                     graph);
-      g_object_unref (graph);
-
-      return TRUE;
-    }
-    else
-      return FALSE;
-}
-
-static gint
-newsprint_color_model (gint colorspace)
-{
-  switch (colorspace)
-    {
-    case 0: return 1; /* black on white */
-    case 1: return 2; /* rgb */
-    case 2: return 3; /* cmyk */
-    case 3: return 1; /* black on white */
-    }
-
-  return 2;
-}
-
-static gint
-newsprint_pattern (gint spotfn)
-{
-  switch (spotfn)
-    {
-    case 0: return 1; /* circle */
-    case 1: return 0; /* line */
-    case 2: return 2; /* diamond */
-    case 3: return 4; /* ps circle */
-    case 4: return 2; /* FIXME postscript diamond */
-    }
-
-  return 1;
-}
-
-static gdouble
-newsprint_angle (gdouble angle)
-{
-  while (angle > 180.0)
-    angle -= 360.0;
-
-  while (angle < -180.0)
-    angle += 360.0;
-
-  return angle;
-}
 
 static GimpValueArray *
 plug_in_autocrop_invoker (GimpProcedure         *procedure,
@@ -387,64 +172,6 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-plug_in_bump_map_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpDrawable *bumpmap;
-  gdouble azimuth;
-  gdouble elevation;
-  gint depth;
-  gint xofs;
-  gint yofs;
-  gdouble waterlevel;
-  gdouble ambient;
-  gboolean compensate;
-  gboolean invert;
-  gint type;
-
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  bumpmap = g_value_get_object (gimp_value_array_index (args, 3));
-  azimuth = g_value_get_double (gimp_value_array_index (args, 4));
-  elevation = g_value_get_double (gimp_value_array_index (args, 5));
-  depth = g_value_get_int (gimp_value_array_index (args, 6));
-  xofs = g_value_get_int (gimp_value_array_index (args, 7));
-  yofs = g_value_get_int (gimp_value_array_index (args, 8));
-  waterlevel = g_value_get_double (gimp_value_array_index (args, 9));
-  ambient = g_value_get_double (gimp_value_array_index (args, 10));
-  compensate = g_value_get_boolean (gimp_value_array_index (args, 11));
-  invert = g_value_get_boolean (gimp_value_array_index (args, 12));
-  type = g_value_get_int (gimp_value_array_index (args, 13));
-
-  if (success)
-    {
-      success = bump_map (drawable,
-                          bumpmap,
-                          azimuth,
-                          elevation,
-                          depth,
-                          xofs,
-                          yofs,
-                          waterlevel,
-                          ambient,
-                          compensate,
-                          invert,
-                          type,
-                          FALSE,
-                          progress,
-                          error);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
 void
 register_plug_in_compat_procs (GimpPDB *pdb)
 {
@@ -519,108 +246,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                          "Input drawable",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-bump-map
-   */
-  procedure = gimp_procedure_new (plug_in_bump_map_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-bump-map");
-  gimp_procedure_set_static_help (procedure,
-                                  "Create an embossing effect using a bump map",
-                                  "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be applied as a bump map to another image and produces a nice embossing effect.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
-                                         "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
-                                         "2015");
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
-                                                      "image",
-                                                      "Input image (unused)",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
-                                                         "drawable",
-                                                         "Input drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("bumpmap",
-                                                         "bumpmap",
-                                                         "Bump map drawable",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("azimuth",
-                                                    "azimuth",
-                                                    "Azimuth",
-                                                    0.0, 360.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("elevation",
-                                                    "elevation",
-                                                    "Elevation",
-                                                    0.5, 90.0, 0.5,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("depth",
-                                                 "depth",
-                                                 "Depth",
-                                                 1, 65, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("xofs",
-                                                 "xofs",
-                                                 "X offset",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("yofs",
-                                                 "yofs",
-                                                 "Y offset",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("waterlevel",
-                                                    "waterlevel",
-                                                    "Level that full transparency should represent",
-                                                    0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("ambient",
-                                                    "ambient",
-                                                    "Ambient lighting factor",
-                                                    0.0, 1.0, 0.0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("compensate",
-                                                     "compensate",
-                                                     "Compensate for darkening",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("invert",
-                                                     "invert",
-                                                     "Invert bumpmap",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("type",
-                                                 "type",
-                                                 "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
-                                                 0, 3, 0,
-                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
