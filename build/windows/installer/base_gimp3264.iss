@@ -807,6 +807,8 @@ end;
 //2. LICENSE
 procedure InfoBeforeLikeLicense();
 begin
+	WizardForm.Bevel.Visible := False;
+
 	WizardForm.InfoBeforeClickLabel.Visible := False;
 	WizardForm.InfoBeforeMemo.Height := WizardForm.InfoBeforeMemo.Height + WizardForm.InfoBeforeMemo.Top - WizardForm.InfoBeforeClickLabel.Top;
 	WizardForm.InfoBeforeMemo.Top := WizardForm.InfoBeforeClickLabel.Top;
