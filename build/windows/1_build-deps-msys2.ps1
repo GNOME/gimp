@@ -23,7 +23,7 @@ if (-not $GITLAB_CI)
 # Install the required (pre-built) packages for babl, GEGL and GIMP
 #MSYS2 forces us to presume 'InstallLocation'. See: https://github.com/msys2/msys2-installer/issues/85
 $MSYS2_PREFIX = 'C:/msys64'
-if ($MSYSTEM_PREFIX -eq 'mingw32')
+if ($GIMP_PREFIX -like '*x86')
   {
     Write-Host '(WARNING): 32-bit builds will be dropped in a future release. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/10922' -ForegroundColor Yellow
   }
@@ -65,7 +65,7 @@ if (-not $GITLAB_CI)
 
 
 # Build babl and GEGL
-function self_build ([string]$dep, [string]$option1, [string]$option2)
+function self_build ([string]$dep, [string]$option1, [string]$option2, [string]$option3)
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build[collapsed=true]$([char]13)$([char]27)[0KBuilding $dep"
 
@@ -90,11 +90,11 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
     git pull
 
     ## Configure and/or build
-    if (-not (Test-Path _build\build.ninja -Type Leaf))
+    if (-not (Test-Path _build${ARTIFACTS_SUFFIX}\build.ninja -Type Leaf))
       {
-        meson setup _build -Dprefix="$GIMP_PREFIX" $option1 $option2
+        meson setup _build${ARTIFACTS_SUFFIX} -Dprefix="$GIMP_PREFIX" $option1 $option2
       }
-    Set-Location _build
+    Set-Location _build${ARTIFACTS_SUFFIX}
     ninja
     ninja install
     if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
@@ -108,7 +108,7 @@ function self_build ([string]$dep, [string]$option1, [string]$option2)
   }
 
 #FIXME: babl dev docs are broken. See: https://gitlab.gnome.org/GNOME/babl/-/issues/97
-self_build babl '-Dwith-docs=false'
-self_build gegl '-Dworkshop=true'
+self_build babl '-Dwith-docs=false' '-Denable-vapi=false'
+self_build gegl '-Dworkshop=true' '-Dvapigen=disabled'
 
 Set-Location $GIMP_DIR

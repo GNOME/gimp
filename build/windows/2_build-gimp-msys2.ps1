@@ -44,15 +44,15 @@ if (-not $GITLAB_CI)
 
 # Build GIMP
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_build[collapsed=true]$([char]13)$([char]27)[0KBuilding GIMP"
-if (-not (Test-Path _build\build.ninja -Type Leaf))
+if (-not (Test-Path _build${ARTIFACTS_SUFFIX}\build.ninja -Type Leaf))
   {
     #FIXME: g-ir-doc is broken. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11200
     #There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
-    meson setup _build -Dprefix="$GIMP_PREFIX" -Djavascript=disabled `
-                       -Ddirectx-sdk-dir="$MSYS2_PREFIX/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
-                       -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION
+    meson setup _build${ARTIFACTS_SUFFIX} -Dprefix="$GIMP_PREFIX" -Djavascript=disabled -Dvala=disabled `
+                                          -Ddirectx-sdk-dir="$MSYS2_PREFIX/$MSYSTEM_PREFIX" -Denable-default-bin=enabled `
+                                          -Dbuild-id='org.gimp.GIMP_official' $INSTALLER_OPTION $STORE_OPTION
   }
-Set-Location _build
+Set-Location _build${ARTIFACTS_SUFFIX}
 ninja
 ccache --show-stats
 Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):gimp_build$([char]13)$([char]27)[0K"
