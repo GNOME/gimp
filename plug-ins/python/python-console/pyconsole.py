@@ -132,6 +132,46 @@ class _ReadLine(object):
             except KeyError:
                 return self.items[self.ptr]
 
+        def search_backward(self, text):
+            if len(self.items) == 1:
+              return None, None
+
+            if self.ptr == 1:
+              return None, None
+
+            if self.ptr == 0:
+              search_iter = len(self.items) - 1
+            else:
+              search_iter = self.ptr - 1
+
+            while text not in self.items[search_iter]:
+              search_iter -= 1
+              if search_iter == 1:
+                return None, self.items[1]
+
+            return search_iter, self.items[search_iter]
+
+        def search_forward(self, text):
+            if len(self.items) == 1:
+              return None, None
+
+            if self.ptr == 0:
+              return None, None
+
+            if self.ptr == len(self.items) - 1:
+              search_iter = 0
+            else:
+              search_iter = self.ptr + 1
+
+            while text not in self.items[search_iter]:
+              if search_iter == 0:
+                return None, None
+              search_iter += 1
+              if search_iter > len(self.items):
+                search_iter = 0
+
+            return search_iter, self.items[search_iter]
+
     def __init__(self, quit_func=None, initial_history=None):
         object.__init__(self)
 
@@ -173,6 +213,9 @@ class _ReadLine(object):
         self.tab_pressed = 0
         self.history = _ReadLine.History(initial_history)
         self.nonword_re = re.compile(r"[^\w\._]")
+
+        self._searching_backward = False
+        self._searching_forward  = False
 
     def freeze_undo(self):
         try: self.begin_not_undoable_action()
@@ -308,29 +351,36 @@ class _ReadLine(object):
         self.tab_pressed = 0
         handled = True
 
-        state = event.state & (Gdk.ModifierType.SHIFT_MASK |
-                               Gdk.ModifierType.CONTROL_MASK |
+        state = event.state & (Gdk.ModifierType.CONTROL_MASK |
                                Gdk.ModifierType.MOD1_MASK)
         keyval = event.keyval
 
         if not state:
             if keyval == Gdk.KEY_Escape:
-                pass
+                self.__history_search_stop()
             elif keyval == Gdk.KEY_Return:
+                self.__history_search_stop()
                 self._commit()
             elif keyval == Gdk.KEY_Up or keyval == Gdk.KEY_Page_Up:
+                self.__history_search_stop()
                 self.__history(-1)
             elif keyval == Gdk.KEY_Down or keyval == Gdk.KEY_Page_Down:
+                self.__history_search_stop()
                 self.__history(1)
             elif keyval == Gdk.KEY_Left:
+                self.__history_search_stop()
                 self.__move_cursor(-1)
             elif keyval == Gdk.KEY_Right:
+                self.__history_search_stop()
                 self.__move_cursor(1)
             elif keyval == Gdk.KEY_Home:
+                self.__history_search_stop()
                 self.__move_cursor(-10000)
             elif keyval == Gdk.KEY_End:
+                self.__history_search_stop()
                 self.__move_cursor(10000)
             elif keyval == Gdk.KEY_Tab:
+                self.__history_search_stop()
                 cursor = self.__get_cursor()
                 if cursor.starts_line():
                     handled = False
@@ -341,17 +391,32 @@ class _ReadLine(object):
                     else:
                         self.tab_pressed = tab_pressed + 1
                         self.__complete()
+            elif self._searching_backward:
+                if event.string != '' or keyval == Gdk.KEY_BackSpace:
+                  self.__history_search_backward(keyval, event.string)
+            elif self._searching_forward:
+                if event.string != '' or keyval == Gdk.KEY_BackSpace:
+                  self.__history_search_forward(keyval, event.string)
             else:
                 handled = False
         elif state == Gdk.ModifierType.CONTROL_MASK:
             if keyval == Gdk.KEY_u:
+                self.__history_search_stop()
                 start = self.__get_start()
                 end = self.__get_cursor()
                 self.__delete(start, end)
             elif keyval == Gdk.KEY_d:
+                self.__history_search_stop()
                 if self.quit_func:
                     self.quit_func()
+            elif keyval == Gdk.KEY_r:
+                self.__history_search_backward(keyval, '')
+            elif keyval == Gdk.KEY_s:
+                self.__history_search_forward(keyval, '')
+            elif keyval == Gdk.KEY_c and (self._searching_backward or self._searching_forward):
+                self.__history_search_cancel()
             else:
+                self.__history_search_stop()
                 handled = False
         else:
             handled = False
@@ -367,6 +432,85 @@ class _ReadLine(object):
         new_text = self.history.get(dir, text)
         if not new_text is None:
             self.__replace_line(new_text)
+        self.__move_cursor(0)
+        self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
+
+    def __history_search_stop(self):
+        if self._searching_backward or self._searching_forward:
+          self._searching_backward = False
+          self._searching_forward  = False
+          self.__replace_line(self.history.items[self.history.ptr])
+          self.__move_cursor(0)
+          self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
+
+    def __history_search_cancel(self):
+        if self._searching_backward or self._searching_forward:
+          self._searching_backward = False
+          self._searching_forward  = False
+          self.history.ptr = self._search_initial_ptr
+          self.__replace_line(self.history.items[self.history.ptr])
+          self.__move_cursor(0)
+          self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
+
+    def __history_search_backward(self, keyval, text):
+        search_anyway = False
+
+        if not self._searching_backward:
+          self._searching_backward = True
+          if not self._searching_forward:
+            self._search_initial_ptr = self.history.ptr
+            self._search_text = ''
+          else:
+            search_anyway = True
+        else:
+          if keyval == Gdk.KEY_BackSpace:
+            search_anyway = True
+            self._search_text = self._search_text[:-1]
+          elif text == '':
+            search_anyway = True
+          else:
+            self._search_text += text
+
+        self._searching_forward = False
+
+        if self._search_text != '' and (self._search_text not in self._get_line() or search_anyway):
+          ptr, new_text = self.history.search_backward(self._search_text)
+          if ptr is not None:
+            self.history.ptr = ptr
+
+        self.__replace_line(self.history.items[self.history.ptr])
+
+        self.__move_cursor(0)
+        self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
+
+    def __history_search_forward(self, keyval, text):
+        search_anyway = False
+
+        if not self._searching_forward:
+          self._searching_forward = True
+          if not self._searching_backward:
+            self._search_initial_ptr = self.history.ptr
+            self._search_text = ''
+          else:
+            search_anyway = True
+        else:
+          if keyval == Gdk.KEY_BackSpace:
+            search_anyway = True
+            self._search_text   = self._search_text[:-1]
+          elif text == '':
+            search_anyway = True
+          else:
+            self._search_text += text
+
+        self._searching_backward = False
+
+        if self._search_text != '' and (self._search_text not in self._get_line() or search_anyway):
+          ptr, new_text = self.history.search_forward(self._search_text)
+          if ptr is not None:
+            self.history.ptr = ptr
+
+        self.__replace_line(self.history.items[self.history.ptr])
+
         self.__move_cursor(0)
         self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
 
