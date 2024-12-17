@@ -439,6 +439,7 @@ class _ReadLine(object):
         if self._searching_backward or self._searching_forward:
           self._searching_backward = False
           self._searching_forward  = False
+          self.ps = self.ps1
           self.__replace_line(self.history.items[self.history.ptr])
           self.__move_cursor(0)
           self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
@@ -448,6 +449,7 @@ class _ReadLine(object):
           self._searching_backward = False
           self._searching_forward  = False
           self.history.ptr = self._search_initial_ptr
+          self.ps = self.ps1
           self.__replace_line(self.history.items[self.history.ptr])
           self.__move_cursor(0)
           self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
@@ -462,6 +464,7 @@ class _ReadLine(object):
             self._search_text = ''
           else:
             search_anyway = True
+          self.ps = self.sb
         else:
           if keyval == Gdk.KEY_BackSpace:
             search_anyway = True
@@ -493,6 +496,7 @@ class _ReadLine(object):
             self._search_text = ''
           else:
             search_anyway = True
+          self.ps = self.sf
         else:
           if keyval == Gdk.KEY_BackSpace:
             search_anyway = True
@@ -518,13 +522,14 @@ class _ReadLine(object):
         '''Returns an iterator at the current cursor position.'''
         return self.buffer.get_iter_at_mark(self.cursor)
 
-    def __get_start(self):
+    def __get_start(self, before_ps=False):
         '''Returns an iterator at the start of the input on the current
         cursor line.'''
 
         iter = self.__get_cursor()
         iter.set_line(iter.get_line())
-        iter.forward_chars(len(self.ps))
+        if not before_ps:
+          iter.forward_chars(len(self.ps))
         return iter
 
     def __get_end(self):
@@ -656,9 +661,12 @@ class _ReadLine(object):
 
     def __replace_line(self, new_text):
         '''Replace the current input with 'new_text' '''
-        start = self.__get_start()
+        start = self.__get_start(True)
         end = self.__get_end()
         self.__delete(start, end)
+        self.__insert(end, self.ps)
+        if self._searching_backward or self._searching_forward:
+          self.__insert(end, '({}) '.format(self._search_text))
         self.__insert(end, new_text)
 
     def _commit(self):
@@ -721,6 +729,8 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
 
         self.ps1 = ">>> "
         self.ps2 = "... "
+        self.sb  = "^^^ "
+        self.sf  = "vvv "
         self.__start()
         self.run_on_raw_input = start_script
         self.raw_input(self.ps1)
@@ -765,7 +775,12 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
             ps = self.ps2
         else:
             self.cmd_buffer = ''
-            ps = self.ps1
+            if self._searching_backward:
+                ps = self.sb
+            elif self._searching_forward:
+                ps = self.sb
+            else:
+                ps = self.ps1
 
         sys.stdout, sys.stderr = saved_stdout, saved_stderr
         self.raw_input(ps)
