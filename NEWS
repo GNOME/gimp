@@ -6,6 +6,158 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
+=======================================================
+
+Core:
+
+  - Histogram now takes into account the image color space for more
+    correct results.
+  - Unsupported fonts stderr message is not shown anymore on stable
+    builds as it is confusing to people (who see often huge numbers,
+    because there are indeed a lot of font types, especially the legacy
+    bitmap fonts whose support got broked by Pango, which are not
+    supported by GIMP, at least for now).
+  - Drag'n drop color fills now forbidden when "Allow editing on
+    non-visible layers" is OFF and the target layer is set invisible.
+  - Improved font matching heuristic for old XCF files, to find the
+    closest font candidate.
+
+Graphical User Interface:
+
+  - "Check for Updates" button is not shown in About dialog anymore when
+    "check-release" build option is FALSE.
+  - Stable (or stable-like such as RCs) builds should not open the debug
+    console on Windows.
+  - Some "Default" icon theme icons are used within the "Legacy" icon
+    theme when missing there, as a temporary workaround to avoid missing
+    icons ugliness.
+  - "Layer Name" field in the Layer dialogue is now explicitly focused
+    on dialog creation (this was the case in 2.10, but there it was
+    probably "by chance", now it's "by design") because layer names is
+    often the most common thing people want to change in this dialog.
+    So it allows quick workflow of opening the dialog, typing a layer
+    name and hitting Enter.
+  - GimpSpinScale CSS styling improved for better readability.
+  - Color Profile labels in the GimpColorSelect widget are now
+    ellipsized to prevent over-wide container widgets/dockables when an
+    image has a profile with a long name.
+  - GimpStatusBar is now aware of icon size changes (soft-proofing
+    buttons and current tool icons are resized when relevant).
+  - GimpHandleBar now uses the system's foreground color for its
+    outline.
+
+Plug-ins:
+
+  - Python Console: PageUp/Down usable as alternate of Up/Down to scroll
+    history.
+  - BMP import overhaul (for more details, see informative commit
+    messages in !1932 since this MR got mistakenly squashed into a
+    single commit):
+    * 8/16/32 bit-per-channel, int or float, are now imported lossessly
+      into the corresponding precision.
+    * New support for 2-bit indexed and ALPHABITFIELDS files.
+    * More lenient with regards to file header specs.
+    * Correctly identify OS/2 Huffman encoding.
+    * Add RLE24 support (RLE24 is a OS/2 variant of bmp compression).
+    * Add Huffman compression support (another compression variant for
+      OS/2 bmps). The source code contains a human readable version of
+      the Huffman code tables (generate-huffman.h). During build, the
+      actual header huffman.h is generated which includes a digested
+      form of these tables.
+    * Load bmp chunk-wise instead of whole image: loads image
+      tile-height lines at a time to reduce memory allocation for
+      temporary image buffer.
+    * Unify RLE24 with RLE4/8 decoding.
+    * RLE: add alpha channel for undefined pixels: RLE-bmps can have
+      undefined pixels. Load those bmps with an alpha channel
+      (GIMP_INDEXEDA_IMAGE) and make undefined pixels transparent.
+    * Convert gamma/endpoint values in V4 headers to floating point.
+    * Various fixes and code reorganization.
+  - Metadata viewer now correctly shows various custom brand markernote
+    tags as interpreted strings (instead of opaque bytes).
+  - CMYK PAM files can now be imported.
+  - Windows shortcut (.link): new plug-in file-lnk (Windows-only) to
+    support loading shortcuts. This is mostly a wrapper plug-in like the
+    file-compressor one which redirects to the correct plug-in for the
+    specific image type.
+  - Script-fu:
+    * Do not warn anymore on not exact argument count for
+      PDB-marshalled procedures (it becomes an info message).
+    * Script-fu dialogs are now properly activated on macOS through
+      platform-specific code.
+    * On macOS, a script-fu dock icon is now only shown when a script
+      has a dialog.
+    * GimpDrawableFilter's IDs are now usable to take full advantage of
+      the various new PDB procedures working on filters.
+    * Adding a few custom wrappers to libgimp (non-PDB) functions:
+      - gimp-drawable-merge-new-filter: variable argument procedure
+        working like libgimp gimp_drawable_merge_new_filter().
+      - gimp-drawable-append-new-filter: variable argument procedure
+        working like libgimp gimp_drawable_append_new_filter().
+      - gimp-drawable-filter-configure: wrapping getting a
+        GimpDrawableFilterConfig and setting its properties as a
+        variable arg script-fu procedure.
+      - gimp-drawable-merge-filter: wrapping
+        gimp_drawable_merge_filter().
+      - gimp-drawable-append-filter: wrapping
+        gimp_drawable_append_filter().
+      - gimp-drawable-filter-set-aux-input: wrapping
+        gimp_drawable_filter_set_aux_input().
+
+API:
+
+  - Changes in libgimp:
+    * gimp_drawable_offset() signature changed, with an added GeglColor
+      argument used when the fill_type is GIMP_OFFSET_COLOR.
+    * New GimpDrawableFilter and GimpDrawableFilterConfig classes. These
+      come with ability to create/destroy a filter and various methods
+      to configure filters, then either append them to the list of
+      non-destructive filters of a layer, or merge them on any drawable.
+    * Auxiliary input pads are also supported for GimpDrawableFilter,
+      though filters with aux input can only be merged (same as in the
+      GUI), not applied non-destructively for the time being.
+    * New methods:
+      - gimp_drawable_get_filters()
+      - gimp_drawable_append_filter()
+      - gimp_drawable_merge_filter()
+      - gimp_drawable_append_new_filter()
+      - gimp_drawable_merge_new_filter()
+    * GIMP_LAYER_MODE_REPLACE is now visible/usable in libgimp and PDB
+     as part of the GimpLayerMode enum type.
+  - Changes in libgimpbase:
+    * GimpOffsetType changed: GIMP_OFFSET_BACKGROUND value replaced with
+      GIMP_OFFSET_COLOR.
+    * Exif.SonyMisc3c tags are now excluded at export because they cause
+      a failure of Exiv2 which was having all metadata export fail (see
+      issue #2670 on Exiv2 tracker).
+  - Changes in PDB:
+    * All compat PDB procedures which were special-casing specific GEGL
+      operations have now been removed. Any usage of these in various
+      scripts and plug-ins has been replaced by the new
+      GimpDrawableFilter generic API.
+    * GeglParamSeed can now be passed through the PDB so that filters
+      with a seed argument work as expected.
+    * Compat PDB procedures plug-in-rotate deleted and its usage in
+      scripts replaced with gimp-image-rotate or
+      gimp-item-transform-rotate-simple.
+
+Build:
+
+  - So many build and packaging improvements that we can't list them
+    all. :-D
+  - Our AppImage now supports much more distributions, though we still
+    consider it experimental.
+  - AppImage build is now a weekly scheduled job.
+  - Several unit tests improved with better UI-testing API.
+  - Pango >= 1.55.0 is now recommended on macOS because of fix pango!745
+    which fixes a major GUI issue on this platform.
+  - CI job logs now have collapsed sections for better readability.
+  - The Windows Installer will not check for SSE anymore since SSE2
+    instructions are required already for any supported Windows
+    versions.
+
+
 Overview of Changes from GIMP 2.99.18 to GIMP 3.0.0-RC1
 =======================================================
 
