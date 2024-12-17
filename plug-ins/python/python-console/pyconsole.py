@@ -115,10 +115,16 @@ class _ReadLine(object):
             elif self.ptr in self.edited:
                 del self.edited[self.ptr]
 
-            self.ptr = self.ptr + dir
-            if self.ptr >= len(self.items):
-                self.ptr = 0
-            elif self.ptr < 0:
+            # Do not cycle. It's confusing.
+            if (self.ptr == 0 and dir > 0) or self.ptr + dir >= len(self.items):
+              # Position 0 is a bit weird. It's the last position, not
+              # the first!
+              self.ptr = 0
+            elif self.ptr > 0 and dir < 0 and self.ptr + dir < 1:
+              self.ptr = 1
+            else:
+              self.ptr = self.ptr + dir
+              if self.ptr < 0:
                 self.ptr = len(self.items) - 1
 
             try:
