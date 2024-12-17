@@ -49,8 +49,11 @@ Graphical User Interface:
 
 Plug-ins:
 
-  - Python Console: PageUp/Down usable as alternate of Up/Down to scroll
-    history.
+  - Python Console:
+    * PageUp/Down usable as alternate of Up/Down to scroll history.
+    * Ctrl-R and Ctrl-S are now usable for searching respectively
+      backward and forward through the console command history, with
+      nice prompt-updating visual feedback.
   - BMP import overhaul (for more details, see informative commit
     messages in !1932 since this MR got mistakenly squashed into a
     single commit):
