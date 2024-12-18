@@ -81,6 +81,7 @@ typedef struct
 
   /* Dragging mode */
   DragMode mode;
+  gboolean triangle_locked;
 
   guint focus_on_ring : 1;
 
@@ -234,10 +235,11 @@ gimp_color_wheel_init (GimpColorWheel *wheel)
   gtk_widget_set_has_window (GTK_WIDGET (wheel), FALSE);
   gtk_widget_set_can_focus (GTK_WIDGET (wheel), TRUE);
 
-  priv->format        = NULL;
-  priv->ring_fraction = DEFAULT_FRACTION;
-  priv->size          = DEFAULT_SIZE;
-  priv->ring_width    = DEFAULT_RING_WIDTH;
+  priv->format          = NULL;
+  priv->ring_fraction   = DEFAULT_FRACTION;
+  priv->size            = DEFAULT_SIZE;
+  priv->ring_width      = DEFAULT_RING_WIDTH;
+  priv->triangle_locked = TRUE;
 
   /* Allow the user to drag the rectangle on the preview */
   gesture = gtk_gesture_drag_new (GTK_WIDGET (wheel));
@@ -500,7 +502,11 @@ compute_triangle (GimpColorWheel *wheel,
 
   outer = priv->size / 2.0;
   inner = outer - priv->ring_width;
-  angle = priv->h * 2.0 * G_PI;
+
+  if (! priv->triangle_locked)
+    angle = priv->h * 2.0 * G_PI;
+  else
+    angle = 90 * G_PI;
 
   *hx = floor (center_x + cos (angle) * inner + 0.5);
   *hy = floor (center_y - sin (angle) * inner + 0.5);
@@ -1538,3 +1544,15 @@ gimp_color_wheel_move (GimpColorWheel   *wheel,
 
   gimp_color_wheel_set_color (wheel, hue, sat, val);
 }
+
+void
+gimp_color_wheel_set_triangle_locked (GimpColorWheel  *wheel,
+                                      gboolean         triangle_locked)
+{
+  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
+
+  g_return_if_fail (GIMP_IS_COLOR_WHEEL (wheel));
+
+  priv->triangle_locked = triangle_locked;
+}
+
