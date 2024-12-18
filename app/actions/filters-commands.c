@@ -277,7 +277,17 @@ filters_run_procedure (Gimp          *gimp,
                                                     display);
         }
 
-      if (success)
+      if (success &&
+          (! GIMP_IS_GEGL_PROCEDURE (procedure) ||
+           /* XXX GimpGeglProcedure made for filter-editing are
+            * short-lived and should not be added to history. I'm not
+            * sure it makes sense UX-wise anyway ("used" filters are for
+            * first calls, not edits).
+            * If ever we decide to change this UX logic, some code logic
+            * changes are needed too. Cf. crash report #12576 and my
+            * (Jehan's) technical comment in there..
+            */
+           ! gimp_gegl_procedure_is_editing_filter (GIMP_GEGL_PROCEDURE (procedure))))
         gimp_filter_history_add (gimp, procedure);
 
       gimp_value_array_unref (args);

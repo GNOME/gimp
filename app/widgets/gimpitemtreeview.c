@@ -2663,8 +2663,6 @@ gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
                                                    name,
                                                    NULL, NULL, NULL);
 
-              gimp_filter_history_add (image->gimp, procedure);
-
               variant = g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure));
               g_variant_take_ref (variant);
               filters_run_procedure (image->gimp,

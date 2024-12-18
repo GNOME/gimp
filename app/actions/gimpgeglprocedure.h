@@ -57,15 +57,16 @@ struct _GimpGeglProcedureClass
 
 GType           gimp_gegl_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_gegl_procedure_new           (Gimp               *gimp,
-                                                   GimpDrawableFilter *filter,
-                                                   GimpRunMode         default_run_mode,
-                                                   GimpObject         *default_settings,
-                                                   const gchar        *operation,
-                                                   const gchar        *name,
-                                                   const gchar        *menu_label,
-                                                   const gchar        *tooltip,
-                                                   const gchar        *icon_name,
-                                                   const gchar        *help_id);
+GimpProcedure * gimp_gegl_procedure_new               (Gimp               *gimp,
+                                                       GimpDrawableFilter *filter_to_edit,
+                                                       GimpRunMode         default_run_mode,
+                                                       GimpObject         *default_settings,
+                                                       const gchar        *operation,
+                                                       const gchar        *name,
+                                                       const gchar        *menu_label,
+                                                       const gchar        *tooltip,
+                                                       const gchar        *icon_name,
+                                                       const gchar        *help_id);
+gboolean        gimp_gegl_procedure_is_editing_filter (GimpGeglProcedure  *procedure);
 
 #endif /* __GIMP_GEGL_PROCEDURE_H__ */

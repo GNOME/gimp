@@ -458,7 +458,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
 GimpProcedure *
 gimp_gegl_procedure_new (Gimp               *gimp,
-                         GimpDrawableFilter *filter,
+                         GimpDrawableFilter *filter_to_edit,
                          GimpRunMode         default_run_mode,
                          GimpObject         *default_settings,
                          const gchar        *operation,
@@ -484,7 +484,7 @@ gimp_gegl_procedure_new (Gimp               *gimp,
 
   gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
 
-  gegl_procedure->filter           = filter;
+  gegl_procedure->filter           = filter_to_edit;
   gegl_procedure->operation        = g_strdup (operation);
   gegl_procedure->default_run_mode = default_run_mode;
   gegl_procedure->menu_label       = g_strdup (menu_label);
@@ -528,4 +528,12 @@ gimp_gegl_procedure_new (Gimp               *gimp,
                                                     GIMP_PARAM_READWRITE));
 
   return procedure;
+}
+
+gboolean
+gimp_gegl_procedure_is_editing_filter (GimpGeglProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_GEGL_PROCEDURE (procedure), FALSE);
+
+  return (procedure->filter != NULL);
 }
