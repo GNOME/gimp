@@ -90,6 +90,10 @@ static gint             add_layers                 (GimpImage      *image,
                                                     GInputStream   *input,
                                                     GError        **error);
 
+static void             add_legacy_layer_effects   (GimpLayer      *layer,
+                                                    PSDlayer       *lyr_a,
+                                                    gboolean        ibm_pc_format);
+
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
@@ -105,6 +109,10 @@ static GimpLayer      * add_clipping_group         (GimpImage      *image,
                                                     GimpLayer      *parent);
 
 static gchar          * get_psd_color_mode_name    (PSDColorMode    mode);
+
+static void             convert_legacy_psd_color   (GeglColor      *color,
+                                                    guint16        *psd_color,
+                                                    gboolean        ibm_pc_format);
 
 static void             psd_to_gimp_color_map      (guchar         *map256);
 
@@ -1235,6 +1243,8 @@ read_layer_info (PSDimage      *img_a,
                             PSD_TELL(input), block_rem);
 
           /* Adjustment layer info */           /* FIXME */
+          lyr_a[lidx]->layer_styles = g_new (PSDLayerStyles, 1);
+          lyr_a[lidx]->layer_styles->count = 0;
 
           while (block_rem > 7)
             {
@@ -2708,6 +2718,13 @@ add_layers (GimpImage     *image,
                 }
             }
 
+            /* Add legacy layer styles if applicable.
+             * TODO: When we can load modern layer styles, only load these if
+             * the file doesn't have modern layer style data. */
+            if (lyr_a[lidx]->layer_styles->count > 0)
+              add_legacy_layer_effects (layer, lyr_a[lidx],
+                                        img_a->ibm_pc_format);
+
             /* Insert the layer */
             if (lyr_a[lidx]->group_type == 0 || /* normal layer */
                 lyr_a[lidx]->group_type == 3    /* group layer end marker */)
@@ -2720,6 +2737,7 @@ add_layers (GimpImage     *image,
 
       g_free (lyr_a[lidx]->chn_info);
       g_free (lyr_a[lidx]->name);
+      g_free (lyr_a[lidx]->layer_styles);
       g_free (lyr_a[lidx]);
     }
   g_free (lyr_a);
@@ -2730,6 +2748,38 @@ add_layers (GimpImage     *image,
   g_list_free (img_a->layer_selection);
 
   return 0;
+}
+
+static void
+add_legacy_layer_effects (GimpLayer *layer,
+                          PSDlayer  *lyr_a,
+                          gboolean   ibm_pc_format)
+{
+  if (lyr_a->layer_styles->count == 7 &&
+      lyr_a->layer_styles->sofi.enabled == 1)
+    {
+      PSDLayerStyleSolidFill  sofi;
+      GimpLayerMode           mode;
+      GimpDrawableFilter     *filter;
+      GeglColor              *color = gegl_color_new ("none");
+
+      sofi = lyr_a->layer_styles->sofi;
+
+      convert_legacy_psd_color (color, sofi.natcolor, ibm_pc_format);
+      convert_psd_mode (sofi.blend, &mode);
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:color",
+                                                "Solid Fill (PSD)",
+                                                "value", color,
+                                                NULL);
+      gimp_drawable_filter_set_opacity (filter, sofi.opacity / 255.0);
+      gimp_drawable_filter_set_blend_mode (filter, mode);
+      gimp_drawable_filter_update (filter);
+
+      g_object_unref (filter);
+      g_object_unref (color);
+    }
 }
 
 static gint
@@ -3218,6 +3268,22 @@ get_psd_color_mode_name (PSDColorMode mode)
   err_name = g_strdup_printf ("UNKNOWN (%d)", mode);
 
   return err_name;
+}
+
+static void
+convert_legacy_psd_color (GeglColor *color,
+                          guint16   *psd_color,
+                          gboolean   ibm_pc_format)
+{
+  guint16 pixel[4];
+
+  for (gint i = 0; i < 4; i++)
+    {
+      pixel[i] = ibm_pc_format ? psd_color[i + 1] :
+                                 GUINT16_TO_BE (psd_color[i + 1]);
+    }
+
+  gegl_color_set_pixel (color, babl_format ("R'G'B' u16"), pixel);
 }
 
 static void
