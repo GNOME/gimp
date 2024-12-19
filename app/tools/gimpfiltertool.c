@@ -967,7 +967,9 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   gboolean        picked;
 
-  g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+  if (! filter_tool->existing_filter)
+    g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+
   g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
   g_return_val_if_fail (sample_format != NULL, FALSE);
 
@@ -1526,7 +1528,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
     drawable = tool->drawables->data;
 
   gimp_assert (filter_tool->operation);
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+
+  if (! filter_tool->existing_filter)
+    g_return_if_fail (g_list_length (tool->drawables) == 1);
 
   filter_tool->filter = gimp_drawable_filter_new (drawable,
                                                   gimp_tool_get_undo_desc (tool),
@@ -1593,7 +1597,8 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
       GimpChannel  *mask     = gimp_image_get_mask (image);
       const Babl   *format;
 
-      g_return_if_fail (g_list_length (tool->drawables) == 1);
+      if (! filter_tool->existing_filter)
+        g_return_if_fail (g_list_length (tool->drawables) == 1);
 
       if (filter_tool->filter)
         {
@@ -1703,7 +1708,8 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  if (! filter_tool->existing_filter)
+    g_return_if_fail (g_list_length (tool->drawables) == 1);
 
   if (filter_tool->preview_guide)
     return;
@@ -1773,7 +1779,8 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  if (! filter_tool->existing_filter)
+    g_return_if_fail (g_list_length (tool->drawables) == 1);
 
   if (! filter_tool->preview_guide)
     return;
@@ -1843,7 +1850,8 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
   GimpItem          *item;
   gint               position;
 
-  g_return_if_fail (g_list_length (tool->drawables) == 1);
+  if (! filter_tool->existing_filter)
+    g_return_if_fail (g_list_length (tool->drawables) == 1);
 
   if (filter_tool->existing_filter)
     {
@@ -2537,7 +2545,8 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
   tool     = GIMP_TOOL (filter_tool);
   settings = GIMP_OPERATION_SETTINGS (filter_tool->config);
 
-  g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
+  if (! filter_tool->existing_filter)
+    g_return_val_if_fail (g_list_length (tool->drawables) == 1, FALSE);
 
   *drawable_offset_x = 0;
   *drawable_offset_y = 0;

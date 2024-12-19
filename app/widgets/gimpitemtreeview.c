@@ -2594,51 +2594,35 @@ static void
 gimp_item_tree_view_effects_edited_clicked (GtkWidget        *widget,
                                             GimpItemTreeView *view)
 {
-  GimpImage *image     = view->priv->image;
-  GList     *drawables = gimp_image_get_selected_drawables (image);
-
-  /* TODO: Revisit when we can apply filters to multiple layers */
-  if (g_list_length (drawables) != 1)
-    {
-      gimp_message_literal (image->gimp, G_OBJECT (view), GIMP_MESSAGE_ERROR,
-                            _("Cannot modify multiple drawables. Select only one."));
-
-      g_list_free (drawables);
-      return;
-    }
-  else
-    {
-      if (! gimp_item_is_visible (GIMP_ITEM (drawables->data)) &&
-          ! GIMP_GUI_CONFIG (image->gimp->config)->edit_non_visible)
-        {
-          gimp_message_literal (image->gimp, G_OBJECT (view),
-                                GIMP_MESSAGE_ERROR,
-                               _("A selected layer is not visible."));
-
-          g_list_free (drawables);
-          return;
-        }
-      else if (gimp_item_get_lock_content (GIMP_ITEM (drawables->data)))
-        {
-          gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
-                                GIMP_MESSAGE_WARNING,
-                                _("A selected layer's pixels are locked."));
-
-          g_list_free (drawables);
-          return;
-        }
-    }
-  g_list_free (drawables);
+  GimpImage    *image = view->priv->image;
+  GimpDrawable *drawable;
+  GeglNode     *op;
 
   if (! view->priv->effects_filter ||
       ! GIMP_IS_DRAWABLE_FILTER (view->priv->effects_filter))
     return;
 
-  if (view->priv->effects_drawable)
-    {
-      GeglNode *op =
-        gimp_drawable_filter_get_operation (view->priv->effects_filter);
+  drawable = gimp_drawable_filter_get_drawable (view->priv->effects_filter);
 
+  if (drawable && GIMP_IS_DRAWABLE (drawable))
+    {
+      if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+          ! GIMP_GUI_CONFIG (image->gimp->config)->edit_non_visible)
+        {
+          gimp_message_literal (image->gimp, G_OBJECT (view),
+                                GIMP_MESSAGE_ERROR,
+                               _("A selected layer is not visible."));
+          return;
+        }
+      else if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+        {
+          gimp_message_literal (view->priv->image->gimp, G_OBJECT (view),
+                                GIMP_MESSAGE_WARNING,
+                                _("A selected layer's pixels are locked."));
+          return;
+        }
+
+      op = gimp_drawable_filter_get_operation (view->priv->effects_filter);
       if (op)
         {
           GimpProcedure *procedure;
