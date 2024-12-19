@@ -1056,10 +1056,12 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("layers-blend-space-auto",           n_selected_layers && bs_mutable);
   SET_SENSITIVE ("layers-blend-space-rgb-linear",     n_selected_layers && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-non-linear", n_selected_layers && bs_mutable);
   SET_SENSITIVE ("layers-blend-space-rgb-perceptual", n_selected_layers && bs_mutable);
 
   SET_SENSITIVE ("layers-composite-space-auto",           n_selected_layers && cs_mutable);
   SET_SENSITIVE ("layers-composite-space-rgb-linear",     n_selected_layers && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-non-linear", n_selected_layers && cs_mutable);
   SET_SENSITIVE ("layers-composite-space-rgb-perceptual", n_selected_layers && cs_mutable);
 
   SET_SENSITIVE ("layers-composite-mode-auto",             n_selected_layers && cm_mutable);

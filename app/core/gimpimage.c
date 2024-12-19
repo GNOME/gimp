@@ -2955,7 +2955,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if ((gimp_layer_get_real_blend_space (layer) == GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
         ||(gimp_layer_get_real_composite_space (layer) == GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL))
         {
-          ADD_REASON (g_strdup_printf (_("Blending space fixes in %s"),
+          ADD_REASON (g_strdup_printf (_("A new perceptual blending space was added in %s"),
                                        "GIMP 3.0"));
           /* The blending space variant corresponding to SPACE_RGB_PERCEPTUAL in <3.0
            * corresponds to R'G'B'A which is NON_LINEAR in babl. Perceptual in babl is
