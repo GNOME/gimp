@@ -22,6 +22,16 @@ Core:
     non-visible layers" is OFF and the target layer is set invisible.
   - Improved font matching heuristic for old XCF files, to find the
     closest font candidate.
+  - The "RGB (perceptual)" blend/composite space got renamed "RGB (from
+    color space)" and a new/real "RGB (perceptual)" blend/composite
+    space was added.
+  - The following layer modes' default blend space was changed to the
+    new "RGB (perceptual)" space: Overlay, Screen, Difference, Dodge,
+    Burn, Hard light, Soft light, Grain extract, Grain merge, Vivid
+    light, Pin light, Linear light, Hard mix, Exclusion and Linear burn.
+    It doesn't break existing XCF files since the actual blend space
+    used is stored in the file (even when left to "Auto", the XCF format
+    knows what "Auto" meant at save time).
 
 Graphical User Interface:
 
@@ -46,6 +56,7 @@ Graphical User Interface:
     buttons and current tool icons are resized when relevant).
   - GimpHandleBar now uses the system's foreground color for its
     outline.
+  - New RC2 splash screen by Sevenix.
 
 Plug-ins:
 
@@ -159,6 +170,10 @@ Build:
   - The Windows Installer will not check for SSE anymore since SSE2
     instructions are required already for any supported Windows
     versions.
+  - The app-ID of our nightly flatpak (on gnome-nightly repository) is
+    now "org.gimp.GIMP.Nightly". This will allow the nightly flatpak to
+    be side-by-side visible next to the stable or dev flatpak without
+    needed CLI commands.
 
 
 Overview of Changes from GIMP 2.99.18 to GIMP 3.0.0-RC1
