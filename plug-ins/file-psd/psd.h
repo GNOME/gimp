@@ -580,6 +580,103 @@ typedef struct
   gchar                 *info; /* Text information */
 } PSDText;
 
+typedef struct
+{
+  guint32    size;
+  guint32    ver;
+  guchar     visible;
+  guint16    unused;
+
+} PSDLayerStyleCommon;
+
+typedef struct
+{
+  guint32    size;
+  guint32    ver;
+  guint32    blur;
+  guint32    intensity;
+  gint32     angle;
+  guint32    distance;
+  guint16    color[5];
+  gchar      blendsig[4];
+  guint32    effect;
+  guchar     effecton;
+  guchar     anglefx;
+  guchar     opacity;
+  guint16    natcolor[5];
+
+} PSDLayerStyleShadow;
+
+typedef struct
+{
+  guint32    size;
+  guint32    ver;
+  guint32    blur;
+  guint32    intensity;
+  guint16    color[5];
+  gchar      blendsig[4];
+  guint32    effect;
+  guchar     effecton;
+  guchar     opacity;
+  /* Version 2 only */
+  guchar     invert; /* Inner Glow Only */
+  guint16    natcolor[5];
+
+} PSDLayerStyleGlow;
+
+typedef struct
+{
+  guint32    size;
+  guint32    ver;
+  gint32     angle;
+  guint32    strength;
+  guint32    blur;
+  guint32    highlightsig;
+  guint32    highlighteffect;
+  guint32    shadowsig;
+  guint32    shadoweffect;
+  guint16    highlightcolor[5];
+  guint16    shadowcolor[5];
+  guchar     style;
+  guchar     highlightopacity;
+  guchar     shadowopacity;
+  guchar     enabled;
+  guchar     global;
+  guchar     direction;
+  /* Version 2 only */
+  guint16    highlightnatcolor[5];
+  guint16    shadownatcolor[5];
+
+} PSDLayerStyleBevel;
+
+typedef struct
+{
+  guint32    size;
+  guint32    ver;
+  gchar      blend[4];
+  guint16    color[5];
+  guchar     opacity;
+  guchar     enabled;
+  guint16    natcolor[5];
+
+} PSDLayerStyleSolidFill;
+
+/* Older PSD Layer Styles format */
+typedef struct
+{
+  guint16 version;
+  guint16 count;
+
+  PSDLayerStyleCommon        cmns; /* Common State */
+  PSDLayerStyleShadow        dsdw; /* Drop Shadow */
+  PSDLayerStyleShadow        isdw; /* Inner Shadow */
+  PSDLayerStyleGlow          oglw; /* Outer Glow */
+  PSDLayerStyleGlow          iglw; /* Inner Glow */
+  PSDLayerStyleBevel         bevl; /* Bevel */
+  PSDLayerStyleSolidFill     sofi; /* Solid Fill */
+
+} PSDLayerStyles;
+
 /* Partially or Unsupported Features */
 typedef struct
 {
@@ -624,6 +721,7 @@ typedef struct
   guint32               id;                     /* Layer ID (Tattoo) */
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
   guint16               color_tag[4];           /* 4 * 16 bit color components */
+  PSDLayerStyles       *layer_styles;           /* Older format of layer styles */
 
   PSDSupport           *unsupported_features;
 } PSDlayer;

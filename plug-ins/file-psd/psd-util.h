@@ -95,6 +95,8 @@ void                    psd_to_gimp_blend_mode (PSDlayer             *psd_layer,
                                                 LayerModeInfo        *mode_info);
 
 const gchar *           gimp_to_psd_blend_mode (const LayerModeInfo  *mode_info);
+gboolean                convert_psd_mode       (const gchar          *psd_mode,
+                                                GimpLayerMode        *mode);
 
 GimpColorTag            psd_to_gimp_layer_color_tag (guint16          layer_color_tag);
 
