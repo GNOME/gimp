@@ -359,6 +359,7 @@ app/pdb/channel-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-color-cmds.c
 app/pdb/drawable-edit-cmds.c
+app/pdb/drawable-filter-cmds.c
 app/pdb/edit-cmds.c
 app/pdb/floating-sel-cmds.c
 app/pdb/gimppdb-query.c
