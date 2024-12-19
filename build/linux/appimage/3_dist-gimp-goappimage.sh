@@ -248,6 +248,7 @@ lang_array=($(echo $(ls po/*.po |
               tr '\n\r' ' '))
 for lang in "${lang_array[@]}"; do
   bund_usr "$GIMP_PREFIX" share/locale/$lang/LC_MESSAGES
+  # Needed for eventually used widgets, GTK inspector etc
   bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/gtk3*.mo
   # For language list in text tool options
   bund_usr "$UNIX_PREFIX" share/locale/$lang/LC_MESSAGES/iso_639*3.mo
