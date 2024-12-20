@@ -16,21 +16,44 @@ def export_scaled_img(image, target_width, target_height, export_path):
   new_height = target_height
   offx       = 0
   offy       = 0
-  img.flatten()
+
+  bg_new_width  = target_width
+  bg_new_height = target_height
+  bg_offx       = 0
+  bg_offy       = 0
+  layer = img.flatten()
+  bg_layer = layer.copy()
+  img.insert_layer(bg_layer, None, 1)
   if w / target_width * target_height < h:
     new_width = target_height / h * w
     offx = (target_width - new_width) / 2
+
+    bg_new_height = target_width / w * h
+    bg_offy = (target_height - bg_new_height) / 2
   else:
     new_height = target_width / w * h
     offy = (target_height - new_height) / 2
-  img.scale(new_width, new_height)
+
+    bg_new_width = target_height / h * w
+    bg_offx = (target_width - bg_new_width) / 2
+  layer.scale(new_width, new_height, False)
+  bg_layer.scale(bg_new_width, bg_new_height, False)
   img.resize(target_width, target_height, offx, offy)
-  # XXX: should we rather use the average color as border?
-  black = Gegl.Color.new("black")
-  Gimp.context_set_background(black)
-  drawables = img.get_selected_drawables()
-  for d in drawables:
-    d.resize_to_image_size()
+  bg_layer.set_offsets(bg_offx, bg_offy)
+
+  # See https://gitlab.gnome.org/GNOME/gimp-data/-/issues/5
+  filter = Gimp.DrawableFilter.new(bg_layer, "gegl:gaussian-blur", "")
+  filter_config = filter.get_config()
+  filter_config.set_property('std-dev-x', 27.5)
+  filter_config.set_property('std-dev-y', 27.5)
+  bg_layer.merge_filter(filter)
+
+  filter = Gimp.DrawableFilter.new(bg_layer, "gegl:noise-hsv", "")
+  filter_config = filter.get_config()
+  filter_config.set_property('hue-distance', 2.0)
+  filter_config.set_property('saturation-distance', 0.002)
+  filter_config.set_property('value-distance', 0.015)
+  bg_layer.merge_filter(filter)
 
   config.set_property("image", img)
   config.set_property("file", Gio.file_new_for_path(export_path))
