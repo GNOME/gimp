@@ -815,38 +815,35 @@ ReadImage (struct Fileinfo *fi,
     {
       gsize offset = (fi->tile_height - fi->tile_n - 1) * fi->rowstride;
 
-      if (! eof)
+      switch (bmpfmt)
         {
-          switch (bmpfmt)
-            {
-            case BMPFMT_RGB:
-              if (! load_rgb (fi, offset))
-                eof = TRUE;
-              break;
+        case BMPFMT_RGB:
+          if (! load_rgb (fi, offset))
+            eof = TRUE;
+          break;
 
-            case BMPFMT_RGB_64:
-              if (! load_rgb_64 (fi, offset))
-                eof = TRUE;
-              break;
+        case BMPFMT_RGB_64:
+          if (! load_rgb_64 (fi, offset))
+            eof = TRUE;
+          break;
 
-            case BMPFMT_INDEXED:
-              if (! load_indexed (fi, offset))
-                eof = TRUE;
-              break;
+        case BMPFMT_INDEXED:
+          if (! load_indexed (fi, offset))
+            eof = TRUE;
+          break;
 
-            case BMPFMT_RLE:
-              if (fi->file_ypos < ypos)
-                break;
+        case BMPFMT_RLE:
+          if (fi->file_ypos < ypos)
+            break;
 
-              if (! load_rle (fi, offset))
-                eof = TRUE;
-              break;
+          if (! load_rle (fi, offset))
+            eof = TRUE;
+          break;
 
-            case BMPFMT_HUFFMAN:
-              if (! load_huffman (fi, offset))
-                eof = TRUE;
-              break;
-            }
+        case BMPFMT_HUFFMAN:
+          if (! load_huffman (fi, offset))
+            eof = TRUE;
+          break;
         }
 
       cur_progress++;
