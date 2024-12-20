@@ -231,7 +231,7 @@ foreach ($bundle in $supported_archs)
         Set-Content "$vfs\share\gimp\*\gimp-release"
 
         ## Disable Update check (ONLY FOR RELEASES)
-        if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
+        if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
           {
             Add-Content "$vfs\share\gimp\*\gimp-release" 'check-update=false'
           }
@@ -247,7 +247,7 @@ foreach ($bundle in $supported_archs)
 
         ## Make .appxsym for each msix_arch (ONLY FOR RELEASES)
         $APPXSYM = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.appxsym"
-        #if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
+        #if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
         #  {
         #    Get-ChildItem $msix_arch -Filter *.pdb -Recurse |
         #    Compress-Archive -DestinationPath "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_$msix_arch.zip"
@@ -270,7 +270,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
   {
     $MSIXBUNDLE = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_neutral.msixbundle"
     $MSIX_ARTIFACT = "$MSIXBUNDLE"
-    if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
+    if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
       {
         $MSIXUPLOAD = "${IDENTITY_NAME}_${CUSTOM_GIMP_VERSION}_x64_arm64_bundle.msixupload"
         $MSIX_ARTIFACT = "$MSIXUPLOAD"
@@ -286,7 +286,7 @@ if (((Test-Path $a64_bundle) -and (Test-Path $x64_bundle)) -and (Get-ChildItem *
     Remove-Item _TempOutput/ -Recurse
 
     ## Make .msixupload (ONLY FOR RELEASES)
-    if ($CI_COMMIT_TAG -or ($GIMP_CI_MS_STORE -like 'MSIXUPLOAD*'))
+    if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*' -or $GIMP_CI_MS_STORE -like 'MSIXUPLOAD*')
       {
         Get-ChildItem *.msixbundle | ForEach-Object { Compress-Archive -Path "$($_.Basename).msixbundle" -DestinationPath "$($_.Basename).zip" }
         Get-ChildItem *.zip | Rename-Item -NewName $MSIXUPLOAD
@@ -350,13 +350,13 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
 
 
 # 7. SIGN .MSIX OR .MSIXBUNDLE (FOR TESTING ONLY)
-if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*') -and ($MSIX_ARTIFACT -notlike "*msixupload"))
- {
-  Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
-  signtool sign /debug /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT
-  Copy-Item build\windows\store\pseudo-gimp.pfx .\ -Recurse
-  Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}$([char]13)$([char]27)[0K"
- }
+if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
+  {
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
+    signtool sign /debug /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT
+    Copy-Item build\windows\store\pseudo-gimp.pfx .\ -Recurse
+    Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}$([char]13)$([char]27)[0K"
+  }
 
 
 if ($GITLAB_CI)
@@ -365,13 +365,13 @@ if ($GITLAB_CI)
     $output_dir = "$PWD\build\windows\store\_Output"
     New-Item $output_dir -ItemType Directory | Out-Null
     Move-Item $MSIX_ARTIFACT $output_dir
-    if (-not $CI_COMMIT_TAG -and ($GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*'))
+    if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
       {
         Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination $output_dir
       }
 
     # Generate checksums in common "sha*sum" format
-    if ($CI_COMMIT_TAG)
+    if ($CI_COMMIT_TAG -match 'GIMP_[0-9]*_[0-9]*_[0-9]*')
       {
         Write-Output "(INFO): generating checksums for $MSIX_ARTIFACT"
         # (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
