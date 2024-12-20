@@ -77,6 +77,11 @@ if ($revision -match '[1-9]' -and $CI_PIPELINE_SOURCE -ne 'schedule')
     $revision = $revision -replace 'MSIXUPLOAD_',''
     $revision_text = ", revision: $revision"
   }
+elseif ($gimp_version -match 'RC[0-9]')
+  {
+    $revision = $gimp_version -replace '\+git','' -replace '^.*(?=.{1}$)'
+    $revision_text = ", RC: $revision"
+  }
 else
   {
     $wack = "$revision"
