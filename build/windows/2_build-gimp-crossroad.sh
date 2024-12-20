@@ -22,20 +22,25 @@ fi
 
 # FIXME: We need native/Linux gimp-console.
 # https://gitlab.gnome.org/GNOME/gimp/-/issues/6393
+if [ "$1" ]; then
+  export BUILD_DIR="$1"
+else
+  export BUILD_DIR=$(echo _build*$RUNNER)
+fi
+if [ ! -d "$BUILD_DIR" ]; then
+  echo -e "\033[31m(ERROR)\033[0m: Before running this script, first build GIMP natively in $BUILD_DIR"
+fi
 if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
   export GIMP_PREFIX="$PWD/../_install"
-fi
-if [ ! -d '_build' ]; then
-  echo -e '\033[31m(ERROR)\033[0m: Before running this script, first build GIMP natively in _build'
 fi
 if [ ! -d "$GIMP_PREFIX" ]; then
   echo -e "\033[31m(ERROR)\033[0m: Before running this script, first install GIMP natively in $GIMP_PREFIX"
 fi
-if [ ! -d '_build' ] || [ ! -d "$GIMP_PREFIX" ]; then
+if [ ! -d "$BUILD_DIR" ] || [ ! -d "$GIMP_PREFIX" ]; then
   echo 'Patches are very welcome: https://gitlab.gnome.org/GNOME/gimp/-/issues/6393'
   exit 1
 fi
-GIMP_APP_VERSION=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+GIMP_APP_VERSION=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 GIMP_CONSOLE_PATH=$PWD/${PARENT_DIR}.local/bin/gimp-console-$GIMP_APP_VERSION
 echo "#!/bin/sh" > $GIMP_CONSOLE_PATH
 IFS=$'\n' VAR_ARRAY=($(cat .gitlab-ci.yml | sed -n '/export PATH=/,/GI_TYPELIB_PATH}\"/p' | sed 's/    - //'))
