@@ -73,7 +73,7 @@ workflow:
   # Caching support
   variables:
     CCACHE_BASEDIR: "$CI_PROJECT_DIR"
-    CCACHE_DIR: "$CI_PROJECT_DIR/_ccache"
+    CCACHE_DIR: "$CI_PROJECT_DIR/_ccache${ARTIFACTS_SUFFIX}"
     CC: "ccache clang"
     CXX: "ccache clang++"
     CC_LD: lld
@@ -81,18 +81,7 @@ workflow:
   cache:
     key: ${CI_JOB_NAME}${VARIANT}
     paths:
-      - _ccache/
-  # Universal variables (works in all POSIX OSes and archs)
-  before_script:
-    - echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
-    - export PATH="$GIMP_PREFIX/bin:$PATH"
-    - gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
-    - gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
-    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
-    - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
-    - echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
+      - _ccache${ARTIFACTS_SUFFIX}/
   # Common artifacts behavior
   artifacts:
     name: "${CI_JOB_NAME}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
@@ -102,8 +91,6 @@ variables:
   # Common cloning procedure
   GIT_DEPTH: "1"
   GIT_SUBMODULE_STRATEGY: none
-  # CI-wide Debian variables
-  GIMP_PREFIX: "${CI_PROJECT_DIR}/_install"
   # Enable colorful output when supported (e.g. ninja, cppcheck)
   CLICOLOR_FORCE: "1"
 
@@ -118,6 +105,7 @@ stages:
 ## prepare build-oriented Docker images ##
 
 .debian:
+  extends: .default
   rules:
     - <<: *CI_MERGE
     - <<: *CI_COMMIT
@@ -135,13 +123,35 @@ stages:
         MESON_OPTIONS: "-Dvector-icons=false"
         VARIANT: "-raster"
     - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
-    - if: '$GIMP_CI_APPIMAGE != null'
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
+  parallel:
+    matrix:
+      - RUNNER: aarch64
+        ARTIFACTS_SUFFIX: a64
+      - RUNNER: x86_64_v2
+        ARTIFACTS_SUFFIX: x64
+  tags:
+    - $RUNNER
+  # Universal variables (works in all POSIX OSes and archs)
+  before_script:
+    - export GIMP_PREFIX="${CI_PROJECT_DIR}/_install${ARTIFACTS_SUFFIX}"
+    - echo -e "\e[0Ksection_start:`date +%s`:environ[collapsed=true]\r\e[0KPreparing build environment"
+    - export PATH="$GIMP_PREFIX/bin:$PATH"
+    - gcc -print-multi-os-directory 2>/dev/null | grep ./ && export LIB_DIR=$(gcc -print-multi-os-directory | sed 's/\.\.\///g') || export LIB_DIR="lib"
+    - gcc -print-multiarch 2>/dev/null | grep . && export LIB_SUBDIR=$(echo $(gcc -print-multiarch)'/')
+    - export PKG_CONFIG_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+    - export LD_LIBRARY_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    - export XDG_DATA_DIRS="${GIMP_PREFIX}/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}"
+    - export GI_TYPELIB_PATH="${GIMP_PREFIX}/${LIB_DIR}/${LIB_SUBDIR}girepository-1.0${GI_TYPELIB_PATH:+:$GI_TYPELIB_PATH}"
+    - echo -e "\e[0Ksection_end:`date +%s`:environ\r\e[0K"
 
-image-debian-x64:
+image-debian:
+  extends: .debian
   rules:
-    - !reference [.debian, rules]
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
+      interruptible: true
+    - if: '$GIMP_CI_APPIMAGE != null'
   stage: prepare
   image:
     name: gcr.io/kaniko-project/executor:debug
@@ -226,17 +236,40 @@ image-debian-x64:
             xvfb
             xz-utils
             yelp-tools" >> Dockerfile
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest${ARTIFACTS_SUFFIX} --cache=true --cache-ttl=120h
+
+image-debian-x64:
+  extends: .debian
+  rules:
+    - !reference [.debian, rules]
+  stage: prepare
+  parallel:
+    matrix: []
+  image: !reference [image-debian, image]
+  variables:
+    GIT_STRATEGY: none
+  cache: {}
+  script:
+    - !reference [image-debian, script]
 
 ## GNU/Linux 64-bit CIs (Debian bookworm) ##
 
-deps-debian-x64:
-  extends: .default
+deps-debian:
+  extends: .debian
   rules:
-    - !reference [.debian, rules]
-  needs: ["image-debian-x64"]
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
+      interruptible: true
+    - if: '$GIMP_CI_APPIMAGE != null'
+  needs:
+    - job: image-debian
+      parallel:
+        matrix:
+          - RUNNER: aarch64
+            ARTIFACTS_SUFFIX: a64
+          - RUNNER: x86_64_v2
+            ARTIFACTS_SUFFIX: x64
   stage: dependencies
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  image: $CI_REGISTRY_IMAGE:build-debian-latest${ARTIFACTS_SUFFIX}
   variables:
     GIT_STRATEGY: none
   script:
@@ -251,8 +284,8 @@ deps-debian-x64:
       fi
     - git clone $babl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git
     - cd babl
-    - meson setup _build -Dprefix="${GIMP_PREFIX}"
-    - cd _build
+    - meson setup _build${ARTIFACTS_SUFFIX} -Dprefix="${GIMP_PREFIX}"
+    - cd _build${ARTIFACTS_SUFFIX}
     - ninja
     - ninja install
     - ccache --show-stats
@@ -269,39 +302,92 @@ deps-debian-x64:
       fi
     - git clone $gegl_branch --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git
     - cd gegl
-    - meson setup _build -Dprefix="${GIMP_PREFIX}" -Dworkshop=true
-    - cd _build
+    - meson setup _build${ARTIFACTS_SUFFIX} -Dprefix="${GIMP_PREFIX}" -Dworkshop=true
+    - cd _build${ARTIFACTS_SUFFIX}
     - ninja
     - ninja install
     - ccache --show-stats
     - echo -e "\e[0Ksection_end:`date +%s`:gegl_build\r\e[0K"
   artifacts:
     paths:
-      - _install/
-      - babl/_build/meson-logs/meson-log.txt
-      - babl/_build/config.h
-      - gegl/_build/meson-logs/meson-log.txt
-      - gegl/_build/config.h
+      - _install${ARTIFACTS_SUFFIX}/
+      - babl/_build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
+      - babl/_build${ARTIFACTS_SUFFIX}/config.h
+      - gegl/_build${ARTIFACTS_SUFFIX}/meson-logs/meson-log.txt
+      - gegl/_build${ARTIFACTS_SUFFIX}/config.h
     expire_in: 2 hours
 
+gimp-debian:
+  extends: .debian
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
+      interruptible: true
+    - if: '$GIMP_CI_APPIMAGE != null'
+  needs:
+    - job: deps-debian
+      parallel:
+        matrix:
+          - RUNNER: aarch64
+            ARTIFACTS_SUFFIX: a64
+          - RUNNER: x86_64_v2
+            ARTIFACTS_SUFFIX: x64
+  stage: gimp
+  image: $CI_REGISTRY_IMAGE:build-debian-latest${ARTIFACTS_SUFFIX}
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  script:
+    # Build GIMP
+    - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
+    - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
+    - meson setup .. -Dprefix="${GIMP_PREFIX}"
+                     -Drelocatable-bundle=yes
+    - ninja
+    - ninja install
+    - cd ..
+    - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
+    # Create bundle
+    - echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle"
+    - bash -x build/linux/appimage/3_dist-gimp-goappimage.sh --bundle-only
+    - echo -e "\e[0Ksection_end:`date +%s`:gimp_bundle\r\e[0K"
+  artifacts:
+    paths:
+      - AppDir${ARTIFACTS_SUFFIX}/
+      - _build${ARTIFACTS_SUFFIX}/config.h
+    expire_in: 2 days
+
+deps-debian-x64:
+  extends: .debian
+  rules:
+    - !reference [.debian, rules]
+  needs: ["image-debian-x64"]
+  parallel:
+    matrix: []
+  stage: dependencies
+  image: $CI_REGISTRY_IMAGE:build-debian-latest${ARTIFACTS_SUFFIX}
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - !reference [deps-debian, script]
+  artifacts: !reference [deps-debian, artifacts]
+
 gimp-debian-x64:
-  extends: .default
+  extends: .debian
   rules:
     - !reference [.debian, rules]
   needs: ["deps-debian-x64"]
+  parallel:
+    matrix: []
   stage: gimp
-  image: $CI_REGISTRY_IMAGE:build-debian-latest
+  image: $CI_REGISTRY_IMAGE:build-debian-latest${ARTIFACTS_SUFFIX}
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
     # Check building
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
-    - mkdir -p _build && cd _build
+    - mkdir -p _build${ARTIFACTS_SUFFIX} && cd _build${ARTIFACTS_SUFFIX}
     - meson setup .. -Dprefix="${GIMP_PREFIX}"
                      -Dgi-docgen=enabled
                      -Dg-ir-doc=true
-                     -Drelocatable-bundle=no
-                     -Denable-default-bin=enabled
                      $MESON_OPTIONS
     - ninja
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
@@ -326,10 +412,10 @@ gimp-debian-x64:
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_install\r\e[0K"
   artifacts:
     paths:
-      - _install/
-      - _build/
+      - _install${ARTIFACTS_SUFFIX}/
+      - _build${ARTIFACTS_SUFFIX}/
     reports:
-      junit: "_build/meson-logs/testlog.junit.xml"
+      junit: "_build${ARTIFACTS_SUFFIX}/meson-logs/testlog.junit.xml"
     expire_in: 2 days
 
 dist-appimage-weekly:
@@ -338,13 +424,22 @@ dist-appimage-weekly:
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*5. AppImage package.*/'
       interruptible: true
     - if: '$GIMP_CI_APPIMAGE != null'
-  needs: ["gimp-debian-x64"]
+  needs:
+    - job: gimp-debian
+      parallel:
+        matrix:
+          - RUNNER: aarch64
+            ARTIFACTS_SUFFIX: a64
+          - RUNNER: x86_64_v2
+            ARTIFACTS_SUFFIX: x64
   stage: distribution
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+  before_script:
+     - !reference [.debian, before_script]
   script:
-    - bash build/linux/appimage/3_dist-gimp-goappimage.sh
+    - bash build/linux/appimage/3_dist-gimp-goappimage.sh _buildx64
   artifacts:
     expose_as: 'Linux appimage'
     paths:
@@ -361,7 +456,6 @@ dist-appimage-weekly:
   tags:
     - flatpak
   image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
-  before_script: []
 
 deps-flatpak-x64:
   extends: .flatpak-x64
@@ -426,7 +520,12 @@ deps-win-x64-cross:
   extends: .win-cross
   rules:
     - !reference [.win-cross, rules]
-  needs: ["image-debian-x64"]
+  needs:
+    - job: image-debian
+      parallel:
+        matrix:
+          - RUNNER: x86_64_v2
+            ARTIFACTS_SUFFIX: x64
   stage: dependencies
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
@@ -448,7 +547,13 @@ gimp-win-x64-cross:
   extends: .win-cross
   rules:
     - !reference [.win-cross, rules]
-  needs: ["deps-win-x64-cross", "gimp-debian-x64"]
+  needs:
+    - job: deps-win-x64-cross
+    - job: deps-debian
+      parallel:
+        matrix:
+          - RUNNER: x86_64_v2
+            ARTIFACTS_SUFFIX: x64
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
@@ -495,7 +600,6 @@ gimp-win-x64-cross:
       variables:
         INSTALLER_OPTION: '-Dwindows-installer=true'
         STORE_OPTION: '-Dms-store=true'
-  # We don't use the universal variables since we use PS
   before_script:
     # MSYS2 config
     - $MSYS2_PREFIX = 'C:/msys64'
@@ -669,6 +773,8 @@ file-plug-in-tests:
     - key: $CI_JOB_NAME
       paths:
         - _data
+  before_script:
+    - !reference [.debian, before_script]
   script:
     - API_VER=$(grep GIMP_PKGCONFIG_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
     - APP_VER=$(grep GIMP_APP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
@@ -741,7 +847,7 @@ sources-debian:
     - <<: *CI_COMMIT
     - if: '$GIMP_CI_SOURCES != null'
     - <<: *CI_RELEASE
-  needs: ["gimp-debian-x64"]
+  needs: ["deps-debian-x64", "gimp-debian-x64"]
   stage: distribution
   cache: []
   variables:

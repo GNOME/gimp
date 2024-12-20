@@ -50,37 +50,27 @@ echo -e "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K"
 
 # 2. GET GLOBAL VARIABLES
 echo -e "\e[0Ksection_start:`date +%s`:apmg_info\r\e[0KGetting AppImage global info"
-if [ "$1" ]; then
+if [ "$1" != '' ] && [[ ! "$1" =~ "--" ]]; then
   export BUILD_DIR="$1"
 else
-  export BUILD_DIR="$PWD/_build"
+  export BUILD_DIR="$PWD/_build$ARTIFACTS_SUFFIX"
 fi
 
-## Get info about GIMP version
+gimp_app_version=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
 if [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
-  export CHANNEL='continuous'
+  export APP_ID="org.gimp.GIMP.continuous"
 else
-  export CHANNEL='latest'
+  export APP_ID="org.gimp.GIMP.latest"
 fi
-export APP_ID="org.gimp.GIMP.$CHANNEL"
 echo "(INFO): App ID: $APP_ID | Version: $GIMP_VERSION"
-
-## Prefixes to get files to copy
-UNIX_PREFIX='/usr'
-if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
-  export GIMP_PREFIX="$PWD/../_install"
-fi
-
-## Paths to receive copied files
-APP_DIR="$PWD/AppDir"
-USR_DIR="$APP_DIR/usr"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
 
 # 3. GIMP FILES
-echo -e "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir/usr"
+if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l) != '2'" ]; then
+echo -e "\e[0Ksection_start:`date +%s`:apmg_files[collapsed=true]\r\e[0KPreparing GIMP files in AppDir${ARTIFACTS_SUFFIX}/usr"
 
 ## 3.1. Special re-building (only if needed)
 
@@ -111,6 +101,17 @@ fi
 
 
 ## 3.2. Bundle files
+
+#Prefixes to get files to copy
+UNIX_PREFIX='/usr'
+if [ -z "$GITLAB_CI" ] && [ -z "$GIMP_PREFIX" ]; then
+  export GIMP_PREFIX="$PWD/../_install"
+fi
+
+#Paths to receive copied files
+APP_DIR="$PWD/AppDir${ARTIFACTS_SUFFIX}"
+USR_DIR="$APP_DIR/usr"
+
 prep_pkg ()
 {
   if [ "$GITLAB_CI" ]; then
@@ -202,8 +203,12 @@ wipe_usr ()
 
 ## Prepare AppDir
 mkdir -p $APP_DIR
-bund_usr "$UNIX_PREFIX" "lib64/ld-*.so.*" --go
-conf_app LD_LINUX "lib64/ld-*.so.*"
+bund_usr "$UNIX_PREFIX" "lib*/ld-*.so.*" --go
+if [ "$ARCH" = 'aarch64' ];then
+  conf_app LD_LINUX "lib/ld-*.so.*"
+else
+  conf_app LD_LINUX "lib64/ld-*.so.*"
+fi
 
 ## Bundle base (bare minimum to run GTK apps)
 ### Glib needed files (to be able to use file dialogs)
@@ -306,9 +311,14 @@ bund_usr "$GIMP_PREFIX" "share/applications/*.desktop" --rename $APP_ID.desktop
 "./$go_appimagetool" -s deploy $USR_DIR/share/applications/$APP_ID.desktop &> appimagetool.log || cat appimagetool.log
 
 ## Manual adjustments (go-appimagetool don't handle Linux FHS gracefully yet)
+### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
+cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
+rm -r $APP_DIR/lib
 ### Ensure that LD is in right dir. See: https://github.com/probonopd/go-appimage/issues/49
-cp -r $APP_DIR/lib64 $USR_DIR
-rm -r $APP_DIR/lib64
+if [ "$ARCH" = 'x86_64' ]; then
+  cp -r $APP_DIR/lib64 $USR_DIR
+  rm -r $APP_DIR/lib64
+fi
 chmod +x "$APP_DIR/$LD_LINUX"
 exec_array=($(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -exec head -c 4 {} \; -exec echo " {}" \;  | grep ^.ELF))
 for exec in "${exec_array[@]}"; do
@@ -316,21 +326,24 @@ for exec in "${exec_array[@]}"; do
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
   fi
 done
-### Undo the mess which breaks babl and GEGL. See: https://github.com/probonopd/go-appimage/issues/315
-cp -r $APP_DIR/lib/* $USR_DIR/${LIB_DIR}
-rm -r $APP_DIR/lib
-
 ## Unnecessary files bundled by go-appimagetool
 echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
       usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
       usr/share/doc
       usr/share/themes
-      etc" > .appimageignore
+      etc" > .appimageignore${ARTIFACTS_SUFFIX}
 echo -e "\e[0Ksection_end:`date +%s`:apmg_files\r\e[0K"
+fi
+if [ "$1" = '--bundle-only' ] || [ "$2" = '--bundle-only' ]; then
+  exit 0
+fi
 
 
 # 4. PREPARE .APPIMAGE-SPECIFIC "SOURCE"
+appdir_array=($(find . -maxdepth 1 -name AppDir*))
+for APP_DIR in "${appdir_array[@]}"; do
 echo -e "\e[0Ksection_start:`date +%s`:apmg_source[collapsed=true]\r\e[0KMaking AppImage assets"
+export USR_DIR="$APP_DIR/usr"
 
 ## 4.1. Finish AppRun configuration
 echo '(INFO): copying configured AppRun'
@@ -349,7 +362,6 @@ cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
 sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
-gimp_app_version=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 ln -s -r "$USR_DIR/bin/gimp-$gimp_app_version" "$USR_DIR/bin/$APP_ID"
 sed -i "s/gimp-$gimp_app_version/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 cp "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
@@ -362,14 +374,18 @@ echo -e "\e[0Ksection_end:`date +%s`:apmg_source\r\e[0K"
 
 
 # 5. CONSTRUCT .APPIMAGE
-APPIMAGETOOL_APP_NAME="GIMP-${CHANNEL}-${ARCH}.AppImage"
+export ARCH=$(echo $APP_DIR | sed 's/AppDir//' )
+APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:apmg_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
-"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
+"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file .appimageignore${ARTIFACTS_SUFFIX} \
+                           -u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
 rm -r $APP_DIR
 #standard appimagetool does not output runtime version at squashing. See: https://github.com/AppImage/appimagetool/issues/80
 chmod +x "./$APPIMAGETOOL_APP_NAME"
 "./$APPIMAGETOOL_APP_NAME" --appimage-version
 echo -e "\e[0Ksection_end:`date +%s`:apmg_making\r\e[0K"
+done
+
 
 if [ "$GITLAB_CI" ]; then
   mkdir -p build/linux/appimage/_Output/
