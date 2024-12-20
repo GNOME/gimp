@@ -353,8 +353,13 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
 if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
   {
     Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
-    signtool sign /debug /fd sha256 /a /f build\windows\store\pseudo-gimp.pfx /p eek $MSIX_ARTIFACT
-    Copy-Item build\windows\store\pseudo-gimp.pfx .\ -Recurse
+    signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
+    if ("$LASTEXITCODE" -gt '0' -or "$?" -eq 'False')
+      {
+        ## We need to manually check failures in pre-7.4 PS
+        exit 1
+      }
+    Copy-Item build\windows\store\pseudo-gimp*.pfx pseudo-gimp.pfx -Recurse
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):msix_sign${msix_arch}$([char]13)$([char]27)[0K"
   }
 
@@ -367,7 +372,7 @@ if ($GITLAB_CI)
     Move-Item $MSIX_ARTIFACT $output_dir
     if ($CI_COMMIT_TAG -notmatch 'GIMP_[0-9]*_[0-9]*_[0-9]*' -and $GIMP_CI_MS_STORE -notlike 'MSIXUPLOAD*' -and $MSIX_ARTIFACT -notlike "*msixupload")
       {
-        Get-ChildItem pseudo-gimp.pfx | Move-Item -Destination $output_dir
+        Copy-Item pseudo-gimp.pfx $output_dir
       }
 
     # Generate checksums in common "sha*sum" format

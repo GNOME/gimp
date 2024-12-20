@@ -20,9 +20,24 @@ Base rule to update the "GIMP (Preview)" entry:
    Only 'Packages' and 'Store listings' sections are needed. On 'Packages' you will
    add the generated .msixupload and on 'Store listings' the brief changelog.
 
-If the .msix* starts to be refused to certification or to signing,
+If the .msix* starts to be refused to certification or to self-signing,
 run `build\windows\store\3_dist-gimp-winsdk.ps1 WACK` locally to see if it
 still complies with the latest Windows policies. Make sure to update WinSDK.
+
+If the .msix* starts to be refused to self-signing due to the .pfx file, then
+generate a new one with the commands below and commit it to this dir.
+
+```pwsh
+$pseudo_gimp = "pseudo-gimp_$(Get-Date -Format yyyy)"
+```
+
+```pwsh
+New-SelfSignedCertificate -Type Custom -Subject "$(([xml](Get-Content build\windows\store\AppxManifest.xml)).Package.Identity.Publisher)" -KeyUsage DigitalSignature -FriendlyName "$pseudo_gimp" -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")
+```
+
+```pwsh
+Export-PfxCertificate -Cert "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)" -FilePath "${pseudo_gimp}.pfx" -Password (ConvertTo-SecureString -String eek -Force -AsPlainText)
+```
 
 ## Versioning the MSIX
 
