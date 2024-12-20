@@ -41,4 +41,4 @@ export PYTHONDONTWRITEBYTECODE=1
 # RUN MAIN_BIN
 # FIXME: We need to run on squash-fs dir since LD is hardlinked into executables
 cd "$HERE"
-exec "${LD_LINUX}" --inhibit-cache "$HERE"/usr/bin/gimp "$@"
+exec "${LD_LINUX}" --inhibit-cache "$HERE"/usr/bin/APP_ID "$@"

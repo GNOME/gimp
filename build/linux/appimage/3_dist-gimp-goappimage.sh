@@ -335,6 +335,7 @@ echo -e "\e[0Ksection_start:`date +%s`:apmg_source[collapsed=true]\r\e[0KMaking 
 ## 4.1. Finish AppRun configuration
 echo '(INFO): copying configured AppRun'
 sed -i '/_WILD/d' build/linux/appimage/AppRun
+sed -i "s/APP_ID/$APP_ID/" build/linux/appimage/AppRun
 mv build/linux/appimage/AppRun $APP_DIR
 chmod +x $APP_DIR/AppRun
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
@@ -348,6 +349,9 @@ cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 echo "(INFO): configuring $APP_ID.desktop"
 sed -i "s/Icon=gimp/Icon=$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
+gimp_app_version=$(grep GIMP_APP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
+ln -s -r "$USR_DIR/bin/gimp-$gimp_app_version" "$USR_DIR/bin/$APP_ID"
+sed -i "s/gimp-$gimp_app_version/$APP_ID/g" "$USR_DIR/share/applications/${APP_ID}.desktop"
 cp "$USR_DIR/share/applications/${APP_ID}.desktop" $APP_DIR
 
 ## 4.4. Configure appdata asset (similarly to flatpaks's 'rename-appdata-file')
