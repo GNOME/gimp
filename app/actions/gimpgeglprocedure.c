@@ -377,6 +377,11 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                              gimp_procedure_get_help_id (procedure));
         }
 
+      /* For custom GIMP operations, we need to set the existing filter to edit
+       * before initializing so it doesn't create a separate filter. */
+      if (gegl_procedure->filter)
+        GIMP_FILTER_TOOL (active_tool)->existing_filter = gegl_procedure->filter;
+
       tool_manager_initialize_active (gimp, display);
 
       /* For GIMP-specific GEGL operations, we need to copy over the
@@ -385,7 +390,6 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
         {
           GeglNode *node;
 
-          GIMP_FILTER_TOOL (active_tool)->existing_filter = gegl_procedure->filter;
           gimp_filter_set_active (GIMP_FILTER (gegl_procedure->filter), FALSE);
 
           node = gimp_drawable_filter_get_operation (gegl_procedure->filter);
