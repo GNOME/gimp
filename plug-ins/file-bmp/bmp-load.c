@@ -544,10 +544,12 @@ load_image (GFile *gfile, GError **error)
         case BI_BITFIELDS:
         case BI_ALPHABITFIELDS:
           read_masks (&bitmap_head.masks[0], fi.masks);
+          digest_masks (fi.masks);
           break;
 
         case BI_RGB:
           set_default_masks (bitmap_head.biBitCnt, fi.masks);
+          digest_masks (fi.masks);
           break;
 
         case BI_OS2_RLE24:
@@ -568,7 +570,6 @@ load_image (GFile *gfile, GError **error)
                        gimp_file_get_utf8_name (gfile));
           goto out;
         }
-      digest_masks (fi.masks);
       break;
 
     case 64:
