@@ -2482,12 +2482,9 @@ gimp_item_set_lock_content (GimpItem *item,
     {
       if (push_undo && gimp_item_is_attached (item))
         {
-          /* Right now I don't think this should be pushed. */
-#if 0
           GimpImage *image = gimp_item_get_image (item);
 
           gimp_image_undo_push_item_lock_content (image, NULL, item);
-#endif
         }
 
       GET_PRIVATE (item)->lock_content = lock_content;
