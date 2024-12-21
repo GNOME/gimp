@@ -1007,21 +1007,7 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
       gimp_context_set_image (factory_context, image);
     }
 
-  if (image == NULL && ! gimp_container_is_empty (image_container))
-    {
-      image = GIMP_IMAGE (gimp_container_get_first_child (image_container));
-
-      /*  this invokes this function recursively but we don't enter
-       *  the if() branch the second time
-       */
-      gimp_context_set_image (context, image);
-
-      /*  stop the emission of the original signal (the emission of
-       *  the recursive signal is finished)
-       */
-      g_signal_stop_emission_by_name (context, "image-changed");
-    }
-  else if (image != NULL && ! gimp_container_is_empty (display_container))
+  if (image != NULL && ! gimp_container_is_empty (display_container))
     {
       GimpDisplay *display;
       GimpImage   *display_image;
