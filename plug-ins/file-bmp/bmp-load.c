@@ -573,6 +573,15 @@ load_image (GFile *gfile, GError **error)
       break;
 
     case 64:
+      if (bitmap_head.biCompr != BI_RGB)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported compression (%u) in BMP file from '%s'"),
+                       bitmap_head.biCompr > 100 ? bitmap_head.biCompr - 100
+                                                 : bitmap_head.biCompr,
+                       gimp_file_get_utf8_name (gfile));
+          goto out;
+        }
       break;
 
     default:
