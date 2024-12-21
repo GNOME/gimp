@@ -199,7 +199,7 @@ read_colormap (FILE     *fd,
           return FALSE;
         }
 
-      /* Bitmap save the colors in another order! But change only once! */
+      /* BMP colormap entries are in BGR order */
 
       buffer[3 * i + 0] = rgb[2];
       buffer[3 * i + 1] = rgb[1];
@@ -348,8 +348,6 @@ load_image (GFile *gfile, GError **error)
       goto out;
     }
 
-  /* What kind of bitmap is it? */
-
   /* OS/2 headers store width and height as unsigned, Windows headers as signed.
    * We make no attempt to distinguish between those (which would be possible
    * in some but not all cases) but always err on the Windows/signed side.
@@ -372,7 +370,7 @@ load_image (GFile *gfile, GError **error)
     }
   else if (bitmap_head.biSize >= 16)
     {
-      /* all others use 32bit ints and have 4-byte table entries */
+      /* all others use 32bit ints and have 4-byte color table entries */
       colorsize = 4;
 
       /* BITMAPINFOHEADER / OS22XBITMAPHEADER */
@@ -388,7 +386,10 @@ load_image (GFile *gfile, GError **error)
       bitmap_head.biClrImp  = ToL (&buffer[36]);
 
       /* OS22XBITMAPHEADER might write garbage into mask values, but
-       * they will be ignored because there is no OS/2 BITFIELDS bmp */
+       * they will be ignored because there is no OS/2 BITFIELDS bmp.
+       * Likewise for the following V4 fields, which would only be used
+       * when the header size is larger than any valid OS/2 header.
+       */
       bitmap_head.masks[0] = ToL (&buffer[40]);
       bitmap_head.masks[1] = ToL (&buffer[44]);
       bitmap_head.masks[2] = ToL (&buffer[48]);
@@ -442,10 +443,12 @@ load_image (GFile *gfile, GError **error)
     {
       if (bitmap_head.biCompr == BI_BITFIELDS && bitmap_head.biBitCnt == 1)
         {
+          /* BCA_HUFFMAN1D */
           bitmap_head.biCompr = BI_OS2_HUFFMAN;
         }
       else if (bitmap_head.biCompr == BI_JPEG && bitmap_head.biBitCnt == 24)
         {
+          /* BCA_RLE24 */
           bitmap_head.biCompr = BI_OS2_RLE24;
         }
     }
@@ -453,7 +456,7 @@ load_image (GFile *gfile, GError **error)
   if (bitmap_head.biSize <= 40 &&
       (bitmap_head.biCompr == BI_BITFIELDS || bitmap_head.biCompr == BI_ALPHABITFIELDS))
     {
-      /* BITMAPINFOHEADER stores masks right after header */
+      /* BITMAPINFOHEADER stores masks right after (not as part of) header */
 
       gint nmasks;
 
@@ -981,6 +984,8 @@ load_rle (struct Fileinfo *fi, gsize offset)
 {
   gint    shift, i, j;
   guchar *dest;
+
+  /* dest must be (re)calculated inside loop, because RLE can skip pixles */
 
   while (fi->xpos <= fi->width)
     {
