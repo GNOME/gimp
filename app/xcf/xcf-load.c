@@ -2634,6 +2634,17 @@ xcf_load_effect_props (XcfInfo      *info,
                       }
 
                     xcf_read_string (info, &serialized, 1);
+                    if (! (serialized && strlen (serialized)))
+                      {
+                        gimp_message (info->gimp, G_OBJECT (info->progress),
+                                      GIMP_MESSAGE_WARNING,
+                                      "XCF Warning: failure to deserialize config object for property '%s' of filter '%s'.\n"
+                                      "Serialized config could not be read.",
+                                      filter_prop_name, filter->operation_name);
+                        valid_prop_value = FALSE;
+                        break;
+                      }
+
                     g_value_init (&filter_prop_value, pspec->value_type);
                     config = g_object_new (pspec->value_type, NULL);
                     if (gimp_config_deserialize_string (GIMP_CONFIG (config), serialized, -1, NULL, &error))
