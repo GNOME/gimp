@@ -271,9 +271,9 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   if (GIMP_IS_TOGGLE_ACTION (action))
     {
       if (gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)))
-        icon_name = "gtk-ok";
+        icon_name = "gimp-toggle-on";
       else
-        icon_name = "gtk-no";
+        icon_name = "gimp-toggle-off";
     }
   else
     {
