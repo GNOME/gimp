@@ -613,8 +613,17 @@ gimp_babl_format_get_with_alpha (const Babl *format)
   if (babl_format_is_palette (format))
     {
       gchar *alpha_palette = g_strdup (model);
+      gchar *last_hyphen;
 
+      /* Retrieving the alpha variant of the same palette.
+       * 1. The alpha variant starts with '\'.
+       * 2. Removing the last part of the name which represents the
+       *    space because babl will add it itself.
+       */
       alpha_palette[0] = '\\';
+      last_hyphen = g_strrstr (alpha_palette, "-");
+      if (last_hyphen != NULL)
+        *last_hyphen = '\0';
       babl_new_palette_with_space (alpha_palette, babl_format_get_space (format),
                                    NULL, &new_format);
       g_free (alpha_palette);
