@@ -338,11 +338,11 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 static const gchar *
 gimp_fix_xmp_tag (const gchar *tag)
 {
-  const gchar *const org = "/Iptc4xmpExt";
-  const gchar *const new = "/iptcExt";
+  const gchar org[] = "/Iptc4xmpExt";
+  const gchar new[] = "/iptcExt";
   gchar *substring, *tail;
 
-  G_STATIC_ASSERT (strlen (new) < strlen (org));
+  G_STATIC_ASSERT (sizeof new < sizeof org);
 
   /* Due to problems using /Iptc4xmpExt namespace (/iptcExt is used
    * instead by Exiv2) we replace all occurrences with /iptcExt which
