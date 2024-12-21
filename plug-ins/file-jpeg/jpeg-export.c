@@ -842,6 +842,7 @@ save_dialog (GimpProcedure       *procedure,
 {
   GtkWidget        *dialog;
   GtkWidget        *widget;
+  GtkWidget        *box;
   GtkWidget        *profile_label;
   GimpColorProfile *cmyk_profile = NULL;
   gint              orig_quality;
@@ -967,8 +968,7 @@ save_dialog (GimpProcedure       *procedure,
     }
 
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "advanced-options",
-                                  "smoothing",
+                                  "advanced-options-1",
                                   "progressive",
                                   "cmyk-frame",
 #ifdef C_ARITH_CODING_SUPPORTED
@@ -976,10 +976,32 @@ save_dialog (GimpProcedure       *procedure,
 #else
                                   "optimize",
 #endif
+                                  NULL);
+
+  /* Put options in two column form so the dialog fits on
+   * smaller screens. */
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "advanced-options-2",
                                   "restart-frame",
                                   "sub-sampling",
                                   "dct",
                                   NULL);
+
+  box = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "advanced-options-horizontal",
+                                        "advanced-options-1",
+                                        "advanced-options-2",
+                                        NULL);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_set_spacing (GTK_BOX (box), 12);
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                        "advanced-options",
+                                        "smoothing",
+                                        "advanced-options-horizontal",
+                                        NULL);
+
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "advanced-frame", "advanced-title", FALSE,
                                     "advanced-options");
@@ -989,8 +1011,6 @@ save_dialog (GimpProcedure       *procedure,
                               "preview-size", "show-preview",
                               "advanced-frame",
                               NULL);
-
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   /* Run make_preview() when various config are changed. */
   g_signal_connect (config, "notify",
