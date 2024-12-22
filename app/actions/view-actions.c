@@ -91,7 +91,7 @@ static const GimpActionEntry view_actions[] =
     view_zoom_fit_in_cmd_callback,
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
-  { "view-zoom-fill", GIMP_ICON_ZOOM_FIT_BEST,
+  { "view-zoom-fill", GIMP_ICON_VIEW_ZOOM_FILL,
     NC_("view-action", "Fi_ll Window"), NULL, { NULL },
     NC_("view-action", "Adjust the zoom ratio so that the entire window is used"),
     view_zoom_fill_cmd_callback,
@@ -148,7 +148,7 @@ static const GimpActionEntry view_actions[] =
     view_color_management_reset_cmd_callback,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
-  { "view-shrink-wrap", GIMP_ICON_ZOOM_FIT_BEST,
+  { "view-shrink-wrap", GIMP_ICON_VIEW_SHRINK_WRAP,
     NC_("view-action", "Shrink _Wrap"), NULL, { "<primary>J", NULL },
     NC_("view-action", "Reduce the image window to the size of the image display"),
     view_shrink_wrap_cmd_callback,
