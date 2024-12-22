@@ -2774,7 +2774,7 @@ add_legacy_layer_effects (GimpLayer *layer,
 
       filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
                                                 "gegl:color-overlay",
-                                                "Color Overlay (PS)",
+                                                NULL,
                                                 "value", color,
                                                 NULL);
       gimp_drawable_filter_set_opacity (filter, sofi.opacity / 255.0);
