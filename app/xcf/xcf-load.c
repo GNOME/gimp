@@ -146,7 +146,8 @@ static gboolean        xcf_load_prop          (XcfInfo       *info,
                                                guint32       *prop_size);
 static GimpLayer     * xcf_load_layer         (XcfInfo       *info,
                                                GimpImage     *image,
-                                               GList        **item_path);
+                                               GList        **item_path,
+                                               gint          *n_broken_effects);
 static GimpChannel   * xcf_load_channel       (XcfInfo       *info,
                                                GimpImage     *image);
 static FilterData    * xcf_load_effect        (XcfInfo       *info,
@@ -220,6 +221,7 @@ xcf_load_image (Gimp     *gimp,
   gint                n_broken_layers         = 0;
   gint                n_broken_channels       = 0;
   gint                n_broken_paths          = 0;
+  gint                n_broken_effects        = 0;
   GList              *broken_paths            = NULL;
   GList              *group_layers            = NULL;
   GList              *syms;
@@ -627,7 +629,7 @@ xcf_load_image (Gimp     *gimp,
         goto error;
 
       /* read in the layer */
-      layer = xcf_load_layer (info, image, &item_path);
+      layer = xcf_load_layer (info, image, &item_path, &n_broken_effects);
       if (! layer)
         {
           n_broken_layers++;
@@ -965,7 +967,7 @@ xcf_load_image (Gimp     *gimp,
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (image, info->tattoo_state);
 
-  if (n_broken_layers > 0 || n_broken_channels > 0 || n_broken_paths > 0)
+  if (n_broken_layers > 0 || n_broken_channels > 0 || n_broken_paths > 0 || n_broken_effects)
     goto error;
 
   gimp_image_undo_enable (image);
@@ -2993,7 +2995,8 @@ xcf_load_prop (XcfInfo  *info,
 static GimpLayer *
 xcf_load_layer (XcfInfo    *info,
                 GimpImage  *image,
-                GList     **item_path)
+                GList     **item_path,
+                gint       *n_broken_effects)
 {
   GimpLayer         *layer;
   GimpLayerMask     *layer_mask;
@@ -3258,13 +3261,14 @@ xcf_load_layer (XcfInfo    *info,
 
       filter_data = xcf_load_effect (info, image, GIMP_DRAWABLE (layer));
       if (! filter_data)
-        goto error;
-
-      xcf_progress_update (info);
-
-      filter_data_list = g_list_prepend (filter_data_list, filter_data);
-      filter_count++;
-
+        {
+          (*n_broken_effects)++;
+        }
+      else
+        {
+          filter_data_list = g_list_prepend (filter_data_list, filter_data);
+          filter_count++;
+        }
       xcf_progress_update (info);
 
       /* restore the saved position so we'll be ready to
