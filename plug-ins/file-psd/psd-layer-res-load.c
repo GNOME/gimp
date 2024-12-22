@@ -358,6 +358,14 @@ load_layer_resource (PSDlayerres   *res_a,
 
   else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
     {
+      /* TODO: Remove once all legacy layer styles are
+       * implemented */
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->layer_effect = TRUE;
+          lyr_a->unsupported_features->show_gui     = TRUE;
+        }
+
       load_resource_lrfx (res_a, lyr_a, input, error);
     }
 

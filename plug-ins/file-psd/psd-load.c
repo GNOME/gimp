@@ -2773,8 +2773,8 @@ add_legacy_layer_effects (GimpLayer *layer,
       convert_psd_mode (sofi.blend, &mode);
 
       filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
-                                                "gegl:color",
-                                                "Solid Fill (PSD)",
+                                                "gegl:color-overlay",
+                                                "Color Overlay (PS)",
                                                 "value", color,
                                                 NULL);
       gimp_drawable_filter_set_opacity (filter, sofi.opacity / 255.0);
