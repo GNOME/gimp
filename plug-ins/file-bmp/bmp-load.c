@@ -66,7 +66,7 @@ struct Fileinfo
   gint          width;
   gint          height;
   guchar       *rowbuf;
-  guint64       rowbytes;
+  guint64       bytes_per_row;
   gint          bpp;
   guchar       *dest;
   gsize         rowstride;
@@ -599,9 +599,9 @@ load_image (GFile *gfile, GError **error)
       goto out;
     }
 
-  fi.rowbytes = (((guint64) bitmap_head.biWidth * bitmap_head.biBitCnt + 31) / 32) * 4;
+  fi.bytes_per_row = (((guint64) bitmap_head.biWidth * bitmap_head.biBitCnt + 31) / 32) * 4;
 
-  if (fi.rowbytes > G_MAXSIZE || bitmap_head.biWidth > GIMP_MAX_IMAGE_SIZE ||
+  if (fi.bytes_per_row > G_MAXSIZE || bitmap_head.biWidth > GIMP_MAX_IMAGE_SIZE ||
       bitmap_head.biWidth < 1)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -791,7 +791,7 @@ ReadImage (struct Fileinfo *fi,
     {
       dest_size  = (gsize) fi->width * fi->tile_height * fi->channels * fi->bytesperchannel;
       fi->dest   = g_try_malloc0 (dest_size);
-      fi->rowbuf = g_try_malloc (MAX (4, fi->rowbytes));
+      fi->rowbuf = g_try_malloc (MAX (4, fi->bytes_per_row));
     }
 
   if (! (fi->dest && fi->rowbuf))
@@ -900,7 +900,7 @@ load_rgb (struct Fileinfo *fi, gsize offset)
   guint16 *dest16;
   guint32 *dest32;
 
-  if (! ReadOK (fi->file, fi->rowbuf, fi->rowbytes))
+  if (! ReadOK (fi->file, fi->rowbuf, fi->bytes_per_row))
     return FALSE;
 
   dest8  = fi->dest + fi->bytesperchannel * offset;
@@ -931,7 +931,7 @@ load_rgb_64 (struct Fileinfo *fi, gsize offset)
   gint    xpos, i;
   gfloat *destflt;
 
-  if (! ReadOK (fi->file, fi->rowbuf, fi->rowbytes))
+  if (! ReadOK (fi->file, fi->rowbuf, fi->bytes_per_row))
     return FALSE;
 
   destflt = (gfloat *) fi->dest + offset;
@@ -958,7 +958,7 @@ load_indexed (struct Fileinfo *fi, gsize offset)
   gint    xpos, val, shift;
   guchar *dest;
 
-  if (! ReadOK (fi->file, fi->rowbuf, fi->rowbytes))
+  if (! ReadOK (fi->file, fi->rowbuf, fi->bytes_per_row))
     return FALSE;
 
   dest = fi->dest + offset;
