@@ -188,6 +188,7 @@ MinVersion=10.0
 
 
 ;3.4.1 INSTALLER PAGES
+PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 ShowLanguageDialog=auto
 DisableWelcomePage=no
