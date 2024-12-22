@@ -230,23 +230,20 @@ digest_masks (BitmapChannel *masks)
 
   for (i = 0; i < 4; i++)
     {
-      guint32 mask;
-      gint    nbits, offset, bit;
+      guint32 mask   = masks[i].mask;
+      gint    nbits  = 0;
+      gint    offset = 0;
 
-      mask   = masks[i].mask;
-      nbits  = 0;
-      offset = -1;
-
-      for (bit = 0; bit < 32; bit++)
+      while (mask && ! (mask & 1))
         {
-          if (mask & 1)
-            {
-              nbits++;
-              if (offset == -1)
-                offset = bit;
-            }
+          mask >>= 1;
+          offset++;
+        }
 
-          mask = mask >> 1;
+      while (mask)
+        {
+          mask >>= 1;
+          nbits++;
         }
 
       masks[i].shiftin   = offset;
