@@ -413,6 +413,8 @@ G_BEGIN_DECLS
 
 #define GIMP_ICON_VIEW_REFRESH              "view-refresh"
 #define GIMP_ICON_VIEW_FULLSCREEN           "view-fullscreen"
+#define GIMP_ICON_VIEW_SHRINK_WRAP          "view-shrink-wrap"
+#define GIMP_ICON_VIEW_ZOOM_FILL            "view-zoom-fill"
 
 #define GIMP_ICON_WILBER                    "gimp-wilber"
 #define GIMP_ICON_WILBER_EEK                "gimp-wilber-eek"
