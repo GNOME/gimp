@@ -261,7 +261,11 @@ begin
 
 end;
 
+#define API_MAJOR=Copy(GIMP_PKGCONFIG_VERSION,1,Pos(".",GIMP_PKGCONFIG_VERSION)-1)
+
 procedure CurUninstallStepChanged(CurStep: TUninstallStep);
+var
+	gimp_directory: String;
 begin
 	DebugMsg('CurUninstallStepChanged','');
 	case CurStep of
@@ -270,7 +274,20 @@ begin
 		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
 		ParseUninstInf();
 	end;
-	//usPostUninstall:
+	usPostUninstall:
+	begin
+		if not IsAdminInstallMode() then begin
+            gimp_directory := GetEnv('GIMP{#API_MAJOR}_DIRECTORY');
+			if gimp_directory = '' then begin
+				gimp_directory := ExpandConstant('{userappdata}\GIMP\{#GIMP_APP_VERSION}');
+			end;
+			if DirExists(gimp_directory + '\') then begin
+				if SuppressibleMsgBox(CustomMessage('UninstallConfig'), mbConfirmation, MB_YESNO or MB_DEFBUTTON2, IDNO) = IDYES then begin
+					DelTree(gimp_directory, True, True, True);
+				end;
+			end;
+	    end;
+	end;
 	end;
 end;
 

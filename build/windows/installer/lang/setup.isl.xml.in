@@ -217,6 +217,11 @@
       <value>Removing add-on</value>
     </config>
 
+    <!-- Shown after uninstall -->
+    <config name="UninstallConfig">
+      <value>Do you want to permanently delete your personal GIMP files (e.g. settings, tool presets, custom brushes)?</value>
+    </config>
+
     <config name="InternalError">
       <value>Internal error (%1).</value>
     </config>
