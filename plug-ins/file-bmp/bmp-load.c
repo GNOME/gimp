@@ -126,33 +126,6 @@ static gint        huff_skip_eol (guint32           *bitbuf,
                                   gint              *buflen,
                                   FILE              *file);
 
-static void
-set_default_masks (gushort        biBitCnt,
-                   BitmapChannel *masks)
-{
-  switch (biBitCnt)
-    {
-    case 24:
-    case 32:
-      masks[0].mask = 0x00ff0000;
-      masks[1].mask = 0x0000ff00;
-      masks[2].mask = 0x000000ff;
-      masks[3].mask = 0x00000000;
-      break;
-
-    case 16:
-      /* 5 bits per channel */
-      masks[0].mask = 0x00007c00;
-      masks[1].mask = 0x000003e0;
-      masks[2].mask = 0x0000001f;
-      masks[3].mask = 0x00000000;
-      break;
-
-    default:
-      break;
-    }
-}
-
 static gint32
 ToL (const guchar *buffer)
 {
@@ -209,6 +182,33 @@ read_colormap (FILE     *fd,
     }
 
   return TRUE;
+}
+
+static void
+set_default_masks (gushort        biBitCnt,
+                   BitmapChannel *masks)
+{
+  switch (biBitCnt)
+    {
+    case 24:
+    case 32:
+      masks[0].mask = 0x00ff0000;
+      masks[1].mask = 0x0000ff00;
+      masks[2].mask = 0x000000ff;
+      masks[3].mask = 0x00000000;
+      break;
+
+    case 16:
+      /* 5 bits per channel */
+      masks[0].mask = 0x00007c00;
+      masks[1].mask = 0x000003e0;
+      masks[2].mask = 0x0000001f;
+      masks[3].mask = 0x00000000;
+      break;
+
+    default:
+      break;
+    }
 }
 
 static void
