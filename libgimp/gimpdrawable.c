@@ -499,6 +499,8 @@ gimp_drawable_merge_filter (GimpDrawable       *drawable,
  * @drawable:       The #GimpDrawable.
  * @operation_name: The GEGL operation's name.
  * @name:           The effect name.
+ * @mode:           The blend mode.
+ * @opacity:        The opacity from 0.0 (transparent) to 1.0 (opaque).
  * @...:            a %NULL-terminated list of operation argument names
  *                  and values.
  *
@@ -513,6 +515,7 @@ gimp_drawable_merge_filter (GimpDrawable       *drawable,
  *
  * ```C
  * filter = gimp_drawable_append_new_filter (drawable,
+ *                                           GIMP_LAYER_MODE_REPLACE, 1.0,
  *                                           "gegl:gaussian-blur", "My Gaussian Blur",
  *                                           "std-dev-x", 2.5,
  *                                           "std-dev-y", 2.5,
@@ -523,9 +526,11 @@ gimp_drawable_merge_filter (GimpDrawable       *drawable,
  * Returns: (transfer none): The newly created filter.
  */
 GimpDrawableFilter *
-gimp_drawable_append_new_filter (GimpDrawable *drawable,
-                                 const gchar  *operation_name,
-                                 const gchar  *name,
+gimp_drawable_append_new_filter (GimpDrawable  *drawable,
+                                 const gchar   *operation_name,
+                                 const gchar   *name,
+                                 GimpLayerMode  mode,
+                                 gdouble        opacity,
                                  ...)
 {
   GimpDrawableFilter       *filter;
@@ -533,13 +538,16 @@ gimp_drawable_append_new_filter (GimpDrawable *drawable,
   const gchar              *arg_name;
   va_list                   va_args;
 
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (opacity >= 0.0 && opacity <= 1.0, NULL);
+
   filter = gimp_drawable_filter_new (drawable, operation_name, name);
 
   g_return_val_if_fail (filter != NULL, NULL);
 
   config = gimp_drawable_filter_get_config (filter);
 
-  va_start (va_args, name);
+  va_start (va_args, opacity);
   while ((arg_name = va_arg (va_args, const gchar *)))
     {
       GParamSpec *pspec;
@@ -570,6 +578,8 @@ gimp_drawable_append_new_filter (GimpDrawable *drawable,
     }
   va_end (va_args);
 
+  gimp_drawable_filter_set_blend_mode (filter, mode);
+  gimp_drawable_filter_set_opacity (filter, opacity);
   gimp_drawable_append_filter (drawable, filter);
 
   return filter;
@@ -617,6 +627,7 @@ gimp_drawable_merge_new_filter (GimpDrawable  *drawable,
   const gchar              *arg_name;
   va_list                   va_args;
 
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (opacity >= 0.0 && opacity <= 1.0);
 
   filter = gimp_drawable_filter_new (drawable, operation_name, name);
