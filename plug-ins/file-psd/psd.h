@@ -586,7 +586,6 @@ typedef struct
   guint32    ver;
   guchar     visible;
   guint16    unused;
-
 } PSDLayerStyleCommon;
 
 typedef struct
@@ -604,7 +603,6 @@ typedef struct
   guchar     anglefx;
   guchar     opacity;
   guint16    natcolor[5];
-
 } PSDLayerStyleShadow;
 
 typedef struct
@@ -621,7 +619,6 @@ typedef struct
   /* Version 2 only */
   guchar     invert; /* Inner Glow Only */
   guint16    natcolor[5];
-
 } PSDLayerStyleGlow;
 
 typedef struct
@@ -646,7 +643,6 @@ typedef struct
   /* Version 2 only */
   guint16    highlightnatcolor[5];
   guint16    shadownatcolor[5];
-
 } PSDLayerStyleBevel;
 
 typedef struct
@@ -658,7 +654,6 @@ typedef struct
   guchar     opacity;
   guchar     enabled;
   guint16    natcolor[5];
-
 } PSDLayerStyleSolidFill;
 
 /* Older PSD Layer Styles format */
@@ -674,7 +669,6 @@ typedef struct
   PSDLayerStyleGlow          iglw; /* Inner Glow */
   PSDLayerStyleBevel         bevl; /* Bevel */
   PSDLayerStyleSolidFill     sofi; /* Solid Fill */
-
 } PSDLayerStyles;
 
 /* Partially or Unsupported Features */

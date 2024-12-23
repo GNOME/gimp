@@ -894,69 +894,49 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "bevl", 4) == 0)
             {
-              guint32    size = 0;
-              gint32    ver;
-              gint32    angle;
-              gint32    strength;
-              gint32    blur;
-              gint32    highlightsig;
-              gint32    highlighteffect;
-              gint32    shadowsig;
-              gint32    shadoweffect;
-              gint16    highlightcolor[5];
-              gint16    shadowcolor[5];
-              gchar     style;
-              gchar     highlightopacity;
-              gchar     shadowopacity;
-              gchar     enabled;
-              gchar     global;
-              gchar     direction;
-              gint16    highlightnatcolor[5];
-              gint16    shadownatcolor[5];
-
-              if (psd_read (input, &size,              4, error) < 4 ||
-                  psd_read (input, &ver,               4, error) < 4 ||
-                  psd_read (input, &angle,             4, error) < 4 ||
-                  psd_read (input, &strength,          4, error) < 4 ||
-                  psd_read (input, &blur,              4, error) < 4 ||
-                  psd_read (input, &highlightsig,      4, error) < 4 ||
-                  psd_read (input, &highlighteffect,   4, error) < 4 ||
-                  psd_read (input, &shadowsig,         4, error) < 4 ||
-                  psd_read (input, &shadoweffect,      4, error) < 4 ||
-                  psd_read (input, &highlightcolor[0], 2, error) < 2 ||
-                  psd_read (input, &highlightcolor[1], 2, error) < 2 ||
-                  psd_read (input, &highlightcolor[2], 2, error) < 2 ||
-                  psd_read (input, &highlightcolor[3], 2, error) < 2 ||
-                  psd_read (input, &highlightcolor[4], 2, error) < 2 ||
-                  psd_read (input, &shadowcolor[0],    2, error) < 2 ||
-                  psd_read (input, &shadowcolor[1],    2, error) < 2 ||
-                  psd_read (input, &shadowcolor[2],    2, error) < 2 ||
-                  psd_read (input, &shadowcolor[3],    2, error) < 2 ||
-                  psd_read (input, &shadowcolor[4],    2, error) < 2 ||
-                  psd_read (input, &style,             1, error) < 1 ||
-                  psd_read (input, &highlightopacity,  1, error) < 1 ||
-                  psd_read (input, &shadowopacity,     1, error) < 1 ||
-                  psd_read (input, &enabled,           1, error) < 1 ||
-                  psd_read (input, &global,            1, error) < 1 ||
-                  psd_read (input, &direction,         1, error) < 1)
+              if (psd_read (input, &ls_a->bevl.size,              4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.ver,               4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.angle,             4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.strength,          4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.blur,              4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.highlightsig,      4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.highlighteffect,   4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.shadowsig,         4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.shadoweffect,      4, error) < 4 ||
+                  psd_read (input, &ls_a->bevl.highlightcolor[0], 2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.highlightcolor[1], 2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.highlightcolor[2], 2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.highlightcolor[3], 2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.highlightcolor[4], 2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.shadowcolor[0],    2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.shadowcolor[1],    2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.shadowcolor[2],    2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.shadowcolor[3],    2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.shadowcolor[4],    2, error) < 2 ||
+                  psd_read (input, &ls_a->bevl.style,             1, error) < 1 ||
+                  psd_read (input, &ls_a->bevl.highlightopacity,  1, error) < 1 ||
+                  psd_read (input, &ls_a->bevl.shadowopacity,     1, error) < 1 ||
+                  psd_read (input, &ls_a->bevl.enabled,           1, error) < 1 ||
+                  psd_read (input, &ls_a->bevl.global,            1, error) < 1 ||
+                  psd_read (input, &ls_a->bevl.direction,         1, error) < 1)
                 {
                   psd_set_error (error);
                   return -1;
                 }
 
-              size = GUINT32_TO_BE (size);
-              if (size == 78)
+              ls_a->bevl.size = GUINT32_TO_BE (ls_a->bevl.size);
+              if (ls_a->bevl.size == 78)
                 {
-                  if (psd_read (input, &highlightnatcolor[0], 2, error) < 2 ||
-                      psd_read (input, &highlightnatcolor[1], 2, error) < 2 ||
-                      psd_read (input, &highlightnatcolor[2], 2, error) < 2 ||
-                      psd_read (input, &highlightnatcolor[3], 2, error) < 2 ||
-                      psd_read (input, &highlightnatcolor[4], 2, error) < 2 ||
-                      psd_read (input, &shadownatcolor[0],    2, error) < 2 ||
-                      psd_read (input, &shadownatcolor[1],    2, error) < 2 ||
-                      psd_read (input, &shadownatcolor[2],    2, error) < 2 ||
-                      psd_read (input, &shadownatcolor[3],    2, error) < 2 ||
-                      psd_read (input, &shadownatcolor[4],    2, error) < 2)
+                  if (psd_read (input, &ls_a->bevl.highlightnatcolor[0], 2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.highlightnatcolor[1], 2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.highlightnatcolor[2], 2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.highlightnatcolor[3], 2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.highlightnatcolor[4], 2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.shadownatcolor[0],    2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.shadownatcolor[1],    2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.shadownatcolor[2],    2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.shadownatcolor[3],    2, error) < 2 ||
+                      psd_read (input, &ls_a->bevl.shadownatcolor[4],    2, error) < 2)
                     {
                       psd_set_error (error);
                       return -1;
@@ -965,8 +945,8 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "sofi", 4) == 0)
             {
-              /* Documentation forgets to include the 4 byte
-               * 'bim8' before the blend signature */
+              /* Documentation forgets to include the 4 byte 'bim8' before
+               * the blend signature */
               gchar blendsig[4];
 
               if (psd_read (input, &ls_a->sofi.size,        4, error) < 4 ||
