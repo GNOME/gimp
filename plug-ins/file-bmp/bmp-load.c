@@ -611,7 +611,7 @@ load_image (GFile *gfile, GError **error)
     }
 
   if (bitmap_head.biHeight < G_MININT + 1 || /* +1 because |G_MININT| > G_MAXINT. */
-      bitmap_head.biHeight > GIMP_MAX_IMAGE_SIZE || bitmap_head.biHeight == 0)
+      ABS (bitmap_head.biHeight) > GIMP_MAX_IMAGE_SIZE || bitmap_head.biHeight == 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported or invalid image height: %d"),
