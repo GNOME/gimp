@@ -787,9 +787,7 @@ void
 psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
                         LayerModeInfo *mode_info)
 {
-  gint i;
-
-  mode_info->mode            = GIMP_LAYER_MODE_NORMAL;
+  mode_info->mode  = GIMP_LAYER_MODE_NORMAL;
   /* FIXME: use the image mode to select the correct color spaces.  for now,
    * we use rgb-perceptual blending/compositing unconditionally.
    */
@@ -800,9 +798,27 @@ psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
   else
     mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_UNION;
 
-  for (i = 0; i < G_N_ELEMENTS (layer_mode_map); i++)
+  if (! convert_psd_mode (psd_layer->blend_mode, &mode_info->mode))
     {
-      if (g_ascii_strncasecmp (psd_layer->blend_mode, layer_mode_map[i].psd_mode, 4) == 0)
+      if (CONVERSION_WARNINGS)
+        {
+          gchar *mode_name = g_strndup (psd_layer->blend_mode, 4);
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+          g_free (mode_name);
+        }
+    }
+}
+
+gboolean
+convert_psd_mode (const gchar   *psd_mode,
+                  GimpLayerMode *mode)
+{
+  *mode = GIMP_LAYER_MODE_NORMAL;
+
+  for (gint i = 0; i < G_N_ELEMENTS (layer_mode_map); i++)
+    {
+      if (g_ascii_strncasecmp (psd_mode, layer_mode_map[i].psd_mode, 4) == 0)
         {
           if (! layer_mode_map[i].exact && CONVERSION_WARNINGS)
             {
@@ -811,19 +827,12 @@ psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
                          layer_mode_map[i].name);
             }
 
-          mode_info->mode = layer_mode_map[i].gimp_mode;
-
-          return;
+          *mode = layer_mode_map[i].gimp_mode;
+          return TRUE;
         }
     }
 
-  if (CONVERSION_WARNINGS)
-    {
-      gchar *mode_name = g_strndup (psd_layer->blend_mode, 4);
-      g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-                 mode_name);
-      g_free (mode_name);
-    }
+  return FALSE;
 }
 
 const gchar *
