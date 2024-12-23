@@ -714,7 +714,7 @@ ReadImage (struct Fileinfo *fi,
       for (i = 0, maxbits = 0; i < fi->channels; i++)
         maxbits = MAX (maxbits, fi->masks[i].nbits);
 
-      if (maxbits <= 8)
+      if (maxbits <= 8 || compression == BI_OS2_RLE24)
         {
           fi->bytesperchannel = 1;
           precision_type      = GIMP_PRECISION_U8_NON_LINEAR;
