@@ -118,6 +118,8 @@ Plug-ins:
         gimp_drawable_append_filter().
       - gimp-drawable-filter-set-aux-input: wrapping
         gimp_drawable_filter_set_aux_input().
+  - PSD: legacy Color Overlay layer styles (legacy 'sofi' data) are now
+    loaded by GIMP as Color Overlay layer filters.
 
 API:
 
@@ -174,6 +176,11 @@ Build:
     now "org.gimp.GIMP.Nightly". This will allow the nightly flatpak to
     be side-by-side visible next to the stable or dev flatpak without
     needed CLI commands.
+  - AppImage also have its own app-ID too: "org.gimp.GIMP.continuous"
+  - Windows installer now defaults to user-mode installs, which is the
+    recommended defaults by Microsoft since Windows 7. It is obviously
+    still possible to install system-wide, but won't be the defaults
+    anymore.
 
 
 Overview of Changes from GIMP 2.99.18 to GIMP 3.0.0-RC1
