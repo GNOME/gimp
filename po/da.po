@@ -60,7 +60,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2024-10-26 12:24+0000\n"
-"PO-Revision-Date: 2024-12-15 14:30+0100\n"
+"PO-Revision-Date: 2024-12-23 15:41+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -12118,7 +12118,7 @@ msgstr "RGB"
 #: app/core/core-enums.c:859
 msgctxt "item-set"
 msgid "None"
-msgstr "Intet"
+msgstr "Ingen"
 
 #: app/core/core-enums.c:860
 msgctxt "item-set"
