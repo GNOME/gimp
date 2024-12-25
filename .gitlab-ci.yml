@@ -267,6 +267,7 @@ deps-debian:
   stage: dependencies
   variables:
     GIT_STRATEGY: none
+    CCACHE_MAXSIZE: 0.25G
   script:
     # Clone and build babl
     - echo -e "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl"
@@ -320,6 +321,7 @@ gimp-debian:
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    CCACHE_MAXSIZE: 0.75G
   script:
     # Build GIMP
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP"
@@ -327,6 +329,7 @@ gimp-debian:
                                    -Drelocatable-bundle=yes
     - cd _build-${RUNNER}
     - ninja
+    - ccache --show-stats
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
     # Create bundle
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_bundle[collapsed=true]\r\e[0KCreating bundle"
@@ -367,6 +370,7 @@ gimp-debian-x64:
                                    $MESON_OPTIONS
     - cd _build-${RUNNER}
     - ninja
+    - ccache --show-stats
     - echo -e "\e[0Ksection_end:`date +%s`:gimp_build\r\e[0K"
     # Check execution
     - echo -e "\e[0Ksection_start:`date +%s`:gimp_test[collapsed=true]\r\e[0KTesting GIMP execution"
@@ -574,6 +578,8 @@ deps-win-a64:
     - !reference [.win-a64, rules]
   needs: []
   stage: dependencies
+  variables:
+    CCACHE_MAXSIZE: 0.25G
   script:
     - build/windows/1_build-deps-msys2.ps1
   artifacts:
@@ -591,6 +597,7 @@ gimp-win-a64:
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    CCACHE_MAXSIZE: 0.75G
   script:
     - build/windows/2_build-gimp-msys2.ps1
   artifacts:
@@ -622,6 +629,8 @@ deps-win-x64:
     - !reference [.win-x64, rules]
   needs: []
   stage: dependencies
+  variables:
+    CCACHE_MAXSIZE: 0.25G
   script:
     - build/windows/1_build-deps-msys2.ps1
   artifacts:
@@ -637,6 +646,7 @@ gimp-win-x64:
   stage: gimp
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    CCACHE_MAXSIZE: 0.75G
   script:
     - build/windows/2_build-gimp-msys2.ps1
   artifacts:
