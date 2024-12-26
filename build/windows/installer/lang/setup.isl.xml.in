@@ -166,6 +166,10 @@
       <value>Error updating Python interpreter info.</value>
     </config>
 
+    <config name="CreatingRestorePoint">
+      <value>Trying to create Restore Point...</value>
+    </config>
+
     <config name="RemovingOldVersion">
       <value>Removing previous version of GIMP:</value>
     </config>

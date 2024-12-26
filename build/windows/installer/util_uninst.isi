@@ -261,6 +261,18 @@ begin
 
 end;
 
+procedure RestorePointU();
+var
+  ResultCode: Integer;
+begin
+  UninstallProgressForm.StatusLabel.Caption := CustomMessage('CreatingRestorePoint');
+  if not ShellExec('RunAs', 'powershell', ExpandConstant('Checkpoint-Computer -Description "GIMP_{#CUSTOM_GIMP_VERSION}_uninstall" -RestorePointType APPLICATION_UNINSTALL'),
+                   '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  begin
+    DebugMsg('RestorePointU','Failed to create restore point. Error code: ' + IntToStr(ResultCode));
+  end;
+end;
+
 #define API_MAJOR=Copy(GIMP_PKGCONFIG_VERSION,1,Pos(".",GIMP_PKGCONFIG_VERSION)-1)
 
 procedure CurUninstallStepChanged(CurStep: TUninstallStep);
@@ -271,6 +283,10 @@ begin
 	case CurStep of
 	usUninstall:
 	begin
+		if IsAdminInstallMode() then begin
+		    RestorePointU();
+			UninstallProgressForm.StatusLabel.Caption := FmtMessage(SetupMessage(msgStatusUninstalling),['GIMP']);
+		end;
 		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asUninstInf);
 		ParseUninstInf();
 	end;

@@ -1008,6 +1008,20 @@ end;
 
 //7.1 BEFORE INSTALL
 
+//Create restore point
+procedure RestorePoint();
+var
+  ResultCode: Integer;
+begin
+  StatusLabel(CustomMessage('CreatingRestorePoint'),'');
+  if not ShellExec('RunAs', 'powershell', ExpandConstant('Checkpoint-Computer -Description "GIMP_{#CUSTOM_GIMP_VERSION}_install" -RestorePointType APPLICATION_INSTALL'),
+                   '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  begin
+    DebugMsg('RestorePoint','Failed to create restore point. Error code: ' + IntToStr(ResultCode));
+  end;
+end;
+
+
 //Unistall old version of GIMP (only if needed)
 const
   UNINSTALL_MAX_WAIT_TIME = 10000;
@@ -1672,6 +1686,9 @@ begin
 	case pCurStep of
 		ssInstall:
 		begin
+			if IsAdminInstallMode() then begin
+				RestorePoint();
+			end;
 			RemoveDebugFiles();
 			AssociationsCleanup();
 		end;
