@@ -63,12 +63,12 @@ fi
 ## Get info about GIMP version
 GIMP_VERSION=$(grep GIMP_VERSION $BUILD_DIR/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/')
 grep -q '#define GIMP_UNSTABLE' $BUILD_DIR/config.h && export GIMP_UNSTABLE=1
-if [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
-  export CHANNEL='continuous'
+if [ -z "$CI_COMMIT_TAG" ] && [ "$GIMP_UNSTABLE" ] || [[ "$GIMP_VERSION" =~ 'git' ]]; then
+  export APP_ID="org.gimp.GIMP.Continuous"
 else
-  export CHANNEL='latest'
+  echo -e "\033[31m(ERROR)\033[0m: AppImage releases are NOT supported yet. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/7661"
+  exit 1
 fi
-export APP_ID="org.gimp.GIMP.$CHANNEL"
 echo "(INFO): App ID: $APP_ID | Version: $GIMP_VERSION"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_info\r\e[0K"
 
@@ -381,7 +381,7 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 
 
 # 5. CONSTRUCT .APPIMAGE
-APPIMAGETOOL_APP_NAME="GIMP-${CHANNEL}-${ARCH}.AppImage"
+APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
 "./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH #-u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
 file "./$APPIMAGETOOL_APP_NAME"
