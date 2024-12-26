@@ -52,6 +52,8 @@ process-stop
 system-run
 view-fullscreen
 view-refresh
+view-shrink-wrap
+view-zoom-fill
 window-new
 zoom-fit-best
 zoom-in

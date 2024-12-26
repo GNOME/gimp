@@ -418,6 +418,14 @@ legacy_tools_scalable = [
   'scalable/gimp-tool-unified-transform.svg',
   'scalable/gimp-tool-warp.svg',
   'scalable/gimp-tool-zoom.svg',
+  '../Default/scalable/view-shrink-wrap-symbolic.svg',
+  '../Default/scalable/view-shrink-wrap.svg',
+  '../Default/scalable/view-zoom-fill-symbolic.svg',
+  '../Default/scalable/view-zoom-fill.svg',
+  '../Default/scalable/zoom-fit-best.svg',
+  '../Default/scalable/zoom-in.svg',
+  '../Default/scalable/zoom-original.svg',
+  '../Default/scalable/zoom-out.svg',
 ]
 
 # Eventually replace with custom icons

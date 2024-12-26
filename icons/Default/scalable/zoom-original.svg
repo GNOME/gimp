@@ -1,79 +1,125 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg7384"
-   height="16"
    width="16"
+   height="16"
+   fill="none"
    version="1.1"
-   sodipodi:docname="gimp-zoom-original.svg"
-   viewBox="0 0 16 16"
-   inkscape:version="0.92pre1 unknown">
+   id="svg16"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <path
+     fill="url(#a)"
+     d="M0 4c0-2.20914 1.79086-4 4-4h8c2.2091 0 4 1.79086 4 4v8c0 2.2091-1.7909 4-4 4H4c-2.20914 0-4-1.7909-4-4V4Z"
+     id="path1" />
+  <path
+     fill="url(#b)"
+     d="M1 4c0-1.65685 1.34315-3 3-3h8c1.6569 0 3 1.34315 3 3v8c0 1.6569-1.3431 3-3 3H4c-1.65685 0-3-1.3431-3-3V4Z"
+     id="path2" />
+  <path
+     fill="url(#c)"
+     fill-rule="evenodd"
+     d="M.5 4C.5 2.067 2.067.5 4 .5h8c1.933 0 3.5 1.567 3.5 3.5v8c0 1.933-1.567 3.5-3.5 3.5H4C2.067 15.5.5 13.933.5 12V4ZM1 4c0-1.65685 1.34315-3 3-3h8c1.6569 0 3 1.34315 3 3v8c0 1.6569-1.3431 3-3 3H4c-1.65685 0-3-1.3431-3-3V4Z"
+     clip-rule="evenodd"
+     id="path3" />
+  <path
+     fill="url(#d)"
+     fill-rule="evenodd"
+     d="M6 8H5V5.31665L6.5 4H10v8H6V8Zm.85-3L6 5.75V7h1v4h2V5H6.85Z"
+     clip-rule="evenodd"
+     id="path4" />
+  <path
+     fill="#fff"
+     d="M6 5.75V7h1v4h2V5H6.85L6 5.75Z"
+     id="path5" />
+  <path
+     fill="url(#e)"
+     fill-opacity=".45"
+     fill-rule="evenodd"
+     d="M6 7V5.76948L6.87663 5H9v6H7V7H6Zm-.5.5V5.6l1.25-1.1H9.5v7h-3v-4h-1Z"
+     clip-rule="evenodd"
+     id="path6" />
   <defs
-     id="defs9" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
-     id="namedview7"
-     showgrid="false"
-     inkscape:zoom="43.1875"
-     inkscape:cx="5.9646657"
-     inkscape:cy="8.301013"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg7384" />
-  <metadata
-     id="metadata90">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gnome Symbolic Icon Theme</dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     id="g4320">
-    <g
-       transform="matrix(-0.07682362,0,0,0.07682362,18.70247,-1.0767273)"
-       id="use4898-5"
-       inkscape:label="Layer 1"
-       style="display:inline;enable-background:new"
-       clip-path="url(#clipPath8434)">
-      <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#eeeeec;fill-opacity:1;stroke:#555753;stroke-width:13.01682949;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:new"
-         id="rect7870"
-         width="195.25244"
-         height="195.25244"
-         x="-236.93846"
-         y="20.524"
-         rx="41.749866"
-         ry="41.690166"
-         transform="scale(-1,1)" />
-    </g>
-    <path
-       inkscape:connector-curvature="0"
-       d="m 9.4999998,11.500003 h -3 V 7.5000029 h -1 v -1.95527 c 0.82444,0 1.36506,-0.18266 1.36506,-1.04473 h 2.63494 z"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:Verdana;-inkscape-font-specification:'Verdana Bold';display:inline;overflow:visible;visibility:visible;fill:#000000;stroke:#555753;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:new;fill-opacity:1"
-       id="path7751-8-9-9"
-       sodipodi:nodetypes="cccccccc" />
-  </g>
+     id="defs16">
+    <linearGradient
+       id="a"
+       x1="8"
+       x2="8"
+       y1="0"
+       y2="16"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#A6AAA2"
+         id="stop6" />
+      <stop
+         offset="1"
+         stop-color="#6B6D69"
+         id="stop7" />
+    </linearGradient>
+    <linearGradient
+       id="b"
+       x1="8"
+       x2="8"
+       y1="1"
+       y2="15"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#fff"
+         id="stop8" />
+      <stop
+         offset=".5"
+         stop-color="#DDDDDB"
+         id="stop9" />
+      <stop
+         offset="1"
+         stop-color="#F5F5F5"
+         id="stop10" />
+    </linearGradient>
+    <linearGradient
+       id="c"
+       x1="8"
+       x2="8"
+       y1=".5"
+       y2="15.5"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#fff"
+         id="stop11" />
+      <stop
+         offset="1"
+         stop-color="#fff"
+         stop-opacity=".7"
+         id="stop12" />
+    </linearGradient>
+    <linearGradient
+       id="d"
+       x1="7.5"
+       x2="7.5"
+       y1="5"
+       y2="11"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#545652"
+         id="stop13" />
+      <stop
+         offset="1"
+         stop-color="#ABAEA7"
+         id="stop14" />
+    </linearGradient>
+    <linearGradient
+       id="e"
+       x1="7.5"
+       x2="7.5"
+       y1="4.5"
+       y2="11.5"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#fff"
+         id="stop15" />
+      <stop
+         offset="1"
+         stop-color="#fff"
+         stop-opacity=".75"
+         id="stop16" />
+    </linearGradient>
+  </defs>
 </svg>
