@@ -66,7 +66,7 @@ GimpDrawableFilter *
 GimpDrawable *
            gimp_drawable_filter_get_drawable   (GimpDrawableFilter      *filter);
 GeglNode * gimp_drawable_filter_get_operation  (GimpDrawableFilter      *filter);
-GimpChannel *
+GimpDrawableFilterMask *
            gimp_drawable_filter_get_mask       (GimpDrawableFilter      *filter);
 gdouble    gimp_drawable_filter_get_opacity    (GimpDrawableFilter      *filter);
 GimpLayerMode

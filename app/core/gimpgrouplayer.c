@@ -2136,7 +2136,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
               GimpDrawableFilter *filter = list->data;
               GimpChannel        *filter_mask;
 
-              filter_mask = gimp_drawable_filter_get_mask (filter);
+              filter_mask = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
 
               /* Don't resize partial layer effects */
               if (gimp_channel_is_empty (filter_mask))

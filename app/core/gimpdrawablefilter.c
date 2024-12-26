@@ -46,6 +46,7 @@
 #include "gimpchannel.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawablefilter.h"
+#include "gimpdrawablefiltermask.h"
 #include "gimperror.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
@@ -63,6 +64,7 @@ enum
 {
   PROP_0,
   PROP_ID,
+  PROP_DRAWABLE,
   PROP_MASK,
   N_PROPS
 };
@@ -75,7 +77,7 @@ struct _GimpDrawableFilter
   gint                    ID;
 
   GimpDrawable           *drawable;
-  GimpChannel            *mask;
+  GimpDrawableFilterMask *mask;
   GeglNode               *operation;
 
   gboolean                has_input;
@@ -189,14 +191,22 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
   object_class->dispose      = gimp_drawable_filter_dispose;
   object_class->finalize     = gimp_drawable_filter_finalize;
 
-  drawable_filter_props[PROP_ID] = g_param_spec_int ("id", NULL, NULL,
-                                                     0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READABLE);
+  drawable_filter_props[PROP_ID]       = g_param_spec_int ("id", NULL, NULL,
+                                                           0, G_MAXINT, 0,
+                                                           GIMP_PARAM_READABLE);
 
-  drawable_filter_props[PROP_MASK] = g_param_spec_object ("mask",
-                                                          NULL, NULL,
-                                                          GIMP_TYPE_CHANNEL,
-                                                          GIMP_PARAM_READWRITE);
+  drawable_filter_props[PROP_DRAWABLE] = g_param_spec_object ("drawable", NULL, NULL,
+                                                              GIMP_TYPE_DRAWABLE,
+                                                              GIMP_PARAM_READWRITE |
+                                                              G_PARAM_CONSTRUCT_ONLY);
+  /* The mask is in fact a GimpDrawableFilterMask but the property is a
+   * GimpDrawable to allow setting any drawable. The set_property() code
+   * will take care of creating a new object of the proper type.
+   */
+  drawable_filter_props[PROP_MASK]     = g_param_spec_object ("mask",
+                                                              NULL, NULL,
+                                                              GIMP_TYPE_DRAWABLE,
+                                                              GIMP_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, drawable_filter_props);
 }
@@ -223,15 +233,30 @@ gimp_drawable_filter_set_property (GObject      *object,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (object);
+  GimpDrawableFilter     *filter = GIMP_DRAWABLE_FILTER (object);
+  GimpDrawableFilterMask *mask   = NULL;
+  GimpImage              *image;
 
   switch (property_id)
     {
+    case PROP_DRAWABLE:
+      g_set_object (&filter->drawable, g_value_get_object (value));
+      break;
+
     case PROP_MASK:
-      g_set_object (&filter->mask, g_value_get_object (value));
+      image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+
+      if (g_value_get_object (value) != NULL)
+        mask = GIMP_DRAWABLE_FILTER_MASK (gimp_item_convert (GIMP_ITEM (g_value_get_object (value)),
+                                                             image, GIMP_TYPE_DRAWABLE_FILTER_MASK));
+      g_set_object (&filter->mask, mask);
+      g_clear_object (&mask);
 
       if (filter->mask)
-        gimp_drawable_filter_sync_mask (filter);
+        {
+          gimp_drawable_filter_mask_set_filter (filter->mask, filter);
+          gimp_drawable_filter_sync_mask (filter);
+        }
       break;
 
     default:
@@ -321,10 +346,10 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
                          "name",      undo_desc,
                          "icon-name", icon_name,
+                         "drawable",  drawable,
                          "mask",      NULL,
                          NULL);
 
-  filter->drawable  = g_object_ref (drawable);
   filter->operation = g_object_ref (operation);
 
   image      = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -397,7 +422,6 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
 {
   GimpImage          *image;
   GimpDrawableFilter *filter;
-  GimpChannel        *mask;
   GeglNode           *prior_node;
   GeglNode           *node = gegl_node_new ();
   gchar              *operation;
@@ -466,15 +490,9 @@ gimp_drawable_filter_duplicate (GimpDrawable       *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   if (image != NULL)
-    {
-      mask = GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (prior_filter->mask),
-                                              image, GIMP_TYPE_CHANNEL));
-
-      g_object_set (filter,
-                    "mask", mask,
-                    NULL);
-      g_object_unref (mask);
-    }
+    g_object_set (filter,
+                  "mask", prior_filter->mask,
+                  NULL);
 
   g_free (operation);
 
@@ -517,7 +535,7 @@ gimp_drawable_filter_get_operation (GimpDrawableFilter *filter)
   return filter->operation;
 }
 
-GimpChannel *
+GimpDrawableFilterMask *
 gimp_drawable_filter_get_mask (GimpDrawableFilter  *filter)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (filter), NULL);
@@ -1183,17 +1201,12 @@ gimp_drawable_filter_abort (GimpDrawableFilter *filter)
 void
 gimp_drawable_filter_layer_mask_freeze (GimpDrawableFilter *filter)
 {
-  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
-  GimpChannel *mask;
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
 
   if (! filter->mask)
-    {
-      mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
-                           GIMP_TYPE_CHANNEL));
-
-      g_set_object (&filter->mask, mask);
-      g_object_unref (mask);
-    }
+    g_object_set (filter,
+                  "mask", GIMP_DRAWABLE (gimp_image_get_mask (image)),
+                  NULL);
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_drawable_filter_mask_changed,

@@ -1807,7 +1807,7 @@ gimp_item_transform (GimpItem               *item,
               GimpDrawableFilter *filter = filter_list->data;
               GimpChannel        *mask;
 
-              mask = gimp_drawable_filter_get_mask (filter);
+              mask = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
 
               /* Don't resize partial layer effects */
               if (! mask || gimp_channel_is_empty (mask))

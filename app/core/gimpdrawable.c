@@ -580,7 +580,7 @@ gimp_drawable_scale (GimpItem              *item,
           if (GIMP_IS_DRAWABLE_FILTER (list->data))
             {
               GimpDrawableFilter *filter = list->data;
-              GimpChannel        *mask   = gimp_drawable_filter_get_mask (filter);
+              GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
               GeglRectangle      *rect   = GEGL_RECTANGLE (0, 0,
                                                            new_width,
                                                            new_height);
@@ -689,7 +689,7 @@ gimp_drawable_resize (GimpItem     *item,
           if (GIMP_IS_DRAWABLE_FILTER (list->data))
             {
               GimpDrawableFilter *filter = list->data;
-              GimpChannel        *mask   = gimp_drawable_filter_get_mask (filter);
+              GimpChannel        *mask   = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter));
               GeglRectangle       rect   = {0, 0, new_width, new_height};
 
               /* Don't resize partial layer effects */
@@ -1399,8 +1399,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
         {
           if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
             {
-              GimpDrawableFilter *filter = filter_list->data;
-              GimpChannel        *mask;
+              GimpDrawableFilter     *filter = filter_list->data;
+              GimpDrawableFilterMask *mask;
 
               mask = gimp_drawable_filter_get_mask (filter);
 

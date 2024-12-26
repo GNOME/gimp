@@ -163,6 +163,7 @@ typedef struct _GimpTagCache                    GimpTagCache;
 /*  drawable objects  */
 
 typedef struct _GimpDrawable                    GimpDrawable;
+typedef struct _GimpDrawableFilterMask          GimpDrawableFilterMask;
 typedef struct _GimpChannel                     GimpChannel;
 typedef struct _GimpLayerMask                   GimpLayerMask;
 typedef struct _GimpSelection                   GimpSelection;

@@ -1966,9 +1966,9 @@ xcf_save_layer (XcfInfo    *info,
     {
       if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
         {
-          GimpDrawableFilter *filter  = filter_list->data;
-          GimpChannel        *mask    = NULL;
-          GeglNode           *op_node = NULL;
+          GimpDrawableFilter     *filter  = filter_list->data;
+          GimpDrawableFilterMask *mask    = NULL;
+          GeglNode               *op_node = NULL;
 
           mask    = gimp_drawable_filter_get_mask (filter);
           op_node = gimp_drawable_filter_get_operation (filter);
@@ -2040,9 +2040,9 @@ xcf_save_layer (XcfInfo    *info,
         {
           if (GIMP_IS_DRAWABLE_FILTER (list->data))
             {
-              GimpDrawableFilter *filter  = list->data;
-              GimpChannel        *mask    = NULL;
-              GeglNode           *op_node = NULL;
+              GimpDrawableFilter     *filter  = list->data;
+              GimpDrawableFilterMask *mask    = NULL;
+              GeglNode               *op_node = NULL;
 
               mask    = gimp_drawable_filter_get_mask (filter);
               op_node = gimp_drawable_filter_get_operation (filter);
@@ -2174,7 +2174,7 @@ xcf_save_effect (XcfInfo     *info,
   offset = info->cp + info->bytes_per_offset;
   xcf_write_offset_check_error (info, &offset, 1, ;);
 
-  effect_mask = gimp_drawable_filter_get_mask (filter_drawable);
+  effect_mask = GIMP_CHANNEL (gimp_drawable_filter_get_mask (filter_drawable));
   xcf_check_error (xcf_save_channel (info, image, effect_mask,
                                      error), ;);
 

@@ -114,6 +114,7 @@ libappcore_sources = [
   'gimpdrawable-transform.c',
   'gimpdrawable.c',
   'gimpdrawablefilter.c',
+  'gimpdrawablefiltermask.c',
   'gimpdrawablefilterundo.c',
   'gimpdrawablemodundo.c',
   'gimpdrawablepropundo.c',
