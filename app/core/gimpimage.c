@@ -46,6 +46,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawable-floating-selection.h"
+#include "gimpdrawablefilter.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
 #include "gimperror.h"
@@ -5331,10 +5332,35 @@ gimp_image_remove_layer (GimpImage *image,
     }
 
   if (push_undo)
-    gimp_image_undo_push_layer_remove (image, undo_desc, layer,
-                                       gimp_layer_get_parent (layer),
-                                       gimp_item_get_index (GIMP_ITEM (layer)),
-                                       selected_layers);
+    {
+      GimpContainer *filters;
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
+
+      if (gimp_container_get_n_children (filters) > 0)
+        {
+          GList *filter_list;
+
+          for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+               filter_list = g_list_previous (filter_list))
+            {
+              if (GIMP_IS_DRAWABLE_FILTER (filter_list->data))
+                {
+                  GimpDrawableFilter *filter = filter_list->data;
+
+                  gimp_image_undo_push_filter_remove (image,
+                                                      _("Remove filter"),
+                                                      GIMP_DRAWABLE (layer),
+                                                      filter);
+                }
+            }
+        }
+
+      gimp_image_undo_push_layer_remove (image, undo_desc, layer,
+                                         gimp_layer_get_parent (layer),
+                                         gimp_item_get_index (GIMP_ITEM (layer)),
+                                         selected_layers);
+    }
 
   g_object_ref (layer);
 
