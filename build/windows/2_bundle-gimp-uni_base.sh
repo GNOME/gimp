@@ -197,7 +197,11 @@ fi
 ### Needed to not pollute output. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8877
 bundle "$MSYS_PREFIX" bin/gdbus.exe
 ### Needed for hyperlink support etc. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/12288
-bundle "$MSYS_PREFIX" bin/gspawn*-console.exe
+if [ "$GIMP_UNSTABLE" ]; then
+  bundle "$MSYS_PREFIX" bin/gspawn*-console.exe
+else
+  bundle "$MSYS_PREFIX" bin/gspawn*-helper.exe
+fi
 
 ### Optional binaries for GObject Introspection support
 if [ "$CI_JOB_NAME" != 'gimp-win-x64-cross' ]; then
