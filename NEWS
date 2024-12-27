@@ -7,7 +7,7 @@ This is the unstable branch of GIMP.
 
 
 Overview of Changes from GIMP 3.0.0-RC1 to GIMP 3.0.0-RC2
-=======================================================
+=========================================================
 
 Core:
 
@@ -57,6 +57,8 @@ Graphical User Interface:
   - GimpHandleBar now uses the system's foreground color for its
     outline.
   - New RC2 splash screen by Sevenix.
+  - New icons: view-shrink-wrap, view-zoom-fill.
+  - Updated icons: zoom-fit, zoom-in, zoom-original, zoom-out.
 
 Plug-ins:
 
@@ -181,6 +183,8 @@ Build:
     recommended defaults by Microsoft since Windows 7. It is obviously
     still possible to install system-wide, but won't be the defaults
     anymore.
+  - There is now also an Aarch64 AppImage.
+  - Minimum dependency version bump: GEGL 0.4.52.
 
 
 Overview of Changes from GIMP 2.99.18 to GIMP 3.0.0-RC1
