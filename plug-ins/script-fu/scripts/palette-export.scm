@@ -7,7 +7,7 @@
 ; See instruction on adding new exporters at the end
 ;
 
-; !!! Here run functions call script-fu-use-v3, to bind PDB returns succintly.
+; !!! Here run functions call script-fu-use-v3, to bind PDB returns succinctly.
 
 ; -----------------------------------------------------------------------------
 ; Numbers and Math

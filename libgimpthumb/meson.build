@@ -1,5 +1,5 @@
 # Unlike other enums file, we don't use the mkenums_wrap because this
-# one is not versionned in the repository (not sure why). Moreover the
+# one is not versioned in the repository (not sure why). Moreover the
 # options are quite different from the other generated enums, so it
 # didn't make sense to overdo it.
 gimpthumbenums = custom_target('gimpthumb-enums.c',

@@ -9,7 +9,7 @@
 ; That is, we don't render the image and have a human look at the results.
 ; Also, there is no API for programmatically finding what rendered colors are out of gamut.
 ; Also, there is no API for programmatically rendering under the simulation profile.
-; i.e. like the user would do under View>Color Managment>SoftProof.
+; i.e. like the user would do under View>Color Management>SoftProof.
 
 ; Notes about test data, all binary files
 ; name                        vector   file  MODE

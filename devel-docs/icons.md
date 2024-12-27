@@ -23,7 +23,7 @@ The Symbolic icon theme is our main target since they are considered
 better suited for graphics work (less visual distraction). Color icons
 are kept as fall-back since some users prefer them.
 
-Vector icons are now prefered because they are much less maintenance.
+Vector icons are now preferred because they are much less maintenance.
 For instance, we do not need to double, triple (or more) every icon for
 the various sizes they are needed in, and double this amount again to
 handle high density displays.

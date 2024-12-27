@@ -12,7 +12,7 @@
 
 
 ; get bounding box of intersection of selection mask with drawable
-; bounding box in x, y, width, heigth format
+; bounding box in x, y, width, height format
 (assert `(gimp-drawable-mask-bounds ,testDrawable))
 ; bounding box in upper left x,y lower right x,y
 (assert `(gimp-drawable-mask-intersect ,testDrawable))

@@ -98,7 +98,7 @@ gimp_operation_shrink_class_init (GimpOperationShrinkClass *klass)
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_int ("radius-x",
                                                      "Radius X",
-                                                     "Shrink radius in X diection",
+                                                     "Shrink radius in X direction",
                                                      1, 2342, 1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
@@ -106,7 +106,7 @@ gimp_operation_shrink_class_init (GimpOperationShrinkClass *klass)
   g_object_class_install_property (object_class, PROP_RADIUS_Y,
                                    g_param_spec_int ("radius-y",
                                                      "Radius Y",
-                                                     "Shrink radius in Y diection",
+                                                     "Shrink radius in Y direction",
                                                      1, 2342, 1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));

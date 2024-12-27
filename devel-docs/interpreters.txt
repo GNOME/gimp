@@ -20,7 +20,7 @@ text file is enough to indicate what interpreter to start.
 On Windows (and Linux for Lua), you also need an .interp file installed with GIMP.
 
 It can get complicated;
-there are many combinations of envirnoment variables, shebangs, file suffixes, and .interp files that can work.
+there are many combinations of environment variables, shebangs, file suffixes, and .interp files that can work.
 
 *To insure a GIMP interpreted plugin works across platforms,
 it should have a shebang.*
@@ -30,7 +30,7 @@ since the ScriptFu extension reads them.*
 
 ## Partial history of interpreters in GIMP
 
-Rarely are interpreters addded to GIMP.
+Rarely are interpreters added to GIMP.
 GIMP 2 offers Perl, Scheme, and Python2 interpreters.
 GIMP 3 offers Python3, lua, javascript, and the gimp-script-fu-interpreter interpreters.
 

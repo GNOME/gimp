@@ -3,7 +3,7 @@
 ; Test a .scm file that does not call script-fu-menu-register
 ; The menu will NOT default.
 ; Expect "Test SF interpreter 4" to NOT EXIST in any menu
-; Expect the PDB proc "script-fu-test4" does appear in the PDB Brower
+; Expect the PDB proc "script-fu-test4" does appear in the PDB Browser
 
 ; Two test cases:
 ;    Alongside an executable script:  plug-ins/test4/test4.scm NOT executable

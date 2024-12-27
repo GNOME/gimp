@@ -80,7 +80,7 @@
 
 ; gimp module, gimp-get methods
 (testing:load-test "gimp.scm")
-; gimp PDB as a queriable store i.e. database
+; gimp PDB as a queryable store i.e. database
 (testing:load-test "PDB.scm")
 ; test gimp as a refreshable set of installed resources
 (testing:load-test "refresh.scm")

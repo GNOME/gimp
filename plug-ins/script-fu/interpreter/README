@@ -118,7 +118,7 @@ A directory containing an .scm file queried by script-fu-interpreter
 is usually a subdirectory of one of the /plug-ins directories,
 unlike for extension-script-fu, where the .scm files are in a /scripts dir.
 
-A plugin directory should contain only one queriable .scm file:
+A plugin directory should contain only one queryable .scm file:
 only one file can have the same base name as the directory and
 GIMP will query that file.
 

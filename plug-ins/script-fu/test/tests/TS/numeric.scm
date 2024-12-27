@@ -20,7 +20,7 @@
 ; e.g. export LANG="de_DE.UTF-8"
 ; In that locale, comma is used as a decimal point.
 ; In TinyScheme, string representation of numbers SHOULD use period as decimal point.
-; But currently doesn't, in some locales using comman for decimal point.
+; But currently doesn't, in some locales using comma for decimal point.
 ; Because TinyScheme uses C standard lib snprintf
 ; which respects locale and can print comma for decimal point.
 

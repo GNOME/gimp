@@ -13,7 +13,7 @@
   ; call a script that always fails
   (script-fu-always-fail)
   ; we have not checked the result and declaring the error on our own.
-  ; since this is the last expression, the #f from the call should propogate.
+  ; since this is the last expression, the #f from the call should propagate.
 )
 
 (script-fu-register "script-fu-call-always-fail"

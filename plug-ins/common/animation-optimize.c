@@ -184,7 +184,7 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                         "final file size.  If a frame of the"
                                         "animation can use the 'combine' "
                                         "mode, this procedure attempts to "
-                                        "maximize the number of ajdacent "
+                                        "maximize the number of adjacent "
                                         "pixels having the same color, which"
                                         "improves the compression for some "
                                         "image formats such as GIF or MNG.",

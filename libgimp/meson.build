@@ -1,5 +1,5 @@
 # Similarly to libgimpthumb/gimpthumb-enums.c, libgimp/gimpenums.c is
-# not versionned so we don't use the mkenums_wrap.
+# not versioned so we don't use the mkenums_wrap.
 # Moreover it is generated in 2 steps, first with common mkenums
 # arguments, then concatenating with a "tail" file.
 gimpenums_notail = custom_target('gimpenums.c.notail',

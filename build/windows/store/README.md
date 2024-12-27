@@ -14,7 +14,7 @@ Base rule to update the "GIMP (Preview)" entry:
 
 1. The link above will open 'Partner Center', the frontend to submit .msixupload
 
-2. With your Microsoft Entra ID account (@*onmicrosoft.com), log-in as costumary
+2. With your Microsoft Entra ID account (@*onmicrosoft.com), log-in as customary
 
 3. Clicking on the "Start update" button will make possible to change some things.
    Only 'Packages' and 'Store listings' sections are needed. On 'Packages' you will

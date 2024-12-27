@@ -3,7 +3,7 @@
 # This is a wrapper to the tools/gimp-mkenums perl script which:
 # * sets a few common values;
 # * updates the ${filebase}enums.c directly in the source directory in
-#   order for it to be versionned.
+#   order for it to be versioned.
 # * Create a no-op stamp-header file to be included by the resulting
 #   enums.c. The goal is to make sure that meson will trigger a rebuild
 #   of the enums.c generation before compiling, if the enums.h changed.

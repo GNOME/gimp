@@ -197,7 +197,7 @@
 
 (test! "read-byte then read-char on input-string, two-byte UTF-8 encoded char")
 ; The first byte of the lambda char is 0xce 206, the next 0xbb 187, code point is 0x3bb
-; Expect this leaves the port in condtion for a subsequent read-char or read
+; Expect this leaves the port in condition for a subsequent read-char or read
 (assert `(= (byte->integer (read-byte ,aStringPort))
             206))
 (assert `(= (byte->integer (read-byte ,aStringPort))

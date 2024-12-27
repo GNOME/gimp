@@ -1058,7 +1058,7 @@ parse_control_point (char          **ss,
             }
           else if (! g_ascii_string_to_signed (argv[i++], 10, 1, GIMP_MAX_IMAGE_SIZE, &h, NULL))
             {
-              g_printerr ("Ignoring invalid image_size heigth '%s'\n", argv[i-1]);
+              g_printerr ("Ignoring invalid image_size height '%s'\n", argv[i-1]);
               parse_errors++;
             }
           else

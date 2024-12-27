@@ -83,7 +83,7 @@
 
 ; export all paths to string all succeeds
 ; passing 0 for path means "all"
-; FIXME this is wierd, should be a separate method gimp-image-export-paths-to-string
+; FIXME this is weird, should be a separate method gimp-image-export-paths-to-string
 ; The name implies a single path
 (assert `(gimp-image-export-path-to-string
             ,testImage

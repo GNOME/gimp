@@ -112,7 +112,7 @@
 ; is a flag indicating whether *user or program* has
 ; set the selection since calling select-none.
 
-; Wierd case: 0 width should throw out of bounds error?
+; Weird case: 0 width should throw out of bounds error?
 
 ; selecting a zero width rect does not throw an error
 (assert `(gimp-image-select-rectangle

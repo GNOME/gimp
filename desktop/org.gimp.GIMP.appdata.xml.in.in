@@ -191,7 +191,7 @@
 
           <li>Floating selections not created anymore when pasting new layers</li>
           <li>New "Gray" theme based on a 18.42% luminance middle-gray background</li>
-          <li>Icon sizes can be overriden in Preferences > Themes</li>
+          <li>Icon sizes can be overridden in Preferences > Themes</li>
 
           <li>Faster save of XCF files</li>
           <li>XCF file format improved with a proper structure for path items</li>

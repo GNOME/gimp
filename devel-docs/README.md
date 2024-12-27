@@ -28,7 +28,7 @@ state. If this happens, you'd be advised to close and reopen the file
 
 Another downside of plug-ins is that GIMP currently doesn't have any
 sandboxing ability. Since we explained that plug-ins are run by GIMP as
-independant processes, it also means they have the same rights as your
+independent processes, it also means they have the same rights as your
 GIMP process. Therefore be careful that you trust the source of your
 plug-ins. You should never run shady plug-ins from untrusted sources.
 
@@ -258,7 +258,7 @@ rules. To do so:
   GIMP interface the widget you are interested to style;
 * the widget name will be displayed on the top of the information area
   of the dialog.
-* Feel free to browse the various sections to see the class hierachy,
+* Feel free to browse the various sections to see the class hierarchy,
   CSS nodes and so on.
 * The second top-left button (just next to the target icon) allows you
   to switch between the details of the selected widget and the widget
@@ -489,7 +489,7 @@ be considered as some kind dependency rule and should be updated.
 The `XCF` format is the core image format of GIMP, which mirrors
 features made available in GIMP. More than an image format, you may
 consider it as a work or project format, as it is not made for finale
-presentation of an artwork but for the work-in-progress processus.
+presentation of an artwork but for the work-in-progress process.
 
 Developers are welcome to read the [specifications of XCF](https://developer.gimp.org/core/standards/xcf/).
 

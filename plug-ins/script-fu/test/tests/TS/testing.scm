@@ -30,7 +30,7 @@
 
 
 
-;           assert-error statment
+;           assert-error statement
 
 ; assert-error tests for error messages
 ; assert-error omits the "Error: " prefix printed by the REPL

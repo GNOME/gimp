@@ -51,4 +51,4 @@ The number of bytes in a string can be had with libc strlen().
 
 ## Other forks
 
-Anothers signficant fork of upstream TinyScheme is in the gnupgp project, where it scripts tests.
+Another significant fork of upstream TinyScheme is in the gnupgp project, where it scripts tests.

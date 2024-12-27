@@ -112,7 +112,7 @@ test_scripts = [
 ]
 
 # Install test framework to shared /scripts
-# Assert: SFConsole, SFExtension, and standalong SFInterpreter will read them.
+# Assert: SFConsole, SFExtension, and standalone SFInterpreter will read them.
 # SFConsole is primary testing interface.
 # Some plugins in /scripts (SFExtension)
 # and in /plug-ins (SFInterpreter) may also be interface for testing.

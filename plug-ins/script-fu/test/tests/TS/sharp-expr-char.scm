@@ -46,12 +46,12 @@
 (assert '(equal? (integer->char 13) #\return))
 (assert '(equal? (integer->char 32) #\space))
 
-; Mispelled sharp constants
+; Misspelled sharp constants
 ; Any sequence of chars starting with #\n, up to a delimiter,
 ; that does not match "newline"
 ; is parsed as the sharp constant for the lower case ASCII n char.\
 ; Similarly for tab, return, space
-(test! "mispelled sharp char constant for newline")
+(test! "misspelled sharp char constant for newline")
 ; 110 is the codepoint for lower case n
 (assert '(equal? (integer->char 110) #\n))
 (assert '(equal? (integer->char 110) #\newlin))

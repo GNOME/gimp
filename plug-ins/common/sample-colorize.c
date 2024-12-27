@@ -284,7 +284,7 @@ colorize_create_procedure (GimpPlugIn  *plug_in,
         "This plug-in colorizes the contents of the specified (gray) layer"
         " with the help of a  sample (color) layer."
         " It analyzes all colors in the sample layer."
-        " The sample colors are sorted by brightness (== intentisty) and amount"
+        " The sample colors are sorted by brightness (== intensity) and amount"
         " and stored in a sample colortable (where brightness is the index)"
         " The pixels of the destination layer are remapped with the help of the"
         " sample colortable. If use_subcolors is TRUE, the remapping process uses"

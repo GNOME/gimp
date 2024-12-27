@@ -76,7 +76,7 @@
       ;
       ; (+ (random 15) 1) yields [2, 16] uniform.
       ; The original formula, a product of random numbers, yields [3, 255] non-uniform.
-      ; To accomodate changes to distress-selection, we use the old formula, and divide by 255.
+      ; To accommodate changes to distress-selection, we use the old formula, and divide by 255.
       ; When you instead just generate a single random float, stains are smaller.
       (set! theThreshold (/
                             (- (* (+ (random 15) 1) (+ (random 15) 1)) 1) ; original formula

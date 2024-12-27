@@ -40,7 +40,7 @@
 ;(assert-error `(close-port ,aOutFilePort)
 ;              "Error: not a port")
 
-; aOutFilePort is still in scope and shoud not be garbage collected.
+; aOutFilePort is still in scope and should not be garbage collected.
 
 (test! "A closed port is still a port")
 (assert `(port? ,aOutFilePort))

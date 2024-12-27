@@ -4,7 +4,7 @@
 
 ; Tests in alphabetic order of attribute name
 
-; Assymmetry:
+; Asymmetry:
 ; - some attributes can be get, but not set
 ; - some attributes can be set but not get
 ; Such attributes are set only in libgimp, not by a PDB procedure

@@ -253,7 +253,7 @@
 ;        expected-error)
 
 
-; Statments in the testing DSL.
+; Statements in the testing DSL.
 
 ; The usual or normal test.
 ; <code> is a boolean proposition expected to yield #t
@@ -436,7 +436,7 @@
 
 ; Returns path to file containing named color profile
 ; Currently, assumes color profiles downloaded to /work dir.
-; FUTURE: platform indpendent path
+; FUTURE: platform independent path
 ; FUTURE: color profile test files in the repo
 (define (testing:path-to-color-profile name)
   (string-append "/work/" name))

@@ -209,7 +209,7 @@ A plugin may have a resource as a parameter.
 An interactive plugin may show a chooser widget to let a user choose a resource.
 The user's choices may be saved in settings.
 
-In the same sesssion of GIMP, or in a subsequent session,
+In the same session of GIMP, or in a subsequent session,
 a user may invoke the plugin again.
 Then the saved settings are displayed in the plugin's dialog
 (when the second invocation is also interactive).

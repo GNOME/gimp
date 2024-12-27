@@ -12,7 +12,7 @@ Changelog:
 WHAT IS TSX?
 
 TinyScheme Extensions is a set of dynamic libraries incorporating
-additional funcionality to TinyScheme, a lightweight
+additional functionality to TinyScheme, a lightweight
 implementation of the Scheme programming language. TinyScheme
 (http://tinyscheme.sourceforge.net) is maintained by D. Souflis
 (dsouflis@acm.org), and is based on MiniSCHEME version 0.85k4.

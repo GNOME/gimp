@@ -9,7 +9,7 @@
 
 ; Seems not used by any script in the repo.
 ; FUTURE move to gimp-data-extras or to scripts/test
-; and maintain it with low priorty.
+; and maintain it with low priority.
 
 ; unsharp-mask is a filter AND renderer, creating a new, visible, dirty image
 ; from the given image.

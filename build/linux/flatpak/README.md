@@ -60,7 +60,7 @@ cd <path-to-gimp-repo>/flatpak/build
 podman run --rm --privileged -v "$(pwd):/run/host:rw" ghcr.io/flathub/flatpak-external-data-checker:latest /run/host/org.gimp.GIMP-nightly.json
 ```
 
-  Our prefered backend for the checker is Anitya, a database maintained
+  Our preferred backend for the checker is Anitya, a database maintained
   by the Fedora project. To set up a new dependency check by Anitya:
 
   1. verify it is available in the database: https://release-monitoring.org/

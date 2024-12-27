@@ -94,7 +94,7 @@
 ; TODO test multi-select, a set of two member path
 
 ; The generic getter get-selected-drawables
-; Returns a homogenous vector of previously selected channels.
+; Returns a homogeneous vector of previously selected channels.
 (assert `(= (vector-ref (car (gimp-image-get-selected-drawables ,testImage)) 0)
             ,testChannel))
 

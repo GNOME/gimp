@@ -98,7 +98,7 @@ gimp_operation_border_class_init (GimpOperationBorderClass *klass)
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_int ("radius-x",
                                                      "Radius X",
-                                                     "Border radius in X diection",
+                                                     "Border radius in X direction",
                                                      1, 2342, 1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
@@ -106,7 +106,7 @@ gimp_operation_border_class_init (GimpOperationBorderClass *klass)
   g_object_class_install_property (object_class, PROP_RADIUS_Y,
                                    g_param_spec_int ("radius-y",
                                                      "Radius Y",
-                                                     "Border radius in Y diection",
+                                                     "Border radius in Y direction",
                                                      1, 2342, 1,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));

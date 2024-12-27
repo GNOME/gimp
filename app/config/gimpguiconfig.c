@@ -246,7 +246,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_ACCELS,
                             "restore-accels",
-                            "Restore acclerator",
+                            "Restore accelerator",
                             RESTORE_ACCELS_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);

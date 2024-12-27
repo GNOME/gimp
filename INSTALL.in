@@ -6,7 +6,7 @@ There are some basic steps to building and installing GIMP.
 
 GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.10.x versions. It is advised to
 uninstall them before installing GIMP @GIMP_APP_VERSION@. Since libgimp* libraries
-and data are all versionned anyway, it is possible to keep your older
+and data are all versioned anyway, it is possible to keep your older
 GIMP 2.x installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
 
 GIMP @GIMP_APP_VERSION@ is not backward compatible with GIMP 2.10 and earlier
