@@ -312,7 +312,7 @@ To fill data for a new entry:
 		name="Cрпски језик (latin)" />
 	<iso_639_entry
 		dl_code="sv"
-		inno_code="Languages\\Unofficial\\Swedish.isl"
+		inno_code="Languages\\Swedish.isl"
 		name="Svenska" />
 	<iso_639_entry
 		dl_code="ta"
