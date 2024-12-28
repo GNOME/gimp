@@ -18,37 +18,59 @@ fi
 
 
 # 1. INSTALL GO-APPIMAGETOOL AND COMPLEMENTARY TOOLS
-echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling go-appimagetool and other tools"
+echo -e "\e[0Ksection_start:`date +%s`:apmg_tlkt\r\e[0KInstalling (go)appimagetool and other tools"
 if [ -f "*appimagetool*.AppImage" ]; then
   rm *appimagetool*.AppImage
+  rm runtime*
 fi
 if [ "$GITLAB_CI" ]; then
   apt-get update >/dev/null 2>&1
-  apt-get install -y --no-install-recommends ca-certificates wget >/dev/null 2>&1
+  apt-get install -y --no-install-recommends ca-certificates wget curl >/dev/null 2>&1
 fi
 export HOST_ARCH=$(uname -m)
 export APPIMAGE_EXTRACT_AND_RUN=1
 
-## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
-wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
-echo "(INFO): Downloaded go-appimagetool: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
-go_appimagetool='go-appimagetool.AppImage'
-mv appimagetool-*.AppImage $go_appimagetool
-chmod +x "$go_appimagetool"
-
-## go-appimagetool does not patch LD interpreter so we use patchelf. See: https://github.com/probonopd/go-appimage/issues/49
-if [ "$GITLAB_CI" ]; then
-  apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
+if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ]; then
+  ## For now, we always use the latest go-appimagetool for bundling. See: https://github.com/probonopd/go-appimage/issues/275
+  if [ "$GITLAB_CI" ]; then
+    apt-get install -y --no-install-recommends patchelf >/dev/null 2>&1
+  fi
+  wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2) >/dev/null 2>&1
+  go_appimagetool_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
+  go_appimagetool='go-appimagetool.AppImage'
+  mv appimagetool-*.AppImage $go_appimagetool
+  chmod +x "$go_appimagetool"
 fi
 
-## standard appimagetool is needed for squashing the .appimage file. See: https://github.com/probonopd/go-appimage/issues/86
-if [ "$GITLAB_CI" ]; then
-  apt-get install -y --no-install-recommends file zsync >/dev/null 2>&1
+if [ "$1" != '--bundle-only' ]; then
+  ## standard appimagetool is needed for squashing the .appimage file
+  if [ "$GITLAB_CI" ]; then
+    apt-get install -y --no-install-recommends file zsync >/dev/null 2>&1
+  fi
+  wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${HOST_ARCH}.AppImage" >/dev/null 2>&1
+  standard_appimagetool='legacy-appimagetool.AppImage'
+  mv appimagetool-*.AppImage $standard_appimagetool
+  chmod +x "$standard_appimagetool"
+  standard_appimagetool_version=$("./$standard_appimagetool" --version 2>&1 | sed -e 's/.*version \(.*\)), build.*/\1/')
+
+  ## static runtime to be squashed by appimagetool with the files bundled by go-appimagetool
+  static_runtime_version_online=$(curl -s 'https://api.github.com/repos/AppImage/type2-runtime/releases' |
+                                  grep -Po '"target_commitish":.*?[^\\]",' | head -1 |
+                                  sed -e 's|target_commitish||g' -e 's|"||g' -e 's|:||g' -e 's|,||g' -e 's| ||g')
+  wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-aarch64 >/dev/null 2>&1
+  wget https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-x86_64 >/dev/null 2>&1
+  chmod +x "./runtime-$HOST_ARCH"
+  static_runtime_version_downloaded=$("./runtime-$HOST_ARCH" --appimage-version 2>&1)
+  chmod -x "./runtime-$HOST_ARCH"
+  if [ "${static_runtime_version_downloaded#*commit/}" != "${static_runtime_version_online:0:7}" ]; then
+    exit 1
+  fi
+  standard_appimagetool_text="appimagetool commit: $standard_appimagetool_version | type2-runtime commit: ${static_runtime_version_downloaded#*commit/}"
 fi
-wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${HOST_ARCH}.AppImage" >/dev/null 2>&1
-standard_appimagetool='legacy-appimagetool.AppImage'
-mv appimagetool-*.AppImage $standard_appimagetool
-chmod +x "$standard_appimagetool"
+if [ "$(ls -dq ./AppDir* 2>/dev/null | wc -l)" != '2' ] && [ "$1" != '--bundle-only' ]; then
+  separator=' | '
+fi
+echo "(INFO): ${go_appimagetool_text}${separator}${standard_appimagetool_text}"
 echo -e "\e[0Ksection_end:`date +%s`:apmg_tlkt\r\e[0K"
 
 
@@ -383,13 +405,10 @@ echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K"
 # 5. CONSTRUCT .APPIMAGE
 APPIMAGETOOL_APP_NAME="GIMP-${GIMP_VERSION}-${ARCH}.AppImage"
 echo -e "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KSquashing $APPIMAGETOOL_APP_NAME"
-"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH #-u "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
+"./$standard_appimagetool" -n $APP_DIR $APPIMAGETOOL_APP_NAME --exclude-file appimageignore-$ARCH \
+                                                              --runtime-file runtime-$ARCH #\
+                                                             #--updateinformation "zsync|https://gitlab.gnome.org/GNOME/gimp/-/jobs/artifacts/master/raw/build/linux/appimage/_Output/${APPIMAGETOOL_APP_NAME}.zsync?job=dist-appimage-weekly"
 file "./$APPIMAGETOOL_APP_NAME"
-#standard appimagetool does not output runtime version at squashing. See: https://github.com/AppImage/appimagetool/issues/80
-chmod +x "./$APPIMAGETOOL_APP_NAME"
-if [ "$ARCH" = "$HOST_ARCH" ]; then
-  "./$APPIMAGETOOL_APP_NAME" --appimage-version
-fi
 echo -e "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K"
 done
 
