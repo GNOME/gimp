@@ -296,6 +296,9 @@ sed -i '/kudo/d' $USR_DIR/share/metainfo/$APP_ID.appdata.xml
 sed -i "s/date=\"TODO\"/date=\"`date --iso-8601`\"/" $USR_DIR/share/metainfo/$APP_ID.appdata.xml
 ### mypaint brushes
 bund_usr "$UNIX_PREFIX" "share/mypaint-data/1.0"
+### Needed for 'th' word breaking in Text tool etc
+bund_usr "$UNIX_PREFIX" "share/libthai"
+conf_app LIBTHAI_DICTDIR "share/libthai"
 ### Needed for full CJK and Cyrillic support in file-pdf
 bund_usr "$UNIX_PREFIX" "share/poppler"
 ### file-wmf support (not portable, depends on how the distro deals with PS fonts)
